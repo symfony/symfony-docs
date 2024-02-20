@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; ChoiceType
-
 ChoiceType Field (select drop-downs, radio buttons & checkboxes)
 ================================================================
 
@@ -76,21 +73,21 @@ method::
         // a callback to return the label for a given choice
         // if a placeholder is used, its empty value (null) may be passed but
         // its label is defined by its own "placeholder" option
-        'choice_label' => function (?Category $category) {
+        'choice_label' => function (?Category $category): string {
             return $category ? strtoupper($category->getName()) : '';
         },
         // returns the html attributes for each option input (may be radio/checkbox)
-        'choice_attr' => function (?Category $category) {
+        'choice_attr' => function (?Category $category): array {
             return $category ? ['class' => 'category_'.strtolower($category->getName())] : [];
         },
         // every option can use a string property path or any callable that get
         // passed each choice as argument, but it may not be needed
-        'group_by' => function () {
+        'group_by' => function (): string {
             // randomly assign things into 2 groups
-            return rand(0, 1) == 1 ? 'Group A' : 'Group B';
+            return rand(0, 1) === 1 ? 'Group A' : 'Group B';
         },
         // a callback to return whether a category is preferred
-        'preferred_choices' => function (?Category $category) {
+        'preferred_choices' => function (?Category $category): bool {
             return $category && 100 < $category->getArticleCounts();
         },
     ]);
@@ -194,19 +191,6 @@ correct types will be assigned to the model.
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
-
-match
-~~~~~
-
-**type**: ``boolean`` **default**: ``true``
-
-When this option is ``false``, the constraint checks that the given value is
-not one of the values defined in the ``choices`` option. In practice, it makes
-the ``Choice`` constraint behave like a ``NotChoice`` constraint.
-
-.. versionadded:: 6.2
-
-    The ``match`` option was introduced in Symfony 6.2.
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -326,7 +310,7 @@ Field Variables
     faster to use the :ref:`selectedchoice <form-twig-selectedchoice>` test.
 
 Accessing Form Choice Data
-...........................
+..........................
 
 The ``form.vars`` variable of each choice entry holds data such as whether the
 choice is selected or not. If you need to get the full list of choices data and

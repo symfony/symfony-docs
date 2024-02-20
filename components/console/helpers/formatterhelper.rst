@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; Formatter Helper
-
 Formatter Helper
 ================
 

@@ -29,7 +29,7 @@ positive number (greater than zero):
         class Employee
         {
             #[Assert\Positive]
-            protected $income;
+            protected int $income;
         }
 
     .. code-block:: yaml
@@ -66,7 +66,9 @@ positive number (greater than zero):
 
         class Employee
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('income', new Assert\Positive());
             }

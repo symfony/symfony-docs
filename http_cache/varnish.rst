@@ -1,6 +1,3 @@
-.. index::
-    single: Cache; Varnish
-
 How to Use Varnish to Speed up my Website
 =========================================
 
@@ -8,9 +5,6 @@ Because Symfony's cache uses the standard HTTP cache headers, the
 :ref:`symfony-gateway-cache` can be replaced with any other reverse
 proxy. `Varnish`_ is a powerful, open-source, HTTP accelerator capable of serving
 cached content fast and including support for :doc:`Edge Side Includes </http_cache/esi>`.
-
-.. index::
-    single: Varnish; configuration
 
 Make Symfony Trust the Reverse Proxy
 ------------------------------------
@@ -213,9 +207,6 @@ Symfony adds automatically:
     behavior, those VCL functions already exist. Append the code
     to the end of the function, they won't interfere with each other.
 
-.. index::
-    single: Varnish; Invalidation
-
 Cache Invalidation
 ------------------
 
@@ -234,9 +225,9 @@ proxy before it has expired, it adds complexity to your caching setup.
     Varnish and other reverse proxies for cache invalidation.
 
 .. _`Varnish`: https://varnish-cache.org/
-.. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
+.. _`Edge Architecture`: https://www.w3.org/TR/edge-arch
 .. _`clean the cookies header`: https://varnish-cache.org/docs/7.0/reference/vmod_cookie.html
-.. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
+.. _`Surrogate-Capability Header`: https://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: https://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.io/en/latest/features/user-context.html
 .. _`default.vcl`: https://github.com/varnishcache/varnish-cache/blob/3.0/bin/varnishd/default.vcl

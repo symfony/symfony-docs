@@ -1,19 +1,8 @@
-.. index::
-   single: BrowserKit
-   single: Components; BrowserKit
-
 The BrowserKit Component
 ========================
 
     The BrowserKit component simulates the behavior of a web browser, allowing
     you to make requests, click on links and submit forms programmatically.
-
-.. note::
-
-    In Symfony versions prior to 4.3, the BrowserKit component could only make
-    internal requests to your application. Starting from Symfony 4.3, this
-    component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
-    when using it in combination with the :doc:`HttpClient component </http_client>`.
 
 Installation
 ------------
@@ -49,7 +38,7 @@ This method accepts a request and should return a response::
 
     class Client extends AbstractBrowser
     {
-        protected function doRequest($request)
+        protected function doRequest($request): Response
         {
             // ... convert request into a response
 
@@ -279,6 +268,27 @@ into the client constructor::
     // create a client and set the cookies
     $client = new Client([], null, $cookieJar);
     // ...
+
+.. _component-browserkit-sending-cookies:
+
+Sending Cookies
+~~~~~~~~~~~~~~~
+
+Requests can include cookies. To do so, use the ``serverParameters`` argument of
+the :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::request` method
+to set the ``Cookie`` header value::
+
+    $client->request('GET', '/', [], [], [
+        'HTTP_COOKIE' => new Cookie('flavor', 'chocolate', strtotime('+1 day')),
+
+        // you can also pass the cookie contents as a string
+        'HTTP_COOKIE' => 'flavor=chocolate; expires=Sat, 11 Feb 2023 12:18:13 GMT; Max-Age=86400; path=/'
+    ]);
+
+.. note::
+
+    All HTTP headers set with the ``serverParameters`` argument must be
+    prefixed by ``HTTP_``.
 
 History
 -------

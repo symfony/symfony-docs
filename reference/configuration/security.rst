@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Configuration reference
-
 Security Configuration Reference (SecurityBundle)
 =================================================
 
@@ -152,7 +149,7 @@ application:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             // 'main' is the name of the firewall (can be chosen freely)
@@ -313,7 +310,7 @@ If ``true``, users are always redirected to the default target path regardless
 of the previous URL that was stored in the session.
 
 default_target_path
-....................
+...................
 
 **type**: ``string`` **default**: ``/``
 
@@ -351,10 +348,13 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
     For historical reasons, and to match the misspelling of the HTTP standard,
     the option is called ``use_referer`` instead of ``use_referrer``.
 
-**Options Related to Logout Configuration**
+logout
+~~~~~~
+
+You can configure logout options.
 
 delete_cookies
-~~~~~~~~~~~~~~
+..............
 
 **type**: ``array`` **default**: ``[]``
 
@@ -429,7 +429,7 @@ user logs out::
         ]);
 
 invalidate_session
-~~~~~~~~~~~~~~~~~~
+..................
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -442,14 +442,14 @@ option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
 ``path``
-~~~~~~~~
+........
 
 **type**: ``string`` **default**: ``/logout``
 
 The path which triggers logout. You need to set up a route with a matching path.
 
 target
-~~~~~~
+......
 
 **type**: ``string`` **default**: ``/``
 
@@ -460,7 +460,7 @@ redirect after logout.
 .. _reference-security-logout-csrf:
 
 enable_csrf
-~~~~~~~~~~~
+...........
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -473,14 +473,14 @@ option if you need to use a custom CSRF token generator.
     The ``enable_csrf`` option was introduced in Symfony 6.2.
 
 csrf_parameter
-~~~~~~~~~~~~~~
+..............
 
-**type**: ``string`` **default**: ``'_csrf_token'``
+**type**: ``string`` **default**: ``_csrf_token``
 
 The name of the parameter that stores the CSRF token value.
 
 csrf_token_generator
-~~~~~~~~~~~~~~~~~~~~
+....................
 
 **type**: ``string`` **default**: ``null``
 
@@ -488,9 +488,9 @@ The ``id`` of the service used to generate the CSRF tokens. Symfony provides a
 default service whose ID is ``security.csrf.token_manager``.
 
 csrf_token_id
-~~~~~~~~~~~~~
+.............
 
-**type**: ``string`` **default**: ``'logout'``
+**type**: ``string`` **default**: ``logout``
 
 An arbitrary string used to identify the token (and check its validity afterwards).
 
@@ -572,7 +572,7 @@ The security configuration should be:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->lazy(true);
             $mainFirewall->jsonLogin()
@@ -697,7 +697,7 @@ X.509 Authentication
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->x509()
                 ->provider('your_user_provider')
@@ -768,7 +768,7 @@ Remote User Authentication
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->remoteUser()
                 ->provider('your_user_provider')
@@ -796,8 +796,7 @@ The name of the ``$_SERVER`` parameter holding the user identifier.
 Firewall Context
 ~~~~~~~~~~~~~~~~
 
-Most applications will only need one :ref:`firewall <firewalls-authentication>`.
-But if your application *does* use multiple firewalls, you'll notice that
+If your application uses multiple :ref:`firewalls <firewalls-authentication>`, you'll notice that
 if you're authenticated in one firewall, you're not automatically authenticated
 in another. In other words, the systems don't share a common "context":
 each firewall acts like a separate security system.
@@ -850,7 +849,7 @@ multiple firewalls, the "context" could actually be shared:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('somename')
                 // ...
                 ->context('my_context')
@@ -869,6 +868,55 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
+stateless
+~~~~~~~~~
+
+Firewalls can configure a ``stateless`` boolean option in order to declare that
+the session must not be used when authenticating users:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    stateless: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main" stateless="true">
+                    <!-- ... -->
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->stateless(true);
+            // ...
+        };
+
 User Checkers
 ~~~~~~~~~~~~~
 
@@ -878,10 +926,60 @@ a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
 
+Required Badges
+~~~~~~~~~~~~~~~
+
+Firewalls can configure a list of required badges that must be present on the authenticated passport:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    required_badges: ['CsrfTokenBadge', 'My\Badge']
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <!-- ... -->
+                    <required_badge>CsrfTokenBadge</required_badge>
+                    <required_badge>My\Badge</required_badge>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->requiredBadges(['CsrfTokenBadge', 'My\Badge']);
+            // ...
+        };
+
 providers
 ---------
 
-This options defines how the application users are loaded (from a database,
+This option defines how the application users are loaded (from a database,
 an LDAP server, a configuration file, etc.) Read
 :doc:`/security/user_providers` to learn more about each of those
 providers.

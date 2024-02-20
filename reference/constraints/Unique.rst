@@ -43,7 +43,7 @@ strings:
         class Person
         {
             #[Assert\Unique]
-            protected $contactEmails;
+            protected array $contactEmails;
         }
 
     .. code-block:: yaml
@@ -79,7 +79,9 @@ strings:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('contactEmails', new Assert\Unique());
             }
@@ -111,21 +113,21 @@ collection::
 
     .. code-block:: php-attributes
 
-        // src/Entity/Poi.php
+        // src/Entity/PointOfInterest.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class Poi
+        class PointOfInterest
         {
-            #[Assert\Unique(fields=['latitude', 'longitude'])]
-            protected $coordinates;
+            #[Assert\Unique(fields: ['latitude', 'longitude'])]
+            protected array $coordinates;
         }
 
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\Entity\Poi:
+        App\Entity\PointOfInterest:
             properties:
                 coordinates:
                     - Unique:
@@ -139,7 +141,7 @@ collection::
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\Entity\Poi">
+            <class name="App\Entity\PointOfInterest">
                 <property name="coordinates">
                     <constraint name="Unique">
                         <option name="fields">
@@ -153,15 +155,17 @@ collection::
 
     .. code-block:: php
 
-        // src/Entity/Poi.php
+        // src/Entity/PointOfInterest.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-        class Poi
+        class PointOfInterest
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('coordinates', new Assert\Unique([
                     'fields' => ['latitude', 'longitude'],

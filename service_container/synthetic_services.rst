@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Synthetic Services
-
 How to Inject Instances into the Container
 ------------------------------------------
 
@@ -66,8 +63,8 @@ configuration:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             // synthetic services don't specify a class
             $services->set('app.synthetic_service')

@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Embedded forms
-
 How to Embed Forms
 ==================
 
@@ -25,7 +22,7 @@ creating the ``Category`` class::
     class Category
     {
         #[Assert\NotBlank]
-        public $name;
+        public string $name;
     }
 
 Next, add a new ``category`` property to the ``Task`` class::
@@ -38,7 +35,7 @@ Next, add a new ``category`` property to the ``Task`` class::
 
         #[Assert\Type(type: Category::class)]
         #[Assert\Valid]
-        protected $category;
+        protected ?Category $category = null;
 
         // ...
 
@@ -47,7 +44,7 @@ Next, add a new ``category`` property to the ``Task`` class::
             return $this->category;
         }
 
-        public function setCategory(?Category $category)
+        public function setCategory(?Category $category): void
         {
             $this->category = $category;
         }

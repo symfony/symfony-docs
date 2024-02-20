@@ -1,6 +1,3 @@
-.. index::
-   single: Cache
-
 HTTP Cache
 ==========
 
@@ -30,10 +27,6 @@ on the topic. If you're new to HTTP caching, Ryan Tomayko's article
 `Things Caches Do`_ is *highly* recommended. Another in-depth resource is Mark
 Nottingham's `Cache Tutorial`_.
 
-.. index::
-   single: Cache; Proxy
-   single: Cache; Reverse proxy
-
 .. _gateway-caches:
 
 Caching with a Gateway Cache
@@ -59,9 +52,6 @@ as `Varnish`_, `Squid in reverse proxy mode`_, and the Symfony reverse proxy.
 
     Gateway caches are sometimes referred to as reverse proxy caches,
     surrogate caches, or even HTTP accelerators.
-
-.. index::
-   single: Cache; Symfony reverse proxy
 
 .. _`symfony-gateway-cache`:
 .. _symfony2-reverse-proxy:
@@ -114,7 +104,7 @@ Use the ``framework.http_cache`` option to enable the proxy for the
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) use ($env) {
+        return static function (FrameworkConfig $framework, string $env): void {
             if ('prod' === $env) {
                 $framework->httpCache()->enabled(true);
             }
@@ -155,9 +145,6 @@ cache efficiency of your routes.
     Fortunately, since all reverse proxies are effectively the same, you should
     be able to switch to something more robust - like Varnish - without any problems.
     See :doc:`How to use Varnish </http_cache/varnish>`
-
-.. index::
-   single: Cache; HTTP
 
 .. _http-cache-introduction:
 
@@ -201,9 +188,6 @@ These four headers are used to help cache your responses via *two* different mod
     invaluable. Don't be put-off by the appearance of the spec - its contents
     are much more beautiful than its cover!
 
-.. index::
-   single: Cache; Expiration
-
 .. _http-cache-expiration-intro:
 
 Expiration Caching
@@ -229,9 +213,8 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
 
         // src/Controller/BlogController.php
         use Symfony\Component\HttpFoundation\Response;
-        // ...
 
-        public function index()
+        public function index(): Response
         {
             // somehow create a Response object, like by rendering a template
             $response = $this->render('blog/index.html.twig', []);
@@ -285,10 +268,6 @@ Finally, for more information about expiration caching, see :doc:`/http_cache/ex
 Validation Caching
 ~~~~~~~~~~~~~~~~~~
 
-.. index::
-   single: Cache; Cache-Control header
-   single: HTTP headers; Cache-Control
-
 With expiration caching, you say "cache for 3600 seconds!". But, when someone
 updates cached content, you won't see that content on your site until the cache
 expires.
@@ -298,9 +277,6 @@ If you need to see updated content *immediately*, you either need to
 caching model.
 
 For details, see :doc:`/http_cache/validation`.
-
-.. index::
-   single: Cache; Safe methods
 
 Safe Methods: Only caching GET or HEAD requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -320,9 +296,6 @@ three things:
 * You should *never* change the state of your application (e.g. update a blog post)
   when responding to a GET or HEAD request. If those requests are cached, future
   requests may not actually hit your server.
-
-.. index::
-   pair: Cache; Configuration
 
 More Response Methods
 ~~~~~~~~~~~~~~~~~~~~~
@@ -417,7 +390,7 @@ Learn more
 
     http_cache/*
 
-.. _`Things Caches Do`: https://2ndscale.com/writings/things-caches-do
+.. _`Things Caches Do`: https://tomayko.com/blog/2008/things-caches-do
 .. _`Cache Tutorial`: https://www.mnot.net/cache_docs/
 .. _`Varnish`: https://varnish-cache.org/
 .. _`Squid in reverse proxy mode`: https://wiki.squid-cache.org/SquidFaq/ReverseProxy

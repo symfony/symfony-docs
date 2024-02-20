@@ -118,8 +118,8 @@ services:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
             $services->set('app.postgresql_lock', PostgresqlLock::class);
@@ -180,8 +180,8 @@ the generic ``app.lock`` service can be defined as follows:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
             $services->set('app.postgresql_lock', PostgresqlLock::class);
@@ -333,9 +333,16 @@ controller.argument_value_resolver
 **Purpose**: Register a value resolver for controller arguments such as ``Request``
 
 Value resolvers implement the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ValueResolverInterface`
 and are used to resolve argument values for controllers as described here:
 :doc:`/controller/argument_value_resolver`.
+
+.. versionadded:: 6.2
+
+    The ``ValueResolverInterface`` was introduced in Symfony 6.2. Prior to
+    6.2, you had to use the
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`,
+    which defines different methods.
 
 data_collector
 --------------
@@ -343,7 +350,7 @@ data_collector
 **Purpose**: Create a class that collects custom data for the profiler
 
 For details on creating your own custom data collection, read the
-:doc:`/profiler/data_collector` article.
+:ref:`profiler-data-collector` article.
 
 doctrine.event_listener
 -----------------------
@@ -416,7 +423,7 @@ service class::
 
     class MyClearer implements CacheClearerInterface
     {
-        public function clear(string $cacheDirectory)
+        public function clear(string $cacheDirectory): void
         {
             // clear your cache
         }
@@ -483,7 +490,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp($cacheDirectory)
+        public function warmUp($cacheDirectory): array
         {
             // ... do some sort of operations to "warm" your cache
 
@@ -499,7 +506,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
             return $filesAndClassesToPreload;
         }
 
-        public function isOptional()
+        public function isOptional(): bool
         {
             return true;
         }
@@ -618,7 +625,7 @@ register it as a service, then tag it with ``kernel.fragment_renderer``.
 kernel.locale_aware
 -------------------
 
-**Purpose**: To access and use the current :doc:`locale </translation/locale>`
+**Purpose**: To access and use the current :ref:`locale <translation-locale>`
 
 Setting and retrieving the locale can be done via configuration or using
 container parameters, listeners, route parameters or the current request.
@@ -635,12 +642,12 @@ the :class:`Symfony\\Contracts\\Translation\\LocaleAwareInterface` interface::
 
     class MyCustomLocaleHandler implements LocaleAwareInterface
     {
-        public function setLocale($locale)
+        public function setLocale(string $locale): void
         {
             $this->locale = $locale;
         }
 
-        public function getLocale()
+        public function getLocale(): string
         {
             return $this->locale;
         }
@@ -694,7 +701,7 @@ the tag.
 
 This is mostly useful when running your projects in application servers that
 reuse the Symfony application between requests to improve performance. This tag
-is applied for example to the built-in :doc:`data collectors </profiler/data_collector>`
+is applied for example to the built-in :ref:`data collectors <profiler-data-collector>`
 of the profiler to delete all their information.
 
 .. _dic_tags-mime:
@@ -953,22 +960,6 @@ This tag is used to automatically register :ref:`expression function providers
 component. Using these providers, you can add custom functions to the security
 expression language.
 
-security.remember_me_aware
---------------------------
-
-**Purpose**: To allow remember me authentication
-
-This tag is used internally to allow remember-me authentication to work.
-If you have a custom authentication method where a user can be remember-me
-authenticated, then you may need to use this tag.
-
-If your custom authentication factory extends
-:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\AbstractFactory`
-and your custom authentication listener extends
-:class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`,
-then your custom authentication listener will automatically have this tag
-applied and it will function automatically.
-
 security.voter
 --------------
 
@@ -1004,9 +995,11 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
 For more details, see :doc:`/serializer`.
 
-The priorities of the default normalizers can be found in the
-:method:`Symfony\\Bundle\\FrameworkBundle\\DependencyInjection\\FrameworkExtension::registerSerializerConfiguration`
-method.
+Run the following command to check the priorities of the default normalizers:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --tag serializer.normalizer
 
 .. _dic-tags-translation-loader:
 
@@ -1078,9 +1071,22 @@ file
 
 When executing the ``translation:extract`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
-has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
-:class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`, which
-help to find and extract translation keys from Twig templates and PHP files.
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a PHP
+extractor to find and extract translation keys from Twig templates and PHP files.
+
+Symfony includes two PHP extractors: :class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`
+and :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`. The
+first one is simple but doesn't require to install any packages; the second one
+is much more advanced, but requires to install this dependency in your project:
+
+.. code-block:: terminal
+
+    $ composer require nikic/php-parser
+
+.. deprecated:: 6.2
+
+    The ``PhpExtractor`` class is deprecated since Symfony 6.2. The ``PhpAstExtractor``
+    class will be the only PHP extractor available starting from Symfony 7.0.
 
 You can create your own extractor by creating a class that implements
 :class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`
@@ -1095,12 +1101,12 @@ required option: ``alias``, which defines the name of the extractor::
 
     class FooExtractor implements ExtractorInterface
     {
-        protected $prefix;
+        protected string $prefix;
 
         /**
          * Extracts translation messages from a template directory to the catalog.
          */
-        public function extract($directory, MessageCatalogue $catalog)
+        public function extract(string $directory, MessageCatalogue $catalog): void
         {
             // ...
         }
@@ -1108,7 +1114,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Sets the prefix that should be used for new found messages.
          */
-        public function setPrefix(string $prefix)
+        public function setPrefix(string $prefix): void
         {
             $this->prefix = $prefix;
         }
@@ -1263,7 +1269,7 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
 
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
-:doc:`/templating/twig_extension` article.
+:ref:`templates-twig-extension` article.
 
 twig.loader
 -----------

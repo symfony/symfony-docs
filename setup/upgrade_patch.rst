@@ -1,6 +1,3 @@
-.. index::
-    single: Upgrading; Patch Version
-
 Upgrading a Patch Version (e.g. 6.0.0 to 6.0.1)
 ===============================================
 

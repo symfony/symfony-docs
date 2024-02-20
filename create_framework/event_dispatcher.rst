@@ -45,20 +45,15 @@ the Response instance::
 
     class Framework
     {
-        private $dispatcher;
-        private $matcher;
-        private $controllerResolver;
-        private $argumentResolver;
-
-        public function __construct(EventDispatcher $dispatcher, UrlMatcherInterface $matcher, ControllerResolverInterface $controllerResolver, ArgumentResolverInterface $argumentResolver)
-        {
-            $this->dispatcher = $dispatcher;
-            $this->matcher = $matcher;
-            $this->controllerResolver = $controllerResolver;
-            $this->argumentResolver = $argumentResolver;
+        public function __construct(
+            private EventDispatcher $dispatcher,
+            private UrlMatcherInterface $matcher,
+            private ControllerResolverInterface $controllerResolver,
+            private ArgumentResolverInterface $argumentResolver,
+        ) {
         }
 
-        public function handle(Request $request)
+        public function handle(Request $request): Response
         {
             $this->matcher->getContext()->fromRequest($request);
 
@@ -94,21 +89,18 @@ now dispatched::
 
     class ResponseEvent extends Event
     {
-        private $request;
-        private $response;
-
-        public function __construct(Response $response, Request $request)
-        {
-            $this->response = $response;
-            $this->request = $request;
+        public function __construct(
+            private Response $response,
+            private Request $request,
+        ) {
         }
 
-        public function getResponse()
+        public function getResponse(): Response
         {
             return $this->response;
         }
 
-        public function getRequest()
+        public function getRequest(): Request
         {
             return $this->request;
         }
@@ -125,7 +117,7 @@ the registration of a listener for the ``response`` event::
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {
+    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event): void {
         $response = $event->getResponse();
 
         if ($response->isRedirection()
@@ -164,7 +156,7 @@ So far so good, but let's add another listener on the same event. Let's say
 that we want to set the ``Content-Length`` of the Response if it is not already
 set::
 
-    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {
+    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event): void {
         $response = $event->getResponse();
         $headers = $response->headers;
 
@@ -182,7 +174,7 @@ a positive number; negative numbers can be used for low priority listeners.
 Here, we want the ``Content-Length`` listener to be executed last, so change
 the priority to ``-255``::
 
-    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {
+    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event): void {
         $response = $event->getResponse();
         $headers = $response->headers;
 
@@ -203,7 +195,7 @@ Let's refactor the code a bit by moving the Google listener to its own class::
 
     class GoogleListener
     {
-        public function onResponse(ResponseEvent $event)
+        public function onResponse(ResponseEvent $event): void
         {
             $response = $event->getResponse();
 
@@ -225,7 +217,7 @@ And do the same with the other listener::
 
     class ContentLengthListener
     {
-        public function onResponse(ResponseEvent $event)
+        public function onResponse(ResponseEvent $event): void
         {
             $response = $event->getResponse();
             $headers = $response->headers;
@@ -267,7 +259,7 @@ look at the new version of the ``GoogleListener``::
     {
         // ...
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return ['response' => 'onResponse'];
         }
@@ -284,7 +276,7 @@ And here is the new version of ``ContentLengthListener``::
     {
         // ...
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return ['response' => ['onResponse', -255]];
         }

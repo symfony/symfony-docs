@@ -2,7 +2,7 @@ Date
 ====
 
 Validates that a value is a valid date, meaning a string (or an object that can
-be cast into a string) that follows a valid ``YYYY-MM-DD`` format.
+be cast into a string) that follows a valid ``Y-m-d`` format (e.g. ``'2023-10-18'``).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -25,7 +25,7 @@ Basic Usage
         class Author
         {
             #[Assert\Date]
-            protected $birthday;
+            protected string $birthday;
         }
 
     .. code-block:: yaml
@@ -64,9 +64,9 @@ Basic Usage
            /**
             * @var string A "Y-m-d" formatted value
             */
-            protected $birthday;
+            protected string $birthday;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('birthday', new Assert\Date());
             }

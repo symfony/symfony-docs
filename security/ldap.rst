@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Authenticating against an LDAP server
-
 Authenticating against an LDAP server
 =====================================
 
@@ -187,7 +184,7 @@ use the ``ldap`` user provider.
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->provider('ldap_users')
                 ->ldap()
                     ->service(Ldap::class)
@@ -409,7 +406,7 @@ Configuration example for form login
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->formLoginLdap()
                     ->service(Ldap::class)
@@ -463,7 +460,7 @@ Configuration example for HTTP Basic
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->stateless(true)
                 ->formLoginLdap()
@@ -523,7 +520,7 @@ Configuration example for form login and query_string
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->stateless(true)
                 ->formLoginLdap()
@@ -536,6 +533,6 @@ Configuration example for form login and query_string
         };
 
 .. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
-.. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
+.. _`RFC4515`: https://datatracker.ietf.org/doc/rfc4515/
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection
 

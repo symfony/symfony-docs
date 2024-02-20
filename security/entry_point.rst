@@ -60,10 +60,10 @@ You can configure this using the ``entry_point`` setting:
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
         use App\Security\SocialConnectAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->enableAuthenticatorManager(true);
             // ....
 
@@ -154,7 +154,7 @@ split the configuration into two separate firewalls:
         use App\Security\LoginFormAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $apiFirewall = $security->firewall('api');
             $apiFirewall
                 ->pattern('^/api')
@@ -167,7 +167,7 @@ split the configuration into two separate firewalls:
                 ->formLogin();
 
             $accessControl = $security->accessControl();
-            $accessControl->path('^/login')->roles(['IS_AUTHENTICATED_ANONYMOUSLY']);
+            $accessControl->path('^/login')->roles(['PUBLIC_ACCESS']);
             $accessControl->path('^/api')->roles(['ROLE_API_USER']);
             $accessControl->path('^/')->roles(['ROLE_USER']);
         };

@@ -37,12 +37,12 @@ The following constraints ensure that:
         class Person
         {
             #[Assert\IdenticalTo('Mary')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\IdenticalTo(
                 value: 20,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -88,7 +88,9 @@ The following constraints ensure that:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\IdenticalTo('Mary'));
 

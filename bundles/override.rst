@@ -1,6 +1,3 @@
-.. index::
-   single: Bundle; Inheritance
-
 How to Override any Part of a Bundle
 ====================================
 

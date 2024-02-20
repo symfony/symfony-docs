@@ -31,7 +31,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
         class Author
         {
             #[Assert\IsNull]
-            protected $firstName;
+            protected ?string $firstName = null;
         }
 
     .. code-block:: yaml
@@ -67,7 +67,9 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', Assert\IsNull());
             }

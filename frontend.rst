@@ -6,7 +6,7 @@ Managing CSS and JavaScript
 
     Do you prefer video tutorials? Check out the `Webpack Encore screencast series`_.
 
-Symfony ships with a pure-JavaScript library - called Webpack Encore - that makes
+Symfony ships with a pure JavaScript library - called Webpack Encore - that makes
 it a joy to work with CSS and JavaScript. You can use it, use something else, or
 create static CSS and JS files in your ``public/`` directory directly and
 include them in your templates.
@@ -18,7 +18,7 @@ Webpack Encore
 
 `Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
 It *wraps* Webpack, giving you a clean & powerful API for bundling JavaScript modules,
-pre-processing CSS & JS and compiling and minifying assets. Encore gives you professional
+pre-processing CSS & JS and compiling and minifying assets. Encore gives you a professional
 asset system that's a *delight* to use.
 
 Encore is inspired by `Webpacker`_ and `Mix`_, but stays in the spirit of Webpack:
@@ -28,7 +28,7 @@ to solve the most common Webpack use cases.
 .. tip::
 
     Encore is made by `Symfony`_ and works *beautifully* in Symfony applications.
-    But it can be used in any PHP application and even with other server side
+    But it can be used in any PHP application and even with other server-side
     programming languages!
 
 .. _encore-toc:
@@ -45,7 +45,7 @@ Getting Started
 Adding more Features
 ....................
 
-* :doc:`CSS Preprocessors: Sass, LESS, etc </frontend/encore/css-preprocessors>`
+* :doc:`CSS Preprocessors: Sass, LESS, etc. </frontend/encore/css-preprocessors>`
 * :doc:`PostCSS and autoprefixing </frontend/encore/postcss>`
 * :doc:`Enabling React.js </frontend/encore/reactjs>`
 * :doc:`Enabling Vue.js (vue-loader) </frontend/encore/vuejs>`

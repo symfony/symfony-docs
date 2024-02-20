@@ -1,7 +1,3 @@
-.. index::
-   single: Workflow
-   single: Components; Workflow
-
 The Workflow Component
 ======================
 
@@ -32,7 +28,7 @@ a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`).
 
 Consider the following example for a blog post. A post can have one of a number
-of predefined statuses (`draft`, `reviewed`, `rejected`, `published`). In a workflow,
+of predefined statuses (``draft``, ``reviewed``, ``rejected``, ``published``). In a workflow,
 these statuses are called **places**. You can define the workflow like this::
 
     use Symfony\Component\Workflow\DefinitionBuilder;
@@ -58,33 +54,14 @@ The ``Workflow`` can now help you to decide what *transitions* (actions) are all
 on a blog post depending on what *place* (state) it is in. This will keep your domain
 logic in one place and not spread all over your application.
 
-When you define multiple workflows you should consider using a ``Registry``,
-which is an object that stores and provides access to different workflows.
-A registry will also help you to decide if a workflow supports the object you
-are trying to use it with::
-
-    use Acme\Entity\BlogPost;
-    use Acme\Entity\Newsletter;
-    use Symfony\Component\Workflow\Registry;
-    use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
-
-    $blogPostWorkflow = ...;
-    $newsletterWorkflow = ...;
-
-    $registry = new Registry();
-    $registry->addWorkflow($blogPostWorkflow, new InstanceOfSupportStrategy(BlogPost::class));
-    $registry->addWorkflow($newsletterWorkflow, new InstanceOfSupportStrategy(Newsletter::class));
-
 Usage
 -----
 
-When you have configured a ``Registry`` with your workflows,
-you can retrieve a workflow from it and use it as follows::
+Here's an example of using the workflow defined above::
 
     // ...
     // Consider that $blogPost is in place "draft" by default
     $blogPost = new BlogPost();
-    $workflow = $registry->get($blogPost);
 
     $workflow->can($blogPost, 'publish'); // False
     $workflow->can($blogPost, 'to_review'); // True
@@ -103,7 +80,6 @@ method to initialize the object property::
 
     // ...
     $blogPost = new BlogPost();
-    $workflow = $registry->get($blogPost);
 
     // initiate workflow
     $workflow->getMarking($blogPost);

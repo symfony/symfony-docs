@@ -1,6 +1,3 @@
-.. index::
-   single: Logging; Emailing errors
-
 How to Configure Monolog to Email Errors
 ========================================
 
@@ -100,7 +97,7 @@ it is broken down.
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $mainHandler = $monolog->handler('main')
                 ->type('fingers_crossed')
                 // 500 errors are logged at the critical level
@@ -179,7 +176,7 @@ You can adjust the time period using the ``time`` option:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             // ...
 
             $monolog->handler('deduplicated')
@@ -288,7 +285,7 @@ get logged on the server as well as the emails being sent:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('main')
                 ->type('fingers_crossed')
                 ->actionLevel('critical')
@@ -296,6 +293,7 @@ get logged on the server as well as the emails being sent:
             ;
 
             $monolog->handler('group')
+                ->type('group')
                 ->members(['streamed', 'deduplicated'])
             ;
 

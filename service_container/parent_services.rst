@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Parent services
-
 How to Manage Common Dependencies with Parent Services
 ======================================================
 
@@ -18,12 +15,11 @@ you may have multiple repository classes which need the
     // ...
     abstract class BaseDoctrineRepository
     {
-        protected $objectManager;
-        protected $logger;
+        protected LoggerInterface $logger;
 
-        public function __construct(ObjectManager $objectManager)
-        {
-            $this->objectManager = $objectManager;
+        public function __construct(
+            protected ObjectManager $objectManager,
+        ) {
         }
 
         public function setLogger(LoggerInterface $logger): void
@@ -122,8 +118,8 @@ avoid duplicated service definitions:
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(BaseDoctrineRepository::class)
                 ->abstract()
@@ -231,8 +227,8 @@ the child class:
         use App\Repository\DoctrineUserRepository;
         // ...
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(BaseDoctrineRepository::class)
                 // ...

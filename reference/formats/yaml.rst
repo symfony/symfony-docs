@@ -1,22 +1,16 @@
-.. index::
-    single: Yaml; YAML Format
-
 The YAML Format
-===============
+---------------
 
-According to the official `YAML website`_, YAML is "a human friendly data
-serialization standard for all programming languages". The Symfony Yaml
-component implements a subset of the `YAML specification`_. Specifically, it
-implements the minimum set of features needed to use YAML as a configuration
-file format.
+The Symfony Yaml Component implements a selected subset of features defined in
+the `YAML 1.2 version specification`_.
 
 Scalars
--------
+~~~~~~~
 
 The syntax for scalars is similar to the PHP syntax.
 
 Strings
-~~~~~~~
+.......
 
 Strings in YAML can be wrapped both in single and double quotes. In some cases,
 they can also be unquoted:
@@ -112,7 +106,7 @@ where each line break is replaced by a space:
     won't appear in the resulting PHP strings.
 
 Numbers
-~~~~~~~
+.......
 
 .. code-block:: yaml
 
@@ -145,17 +139,17 @@ Numbers
     .inf
 
 Nulls
-~~~~~
+.....
 
 Nulls in YAML can be expressed with ``null`` or ``~``.
 
 Booleans
-~~~~~~~~
+........
 
 Booleans in YAML are expressed with ``true`` and ``false``.
 
 Dates
-~~~~~
+.....
 
 YAML uses the `ISO-8601`_ standard to express dates:
 
@@ -171,7 +165,7 @@ YAML uses the `ISO-8601`_ standard to express dates:
 .. _yaml-format-collections:
 
 Collections
------------
+~~~~~~~~~~~
 
 A YAML file is rarely used to describe a simple scalar. Most of the time, it
 describes a collection. YAML collections can be a sequence (indexed arrays in PHP)
@@ -282,7 +276,7 @@ You can mix and match styles to achieve a better readability:
     'symfony 1.2': { PHP: 5.2, Propel: 1.3 }
 
 Comments
---------
+~~~~~~~~
 
 Comments can be added in YAML by prefixing them with a hash mark (``#``):
 
@@ -298,7 +292,7 @@ Comments can be added in YAML by prefixing them with a hash mark (``#``):
     according to the current level of nesting in a collection.
 
 Explicit Typing
----------------
+~~~~~~~~~~~~~~~
 
 The YAML specification defines some tags to set the type of any data explicitly:
 
@@ -318,8 +312,46 @@ The YAML specification defines some tags to set the type of any data explicitly:
             Pz7Y6OjuDg4J+fn5OTk6enp
             56enmleECcgggoBADs=
 
+Symfony Specific Features
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Yaml component provides some additional features that are not part of the
+official YAML specification but are useful in Symfony applications:
+
+* ``!php/const`` allows to get the value of a PHP constant. This tag takes the
+  fully-qualified class name of the constant as its argument:
+
+  .. code-block:: yaml
+
+      data:
+          page_limit: !php/const App\Pagination\Paginator::PAGE_LIMIT
+
+* ``!php/object`` allows to pass the serialized representation of a PHP
+  object (created with the `serialize()`_ function), which will be deserialized
+  when parsing the YAML file:
+
+  .. code-block:: yaml
+
+      data:
+          my_object: !php/object 'O:8:"stdClass":1:{s:3:"bar";i:2;}'
+
+* ``!php/enum`` allows to use a PHP enum case. This tag takes the fully-qualified
+  class name of the enum case as its argument:
+
+  .. code-block:: yaml
+
+      data:
+          # You can use the typed enum case...
+          operator_type: !php/enum App\Operator\Enum\Type::Or
+          # ... or you can also use "->value" to directly use the value of a BackedEnum case
+          operator_type: !php/enum App\Operator\Enum\Type::Or->value
+
+.. versionadded:: 6.2
+
+    The ``!php/enum`` tag was introduced in Symfony 6.2.
+
 Unsupported YAML Features
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The following YAML features are not supported by the Symfony Yaml component:
 
@@ -333,6 +365,6 @@ The following YAML features are not supported by the Symfony Yaml component:
 * Using sequence-like syntax for mapping elements (example: ``{foo, bar}``; use
   ``{foo: ~, bar: ~}`` instead).
 
+.. _`YAML 1.2 version specification`: https://yaml.org/spec/1.2/spec.html
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
-.. _`YAML website`: https://yaml.org/
-.. _`YAML specification`: https://www.yaml.org/spec/1.2/spec.html
+.. _`serialize()`: https://www.php.net/manual/en/function.serialize.php

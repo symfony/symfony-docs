@@ -26,7 +26,7 @@ Basic Usage
         class Author
         {
             #[Assert\Ip]
-            protected $ipAddress;
+            protected string $ipAddress;
         }
 
     .. code-block:: yaml
@@ -62,7 +62,9 @@ Basic Usage
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('ipAddress', new Assert\Ip());
             }

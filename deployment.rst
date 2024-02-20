@@ -1,6 +1,3 @@
-.. index::
-   single: Deployment; Deployment tools
-
 .. _how-to-deploy-a-symfony2-application:
 
 How to Deploy a Symfony Application
@@ -166,19 +163,8 @@ most natural in your hosting environment.
 
         $ composer dump-env prod --empty
 
-    If ``composer`` is not installed on your server, you can generate this optimized
-    file with a command provided by Symfony itself, which you must register in
-    your application before using it:
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-
-    .. code-block:: terminal
-
-        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+    If you don't have Composer installed on the production server, use instead
+    :ref:`the dotenv:dump Symfony command <configuration-env-var-in-prod>`.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,6 +209,7 @@ setup:
 * Running any database migrations
 * Clearing your APCu cache
 * Add/edit CRON jobs
+* Restarting your workers
 * :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
 * On a shared hosting platform using the Apache web server, you may need to
@@ -271,10 +258,10 @@ Learn More
 
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: https://capistranorb.com/
-.. _`Fabric`: http://www.fabfile.org/
+.. _`Fabric`: https://www.fabfile.org/
 .. _`Ansistrano`: https://ansistrano.com/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
-.. _`Memcached`: http://memcached.org/
+.. _`Memcached`: https://memcached.org/
 .. _`Redis`: https://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: https://deployer.org/

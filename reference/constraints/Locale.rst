@@ -35,7 +35,7 @@ Basic Usage
             #[Assert\Locale(
                 canonicalize: true,
             )]
-            protected $locale;
+            protected string $locale;
         }
 
     .. code-block:: yaml
@@ -74,7 +74,9 @@ Basic Usage
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('locale', new Assert\Locale([
                     'canonicalize' => true,

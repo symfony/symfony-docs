@@ -1,6 +1,3 @@
-.. index::
-   single: Config; Defining and processing configuration values
-
 Defining and Processing Configuration Values
 ============================================
 
@@ -57,7 +54,7 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
 
     class DatabaseConfiguration implements ConfigurationInterface
     {
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('database');
 
@@ -543,7 +540,9 @@ be large and you may want to split it up into sections. You can do this
 by making a section a separate node and then appending it into the main
 tree with ``append()``::
 
-    public function getConfigTreeBuilder()
+    use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('database');
 
@@ -572,7 +571,7 @@ tree with ``append()``::
         return $treeBuilder;
     }
 
-    public function addParametersNode()
+    public function addParametersNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('parameters');
 
@@ -740,7 +739,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function ($v) { return ['name' => $v]; })
+                    ->then(function (string $v): array { return ['name' => $v]; })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()->end()
@@ -780,7 +779,7 @@ the following ways:
 - ``ifTrue()``
 - ``ifString()``
 - ``ifNull()``
-- ``ifEmpty()`` (since Symfony 3.2)
+- ``ifEmpty()``
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``
@@ -866,3 +865,8 @@ Otherwise the result is a clean array of configuration values::
         $databaseConfiguration,
         $configs
     );
+
+.. caution::
+
+    When processing the configuration tree, the processor assumes that the top
+    level array key (which matches the extension name) is already stripped off.

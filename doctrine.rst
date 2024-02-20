@@ -1,6 +1,3 @@
-.. index::
-   single: Doctrine
-
 Databases and the Doctrine ORM
 ==============================
 
@@ -61,11 +58,11 @@ The database connection information is stored as an environment variable called
 .. caution::
 
     If the username, password, host or database name contain any character considered
-    special in a URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``),
+    special in a URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``, ``%``),
     you must encode them. See `RFC 3986`_ for the full list of reserved characters or
     use the :phpfunction:`urlencode` function to encode them. In this case you need to
     remove the ``resolve:`` prefix in ``config/packages/doctrine.yaml`` to avoid errors:
-    ``url: '%env(resolve:DATABASE_URL)%'``
+    ``url: '%env(DATABASE_URL)%'``
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
 database for you:
@@ -135,19 +132,19 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     use App\Repository\ProductRepository;
     use Doctrine\ORM\Mapping as ORM;
 
-     #[ORM\Entity(repositoryClass: ProductRepository::class)]
+    #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Id]
         #[ORM\GeneratedValue]
         #[ORM\Column]
-        private int $id;
+        private ?int $id = null;
 
         #[ORM\Column(length: 255)]
-        private string $name;
+        private ?string $name = null;
 
         #[ORM\Column]
-        private int $price;
+        private ?int $price = null;
 
         public function getId(): ?int
         {
@@ -278,13 +275,14 @@ methods:
 
       // src/Entity/Product.php
       // ...
+    +  use Doctrine\DBAL\Types\Types;
 
       class Product
       {
           // ...
 
-    +     #[ORM\Column(type: 'text')]
-    +     private $description;
+    +     #[ORM\Column(type: Types::TEXT)]
+    +     private string $description;
 
           // getDescription() & setDescription() were also added
       }
@@ -350,17 +348,15 @@ and save it::
 
     // ...
     use App\Entity\Product;
-    use Doctrine\Persistence\ManagerRegistry;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
         #[Route('/product', name: 'create_product')]
-        public function createProduct(ManagerRegistry $doctrine): Response
+        public function createProduct(EntityManagerInterface $entityManager): Response
         {
-            $entityManager = $doctrine->getManager();
-
             $product = new Product();
             $product->setName('Keyboard');
             $product->setPrice(1999);
@@ -394,21 +390,18 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 13** The ``ManagerRegistry $doctrine`` argument tells Symfony to
-  :ref:`inject the Doctrine service <services-constructor-injection>` into the
-  controller method.
+* **line 13** The ``EntityManagerInterface $entityManager`` argument tells Symfony
+  to :ref:`inject the Entity Manager service <services-constructor-injection>` into
+  the controller method. This object is responsible for saving objects to, and
+  fetching objects from, the database.
 
-* **line 15** The ``$doctrine->getManager()`` method gets Doctrine's
-  *entity manager* object, which is the most important object in Doctrine. It's
-  responsible for saving objects to, and fetching objects from, the database.
-
-* **lines 17-20** In this section, you instantiate and work with the ``$product``
+* **lines 15-18** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 23** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 26** When the ``flush()`` method is called, Doctrine looks through
+* **line 24** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
@@ -427,8 +420,12 @@ is smart enough to know if it should INSERT or UPDATE your entity.
 Validating Objects
 ------------------
 
-:doc:`The Symfony validator </validation>` reuses Doctrine metadata to perform
-some basic validation tasks::
+:doc:`The Symfony validator </validation>` can reuse Doctrine metadata to perform
+some basic validation tasks. First, add or configure the
+:ref:`auto_mapping option <reference-validation-auto-mapping>` to define which
+entities should be introspected by Symfony to add automatic validation constraints.
+
+Consider the following controller code::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -462,9 +459,11 @@ some basic validation tasks::
     }
 
 Although the ``Product`` entity doesn't define any explicit
-:doc:`validation configuration </validation>`, Symfony introspects the Doctrine
-mapping configuration to infer some validation rules. For example, given that
-the ``name`` property can't be ``null`` in the database, a
+:doc:`validation configuration </validation>`, if the ``auto_mapping`` option
+includes it in the list of entities to introspect, Symfony will infer some
+validation rules for it and will apply them.
+
+For example, given that the ``name`` property can't be ``null`` in the database, a
 :doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
 to the property (if it doesn't contain that constraint already).
 
@@ -499,6 +498,7 @@ be able to go to ``/product/1`` to see your new product::
     namespace App\Controller;
 
     use App\Entity\Product;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     // ...
@@ -506,9 +506,9 @@ be able to go to ``/product/1`` to see your new product::
     class ProductController extends AbstractController
     {
         #[Route('/product/{id}', name: 'product_show')]
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(EntityManagerInterface $entityManager, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->find($id);
+            $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
                 throw $this->createNotFoundException(
@@ -558,7 +558,7 @@ job is to help you fetch entities of a certain class.
 
 Once you have a repository object, you have many helper methods::
 
-    $repository = $doctrine->getRepository(Product::class);
+    $repository = $entityManager->getRepository(Product::class);
 
     // look for a single Product by its primary key (usually "id")
     $product = $repository->find($id);
@@ -666,8 +666,8 @@ using the ``MapEntity`` attribute::
 
 .. tip::
 
-    When enabled globally, it's possible to disabled the behavior on a specific
-    controller, by using the ``MapEntity`` set to ``disabled``.
+    When enabled globally, it's possible to disable the behavior on a specific
+    controller, by using the ``MapEntity`` set to ``disabled``::
 
         public function show(
             #[CurrentUser]
@@ -733,7 +733,7 @@ This can also be used to help resolve multiple arguments::
 
     #[Route('/product/{id}/comments/{comment_id}')]
     public function show(
-        Product $product
+        Product $product,
         #[MapEntity(expr: 'repository.find(comment_id)')]
         Comment $comment
     ): Response {
@@ -755,9 +755,8 @@ control behavior:
 
         #[Route('/product/{product_id}')]
         public function show(
-            Product $product
             #[MapEntity(id: 'product_id')]
-            Comment $comment
+            Product $product
         ): Response {
         }
 
@@ -769,7 +768,7 @@ control behavior:
         #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
         public function show(
             #[MapEntity(mapping: ['category' => 'category', 'slug' => 'slug'])]
-            Product $product
+            Product $product,
             #[MapEntity(mapping: ['comment_slug' => 'slug'])]
             Comment $comment
         ): Response {
@@ -782,7 +781,7 @@ control behavior:
         #[Route('/product/{slug}/{date}')]
         public function show(
             #[MapEntity(exclude: ['date'])]
-            Product $product
+            Product $product,
             \DateTime $date
         ): Response {
         }
@@ -791,13 +790,13 @@ control behavior:
     If true, then when ``findOneBy()`` is used, any values that are
     ``null`` will not be used for the query.
 
-``entityManager``
+``objectManager``
     By default, the ``EntityValueResolver`` uses the *default*
-    entity manager, but you can configure this::
+    object manager, but you can configure this::
 
         #[Route('/product/{id}')]
         public function show(
-            #[MapEntity(entityManager: ['foo'])]
+            #[MapEntity(objectManager: 'foo')]
             Product $product
         ): Response {
         }
@@ -820,6 +819,7 @@ with any PHP model::
 
     use App\Entity\Product;
     use App\Repository\ProductRepository;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     // ...
@@ -827,9 +827,8 @@ with any PHP model::
     class ProductController extends AbstractController
     {
         #[Route('/product/edit/{id}', name: 'product_edit')]
-        public function update(ManagerRegistry $doctrine, int $id): Response
+        public function update(EntityManagerInterface $entityManager, int $id): Response
         {
-            $entityManager = $doctrine->getManager();
             $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
@@ -878,7 +877,7 @@ You've already seen how the repository object allows you to run basic queries
 without any work::
 
     // from inside a controller
-    $repository = $doctrine->getRepository(Product::class);
+    $repository = $entityManager->getRepository(Product::class);
     $product = $repository->find($id);
 
 But what if you need a more complex query? When you generated your entity with
@@ -945,7 +944,7 @@ Now, you can call this method on the repository::
     // from inside a controller
     $minPrice = 1000;
 
-    $products = $doctrine->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
+    $products = $entityManager->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
 
     // ...
 
@@ -1005,8 +1004,8 @@ In addition, you can query directly with SQL if you need to::
                 WHERE p.price > :price
                 ORDER BY p.price ASC
                 ';
-            $stmt = $conn->prepare($sql);
-            $resultSet = $stmt->executeQuery(['price' => $price]);
+
+            $resultSet = $conn->executeQuery($sql, ['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
             return $resultSet->fetchAllAssociative();
@@ -1057,7 +1056,6 @@ Learn more
     doctrine/multiple_entity_managers
     doctrine/resolve_target_entity
     doctrine/reverse_engineering
-    session/database
     testing/database
 
 .. _`Doctrine`: https://www.doctrine-project.org/

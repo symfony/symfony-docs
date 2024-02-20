@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Console Helpers
-
 The Console Helpers
 ===================
 

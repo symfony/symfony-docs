@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Force HTTPS
-
 How to Force HTTPS or HTTP for different URLs
 =============================================
 
@@ -24,9 +21,9 @@ access control:
 
                 access_control:
                     - { path: '^/secure', roles: ROLE_ADMIN, requires_channel: https }
-                    - { path: '^/login', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                    - { path: '^/login', roles: PUBLIC_ACCESS, requires_channel: https }
                     # catch all other URLs
-                    - { path: '^/', roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                    - { path: '^/', roles: PUBLIC_ACCESS, requires_channel: https }
 
         .. code-block:: xml
 
@@ -43,17 +40,9 @@ access control:
                 <config>
                     <!-- ... -->
 
-                    <rule path="^/secure"
-                        role="ROLE_ADMIN"
-                        requires-channel="https"/>
-                    <rule path="^/login"
-                        role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires-channel="https"
-                    />
-                    <rule path="^/"
-                        role="IS_AUTHENTICATED_ANONYMOUSLY"
-                        requires-channel="https"
-                    />
+                    <rule path="^/secure" role="ROLE_ADMIN" requires-channel="https"/>
+                    <rule path="^/login" role="PUBLIC_ACCESS" requires-channel="https"/>
+                    <rule path="^/" role="PUBLIC_ACCESS" requires-channel="https"/>
                 </config>
             </srv:container>
 
@@ -62,7 +51,7 @@ access control:
             // config/packages/security.php
             use Symfony\Config\SecurityConfig;
 
-            return static function (SecurityConfig $security) {
+            return static function (SecurityConfig $security): void {
                 // ....
 
                 $security->accessControl()
@@ -73,13 +62,13 @@ access control:
 
                 $security->accessControl()
                     ->path('^/login')
-                    ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                    ->roles(['PUBLIC_ACCESS'])
                     ->requiresChannel('https')
                 ;
 
                 $security->accessControl()
                     ->path('^/')
-                    ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                    ->roles(['PUBLIC_ACCESS'])
                     ->requiresChannel('https')
                 ;
             };

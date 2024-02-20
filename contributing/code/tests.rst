@@ -3,7 +3,7 @@
 Running Symfony Tests
 =====================
 
-The Symfony project uses a third-party service which automatically runs tests
+The Symfony project uses a CI (Continuous Integration) service which automatically runs tests
 for any submitted :doc:`patch <pull_requests>`. If the new code breaks any test,
 the pull request will show an error message with a link to the full error details.
 
@@ -32,7 +32,7 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
     .. code-block:: terminal
 
-        $ COMPOSER_ROOT_VERSION=4.4.x-dev composer update
+        $ COMPOSER_ROOT_VERSION=5.4.x-dev composer update
 
 .. _running:
 
@@ -65,7 +65,7 @@ what's going on and if the tests are broken because of the new code.
     to see colored test results.
 
 .. _`install Composer`: https://getcomposer.org/download/
-.. _Cmder: https://cmder.net/
+.. _Cmder: https://cmder.app/
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/

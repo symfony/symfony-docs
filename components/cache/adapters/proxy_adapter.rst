@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Proxy Cache
-
 Proxy Cache Adapter
 ===================
 

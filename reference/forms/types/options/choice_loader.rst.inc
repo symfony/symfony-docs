@@ -17,7 +17,7 @@ if you want to take advantage of lazy loading::
     // ...
 
     $builder->add('loaded_choices', ChoiceType::class, [
-        'choice_loader' => new CallbackChoiceLoader(function () {
+        'choice_loader' => new CallbackChoiceLoader(static function (): array {
             return StaticClass::getConstants();
         }),
     ]);
@@ -57,7 +57,7 @@ better performance::
 
                 // you can pass your own loader as well, depending on other options
                 'some_key' => null,
-                'choice_loader' => function (Options $options) {
+                'choice_loader' => function (Options $options): array {
                     return ChoiceList::loader(
                         // pass the instance of the type or type extension which is
                         // currently configuring the choice list as first argument

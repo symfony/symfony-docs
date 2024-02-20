@@ -36,12 +36,12 @@ the following:
         class Person
         {
             #[Assert\NotEqualTo('Mary')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\NotEqualTo(
                 value: 15,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -87,7 +87,9 @@ the following:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotEqualTo('Mary'));
 

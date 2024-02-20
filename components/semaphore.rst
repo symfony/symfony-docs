@@ -1,7 +1,3 @@
-.. index::
-   single: Semaphore
-   single: Components; Semaphore
-
 The Semaphore Component
 =======================
 

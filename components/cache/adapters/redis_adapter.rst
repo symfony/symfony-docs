@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Redis Cache
-
 .. _redis-adapter:
 
 Redis Cache Adapter
@@ -214,7 +210,7 @@ Available Options
     ``error``, ``distribute`` or ``slaves``.  For ``\Predis\ClientInterface`` valid options are ``slaves``
     or ``distribute``.
 
-``ssl`` (type: ``bool``, default: ``null``)
+``ssl`` (type: ``array``, default: ``null``)
     SSL context options. See `php.net/context.ssl`_ for more information.
 
 .. note::
@@ -224,19 +220,8 @@ Available Options
 
 .. _redis-tag-aware-adapter:
 
-Working with Tags
------------------
-
-In order to use tag-based invalidation, you can wrap your adapter in :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but when Redis is used as backend, it's often more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag invalidation logic is implemented in Redis itself, this adapter offers better performance when using tag-based invalidation::
-
-    use Symfony\Component\Cache\Adapter\RedisAdapter;
-    use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
-
-    $client = RedisAdapter::createConnection('redis://localhost');
-    $cache = new RedisTagAwareAdapter($client);
-
 Configuring Redis
-~~~~~~~~~~~~~~~~~
+-----------------
 
 When using Redis as cache, you should configure the ``maxmemory`` and ``maxmemory-policy``
 settings. By setting ``maxmemory``, you limit how much memory Redis is allowed to consume.
@@ -250,6 +235,28 @@ try to add data when no memory is available. An example setting could look as fo
 
     maxmemory 100mb
     maxmemory-policy allkeys-lru
+
+Working with Tags
+-----------------
+
+In order to use tag-based invalidation, you can wrap your adapter in
+:class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`. However, when Redis
+is used as backend, it's often more interesting to use the dedicated
+:class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag
+invalidation logic is implemented in Redis itself, this adapter offers better
+performance when using tag-based invalidation::
+
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
+
+    $client = RedisAdapter::createConnection('redis://localhost');
+    $cache = new RedisTagAwareAdapter($client);
+
+.. note::
+
+    When using RedisTagAwareAdapter, in order to maintain relationships between
+    tags and cache items, you have to use either ``noeviction`` or ``volatile-*``
+    in the Redis ``maxmemory-policy`` eviction policy.
 
 Read more about this topic in the official `Redis LRU Cache Documentation`_.
 

@@ -21,7 +21,7 @@ tutorial and the `reStructuredText Reference`_.
     If you are familiar with Markdown, be careful as things are sometimes very
     similar but different:
 
-    * Lists starts at the beginning of a line (no indentation is allowed);
+    * Lists start at the beginning of a line (no indentation is allowed);
     * Inline code blocks use double-ticks (````like this````).
 
 Sphinx
@@ -90,11 +90,26 @@ The previous reStructuredText snippet renders as follow:
 
         // Configuration in PHP
 
+All code examples assume that you are using that feature inside a Symfony
+application. If you ever need to also show how to use it when working with
+standalone components in any PHP application, use the special formats
+``php-symfony`` and ``php-standalone``, which will be rendered like this:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // PHP code using features provided by the Symfony framework
+
+    .. code-block:: php-standalone
+
+        // PHP code using standalone components
+
 The current list of supported formats are the following:
 
-===================  ======================================
+===================  ==============================================================================
 Markup Format        Use It to Display
-===================  ======================================
+===================  ==============================================================================
 ``html``             HTML
 ``xml``              XML
 ``php``              PHP
@@ -105,7 +120,34 @@ Markup Format        Use It to Display
 ``ini``              INI
 ``php-annotations``  PHP Annotations
 ``php-attributes``   PHP Attributes
-===================  ======================================
+``php-symfony``      PHP code example when using the Symfony framework
+``php-standalone``   PHP code to be used in any PHP application using standalone Symfony components
+===================  ==============================================================================
+
+Displaying Tabs
+~~~~~~~~~~~~~~~
+
+It is possible to display tabs in the documentation. They look similar to
+configuration blocks when rendered, but tabs can hold any type of content:
+
+.. code-block:: rst
+
+    .. tabs:: UX Installation
+
+        .. tab:: Webpack Encore
+
+            Introduction to Webpack
+
+            .. code-block:: yaml
+
+                webpack:
+                    # ...
+
+        .. tab:: AssetMapper
+
+            Introduction to AssetMapper
+
+            Something else about AssetMapper
 
 Adding Links
 ~~~~~~~~~~~~

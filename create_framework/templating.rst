@@ -38,7 +38,7 @@ that renders a template when there is no specific logic. To keep the same
 template as before, request attributes are extracted before the template is
 rendered::
 
-    function render_template($request)
+    function render_template(Request $request): Response
     {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
@@ -74,7 +74,7 @@ can still use the ``render_template()`` to render a template::
 
     $routes->add('hello', new Routing\Route('/hello/{name}', [
         'name' => 'World',
-        '_controller' => function ($request) {
+        '_controller' => function (Request $request): string {
             return render_template($request);
         }
     ]));
@@ -84,7 +84,7 @@ you can even pass additional arguments to the template::
 
     $routes->add('hello', new Routing\Route('/hello/{name}', [
         'name' => 'World',
-        '_controller' => function ($request) {
+        '_controller' => function (Request $request): Response {
             // $foo will be available in the template
             $request->attributes->set('foo', 'bar');
 
@@ -106,7 +106,7 @@ Here is the updated and improved version of our framework::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function render_template($request)
+    function render_template(Request $request): Response
     {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
@@ -145,7 +145,7 @@ framework does not need to be modified in any way, create a new
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function is_leap_year($year = null)
+    function is_leap_year(int $year = null): bool
     {
         if (null === $year) {
             $year = date('Y');
@@ -157,7 +157,7 @@ framework does not need to be modified in any way, create a new
     $routes = new Routing\RouteCollection();
     $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', [
         'year' => null,
-        '_controller' => function ($request) {
+        '_controller' => function (Request $request): Response {
             if (is_leap_year($request->attributes->get('year'))) {
                 return new Response('Yep, this is a leap year!');
             }

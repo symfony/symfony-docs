@@ -1,12 +1,10 @@
-.. index::
-   single: Dependency Injection; Lazy Services
-
 Lazy Services
 =============
 
 .. seealso::
 
-    Another way to inject services lazily is via a :doc:`service subscriber </service_container/service_subscribers_locators>`.
+    Other ways to inject services lazily are via a :doc:`service closure </service_container/service_closures>` or
+    :doc:`service subscriber </service_container/service_subscribers_locators>`.
 
 Why Lazy Services?
 ------------------
@@ -33,8 +31,10 @@ until you interact with the proxy in some way.
 
 .. versionadded:: 6.2
 
-    Starting from Symfony 6.2, you don't have to install any package (e.g.
-    ``symfony/proxy-manager-bridge``) in order to use the lazy service instantiation.
+    Starting from Symfony 6.2, service laziness is supported out of the box
+    without having to install any additional package.
+
+.. _lazy-services_configuration:
 
 Configuration
 -------------
@@ -71,8 +71,8 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(AppExtension::class)->lazy();
         };
@@ -86,7 +86,22 @@ itself when being accessed for the first time). The same happens when calling
 To check if your lazy service works you can check the interface of the received object::
 
     dump(class_implements($service));
-    // the output should include "Symfony\Component\VarExporter\LazyGhostObjectInterface"
+    // the output should include "Symfony\Component\VarExporter\LazyObjectInterface"
+
+You can also configure your service's laziness thanks to the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
+For example, to define your service as lazy use the following::
+
+    namespace App\Twig;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+    use Twig\Extension\ExtensionInterface;
+
+    #[Autoconfigure(lazy: true)]
+    class AppExtension implements ExtensionInterface
+    {
+        // ...
+    }
 
 Interface Proxifying
 --------------------
@@ -137,14 +152,30 @@ specific interfaces.
         use App\Twig\AppExtension;
         use Twig\Extension\ExtensionInterface;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(AppExtension::class)
                 ->lazy()
                 ->tag('proxy', ['interface' => ExtensionInterface::class])
             ;
         };
+
+Just like in the :ref:`Configuration <lazy-services_configuration>` section, you can
+use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure`
+attribute to configure the interface to proxify by passing its FQCN as the ``lazy``
+parameter value::
+
+    namespace App\Twig;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+    use Twig\Extension\ExtensionInterface;
+
+    #[Autoconfigure(lazy: ExtensionInterface::class)]
+    class AppExtension implements ExtensionInterface
+    {
+        // ...
+    }
 
 The virtual `proxy`_ injected into other services will only implement the
 specified interfaces and will not extend the original service class, allowing to

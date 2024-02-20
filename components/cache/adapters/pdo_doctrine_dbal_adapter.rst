@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: PDO Cache, Doctrine DBAL Cache
-
 .. _pdo-doctrine-adapter:
 
 PDO & Doctrine DBAL Cache Adapter

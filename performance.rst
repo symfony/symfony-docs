@@ -1,6 +1,3 @@
-.. index::
-   single: Performance; Byte code cache; OPcache; APC
-
 Performance
 ===========
 
@@ -248,14 +245,12 @@ and Symfony will inject the ``debug.stopwatch`` service::
 
     class DataExporter
     {
-        private $stopwatch;
-
-        public function __construct(Stopwatch $stopwatch)
-        {
-            $this->stopwatch = $stopwatch;
+        public function __construct(
+            private Stopwatch $stopwatch,
+        ) {
         }
 
-        public function export()
+        public function export(): void
         {
             // the argument is the name of the "profiling event"
             $this->stopwatch->start('export-data');

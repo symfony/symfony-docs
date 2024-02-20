@@ -1,7 +1,3 @@
-.. index::
-   single: Clock
-   single: Components; Clock
-
 The Clock Component
 ===================
 
@@ -21,7 +17,7 @@ for different use cases:
 :class:`Symfony\\Component\\Clock\\MockClock`
     Commonly used in tests as a replacement for the ``NativeClock`` to be able
     to freeze and change the current time using either ``sleep()`` or ``modify()``.
-:class:`Symfony\\Component\\Clock\\MonotonicClock``
+:class:`Symfony\\Component\\Clock\\MonotonicClock`
     Relies on ``hrtime()`` and provides a high resolution, monotonic clock,
     when you need a precise stopwatch.
 
@@ -50,7 +46,7 @@ determine the current time::
     class ExpirationChecker
     {
         public function __construct(
-            private readonly ClockInterface $clock
+            private ClockInterface $clock
         ) {}
 
         public function isExpired(DateTimeInterface $validUntil): bool

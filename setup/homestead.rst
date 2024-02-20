@@ -1,5 +1,3 @@
-.. index:: Vagrant, Homestead
-
 Using Symfony with Homestead/Vagrant
 ====================================
 

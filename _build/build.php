@@ -20,7 +20,7 @@ use SymfonyDocsBuilder\DocBuilder;
 
         $outputDir = __DIR__.'/output';
         $buildConfig = (new BuildConfig())
-            ->setSymfonyVersion('4.4')
+            ->setSymfonyVersion('5.4')
             ->setContentDir(__DIR__.'/..')
             ->setOutputDir($outputDir)
             ->setImagesDir(__DIR__.'/output/_images')

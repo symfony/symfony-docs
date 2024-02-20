@@ -1,6 +1,3 @@
-.. index::
-   single: DependencyInjection; Workflow
-
 Container Building Workflow
 ===========================
 

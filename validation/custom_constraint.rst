@@ -1,6 +1,3 @@
-.. index::
-   single: Validation; Custom constraints
-
 How to Create a Custom Validation Constraint
 ============================================
 
@@ -49,14 +46,15 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
     #[\Attribute]
     class ContainsAlphanumeric extends Constraint
     {
-        public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-        public string $mode;
+        public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
 
         #[HasNamedArguments]
-        public function __construct(string $mode, array $groups = null, mixed $payload = null)
-        {
+        public function __construct(
+            public string $mode,
+            array $groups = null,
+            mixed $payload = null,
+        ) {
             parent::__construct([], $groups, $payload);
-            $this->mode = $mode;
         }
     }
 
@@ -69,7 +67,7 @@ class is specified by the constraint's ``validatedBy()`` method, which
 has this default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return static::class.'Validator';
     }
@@ -90,7 +88,7 @@ The validator class only has one required method ``validate()``::
 
     class ContainsAlphanumericValidator extends ConstraintValidator
     {
-        public function validate($value, Constraint $constraint): void
+        public function validate(mixed $value, Constraint $constraint): void
         {
             if (!$constraint instanceof ContainsAlphanumeric) {
                 throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
@@ -361,16 +359,17 @@ class to simplify writing unit tests for your custom constraints::
 
     use App\Validator\ContainsAlphanumeric;
     use App\Validator\ContainsAlphanumericValidator;
+    use Symfony\Component\Validator\ConstraintValidatorInterface;
     use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
     class ContainsAlphanumericValidatorTest extends ConstraintValidatorTestCase
     {
-        protected function createValidator()
+        protected function createValidator(): ConstraintValidatorInterface
         {
             return new ContainsAlphanumericValidator();
         }
 
-        public function testNullIsValid()
+        public function testNullIsValid(): void
         {
             $this->validator->validate(null, new ContainsAlphanumeric());
 
@@ -380,7 +379,7 @@ class to simplify writing unit tests for your custom constraints::
         /**
          * @dataProvider provideInvalidConstraints
          */
-        public function testTrueIsInvalid(ContainsAlphanumeric $constraint)
+        public function testTrueIsInvalid(ContainsAlphanumeric $constraint): void
         {
             $this->validator->validate('...', $constraint);
 

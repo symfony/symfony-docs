@@ -1,6 +1,3 @@
-.. index::
-   single: DependencyInjection; Injection types
-
 Types of Injection
 ==================
 
@@ -25,11 +22,9 @@ the dependency::
     // ...
     class NewsletterManager
     {
-        private $mailer;
-
-        public function __construct(MailerInterface $mailer)
-        {
-            $this->mailer = $mailer;
+        public function __construct(
+            private MailerInterface $mailer,
+        ) {
         }
 
         // ...
@@ -74,8 +69,8 @@ service container configuration:
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 ->args(service('mailer'));
@@ -116,15 +111,16 @@ by cloning the original service, this approach allows you to make a service immu
 
     // ...
     use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Contracts\Service\Attribute\Required;
 
     class NewsletterManager
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
         /**
-         * @required
          * @return static
          */
+        #[Required]
         public function withMailer(MailerInterface $mailer): self
         {
             $new = clone $this;
@@ -184,8 +180,9 @@ In order to use this type of injection, don't forget to configure it:
 .. note::
 
     If you decide to use autowiring, this type of injection requires
-    that you add a ``@return static`` docblock in order for the container
-    to be capable of registering the method.
+    that you add a ``@return static`` docblock or the ``static`` return
+    type in order for the container to be capable of registering
+    the method.
 
 This approach is useful if you need to configure your service according to your needs,
 so, here's the advantages of immutable-setters:
@@ -220,14 +217,14 @@ that accepts the dependency::
     // src/Mail/NewsletterManager.php
     namespace App\Mail;
 
+    use Symfony\Contracts\Service\Attribute\Required;
+
     // ...
     class NewsletterManager
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
-        /**
-         * @required
-         */
+        #[Required]
         public function setMailer(MailerInterface $mailer): void
         {
             $this->mailer = $mailer;
@@ -276,8 +273,8 @@ that accepts the dependency::
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 ->call('setMailer', [service('mailer')]);
@@ -315,7 +312,7 @@ Another possibility is setting public fields of the class directly::
     // ...
     class NewsletterManager
     {
-        public $mailer;
+        public MailerInterface $mailer;
 
         // ...
     }
@@ -358,8 +355,8 @@ Another possibility is setting public fields of the class directly::
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set('app.newsletter_manager', NewsletterManager::class)
                 ->property('mailer', service('mailer'));

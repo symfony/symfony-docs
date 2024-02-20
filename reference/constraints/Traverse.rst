@@ -39,13 +39,13 @@ that all have constraints on their properties.
              */
             #[ORM\Column]
             #[Assert\NotBlank]
-            protected $name = '';
+            protected string $name = '';
 
             /**
              * @var Collection|Book[]
              */
             #[ORM\ManyToMany(targetEntity: Book::class)]
-            protected $books;
+            protected ArrayCollection $books;
 
             // some other properties
 
@@ -77,7 +77,7 @@ that all have constraints on their properties.
             // neither the method above nor any other specific getter
             // could be used to validated all nested books;
             // this object needs to be traversed to call the iterator
-            public function getIterator()
+            public function getIterator(): \Iterator
             {
                 return $this->books->getIterator();
             }
@@ -115,7 +115,7 @@ that all have constraints on their properties.
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Traverse());
             }
@@ -194,7 +194,7 @@ disable validating:
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Traverse(false));
             }

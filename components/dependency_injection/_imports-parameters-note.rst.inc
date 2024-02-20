@@ -2,7 +2,7 @@
 
     Due to the way in which parameters are resolved, you cannot use them
     to build paths in imports dynamically. This means that something like
-    the following doesn't work:
+    **the following does not work:**
 
     .. configuration-block::
 
@@ -31,6 +31,6 @@
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $container) {
+            return static function (ContainerConfigurator $container): void {
                 $container->import('%kernel.project_dir%/somefile.yaml');
             };

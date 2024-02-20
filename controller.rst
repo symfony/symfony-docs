@@ -1,6 +1,3 @@
-.. index::
-   single: Controller
-
 Controller
 ==========
 
@@ -15,11 +12,8 @@ to render the content of a page.
     If you haven't already created your first working page, check out
     :doc:`/page_creation` and then come back!
 
-.. index::
-   single: Controller; Basic example
-
 A Basic Controller
--------------------
+------------------
 
 While a controller can be any PHP callable (function, method on an object,
 or a ``Closure``), a controller is usually a method inside a controller
@@ -64,9 +58,6 @@ This controller is pretty straightforward:
 
 * *line 14*: The controller creates and returns a ``Response`` object.
 
-.. index::
-   single: Controller; Routes and controllers
-
 Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -77,9 +68,6 @@ a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
 For more information on routing, see :doc:`/routing`.
-
-.. index::
-   single: Controller; Base controller class
 
 .. _the-base-controller-class-services:
 .. _the-base-controller-classes-services:
@@ -109,9 +97,6 @@ Add the ``use`` statement atop your controller class and then modify
 
 That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
 and many others that you'll learn about next.
-
-.. index::
-   single: Controller; Redirecting
 
 Generating URLs
 ~~~~~~~~~~~~~~~
@@ -165,9 +150,6 @@ and ``redirect()`` methods::
     redirect to a URL provided by end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
-.. index::
-   single: Controller; Rendering templates
-
 .. _controller-rendering-templates:
 
 Rendering Templates
@@ -182,9 +164,6 @@ object for you::
 
 Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templates>`.
-
-.. index::
-   single: Controller; Accessing services
 
 .. _controller-accessing-services:
 .. _accessing-other-services:
@@ -289,10 +268,6 @@ use:
     created: templates/product/new.html.twig
     created: templates/product/show.html.twig
 
-.. index::
-   single: Controller; Managing errors
-   single: Controller; 404 pages
-
 Managing Errors and 404 Pages
 -----------------------------
 
@@ -314,7 +289,7 @@ special type of exception::
             // throw new NotFoundHttpException('The product does not exist');
         }
 
-        return $this->render(...);
+        return $this->render(/* ... */);
     }
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createNotFoundException`
@@ -361,135 +336,44 @@ object. To access it in your controller, add it as an argument and
 :ref:`Keep reading <request-object-info>` for more information about using the
 Request object.
 
-.. index::
-   single: Controller; The session
-   single: Session
-
-.. _session-intro:
-
 Managing the Session
 --------------------
 
-Symfony provides a session object that you can use to store information
-about the user between requests. Session is enabled by default, but will only be
-started if you read or write from it.
-
-Session storage and other configuration can be controlled under the
-:ref:`framework.session configuration <config-framework-session>` in
-``config/packages/framework.yaml``.
-
-To get the session, add an argument and type-hint it with
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
-
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
-    // ...
-
-    public function index(SessionInterface $session): Response
-    {
-        // stores an attribute for reuse during a later user request
-        $session->set('foo', 'bar');
-
-        // gets the attribute set by another controller in another request
-        $foobar = $session->get('foobar');
-
-        // uses a default value if the attribute doesn't exist
-        $filters = $session->get('filters', []);
-
-        // ...
-    }
-
-Stored attributes remain in the session for the remainder of that user's session.
-
-For more info, see :doc:`/session`.
-
-.. index::
-   single: Session; Flash messages
-
-.. _flash-messages:
-
-Flash Messages
-~~~~~~~~~~~~~~
-
-You can also store special messages, called "flash" messages, on the user's
-session. By design, flash messages are meant to be used exactly once: they vanish
-from the session automatically as soon as you retrieve them. This feature makes
+You can store special messages, called "flash" messages, on the user's session.
+By design, flash messages are meant to be used exactly once: they vanish from
+the session automatically as soon as you retrieve them. This feature makes
 "flash" messages particularly great for storing user notifications.
 
 For example, imagine you're processing a :doc:`form </forms>` submission::
 
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
+.. configuration-block::
 
-    public function update(Request $request): Response
-    {
+    .. code-block:: php-symfony
+
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Response;
         // ...
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // do some sort of processing
+        public function update(Request $request): Response
+        {
+            // ...
 
-            $this->addFlash(
-                'notice',
-                'Your changes were saved!'
-            );
-            // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+            if ($form->isSubmitted() && $form->isValid()) {
+                // do some sort of processing
 
-            return $this->redirectToRoute(...);
+                $this->addFlash(
+                    'notice',
+                    'Your changes were saved!'
+                );
+                // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
+
+                return $this->redirectToRoute(/* ... */);
+            }
+
+            return $this->render(/* ... */);
         }
 
-        return $this->render(...);
-    }
-
-After processing the request, the controller sets a flash message in the session
-and then redirects. The message key (``notice`` in this example) can be anything:
-you'll use this key to retrieve the message.
-
-In the template of the next page (or even better, in your base layout template),
-read any flash messages from the session using the ``flashes()`` method provided
-by the :ref:`Twig global app variable <twig-app-variable>`:
-
-.. code-block:: html+twig
-
-    {# templates/base.html.twig #}
-
-    {# read and display just one flash message type #}
-    {% for message in app.flashes('notice') %}
-        <div class="flash-notice">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {# read and display several types of flash messages #}
-    {% for label, messages in app.flashes(['success', 'warning']) %}
-        {% for message in messages %}
-            <div class="flash-{{ label }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-
-    {# read and display all flash messages #}
-    {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="flash-{{ label }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endfor %}
-
-It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
-different types of flash messages, but you can use any key that fits your
-needs.
-
-.. tip::
-
-    You can use the
-    :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
-    method instead to retrieve the message while keeping it in the bag.
-
-.. index::
-   single: Controller; Response object
+:ref:`Reading <session-intro>` for more information about using Sessions.
 
 .. _request-object-info:
 

@@ -33,19 +33,19 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
         class Author
         {
             #[Assert\Type(Address::class)]
-            protected $emailAddress;
+            protected Address $emailAddress;
 
             #[Assert\Type('string')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\Type(
                 type: 'integer',
                 message: 'The value {{ value }} is not a valid {{ type }}.',
             )]
-            protected $age;
+            protected int $age;
 
             #[Assert\Type(type: ['alpha', 'digit'])]
-            protected $accessCode;
+            protected string $accessCode;
         }
 
     .. code-block:: yaml
@@ -115,7 +115,9 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('emailAddress', new Assert\Type(Address::class));
 
@@ -169,22 +171,24 @@ This required option defines the type or collection of types allowed for the
 given value. Each type is either the FQCN (fully qualified class name) of some
 PHP class/interface or a valid PHP datatype (checked by PHP's ``is_()`` functions):
 
-* :phpfunction:`array <is_array>`
 * :phpfunction:`bool <is_bool>`
-* :phpfunction:`callable <is_callable>`
-* :phpfunction:`float <is_float>`
-* :phpfunction:`double <is_double>`
+* :phpfunction:`boolean <is_bool>`
 * :phpfunction:`int <is_int>`
-* :phpfunction:`integer <is_integer>`
-* :phpfunction:`iterable <is_iterable>`
-* :phpfunction:`long <is_long>`
-* :phpfunction:`null <is_null>`
+* :phpfunction:`integer <is_int>`
+* :phpfunction:`long <is_int>`
+* :phpfunction:`float <is_float>`
+* :phpfunction:`double <is_float>`
+* :phpfunction:`real <is_float>`
 * :phpfunction:`numeric <is_numeric>`
-* :phpfunction:`object <is_object>`
-* :phpfunction:`real <is_real>`
-* :phpfunction:`resource <is_resource>`
-* :phpfunction:`scalar <is_scalar>`
 * :phpfunction:`string <is_string>`
+* :phpfunction:`scalar <is_scalar>`
+* :phpfunction:`array <is_array>`
+* :phpfunction:`iterable <is_iterable>`
+* :phpfunction:`countable <is_countable>`
+* :phpfunction:`callable <is_callable>`
+* :phpfunction:`object <is_object>`
+* :phpfunction:`resource <is_resource>`
+* :phpfunction:`null <is_null>`
 
 Also, you can use ``ctype_*()`` functions from corresponding
 `built-in PHP extension`_. Consider `a list of ctype functions`_:

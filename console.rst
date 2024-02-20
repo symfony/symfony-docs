@@ -1,6 +1,3 @@
-.. index::
-   single: Console; Create commands
-
 Console Commands
 ================
 
@@ -174,6 +171,12 @@ You can optionally define a description, help message and the
     classes, but it won't show any description for commands that use the
     ``setDescription()`` method instead of the static property.
 
+.. deprecated:: 6.1
+
+    The static property ``$defaultDescription`` was deprecated in Symfony 6.1.
+    Instead, use the ``#[AsCommand]`` attribute to define the optional command
+    description.
+
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
@@ -206,11 +209,12 @@ available in the ``configure()`` method::
         }
     }
 
+.. _console_registering-the-command:
+
 Registering the Command
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In PHP 8 and newer versions, you can register the command by adding the
-``AsCommand`` attribute to it::
+You can register the command by adding the ``AsCommand`` attribute to it::
 
     // src/Command/CreateUserCommand.php
     namespace App\Command;
@@ -235,6 +239,11 @@ If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+.. deprecated:: 6.1
+
+    The static property ``$defaultName`` was deprecated in Symfony 6.1.
+    Define your command name with the ``#[AsCommand]`` attribute instead.
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
@@ -418,12 +427,9 @@ as a service, you can use normal dependency injection. Imagine you have a
 
     class CreateUserCommand extends Command
     {
-        private $userManager;
-
-        public function __construct(UserManager $userManager)
-        {
-            $this->userManager = $userManager;
-
+        public function __construct(
+            private UserManager $userManager,
+        ){
             parent::__construct();
         }
 
@@ -483,7 +489,7 @@ console::
 
     class CreateUserCommandTest extends KernelTestCase
     {
-        public function testExecute()
+        public function testExecute(): void
         {
             $kernel = self::bootKernel();
             $application = new Application($kernel);
@@ -533,13 +539,13 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
         $application->setAutoExit(false);
 
         $tester = new ApplicationTester($application);
-        
+
 
 .. caution::
 
     When testing ``InputOption::VALUE_NONE`` command options, you must pass ``true``
     to them::
-    
+
         $commandTester = new CommandTester($command);
         $commandTester->execute(['--some-option' => true]);
 
@@ -573,6 +579,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/questionhelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progressbar`: shows a progress bar
+* :doc:`/components/console/helpers/progressindicator`: shows a progress indicator
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program

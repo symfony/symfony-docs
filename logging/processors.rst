@@ -19,16 +19,15 @@ using a processor::
     // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
+    use Monolog\LogRecord;
     use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
     use Symfony\Component\HttpFoundation\RequestStack;
 
     class SessionRequestProcessor
     {
-        private $requestStack;
-
-        public function __construct(RequestStack $requestStack)
-        {
-            $this->requestStack = $requestStack;
+        public function __construct(
+            private RequestStack $requestStack
+        ) {
         }
 
         // this method is called for each log record; optimize it to not hurt performance
@@ -151,7 +150,7 @@ Finally, set the formatter to be used on whatever handler you want:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('main')
                 ->type('stream')
                 ->path('%kernel.logs_dir%/%kernel.environment%.log')
@@ -163,6 +162,32 @@ Finally, set the formatter to be used on whatever handler you want:
 If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally
 (see the following sections).
+
+When registering a new processor, instead of adding the tag manually in your
+configuration files, you can use the ``#[AsMonologProcessor]`` attribute to
+apply it on the processor class::
+
+    // src/Logger/SessionRequestProcessor.php
+    namespace App\Logger;
+
+    use Monolog\Attribute\AsMonologProcessor;
+
+    #[AsMonologProcessor]
+    class SessionRequestProcessor
+    {
+        // ...
+    }
+
+The ``#[AsMonologProcessor]`` attribute takes these optional arguments:
+
+* ``channel``: the logging channel the processor should be pushed to;
+* ``handler``: the handler the processor should be pushed to;
+* ``method``: the method that processes the records (useful when applying
+  the attribute to the entire class instead of a single method).
+
+.. versionadded:: 3.8
+
+    The ``#[AsMonologProcessor]`` attribute was introduced in MonologBundle 3.8.
 
 Symfony's MonologBridge provides processors that can be registered inside your application.
 

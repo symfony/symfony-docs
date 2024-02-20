@@ -32,12 +32,12 @@ The following constraints ensure that:
         class Person
         {
             #[Assert\GreaterThan(5)]
-            protected $siblings;
+            protected int $siblings;
 
             #[Assert\GreaterThan(
                 value: 18,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -83,7 +83,9 @@ The following constraints ensure that:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\GreaterThan(5));
 
@@ -112,7 +114,7 @@ that a date must at least be the next day:
         class Order
         {
             #[Assert\GreaterThan('today')]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -148,7 +150,9 @@ that a date must at least be the next day:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('today'));
             }
@@ -169,7 +173,7 @@ dates. If you want to fix the timezone, append it to the date string:
         class Order
         {
             #[Assert\GreaterThan('today UTC')]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -205,7 +209,9 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('today UTC'));
             }
@@ -227,7 +233,7 @@ current time:
         class Order
         {
             #[Assert\GreaterThan('+5 hours')]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -263,7 +269,9 @@ current time:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('+5 hours'));
             }

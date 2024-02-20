@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; PasswordType
-
 PasswordType Field
 ==================
 

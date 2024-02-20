@@ -1,7 +1,3 @@
-.. index::
-    single: PropertyInfo
-    single: Components; PropertyInfo
-
 The PropertyInfo Component
 ==========================
 
@@ -332,6 +328,11 @@ available), via the :method:`Type::getCollectionKeyTypes() <Symfony\\Component\\
 and :method:`Type::getCollectionValueTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueTypes>`
 methods.
 
+.. note::
+
+    The ``list`` pseudo type is returned by the PropertyInfo component as an
+    array with integer as the key type.
+
 .. _`components-property-info-extractors`:
 
 Extractors
@@ -426,25 +427,21 @@ information from annotations of properties and methods, such as ``@var``,
     // src/Domain/Foo.php
     class Foo
     {
-        private $bar;
-
         /**
          * @param string $bar
          */
-        public function __construct($bar) {
-            $this->bar = $bar;
+        public function __construct(
+            private string $bar,
+        ) {
         }
     }
 
     // Extraction.php
     use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+    use App\Domain\Foo;
 
     $phpStanExtractor = new PhpStanExtractor();
     $phpStanExtractor->getTypesFromConstructor(Foo::class, 'bar');
-
-.. versionadded:: 6.1
-
-    The ``PhpStanExtractor`` was introduced in Symfony 6.1.
 
 SerializerExtractor
 ~~~~~~~~~~~~~~~~~~~
@@ -504,6 +501,31 @@ with the ``property_info`` service in the Symfony Framework::
     $doctrineExtractor->getProperties($class);
     // Type information.
     $doctrineExtractor->getTypes($class, $property);
+
+ConstructorExtractor
+~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
+tries to extract properties information by using either the
+:class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpStanExtractor` or
+the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
+on the constructor arguments::
+
+    // src/Domain/Foo.php
+    class Foo
+    {
+        public function __construct(
+            private string $bar,
+        ) {
+        }
+    }
+
+    // Extraction.php
+    use App\Domain\Foo;
+    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
+
+    $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
+    $constructorExtractor->getTypes(Foo::class, 'bar')[0]->getBuiltinType(); // returns 'string'
 
 .. _`components-property-information-extractors-creation`:
 

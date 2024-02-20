@@ -1,6 +1,3 @@
-.. index::
-   single: Controller; Argument Value Resolvers
-
 Extending Action Argument Resolving
 ===================================
 
@@ -96,7 +93,8 @@ Symfony ships with the following value resolvers in the
 
     .. versionadded:: 6.1
 
-        The ``DateTimeValueResolver`` was introduced in Symfony 6.1.
+        The ``DateTimeValueResolver`` and the ``MapDateTime`` attribute were
+        introduced in Symfony 6.1.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
@@ -232,9 +230,7 @@ instance, which contains all information from the method signature.
 The ``resolve()`` method should return either an empty array (if it cannot resolve
 this argument) or an array with the resolved value(s). Usually arguments are
 resolved as a single value, but variadic arguments require resolving multiple
-values. That's why you must always return an array, even for single values:
-
-.. code-block:: php
+values. That's why you must always return an array, even for single values::
 
     // src/ValueResolver/IdentifierValueResolver.php
     namespace App\ValueResolver;
@@ -246,7 +242,7 @@ values. That's why you must always return an array, even for single values:
 
     class BookingIdValueResolver implements ValueResolverInterface
     {
-        public function resolve(Request $request, ArgumentMetadata $argument): array
+        public function resolve(Request $request, ArgumentMetadata $argument): iterable
         {
             // get the argument type (e.g. BookingId)
             $argumentType = $argument->getType();
@@ -292,7 +288,7 @@ and adding a priority:
                 autowire: true
             # ...
 
-            App\ArgumentResolver\BookingIdValueResolver:
+            App\ValueResolver\BookingIdValueResolver:
                 tags:
                     - { name: controller.argument_value_resolver, priority: 150 }
 
@@ -310,7 +306,7 @@ and adding a priority:
                 <defaults autowire="true"/>
                 <!-- ... -->
 
-                <service id="App\ArgumentResolver\BookingIdValueResolver">
+                <service id="App\ValueResolver\BookingIdValueResolver">
                     <tag name="controller.argument_value_resolver" priority="150"/>
                 </service>
             </services>
@@ -322,10 +318,10 @@ and adding a priority:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\ArgumentResolver\BookingIdValueResolver;
+        use App\ValueResolver\BookingIdValueResolver;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator): void {
+            $services = $containerConfigurator->services();
 
             $services->set(BookingIdValueResolver::class)
                 ->tag('controller.argument_value_resolver', ['priority' => 150])

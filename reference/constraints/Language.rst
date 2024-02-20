@@ -25,7 +25,7 @@ Basic Usage
         class User
         {
             #[Assert\Language]
-            protected $preferredLanguage;
+            protected string $preferredLanguage;
         }
 
     .. code-block:: yaml
@@ -61,7 +61,9 @@ Basic Usage
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('preferredLanguage', new Assert\Language());
             }

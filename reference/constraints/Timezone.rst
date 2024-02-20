@@ -27,7 +27,7 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
         class UserSettings
         {
             #[Assert\Timezone]
-            protected $timezone;
+            protected string $timezone;
         }
 
     .. code-block:: yaml
@@ -63,7 +63,9 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
 
         class UserSettings
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('timezone', new Assert\Timezone());
             }

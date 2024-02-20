@@ -1,6 +1,3 @@
-.. index::
-    single: Configuration reference; Framework
-
 Debug Configuration Reference (DebugBundle)
 ===========================================
 

@@ -25,11 +25,11 @@ you have the following method::
 
     class Author
     {
-        protected $token;
+        protected string $token;
 
-        public function isTokenValid()
+        public function isTokenValid(): bool
         {
-            return $this->token == $this->generateToken();
+            return $this->token === $this->generateToken();
         }
     }
 
@@ -46,13 +46,15 @@ Then you can validate this method with ``IsTrue`` as follows:
 
         class Author
         {
-            protected $token;
+            protected string $token;
 
             #[Assert\IsTrue(message: 'The token is invalid.')]
-            public function isTokenValid()
+            public function isTokenValid(): bool
             {
-                return $this->token == $this->generateToken();
+                return $this->token === $this->generateToken();
             }
+
+            // ...
         }
 
     .. code-block:: yaml
@@ -91,17 +93,21 @@ Then you can validate this method with ``IsTrue`` as follows:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('tokenValid', new IsTrue([
                     'message' => 'The token is invalid.',
                 ]));
             }
 
-            public function isTokenValid()
+            public function isTokenValid(): bool
             {
-                return $this->token == $this->generateToken();
+                return $this->token === $this->generateToken();
             }
+
+            // ...
         }
 
 If the ``isTokenValid()`` returns false, the validation will fail.

@@ -33,7 +33,7 @@ be especially useful if your values are objects::
             '1 week' => new \DateTime('+1 week'),
             '1 month' => new \DateTime('+1 month'),
         ],
-        'preferred_choices' => function ($choice, $key, $value) {
+        'preferred_choices' => function ($choice, $key, $value): bool {
             // prefer options within 3 days
             return $choice <= new \DateTime('+3 days');
         },

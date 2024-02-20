@@ -71,7 +71,7 @@ optionally some *algorithm options*:
         use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             // auto hasher with default options for the User class (and children)
@@ -125,17 +125,20 @@ Further in this article, you can find a
         .. code-block:: yaml
 
             # config/packages/test/security.yaml
-            password_hashers:
-                # Use your user class name here
-                App\Entity\User:
-                    algorithm: plaintext # disable hashing (only do this in tests!)
+            security:
+                # ...
 
-                # or use the lowest possible values
-                App\Entity\User:
-                    algorithm: auto # This should be the same value as in config/packages/security.yaml
-                    cost: 4 # Lowest possible value for bcrypt
-                    time_cost: 3 # Lowest possible value for argon
-                    memory_cost: 10 # Lowest possible value for argon
+                password_hashers:
+                    # Use your user class name here
+                    App\Entity\User:
+                        algorithm: plaintext # disable hashing (only do this in tests!)
+
+                    # or use the lowest possible values
+                    App\Entity\User:
+                        algorithm: auto # This should be the same value as in config/packages/security.yaml
+                        cost: 4 # Lowest possible value for bcrypt
+                        time_cost: 3 # Lowest possible value for argon
+                        memory_cost: 10 # Lowest possible value for argon
 
         .. code-block:: xml
 
@@ -176,7 +179,7 @@ Further in this article, you can find a
             use App\Entity\User;
             use Symfony\Config\SecurityConfig;
 
-            return static function (SecurityConfig $security) {
+            return static function (SecurityConfig $security): void {
                 // ...
 
                 // Use your user class name here
@@ -206,13 +209,12 @@ After configuring the correct algorithm, you can use the
         namespace App\Controller;
 
         // ...
-        use
-        Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+        use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
         use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
         class UserController extends AbstractController
         {
-            public function registration(UserPasswordHasherInterface $passwordHasher)
+            public function registration(UserPasswordHasherInterface $passwordHasher): Response
             {
                 // ... e.g. get the user data from a registration form
                 $user = new User(...);
@@ -228,7 +230,7 @@ After configuring the correct algorithm, you can use the
                 // ...
             }
 
-            public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user)
+            public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user): void
             {
                 // ... e.g. get the password from a "confirm deletion" dialog
                 $plaintextPassword = ...;
@@ -366,7 +368,7 @@ on the new hasher to point to the old, legacy hasher(s):
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('legacy')
                 ->algorithm('sha256')
@@ -461,13 +463,14 @@ storing the newly created password hash::
     namespace App\Repository;
 
     // ...
+    use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
     class UserRepository extends EntityRepository implements PasswordUpgraderInterface
     {
         // ...
 
-        public function upgradePassword(UserInterface $user, string $newHashedPassword): void
+        public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
         {
             // set the new hashed password on the User object
             $user->setPassword($newHashedPassword);
@@ -530,8 +533,10 @@ migration by returning ``true`` in the ``needsRehash()`` method::
         }
     }
 
-Named Password Hashers
-----------------------
+.. _named-password-hashers:
+
+Dynamic Password Hashers
+------------------------
 
 Usually, the same password hasher is used for all users by configuring it
 to apply to all instances of a specific class. Another option is to use a
@@ -582,7 +587,7 @@ cost. This can be done with named hashers:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('harsh')
                 ->algorithm('auto')
@@ -632,6 +637,12 @@ the name of the hasher to use::
         }
     }
 
+.. caution::
+
+    When :ref:`migrating passwords <security-password-migration>`, you don't
+    need to implement ``PasswordHasherAwareInterface`` to return the legacy
+    hasher name: Symfony will detect it from your ``migrate_from`` configuration.
+
 If you created your own password hasher implementing the
 :class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`,
 you must register a service for it in order to use it as a named hasher:
@@ -673,7 +684,7 @@ you must register a service for it in order to use it as a named hasher:
         use App\Security\Hasher\MyCustomPasswordHasher;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('app_hasher')
                 ->id(MyCustomPasswordHasher::class)
@@ -682,6 +693,32 @@ you must register a service for it in order to use it as a named hasher:
 
 This creates a hasher named ``app_hasher`` from a service with the ID
 ``App\Security\Hasher\MyCustomPasswordHasher``.
+
+Hashing a Stand-Alone String
+----------------------------
+
+The password hasher can be used to hash strings independently
+of users. By using the
+:class:`Symfony\\Component\\PasswordHasher\\Hasher\\PasswordHasherFactory`,
+you can declare multiple hashers, retrieve any of them with
+its name and create hashes. You can then verify that a string matches the given
+hash::
+
+    use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+
+    // configure different hashers via the factory
+    $factory = new PasswordHasherFactory([
+        'common' => ['algorithm' => 'bcrypt'],
+        'sodium' => ['algorithm' => 'sodium'],
+    ]);
+
+    // retrieve the hasher using bcrypt
+    $hasher = $factory->getPasswordHasher('common');
+    $hash = $hasher->hash('plain');
+
+    // verify that a given string matches the hash calculated above
+    $hasher->verify($hash, 'invalid'); // false
+    $hasher->verify($hash, 'plain'); // true
 
 .. _passwordhasher-supported-algorithms:
 
@@ -816,6 +853,12 @@ If you need to create your own, it needs to follow these rules:
 
             return $passwordIsValid;
         }
+
+        public function needsRehash(string $hashedPassword): bool
+        {
+            // Check if a password hash would benefit from rehashing
+            return $needsRehash;
+        }
     }
 
 Now, define a password hasher using the ``id`` setting:
@@ -859,7 +902,7 @@ Now, define a password hasher using the ``id`` setting:
         use App\Security\Hasher\CustomVerySecureHasher;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('app_hasher')
                 // the service ID of your custom hasher (the FQCN using the default services.yaml)

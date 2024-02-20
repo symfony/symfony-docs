@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Changing the Default Command
-
 Changing the Default Command
 ============================
 
@@ -18,14 +15,16 @@ name to the ``setDefaultCommand()`` method::
     #[AsCommand(name: 'hello:world')]
     class HelloWorldCommand extends Command
     {
-        protected function configure()
+        protected function configure(): void
         {
             $this->setDescription('Outputs "Hello World"');
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $output->writeln('Hello World');
+
+            return Command::SUCCESS;
         }
     }
 

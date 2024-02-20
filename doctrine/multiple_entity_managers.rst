@@ -1,7 +1,4 @@
-.. index::
-   single: Doctrine; Multiple entity managers
-
-How to Work with multiple Entity Managers and Connections
+How to Work with Multiple Entity Managers and Connections
 =========================================================
 
 You can use multiple Doctrine entity managers or connections in a Symfony
@@ -32,20 +29,12 @@ The following configuration code shows how you can configure two entity managers
         # config/packages/doctrine.yaml
         doctrine:
             dbal:
-                default_connection: default
                 connections:
                     default:
-                        # configure these for your database server
                         url: '%env(resolve:DATABASE_URL)%'
-                        driver: 'pdo_mysql'
-                        server_version: '5.7'
-                        charset: utf8mb4
                     customer:
-                        # configure these for your database server
-                        url: '%env(resolve:DATABASE_CUSTOMER_URL)%'
-                        driver: 'pdo_mysql'
-                        server_version: '5.7'
-                        charset: utf8mb4
+                        url: '%env(resolve:CUSTOMER_DATABASE_URL)%'
+                default_connection: default
             orm:
                 default_entity_manager: default
                 entity_managers:
@@ -54,7 +43,6 @@ The following configuration code shows how you can configure two entity managers
                         mappings:
                             Main:
                                 is_bundle: false
-                                type: annotation
                                 dir: '%kernel.project_dir%/src/Entity/Main'
                                 prefix: 'App\Entity\Main'
                                 alias: Main
@@ -63,7 +51,6 @@ The following configuration code shows how you can configure two entity managers
                         mappings:
                             Customer:
                                 is_bundle: false
-                                type: annotation
                                 dir: '%kernel.project_dir%/src/Entity/Customer'
                                 prefix: 'App\Entity\Customer'
                                 alias: Customer
@@ -82,20 +69,12 @@ The following configuration code shows how you can configure two entity managers
 
             <doctrine:config>
                 <doctrine:dbal default-connection="default">
-                    <!-- configure these for your database server -->
                     <doctrine:connection name="default"
                         url="%env(resolve:DATABASE_URL)%"
-                        driver="pdo_mysql"
-                        server_version="5.7"
-                        charset="utf8mb4"
                     />
 
-                    <!-- configure these for your database server -->
                     <doctrine:connection name="customer"
-                        url="%env(resolve:DATABASE_CUSTOMER_URL)%"
-                        driver="pdo_mysql"
-                        server_version="5.7"
-                        charset="utf8mb4"
+                        url="%env(resolve:CUSTOMER_DATABASE_URL)%"
                     />
                 </doctrine:dbal>
 
@@ -104,7 +83,6 @@ The following configuration code shows how you can configure two entity managers
                         <doctrine:mapping
                             name="Main"
                             is_bundle="false"
-                            type="annotation"
                             dir="%kernel.project_dir%/src/Entity/Main"
                             prefix="App\Entity\Main"
                             alias="Main"
@@ -115,7 +93,6 @@ The following configuration code shows how you can configure two entity managers
                         <doctrine:mapping
                             name="Customer"
                             is_bundle="false"
-                            type="annotation"
                             dir="%kernel.project_dir%/src/Entity/Customer"
                             prefix="App\Entity\Customer"
                             alias="Customer"
@@ -130,40 +107,29 @@ The following configuration code shows how you can configure two entity managers
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
-            $doctrine->dbal()->defaultConnection('default');
-
-            // configure these for your database server
+        return static function (DoctrineConfig $doctrine): void {
+            // Connections:
             $doctrine->dbal()
                 ->connection('default')
-                ->url(env('DATABASE_URL')->resolve())
-                ->driver('pdo_mysql')
-                ->serverVersion('5.7')
-                ->charset('utf8mb4');
-
-            // configure these for your database server
+                ->url(env('DATABASE_URL')->resolve());
             $doctrine->dbal()
                 ->connection('customer')
-                ->url(env('DATABASE_CUSTOMER_URL')->resolve())
-                ->driver('pdo_mysql')
-                ->serverVersion('5.7')
-                ->charset('utf8mb4');
+                ->url(env('CUSTOMER_DATABASE_URL')->resolve());
+            $doctrine->dbal()->defaultConnection('default');
 
+            // Entity Managers:
             $doctrine->orm()->defaultEntityManager('default');
-            $emDefault = $doctrine->orm()->entityManager('default');
-            $emDefault->connection('default');
-            $emDefault->mapping('Main')
+            $defaultEntityManager = $doctrine->orm()->entityManager('default');
+            $defaultEntityManager->connection('default');
+            $defaultEntityManager->mapping('Main')
                 ->isBundle(false)
-                ->type('annotation')
                 ->dir('%kernel.project_dir%/src/Entity/Main')
                 ->prefix('App\Entity\Main')
                 ->alias('Main');
-
-            $emCustomer = $doctrine->orm()->entityManager('customer');
-            $emCustomer->connection('customer');
-            $emCustomer->mapping('Customer')
+            $customerEntityManager = $doctrine->orm()->entityManager('customer');
+            $customerEntityManager->connection('customer');
+            $customerEntityManager->mapping('Customer')
                 ->isBundle(false)
-                ->type('annotation')
                 ->dir('%kernel.project_dir%/src/Entity/Customer')
                 ->prefix('App\Entity\Customer')
                 ->alias('Customer')
@@ -250,7 +216,7 @@ the default entity manager (i.e. ``default``) is returned::
     }
 
 Entity managers also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
-when the :ref:`framework bundle <framework-bundle-configuration>` is used. For
+when the :doc:`framework bundle </reference/configuration/framework>` is used. For
 example, to inject the ``customer`` entity manager, type-hint your method with
 ``EntityManagerInterface $customerEntityManager``.
 

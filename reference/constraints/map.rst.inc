@@ -97,7 +97,10 @@ Other Constraints
 * :doc:`When </reference/constraints/When>`
 * :doc:`All </reference/constraints/All>`
 * :doc:`Valid </reference/constraints/Valid>`
+* :doc:`Cascade </reference/constraints/Cascade>`
 * :doc:`Traverse </reference/constraints/Traverse>`
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
+* :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`

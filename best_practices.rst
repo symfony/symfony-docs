@@ -207,9 +207,6 @@ Doctrine supports several metadata formats, but it's recommended to use PHP
 attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
 
-If your PHP version doesn't support attributes yet, use annotations, which is
-similar but requires installing some extra dependencies in your project.
-
 Controllers
 -----------
 
@@ -229,7 +226,7 @@ important parts of your application.
 .. _best-practice-controller-annotations:
 
 Use Attributes or Annotations to Configure Routing, Caching, and Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using attributes or annotations for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
@@ -411,7 +408,7 @@ checks that all application URLs load successfully::
         /**
          * @dataProvider urlProvider
          */
-        public function testPageIsSuccessful($url)
+        public function testPageIsSuccessful($url): void
         {
             $client = self::createClient();
             $client->request('GET', $url);
@@ -419,7 +416,7 @@ checks that all application URLs load successfully::
             $this->assertResponseIsSuccessful();
         }
 
-        public function urlProvider()
+        public function urlProvider(): \Generator
         {
             yield ['/'];
             yield ['/posts'];
@@ -437,7 +434,7 @@ specific tests for each page.
 .. _hardcode-urls-in-a-functional-test:
 
 Hard-code URLs in a Functional Test
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`
 using routes to automatically update all links when a URL changes. However, if a
@@ -454,4 +451,4 @@ you must set up a redirection.
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
-.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html#data-providers

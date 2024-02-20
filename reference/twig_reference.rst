@@ -1,6 +1,3 @@
-.. index::
-    single: Symfony Twig extensions
-
 Twig Extensions Defined by Symfony
 ==================================
 
@@ -12,7 +9,7 @@ components with Twig templates. This article explains them all.
 .. tip::
 
     If these extensions provided by Symfony are not enough, you can
-    :doc:`create a custom Twig extension </templating/twig_extension>` to define
+    :ref:`create a custom Twig extension <templates-twig-extension>` to define
     even more filters and functions.
 
 .. _reference-twig-functions:
@@ -63,6 +60,24 @@ falls back to the behavior of `render`_ otherwise.
     in the function name, e.g. ``render_hinclude()`` will use the hinclude.js
     strategy. This works for all ``render_*()`` functions.
 
+fragment_uri
+~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ fragment_uri(controller, absolute = false, strict = true, sign = true) }}
+
+``controller``
+    **type**: ``ControllerReference``
+``absolute`` *(optional)*
+    **type**: ``boolean`` **default**: ``false``
+``strict`` *(optional)*
+    **type**: ``boolean`` **default**: ``true``
+``sign`` *(optional)*
+    **type**: ``boolean`` **default**: ``true``
+
+Generates the URI of :ref:`a fragment <fragments-path-config>`.
+
 controller
 ~~~~~~~~~~
 
@@ -109,7 +124,7 @@ and :ref:`reference-assets-json-manifest-path` configuration options.
     Read more about :ref:`linking to web assets from templates <templates-link-to-assets>`.
 
 asset_version
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 .. code-block:: twig
 
@@ -303,7 +318,7 @@ absolute URLs instead of relative URLs.
 .. _reference-twig-function-t:
 
 t
-~
+~~~
 
 .. code-block:: twig
 
@@ -334,6 +349,12 @@ explained in the article about :doc:`customizing form rendering </form/form_cust
 * :ref:`form_help() <reference-forms-twig-help>`
 * :ref:`form_row() <reference-forms-twig-row>`
 * :ref:`form_rest() <reference-forms-twig-rest>`
+* :ref:`field_name() <reference-forms-twig-field-helpers>`
+* :ref:`field_value() <reference-forms-twig-field-helpers>`
+* :ref:`field_label() <reference-forms-twig-field-helpers>`
+* :ref:`field_help() <reference-forms-twig-field-helpers>`
+* :ref:`field_errors() <reference-forms-twig-field-helpers>`
+* :ref:`field_choices() <reference-forms-twig-field-helpers>`
 
 .. _reference-twig-filters:
 

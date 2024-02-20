@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; SubmitType
-
 SubmitType Field
 ================
 

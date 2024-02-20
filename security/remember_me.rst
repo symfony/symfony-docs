@@ -1,6 +1,3 @@
-.. index::
-   single: Security; "Remember me"
-
 How to Add "Remember Me" Login Functionality
 ============================================
 
@@ -65,7 +62,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -187,7 +184,7 @@ allow users to opt-out. In these cases, you can use the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -263,12 +260,14 @@ Signature based tokens
     By default, the remember me cookie contains a signature based on
     properties of the user. If the properties change, the signature changes
     and already generated tokens are no longer considered valid. See
-    :ref:`security-remember-me-signature` for more information.
+    :ref:`how to use them <security-remember-me-signature>` for more
+    information.
 
 Persistent tokens
     Persistent tokens store any generated token (e.g. in a database). This
     allows you to invalidate tokens by changing the rows in the database.
-    See :ref:`security-remember-me-persistent` for more information.
+    See :ref:`how to store tokens <security-remember-me-persistent>` for more
+    information.
 
 .. note::
 
@@ -348,7 +347,7 @@ are fetched from the user object using the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -432,7 +431,7 @@ You can enable the doctrine token provider using the ``doctrine`` setting:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -521,7 +520,7 @@ Then, configure the service ID of your custom token provider as ``service``:
         use App\Security\RememberMe\CustomTokenProvider;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...

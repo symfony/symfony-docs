@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; DebugFormatter Helper
-
 Debug Formatter Helper
 ======================
 
@@ -81,7 +78,7 @@ using
     // ...
     $process = new Process(...);
 
-    $process->run(function ($type, $buffer) use ($output, $debugFormatter, $process) {
+    $process->run(function (string $type, string $buffer) use ($output, $debugFormatter, $process): void {
         $output->writeln(
             $debugFormatter->progress(
                 spl_object_hash($process),

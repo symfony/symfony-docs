@@ -1,6 +1,3 @@
-.. index::
-    single: Upgrading; Minor Version
-
 Upgrading a Minor Version (e.g. 5.0.0 to 5.1.0)
 ===============================================
 
@@ -87,6 +84,12 @@ included in the Symfony directory that describes these changes. If you follow
 the instructions in the document and update your code accordingly, it should be
 safe to update in the future.
 
+.. tip::
+
+    `Rector`_ is a third-party project that automates the upgrading and
+    refactoring of PHP projects. Rector includes some rules to fix certain
+    Symfony deprecations automatically.
+
 These documents can also be found in the `Symfony Repository`_.
 
 .. _updating-flex-recipes:
@@ -95,3 +98,4 @@ These documents can also be found in the `Symfony Repository`_.
 
 .. _`Symfony Repository`: https://github.com/symfony/symfony
 .. _`UPGRADE-5.4.md`: https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.4.md
+.. _`Rector`: https://github.com/rectorphp/rector

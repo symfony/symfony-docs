@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; EnumType
-
 EnumType Field
 ==============
 
@@ -59,7 +56,7 @@ dots or spaces). If you need more flexibility for these labels, use the
 
     ->add('textAlign', EnumType::class, [
         'class' => TextAlign::class,
-        'choice_label' => match ($choice) {
+        'choice_label' => fn ($choice) => match ($choice) {
             TextAlign::Left => 'text_align.left.label',
             TextAlign::Center => 'text_align.center.label',
             TextAlign::Right  => 'text_align.right.label',
@@ -87,6 +84,59 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
+
+``group_by``
+~~~~~~~~~~~~
+
+**type**: ``string`` or ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``null``
+
+You can group the ``<option>`` elements of a ``<select>`` into ``<optgroup>``
+by passing a multi-dimensional array to ``choices``. See the
+:ref:`Grouping Options <form-choices-simple-grouping>` section about that.
+
+The ``group_by`` option is an alternative way to group choices, which gives you
+a bit more flexibility.
+
+Let's add a few cases to our ``TextAlign`` enumeration::
+
+    // src/Config/TextAlign.php
+    namespace App\Config;
+
+    enum TextAlign: string
+    {
+        case UpperLeft = 'Upper Left aligned';
+        case LowerLeft = 'Lower Left aligned';
+
+        case Center = 'Center aligned';
+
+        case UpperRight = 'Upper Right aligned';
+        case LowerRight = 'Lower Right aligned';
+    }
+
+We can now group choices by the enum case value::
+
+    use App\Config\TextAlign;
+    use Symfony\Component\Form\Extension\Core\Type\EnumType;
+    // ...
+
+    $builder->add('alignment', EnumType::class, [
+        'class' => TextAlign::class,
+        'group_by' => function(TextAlign $choice, int $key, string $value): ?string {
+            if (str_starts_with($value, 'Upper')) {
+                return 'Upper';
+            }
+
+            if (str_starts_with($value, 'Lower')) {
+                return 'Lower';
+            }
+
+            return 'Other';
+        }
+    ]);
+
+This callback will group choices in 3 categories: ``Upper``, ``Lower`` and ``Other``.
+
+If you return ``null``, the option won't be grouped.
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 

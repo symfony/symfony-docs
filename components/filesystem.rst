@@ -1,6 +1,3 @@
-.. index::
-   single: Filesystem
-
 The Filesystem Component
 ========================
 
@@ -343,7 +340,7 @@ following rules iteratively until no further processing can be done:
 - root paths ("/" and "C:/") always terminate with a slash;
 - non-root paths never terminate with a slash;
 - schemes (such as "phar://") are kept;
-- replace "~" with the user's home directory.
+- replace ``~`` with the user's home directory.
 
 You can canonicalize a path with :method:`Symfony\\Component\\Filesystem\\Path::canonicalize`::
 
@@ -472,12 +469,12 @@ Finding Directories/Root Directories
 PHP offers the function :phpfunction:`dirname` to obtain the directory path of a
 file path. This method has a few quirks::
 
-- `dirname()` does not accept backslashes on UNIX
-- `dirname("C:/Programs")` returns "C:", not "C:/"
-- `dirname("C:/")` returns ".", not "C:/"
-- `dirname("C:")` returns ".", not "C:/"
-- `dirname("Programs")` returns ".", not ""
-- `dirname()` does not canonicalize the result
+- ``dirname()`` does not accept backslashes on UNIX
+- ``dirname("C:/Programs")`` returns "C:", not "C:/"
+- ``dirname("C:/")`` returns ".", not "C:/"
+- ``dirname("C:")`` returns ".", not "C:/"
+- ``dirname("Programs")`` returns ".", not ""
+- ``dirname()`` does not canonicalize the result
 
 :method:`Symfony\\Component\\Filesystem\\Path::getDirectory` fixes these
 shortcomings::

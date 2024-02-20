@@ -1,6 +1,3 @@
-.. index::
-    single: Syntax; ExpressionLanguage
-
 The Expression Syntax
 =====================
 
@@ -57,7 +54,7 @@ to JavaScript::
 
     class Apple
     {
-        public $variety;
+        public string $variety;
     }
 
     $apple = new Apple();
@@ -80,7 +77,7 @@ JavaScript::
 
     class Robot
     {
-        public function sayHi($times)
+        public function sayHi(int $times): string
         {
             $greetings = [];
             for ($i = 0; $i < $times; $i++) {
@@ -103,7 +100,7 @@ JavaScript::
 This will print out ``Hi Hi Hi!``.
 
 Null-safe Operator
-~~~~~~~~~~~~~~~~~~
+..................
 
 Use the ``?.`` syntax to access properties and methods of objects that can be
 ``null`` (this is equivalent to the ``$object?->propertyOrMethod`` PHP null-safe
@@ -142,7 +139,7 @@ This will print out ``root``.
 .. tip::
 
     To read how to register your own functions to use in an expression, see
-    ":doc:`/components/expression_language/extending`".
+    ":ref:`expression-language-extending`".
 
 .. _component-expression-arrays:
 
@@ -296,7 +293,7 @@ For example::
 
     class User
     {
-        public $group;
+        public string $group;
     }
 
     $user = new User();
@@ -320,7 +317,7 @@ For example::
 
     class User
     {
-        public $age;
+        public int $age;
     }
 
     $user = new User();
@@ -343,23 +340,6 @@ Ternary Operators
 * ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
 * ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
 
-Null Coalescing Operator
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-This is the same as the PHP `null-coalescing operator`_, which combines
-the ternary operator and ``isset()``. It returns the left hand-side if it exists
-and it's not ``null``; otherwise it returns the right hand-side. Note that you
-can chain multiple coalescing operators.
-
-* ``foo ?? 'no'``
-* ``foo.baz ?? 'no'``
-* ``foo[3] ?? 'no'``
-* ``foo.baz ?? foo['baz'] ?? 'no'``
-
-.. versionadded:: 6.2
-
-    The null-coalescing operator was introduced in Symfony 6.2.
-
 Built-in Objects and Variables
 ------------------------------
 
@@ -370,5 +350,3 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
-
-.. _`null-coalescing operator`: https://www.php.net/manual/en/language.operators.comparison.php#language.operators.comparison.coalesce

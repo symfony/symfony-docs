@@ -1,7 +1,3 @@
-.. index::
-   single: Asset
-   single: Components; Asset
-
 The Asset Component
 ===================
 
@@ -207,19 +203,19 @@ every day::
 
     class DateVersionStrategy implements VersionStrategyInterface
     {
-        private $version;
+        private \DateTimeInterface $version;
 
         public function __construct()
         {
             $this->version = date('Ymd');
         }
 
-        public function getVersion(string $path)
+        public function getVersion(string $path): \DateTimeInterface
         {
             return $this->version;
         }
 
-        public function applyVersion(string $path)
+        public function applyVersion(string $path): string
         {
             return sprintf('%s?v=%s', $path, $this->getVersion($path));
         }
@@ -290,12 +286,12 @@ class to generate absolute URLs for their assets::
     // ...
 
     $urlPackage = new UrlPackage(
-        'http://static.example.com/images/',
+        'https://static.example.com/images/',
         new StaticVersionStrategy('v1')
     );
 
     echo $urlPackage->getUrl('/logo.png');
-    // result: http://static.example.com/images/logo.png?v1
+    // result: https://static.example.com/images/logo.png?v1
 
 You can also pass a schema-agnostic URL::
 
@@ -322,15 +318,15 @@ constructor::
     // ...
 
     $urls = [
-        '//static1.example.com/images/',
-        '//static2.example.com/images/',
+        'https://static1.example.com/images/',
+        'https://static2.example.com/images/',
     ];
     $urlPackage = new UrlPackage($urls, new StaticVersionStrategy('v1'));
 
     echo $urlPackage->getUrl('/logo.png');
-    // result: http://static1.example.com/images/logo.png?v1
+    // result: https://static1.example.com/images/logo.png?v1
     echo $urlPackage->getUrl('/icon.png');
-    // result: http://static2.example.com/images/icon.png?v1
+    // result: https://static2.example.com/images/icon.png?v1
 
 For each asset, one of the URLs will be randomly used. But, the selection
 is deterministic, meaning that each asset will always be served by the same
@@ -380,7 +376,7 @@ they all have different base paths::
     $defaultPackage = new Package($versionStrategy);
 
     $namedPackages = [
-        'img' => new UrlPackage('http://img.example.com/', $versionStrategy),
+        'img' => new UrlPackage('https://img.example.com/', $versionStrategy),
         'doc' => new PathPackage('/somewhere/deep/for/documents', $versionStrategy),
     ];
 
@@ -396,7 +392,7 @@ document inside a template::
     // result: /main.css?v1
 
     echo $packages->getUrl('/logo.png', 'img');
-    // result: http://img.example.com/logo.png?v1
+    // result: https://img.example.com/logo.png?v1
 
     echo $packages->getUrl('resume.pdf', 'doc');
     // result: /somewhere/deep/for/documents/resume.pdf?v1

@@ -1,7 +1,3 @@
-.. index::
-   single: EventDispatcher
-   single: Components; EventDispatcher
-
 The EventDispatcher Component
 =============================
 
@@ -46,9 +42,6 @@ event - ``kernel.response``. Here's how it works:
   ``kernel.response`` event, allowing each of them to make modifications
   to the ``Response`` object.
 
-.. index::
-   single: EventDispatcher; Events
-
 Installation
 ------------
 
@@ -76,9 +69,6 @@ An :class:`Symfony\\Contracts\\EventDispatcher\\Event` instance is also
 created and passed to all of the listeners. As you'll see later, the ``Event``
 object itself often contains data about the event being dispatched.
 
-.. index::
-   pair: EventDispatcher; Naming conventions
-
 Naming Conventions
 ..................
 
@@ -89,9 +79,6 @@ naming conventions:
 * Prefix names with a namespace followed by a dot (e.g. ``order.*``, ``user.*``);
 * End names with a verb that indicates what action has been taken (e.g.
   ``order.placed``).
-
-.. index::
-   single: EventDispatcher; Event subclasses
 
 Event Names and Event Objects
 .............................
@@ -125,9 +112,6 @@ listeners registered with that event::
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
     $dispatcher = new EventDispatcher();
-
-.. index::
-   single: EventDispatcher; Listeners
 
 Connecting Listeners
 ~~~~~~~~~~~~~~~~~~~~
@@ -163,7 +147,7 @@ The ``addListener()`` method takes up to three arguments:
 
         use Symfony\Contracts\EventDispatcher\Event;
 
-        $dispatcher->addListener('acme.foo.action', function (Event $event) {
+        $dispatcher->addListener('acme.foo.action', function (Event $event): void {
             // will be executed when the acme.foo.action event is dispatched
         });
 
@@ -178,7 +162,7 @@ the ``Event`` object as the single argument::
     {
         // ...
 
-        public function onFooAction(Event $event)
+        public function onFooAction(Event $event): void
         {
             // ... do something
         }
@@ -198,26 +182,25 @@ determine which instance is passed.
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
         use Symfony\Component\EventDispatcher\EventDispatcher;
 
-        $containerBuilder = new ContainerBuilder(new ParameterBag());
+        $container = new ContainerBuilder(new ParameterBag());
         // register the compiler pass that handles the 'kernel.event_listener'
         // and 'kernel.event_subscriber' service tags
-        $containerBuilder->addCompilerPass(new RegisterListenersPass());
+        $container->addCompilerPass(new RegisterListenersPass());
 
-        $containerBuilder->register('event_dispatcher', EventDispatcher::class);
+        $container->register('event_dispatcher', EventDispatcher::class);
 
         // registers an event listener
-        $containerBuilder->register('listener_service_id', \AcmeListener::class)
+        $container->register('listener_service_id', \AcmeListener::class)
             ->addTag('kernel.event_listener', [
                 'event' => 'acme.foo.action',
                 'method' => 'onFooAction',
             ]);
 
         // registers an event subscriber
-        $containerBuilder->register('subscriber_service_id', \AcmeSubscriber::class)
+        $container->register('subscriber_service_id', \AcmeSubscriber::class)
             ->addTag('kernel.event_subscriber');
 
     ``RegisterListenersPass`` resolves aliased class names which for instance
@@ -229,21 +212,20 @@ determine which instance is passed.
         use Symfony\Component\DependencyInjection\Compiler\PassConfig;
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\EventDispatcher\DependencyInjection\AddEventAliasesPass;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
         use Symfony\Component\EventDispatcher\EventDispatcher;
 
-        $containerBuilder = new ContainerBuilder(new ParameterBag());
-        $containerBuilder->addCompilerPass(new AddEventAliasesPass([
+        $container = new ContainerBuilder(new ParameterBag());
+        $container->addCompilerPass(new AddEventAliasesPass([
             \AcmeFooActionEvent::class => 'acme.foo.action',
         ]));
-        $containerBuilder->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
+        $container->addCompilerPass(new RegisterListenersPass(), PassConfig::TYPE_BEFORE_REMOVING);
 
-        $containerBuilder->register('event_dispatcher', EventDispatcher::class);
+        $container->register('event_dispatcher', EventDispatcher::class);
 
         // registers an event listener
-        $containerBuilder->register('listener_service_id', \AcmeListener::class)
+        $container->register('listener_service_id', \AcmeListener::class)
             ->addTag('kernel.event_listener', [
                 // will be translated to 'acme.foo.action' by RegisterListenersPass.
                 'event' => \AcmeFooActionEvent::class,
@@ -261,9 +243,6 @@ determine which instance is passed.
     stored as parameter ``event_dispatcher.event_aliases``.
 
 .. _event_dispatcher-closures-as-listeners:
-
-.. index::
-   single: EventDispatcher; Creating and dispatching an event
 
 Creating and Dispatching an Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -296,11 +275,9 @@ order. Start by creating this custom event class and documenting it::
     {
         public const NAME = 'order.placed';
 
-        protected $order;
-
-        public function __construct(Order $order)
-        {
-            $this->order = $order;
+        public function __construct(
+            protected Order $order,
+        ) {
         }
 
         public function getOrder(): Order
@@ -343,9 +320,6 @@ Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
 event will receive the ``OrderPlacedEvent``.
 
-.. index::
-   single: EventDispatcher; Event subscribers
-
 .. _event_dispatcher-using-event-subscribers:
 
 Using Event Subscribers
@@ -373,7 +347,7 @@ Take the following example of a subscriber that subscribes to the
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 KernelEvents::RESPONSE => [
@@ -384,17 +358,17 @@ Take the following example of a subscriber that subscribes to the
             ];
         }
 
-        public function onKernelResponsePre(ResponseEvent $event)
+        public function onKernelResponsePre(ResponseEvent $event): void
         {
             // ...
         }
 
-        public function onKernelResponsePost(ResponseEvent $event)
+        public function onKernelResponsePost(ResponseEvent $event): void
         {
             // ...
         }
 
-        public function onStoreOrder(OrderPlacedEvent $event)
+        public function onStoreOrder(OrderPlacedEvent $event): void
         {
             // ...
         }
@@ -425,9 +399,6 @@ example, when the ``kernel.response`` event is triggered, the methods
 ``onKernelResponsePre()`` and ``onKernelResponsePost()`` are called in that
 order.
 
-.. index::
-   single: EventDispatcher; Stopping event flow
-
 .. _event_dispatcher-event-propagation:
 
 Stopping Event Flow/Propagation
@@ -442,7 +413,7 @@ inside a listener via the
 
     use Acme\Store\Event\OrderPlacedEvent;
 
-    public function onStoreOrder(OrderPlacedEvent $event)
+    public function onStoreOrder(OrderPlacedEvent $event): void
     {
         // ...
 
@@ -462,9 +433,6 @@ method which returns a boolean value::
         // ...
     }
 
-.. index::
-   single: EventDispatcher; EventDispatcher aware events and listeners
-
 .. _event_dispatcher-dispatcher-aware-events:
 
 EventDispatcher Aware Events and Listeners
@@ -474,9 +442,6 @@ The ``EventDispatcher`` always passes the dispatched event, the event's
 name and a reference to itself to the listeners. This can lead to some advanced
 applications of the ``EventDispatcher`` including dispatching other events inside
 listeners, chaining events or even lazy loading listeners into the dispatcher object.
-
-.. index::
-   single: EventDispatcher; Event name introspection
 
 .. _event_dispatcher-event-name-introspection:
 
@@ -491,7 +456,7 @@ is dispatched, are passed as arguments to the listener::
 
     class MyListener
     {
-        public function myEventListener(Event $event, string $eventName, EventDispatcherInterface $dispatcher)
+        public function myEventListener(Event $event, string $eventName, EventDispatcherInterface $dispatcher): void
         {
             // ... do something with the event name
         }
@@ -513,8 +478,7 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    /components/event_dispatcher/*
-    /event_dispatcher/*
+    event_dispatcher
 
 * :ref:`The kernel.event_listener tag <dic-tags-kernel-event-listener>`
 * :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`

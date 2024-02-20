@@ -38,14 +38,14 @@ type. The ``Author`` class might look as follows::
 
     class Author
     {
-        protected $bioFile;
+        protected File $bioFile;
 
-        public function setBioFile(File $file = null)
+        public function setBioFile(File $file = null): void
         {
             $this->bioFile = $file;
         }
 
-        public function getBioFile()
+        public function getBioFile(): File
         {
             return $this->bioFile;
         }
@@ -70,7 +70,7 @@ below a certain file size and a valid PDF, add the following:
                 extensions: ['pdf'],
                 extensionsMessage: 'Please upload a valid PDF',
             )]
-            protected $bioFile;
+            protected File $bioFile;
         }
 
     .. code-block:: yaml
@@ -115,7 +115,9 @@ below a certain file size and a valid PDF, add the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioFile', new Assert\File([
                     'maxSize' => '1024k',
@@ -412,5 +414,5 @@ The message that is displayed if the uploaded file is only partially uploaded.
 
 This message has no parameters.
 
-.. _`IANA website`: http://www.iana.org/assignments/media-types/media-types.xhtml
+.. _`IANA website`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`Wikipedia: Binary prefix`: https://en.wikipedia.org/wiki/Binary_prefix

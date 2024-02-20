@@ -1,7 +1,3 @@
-.. index::
-   single: Yaml
-   single: Components; Yaml
-
 The Yaml Component
 ==================
 
@@ -18,13 +14,9 @@ standard for all programming languages. YAML is a great format for your
 configuration files. YAML files are as expressive as XML files and as readable
 as INI files.
 
-The Symfony Yaml Component implements a selected subset of features defined in
-the `YAML 1.2 version specification`_.
-
 .. tip::
 
-    Learn more about the Yaml component in the
-    :doc:`/components/yaml/yaml_format` article.
+    Learn more about :doc:`YAML specifications </reference/formats/yaml>`.
 
 Installation
 ------------
@@ -49,7 +41,7 @@ compact block collections and multi-document files.
 Real Parser
 ~~~~~~~~~~~
 
-It sports a real parser and is able to parse a large subset of the YAML
+It supports a real parser and is able to parse a large subset of the YAML
 specification, for all your configuration needs. It also means that the parser
 is pretty robust, easy to understand, and simple enough to extend.
 
@@ -477,16 +469,6 @@ Add the ``--format`` option to get the output in JSON format:
     YAML files. This may for example be useful for recognizing deprecations of
     contents of YAML files during automated tests.
 
-Learn More
-----------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    yaml/*
-
 .. _`YAML`: https://yaml.org/
-.. _`YAML 1.2 version specification`: https://yaml.org/spec/1.2/spec.html
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
 .. _`PHP enumerations`: https://www.php.net/manual/en/language.types.enumerations.php

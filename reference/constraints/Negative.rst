@@ -29,7 +29,7 @@ The following constraint ensures that the ``withdraw`` of a  bank account
         class TransferItem
         {
             #[Assert\Negative]
-            protected $withdraw;
+            protected int $withdraw;
         }
 
     .. code-block:: yaml
@@ -65,7 +65,9 @@ The following constraint ensures that the ``withdraw`` of a  bank account
 
         class TransferItem
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('withdraw', new Assert\Negative());
             }

@@ -1,7 +1,3 @@
-.. index::
-    single: Cache; ESI
-    single: ESI
-
 .. _edge-side-includes:
 
 Working with Edge Side Includes
@@ -90,7 +86,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->esi()
                 ->enabled(true)
             ;
@@ -193,8 +189,10 @@ of the main page::
         // ...
         class NewsController extends AbstractController
         {
-            public function latest($maxPerPage)
+            public function latest(int $maxPerPage): Response
             {
+                // ...
+
                 // sets to public and adds some expiration
                 $response->setSharedMaxAge(60);
 
@@ -250,7 +248,7 @@ that must be enabled in your configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()
                 ->path('/_fragment')
@@ -267,7 +265,7 @@ possible.
     signed when using the fragment renderer and the ``render_esi`` Twig
     function.
 
-The ``render_esi`` helper supports two other useful options:
+The ``render_esi`` helper supports three other useful options:
 
 ``alt``
     Used as the ``alt`` attribute on the ESI tag, which allows you to specify an
@@ -278,4 +276,11 @@ The ``render_esi`` helper supports two other useful options:
     of ``continue`` indicating that, in the event of a failure, the gateway cache
     will remove the ESI tag silently.
 
-.. _`ESI`: http://www.w3.org/TR/esi-lang
+``absolute_uri``
+     If set to true, an absolute URI will be generated. **default**: ``false``
+
+.. versionadded:: 6.2
+
+    The ``absolute_uri`` option was introduced in Symfony 6.2.
+
+.. _`ESI`: https://www.w3.org/TR/esi-lang/

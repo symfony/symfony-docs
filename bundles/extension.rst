@@ -1,7 +1,3 @@
-.. index::
-   single: Configuration; Semantic
-   single: Bundle; Extension configuration
-
 How to Load Service Configuration inside a Bundle
 =================================================
 
@@ -38,7 +34,7 @@ This is how the extension of an AcmeHelloBundle should look like::
 
     class AcmeHelloExtension extends Extension
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             // ... you'll load the files here later
         }
@@ -54,10 +50,11 @@ method to return the instance of the extension::
 
     // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
+    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
     class AcmeHelloBundle extends Bundle
     {
-        public function getContainerExtension()
+        public function getContainerExtension(): ?ExtensionInterface
         {
             return new UnconventionalExtensionClass();
         }
@@ -93,7 +90,7 @@ For instance, assume you have a file called ``services.xml`` in the
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     // ...
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader(
             $container,
@@ -130,18 +127,18 @@ method::
 
     class AcmeHelloBundle extends AbstractBundle
     {
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
         {
             // load an XML, PHP or Yaml file
-            $container->import('../config/services.xml');
+            $containerConfigurator->import('../config/services.xml');
 
             // you can also add or replace parameters and services
-            $container->parameters()
+            $containerConfigurator->parameters()
                 ->set('acme_hello.phrase', $config['phrase'])
             ;
 
             if ($config['scream']) {
-                $container->services()
+                $containerConfigurator->services()
                     ->get('acme_hello.printer')
                         ->class(ScreamingPrinter::class)
                 ;
@@ -170,7 +167,7 @@ they are compiled when generating the application cache to improve the overall
 performance. Define the list of annotated classes to compile in the
 ``addAnnotatedClassesToCompile()`` method::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         // ...
 

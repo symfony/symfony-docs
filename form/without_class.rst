@@ -1,12 +1,9 @@
-.. index::
-    single: Forms; With no class
-
 How to Use a Form without a Data Class
 ======================================
 
 In most cases, a form is tied to an object, and the fields of the form get
-and store their data on the properties of that object. This is exactly what
-you've seen so far in this article with the ``Task`` class.
+and store their data on the properties of that object. This is what
+:doc:`the main article on forms </forms>` is about.
 
 But sometimes, you may want to use a form without a class, and get back an
 array of the submitted data. The ``getData()`` method allows you to do

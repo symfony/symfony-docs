@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: APCu Cache
-
 .. _apcu-adapter:
 
 APCu Cache Adapter

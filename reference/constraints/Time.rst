@@ -2,7 +2,7 @@ Time
 ====
 
 Validates that a value is a valid time, meaning a string (or an object that can
-be cast into a string) that follows a valid ``HH:MM:SS`` format.
+be cast into a string) that follows a valid ``H:i:s`` format (e.g. ``'16:27:36'``).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -31,7 +31,7 @@ of the day when the event starts:
              * @var string A "H:i:s" formatted value
              */
             #[Assert\Time]
-            protected $startsAt;
+            protected string $startsAt;
         }
 
     .. code-block:: yaml
@@ -70,9 +70,9 @@ of the day when the event starts:
            /**
             * @var string A "H:i:s" formatted value
             */
-            protected $startsAt;
+            protected string $startsAt;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startsAt', new Assert\Time());
             }

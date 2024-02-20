@@ -1,9 +1,5 @@
-.. index::
-   single: Runtime
-   single: Components; Runtime
-
 The Runtime Component
-======================
+=====================
 
     The Runtime Component decouples the bootstrapping logic from any global state
     to make sure the application can run with runtimes like PHP-PM, ReactPHP,
@@ -26,13 +22,12 @@ The Runtime component abstracts most bootstrapping logic as so-called
 For instance, the Runtime component allows Symfony's ``public/index.php``
 to look like this::
 
-    <?php
     // public/index.php
     use App\Kernel;
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): Kernel {
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
     };
 
@@ -66,7 +61,7 @@ To make a console application, the bootstrap code would look like::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): Application {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
 
         // returning an "Application" makes the Runtime run a Console
@@ -116,14 +111,14 @@ Resolvable Arguments
 
 The closure returned from the front-controller may have zero or more arguments::
 
-    <?php
     // public/index.php
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (InputInterface $input, OutputInterface $output) {
+    return function (InputInterface $input, OutputInterface $output): Application {
         // ...
     };
 
@@ -163,13 +158,12 @@ Resolvable Applications
 The application returned by the closure below is a Symfony Kernel. However,
 a number of different applications are supported::
 
-    <?php
     // public/index.php
     use App\Kernel;
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function () {
+    return static function (): Kernel {
         return new Kernel('prod', false);
     };
 
@@ -183,13 +177,12 @@ The ``SymfonyRuntime`` can handle these applications:
     The Response will be printed by
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ResponseRunner`::
 
-        <?php
         // public/index.php
         use Symfony\Component\HttpFoundation\Response;
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return static function (): Response {
             return new Response('Hello world');
         };
 
@@ -197,16 +190,14 @@ The ``SymfonyRuntime`` can handle these applications:
     To write single command applications. This will use the
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
 
-        <?php
-
         use Symfony\Component\Console\Command\Command;
         use Symfony\Component\Console\Input\InputInterface;
         use Symfony\Component\Console\Output\OutputInterface;
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function (Command $command) {
-            $command->setCode(function (InputInterface $input, OutputInterface $output) {
+        return static function (Command $command): Command {
+            $command->setCode(static function (InputInterface $input, OutputInterface $output): void {
                 $output->write('Hello World');
             });
 
@@ -217,8 +208,6 @@ The ``SymfonyRuntime`` can handle these applications:
     Useful with console applications with more than one command. This will use the
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
 
-        <?php
-
         use Symfony\Component\Console\Application;
         use Symfony\Component\Console\Command\Command;
         use Symfony\Component\Console\Input\InputInterface;
@@ -226,9 +215,9 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function (array $context) {
+        return static function (array $context): Application {
             $command = new Command('hello');
-            $command->setCode(function (InputInterface $input, OutputInterface $output) {
+            $command->setCode(static function (InputInterface $input, OutputInterface $output): void {
                 $output->write('Hello World');
             });
 
@@ -246,13 +235,12 @@ applications:
     The ``RunnerInterface`` is a way to use a custom application with the
     generic Runtime::
 
-        <?php
         // public/index.php
         use Symfony\Component\Runtime\RunnerInterface;
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return static function (): RunnerInterface {
             return new class implements RunnerInterface {
                 public function run(): int
                 {
@@ -267,13 +255,11 @@ applications:
     Your "application" can also be a ``callable``. The first callable will return
     the "application" and the second callable is the "application" itself::
 
-        <?php
         // public/index.php
-
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
-            $app = function() {
+        return static function (): callable {
+            $app = static function(): int {
                 echo 'Hello World';
 
                 return 0;
@@ -286,11 +272,9 @@ applications:
     If the callable doesn't return anything, the ``SymfonyRuntime`` will assume
     everything is fine::
 
-        <?php
-
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return function (): void {
             echo 'Hello world';
         };
 
@@ -299,8 +283,6 @@ Using Options
 
 Some behavior of the Runtimes can be modified through runtime options. They
 can be set using the ``APP_RUNTIME_OPTIONS`` environment variable::
-
-    <?php
 
     $_SERVER['APP_RUNTIME_OPTIONS'] = [
         'project_dir' => '/var/task',
@@ -324,6 +306,9 @@ You can also configure ``extra.runtime`` in ``composer.json``:
             }
         }
     }
+
+Then, update your Composer files (running ``composer dump-autoload``, for instance),
+so that the ``vendor/autoload_runtime.php`` files gets regenerated with the new option.
 
 The following options are supported by the ``SymfonyRuntime``:
 
@@ -386,7 +371,7 @@ application outside of the global state in 6 steps:
    returns a :class:`Symfony\\Component\\Runtime\\RunnerInterface`: an instance
    that knows how to "run" the application object.
 #. The ``RunnerInterface::run(object $application)`` is called and it returns the
-   exit status code as `int`.
+   exit status code as ``int``.
 #. The PHP engine is terminated with this status code.
 
 When creating a new runtime, there are two things to consider: First, what arguments
@@ -408,6 +393,7 @@ the `PSR-15`_ interfaces for HTTP request handling.
 However, a ReactPHP application will need some special logic to *run*. That logic
 is added in a new class implementing :class:`Symfony\\Component\\Runtime\\RunnerInterface`::
 
+    use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Server\RequestHandlerInterface;
     use React\EventLoop\Factory as ReactFactory;
@@ -417,13 +403,10 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
 
     class ReactPHPRunner implements RunnerInterface
     {
-        private $application;
-        private $port;
-
-        public function __construct(RequestHandlerInterface $application, int $port)
-        {
-            $this->application = $application;
-            $this->port = $port;
+        public function __construct(
+            private RequestHandlerInterface $application,
+            private int $port,
+        ) {
         }
 
         public function run(): int
@@ -434,7 +417,7 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
             // configure ReactPHP to correctly handle the PSR-15 application
             $server = new ReactHttpServer(
                 $loop,
-                function (ServerRequestInterface $request) use ($application) {
+                function (ServerRequestInterface $request) use ($application): ResponseInterface {
                     return $application->handle($request);
                 }
             );
@@ -457,7 +440,7 @@ always using this ``ReactPHPRunner``::
 
     class ReactPHPRuntime extends GenericRuntime
     {
-        private $port;
+        private int $port;
 
         public function __construct(array $options)
         {
@@ -479,11 +462,9 @@ always using this ``ReactPHPRunner``::
 
 The end user will now be able to create front controller like::
 
-    <?php
-
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): SomeCustomPsr15Application {
         return new SomeCustomPsr15Application();
     };
 

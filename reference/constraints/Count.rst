@@ -33,7 +33,7 @@ you might add the following:
                 minMessage: 'You must specify at least one email',
                 maxMessage: 'You cannot specify more than {{ limit }} emails',
             )]
-            protected $emails = [];
+            protected array $emails = [];
         }
 
     .. code-block:: yaml
@@ -78,7 +78,9 @@ you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('emails', new Assert\Count([
                     'min' => 1,
@@ -95,7 +97,7 @@ Options
 ``divisibleBy``
 ~~~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: null
+**type**: ``integer`` **default**: ``null``
 
 Validates that the number of elements of the given collection is divisible by
 a certain number.

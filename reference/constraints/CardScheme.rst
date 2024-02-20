@@ -32,7 +32,7 @@ on an object that will contain a credit card number.
                 schemes: [Assert\CardScheme::VISA],
                 message: 'Your credit card number is invalid.',
             )]
-            protected $cardNumber;
+            protected string $cardNumber;
         }
 
     .. code-block:: yaml
@@ -75,7 +75,7 @@ on an object that will contain a credit card number.
 
         class Transaction
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme([
                     'schemes' => [

@@ -28,7 +28,7 @@ is positive or zero:
         class Person
         {
             #[Assert\PositiveOrZero]
-            protected $siblings;
+            protected int $siblings;
         }
 
     .. code-block:: yaml
@@ -64,7 +64,9 @@ is positive or zero:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\PositiveOrZero());
             }

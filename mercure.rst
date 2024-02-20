@@ -1,6 +1,3 @@
-.. index::
-   single: Mercure
-
 Pushing Data to Clients Using the Mercure Protocol
 ==================================================
 
@@ -193,16 +190,11 @@ MercureBundle provides a more advanced configuration:
 
         {
             "mercure": {
-                "publish": []
+                "publish": ["*"]
             }
         }
 
-    Because the array is empty, the Symfony app will only be authorized to publish
-    public updates (see the authorization_ section for further information).
-
-    The jwt.io website is a convenient way to create and sign JWTs.
-    Checkout this `example JWT`_, that grants publishing rights for all *topics*
-    (notice the star in the array).
+    The jwt.io website is a convenient way to create and sign JWTs, checkout this `example JWT`_.
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
 
 Basic Usage
@@ -261,7 +253,7 @@ Subscribing
 
 Subscribing to updates in JavaScript from a Twig template is straightforward:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <script>
     const eventSource = new EventSource("{{ mercure('https://example.com/books/1')|escape('js') }}");
@@ -278,7 +270,7 @@ parameters corresponding to the topics passed as first argument.
 If you want to access to this URL from an external JavaScript file, generate the
 URL in a dedicated HTML element:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <script type="application/json" id="mercure-url">
     {{ mercure('https://example.com/books/1')|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
@@ -296,7 +288,7 @@ Mercure also allows subscribing to several topics,
 and to use URI Templates or the special value ``*`` (matched by all topics)
 as patterns:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <script>
     {# Subscribe to updates of several Book resources and to all Review resources matching the given pattern #}
@@ -427,7 +419,7 @@ passed by the browsers to the Mercure hub if the ``withCredentials`` attribute
 of the ``EventSource`` class is set to ``true``. Then, the Hub verifies the
 validity of the provided JWT, and extract the topic selectors from it.
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <script>
     const eventSource = new EventSource("{{ mercure('https://example.com/books/1', { subscribe: 'https://example.com/books/1' })|escape('js') }}", {
@@ -455,7 +447,7 @@ is the way to go.
     The native implementation of EventSource doesn't allow specifying headers.
     For example, authorization using a Bearer token. In order to achieve that, use `a polyfill`_
 
-    .. code-block:: twig
+    .. code-block:: html+twig
 
         <script>
         const es = new EventSourcePolyfill("{{ mercure('https://example.com/books/1') }}", {
@@ -619,11 +611,11 @@ Checkout `the dedicated API Platform documentation`_ to learn more about
 its Mercure support.
 
 Testing
---------
+-------
 
 During unit testing it's usually not needed to send updates to Mercure.
 
-You can instead make use of the `MockHub` class::
+You can instead make use of the ``MockHub`` class::
 
     // tests/FunctionalTest.php
     namespace App\Tests\Unit\Controller;
@@ -636,7 +628,7 @@ You can instead make use of the `MockHub` class::
 
     class MessageControllerTest extends TestCase
     {
-        public function testPublishing()
+        public function testPublishing(): void
         {
             $hub = new MockHub('https://internal/.well-known/mercure', new StaticTokenProvider('foo'), function(Update $update): string {
                 // $this->assertTrue($update->isPrivate());

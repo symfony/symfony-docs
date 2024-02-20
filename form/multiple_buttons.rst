@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Multiple Submit Buttons
-
 How to Submit a Form with Multiple Buttons
 ==========================================
 

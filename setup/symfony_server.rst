@@ -56,6 +56,21 @@ run the Symfony server in the background:
     # show the latest log messages
     $ symfony server:log
 
+.. tip::
+
+    On macOS, when starting the Symfony server you might see a warning dialog asking
+    *"Do you want the application to accept incoming network connections?"*.
+    This happens when running unsigned appplications that are not listed in the
+    firewall list. The solution is to run this command that signs the Symfony binary:
+
+    .. code-block:: terminal
+
+        # find the installed version of the Symfony binary
+        $ symfony version
+
+        # change the path to the location of your Symfony binary and replace {version} too
+        $ sudo codesign --force --deep --sign - /opt/homebrew/Cellar/symfony-cli/{version}/bin/symfony
+
 Enabling PHP-FPM
 ----------------
 
@@ -232,6 +247,14 @@ new custom domain.
     Browse the http://127.0.0.1:7080 URL to get the full list of local project
     directories, their custom domains, and port numbers.
 
+You can also add a wildcard domain:
+
+.. code-block:: terminal
+
+    $ symfony proxy:domain:attach "*.my-domain"
+
+So it will match all subdomains like ``https://admin.my-domain.wip``, ``https://other.my-domain.wip``...
+
 When running console commands, add the ``https_proxy`` env var to make custom
 domains work:
 
@@ -254,7 +277,7 @@ domains work:
 
 .. tip::
 
-    If you prefer to use a different TLD, edit the ``~/.symfony/proxy.json``
+    If you prefer to use a different TLD, edit the ``~/.symfony5/proxy.json``
     file (where ``~`` means the path to your user directory) and change the
     value of the ``tld`` option from ``wip`` to any other TLD.
 
@@ -284,16 +307,46 @@ server provides a ``run`` command to wrap them as follows:
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
-Configuring Workers
--------------------
+Configuration file
+------------------
 
 .. caution::
 
     This feature is experimental and could change or be removed at any time
     without prior notice.
 
+There are several options that you can set using a ``.symfony.local.yaml`` config file:
+
+.. code-block:: yaml
+
+    # Sets domain1.wip and domain2.wip for the current project
+    proxy:
+        domains:
+            - domain1
+            - domain2
+
+    http:
+        document_root: public/ # Path to the project document root
+        passthru: index.php # Project passthru index
+        port: 8000 # Force the port that will be used to run the server
+        preferred_port: 8001 # Preferred HTTP port [default: 8000]
+        p12: path/to/p12_cert # Name of the file containing the TLS certificate to use in p12 format
+        allow_http: true # Prevent auto-redirection from HTTP to HTTPS
+        no_tls: true # Use HTTP instead of HTTPS
+        daemon: true # Run the server in the background
+        use_gzip: true # Toggle GZIP compression
+
+.. caution::
+
+    Setting domains in this configuration file will override any domains you set
+    using the ``proxy:domain:attach`` command for the current project when you start
+    the server.
+
+Configuring Workers
+~~~~~~~~~~~~~~~~~~~
+
 If you like some processes to start automatically, along with the webserver
-(``symfony server:start``), add a configuration file to your project:
+(``symfony server:start``), you can set them in the YAML configuration file:
 
 .. code-block:: yaml
 
@@ -450,22 +503,28 @@ its location, same as for ``docker-compose``:
     ``symfony console doctrine:database:drop --force --env=test``, the command will drop the database
     defined in your Docker configuration and not the "test" one.
 
-SymfonyCloud Integration
-------------------------
+.. caution::
+
+    Similar to other web servers, this tool automatically exposes all environment
+    variables available in the CLI context. Ensure that this local server is not
+    accessible on your local network without consent to avoid security issues.
+
+Platform.sh Integration
+-----------------------
 
 The local Symfony server provides full, but optional, integration with
-`SymfonyCloud`_, a service optimized to run your Symfony applications on the
+`Platform.sh`_, a service optimized to run your Symfony applications on the
 cloud. It provides features such as creating environments, backups/snapshots,
-and even access to a copy of the production data from your local machine to help
-debug any issues.
+and even access to a copy of the production data from your local machine to
+help debug any issues.
 
-`Read SymfonyCloud technical docs`_.
+`Read Platform.sh for Symfony technical docs`_.
 
 .. _`install Symfony`: https://symfony.com/download
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
-.. _`SymfonyCloud`: https://symfony.com/cloud/
-.. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`Platform.sh`: https://symfony.com/cloud/
+.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/master/cloud/intro.html
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en

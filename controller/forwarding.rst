@@ -1,6 +1,3 @@
-.. index::
-    single: Controller; Forwarding
-
 How to Forward Requests to another Controller
 =============================================
 
@@ -14,7 +11,7 @@ and calls the defined controller. The ``forward()`` method returns the
 :class:`Symfony\\Component\\HttpFoundation\\Response` object that is returned
 from *that* controller::
 
-    public function index($name)
+    public function index($name): Response
     {
         $response = $this->forward('App\Controller\OtherController::fancy', [
             'name'  => $name,
@@ -29,7 +26,7 @@ from *that* controller::
 The array passed to the method becomes the arguments for the resulting controller.
 The target controller method might look something like this::
 
-    public function fancy($name, $color)
+    public function fancy(string $name, string $color): Response
     {
         // ... create and return a Response object
     }

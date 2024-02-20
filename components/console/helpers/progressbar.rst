@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; Progress Bar
-
 Progress Bar
 ============
 
@@ -99,6 +96,12 @@ The progress will then be displayed as a throbber:
      0/3 [>---------------------------]   0%
      1/3 [=========>------------------]  33%
      3/3 [============================] 100%
+
+.. tip::
+
+    An alternative to this is to use a
+    :doc:`/components/console/helpers/progressindicator` instead of a
+    progress bar.
 
 Whenever your task is finished, don't forget to call
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::finish` to ensure
@@ -339,7 +342,7 @@ that displays the number of remaining steps::
 
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
-        function (ProgressBar $progressBar, OutputInterface $output) {
+        function (ProgressBar $progressBar, OutputInterface $output): int {
             return $progressBar->getMaxSteps() - $progressBar->getProgress();
         }
     );

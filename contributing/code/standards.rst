@@ -49,19 +49,16 @@ short example containing most features described below::
     {
         public const SOME_CONST = 42;
 
-        /**
-         * @var string
-         */
-        private $fooBar;
-        private $qux;
+        private string $fooBar;
 
         /**
          * @param $dummy some argument description
          */
-        public function __construct(string $dummy, Qux $qux)
-        {
+        public function __construct(
+            string $dummy,
+            private Qux $qux,
+        ) {
             $this->fooBar = $this->transformText($dummy);
-            $this->qux = $qux;
         }
 
         /**
@@ -114,7 +111,7 @@ short example containing most features described below::
         /**
          * Performs some basic operations for a given value.
          */
-        private function performOperations(mixed $value = null, bool $theSwitch = false)
+        private function performOperations(mixed $value = null, bool $theSwitch = false): void
         {
             if (!$theSwitch) {
                 return;
@@ -179,6 +176,25 @@ Structure
 
 * Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
 
+* Exception and error messages must not contain backticks,
+  even when referring to a technical element (such as a method or variable name).
+  Double quotes must be used at all time:
+
+  .. code-block:: diff
+
+    - Expected `foo` option to be one of ...
+    + Expected "foo" option to be one of ...
+
+* Exception and error messages must start with a capital letter and finish with a dot ``.``;
+
+* Exception, error and deprecation messages containing a class name must
+  use ``get_debug_type()`` instead of ``::class`` to retrieve it:
+
+  .. code-block:: diff
+
+    - throw new \Exception(sprintf('Command "%s" failed.', $command::class));
+    + throw new \Exception(sprintf('Command "%s" failed.', get_debug_type($command)));
+
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
 
@@ -219,8 +235,11 @@ Naming Conventions
 
 * Suffix exceptions with ``Exception``;
 
-* Prefix PHP attributes with ``As`` where applicable (e.g. ``#[AsCommand]``
-  instead of ``#[Command]``, but ``#[When]`` is kept as-is);
+* Prefix PHP attributes that relate to service configuration with ``As``
+  (e.g. ``#[AsCommand]``, ``#[AsEventListener]``, etc.);
+
+* Prefix PHP attributes that relate to controller arguments with ``Map``
+  (e.g. ``#[MapEntity]``, ``#[MapCurrentUser]``, etc.);
 
 * Use UpperCamelCase for naming PHP files (e.g. ``EnvVarProcessor.php``) and
   snake case for naming Twig templates and web assets (``section_layout.html.twig``,

@@ -1,7 +1,3 @@
-.. index::
-   single: Doctrine; Resolving target entities
-   single: Doctrine; Define relationships with abstract classes and interfaces
-
 How to Define Relationships with Abstract Classes and Interfaces
 ================================================================
 
@@ -69,11 +65,8 @@ An Invoice entity::
     #[ORM\Table(name: 'invoice')]
     class Invoice
     {
-        /**
-         * @var InvoiceSubjectInterface
-         */
         #[ORM\ManyToOne(targetEntity: InvoiceSubjectInterface::class)]
-        protected $subject;
+        protected InvoiceSubjectInterface $subject;
     }
 
 An InvoiceSubjectInterface::
@@ -138,7 +131,7 @@ about the replacement:
         use App\Model\InvoiceSubjectInterface;
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $orm = $doctrine->orm();
             // ...
             $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);

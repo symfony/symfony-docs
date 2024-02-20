@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Creating a Custom Access Denied Handler
-
 How to Customize Access Denied Responses
 ========================================
 
@@ -36,11 +33,9 @@ unauthenticated user tries to access a protected resource::
 
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
-        private $urlGenerator;
-
-        public function __construct(UrlGeneratorInterface $urlGenerator)
-        {
-            $this->urlGenerator = $urlGenerator;
+        public function __construct(
+            private UrlGeneratorInterface $urlGenerator,
+        ) {
         }
 
         public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
@@ -94,7 +89,7 @@ Now, configure this service ID as the entry point for the firewall:
         use App\Security\AuthenticationEntryPoint;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 // ....
                 ->entryPoint(AuthenticationEntryPoint::class)
@@ -170,7 +165,7 @@ configure it under your firewall:
         use App\Security\AccessDeniedHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 // ....
                 ->accessDeniedHandler(AccessDeniedHandler::class)

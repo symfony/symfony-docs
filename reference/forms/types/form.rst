@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; FormType
-
 FormType Field
 ==============
 
@@ -65,6 +62,13 @@ The actual default value of this option depends on other field options:
   (empty string).
 
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
+
+``is_empty_callback``
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+This callable takes form data and returns whether value is considered empty.
 
 .. _reference-form-option-error-bubbling:
 

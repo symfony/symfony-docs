@@ -71,7 +71,7 @@ and what headers your reverse proxy uses to send information:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework
                 // the IP address (or range) of your proxy
                 ->trustedProxies('192.0.0.1,10.0.0.0/8')
@@ -91,6 +91,22 @@ and what headers your reverse proxy uses to send information:
 The Request object has several ``Request::HEADER_*`` constants that control exactly
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
 so you can also pass your own value (e.g. ``0b00110``).
+
+.. tip::
+
+    You can set a ``TRUSTED_PROXIES`` env var to configure proxies on a per-environment basis:
+
+    .. code-block:: bash
+
+        # .env
+        TRUSTED_PROXIES=127.0.0.1,10.0.0.0/8
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
 .. caution::
 
@@ -123,23 +139,6 @@ That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
-.. tip::
-
-    In applications using :ref:`Symfony Flex <symfony-flex>` you can set the
-    ``TRUSTED_PROXIES`` env var:
-
-    .. code-block:: bash
-
-        # .env
-        TRUSTED_PROXIES=127.0.0.1,REMOTE_ADDR
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            trusted_proxies: '%env(TRUSTED_PROXIES)%'
-
 If you are also using a reverse proxy on top of your load balancer (e.g.
 `CloudFront`_), calling ``$request->server->get('REMOTE_ADDR')`` won't be
 enough, as it will only trust the node sitting directly above your application
@@ -169,4 +168,4 @@ handling the request::
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
-.. _`nginx realip module`: http://nginx.org/en/docs/http/ngx_http_realip_module.html
+.. _`nginx realip module`: https://nginx.org/en/docs/http/ngx_http_realip_module.html

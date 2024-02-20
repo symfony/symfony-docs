@@ -1,6 +1,3 @@
-.. index::
-   single: Configuration
-
 Configuring Symfony
 ===================
 
@@ -18,22 +15,20 @@ directory, which has this default structure:
     │  ├─ bundles.php
     │  ├─ routes.yaml
     │  └─ services.yaml
-    ├─ ...
 
-The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
-the ``services.yaml`` file configures the services of the
-:doc:`service container </service_container>`; the ``bundles.php`` file enables/
-disables packages in your application.
+* The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
+* The ``services.yaml`` file configures the services of the :doc:`service container </service_container>`;
+* The ``bundles.php`` file enables/disables packages in your application;
+* The ``config/packages/`` directory stores the configuration of every package
+  installed in your application.
 
-You'll be working mostly in the ``config/packages/`` directory. This directory
-stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
 
 When using :ref:`Symfony Flex <symfony-flex>`, which is enabled by default in
 Symfony applications, packages update the ``bundles.php`` file and create new
 files in ``config/packages/`` automatically during their installation. For
-example, this is the default file created by the "API Platform" package:
+example, this is the default file created by the "API Platform" bundle:
 
 .. code-block:: yaml
 
@@ -42,9 +37,9 @@ example, this is the default file created by the "API Platform" package:
         mapping:
             paths: ['%kernel.project_dir%/src/Entity']
 
-Splitting the configuration into lots of small files is intimidating for some
+Splitting the configuration into lots of small files might appear intimidating for some
 Symfony newcomers. However, you'll get used to them quickly and you rarely need
-to change these files after package installation
+to change these files after package installation.
 
 .. tip::
 
@@ -58,19 +53,19 @@ Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~
 
 Unlike other frameworks, Symfony doesn't impose a specific format on you to
-configure your applications. Symfony lets you choose between YAML, XML and PHP
-and throughout the Symfony documentation, all configuration examples will be
+configure your applications, but lets you choose between YAML, XML and PHP.
+Throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
 There isn't any practical difference between formats. In fact, Symfony
-transforms and caches all of them into PHP before running the application, so
-there's not even any performance difference between them.
+transforms all of them into PHP and caches them before running the application,
+so there's not even any performance difference.
 
 YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
 
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
-  and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
+  and validation for it. :doc:`Learn the YAML syntax </reference/formats/yaml>`;
 * **XML**: autocompleted/validated by most IDEs and is parsed natively by PHP,
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
 * **PHP**: very powerful and it allows you to create dynamic configuration with
@@ -141,7 +136,7 @@ configuration files, even if they use a different format:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->import('legacy_config.php');
 
             // glob expressions are also supported to load multiple files
@@ -191,6 +186,9 @@ reusable configuration value. By convention, parameters are defined under the
             app.some_constant: !php/const GLOBAL_CONSTANT
             app.another_constant: !php/const App\Entity\BlogPost::MAX_ITEMS
 
+            # Enum case as parameter values
+            app.some_enum: !php/enum App\Enum\PostState::Published
+
         # ...
 
     .. code-block:: xml
@@ -228,6 +226,9 @@ reusable configuration value. By convention, parameters are defined under the
                 <!-- PHP constants as parameter values -->
                 <parameter key="app.some_constant" type="constant">GLOBAL_CONSTANT</parameter>
                 <parameter key="app.another_constant" type="constant">App\Entity\BlogPost::MAX_ITEMS</parameter>
+
+                <!-- Enum case as parameter values -->
+                <parameter key="app.some_enum" type="enum">App\Enum\PostState::Published</parameter>
             </parameters>
 
             <!-- ... -->
@@ -239,8 +240,9 @@ reusable configuration value. By convention, parameters are defined under the
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Entity\BlogPost;
+        use App\Enum\PostState;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
@@ -258,6 +260,9 @@ reusable configuration value. By convention, parameters are defined under the
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
                 ->set('app.another_constant', BlogPost::MAX_ITEMS);
+
+                // Enum case as parameter values
+                ->set('app.some_enum', PostState::Published);
         };
 
         // ...
@@ -274,6 +279,10 @@ reusable configuration value. By convention, parameters are defined under the
             something@example.com
         </parameter>
 
+.. versionadded:: 6.2
+
+    Passing an enum case as a service parameter was introduced in Symfony 6.2.
+
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
 (e.g. ``%app.admin_email%``):
@@ -286,8 +295,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
         some_package:
             # any string surrounded by two % is replaced by that parameter value
             email_address: '%app.admin_email%'
-
-            # ...
 
     .. code-block:: xml
 
@@ -311,13 +318,17 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 
         // config/packages/some_package.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('some_package', [
-                // any string surrounded by two % is replaced by that parameter value
-                'email_address' => '%app.admin_email%',
+                // when using the param() function, you only have to pass the parameter name...
+                'email_address' => param('app.admin_email'),
 
-                // ...
+                // ... but if you prefer it, you can also pass the name as a string
+                // surrounded by two % (same as in YAML and XML formats) and Symfony will
+                // replace it by that parameter value
+                'email_address' => '%app.admin_email%',
             ]);
         };
 
@@ -325,7 +336,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 .. note::
 
     If some parameter value includes the ``%`` character, you need to escape it
-    by adding another ``%`` so Symfony doesn't consider it a reference to a
+    by adding another ``%``, so Symfony doesn't consider it a reference to a
     parameter name:
 
     .. configuration-block::
@@ -349,7 +360,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $container) {
+            return static function (ContainerConfigurator $container): void {
                 $container->parameters()
                     ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
             };
@@ -364,9 +375,6 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 
     Later in this article you can read how to
     :ref:`get configuration parameters in controllers and services <configuration-accessing-parameters>`.
-
-.. index::
-   single: Environments; Introduction
 
 .. _page-creation-environments:
 .. _page-creation-prod-cache-clear:
@@ -387,17 +395,19 @@ The files stored in ``config/packages/`` are used by Symfony to configure the
 the application behavior by changing which configuration files are loaded.
 That's the idea of Symfony's **configuration environments**.
 
-A typical Symfony application begins with three environments: ``dev`` (for local
-development), ``prod`` (for production servers) and ``test`` (for
-:doc:`automated tests </testing>`). When running the application, Symfony loads
-the configuration files in this order (the last files can override the values
-set in the previous ones):
+A typical Symfony application begins with three environments:
 
-#. ``config/packages/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
-#. ``config/packages/<environment-name>/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
-#. ``config/services.yaml`` (and ``services.xml`` and ``services.php`` files too);
-#. ``config/services_<environment-name>.yaml`` (and ``services_<environment-name>.xml``
-   and ``services_<environment-name>.php`` files too).
+* ``dev`` for local development,
+* ``prod`` for production servers,
+* ``test`` for :doc:`automated tests </testing>`.
+
+When running the application, Symfony loads the configuration files in this
+order (the last files can override the values set in the previous ones):
+
+#. The files in ``config/packages/*.<extension>``;
+#. the files in ``config/packages/<environment-name>/*.<extension>``;
+#. ``config/services.<extension>``;
+#. ``config/services_<environment-name>.<extension>``.
 
 Take the ``framework`` package, installed by default, as an example:
 
@@ -481,7 +491,7 @@ files directly in the ``config/packages/`` directory.
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
             use Symfony\Config\WebpackEncoreConfig;
 
-            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container) {
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container): void {
                 $webpackEncore
                     ->outputPath('%kernel.project_dir%/public/build')
                     ->strictMode(true)
@@ -578,53 +588,57 @@ The values of these options are resolved at runtime (only once per request, to
 not impact performance) so you can change the application behavior without having
 to clear the cache.
 
-This example shows how you could configure the database connection using an env var:
+This example shows how you could configure the application secret using an env var:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/packages/doctrine.yaml
-        doctrine:
-            dbal:
-                # by convention the env var names are always uppercase
-                url: '%env(resolve:DATABASE_URL)%'
+        # config/packages/framework.yaml
+        framework:
+            # by convention the env var names are always uppercase
+            secret: '%env(APP_SECRET)%'
             # ...
 
     .. code-block:: xml
 
-        <!-- config/packages/doctrine.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xmlns:framework="http://symfony.com/schema/dic/framework"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <doctrine:config>
-                <!-- by convention the env var names are always uppercase -->
-                <doctrine:dbal url="%env(resolve:DATABASE_URL)%"/>
-            </doctrine:config>
+            <!-- by convention the env var names are always uppercase -->
+            <framework:config secret="%env(APP_SECRET)%"/>
 
         </container>
 
     .. code-block:: php
 
-        // config/packages/doctrine.php
+        // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
-            $container->extension('doctrine', [
-                'dbal' => [
-                    // by convention the env var names are always uppercase
-                    'url' => env('DATABASE_URL')->resolve(),
-                    // or
-                    'url' => '%env(resolve:DATABASE_URL)%',
-                ],
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('framework', [
+                // by convention the env var names are always uppercase
+                'secret' => '%env(APP_SECRET)%',
             ]);
         };
+
+.. note::
+
+    Your env vars can also be accessed via the PHP super globals ``$_ENV`` and
+    ``$_SERVER`` (both are equivalent)::
+
+        $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
+        $env = $_SERVER['APP_ENV']; // prod
+
+    However, in Symfony applications there's no need to use this, because the
+    configuration system provides a better way of working with env vars.
 
 .. seealso::
 
@@ -640,7 +654,7 @@ To define the value of an env var, you have several options:
 
 .. tip::
 
-    Some hosts - like SymfonyCloud - offer easy `utilities to manage env vars`_
+    Some hosts - like Platform.sh - offer easy `utilities to manage env vars`_
     in production.
 
 .. note::
@@ -778,7 +792,9 @@ the right situation:
   but the overrides only apply to one environment.
 
 *Real* environment variables always win over env vars created by any of the
-``.env`` files.
+``.env`` files. This behavior depends on
+`variables_order <http://php.net/manual/en/ini.core.php#ini.variables-order>`_ to
+contain an ``E`` to expose the ``$_ENV`` superglobal.
 
 The ``.env`` and ``.env.<environment>`` files should be committed to the
 repository because they are the same for all developers and machines. However,
@@ -795,13 +811,33 @@ In production, the ``.env`` files are also parsed and loaded on each request. So
 the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
-To improve performance, you can optionally run the ``dump-env`` command (available
-in :ref:`Symfony Flex <symfony-flex>` 1.2 or later):
+To improve performance, you can optionally run the ``dotenv:dump`` command (available
+in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered
+by default, so you must register first in your services:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Symfony\Component\Dotenv\Command\DotenvDumpCommand:
+            - '%kernel.project_dir%/.env'
+            - '%kernel.environment%'
+
+In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
+(which is the default):
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+Then, run the command:
 
 .. code-block:: terminal
 
     # parses ALL .env files and dumps their final values to .env.local.php
-    $ composer dump-env prod
+    $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
 
 After running this command, Symfony will load the ``.env.local.php`` file to
 get the environment variables and will not spend time parsing the ``.env`` files.
@@ -961,7 +997,7 @@ doesn't work for parameters:
 
         use App\Service\MessageGenerator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 ->set('app.contents_dir', '...');
 
@@ -1016,9 +1052,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Controller\LuckyController;
-
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->services()
                 ->defaults()
                     // pass this value to any $projectDir argument for any service
@@ -1047,14 +1081,12 @@ parameters at once by type-hinting any of its constructor arguments with the
 
     class MessageGenerator
     {
-        private $params;
-
-        public function __construct(ContainerBagInterface $params)
-        {
-            $this->params = $params;
+        public function __construct(
+            private ContainerBagInterface $params,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // get any container parameter from $this->params, which stores all of them
             $sender = $this->params->get('mailer_sender');
@@ -1080,7 +1112,7 @@ namespace ``Symfony\Config``::
     // config/packages/security.php
     use Symfony\Config\SecurityConfig;
 
-    return static function (SecurityConfig $security) {
+    return static function (SecurityConfig $security): void {
         $security->firewall('main')
             ->pattern('^/*')
             ->lazy(true)

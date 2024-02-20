@@ -29,14 +29,13 @@ The following constraints ensure that:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Student
         {
             #[Assert\AtLeastOneOf([
                 new Assert\Regex('/#/'),
                 new Assert\Length(min: 10),
             ])]
-            protected $plainPassword;
+            protected string $plainPassword;
 
             #[Assert\AtLeastOneOf([
                 new Assert\Count(min: 3),
@@ -44,7 +43,7 @@ The following constraints ensure that:
                     new Assert\GreaterThanOrEqual(5)
                 ),
             ])]
-            protected $grades;
+            protected array $grades;
         }
 
     .. code-block:: yaml
@@ -114,7 +113,7 @@ The following constraints ensure that:
 
         class Student
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('password', new Assert\AtLeastOneOf([
                     'constraints' => [

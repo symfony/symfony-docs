@@ -1,7 +1,3 @@
-.. index::
-   single: DomCrawler
-   single: Components; DomCrawler
-
 The DomCrawler Component
 ========================
 
@@ -70,13 +66,6 @@ tree.
     isn't meant to dump content, you can see the "fixed" version of your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
-.. note::
-
-    If you need better support for HTML5 contents or want to get rid of the
-    inconsistencies of PHP's DOM extension, install the `html5-php library`_.
-    The DomCrawler component will use it automatically when the content has
-    an HTML5 doctype.
-
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -100,9 +89,9 @@ An anonymous function can be used to filter with more complex criteria::
 
     $crawler = $crawler
         ->filter('body > p')
-        ->reduce(function (Crawler $node, $i) {
+        ->reduce(function (Crawler $node, $i): bool {
             // filters every other node
-            return ($i % 2) == 0;
+            return ($i % 2) === 0;
         });
 
 To remove a node, the anonymous function must return ``false``.
@@ -253,7 +242,7 @@ Call an anonymous function on each node of the list::
     use Symfony\Component\DomCrawler\Crawler;
     // ...
 
-    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i): string {
         return $node->text();
     });
 
@@ -263,7 +252,7 @@ The result is an array of values returned by the anonymous function calls.
 When using nested crawler, beware that ``filterXPath()`` is evaluated in the
 context of the crawler::
 
-    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i) {
+    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i): avoid {
         // DON'T DO THIS: direct child can not be found
         $subCrawler = $parentCrawler->filterXPath('sub-tag/sub-child-tag');
 
@@ -650,5 +639,3 @@ Learn more
 
 * :doc:`/testing`
 * :doc:`/components/css_selector`
-
-.. _`html5-php library`: https://github.com/Masterminds/html5-php

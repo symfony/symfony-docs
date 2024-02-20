@@ -1,7 +1,3 @@
-.. index::
-   single: Lock
-   single: Components; Lock
-
 The Lock Component
 ==================
 
@@ -70,13 +66,44 @@ method can be safely called repeatedly, even if the lock is already acquired.
     third argument of the ``createLock()`` method to ``false``.
 
 Serializing Locks
-------------------
+-----------------
 
 The :class:`Symfony\\Component\\Lock\\Key` contains the state of the
 :class:`Symfony\\Component\\Lock\\Lock` and can be serialized. This
 allows the user to begin a long job in a process by acquiring the lock, and
-continue the job in another process using the same lock::
+continue the job in another process using the same lock.
 
+First, you may create a serializable class containing the resource and the
+key of the lock::
+
+    // src/Lock/RefreshTaxonomy.php
+    namespace App\Lock;
+
+    use Symfony\Component\Lock\Key;
+
+    class RefreshTaxonomy
+    {
+        public function __construct(
+            private object $article,
+            private Key $key,
+        ) {
+        }
+
+        public function getArticle(): object
+        {
+            return $this->article;
+        }
+
+        public function getKey(): Key
+        {
+            return $this->key;
+        }
+    }
+
+Then, you can use this class to dispatch all that's needed for another process
+to handle the rest of the job::
+
+    use App\Lock\RefreshTaxonomy;
     use Symfony\Component\Lock\Key;
     use Symfony\Component\Lock\Lock;
 
@@ -299,7 +326,7 @@ will fallback to a write lock by calling the ``acquire()`` method.
 The Owner of The Lock
 ---------------------
 
-Locks that are acquired for the first time are owned [1]_ by the ``Lock`` instance that acquired
+Locks that are acquired for the first time are :ref:`owned <lock-owner-technical-details>` by the ``Lock`` instance that acquired
 it. If you need to check whether the current ``Lock`` instance is (still) the owner of
 a lock, you can use the ``isAcquired()`` method::
 
@@ -336,7 +363,11 @@ lose the lock it acquired automatically::
     you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
     if the lock has been acquired by the **current process** only.
 
-.. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
+.. _lock-owner-technical-details:
+
+.. note::
+
+    Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
     not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
     with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
     is the owner of the lock.

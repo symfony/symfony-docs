@@ -1,6 +1,3 @@
-.. index::
-   single: Controller; As Services
-
 How to Define Controllers as Services
 =====================================
 
@@ -34,6 +31,7 @@ apply the ``controller.service_arguments`` tag to your controller services::
     // src/Controller/HelloController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\AsController;
     use Symfony\Component\Routing\Annotation\Route;
 
@@ -41,7 +39,7 @@ apply the ``controller.service_arguments`` tag to your controller services::
     class HelloController
     {
         #[Route('/hello', name: 'hello', methods: ['GET'])]
-        public function index()
+        public function index(): Response
         {
             // ...
         }
@@ -63,12 +61,13 @@ a service like: ``App\Controller\HelloController::index``:
         // src/Controller/HelloController.php
         namespace App\Controller;
 
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class HelloController
         {
             #[Route('/hello', name: 'hello', methods: ['GET'])]
-            public function index()
+            public function index(): Response
             {
                 // ...
             }
@@ -78,9 +77,9 @@ a service like: ``App\Controller\HelloController::index``:
 
         # config/routes.yaml
         hello:
-            path:     /hello
+            path:       /hello
             controller: App\Controller\HelloController::index
-            methods: GET
+            methods:    GET
 
     .. code-block:: xml
 
@@ -101,7 +100,7 @@ a service like: ``App\Controller\HelloController::index``:
         use App\Controller\HelloController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('hello', '/hello')
                 ->controller([HelloController::class, 'index'])
                 ->methods(['GET'])
@@ -130,7 +129,7 @@ which is a common practice when following the `ADR pattern`_
         #[Route('/hello/{name}', name: 'hello')]
         class Hello
         {
-            public function __invoke($name = 'World')
+            public function __invoke(string $name = 'World'): Response
             {
                 return new Response(sprintf('Hello %s!', $name));
             }
@@ -140,8 +139,8 @@ which is a common practice when following the `ADR pattern`_
 
         # config/routes.yaml
         hello:
-            path:     /hello/{name}
-            controller: app.hello_controller
+            path:       /hello/{name}
+            controller: App\Controller\HelloController
 
     .. code-block:: xml
 
@@ -153,16 +152,18 @@ which is a common practice when following the `ADR pattern`_
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello/{name}">
-                <default key="_controller">app.hello_controller</default>
+                <default key="_controller">App\Controller\HelloController</default>
             </route>
 
         </routes>
 
     .. code-block:: php
 
+        use App\Controller\HelloController;
+
         // app/config/routing.php
         $collection->add('hello', new Route('/hello', [
-            '_controller' => 'app.hello_controller',
+            '_controller' => HelloController::class,
         ]));
 
 Alternatives to base Controller Methods
@@ -188,14 +189,12 @@ service and use it directly::
 
     class HelloController
     {
-        private $twig;
-
-        public function __construct(Environment $twig)
-        {
-            $this->twig = $twig;
+        public function __construct(
+            private Environment $twig,
+        ) {
         }
 
-        public function index($name)
+        public function index(string $name): Response
         {
             $content = $this->twig->render(
                 'hello/index.html.twig',

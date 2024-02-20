@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; CollectionType
-
 CollectionType Field
 ====================
 
@@ -10,6 +7,9 @@ an array ``emails`` values. In more complex examples, you can embed entire
 forms, which is useful when creating forms that expose one-to-many
 relationships (e.g. a product from where you can manage many related product
 photos).
+
+When rendered, existing collection entries are indexed by the keys of the array
+that is passed as the collection type field data.
 
 +---------------------------+--------------------------------------------------------------------------+
 | Rendered as               | depends on the `entry_type`_ option                                      |
@@ -82,114 +82,6 @@ In this simple example, it's still impossible to add new addresses or remove
 existing addresses. Adding new addresses is possible by using the `allow_add`_
 option (and optionally the `prototype`_ option) (see example below). Removing
 emails from the ``emails`` array is possible with the `allow_delete`_ option.
-
-Adding and Removing Items
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If `allow_add`_ is set to ``true``, then if any unrecognized items are submitted,
-they'll be added seamlessly to the array of items. This is great in theory,
-but takes a little bit more effort in practice to get the client-side JavaScript
-correct.
-
-Following along with the previous example, suppose you start with two
-emails in the ``emails`` data array. In that case, two input fields will
-be rendered that will look something like this (depending on the name of
-your form):
-
-.. code-block:: html
-
-    <input type="email" id="form_emails_0" name="form[emails][0]" value="foo@foo.com"/>
-    <input type="email" id="form_emails_1" name="form[emails][1]" value="bar@bar.com"/>
-
-To allow your user to add another email, just set `allow_add`_ to ``true``
-and - via JavaScript - render another field with the name ``form[emails][2]``
-(and so on for more and more fields).
-
-To help make this easier, setting the `prototype`_ option to ``true`` allows
-you to render a "template" field, which you can then use in your JavaScript
-to help you dynamically create these new fields. A rendered prototype field
-will look like this:
-
-.. code-block:: html
-
-    <input type="email"
-        id="form_emails___name__"
-        name="form[emails][__name__]"
-        value=""
-    />
-
-By replacing ``__name__`` with some unique value (e.g. ``2``),
-you can build and insert new HTML fields into your form.
-
-Using jQuery, a simple example might look like this. If you're rendering
-your collection fields all at once (e.g. ``form_row(form.emails)``), then
-things are even easier because the ``data-prototype`` attribute is rendered
-automatically for you (with a slight difference - see note below) and all
-you need is this JavaScript code:
-
-.. code-block:: javascript
-
-    // add-collection-widget.js
-    jQuery(document).ready(function () {
-        jQuery('.add-another-collection-widget').click(function (e) {
-            var list = jQuery(jQuery(this).attr('data-list-selector'));
-            // Try to find the counter of the list or use the length of the list
-            var counter = list.data('widget-counter') || list.children().length;
-
-            // grab the prototype template
-            var newWidget = list.attr('data-prototype');
-            // replace the "__name__" used in the id and name of the prototype
-            // with a number that's unique to your emails
-            // end name attribute looks like name="contact[emails][2]"
-            newWidget = newWidget.replace(/__name__/g, counter);
-            // Increase the counter
-            counter++;
-            // And store it, the length cannot be used if deleting widgets is allowed
-            list.data('widget-counter', counter);
-
-            // create a new list element and add it to the list
-            var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-            newElem.appendTo(list);
-        });
-    });
-
-And update the template as follows:
-
-.. code-block:: html+twig
-
-    {{ form_start(form) }}
-        {# ... #}
-
-        {# store the prototype on the data-prototype attribute #}
-        <ul id="email-fields-list"
-            data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}"
-            data-widget-tags="{{ '<li></li>'|e }}"
-            data-widget-counter="{{ form.emails|length }}">
-        {% for emailField in form.emails %}
-            <li>
-                {{ form_errors(emailField) }}
-                {{ form_widget(emailField) }}
-            </li>
-        {% endfor %}
-        </ul>
-
-        <button type="button"
-            class="add-another-collection-widget"
-            data-list-selector="#email-fields-list">Add another email</button>
-
-        {# ... #}
-    {{ form_end(form) }}
-
-    <script src="add-collection-widget.js"></script>
-
-.. tip::
-
-    If you're rendering the entire collection at once, then the prototype
-    is automatically available on the ``data-prototype`` attribute of the
-    element (e.g. ``div`` or ``table``) that surrounds your collection.
-    The only difference is that the entire "form row" is rendered for you,
-    meaning you wouldn't have to wrap it in any container element as it
-    was done above.
 
 Field Options
 -------------
@@ -268,7 +160,7 @@ the value is removed from the collection. For example::
 
     $builder->add('users', CollectionType::class, [
         // ...
-        'delete_empty' => function (User $user = null) {
+        'delete_empty' => function (User $user = null): bool {
             return null === $user || empty($user->getFirstName());
         },
     ]);
@@ -333,7 +225,7 @@ on whether you are adding a new entry or editing an existing entry::
 entry_type
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Symfony\Component\Form\Extension\Core\Type\TextType'``
+**type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\TextType``
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,

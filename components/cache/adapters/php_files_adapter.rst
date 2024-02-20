@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: PHP Files Cache
-
 .. _component-cache-files-adapter:
 
 PHP Files Cache Adapter

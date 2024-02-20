@@ -61,7 +61,7 @@ entirely::
 
     use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         // ...
 
@@ -93,7 +93,7 @@ found::
 
     use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 
-    public function onKernelControllerArguments(ControllerArgumentsEvent $event)
+    public function onKernelControllerArguments(ControllerArgumentsEvent $event): void
     {
         // ...
 
@@ -125,7 +125,7 @@ HTML contents) into the ``Response`` object needed by Symfony::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\ViewEvent;
 
-    public function onKernelView(ViewEvent $event)
+    public function onKernelView(ViewEvent $event): void
     {
         $value = $event->getControllerResult();
         $response = new Response();
@@ -157,7 +157,7 @@ before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $response = $event->getResponse();
 
@@ -186,7 +186,7 @@ the translator's locale to the one of the parent request)::
 
     use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 
-    public function onKernelFinishRequest(FinishRequestEvent $event)
+    public function onKernelFinishRequest(FinishRequestEvent $event): void
     {
         if (null === $parentRequest = $this->requestStack->getParentRequest()) {
             return;
@@ -238,7 +238,7 @@ sent as response::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
         $response = new Response();

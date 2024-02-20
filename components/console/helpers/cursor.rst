@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; Cursor Helper
-
 Cursor Helper
 =============
 

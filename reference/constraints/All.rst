@@ -25,14 +25,13 @@ entry in that array:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes require PHP 8.1 or higher
         class User
         {
             #[Assert\All([
                 new Assert\NotBlank,
                 new Assert\Length(min: 5),
             ])]
-            protected $favoriteColors = [];
+            protected array $favoriteColors = [];
         }
 
     .. code-block:: yaml
@@ -78,7 +77,7 @@ entry in that array:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('favoriteColors', new Assert\All([
                     'constraints' => [

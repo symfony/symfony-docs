@@ -1,6 +1,3 @@
-.. index::
-   single: Controller; Upload; File
-
 How to Upload Files
 ===================
 
@@ -25,14 +22,14 @@ add a PDF brochure for each product. To do so, add a new property called
         // ...
 
         #[ORM\Column(type: 'string')]
-        private $brochureFilename;
+        private string $brochureFilename;
 
-        public function getBrochureFilename()
+        public function getBrochureFilename(): string
         {
             return $this->brochureFilename;
         }
 
-        public function setBrochureFilename($brochureFilename)
+        public function setBrochureFilename(string $brochureFilename): self
         {
             $this->brochureFilename = $brochureFilename;
 
@@ -61,7 +58,7 @@ so Symfony doesn't try to get/set its value from the related entity::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -92,7 +89,7 @@ so Symfony doesn't try to get/set its value from the related entity::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Product::class,
@@ -126,13 +123,14 @@ Finally, you need to update the code of the controller that handles the form::
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\String\Slugger\SluggerInterface;
 
     class ProductController extends AbstractController
     {
         #[Route('/product/new', name: 'app_product_new')]
-        public function new(Request $request, SluggerInterface $slugger)
+        public function new(Request $request, SluggerInterface $slugger): Response
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -170,7 +168,7 @@ Finally, you need to update the code of the controller that handles the form::
                 return $this->redirectToRoute('app_product_list');
             }
 
-            return $this->renderForm('product/new.html.twig', [
+            return $this->render('product/new.html.twig', [
                 'form' => $form,
             ]);
         }
@@ -239,16 +237,13 @@ logic to a separate service::
 
     class FileUploader
     {
-        private $targetDirectory;
-        private $slugger;
-
-        public function __construct($targetDirectory, SluggerInterface $slugger)
-        {
-            $this->targetDirectory = $targetDirectory;
-            $this->slugger = $slugger;
+        public function __construct(
+            private string $targetDirectory,
+            private SluggerInterface $slugger,
+        ) {
         }
 
-        public function upload(UploadedFile $file)
+        public function upload(UploadedFile $file): string
         {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
@@ -263,7 +258,7 @@ logic to a separate service::
             return $fileName;
         }
 
-        public function getTargetDirectory()
+        public function getTargetDirectory(): string
         {
             return $this->targetDirectory;
         }
@@ -317,8 +312,8 @@ Then, define a service for this class:
 
         use App\Service\FileUploader;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(FileUploader::class)
                 ->arg('$targetDirectory', '%brochures_directory%')
@@ -332,9 +327,10 @@ Now you're ready to use this service in the controller::
 
     use App\Service\FileUploader;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         // ...
 

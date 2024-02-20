@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Validation groups
-
 How to Define the Validation Groups to Use
 ==========================================
 
@@ -13,7 +10,7 @@ this as an option when :ref:`creating forms in controllers <creating-forms-in-co
 
     $form = $this->createFormBuilder($user, [
         'validation_groups' => ['registration'],
-    ])->add(...);
+    ])->add(/* ... */);
 
 When :ref:`creating forms in classes <creating-forms-in-classes>`, add the
 following to the ``configureOptions()`` method::

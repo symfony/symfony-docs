@@ -69,7 +69,7 @@ One way to accomplish this is with the When constraint:
         {
             #[Assert\GreaterThan(0)]
             #[Assert\When(
-                expression: 'this.type == "percent"',
+                expression: 'this.getType() == "percent"',
                 constraints: [
                     new Assert\LessThanOrEqual(100, message: 'The value should be between 1 and 100!')
                 ],
@@ -87,7 +87,7 @@ One way to accomplish this is with the When constraint:
                 value:
                     - GreaterThan: 0
                     - When:
-                        expression: "this.type == 'percent'"
+                        expression: "this.getType() == 'percent'"
                         constraints:
                             - LessThanOrEqual:
                                 value: 100
@@ -105,7 +105,7 @@ One way to accomplish this is with the When constraint:
                     <constraint name="GreaterThan">0</constraint>
                     <constraint name="When">
                         <option name="expression">
-                            this.type == 'percent'
+                            this.getType() == 'percent'
                         </option>
                         <option name="constraints">
                             <constraint name="LessThanOrEqual">
@@ -128,11 +128,11 @@ One way to accomplish this is with the When constraint:
 
         class Discount
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('value', new Assert\GreaterThan(0));
                 $metadata->addPropertyConstraint('value', new Assert\When([
-                    'expression' => 'this.type == "percent"',
+                    'expression' => 'this.getType() == "percent"',
                     'constraints' => [
                         new Assert\LessThanOrEqual([
                             'value' => 100,
@@ -147,7 +147,7 @@ One way to accomplish this is with the When constraint:
 
 The `expression`_ option is the expression that must return true in order
 to trigger the validation of the attached constraints. To learn more about
-the expression language syntax, see :doc:`/components/expression_language/syntax`.
+the expression language syntax, see :doc:`/reference/formats/expression_language`.
 
 For more information about the expression and what variables are available
 to you, see the `expression`_ option details below.
@@ -165,7 +165,7 @@ If the expression evaluates to a falsey value (i.e. using ``==``, not ``===``),
 validation of constraints won't be triggered.
 
 To learn more about the expression language syntax, see
-:doc:`/components/expression_language/syntax`.
+:doc:`/reference/formats/expression_language`.
 
 Depending on how you use the constraint, you have access to 1 or 2 variables
 in your expression:
@@ -198,7 +198,7 @@ validation based on its value:
             private ?string $type;
             // ...
 
-            public function doComplexValidation(ExecutionContextInterface $context, $payload)
+            public function doComplexValidation(ExecutionContextInterface $context, $payload): void
             {
                 // ...
             }
@@ -250,7 +250,7 @@ validation based on its value:
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('type', new Assert\When([
                     'expression' => 'value == "percent"',
@@ -260,7 +260,7 @@ validation based on its value:
                 ]));
             }
 
-            public function doComplexValidation(ExecutionContextInterface $context, $payload)
+            public function doComplexValidation(ExecutionContextInterface $context, $payload): void
             {
                 // ...
             }

@@ -92,6 +92,7 @@ Configuration examples should show all supported formats using
 * **Validation**: Attributes, YAML, XML, PHP
 * **Doctrine Mapping**: Attributes, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
+* **Code Examples** (if applicable): PHP Symfony, PHP Standalone
 
 Example
 ~~~~~~~
@@ -108,7 +109,7 @@ Example
     {
         // ...
 
-        public function foo($bar)
+        public function foo($bar): mixed
         {
             // set foo with a value of bar
             $foo = ...;
@@ -189,6 +190,9 @@ In addition, documentation follows these rules:
   * quick/quickly
   * simply
   * trivial
+
+* **Contractions** are allowed: e.g. you can write ``you would`` as well as ``you'd``,
+  ``it is`` as well as ``it's``, etc.
 
 .. _`the Sphinx documentation`: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#literal-blocks
 .. _`Twig Coding Standards`: https://twig.symfony.com/doc/3.x/coding_standards.html

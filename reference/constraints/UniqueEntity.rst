@@ -48,7 +48,7 @@ between all of the rows in your user table:
         {
             #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
             #[Assert\Email]
-            protected $email;
+            protected string $email;
         }
 
     .. code-block:: yaml
@@ -91,13 +91,38 @@ between all of the rows in your user table:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new UniqueEntity([
                     'fields' => 'email',
                 ]));
 
                 $metadata->addPropertyConstraint('email', new Assert\Email());
+            }
+        }
+
+        // src/Form/Type/UserType.php
+        namespace App\Form\Type;
+
+        // ...
+        // DON'T forget the following use statement!!!
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        class UserType extends AbstractType
+        {
+            // ...
+
+            public function configureOptions(OptionsResolver $resolver): void
+            {
+                $resolver->setDefaults([
+                    // ...
+                    'data_class' => User::class,
+                    'constraints' => [
+                        new UniqueEntity(fields: ['email']),
+                    ],
+                ]);
             }
         }
 
@@ -120,7 +145,7 @@ Options
 em
 ~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
 The name of the entity manager to use for making the query to determine
 the uniqueness. If it's left blank, the correct entity manager will be
@@ -130,7 +155,7 @@ not need to be used.
 ``entityClass``
 ~~~~~~~~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
 By default, the query performed to ensure the uniqueness uses the repository of
 the current class instance. However, in some cases, such as when using Doctrine
@@ -169,10 +194,10 @@ Consider this example:
         class Service
         {
             #[ORM\ManyToOne(targetEntity: Host::class)]
-            public $host;
+            public Host $host;
 
             #[ORM\Column(type: 'integer')]
-            public $port;
+            public int $port;
         }
 
     .. code-block:: yaml
@@ -211,15 +236,16 @@ Consider this example:
         // src/Entity/Service.php
         namespace App\Entity;
 
+        use App\Entity\Host;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Service
         {
-            public $host;
-            public $port;
+            public Host $host;
+            public int $port;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new UniqueEntity([
                     'fields' => ['host', 'port'],

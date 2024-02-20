@@ -1,6 +1,3 @@
-.. index::
-    single: Environment Variable Processors; env vars
-
 .. _env-var-processors:
 
 Environment Variable Processors
@@ -48,7 +45,7 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
 
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->router()
                 ->httpPort('%env(int:HTTP_PORT)%')
                 // or
@@ -101,7 +98,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
                 $container->setParameter('env(SECRET)', 'some_secret');
                 $framework->secret(env('SECRET')->string());
             };
@@ -147,7 +144,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
                 $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
                 $framework->httpMethodOverride(env('HTTP_METHOD_OVERRIDE')->bool());
             };
@@ -234,7 +231,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\SecurityConfig;
 
-            return static function (ContainerBuilder $container, SecurityConfig $security) {
+            return static function (ContainerBuilder $container, SecurityConfig $security): void {
                 $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
                 $security->accessControl()
                     ->path('^/health-check$')
@@ -254,9 +251,8 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(TRUSTED_HOSTS): '["10.0.0.1", "10.0.0.2"]'
-            framework:
-                trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+                env(ALLOWED_LANGUAGES): '["en","de","es"]'
+                app_allowed_languages: '%env(json:ALLOWED_LANGUAGES)%'
 
         .. code-block:: xml
 
@@ -271,10 +267,9 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(TRUSTED_HOSTS)">["10.0.0.1", "10.0.0.2"]</parameter>
+                    <parameter key="env(ALLOWED_LANGUAGES)">["en","de","es"]</parameter>
+                    <parameter key="app_allowed_languages">%env(json:ALLOWED_LANGUAGES)%</parameter>
                 </parameters>
-
-                <framework:config trusted-hosts="%env(json:TRUSTED_HOSTS)%"/>
             </container>
 
         .. code-block:: php
@@ -285,9 +280,9 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
-                $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
-                $framework->trustedHosts(env('TRUSTED_HOSTS')->json());
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(ALLOWED_LANGUAGES)', '["en","de","es"]');
+                $container->setParameter('app_allowed_languages', '%env(json:ALLOWED_LANGUAGES)%');
             };
 
 ``env(resolve:FOO)``
@@ -300,8 +295,7 @@ Symfony provides the following env var processors:
 
             # config/packages/sentry.yaml
             parameters:
-                env(HOST): '10.0.0.1'
-                sentry_host: '%env(HOST)%'
+                sentry_host: '10.0.0.1'
                 env(SENTRY_DSN): 'http://%sentry_host%/project'
             sentry:
                 dsn: '%env(resolve:SENTRY_DSN)%'
@@ -316,8 +310,7 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(HOST)">10.0.0.1</parameter>
-                    <parameter key="sentry_host">%env(HOST)%</parameter>
+                    <parameter key="sentry_host">10.0.0.1</parameter>
                     <parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</parameter>
                 </parameters>
 
@@ -327,8 +320,7 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/sentry.php
-            $container->setParameter('env(HOST)', '10.0.0.1');
-            $container->setParameter('sentry_host', '%env(HOST)%');
+            $container->setParameter('sentry_host', '10.0.0.1');
             $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
             $container->loadFromExtension('sentry', [
                 'dsn' => '%env(resolve:SENTRY_DSN)%',
@@ -343,9 +335,8 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(TRUSTED_HOSTS): "10.0.0.1,10.0.0.2"
-            framework:
-               trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+                env(ALLOWED_LANGUAGES): "en,de,es"
+                app_allowed_languages: '%env(csv:ALLOWED_LANGUAGES)%'
 
         .. code-block:: xml
 
@@ -360,10 +351,9 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(TRUSTED_HOSTS)">10.0.0.1,10.0.0.2</parameter>
+                    <parameter key="env(ALLOWED_LANGUAGES)">en,de,es</parameter>
+                    <parameter key="app_allowed_languages">%env(csv:ALLOWED_LANGUAGES)%</parameter>
                 </parameters>
-
-                <framework:config trusted-hosts="%env(csv:TRUSTED_HOSTS)%"/>
             </container>
 
         .. code-block:: php
@@ -374,9 +364,9 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
-                $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
-                $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(ALLOWED_LANGUAGES)', 'en,de,es');
+                $container->setParameter('app_allowed_languages', '%env(csv:ALLOWED_LANGUAGES)%');
             };
 
 ``env(shuffle:FOO)``
@@ -423,8 +413,8 @@ Symfony provides the following env var processors:
             // config/services.php
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-            return static function (ContainerConfigurator $configurator): void {
-                $container = $configurator->services()
+            return static function (ContainerConfigurator $containerConfigurator): void {
+                $container = $containerConfigurator->services()
                     ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
             };
 
@@ -441,7 +431,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
+                env(AUTH_FILE): '%kernel.project_dir%/config/auth.json'
             google:
                 auth: '%env(file:AUTH_FILE)%'
 
@@ -482,7 +472,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(PHP_FILE): '../config/.runtime-evaluated.php'
+                env(PHP_FILE): '%kernel.project_dir%/config/.runtime-evaluated.php'
             app:
                 auth: '%env(require:PHP_FILE)%'
 
@@ -524,7 +514,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
+                env(AUTH_FILE): '%kernel.project_dir%/config/auth.json'
             google:
                 auth: '%env(trim:file:AUTH_FILE)%'
 
@@ -753,9 +743,7 @@ Symfony provides the following env var processors:
 
 ``env(enum:FooEnum:BAR)``
     Tries to convert an environment variable to an actual ``\BackedEnum`` value.
-    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument.
-
-    .. code-block:: php
+    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument::
 
         # App\Enum\Environment
         enum Environment: string
@@ -860,14 +848,14 @@ create a class that implements
 
     class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
     {
-        public function getEnv(string $prefix, string $name, \Closure $getEnv)
+        public function getEnv(string $prefix, string $name, \Closure $getEnv): string
         {
             $env = $getEnv($name);
 
             return strtolower($env);
         }
 
-        public static function getProvidedTypes()
+        public static function getProvidedTypes(): array
         {
             return [
                 'lowercase' => 'string',

@@ -1,8 +1,3 @@
-.. index::
-    single: Cache Item
-    single: Cache Expiration
-    single: Cache Exceptions
-
 Cache Items
 ===========
 
@@ -32,7 +27,7 @@ The only way to create cache items is via cache pools. When using the Cache
 Contracts, they are passed as arguments to the recomputation callback::
 
     // $cache pool object was created before
-    $productsCount = $cache->get('stats.products_count', function (ItemInterface $item) {
+    $productsCount = $cache->get('stats.products_count', function (ItemInterface $item): string {
         // [...]
     });
 

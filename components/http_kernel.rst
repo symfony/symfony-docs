@@ -1,8 +1,3 @@
-.. index::
-   single: HTTP
-   single: HttpKernel
-   single: Components; HttpKernel
-
 The HttpKernel Component
 ========================
 
@@ -131,17 +126,10 @@ listeners to the events discussed below::
     // trigger the kernel.terminate event
     $kernel->terminate($request, $response);
 
-See ":ref:`http-kernel-working-example`" for a more concrete implementation.
+See ":ref:`A full working example <http-kernel-working-example>`" for a more concrete implementation.
 
 For general information on adding listeners to the events below, see
-:ref:`http-kernel-creating-listener`.
-
-.. caution::
-
-    As of 3.1 the :class:`Symfony\\Component\\HttpKernel\\HttpKernel` accepts a
-    fourth argument, which must be an instance of
-    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`.
-    In 4.0 this argument will become mandatory.
+:ref:`Creating an Event Listener <http-kernel-creating-listener>`.
 
 .. seealso::
 
@@ -236,7 +224,7 @@ This implementation is explained more in the sidebar below::
 
     interface ControllerResolverInterface
     {
-        public function getController(Request $request);
+        public function getController(Request $request): callable|false;
     }
 
 Internally, the ``HttpKernel::handle()`` method first calls
@@ -352,11 +340,18 @@ of arguments that should be passed when executing that callable.
        available through the `variadic`_ argument.
 
     This functionality is provided by resolvers implementing the
-    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ValueResolverInterface`.
     There are four implementations which provide the default behavior of
     Symfony but customization is the key here. By implementing the
-    ``ArgumentValueResolverInterface`` yourself and passing this to the
+    ``ValueResolverInterface`` yourself and passing this to the
     ``ArgumentResolver``, you can extend this functionality.
+
+    .. versionadded:: 6.2
+
+        The ``ValueResolverInterface`` was introduced in Symfony 6.2. Prior to
+        6.2, you had to use the
+        :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`,
+        which defines different methods.
 
 .. _component-http-kernel-calling-controller:
 
@@ -642,7 +637,7 @@ else that can be used to create a working example::
 
     $routes = new RouteCollection();
     $routes->add('hello', new Route('/hello/{name}', [
-        '_controller' => function (Request $request) {
+        '_controller' => function (Request $request): Response {
             return new Response(
                 sprintf("Hello %s", $request->get('name'))
             );
@@ -711,7 +706,7 @@ look like this::
     use Symfony\Component\HttpKernel\Event\RequestEvent;
     // ...
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;

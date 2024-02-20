@@ -1,6 +1,3 @@
-.. index::
-   single: Expressions in the Framework
-
 Using Expressions in Security Access Controls
 =============================================
 
@@ -23,13 +20,20 @@ and ``#[IsGranted()]`` attribute also accept an
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\ExpressionLanguage\Expression;
         use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Security\Http\Attribute\IsGranted;
 
         class MyController extends AbstractController
         {
+            #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_MANAGER")'))]
+            public function show(): Response
+            {
+                // ...
+            }
+
             #[IsGranted(new Expression(
                 '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
             ))]
-            public function index(): Response
+            public function edit(): Response
             {
                 // ...
             }
@@ -46,7 +50,16 @@ and ``#[IsGranted()]`` attribute also accept an
 
         class MyController extends AbstractController
         {
-            public function index(): Response
+            public function show(): Response
+            {
+                $this->denyAccessUnlessGranted(new Expression(
+                    'is_granted("ROLE_ADMIN") or is_granted("ROLE_MANAGER")'
+                ));
+
+                // ...
+            }
+
+            public function edit(): Response
             {
                 $this->denyAccessUnlessGranted(new Expression(
                     '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
@@ -65,12 +78,10 @@ user object's ``isSuperAdmin()`` method returns ``true``, then access will
 be granted (note: your User object may not have an ``isSuperAdmin()`` method,
 that method is invented for this example).
 
-This uses an expression and you can learn more about the expression language
-syntax, see :doc:`/components/expression_language/syntax`.
-
 .. _security-expression-variables:
 
-Inside the expression, you have access to a number of variables:
+The security expression must use any valid :doc:`expression language syntax </reference/formats/expression_language>`
+and can use any of these variables created by Symfony:
 
 ``user``
     An instance of :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
@@ -130,6 +141,69 @@ Additionally, you have access to a number of functions inside the expression:
     via a remember-me cookie and ``is_fully_authenticated()`` *only* returns
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
+
+In case of the ``#[IsGranted()]`` attribute, the subject can also be an
+:class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
+
+    // src/Controller/MyController.php
+    namespace App\Controller;
+
+    use App\Entity\Post;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\ExpressionLanguage\Expression;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class MyController extends AbstractController
+    {
+        #[IsGranted(
+            attribute: new Expression('user === subject'),
+            subject: new Expression('args["post"].getAuthor()'),
+        )]
+        public function index(Post $post): Response
+        {
+            // ...
+        }
+    }
+
+In this example, we fetch the author of the post and use it as the subject. If the subject matches
+the current user, then access will be granted.
+
+The subject may also be an array where the key can be used as an alias for the result of an expression::
+
+    #[IsGranted(
+        attribute: new Expression('user === subject["author"] and subject["post"].isPublished()'),
+        subject: [
+            'author' => new Expression('args["post"].getAuthor()'),
+            'post',
+        ],
+    )]
+    public function index(Post $post): Response
+    {
+        // ...
+    }
+
+Here, access will be granted if the author matches the current user
+and the post's ``isPublished()`` method returns ``true``.
+
+You can also use the current request as the subject::
+
+    #[IsGranted(
+        attribute: '...',
+        subject: new Expression('request'),
+    )]
+    public function index(): Response
+    {
+        // ...
+    }
+
+Inside the subject's expression, you have access to two variables:
+
+``request``
+    The :ref:`Symfony Request <component-http-foundation-request>` object that
+    represents the current request.
+``args``
+    An array of controller arguments that are passed to the controller.
 
 Learn more
 ----------

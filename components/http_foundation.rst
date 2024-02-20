@@ -1,8 +1,3 @@
-.. index::
-   single: HTTP
-   single: HttpFoundation
-   single: Components; HttpFoundation
-
 The HttpFoundation Component
 ============================
 
@@ -560,7 +555,7 @@ represented by a PHP callable instead of a string::
     use Symfony\Component\HttpFoundation\StreamedResponse;
 
     $response = new StreamedResponse();
-    $response->setCallback(function () {
+    $response->setCallback(function (): void {
         var_dump('Hello World');
         flush();
         sleep(2);
@@ -744,7 +739,7 @@ the response content will look like this:
 Session
 -------
 
-The session information is in its own document: :doc:`/components/http_foundation/sessions`.
+The session information is in its own document: :doc:`/session`.
 
 Safe Content Preference
 -----------------------
@@ -790,14 +785,12 @@ methods. You can inject this as a service anywhere in your application::
 
     class UserApiNormalizer
     {
-        private UrlHelper $urlHelper;
-
-        public function __construct(UrlHelper $urlHelper)
-        {
-            $this->urlHelper = $urlHelper;
+        public function __construct(
+            private UrlHelper $urlHelper,
+        ) {
         }
 
-        public function normalize($user)
+        public function normalize($user): array
         {
             return [
                 'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),
@@ -812,10 +805,9 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    /components/http_foundation/*
     /controller
     /controller/*
-    /session/*
+    /session
     /http_cache/*
 
 .. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/

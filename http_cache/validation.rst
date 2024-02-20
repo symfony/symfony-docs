@@ -1,6 +1,3 @@
-.. index::
-    single: Cache; Validation
-
 HTTP Cache Validation
 =====================
 
@@ -30,10 +27,6 @@ Like with expiration, there are two different HTTP headers that can be used
 to implement the validation model: ``ETag`` and ``Last-Modified``.
 
 .. include:: /http_cache/_expiration-and-validation.rst.inc
-
-.. index::
-    single: Cache; Etag header
-    single: HTTP headers; Etag
 
 Validation with the ``ETag`` Header
 -----------------------------------
@@ -111,10 +104,6 @@ doing so much work.
     argument to the
     :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
 
-.. index::
-    single: Cache; Last-Modified header
-    single: HTTP headers; Last-Modified
-
 Validation with the ``Last-Modified`` Header
 --------------------------------------------
 
@@ -174,10 +163,6 @@ response header. If they are equivalent, the ``Response`` will be set to a
     of the original cached response before sending the request back to the
     app. This is how the cache and server communicate with each other and
     decide whether or not the resource has been updated since it was cached.
-
-.. index::
-    single: Cache; Conditional get
-    single: HTTP; 304
 
 .. _optimizing-cache-validation:
 

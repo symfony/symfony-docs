@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Impersonating User
-
 How to Impersonate a User
 =========================
 
@@ -57,7 +54,7 @@ listener:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -116,7 +113,7 @@ as the value to the current URL:
 
             // config/packages/security.php
             use Symfony\Config\SecurityConfig;
-            return static function (SecurityConfig $security) {
+            return static function (SecurityConfig $security): void {
                 // ...
                 $security->firewall('main')
                     // ...
@@ -166,14 +163,12 @@ the impersonator user::
 
     class SomeService
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -234,7 +229,7 @@ also adjust the query parameter name via the ``parameter`` setting:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -296,7 +291,7 @@ This feature allows you to control the redirection target route via ``target_rou
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -352,7 +347,7 @@ be called):
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -374,11 +369,9 @@ logic you want::
 
     class SwitchToCustomerVoter extends Voter
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         protected function supports($attribute, $subject): bool
@@ -426,9 +419,9 @@ The firewall dispatches the ``security.switch_user`` event right after the imper
 is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
 passed to the listener, and you can use this to get the user that you are now impersonating.
 
-The :doc:`/session/locale_sticky_session` article does not update the locale
-when you impersonate a user. If you *do* want to be sure to update the locale when
-you switch users, add an event subscriber on this event::
+The :ref:`locale-sticky-session` section does not update the locale when you
+impersonate a user. If you *do* want to be sure to update the locale when you
+switch users, add an event subscriber on this event::
 
     // src/EventListener/SwitchUserSubscriber.php
     namespace App\EventListener;

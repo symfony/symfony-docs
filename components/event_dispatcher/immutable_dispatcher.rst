@@ -1,6 +1,3 @@
-.. index::
-    single: EventDispatcher; Immutable
-
 The Immutable Event Dispatcher
 ==============================
 
@@ -16,9 +13,10 @@ To use it, first create a normal ``EventDispatcher`` dispatcher and register
 some listeners or subscribers::
 
     use Symfony\Component\EventDispatcher\EventDispatcher;
+    use Symfony\Contracts\EventDispatcher\Event;
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addListener('foo.action', function ($event) {
+    $dispatcher->addListener('foo.action', function (Event $event): void {
         // ...
     });
 

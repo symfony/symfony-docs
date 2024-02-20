@@ -1,6 +1,3 @@
-.. index::
-    single: Validation; Translation
-
 How to Translate Validation Constraint Messages
 ===============================================
 
@@ -23,7 +20,7 @@ your application::
 
     class Author
     {
-        public $name;
+        public string $name;
     }
 
 Add constraints through any of the supported methods. Set the message option
@@ -42,7 +39,7 @@ property is not empty, add the following:
         class Author
         {
             #[Assert\NotBlank(message: 'author.name.not_blank')]
-            public $name;
+            public string $name;
         }
 
     .. code-block:: yaml
@@ -82,9 +79,9 @@ property is not empty, add the following:
 
         class Author
         {
-            public $name;
+            public string $name;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new NotBlank([
                     'message' => 'author.name.not_blank',

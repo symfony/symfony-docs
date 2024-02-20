@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Empty data
-
 How to Configure empty Data for a Form Class
 ============================================
 
@@ -53,11 +50,9 @@ that constructor with no arguments::
 
     class BlogType extends AbstractType
     {
-        private $someDependency;
-
-        public function __construct($someDependency)
-        {
-            $this->someDependency = $someDependency;
+        public function __construct(
+            private object $someDependency,
+        ) {
         }
         // ...
 
@@ -99,7 +94,7 @@ The closure must accept a ``FormInterface`` instance as the first argument::
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'empty_data' => function (FormInterface $form) {
+            'empty_data' => function (FormInterface $form): Blog {
                 return new Blog($form->get('title')->getData());
             },
         ]);

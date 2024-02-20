@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; FileType
-
 FileType Field
 ==============
 
@@ -36,7 +33,7 @@ be used to move the ``attachment`` file to a permanent location::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-    public function upload()
+    public function upload(): Response
     {
         // ...
 

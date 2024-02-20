@@ -29,7 +29,7 @@ will contain a host name.
         class ServerSettings
         {
             #[Assert\Hostname(message: 'The server name must be a valid hostname.')]
-            protected $name;
+            protected string $name;
         }
 
     .. code-block:: yaml
@@ -68,7 +68,9 @@ will contain a host name.
 
         class ServerSettings
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new Assert\Hostname([
                     'message' => 'The server name must be a valid hostname.',

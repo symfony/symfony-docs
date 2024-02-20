@@ -1,7 +1,3 @@
-.. index::
-   single: String
-   single: Components; String
-
 The String Component
 ====================
 
@@ -165,8 +161,10 @@ There is also a method to get the bytes stored at some position::
     b('नमस्ते')->bytesAt(1);   // [164]
     u('नमस्ते')->bytesAt(1);   // [224, 164, 174]
 
-Methods Related to Length and White Spaces
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _methods-related-to-length-and-white-spaces:
+
+Methods Related to Length and Whitespace Characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -190,14 +188,14 @@ Methods Related to Length and White Spaces
     END";
     u($text)->width(); // 14
 
-    // only returns TRUE if the string is exactly an empty string (not even white spaces)
+    // only returns TRUE if the string is exactly an empty string (not even whitespace)
     u('hello world')->isEmpty();  // false
     u('     ')->isEmpty();        // false
     u('')->isEmpty();             // true
 
-    // removes all white spaces from the start and end of the string and replaces two
-    // or more consecutive white spaces inside contents by a single white space
-    u("  \n\n   hello        world \n    \n")->collapseWhitespace(); // 'hello world'
+    // removes all whitespace (' \n\r\t\x0C') from the start and end of the string and
+    // replaces two or more consecutive whitespace characters with a single space (' ') character
+    u("  \n\n   hello \t   \n\r   world \n    \n")->collapseWhitespace(); // 'hello world'
 
 Methods to Change Case
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -286,7 +284,7 @@ Methods to Pad and Trim
     // repeats the given string the number of times passed as argument
     u('_.')->repeat(10); // '_._._._._._._._._._.'
 
-    // removes the given characters (by default, white spaces) from the string
+    // removes the given characters (default: whitespace characters) from the beginning and end of a string
     u('   Lorem Ipsum   ')->trim(); // 'Lorem Ipsum'
     u('Lorem Ipsum   ')->trim('m'); // 'Lorem Ipsum   '
     u('Lorem Ipsum')->trim('m');    // 'Lorem Ipsu'
@@ -354,7 +352,7 @@ Methods to Search and Replace
     // replaces all occurrences of the given regular expression
     u('(+1) 206-555-0100')->replaceMatches('/[^A-Za-z0-9]++/', ''); // '12065550100'
     // you can pass a callable as the second argument to perform advanced replacements
-    u('123')->replaceMatches('/\d/', function ($match) {
+    u('123')->replaceMatches('/\d/', function (string $match): string {
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
 
@@ -451,6 +449,50 @@ letter A with ring above"*) or a sequence of two code points (``U+0061`` =
     u('å')->normalize(UnicodeString::NFD);
     u('å')->normalize(UnicodeString::NFKD);
 
+Lazy-loaded Strings
+-------------------
+
+Sometimes, creating a string with the methods presented in the previous sections
+is not optimal. For example, consider a hash value that requires certain
+computation to obtain and which you might end up not using it.
+
+In those cases, it's better to use the :class:`Symfony\\Component\\String\\LazyString`
+class that allows to store a string whose value is only generated when you need it::
+
+    use Symfony\Component\String\LazyString;
+
+    $lazyString = LazyString::fromCallable(function (): string {
+        // Compute the string value...
+        $value = ...;
+
+        // Then return the final value
+        return $value;
+    });
+
+The callback will only be executed when the value of the lazy string is
+requested during the program execution. You can also create lazy strings from a
+``Stringable`` object::
+
+    class Hash implements \Stringable
+    {
+        public function __toString(): string
+        {
+            return $this->computeHash();
+        }
+
+        private function computeHash(): string
+        {
+            // Compute hash value with potentially heavy processing
+            $hash = ...;
+
+            return $hash;
+        }
+    }
+
+    // Then create a lazy string from this hash, which will trigger
+    // hash computation only if it's needed
+    $lazyHash = LazyString::fromStringable(new Hash());
+
 Slugger
 -------
 
@@ -476,7 +518,7 @@ that only includes safe ASCII characters::
     // $slug = '10-percent-or-5-euro'
 
     // for more dynamic substitutions, pass a PHP closure instead of an array
-    $slugger = new AsciiSlugger('en', function ($string, $locale) {
+    $slugger = new AsciiSlugger('en', function (string $string, string $locale): string {
         return str_replace('❤️', 'love', $string);
     });
 
@@ -490,10 +532,11 @@ The slugger transliterates the original string into the Latin script before
 applying the other transformations. The locale of the original string is
 detected automatically, but you can define it explicitly::
 
-    // this tells the slugger to transliterate from Korean language
+    // this tells the slugger to transliterate from Korean ('ko') language
     $slugger = new AsciiSlugger('ko');
 
     // you can override the locale as the third optional parameter of slug()
+    // e.g. this slugger transliterates from Persian ('fa') language
     $slug = $slugger->slug('...', '-', 'fa');
 
 In a Symfony application, you don't need to create the slugger yourself. Thanks
@@ -506,14 +549,12 @@ the injected slugger is the same as the request locale::
 
     class MyService
     {
-        private $slugger;
-
-        public function __construct(SluggerInterface $slugger)
-        {
-            $this->slugger = $slugger;
+        public function __construct(
+            private SluggerInterface $slugger,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             $slug = $this->slugger->slug('...');
         }
@@ -585,6 +626,12 @@ class to convert English words from/to singular/plural with confidence::
 
 The value returned by both methods is always an array because sometimes it's not
 possible to determine a unique singular/plural form for the given word.
+
+.. note::
+
+    Symfony also provides a :class:`Symfony\\Component\\String\\Inflector\\FrenchInflector`
+    and an :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface` if
+    you need to implement your own inflector.
 
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
 .. _`Unicode`: https://en.wikipedia.org/wiki/Unicode

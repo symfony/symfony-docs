@@ -1,6 +1,3 @@
-.. index::
-    single: Form; Data mappers
-
 When and How to Use Data Mappers
 ================================
 
@@ -36,15 +33,11 @@ using an immutable color object::
 
     final class Color
     {
-        private $red;
-        private $green;
-        private $blue;
-
-        public function __construct(int $red, int $green, int $blue)
-        {
-            $this->red = $red;
-            $this->green = $green;
-            $this->blue = $blue;
+        public function __construct(
+            private int $red,
+            private int $green,
+            private int $blue,
+        ) {
         }
 
         public function getRed(): int
@@ -196,7 +189,7 @@ fields and only one of them needs to be mapped in some special way or you only
 need to change how it's written into the underlying object. In that case, register
 a PHP callable that is able to write or read to/from that specific object::
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 

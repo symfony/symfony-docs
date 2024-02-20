@@ -1,6 +1,3 @@
-.. index::
-   single: Bundle; Best practices
-
 Best Practices for Reusable Bundles
 ===================================
 
@@ -8,9 +5,6 @@ This article is all about how to structure your **reusable bundles** to be
 configurable and extendable. Reusable bundles are those meant to be shared
 privately across many company projects or publicly so any Symfony project can
 install them.
-
-.. index::
-   pair: Bundle; Naming conventions
 
 .. _bundles-naming-conventions:
 
@@ -167,7 +161,7 @@ Doctrine Entities/Documents
 
 If the bundle includes Doctrine ORM entities and/or ODM documents, it's
 recommended to define their mapping using XML files stored in
-``Resources/config/doctrine/``. This allows to override that mapping using the
+``config/doctrine/``. This allows to override that mapping using the
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
 This is not possible when using annotations/attributes to define the mapping.
 
@@ -442,7 +436,7 @@ The end user can provide values in any configuration file:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 ->set('acme_blog.author.email', 'fabien@example.com')
             ;

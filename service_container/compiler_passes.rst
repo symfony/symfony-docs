@@ -1,7 +1,3 @@
-.. index::
-   single: DependencyInjection; Compiler passes
-   single: Service Container; Compiler passes
-
 How to Work with Compiler Passes
 ================================
 

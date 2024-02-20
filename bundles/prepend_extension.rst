@@ -1,7 +1,3 @@
-.. index::
-   single: Configuration; Semantic
-   single: Bundle; Extension configuration
-
 How to Simplify Configuration of Multiple Bundles
 =================================================
 
@@ -35,7 +31,7 @@ To give an Extension the power to do this, it needs to implement
     {
         // ...
 
-        public function prepend(ContainerBuilder $container)
+        public function prepend(ContainerBuilder $container): void
         {
             // ...
         }
@@ -56,7 +52,7 @@ a configuration setting in multiple bundles as well as disable a flag in multipl
 in case a specific other bundle is not registered::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         // get all bundles
         $bundles = $container->getParameter('kernel.bundles');
@@ -143,7 +139,7 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
         // config/packages/acme_something.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('acme_something', [
                 // ...
                 'use_acme_goodbye' => false,
@@ -173,20 +169,20 @@ method::
 
     class FooBundle extends AbstractBundle
     {
-        public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
+        public function prependExtension(ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
         {
             // prepend
-            $builder->prependExtensionConfig('framework', [
+            $containerBuilder->prependExtensionConfig('framework', [
                 'cache' => ['prefix_seed' => 'foo/bar'],
             ]);
 
             // append
-            $container->extension('framework', [
+            $containerConfigurator->extension('framework', [
                 'cache' => ['prefix_seed' => 'foo/bar'],
             ]);
 
             // append from file
-            $container->import('../config/packages/cache.php');
+            $containerConfigurator->import('../config/packages/cache.php');
         }
     }
 

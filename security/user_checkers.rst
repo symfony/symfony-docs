@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Creating and Enabling Custom User Checkers
-
 How to Create and Enable Custom User Checkers
 =============================================
 
@@ -108,7 +105,7 @@ is the service id of your user checker:
         use App\Security\UserChecker;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 ->pattern('^/')
@@ -183,8 +180,8 @@ order in which user checkers are called::
         use App\Security\AccountEnabledUserChecker;
         use App\Security\APIAccessAllowedUserChecker;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(AccountEnabledUserChecker::class)
                 ->tag('security.user_checker.api', ['priority' => 10])
@@ -247,7 +244,7 @@ Once your checker services are tagged, next you will need configure your firewal
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('api')
                 ->pattern('^/api')

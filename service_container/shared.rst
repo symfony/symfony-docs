@@ -1,6 +1,3 @@
-.. index::
-    single: Service Container; Shared Services
-
 How to Define Non Shared Services
 =================================
 
@@ -36,8 +33,8 @@ in your service definition:
 
         use App\SomeNonSharedService;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(SomeNonSharedService::class)
                 ->share(false);

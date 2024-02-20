@@ -24,7 +24,7 @@ Basic Usage
         class Author
         {
             #[Assert\Url]
-            protected $bioUrl;
+            protected string $bioUrl;
         }
 
     .. code-block:: yaml
@@ -60,7 +60,9 @@ Basic Usage
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url());
             }
@@ -107,7 +109,7 @@ Parameter        Description
             #[Assert\Url(
                 message: 'The url {{ value }} is not a valid url',
             )]
-            protected $bioUrl;
+            protected string $bioUrl;
         }
 
     .. code-block:: yaml
@@ -146,7 +148,9 @@ Parameter        Description
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url([
                     'message' => 'The url "{{ value }}" is not a valid url.',
@@ -181,7 +185,7 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
             #[Assert\Url(
                 protocols: ['http', 'https', 'ftp'],
             )]
-            protected $bioUrl;
+            protected string $bioUrl;
         }
 
     .. code-block:: yaml
@@ -223,7 +227,9 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url([
                     'protocols' => ['http', 'https', 'ftp'],
@@ -254,7 +260,7 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
             #[Assert\Url(
                 relativeProtocol: true,
             )]
-            protected $bioUrl;
+            protected string $bioUrl;
         }
 
     .. code-block:: yaml
@@ -292,7 +298,9 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioUrl', new Assert\Url([
                     'relativeProtocol' => true,

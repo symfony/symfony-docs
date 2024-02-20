@@ -1,6 +1,3 @@
-.. index::
-   single: Logging
-
 How to Log Messages to different Files
 ======================================
 
@@ -80,7 +77,7 @@ can do it in any (or all) environments:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('security')
                 ->type('stream')
                 ->path('%kernel.logs_dir%/security.log')
@@ -99,10 +96,9 @@ can do it in any (or all) environments:
     such handler will ignore this configuration and will process every message
     passed to them.
 
-YAML Specification
-------------------
+.. _yaml-specification:
 
-You can specify the configuration by many forms:
+You can specify the configuration in different ways:
 
 .. code-block:: yaml
 
@@ -162,7 +158,7 @@ You can also configure additional channels without the need to tag your services
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->channels(['foo', 'bar', 'foo_bar']);
         };
 
@@ -186,10 +182,10 @@ change your constructor like this:
 
 .. code-block:: diff
 
-    -     public function __construct(LoggerInterface $logger)
-    +     public function __construct(LoggerInterface $fooBarLogger)
-        {
-            $this->logger = $fooBarLogger;
+        public function __construct(
+    -     LoggerInterface $logger,
+    +     LoggerInterface $fooBarLogger,
+        ) {
         }
 
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle

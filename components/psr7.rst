@@ -1,6 +1,3 @@
-.. index::
-   single: PSR-7
-
 The PSR-7 Bridge
 ================
 
@@ -33,8 +30,8 @@ Converting from HttpFoundation Objects to PSR-7
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The bridge provides an interface of a factory called
-:class:`Symfony\\Bridge\\PsrHttpMessage\\HttpMessageFactoryInterface`
-that builds objects implementing PSR-7 interfaces from HttpFoundation objects.
+`HttpMessageFactoryInterface`_ that builds objects implementing PSR-7
+interfaces from HttpFoundation objects.
 
 The following code snippet explains how to convert a :class:`Symfony\\Component\\HttpFoundation\\Request`
 to a ``Nyholm\Psr7\ServerRequest`` class implementing the
@@ -69,8 +66,8 @@ Converting Objects implementing PSR-7 Interfaces to HttpFoundation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 On the other hand, the bridge provide a factory interface called
-:class:`Symfony\\Bridge\\PsrHttpMessage\\HttpFoundationFactoryInterface`
-that builds HttpFoundation objects from objects implementing PSR-7 interfaces.
+`HttpFoundationFactoryInterface`_ that builds HttpFoundation objects from
+objects implementing PSR-7 interfaces.
 
 The next snippet explain how to convert an object implementing the
 ``Psr\Http\Message\ServerRequestInterface`` interface to a
@@ -96,3 +93,5 @@ to a :class:`Symfony\\Component\\HttpFoundation\\Response` instance::
 .. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`libraries that implement psr/http-factory-implementation`: https://packagist.org/providers/psr/http-factory-implementation
+.. _`HttpMessageFactoryInterface`: https://github.com/symfony/psr-http-message-bridge/blob/main/HttpMessageFactoryInterface.php
+.. _`HttpFoundationFactoryInterface`: https://github.com/symfony/psr-http-message-bridge/blob/main/HttpFoundationFactoryInterface.php

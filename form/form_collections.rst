@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Embed collection of forms
-
 How to Embed a Collection of Forms
 ==================================
 
@@ -14,13 +11,12 @@ Let's start by creating a ``Task`` entity::
     // src/Entity/Task.php
     namespace App\Entity;
 
-    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
 
     class Task
     {
-        protected $description;
-        protected $tags;
+        protected string $description;
+        protected Collection $tags;
 
         public function __construct()
         {
@@ -56,7 +52,7 @@ objects::
 
     class Tag
     {
-        private $name;
+        private string $name;
 
         public function getName(): string
         {
@@ -164,7 +160,7 @@ In your controller, you'll create a new form from the ``TaskType``::
                 // ... do your form processing, like saving the Task and Tag entities
             }
 
-            return $this->renderForm('task/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form,
             ]);
         }
@@ -215,6 +211,12 @@ Allowing "new" Tags with the "Prototype"
 Previously you added two tags to your task in the controller. Now let the users
 add as many tag forms as they need directly in the browser. This requires a bit
 of JavaScript code.
+
+.. tip::
+
+    Instead of writing the needed JavaScript code yourself, you can use Symfony
+    UX to implement this feature with only PHP and Twig code. See the
+    `Symfony UX Demo of Form Collections`_.
 
 But first, you need to let the form collection know that instead of exactly two,
 it will receive an *unknown* number of tags. Otherwise, you'll see a
@@ -358,7 +360,7 @@ Then create the controller:
 .. code-block:: javascript
 
     // assets/controllers/form-collection_controller.js
-    
+
     import { Controller } from '@hotwired/stimulus';
 
     export default class extends Controller {
@@ -374,7 +376,7 @@ Then create the controller:
             const item = document.createElement('li');
             item.innerHTML = this.prototypeValue.replace(/__name__/g, this.indexValue);
             this.collectionContainerTarget.appendChild(item);
-            this.indexValue++;           
+            this.indexValue++;
         }
     }
 
@@ -463,7 +465,7 @@ you will learn about next!).
             // ...
 
             #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
-            protected $tags;
+            protected Collection $tags;
 
         .. code-block:: yaml
 
@@ -646,12 +648,8 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
         class TaskController extends AbstractController
         {
-            public function edit($id, Request $request, EntityManagerInterface $entityManager): Response
+            public function edit(Task $task, Request $request, EntityManagerInterface $entityManager): Response
             {
-                if (null === $task = $entityManager->getRepository(Task::class)->find($id)) {
-                    throw $this->createNotFoundException('No task found for id '.$id);
-                }
-
                 $originalTags = new ArrayCollection();
 
                 // Create an ArrayCollection of the current Tag objects in the database
@@ -709,4 +707,5 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
+.. _`Symfony UX Demo of Form Collections`: https://ux.symfony.com/live-component/demos/form-collection-type
 .. _`Stimulus`: https://symfony.com/doc/current/frontend/encore/simple-example.html#stimulus-symfony-ux

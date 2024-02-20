@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Service definitions
-
 How to work with Service Definition Objects
 ===========================================
 

@@ -1,7 +1,3 @@
-.. index::
-   single: Service Container
-   single: DependencyInjection; Container
-
 Service Container
 =================
 
@@ -86,9 +82,6 @@ in the container.
     list, you can run ``php bin/console debug:container``. But most of the time,
     you won't need to worry about this. See :ref:`services-wire-specific-service`.
     See :doc:`/service_container/debug`.
-
-.. index::
-   single: Service Container; Configuring services
 
 .. _service-container-creating-service:
 
@@ -210,9 +203,9 @@ each time you ask for it.
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return function(ContainerConfigurator $configurator) {
+            return function(ContainerConfigurator $container): void {
                 // default configuration for services in *this* file
-                $services = $configurator->services()
+                $services = $container->services()
                     ->defaults()
                         ->autowire()      // Automatically injects dependencies in your services.
                         ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
@@ -240,11 +233,13 @@ each time you ask for it.
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
+.. _service-container_limiting-to-env:
+
 Limiting Services to a specific Symfony Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are using PHP 8.0 or later, you can use the ``#[When]`` PHP
-attribute to only register the class as a service in some environments::
+You can use the ``#[When]`` attribute to only register the class
+as a service in some environments::
 
     use Symfony\Component\DependencyInjection\Attribute\When;
 
@@ -282,11 +277,9 @@ and use it later::
 
     class MessageGenerator
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
         public function getHappyMessage(): string
@@ -345,13 +338,10 @@ made. To do that, you create a new class::
 
     class SiteUpdateManager
     {
-        private $messageGenerator;
-        private $mailer;
-
-        public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
-        {
-            $this->messageGenerator = $messageGenerator;
-            $this->mailer = $mailer;
+        public function __construct(
+            private MessageGenerator $messageGenerator,
+            private MailerInterface $mailer,
+        ) {
         }
 
         public function notifyOfSiteUpdate(): bool
@@ -417,13 +407,13 @@ example, suppose you want to make the admin email configurable:
       class SiteUpdateManager
       {
           // ...
-    +    private $adminEmail;
+    +    private string $adminEmail;
 
-    -    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
-    +    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, string $adminEmail)
-          {
-              // ...
-    +        $this->adminEmail = $adminEmail;
+          public function __construct(
+              private MessageGenerator $messageGenerator,
+              private MailerInterface $mailer,
+    +        private string $adminEmail
+          ) {
           }
 
           public function notifyOfSiteUpdate(): bool
@@ -499,7 +489,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         use App\Service\SiteUpdateManager;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             // same as before
@@ -574,8 +564,8 @@ parameter and in PHP config use the ``service()`` function:
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(MessageGenerator::class)
                 ->args([service('logger')])
@@ -621,11 +611,9 @@ The ``MessageGenerator`` service created earlier requires a ``LoggerInterface`` 
 
     class MessageGenerator
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
         // ...
     }
@@ -680,7 +668,7 @@ But, you can control this and pass in a different logger:
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container): void {
             // ... same code as before
 
             // explicitly configure the service
@@ -699,6 +687,125 @@ For a full list of *all* possible services in the container, run:
 .. code-block:: terminal
 
     $ php bin/console debug:container
+
+Remove Services
+---------------
+
+A service can be removed from the service container if needed. This is useful
+for example to make a service unavailable in some :ref:`configuration environment <configuration-environments>`
+(e.g. in the ``test`` environment):
+
+.. configuration-block::
+
+    .. code-block:: php
+
+        // config/services_test.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\RemovedService;
+
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
+
+            $services->remove(RemovedService::class);
+        };
+
+Now, the container will not contain the ``App\RemovedService`` in the ``test``
+environment.
+
+Injecting a Closure as an Argument
+----------------------------------
+
+It is possible to inject a callable as an argument of a service.
+Let's add an argument to our ``MessageGenerator`` constructor::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+
+    class MessageGenerator
+    {
+        private string $messageHash;
+
+        public function __construct(
+            private LoggerInterface $logger,
+            callable $generateMessageHash,
+        ) {
+            $this->messageHash = $generateMessageHash();
+        }
+        // ...
+    }
+
+Now, we would add a new invokable service to generate the message hash::
+
+    // src/Hash/MessageHashGenerator.php
+    namespace App\Hash;
+
+    class MessageHashGenerator
+    {
+        public function __invoke(): string
+        {
+            // Compute and return a message hash
+        }
+    }
+
+Our configuration looks like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ... same code as before
+
+            # explicitly configure the service
+            App\Service\MessageGenerator:
+                arguments:
+                    $logger: '@monolog.logger.request'
+                    $generateMessageHash: !closure '@App\Hash\MessageHashGenerator'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... same code as before -->
+
+                <!-- Explicitly configure the service -->
+                <service id="App\Service\MessageGenerator">
+                    <argument key="$logger" type="service" id="monolog.logger.request"/>
+                    <argument key="$generateMessageHash" type="closure" id="App\Hash\MessageHashGenerator"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageGenerator;
+
+        return function(ContainerConfigurator $containerConfigurator): void {
+            // ... same code as before
+
+            // explicitly configure the service
+            $services->set(MessageGenerator::class)
+                ->arg('$logger', service('monolog.logger.request'))
+                ->arg('$generateMessageHash', closure('App\Hash\MessageHashGenerator'))
+            ;
+        };
+
+.. versionadded:: 6.1
+
+    The ``closure`` argument type was introduced in Symfony 6.1.
 
 .. _services-binding:
 
@@ -776,13 +883,10 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services()
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services()
                 ->defaults()
                     // pass this value to any $adminEmail argument for any service
                     // that's defined in this file (including controller arguments)
@@ -916,7 +1020,7 @@ setting:
 
         use App\Service\PublicService;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container): void {
             // ... same as code before
 
             // explicitly configure the service
@@ -968,7 +1072,7 @@ key. For example, the default Symfony configuration contains this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             // makes classes in src/ available to be used as services
@@ -1074,11 +1178,8 @@ unique string as the key of each service config:
 Explicitly Configuring Services and Arguments
 ---------------------------------------------
 
-Prior to Symfony 3.3, all services and (typically) arguments were explicitly configured:
-it was not possible to :ref:`load services automatically <service-container-services-load-example>`
-and :ref:`autowiring <services-autowire>` was much less common.
-
-Both of these features are optional. And even if you use them, there may be some
+:ref:`Loading services automatically <service-container-services-load-example>`
+and :ref:`autowiring <services-autowire>` are optional. And even if you use them, there may be some
 cases where you want to manually wire a service. For example, suppose that you want
 to register *2* services for the ``SiteUpdateManager`` class - each with a different
 admin email. In this case, each needs to have a unique service id:
@@ -1150,7 +1251,7 @@ admin email. In this case, each needs to have a unique service id:
         use App\Service\MessageGenerator;
         use App\Service\SiteUpdateManager;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             // site_update_manager.superadmin is the service's id
@@ -1188,6 +1289,18 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
     then *three* services have been created (the automatic service + your two services)
     and the automatically loaded service will be passed - by default - when you type-hint
     ``SiteUpdateManager``. That's why creating the alias is a good idea.
+
+When using PHP closures to configure your services, it is possible to automatically
+inject the current environment value by adding a string argument named ``$env`` to
+the closure::
+
+    // config/packages/my_config.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+    return function(ContainerConfigurator $containerConfigurator, string $env): void {
+        // `$env` is automatically filled in, so you can configure your
+        // services depending on which environment you're on
+    };
 
 Learn more
 ----------

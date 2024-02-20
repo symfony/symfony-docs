@@ -1,7 +1,3 @@
-.. index::
-   single: UID
-   single: Components; UID
-
 The UID Component
 =================
 
@@ -58,9 +54,9 @@ to create each type of UUID::
     $uuid = Uuid::v3(Uuid::NAMESPACE_OID, $name);  // same as: Uuid::v3('oid', $name);
     $uuid = Uuid::v3(Uuid::NAMESPACE_X500, $name); // same as: Uuid::v3('x500', $name);
 
-    // UUID type 6 is not part of the UUID standard. It's lexicographically sortable
+    // UUID type 6 is not yet part of the UUID standard. It's lexicographically sortable
     // (like ULIDs) and contains a 60-bit timestamp and 63 extra unique bits.
-    // It's defined in http://gh.peabody.io/uuidv6/
+    // It's defined in https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-04.html#name-uuid-version-6
     $uuid = Uuid::v6(); // $uuid is an instance of Symfony\Component\Uid\UuidV6
 
     // UUID version 7 features a time-ordered value field derived from the well known
@@ -87,6 +83,93 @@ following methods to create a ``Uuid`` object from it::
     $uuid = Uuid::fromBase32('6SWYGR8QAV27NACAHMK5RG0RPG');
     $uuid = Uuid::fromBase58('TuetYWNHhmuSQ3xPoVLv9M');
     $uuid = Uuid::fromRfc4122('d9e7a184-5d5b-11ea-a62a-3499710062d0');
+
+You can also use the ``UuidFactory`` to generate UUIDs. First, you may
+configure the behavior of the factory using configuration files::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/uid.yaml
+        framework:
+            uid:
+                default_uuid_version: 7
+                name_based_uuid_version: 5
+                name_based_uuid_namespace: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+                time_based_uuid_version: 7
+                time_based_uuid_node: 121212121212
+
+    .. code-block:: xml
+
+        <!-- config/packages/uid.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:framework="http://symfony.com/schema/dic/symfony"
+                   xsi:schemaLocation="http://symfony.com/schema/dic/services
+                        https://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:uid
+                    default_uuid_version="7"
+                    name_based_uuid_version="5"
+                    name_based_uuid_namespace="6ba7b810-9dad-11d1-80b4-00c04fd430c8"
+                    time_based_uuid_version="7"
+                    time_based_uuid_node="121212121212"
+                />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/uid.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services()
+                ->defaults()
+                ->autowire()
+                ->autoconfigure();
+
+            $container->extension('framework', [
+                'uid' => [
+                    'default_uuid_version' => 7,
+                    'name_based_uuid_version' => 5,
+                    'name_based_uuid_namespace' => '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
+                    'time_based_uuid_version' => 7,
+                    'time_based_uuid_node' => 121212121212,
+                ],
+            ]);
+        };
+
+Then, you can inject the factory in your services and use it to generate UUIDs based
+on the configuration you defined::
+
+    namespace App\Service;
+
+    use Symfony\Component\Uid\Factory\UuidFactory;
+
+    class FooService
+    {
+        public function __construct(
+            private UuidFactory $uuidFactory,
+        ) {
+        }
+
+        public function generate(): void
+        {
+            // This creates a UUID of the version given in the configuration file (v7 by default)
+            $uuid = $this->uuidFactory->create();
+
+            $nameBasedUuid = $this->uuidFactory->nameBased(/** ... */);
+            $randomBasedUuid = $this->uuidFactory->randomBased();
+            $timestampBased = $this->uuidFactory->timeBased();
+
+            // ...
+        }
+    }
 
 Converting UUIDs
 ~~~~~~~~~~~~~~~~
@@ -153,12 +236,13 @@ type, which converts to/from UUID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Types\UuidType;
+    use Symfony\Component\Uid\Uuid;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Column(type: UuidType::NAME)]
-        private $someProperty;
+        private Uuid $someProperty;
 
         // ...
     }
@@ -182,7 +266,7 @@ entity primary keys::
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-        private $id;
+        private ?Uuid $id;
 
         public function getId(): ?Uuid
         {
@@ -262,6 +346,27 @@ following methods to create a ``Ulid`` object from it::
     $ulid = Ulid::fromBase58('1BKocMc5BnrVcuq2ti4Eqm');
     $ulid = Ulid::fromRfc4122('0171069d-593d-97d3-8b3e-23d06de5b308');
 
+Like UUIDs, ULIDs have their own factory, ``UlidFactory``, that can be used to generate them::
+
+    namespace App\Service;
+
+    use Symfony\Component\Uid\Factory\UlidFactory;
+
+    class FooService
+    {
+        public function __construct(
+            private UlidFactory $ulidFactory,
+        ) {
+        }
+
+        public function generate(): void
+        {
+            $ulid = $this->ulidFactory->create();
+
+            // ...
+        }
+    }
+
 There's also a special ``NilUlid`` class to represent ULID ``null`` values::
 
     use Symfony\Component\Uid\NilUlid;
@@ -318,12 +423,13 @@ type, which converts to/from ULID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Types\UlidType;
+    use Symfony\Component\Uid\Ulid;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Column(type: UlidType::NAME)]
-        private $someProperty;
+        private Ulid $someProperty;
 
         // ...
     }
@@ -347,7 +453,7 @@ entity primary keys::
         #[ORM\Column(type: UlidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
-        private $id;
+        private ?Ulid $id;
 
         public function getId(): ?Ulid
         {
@@ -436,7 +542,7 @@ configuration in your application before using these commands:
         use Symfony\Component\Uid\Command\InspectUlidCommand;
         use Symfony\Component\Uid\Command\InspectUuidCommand;
 
-        return static function (ContainerConfigurator $configurator): void {
+        return static function (ContainerConfigurator $container): void {
             // ...
 
             $services

@@ -1,14 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: APCu Cache
-    single: Array Cache
-    single: Chain Cache
-    single: Doctrine Cache
-    single: Filesystem Cache
-    single: Memcached Cache
-    single: PDO Cache, Doctrine DBAL Cache
-    single: Redis Cache
-
 .. _component-cache-cache-pools:
 
 Cache Pools and Supported Adapters
@@ -49,7 +38,7 @@ and deleting cache items using only two methods and a callback::
     $cache = new FilesystemAdapter();
 
     // The callable will only be executed on a cache miss.
-    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+    $value = $cache->get('my_cache_key', function (ItemInterface $item): string {
         $item->expiresAfter(3600);
 
         // ... do some HTTP request or heavy computations
@@ -174,7 +163,7 @@ when all items are successfully deleted)::
 
     If the cache component is used inside a Symfony application, you can remove
     items from cache pools using the following commands (which reside within
-    the :ref:`framework bundle <framework-bundle-configuration>`):
+    the :doc:`framework bundle </reference/configuration/framework>`):
 
     To remove *one specific item* from the *given pool*:
 
@@ -253,7 +242,7 @@ silently ignored)::
 
     If the cache component is used inside a Symfony application, you can prune
     *all items* from *all pools* using the following command (which resides within
-    the :ref:`framework bundle <framework-bundle-configuration>`):
+    the :doc:`framework bundle </reference/configuration/framework>`):
 
     .. code-block:: terminal
 

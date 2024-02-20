@@ -44,7 +44,6 @@ You can validate each of these constraints sequentially to solve these issues:
         use App\Validator\Constraints as AcmeAssert;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Place
         {
             #[Assert\Sequentially([
@@ -54,7 +53,7 @@ You can validate each of these constraints sequentially to solve these issues:
                 new Assert\Regex(Place::ADDRESS_REGEX),
                 new AcmeAssert\Geolocalizable,
             ])]
-            public $address;
+            public string $address;
         }
 
     .. code-block:: yaml
@@ -106,7 +105,7 @@ You can validate each of these constraints sequentially to solve these issues:
 
         class Place
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('address', new Assert\Sequentially([
                     new Assert\NotNull(),

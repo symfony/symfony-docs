@@ -1,9 +1,3 @@
-.. index::
-    single: DependencyInjection; ExpressionLanguage
-    single: DependencyInjection; Expressions
-    single: Service Container; ExpressionLanguage
-    single: Service Container; Expressions
-
 How to Inject Values Based on Complex Expressions
 =================================================
 
@@ -61,7 +55,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
         use App\Mail\MailerConfiguration;
         use App\Mailer;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(MailerConfiguration::class);
@@ -71,7 +65,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
                 ->args([expr("service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()")]);
         };
 
-To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
+Learn more about the :doc:`expression language syntax </reference/formats/expression_language>`.
 
 In this context, you have access to 3 functions:
 
@@ -122,8 +116,8 @@ via a ``container`` variable. Here's another example:
 
         use App\Mailer;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(Mailer::class)
                 ->args([expr("container.hasParameter('some_param') ? parameter('some_param') : 'default_value'")]);

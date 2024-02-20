@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: PHP Array Cache
-
 PHP Array Cache Adapter
 =======================
 

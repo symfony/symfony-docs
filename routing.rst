@@ -1,6 +1,3 @@
-.. index::
-   single: Routing
-
 Routing
 =======
 
@@ -146,7 +143,7 @@ the ``BlogController``:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('blog_list', '/blog')
                 // the controller value has the format [controller_class, method_name]
                 ->controller([BlogController::class, 'list'])
@@ -232,7 +229,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
         use App\Controller\BlogApiController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('api_post_show', '/api/posts/{id}')
                 ->controller([BlogApiController::class, 'show'])
                 ->methods(['GET', 'HEAD'])
@@ -249,7 +246,8 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
     route with a different method from an HTML form, add a hidden field called
     ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT">``).
     If you create your forms with :doc:`Symfony Forms </forms>` this is done
-    automatically for you.
+    automatically for you when the :ref:`framework.http_method_override <configuration-framework-http_method_override>`
+    option is ``true``.
 
 .. _routing-matching-expressions:
 
@@ -343,7 +341,7 @@ arbitrary matching logic:
         use App\Controller\DefaultController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('contact', '/contact')
                 ->controller([DefaultController::class, 'contact'])
                 ->condition('context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"')
@@ -359,9 +357,9 @@ arbitrary matching logic:
             ;
         };
 
-The value of the ``condition`` option is any valid
-:doc:`ExpressionLanguage expression </components/expression_language/syntax>`
-and can use any of these variables created by Symfony:
+The value of the ``condition`` option is an expression using any valid
+:doc:`expression language syntax </reference/formats/expression_language>` and
+can use any of these variables created by Symfony:
 
 ``context``
     An instance of :class:`Symfony\\Component\\Routing\\RequestContext`,
@@ -407,7 +405,7 @@ You can also use these functions:
         // Controller (using an alias):
         #[Route(condition: "service('route_checker').check(request)")]
         // Or without alias:
-        #[Route(condition: "service('Ap\\\Service\\\RouteChecker').check(request)")]
+        #[Route(condition: "service('App\\\Service\\\RouteChecker').check(request)")]
 
 .. versionadded:: 6.1
 
@@ -483,9 +481,8 @@ However, it's common to define routes where some parts are variable. For example
 the URL to display some blog post will probably include the title or slug
 (e.g. ``/blog/my-first-post`` or ``/blog/all-about-symfony``).
 
-In Symfony routes, variable parts are wrapped in ``{ ... }`` and they must have
-a unique name. For example, the route to display the blog post contents is
-defined as ``/blog/{slug}``:
+In Symfony routes, variable parts are wrapped in ``{ }``.
+For example, the route to display the blog post contents is defined as ``/blog/{slug}``:
 
 .. configuration-block::
 
@@ -538,7 +535,7 @@ defined as ``/blog/{slug}``:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('blog_show', '/blog/{slug}')
                 ->controller([BlogController::class, 'show'])
             ;
@@ -628,7 +625,7 @@ the ``{page}`` parameter using the ``requirements`` option:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('blog_list', '/blog/{page}')
                 ->controller([BlogController::class, 'list'])
                 ->requirements(['page' => '\d+'])
@@ -732,7 +729,7 @@ concise, but it can decrease route readability when requirements are complex:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('blog_list', '/blog/{page<\d+>}')
                 ->controller([BlogController::class, 'list'])
             ;
@@ -809,7 +806,7 @@ other configuration formats they are defined with the ``defaults`` option:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('blog_list', '/blog/{page}')
                 ->controller([BlogController::class, 'list'])
                 ->defaults(['page' => 1])
@@ -884,7 +881,7 @@ parameter:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('blog_list', '/blog/{page<\d+>?1}')
                 ->controller([BlogController::class, 'list'])
             ;
@@ -949,11 +946,11 @@ A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
 represents the user). This feature is called a "param converter".
 
-To add support for "param converters" we need SensioFrameworkExtraBundle:
+.. versionadded:: 6.2
 
-.. code-block:: terminal
-
-    $ composer require sensio/framework-extra-bundle
+    Starting from Symfony 6.2, route param conversion is a built-in feature.
+    In previous Symfony versions you had to install the package
+    ``sensio/framework-extra-bundle`` before using this feature.
 
 Now, keep the previous route configuration, but change the arguments of the
 controller action. Instead of ``string $slug``, add ``BlogPost $post``::
@@ -984,8 +981,9 @@ this case), the "param converter" makes a database request to find the object
 using the request parameters (``slug`` in this case). If no object is found,
 Symfony generates a 404 response automatically.
 
-Read the `full param converter documentation`_ to learn about the converters
-provided by Symfony and how to configure them.
+Check out the :ref:`Doctrine param conversion documentation <doctrine-entity-value-resolver>`
+to learn about the ``#[MapEntity]`` attribute that can be used to customize the
+database queries used to fetch the object from the route parameter.
 
 Special Parameters
 ~~~~~~~~~~~~~~~~~~
@@ -1080,7 +1078,7 @@ and in route imports. Symfony defines some special attributes with the same name
 
         use App\Controller\ArticleController;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('article_show', '/articles/{_locale}/search.{_format}')
                 ->controller([ArticleController::class, 'search'])
                 ->locale('en')
@@ -1150,7 +1148,7 @@ the controllers of the routes:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('blog_index', '/blog/{page}')
                 ->controller([BlogController::class, 'index'])
                 ->defaults([
@@ -1221,7 +1219,7 @@ A possible solution is to change the parameter requirements to be more permissiv
         use App\Controller\DefaultController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('share', '/share/{token}')
                 ->controller([DefaultController::class, 'share'])
                 ->requirements([
@@ -1279,7 +1277,7 @@ Route alias allow you to have multiple name for the same route:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->alias('new_route_name', 'original_route_name');
         };
 
@@ -1454,7 +1452,7 @@ when importing the routes.
         // config/routes/annotations.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import(
                     '../../src/Controller/',
                     'annotation',
@@ -1528,7 +1526,7 @@ defined in the class annotation.
             // config/routes/annotations.php
             use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-            return function (RoutingConfigurator $routes) {
+            return static function (RoutingConfigurator $routes): void {
                 $routes->import('../../src/Controller/', 'annotation')
                     // the second argument is the $trailingSlashOnRoot option
                     ->prefix('/blog', false)
@@ -1628,8 +1626,10 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 # * for temporary redirects, it uses the 307 status code instead of 302
                 # * for permanent redirects, it uses the 308 status code instead of 301
                 keepRequestMethod: true
-                # add this to remove the original route attributes when redirecting
+                # add this to remove all original route attributes when redirecting
                 ignoreAttributes: true
+                # or specify which attributes to ignore:
+                # ignoreAttributes: ['offset', 'limit']
 
         legacy_doc:
             path: /legacy/doc
@@ -1680,7 +1680,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('doc_shortcut', '/doc')
                 ->controller(RedirectController::class)
                  ->defaults([
@@ -1805,7 +1805,7 @@ host name:
         use App\Controller\MainController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('mobile_homepage', '/')
                 ->controller([MainController::class, 'mobileHomepage'])
                 ->host('m.example.com')
@@ -1894,7 +1894,7 @@ multi-tenant applications) and these parameters can be validated too with
         use App\Controller\MainController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('mobile_homepage', '/')
                 ->controller([MainController::class, 'mobileHomepage'])
                 ->host('{subdomain}.example.com')
@@ -1945,7 +1945,7 @@ Localized Routes (i18n)
 -----------------------
 
 If your application is translated into multiple languages, each route can define
-a different URL per each :doc:`translation locale </translation/locale>`. This
+a different URL per each :ref:`translation locale <translation-locale>`. This
 avoids the need for duplicating routes, which also reduces the potential bugs:
 
 .. configuration-block::
@@ -2001,7 +2001,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
         use App\Controller\CompanyController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('about_us', [
                 'en' => '/about-us',
                 'nl' => '/over-ons',
@@ -2061,7 +2061,7 @@ with a locale. This can be done by defining a different prefix for each locale
         // config/routes/annotations.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('../../src/Controller/', 'annotation')
                 ->prefix([
                     // don't prefix URLs for English, the default locale
@@ -2084,8 +2084,8 @@ locale.
             resource: '../../src/Controller/'
             type: annotation
             host:
-                en: 'https://www.example.com'
-                nl: 'https://www.example.nl'
+                en: 'www.example.com'
+                nl: 'www.example.nl'
 
     .. code-block:: xml
 
@@ -2096,8 +2096,8 @@ locale.
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
             <import resource="../../src/Controller/" type="annotation">
-                <host locale="en">https://www.example.com</host>
-                <host locale="nl">https://www.example.nl</host>
+                <host locale="en">www.example.com</host>
+                <host locale="nl">www.example.nl</host>
             </import>
         </routes>
 
@@ -2105,11 +2105,11 @@ locale.
 
         // config/routes/annotations.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('../../src/Controller/', 'annotation')
                 ->host([
-                    'en' => 'https://www.example.com',
-                    'nl' => 'https://www.example.nl',
+                    'en' => 'www.example.com',
+                    'nl' => 'www.example.nl',
                 ])
             ;
         };
@@ -2172,7 +2172,7 @@ session shouldn't be used when matching a request:
         use App\Controller\MainController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('homepage', '/')
                 ->controller([MainController::class, 'homepage'])
                 ->stateless()
@@ -2284,11 +2284,12 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
     class SomeService
     {
-        public function __construct(private UrlGeneratorInterface $router)
-        {
+        public function __construct(
+            private UrlGeneratorInterface $router,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -2382,7 +2383,7 @@ The solution is to configure the ``default_uri`` option to define the
         // config/packages/routing.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->router()->defaultUri('https://example.org/my/path/');
         };
 
@@ -2395,12 +2396,11 @@ Now you'll get the expected results when generating URLs in your commands::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-    use Symfony\Component\Routing\RouterInterface;
     // ...
 
     class SomeCommand extends Command
     {
-        public function __construct(private RouterInterface $router)
+        public function __construct(private UrlGeneratorInterface $urlGenerator)
         {
             parent::__construct();
         }
@@ -2408,20 +2408,20 @@ Now you'll get the expected results when generating URLs in your commands::
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // generate a URL with no route arguments
-            $signUpPage = $this->router->generate('sign_up');
+            $signUpPage = $this->urlGenerator->generate('sign_up');
 
             // generate a URL with route arguments
-            $userProfilePage = $this->router->generate('user_profile', [
+            $userProfilePage = $this->urlGenerator->generate('user_profile', [
                 'username' => $user->getUserIdentifier(),
             ]);
 
-            // generated URLs are "absolute paths" by default. Pass a third optional
-            // argument to generate different URLs (e.g. an "absolute URL")
-            $signUpPage = $this->router->generate('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
+            // by default, generated URLs are "absolute paths". Pass a third optional
+            // argument to generate different URIs (e.g. an "absolute URL")
+            $signUpPage = $this->urlGenerator->generate('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
             // when a route is localized, Symfony uses by default the current request locale
             // pass a different '_locale' value if you want to set the locale explicitly
-            $signUpPageInDutch = $this->router->generate('sign_up', ['_locale' => 'nl']);
+            $signUpPageInDutch = $this->urlGenerator->generate('sign_up', ['_locale' => 'nl']);
 
             // ...
         }
@@ -2546,7 +2546,7 @@ each route explicitly:
         use App\Controller\SecurityController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->add('login', '/login')
                 ->controller([SecurityController::class, 'login'])
                 ->schemes(['https'])
@@ -2605,7 +2605,7 @@ defined as annotations:
         // config/routes/annotations.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('../../src/Controller/', 'annotation')
                 ->schemes(['https'])
             ;
@@ -2617,10 +2617,55 @@ defined as annotations:
     :doc:`another way to enforce HTTP or HTTPS </security/force_https>`
     via the ``requires_channel`` setting.
 
+Signing URIs
+~~~~~~~~~~~~
+
+A signed URI is an URI that includes a hash value that depends on the contents of
+the URI. This way, you can later check the integrity of the signed URI by
+recomputing its hash value and comparing it with the hash included in the URI.
+
+Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpKernel\\UriSigner`
+service, which you can inject in your services or controllers::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
+
+    use Symfony\Component\HttpKernel\UriSigner;
+
+    class SomeService
+    {
+        public function __construct(
+            private UriSigner $uriSigner,
+        ) {
+        }
+
+        public function someMethod(): void
+        {
+            // ...
+
+            // generate a URL youself or get it somehow...
+            $url = 'https://example.com/foo/bar?sort=desc';
+
+            // sign the URL (it adds a query parameter called '_hash')
+            $signedUrl = $this->uriSigner->sign($url);
+            // $url = 'https://example.com/foo/bar?sort=desc&_hash=e4a21b9'
+
+            // check the URL signature
+            $uriSignatureIsValid = $this->uriSigner->check($signedUrl);
+            // $uriSignatureIsValid = true
+
+            // if you have access to the current Request object, you can use this
+            // other method to pass the entire Request object instead of the URI:
+            $uriSignatureIsValid = $this->uriSigner->checkRequest($request);
+        }
+    }
+
 Troubleshooting
 ---------------
 
 Here are some common errors you might see while working with routing:
+
+.. code-block:: text
 
     Controller "App\\Controller\\BlogController::show()" requires that you
     provide a value for the "$slug" argument.
@@ -2635,6 +2680,8 @@ This happens when your controller method has an argument (e.g. ``$slug``)::
 But your route path does *not* have a ``{slug}`` parameter (e.g. it is
 ``/blog/show``). Add a ``{slug}`` to your route path: ``/blog/show/{slug}`` or
 give the argument a default value (i.e. ``$slug = null``).
+
+.. code-block:: text
 
     Some mandatory parameters are missing ("slug") to generate a URL for route
     "blog_show".
@@ -2668,5 +2715,4 @@ Learn more about Routing
 
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
 .. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
-.. _`full param converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

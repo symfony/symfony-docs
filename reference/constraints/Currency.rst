@@ -27,7 +27,7 @@ a valid currency, you could do the following:
         class Order
         {
             #[Assert\Currency]
-            protected $currency;
+            protected string $currency;
         }
 
     .. code-block:: yaml
@@ -63,7 +63,9 @@ a valid currency, you could do the following:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('currency', new Assert\Currency());
             }

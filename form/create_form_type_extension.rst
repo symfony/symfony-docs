@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Form type extension
-
 How to Create a Form Type Extension
 ===================================
 
@@ -110,7 +107,7 @@ the database::
         /**
          * @var string The path - typically stored in the database
          */
-        private $path;
+        private string $path;
 
         // ...
 

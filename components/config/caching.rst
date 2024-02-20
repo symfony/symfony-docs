@@ -1,6 +1,3 @@
-.. index::
-   single: Config; Caching based on resources
-
 Caching based on Resources
 ==========================
 

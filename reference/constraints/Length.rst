@@ -32,7 +32,7 @@ and ``50``, you might add the following:
                 minMessage: 'Your first name must be at least {{ limit }} characters long',
                 maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
             )]
-            protected $firstName;
+            protected string $firstName;
         }
 
 
@@ -82,7 +82,9 @@ and ``50``, you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\Length([
                     'min' => 2,
@@ -123,8 +125,22 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-exactMessage
-~~~~~~~~~~~~
+``exactly``
+~~~~~~~~~~~
+
+**type**: ``integer``
+
+This option is the exact length value. Validation will fail if
+the given value's length is not **exactly** equal to this value.
+
+.. note::
+
+    This option is the one being set by default when using the Length constraint
+    without passing any named argument to it. This means that for example,
+    ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]`` are equivalent.
+
+``exactMessage``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 

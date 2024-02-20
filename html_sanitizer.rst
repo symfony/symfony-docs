@@ -197,7 +197,7 @@ You can do this by defining a new HTML sanitizer in the configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     ->blockElement('h1')
@@ -273,7 +273,7 @@ Safe elements
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // enable either of these
@@ -360,20 +360,17 @@ attributes from the `W3C Standard Proposal`_ are allowed.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow the <article> element and 2 attributes
-                    ->allowElement('article')
-                        ->attribute('class')
-                        ->attribute('data-attr')
+                    ->allowElement('article', ['class', 'data-attr'])
 
                     // allow the <img> element and preserve the src attribute
-                    ->allowElement('img')
-                        ->attribute('src')
+                    ->allowElement('img', 'src')
 
                     // allow the <h1> element with all safe attributes
-                    ->allowElement('h1', '*')
+                    ->allowElement('h1')
             ;
         };
 
@@ -446,7 +443,7 @@ This can also be used to remove elements from the allow list.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // remove <div>, but process the children
@@ -524,16 +521,14 @@ on all elements allowed *before this setting*.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow "src' on <iframe> elements
-                    ->allowAttribute('src')
-                        ->element('iframe')
+                    ->allowAttribute('src', ['iframe'])
 
                     // allow "data-attr" on all elements currently allowed
-                    ->allowAttribute('data-attr')
-                        ->element('*')
+                    ->allowAttribute('data-attr', '*')
             ;
         };
 
@@ -612,7 +607,7 @@ This option allows you to disallow attributes that were allowed before.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow the "data-attr" on all safe elements...
@@ -620,12 +615,10 @@ This option allows you to disallow attributes that were allowed before.
                         ->element('*')
 
                     // ...except for the <section> element
-                    ->dropAttriute('data-attr')
-                        ->element('section')
+                    ->dropAttribute('data-attr', ['section'])
 
                     // disallows "style' on any allowed element
                     ->dropAttribute('style')
-                        ->element('*')
             ;
         };
 
@@ -640,7 +633,7 @@ This option allows you to disallow attributes that were allowed before.
                 ->allowAttribute('data-attr')
 
                 // ...except for the <section> element
-                ->dropAttriute('data-attr', ['section'])
+                ->dropAttribute('data-attr', ['section'])
 
                 // disallows "style' on any allowed element
                 ->dropAttribute('style')
@@ -692,11 +685,10 @@ element (even if the original one didn't contain a ``rel`` attribute):
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    ->forceAttribute('a')
-                        ->attribute('rel', 'noopener noreferrer')
+                    ->forceAttribute('a', 'rel', 'noopener noreferrer')
             ;
         };
 
@@ -729,8 +721,9 @@ URLs of ``<a>`` elements:
                     app.post_sanitizer:
                         # ...
 
-                        # if `true`, all URLs will be forced using the `https://` scheme (instead
-                        # of e.g. `http://` or `mailto:`)
+                        # if `true`, all URLs using the `http://` scheme will be converted to
+                        # use the `https://` scheme instead. `http` still needs to be allowed
+                        # in `allowed_link_schemes`
                         force_https_urls: true
 
                         # specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -738,7 +731,8 @@ URLs of ``<a>`` elements:
                         allowed_link_schemes: ['http', 'https', 'mailto']
 
                         # specifies the allowed hosts, the attribute will be dropped if the
-                        # URL contains a different host
+                        # URL contains a different host. Subdomains are allowed: e.g. the following
+                        # config would also allow 'www.symfony.com', 'live.symfony.com', etc.
                         allowed_link_hosts: ['symfony.com']
 
                         # whether to allow relative links (i.e. URLs without scheme and host)
@@ -756,8 +750,9 @@ URLs of ``<a>`` elements:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- force-https-urls: if `true`, all URLs will be forced using the `https://`
-                                       scheme (instead of e.g. `http://` or `mailto:`) -->
+                <!-- force-https-urls: if `true`, all URLs using the `http://` scheme will be
+                                       converted to use the `https://` scheme instead.
+                                       `http` still needs to be allowed in `allowed-link-scheme` -->
                 <!-- allow-relative-links: whether to allow relative links (i.e. URLs without
                                            scheme and host) -->
                 <framework:html-sanitizer
@@ -771,7 +766,8 @@ URLs of ``<a>`` elements:
                     <allowed-link-scheme>mailto</allowed-link-scheme>
 
                     <!-- specifies the allowed hosts, the attribute will be dropped if the
-                         URL contains a different host -->
+                         URL contains a different host. Subdomains are allowed: e.g. the following
+                         config would also allow 'www.symfony.com', 'live.symfony.com', etc. -->
                     <allowed-link-host>symfony.com</allowed-link-host>
                 </framework:html-sanitizer>
             </framework:config>
@@ -782,21 +778,21 @@ URLs of ``<a>`` elements:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    // if `true`, all URLs will be forced using the `https://` scheme (instead
-                    // of e.g. `http://` or `mailto:`)
+                    // if `true`, all URLs using the `http://` scheme will be converted to
+                    // use the `https://` scheme instead. `http` still needs to be
+                    // allowed in `allowedLinkSchemes`
                     ->forceHttpsUrls(true)
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
                     // attribute will be dropped
-                    ->allowedLinkScheme('http')
-                    ->allowedLinkScheme('https')
-                    ->allowedLinkScheme('mailto')
+                    ->allowedLinkSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the
-                    // URL contains a different host
+                    // URL contains a different host. Subdomains are allowed: e.g. the following
+                    // config would also allow 'www.symfony.com', 'live.symfony.com', etc.
                     ->allowedLinkHost('symfony.com')
 
                     // whether to allow relative links (i.e. URLs without scheme and host)
@@ -811,8 +807,9 @@ URLs of ``<a>`` elements:
 
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
-                // if `true`, all URLs will be forced using the `https://` scheme (instead
-                // of e.g. `http://` or `mailto:`)
+                // if `true`, all URLs using the `http://` scheme will be converted to
+                // use the `https://` scheme instead. `http` still needs to be
+                // allowed in `allowedLinkSchemes`
                 ->forceHttpsUrls()
 
                 // specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -820,15 +817,15 @@ URLs of ``<a>`` elements:
                 ->allowedLinkSchemes(['http', 'https', 'mailto'])
 
                 // specifies the allowed hosts, the attribute will be dropped if the
-                // URL contains a different host
-                ->allowedLinkHosts(['symfony.com'])
+                // URL contains a different host which is not a subdomain of the allowed host
+                ->allowedLinkHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                 // whether to allow relative links (i.e. URLs without scheme and host)
                 ->allowRelativeLinks()
         );
 
 Force/Allow Media URLs
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 Like :ref:`link URLs <html-sanitizer-link-url>`, you can also control the
 URLs of other media in the HTML. The following attributes are checked by
@@ -845,8 +842,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                     app.post_sanitizer:
                         # ...
 
-                        # if `true`, all URLs will be forced using the `https://` scheme (instead
-                        # of e.g. `http://` or `data:`)
+                        # if `true`, all URLs using the `http://` scheme will be converted to
+                        # use the `https://` scheme instead. `http` still needs to be allowed
+                        # in `allowed_media_schemes`
                         force_https_urls: true
 
                         # specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -854,8 +852,8 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                         allowed_media_schemes: ['http', 'https', 'mailto']
 
                         # specifies the allowed hosts, the attribute will be dropped if the URL
-                        # contains a different host
-                        allowed_media_hosts: ['symfony.com']
+                        # contains a different host which is not a subdomain of the allowed host
+                        allowed_media_hosts: ['symfony.com'] # Also allows any subdomain (i.e. www.symfony.com)
 
                         # whether to allow relative URLs (i.e. URLs without scheme and host)
                         allow_relative_medias: true
@@ -872,8 +870,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- force-https-urls: if `true`, all URLs will be forced using the `https://`
-                                       scheme (instead of e.g. `http://` or `data:`) -->
+                <!-- force-https-urls: if `true`, all URLs using the `http://` scheme will be
+                                       converted to use the `https://` scheme instead. `http`
+                                       still needs to be allowed in `allowed-media-scheme` -->
                 <!-- allow-relative-medias: whether to allow relative URLs (i.e. URLs without
                                            scheme and host) -->
                 <framework:html-sanitizer
@@ -887,7 +886,8 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                     <allowed-media-scheme>mailto</allowed-media-scheme>
 
                     <!-- specifies the allowed hosts, the attribute will be dropped if the URL
-                         contains a different host -->
+                         contains a different host which is not a subdomain of the allowed host.
+                         Also allows any subdomain (i.e. www.symfony.com) -->
                     <allowed-media-host>symfony.com</allowed-media-host>
                 </framework:html-sanitizer>
             </framework:config>
@@ -898,22 +898,21 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    // if `true`, all URLs will be forced using the `https://` scheme (instead
-                    // of e.g. `http://` or `data:`)
+                    // if `true`, all URLs using the `http://` scheme will be converted to
+                    // use the `https://` scheme instead. `http` still needs to be
+                    // allowed in `allowedMediaSchemes`
                     ->forceHttpsUrls(true)
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
                     // attribute will be dropped
-                    ->allowedMediaScheme('http')
-                    ->allowedMediaScheme('https')
-                    ->allowedMediaScheme('mailto')
+                    ->allowedMediaSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the URL
-                    // contains a different host
-                    ->allowedMediaHost('symfony.com')
+                    // contains a different host which is not a subdomain of the allowed host
+                    ->allowedMediaHost('symfony.com') // Also allows any subdomain (i.e. www.symfony.com)
 
                     // whether to allow relative URLs (i.e. URLs without scheme and host)
                     ->allowRelativeMedias(true)
@@ -927,8 +926,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
-                // if `true`, all URLs will be forced using the `https://` scheme (instead
-                // of e.g. `http://` or `data:`)
+                // if `true`, all URLs using the `http://` scheme will be converted to
+                // use the `https://` scheme instead. `http` still needs to be
+                // allowed in `allowedMediaSchemes`
                 ->forceHttpsUrls()
 
                 // specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -936,11 +936,78 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 ->allowedMediaSchemes(['http', 'https', 'mailto'])
 
                 // specifies the allowed hosts, the attribute will be dropped if the URL
-                // contains a different host
-                ->allowedMediaHosts(['symfony.com'])
+                // contains a different host which is not a subdomain of the allowed host
+                ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                 // whether to allow relative URLs (i.e. URLs without scheme and host)
                 ->allowRelativeMedias()
+        );
+
+Max Input Length
+~~~~~~~~~~~~~~~~
+
+In order to prevent `DoS attacks`_, by default the HTML sanitizer limits the
+input length to ``20000`` characters (as measured by ``strlen($input)``). All
+the contents exceeding that length will be truncated. Use this option to
+increase or decrease this limit:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/html_sanitizer.yaml
+        framework:
+            html_sanitizer:
+                sanitizers:
+                    app.post_sanitizer:
+                        # ...
+
+                        # inputs longer (in characters) than this value will be truncated
+                        max_input_length: 30000 # default: 20000
+
+    .. code-block:: xml
+
+        <!-- config/packages/html_sanitizer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:html-sanitizer>
+                    <framework:sanitizer name="app.post_sanitizer">
+                        <!-- inputs longer (in characters) than this value will be truncated (default: 20000) -->
+                        <framework:max-input-length>20000</framework:max-input-length>
+                    </framework:sanitizer>
+                </framework:html-sanitizer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->htmlSanitizer()
+                ->sanitizer('app.post_sanitizer')
+                    // inputs longer (in characters) than this value will be truncated (default: 20000)
+                    ->withMaxInputLength(20000)
+            ;
+        };
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+
+        $postSanitizer = new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                // inputs longer (in characters) than this value will be truncated (default: 20000)
+                ->withMaxInputLength(20000)
         );
 
 Custom Attribute Sanitizers
@@ -998,7 +1065,7 @@ to enable it for an HTML sanitizer:
         use App\Sanitizer\CustomAttributeSanitizer;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     ->withAttributeSanitizer(CustomAttributeSanitizer::class)
@@ -1025,3 +1092,4 @@ to enable it for an HTML sanitizer:
 
 .. _`HTML Sanitizer W3C Standard Proposal`: https://wicg.github.io/sanitizer-api/
 .. _`W3C Standard Proposal`: https://wicg.github.io/sanitizer-api/
+.. _`DoS attacks`: https://en.wikipedia.org/wiki/Denial-of-service_attack

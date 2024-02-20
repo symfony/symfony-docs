@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Custom field type
-
 How to Create a Custom Form Field Type
 ======================================
 
@@ -119,25 +116,6 @@ These are the most important methods that a form type class can define:
 
 .. _form-type-methods-explanation:
 
-``buildForm()``
-    It adds and configures other types into this type. It's the same method used
-    when :ref:`creating Symfony form classes <creating-forms-in-classes>`.
-
-``buildView()``
-    It sets any extra variables you'll need when rendering the field in a template.
-
-``finishView()``
-    This method allows to modify the "view" of any rendered widget. This is useful
-    if your form type consists of many fields, or contains a type that produces
-    many HTML elements (e.g. ``ChoiceType``). For any other use case, it's
-    recommended to use ``buildView()`` instead.
-
-``configureOptions()``
-    It defines the options configurable when using the form type, which are also
-    the options that can be used in ``buildForm()`` and ``buildView()``
-    methods. Options are inherited from parent types and parent type
-    extensions, but you can create any custom option you need.
-
 ``getParent()``
     If your custom type is based on another type (i.e. they share some
     functionality), add this method to return the fully-qualified class name
@@ -151,6 +129,28 @@ These are the most important methods that a form type class can define:
     By default, the ``AbstractType`` class returns the generic
     :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`
     type, which is the root parent for all form types in the Form component.
+
+``configureOptions()``
+    It defines the options configurable when using the form type, which are also
+    the options that can be used in the following methods. Options are inherited
+    from parent types and parent type extensions, but you can create any custom
+    option you need.
+
+``buildForm()``
+    It configures the current form and may add nested fields. It's the same
+    method used when
+    :ref:`creating Symfony form classes <creating-forms-in-classes>`.
+
+``buildView()``
+    It sets any extra variables you'll need when rendering the field in a form
+    theme template.
+
+``finishView()``
+    Same as ``buildView()``. This is useful only if your form type consists of
+    many fields (i.e. A ``ChoiceType`` composed of many radio or checkboxes),
+    as this method will allow accessing child views with
+    ``$view['child_name']``. For any other use case, it's recommended to use
+    ``buildView()`` instead.
 
 Defining the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -271,7 +271,8 @@ to define, validate and process their values::
 
             // optionally you can transform the given values for the options to
             // simplify the further processing of those options
-            $resolver->setNormalizer('allowed_states', static function (Options $options, $states) {
+            $resolver->setNormalizer('allowed_states', static function (Options $options, $states): ?array
+            {
                 if (null === $states) {
                     return $states;
                 }
@@ -397,7 +398,7 @@ rest of files):
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
                 'form/custom_types.html.twig',
                 '...',
@@ -463,11 +464,9 @@ defined by the form or be completely independent::
 
     class PostalAddressType extends AbstractType
     {
-        private $entityManager;
-
-        public function __construct(EntityManagerInterface $entityManager)
-        {
-            $this->entityManager = $entityManager;
+        public function __construct(
+            private EntityManagerInterface $entityManager,
+        ) {
         }
 
         // ...

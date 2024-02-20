@@ -1,6 +1,3 @@
-.. index::
-   single: Config; Loading resources
-
 Loading Resources
 =================
 
@@ -46,7 +43,7 @@ which allows for recursively importing other resources::
 
     class YamlUserLoader extends FileLoader
     {
-        public function load($resource, $type = null)
+        public function load($resource, $type = null): void
         {
             $configValues = Yaml::parse(file_get_contents($resource));
 
@@ -57,7 +54,7 @@ which allows for recursively importing other resources::
             // $this->import('extra_users.yaml');
         }
 
-        public function supports($resource, $type = null)
+        public function supports($resource, $type = null): bool
         {
             return is_string($resource) && 'yaml' === pathinfo(
                 $resource,

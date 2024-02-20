@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Validation groups based on clicked button
-
 How to Choose Validation Groups Based on the Clicked Button
 ===========================================================
 

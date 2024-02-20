@@ -1,6 +1,3 @@
-.. index::
-   single: Routing; Extra Information
-
 Looking up Routes from a Database: Symfony CMF DynamicRouter
 ============================================================
 

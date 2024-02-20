@@ -1,6 +1,3 @@
-.. index::
-   single: Symfony UX
-
 The Symfony UX Initiative & Packages
 ====================================
 
@@ -62,7 +59,7 @@ PHP package. For example:
     {
         "devDependencies": {
             "...": "",
-            "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets"
+            "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets"
         }
     }
 
@@ -100,7 +97,7 @@ controller available! In this example, it's called
 into the ``{{ stimulus_controller() }}`` function from WebpackEncoreBundle, and
 it will normalize it:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <div {{ stimulus_controller('@symfony/ux-chartjs/chart') }}>
 

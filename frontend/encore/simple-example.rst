@@ -5,10 +5,7 @@ After :doc:`installing Encore </frontend/encore/installation>`, your app already
 has a few files, organized into an ``assets/`` directory:
 
 * ``assets/app.js``
-* ``assets/bootstrap.js``
-* ``assets/controllers.json``
 * ``assets/styles/app.css``
-* ``assets/controllers/hello_controller.js``
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
@@ -26,9 +23,6 @@ Encore's job (via Webpack) is simple: to read and follow *all* of the ``import``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
 your app needs. Encore can do a lot more: minify files, pre-process Sass/LESS,
 support React, Vue.js, etc.
-
-The other files - ``bootstrap.js``, ``controllers.json`` and ``hello_controller.js``
-relate to a topic you'll learn about soon: `Stimulus & Symfony UX`_.
 
 Configuring Encore/Webpack
 --------------------------
@@ -75,7 +69,7 @@ To build the assets, run the following if you use the Yarn package manager:
     $ yarn dev-server
     # or
     $ npm run dev-server
-    
+
     # compile assets once
     $ yarn dev
     # or
@@ -154,9 +148,10 @@ template: the paths in ``entrypoints.json`` will always be the final, correct pa
 And if you use :doc:`splitEntryChunks() </frontend/encore/split-chunks>` (where Webpack splits the output into even
 more files), all the necessary ``script`` and ``link`` tags will render automatically.
 
-If you're *not* using Symfony, you can ignore the ``entrypoints.json`` file and
-point to the final, built file directly. ``entrypoints.json`` is only required for
-some optional features.
+If you are not using Symfony you won't have the ``encore_entry_*`` functions available.
+Instead, you can point directly to the final built files or write code to parse
+``entrypoints.json`` manually. The entrypoints file is needed only if you're using
+certain optional features, like ``splitEntryChunks()``.
 
 .. versionadded:: 1.9.0
 
@@ -221,14 +216,22 @@ easy to attach behavior to HTML. It's powerful, and you will love it! Symfony
 even provides packages to add more features to Stimulus. These are called the
 Symfony UX Packages.
 
-If you followed the setup instructions, you should already have Stimulus installed
-and ready to go! In fact, that's the purpose of the ``assets/bootstrap.js`` file:
-to initialize Stimulus and automatically load any "controllers" from the
-``assets/controllers/`` directory.
+To use Stimulus, first install StimulusBundle:
+
+.. code-block:: terminal
+
+    $ composer require symfony/stimulus-bundle
+
+The Flex recipe should add several files/directories:
+
+* ``assets/bootstrap.js`` - initializes Stimulus;
+* ``assets/controllers/`` - a directory where you'll put your Stimulus controllers;
+* ``assets/controllers.json`` - file that helps load Stimulus controllers form UX
+  packages that you'll install.
 
 Let's look at a simple Stimulus example. In a Twig template, suppose you have:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <div {{ stimulus_controller('say-hello') }}>
         <input type="text" {{ stimulus_target('say-hello', 'name') }}>
@@ -427,7 +430,7 @@ Encore. When you do, you'll see an error!
 .. code-block:: terminal
 
     >   Error: Install sass-loader & sass to use enableSassLoader()
-    >     yarn add sass-loader@^12.0.0 sass --dev
+    >     yarn add sass-loader@^13.0.0 sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
@@ -435,11 +438,11 @@ you need a feature, Encore will tell you what you need to install. Run:
 .. code-block:: terminal
 
     # if you use the Yarn package manager
-    $ yarn add sass-loader@^12.0.0 sass --dev
+    $ yarn add sass-loader@^13.0.0 sass --dev
     $ yarn encore dev --watch
 
     # if you use the npm package manager
-    $ npm install sass-loader@^12.0.0 sass --save-dev
+    $ npm install sass-loader@^13.0.0 sass --save-dev
     $ npm run watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See

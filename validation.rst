@@ -1,6 +1,3 @@
-.. index::
-   single: Validation
-
 Validation
 ==========
 
@@ -10,10 +7,6 @@ into a database or passed to a web service.
 
 Symfony provides a `Validator`_ component to handle this for you. This
 component is based on the `JSR303 Bean Validation specification`_.
-
-.. index::
-   pair: Validation; Installation
-   pair: Validation; Configuration
 
 Installation
 ------------
@@ -31,9 +24,6 @@ install the validator before using it:
     manual configuration to enable validation. Check out the
     :ref:`Validation configuration reference <reference-validation>`.
 
-.. index::
-   single: Validation; The basics
-
 The Basics of Validation
 ------------------------
 
@@ -46,7 +36,7 @@ your application::
 
     class Author
     {
-        private $name;
+        private string $name;
     }
 
 So far, this is an ordinary class that serves some purpose inside your
@@ -73,7 +63,7 @@ following:
         class Author
         {
             #[Assert\NotBlank]
-            private $name;
+            private string $name;
         }
 
     .. code-block:: yaml
@@ -110,9 +100,9 @@ following:
 
         class Author
         {
-            private $name;
+            private string $name;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
             }
@@ -128,9 +118,6 @@ be passed to the validator service to be checked.
     Symfony's validator uses PHP reflection, as well as *"getter"* methods, to
     get the value of any property, so they can be public, private or protected
     (see :ref:`validator-constraint-targets`).
-
-.. index::
-   single: Validation; Using the validator
 
 Using the Validator Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,7 +136,7 @@ returned. Take this simple example from inside a controller::
     use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function author(ValidatorInterface $validator)
+    public function author(ValidatorInterface $validator): Response
     {
         $author = new Author();
 
@@ -214,9 +201,6 @@ Inside the template, you can output the list of errors exactly as needed:
     Each validation error (called a "constraint violation"), is represented by
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
 
-.. index::
-   single: Validation; Callables
-
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -230,9 +214,6 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
-
-.. index::
-   single: Validation; Constraints
 
 .. _validation-constraints:
 
@@ -258,9 +239,6 @@ Symfony packages many of the most commonly-needed constraints:
 
 You can also create your own custom constraints. This topic is covered in
 the :doc:`/validation/custom_constraint` article.
-
-.. index::
-   single: Validation; Constraints configuration
 
 .. _validation-constraint-configuration:
 
@@ -290,7 +268,7 @@ literature genre mostly associated with the author, which can be set to either
                 choices: ['fiction', 'non-fiction'],
                 message: 'Choose a valid genre.',
             )]
-            private $genre;
+            private string $genre;
 
             // ...
         }
@@ -339,11 +317,11 @@ literature genre mostly associated with the author, which can be set to either
 
         class Author
         {
-            private $genre;
+            private string $genre;
 
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 // ...
 
@@ -374,7 +352,7 @@ options can be specified in this way.
         class Author
         {
             #[Assert\Choice(['fiction', 'non-fiction'])]
-            private $genre;
+            private string $genre;
 
             // ...
         }
@@ -420,9 +398,9 @@ options can be specified in this way.
 
         class Author
         {
-            private $genre;
+            private string $genre;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 // ...
 
@@ -446,7 +424,7 @@ Constraints in Form Classes
 Constraints can be defined while building the form via the ``constraints`` option
 of the form fields::
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('myField', TextType::class, [
@@ -455,9 +433,6 @@ of the form fields::
             ])
         ;
     }
-
-.. index::
-   single: Validation; Constraint targets
 
 .. _validator-constraint-targets:
 
@@ -469,9 +444,6 @@ a getter method (e.g. ``getFullName()``) or an entire class. Property constraint
 are the most common and easy to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
-
-.. index::
-   single: Validation; Property constraints
 
 .. _validation-property-target:
 
@@ -496,7 +468,7 @@ class to have at least 3 characters.
         {
             #[Assert\NotBlank]
             #[Assert\Length(min: 3)]
-            private $firstName;
+            private string $firstName;
         }
 
     .. code-block:: yaml
@@ -539,9 +511,9 @@ class to have at least 3 characters.
 
         class Author
         {
-            private $firstName;
+            private string $firstName;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
                 $metadata->addPropertyConstraint(
@@ -556,9 +528,6 @@ class to have at least 3 characters.
     The validator will use a value ``null`` if a typed property is uninitialized.
     This can cause unexpected behavior if the property holds a value when initialized.
     In order to avoid this, make sure all properties are initialized before validating them.
-
-.. index::
-   single: Validation; Getter constraints
 
 Getters
 ~~~~~~~
@@ -587,7 +556,7 @@ this method must return ``true``:
         class Author
         {
             #[Assert\IsTrue(message: 'The password cannot match your first name')]
-            public function isPasswordSafe()
+            public function isPasswordSafe(): bool
             {
                 // ... return true or false
             }
@@ -630,7 +599,7 @@ this method must return ``true``:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue([
                     'message' => 'The password cannot match your first name',
@@ -640,7 +609,7 @@ this method must return ``true``:
 
 Now, create the ``isPasswordSafe()`` method and include the logic you need::
 
-    public function isPasswordSafe()
+    public function isPasswordSafe(): bool
     {
         return $this->firstName !== $this->password;
     }

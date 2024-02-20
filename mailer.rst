@@ -12,7 +12,6 @@ integration, CSS inlining, file attachments and a lot more. Get them installed w
 
     $ composer require symfony/mailer
 
-
 .. _mailer-transport-setup:
 
 Transport Setup
@@ -55,10 +54,11 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
     .. code-block:: php
 
         // config/packages/mailer.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
         use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
-            $containerConfigurator->extension('framework', [
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('framework', [
                 'mailer' => [
                     'dsn' => env('MAILER_DSN'),
                 ],
@@ -96,32 +96,36 @@ native        ``native://default``                      Mailer uses the sendmail
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using your own SMTP server or sendmail binary, you can send emails via a 3rd party
-provider. Mailer supports several - install whichever you want:
+Instead of using your own SMTP server or sendmail binary, you can send emails
+via a third-party provider:
 
-==================  ==============================================
-Service             Install with
-==================  ==============================================
-Amazon SES          ``composer require symfony/amazon-mailer``
-Gmail               ``composer require symfony/google-mailer``
-MailChimp           ``composer require symfony/mailchimp-mailer``
-Mailgun             ``composer require symfony/mailgun-mailer``
-Mailjet             ``composer require symfony/mailjet-mailer``
-Postmark            ``composer require symfony/postmark-mailer``
-SendGrid            ``composer require symfony/sendgrid-mailer``
-Sendinblue          ``composer require symfony/sendinblue-mailer``
-MailPace            ``composer require symfony/mailpace-mailer``
-Infobip             ``composer require symfony/infobip-mailer``
-==================  ==============================================
-
-.. versionadded:: 6.2
-
-    The ``MailPace`` integration was introduced in Symfony 6.2 (in previous
-    Symfony versions it was called ``OhMySMTP``).
+===================== ==============================================
+Service               Install with
+===================== ==============================================
+`Amazon SES`_         ``composer require symfony/amazon-mailer``
+`Infobip`_            ``composer require symfony/infobip-mailer``
+`Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
+`Mailgun`_            ``composer require symfony/mailgun-mailer``
+`Mailjet`_            ``composer require symfony/mailjet-mailer``
+`MailPace`_           ``composer require symfony/mail-pace-mailer``
+`Postmark`_           ``composer require symfony/postmark-mailer``
+`SendGrid`_           ``composer require symfony/sendgrid-mailer``
+`Sendinblue`_         ``composer require symfony/sendinblue-mailer``
+===================== ==============================================
 
 .. versionadded:: 6.2
 
-    The Infobip integration was introduced in Symfony 6.2.
+    The Infobip integration was introduced in Symfony 6.2 and the ``MailPace``
+    integration was renamed in Symfony 6.2 (in previous Symfony versions it was
+    called ``OhMySMTP``).
+
+.. note::
+
+    As a convenience, Symfony also provides support for Gmail (``composer
+    require symfony/google-mailer``), but this should not be used in
+    production. In development, you should probably use an :ref:`email catcher
+    <mail-catcher>` instead. Note that most supported providers also offer a
+    free tier.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -160,20 +164,49 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
-==================== ==================================================== =========================================== ========================================
-Provider             SMTP                                                 HTTP                                        API
-==================== ==================================================== =========================================== ========================================
-Amazon SES           ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
-Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a                                         n/a
-Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
-Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
-Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
-MailPace             mailpace+api://API_TOKEN@default                     n/a                                         mailpace+api://API_TOKEN@default
-Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
-Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
-Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-Infobip              infobip+smtp://KEY@default                           n/a                                         infobip+api://KEY@BASE_URL
-==================== ==================================================== =========================================== ========================================
++------------------------+-----------------------------------------------------+
+| Provider               | Formats                                             |
++========================+=====================================================+
+| `Amazon SES`_          | - SMTP ses+smtp://USERNAME:PASSWORD@default         |
+|                        | - HTTP ses+https://ACCESS_KEY:SECRET_KEY@default    |
+|                        | - API ses+api://ACCESS_KEY:SECRET_KEY@default       |
++------------------------+-----------------------------------------------------+
+| `Google Gmail`_        | - SMTP gmail+smtp://USERNAME:APP-PASSWORD@default   |
+|                        | - HTTP n/a                                          |
+|                        | - API n/a                                           |
++------------------------+-----------------------------------------------------+
+| `Infobip`_             | - SMTP infobip+smtp://KEY@default                   |
+|                        | - HTTP n/a                                          |
+|                        | - API infobip+api://KEY@BASE_URL                    |
++------------------------+-----------------------------------------------------+
+| `Mailchimp Mandrill`_  | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
+|                        | - HTTP mandrill+https://KEY@default                 |
+|                        | - API mandrill+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Mailgun`_             | - SMTP mailgun+smtp://USERNAME:PASSWORD@default     |
+|                        | - HTTP mailgun+https://KEY:DOMAIN@default           |
+|                        | - API mailgun+api://KEY:DOMAIN@default              |
++------------------------+-----------------------------------------------------+
+| `Mailjet`_             | - SMTP mailjet+smtp://ACCESS_KEY:SECRET_KEY@default |
+|                        | - HTTP n/a                                          |
+|                        | - API mailjet+api://ACCESS_KEY:SECRET_KEY@default   |
++------------------------+-----------------------------------------------------+
+| `MailPace`_            | - SMTP mailpace+api://API_TOKEN@default             |
+|                        | - HTTP n/a                                          |
+|                        | - API mailpace+api://API_TOKEN@default              |
++------------------------+-----------------------------------------------------+
+| `Postmark`_            | - SMTP postmark+smtp://ID@default                   |
+|                        | - HTTP n/a                                          |
+|                        | - API postmark+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Sendgrid`_            | - SMTP sendgrid+smtp://KEY@default                  |
+|                        | - HTTP n/a                                          |
+|                        | - API sendgrid+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Sendinblue`_          | - SMTP sendinblue+smtp://USERNAME:PASSWORD@default  |
+|                        | - HTTP n/a                                          |
+|                        | - API sendinblue+api://KEY@default                  |
++------------------------+-----------------------------------------------------+
 
 .. caution::
 
@@ -193,6 +226,21 @@ Infobip              infobip+smtp://KEY@default                           n/a   
     When using SMTP, the default timeout for sending a message before throwing an
     exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
 
+.. note::
+
+    Besides SMTP, many 3rd party transports offer a web API to send emails.
+    To do so, you have to install (additionally to the bridge)
+    the HttpClient component via ``composer require symfony/http-client``.
+
+.. note::
+
+    To use Google Gmail, you must have a Google Account with 2-Step-Verification (2FA)
+    enabled and you must use `App Password`_ to authenticate. Also note that Google
+    revokes your App Passwords when you change your Google Account password and then
+    you need to generate a new one.
+    Using other methods (like ``XOAUTH2`` or the ``Gmail API``) are not supported currently.
+    You should use Gmail for testing purposes only and use a real provider in production.
+
 .. tip::
 
     If you want to override the default host for a provider (to debug an issue using
@@ -204,6 +252,17 @@ Infobip              infobip+smtp://KEY@default                           n/a   
         MAILER_DSN=mailgun+https://KEY:DOMAIN@requestbin.com
 
     Note that the protocol is *always* HTTPs and cannot be changed.
+
+.. note::
+
+    The specific transports, e.g. ``mailgun+smtp`` are designed to work without any manual configuration.
+    Changing the port by appending it to your DSN is not supported for any of these ``<provider>+smtp` transports.
+    If you need to change the port, use the ``smtp`` transport instead, like so:
+
+    .. code-block:: env
+
+        # .env
+        MAILER_DSN=smtp://KEY:DOMAIN@smtp.eu.mailgun.org.com:25
 
 High Availability
 ~~~~~~~~~~~~~~~~~
@@ -535,7 +594,7 @@ and headers.
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
+        # config/packages/mailer.yaml
         framework:
             mailer:
                 envelope:
@@ -577,7 +636,7 @@ and headers.
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $mailer = $framework->mailer();
             $mailer
                 ->envelope()
@@ -627,6 +686,12 @@ The :class:`Symfony\\Component\\Mailer\\SentMessage` object returned by the
 provides access to the original message (``getOriginalMessage()``) and to some
 debug information (``getDebug()``) such as the HTTP calls done by the HTTP
 transports, which is useful to debug errors.
+
+.. note::
+
+    If your code used :class:`Symfony\\Component\\Mailer\\MailerInterface`, you
+    need to replace it by :class:`Symfony\\Component\\Mailer\\Transport\\TransportInterface`
+    to have the ``SentMessage`` object returned.
 
 .. note::
 
@@ -705,12 +770,22 @@ method of the ``TemplatedEmail`` class and also to a special variable called
 Text Content
 ~~~~~~~~~~~~
 
-When the text content of a ``TemplatedEmail`` is not explicitly defined, mailer
-will generate it automatically by converting the HTML contents into text. If you
-have `league/html-to-markdown`_ installed in your application,
-it uses that to turn HTML into Markdown (so the text email has some visual appeal).
-Otherwise, it applies the :phpfunction:`strip_tags` PHP function to the original
-HTML contents.
+When the text content of a ``TemplatedEmail`` is not explicitly defined, it is
+automatically generated from the HTML contents.
+
+Symfony uses the following strategy when generating the text version of an
+email:
+
+* If an explicit HTML to text converter has been configured (see
+  :ref:`twig.mailer.html_to_text_converter
+  <config-twig-html-to-text-converter>`), it calls it;
+
+* If not, and if you have `league/html-to-markdown`_ installed in your
+  application, it uses it to turn HTML into Markdown (so the text email has
+  some visual appeal);
+
+* Otherwise, it applies the :phpfunction:`strip_tags` PHP function to the
+  original HTML contents.
 
 If you want to define the text content yourself, use the ``text()`` method
 explained in the previous sections or the ``textTemplate()`` method provided by
@@ -718,15 +793,15 @@ the ``TemplatedEmail`` class:
 
 .. code-block:: diff
 
-    + use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+    +use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-    $email = (new TemplatedEmail())
-        // ...
+     $email = (new TemplatedEmail())
+         // ...
 
-        ->htmlTemplate('emails/signup.html.twig')
+         ->htmlTemplate('emails/signup.html.twig')
     +     ->textTemplate('emails/signup.txt.twig')
-        // ...
-    ;
+         // ...
+     ;
 
 .. _mailer-twig-embedding-images:
 
@@ -773,7 +848,7 @@ image files as usual. First, to simplify things, define a Twig namespace called
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // point this wherever your images live
@@ -882,7 +957,7 @@ called ``styles`` that points to the directory where ``email.css`` lives:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // point this wherever your css files live
@@ -994,6 +1069,15 @@ Before signing/encrypting messages, make sure to have:
     When using OpenSSL to generate certificates, make sure to add the
     ``-addtrust emailProtection`` command option.
 
+.. caution::
+
+    Signing and encrypting messages require their contents to be fully rendered.
+    For example, the content of :ref:`templated emails <mailer-twig>` is rendered
+    by a :class:`Symfony\\Component\\Mailer\\EventListener\\MessageListener`.
+    So, if you want to sign and/or encrypt such a message, you need to do it in
+    a :ref:`MessageEvent <messageevent>` listener run after it (you need to set
+    a negative priority to your listener).
+
 Signing Messages
 ~~~~~~~~~~~~~~~~
 
@@ -1009,6 +1093,12 @@ certificate and private key must be `PEM encoded`_, and can be either created
 using for example OpenSSL or obtained at an official Certificate Authority (CA).
 The email recipient must have the CA certificate in the list of trusted issuers
 in order to verify the signature.
+
+.. caution::
+
+    If you use message signature, sending to ``Bcc`` will be removed from the
+    message. If you need to send a message to multiple recipients, you need
+    to compute a new signature for each recipient.
 
 S/MIME Signer
 .............
@@ -1157,9 +1247,10 @@ This can be configured by replacing the ``dsn`` configuration entry with a
     .. code-block:: php
 
         // config/packages/mailer.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->mailer()
                 ->transport('main', env('MAILER_DSN'))
                 ->transport('alternative', env('MAILER_DSN_IMPORTANT'))
@@ -1232,7 +1323,7 @@ you have a transport called ``async``, you can route the message there:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->messenger()
                 ->transport('async')->dsn(env('MESSENGER_TRANSPORT_DSN'));
 
@@ -1263,7 +1354,7 @@ render the email before calling ``$mailer->send($email)``::
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\BodyRendererInterface;
 
-    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer)
+    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer): void
     {
         $email = (new TemplatedEmail())
             ->htmlTemplate($template)
@@ -1312,7 +1403,7 @@ disable asynchronous delivery.
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->mailer()
                 ->messageBus('app.another_bus');
         };
@@ -1329,6 +1420,17 @@ disable asynchronous delivery.
 
     The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop`
     method was made public in Symfony 6.1.
+
+You can also select the transport by adding an ``X-Bus-Transport`` header (which
+will be removed automatically from the final message)::
+
+    // Use the bus transport "app.another_bus":
+    $email->getHeaders()->addTextHeader('X-Bus-Transport', 'app.another_bus');
+    $mailer->send($email);
+
+.. versionadded:: 6.2
+
+    The ``X-Bus-Transport`` header support was introduced in Symfony 6.2.
 
 Adding Tags and Metadata to Emails
 ----------------------------------
@@ -1356,7 +1458,7 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
-* MailChimp
+* Mailchimp
 * Mailgun
 * Postmark
 * Sendgrid
@@ -1447,15 +1549,15 @@ the email is sent::
         if (!$message instanceof Email) {
             return;
         }
-        // do something with the message
+        // do something with the message (logging, ...)
+
+        // and/or add some Messenger stamps
+        $event->addStamp(new SomeMessengerStamp());
     }
 
-.. tip::
+.. versionadded:: 6.2
 
-    When using a ``MessageEvent`` listener to
-    :doc:`sign the email contents <signing-and-encrypting-messages>`, run it as
-    late as possible (e.g. setting a negative priority for it) so the email
-    contents are not set or modified after signing them.
+    Methods ``addStamp()`` and ``getStamps()`` were introduced in Symfony 6.2.
 
 Execute this command to find out which listeners are registered for this event
 and their priorities:
@@ -1463,48 +1565,6 @@ and their priorities:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\MessageEvent"
-
-QueuingMessageEvent
-~~~~~~~~~~~~~~~~~~~
-
-**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\QueuingMessageEvent`
-
-.. versionadded:: 6.2
-
-    The ``QueuingMessageEvent`` class was introduced in Symfony 6.2.
-
-``QueuingMessageEvent`` allows to add some logic before the email is sent to
-the Messenger bus (this event is not dispatched when no bus is configured); it
-extends ``MessageEvent`` to allow adding Messenger stamps to the Messenger
-message sent to the bus::
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Mailer\Event\QueuingMessageEvent;
-    use Symfony\Component\Mime\Email;
-
-    public function onMessage(QueuingMessageEvent $event): void
-    {
-        $message = $event->getMessage();
-        if (!$message instanceof Email) {
-            return;
-        }
-        // do something with the message (logging, ...)
-
-        // and/or add some Messenger stamps
-        $event->addStamp(new SomeMessengerStamp());
-    }
-
-This event lets listeners do something before a message is sent to the queue
-(like adding stamps or logging) but any changes to the message or the envelope
-are discarded. To change the message or the envelope, listen to
-``MessageEvent`` instead.
-
-Execute this command to find out which listeners are registered for this event
-and their priorities:
-
-.. code-block:: terminal
-
-    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\QueuingMessageEvent"
 
 SentMessageEvent
 ~~~~~~~~~~~~~~~~
@@ -1573,6 +1633,17 @@ and their priorities:
 Development & Debugging
 -----------------------
 
+.. _mail-catcher:
+
+Enabling an Email Catcher
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When developing locally, it is recommended to use an email catcher. If you have
+enabled Docker support via Symfony recipes, an email catcher is automatically
+configured. In addition, if you are using the :doc:`Symfony local web server
+</setup/symfony_server>`, the mailer DSN is automatically exposed via the
+:ref:`symfony binary Docker integration <symfony-server-docker>`.
+
 Sending Test Emails
 ~~~~~~~~~~~~~~~~~~~
 
@@ -1604,10 +1675,11 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
-        framework:
-            mailer:
-                dsn: 'null://null'
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    dsn: 'null://null'
 
     .. code-block:: xml
 
@@ -1631,7 +1703,7 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->mailer()
                 ->dsn('null://null');
@@ -1652,11 +1724,12 @@ a specific address, instead of the *real* address:
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
-        framework:
-            mailer:
-                envelope:
-                    recipients: ['youremail@example.com']
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    envelope:
+                        recipients: ['youremail@example.com']
 
     .. code-block:: xml
 
@@ -1684,7 +1757,7 @@ a specific address, instead of the *real* address:
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->mailer()
                 ->envelope()
@@ -1695,26 +1768,26 @@ a specific address, instead of the *real* address:
 Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To functionally test that an email was sent, and even assert the email content or headers,
-you can use the built in assertions::
+Symfony provides lots of :ref:`built-in mailer assertions <mailer-assertions>`
+to functionally test that an email was sent, its contents or headers, etc.
+They are available in test classes extending
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` or when using
+the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
     // tests/Controller/MailControllerTest.php
     namespace App\Tests\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class MailControllerTest extends WebTestCase
     {
-        use MailerAssertionsTrait;
-
-        public function testMailIsSentAndContentIsOk()
+        public function testMailIsSentAndContentIsOk(): void
         {
-            $client = $this->createClient();
+            $client = static::createClient();
             $client->request('GET', '/mail/send');
             $this->assertResponseIsSuccessful();
 
-            $this->assertEmailCount(1);
+            $this->assertEmailCount(1); // use assertQueuedEmailCount() when using Messenger
 
             $email = $this->getMailerMessage();
 
@@ -1723,15 +1796,26 @@ you can use the built in assertions::
         }
     }
 
-.. _`high availability`: https://en.wikipedia.org/wiki/High_availability
-.. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
-.. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
-.. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
-.. _`Markdown syntax`: https://commonmark.org/
-.. _`Inky`: https://get.foundation/emails/docs/inky.html
-.. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
+.. _`App Password`: https://support.google.com/accounts/answer/185833
+.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
+.. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
+.. _`Google Gmail`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Google/README.md
+.. _`high availability`: https://en.wikipedia.org/wiki/High_availability
+.. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Infobip/README.md
+.. _`Inky`: https://get.foundation/emails/docs/inky.html
+.. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
+.. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
+.. _`Mailchimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
+.. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
+.. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
+.. _`Markdown syntax`: https://commonmark.org/
+.. _`MailPace`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailPace/README.md
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
-.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
+.. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
+.. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
+.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendinblue/README.md

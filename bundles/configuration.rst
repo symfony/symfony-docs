@@ -1,7 +1,3 @@
-.. index::
-   single: Configuration; Semantic
-   single: Bundle; Extension configuration
-
 How to Create Friendly Configuration for a Bundle
 =================================================
 
@@ -46,7 +42,7 @@ as integration of other related components:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->form()->enabled(true);
         };
 
@@ -89,7 +85,7 @@ can add some configuration that looks like this:
         // config/packages/acme_social.php
         use Symfony\Config\AcmeSocialConfig;
 
-        return static function (AcmeSocialConfig $acmeSocial) {
+        return static function (AcmeSocialConfig $acmeSocial): void {
             $acmeSocial->twitter()
                 ->clientId(123)
                 ->clientSecret('your_secret');
@@ -104,7 +100,7 @@ load correct services and parameters inside an "Extension" class.
 
     The root key of your bundle configuration (``acme_social`` in the previous
     example) is automatically determined from your bundle name (it's the
-    `snake case`_ of the bundle name without the ``Bundle`` suffix ).
+    `snake case`_ of the bundle name without the ``Bundle`` suffix).
 
 .. seealso::
 
@@ -187,7 +183,7 @@ The ``Configuration`` class to handle the sample configuration looks like::
 
     class Configuration implements ConfigurationInterface
     {
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('acme_social');
 
@@ -221,7 +217,7 @@ force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
     // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
 
@@ -263,7 +259,7 @@ In your extension, you can load this and dynamically set its arguments::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
         $loader->load('services.xml');
@@ -292,7 +288,7 @@ In your extension, you can load this and dynamically set its arguments::
         class AcmeHelloExtension extends ConfigurableExtension
         {
             // note that this method is called loadInternal and not load
-            protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+            protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
             {
                 // ...
             }
@@ -308,7 +304,7 @@ In your extension, you can load this and dynamically set its arguments::
     (e.g. by overriding configurations and using :phpfunction:`isset` to check
     for the existence of a value). Be aware that it'll be very hard to support XML::
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             $config = [];
             // let resources override the previous set value
@@ -319,21 +315,26 @@ In your extension, you can load this and dynamically set its arguments::
             // ... now use the flat $config array
         }
 
-Using the Bundle Class
-----------------------
+.. _using-the-bundle-class:
+
+Using the AbstractBundle Class
+------------------------------
 
 .. versionadded:: 6.1
 
     The ``AbstractBundle`` class was introduced in Symfony 6.1.
 
-Instead of creating an extension and configuration class, you can also
-extend :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to
-add this logic to the bundle class directly::
+As an alternative, instead of creating an extension and configuration class as
+shown in the previous section, you can also extend
+:class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to add this
+logic to the bundle class directly::
 
     // src/AcmeSocialBundle.php
     namespace Acme\SocialBundle;
 
     use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
     class AcmeSocialBundle extends AbstractBundle
@@ -352,11 +353,11 @@ add this logic to the bundle class directly::
             ;
         }
 
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
         {
             // Contrary to the Extension class, the "$config" variable is already merged
             // and processed. You can use it directly to configure the service container.
-            $container->services()
+            $containerConfigurator->services()
                 ->get('acme.social.twitter_client')
                 ->arg(0, $config['twitter']['client_id'])
                 ->arg(1, $config['twitter']['client_secret'])
@@ -393,7 +394,7 @@ add this logic to the bundle class directly::
         // config/definition.php
         use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
-        return static function (DefinitionConfigurator $definition) {
+        return static function (DefinitionConfigurator $definition): void {
             $definition->rootNode()
                 ->children()
                     ->scalarNode('foo')->defaultValue('bar')->end()
@@ -457,7 +458,7 @@ the extension. You might want to change this to a more professional URL::
     {
         // ...
 
-        public function getNamespace()
+        public function getNamespace(): string
         {
             return 'http://acme_company.com/schema/dic/hello';
         }
@@ -489,7 +490,7 @@ can place it anywhere you like. You should return this path as the base path::
     {
         // ...
 
-        public function getXsdValidationBasePath()
+        public function getXsdValidationBasePath(): string
         {
             return __DIR__.'/../Resources/config/schema';
         }

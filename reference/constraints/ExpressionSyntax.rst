@@ -38,12 +38,12 @@ The following constraints ensure that:
         class Order
         {
             #[Assert\ExpressionSyntax]
-            protected $promotion;
+            protected string $promotion;
 
             #[Assert\ExpressionSyntax(
                 allowedVariables: ['user', 'shipping_centers'],
             )]
-            protected $shippingOptions;
+            protected string $shippingOptions;
         }
 
     .. code-block:: yaml
@@ -90,7 +90,9 @@ The following constraints ensure that:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('promotion', new Assert\ExpressionSyntax());
 

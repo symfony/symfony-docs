@@ -1,7 +1,3 @@
-.. index::
-   single: Ldap
-   single: Components; Ldap
-
 The Ldap Component
 ==================
 

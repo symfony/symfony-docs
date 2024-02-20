@@ -39,7 +39,7 @@ a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
 Consider the following example for a blog post. A post can have these places:
-``draft``, ``reviewed``, ``rejected``, ``published``. You could define the workflow as 
+``draft``, ``reviewed``, ``rejected``, ``published``. You could define the workflow as
 follows:
 
 .. configuration-block::
@@ -122,7 +122,7 @@ follows:
         use App\Entity\BlogPost;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             $blogPublishing
                 ->type('workflow') // or 'state_machine'
@@ -160,6 +160,13 @@ follows:
     If you are creating your first workflows, consider using the ``workflow:dump``
     command to :doc:`debug the workflow contents </workflow/dumping-workflows>`.
 
+.. tip::
+
+    You can use PHP constants in YAML files via the ``!php/const `` notation.
+    E.g. you can use ``!php/const App\Entity\BlogPost::STATE_DRAFT`` instead of
+    ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
+    instead of ``'to_review'``.
+
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
@@ -168,17 +175,17 @@ The configured property will be used via its implemented getter/setter methods b
     class BlogPost
     {
         // the configured marking store property must be declared
-        private $currentPlace;
-        private $title;
-        private $content;
+        private string $currentPlace;
+        private string $title;
+        private string $content;
 
         // getter/setter methods must exist for property access by the marking store
-        public function getCurrentPlace()
+        public function getCurrentPlace(): string
         {
             return $this->currentPlace;
         }
 
-        public function setCurrentPlace($currentPlace, $context = [])
+        public function setCurrentPlace($currentPlace, $context = []): void
         {
             $this->currentPlace = $currentPlace;
         }
@@ -194,7 +201,10 @@ The configured property will be used via its implemented getter/setter methods b
     preferable to not configure it.
 
     A single state marking store uses a ``string`` to store the data. A multiple
-    state marking store uses an ``array`` to store the data.
+    state marking store uses an ``array`` to store the data. If no state marking
+    store is defined you have to return ``null`` in both cases (e.g. the above
+    example should define a return type like ``App\Entity\BlogPost::getCurrentPlace(): ?array``
+    or like ``App\Entity\BlogPost::getCurrentPlace(): ?string``).
 
 .. tip::
 
@@ -245,15 +255,13 @@ machine type, use ``camelCased workflow name + StateMachine``::
 
     class MyClass
     {
-        private $blogPublishingWorkflow;
-
-        // Symfony will inject the 'blog_publishing' workflow configured before
-        public function __construct(WorkflowInterface $blogPublishingWorkflow)
-        {
-            $this->blogPublishingWorkflow = $blogPublishingWorkflow;
+        public function __construct(
+            // Symfony will inject the 'blog_publishing' workflow configured before
+            private WorkflowInterface $blogPublishingWorkflow,
+        ) {
         }
 
-        public function toReview(BlogPost $post)
+        public function toReview(BlogPost $post): void
         {
             // Update the currentState on the post
             try {
@@ -410,14 +418,12 @@ workflow leaves a place::
 
     class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
-        public function onLeave(Event $event)
+        public function onLeave(Event $event): void
         {
             $this->logger->alert(sprintf(
                 'Blog post (id: "%s") performed transition "%s" from "%s" to "%s"',
@@ -428,7 +434,7 @@ workflow leaves a place::
             ));
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.leave' => 'onLeave',
@@ -471,7 +477,7 @@ missing a title::
 
     class BlogPostReviewSubscriber implements EventSubscriberInterface
     {
-        public function guardReview(GuardEvent $event)
+        public function guardReview(GuardEvent $event): void
         {
             /** @var BlogPost $post */
             $post = $event->getSubject();
@@ -482,7 +488,7 @@ missing a title::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.guard.to_review' => ['guardReview'],
@@ -544,7 +550,7 @@ to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
 
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
@@ -718,7 +724,7 @@ transition. The value of this option is any valid expression created with the
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             // ... previous configuration
 
@@ -763,7 +769,7 @@ place::
 
     class BlogPostPublishSubscriber implements EventSubscriberInterface
     {
-        public function guardPublish(GuardEvent $event)
+        public function guardPublish(GuardEvent $event): void
         {
             $eventTransition = $event->getTransition();
             $hourLimit = $event->getMetadata('hour_limit', $eventTransition);
@@ -778,7 +784,7 @@ place::
             $event->addTransitionBlocker(new TransitionBlocker($explanation , '0'));
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.guard.publish' => ['guardPublish'],
@@ -929,7 +935,7 @@ be only the title of the workflow or very complex objects:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             // ... previous configuration
 
@@ -972,7 +978,7 @@ Then you can access this metadata in your controller as follows::
     use Symfony\Component\Workflow\WorkflowInterface;
     // ...
 
-    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post)
+    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post): Response
     {
         $title = $blogPublishingWorkflow
             ->getMetadataStore()

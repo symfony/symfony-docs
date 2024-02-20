@@ -1,6 +1,3 @@
-.. index::
-   single: DependencyInjection; Factories
-
 Using a Factory to Create Services
 ==================================
 
@@ -65,12 +62,6 @@ create its object:
                 <service id="App\Email\NewsletterManager">
                     <!-- the first argument is the class and the second argument is the static method -->
                     <factory class="App\Email\NewsletterManagerStaticFactory" method="createNewsletterManager"/>
-
-                    <!-- if the factory class is the same as the service class, you can omit
-                         the 'class' attribute and define just the 'method' attribute:
-
-                         <factory method="createNewsletterManager"/>
-                    -->
                 </service>
             </services>
         </container>
@@ -83,8 +74,8 @@ create its object:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerStaticFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 // the first argument is the class and the second argument is the static method
@@ -99,6 +90,79 @@ create its object:
     only depends on the object that is returned by the factory. However,
     the configured class name may be used by compiler passes and therefore
     should be set to a sensible value.
+
+Using the Class as Factory Itself
+---------------------------------
+
+When the static factory method is on the same class as the created instance,
+the class name can be omitted from the factory declaration.
+Let's suppose the ``NewsletterManager`` class has a ``create()`` method that needs
+to be called to create the object and needs a sender::
+
+    // src/Email/NewsletterManager.php
+    namespace App\Email;
+
+    // ...
+
+    class NewsletterManager
+    {
+        private string $sender;
+
+        public static function create(string $sender): self
+        {
+            $newsletterManager = new self();
+            $newsletterManager->sender = $sender;
+            // ...
+
+            return $newsletterManager;
+        }
+    }
+
+You can omit the class on the factory declaration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\Email\NewsletterManager:
+                factory: [null, 'create']
+                arguments:
+                    $sender: 'fabien@symfony.com'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Email\NewsletterManager">
+                    <factory method="create"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Email\NewsletterManager;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            // Note that we are not using service()
+            $services->set(NewsletterManager::class)
+                ->factory([null, 'create']);
+        };
 
 Non-Static Factories
 --------------------
@@ -154,8 +218,8 @@ Configuration of the service container then looks like this:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             // first, create a service for the factory
             $services->set(NewsletterManagerFactory::class);
@@ -232,8 +296,8 @@ method name:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 ->factory(service(InvokableNewsletterManagerFactory::class));
@@ -295,11 +359,11 @@ e.g. change the service based on a parameter:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Email\NewsletterManagerInterface;
         use App\Email\NewsletterManagerFactory;
+        use App\Email\NewsletterManagerInterface;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(NewsletterManagerInterface::class)
                 // use the "tracable_newsletter" service when debug is enabled, "newsletter" otherwise.
@@ -368,8 +432,8 @@ previous examples takes the ``templating`` service as an argument:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager'])

@@ -1,6 +1,3 @@
-.. index::
-   single: Serializer
-
 How to Use the Serializer
 =========================
 
@@ -31,11 +28,12 @@ you need it or it can be used in a controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Serializer\SerializerInterface;
 
     class DefaultController extends AbstractController
     {
-        public function index(SerializerInterface $serializer)
+        public function index(SerializerInterface $serializer): Response
         {
             // keep reading for usage examples
         }
@@ -90,7 +88,7 @@ possible to set the priority of the tag in order to decide the matching order.
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
     usage and exposing internal details.
 
-.. _serializer-context:
+.. _serializer_serializer-context:
 
 Serializer Context
 ------------------
@@ -145,11 +143,11 @@ configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-        use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
         use Symfony\Component\Serializer\Encoder\YamlEncoder;
+        use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+        use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->serializer()
                 ->defaultContext([
                     AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
@@ -178,7 +176,7 @@ You can also specify the context on a per-property basis::
             /**
              * @Context({ DateTimeNormalizer::FORMAT_KEY = 'Y-m-d' })
              */
-            public $createdAt;
+            public \DateTimeInterface $createdAt;
 
             // ...
         }
@@ -193,7 +191,7 @@ You can also specify the context on a per-property basis::
         class Person
         {
             #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
-            public $createdAt;
+            public \DateTimeInterface $createdAt;
 
             // ...
         }
@@ -236,7 +234,7 @@ Use the options to specify context specific to normalization or denormalization:
             normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'],
             denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339],
         )]
-        public $createdAt;
+        public \DateTimeInterface $createdAt;
 
         // ...
     }
@@ -257,7 +255,7 @@ You can also restrict the usage of a context to some groups::
             context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
             groups: ['extended'],
         )]
-        public $createdAt;
+        public \DateTimeInterface $createdAt;
 
         // ...
     }
@@ -330,15 +328,15 @@ to your class::
         #[ORM\GeneratedValue]
         #[ORM\Column(type: 'integer')]
         #[Groups(['show_product', 'list_product'])]
-        private $id;
+        private int $id;
 
         #[ORM\Column(type: 'string', length: 255)]
         #[Groups(['show_product', 'list_product'])]
-        private $name;
+        private string $name;
 
-        #[ORM\Column(type: 'integer')]
+        #[ORM\Column(type: 'text')]
         #[Groups(['show_product'])]
-        private $description;
+        private string $description;
     }
 
 You can now choose which groups to use when serializing::
@@ -412,7 +410,7 @@ their paths using a :doc:`valid PropertyAccess syntax </components/property_acce
             attributes:
                 dob:
                     serialized_path: '[profile][information][birthday]'
-        
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -430,8 +428,8 @@ their paths using a :doc:`valid PropertyAccess syntax </components/property_acce
 
     The option to configure a ``SerializedPath`` was introduced in Symfony 6.2.
 
-Using the configuration from above, denormalizing with a metadata-aware 
-normalizer will write the ``birthday`` field from ``$data`` onto the ``Person`` 
+Using the configuration from above, denormalizing with a metadata-aware
+normalizer will write the ``birthday`` field from ``$data`` onto the ``Person``
 object::
 
     $data = [
@@ -441,10 +439,10 @@ object::
             ],
         ],
     ];
-    $person = $normalizer->denormalize($data, Person::class, 'any'); 
+    $person = $normalizer->denormalize($data, Person::class, 'any');
     $person->getBirthday(); // 01-01-1970
 
-When using annotations or attributes, the ``SerializedPath`` can either 
+When using annotations or attributes, the ``SerializedPath`` can either
 be set on the property or the associated _getter_ method. The ``SerializedPath``
 cannot be used in combination with a ``SerializedName`` for the same property.
 
@@ -490,7 +488,7 @@ value:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->serializer()->nameConverter('serializer.name_converter.camel_case_to_snake_case');
         };
 
@@ -525,7 +523,7 @@ take a look at how this bundle works.
 
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: https://json-ld.org
-.. _`Hydra Core Vocabulary`: http://www.hydra-cg.com
+.. _`Hydra Core Vocabulary`: https://www.hydra-cg.com/
 .. _`OpenAPI`: https://www.openapis.org
 .. _`GraphQL`: https://graphql.org
 .. _`JSON:API`: https://jsonapi.org

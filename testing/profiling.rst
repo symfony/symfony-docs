@@ -1,6 +1,3 @@
-.. index::
-   single: Tests; Profiling
-
 How to Use the Profiler in a Functional Test
 ============================================
 
@@ -49,7 +46,7 @@ tests significantly. That's why Symfony disables it by default:
         // config/packages/test/web_profiler.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->profiler()
                 ->enabled(true)
@@ -76,7 +73,7 @@ provided by the collectors obtained through the ``$client->getProfile()`` call::
 
     class LuckyControllerTest extends WebTestCase
     {
-        public function testRandomNumber()
+        public function testRandomNumber(): void
         {
             $client = static::createClient();
 
@@ -126,5 +123,5 @@ finish. It can be achieved by embedding the token in the error message::
 
 .. tip::
 
-    Read the API for built-in :doc:`data collectors </profiler/data_collector>`
+    Read the API for built-in :ref:`data collectors <profiler-data-collector>`
     to learn more about their interfaces.

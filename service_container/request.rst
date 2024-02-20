@@ -1,7 +1,3 @@
-.. index::
-    single: DependencyInjection; Request
-    single: Service Container; Request
-
 How to Retrieve the Request from the Service Container
 ======================================================
 
@@ -18,14 +14,12 @@ method::
 
     class NewsletterManager
     {
-        protected $requestStack;
-
-        public function __construct(RequestStack $requestStack)
-        {
-            $this->requestStack = $requestStack;
+        public function __construct(
+            protected RequestStack $requestStack,
+        ) {
         }
 
-        public function anyMethod()
+        public function anyMethod(): void
         {
             $request = $this->requestStack->getCurrentRequest();
             // ... do something with the request

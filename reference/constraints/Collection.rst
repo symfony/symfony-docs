@@ -33,12 +33,12 @@ of a collection individually. Take the following example::
 
     class Author
     {
-        protected $profileData = [
+        protected array $profileData = [
             'personal_email' => '...',
             'short_bio' => '...',
         ];
 
-        public function setProfileData($key, $value)
+        public function setProfileData($key, $value): void
         {
             $this->profileData[$key] = $value;
         }
@@ -58,7 +58,6 @@ following:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Author
         {
             #[Assert\Collection(
@@ -74,7 +73,7 @@ following:
                 ],
                 allowMissingFields: true,
             )]
-            protected $profileData = [
+            protected array $profileData = [
                 'personal_email' => '...',
                 'short_bio' => '...',
             ];
@@ -136,7 +135,9 @@ following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection([
                     'fields' => [
@@ -204,7 +205,7 @@ you can do the following:
                     ),
                 ],
             )]
-            protected $profileData = ['personal_email' => 'email@example.com'];
+            protected array $profileData = ['personal_email' => 'email@example.com'];
         }
 
     .. code-block:: yaml
@@ -262,9 +263,9 @@ you can do the following:
 
         class Author
         {
-            protected $profileData = ['personal_email'];
+            // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection([
                     'fields' => [
@@ -324,7 +325,7 @@ Options
 ``allowExtraFields``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: false
+**type**: ``boolean`` **default**: ``false``
 
 If this option is set to ``false`` and the underlying collection contains
 one or more elements that are not included in the `fields`_ option, a validation
@@ -333,7 +334,7 @@ error will be returned. If set to ``true``, extra fields are OK.
 ``allowMissingFields``
 ~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: false
+**type**: ``boolean`` **default**: ``false``
 
 If this option is set to ``false`` and one or more fields from the `fields`_
 option are not present in the underlying collection, a validation error
