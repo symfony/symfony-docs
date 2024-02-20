@@ -85,4 +85,7 @@ Create your Own Framework
 
 Want to create your own framework based on Symfony?
 
-.. include:: /create_framework/map.rst.inc
+.. toctree::
+   :maxdepth: 2
+
+   create_framework/index
