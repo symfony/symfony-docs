@@ -146,6 +146,35 @@ enough, as it will only trust the node sitting directly above your application
 ranges of any additional proxy (e.g. `CloudFront IP ranges`_) to the array of
 trusted proxies.
 
+Reverse proxy in a subpath / subfolder
+--------------------------------------
+
+If your Symfony application runs behind a reverse proxy and it's served in a
+subpath/subfolder, Symfony might generate incorrect URLs that ignore the
+subpath/subfolder of the reverse proxy.
+
+To fix this, you need to pass the subpath/subfolder route prefix of the reverse
+proxy to Symfony by setting the ``X-Forwarded-Prefix`` header. The header can
+normally be configured in your reverse proxy configuration. Configure
+``X-Forwared-Prefix`` as trusted header to be able to use this feature.
+
+The ``X-Forwarded-Prefix`` is used by Symfony to prefix the base URL of request
+objects, which is used to generate absolute paths and URLs in Symfony applications.
+Without the header, the base URL would be only determined based on the configuration
+of the web server running Symfony, which leads to incorrect paths/URLs, when the
+application is served under a subpath/subfolder by a reverse proxy.
+
+For example if your Symfony application is directly served under a URL like
+``https://symfony.tld/`` and you would like to use a reverse proxy to serve the
+application under ``https://public.tld/app/``, you would need to set the
+``X-Forwarded-Prefix`` header to ``/app/`` in your reverse proxy configuration.
+Without the header, Symfony would generate URLs based on its server base URL
+(e.g. ``/my/route``) instead of the correct ``/app/my/route``, which is
+required to access the route via the reverse proxy.
+
+The header can be different for each reverse proxy, so that access via different
+reverse proxies served under different subpaths/subfolders can be handled correctly.
+
 Custom Headers When Using a Reverse Proxy
 -----------------------------------------
 
