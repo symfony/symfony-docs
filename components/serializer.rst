@@ -556,7 +556,7 @@ A custom name converter can handle such cases::
         public function denormalize(string $propertyName): string
         {
             // removes 'org_' prefix
-            return 'org_' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
+            return str_starts_with($propertyName, 'org_') ? substr($propertyName, 4) : $propertyName;
         }
     }
 
