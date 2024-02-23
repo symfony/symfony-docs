@@ -1041,6 +1041,7 @@ is dispatched. Listeners receive a
 .. _`Smsbox`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsbox/README.md
 .. _`Smsapi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsapi/README.md
 .. _`Smsc`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsc/README.md
+.. _`SMSense`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SMSense/README.md
 .. _`SmsSluzba`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsSluzba/README.md
 .. _`SpotHit`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SpotHit/README.md
 .. _`Telegram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telegram/README.md
