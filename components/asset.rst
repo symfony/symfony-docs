@@ -203,14 +203,14 @@ every day::
 
     class DateVersionStrategy implements VersionStrategyInterface
     {
-        private \DateTimeInterface $version;
+        private string $version;
 
         public function __construct()
         {
             $this->version = date('Ymd');
         }
 
-        public function getVersion(string $path): \DateTimeInterface
+        public function getVersion(string $path): string
         {
             return $this->version;
         }
