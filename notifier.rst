@@ -96,6 +96,7 @@ Service             Package                                DSN                  
 `Smsapi`_           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
 `Smsbox`_           ``symfony/smsbox-notifier``            ``smsbox://APIKEY@default?mode=MODE&strategy=STRATEGY&sender=SENDER``
 `Smsc`_             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
+`SMSense`_          ``symfony/smsense-notifier``           ``smsense://API_TOKEN@default?from=FROM``
 `SpotHit`_          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
 `Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 `TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
@@ -114,7 +115,7 @@ Service             Package                                DSN                  
 
 .. versionadded:: 7.1
 
-    The `SmsSluzba`_ integration was introduced in Symfony 7.1.
+    The `SmsSluzba`_ and  `SMSense`_ integrations were introduced in Symfony 7.1.
 
 .. deprecated:: 7.1
 
