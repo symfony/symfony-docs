@@ -104,6 +104,10 @@ Configuring Process Options
 
     The feature to configure process options was introduced in Symfony 5.2.
 
+.. caution::
+
+    Windows only
+
 Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
 You can configure the options passed to the ``other_options`` argument of
 ``proc_open()`` using the ``setOptions()`` method::
