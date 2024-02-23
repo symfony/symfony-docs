@@ -749,10 +749,11 @@ method to access the list of errors. It returns a
     // "firstName" field
     $errors = $form['firstName']->getErrors();
 
-    // a FormErrorIterator instance in a flattened structure
+    // a FormErrorIterator instance including child forms in a flattened structure
+    // use getOrigin() to determine the form causing the error
     $errors = $form->getErrors(true);
 
-    // a FormErrorIterator instance representing the form tree structure
+    // a FormErrorIterator instance including child forms without flattening the output structure
     $errors = $form->getErrors(true, false);
 
 Clearing Form Errors
