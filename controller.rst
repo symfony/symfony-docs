@@ -539,6 +539,37 @@ if you want to map a nested array of specific DTOs::
         ) {}
     }
 
+.. tip::
+
+    If using typed properties with `MapRequestPayload`, it's recommanded to use built-in types (like `int`, `bool`, `string`...) for mapping. Using custom types can expose your application implementation outside with errors during denormalization.
+    Validating an Enum in your `#[MapRequestPayload]` class should look like this::
+
+        class LuckyController
+        {
+            #[Route('/lucky/number/{max}', name: 'app_lucky_number', methods: ['POST'])]
+            public function number(#[MapRequestPayload] MyInput $input, int $max): Response
+            {
+                // use it like this : $input->myInputAttribute;
+            }
+        }
+
+        class MyInput
+        {
+            #[Assert\Choice(callback: [MyEnum::class, 'values'])]
+            public string $myInputAttribute;
+        }
+
+        enum MyEnum: string
+        {
+            case FIRST_CASE = 'first_case';
+            case SECOND_CASE = 'second_case';
+
+            public static function values(): array
+            {
+                return array_column(self::cases(), 'value');
+            }
+        }
+
 Managing the Session
 --------------------
 
