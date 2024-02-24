@@ -348,7 +348,7 @@ to cache each of Doctrine ORM elements (queries, results, etc.):
     .. code-block:: php
 
         use Symfony\Config\DoctrineConfig;
-        use Symfony\Config\FrameworkConfig;w
+        use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework, DoctrineConfig $doctrine): void {
             $framework
