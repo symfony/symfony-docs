@@ -235,6 +235,23 @@ The constructor also allows setting a timezone or custom referenced date::
     error handling across versions of PHP, thanks to polyfilling `PHP 8.3's behavior`_
     on the topic.
 
+``DatePoint`` also allows to set and get the microsecond part of the date and time::
+
+    $datePoint = new DatePoint();
+    $datePoint->setMicroseconds(345);
+    $microseconds = $datePoint->getMicroseconds();
+
+.. note::
+
+    This feature polyfills PHP 8.4's behavior on the topic, as microseconds manipulation
+    is not available in previous versions of PHP.
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Clock\\DatePoint::setMicroseconds` and
+    :method:`Symfony\\Component\\Clock\\DatePoint::getMicroseconds` methods were
+    introduced in Symfony 7.1.
+
 .. _clock_writing-tests:
 
 Writing Time-Sensitive Tests
