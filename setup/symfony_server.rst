@@ -388,7 +388,7 @@ Consider the following configuration:
 
 .. code-block:: yaml
 
-    # docker-compose.yaml
+    # compose.yaml
     services:
         database:
             ports: [3306]
@@ -401,12 +401,12 @@ variables accordingly with the service name (``database``) as a prefix:
 If the service is not in the supported list below, generic environment
 variables are set: ``PORT``, ``IP``, and ``HOST``.
 
-If the ``docker-compose.yaml`` names do not match Symfony's conventions, add a
+If the ``compose.yaml`` names do not match Symfony's conventions, add a
 label to override the environment variables prefix:
 
 .. code-block:: yaml
 
-    # docker-compose.yaml
+    # compose.yaml
     services:
         db:
             ports: [3306]
@@ -471,7 +471,7 @@ check the "Symfony Server" section in the web debug toolbar; you'll see that
 
     .. code-block:: yaml
 
-        # docker-compose.yaml
+        # compose.yaml
         services:
             db:
                 ports: [3306]
@@ -485,10 +485,10 @@ its location, same as for ``docker-compose``:
 .. code-block:: bash
 
     # start your containers:
-    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
+    COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
 
     # run any Symfony CLI command:
-    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
+    COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
 
 .. note::
 
