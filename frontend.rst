@@ -35,7 +35,7 @@ Supports Sass/Tailwind            :ref:`yes <asset-mapper-tailwind>`  yes
 Supports React, Vue, Svelte?      yes :ref:`[1] <ux-note-1>`          yes
 Supports TypeScript               :ref:`yes <asset-mapper-ts>`        yes
 Removes comments from JavaScript  no                                  yes
-Removes comments from CSS         no                                  no :ref:`[2] <ux-note-2>`
+Removes comments from CSS         no :ref:`[2] <ux-note-2>`           no :ref:`[2] <ux-note-2>`
 Versioned assets                  always                              optional
 ================================  ==================================  ==========
 
