@@ -194,4 +194,35 @@ change your constructor like this:
         ) {
         }
 
+Configure Logger Channels with Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from `Monolog`_ 3.5 you can also configure the logger channel
+by using the ``#[WithMonologChannel]`` attribute directly on your service
+class::
+
+    // src/Service/MyFixtureService.php
+    namespace App\Service;
+
+    use Monolog\Attribute\WithMonologChannel;
+    use Psr\Log\LoggerInterface;
+    use Symfony\Bridge\Monolog\Logger;
+
+    #[WithMonologChannel('fixtures')]
+    class MyFixtureService
+    {
+        public function __construct(LoggerInterface $logger)
+        {
+            // ...
+        }
+    }
+
+This way you can avoid declaring your service manually to use a specific
+channel.
+
+.. versionadded:: 3.5
+
+    The ``#[WithMonologChannel]`` attribute was introduced in Monolog 3.5.0.
+
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle
+.. _`Monolog`: https://github.com/Seldaek/monolog
