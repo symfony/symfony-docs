@@ -93,6 +93,7 @@ whitelist:
         - '/``.yml``/'
         - '/(.*)\.orm\.yml/' # currently DoctrineBundle only supports .yml
         - /docker-compose\.yml/
+        - /compose\.yaml/
     lines:
         - 'in config files, so the old ``app/config/config_dev.yml`` goes to'
         - '#. The most important config file is ``app/config/services.yml``, which now is'
