@@ -15,8 +15,10 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
-The Workflow of a Request
--------------------------
+.. _the-workflow-of-a-request:
+
+The Request-Response Lifecycle
+------------------------------
 
 .. seealso::
 
@@ -29,7 +31,7 @@ The Workflow of a Request
 Every HTTP web interaction begins with a request and ends with a response.
 Your job as a developer is to create PHP code that reads the request information
 (e.g. the URL) and creates and returns a response (e.g. an HTML page or JSON string).
-This is a simplified overview of the request workflow in Symfony applications:
+This is a simplified overview of the request-response lifecycle in Symfony applications:
 
 #. The **user** asks for a **resource** in a **browser**;
 #. The **browser** sends a **request** to the **server**;
@@ -66,7 +68,7 @@ that system::
 
 Internally, :method:`HttpKernel::handle() <Symfony\\Component\\HttpKernel\\HttpKernel::handle>` -
 the concrete implementation of :method:`HttpKernelInterface::handle() <Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle>` -
-defines a workflow that starts with a :class:`Symfony\\Component\\HttpFoundation\\Request`
+defines a lifecycle that starts with a :class:`Symfony\\Component\\HttpFoundation\\Request`
 and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
 
 .. raw:: html
@@ -75,7 +77,7 @@ and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
         alt="A flow diagram showing all HTTP Kernel events in the Request-Response lifecycle. Each event is numbered 1 to 8 and described in detail in the following subsections."
     ></object>
 
-The exact details of this workflow are the key to understanding how the kernel
+The exact details of this lifecycle are the key to understanding how the kernel
 (and the Symfony Framework or any other library that uses the kernel) works.
 
 HttpKernel: Driven by Events
@@ -508,7 +510,7 @@ as possible to the client (e.g. sending emails).
 
 .. _component-http-kernel-kernel-exception:
 
-Handling Exceptions: the ``kernel.exception`` Event
+9) Handling Exceptions: the ``kernel.exception`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Handle some type of exception and create an appropriate
