@@ -213,7 +213,7 @@ included in the Symfony repository for any BC break that you need to be aware of
 Upgrading to Symfony 6: Add Native Return Types
 -----------------------------------------------
 
-Symfony 6 and Symfony 6 have come with native PHP return types to (almost all) methods.
+Symfony 6 and Symfony 7 added native PHP return types to (almost all) methods.
 
 In PHP, if the parent has a return type declaration, any class implementing
 or overriding the method must have the return type as well. However, you
