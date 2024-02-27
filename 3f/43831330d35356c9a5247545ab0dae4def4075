@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2024-02-27T02:03:55Z
+
+Can we remove the entire line now? The goal of this table is to compare Webpack / AM.
+
+I'm not sure there is added value to list features that are _not_ provided in both cases.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-02-27T07:36:48Z
+
+I added this line cause I wasn't aware that neither is minifying CSS. And since both are not doing it, the docs don't say anything about it - so I figured this would be a nice place to quickly inform people.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-02-27T12:14:58Z
+
+@smnandre generally speaking I agree with you (the table should not contain rows with two "no") but in this case I also agree with @ThomasLandauer because minifying CSS is something that many people still think about (although it's no longer important or needed)
