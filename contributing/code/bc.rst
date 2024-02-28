@@ -491,42 +491,42 @@ If that's the case, here is how to do it properly in a minor version:
 #. Add the argument as a comment in the signature::
 
     // the new argument can be optional
-    public function say(string $text, /* bool $stripWithespace = true */): void
+    public function say(string $text, /* bool $stripWhitespace = true */): void
     {
     }
 
     // or required
-    public function say(string $text, /* bool $stripWithespace */): void
+    public function say(string $text, /* bool $stripWhitespace */): void
     {
     }
 
 #. Document the new argument in a PHPDoc::
 
     /**
-     * @param bool $stripWithespace
+     * @param bool $stripWhitespace
      */
 
 #. Use ``func_num_args`` and ``func_get_arg`` to retrieve the argument in the
    method::
 
-        $stripWithespace = 2 <= \func_num_args() ? func_get_arg(1) : false;
+        $stripWhitespace = 2 <= \func_num_args() ? func_get_arg(1) : false;
 
    Note that the default value is ``false`` to keep the current behavior.
 
 #. If the argument has a default value that will change the current behavior,
    warn the user::
 
-    trigger_deprecation('symfony/COMPONENT', 'X.Y', 'Not passing the "bool $stripWithespace" argument explicitly is deprecated, its default value will change to X in Z.0.');
+    trigger_deprecation('symfony/COMPONENT', 'X.Y', 'Not passing the "bool $stripWhitespace" argument explicitly is deprecated, its default value will change to X in Z.0.');
 
 #. If the argument has no default value, warn the user that is going to be
    required in the next major version::
 
     if (\func_num_args() < 2) {
-        trigger_deprecation('symfony/COMPONENT', 'X.Y', 'The "%s()" method will have a new "bool $stripWithespace" argument in version Z.0, not defining it is deprecated.', __METHOD__);
+        trigger_deprecation('symfony/COMPONENT', 'X.Y', 'The "%s()" method will have a new "bool $stripWhitespace" argument in version Z.0, not defining it is deprecated.', __METHOD__);
 
-        $stripWithespace = false;
+        $stripWhitespace = false;
     } else {
-        $stripWithespace = func_get_arg(1);
+        $stripWhitespace = func_get_arg(1);
     }
 
 #. In the next major version (``X.0``), uncomment the argument, remove the
