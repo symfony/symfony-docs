@@ -546,7 +546,7 @@ field according to the current selection in the ``sport`` field:
 .. code-block:: html+twig
 
     {# templates/meetup/create.html.twig #}
-    {{ form_start(form, { attr: { id: 'supply_history_form' } }) }}
+    {{ form_start(form, { attr: { id: 'sport_meetup_form' } }) }}
         {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
         {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
         {# ... #}
