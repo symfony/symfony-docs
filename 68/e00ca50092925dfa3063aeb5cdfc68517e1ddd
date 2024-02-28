@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by thomas-l at 2024-02-23T12:56:13Z
+
+I'm not sure whether it has always been the case for older versions of PHP `proc_open` function. Tell me if I should anyway make a PR against the oldest branch with the options.
