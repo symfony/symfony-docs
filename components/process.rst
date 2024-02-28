@@ -104,10 +104,6 @@ Configuring Process Options
 
     The feature to configure process options was introduced in Symfony 5.2.
 
-.. caution::
-
-    Windows only
-
 Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
 You can configure the options passed to the ``other_options`` argument of
 ``proc_open()`` using the ``setOptions()`` method::
@@ -115,6 +111,12 @@ You can configure the options passed to the ``other_options`` argument of
     $process = new Process(['...', '...', '...']);
     // this option allows a subprocess to continue running after the main script exited
     $process->setOptions(['create_new_console' => true]);
+
+.. caution::
+
+    Most of the options defined by ``proc_open()`` (such as ``create_new_console``
+    and ``suppress_errors``) are only supported on Windows operating systems.
+    Check out the `PHP documentation for proc_open()`_ before using them.
 
 Using Features From the OS Shell
 --------------------------------
@@ -574,3 +576,4 @@ whether `TTY`_ is supported on the current operating system::
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`output_buffering`: https://www.php.net/manual/en/outcontrol.configuration.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)
+.. _`PHP documentation for proc_open()`: https://www.php.net/manual/en/function.proc-open.php
