@@ -285,6 +285,7 @@ of the UUID parameters::
     // src/Repository/ProductRepository.php
 
     // ...
+    use Doctrine\DBAL\ParameterType;
     use Symfony\Bridge\Doctrine\Types\UuidType;
 
     class ProductRepository extends ServiceEntityRepository
@@ -300,7 +301,8 @@ of the UUID parameters::
 
                 // alternatively, you can convert it to a value compatible with
                 // the type inferred by Doctrine
-                ->setParameter('user', $user->getUuid()->toBinary())
+                // Note: ParameterType::BINARY is required to query PostgreSQL
+                ->setParameter('user', $user->getUuid()->toBinary(), ParameterType::BINARY)
             ;
 
             // ...
