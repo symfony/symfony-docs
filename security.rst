@@ -476,9 +476,12 @@ will be able to authenticate (e.g. login form, API token, etc).
         security:
             # ...
             firewalls:
+                # the order in which firewalls are defined is very important, as the
+                # request will be handled by the first firewall whose pattern matches
                 dev:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
+                # a firewall with no pattern should be defined last because it will match all requests
                 main:
                     lazy: true
                     # provider that you set earlier inside providers
@@ -504,10 +507,14 @@ will be able to authenticate (e.g. login form, API token, etc).
 
             <config>
                 <!-- ... -->
+
+                <!-- the order in which firewalls are defined is very important, as the
+                     request will be handled by the first firewall whose pattern matches -->
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false"/>
 
+                <!-- a firewall with no pattern should be defined last because it will match all requests -->
                 <firewall name="main"
                     lazy="true"/>
 
@@ -526,11 +533,15 @@ will be able to authenticate (e.g. login form, API token, etc).
 
         return static function (SecurityConfig $security): void {
             // ...
+
+            // the order in which firewalls are defined is very important, as the
+            // request will be handled by the first firewall whose pattern matches
             $security->firewall('dev')
                 ->pattern('^/(_(profiler|wdt)|css|images|js)/')
                 ->security(false)
             ;
 
+            // a firewall with no pattern should be defined last because it will match all requests
             $security->firewall('main')
                 ->lazy(true)
 
