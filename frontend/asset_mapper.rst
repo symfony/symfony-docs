@@ -608,15 +608,15 @@ is being built, which you can ignore.
 Deploying with the AssetMapper Component
 ----------------------------------------
 
-When you're ready to deploy, "compile" your assets:
+When you're ready to deploy, "compile" your assets by running this command:
 
 .. code-block:: terminal
 
     $ php bin/console asset-map:compile
 
 This will write all your versioned asset files into the ``public/assets/`` directory,
-along with a few JSON files: ``manifest.json``, ``importmap.json``, plus one ``entrypoint.<name>.json``
-for each entrypoint.
+along with a few JSON files (``manifest.json``, ``importmap.json``, etc.) so that
+the ``importmap`` can be rendered lightning fast.
 
 .. _optimization:
 
