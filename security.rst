@@ -511,6 +511,8 @@ will be able to authenticate (e.g. login form, API token, etc).
                 dev:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
+                    # add a new firewall here with a specific pattern, the first firewall matched by pattern will be
+                    # executed, if a firewall has no pattern it will match all requests and the others will be skipped
                 main:
                     lazy: true
                     provider: users_in_memory
