@@ -513,6 +513,7 @@ will be able to authenticate (e.g. login form, API token, etc).
                 dev:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
+                # a firewall with no pattern should be defined last because it will match all requests
                 main:
                     lazy: true
                     provider: users_in_memory
@@ -544,6 +545,7 @@ will be able to authenticate (e.g. login form, API token, etc).
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false"/>
 
+                <!-- a firewall with no pattern should be defined last because it will match all requests -->
                 <firewall name="main"
                     lazy="true"/>
 
@@ -570,6 +572,7 @@ will be able to authenticate (e.g. login form, API token, etc).
                 ->security(false)
             ;
 
+            // a firewall with no pattern should be defined last because it will match all requests
             $security->firewall('main')
                 ->lazy(true)
 
