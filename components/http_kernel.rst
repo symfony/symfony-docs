@@ -492,7 +492,7 @@ as possible to the client (e.g. sending emails).
 .. _component-http-kernel-kernel-exception:
 
 9) Handling Exceptions: the ``kernel.exception`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Handle some type of exception and create an appropriate
 ``Response`` to return for the exception

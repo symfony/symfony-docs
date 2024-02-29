@@ -508,11 +508,11 @@ will be able to authenticate (e.g. login form, API token, etc).
         security:
             # ...
             firewalls:
+                # the order in which firewalls are defined is very important, as the
+                # request will be handled by the first firewall whose pattern matches
                 dev:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
-                    # add a new firewall here with a specific pattern, the first firewall matched by pattern will be
-                    # executed, if a firewall has no pattern it will match all requests and the others will be skipped
                 main:
                     lazy: true
                     provider: users_in_memory
@@ -537,6 +537,9 @@ will be able to authenticate (e.g. login form, API token, etc).
 
             <config>
                 <!-- ... -->
+
+                <!-- the order in which firewalls are defined is very important, as the
+                     request will be handled by the first firewall whose pattern matches -->
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false"/>
@@ -559,6 +562,9 @@ will be able to authenticate (e.g. login form, API token, etc).
 
         return static function (SecurityConfig $security) {
             // ...
+
+            // the order in which firewalls are defined is very important, as the
+            // request will be handled by the first firewall whose pattern matches
             $security->firewall('dev')
                 ->pattern('^/(_(profiler|wdt)|css|images|js)/')
                 ->security(false)
