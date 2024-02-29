@@ -629,12 +629,14 @@ which will automatically do most of these things for you:
 
 - **Use HTTP/2**: Your web server should be running HTTP/2 (or HTTP/3) so the
   browser can download assets in parallel. HTTP/2 is automatically enabled in Caddy
-  and can be activated in Nginx and Apache.
+  and can be activated in Nginx and Apache. Or, proxy your site through a
+  service like Cloudflare, which will automatically enable HTTP/2 for you.
 
 - **Compress your assets**: Your web server should compress (e.g. using gzip)
   your assets (JavaScript, CSS, images) before sending them to the browser. This
   is automatically enabled in Caddy and can be activated in Nginx and Apache.
-  In Cloudflare, you can also
+  Or, proxy your site through a service like Cloudflare, which will
+  automatically compress your assets for you. In Cloudflare, you can also
   enable `auto minify`_ to further compress your assets (e.g. removing
   whitespace and comments from JavaScript and CSS files).
 
