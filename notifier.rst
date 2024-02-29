@@ -195,7 +195,7 @@ send SMS messages::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\Message\SmsMessage;
     use Symfony\Component\Notifier\TexterInterface;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class SecurityController
     {
