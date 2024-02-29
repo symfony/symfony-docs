@@ -360,13 +360,11 @@ you to send messages to chat services::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\ChatterInterface;
     use Symfony\Component\Notifier\Message\ChatMessage;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class CheckoutController extends AbstractController
     {
-        /**
-         * @Route("/checkout/thankyou")
-         */
+        #[Route('/checkout/thankyou')]
         public function thankyou(ChatterInterface $chatter): Response
         {
             $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
