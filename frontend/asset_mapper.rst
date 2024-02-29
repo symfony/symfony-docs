@@ -627,27 +627,25 @@ To make your AssetMapper-powered site fly, there are a few things you need to
 do. If you want to take a shortcut, you can use a service like `Cloudflare`_,
 which will automatically do most of these things for you:
 
-- **Use HTTP/2**: Your web server **must** be running HTTP/2 (or HTTP/3) so the
+- **Use HTTP/2**: Your web server should be running HTTP/2 (or HTTP/3) so the
   browser can download assets in parallel. HTTP/2 is automatically enabled in Caddy
-  and can be activated in Nginx and Apache. Or, proxy your site through a
-  service like Cloudflare, which will automatically enable HTTP/2 for you.
+  and can be activated in Nginx and Apache.
 
 - **Compress your assets**: Your web server should compress (e.g. using gzip)
   your assets (JavaScript, CSS, images) before sending them to the browser. This
   is automatically enabled in Caddy and can be activated in Nginx and Apache.
-  Or, proxy your site through a service like Cloudflare, which will
-  automatically compress your assets for you. In Cloudflare, you can also
+  In Cloudflare, you can also
   enable `auto minify`_ to further compress your assets (e.g. removing
   whitespace and comments from JavaScript and CSS files).
 
 - **Set long-lived Expires headers**: Your web server should set long-lived
-  Expires headers on your assets. Because the AssetMapper component includes a version
-  hash in the filename of each asset, you can safely set the Expires header
+  ``Expires`` HTTP headers on your assets. Because the AssetMapper component includes a version
+  hash in the filename of each asset, you can safely set the ``Expires`` header
   to a very long time in the future (e.g. 1 year). This isn't automatic in
   any web server, but can be easily enabled.
 
 Once you've done these things, you can use a tool like `Lighthouse`_ to
-validate the performance of your site!
+check the performance of your site.
 
 .. _performance-preloading:
 
