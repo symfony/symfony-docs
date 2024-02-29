@@ -592,19 +592,15 @@ is being built, which you can ignore.
 Deploying with the AssetMapper Component
 ----------------------------------------
 
-When you're ready to deploy, "compile" your assets during deployment:
+When you're ready to deploy, "compile" your assets by running this command:
 
 .. code-block:: terminal
 
     $ php bin/console asset-map:compile
 
-That's it! This will write all your assets into the ``public/assets/`` directory,
-along with a few JSON files so that the ``importmap`` can be rendered lightning fast.
-
-But to make sure your site is performant, be sure that your web server
-(or a proxy) is running HTTP/2, is compressing your assets and setting
-long-lived Expires headers on them. See :ref:`Optimization <optimization>` for
-more details.
+This will write all your versioned asset files into the ``public/assets/`` directory,
+along with a few JSON files (``manifest.json``, ``importmap.json``, etc.) so that
+the ``importmap`` can be rendered lightning fast.
 
 .. _optimization:
 
