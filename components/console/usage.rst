@@ -104,7 +104,7 @@ If you do not provide a console name then it will just output:
 
 .. code-block:: text
 
-    console tool
+    Console Tool
 
 You can force turning on ANSI output coloring with:
 
