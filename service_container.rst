@@ -1035,20 +1035,22 @@ to them.
 Linting Service Definitions
 ---------------------------
 
-The ``lint:container`` command checks that the arguments injected into services
-match their type declarations. It's useful to run it before deploying your
+The ``lint:container`` command makes several checks into your services definition. It first
+checks that when an alias is defined on an interface it can resolve to a service implementing this
+interface (thus preventing type errors at runtime). It then checks that the arguments injected
+into services match their type declarations. It's useful to run it before deploying your
 application to production (e.g. in your continuous integration server):
 
 .. code-block:: terminal
 
     $ php bin/console lint:container
 
-Checking the types of all service arguments whenever the container is compiled
-can hurt performance. That's why this type checking is implemented in a
-:doc:`compiler pass </service_container/compiler_passes>` called
-``CheckTypeDeclarationsPass`` which is disabled by default and enabled only when
-executing the ``lint:container`` command. If you don't mind the performance
-loss, enable the compiler pass in your application.
+Having these checks on all aliases and service arguments whenever the container is compiled
+can hurt performance. That's why these checks are implemented in dedicated
+:doc:`compiler passes </service_container/compiler_passes>` respectively called
+``CheckAliasValidityPass`` and ``CheckTypeDeclarationsPass`` which are disabled by default and
+enabled only when executing the ``lint:container`` command. If you don't mind the performance
+loss, enable these compiler passes in your application.
 
 .. _container-public:
 
