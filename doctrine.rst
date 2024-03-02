@@ -356,7 +356,7 @@ and save it::
     use App\Entity\Product;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ProductController extends AbstractController
     {
@@ -438,7 +438,7 @@ Consider the following controller code::
 
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
     // ...
 
@@ -502,7 +502,7 @@ be able to go to ``/product/1`` to see your new product::
     use App\Entity\Product;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
@@ -535,7 +535,7 @@ and injected by the dependency injection container::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
@@ -624,7 +624,7 @@ automatically! You can simplify the controller to::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
@@ -700,7 +700,7 @@ the ``EntityValueResolver`` behavior by using the `MapEntity options`_ ::
     use App\Entity\Product;
     use Symfony\Bridge\Doctrine\Attribute\MapEntity;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
@@ -841,7 +841,7 @@ with any PHP model::
     use App\Repository\ProductRepository;
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController

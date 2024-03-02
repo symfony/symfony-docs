@@ -64,7 +64,7 @@ do so, create a :doc:`controller class </controller>` like the following:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -178,7 +178,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogApiController extends AbstractController
         {
@@ -269,7 +269,7 @@ arbitrary matching logic:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class DefaultController extends AbstractController
         {
@@ -505,7 +505,7 @@ For example, the route to display the blog post contents is defined as ``/blog/{
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -584,7 +584,7 @@ the ``{page}`` parameter using the ``requirements`` option:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -702,7 +702,7 @@ concise, but it can decrease route readability when requirements are complex:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -769,7 +769,7 @@ other configuration formats they are defined with the ``defaults`` option:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -854,7 +854,7 @@ parameter:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -924,7 +924,7 @@ optional ``priority`` parameter in those routes to control their priority:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -973,7 +973,7 @@ controller action. Instead of ``string $slug``, add ``BlogPost $post``::
     use App\Entity\BlogPost;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class BlogController extends AbstractController
     {
@@ -1015,7 +1015,7 @@ convert them automatically to their scalar values.
     use App\Enum\OrderStatusEnum;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class OrderController extends AbstractController
     {
@@ -1147,7 +1147,7 @@ the controllers of the routes:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -1220,7 +1220,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class DefaultController extends AbstractController
         {
@@ -1417,7 +1417,7 @@ when importing the routes.
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         #[Route('/blog', requirements: ['_locale' => 'en|es|fr'], name: 'blog_')]
         class BlogController extends AbstractController
@@ -1597,7 +1597,7 @@ information in a controller via the ``Request`` object::
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class BlogController extends AbstractController
     {
@@ -1793,7 +1793,7 @@ host name:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class MainController extends AbstractController
         {
@@ -1868,7 +1868,7 @@ multi-tenant applications) and these parameters can be validated too with
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class MainController extends AbstractController
         {
@@ -1996,7 +1996,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class CompanyController extends AbstractController
         {
@@ -2175,7 +2175,7 @@ session shouldn't be used when matching a request:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class MainController extends AbstractController
         {
@@ -2257,7 +2257,7 @@ that defines only one route. Consider the following class::
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         final class MainController extends AbstractController
         {
@@ -2286,7 +2286,7 @@ use the ``generateUrl()`` helper::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
     class BlogController extends AbstractController
@@ -2588,7 +2588,7 @@ each route explicitly:
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class SecurityController extends AbstractController
         {
