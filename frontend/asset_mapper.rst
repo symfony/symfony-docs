@@ -228,29 +228,22 @@ command to download the files on other computers if some are missing:
 
     The ``importmap:install`` command was introduced in Symfony 6.4.
 
-You can check for available updates for your third-party packages by running:
+You can update your third-party packages to their current versions by running:
 
 .. code-block:: terminal
 
     # check for updates for all packages
     $ php bin/console importmap:outdated
+    # update them
+    $ php bin/console importmap:update
 
-    # check for updates for the given list of packages
+    # only for the given list of packages
+    $ php bin/console importmap:update bootstrap lodash
     $ php bin/console importmap:outdated bootstrap lodash
 
 .. versionadded:: 6.4
 
     The ``importmap:outdated`` command was introduced in Symfony 6.4.
-
-To update third-party packages in your ``importmap.php`` file, run:
-
-.. code-block:: terminal
-
-    # updates all packages
-    $ php bin/console importmap:update
-
-    # updates only the given list of packages
-    $ php bin/console importmap:update bootstrap lodash
 
 How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
