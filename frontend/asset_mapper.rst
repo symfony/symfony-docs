@@ -621,10 +621,10 @@ which will automatically do most of these things for you:
   enable `auto minify`_ to further compress your assets (e.g. removing
   whitespace and comments from JavaScript and CSS files).
 
-- **Set long-lived Expires headers**: Your web server should set long-lived
-  ``Expires`` HTTP headers on your assets. Because the AssetMapper component includes a version
-  hash in the filename of each asset, you can safely set the ``Expires`` header
-  to a very long time in the future (e.g. 1 year). This isn't automatic in
+- **Set long-lived cache expiry**: Your web server should set a long-lived
+  ``Cache-Control`` HTTP header on your assets. Because the AssetMapper component includes a version
+  hash in the filename of each asset, you can safely set ``max-age``
+  to a very long time (e.g. 1 year). This isn't automatic in
   any web server, but can be easily enabled.
 
 Once you've done these things, you can use a tool like `Lighthouse`_ to
