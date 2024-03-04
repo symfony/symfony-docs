@@ -154,7 +154,7 @@ Instead, add the route *right above* the controller method:
       namespace App\Controller;
 
       use Symfony\Component\HttpFoundation\Response;
-    + use Symfony\Component\Routing\Annotation\Route;
+    + use Symfony\Component\Routing\Attribute\Route;
 
       class DefaultController
       {
@@ -173,7 +173,7 @@ in ``DefaultController``::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController
     {
