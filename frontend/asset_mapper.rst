@@ -93,8 +93,10 @@ This will physically copy all the files from your mapped directories to
 ``public/assets/`` so that they're served directly by your web server.
 See :ref:`Deployment <asset-mapper-deployment>` for more details.
 
-If you compiled your assets on your development machine, you need to delete them again,
-in order to make Symfony serve the current versions from ``assets/`` again.
+.. caution::
+
+    If you compiled your assets on your development machine, you need to delete them again,
+    in order to make Symfony serve the current versions from ``assets/`` again.
 
 .. tip::
 
