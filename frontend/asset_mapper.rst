@@ -635,7 +635,7 @@ which will automatically do most of these things for you:
 - **Compress your assets**: Your web server should compress (e.g. using gzip)
   your assets (JavaScript, CSS, images) before sending them to the browser. This
   is automatically enabled in Caddy and can be activated in Nginx and Apache.
-  In Cloudflare, you can also
+  In Cloudflare, assets are compressed by default and you can also
   enable `auto minify`_ to further compress your assets (e.g. removing
   whitespace and comments from JavaScript and CSS files).
 
