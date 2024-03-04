@@ -69,7 +69,7 @@ metadata to code):
       // src/Controller/LuckyController.php
 
       // ...
-    + use Symfony\Component\Routing\Annotation\Route;
+    + use Symfony\Component\Routing\Attribute\Route;
 
       class LuckyController
       {
