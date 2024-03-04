@@ -217,7 +217,8 @@ Now you can import the ``bootstrap`` package like usual:
 
 All packages in ``importmap.php`` are downloaded into an ``assets/vendor/`` directory,
 which should be ignored by git (the Flex recipe adds it to ``.gitignore`` for you).
-To intialize your project on another computer, you'll need to run:
+You'll need to run the following command to download the files on other computers
+if some are missing:
 
 .. code-block:: terminal
 
