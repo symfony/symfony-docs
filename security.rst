@@ -736,7 +736,7 @@ First, create a controller for the login form:
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class LoginController extends AbstractController
     {
@@ -1098,7 +1098,7 @@ create a controller for this path:
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ApiLoginController extends AbstractController
     {

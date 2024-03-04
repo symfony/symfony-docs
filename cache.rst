@@ -898,7 +898,7 @@ In the following example, the value is requested from a controller::
 
     use App\Cache\CacheComputation;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Contracts\Cache\CacheInterface;
     use Symfony\Contracts\Cache\ItemInterface;
 

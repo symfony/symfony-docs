@@ -66,7 +66,7 @@ apply the ``controller.service_arguments`` tag to your controller services::
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\AsController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     #[AsController]
     class HelloController
@@ -95,7 +95,7 @@ a service like: ``App\Controller\HelloController::index``:
         namespace App\Controller;
 
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class HelloController
         {
@@ -157,7 +157,7 @@ which is a common practice when following the `ADR pattern`_
         namespace App\Controller;
 
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         #[Route('/hello/{name}', name: 'hello')]
         class Hello

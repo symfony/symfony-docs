@@ -79,7 +79,7 @@ Thanks to Flex, after one command, you can start using Twig immediately:
       // src/Controller/DefaultController.php
       namespace App\Controller;
 
-      use Symfony\Component\Routing\Annotation\Route;
+      use Symfony\Component\Routing\Attribute\Route;
     - use Symfony\Component\HttpFoundation\Response;
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -157,7 +157,7 @@ Are you building an API? You can already return JSON from any controller::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController extends AbstractController
     {

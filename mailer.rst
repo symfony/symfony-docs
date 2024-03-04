@@ -438,7 +438,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\Email;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class MailerController extends AbstractController
     {
@@ -1555,7 +1555,7 @@ Here's an example of making one available to download::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
     use Symfony\Component\Mime\DraftEmail;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DownloadEmailController extends AbstractController
     {

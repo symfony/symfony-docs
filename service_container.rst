@@ -30,7 +30,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
     use Psr\Log\LoggerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ProductController extends AbstractController
     {
@@ -117,7 +117,7 @@ inside your controller::
     use App\Service\MessageGenerator;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ProductController extends AbstractController
     {
