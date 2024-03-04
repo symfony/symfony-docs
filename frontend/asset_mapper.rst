@@ -224,26 +224,23 @@ if some are missing:
 
     $ php bin/console importmap:install
 
-.. versionadded:: 6.4
-
-    The ``importmap:install`` command was introduced in Symfony 6.4.
-
 You can update your third-party packages to their current versions by running:
 
 .. code-block:: terminal
 
-    # check for updates for all packages
+    # lists outdated packages and shows their latest versions
     $ php bin/console importmap:outdated
-    # update them
+    # updates all the outdated packages
     $ php bin/console importmap:update
 
-    # only for the given list of packages
+    # you can also run the commands only for the given list of packages
     $ php bin/console importmap:update bootstrap lodash
     $ php bin/console importmap:outdated bootstrap lodash
 
 .. versionadded:: 6.4
 
-    The ``importmap:outdated`` command was introduced in Symfony 6.4.
+    The ``importmap:install`` and ``importmap:outdated`` commands were introduced
+    in Symfony 6.4.
 
 How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
