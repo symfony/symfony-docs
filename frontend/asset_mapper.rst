@@ -233,11 +233,6 @@ You can update your third-party packages to their current versions by running:
     $ php bin/console importmap:update bootstrap lodash
     $ php bin/console importmap:outdated bootstrap lodash
 
-.. versionadded:: 6.4
-
-    The ``importmap:install`` and ``importmap:outdated`` commands were introduced
-    in Symfony 6.4.
-
 How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
