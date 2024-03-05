@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-02-28T16:43:40Z
+
+Thanks for this contribution!
+
+Personally I don't like adding details about specific databases because this makes docs very hard to maintain. But I don't know if there's an alternative in this case. Let's wait a bit to see if someone can propose another solution. Thanks!
+
+---------------------------------------------------------------------------
+
+by Prometee at 2024-02-28T18:55:49Z
+
+@javiereguiluz what about adding a note after the code example ?
+
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2024-02-29T12:31:12Z
+
+Personally, I don't see a problem because `ParameterType` doesn't depend on PostgreSQL. I'll just remove the comment to be database agnostic.
