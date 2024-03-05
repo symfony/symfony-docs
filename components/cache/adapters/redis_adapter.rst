@@ -48,7 +48,7 @@ as the second and third parameters::
 Configure the Connection
 ------------------------
 
-The :method:`Symfony\\Component\\Cache\\Adapter\\RedisAdapter::createConnection`
+The :method:`Symfony\\Component\\Cache\\Traits\\RedisTrait::createConnection`
 helper method allows creating and configuring the Redis client class instance using a
 `Data Source Name (DSN)`_::
 
