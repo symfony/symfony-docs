@@ -301,7 +301,6 @@ of the UUID parameters::
 
                 // alternatively, you can convert it to a value compatible with
                 // the type inferred by Doctrine
-                // Note: ParameterType::BINARY is required to query PostgreSQL
                 ->setParameter('user', $user->getUuid()->toBinary(), ParameterType::BINARY)
             ;
 
