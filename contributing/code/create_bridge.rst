@@ -32,7 +32,7 @@ Update documentation
 --------------------
 
 Bridges are not documented with code documentation, you can use the component's
-readme file to add some informations about how to use it. However components
+readme file to add some information about how to use it. However components
 documentation requires some updates in order to stay up to date.
 
 For a Mailer Bridge
