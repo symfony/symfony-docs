@@ -943,8 +943,8 @@ Using Events
 The :class:`Symfony\\Component\\Notifier\\Transport` class of the Notifier component
 allows you to optionally hook into the lifecycle via events.
 
-The ``MessageEvent::class`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``MessageEvent`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Doing something before the message is sent (like logging
 which message is going to be sent, or displaying something about the event
