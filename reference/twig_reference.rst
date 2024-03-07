@@ -495,9 +495,7 @@ The ``inline`` argument is the level where you switch to inline YAML:
     {{ array|yaml_encode(1) }}
     {# output: a: { c: e } b: { d: f } #}
 
-The ``dumpObjects`` argument is used to dump objects:
-
-.. code-block:: php
+The ``dumpObjects`` argument is used to dump objects::
 
     // ...
     $object = new \stdClass();
@@ -550,9 +548,7 @@ The ``inline`` argument is the level where you switch to inline YAML:
     {{ array|yaml_dump(1) }}
     {# output: %array% a: { c: e } b: { d: f } #}
 
-The ``dumpObjects`` argument is used to dump objects:
-
-.. code-block:: php
+The ``dumpObjects`` argument is used to dump objects::
 
     // ...
     $object = new \stdClass();
