@@ -483,8 +483,43 @@ yaml_encode
 ``dumpObjects`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
-Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for
-more information.
+Transforms the input into YAML syntax.
+
+The ``inline`` argument is the level where you switch to inline YAML:
+
+.. code-block:: twig
+
+    {% set array = {
+        'a': {
+            'c': 'e'
+        },
+        'b': {
+            'd': 'f'
+        }
+    } %}
+
+    {{ array|yaml_encode(inline = 0) }}
+    {# output: { a: { c: e }, b: { d: f } } #}
+
+    {{ array|yaml_encode(inline = 1) }}
+    {# output: a: { c: e } b: { d: f } #}
+
+The ``dumpObjects`` argument is used to dump objects::
+
+    // ...
+    $object = new \stdClass();
+    $object->foo = 'bar';
+    // ...
+
+.. code-block:: twig
+
+    {{ object|yaml_encode(dumpObjects = false) }}
+    {# output: null #}
+
+    {{ object|yaml_encode(dumpObjects = true) }}
+    {# output: !php/object 'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}' #}
+
+See :ref:`components-yaml-dump` for more information.
 
 yaml_dump
 ~~~~~~~~~
@@ -502,6 +537,40 @@ yaml_dump
 
 Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
 the output.
+
+The ``inline`` argument is the level where you switch to inline YAML:
+
+.. code-block:: twig
+
+    {% set array = {
+        'a': {
+            'c': 'e'
+        },
+        'b': {
+            'd': 'f'
+        }
+    } %}
+
+    {{ array|yaml_dump(inline = 0) }}
+    {# output: %array% { a: { c: e }, b: { d: f } } #}
+
+    {{ array|yaml_dump(inline = 1) }}
+    {# output: %array% a: { c: e } b: { d: f } #}
+
+The ``dumpObjects`` argument is used to dump objects::
+
+    // ...
+    $object = new \stdClass();
+    $object->foo = 'bar';
+    // ...
+
+.. code-block:: twig
+
+    {{ object|yaml_dump(dumpObjects = false) }}
+    {# output: %object% null #}
+
+    {{ object|yaml_dump(dumpObjects = true) }}
+    {# output: %object% !php/object 'O:8:"stdClass":1:{s:3:"foo";s:3:"bar";}' #}
 
 abbr_class
 ~~~~~~~~~~
