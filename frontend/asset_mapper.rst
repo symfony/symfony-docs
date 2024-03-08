@@ -15,8 +15,8 @@ The component has two main features:
 
 * :ref:`Mapping & Versioning Assets <mapping-assets>`: All files inside of ``assets/``
   are made available publicly and **versioned**. You can reference the file
-  ``assets/images/product.jpeg`` in a Twig template with ``{{ asset('images/product.jpeg') }}``.
-  The final URL will include a version hash, like ``/assets/images/product-3c16d9220694c0e56d8648f25e6035e9.jpeg``.
+  ``assets/images/product.jpg`` in a Twig template with ``{{ asset('images/product.jpg') }}``.
+  The final URL will include a version hash, like ``/assets/images/product-3c16d9220694c0e56d8648f25e6035e9.jpg``.
 
 * :ref:`Importmaps <importmaps-javascript>`: A native browser feature that makes it easier
   to use the JavaScript ``import`` statement (e.g. ``import { Modal } from 'bootstrap'``)
