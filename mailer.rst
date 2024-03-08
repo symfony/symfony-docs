@@ -836,7 +836,7 @@ Then, create the template:
     <p><code>{{ email.to[0].address }}</code></p>
 
     <p>
-        <a href="#">Click here to activate your account</a>
+        <a href="#">Activate your account</a>
         (this link is valid until {{ expiration_date|date('F jS') }})
     </p>
 
@@ -1069,7 +1069,7 @@ the entire email contents from Markdown to HTML:
         You signed up to our site using the following email:
         `{{ email.to[0].address }}`
 
-        [Click here to activate your account]({{ url('...') }})
+        [Activate your account]({{ url('...') }})
     {% endapply %}
 
 .. _mailer-inky:
