@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2024-02-16T16:05:02Z
+
+```console
+Run ../_checker/code-block-checker.php verify:docs `pwd` components/emoji.rst components/intl.rst  --baseline=baseline.json --output-format=github --symfony-application=`realpath ../_sf_app`
+
+Error: [Missing class] Class, interface or trait with name "Symfony\Component\Emoji\EmojiTransliterator" does not exist
+Error: [Missing class] Class, interface or trait with name "Symfony\Component\Emoji\EmojiTransliterator" does not exist
+Error: Process completed with exit code 1.
+```
+
+Does that mean Emoji component must be added to the symfony app ?
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-02-20T15:38:39Z
+
+Thank you for the feedback @javiereguiluz !
+
+The CI stays red (will stay red until we add "emoji" to the stimulus app used in this CI workflow i think)
+
+Anything i can add / imrpove ?
