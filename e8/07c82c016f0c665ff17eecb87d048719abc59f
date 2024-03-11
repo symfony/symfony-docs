@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2024-03-09T17:37:09Z
+
+> What about still, during a period of time, document both options to let ppl decide what they really need for their apps?
+>
+>
+
+The linked page is done for that :) i just update the "default value"
+
+---------------------------------------------------------------------------
+
+by 94noni at 2024-03-10T06:56:31Z
+
+of course I got the primer idea, nonetheless here you change one to another
+why not writing then "read more about symfony frontend doc" ?
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-03-10T15:53:47Z
+
+Because as for Symfony 6.4 AssetMapper is the recommanded / default way of handling front-end assets :)
