@@ -390,7 +390,7 @@ Emoji Transliteration
     The ``EmojiTransliterator`` class provides a utility to translate emojis into
     their textual representation in all languages based on the Unicode CLDR dataset.
 
-Discover all the available Emoji manipulations in the :doc:`component documentation </components/emoji>`.
+Discover all the available Emoji manipulations in the :ref:`component documentation <working-with-emojis>`.
 
 Disk space
 ----------
