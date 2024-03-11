@@ -16,6 +16,8 @@ To get started, install the SecurityBundle:
 
     $ composer require symfony/security-bundle
 
+If you receive error `There is no extension able to load the configuration for "security"`, you may have to activate the bundle manually in `config/bundles.php`: `Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true ]`.
+
 If you have :ref:`Symfony Flex <symfony-flex>` installed, this also
 creates a ``security.yaml`` configuration file for you:
 
