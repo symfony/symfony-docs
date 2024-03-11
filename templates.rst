@@ -330,7 +330,7 @@ Build, Versioning & More Advanced CSS, JavaScript and Image Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For help building, versioning and minifying your JavaScript and
-CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
+CSS assets in a modern way, read about :doc:`Symfony's Asset Mapper </frontend>`.
 
 .. _twig-app-variable:
 
