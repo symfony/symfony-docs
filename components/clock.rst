@@ -238,8 +238,8 @@ The constructor also allows setting a timezone or custom referenced date::
 ``DatePoint`` also allows to set and get the microsecond part of the date and time::
 
     $datePoint = new DatePoint();
-    $datePoint->setMicroseconds(345);
-    $microseconds = $datePoint->getMicroseconds();
+    $datePoint->setMicrosecond(345);
+    $microseconds = $datePoint->getMicrosecond();
 
 .. note::
 
@@ -248,8 +248,8 @@ The constructor also allows setting a timezone or custom referenced date::
 
 .. versionadded:: 7.1
 
-    The :method:`Symfony\\Component\\Clock\\DatePoint::setMicroseconds` and
-    :method:`Symfony\\Component\\Clock\\DatePoint::getMicroseconds` methods were
+    The :method:`Symfony\\Component\\Clock\\DatePoint::setMicrosecond` and
+    :method:`Symfony\\Component\\Clock\\DatePoint::getMicrosecond` methods were
     introduced in Symfony 7.1.
 
 .. _clock_writing-tests:
