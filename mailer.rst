@@ -158,57 +158,57 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
-+------------------------+-----------------------------------------------------+
-| Provider               | Formats                                             |
-+========================+=====================================================+
-| `Amazon SES`_          | - SMTP ses+smtp://USERNAME:PASSWORD@default         |
-|                        | - HTTP ses+https://ACCESS_KEY:SECRET_KEY@default    |
-|                        | - API ses+api://ACCESS_KEY:SECRET_KEY@default       |
-+------------------------+-----------------------------------------------------+
-| `Brevo`_               | - SMTP brevo+smtp://USERNAME:PASSWORD@default       |
-|                        | - HTTP n/a                                          |
-|                        | - API brevo+api://KEY@default                       |
-+------------------------+-----------------------------------------------------+
-| `Google Gmail`_        | - SMTP gmail+smtp://USERNAME:APP-PASSWORD@default   |
-|                        | - HTTP n/a                                          |
-|                        | - API n/a                                           |
-+------------------------+-----------------------------------------------------+
-| `Infobip`_             | - SMTP infobip+smtp://KEY@default                   |
-|                        | - HTTP n/a                                          |
-|                        | - API infobip+api://KEY@BASE_URL                    |
-+------------------------+-----------------------------------------------------+
-| `Mandrill`_            | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
-|                        | - HTTP mandrill+https://KEY@default                 |
-|                        | - API mandrill+api://KEY@default                    |
-+------------------------+-----------------------------------------------------+
-| `MailerSend`_          | - SMTP mailersend+smtp://KEY@default                |
-|                        | - HTTP n/a                                          |
-|                        | - API mailersend+api://KEY@BASE_URL                 |
-+------------------------+-----------------------------------------------------+
-| `Mailgun`_             | - SMTP mailgun+smtp://USERNAME:PASSWORD@default     |
-|                        | - HTTP mailgun+https://KEY:DOMAIN@default           |
-|                        | - API mailgun+api://KEY:DOMAIN@default              |
-+------------------------+-----------------------------------------------------+
-| `Mailjet`_             | - SMTP mailjet+smtp://ACCESS_KEY:SECRET_KEY@default |
-|                        | - HTTP n/a                                          |
-|                        | - API mailjet+api://ACCESS_KEY:SECRET_KEY@default   |
-+------------------------+-----------------------------------------------------+
-| `MailPace`_            | - SMTP mailpace+api://API_TOKEN@default             |
-|                        | - HTTP n/a                                          |
-|                        | - API mailpace+api://API_TOKEN@default              |
-+------------------------+-----------------------------------------------------+
-| `Postmark`_            | - SMTP postmark+smtp://ID@default                   |
-|                        | - HTTP n/a                                          |
-|                        | - API postmark+api://KEY@default                    |
-+------------------------+-----------------------------------------------------+
-| `Scaleway`_            | - SMTP scaleway+smtp://PROJECT_ID:API_KEY@default   |
-|                        | - HTTP n/a                                          |
-|                        | - API scaleway+api://PROJECT_ID:API_KEY@default     |
-+------------------------+-----------------------------------------------------+
-| `Sendgrid`_            | - SMTP sendgrid+smtp://KEY@default                  |
-|                        | - HTTP n/a                                          |
-|                        | - API sendgrid+api://KEY@default                    |
-+------------------------+-----------------------------------------------------+
++------------------------+---------------------------------------------------------+
+| Provider               | Formats                                                 |
++========================+=========================================================+
+| `Amazon SES`_          | - SMTP ``ses+smtp://USERNAME:PASSWORD@default``         |
+|                        | - HTTP ``ses+https://ACCESS_KEY:SECRET_KEY@default``    |
+|                        | - API ``ses+api://ACCESS_KEY:SECRET_KEY@default``       |
++------------------------+---------------------------------------------------------+
+| `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default``       |
+|                        | - HTTP n/a                                              |
+|                        | - API ``brevo+api://KEY@default``                       |
++------------------------+---------------------------------------------------------+
+| `Google Gmail`_        | - SMTP ``gmail+smtp://USERNAME:APP-PASSWORD@default``   |
+|                        | - HTTP n/a                                              |
+|                        | - API n/a                                               |
++------------------------+---------------------------------------------------------+
+| `Infobip`_             | - SMTP ``infobip+smtp://KEY@default``                   |
+|                        | - HTTP n/a                                              |
+|                        | - API ``infobip+api://KEY@BASE_URL``                    |
++------------------------+---------------------------------------------------------+
+| `Mandrill`_            | - SMTP ``mandrill+smtp://USERNAME:PASSWORD@default``    |
+|                        | - HTTP ``mandrill+https://KEY@default``                 |
+|                        | - API ``mandrill+api://KEY@default``                    |
++------------------------+---------------------------------------------------------+
+| `MailerSend`_          | - SMTP ``mailersend+smtp://KEY@default``                |
+|                        | - HTTP n/a                                              |
+|                        | - API ``mailersend+api://KEY@BASE_URL``                 |
++------------------------+---------------------------------------------------------+
+| `Mailgun`_             | - SMTP ``mailgun+smtp://USERNAME:PASSWORD@default``     |
+|                        | - HTTP ``mailgun+https://KEY:DOMAIN@default``           |
+|                        | - API ``mailgun+api://KEY:DOMAIN@default``              |
++------------------------+---------------------------------------------------------+
+| `Mailjet`_             | - SMTP ``mailjet+smtp://ACCESS_KEY:SECRET_KEY@default`` |
+|                        | - HTTP n/a                                              |
+|                        | - API ``mailjet+api://ACCESS_KEY:SECRET_KEY@default``   |
++------------------------+---------------------------------------------------------+
+| `MailPace`_            | - SMTP ``mailpace+api://API_TOKEN@default``             |
+|                        | - HTTP n/a                                              |
+|                        | - API ``mailpace+api://API_TOKEN@default``              |
++------------------------+---------------------------------------------------------+
+| `Postmark`_            | - SMTP ``postmark+smtp://ID@default``                   |
+|                        | - HTTP n/a                                              |
+|                        | - API ``postmark+api://KEY@default``                    |
++------------------------+---------------------------------------------------------+
+| `Scaleway`_            | - SMTP ``scaleway+smtp://PROJECT_ID:API_KEY@default``   |
+|                        | - HTTP n/a                                              |
+|                        | - API ``scaleway+api://PROJECT_ID:API_KEY@default``     |
++------------------------+---------------------------------------------------------+
+| `Sendgrid`_            | - SMTP ``sendgrid+smtp://KEY@default``                  |
+|                        | - HTTP n/a                                              |
+|                        | - API ``sendgrid+api://KEY@default``                    |
++------------------------+---------------------------------------------------------+
 
 .. caution::
 
