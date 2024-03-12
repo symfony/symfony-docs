@@ -451,8 +451,8 @@ HTTP status to return if the validation fails::
 
 The default status code returned if the validation fails is 404.
 
-If the request query string is empty and if you still need to have a valid DTO, you can
-define a default value in your controller method::
+If you need a valid DTO even when the request query string is empty, set a
+default value for your controller arguments::
 
     use App\Model\UserDto;
     use Symfony\Component\HttpFoundation\Response;
@@ -466,8 +466,6 @@ define a default value in your controller method::
     {
         // ...
     }
-
-In this case your DTO should have default values.
 
 .. versionadded:: 6.3
 
