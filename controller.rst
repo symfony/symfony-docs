@@ -541,9 +541,9 @@ if you want to map a nested array of specific DTOs::
 
 .. caution::
 
-    If you're using typed properties with ``MapRequestPayload```, it is 
-    recommended to use built-in types like ``int``, ``bool`` or ``string`` for 
-    mapping. Using custom types could expose your application implementation in 
+    If you're using typed properties with ``MapRequestPayload```, it is
+    recommended to use built-in types like ``int``, ``bool`` or ``string`` for
+    mapping. Using custom types could expose your application implementation in
     errors during denormalization. For example, validating an enum when using
     ``#[MapRequestPayload]`` could look like this::
 
