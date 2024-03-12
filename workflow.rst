@@ -366,6 +366,17 @@ name.
     * ``workflow.workflow``: all workflows;
     * ``workflow.state_machine``: all state machines.
 
+    Note that workflow metadata are attached to tags under the
+    ``metatdata`` key, giving you more context and information about the workflow
+    at disposal. You can learn more about
+    :ref:`tag attributes <tags_additional-attributes>` and
+    :ref:`storing workflow metadata <workflow_storing-metadata>`
+    in their dedicated sections.
+
+    .. versionadded:: 7.1
+
+        The attached configuration to the tag was introduced in Symfony 7.1.
+
 .. tip::
 
     You can find the list of available workflow services with the
@@ -1031,6 +1042,8 @@ The following example shows these functions in action:
     {% for blocker in workflow_transition_blockers(post, 'publish') %}
         <span class="error">{{ blocker.message }}</span>
     {% endfor %}
+
+.. _workflow_storing-metadata:
 
 Storing Metadata
 ----------------
