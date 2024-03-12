@@ -632,13 +632,13 @@ pull translations via Loco. The *only* part you need to change is the
 
 This table shows the full list of available DSN formats for each provider:
 
-=====================  ==========================================================
+=====================  ==============================================================
 Provider               DSN
-=====================  ==========================================================
-Crowdin                crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
-Loco (localise.biz)    loco://API_KEY@default
-Lokalise               lokalise://PROJECT_ID:API_KEY@default
-=====================  ==========================================================
+=====================  ==============================================================
+Crowdin                ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
+Loco (localise.biz)    ``loco://API_KEY@default``
+Lokalise               ``lokalise://PROJECT_ID:API_KEY@default``
+=====================  ==============================================================
 
 To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
