@@ -5,6 +5,10 @@ Validates that a particular field (or fields) in a Doctrine entity is (are)
 unique. This is commonly used, for example, to prevent a new user to register
 using an email address that already exists in the system.
 
+.. versionadded:: 7.1
+
+    Any class instance (like DTO) field (or fields) validation against entities persisted in the database was introduced in Symfony 7.1.
+
 .. seealso::
 
     If you want to validate that all the elements of the collection are unique
@@ -162,6 +166,7 @@ the current class instance. However, in some cases, such as when using Doctrine
 inheritance mapping, you need to execute the query in a different repository.
 Use this option to define the fully-qualified class name (FQCN) of the Doctrine
 entity associated with the repository you want to use.
+Another case is when the object being validated is not an entity.
 
 ``errorPath``
 ~~~~~~~~~~~~~
@@ -273,6 +278,125 @@ If you need to require two fields to be individually unique (e.g. a unique
 each with a single field.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
+
+If object being validated field name(s) do not match the one(s) from the entity,
+use key-value mapping; Where ``key`` is the name of the field in the object being
+validated and ``value`` is the name of the field in the entity.
+Field name(s) mapping only applies when the object being validated is not an entity.
+
+``identifierFieldNames``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``array`` | ``string`` [:ref:`default option <validation-default-option>`]
+
+Use it only when the object being validated is not an entity and you need to update an
+entity with it.
+This option is the identifier field name that is the ``primary key`` or the identifier
+field names that are ``composite keys`` in the entity class set by the `entityClass`_
+option.
+If set, it won’t trigger a uniqueness constraint violation when the only not unique
+entity identifier(s) value(s) will be matching corresponding value(s) from the
+object being validated.
+If object being validated field name(s) do not match the one(s) from the entity,
+use key-value mapping; Where ``key`` is the name of the field in the object being
+validated and ``value`` is the name of the field in the entity.
+
+Consider this example:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Doctrine\ORM\Mapping as ORM;
+
+        #[ORM\Entity]
+        class User
+        {
+            #[ORM\Column(type: 'string')]
+            public string $id;
+
+            #[ORM\Column(type: 'string')]
+            public string $username;
+        }
+
+        // src/Message/UpdateEmployeeProfile.php
+        namespace App\Message;
+
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        #[UniqueEntity(
+            fields: ['name' => 'username'],
+            entityClass: 'App\Entity\User',
+            identifierFieldNames: ['uid' => 'id'],
+        )]
+        class UpdateEmployeeProfile
+        {
+            public function __construct(public string $uid, public string $name)
+            {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Message\UpdateEmployeeProfile:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: {name: username}
+                    entityClass: 'App\Entity\User'
+                    identifierFieldNames: {uid: id}
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Message\UpdateEmployeeProfile">
+                <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                    <option name="fields">
+                        <value key="name" >username</value>
+                    </option>
+                    <option name="entityClass">App\Entity\User</option>
+                    <option name="identifierFieldNames">
+                        <value key="uid" >id</value>
+                    </option>
+                </constraint>
+            </class>
+
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Message/UpdateEmployeeProfile.php
+        namespace App\Message;
+
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class UpdateEmployeeProfile
+        {
+            public string $uid;
+            public string $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new UniqueEntity([
+                    'fields' => ['name' => 'username'],
+                    'entityClass' => 'App\Entity\User',
+                    'identifierFieldNames' => ['uid' => 'id'],
+                ]));
+            }
+        }
+
+.. versionadded:: 7.1
+
+    The option was introduced in Symfony 7.1.
 
 ``ignoreNull``
 ~~~~~~~~~~~~~~
