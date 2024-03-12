@@ -539,10 +539,18 @@ if you want to map a nested array of specific DTOs::
         ) {}
     }
 
-.. tip::
+.. caution::
 
-    If using typed properties with `MapRequestPayload`, it's recommanded to use built-in types (like `int`, `bool`, `string`...) for mapping. Using custom types can expose your application implementation outside with errors during denormalization.
-    Validating an Enum in your `#[MapRequestPayload]` class should look like this::
+    If you're using typed properties with ``MapRequestPayload```, it is 
+    recommended to use built-in types like ``int``, ``bool`` or ``string`` for 
+    mapping. Using custom types could expose your application implementation in 
+    errors during denormalization. For example, validating an enum when using
+    ``#[MapRequestPayload]`` could look like this::
+
+        // src/Controller/LuckyController.php
+        use App\Model\MyInput;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
         class LuckyController
         {
@@ -553,12 +561,14 @@ if you want to map a nested array of specific DTOs::
             }
         }
 
+        // src/Model/MyInput.php
         class MyInput
         {
             #[Assert\Choice(callback: [MyEnum::class, 'values'])]
             public string $myInputAttribute;
         }
 
+        // src/Model/MyEnum.php
         enum MyEnum: string
         {
             case FIRST_CASE = 'first_case';
