@@ -235,6 +235,18 @@ method after parsing any expression to get its AST::
     // dump the AST nodes as a string representation
     $astAsString = $ast->dump();
 
+.. note::
+
+    The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
+    method requires you to be specific about the possible variables and functions.
+    If you do not need to specify them (e.g. for evaluating the AST in another
+    engine or to extract some insight from it) you can use the
+    :method:`Symfony\\Component\\ExpressionLanguage\\Parser::parseWithoutContext` method.
+
+        .. versionadded:: 6.4
+        
+            The `parseWithoutContext` method was introduced in Symfony 6.4.
+
 Manipulating the AST
 ~~~~~~~~~~~~~~~~~~~~
 
