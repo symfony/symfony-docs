@@ -1158,6 +1158,10 @@ Option                          Description                                     
 ``save_options``                XML saving `options with libxml`_                  ``0``
 ``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
                                 generated XML
+``enable_cdata_wrapping``       If set to false, will not wrap any value           ``true``
+                                containing one of the following characters (
+                                ``<``, ``>``, ``&``) in `a CDATA section`_ like
+                                following : ``<![CDATA[...]]>``
 ==============================  =================================================  ==========================
 
 Example with custom ``context``::
@@ -1887,3 +1891,4 @@ Learn more
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
 .. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
 .. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+.. _`a CDATA section`: https://en.wikipedia.org/wiki/CDATA
