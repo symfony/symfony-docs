@@ -197,6 +197,12 @@ use the ``ldap`` user provider.
             ;
         };
 
+.. versionadded:: 5.4
+
+    `LdapUser::getExtraFields()` always returns an array of values. Prior
+    `LdapUserProvider` threw and `InvalidArgumentException` on multiple
+    attributes.
+
 .. caution::
 
     The Security component escapes provided input data when the LDAP user
