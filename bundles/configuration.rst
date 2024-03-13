@@ -353,7 +353,7 @@ logic to the bundle class directly::
             ;
         }
 
-        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
         {
             // Contrary to the Extension class, the "$config" variable is already merged
             // and processed. You can use it directly to configure the service container.

@@ -330,7 +330,7 @@ add a service conditionally based on the ``foo`` value::
                 ->end();
         }
 
-        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
         {
             if ($config['foo']) {
                 $containerBuilder->register('foo_service', \stdClass::class);
