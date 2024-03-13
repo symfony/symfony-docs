@@ -199,9 +199,9 @@ use the ``ldap`` user provider.
 
 .. versionadded:: 5.4
 
-    `LdapUser::getExtraFields()` always returns an array of values. Prior
-    `LdapUserProvider` threw and `InvalidArgumentException` on multiple
-    attributes.
+    The ``LdapUser::getExtraFields()`` method always returns an array of values.
+    In prior Symfony versions, ``LdapUserProvider`` threw an ``InvalidArgumentException``
+    on multiple attributes.
 
 .. caution::
 
