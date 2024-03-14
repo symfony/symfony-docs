@@ -749,8 +749,17 @@ and their priorities:
 
     $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\FailureEvent"
 
-Consuming Messages (Running the Worker)
----------------------------------------
+Consuming Messages
+------------------
+
+The Scheduler component offers two ways to consume messages, depending on your
+needs: using the ``messenger:consume`` command or creating a worker programmatically.
+The first solution is the recommended one when using the Scheduler component in
+the context of a full stack Symfony application, the second one is more suitable
+when using the Scheduler component as a standalone component.
+
+Running a Worker
+~~~~~~~~~~~~~~~~
 
 After defining and attaching your recurring messages to a schedule, you'll need
 a mechanism to generate and consume the messages according to their defined frequencies.
@@ -766,6 +775,45 @@ the Messenger component:
 
 .. image:: /_images/components/scheduler/generate_consume.png
     :alt: Symfony Scheduler - generate and consume
+
+Creating a Consumer Programmatically
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An alternative to the previous solution is to create and call a worker that
+will consume the messages. The component comes with a ready-to-use worker
+named :class:`Symfony\\Component\\Scheduler\\Scheduler` that you can use in your
+code::
+
+    use Symfony\Component\Scheduler\Scheduler;
+
+    $schedule = (new Schedule())
+        ->with(
+            RecurringMessage::trigger(
+                new ExcludeHolidaysTrigger(
+                    CronExpressionTrigger::fromSpec('@daily'),
+                ),
+                new SendDailySalesReports()
+            ),
+        );
+
+    $scheduler = new Scheduler(handlers: [
+        SendDailySalesReports::class => new SendDailySalesReportsHandler(),
+        // add more handlers if you have more message types
+    ], schedules: [
+        $schedule,
+        // the scheduler can take as many schedules as you need
+    ]);
+
+    // finally, run the scheduler once it's ready
+    $scheduler->run();
+
+.. note::
+
+    The :class:`Symfony\\Component\\Scheduler\\Scheduler` may be used
+    when using the Scheduler component as a standalone component. If
+    you are using it in the framework context, it is highly recommended to
+    use the ``messenger:consume`` command as explained in the previous
+    section.
 
 Debugging the Schedule
 ----------------------
