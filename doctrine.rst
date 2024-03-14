@@ -637,8 +637,22 @@ automatically! You can simplify the controller to::
         }
     }
 
-That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
-by the ``id`` column. If it's not found, a 404 page is generated.
+That's it! The bundle uses the ``{id}`` from the route to query for the ``Product`` by its
+primary key (using ``find()``). If no matching object is found, a 404 page is generated.
+
+.. tip::
+
+    This works best if you only have a single route parameter. It is however recommended
+    to match the route parameter name with the controller argument name. This will allow the
+    use of multiple parameters without any ambiguity. When a route parameter name matches
+    with the controller argument name, it will use its value to query on its primary key::
+
+        #[Route('/product/{product}/shop/{shop}')]
+        public function show(Product $product, Shop $shop): Response
+        {
+            // use the Product and Shop!
+            // ...
+        }
 
 .. tip::
 
@@ -661,15 +675,25 @@ If your route wildcards match properties on your entity, then the resolver
 will automatically fetch them::
 
     /**
-     * Fetch via primary key because {id} is in the route.
+     * Fetch via primary key because {product} matches with the controller
+     * argument name.
      */
-    #[Route('/product/{id}')]
+    #[Route('/product/{product}')]
     public function showByPk(Product $product): Response
     {
     }
 
     /**
+     * Fetch via primary key because {id} is in the route.
+     */
+    #[Route('/product/{id}')]
+    public function showById(Product $product): Response
+    {
+    }
+
+    /**
      * Perform a findOneBy() where the slug property matches {slug}.
+     * Requires doctrine.orm.controller_resolver.auto_mapping to set to true.
      */
     #[Route('/product/{slug}')]
     public function showBySlug(Product $product): Response
@@ -678,21 +702,29 @@ will automatically fetch them::
 
 Automatic fetching works in these situations:
 
-* If ``{id}`` is in your route, then this is used to fetch by
-  primary key via the ``find()`` method.
+* If the route parameter name matches with the controller argument name,
+  it will be used to fetch by primary key via the ``find()`` method.
 
-* The resolver will attempt to do a ``findOneBy()`` fetch by using
-  *all* of the wildcards in your route that are actually properties
-  on your entity (non-properties are ignored).
+* If ``{id}`` is in your route, then this is used to fetch by primary key
+  via the ``find()`` method. This is only recommended when you have a single
+  route parameter that needs to be resolved, as otherwise the value of ``{id}``
+  will be used to resolve both controller arguments.
 
-This behavior is enabled by default on all controllers. If you prefer, you can
-restrict this feature to only work on route wildcards called ``id`` to look for
-entities by primary key. To do so, set the option
-``doctrine.orm.controller_resolver.auto_mapping`` to ``false``.
+* If ``doctrine.orm.controller_resolver.auto_mapping`` is set to ``true``
+  (enabled by default when using DoctrineBundle before 2.12, but not recommended),
+  the resolver will attempt to do a ``findOneBy()`` fetch by using *all* of the wildcards in
+  your route that are actually properties on your entity (non-properties are ignored).
 
-When ``auto_mapping`` is disabled, you can configure the mapping explicitly for
-any controller argument with the ``MapEntity`` attribute. You can even control
-the ``EntityValueResolver`` behavior by using the `MapEntity options`_ ::
+.. caution::
+
+    It is not recommended to enable ``doctrine.orm.controller_resolver.auto_mapping``
+    as it can lead to surprising behavior and has been disabled by default with
+    DoctrineBundle 3 for that reason. Use the ``MapEntity`` ``mapping`` option
+    to configure custom mapping requirements for specific routes when needed.
+
+You can manually override the mapping for any controller argument with the
+``MapEntity`` attribute. You can even control the ``EntityValueResolver``
+behavior by using the `MapEntity options`_ ::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -771,7 +803,7 @@ control behavior:
 
 ``id``
     If an ``id`` option is configured and matches a route parameter, then
-    the resolver will find by the primary key::
+    the resolver will use that value to fetch by the primary key::
 
         #[Route('/product/{product_id}')]
         public function show(
