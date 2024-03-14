@@ -167,11 +167,6 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
   differentiate it from messages created "manually". You can learn more about it
   in the :doc:`Scheduler documentation </scheduler>`.
 
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp` was
-    introduced in Symfony 6.4.
-
 .. note::
 
     The :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp` stamp
