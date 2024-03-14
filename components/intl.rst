@@ -385,12 +385,9 @@ to catching the exception, you can also check if a given timezone ID is valid::
 Emoji Transliteration
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. note::
-
-    The ``EmojiTransliterator`` class provides a utility to translate emojis into
-    their textual representation in all languages based on the Unicode CLDR dataset.
-
-Discover all the available Emoji manipulations in the :ref:`component documentation <working-with-emojis>`.
+Symfony provides utilities to translate emojis into their textual representation
+in all languages. Read the documentation on :ref:`working with emojis in strings <string-emoji-transliteration>`
+to learn more about this feature.
 
 Disk space
 ----------
