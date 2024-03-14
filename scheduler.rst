@@ -844,7 +844,7 @@ code::
 
     The :class:`Symfony\\Component\\Scheduler\\Scheduler` may be used
     when using the Scheduler component as a standalone component. If
-    you are using it in the Framework context, it is highly recommended to
+    you are using it in the framework context, it is highly recommended to
     use the ``messenger:consume`` command as explained in the previous
     section.
 
