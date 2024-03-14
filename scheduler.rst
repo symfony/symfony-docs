@@ -881,6 +881,15 @@ before being further redispatched to its corresponding handler::
         }
     }
 
+When using the ``RedispatchMessage``, Symfony will attach a
+:class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp` to the message,
+helping you identify those messages when needed.
+
+.. versionadded:: 6.4
+
+    Automatically attaching a :class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp`
+    to redispatched messages was introduced in Symfony 6.4.
+
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
 .. _`cron command-line utility`: https://en.wikipedia.org/wiki/Cron
 .. _`crontab.guru website`: https://crontab.guru/
