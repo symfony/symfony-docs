@@ -163,9 +163,9 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
 * :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
   an internal stamp when a message fails due to an exception in the handler.
 * :class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp`,
-  a stamp that marks the message as produced by a scheduler. You can learn
-  more about it in the :doc:`Scheduler component page </scheduler>`. This helps
-  differentiate from messages created "manually".
+  a stamp that marks the message as produced by a scheduler. This helps
+  differentiate it from messages created "manually". You can learn more about it
+  in the :doc:`Scheduler documentation </scheduler>`.
 
 .. versionadded:: 6.4
 

@@ -914,9 +914,9 @@ before being further redispatched to its corresponding handler::
         }
     }
 
-When using the ``RedispatchMessage``, a
-:class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp` will be attached
-to the message, helping you identify those messages when needed.
+When using the ``RedispatchMessage``, Symfony will attach a
+:class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp` to the message,
+helping you identify those messages when needed.
 
 .. versionadded:: 6.4
 
