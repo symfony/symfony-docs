@@ -154,6 +154,7 @@ to write logs using the :phpfunction:`syslog` function:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
+        use Psr\Log\LogLevel;
         use Symfony\Config\MonologConfig;
 
         return static function (MonologConfig $monolog) {
@@ -163,12 +164,12 @@ to write logs using the :phpfunction:`syslog` function:
                 // log to var/logs/(environment).log
                 ->path('%kernel.logs_dir%/%kernel.environment%.log')
                 // log *all* messages (debug is lowest level)
-                ->level('debug');
+                ->level(LogLevel::DEBUG);
 
             $monolog->handler('syslog_handler')
                 ->type('syslog')
                 // log error-level messages and higher
-                ->level('error');
+                ->level(LogLevel::ERROR);
         };
 
 This defines a *stack* of handlers and each handler is called in the order that it's
