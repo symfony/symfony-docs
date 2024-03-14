@@ -749,6 +749,8 @@ and their priorities:
 
     $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\FailureEvent"
 
+.. _consuming-messages-running-the-worker:
+
 Consuming Messages
 ------------------
 
