@@ -782,6 +782,8 @@ and their priorities:
     The ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent`` events were
     introduced in Symfony 6.4.
 
+.. _consuming-messages-running-the-worker:
+
 Consuming Messages
 ------------------
 
