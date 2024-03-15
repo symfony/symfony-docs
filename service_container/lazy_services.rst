@@ -23,7 +23,7 @@ until you interact with the proxy in some way.
 
 .. caution::
 
-    Lazy services do not support `final`_ classes, but you can use
+    Lazy services do not support `final`_ or `readonly` classes, but you can use
     `Interface Proxifying`_ to work around this limitation.
 
     In PHP versions prior to 8.0 lazy services do not support parameters with
