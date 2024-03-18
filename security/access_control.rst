@@ -137,33 +137,49 @@ For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
 and the request method. Remember, the first rule that matches is used, and
 if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
-``access_control`` will match any ``ip``, ``port``, ``host`` or ``method``:
+``access_control`` will match any ``ip``, ``port``, ``host`` or ``method``.
+See the following examples:
 
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| URI             | IP          | PORT        | HOST        | METHOD     | ``access_control``             | Why?                                                        |
-+=================+=============+=============+=============+============+================================+=============================================================+
-| ``/admin/user`` | 127.0.0.1   | 80          | example.com | GET        | rule #2 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | 80          | symfony.com | GET        | rule #2 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
-|                 |             |             |             |            |                                | the ``ROLE_USER_HOST`` entry, but *only* the **first**      |
-|                 |             |             |             |            |                                | ``access_control`` match is used.                           |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | 8080        | symfony.com | GET        | rule #1 (``ROLE_USER_PORT``)   | The ``path``, ``ip`` and ``port`` match.                    |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | GET        | rule #3 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match neither the first rule nor the     |
-|                 |             |             |             |            |                                | second rule. So the third rule (which matches) is used.     |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | POST       | rule #3 (``ROLE_USER_HOST``)   | The third rule still matches. This would also match the     |
-|                 |             |             |             |            |                                | fourth rule (``ROLE_USER_METHOD``), but only the **first**  |
-|                 |             |             |             |            |                                | matched ``access_control`` is used.                         |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | example.com | POST       | rule #4 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first three         |
-|                 |             |             |             |            |                                | entries, but the fourth - ``ROLE_USER_METHOD`` - matches    |
-|                 |             |             |             |            |                                | and is used.                                                |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/foo``        | 127.0.0.1   | 80          | symfony.com | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
-|                 |             |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+Example #1:
+  * **URI** ``/admin/user``
+  * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``example.com``, **Method**: ``GET``
+  * **Rule applied**: rule #2 (``ROLE_USER_IP``)
+  * **Why?** The URI matches ``path`` and the IP matches ``ip``.
+Example #2:
+  * **URI** ``/admin/user``
+  * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``GET``
+  * **Rule applied**: rule #2 (``ROLE_USER_IP``)
+  * **Why?** The ``path`` and ``ip`` still match. This would also match the
+    ``ROLE_USER_HOST`` entry, but *only* the **first** ``access_control`` match is used.
+Example #3:
+  * **URI** ``/admin/user``
+  * **IP**: ``127.0.0.1``, **Port**: ``8080``, **Host**: ``symfony.com``, **Method**: ``GET``
+  * **Rule applied**: rule #1 (``ROLE_USER_PORT``)
+  * **Why?** The ``path``, ``ip`` and ``port`` match.
+Example #4:
+  * **URI** ``/admin/user``
+  * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``GET``
+  * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
+  * **Why?** The ``ip`` doesn't match neither the first rule nor the second rule.
+  * So the third rule (which matches) is used.
+Example #5:
+  * **URI** ``/admin/user``
+  * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``POST``
+  * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
+  * **Why?** The third rule still matches. This would also match the fourth rule
+  * (``ROLE_USER_METHOD``), but only the **first** matched ``access_control`` is used.
+Example #6:
+  * **URI** ``/admin/user``
+  * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``example.com``, **Method**: ``POST``
+  * **Rule applied**: rule #4 (``ROLE_USER_METHOD``)
+  * **Why?** The ``ip`` and ``host`` don't match the first three entries, but
+  * the fourth - ``ROLE_USER_METHOD`` - matches and is used.
+Example #7:
+  * **URI** ``/foo``
+  * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``POST``
+  * **Rule applied**: matches no entries
+  * **Why?** This doesn't match any ``access_control`` rules, since its URI
+  * doesn't match any of the ``path`` values.
 
 .. caution::
 
