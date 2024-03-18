@@ -366,12 +366,10 @@ name.
     * ``workflow.workflow``: all workflows;
     * ``workflow.state_machine``: all state machines.
 
-    Note that workflow metadata are attached to tags under the
-    ``metatdata`` key, giving you more context and information about the workflow
-    at disposal. You can learn more about
-    :ref:`tag attributes <tags_additional-attributes>` and
-    :ref:`storing workflow metadata <workflow_storing-metadata>`
-    in their dedicated sections.
+    Note that workflow metadata are attached to tags under the ``metadata`` key,
+    giving you more context and information about the workflow at disposal.
+    Learn more about :ref:`tag attributes <tags_additional-attributes>` and
+    :ref:`storing workflow metadata <workflow_storing-metadata>`.
 
     .. versionadded:: 7.1
 
