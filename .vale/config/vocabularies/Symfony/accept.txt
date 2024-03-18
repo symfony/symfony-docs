@@ -1,0 +1,7 @@
+Symfony
+namespace
+autowiring
+autowired
+boolean
+stderr
+config
