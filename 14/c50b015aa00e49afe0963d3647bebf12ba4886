@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-03-15T11:34:07Z
+
+Do you have an after screenshot?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-03-15T11:47:41Z
+
+@OskarStark as you suspected, the original PR looked bad when rendered:
+
+![image](https://github.com/symfony/symfony-docs/assets/73419/4a091e4c-fdf3-423a-89a7-efa3bced235c)
+
+I updated the PR and now it looks like this:
+
+![image](https://github.com/symfony/symfony-docs/assets/73419/9779aead-b5aa-445e-8491-8d373fb2501a)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-03-16T04:37:51Z
+
+Much better, love it 👍🏻
