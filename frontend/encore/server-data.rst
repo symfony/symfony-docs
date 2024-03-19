@@ -21,15 +21,21 @@ Fetch this in JavaScript:
 
     document.addEventListener('DOMContentLoaded', function() {
         const userRating = document.querySelector('.js-user-rating');
-        const isAuthenticated = userRating.dataset.isAuthenticated;
-        const user = JSON.parse(userRating.dataset.user);
+        const isAuthenticated = userRating.getAttribute('data-is-authenticated');
+        const user = JSON.parse(userRating.getAttribute('data-user'));
     });
 
 .. note::
 
-    When `accessing data attributes from JavaScript`_, the attribute names are
-    converted from dash-style to camelCase. For example, ``data-number-of-reviews`` becomes
-    ``dataset.numberOfReviews``.
+    If you prefer to `access data attributes via JavaScript's dataset property`_,
+    the attribute names are converted from dash-style to camelCase. For example,
+    ``data-number-of-reviews`` becomes ``dataset.numberOfReviews``:
+
+    .. code-block:: javascript
+
+        // ...
+        const isAuthenticated = userRating.dataset.isAuthenticated;
+        const user = JSON.parse(userRating.dataset.user);
 
 There is no size limit for the value of the ``data-*`` attributes, so you can
 store any content. In Twig, use the ``html_attr`` escaping strategy to avoid messing
@@ -42,4 +48,4 @@ method that returns an array, you could do the following:
         <!-- ... -->
     </div>
 
-.. _`accessing data attributes from JavaScript`: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+.. _`access data attributes via JavaScript's dataset property`: https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
