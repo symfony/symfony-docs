@@ -100,6 +100,7 @@ Other Front-End Articles
 
 * :doc:`/frontend/create_ux_bundle`
 * :doc:`/frontend/custom_version_strategy`
+* :doc:`/frontend/server-data`
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/
