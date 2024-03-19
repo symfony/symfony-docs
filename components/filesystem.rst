@@ -313,6 +313,22 @@ contents at the end of some file::
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
 
+``readFile``
+~~~~~~~~~~~~
+
+.. versionadded:: 7.1
+
+    The ``readFile()`` method was introduced in Symfony 7.1.
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::readFile` returns all the
+contents of a file as a string. Unlike the :phpfunction:`file_get_contents` function
+from PHP, it throws an exception when the given file path is not readable and
+when passing the path to a directory instead of a file::
+
+    $contents = $filesystem->readFile('/some/path/to/file.txt');
+
+The ``$contents`` variable now stores all the contents of the ``file.txt`` file.
+
 Path Manipulation Utilities
 ---------------------------
 
