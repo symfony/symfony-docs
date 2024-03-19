@@ -1,9 +1,9 @@
-Passing Information from Twig to JavaScript with Webpack Encore
-===============================================================
+Passing Information from Twig to JavaScript
+===========================================
 
 In Symfony applications, you may find that you need to pass some dynamic data
 (e.g. user information) from Twig to your JavaScript code. One great way to pass
-dynamic configuration is by storing information in ``data`` attributes and reading
+dynamic configuration is by storing information in ``data-*`` attributes and reading
 them later in JavaScript. For example:
 
 .. code-block:: html+twig
@@ -20,22 +20,18 @@ Fetch this in JavaScript:
 .. code-block:: javascript
 
     document.addEventListener('DOMContentLoaded', function() {
-        var userRating = document.querySelector('.js-user-rating');
-        var isAuthenticated = userRating.dataset.isAuthenticated;
-        var user = JSON.parse(userRating.dataset.user);
-
-        // or with jQuery
-        //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
+        const userRating = document.querySelector('.js-user-rating');
+        const isAuthenticated = userRating.dataset.isAuthenticated;
+        const user = JSON.parse(userRating.dataset.user);
     });
 
 .. note::
 
     When `accessing data attributes from JavaScript`_, the attribute names are
-    converted from dash-style to camelCase. For example, ``data-is-authenticated``
-    becomes ``isAuthenticated`` and ``data-number-of-reviews`` becomes
-    ``numberOfReviews``.
+    converted from dash-style to camelCase. For example, ``data-number-of-reviews`` becomes
+    ``dataset.numberOfReviews``.
 
-There is no size limit for the value of the ``data-`` attributes, so you can
+There is no size limit for the value of the ``data-*`` attributes, so you can
 store any content. In Twig, use the ``html_attr`` escaping strategy to avoid messing
 with HTML attributes. For example, if your ``User`` object has some ``getProfileData()``
 method that returns an array, you could do the following:
