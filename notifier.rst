@@ -50,7 +50,7 @@ SMS Channel
 .. caution::
 
     If any of the DSN values contains any character considered special in a
-    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``), you must
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
 
@@ -211,7 +211,7 @@ Chat Channel
 .. caution::
 
     If any of the DSN values contains any character considered special in a
-    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``), you must
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
 
@@ -415,7 +415,7 @@ Push Channel
 .. caution::
 
     If any of the DSN values contains any character considered special in a
-    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``), you must
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
 
