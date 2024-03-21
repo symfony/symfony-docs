@@ -920,7 +920,7 @@ In the following example, the value is requested from a controller::
         public function index(CacheInterface $asyncCache): Response
         {
             // pass to the cache the service method that refreshes the item
-            $cachedValue = $cache->get('my_value', [CacheComputation::class, 'compute'])
+            $cachedValue = $asyncCache->get('my_value', [CacheComputation::class, 'compute'])
 
             // ...
         }
@@ -938,13 +938,13 @@ a message bus to compute values in a worker:
             cache:
                 pools:
                     async.cache:
-                        early_expiration_message_bus: async_bus
+                        early_expiration_message_bus: messenger.default_bus
 
             messenger:
                 transports:
                     async_bus: '%env(MESSENGER_TRANSPORT_DSN)%'
                 routing:
-                    Symfony\Component\Cache\Messenger\Message\EarlyExpirationMessage: async_bus
+                    'Symfony\Component\Cache\Messenger\EarlyExpirationMessage': async_bus
 
     .. code-block:: xml
 
@@ -960,12 +960,12 @@ a message bus to compute values in a worker:
         >
             <framework:config>
                 <framework:cache>
-                    <framework:pool name="async.cache" early-expiration-message-bus="async_bus"/>
+                    <framework:pool name="async.cache" early-expiration-message-bus="messenger.default_bus"/>
                 </framework:cache>
 
                 <framework:messenger>
                     <framework:transport name="async_bus">%env(MESSENGER_TRANSPORT_DSN)%</framework:transport>
-                    <framework:routing message-class="Symfony\Component\Cache\Messenger\Message\EarlyExpirationMessage">
+                    <framework:routing message-class="Symfony\Component\Cache\Messenger\EarlyExpirationMessage">
                         <framework:sender service="async_bus"/>
                     </framework:routing>
                 </framework:messenger>
@@ -982,7 +982,7 @@ a message bus to compute values in a worker:
         return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('async.cache')
-                    ->earlyExpirationMessageBus('async_bus');
+                    ->earlyExpirationMessageBus('messenger.default_bus');
 
             $framework->messenger()
                 ->transport('async_bus')
