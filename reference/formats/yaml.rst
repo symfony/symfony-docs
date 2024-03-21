@@ -34,12 +34,10 @@ must be doubled to escape it:
 
     'A single quote '' inside a single-quoted string'
 
-Strings containing any of the following characters must be quoted. Although you
-can use double quotes, for these characters it is more convenient to use single
-quotes, which avoids having to escape any backslash ``\``:
-
-* ``:``, ``{``, ``}``, ``[``, ``]``, ``,``, ``&``, ``*``, ``#``, ``?``, ``|``,
-  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, `````
+Strings containing any of the following characters must be quoted:
+``: { } [ ] , & * # ? | - < > = ! % @`` Although you can use double quotes, for
+these characters it is more convenient to use single quotes, which avoids having
+to escape any backslash ``\``.
 
 The double-quoted style provides a way to express arbitrary strings, by
 using ``\`` to escape characters and sequences. For instance, it is very useful
@@ -52,11 +50,11 @@ when you need to embed a ``\n`` or a Unicode character in a string.
 If the string contains any of the following control characters, it must be
 escaped with double quotes:
 
-* ``\0``, ``\x01``, ``\x02``, ``\x03``, ``\x04``, ``\x05``, ``\x06``, ``\a``,
-  ``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\x0e``, ``\x0f``, ``\x10``,
-  ``\x11``, ``\x12``, ``\x13``, ``\x14``, ``\x15``, ``\x16``, ``\x17``, ``\x18``,
-  ``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
-  ``\_``, ``\L``, ``\P``
+``\0``, ``\x01``, ``\x02``, ``\x03``, ``\x04``, ``\x05``, ``\x06``, ``\a``,
+``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\x0e``, ``\x0f``, ``\x10``,
+``\x11``, ``\x12``, ``\x13``, ``\x14``, ``\x15``, ``\x16``, ``\x17``, ``\x18``,
+``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
+``\_``, ``\L``, ``\P``
 
 Finally, there are other cases when the strings must be quoted, no matter if
 you're using single or double quotes:
