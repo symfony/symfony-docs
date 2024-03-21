@@ -61,7 +61,7 @@ The database connection information is stored as an environment variable called
 .. caution::
 
     If the username, password, host or database name contain any character considered
-    special in a URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``, ``%``),
+    special in a URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``),
     you must encode them. See `RFC 3986`_ for the full list of reserved characters.
     You can use the :phpfunction:`urlencode` function to encode them or
     the :ref:`urlencode environment variable processor <urlencode_environment_variable_processor>`.
