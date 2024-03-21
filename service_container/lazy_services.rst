@@ -137,8 +137,8 @@ Another possibility is to use the :class:`Symfony\\Component\\DependencyInjectio
         // ...
     }
 
-This attribute can be used on a class or on a parameter which should be lazy-loaded, and has a parameter
-that also supports defining interfaces to proxy and intersection types::
+This attribute can be applied to both class and parameters that should be lazy-loaded.
+It defines an optional parameter used to define interfaces for proxy and intersection types::
 
     public function __construct(
         #[Lazy(FooInterface::class)]
