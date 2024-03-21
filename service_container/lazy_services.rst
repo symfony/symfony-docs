@@ -124,6 +124,32 @@ laziness, and supports lazy-autowiring of union types::
     ) {
     }
 
+Another possibility is to use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Lazy` attribute::
+
+    namespace App\Twig;
+
+    use Symfony\Component\DependencyInjection\Attribute\Lazy;
+    use Twig\Extension\ExtensionInterface;
+
+    #[Lazy]
+    class AppExtension implements ExtensionInterface
+    {
+        // ...
+    }
+
+This attribute can be used on a class or on a parameter which should be lazy-loaded, and has a parameter
+that also supports defining interfaces to proxy and intersection types::
+
+    public function __construct(
+        #[Lazy(FooInterface::class)]
+        FooInterface|BarInterface $foo,
+    ) {
+    }
+
+.. versionadded:: 7.1
+
+    The ``#[Lazy]`` attribute was introduced in Symfony 7.1.
+
 Interface Proxifying
 --------------------
 

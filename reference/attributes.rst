@@ -37,6 +37,7 @@ Dependency Injection
 * :ref:`AutowireLocator <service-locator_autowire-locator>`
 * :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
+* :ref:`Lazy <lazy-services_configuration>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
