@@ -565,3 +565,4 @@
 /messenger/handler_results /messenger#messenger-getting-handler-results
 /messenger/dispatch_after_current_bus /messenger#messenger-transactional-messages
 /messenger/multiple_buses /messenger#messenger-multiple-buses
+/frontend/encore/server-data /frontend/server-data
