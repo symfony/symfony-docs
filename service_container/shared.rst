@@ -11,6 +11,19 @@ in your service definition:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/SomeNonSharedService.php
+        namespace App;
+
+	    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(shared: false)]
+        class SomeNonSharedService
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
