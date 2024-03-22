@@ -43,4 +43,23 @@ that adds two convenient methods to lock and release commands::
         }
     }
 
+By default, the LockableTrait will use the ``FlockStore``, or the ``SemaphoreStore`` if available,
+but you can override this behavior by setting a ``$lockFactory`` property with your own lock factory::
+
+    // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Command\LockableTrait;
+    use Symfony\Component\Lock\LockFactory;
+
+    class UpdateContentsCommand extends Command
+    {
+        use LockableTrait;
+
+        public function __construct(private LockFactory $lockFactory)
+        {
+        }
+
+        // ...
+    }
+
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
