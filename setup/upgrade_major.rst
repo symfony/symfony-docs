@@ -176,6 +176,12 @@ this one. For instance, update it to ``6.0.*`` to upgrade to Symfony 6.0:
           }
       }
 
+
+.. tip::
+
+    If a more recent minor version is available, e.g. ``6.4``, you can use this version directly
+    and skip the older releases, like ``6.0``. Check the `available versions`_.
+
 Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal
@@ -335,3 +341,4 @@ Classes in the ``vendor/`` directory are always ignored.
 
 .. _`PHP CS Fixer`: https://github.com/friendsofphp/php-cs-fixer
 .. _`Rector`: https://github.com/rectorphp/rector
+.. _`available versions`: https://symfony.com/releases
