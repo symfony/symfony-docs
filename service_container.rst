@@ -1037,8 +1037,8 @@ Linting Service Definitions
 
 The ``lint:container`` command performs some additional checks to make sure
 the container is properly configured:
-* checks that the arguments injected into services match their type declarations.
-* checks that the interfaces configured as alias are resolving to a compatible
+* ensures the arguments injected into services match their type declarations.
+* ensures the interfaces configured as alias are resolving to a compatible
 service.
 It's useful to run it before deploying your application to production
 (e.g. in your continuous integration server):
