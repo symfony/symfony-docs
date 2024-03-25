@@ -1,0 +1,58 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-02-16T11:35:49Z
+
+Yeah, you're right, there is no good place for this currently. So I'd like to reorganize the sections and **merge "Importing 3rd Party JavaScript Packages" with "Handling 3rd-Party CSS"** and move them downwards, under the CSS section.
+
+Reasons:
+* 3rd party JavaScript comes too early, IMO. How the importmap works at all should be explained first.
+* Same for CSS: People need to understand how *their own* CSS works first, before caring about 3rd party CSS.
+* Many external packages contain CSS, so it's better to deal with these two topics (3rd party JS and 3rd party CSS) in one section. Then the content of this PR would fit there nicely.
+
+What do you think?
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-02-16T11:40:27Z
+
+As i see it, required JS packages is the main reason to use importmaps.
+
+CSS files is just a bonus, for those who want to install them.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-02-16T13:43:53Z
+
+I like this proposal. Two quick comments:
+
+(1) This:
+
+```
+include `"main":` and `"module":` to the package's `package.json`
+```
+
+maybe can be reworded as follows to make it more clear:
+
+```
+include the `main` and `module` options to the package's `package.json`
+```
+
+(2) Do we have a reference for the `package.json` format? Ideally I'd like to add a link so people can read more about these new options that they need to add.
+
+Thanks.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-02-16T13:53:28Z
+
+@javiereguiluz OK, but where to put it? What do you think about merging the two sections (see above)?
+
+@smnandre No matter what people are using it for: I think handling *local* files should be explained first, to make people understand the basics.
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-02-16T14:05:54Z
+
+I'm just stating a fact: AssetMapper may be for local CSS files first..
+
+But ImportMap is a tool made for 3rd party scripts / dependencies first.
