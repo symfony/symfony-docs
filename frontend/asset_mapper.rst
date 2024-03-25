@@ -204,6 +204,14 @@ This adds the ``bootstrap`` package to your ``importmap.php`` file::
     main package *and* its dependencies. If a package includes a main CSS file,
     that will also be added (see :ref:`Handling 3rd-Party CSS <asset-mapper-3rd-party-css>`).
 
+.. note::
+
+    If you get a 404 error, there might be some issue with the JavaScript package
+    that prevents it from being served by the ``jsDelivr`` CDN. For example, the
+    package might be missing properties like ``main`` or ``module`` in its
+    `package.json configuration file`_. Try to contact the package maintainer to
+    ask them to fix those issues.
+
 Now you can import the ``bootstrap`` package like usual:
 
 .. code-block:: javascript
@@ -429,7 +437,10 @@ To include it on the page, import it from a JavaScript file:
 
     Some packages - like ``bootstrap`` - advertise that they contain a CSS
     file. In those cases, when you ``importmap:require bootstrap``, the
-    CSS file is also added to ``importmap.php`` for convenience.
+    CSS file is also added to ``importmap.php`` for convenience. If some package
+    doesn't advertise its CSS file in the ``style`` property of the
+    `package.json configuration file`_ try to contact the package maintainer to
+    ask them to add that.
 
 Paths Inside of CSS Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1095,3 +1106,4 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 .. _sensiolabs/typescript-bundle: https://github.com/sensiolabs/AssetMapperTypeScriptBundle
 .. _`dist/css/bootstrap.min.css file`: https://www.jsdelivr.com/package/npm/bootstrap?tab=files&path=dist%2Fcss#tabRouteFiles
 .. _`dynamic import`: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import
+.. _`package.json configuration file`: https://docs.npmjs.com/creating-a-package-json-file
