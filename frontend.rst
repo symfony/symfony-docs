@@ -37,7 +37,7 @@ Supports TypeScript               :ref:`yes <asset-mapper-ts>`        yes
 Removes comments from JavaScript  no                                  yes
 Removes comments from CSS         no                                  no
 Versioned assets                  always                              optional
-Can update 3rd party packages     yes                                 no :ref:`[3] <ux-note-3>`
+Can update 3rd party packages     yes                                 no :ref:`[2] <ux-note-2>`
 ================================  ==================================  ==========
 
 .. _ux-note-1:
@@ -49,11 +49,7 @@ be executed by a browser.
 
 .. _ux-note-2:
 
-**[2]** There are some `PostCSS`_ plugins available to remove comments from CSS files.
-
-.. _ux-note-3:
-
-**[3]** If you use ``npm``, there are update checkers available (e.g. ``npm-check``).
+**[2]** If you use ``npm``, there are update checkers available (e.g. ``npm-check``).
 
 .. _frontend-asset-mapper:
 
