@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-02-16T12:09:19Z
+
+The new entry is a bit confusing. I'd change it for `Can update 3rd party packages`
+
+If that's the true mining of what we're adding here ... I'm not sure we should say `yes` for Webpack Encore because it doesn't include any command/feature to update packages. AssetMapper has `importmap:update` but Encore has nothing like it (you can update packages with npm, yarn, etc. ... but that's not Encore).
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-02-16T13:40:30Z
+
+I updated the wording. Maybe add a link to npm-check?
+2 arguments for this change:
+* When switching from Encore to AssetMapper, it's important to know that there is still an updater.
+* People not familiar with JS bundlers might not know that NPM has one.
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-02-16T14:10:22Z
+
+> AssetMapper has `importmap:update` but Encore has nothing like it (you can update packages with npm, yarn, etc. ... but that's not Encore).
+
+Hmm.. to be honest Encore has nothing like it because... if you have Encore you have yarn or npm or pnpm or (...) for that :) So Encore would have no reason to implement such command.
+
+I'm thinking all the lines have really different "importances" in term of comparaison, and we may want to split the table in distinct aspects (compatibility, dx, standards, ..)
