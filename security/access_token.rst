@@ -97,7 +97,8 @@ This handler must implement
             }
 
             // and return a UserBadge object containing the user identifier from the found token
-            // the user identifier being an email, a username and not necessarily an Id
+            // (this is the same identifier used in Security configuration; it can be an email,
+            // a UUUID, a username, a database ID, etc.)
             return new UserBadge($accessToken->getUserId());
         }
     }
