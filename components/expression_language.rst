@@ -396,4 +396,3 @@ or by using the second argument of the constructor::
 
 .. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
 .. _`CacheItemPoolInterface`: https://github.com/php-fig/cache/blob/master/src/CacheItemPoolInterface.php
-.. _`null-coalescing operator in PHP`: https://www.php.net/manual/en/language.operators.comparison.php#language.operators.comparison.coalesce
