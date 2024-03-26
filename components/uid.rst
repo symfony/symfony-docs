@@ -54,8 +54,9 @@ to create each type of UUID:
         use Symfony\Component\Uid\Uuid;
 
         $namespace = Uuid::fromString(Uuid::NAMESPACE_OID);
+        // $name can be any arbitrary string
         // $uuid is an instance of Symfony\Component\Uid\UuidV3
-        $uuid = Uuid::v3($namespace, 'Hello World');
+        $uuid = Uuid::v3($namespace, $name);
 
     The namespace can be any valid UUID, such as a random value generated with
     ``Uuid::v4()`` but the UUID spec provides some default namespaces:
