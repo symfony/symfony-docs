@@ -232,6 +232,13 @@ from the `MakerBundle`_:
         }
     }
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
+    ``--with-ulid`` to ``make:user``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    this generates a ``User`` entity with the ``id`` type as :ref:`Uuid <uuid>`
+    or :ref:`Ulid <ulid>` instead of ``int``.
+
 .. versionadded:: 5.3
 
     The :class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
