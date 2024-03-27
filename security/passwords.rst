@@ -294,6 +294,13 @@ you'll see a success message and a list of any other steps you need to do.
 
     $ php bin/console make:reset-password
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
+    ``--with-ulid`` to ``make:reset-password``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    the entities will be generated with the ``id`` type as :ref:`Uuid <uuid>`
+    or :ref:`Ulid <ulid>` instead of ``int``.
+
 You can customize the reset password bundle's behavior by updating the
 ``reset_password.yaml`` file. For more information on the configuration,
 check out the `SymfonyCastsResetPasswordBundle`_  guide.
