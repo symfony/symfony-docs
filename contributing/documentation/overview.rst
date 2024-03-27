@@ -104,7 +104,7 @@ Fetch all the commits of the upstream branches by executing this command:
 
     $ git fetch upstream
 
-The purpose of this step is to allow you work simultaneously on the official
+The purpose of this step is to allow you to work simultaneously on the official
 Symfony repository and on your own fork. You'll see this in action in a moment.
 
 **Step 4.** Create a dedicated **new branch** for your changes. Use a short and
