@@ -266,7 +266,7 @@ domains work:
     # Example with Cypress
     $ https_proxy=$(symfony proxy:url) ./node_modules/bin/cypress open
 
-.. note::
+.. caution::
 
     Although env var names are always defined in uppercase, the ``https_proxy``
     env var `is treated differently`_ than other env vars and its name must be
@@ -530,5 +530,5 @@ help debug any issues.
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
-.. _`is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only
+.. _`is treated differently`: https://superuser.com/a/1799209
 .. _`Docker compose CLI env var reference`: https://docs.docker.com/compose/reference/envvars/
