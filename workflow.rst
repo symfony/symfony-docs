@@ -248,6 +248,44 @@ what actions are allowed on a blog post::
     // See a specific available transition for the post in the current state
     $transition = $workflow->getEnabledTransition($post, 'publish');
 
+Using a multiple state marking store
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are creating a :doc:`workflow </workflow/workflow-and-state-machine>`
+, your marking store may need to contain multiple places at the same time.
+If you are using Doctrine, the matching column definition should use the
+type ``json`` ::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    use Doctrine\DBAL\Types\Types;
+    use Doctrine\ORM\Mapping as ORM;
+
+    #[ORM\Entity]
+    class BlogPost
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
+        private int $id;
+
+        // Type declaration is not mandatory and
+        // matches the guessed value from Doctrine
+        #[ORM\Column(type: Types::JSON)] // or #[ORM\Column(type: 'json')]
+        private array $currentPlaces;
+
+        // ...
+    }
+
+.. tip::
+
+    You should not use the type ``simple_array`` for your marking store.
+    Inside a multiple state marking store, places are store as keys with
+    a value of one, such as ``['draft' => 1]``. If the marking store contains
+    only one place, this Doctrine type will store its value only as a string,
+    resulting in the loss of the object's current place.
+
 Accessing the Workflow in a Class
 ---------------------------------
 
