@@ -266,7 +266,7 @@ domains work:
     # Example with Cypress
     $ https_proxy=$(symfony proxy:url) ./node_modules/bin/cypress open
 
-.. note::
+.. caution::
 
     Although env var names are always defined in uppercase, the ``https_proxy``
     env var `is treated differently`_ than other env vars and its name must be
