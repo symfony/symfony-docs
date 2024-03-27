@@ -157,9 +157,16 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
         // ... getter and setter methods
     }
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
+    ``--with-ulid`` to ``make:entity``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    this generates an entity with the ``id`` type as :ref:`Uuid <uuid>`
+    or :ref:`Ulid <ulid>` instead of ``int``.
+
 .. note::
 
-    Starting in v1.44.0 - MakerBundle only supports entities using PHP attributes.
+    Starting in v1.44.0 - `MakerBundle`_: only supports entities using PHP attributes.
 
 .. note::
 
@@ -224,6 +231,11 @@ already installed:
 .. code-block:: terminal
 
     $ php bin/console make:migration
+
+.. tip::
+
+    Starting in `MakerBundle`_: v1.56.0 - Passing ``--formatted`` to ``make:migration``
+    generates a nice and tidy migration file.
 
 If everything worked, you should see something like this:
 
@@ -1085,3 +1097,4 @@ Learn more
 .. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/doctrine-extensions/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
