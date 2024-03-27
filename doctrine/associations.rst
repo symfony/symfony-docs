@@ -79,6 +79,13 @@ This will generate your new entity class::
         // ... getters and setters
     }
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
+    ``--with-ulid`` to ``make:entity``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    this generates an entity with the ``id`` type as :ref:`Uuid <uuid>`
+    or :ref:`Ulid <ulid>` instead of ``int``.
+
 Mapping the ManyToOne Relationship
 ----------------------------------
 
@@ -626,3 +633,4 @@ Doctrine's `Association Mapping Documentation`_.
 .. _`orphanRemoval`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-associations.html#orphan-removal
 .. _`Mastering Doctrine Relations`: https://symfonycasts.com/screencast/doctrine-relations
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
