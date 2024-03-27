@@ -225,6 +225,11 @@ already installed:
 
     $ php bin/console make:migration
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.56.0 - Passing ``--formatted`` to ``make:migration``
+    generates a nice and tidy migration file.
+
 If everything worked, you should see something like this:
 
 .. code-block:: text
@@ -909,3 +914,4 @@ Learn more
 .. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/doctrine-extensions/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

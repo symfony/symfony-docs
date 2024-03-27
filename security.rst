@@ -245,6 +245,11 @@ to create the tables by :ref:`creating and running a migration <doctrine-creatin
     $ php bin/console make:migration
     $ php bin/console doctrine:migrations:migrate
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.56.0 - Passing ``--formatted`` to ``make:migration``
+    generates a nice and tidy migration file.
+
 .. _where-do-users-come-from-user-providers:
 .. _security-user-providers:
 
