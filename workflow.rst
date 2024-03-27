@@ -496,6 +496,7 @@ workflow leaves a place::
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
+    use Symfony\Component\Workflow\Event\LeaveEvent;
 
     class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
@@ -518,10 +519,23 @@ workflow leaves a place::
         public static function getSubscribedEvents(): array
         {
             return [
-                'workflow.blog_publishing.leave' => 'onLeave',
+                LeaveEvent::getName('blog_publishing') => 'onLeave',
+                // if you prefer, you can write the event name manually like this:
+                // 'workflow.blog_publishing.leave' => 'onLeave',
             ];
         }
     }
+
+.. tip::
+
+    All built-in workflow events define the ``getName(?string $workflowName, ?string $transitionOrPlaceName)``
+    method to build the full event name without having to deal with strings.
+    You can also use this method in your custom events via the
+    :class:`Symfony\\Component\\Workflow\\Event\\EventNameTrait`.
+
+    .. versionadded:: 7.1
+
+        The ``getName()`` method was introduced in Symfony 7.1.
 
 If some listeners update the context during a transition, you can retrieve
 it via the marking::
