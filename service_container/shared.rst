@@ -16,7 +16,7 @@ in your service definition:
         // src/SomeNonSharedService.php
         namespace App;
 
-	    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
 
         #[Autoconfigure(shared: false)]
         class SomeNonSharedService
