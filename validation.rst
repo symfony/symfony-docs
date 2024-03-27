@@ -144,7 +144,7 @@ returned. Take this simple example from inside a controller::
 
         $errors = $validator->validate($author);
 
-        if (count($errors) > 0) {
+        if ($errors->count() > 0) {
             /*
              * Uses a __toString method on the $errors variable which is a
              * ConstraintViolationList object. This gives us a nice string
@@ -178,7 +178,7 @@ will appear.
 
 You could also pass the collection of errors into a template::
 
-    if (count($errors) > 0) {
+    if ($errors->count() > 0) {
         return $this->render('author/validation.html.twig', [
             'errors' => $errors,
         ]);
