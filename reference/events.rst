@@ -7,6 +7,12 @@ application using the :doc:`HttpKernel component </components/http_kernel>`)
 dispatches some :doc:`events </event_dispatcher>` which you can use to modify
 how the request is handled and how the response is returned.
 
+.. raw:: html
+
+    <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"
+        alt="The HTTP Kernel flow diagram showing events flow"
+    ></object>
+
 Kernel Events
 -------------
 
