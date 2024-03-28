@@ -62,6 +62,26 @@ You can also control the ``public`` option on a service-by-service basis:
                 ->public();
         };
 
+It is also possible to define a service as public thanks to the ``#[Autoconfigure]``
+attribute. This attribute must be used directly on the class of the service
+you want to configure::
+
+    // src/Service/Foo.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+    #[Autoconfigure(public: true)]
+    class Foo
+    {
+        // ...
+    }
+
+.. versionadded:: 5.3
+
+    The ``#[Autoconfigure]`` attribute was introduced in Symfony 5.3. PHP
+    attributes require at least PHP 8.0.
+
 .. _services-why-private:
 
 Private services are special because they allow the container to optimize whether
