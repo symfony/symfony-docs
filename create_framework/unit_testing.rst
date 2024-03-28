@@ -21,22 +21,22 @@ Then, create a PHPUnit configuration file in ``example.com/phpunit.xml.dist``:
     <?xml version="1.0" encoding="UTF-8"?>
     <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
         backupGlobals="false"
         colors="true"
         bootstrap="vendor/autoload.php"
     >
-        <coverage processUncoveredFiles="true">
-            <include>
-                <directory suffix=".php">./src</directory>
-            </include>
-        </coverage>
-
+        <coverage/>
         <testsuites>
             <testsuite name="Test Suite">
                 <directory>./tests</directory>
             </testsuite>
         </testsuites>
+        <source>
+            <include>
+                <directory suffix=".php">./src</directory>
+            </include>
+        </source>
     </phpunit>
 
 This configuration defines sensible defaults for most PHPUnit settings; more
@@ -114,7 +114,7 @@ We are now ready to write our first test::
             $matcher
                 ->expects($this->once())
                 ->method('getContext')
-                ->will($this->returnValue($this->createMock(Routing\RequestContext::class)))
+                ->willReturn($this->createMock(Routing\RequestContext::class))
             ;
             $controllerResolver = $this->createMock(ControllerResolverInterface::class);
             $argumentResolver = $this->createMock(ArgumentResolverInterface::class);
@@ -169,16 +169,16 @@ Response::
         $matcher
             ->expects($this->once())
             ->method('match')
-            ->will($this->returnValue([
+            ->willReturn([
                 '_route' => 'is_leap_year/{year}',
                 'year' => '2000',
                 '_controller' => [new LeapYearController(), 'index'],
-            ]))
+            ])
         ;
         $matcher
             ->expects($this->once())
             ->method('getContext')
-            ->will($this->returnValue($this->createMock(Routing\RequestContext::class)))
+            ->willReturn($this->createMock(Routing\RequestContext::class))
         ;
         $controllerResolver = new ControllerResolver();
         $argumentResolver = new ArgumentResolver();
