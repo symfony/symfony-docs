@@ -81,7 +81,7 @@ Serving Assets in dev vs prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``dev`` environment, the URL ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``
-is handled and returned by your Symfony app.
+is handled and returned by your Symfony app - but only if ``public/assets/`` is empty (see below).
 
 For the ``prod`` environment, before deploy, you should run:
 
@@ -92,6 +92,11 @@ For the ``prod`` environment, before deploy, you should run:
 This will physically copy all the files from your mapped directories to
 ``public/assets/`` so that they're served directly by your web server.
 See :ref:`Deployment <asset-mapper-deployment>` for more details.
+
+.. caution::
+
+    If you compiled your assets on your development machine, you need to delete them again,
+    in order to make Symfony serve the current versions from ``assets/`` again.
 
 .. tip::
 
