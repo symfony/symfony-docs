@@ -311,6 +311,37 @@ The above code can be simplified as follows because ``false !== null``::
     $yell = ($optionValue !== false);
     $yellLouder = ($optionValue === 'louder');
 
+Fetching The Raw Command Input
+------------------------------
+
+Sometimes, you may need to fetch the raw input that was passed to the command.
+This is useful when you need to parse the input yourself or when you need to
+pass the input to another command without having to worry about the number
+of arguments or options defined in your own command. This can be achieved
+thanks to the
+:method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens` method::
+
+    // ...
+    use Symfony\Component\Process\Process;
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        // pass the raw input of your command to the "ls" command
+        $process = new Process(['ls', ...$input->getRawTokens(true)]);
+        $process->setTty(true);
+        $process->mustRun();
+
+        // ...
+    }
+
+You can include the current command name in the raw tokens by passing ``true``
+to the ``getRawTokens`` method only parameter.
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens`
+    method was introduced in Symfony 7.1.
+
 Adding Argument/Option Value Completion
 ---------------------------------------
 
