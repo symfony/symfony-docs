@@ -57,6 +57,11 @@ method)::
     ``$this->getApplication()->find('demo:greet')->run()`` will allow proper
     events to be dispatched for that inner command as well.
 
+
+.. tip::
+
+    If you want to call the command non interactively (from a console that is capable of that), you have to set it manual on the ``Input`` object ``$greetInput->setInteractive(false);``.
+
 .. caution::
 
     Note that all the commands will run in the same process and some of Symfony's
