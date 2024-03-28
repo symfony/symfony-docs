@@ -2734,6 +2734,8 @@ for each bus looks like this:
 
 #. ``handle_message`` - calls the message handler(s) for the given message.
 
+#. ``auto_stamp_middleware`` - add stamps to envelope from ``StampInterface`` attributes on message.
+
 .. note::
 
     These middleware names are actually shortcut names. The real service ids
