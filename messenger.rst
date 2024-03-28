@@ -797,6 +797,8 @@ directory. For example, you can create a new ``messenger-worker.service`` file. 
 
     [Service]
     ExecStart=php /path/to/your/app/bin/console messenger:consume async --time-limit=3600
+    # For Redis, set a custom consumer name for each instance
+    Environment="MESSENGER_CONSUMER_NAME=symfony-%n-%i"
     Restart=always
     RestartSec=30
 
