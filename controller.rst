@@ -555,6 +555,47 @@ if you want to map a nested array of specific DTOs::
         ) {}
     }
 
+.. caution::
+
+    If you're using typed properties with ``MapRequestPayload```, it is
+    recommended to use built-in types like ``int``, ``bool`` or ``string`` for
+    mapping. Using custom types could expose your application implementation in
+    errors during denormalization. For example, validating an enum when using
+    ``#[MapRequestPayload]`` could look like this::
+
+        // src/Controller/LuckyController.php
+        use App\Model\MyInput;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
+        class LuckyController
+        {
+            #[Route('/lucky/number/{max}', name: 'app_lucky_number', methods: ['POST'])]
+            public function number(#[MapRequestPayload] MyInput $input, int $max): Response
+            {
+                // use it like this : $input->myInputAttribute;
+            }
+        }
+
+        // src/Model/MyInput.php
+        class MyInput
+        {
+            #[Assert\Choice(callback: [MyEnum::class, 'values'])]
+            public string $myInputAttribute;
+        }
+
+        // src/Model/MyEnum.php
+        enum MyEnum: string
+        {
+            case FIRST_CASE = 'first_case';
+            case SECOND_CASE = 'second_case';
+
+            public static function values(): array
+            {
+                return array_column(self::cases(), 'value');
+            }
+        }
+
 Managing the Session
 --------------------
 
