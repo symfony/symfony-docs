@@ -51,7 +51,7 @@ a PHP script, it's better to reproduce the bug by creating a new project. To do 
 #. Add a comment in your original issue report to share the URL of your forked
    project (e.g. ``https://github.com/YOUR-GITHUB-USERNAME/symfony_issue_23567``)
    and, if necessary, explain the steps to reproduce (e.g. "browse this URL",
-   "fill in this data in the form and submit it", etc.)
+   "fill in this data in the form and submit it").
 
 Adding the Minimum Amount of Code Possible
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

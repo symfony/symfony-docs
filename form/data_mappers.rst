@@ -19,7 +19,7 @@ It is important to know the difference between
 * **Data transformers** change the representation of a single value, e.g. from
   ``"2016-08-12"`` to a ``DateTime`` instance;
 * **Data mappers** map data (e.g. an object or array) to one or many form fields, and vice versa,
-  e.g. using a single ``DateTime`` instance to populate the inner fields (e.g year, hour, etc.)
+  e.g. using a single ``DateTime`` instance to populate the inner fields (e.g. year, hour, etc.)
   of a compound date type.
 
 Creating a Data Mapper

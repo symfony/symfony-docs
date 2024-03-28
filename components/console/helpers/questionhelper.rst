@@ -53,7 +53,7 @@ the following to your command::
 
 In this case, the user will be asked "Continue with this action?". If the user
 answers with ``y`` (or any word, expression starting with ``y`` due to default
-answer regex, e.g ``yeti``) it returns ``true`` or ``false`` otherwise, e.g. ``n``.
+answer regex, e.g. ``yeti``) it returns ``true`` or ``false`` otherwise, e.g. ``n``.
 
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`

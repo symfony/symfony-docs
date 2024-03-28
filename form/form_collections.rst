@@ -201,7 +201,7 @@ yet to add new tags or delete existing ones.
     if you use Xdebug, you may receive a ``Maximum function nesting level of '100'
     reached, aborting!`` error. To fix this, increase the ``xdebug.max_nesting_level``
     PHP setting, or render each form field by hand using ``form_row()`` instead of
-    rendering the whole form at once (e.g ``form_widget(form)``).
+    rendering the whole form at once (e.g. ``form_widget(form)``).
 
 .. _form-collections-new-prototype:
 

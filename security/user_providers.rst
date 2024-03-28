@@ -36,7 +36,7 @@ the user provider uses :doc:`Doctrine </doctrine>` to retrieve them.
                     entity:
                         # the class of the entity that represents users
                         class: 'App\Entity\User'
-                        # the property to query by - e.g. email, username, etc
+                        # the property to query by - e.g. email, username
                         property: 'email'
 
                         # optional: if you're using multiple Doctrine entity

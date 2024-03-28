@@ -153,7 +153,7 @@ their priorities:
 
 This event is dispatched after the controller or any ``kernel.view`` listener
 returns a ``Response`` object. It's useful to modify or replace the response
-before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
+before sending it back (e.g. add/modify HTTP headers, add cookies)::
 
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
 

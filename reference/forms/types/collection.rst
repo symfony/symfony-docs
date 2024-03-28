@@ -228,7 +228,7 @@ entry_type
 **type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\TextType``
 
 This is the field type for each item in this collection (e.g. ``TextType``,
-``ChoiceType``, etc). For example, if you have an array of email addresses,
+``ChoiceType``). For example, if you have an array of email addresses,
 you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, pass the form type class as this
 option (e.g. ``MyFormType::class``).

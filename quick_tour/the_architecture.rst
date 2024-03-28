@@ -82,7 +82,7 @@ Creating Services
 -----------------
 
 To keep your code organized, you can even create your own services! Suppose you
-want to generate a random greeting (e.g. "Hello", "Yo", etc). Instead of putting
+want to generate a random greeting (e.g. "Hello", "Yo"). Instead of putting
 this code directly in your controller, create a new class::
 
     // src/GreetingGenerator.php

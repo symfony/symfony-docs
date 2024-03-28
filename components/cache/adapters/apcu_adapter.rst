@@ -38,7 +38,7 @@ and cache items version string as constructor arguments::
 .. tip::
 
     This adapter's CRUD operations are specific to the PHP SAPI it is running under. This
-    means cache operations (such as additions, deletions, etc) using the CLI will not be
+    means cache operations (such as additions, deletions, etc.) using the CLI will not be
     available under the FPM or CGI SAPIs.
 
 .. _`APCu extension`: https://pecl.php.net/package/APCu

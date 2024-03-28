@@ -515,7 +515,7 @@ Polyfills for the Unavailable Methods
 
 When using the ``simple-phpunit`` script, PHPUnit Bridge injects polyfills for
 most methods of the ``TestCase`` and ``Assert`` classes (e.g. ``expectException()``,
-``expectExceptionMessage()``, ``assertContainsEquals()``, etc.). This allows writing
+``expectExceptionMessage()``, ``assertContainsEquals()``). This allows writing
 test cases using the latest best practices while still remaining compatible with
 older PHPUnit versions.
 
@@ -637,7 +637,7 @@ And that's all!
 .. caution::
 
     Time-based function mocking follows the `PHP namespace resolutions rules`_
-    so "fully qualified function calls" (e.g ``\time()``) cannot be mocked.
+    so "fully qualified function calls" (e.g. ``\time()``) cannot be mocked.
 
 The ``@group time-sensitive`` annotation is equivalent to calling
 ``ClockMock::register(MyTest::class)``. If you want to mock a function used in a

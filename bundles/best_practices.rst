@@ -253,8 +253,8 @@ Bundles should set ``"type": "symfony-bundle"`` in their ``composer.json`` file.
 With this, :ref:`Symfony Flex <symfony-flex>` will be able to automatically
 enable your bundle when it's installed.
 
-If your bundle requires any setup (e.g. configuration, new files, changes to
-``.gitignore``, etc), then you should create a `Symfony Flex recipe`_.
+If your bundle requires any setup (e.g. configuration, new files or changes to
+``.gitignore``), then you should create a `Symfony Flex recipe`_.
 
 Documentation
 -------------

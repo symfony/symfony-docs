@@ -361,7 +361,7 @@ the data that was submitted by the user. For example, imagine you have a registr
 form for sports gatherings. Some events will allow you to specify your preferred
 position on the field. This would be a ``choice`` field for example. However, the
 possible choices will depend on each sport. Football will have attack, defense,
-goalkeeper etc... Baseball will have a pitcher but will not have a goalkeeper. You
+goalkeeper, etc. Baseball will have a pitcher but will not have a goalkeeper. You
 will need the correct options in order for validation to pass.
 
 The meetup is passed as an entity field to the form. So we can access each
@@ -487,7 +487,7 @@ The type would now look like::
                     $formModifier($event->getForm()->getParent(), $sport);
                 }
             );
-            
+
             // by default, action does not appear in the <form> tag
             // you can set this value by passing the controller route
             $builder->setAction($options['action']);
@@ -529,7 +529,7 @@ your application. Assume that you have a sport meetup creation controller::
             $form = $this->createForm(SportMeetupType::class, $meetup, ['action' => $this->generateUrl('app_meetup_create')]);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                // ... save the meetup, redirect etc.
+                // ... save the meetup, redirect, etc.
             }
 
             return $this->render('meetup/create.html.twig', [

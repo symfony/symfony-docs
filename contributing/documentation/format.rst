@@ -273,7 +273,7 @@ For a deprecation use the ``.. deprecated:: 6.x`` directive:
 
         ... ... ... was deprecated in Symfony 6.2.
 
-Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc), a new
+Whenever a new major version of Symfony is released (e.g. 6.0, 7.0), a new
 branch of the documentation is created from the ``x.4`` branch of the previous
 major version. At this point, all the ``versionadded`` and ``deprecated`` tags
 for Symfony versions that have a lower major version will be removed. For

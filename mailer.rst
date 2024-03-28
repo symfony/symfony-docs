@@ -1616,7 +1616,7 @@ Draft Emails
 
 :class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
 :class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
-(with body, attachments, etc) and make available to download as an ``.eml`` with
+(with body, attachments, etc.) and make available to download as an ``.eml`` with
 the ``X-Unsent`` header. Many email clients can open these files and interpret
 them as *draft emails*. You can use these to create advanced ``mailto:`` links.
 
@@ -1761,7 +1761,7 @@ FailedMessageEvent
 
     public function onMessage(FailedMessageEvent $event): void
     {
-        // e.g you can get more information on this error when sending an email
+        // e.g. you can get more information on this error when sending an email
         $event->getError();
 
         // do something with the message
