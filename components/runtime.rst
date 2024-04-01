@@ -396,12 +396,11 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
     use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Server\RequestHandlerInterface;
-    use React\EventLoop\Factory as ReactFactory;
-    use React\Http\Server as ReactHttpServer;
-    use React\Socket\Server as ReactSocketServer;
+    use React\Http\HttpServer as ReactHttpServer;
+    use React\Socket\SocketServer as ReactSocketServer;
     use Symfony\Component\Runtime\RunnerInterface;
 
-    class ReactPHPRunner implements RunnerInterface
+    class ReactPhpRunner implements RunnerInterface
     {
         public function __construct(
             private RequestHandlerInterface $application,
@@ -412,21 +411,18 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
         public function run(): int
         {
             $application = $this->application;
-            $loop = ReactFactory::create();
 
-            // configure ReactPHP to correctly handle the PSR-15 application
-            $server = new ReactHttpServer(
-                $loop,
-                function (ServerRequestInterface $request) use ($application): ResponseInterface {
-                    return $application->handle($request);
-                }
-            );
+            $serverAddress = '127.0.0.1:' . $this->port;
+            $socket = new ReactSocketServer($serverAddress);
 
-            // start the ReactPHP server
-            $socket = new ReactSocketServer($this->port, $loop);
+            $server = new ReactHttpServer(function (ServerRequestInterface $requestHandler) use ($application) {
+                return $application->handle($requestHandler) ;
+            });
+
+            // listen the ReactPHP socket
             $server->listen($socket);
 
-            $loop->run();
+            echo "Server running at http://" . $serverAddress . PHP_EOL;
 
             return 0;
         }
@@ -451,7 +447,7 @@ always using this ``ReactPHPRunner``::
         public function getRunner(?object $application): RunnerInterface
         {
             if ($application instanceof RequestHandlerInterface) {
-                return new ReactPHPRunner($application, $this->port);
+                return new ReactPhpRunner($application, $this->port);
             }
 
             // if it's not a PSR-15 application, use the GenericRuntime to
@@ -462,10 +458,23 @@ always using this ``ReactPHPRunner``::
 
 The end user will now be able to create front controller like::
 
-    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    use App\Runtime\ReactPhpRuntime;
+    use Psr\Http\Server\RequestHandlerInterface;
 
-    return function (array $context): SomeCustomPsr15Application {
-        return new SomeCustomPsr15Application();
+    $_SERVER['APP_RUNTIME'] = ReactPhpRuntime::class;
+
+    require_once dirname(__DIR__) . '/vendor/autoload_runtime.php';
+
+    return static function (): RequestHandlerInterface {
+        return new class implements RequestHandlerInterface {
+            public function handle(\Psr\Http\Message\ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface
+            {
+                return new \React\Http\Message\Response(
+                    headers: ['Content-Type' => 'text/html; charset=utf-8'],
+                    body: 'Welcome to your new application'
+                );
+            }
+        };
     };
 
 .. _PHP-PM: https://github.com/php-pm/php-pm
