@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-03-28T20:57:06Z
+
+friendly ping @alexandre-daubois as you contributed this in #17785
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2024-03-29T07:34:11Z
+
+This was a requirement in the early days of lazy ghosts implementation, and I think it is indeed not necessary anymore. The README of VarExporter doesn't mention it. I think it is safe to remove 😊
