@@ -99,6 +99,8 @@ JavaScript::
 
 This will print out ``Hi Hi Hi!``.
 
+.. _component-expression-null-safe-operator:
+
 Null-safe Operator
 ..................
 
@@ -117,6 +119,29 @@ operator)::
 .. versionadded:: 6.1
 
     The null safe operator was introduced in Symfony 6.1.
+
+.. _component-expression-null-coalescing-operator:
+
+Null-Coalescing Operator
+........................
+
+It returns the left-hand side if it exists and it's not ``null``; otherwise it
+returns the right-hand side. Expressions can chain multiple coalescing operators:
+
+* ``foo ?? 'no'``
+* ``foo.baz ?? 'no'``
+* ``foo[3] ?? 'no'``
+* ``foo.baz ?? foo['baz'] ?? 'no'``
+
+.. note::
+
+    The main difference with the `null-coalescing operator in PHP`_ is that
+    ExpressionLanguage will throw an exception when trying to access a
+    non-existent variable.
+
+.. versionadded:: 6.2
+
+    The null-coalescing operator was introduced in Symfony 6.2.
 
 .. _component-expression-functions:
 
@@ -391,6 +416,12 @@ Ternary Operators
 * ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
 * ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
 
+Other Operators
+~~~~~~~~~~~~~~~
+
+* ``?.`` (:ref:`null-safe operator <component-expression-null-safe-operator>`)
+* ``??`` (:ref:`null-coalescing operator <component-expression-null-coalescing-operator>`)
+
 Built-in Objects and Variables
 ------------------------------
 
@@ -401,3 +432,5 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
+
+.. _`null-coalescing operator in PHP`: https://www.php.net/manual/en/language.operators.comparison.php#language.operators.comparison.coalesce
