@@ -1328,6 +1328,47 @@ has to return an integer which will be used as TTL.
             // Inject whatever dependencies you need to be able to resolve a TTL for the current session
             ->args([service('security')]);
 
+
+.. _session-passing-session-parameter:
+
+Passing a session parameter to a controller argument
+----------------------------------------------------
+
+A possibility is to pass a session parameter to a controller argument.
+Let's say you declare the following DTO ::
+
+    namespace App\Model;
+
+    class UserPreference
+    {
+        public bool $enableNotification = true;
+        public string $locale = "en";
+    }
+
+You can then use the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapSessionParameter`
+attribute in your controller::
+
+    use App\Model\UserPreference;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapSessionParameter;
+
+    // ...
+
+    public function dashboard(
+        #[MapSessionParameter] UserPreference $userPreferences
+    ): Response
+    {
+        // ...
+    }
+
+The method will then receive an instance of your DTO linked with the session.
+Value set in this object will be persisted in session and will be available for reading later.
+
+The name of the parameter is used as the session key.
+
+This attribute work with classes and interfaces.
+If you use an interface, you must provide a default value or make the parameter nullable, if the session isn't set, it will not be possible to create a new instance when resolving the value.
+
 .. _locale-sticky-session:
 
 Making the Locale "Sticky" during a User's Session
