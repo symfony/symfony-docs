@@ -371,7 +371,7 @@ attribute, arguments of your controller's action can be automatically fulfilled:
     // ...
 
     public function dashboard(
-        #[MapQueryParameter(filter: \FILTER_VALIDATE_REGEXP, options: ['regexp' => '/^\w++$/'])] string $firstName,
+        #[MapQueryParameter(filter: \FILTER_VALIDATE_REGEXP, options: ['regexp' => '/^\w+$/'])] string $firstName,
         #[MapQueryParameter] string $lastName,
         #[MapQueryParameter(filter: \FILTER_VALIDATE_INT)] int $age,
     ): Response
