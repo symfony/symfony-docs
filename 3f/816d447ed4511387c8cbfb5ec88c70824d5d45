@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by VincentLanglet at 2024-03-22T09:06:56Z
+
+Why do I get `[Missing class] Class, interface or trait with name "Symfony\Component\Lock\LockFactory" does not exist` ?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-03-27T14:57:17Z
+
+Vincent, you can ignore the code block error. It's a false positive that will be fixed when we update the code in that linter. Thanks.
