@@ -206,9 +206,6 @@ initialized::
     class HashProcessor
     {
         use LazyGhostTrait;
-        // Because of how the LazyGhostTrait trait works internally, you
-        // must add this private property in your class
-        private int $lazyObjectId;
 
         // This property may require a heavy computation to have its value
         public readonly string $hash;
