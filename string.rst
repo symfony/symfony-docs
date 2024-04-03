@@ -560,7 +560,7 @@ textual representation in all languages based on the `Unicode CLDR dataset`_::
 
 
 The ``EmojiTransliterator`` also provides special locales that convert emojis to
-short codes and vice versa in specific platforms, such as GitHub and Slack.
+short codes and vice versa in specific platforms, such as GitHub, Gitlab and Slack.
 
 GitHub Emoji Transliteration
 ............................
@@ -576,6 +576,21 @@ Convert GitHub short codes to emojis with the ``github-emoji`` locale::
     $transliterator = EmojiTransliterator::create('github-emoji');
     $transliterator->transliterate('Teenage :turtle: really love :pizza:');
     // => 'Teenage 🐢 really love 🍕'
+
+Gitlab Emoji Transliteration
+............................
+
+Convert Gitlab emojis to short codes with the ``emoji-gitlab`` locale::
+
+    $transliterator = EmojiTransliterator::create('emoji-gitlab');
+    $transliterator->transliterate('Breakfast with 🥝 or 🥛');
+    // => 'Breakfast with :kiwi: or :milk:'
+
+Convert Gitlab short codes to emojis with the ``gitlab-emoji`` locale::
+
+    $transliterator = EmojiTransliterator::create('gitlab-emoji');
+    $transliterator->transliterate('Breakfast with :kiwi: or :milk:');
+    // => 'Breakfast with 🥝 or 🥛'
 
 Slack Emoji Transliteration
 ...........................
@@ -693,7 +708,7 @@ with the slugger to transform any emojis into their textual representation::
     // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
 
 If you want to use a specific locale for the emoji, or to use the short codes
-from GitHub or Slack, use the first argument of ``withEmoji()`` method::
+from GitHub, Gitlab or Slack, use the first argument of ``withEmoji()`` method::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
