@@ -169,7 +169,7 @@ subpath/subfolder of the reverse proxy.
 To fix this, you need to pass the subpath/subfolder route prefix of the reverse
 proxy to Symfony by setting the ``X-Forwarded-Prefix`` header. The header can
 normally be configured in your reverse proxy configuration. Configure
-``X-Forwared-Prefix`` as trusted header to be able to use this feature.
+``X-Forwarded-Prefix`` as trusted header to be able to use this feature.
 
 The ``X-Forwarded-Prefix`` is used by Symfony to prefix the base URL of request
 objects, which is used to generate absolute paths and URLs in Symfony applications.
