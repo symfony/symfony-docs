@@ -1514,15 +1514,7 @@ The directory where routing information will be cached. Can be set to
 .. deprecated:: 7.1
 
     Setting the ``cache_dir`` option is deprecated since Symfony 7.1. The routes
-    are now always cached in the ``%kernel.build_dir%`` directory. If you want
-    to disable route caching, set the ``ignore_cache`` option to ``true``.
-
-ignore_cache
-............
-
-**type**: ``boolean`` **default**: ``false``
-
-When this option is set to ``true``, routing information will not be cached.
+    are now always cached in the ``%kernel.build_dir%`` directory.
 
 secrets
 ~~~~~~~
