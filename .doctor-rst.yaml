@@ -12,6 +12,7 @@ rules:
     correct_code_block_directive_based_on_the_content: ~
     deprecated_directive_should_have_version: ~
     ensure_bash_prompt_before_composer_command: ~
+    ensure_correct_format_for_phpfunction: ~
     ensure_exactly_one_space_before_directive_type: ~
     ensure_exactly_one_space_between_link_definition_and_link: ~
     ensure_github_directive_start_with_prefix:
