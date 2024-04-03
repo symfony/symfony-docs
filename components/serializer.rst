@@ -700,8 +700,13 @@ deserializing objects::
     $serialized = $serializer->serialize(new Person('Kévin'), 'json');
     // {"customer_name": "Kévin"}
 
-Serializing Boolean Attributes
-------------------------------
+.. _serializing-boolean-attributes:
+
+Handling Boolean Attributes And Values
+--------------------------------------
+
+During Serialization
+~~~~~~~~~~~~~~~~~~~~
 
 If you are using isser methods (methods prefixed by ``is``, like
 ``App\Model\Person::isSportsperson()``), the Serializer component will
@@ -709,6 +714,34 @@ automatically detect and use it to serialize related attributes.
 
 The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``get``,
 and ``can``.
+
+During Deserialization
+~~~~~~~~~~~~~~~~~~~~~~
+
+PHP considers many different values as true or false. For example, the
+strings ``true``, ``1``, and ``yes`` are considered true, while
+``false``, ``0``, and ``no`` are considered false.
+
+When deserializing, the Serializer component can take care of this
+automatically. This can be done by using the ``AbstractNormalizer::FILTER_BOOL``
+context option::
+
+    use Acme\Person;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $normalizer = new ObjectNormalizer();
+    $serializer = new Serializer([$normalizer]);
+
+    $data = $serializer->denormalize(['sportsperson' => 'yes'], Person::class, context: [AbstractNormalizer::FILTER_BOOL => true]);
+
+This context makes the deserialization process behave like the
+:phpfunction:`filter_var` function with the ``FILTER_VALIDATE_BOOL`` flag.
+
+.. versionadded:: 7.1
+
+    The ``AbstractNormalizer::FILTER_BOOL`` context option was introduced in Symfony 7.1.
 
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
