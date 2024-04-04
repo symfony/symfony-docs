@@ -82,7 +82,7 @@ Null Coalescing Operator
 
 .. note::
 
-    This content has been moved to the ref:`null coalescing operator <component-expression-null-coalescing-operator>`
+    This content has been moved to the ref:`null coalescing operator <component-expression-null-coalescing-operator>`_
     section of ExpressionLanguage syntax reference page.
 
 Parsing and Linting Expressions
