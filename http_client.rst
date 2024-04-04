@@ -1482,7 +1482,7 @@ decorator that allows to limit the number of requests within a certain period.
 
 The implementation leverages the
 :class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class under the hood
-so that the :doc:`Rate Limiter component </rate_limiter>` needs to be
+so the :doc:`Rate Limiter component </rate_limiter>` needs to be
 installed in your application::
 
     use Symfony\Component\HttpClient\HttpClient;
