@@ -1174,6 +1174,20 @@ query
 An associative array of the query string values added to the URL before making
 the request. This value must use the format ``['parameter-name' => parameter-value, ...]``.
 
+rate_limiter
+............
+
+**type**: ``string``
+
+This option limit the number of requests within a certain period thanks
+to the :doc:`Rate Limiter component </rate_limiter>`.
+
+The rate limiter service ID you want to use.
+
+.. versionadded:: 7.1
+
+    The ``rate_limiter`` option was introduced in Symfony 7.1.
+
 resolve
 .......
 

@@ -1474,6 +1474,40 @@ installed in your application::
 :class:`Symfony\\Component\\HttpClient\\CachingHttpClient` accepts a third argument
 to set the options of the :class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache`.
 
+Limit the Number of Requests
+----------------------------
+
+This component provides a :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient`
+decorator that allows to limit the number of requests within a certain period.
+
+The implementation leverages the
+:class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class under the hood
+so that the :doc:`Rate Limiter component </rate_limiter>` needs to be
+installed in your application::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\ThrottlingHttpClient;
+    use Symfony\Component\RateLimiter\LimiterInterface;
+
+    $rateLimiter = ...; // $rateLimiter is an instance of Symfony\Component\RateLimiter\LimiterInterface
+    $client = HttpClient::create();
+    $client = new ThrottlingHttpClient($client, $rateLimiter);
+
+    $requests = [];
+    for ($i = 0; $i < 100; $i++) {
+        $requests[] = $client->request('GET', 'https://example.com');
+    }
+
+    foreach ($requests as $request) {
+        // Depending on rate limiting policy, calls will be delayed
+        $output->writeln($request->getContent());
+    }
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient` was
+    introduced in Symfony 7.1.
+
 Consuming Server-Sent Events
 ----------------------------
 
