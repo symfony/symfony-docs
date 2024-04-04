@@ -1179,10 +1179,9 @@ rate_limiter
 
 **type**: ``string``
 
-This option limit the number of requests within a certain period thanks
-to the :doc:`Rate Limiter component </rate_limiter>`.
-
-The rate limiter service ID you want to use.
+The service ID of the rate limiter used to limit the number of HTTP requests
+within a certain period. The service must implement the
+:class:`Symfony\\Component\\RateLimiter\\LimiterInterface`.
 
 .. versionadded:: 7.1
 
