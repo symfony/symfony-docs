@@ -307,3 +307,114 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
                 ]));
             }
         }
+
+``requireTld``
+~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 7.1
+
+    The ``requiredTld`` option was introduced in Symfony 7.1.
+
+By default, URLs like ``https://aaa`` or ``https://foobar`` are considered valid
+because they are tecnically correct according to the `URL spec`_. If you set this option
+to ``true``, the host part of the URL will have to include a TLD (top-level domain
+name): e.g. ``https://example.com`` will be valid but ``https://example`` won't.
+
+.. note::
+
+    This constraint does not validate that the given TLD value is included in
+    the `list of official top-level domains`_ (because that list is growing
+    continuously and it's hard to keep track of it).
+
+``tldMessage``
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This URL does not contain a TLD.``
+
+.. versionadded:: 7.1
+
+    The ``tldMessage`` option was introduced in Symfony 7.1.
+
+This message is shown if the ``requireTld`` option is set to ``true`` and the URL
+does not contain at least one TLD.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
+===============  ==============================================================
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Website.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Website
+        {
+            #[Assert\Url(
+                requireTld: true,
+                tldMessage: 'Add at least one TLD to the {{ value }} URL.',
+            )]
+            protected string $homepageUrl;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Website:
+            properties:
+                homepageUrl:
+                    - Url:
+                        requireTld: true
+                        tldMessage: Add at least one TLD to the {{ value }} URL.
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Website">
+                <property name="homepageUrl">
+                    <constraint name="Url">
+                        <option name="requireTld">true</option>
+                        <option name="tldMessage">Add at least one TLD to the {{ value }} URL.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Website.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Website
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('homepageUrl', new Assert\Url([
+                    'requireTld' => true,
+                    'tldMessage' => 'Add at least one TLD to the {{ value }} URL.',
+                ]));
+            }
+        }
+
+.. _`URL spec`: https://datatracker.ietf.org/doc/html/rfc1738
+.. _`list of official top-level domains`: https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains
