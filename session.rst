@@ -541,7 +541,7 @@ a Symfony service for the connection to the Redis server:
 
             Redis:
                 # you can also use \RedisArray, \RedisCluster or \Predis\Client classes
-                class: Redis
+                class: \Redis
                 calls:
                     - connect:
                         - '%env(REDIS_HOST)%'
