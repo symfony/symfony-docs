@@ -307,11 +307,6 @@ server provides a ``run`` command to wrap them as follows:
 Configuration file
 ------------------
 
-.. caution::
-
-    This feature is experimental and could change or be removed at any time
-    without prior notice.
-
 There are several options that you can set using a ``.symfony.local.yaml`` config file:
 
 .. code-block:: yaml
