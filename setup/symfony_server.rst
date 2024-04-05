@@ -106,6 +106,14 @@ trust store, registers it in Firefox (this is required only for that browser)
 and creates a default certificate for ``localhost`` and ``127.0.0.1``. In other
 words, it does everything for you.
 
+.. tip::
+
+    If you are doing this in WSL (Windows Subsystem for Linux), the newly created
+    local certificate authority needs to be manually imported in Windows. The file
+    is located in ``wsl`` at ``~/.symfony5/certs/default.p12``. The easiest way to
+    do so is to run ``explorer.exe \`wslpath -w $HOME/.symfony5/certs\``` from ``wsl``
+    and double-click the ``default.p12`` file.
+
 Before browsing your local application with HTTPS instead of HTTP, restart its
 server stopping and starting it again.
 
@@ -223,6 +231,9 @@ If the proxy doesn't work as explained in the following sections, check these:
 * Some Operating Systems (e.g. macOS) don't apply by default the proxy settings
   to local hosts and domains. You may need to remove ``*.local`` and/or other
   IP addresses from that list.
+* Windows Operating System **requires** ``localhost`` instead of ``127.0.0.1``
+  when configuring the automatic proxy, otherwise you won't be able to access
+  your local domain from your browser running in Windows.
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
