@@ -2694,6 +2694,71 @@ service, which you can inject in your services or controllers::
         }
     }
 
+You can make the signed URI expire. To do so, you can pass a value to the `$expiration` argument
+of :phpmethod:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`. This optional argument is `null` by default. You can
+specify an expiration date by several ways::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
+
+    use Symfony\Component\HttpFoundation\UriSigner;
+
+    class SomeService
+    {
+        public function __construct(
+            private UriSigner $uriSigner,
+        ) {
+        }
+
+        public function someMethod(): void
+        {
+            // ...
+
+            // generate a URL yourself or get it somehow...
+            $url = 'https://example.com/foo/bar?sort=desc';
+
+            // sign the URL with an explicit expiration date
+            $signedUrl = $this->uriSigner->sign($url, new \DateTime('2050-01-01'));
+            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=2524608000&_hash=e4a21b9'
+
+            // check the URL signature
+            $uriSignatureIsValid = $this->uriSigner->check($signedUrl);
+            // $uriSignatureIsValid = true
+
+            // if given a \DateInterval, it will be added from now to get the expiration date
+            $signedUrl = $this->uriSigner->sign($url, new \DateInterval('PT10S'));  // valid for 10 seconds from now
+            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=1712414278&_hash=e4a21b9'
+
+            // check the URL signature
+            $uriSignatureIsValid = $this->uriSigner->check($signedUrl);
+            // $uriSignatureIsValid = true
+
+            sleep(30); // wait 30 seconds...
+
+            // the URL signature has expired
+            $uriSignatureIsValid = $this->uriSigner->check($signedUrl);
+            // $uriSignatureIsValid = false
+
+            // you can also use a timestamp in seconds
+            $signedUrl = $this->uriSigner->sign($url, 4070908800); // timestamp for the date 2099-01-01
+            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=4070908800&_hash=e4a21b9'
+
+        }
+    }
+
+.. caution::
+
+    `null` means no expiration for the signed URI.
+
+.. note::
+
+    When making the URI expire, an `_expiration` query parameter is added to the URL and the expiration date is
+    converted into a timestamp
+
+.. versionadded:: 7.1
+
+    The possibility to add an expiration date for a signed URI was introduced in Symfony 7.1.
+
 Troubleshooting
 ---------------
 
