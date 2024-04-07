@@ -555,6 +555,32 @@ if you want to map a nested array of specific DTOs::
         ) {}
     }
 
+Nevertheless, if you want to send the array of payloads directly like this:
+
+.. code-block:: json
+
+    [
+        {
+            "firstName": "John",
+            "lastName": "Smith",
+            "age": 28
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "age": 30
+        }
+    ]
+
+Map the parameter as an array and configure the type of each element in the attribute::
+
+    public function dashboard(
+        #[MapRequestPayload(type: UserDTO::class)] array $users
+    ): Response
+    {
+        // ...
+    }
+
 Managing the Session
 --------------------
 
