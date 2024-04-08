@@ -11,6 +11,8 @@ Class       :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqu
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqualValidator`
 ==========  ===================================================================
 
+.. include:: /reference/constraints/_php7-string-and-number.rst.inc
+
 Basic Usage
 -----------
 
