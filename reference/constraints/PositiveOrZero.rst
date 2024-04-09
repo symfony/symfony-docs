@@ -10,8 +10,6 @@ Class       :class:`Symfony\\Component\\Validator\\Constraints\\PositiveOrZero`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanOrEqualValidator`
 ==========  ===================================================================
 
-.. include:: /reference/constraints/_php7-string-and-number.rst.inc
-
 Basic Usage
 -----------
 

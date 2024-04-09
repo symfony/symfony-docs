@@ -10,8 +10,6 @@ Class       :class:`Symfony\\Component\\Validator\\Constraints\\NegativeOrZero`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanOrEqualValidator`
 ==========  ===================================================================
 
-.. include:: /reference/constraints/_php7-string-and-number.rst.inc
-
 Basic Usage
 -----------
 
