@@ -400,7 +400,7 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
     use React\Socket\SocketServer as ReactSocketServer;
     use Symfony\Component\Runtime\RunnerInterface;
 
-    class ReactPhpRunner implements RunnerInterface
+    class ReactPHPRunner implements RunnerInterface
     {
         public function __construct(
             private RequestHandlerInterface $application,
@@ -447,7 +447,7 @@ always using this ``ReactPHPRunner``::
         public function getRunner(?object $application): RunnerInterface
         {
             if ($application instanceof RequestHandlerInterface) {
-                return new ReactPhpRunner($application, $this->port);
+                return new ReactPHPRunner($application, $this->port);
             }
 
             // if it's not a PSR-15 application, use the GenericRuntime to
@@ -458,23 +458,10 @@ always using this ``ReactPHPRunner``::
 
 The end user will now be able to create front controller like::
 
-    use App\Runtime\ReactPhpRuntime;
-    use Psr\Http\Server\RequestHandlerInterface;
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    $_SERVER['APP_RUNTIME'] = ReactPhpRuntime::class;
-
-    require_once dirname(__DIR__) . '/vendor/autoload_runtime.php';
-
-    return static function (): RequestHandlerInterface {
-        return new class implements RequestHandlerInterface {
-            public function handle(\Psr\Http\Message\ServerRequestInterface $request): \Psr\Http\Message\ResponseInterface
-            {
-                return new \React\Http\Message\Response(
-                    headers: ['Content-Type' => 'text/html; charset=utf-8'],
-                    body: 'Welcome to your new application'
-                );
-            }
-        };
+    return function (array $context): SomeCustomPsr15Application {
+        return new SomeCustomPsr15Application();
     };
 
 .. _PHP-PM: https://github.com/php-pm/php-pm
