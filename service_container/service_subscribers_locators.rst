@@ -859,7 +859,7 @@ the following order:
 Service Subscriber Trait
 ------------------------
 
-The :class:`Symfony\\Contracts\\Service\\ServiceSubscriberTrait` provides an
+The :class:`Symfony\\Contracts\\Service\\ServiceMethodsSubscriberTrait` provides an
 implementation for :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`
 that looks through all methods in your class that are marked with the
 :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute. It
@@ -873,12 +873,12 @@ services based on type-hinted helper methods::
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Routing\RouterInterface;
     use Symfony\Contracts\Service\Attribute\SubscribedService;
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
-    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
-        use ServiceSubscriberTrait;
+        use ServiceMethodsSubscriberTrait;
 
         public function doSomething(): void
         {
@@ -935,12 +935,12 @@ and compose your services with them::
     // src/Service/MyService.php
     namespace App\Service;
 
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
-    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
-        use ServiceSubscriberTrait, LoggerAware, RouterAware;
+        use ServiceMethodsSubscriberTrait, LoggerAware, RouterAware;
 
         public function doSomething(): void
         {
@@ -977,12 +977,12 @@ Here's an example::
     use Symfony\Component\DependencyInjection\Attribute\Target;
     use Symfony\Component\Routing\RouterInterface;
     use Symfony\Contracts\Service\Attribute\SubscribedService;
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
-    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
-        use ServiceSubscriberTrait;
+        use ServiceMethodsSubscriberTrait;
 
         public function doSomething(): void
         {
