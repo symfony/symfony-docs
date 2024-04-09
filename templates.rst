@@ -1632,7 +1632,7 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
 .. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
 .. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
-.. _`Twig Environment`: https://github.com/twigphp/Twig/blob/3.x/src/Loader/FilesystemLoader.php
+.. _`Twig Environment`: https://github.com/twigphp/Twig/blob/3.x/src/Environment.php
 .. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
 .. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
 .. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
