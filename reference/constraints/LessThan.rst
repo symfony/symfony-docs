@@ -12,6 +12,8 @@ Class       :class:`Symfony\\Component\\Validator\\Constraints\\LessThan`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanValidator`
 ==========  ===================================================================
 
+.. include:: /reference/constraints/_php7-string-and-number.rst.inc
+
 Basic Usage
 -----------
 
