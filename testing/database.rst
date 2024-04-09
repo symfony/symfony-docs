@@ -99,7 +99,7 @@ so, get the entity manager via the service container as follows::
 
     class ProductRepositoryTest extends KernelTestCase
     {
-        private EntityManager $entityManager;
+        private ?EntityManager $entityManager;
 
         protected function setUp(): void
         {
