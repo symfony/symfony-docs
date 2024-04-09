@@ -251,10 +251,9 @@ what actions are allowed on a blog post::
 Using a multiple state marking store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are creating a :doc:`workflow </workflow/workflow-and-state-machine>`
-, your marking store may need to contain multiple places at the same time.
-If you are using Doctrine, the matching column definition should use the
-type ``json`` ::
+If you are creating a :doc:`workflow </workflow/workflow-and-state-machine>`,
+your marking store may need to contain multiple places at the same time. That's why,
+if you are using Doctrine, the matching column definition should use the type ``json``::
 
     // src/Entity/BlogPost.php
     namespace App\Entity;
@@ -270,21 +269,19 @@ type ``json`` ::
         #[ORM\Column]
         private int $id;
 
-        // Type declaration is not mandatory and
-        // matches the guessed value from Doctrine
-        #[ORM\Column(type: Types::JSON)] // or #[ORM\Column(type: 'json')]
+        #[ORM\Column(type: Types::JSON)]
         private array $currentPlaces;
 
         // ...
     }
 
-.. tip::
+.. caution::
 
-    You should not use the type ``simple_array`` for your marking store.
-    Inside a multiple state marking store, places are store as keys with
-    a value of one, such as ``['draft' => 1]``. If the marking store contains
-    only one place, this Doctrine type will store its value only as a string,
-    resulting in the loss of the object's current place.
+    You should not use the type ``simple_array`` for your marking store. Inside
+    a multiple state marking store, places are stored as keys with a value of one,
+    such as ``['draft' => 1]``. If the marking store contains only one place,
+    this Doctrine type will store its value only as a string, resulting in the
+    loss of the object's current place.
 
 Accessing the Workflow in a Class
 ---------------------------------
