@@ -327,6 +327,7 @@ There are several options that you can set using a ``.symfony.local.yaml`` confi
         no_tls: true # Use HTTP instead of HTTPS
         daemon: true # Run the server in the background
         use_gzip: true # Toggle GZIP compression
+        no_workers: true # Do not start workers
 
 .. caution::
 
@@ -363,6 +364,11 @@ If you like some processes to start automatically, along with the webserver
 
         # auto start Docker compose when starting server (available since Symfony CLI 5.7.0)
         docker_compose: ~
+
+.. tip::
+
+    You may want to not start workers on some environments like CI. You can use the
+    ``--no-workers`` option to start the server without starting workers.
 
 .. _symfony-server-docker:
 
