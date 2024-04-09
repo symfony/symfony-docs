@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-01T04:21:44Z
+
+Couldn't this be fixed on the code-side @lyrixx ?
+
+This sounds like a bug to me
+
+---------------------------------------------------------------------------
+
+by lyrixx at 2024-04-01T09:11:06Z
+
+> Couldn't this be fixed on the code-side @lyrixx ?
+
+nope, the number of token can be superior to 1
+
+---------------------------------------------------------------------------
+
+by Tiriel at 2024-04-01T09:41:06Z
+
+> > Couldn't this be fixed on the code-side @lyrixx ?
+>
+> nope, the number of token can be superior to 1
+
+And checking about with Doctrine's `simple_array` type, it's also its intended behavior. `simple_array` converts arrays to text using a simple `implode`, so keys are obviously lost. A small documentation on the issue would still be a good idea IMHO.
+
+---------------------------------------------------------------------------
+
+by Tiriel at 2024-04-03T09:41:41Z
+
+Btw, what should I do with the lint error? Remove the import completely?
