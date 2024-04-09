@@ -458,9 +458,11 @@ always using this ``ReactPHPRunner``::
 
 The end user will now be able to create front controller like::
 
+    use Psr\Http\Server\RequestHandlerInterface;
+
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context): SomeCustomPsr15Application {
+    return function (array $context): RequestHandlerInterface {
         return new SomeCustomPsr15Application();
     };
 
