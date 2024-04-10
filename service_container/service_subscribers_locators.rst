@@ -899,6 +899,11 @@ services based on type-hinted helper methods::
         }
     }
 
+.. versionadded:: 7.1
+
+    The ``ServiceMethodsSubscriberTrait`` was introduced in Symfony 7.1.
+    In previous Symfony versions it was called ``ServiceSubscriberTrait``.
+
 This  allows you to create helper traits like RouterAware, LoggerAware, etc...
 and compose your services with them::
 
