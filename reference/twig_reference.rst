@@ -645,6 +645,37 @@ serialize
 Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
 and returns a serialized string in the specified ``format``.
 
+.. _reference-twig-filter-emojify:
+
+emojify
+~~~~~~~
+
+.. versionadded:: 7.1
+
+    The ``emojify`` filter was introduced in Symfony 7.1.
+
+.. code-block:: twig
+
+    {{ text|emojify(catalog = null) }}
+
+``text``
+    **type**: ``string``
+
+``catalog`` *(optional)*
+    **type**: ``string`` | ``null``
+
+    The emoji set used to generate the textual representation (``slack``,
+    ``github``, ``gitlab``, etc.)
+
+It transforms the textual representation of an emoji (e.g. ``:wave:``) into the
+actual emoji (👋):
+
+.. code-block:: twig
+
+    {{ ':+1:'|emojify }}                 {# renders: 👍 #}
+    {{ ':+1:'|emojify('github') }}       {# renders: 👍 #}
+    {{ ':thumbsup:'|emojify('gitlab') }} {# renders: 👍 #}
+
 .. _reference-twig-tags:
 
 Tags
