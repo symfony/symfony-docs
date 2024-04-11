@@ -211,8 +211,8 @@ Consider this example:
          * @ORM\Entity
          * @UniqueEntity(
          *     fields={"host", "port"},
-         *     errorPath="port",
-         *     message="This port is already in use on that host."
+         *     message="This port is already in use on that host.",
+         *     errorPath="port"
          * )
          */
         class Service
@@ -240,8 +240,8 @@ Consider this example:
         #[ORM\Entity]
         #[UniqueEntity(
             fields: ['host', 'port'],
-            errorPath: 'port',
             message: 'This port is already in use on that host.',
+            errorPath: 'port',
         )]
         class Service
         {
@@ -259,8 +259,8 @@ Consider this example:
             constraints:
                 - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
                     fields: [host, port]
-                    errorPath: port
                     message: 'This port is already in use on that host.'
+                    errorPath: port
 
     .. code-block:: xml
 
@@ -276,8 +276,8 @@ Consider this example:
                         <value>host</value>
                         <value>port</value>
                     </option>
-                    <option name="errorPath">port</option>
                     <option name="message">This port is already in use on that host.</option>
+                    <option name="errorPath">port</option>
                 </constraint>
             </class>
 
@@ -300,8 +300,8 @@ Consider this example:
             {
                 $metadata->addConstraint(new UniqueEntity([
                     'fields' => ['host', 'port'],
-                    'errorPath' => 'port',
                     'message' => 'This port is already in use on that host.',
+                    'errorPath' => 'port',
                 ]));
             }
         }
