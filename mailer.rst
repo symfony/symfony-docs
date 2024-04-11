@@ -1852,6 +1852,75 @@ a specific address, instead of the *real* address:
             ;
         };
 
+You may also go even further by restricting the recipient to a specific
+address, except for some specific ones. This can be done by using the
+``allowed_recipients`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    envelope:
+                        recipients: ['youremail@example.com']
+                        allowed_recipients:
+                            - 'interal@example.com'
+                            # you can also use regular expression to define allowed recipients
+                            - 'internal-.*@example.(com|fr)'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:mailer>
+                    <framework:envelope>
+                        <framework:recipient>youremail@example.com</framework:recipient>
+                        <framework:allowed-recipient>internal@example.com</framework:allowed-recipient>
+                        <!-- you can also use regular expression to define allowed recipients -->
+                        <framework:allowed-recipient>internal-.*@example.(com|fr)</framework:allowed-recipient>
+                    </framework:envelope>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+            $framework->mailer()
+                ->envelope()
+                    ->recipients(['youremail@example.com'])
+                    ->allowedRecipients([
+                        'internal@example.com',
+                        // you can also use regular expression to define allowed recipients
+                        'internal-.*@example.(com|fr)',
+                    ])
+            ;
+        };
+
+With this configuration, all emails will be sent to ``youremail@example.com``,
+except for those sent to ``internal@example.com``, which will receive emails as
+usual.
+
+.. versionadded:: 7.1
+
+    The ``allowed_recipients`` option was introduced in Symfony 7.1.
+
 Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
