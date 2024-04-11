@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-04-11T11:40:47Z
+
+We can merge this change as it’s not wrong per se, but I think this should also be reported with your IDE as the order does not matter when using named arguments as we do here.
+
+---------------------------------------------------------------------------
+
+by LtMost at 2024-04-11T11:46:59Z
+
+I recently had a similar pull request in symfony/ux.
+https://github.com/symfony/ux/pull/1703
+
+should i ignore this kind of thing in the future?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-04-11T12:13:15Z
+
+feel free to still submit this kind of PRs :)
