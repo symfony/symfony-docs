@@ -391,9 +391,18 @@ humanize
 ``text``
     **type**: ``string``
 
-Makes a technical name human readable (i.e. replaces underscores by spaces
-or transforms camelCase text like ``helloWorld`` to ``hello world``
-and then capitalizes the string).
+Transforms the given string into a human readable string (by replacing underscores
+with spaces, capitalizing the string, etc.) It's useful e.g. when displaying
+the names of PHP properties/variables to end users:
+
+.. code-block:: twig
+
+    {{ 'dateOfBirth'|humanize }}    {# renders: Date of birth #}
+    {{ 'DateOfBirth'|humanize }}    {# renders: Date of birth #}
+    {{ 'date-of-birth'|humanize }}  {# renders: Date-of-birth #}
+    {{ 'date_of_birth'|humanize }}  {# renders: Date of birth #}
+    {{ 'date of birth'|humanize }}  {# renders: Date of birth #}
+    {{ 'Date Of Birth'|humanize }}  {# renders: Date of birth #}
 
 .. _reference-twig-filter-trans:
 
