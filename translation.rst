@@ -986,7 +986,7 @@ as argument (that's why the order of the passed locales is important).
 
 .. versionadded:: 7.1
 
-    The feature to match lcoales partially was introduced in Symfony 7.1.
+    The feature to match locales partially was introduced in Symfony 7.1.
 
 .. _translation-fallback:
 
