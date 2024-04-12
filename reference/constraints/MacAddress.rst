@@ -103,4 +103,33 @@ Parameter            Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+.. _reference-constraint-mac-address-type:
+
+``type``
+~~~~~~~~
+
+**type**: ``string`` **default**: ``all``
+
+This determines exactly *how* the MAC address is validated. This option defines a
+lot of different possible values based on the type of MAC address that you want to allow/deny:
+
+================================  ==============================================================
+Parameter                         Description
+================================  ==============================================================
+``all``                           All
+``all_no_broadcast``              All except broadcast
+``local_all``                     Only local
+``local_no_broadcast``            Only local except broadcast
+``local_unicast``                 Only local and unicast
+``local_multicast``               Only local and multicast
+``local_multicast_no_broadcast``  Only local and multicast except broadcast
+``universal_all``                 Only universal
+``universal_unicast``             Only universal and unicast
+``universal_multicast``           Only universal and multicast
+``unicast_all``                   Only unicast
+``multicast_all``                 Only multicast
+``multicast_no_broadcast``        Only multicast except broadcast
+``broadcast``                     Only broadcast
+===============  ==============================================================
+
 .. _`MAC address`: https://en.wikipedia.org/wiki/MAC_address
