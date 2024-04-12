@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-04-11T12:08:20Z
+
+We should somehow document that the `allowed_recipients` option is used to configure a list of regular expressions. With the current example one can get the expression that I would have to list all recipients explicitly.
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2024-04-11T12:18:40Z
+
+You're right I missed that point! I updated accordingly with an example
