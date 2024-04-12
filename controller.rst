@@ -623,8 +623,8 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
 .. _request-object-info:
 
-The Request and Response Object
--------------------------------
+The Request Object
+------------------
 
 As mentioned :ref:`earlier <controller-request-argument>`, Symfony will
 pass the ``Request`` object to any controller argument that is type-hinted with
@@ -659,6 +659,36 @@ the ``Request`` class::
 
 The ``Request`` class has several public properties and methods that return any
 information you need about the request.
+
+For example, the method ``getPreferredLanguage`` accepts an array of preferred languages and
+returns the best language for the user, based on the ``Accept-Language`` header.
+The locale is returned with language, script and region, if available (e.g. ``en_US``, ``fr_Latn_CH`` or ``pt``).
+
+Before Symfony 7.1, this method had the following logic:
+
+1. If no locale is set as a parameter, it returns the first language in the
+   ``Accept-Language`` header or ``null`` if the header is empty
+2. If no ``Accept-Language`` header is set, it returns the first locale passed
+   as a parameter.
+3. If a locale is set as a parameter and in the ``Accept-Language`` header,
+   it returns the first exact match.
+4. Then, it returns the first language passed in the ``Accept-Language`` header or as argument.
+
+Starting from Symfony 7.1, the method has an additional step:
+
+1. If no locale is set as a parameter, it returns the first language in the
+   ``Accept-Language`` header or ``null`` if the header is empty
+2. If no ``Accept-Language`` header is set, it returns the first locale passed
+   as a parameter.
+3. If a locale is set as a parameter and in the ``Accept-Language`` header,
+   it returns the first exact match.
+4. If a language matches the locale, but has a different script or region, it returns the first language in the
+   ``Accept-Language`` header that matches the locale's language, script or region combination
+   (e.g. ``fr_CA`` will match ``fr_FR``).
+5. Then, it returns the first language passed in the ``Accept-Language`` header or as argument.
+
+The Response Object
+-------------------
 
 Like the ``Request``, the ``Response`` object has a public ``headers`` property.
 This object is of the type :class:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag`
