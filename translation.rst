@@ -963,6 +963,25 @@ the framework:
 This ``default_locale`` is also relevant for the translator, as shown in the
 next section.
 
+Selecting the Language Preferred by the User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your application supports multiple languages, the first time a user visits your
+site it's common to redirect them to the best possible language according to their
+preferences. This is achieved with the ``getPreferredLanguage()`` method of the
+:ref:`Request object <controller-request-argument>`::
+
+    // get the Request object somehow (e.g. as a controller argument)
+    $request = ...
+    // pass an array of the locales (their script and region parts are optional) supported
+    // by your application and the method returns the best locale for the current user
+    $locale = $request->getPreferredLanguage(['pt', 'fr_Latn_CH', 'en_US'] );
+
+Symfony finds the best possible language based on the locales passed as argument
+and the value of the ``Accept-Language`` HTTP header. If it can't find a perfect
+match between them, this method returns the first locale passed as argument
+(that's why the order of the passed locales is important).
+
 .. _translation-fallback:
 
 Fallback Translation Locales
