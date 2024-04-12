@@ -1852,9 +1852,9 @@ a specific address, instead of the *real* address:
             ;
         };
 
-You may also go even further by restricting the recipient to a specific
-address, except for some specific ones. This can be done by using the
-``allowed_recipients`` option:
+Use the ``allowed_recipients`` option to specify exceptions to the behavior defined
+in the ``recipients`` option; allowing emails directed to these specific recipients
+to maintain their original destination:
 
 .. configuration-block::
 
@@ -1867,7 +1867,7 @@ address, except for some specific ones. This can be done by using the
                     envelope:
                         recipients: ['youremail@example.com']
                         allowed_recipients:
-                            - 'interal@example.com'
+                            - 'internal@example.com'
                             # you can also use regular expression to define allowed recipients
                             - 'internal-.*@example.(com|fr)'
 
@@ -1914,8 +1914,8 @@ address, except for some specific ones. This can be done by using the
         };
 
 With this configuration, all emails will be sent to ``youremail@example.com``,
-except for those sent to ``internal@example.com``, which will receive emails as
-usual.
+except for those sent to ``internal@example.com``, ``internal-monitoring@example.fr``,
+etc., which will receive emails as usual.
 
 .. versionadded:: 7.1
 
