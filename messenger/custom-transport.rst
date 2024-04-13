@@ -50,7 +50,7 @@ Here is a simplified example of a database transport::
         /**
          * @param FakeDatabase $db is used for demo purposes. It is not a real class.
          */
-        public function __construct(FakeDatabase $db, SerializerInterface $serializer = null)
+        public function __construct(FakeDatabase $db, ?SerializerInterface $serializer = null)
         {
             $this->db = $db;
             $this->serializer = $serializer ?? new PhpSerializer();

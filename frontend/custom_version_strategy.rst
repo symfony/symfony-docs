@@ -68,7 +68,7 @@ version string::
          * @param string      $manifestPath
          * @param string|null $format
          */
-        public function __construct(string $manifestPath, string $format = null)
+        public function __construct(string $manifestPath, ?string $format = null)
         {
             $this->manifestPath = $manifestPath;
             $this->format = $format ?: '%s?%s';

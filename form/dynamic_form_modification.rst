@@ -459,7 +459,7 @@ The type would now look like::
                 ])
             ;
 
-            $formModifier = function (FormInterface $form, Sport $sport = null) {
+            $formModifier = function (FormInterface $form, ?Sport $sport = null) {
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
