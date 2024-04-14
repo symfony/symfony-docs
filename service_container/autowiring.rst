@@ -320,8 +320,8 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
             App\Util\Rot13Transformer: ~
 
-            # the ``App\Util\Rot13Transformer`` service will be injected when
-            # an ``App\Util\TransformerInterface`` type-hint is detected
+            # the App\Util\Rot13Transformer service will be injected when
+            # an App\Util\TransformerInterface type-hint is detected
             App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
 
     .. code-block:: xml
@@ -428,7 +428,7 @@ type hinted, but use the ``UppercaseTransformer`` implementation in some
 specific cases. To do so, you can create a normal alias from the
 ``TransformerInterface`` interface to ``Rot13Transformer``, and then
 create a *named autowiring alias* from a special string containing the
-interface followed by a variable name matching the one you use when doing
+interface followed by an argument name matching the one you use when doing
 the injection::
 
     // src/Service/MastodonClient.php
@@ -464,13 +464,13 @@ the injection::
             App\Util\Rot13Transformer: ~
             App\Util\UppercaseTransformer: ~
 
-            # the ``App\Util\UppercaseTransformer`` service will be
-            # injected when an ``App\Util\TransformerInterface``
-            # type-hint for a ``$shoutyTransformer`` argument is detected.
+            # the App\Util\UppercaseTransformer service will be
+            # injected when an App\Util\TransformerInterface
+            # type-hint for a $shoutyTransformer argument is detected
             App\Util\TransformerInterface $shoutyTransformer: '@App\Util\UppercaseTransformer'
 
             # If the argument used for injection does not match, but the
-            # type-hint still matches, the ``App\Util\Rot13Transformer``
+            # type-hint still matches, the App\Util\Rot13Transformer
             # service will be injected.
             App\Util\TransformerInterface: '@App\Util\Rot13Transformer'
 
@@ -527,7 +527,7 @@ the injection::
 
             // the App\Util\UppercaseTransformer service will be
             // injected when an App\Util\TransformerInterface
-            // type-hint for a $shoutyTransformer argument is detected.
+            // type-hint for a $shoutyTransformer argument is detected
             $services->alias(TransformerInterface::class.' $shoutyTransformer', UppercaseTransformer::class);
 
             // If the argument used for injection does not match, but the
@@ -555,13 +555,17 @@ under the arguments key.
 
 Another possibility is to use the ``#[Target]`` attribute. By using this attribute
 on the argument you want to autowire, you can define exactly which service to inject
-by using its alias. Thanks to this, you're able to have multiple services implementing
-the same interface and keep the argument name decorrelated of any implementation name
-(like shown in the example above).
+by passing the name of the argument used in the named alias. Thanks to this, you're able
+to have multiple services implementing the same interface and keep the argument name
+decorrelated of any implementation name (like shown in the example above).
 
-Let's say you defined the ``app.uppercase_transformer`` alias for the
-``App\Util\UppercaseTransformer`` service. You would be able to use the ``#[Target]``
-attribute like this::
+.. warning::
+
+    The ``#[Target]`` attribute only accepts the name of the argument used in the named
+    alias, it **does not** accept service ids or service aliases.
+
+Suppose you want to inject the ``App\Util\UppercaseTransformer`` service. You would use
+the ``#[Target]`` attribute by passing the name of the ``$shoutyTransformer`` argument::
 
     // src/Service/MastodonClient.php
     namespace App\Service;
@@ -573,11 +577,15 @@ attribute like this::
     {
         private $transformer;
 
-        public function __construct(#[Target('app.uppercase_transformer')] TransformerInterface $transformer)
-        {
+        public function __construct(
+            #[Target('shoutyTransformer')] TransformerInterface $transformer,
+        ) {
             $this->transformer = $transformer;
         }
     }
+
+Since the ``#[Target]`` attribute normalizes the string passed to it to its camelCased form,
+name variations such as ``shouty.transformer`` also work.
 
 .. note::
 
