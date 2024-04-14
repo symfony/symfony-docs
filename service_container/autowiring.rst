@@ -549,12 +549,34 @@ Another option is to use the ``#[Target]`` attribute. By adding this attribute
 to the argument you want to autowire, you can specify which service to inject by
 passing the name of the argument used in the named alias. This way, you can have
 multiple services implementing the same interface and keep the argument name
-separate from any implementation name (like shown in the example above).
+separate from any implementation name (like shown in the example above). In addition,
+you'll get an exception in case you make any typo in the target name.
 
 .. warning::
 
     The ``#[Target]`` attribute only accepts the name of the argument used in the
     named alias; it **does not** accept service ids or service aliases.
+
+You can get a list of named autowiring aliases by running the ``debug:autowiring`` command::
+
+.. code-block:: terminal
+
+    $ php bin/console debug:autowiring LoggerInterface
+
+    Autowirable Types
+    =================
+
+     The following classes & interfaces can be used as type-hints when autowiring:
+     (only showing classes/interfaces matching LoggerInterface)
+
+     Describes a logger instance.
+     Psr\Log\LoggerInterface - alias:monolog.logger
+     Psr\Log\LoggerInterface $assetMapperLogger - target:asset_mapperLogger - alias:monolog.logger.asset_mapper
+     Psr\Log\LoggerInterface $cacheLogger - alias:monolog.logger.cache
+     Psr\Log\LoggerInterface $httpClientLogger - target:http_clientLogger - alias:monolog.logger.http_client
+     Psr\Log\LoggerInterface $mailerLogger - alias:monolog.logger.mailer
+
+     [...]
 
 Suppose you want to inject the ``App\Util\UppercaseTransformer`` service. You would use
 the ``#[Target]`` attribute by passing the name of the ``$shoutyTransformer`` argument::
