@@ -181,11 +181,11 @@ method::
 
     The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
 
-.. deprecated:: 7.1
+.. versionadded:: 7.1
 
-    The :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::import`
-    method behavior was modified in Symfony 7.1 to prepend config instead of appending. This behavior change only
-    affects to the ``prependExtension()`` method.
+    Starting from Symfony 7.1, calling the :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::import`
+    method inside ``prependExtension()`` will prepend the given configuration.
+    In previous Symfony versions, this method appended the configuration.
 
 Alternatively, you can use the ``prepend`` parameter of the
 :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
