@@ -1772,7 +1772,7 @@ If you want to extend the behavior of a base HTTP client, you can use
     class MyExtendedHttpClient implements HttpClientInterface
     {
         public function __construct(
-            private HttpClientInterface $decoratedClient = null
+            private ?HttpClientInterface $decoratedClient = null
         ) {
             $this->decoratedClient ??= HttpClient::create();
         }
@@ -1788,7 +1788,7 @@ If you want to extend the behavior of a base HTTP client, you can use
             return $response;
         }
 
-        public function stream($responses, float $timeout = null): ResponseStreamInterface
+        public function stream($responses, ?float $timeout = null): ResponseStreamInterface
         {
             return $this->decoratedClient->stream($responses, $timeout);
         }

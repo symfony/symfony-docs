@@ -51,7 +51,7 @@ Here is a simplified example of a database transport::
          */
         public function __construct(
             private FakeDatabase $db,
-            SerializerInterface $serializer = null,
+            ?SerializerInterface $serializer = null,
         ) {
             $this->serializer = $serializer ?? new PhpSerializer();
         }

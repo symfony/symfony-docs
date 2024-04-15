@@ -555,13 +555,13 @@ returns a ``Crawler`` instance.
 
 The full signature of the ``request()`` method is::
 
-    request(
+    public function request(
         string $method,
         string $uri,
         array $parameters = [],
         array $files = [],
         array $server = [],
-        string $content = null,
+        ?string $content = null,
         bool $changeHistory = true
     ): Crawler
 
@@ -960,7 +960,7 @@ Response Assertions
     Asserts that the response was successful (HTTP status is 2xx).
 ``assertResponseStatusCodeSame(int $expectedCode, string $message = '')``
     Asserts a specific HTTP status code.
-``assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = '')``
+``assertResponseRedirects(?string $expectedLocation = null, ?int $expectedCode = null, string $message = '')``
     Asserts the response is a redirect response (optionally, you can check
     the target location and status code). The excepted location can be either
     an absolute or a relative path.
@@ -969,10 +969,10 @@ Response Assertions
 ``assertResponseHeaderSame(string $headerName, string $expectedValue, string $message = '')``/``assertResponseHeaderNotSame(string $headerName, string $expectedValue, string $message = '')``
     Asserts the given header does (not) contain the expected value on the
     response, e.g. ``assertResponseHeaderSame('content-type', 'application/octet-stream');``.
-``assertResponseHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``/``assertResponseNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``
+``assertResponseHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``/``assertResponseNotHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie is present in the response (optionally
     checking for a specific cookie path or domain).
-``assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
+``assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie is present and set to the expected value.
 ``assertResponseFormatSame(?string $expectedFormat, string $message = '')``
     Asserts the response format returned by the
@@ -993,10 +993,10 @@ Request Assertions
 Browser Assertions
 ..................
 
-``assertBrowserHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``/``assertBrowserNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``
+``assertBrowserHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``/``assertBrowserNotHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts that the test Client does (not) have the given cookie set
     (meaning, the cookie was set by any response in the test).
-``assertBrowserCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
+``assertBrowserCookieValueSame(string $name, string $expectedValue, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie in the test Client is set to the expected
     value.
 ``assertThatForClient(Constraint $constraint, string $message = '')``
@@ -1047,18 +1047,18 @@ Crawler Assertions
 Mailer Assertions
 .................
 
-``assertEmailCount(int $count, string $transport = null, string $message = '')``
+``assertEmailCount(int $count, ?string $transport = null, string $message = '')``
     Asserts that the expected number of emails was sent.
-``assertQueuedEmailCount(int $count, string $transport = null, string $message = '')``
+``assertQueuedEmailCount(int $count, ?string $transport = null, string $message = '')``
     Asserts that the expected number of emails was queued (e.g. using the
     Messenger component).
 ``assertEmailIsQueued(MessageEvent $event, string $message = '')``/``assertEmailIsNotQueued(MessageEvent $event, string $message = '')``
     Asserts that the given mailer event is (not) queued. Use
-    ``getMailerEvent(int $index = 0, string $transport = null)`` to
+    ``getMailerEvent(int $index = 0, ?string $transport = null)`` to
     retrieve a mailer event by index.
 ``assertEmailAttachmentCount(RawMessage $email, int $count, string $message = '')``
     Asserts that the given email has the expected number of attachments. Use
-    ``getMailerMessage(int $index = 0, string $transport = null)`` to
+    ``getMailerMessage(int $index = 0, ?string $transport = null)`` to
     retrieve a specific email by index.
 ``assertEmailTextBodyContains(RawMessage $email, string $text, string $message = '')``/``assertEmailTextBodyNotContains(RawMessage $email, string $text, string $message = '')``
     Asserts that the text body of the given email does (not) contain the
