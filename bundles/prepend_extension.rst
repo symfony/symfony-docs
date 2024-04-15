@@ -171,12 +171,21 @@ method::
             $containerBuilder->prependExtensionConfig('framework', [
                 'cache' => ['prefix_seed' => 'foo/bar'],
             ]);
+
+            // prepend config from a file
+            $containerConfigurator->import('../config/packages/cache.php');
         }
     }
 
 .. note::
 
     The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
+
+.. deprecated:: 7.1
+
+    The :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::import`
+    method behavior was modified in Symfony 7.1 to prepend config instead of appending. This behavior change only
+    affects to the ``prependExtension()`` method.
 
 Alternatively, you can use the ``prepend`` parameter of the
 :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
