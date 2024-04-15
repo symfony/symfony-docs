@@ -271,7 +271,7 @@ you do. The resource name itself is not actually used in the example::
     {
         private bool $isLoaded = false;
 
-        public function load($resource, string $type = null): RouteCollection
+        public function load($resource, ?string $type = null): RouteCollection
         {
             if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
@@ -298,7 +298,7 @@ you do. The resource name itself is not actually used in the example::
             return $routes;
         }
 
-        public function supports($resource, string $type = null): bool
+        public function supports($resource, ?string $type = null): bool
         {
             return 'extra' === $type;
         }
@@ -443,7 +443,7 @@ configuration file - you can call the
 
     class AdvancedLoader extends Loader
     {
-        public function load($resource, string $type = null): RouteCollection
+        public function load($resource, ?string $type = null): RouteCollection
         {
             $routes = new RouteCollection();
 
@@ -457,7 +457,7 @@ configuration file - you can call the
             return $routes;
         }
 
-        public function supports($resource, string $type = null): bool
+        public function supports($resource, ?string $type = null): bool
         {
             return 'advanced_extra' === $type;
         }

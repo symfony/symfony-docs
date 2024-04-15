@@ -35,7 +35,7 @@ would be a ``file`` type. The ``Author`` class might look as follows::
     {
         protected File $headshot;
 
-        public function setHeadshot(File $file = null): void
+        public function setHeadshot(?File $file = null): void
         {
             $this->headshot = $file;
         }
