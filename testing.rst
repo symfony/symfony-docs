@@ -600,7 +600,7 @@ returns a ``Crawler`` instance.
 
 The full signature of the ``request()`` method is::
 
-    request(
+    public function request(
         string $method,
         string $uri,
         array $parameters = [],
