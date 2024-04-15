@@ -78,6 +78,26 @@ pre-processing CSS & JS and compiling and minifying assets.
 
 :doc:`Read the Encore Documentation </frontend/encore/index>`
 
+Switch from AssetMapper
+^^^^^^^^^^^^^^^^^^^^^^^
+
+By default, new Symfony webapp projects (created with ``symfony new --webapp myapp``)
+use AssetMapper. If you still need to use Webpack Encore, use the following steps to
+switch. This is best done on a new project and provides the same features (Turbo/Stimulus)
+as the default webapp.
+
+.. code-block:: terminal
+
+    # Remove AssetMapper & Turbo/Stimulus temporarily
+    $ composer remove symfony/ux-turbo symfony/asset-mapper symfony/stimulus-bundle
+
+    # Add Webpack Encore & Turbo/Stimulus back
+    $ composer require symfony/webpack-encore-bundle symfony/ux-turbo symfony/stimulus-bundle
+
+    # Install & Build Assets
+    $ npm install
+    $ npm run dev
+
 Stimulus & Symfony UX Components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
