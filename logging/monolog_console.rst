@@ -46,6 +46,7 @@ The example above could then be rewritten as::
 
         public function __construct(LoggerInterface $logger)
         {
+            parent::__construct();
             $this->logger = $logger;
         }
 
