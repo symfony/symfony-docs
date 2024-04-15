@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2024-04-13T14:45:08Z
+
+I'm not sure to understand the CI/Code Blocks fails here 🤷‍♂️
+
+Concerning the DOCtor-RST rule, if you can point me in some direction / show some examples i can try :)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-13T18:50:50Z
+
+> I'm not sure to understand the CI/Code Blocks fails here 🤷‍♂️
+
+Maybe it should be:
+```diff
+- request(
++ public function request(
+```
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-13T18:53:59Z
+
+> Concerning the DOCtor-RST rule, if you can point me in some direction / show some examples i can try :)
+
+Sure, the repo can be found here:
+https://github.com/OskarStark/doctor-rst
+
+I created a new issue with some more information
+* https://github.com/OskarStark/doctor-rst/issues/1710
