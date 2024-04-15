@@ -2220,7 +2220,7 @@ provided in order to ease the declaration of these special handlers::
     {
         use BatchHandlerTrait;
 
-        public function __invoke(MyMessage $message, Acknowledger $ack = null)
+        public function __invoke(MyMessage $message, ?Acknowledger $ack = null)
         {
             return $this->handle($message, $ack);
         }

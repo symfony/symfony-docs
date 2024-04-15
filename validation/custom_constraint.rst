@@ -44,7 +44,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
             public $mode = 'strict';
 
             // all configurable options must be passed to the constructor
-            public function __construct(string $mode = null, string $message = null, array $groups = null, $payload = null)
+            public function __construct(?string $mode = null, ?string $message = null, ?array $groups = null, $payload = null)
             {
                 parent::__construct([], $groups, $payload);
 
@@ -270,9 +270,9 @@ define those options as public properties on the constraint class:
 
             public function __construct(
                 $mandatoryFooOption,
-                string $message = null,
-                bool $optionalBarOption = null,
-                array $groups = null,
+                ?string $message = null,
+                ?bool $optionalBarOption = null,
+                ?array $groups = null,
                 $payload = null,
                 array $options = []
             ) {
