@@ -455,7 +455,7 @@ The type would now look like::
                 ])
             ;
 
-            $formModifier = function (FormInterface $form, Sport $sport = null): void {
+            $formModifier = function (FormInterface $form, ?Sport $sport = null): void {
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
@@ -487,7 +487,7 @@ The type would now look like::
                     $formModifier($event->getForm()->getParent(), $sport);
                 }
             );
-            
+
             // by default, action does not appear in the <form> tag
             // you can set this value by passing the controller route
             $builder->setAction($options['action']);

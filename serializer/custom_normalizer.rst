@@ -35,7 +35,7 @@ normalization process::
         ) {
         }
 
-        public function normalize($topic, string $format = null, array $context = []): array
+        public function normalize($topic, ?string $format = null, array $context = []): array
         {
             $data = $this->normalizer->normalize($topic, $format, $context);
 
@@ -47,7 +47,7 @@ normalization process::
             return $data;
         }
 
-        public function supportsNormalization($data, string $format = null, array $context = []): bool
+        public function supportsNormalization($data, ?string $format = null, array $context = []): bool
         {
             return $data instanceof Topic;
         }

@@ -283,7 +283,7 @@ This will send an email like this to the user:
 
         class CustomLoginLinkNotification extends LoginLinkNotification
         {
-            public function asEmailMessage(EmailRecipientInterface $recipient, string $transport = null): ?EmailMessage
+            public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): ?EmailMessage
             {
                 $emailMessage = parent::asEmailMessage($recipient, $transport);
 
