@@ -47,6 +47,7 @@ The example above could then be rewritten as::
         public function __construct(
             private LoggerInterface $logger,
         ) {
+            parent::__construct();
         }
 
         protected function execute(InputInterface $input, OutputInterface $output): int
