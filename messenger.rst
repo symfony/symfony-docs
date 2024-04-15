@@ -2621,7 +2621,7 @@ provided in order to ease the declaration of these special handlers::
     {
         use BatchHandlerTrait;
 
-        public function __invoke(MyMessage $message, Acknowledger $ack = null): mixed
+        public function __invoke(MyMessage $message, ?Acknowledger $ack = null): mixed
         {
             return $this->handle($message, $ack);
         }

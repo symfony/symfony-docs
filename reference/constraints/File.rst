@@ -40,7 +40,7 @@ type. The ``Author`` class might look as follows::
     {
         protected File $bioFile;
 
-        public function setBioFile(File $file = null): void
+        public function setBioFile(?File $file = null): void
         {
             $this->bioFile = $file;
         }

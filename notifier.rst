@@ -824,7 +824,7 @@ and its ``asChatMessage()`` method::
         ) {
         }
 
-        public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage
+        public function asChatMessage(RecipientInterface $recipient, ?string $transport = null): ?ChatMessage
         {
             // Add a custom subject and emoji if the message is sent to Slack
             if ('slack' === $transport) {
