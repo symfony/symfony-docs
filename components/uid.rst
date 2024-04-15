@@ -113,6 +113,8 @@ sortable (like :ref:`ULIDs <ulid>`). It's more efficient for database indexing
     It's recommended to use UUIDv7 instead of UUIDv6 because it provides
     better entropy.
 
+.. _uid-uuid-v7:
+
 **UUID v7** (UNIX timestamp)
 
 Generates time-ordered UUIDs based on a high-resolution Unix Epoch timestamp
@@ -332,6 +334,14 @@ entity primary keys::
         // ...
     }
 
+.. caution::
+
+    Using UUIDs as primary keys is usually not recommended for performance reasons:
+    indexes are slower and take more space (because UUIDs in binary format take
+    128 bits instead of 32/64 bits for auto-incremental integers) and the non-sequential
+    nature of UUIDs fragments indexes. :ref:`UUID v7 <uid-uuid-v7>` is the only
+    variant that solves the fragmentation issue (but the index size issue remains).
+
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these UUID types to build the SQL query
 (e.g. ``->findOneBy(['user' => $user->getUuid()])``). However, when using DQL
@@ -510,8 +520,14 @@ entity primary keys::
         }
 
         // ...
-
     }
+
+.. caution::
+
+    Using ULIDs as primary keys is usually not recommended for performance reasons.
+    Although ULIDs don't suffer from index fragmentation issues (because the values
+    are sequential), their indexes are slower and take more space (because ULIDs
+    in binary format take 128 bits instead of 32/64 bits for auto-incremental integers).
 
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these ULID types to build the SQL query
