@@ -74,6 +74,7 @@ Service             Package                                DSN                  
 `Iqsms`_            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 `KazInfoTeh`_       ``symfony/kaz-info-teh-notifier``      ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
 `LightSms`_         ``symfony/light-sms-notifier``         ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+`LOX24`_            ``symfony/lox24-notifier``             ``lox24://USER:TOKEN@default?from=FROM``
 `Mailjet`_          ``symfony/mailjet-notifier``           ``mailjet://TOKEN@default?from=FROM``
 `MessageBird`_      ``symfony/message-bird-notifier``      ``messagebird://TOKEN@default?from=FROM``
 `MessageMedia`_     ``symfony/message-media-notifier``     ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
@@ -115,7 +116,7 @@ Service             Package                                DSN                  
 
 .. versionadded:: 7.1
 
-    The `SmsSluzba`_ and  `SMSense`_ integrations were introduced in Symfony 7.1.
+    The `SmsSluzba`_, `SMSense`_  and `LOX24`_ integrations were introduced in Symfony 7.1.
 
 .. deprecated:: 7.1
 
@@ -1005,6 +1006,7 @@ is dispatched. Listeners receive a
 .. _`LINE Notify`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LineNotify/README.md
 .. _`LightSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LightSms/README.md
 .. _`LinkedIn`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LinkedIn/README.md
+.. _`LOX24`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Lox24/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mailjet/README.md
 .. _`Mastodon`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mastodon/README.md
 .. _`Mattermost`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mattermost/README.md
