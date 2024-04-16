@@ -46,11 +46,114 @@ as integration of other related components:
             $framework->form()->enabled(true);
         };
 
+There are two different ways of creating friendly configuration for a bundle:
+
+#. :ref:`Using the main bundle class <bundle-friendly-config-bundle-class>`:
+   this is recommended for new bundles and for bundles following the
+   :ref:`recommended directory structure <bundles-directory-structure>`;
+#. :ref:`Using the Bundle extension class <bundle-friendly-config-extension>`:
+   this was the traditional way of doing it, but nowadays it's only recommended for
+   bundles following the :ref:`legacy directory structure <bundles-legacy-directory-structure>`.
+
+.. _using-the-bundle-class:
+.. _bundle-friendly-config-bundle-class:
+
+Using the AbstractBundle Class
+------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class was introduced in Symfony 6.1.
+
+In bundles extending the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class, you can add all the logic related to processing the configuration in that class::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    ->arrayNode('twitter')
+                        ->children()
+                            ->integerNode('client_id')->end()
+                            ->scalarNode('client_secret')->end()
+                        ->end()
+                    ->end() // twitter
+                ->end()
+            ;
+        }
+
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // the "$config" variable is already merged and processed so you can
+            // use it directly to configure the service container (when defining an
+            // extension class, you also have to do this merging and processing)
+            $containerConfigurator->services()
+                ->get('acme.social.twitter_client')
+                ->arg(0, $config['twitter']['client_id'])
+                ->arg(1, $config['twitter']['client_secret'])
+            ;
+        }
+    }
+
+.. note::
+
+    The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
+
+.. tip::
+
+    The ``AbstractBundle::configure()`` method also allows to import the
+    configuration definition from one or more files::
+
+        // src/AcmeSocialBundle.php
+        namespace Acme\SocialBundle;
+
+        // ...
+        class AcmeSocialBundle extends AbstractBundle
+        {
+            public function configure(DefinitionConfigurator $definition): void
+            {
+                $definition->import('../config/definition.php');
+                // you can also use glob patterns
+                //$definition->import('../config/definition/*.php');
+            }
+
+            // ...
+        }
+
+    .. code-block:: php
+
+        // config/definition.php
+        use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+
+        return static function (DefinitionConfigurator $definition): void {
+            $definition->rootNode()
+                ->children()
+                    ->scalarNode('foo')->defaultValue('bar')->end()
+                ->end()
+            ;
+        };
+
+.. _bundle-friendly-config-extension:
+
 Using the Bundle Extension
 --------------------------
 
+This is the traditional way of creating friendly configuration for bundles. For new
+bundles it's recommended to :ref:`use the main bundle class <bundle-friendly-config-bundle-class>`,
+but the traditional way of creating an extension class still works.
+
 Imagine you are creating a new bundle - AcmeSocialBundle - which provides
-integration with Twitter. To make your bundle configurable to the user, you
+integration with X/Twitter. To make your bundle configurable to the user, you
 can add some configuration that looks like this:
 
 .. configuration-block::
@@ -110,7 +213,7 @@ load correct services and parameters inside an "Extension" class.
 
     If a bundle provides an Extension class, then you should *not* generally
     override any service container parameters from that bundle. The idea
-    is that if an Extension class is present, every setting that should be
+    is that if an extension class is present, every setting that should be
     configurable should be present in the configuration made available by
     that class. In other words, the extension class defines all the public
     configuration settings for which backward compatibility will be maintained.
@@ -314,94 +417,6 @@ In your extension, you can load this and dynamically set its arguments::
 
             // ... now use the flat $config array
         }
-
-.. _using-the-bundle-class:
-
-Using the AbstractBundle Class
-------------------------------
-
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class was introduced in Symfony 6.1.
-
-As an alternative, instead of creating an extension and configuration class as
-shown in the previous section, you can also extend
-:class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to add this
-logic to the bundle class directly::
-
-    // src/AcmeSocialBundle.php
-    namespace Acme\SocialBundle;
-
-    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-
-    class AcmeSocialBundle extends AbstractBundle
-    {
-        public function configure(DefinitionConfigurator $definition): void
-        {
-            $definition->rootNode()
-                ->children()
-                    ->arrayNode('twitter')
-                        ->children()
-                            ->integerNode('client_id')->end()
-                            ->scalarNode('client_secret')->end()
-                        ->end()
-                    ->end() // twitter
-                ->end()
-            ;
-        }
-
-        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
-        {
-            // Contrary to the Extension class, the "$config" variable is already merged
-            // and processed. You can use it directly to configure the service container.
-            $containerConfigurator->services()
-                ->get('acme.social.twitter_client')
-                ->arg(0, $config['twitter']['client_id'])
-                ->arg(1, $config['twitter']['client_secret'])
-            ;
-        }
-    }
-
-.. note::
-
-    The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
-
-.. tip::
-
-    The ``AbstractBundle::configure()`` method also allows to import the
-    configuration definition from one or more files::
-
-        // src/AcmeSocialBundle.php
-        namespace Acme\SocialBundle;
-
-        // ...
-        class AcmeSocialBundle extends AbstractBundle
-        {
-            public function configure(DefinitionConfigurator $definition): void
-            {
-                $definition->import('../config/definition.php');
-                // you can also use glob patterns
-                //$definition->import('../config/definition/*.php');
-            }
-
-            // ...
-        }
-
-    .. code-block:: php
-
-        // config/definition.php
-        use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-
-        return static function (DefinitionConfigurator $definition): void {
-            $definition->rootNode()
-                ->children()
-                    ->scalarNode('foo')->defaultValue('bar')->end()
-                ->end()
-            ;
-        };
 
 Modifying the Configuration of Another Bundle
 ---------------------------------------------
