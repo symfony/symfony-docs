@@ -97,6 +97,8 @@ It's the same as UUIDv3 (explained above) but it uses ``sha1`` instead of
 ``md5`` to hash the given namespace and name (`read UUIDv5 spec <https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-5>`__).
 This makes it more secure and less prone to hash collisions.
 
+.. _uid-uuid-v6:
+
 **UUID v6** (reordered time-based)
 
 It rearranges the time-based fields of the UUIDv1 to make it lexicographically
@@ -351,8 +353,8 @@ entity primary keys::
     Using UUIDs as primary keys is usually not recommended for performance reasons:
     indexes are slower and take more space (because UUIDs in binary format take
     128 bits instead of 32/64 bits for auto-incremental integers) and the non-sequential
-    nature of UUIDs fragments indexes. :ref:`UUID v7 <uid-uuid-v7>` is the only
-    variant that solves the fragmentation issue (but the index size issue remains).
+    nature of UUIDs fragments indexes. :ref:`UUID v6 <uid-uuid-v6>` and :ref:`UUID v7 <uid-uuid-v7>`
+    are the only variants that solves the fragmentation issue (but the index size issue remains).
 
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these UUID types to build the SQL query
