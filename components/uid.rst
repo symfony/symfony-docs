@@ -354,7 +354,7 @@ entity primary keys::
     indexes are slower and take more space (because UUIDs in binary format take
     128 bits instead of 32/64 bits for auto-incremental integers) and the non-sequential
     nature of UUIDs fragments indexes. :ref:`UUID v6 <uid-uuid-v6>` and :ref:`UUID v7 <uid-uuid-v7>`
-    are the only variants that solves the fragmentation issue (but the index size issue remains).
+    are the only variants that solve the fragmentation issue (but the index size issue remains).
 
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these UUID types to build the SQL query
