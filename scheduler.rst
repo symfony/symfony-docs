@@ -149,7 +149,7 @@ the frequency of the message. Symfony provides different types of triggers:
 
 :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger`
     A trigger that adds a random jitter to a given trigger. The jitter is some
-    time that it's added/subtracted to the original triggering date/time. This
+    time that is added to the original triggering date/time. This
     allows to distribute the load of the scheduled tasks instead of running them
     all at the exact same time.
 
