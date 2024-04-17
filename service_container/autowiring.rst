@@ -635,11 +635,11 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
 
             // expressions
             #[Autowire(expression: 'service("App\\\Mail\\\MailerConfiguration").getMailerMethod()')]
-            string $mailerMethod
+            string $mailerMethod,
 
             // environment variables
             #[Autowire(env: 'SOME_ENV_VAR')]
-            string $senderName
+            string $senderName,
         ) {
         }
         // ...
