@@ -66,7 +66,7 @@ implement ``TranslatableInterface`` to translate or display custom labels::
         case Center = 'Center aligned';
         case Right = 'Right aligned';
 
-        public function trans(TranslatorInterface $translator, string $locale = null): string
+        public function trans(TranslatorInterface $translator, ?string $locale = null): string
         {
             // Translate enum from name (Left, Center or Right)
             return $translator->trans($this->name, locale: $locale);
