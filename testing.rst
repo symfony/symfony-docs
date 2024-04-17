@@ -1082,10 +1082,10 @@ Mailer Assertions
 Notifier Assertions
 ...................
 
-``assertNotificationCount(int $count, string $transportName = null, string $message = '')``
+``assertNotificationCount(int $count, ?string $transportName = null, string $message = '')``
     Asserts that the given number of notifications has been created
     (in total or for the given transport).
-``assertQueuedNotificationCount(int $count, string $transportName = null, string $message = '')``
+``assertQueuedNotificationCount(int $count, ?string $transportName = null, string $message = '')``
     Asserts that the given number of notifications are queued
     (in total or for the given transport).
 ``assertNotificationIsQueued(MessageEvent $event, string $message = '')``
@@ -1113,7 +1113,7 @@ HttpClient Assertions
     For all the following assertions, ``$client->enableProfiler()`` must be
     called before the code that will trigger HTTP request(s).
 
-``assertHttpClientRequest(string $expectedUrl, string $expectedMethod = 'GET', string|array $expectedBody = null, array $expectedHeaders = [], string $httpClientId = 'http_client')``
+``assertHttpClientRequest(string $expectedUrl, string $expectedMethod = 'GET', string|array|null $expectedBody = null, array $expectedHeaders = [], string $httpClientId = 'http_client')``
     Asserts that the given URL has been called using, if specified,
     the given method body and headers. By default it will check on the HttpClient,
     but you can also pass a specific HttpClient ID.
