@@ -265,12 +265,12 @@ define those options as public properties on the constraint class::
             $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
         }
 
-        public function getDefaultOption()
+        public function getDefaultOption(): string
         {
             return 'mandatoryFooOption';
         }
 
-        public function getRequiredOptions()
+        public function getRequiredOptions(): array
         {
             return ['mandatoryFooOption'];
         }
