@@ -15,6 +15,7 @@ rules:
     ensure_correct_format_for_phpfunction: ~
     ensure_exactly_one_space_before_directive_type: ~
     ensure_exactly_one_space_between_link_definition_and_link: ~
+    ensure_explicit_nullable_types: ~
     ensure_github_directive_start_with_prefix:
         prefix: 'Symfony'
     ensure_link_bottom: ~
