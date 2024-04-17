@@ -644,7 +644,7 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
 
             // environment variables with processors
             #[Autowire(env: 'bool:SOME_BOOL_ENV_VAR')]
-            string $allowAttachments,
+            bool $allowAttachments,
         ) {
         }
         // ...
