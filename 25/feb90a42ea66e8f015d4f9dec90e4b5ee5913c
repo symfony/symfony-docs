@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-14T19:18:59Z
+
+New image not yet available...
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-14T19:25:05Z
+
+All files are valid 🤔 , but this is 5.4, so this seems to be correct, right?
+
+---------------------------------------------------------------------------
+
+by alamirault at 2024-04-14T19:27:12Z
+
+@OskarStark doctor-rst file must be update 😂
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-14T19:35:43Z
+
+Indeed, it's too late 😄
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-15T06:08:28Z
+
+@smnandre can you please check the occurrences? One is a false positive, thanks
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-17T06:21:03Z
+
+> In AbstractUnicodeString.php line 235:
+>
+>  Matching failed with error: Backtrack limit exhausted
+
+Any clue @smnandre ?
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-04-17T06:24:41Z
+
+> > In AbstractUnicodeString.php line 235:
+> > Matching failed with error: Backtrack limit exhausted
+>
+> Any clue @smnandre ?
+
+Hmm maybe the positive lookahead in the pattern ... but it should only be called on a (short) php code line, no ?
