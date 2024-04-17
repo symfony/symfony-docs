@@ -55,7 +55,7 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
         #[HasNamedArguments]
         public function __construct(
             public string $mode,
-            array $groups = null,
+            ?array $groups = null,
             mixed $payload = null,
         ) {
             parent::__construct([], $groups, $payload);
