@@ -120,7 +120,7 @@ And move the ``is_leap_year()`` function to its own class too::
 
     class LeapYear
     {
-        public function isLeapYear(int $year = null): bool
+        public function isLeapYear(?int $year = null): bool
         {
             if (null === $year) {
                 $year = date('Y');
