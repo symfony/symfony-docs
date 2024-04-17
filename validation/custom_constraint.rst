@@ -320,9 +320,9 @@ define those options as public properties on the constraint class:
 
             public function __construct(
                 $mandatoryFooOption,
-                string $message = null,
-                bool $optionalBarOption = null,
-                array $groups = null,
+                ?string $message = null,
+                ?bool $optionalBarOption = null,
+                ?array $groups = null,
                 $payload = null,
                 array $options = []
             ) {
