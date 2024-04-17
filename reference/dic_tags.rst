@@ -490,7 +490,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp(string $cacheDir, string $buildDir = null): array
+        public function warmUp(string $cacheDir, ?string $buildDir = null): array
         {
             // ... do some sort of operations to "warm" your cache
 
