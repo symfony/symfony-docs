@@ -424,10 +424,6 @@ command will generate a nice skeleton to get you started::
          */
         public function refreshUser(UserInterface $user): UserInterface
         {
-            if (!$user instanceof User) {
-                throw new UnsupportedUserException(sprintf('Invalid user class "%s".', get_class($user)));
-            }
-
             // Return a User object after making sure its data is "fresh".
             // Or throw a UserNotFoundException if the user no longer exists.
             throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
