@@ -9,8 +9,8 @@ sanitize_html
 
 When ``true``, the text input will be sanitized using the
 :doc:`Symfony HTML Sanitizer component </html_sanitizer>` after the form is
-submitted. This protects the form input against XSS, clickjacking and CSS
-injection.
+submitted. This protects the form input against :ref:`XSS attacks <xss-attacks>`,
+clickjacking and CSS injection.
 
 .. note::
 

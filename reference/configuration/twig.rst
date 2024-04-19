@@ -49,7 +49,7 @@ individually in the templates).
 .. danger::
 
     Setting this option to ``false`` is dangerous and it will make your
-    application vulnerable to `XSS attacks`_ because most third-party bundles
+    application vulnerable to :ref:`XSS attacks <xss-attacks>` because most third-party bundles
     assume that auto-escaping is enabled and they don't escape contents
     themselves.
 
@@ -441,5 +441,4 @@ attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
 .. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
-.. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`__invoke() PHP magic method`: https://www.php.net/manual/en/language.oop5.magic.php#object.invoke
