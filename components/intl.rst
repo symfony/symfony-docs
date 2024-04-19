@@ -389,7 +389,7 @@ Symfony provides utilities to translate emojis into their textual representation
 in all languages. Read the documentation on :ref:`working with emojis in strings <string-emoji-transliteration>`
 to learn more about this feature.
 
-Disk space
+Disk Space
 ----------
 
 If you need to save disk space (e.g. because you deploy to some service with tight size
