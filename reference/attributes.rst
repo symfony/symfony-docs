@@ -64,6 +64,7 @@ HttpKernel
 * :ref:`MapQueryParameter <controller_map-request>`
 * :ref:`MapQueryString <controller_map-request>`
 * :ref:`MapRequestPayload <controller_map-request>`
+* :ref:`MapUploadedFile <controller_map-uploaded-file>`
 * :ref:`ValueResolver <managing-value-resolvers>`
 * :ref:`WithHttpStatus <framework_exceptions>`
 * :ref:`WithLogLevel <framework_exceptions>`
