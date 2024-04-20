@@ -65,7 +65,7 @@ reporting turned on and errors displayed in the browser to ease debugging::
 environment. Having two different front controllers gives you the opportunity
 to have a slightly different configuration for each of them.
 
-So, moving code from the front controller to the framework class makes our
+Moving code from the front controller to the framework class makes our
 framework more configurable, but at the same time, it introduces a lot of
 issues:
 

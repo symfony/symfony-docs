@@ -1,4 +1,4 @@
-The HttpKernel Component: the Controller Resolver
+The HttpKernel Component: The Controller Resolver
 =================================================
 
 You might think that our framework is already pretty solid and you are

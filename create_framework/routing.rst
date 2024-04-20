@@ -157,7 +157,7 @@ With this knowledge in mind, let's write the new version of our framework::
 
     $response->send();
 
-There are a few new things in the code:
+This code has a few new things:
 
 * Route names are used for template names;
 
