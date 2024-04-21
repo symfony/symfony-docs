@@ -5,7 +5,8 @@ Symfony comes with :ref:`many authenticators <security-authenticators>` and
 third party bundles also implement more complex cases like JWT and oAuth
 2.0. However, sometimes you need to implement a custom authentication
 mechanism that doesn't exist yet or you need to customize one. In such
-cases, you must create and use your own authenticator.
+cases, you can use the ``make:security:custom`` command to create your own
+authenticator.
 
 Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
