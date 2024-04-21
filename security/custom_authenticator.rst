@@ -9,6 +9,15 @@ cases, you must create and use your own authenticator.
 
 Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
+
+.. tip::
+
+    If your login method is interactive, which means that the user actively
+    logged into your application, you may want your authenticator to implement the
+    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`
+    so that it dispatches an
+    :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
+
 You can also extend
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractAuthenticator`,
 which has a default implementation for the ``createToken()``
@@ -176,7 +185,12 @@ can define what happens in these cases:
 
     If ``null`` is returned, the request continues like normal. This is
     useful for e.g. login forms, where the login controller is run again
-    with the login errors.
+    with the login errors. In order to access the login error in the controller
+    with ``$authenticationUtils->getLastAuthenticationError()``, you need to
+    store it in the session now::
+
+        use Symfony\Component\Security\Http\SecurityRequestAttributes;
+        $request->getSession()->set(SecurityRequestAttributes::AUTHENTICATION_ERROR, $exception);
 
     If you're using :ref:`login throttling <security-login-throttling>`,
     you can check if ``$exception`` is an instance of
@@ -190,13 +204,6 @@ can define what happens in these cases:
     above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
     if you want to set custom error messages.
 
-.. tip::
-
-    If your login method is interactive, which means that the user actively
-    logged into your application, you may want your authenticator to implement the
-    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`
-    so that it dispatches an
-    :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 
 .. _security-passport:
 
