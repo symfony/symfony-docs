@@ -958,9 +958,9 @@ First, you need to enable CSRF on the form login:
 
 .. _csrf-login-template:
 
-Then, use the ``csrf_token()`` function in the Twig template to generate a CSRF
-token and store it as a hidden field of the form. By default, the HTML field
-is called ``_csrf_token`` and takes an arbitrary string as argument ``tokenId``:
+Then, add a hidden field to the form. In order to work with the built-in ``FormLoginAuthenticator``,
+the HTML field must be called ``_csrf_token``, and the argument of Twig's ``csrf_token()`` function
+must be called ``authenticate``:
 
 .. code-block:: html+twig
 
