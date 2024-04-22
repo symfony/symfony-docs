@@ -704,7 +704,7 @@ attribute::
 
 It is common that a service accepts a closure with a specific signature.
 In this case, you can use the
-:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable` attribute
 to generate a closure with the same signature as a specific method of a service. When
 this closure is called, it will pass all its arguments to the underlying service
 function.  If the closure needs to be called more than once, the service instance
@@ -733,7 +733,7 @@ create extra instances of a non-shared service::
     }
 
 Finally, you can pass the ``lazy: true`` option to the
-:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable`
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
 attribute. By doing so, the callable will automatically be lazy, which means
 that the encapsulated service will be instantiated **only** at the
 closure's first call.
