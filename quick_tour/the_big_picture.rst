@@ -80,8 +80,8 @@ doesn't exist yet, so let's create it!
 In ``src/Controller``, create a new ``DefaultController`` class and an ``index``
 method inside::
 
-    // src/Controller/DefaultController.php
     <?php
+    // src/Controller/DefaultController.php
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -140,11 +140,12 @@ But this can be even simpler! Comment-out the YAML route by adding the
 ``#`` character. Uncomment previous code to avoid a notfound error.
 
 .. code-block:: diff
+// Uncomment
     controllers:
       resource:
         path: ../src/Controller/
         namespace: App\Controller
-    
+
       type: attribute
     # config/routes.yaml
     # index:
