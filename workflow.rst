@@ -960,12 +960,18 @@ the
 
     final class BlogPostMarkingStore implements MarkingStoreInterface
     {
-        public function getMarking(BlogPost $subject): Marking
+        /**
+         * @param BlogPost $subject
+         */
+        public function getMarking(object $subject): Marking
         {
             return new Marking([$subject->getCurrentPlace() => 1]);
         }
 
-        public function setMarking(BlogPost $subject, Marking $marking): void
+        /**
+         * @param BlogPost $subject
+         */
+        public function setMarking(object $subject, Marking $marking, array $context = []): void
         {
             $marking = key($marking->getPlaces());
             $subject->setCurrentPlace($marking);
