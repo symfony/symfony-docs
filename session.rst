@@ -176,7 +176,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
         $flashes->add('error', 'Another error');
 
 After processing the request, the controller sets a flash message in the session
-and then redirects. The message key (``notice`` in this example) can be anything:
+and then redirects. The message key (``warning`` and ``error`` in this example) can be anything:
 you'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
