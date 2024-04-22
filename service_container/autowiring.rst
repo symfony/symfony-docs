@@ -738,6 +738,36 @@ attribute. By doing so, the callable will automatically be lazy, which means
 that the encapsulated service will be instantiated **only** at the
 closure's first call.
 
+:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireMethodOf`
+provides a simpler way of specifying the name of the service method by using
+the property name as method name::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutowireMethodOf;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[AutowireMethodOf('third_party.remote_message_formatter')]
+            private \Closure $format,
+        ) {
+        }
+
+        public function generate(string $message): void
+        {
+            $formattedMessage = ($this->format)($message);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 7.1
+
+    :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireMethodOf`
+    was introduced in Symfony 7.1.
+
 .. _autowiring-calls:
 
 Autowiring other Methods (e.g. Setters and Public Typed Properties)
