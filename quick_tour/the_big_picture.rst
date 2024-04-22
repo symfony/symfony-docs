@@ -14,7 +14,7 @@ safe & easy!) and offers long-term support.
 Downloading Symfony
 -------------------
 
-First, make sure you've installed `Composer`_ and have PHP 8.1 or higher.
+First, make sure you've installed `Composer`_ and have PHP 8.3 or higher.
 
 Ready? In a terminal, run:
 
@@ -81,6 +81,7 @@ In ``src/Controller``, create a new ``DefaultController`` class and an ``index``
 method inside::
 
     // src/Controller/DefaultController.php
+    <?php
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
@@ -136,10 +137,15 @@ see: Hello Symfony! The value of the ``{name}`` in the URL is available as a ``$
 argument in your controller.
 
 But this can be even simpler! Comment-out the YAML route by adding the
-``#`` character:
+``#`` character. Uncomment previous code to avoid a notfound error.
 
-.. code-block:: yaml
-
+.. code-block:: diff
+    controllers:
+      resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    
+      type: attribute
     # config/routes.yaml
     # index:
     #     path: /hello/{name}
