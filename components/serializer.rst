@@ -589,6 +589,10 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
     to access the current class name, format and context.
 
+.. versionadded:: 7.1
+
+    Accessing the current class name, format and context via :method:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface::normalize` and :method:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface::denormalize` was introduced in Symfony 7.1.
+
 .. _using-camelized-method-names-for-underscored-attributes:
 
 CamelCase to snake_case
