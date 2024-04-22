@@ -511,6 +511,20 @@ When running a program asynchronously, you can send it POSIX signals with the
     // will send a SIGKILL to the process
     $process->signal(SIGKILL);
 
+You can make the process ignore signals by using the
+:method:`Symfony\\Component\\Process\\Process::setIgnoredSignals`
+method. The given signals won't be propagated to the child process::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process(['find', '/', '-name', 'rabbit']);
+    $process->setIgnoredSignals([SIGKILL, SIGUSR1]);
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Process\\Process::setIgnoredSignals`
+    method was introduced in Symfony 7.1.
+
 Process Pid
 -----------
 
