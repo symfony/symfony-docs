@@ -222,9 +222,13 @@ You can use the following code to link to the PDF brochure of a product:
         use Symfony\Component\HttpFoundation\File\File;
         // ...
 
-        $product->setBrochureFilename(
-            new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename())
-        );
+        if (!$form->isSubmitted() && $product->getBrochureFilename()) {
+            $form->setData(['brochure' => new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename())]);
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // ...
+        }
 
 Creating an Uploader Service
 ----------------------------
