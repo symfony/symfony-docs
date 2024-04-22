@@ -76,6 +76,19 @@ If set to ``true``, the HTML input will be rendered as a native HTML5
 
     As HTML5 number format is normalized, it is incompatible with ``grouping`` option.
 
+model_type
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``float``
+
+By default, the money value is converted to a ``float`` PHP type. If you need the
+value to be converted into an integer (e.g. because some library needs money
+values stored in cents as integers) set this option to ``integer``.
+
+.. versionadded:: 7.1
+
+    The ``model_type`` option was introduced in Symfony 7.1.
+
 scale
 ~~~~~
 

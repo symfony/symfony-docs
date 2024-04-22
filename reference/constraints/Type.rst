@@ -190,6 +190,11 @@ PHP class/interface or a valid PHP datatype (checked by PHP's ``is_()`` function
 * :phpfunction:`resource <is_resource>`
 * :phpfunction:`null <is_null>`
 
+If you're dealing with arrays, you can use the following types in the constraint:
+
+* ``list`` which uses :phpfunction:`array_is_list <array_is_list>` internally
+* ``associative_array`` which is true for any **non-empty** array that is not a list
+
 Also, you can use ``ctype_*()`` functions from corresponding
 `built-in PHP extension`_. Consider `a list of ctype functions`_:
 
@@ -207,6 +212,11 @@ Also, you can use ``ctype_*()`` functions from corresponding
 
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
+
+.. versionadded:: 7.1
+
+    The ``list`` and ``associative_array`` types were introduced in Symfony
+    7.1.
 
 Finally, you can use aggregated functions:
 

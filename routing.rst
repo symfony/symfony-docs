@@ -2694,6 +2694,53 @@ service, which you can inject in your services or controllers::
         }
     }
 
+For security reasons, it's common to make signed URIs expire after some time
+(e.g. when using them to reset user credentials). By default, signed URIs don't
+expire, but you can define an expiration date/time using the ``$expiration``
+argument of :phpmethod:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
+
+    use Symfony\Component\HttpFoundation\UriSigner;
+
+    class SomeService
+    {
+        public function __construct(
+            private UriSigner $uriSigner,
+        ) {
+        }
+
+        public function someMethod(): void
+        {
+            // ...
+
+            // generate a URL yourself or get it somehow...
+            $url = 'https://example.com/foo/bar?sort=desc';
+
+            // sign the URL with an explicit expiration date
+            $signedUrl = $this->uriSigner->sign($url, new \DateTimeImmutable('2050-01-01'));
+            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=2524608000&_hash=e4a21b9'
+
+            // if you pass a \DateInterval, it will be added from now to get the expiration date
+            $signedUrl = $this->uriSigner->sign($url, new \DateInterval('PT10S'));  // valid for 10 seconds from now
+            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=1712414278&_hash=e4a21b9'
+
+            // you can also use a timestamp in seconds
+            $signedUrl = $this->uriSigner->sign($url, 4070908800); // timestamp for the date 2099-01-01
+            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=4070908800&_hash=e4a21b9'
+        }
+    }
+
+.. note::
+
+    The expiration date/time is included in the signed URIs as a timestamp via
+    the ``_expiration`` query parameter.
+
+.. versionadded:: 7.1
+
+    The feature to add an expiration date for a signed URI was introduced in Symfony 7.1.
+
 Troubleshooting
 ---------------
 

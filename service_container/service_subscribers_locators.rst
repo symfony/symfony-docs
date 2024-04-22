@@ -110,17 +110,35 @@ in the service subscriber::
     that you have :ref:`autoconfigure <services-autoconfigure>` enabled. You
     can also manually add the ``container.service_subscriber`` tag.
 
-The injected service is an instance of :class:`Symfony\\Component\\DependencyInjection\\ServiceLocator`
-which implements both the PSR-11 ``ContainerInterface`` and :class:`Symfony\\Contracts\\Service\\ServiceProviderInterface`.
-It is also a callable and a countable::
+A service locator is a `PSR-11 container`_ that contains a set of services,
+but only instantiates them when they are actually used. Consider the following code::
+
+    // ...
+    $handler = $this->locator->get($commandClass);
+
+    return $handler->handle($command);
+
+In this example, the ``$handler`` service is only instantiated when the
+``$this->locator->get($commandClass)`` method is called.
+
+You can also type-hint the service locator argument with
+:class:`Symfony\\Contracts\\Service\\ServiceCollectionInterface` instead of
+``Psr\Container\ContainerInterface``. By doing so, you'll be able to
+count and iterate over the services of the locator::
 
     // ...
     $numberOfHandlers = count($this->locator);
     $nameOfHandlers = array_keys($this->locator->getProvidedServices());
-    // ...
-    $handler = ($this->locator)($commandClass);
 
-    return $handler->handle($command);
+    // you can iterate through all services of the locator
+    foreach ($this->locator as $serviceId => $service) {
+        // do something with the service, the service id or both
+    }
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Contracts\\Service\\ServiceCollectionInterface` was
+    introduced in Symfony 7.1.
 
 Including Services
 ------------------
@@ -841,7 +859,7 @@ the following order:
 Service Subscriber Trait
 ------------------------
 
-The :class:`Symfony\\Contracts\\Service\\ServiceSubscriberTrait` provides an
+The :class:`Symfony\\Contracts\\Service\\ServiceMethodsSubscriberTrait` provides an
 implementation for :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`
 that looks through all methods in your class that are marked with the
 :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute. It
@@ -855,12 +873,12 @@ services based on type-hinted helper methods::
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Routing\RouterInterface;
     use Symfony\Contracts\Service\Attribute\SubscribedService;
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
-    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
-        use ServiceSubscriberTrait;
+        use ServiceMethodsSubscriberTrait;
 
         public function doSomething(): void
         {
@@ -880,6 +898,11 @@ services based on type-hinted helper methods::
             return $this->container->get(__METHOD__);
         }
     }
+
+.. versionadded:: 7.1
+
+    The ``ServiceMethodsSubscriberTrait`` was introduced in Symfony 7.1.
+    In previous Symfony versions it was called ``ServiceSubscriberTrait``.
 
 This  allows you to create helper traits like RouterAware, LoggerAware, etc...
 and compose your services with them::
@@ -917,12 +940,12 @@ and compose your services with them::
     // src/Service/MyService.php
     namespace App\Service;
 
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
-    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
-        use ServiceSubscriberTrait, LoggerAware, RouterAware;
+        use ServiceMethodsSubscriberTrait, LoggerAware, RouterAware;
 
         public function doSomething(): void
         {
@@ -959,12 +982,12 @@ Here's an example::
     use Symfony\Component\DependencyInjection\Attribute\Target;
     use Symfony\Component\Routing\RouterInterface;
     use Symfony\Contracts\Service\Attribute\SubscribedService;
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
-    use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
     class MyService implements ServiceSubscriberInterface
     {
-        use ServiceSubscriberTrait;
+        use ServiceMethodsSubscriberTrait;
 
         public function doSomething(): void
         {
@@ -1047,3 +1070,4 @@ Another alternative is to mock it using ``PHPUnit``::
     // ...
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
+.. _`PSR-11 container`: https://www.php-fig.org/psr/psr-11/

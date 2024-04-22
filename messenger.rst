@@ -485,6 +485,17 @@ The first argument is the receiver's name (or service id if you routed to a
 custom service). By default, the command will run forever: looking for new messages
 on your transport and handling them. This command is called your "worker".
 
+If you want to consume messages from all available receivers, you can use the
+command with the ``--all`` option:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume --all
+
+.. versionadded:: 7.1
+
+    The ``--all`` option was introduced in Symfony 7.1.
+
 .. tip::
 
     In a development environment and if you're using the Symfony CLI tool,
@@ -975,6 +986,9 @@ this is configurable for each transport:
                             # e.g. 1 second delay, 2 seconds, 4 seconds
                             multiplier: 2
                             max_delay: 0
+                            # applies randomness to the delay that can prevent the thundering herd effect
+                            # the value (between 0 and 1.0) is the percentage of 'delay' that will be added/subtracted
+                            jitter: 0.1
                             # override all of this with a service that
                             # implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
                             # service: null
@@ -994,7 +1008,7 @@ this is configurable for each transport:
             <framework:config>
                 <framework:messenger>
                     <framework:transport name="async_priority_high" dsn="%env(MESSENGER_TRANSPORT_DSN)%?queue_name=high_priority">
-                        <framework:retry-strategy max-retries="3" delay="1000" multiplier="2" max-delay="0"/>
+                        <framework:retry-strategy max-retries="3" delay="1000" multiplier="2" max-delay="0" jitter="0.1"/>
                     </framework:transport>
                 </framework:messenger>
             </framework:config>
@@ -1019,11 +1033,18 @@ this is configurable for each transport:
                     // e.g. 1 second delay, 2 seconds, 4 seconds
                     ->multiplier(2)
                     ->maxDelay(0)
+                    // applies randomness to the delay that can prevent the thundering herd effect
+                    // the value (between 0 and 1.0) is the percentage of 'delay' that will be added/subtracted
+                    ->jitter(0.1)
                     // override all of this with a service that
                     // implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
                     ->service(null)
             ;
         };
+
+.. versionadded:: 7.1
+
+    The ``jitter`` option was introduced in Symfony 7.1.
 
 .. tip::
 
@@ -1653,8 +1674,13 @@ read_timeout             Float, value in seconds                ``0``
 timeout                  Connection timeout. Float, value in    ``0``
                          seconds default indicates unlimited
 sentinel_master          String, if null or empty Sentinel      null
-                         support is disabled
+redis_sentinel           support is disabled
 =======================  =====================================  =================================
+
+.. versionadded:: 7.1
+
+    The option `redis_sentinel` as an alias for `sentinel_master` was introduced
+    in Symfony 7.1.
 
 .. caution::
 

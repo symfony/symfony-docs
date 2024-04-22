@@ -200,6 +200,9 @@ Available Options
 ``redis_sentinel`` (type: ``string``, default: ``null``)
     Specifies the master name connected to the sentinels.
 
+``sentinel_master`` (type: ``string``, default: ``null``)
+    Alias of ``redis_sentinel`` option.
+
 ``dbindex`` (type: ``int``, default: ``0``)
     Specifies the database index to select.
 
@@ -210,6 +213,11 @@ Available Options
 
 ``ssl`` (type: ``array``, default: ``null``)
     SSL context options. See `php.net/context.ssl`_ for more information.
+
+.. versionadded:: 7.1
+
+    The option `sentinel_master` as an alias for `redis_sentinel` was introduced
+    in Symfony 7.1.
 
 .. note::
 

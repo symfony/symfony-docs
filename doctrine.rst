@@ -62,10 +62,11 @@ The database connection information is stored as an environment variable called
 
     If the username, password, host or database name contain any character considered
     special in a URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``),
-    you must encode them. See `RFC 3986`_ for the full list of reserved characters or
-    use the :phpfunction:`urlencode` function to encode them. In this case you need to
-    remove the ``resolve:`` prefix in ``config/packages/doctrine.yaml`` to avoid errors:
-    ``url: '%env(DATABASE_URL)%'``
+    you must encode them. See `RFC 3986`_ for the full list of reserved characters.
+    You can use the :phpfunction:`urlencode` function to encode them or
+    the :ref:`urlencode environment variable processor <urlencode_environment_variable_processor>`.
+    In this case you need to remove the ``resolve:`` prefix in ``config/packages/doctrine.yaml``
+    to avoid errors: ``url: '%env(DATABASE_URL)%'``
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
 database for you:
@@ -830,6 +831,21 @@ control behavior:
 
 ``disabled``
     If true, the ``EntityValueResolver`` will not try to replace the argument.
+
+``message``
+    An optional custom message displayed when there's a :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`,
+    but **only in the development environment** (you won't see this message in production)::
+
+        #[Route('/product/{product_id}')]
+        public function show(
+            #[MapEntity(id: 'product_id', message: 'The product does not exist')]
+            Product $product
+        ): Response {
+        }
+
+.. versionadded:: 7.1
+
+    The ``message`` option was introduced in Symfony 7.1.
 
 Updating an Object
 ------------------

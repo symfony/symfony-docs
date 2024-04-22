@@ -555,6 +555,38 @@ if you want to map a nested array of specific DTOs::
         ) {}
     }
 
+Instead of returning an array of DTO objects, you can tell Symfony to transform
+each DTO object into an array and return something like this:
+
+.. code-block:: json
+
+    [
+        {
+            "firstName": "John",
+            "lastName": "Smith",
+            "age": 28
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "age": 30
+        }
+    ]
+
+To do so, map the parameter as an array and configure the type of each element
+using the ``type`` option of the attribute::
+
+    public function dashboard(
+        #[MapRequestPayload(type: UserDTO::class)] array $users
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 7.1
+
+    The ``type`` option of ``#[MapRequestPayload]`` was introduced in Symfony 7.1.
+
 Managing the Session
 --------------------
 

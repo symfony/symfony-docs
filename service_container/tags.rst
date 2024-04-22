@@ -458,6 +458,8 @@ or from your kernel::
     :ref:`components documentation <components-di-compiler-pass>` for more
     information.
 
+.. _tags_additional-attributes:
+
 Adding Additional Attributes on Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

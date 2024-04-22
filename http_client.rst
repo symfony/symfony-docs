@@ -150,9 +150,17 @@ brings most of the available options with type-hinted getters and setters::
     $this->client = $client->withOptions(
         (new HttpOptions())
             ->setBaseUri('https://...')
+            // replaces *all* headers at once, and deletes the headers you do not provide
             ->setHeaders(['header-name' => 'header-value'])
+            // set or replace a single header using addHeader()
+            ->setHeader('another-header-name', 'another-header-value')
             ->toArray()
     );
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::setHeader`
+    method was introduced in Symfony 7.1.
 
 Some options are described in this guide:
 
@@ -1466,6 +1474,40 @@ installed in your application::
 :class:`Symfony\\Component\\HttpClient\\CachingHttpClient` accepts a third argument
 to set the options of the :class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache`.
 
+Limit the Number of Requests
+----------------------------
+
+This component provides a :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient`
+decorator that allows to limit the number of requests within a certain period.
+
+The implementation leverages the
+:class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class under the hood
+so the :doc:`Rate Limiter component </rate_limiter>` needs to be
+installed in your application::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\ThrottlingHttpClient;
+    use Symfony\Component\RateLimiter\LimiterInterface;
+
+    $rateLimiter = ...; // $rateLimiter is an instance of Symfony\Component\RateLimiter\LimiterInterface
+    $client = HttpClient::create();
+    $client = new ThrottlingHttpClient($client, $rateLimiter);
+
+    $requests = [];
+    for ($i = 0; $i < 100; $i++) {
+        $requests[] = $client->request('GET', 'https://example.com');
+    }
+
+    foreach ($requests as $request) {
+        // Depending on rate limiting policy, calls will be delayed
+        $output->writeln($request->getContent());
+    }
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient` was
+    introduced in Symfony 7.1.
+
 Consuming Server-Sent Events
 ----------------------------
 
@@ -1905,6 +1947,20 @@ in order when requests are made::
     $response1 = $client->request('...'); // returns $responses[0]
     $response2 = $client->request('...'); // returns $responses[1]
 
+It is also possible to create a
+:class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` directly
+from a file, which is particularly useful when storing your response
+snapshots in files::
+
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $response = MockResponse::fromFile('tests/fixtures/response.xml');
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\Response\\MockResponse::fromFile`
+    method was introduced in Symfony 7.1.
+
 Another way of using :class:`Symfony\\Component\\HttpClient\\MockHttpClient` is to
 pass a callback that generates the responses dynamically when it's called::
 
@@ -2078,6 +2134,19 @@ You can use :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse` 
     $response = new JsonMockResponse([
         'foo' => 'bar',
     ]);
+
+Just like :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`, you can
+also create a :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse`
+directly from a file::
+
+    use Symfony\Component\HttpClient\Response\JsonMockResponse;
+
+    $response = JsonMockResponse::fromFile('tests/fixtures/response.json');
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse::fromFile`
+    method was introduced in Symfony 7.1.
 
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~

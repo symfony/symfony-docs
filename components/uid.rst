@@ -251,6 +251,31 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toBase58();  // string(22) "TuetYWNHhmuSQ3xPoVLv9M"
     $uuid->toRfc4122(); // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
     $uuid->toHex();     // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
+    $uuid->toString();  // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
+
+.. versionadded:: 7.1
+
+    The ``toString()`` method was introduced in Symfony 7.1.
+
+You can also convert some UUID versions to others::
+
+    // convert V1 to V6 or V7
+    $uuid = Uuid::v1();
+
+    $uuid->toV6(); // returns a Symfony\Component\Uid\UuidV6 instance
+    $uuid->toV7(); // returns a Symfony\Component\Uid\UuidV7 instance
+
+    // convert V6 to V7
+    $uuid = Uuid::v6();
+
+    $uuid->toV7(); // returns a Symfony\Component\Uid\UuidV7 instance
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Uid\\UuidV1::toV6`,
+    :method:`Symfony\\Component\\Uid\\UuidV1::toV7` and
+    :method:`Symfony\\Component\\Uid\\UuidV6::toV7`
+    methods were introduced in Symfony 7.1.
 
 Working with UUIDs
 ~~~~~~~~~~~~~~~~~~

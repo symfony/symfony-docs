@@ -164,6 +164,28 @@ method to check its validity::
         }
     }
 
+.. _csrf-controller-attributes:
+
+Alternatively you can use the
+:class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
+attribute on the controller action::
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+    // ...
+
+    #[IsCsrfTokenValid('delete-item', tokenKey: 'token')]
+    public function delete(Request $request): Response
+    {
+        // ... do something, like deleting an object
+    }
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
+    attribute was introduced in Symfony 7.1.
+
 CSRF Tokens and Compression Side-Channel Attacks
 ------------------------------------------------
 

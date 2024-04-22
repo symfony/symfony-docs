@@ -383,6 +383,18 @@ stored in one of the following locations:
 * All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
 
+.. note::
+
+    The groups used by default when normalizing and denormalizing objects are
+    ``Default`` and the group that matches the class name. For example, if you
+    are normalizing a ``App\Entity\Product`` object, the groups used are
+    ``Default`` and ``Product``.
+
+    .. versionadded:: 7.1
+
+        The default use of the class name and ``Default`` groups when normalizing
+        and denormalizing objects was introduced in Symfony 7.1.
+
 .. _serializer-enabling-metadata-cache:
 
 Using Nested Attributes
@@ -511,20 +523,22 @@ given class:
         |          |   "groups" => [                                            |
         |          |       "book:read",                                         |
         |          |       "book:write",                                        |
-        |          |   ]                                                        |
+        |          |   ],                                                       |
         |          |   "maxDepth" => 1,                                         |
-        |          |   "serializedName" => "book_name"                          |
-        |          |   "ignore" => false                                        |
+        |          |   "serializedName" => "book_name",                         |
+        |          |   "serializedPath" => null,                                |
+        |          |   "ignore" => false,                                       |
         |          |   "normalizationContexts" => [],                           |
         |          |   "denormalizationContexts" => []                          |
         |          | ]                                                          |
         | isbn     | [                                                          |
         |          |   "groups" => [                                            |
         |          |       "book:read",                                         |
-        |          |   ]                                                        |
+        |          |   ],                                                       |
         |          |   "maxDepth" => null,                                      |
-        |          |   "serializedName" => null                                 |
-        |          |   "ignore" => false                                        |
+        |          |   "serializedName" => null,                                |
+        |          |   "serializedPath" => [data][isbn],                        |
+        |          |   "ignore" => false,                                       |
         |          |   "normalizationContexts" => [],                           |
         |          |   "denormalizationContexts" => []                          |
         |          | ]                                                          |

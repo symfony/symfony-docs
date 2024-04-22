@@ -101,6 +101,7 @@ via a third-party provider:
 Service               Install with                                    Webhook support
 ===================== =============================================== ===============
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
+`Azure`_              ``composer require symfony/azure-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``       yes
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``     yes
@@ -109,9 +110,14 @@ Service               Install with                                    Webhook su
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``    yes
+`Resend`_             ``composer require symfony/resend-mailer``      yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``    yes
 ===================== =============================================== ===============
+
+.. versionadded:: 7.1
+
+    The Azure and Resend integrations were introduced in Symfony 7.1.
 
 .. note::
 
@@ -165,6 +171,8 @@ party provider:
 |                        | - HTTP ``ses+https://ACCESS_KEY:SECRET_KEY@default``    |
 |                        | - API ``ses+api://ACCESS_KEY:SECRET_KEY@default``       |
 +------------------------+---------------------------------------------------------+
+| `Azure`_               | - API ``azure+api://ACS_RESOURCE_NAME:KEY@default``     |
++------------------------+---------------------------------------------------------+
 | `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default``       |
 |                        | - HTTP n/a                                              |
 |                        | - API ``brevo+api://KEY@default``                       |
@@ -200,6 +208,10 @@ party provider:
 | `Postmark`_            | - SMTP ``postmark+smtp://ID@default``                   |
 |                        | - HTTP n/a                                              |
 |                        | - API ``postmark+api://KEY@default``                    |
++------------------------+---------------------------------------------------------+
+| `Resend`_              | - SMTP ``resend+smtp://resend:API_KEY@default``         |
+|                        | - HTTP n/a                                              |
+|                        | - API ``resend+api://API_KEY@default``                  |
 +------------------------+---------------------------------------------------------+
 | `Scaleway`_            | - SMTP ``scaleway+smtp://PROJECT_ID:API_KEY@default``   |
 |                        | - HTTP n/a                                              |
@@ -334,6 +346,30 @@ disabling ``verify_peer`` is needed, but security is still desired. Fingerprint
 may be specified as SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
+
+Disabling Automatic TLS
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.1
+
+    The option to disable automatic TLS was introduced in Symfony 7.1.
+
+By default, the Mailer component will use encryption when the OpenSSL extension
+is enabled and the SMTP server supports ``STARTTLS``. This behavior can be turned
+off by calling ``setAutoTls(false)`` on the ``EsmtpTransport`` instance, or by
+setting the ``auto_tls`` option to ``false`` in the DSN::
+
+    $dsn = 'smtp://user:pass@10.0.0.25?auto_tls=false';
+
+.. caution::
+
+    It's not recommended to disable TLS while connecting to an SMTP server over
+    the Internet, but it can be useful when both the application and the SMTP
+    server are in a secured network, where there is no need for additional encryption.
+
+.. note::
+
+    This setting only works when the ``smtp://`` protocol is used.
 
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1531,6 +1567,7 @@ The following transports currently support tags and metadata:
 The following transports only support tags:
 
 * MailPace
+* Resend
 
 The following transports only support metadata:
 
@@ -1815,6 +1852,75 @@ a specific address, instead of the *real* address:
             ;
         };
 
+Use the ``allowed_recipients`` option to specify exceptions to the behavior defined
+in the ``recipients`` option; allowing emails directed to these specific recipients
+to maintain their original destination:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    envelope:
+                        recipients: ['youremail@example.com']
+                        allowed_recipients:
+                            - 'internal@example.com'
+                            # you can also use regular expression to define allowed recipients
+                            - 'internal-.*@example.(com|fr)'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mailer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:mailer>
+                    <framework:envelope>
+                        <framework:recipient>youremail@example.com</framework:recipient>
+                        <framework:allowed-recipient>internal@example.com</framework:allowed-recipient>
+                        <!-- you can also use regular expression to define allowed recipients -->
+                        <framework:allowed-recipient>internal-.*@example.(com|fr)</framework:allowed-recipient>
+                    </framework:envelope>
+                </framework:mailer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+            $framework->mailer()
+                ->envelope()
+                    ->recipients(['youremail@example.com'])
+                    ->allowedRecipients([
+                        'internal@example.com',
+                        // you can also use regular expression to define allowed recipients
+                        'internal-.*@example.(com|fr)',
+                    ])
+            ;
+        };
+
+With this configuration, all emails will be sent to ``youremail@example.com``,
+except for those sent to ``internal@example.com``, ``internal-monitoring@example.fr``,
+etc., which will receive emails as usual.
+
+.. versionadded:: 7.1
+
+    The ``allowed_recipients`` option was introduced in Symfony 7.1.
+
 Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1854,6 +1960,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
    handler.
 
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
+.. _`Azure`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Azure/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
 .. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
@@ -1874,6 +1981,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
+.. _`Resend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Resend/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md

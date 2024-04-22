@@ -31,6 +31,8 @@ String Constraints
 * :doc:`PasswordStrength </reference/constraints/PasswordStrength>`
 * :doc:`CssColor </reference/constraints/CssColor>`
 * :doc:`NoSuspiciousCharacters </reference/constraints/NoSuspiciousCharacters>`
+* :doc:`Charset </reference/constraints/Charset>`
+* :doc:`MacAddress </reference/constraints/MacAddress>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~

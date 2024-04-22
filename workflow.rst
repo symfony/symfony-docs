@@ -60,7 +60,7 @@ follows:
                     supports:
                         - App\Entity\BlogPost
                     initial_marking: draft
-                    places:
+                    places:          # defining places manually is optional
                         - draft
                         - reviewed
                         - rejected
@@ -97,10 +97,13 @@ follows:
                     </framework:marking-store>
                     <framework:support>App\Entity\BlogPost</framework:support>
                     <framework:initial-marking>draft</framework:initial-marking>
+
+                    <!-- defining places manually is optional -->
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
+
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
                         <framework:to>reviewed</framework:to>
@@ -135,6 +138,7 @@ follows:
                 ->type('method')
                 ->property('currentPlace');
 
+            // defining places manually is optional
             $blogPublishing->place()->name('draft');
             $blogPublishing->place()->name('reviewed');
             $blogPublishing->place()->name('rejected');
@@ -167,6 +171,17 @@ follows:
     E.g. you can use ``!php/const App\Entity\BlogPost::STATE_DRAFT`` instead of
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
+
+.. tip::
+
+    You can omit the ``places`` option if your transitions define all the places
+    that are used in the workflow. Symfony will automatically extract the places
+    from the transitions.
+
+    .. versionadded:: 7.1
+
+        The support for omitting the ``places`` option was introduced in
+        Symfony 7.1.
 
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
@@ -345,6 +360,15 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
+To get the enabled transition of a Workflow, you can use
+:method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
+method.
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
+    method was introduced in Symfony 7.1.
+
 Workflows can also be injected thanks to their name and the
 :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
 attribute::
@@ -376,6 +400,15 @@ name.
     * ``workflow``: all workflows and all state machine;
     * ``workflow.workflow``: all workflows;
     * ``workflow.state_machine``: all state machines.
+
+    Note that workflow metadata are attached to tags under the ``metadata`` key,
+    giving you more context and information about the workflow at disposal.
+    Learn more about :ref:`tag attributes <tags_additional-attributes>` and
+    :ref:`storing workflow metadata <workflow_storing-metadata>`.
+
+    .. versionadded:: 7.1
+
+        The attached configuration to the tag was introduced in Symfony 7.1.
 
 .. tip::
 
@@ -498,6 +531,7 @@ workflow leaves a place::
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
+    use Symfony\Component\Workflow\Event\LeaveEvent;
 
     class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
@@ -520,10 +554,23 @@ workflow leaves a place::
         public static function getSubscribedEvents(): array
         {
             return [
-                'workflow.blog_publishing.leave' => 'onLeave',
+                LeaveEvent::getName('blog_publishing') => 'onLeave',
+                // if you prefer, you can write the event name manually like this:
+                // 'workflow.blog_publishing.leave' => 'onLeave',
             ];
         }
     }
+
+.. tip::
+
+    All built-in workflow events define the ``getName(?string $workflowName, ?string $transitionOrPlaceName)``
+    method to build the full event name without having to deal with strings.
+    You can also use this method in your custom events via the
+    :class:`Symfony\\Component\\Workflow\\Event\\EventNameTrait`.
+
+    .. versionadded:: 7.1
+
+        The ``getName()`` method was introduced in Symfony 7.1.
 
 If some listeners update the context during a transition, you can retrieve
 it via the marking::
@@ -1042,6 +1089,8 @@ The following example shows these functions in action:
     {% for blocker in workflow_transition_blockers(post, 'publish') %}
         <span class="error">{{ blocker.message }}</span>
     {% endfor %}
+
+.. _workflow_storing-metadata:
 
 Storing Metadata
 ----------------

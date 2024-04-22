@@ -388,17 +388,18 @@ address, it uses a certain HTTP method, etc.):
 
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HeaderRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\QueryParameterRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
 
 You can use them individually or combine them using the
-:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher`
-class::
+:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` class::
 
     use Symfony\Component\HttpFoundation\ChainRequestMatcher;
     use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
@@ -420,6 +421,11 @@ class::
     if ($matcher->matches($request)) {
         // ...
     }
+
+.. versionadded:: 7.1
+
+    The ``HeaderRequestMatcher`` and ``QueryParameterRequestMatcher`` were
+    introduced in Symfony 7.1.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -834,6 +840,23 @@ or change its ``Content-Disposition``::
 It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
+
+Alternatively, ``BinaryFileResponse`` supports instances of ``\SplTempFileObject``.
+This is useful when you want to serve a file that has been created in memory
+and that will be automatically deleted after the response is sent::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+    $file = new \SplTempFileObject();
+    $file->fwrite('Hello World');
+    $file->rewind();
+
+    $response = new BinaryFileResponse($file);
+
+.. versionadded:: 7.1
+
+    The support for ``\SplTempFileObject`` in ``BinaryFileResponse``
+    was introduced in Symfony 7.1.
 
 If the size of the served file is unknown (e.g. because it's being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``

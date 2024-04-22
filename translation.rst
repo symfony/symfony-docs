@@ -979,8 +979,14 @@ preferences. This is achieved with the ``getPreferredLanguage()`` method of the
 
 Symfony finds the best possible language based on the locales passed as argument
 and the value of the ``Accept-Language`` HTTP header. If it can't find a perfect
-match between them, this method returns the first locale passed as argument
-(that's why the order of the passed locales is important).
+match between them, Symfony will try to find a partial match based on the language
+(e.g. ``fr_CA`` would match ``fr_Latn_CH`` because their language is the same).
+If there's no perfect or partial match, this method returns the first locale passed
+as argument (that's why the order of the passed locales is important).
+
+.. versionadded:: 7.1
+
+    The feature to match locales partially was introduced in Symfony 7.1.
 
 .. _translation-fallback:
 

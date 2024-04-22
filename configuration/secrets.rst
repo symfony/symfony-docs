@@ -166,6 +166,22 @@ secrets' values by passing the ``--reveal`` option:
       DATABASE_PASSWORD   "my secret"
      ------------------- ------------ -------------
 
+Reveal Existing Secrets
+-----------------------
+
+If you have the **decryption key**, the ``secrets:reveal`` command allows
+you to reveal a single secret's value.
+
+.. code-block:: terminal
+
+    $ php bin/console secrets:reveal DATABASE_PASSWORD
+
+     my secret
+
+.. versionadded:: 7.1
+
+    The ``secrets:reveal`` command was introduced in Symfony 7.1.
+
 Remove Secrets
 --------------
 

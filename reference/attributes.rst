@@ -35,8 +35,10 @@ Dependency Injection
 * :doc:`AutowireDecorated </service_container/service_decoration>`
 * :doc:`AutowireIterator <service-locator_autowire-iterator>`
 * :ref:`AutowireLocator <service-locator_autowire-locator>`
+* :ref:`AutowireMethodOf <autowiring_closures>`
 * :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
+* :ref:`Lazy <lazy-services_configuration>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
@@ -92,6 +94,7 @@ Security
 ~~~~~~~~
 
 * :ref:`CurrentUser <security-json-login>`
+* :ref:`IsCsrfTokenValid <csrf-controller-attributes>`
 * :ref:`IsGranted <security-securing-controller-attributes>`
 
 Serializer

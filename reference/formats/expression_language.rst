@@ -141,6 +141,8 @@ following functions by default:
 
 * ``constant()``
 * ``enum()``
+* ``min()``
+* ``max()``
 
 ``constant()`` function
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -187,6 +189,38 @@ This function will return the case of an enumeration::
     ));
 
 This will print out ``true``.
+
+``min()`` function
+~~~~~~~~~~~~~~~~~~
+
+This function will return the lowest value of the given parameters. You can pass
+different types of parameters (e.g. dates, strings, numeric values) and even mix
+them (e.g. pass numeric values and strings). Internally it uses the :phpfunction:`min`
+PHP function to find the lowest value::
+
+    var_dump($expressionLanguage->evaluate(
+        'min(1, 2, 3)'
+    ));
+
+This will print out ``1``.
+
+``max()`` function
+~~~~~~~~~~~~~~~~~~
+
+This function will return the highest value of the given parameters. You can pass
+different types of parameters (e.g. dates, strings, numeric values) and even mix
+them (e.g. pass numeric values and strings). Internally it uses the :phpfunction:`max`
+PHP function to find the highest value::
+
+    var_dump($expressionLanguage->evaluate(
+        'max(1, 2, 3)'
+    ));
+
+This will print out ``3``.
+
+.. versionadded:: 7.1
+
+    The ``min()`` and ``max()`` functions were introduced in Symfony 7.1.
 
 .. tip::
 

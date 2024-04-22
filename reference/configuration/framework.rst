@@ -1174,6 +1174,19 @@ query
 An associative array of the query string values added to the URL before making
 the request. This value must use the format ``['parameter-name' => parameter-value, ...]``.
 
+rate_limiter
+............
+
+**type**: ``string``
+
+The service ID of the rate limiter used to limit the number of HTTP requests
+within a certain period. The service must implement the
+:class:`Symfony\\Component\\RateLimiter\\LimiterInterface`.
+
+.. versionadded:: 7.1
+
+    The ``rate_limiter`` option was introduced in Symfony 7.1.
+
 resolve
 .......
 
@@ -1510,6 +1523,11 @@ cache_dir
 
 The directory where routing information will be cached. Can be set to
 ``~`` (``null``) to disable route caching.
+
+.. deprecated:: 7.1
+
+    Setting the ``cache_dir`` option is deprecated since Symfony 7.1. The routes
+    are now always cached in the ``%kernel.build_dir%`` directory.
 
 secrets
 ~~~~~~~
@@ -3805,6 +3823,26 @@ the ``#[WithLogLevel]`` attribute::
     class CustomException extends \Exception
     {
     }
+
+The attributes can also be added to interfaces directly::
+
+    namespace App\Exception;
+
+    use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
+
+    #[WithHttpStatus(422)]
+    interface CustomExceptionInterface
+    {
+    }
+
+    class CustomException extends \Exception implements CustomExceptionInterface
+    {
+    }
+
+.. versionadded:: 7.1
+
+    Support to use ``#[WithHttpStatus]`` and ``#[WithLogLevel]`` attributes
+    on interfaces was introduced in Symfony 7.1.
 
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

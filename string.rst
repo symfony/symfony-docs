@@ -1,11 +1,11 @@
-The String Component
-====================
+Creating and Manipulating Strings
+=================================
 
-    The String component provides a single object-oriented API to work with
-    three "unit systems" of strings: bytes, code points and grapheme clusters.
+Symfony provides an object-oriented API to work with Unicode strings (as bytes,
+code points and grapheme clusters). This API is available via the String component,
+which you must first install in your application:
 
-Installation
-------------
+.. _installation:
 
 .. code-block:: terminal
 
@@ -203,7 +203,10 @@ Methods to Change Case
 ::
 
     // changes all graphemes/code points to lower case
-    u('FOO Bar')->lower();  // 'foo bar'
+    u('FOO Bar Brİan')->lower();  // 'foo bar bri̇an'
+    // changes all graphemes/code points to lower case according to locale-specific case mappings
+    u('FOO Bar Brİan')->localeLower('en');  // 'foo bar bri̇an'
+    u('FOO Bar Brİan')->localeLower('lt');  // 'foo bar bri̇̇an'
 
     // when dealing with different languages, uppercase/lowercase is not enough
     // there are three cases (lower, upper, title), some characters have no case,
@@ -213,11 +216,17 @@ Methods to Change Case
     u('Die O\'Brian Straße')->folded(); // "die o'brian strasse"
 
     // changes all graphemes/code points to upper case
-    u('foo BAR')->upper(); // 'FOO BAR'
+    u('foo BAR bάz')->upper(); // 'FOO BAR BΆZ'
+    // changes all graphemes/code points to upper case according to locale-specific case mappings
+    u('foo BAR bάz')->localeUpper('en'); // 'FOO BAR BΆZ'
+    u('foo BAR bάz')->localeUpper('el'); // 'FOO BAR BAZ'
 
     // changes all graphemes/code points to "title case"
-    u('foo bar')->title();     // 'Foo bar'
-    u('foo bar')->title(true); // 'Foo Bar'
+    u('foo ijssel')->title();     // 'Foo ijssel'
+    u('foo ijssel')->title(true); // 'Foo Ijssel'
+    // changes all graphemes/code points to "title case" according to locale-specific case mappings
+    u('foo ijssel')->localeTitle('en'); // 'Foo ijssel'
+    u('foo ijssel')->localeTitle('nl'); // 'Foo IJssel'
 
     // changes all graphemes/code points to camelCase
     u('Foo: Bar-baz.')->camel(); // 'fooBarBaz'
@@ -225,6 +234,11 @@ Methods to Change Case
     u('Foo: Bar-baz.')->snake(); // 'foo_bar_baz'
     // other cases can be achieved by chaining methods. E.g. PascalCase:
     u('Foo: Bar-baz.')->camel()->title(); // 'FooBarBaz'
+
+.. versionadded:: 7.1
+
+    The ``localeLower()``, ``localeUpper()`` and ``localeTitle()`` methods were
+    introduced in Symfony 7.1.
 
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
@@ -493,6 +507,120 @@ requested during the program execution. You can also create lazy strings from a
     // hash computation only if it's needed
     $lazyHash = LazyString::fromStringable(new Hash());
 
+.. _working-with-emojis:
+
+Working with Emojis
+-------------------
+
+.. versionadded:: 7.1
+
+    The emoji component was introduced in Symfony 7.1.
+
+Symfony provides several utilities to work with emoji characters and sequences
+from the `Unicode CLDR dataset`_. They are available via the Emoji component,
+which you must first install in your application:
+
+.. code-block:: terminal
+
+    $ composer require symfony/emoji
+
+.. include:: /components/require_autoload.rst.inc
+
+The data needed to store the transliteration of all emojis (~5,000) into all
+languages take a considerable disk space.
+
+If you need to save disk space (e.g. because you deploy to some service with tight
+size constraints), run this command (e.g. as an automated script after ``composer install``)
+to compress the internal Symfony emoji data files using the PHP ``zlib`` extension:
+
+.. code-block:: terminal
+
+    # adjust the path to the 'compress' binary based on your application installation
+    $ php ./vendor/symfony/emoji/Resources/bin/compress
+
+.. _string-emoji-transliteration:
+
+Emoji Transliteration
+~~~~~~~~~~~~~~~~~~~~~
+
+The ``EmojiTransliterator`` class offers a way to translate emojis into their
+textual representation in all languages based on the `Unicode CLDR dataset`_::
+
+    use Symfony\Component\Emoji\EmojiTransliterator;
+
+    // Describe emojis in English
+    $transliterator = EmojiTransliterator::create('en');
+    $transliterator->transliterate('Menus with 🍕 or 🍝');
+    // => 'Menus with pizza or spaghetti'
+
+    // Describe emojis in Ukrainian
+    $transliterator = EmojiTransliterator::create('uk');
+    $transliterator->transliterate('Menus with 🍕 or 🍝');
+    // => 'Menus with піца or спагеті'
+
+
+The ``EmojiTransliterator`` also provides special locales that convert emojis to
+short codes and vice versa in specific platforms, such as GitHub, Gitlab and Slack.
+
+GitHub Emoji Transliteration
+............................
+
+Convert GitHub emojis to short codes with the ``emoji-github`` locale::
+
+    $transliterator = EmojiTransliterator::create('emoji-github');
+    $transliterator->transliterate('Teenage 🐢 really love 🍕');
+    // => 'Teenage :turtle: really love :pizza:'
+
+Convert GitHub short codes to emojis with the ``github-emoji`` locale::
+
+    $transliterator = EmojiTransliterator::create('github-emoji');
+    $transliterator->transliterate('Teenage :turtle: really love :pizza:');
+    // => 'Teenage 🐢 really love 🍕'
+
+Gitlab Emoji Transliteration
+............................
+
+Convert Gitlab emojis to short codes with the ``emoji-gitlab`` locale::
+
+    $transliterator = EmojiTransliterator::create('emoji-gitlab');
+    $transliterator->transliterate('Breakfast with 🥝 or 🥛');
+    // => 'Breakfast with :kiwi: or :milk:'
+
+Convert Gitlab short codes to emojis with the ``gitlab-emoji`` locale::
+
+    $transliterator = EmojiTransliterator::create('gitlab-emoji');
+    $transliterator->transliterate('Breakfast with :kiwi: or :milk:');
+    // => 'Breakfast with 🥝 or 🥛'
+
+Slack Emoji Transliteration
+...........................
+
+Convert Slack emojis to short codes with the ``emoji-slack`` locale::
+
+    $transliterator = EmojiTransliterator::create('emoji-slack');
+    $transliterator->transliterate('Menus with 🥗 or 🧆');
+    // => 'Menus with :green_salad: or :falafel:'
+
+Convert Slack short codes to emojis with the ``slack-emoji`` locale::
+
+    $transliterator = EmojiTransliterator::create('slack-emoji');
+    $transliterator->transliterate('Menus with :green_salad: or :falafel:');
+    // => 'Menus with 🥗 or 🧆'
+
+Removing Emojis
+~~~~~~~~~~~~~~~
+
+The ``EmojiTransliterator`` can also be used to remove all emojis from a string,
+via the special ``strip`` locale::
+
+    use Symfony\Component\Emoji\EmojiTransliterator;
+
+    $transliterator = EmojiTransliterator::create('strip');
+    $transliterator->transliterate('🎉Hey!🥳 🎁Happy Birthday!🎁');
+    // => 'Hey! Happy Birthday!'
+
+.. _string-slugger:
+
 Slugger
 -------
 
@@ -565,7 +693,8 @@ the injected slugger is the same as the request locale::
 Slug Emojis
 ~~~~~~~~~~~
 
-You can transform any emojis into their textual representation::
+You can also combine the :ref:`emoji transliterator <string-emoji-transliteration>`
+with the slugger to transform any emojis into their textual representation::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -579,7 +708,7 @@ You can transform any emojis into their textual representation::
     // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
 
 If you want to use a specific locale for the emoji, or to use the short codes
-from GitHub or Slack, use the first argument of ``withEmoji()`` method::
+from GitHub, Gitlab or Slack, use the first argument of ``withEmoji()`` method::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -634,3 +763,4 @@ possible to determine a unique singular/plural form for the given word.
 .. _`Code points`: https://en.wikipedia.org/wiki/Code_point
 .. _`Grapheme clusters`: https://en.wikipedia.org/wiki/Grapheme
 .. _`Unicode equivalence`: https://en.wikipedia.org/wiki/Unicode_equivalence
+.. _`Unicode CLDR dataset`: https://github.com/unicode-org/cldr

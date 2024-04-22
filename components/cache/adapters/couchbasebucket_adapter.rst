@@ -1,6 +1,12 @@
 Couchbase Bucket Cache Adapter
 ==============================
 
+.. deprecated:: 7.1
+
+    The ``CouchbaseBucketAdapter`` is deprecated since Symfony 7.1, use the
+    :doc:`CouchbaseCollectionAdapter </components/cache/adapters/couchbasecollection_adapter>`
+    instead.
+
 This adapter stores the values in-memory using one (or more) `Couchbase server`_
 instances. Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Memcached adapter </components/cache/adapters/memcached_adapter>`, it is not limited to the current server's

@@ -344,6 +344,19 @@ official YAML specification but are useful in Symfony applications:
           # ... or you can also use "->value" to directly use the value of a BackedEnum case
           operator_type: !php/enum App\Operator\Enum\Type::Or->value
 
+  This tag allows to omit the enum case and only provide the enum FQCN
+  to return an array of all available enum cases:
+
+  .. code-block:: yaml
+
+      data:
+          operator_types: !php/enum App\Operator\Enum\Type
+
+  .. versionadded:: 7.1
+
+    The support for using the enum FQCN without specifying a case
+    was introduced in Symfony 7.1.
+
 Unsupported YAML Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
