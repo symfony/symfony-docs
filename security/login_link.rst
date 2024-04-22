@@ -279,6 +279,8 @@ This will send an email like this to the user:
         // src/Notifier/CustomLoginLinkNotification
         namespace App\Notifier;
 
+        use Symfony\Component\Notifier\Message\EmailMessage;
+        use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
         use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
         class CustomLoginLinkNotification extends LoginLinkNotification
