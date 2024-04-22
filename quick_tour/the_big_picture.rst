@@ -80,7 +80,6 @@ doesn't exist yet, so let's create it!
 In ``src/Controller``, create a new ``DefaultController`` class and an ``index``
 method inside::
 
-    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -140,7 +139,8 @@ But this can be even simpler! Comment-out the YAML route by adding the
 ``#`` character. Uncomment previous code to avoid a notfound error.
 
 .. code-block:: diff
-// Uncomment
+
+// Uncomment the template code to avoid an error
     controllers:
       resource:
         path: ../src/Controller/
