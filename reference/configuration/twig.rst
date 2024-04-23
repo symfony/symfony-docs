@@ -38,8 +38,8 @@ autoescape_service
 
 **type**: ``string`` **default**: ``null``
 
-The escaping strategy applied by default to the template is determined during
-compilation time based on the filename of the template. This means for example
+The escaping strategy applied by default to the template (to prevent :ref:`XSS attacks <xss-attacks>`)
+is determined during compilation time based on the filename of the template. This means for example
 that the contents of a ``*.html.twig`` template are escaped for HTML and the
 contents of ``*.js.twig`` are escaped for JavaScript.
 
