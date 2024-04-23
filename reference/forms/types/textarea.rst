@@ -22,7 +22,7 @@ Renders a ``textarea`` HTML element.
 .. caution::
 
     When allowing users to type HTML code in the textarea (or using a
-    WYSIWYG) editor, the application is vulnerable to XSS injection,
+    WYSIWYG) editor, the application is vulnerable to :ref:`XSS injection <xss-attacks>`,
     clickjacking or CSS injection. Use the `sanitize_html`_ option to
     protect against these types of attacks.
 
