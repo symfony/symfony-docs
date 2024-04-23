@@ -1257,7 +1257,7 @@ user name and a malicious user sets the following as their name:
     </script>
 
 You'll see ``My Name`` on screen but the attacker just secretly stole your cookies
-so they can impersonate you in other websites. This is known as a `Cross-Site Scripting`_
+so they can impersonate you on other websites. This is known as a `Cross-Site Scripting`_
 or XSS attack.
 
 To prevent this attack, use *"output escaping"* to transform the characters
