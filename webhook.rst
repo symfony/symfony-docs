@@ -16,11 +16,6 @@ Installation
 
     $ composer require symfony/webhook
 
-.. tip::
-
-    Since MakerBundle ``v1.58.0`` - you can run ``php bin/console make:webhook``
-    to generate the files needed to use the Webhook component.
-
 Usage in Combination with the Mailer Component
 ----------------------------------------------
 
@@ -193,3 +188,14 @@ For SMS webhooks, react to the
             // Handle the SMS event
         }
     }
+
+Creating a Custom Webhook
+-------------------------
+
+.. tip::
+
+    Starting in `MakerBundle`_ ``v1.58.0``, you can run ``php bin/console make:webhook``
+    to generate the request parser and consumer files needed to create your own
+    Webhook.
+
+_`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
