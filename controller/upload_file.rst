@@ -134,7 +134,7 @@ Finally, you need to update the code of the controller that handles the form::
         /**
          * @Route("/product/new", name="app_product_new")
          */
-        public function new(Request $request, SluggerInterface $slugger): Response
+        public function new(Request $request, SluggerInterface $slugger, string $brochuresDirectory): Response
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -154,10 +154,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                     // Move the file to the directory where brochures are stored
                     try {
-                        $brochureFile->move(
-                            $this->getParameter('brochures_directory'),
-                            $newFilename
-                        );
+                        $brochureFile->move($brochuresDirectory, $newFilename);
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                     }
@@ -223,7 +220,7 @@ You can use the following code to link to the PDF brochure of a product:
         // ...
 
         $product->setBrochureFilename(
-            new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename())
+            new File($brochuresDirectory.DIRECTORY_SEPARATOR.$product->getBrochureFilename())
         );
 
 Creating an Uploader Service
