@@ -1804,7 +1804,7 @@ cookie_httponly
 This determines whether cookies should only be accessible through the HTTP
 protocol. This means that the cookie won't be accessible by scripting
 languages, such as JavaScript. This setting can effectively help to reduce
-identity theft through XSS attacks.
+identity theft through :ref:`XSS attacks <xss-attacks>`.
 
 gc_divisor
 ..........

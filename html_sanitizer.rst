@@ -11,8 +11,8 @@ that the returned HTML is very predictable (it only contains allowed
 elements), but it does not work well with badly formatted input (e.g.
 invalid HTML). The sanitizer is targeted for two use cases:
 
-* Preventing security attacks based on XSS or other technologies relying on
-  execution of malicious code on the visitors browsers;
+* Preventing security attacks based on :ref:`XSS <xss-attacks>` or other technologies
+  relying on the execution of malicious code on the visitors browsers;
 * Generating HTML that always respects a certain format (only certain
   tags, attributes, hosts, etc.) to be able to consistently style the
   resulting output with CSS. This also protects your application against
