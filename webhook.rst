@@ -196,4 +196,4 @@ Creating a Custom Webhook
     to generate the request parser and consumer files needed to create your own
     Webhook.
 
-_`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
