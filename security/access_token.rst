@@ -537,15 +537,12 @@ claims. To create your own user object from the claims, you must
 2) Configure the OidcTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``OidcTokenHandler`` requires ``web-token/jwt-signature``,
-``web-token/jwt-checker`` and ``web-token/jwt-signature-algorithm-ecdsa``
-packages. If you haven't installed them yet, run these commands:
+The ``OidcTokenHandler`` requires the package ``web-token/jwt-library``.
+If you haven't installed it yet, run this command:
 
 .. code-block:: terminal
 
-    $ composer require web-token/jwt-signature
-    $ composer require web-token/jwt-checker
-    $ composer require web-token/jwt-signature-algorithm-ecdsa
+    $ composer require web-token/jwt-library
 
 Symfony provides a generic ``OidcTokenHandler`` to decode your token, validate
 it and retrieve the user info from it:
@@ -561,10 +558,10 @@ it and retrieve the user info from it:
                     access_token:
                         token_handler:
                             oidc:
-                                # Algorithm used to sign the JWS
-                                algorithm: 'ES256'
+                                # Algorithms used to sign the JWS
+                                algorithms: ['ES256', 'RS256']
                                 # A JSON-encoded JWK
-                                key: '{"kty":"...","k":"..."}'
+                                keyset: '{"keys":[{"kty":"...","k":"..."}]}'
                                 # Audience (`aud` claim): required for validation purpose
                                 audience: 'api-example'
                                 # Issuers (`iss` claim): required for validation purpose
@@ -589,8 +586,10 @@ it and retrieve the user info from it:
                             <!-- Algorithm used to sign the JWS -->
                             <!-- A JSON-encoded JWK -->
                             <!-- Audience (`aud` claim): required for validation purpose -->
-                            <oidc algorithm="ES256" key="{'kty':'...','k':'...'}" audience="api-example">
+                            <oidc keyset="{'keys':[{'kty':'...','k':'...'}]}" audience="api-example">
                                 <!-- Issuers (`iss` claim): required for validation purpose -->
+                                <algorithm>ES256</algorithm>
+                                <algorithm>RS256</algorithm>
                                 <issuer>https://oidc.example.com</issuer>
                             </oidc>
                         </token-handler>
@@ -610,9 +609,9 @@ it and retrieve the user info from it:
                     ->tokenHandler()
                         ->oidc()
                             // Algorithm used to sign the JWS
-                            ->algorithm('ES256')
+                            ->algorithms(['ES256', 'RS256'])
                             // A JSON-encoded JWK
-                            ->key('{"kty":"...","k":"..."}')
+                            ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
                             // Audience (`aud` claim): required for validation purpose
                             ->audience('api-example')
                             // Issuers (`iss` claim): required for validation purpose
@@ -636,8 +635,8 @@ configuration:
                         token_handler:
                             oidc:
                                 claim: email
-                                algorithm: 'ES256'
-                                key: '{"kty":"...","k":"..."}'
+                                algorithms: ['ES256', 'RS256']
+                                keyset: '{"keys":[{"kty":"...","k":"..."}]}'
                                 audience: 'api-example'
                                 issuers: ['https://oidc.example.com']
 
@@ -657,7 +656,9 @@ configuration:
                 <firewall name="main">
                     <access-token>
                         <token-handler>
-                            <oidc claim="email" algorithm="ES256" key="{'kty':'...','k':'...'}" audience="api-example">
+                            <oidc claim="email" keyset="{'keys':[{'kty':'...','k':'...'}]}" audience="api-example">
+                                <algorithm>ES256</algorithm>
+                                <algorithm>RS256</algorithm>
                                 <issuer>https://oidc.example.com</issuer>
                             </oidc>
                         </token-handler>
@@ -677,8 +678,8 @@ configuration:
                     ->tokenHandler()
                         ->oidc()
                             ->claim('email')
-                            ->algorithm('ES256')
-                            ->key('{"kty":"...","k":"..."}')
+                            ->algorithms(['ES256', 'RS256'])
+                            ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
                             ->audience('api-example')
                             ->issuers(['https://oidc.example.com'])
             ;
