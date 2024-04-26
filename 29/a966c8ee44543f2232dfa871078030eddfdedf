@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2024-04-16T16:53:25Z
+
+Yes, it's perfect timing since we introduced `AbstractBundle` and `AbstractExtension` to the bundle ecosystem.
+
+I'll check the documentation later; thanks for the ping!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-04-17T06:46:15Z
+
+Thanks for the reviews. I updated the things you asked me to.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-24T08:29:43Z
+
+Please rebase to fix DOCtor-RST build, thanks
