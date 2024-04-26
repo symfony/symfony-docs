@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-19T18:58:07Z
+
+One question, before 7.1 it worked with one and now with more. Shall we add sth like:
+
+```
+.. versionadded:: 7.1
+
+    Add more than one algorithm is supported since Symfony 7.1.
+```
+?
