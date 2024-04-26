@@ -591,7 +591,7 @@ In your handler, you can check a condition and, if affirmative, access the
         }
     }
 
-    // src/Scheduler/Handler/.php
+    // src/Scheduler/Handler/CleanUpOldSalesReportHandler.php
     namespace App\Scheduler\Handler;
 
     #[AsMessageHandler]
