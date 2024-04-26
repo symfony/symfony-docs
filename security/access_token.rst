@@ -537,7 +537,7 @@ claims. To create your own user object from the claims, you must
 2) Configure the OidcTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``OidcTokenHandler`` requires the package ``web-token/jwt-library``.
+The ``OidcTokenHandler`` requires the ``web-token/jwt-library`` package.
 If you haven't installed it yet, run this command:
 
 .. code-block:: terminal
@@ -618,6 +618,11 @@ it and retrieve the user info from it:
                             ->issuers(['https://oidc.example.com'])
             ;
         };
+
+.. versionadded:: 7.1
+
+    The support of multiple algorithms to sign the JWS was introduced in Symfony 7.1.
+    In previous versions, only the ``ES256`` algorithm was supported.
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used by
 default as user identifier. To use another claim, specify it on the
