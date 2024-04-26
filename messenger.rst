@@ -2991,12 +2991,10 @@ Let's say you want to create a message decoder::
     {
         public function decode(array $encodedEnvelope): Envelope
         {
-            $envelope = \json_decode($encodedEnvelope, true);
-
             try {
                 // parse the data you received with your custom fields
-                $data = $envelope['data'];
-                $data['token'] = $envelope['token'];
+                $data = $encodedEnvelope['data'];
+                $data['token'] = $encodedEnvelope['token'];
 
                 // other operations like getting information from stamps
             } catch (\Throwable $throwable) {
