@@ -563,7 +563,7 @@ In your handler, you can check a condition and, if affirmative, access the
         }
     }
 
-    // src/Scheduler/Handler/.php
+    // src/Scheduler/Handler/CleanUpOldSalesReportHandler.php
     namespace App\Scheduler\Handler;
 
     #[AsMessageHandler]
@@ -932,7 +932,7 @@ before being further redispatched to its corresponding handler::
     }
 
 When using the ``RedispatchMessage``, Symfony will attach a
-:class:`Symfony\\Component\\Messenger\\Stamp\\ScheduledStamp` to the message,
+:class:`Symfony\\Component\\Scheduler\\Messenger\\Stamp\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
 
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
