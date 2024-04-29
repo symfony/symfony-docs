@@ -773,7 +773,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
     that stores this method. The form will be submitted in a normal ``POST``
     request, but :doc:`Symfony's routing </routing>` is capable of detecting the
     ``_method`` parameter and will interpret it as a ``PUT``, ``PATCH`` or
-    ``DELETE`` request. The :ref:`configuration-framework-http_method_override`
+    ``DELETE`` request. The :ref:`http_method_override <configuration-framework-http_method_override>`
     option must be enabled for this to work.
 
 Changing the Form Name
