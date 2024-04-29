@@ -61,10 +61,6 @@ There are two different ways of creating friendly configuration for a bundle:
 Using the AbstractBundle Class
 ------------------------------
 
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class was introduced in Symfony 6.1.
-
 In bundles extending the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
 class, you can add all the logic related to processing the configuration in that class::
 

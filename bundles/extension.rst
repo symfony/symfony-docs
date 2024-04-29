@@ -20,10 +20,6 @@ There are two different ways of doing it:
 Loading Services Directly in your Bundle Class
 ----------------------------------------------
 
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class was introduced in Symfony 6.1.
-
 In bundles extending the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
 class, you can define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension`
 method to load service definitions from configuration files::
