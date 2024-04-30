@@ -997,8 +997,7 @@ preferences. This is achieved with the ``getPreferredLanguage()`` method of the
 
 Symfony finds the best possible language based on the locales passed as argument
 and the value of the ``Accept-Language`` HTTP header. If it can't find a perfect
-match between them, this method returns the first locale passed as argument
-(that's why the order of the passed locales is important).
+match between them, this method returns ``default_locale``.
 
 .. _translation-fallback:
 
