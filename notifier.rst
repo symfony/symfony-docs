@@ -138,6 +138,9 @@ Service
 `Plivo`_            **Install**: ``composer require symfony/plivo-notifier`` \
                     **DSN**: ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM`` \
                     **Webhook support**: No
+`Primotexto`_       **Install**: ``composer require symfony/primotexto-notifier`` \
+                    **DSN**: ``primotexto://API_KEY@default?from=FROM`` \
+                    **Webhook support**: No
 `Redlink`_          **Install**: ``composer require symfony/redlink-notifier`` \
                     **DSN**: ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION`` \
                     **Webhook support**: No
@@ -202,6 +205,10 @@ Service
                     **DSN**: ``yunpian://APIKEY@default`` \
                     **Webhook support**: No
 ==================  ====================================================================================================================================
+
+.. versionadded:: 7.2
+
+    The ``Primotexto`` integration was introduced in Symfony 7.2.
 
 .. tip::
 
@@ -1119,6 +1126,7 @@ is dispatched. Listeners receive a
 .. _`OvhCloud`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OvhCloud/README.md
 .. _`PagerDuty`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/PagerDuty/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
+.. _`Primotexto`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Primotexto/README.md
 .. _`Pushover`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushover/README.md
 .. _`Pushy`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushy/README.md
 .. _`Redlink`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Redlink/README.md
