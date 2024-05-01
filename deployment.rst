@@ -205,7 +205,7 @@ warm up the cache (so you should load your app afterwards):
 
 .. code-block:: terminal
 
-    $ APP_ENV=prod APP_DEBUG=0 rm -rf var/cache/prod/*
+    $ rm -rf var/cache/prod/*
 
 E) Other Things!
 ~~~~~~~~~~~~~~~~
