@@ -934,7 +934,7 @@ same task more than once::
                 ->with(
                     // ...
                 )
-                ->lock($this->lockFactory->createLock('my-lock')
+                ->lock($this->lockFactory->createLock('my-lock'));
         }
     }
 
