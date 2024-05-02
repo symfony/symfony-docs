@@ -76,8 +76,8 @@ If set to ``true``, the HTML input will be rendered as a native HTML5
 
     As HTML5 number format is normalized, it is incompatible with ``grouping`` option.
 
-model_type
-~~~~~~~~~~
+input
+~~~~~
 
 **type**: ``string`` **default**: ``float``
 
@@ -87,7 +87,7 @@ values stored in cents as integers) set this option to ``integer``.
 
 .. versionadded:: 7.1
 
-    The ``model_type`` option was introduced in Symfony 7.1.
+    The ``input`` option was introduced in Symfony 7.1.
 
 scale
 ~~~~~
