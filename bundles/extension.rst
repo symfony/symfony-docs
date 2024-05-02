@@ -75,7 +75,7 @@ This is the traditional way of loading service definitions in bundles. For new
 bundles it's recommended to :ref:`load your services in the main bundle class <bundle-load-services-bundle-class>`,
 but the traditional way of creating an extension class still works.
 
-A depdendency injection extension is defined as a class that follows these
+A dependency injection extension is defined as a class that follows these
 conventions (later you'll learn how to skip them if needed):
 
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
