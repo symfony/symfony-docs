@@ -419,7 +419,7 @@ optional validation constraints::
 You can then use the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString`
 attribute in your controller::
 
-    use App\Model\UserDto;
+    use App\Model\UserDTO;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 
@@ -454,7 +454,7 @@ The default status code returned if the validation fails is 404.
 If you need a valid DTO even when the request query string is empty, set a
 default value for your controller arguments::
 
-    use App\Model\UserDto;
+    use App\Model\UserDTO;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 
@@ -497,7 +497,7 @@ In this case, it is also possible to directly map this payload to your DTO by
 using the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload`
 attribute::
 
-    use App\Model\UserDto;
+    use App\Model\UserDTO;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
