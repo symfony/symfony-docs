@@ -2548,6 +2548,25 @@ the ``ROLE_SUPER_ADMIN`` permission:
         }
     }
 
+You can pass any controller argument to the #[IsGranted()] attribute by name:
+
+.. code-block:: php-attributes
+
+    // src/Controller/PostController.php
+    // ...
+
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class PostController extends AbstractController
+    {
+        #[Route('/posts/{id}/edit', name: 'post_edit')]
+        #[IsGranted('edit', 'post')]
+        public function edit(Post $post): Response
+        {
+            // ...
+        }
+    }
+
 If you want to use a custom status code instead of the default one (which
 is 403), this can be done by setting with the ``statusCode`` argument::
 
