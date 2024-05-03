@@ -422,6 +422,36 @@ Other Operators
 * ``?.`` (:ref:`null-safe operator <component-expression-null-safe-operator>`)
 * ``??`` (:ref:`null-coalescing operator <component-expression-null-coalescing-operator>`)
 
+Operators Precedence
+~~~~~~~~~~~~~~~~~~~~
+
+The following table summarize the operators and their associativity from the highest to the lowest precedence.
+It can be useful to understand the actual behavior of an expression.
+
+To avoid ambiguities it is a good practice to add parentheses.
+
+=============================================  =============
+Operators                                      associativity
+=============================================  =============
+``-``, ``+``                                   none
+``**``                                         right
+``*``, ``/``, ``%``                            left
+``not``, ``!``                                 none
+``~``                                          left
+``+``, ``-``                                   left
+``..``                                         left
+``==``, ``===``, ``!=``, ``!==``,              left
+``<``, ``>``, ``>=``, ``<=``,
+``not in``, ``in``, ``contains``,
+``starts with``, ``ends with``, ``matches``
+``&``                                          left
+``^``                                          left
+``|``                                          left
+``and``, ``&&``                                left
+``or``, ``||``                                 left
+=============================================  =============
+
+
 Built-in Objects and Variables
 ------------------------------
 
