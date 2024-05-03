@@ -410,7 +410,7 @@ optional validation constraints::
 You can then use the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString`
 attribute in your controller::
 
-    use App\Model\UserDto;
+    use App\Model\UserDTO;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 
