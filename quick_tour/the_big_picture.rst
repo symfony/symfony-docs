@@ -14,7 +14,7 @@ safe & easy!) and offers long-term support.
 Downloading Symfony
 -------------------
 
-First, make sure you've installed `Composer`_ and have PHP 8.2.0 or higher.
+First, make sure you've installed `Composer`_ and have PHP 8.2 or higher.
 
 Ready? In a terminal, run:
 
