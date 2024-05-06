@@ -1,15 +1,44 @@
 How to Implement CSRF Protection
 ================================
 
-CSRF - or `Cross-site request forgery`_ - is a method by which a malicious
-user attempts to make your legitimate users unknowingly submit data that
-they don't intend to submit.
+CSRF, or `Cross-site request forgery`_, is a type of attack where a malicious actor
+tricks a user into performing actions on a web application without their knowledge
+or consent.
 
-CSRF protection works by adding a hidden field to your form that contains a
-value that only you and your user know. This ensures that the user - not some
-other entity - is submitting the given data.
+The attack is based on the trust that a web application has in a user's browser
+(e.g. on session cookies). Here's a real example of a CSRF attack: a malicious
+actor could create the following website:
 
-Before using the CSRF protection, install it in your project:
+.. code-block:: html
+
+    <html>
+        <body>
+            <form action="https://example.com/settings/update-email" method="POST">
+                <input type="hidden" name="email" value="malicious-actor-address@some-domain.com"/>
+            </form>
+            <script>
+                document.forms[0].submit();
+            </script>
+
+            <!-- some content here to distract the user -->
+        </body>
+    </html>
+
+If you visit this website (e.g. by clicking on some email link or some social
+network post) and you were already logged in on the ``https://example.com`` site,
+the malicious actor could change the email address associated to your account
+(effectively taking over your account) without you even being aware of it.
+
+An effective way of preventing CSRF attacks is to use anti-CSRF tokens. These are
+unique tokens added to forms as hidden fields. The legit server validates them to
+ensure that the request originated from the expected source and not some other
+malicious website.
+
+Installation
+------------
+
+Symfony provides all the needed features to generate and validate the anti-CSRF
+tokens. Before using them, install this package in your project:
 
 .. code-block:: terminal
 
@@ -75,9 +104,9 @@ protected forms. As an alternative, you can:
 CSRF Protection in Symfony Forms
 --------------------------------
 
-Forms created with the Symfony Form component include CSRF tokens by default
-and Symfony checks them automatically, so you don't have to do anything to be
-protected against CSRF attacks.
+:doc:`Symfony Forms </forms>` include CSRF tokens by default and Symfony also
+checks them automatically for you. So, when using Symfony Forms, you don't have
+o do anything to be protected against CSRF attacks.
 
 .. _form-csrf-customization:
 
@@ -117,12 +146,15 @@ You can also customize the rendering of the CSRF form field creating a custom
 the field (e.g. define ``{% block csrf_token_widget %} ... {% endblock %}`` to
 customize the entire form field contents).
 
-CSRF Protection in Login Forms
-------------------------------
+.. _csrf-protection-in-login-forms:
 
-See :ref:`form_login-csrf` for a login form that is protected from CSRF
-attacks. You can also configure the
-:ref:`CSRF protection for the logout action <reference-security-logout-csrf>`.
+CSRF Protection in Login Form and Logout Action
+-----------------------------------------------
+
+Read the following:
+
+* :ref:`CSRF Protection in Login Forms <form_login-csrf>`;
+* :ref:`CSRF protection for the logout action <reference-security-logout-csrf>`.
 
 .. _csrf-protection-in-html-forms:
 
