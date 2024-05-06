@@ -292,7 +292,7 @@ get logged on the server as well as the emails being sent:
                 ->handler('grouped')
             ;
 
-            $monolog->handler('group')
+            $monolog->handler('grouped')
                 ->type('group')
                 ->members(['streamed', 'deduplicated'])
             ;
@@ -322,7 +322,7 @@ get logged on the server as well as the emails being sent:
             ;
         };
 
-This uses the ``group`` handler to send the messages to the two
+This uses the ``grouped`` handler to send the messages to the two
 group members, the ``deduplicated`` and the ``stream`` handlers. The messages will
 now be both written to the log file and emailed.
 
