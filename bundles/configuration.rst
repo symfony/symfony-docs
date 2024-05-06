@@ -94,7 +94,7 @@ class, you can add all the logic related to processing the configuration in that
             // use it directly to configure the service container (when defining an
             // extension class, you also have to do this merging and processing)
             $containerConfigurator->services()
-                ->get('acme.social.twitter_client')
+                ->get('acme_social.twitter_client')
                 ->arg(0, $config['twitter']['client_id'])
                 ->arg(1, $config['twitter']['client_secret'])
             ;
@@ -343,7 +343,7 @@ For example, imagine your bundle has the following example config:
             https://symfony.com/schema/dic/services/services-1.0.xsd"
     >
         <services>
-            <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
+            <service id="acme_social.twitter_client" class="Acme\SocialBundle\TwitterClient">
                 <argument></argument> <!-- will be filled in with client_id dynamically -->
                 <argument></argument> <!-- will be filled in with client_secret dynamically -->
             </service>
@@ -366,7 +366,7 @@ In your extension, you can load this and dynamically set its arguments::
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $definition = $container->getDefinition('acme.social.twitter_client');
+        $definition = $container->getDefinition('acme_social.twitter_client');
         $definition->replaceArgument(0, $config['twitter']['client_id']);
         $definition->replaceArgument(1, $config['twitter']['client_secret']);
     }
