@@ -558,7 +558,7 @@ Using Cache Tags
 In applications with many cache keys it could be useful to organize the data stored
 to be able to invalidate the cache more efficiently. One way to achieve that is to
 use cache tags. One or more tags could be added to the cache item. All items with
-the same key could be invalidated with one function call::
+the same tag could be invalidated with one function call::
 
     use Symfony\Contracts\Cache\ItemInterface;
     use Symfony\Contracts\Cache\TagAwareCacheInterface;
