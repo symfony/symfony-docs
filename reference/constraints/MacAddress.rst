@@ -19,18 +19,18 @@ Basic Usage
 -----------
 
 To use the MacAddress validator, apply it to a property on an object that
-will contain a host name.
+can contain a MAC address:
 
 .. configuration-block::
 
     .. code-block:: php-attributes
 
-        // src/Entity/Author.php
+        // src/Entity/Device.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class Author
+        class Device
         {
             #[Assert\MacAddress]
             protected string $mac;
@@ -39,7 +39,7 @@ will contain a host name.
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\Entity\Author:
+        App\Entity\Device:
             properties:
                 mac:
                     - MacAddress: ~
@@ -52,7 +52,7 @@ will contain a host name.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\Entity\Author">
+            <class name="App\Entity\Device">
                 <property name="max">
                     <constraint name="MacAddress"/>
                 </property>
@@ -61,13 +61,13 @@ will contain a host name.
 
     .. code-block:: php
 
-        // src/Entity/Author.php
+        // src/Entity/Device.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-        class Author
+        class Device
         {
             // ...
 
