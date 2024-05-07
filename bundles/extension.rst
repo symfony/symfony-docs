@@ -6,12 +6,73 @@ file used by the application but in the bundles themselves. This article
 explains how to create and load service files using the bundle directory
 structure.
 
+There are two different ways of doing it:
+
+#. :ref:`Load your services in the main bundle class <bundle-load-services-bundle-class>`:
+   this is recommended for new bundles and for bundles following the
+   :ref:`recommended directory structure <bundles-directory-structure>`;
+#. :ref:`Create an extension class to load the service configuration files <bundle-load-services-extension>`:
+   this was the traditional way of doing it, but nowadays it's only recommended for
+   bundles following the :ref:`legacy directory structure <bundles-legacy-directory-structure>`.
+
+.. _bundle-load-services-bundle-class:
+
+Loading Services Directly in your Bundle Class
+----------------------------------------------
+
+In bundles extending the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class, you can define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension`
+method to load service definitions from configuration files::
+
+    // ...
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeHelloBundle extends AbstractBundle
+    {
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // load an XML, PHP or YAML file
+            $container->import('../config/services.xml');
+
+            // you can also add or replace parameters and services
+            $container->parameters()
+                ->set('acme_hello.phrase', $config['phrase'])
+            ;
+
+            if ($config['scream']) {
+                $container->services()
+                    ->get('acme_hello.printer')
+                        ->class(ScreamingPrinter::class)
+                ;
+            }
+        }
+    }
+
+This method works similar to the ``Extension::load()`` method explained below,
+but it uses a new simpler API to define and import service configuration.
+
+.. note::
+
+    Contrary to the ``$configs`` parameter in ``Extension::load()``, the
+    ``$config`` parameter is already merged and processed by the
+    ``AbstractBundle``.
+
+.. note::
+
+    The ``loadExtension()`` is called only at compile time.
+
+.. _bundle-load-services-extension:
+
 Creating an Extension Class
 ---------------------------
 
-In order to load service configuration, you have to create a Dependency
-Injection (DI) Extension for your bundle. By default, the Extension class must
-follow these conventions (but later you'll learn how to skip them if needed):
+This is the traditional way of loading service definitions in bundles. For new
+bundles it's recommended to :ref:`load your services in the main bundle class <bundle-load-services-bundle-class>`,
+but the traditional way of creating an extension class still works.
+
+A dependency injection extension is defined as a class that follows these
+conventions (later you'll learn how to skip them if needed):
 
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
 
@@ -20,7 +81,7 @@ follow these conventions (but later you'll learn how to skip them if needed):
   :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension` class;
 
 * The name is equal to the bundle name with the ``Bundle`` suffix replaced by
-  ``Extension`` (e.g. the Extension class of the AcmeBundle would be called
+  ``Extension`` (e.g. the extension class of the AcmeBundle would be called
   ``AcmeExtension`` and the one for AcmeHelloBundle would be called
   ``AcmeHelloExtension``).
 
@@ -70,7 +131,7 @@ class name to underscores (e.g. ``AcmeHelloExtension``'s DI alias is
 ``acme_hello``).
 
 Using the ``load()`` Method
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``load()`` method, all services and parameters related to this extension
 will be loaded. This method doesn't get the actual container instance, but a
@@ -107,53 +168,6 @@ Using Configuration to Change the Services
 The Extension is also the class that handles the configuration for that
 particular bundle (e.g. the configuration in ``config/packages/<bundle_alias>.yaml``).
 To read more about it, see the ":doc:`/bundles/configuration`" article.
-
-Loading Services directly in your Bundle class
-----------------------------------------------
-
-Alternatively, you can define and load services configuration directly in a
-bundle class instead of creating a specific ``Extension`` class. You can do
-this by extending from :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
-and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension`
-method::
-
-    // ...
-    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-
-    class AcmeHelloBundle extends AbstractBundle
-    {
-        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
-        {
-            // load an XML, PHP or Yaml file
-            $containerConfigurator->import('../config/services.xml');
-
-            // you can also add or replace parameters and services
-            $containerConfigurator->parameters()
-                ->set('acme_hello.phrase', $config['phrase'])
-            ;
-
-            if ($config['scream']) {
-                $containerConfigurator->services()
-                    ->get('acme_hello.printer')
-                        ->class(ScreamingPrinter::class)
-                ;
-            }
-        }
-    }
-
-This method works similar to the ``Extension::load()`` method, but it uses
-a new API to define and import service configuration.
-
-.. note::
-
-    Contrary to the ``$configs`` parameter in ``Extension::load()``, the
-    ``$config`` parameter is already merged and processed by the
-    ``AbstractBundle``.
-
-.. note::
-
-    The ``loadExtension()`` is called only at compile time.
 
 Adding Classes to Compile
 -------------------------

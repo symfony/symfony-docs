@@ -704,7 +704,7 @@ attribute::
 
 It is common that a service accepts a closure with a specific signature.
 In this case, you can use the
-:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable` attribute
 to generate a closure with the same signature as a specific method of a service. When
 this closure is called, it will pass all its arguments to the underlying service
 function.  If the closure needs to be called more than once, the service instance
@@ -733,14 +733,14 @@ create extra instances of a non-shared service::
     }
 
 Finally, you can pass the ``lazy: true`` option to the
-:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable`
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
 attribute. By doing so, the callable will automatically be lazy, which means
 that the encapsulated service will be instantiated **only** at the
 closure's first call.
 
-:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireMethodOf`
-provides a simpler way of specifying the name of the service method by using
-the property name as method name::
+The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireMethodOf`
+attribute provides a simpler way of specifying the name of the service method
+by using the property name as method name::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -765,8 +765,8 @@ the property name as method name::
 
 .. versionadded:: 7.1
 
-    :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireMethodOf`
-    was introduced in Symfony 7.1.
+    The :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireMethodOf`
+    attribute was introduced in Symfony 7.1.
 
 .. _autowiring-calls:
 

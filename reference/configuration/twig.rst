@@ -38,8 +38,8 @@ autoescape_service
 
 **type**: ``string`` **default**: ``null``
 
-The escaping strategy applied by default to the template is determined during
-compilation time based on the filename of the template. This means for example
+The escaping strategy applied by default to the template (to prevent :ref:`XSS attacks <xss-attacks>`)
+is determined during compilation time based on the filename of the template. This means for example
 that the contents of a ``*.html.twig`` template are escaped for HTML and the
 contents of ``*.js.twig`` are escaped for JavaScript.
 
@@ -61,6 +61,10 @@ base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Twig\Template``
+
+.. deprecated:: 7.1
+
+    The ``base_template_class`` option is deprecated since Symfony 7.1.
 
 Twig templates are compiled into PHP classes before using them to render
 contents. This option defines the base class from which all the template classes

@@ -409,9 +409,11 @@ performance a bit:
             $framework->enabledLocales(['en', 'es']);
         };
 
-If some user makes requests with a locale not included in this option, the
-application won't display any error because Symfony will display contents using
-the fallback locale.
+An added bonus of defining the enabled locales is that they are automatically
+added as a requirement of the :ref:`special _locale parameter <routing-locale-parameter>`.
+For example, if you define this value as ``['ar', 'he', 'ja', 'zh']``, the
+``_locale`` routing parameter will have an ``ar|he|ja|zh`` requirement. If some
+user makes requests with a locale not included in this option, they'll see a 404 error.
 
 set_content_language_from_locale
 ................................
@@ -1804,7 +1806,7 @@ cookie_httponly
 This determines whether cookies should only be accessible through the HTTP
 protocol. This means that the cookie won't be accessible by scripting
 languages, such as JavaScript. This setting can effectively help to reduce
-identity theft through XSS attacks.
+identity theft through :ref:`XSS attacks <xss-attacks>`.
 
 gc_divisor
 ..........

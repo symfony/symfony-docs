@@ -82,6 +82,8 @@ of the bundle. Now that you've created the bundle, enable it::
 
 And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
+.. _bundles-directory-structure:
+
 Bundle Directory Structure
 --------------------------
 
@@ -113,6 +115,8 @@ to be adjusted if needed:
 
 ``translations/``
     Holds translations organized by domain and locale (e.g. ``AcmeBlogBundle.en.xlf``).
+
+.. _bundles-legacy-directory-structure:
 
 .. caution::
 

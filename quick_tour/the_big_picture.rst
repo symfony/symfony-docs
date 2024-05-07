@@ -39,7 +39,7 @@ Symfony application:
     ├─ var/
     └─ vendor/
 
-Can we already load the project in a browser? Yes! You can setup
+Can we already load the project in a browser? Yes! You can set up
 :doc:`Nginx or Apache </setup/web_server_configuration>` and configure their
 document root to be the ``public/`` directory. But, for development, it's better
 to :doc:`install the Symfony local web server </setup/symfony_server>` and run
@@ -63,20 +63,6 @@ web app, or a microservice. Symfony starts small, but scales with you.
 
 But before we go too far, let's dig into the fundamentals by building our first page.
 
-Start in ``config/routes.yaml``: this is where *we* can define the URL to our new
-page. Uncomment the example that already lives in the file:
-
-.. code-block:: yaml
-
-    # config/routes.yaml
-    index:
-        path: /
-        controller: 'App\Controller\DefaultController::index'
-
-This is called a *route*: it defines the URL to your page (``/``) and the "controller":
-the *function* that will be called whenever anyone goes to this URL. That function
-doesn't exist yet, so let's create it!
-
 In ``src/Controller``, create a new ``DefaultController`` class and an ``index``
 method inside::
 
@@ -84,9 +70,11 @@ method inside::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController
     {
+        #[Route('/', name: 'index')]
         public function index(): Response
         {
             return new Response('Hello!');
@@ -104,11 +92,21 @@ But the routing system is *much* more powerful. So let's make the route more int
 
 .. code-block:: diff
 
-      # config/routes.yaml
-      index:
-    -     path: /
-    +     path: /hello/{name}
-          controller: 'App\Controller\DefaultController::index'
+      // src/Controller/DefaultController.php
+      namespace App\Controller;
+
+      use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\Routing\Attribute\Route;
+
+      class DefaultController
+      {
+    -     #[Route('/', name: 'index')]
+    +     #[Route('/hello/{name}', name: 'index')]
+          public function index(): Response
+          {
+              return new Response('Hello!');
+          }
+      }
 
 The URL to this page has changed: it is *now* ``/hello/*``: the ``{name}`` acts
 like a wildcard that matches anything. And it gets better! Update the controller too:
@@ -120,9 +118,11 @@ like a wildcard that matches anything. And it gets better! Update the controller
       namespace App\Controller;
 
       use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\Routing\Attribute\Route;
 
       class DefaultController
       {
+          #[Route('/hello/{name}', name: 'index')]
     -     public function index()
     +     public function index(string $name): Response
           {
