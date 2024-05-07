@@ -1029,6 +1029,27 @@ have *one* importmap, so ``importmap()`` must be called exactly once.
 If, for some reason, you want to execute *only* ``checkout.js``
 and *not* ``app.js``, pass only ``checkout`` to ``importmap()``.
 
+Using a Content Security Policy (CSP)
+-------------------------------------
+
+If you're using a `Content Security Policy`_ (CSP) to prevent cross-site
+scripting attacks, the inline ``<script>`` tags rendered by the ``importmap()``
+function will likely violate that policy and will not be executed by the browser.
+
+To allow these scripts to run without disabling the security provided by
+the CSP, you can generate a secure random string for every request (called
+a *nonce*) and include it in the CSP header and in a ``nonce`` attribute on
+the ``<script>`` tags.
+The ``importmap()`` function accepts an optional second argument that can be
+used to pass attributes to the rendered ``<script>`` tags.
+You can use the `NelmioSecurityBundle`_ to generate the nonce and include
+it in the CSP header, and then pass the same nonce to the Twig function:
+
+.. code-block:: twig
+
+    {# the csp_nonce() function is defined by the NelmioSecurityBundle #}
+    {{ importmap('app', {'nonce': csp_nonce('script')}) }}
+
 The AssetMapper Component Caching System in dev
 -----------------------------------------------
 
@@ -1107,3 +1128,5 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 .. _`dist/css/bootstrap.min.css file`: https://www.jsdelivr.com/package/npm/bootstrap?tab=files&path=dist%2Fcss#tabRouteFiles
 .. _`dynamic import`: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import
 .. _`package.json configuration file`: https://docs.npmjs.com/creating-a-package-json-file
+.. _Content Security Policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _NelmioSecurityBundle: https://symfony.com/bundles/NelmioSecurityBundle/current/index.html#nonce-for-inline-script-handling
