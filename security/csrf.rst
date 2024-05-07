@@ -176,7 +176,7 @@ attribute on the controller action::
     // ...
 
     #[IsCsrfTokenValid('delete-item', tokenKey: 'token')]
-    public function delete(Request $request): Response
+    public function delete(): Response
     {
         // ... do something, like deleting an object
     }
