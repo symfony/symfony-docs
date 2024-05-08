@@ -589,84 +589,91 @@ using the ``type`` option of the attribute::
 
 .. _controller_map-uploaded-file:
 
-Mapping Uploaded File
-~~~~~~~~~~~~~~~~~~~~~
+Mapping Uploaded Files
+~~~~~~~~~~~~~~~~~~~~~~
 
-You can map ``UploadedFile``s to the controller arguments and optionally bind ``Constraints`` to them.
-The argument resolver fetches the ``UploadedFile`` based on the argument name.
-
-::
+Symfony provides an attribute called ``#[MapUploadedFile]`` to map one or more
+``UploadedFile`` objects to controller arguments::
 
     namespace App\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
     use Symfony\Component\Routing\Attribute\Route;
-    use Symfony\Component\Validator\Constraints as Assert;
 
-    #[Route('/user/picture', methods: ['PUT'])]
-    class ChangeUserPictureController
+    class UserController extends AbstractController
     {
-        public function _invoke(
-            #[MapUploadedFile([
-                new Assert\File(mimeTypes: ['image/png', 'image/jpeg']),
-                new Assert\Image(maxWidth: 3840, maxHeight: 2160)
-            ])]
-            UploadedFile $picture
+        #[Route('/user/picture', methods: ['PUT'])]
+        public function changePicture(
+            #[MapUploadedFile] UploadedFile $picture,
         ): Response {
             // ...
         }
     }
 
-.. tip::
-
-    The bound ``Constraints`` are performed before injecting the ``UploadedFile`` into the controller argument.
-    When a constraint violation is detected an ``HTTPException`` is thrown and the controller's
-    action is not executed.
-
-Mapping ``UploadedFile``s with no custom settings.
-
-.. code-block:: php-attributes
-
-    #[MapUploadedFile]
-    UploadedFile $document
-
-An ``HTTPException`` is thrown when the file is not submitted.
-You can skip this check by making the controller argument nullable.
+In this example, the associated :doc:`argument resolver <controller/value_resolver>`
+fetches the ``UploadedFile`` based on the argument name (``$picture``). If no file
+is submitted, an ``HttpException`` is thrown. You can change this by making the
+controller argument nullable:
 
 .. code-block:: php-attributes
 
     #[MapUploadedFile]
     ?UploadedFile $document
 
-.. code-block:: php-attributes
+The ``#[MapUploadedFile]`` attribute also allows to pass a list of constraints
+to apply to the uploaded file::
 
-    #[MapUploadedFile]
-    UploadedFile|null $document
+    namespace App\Controller;
 
-``UploadedFile`` collections must be mapped to array or variadic arguments.
-The bound ``Constraints`` will be applied to each file in the collection.
-If a constraint violation is detected to one of them an ``HTTPException`` is thrown.
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
+    use Symfony\Component\Routing\Attribute\Route;
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class UserController extends AbstractController
+    {
+        #[Route('/user/picture', methods: ['PUT'])]
+        public function changePicture(
+            #[MapUploadedFile([
+                new Assert\File(mimeTypes: ['image/png', 'image/jpeg']),
+                new Assert\Image(maxWidth: 3840, maxHeight: 2160),
+            ])]
+            UploadedFile $picture,
+        ): Response {
+            // ...
+        }
+    }
+
+The validation constraints are checked before injecting the ``UploadedFile`` into
+the controller argument. If there's a constraint violation, an ``HttpException``
+is thrown and the controller's action is not executed.
+
+If you need to upload a collection of files, map them to an array or a variadic
+argument. The given constraint will be applied to all files and if any of them
+fails, an ``HttpException`` is thrown:
 
 .. code-block:: php-attributes
 
     #[MapUploadedFile(new Assert\File(mimeTypes: ['application/pdf']))]
     array $documents
 
-.. code-block:: php-attributes
-
     #[MapUploadedFile(new Assert\File(mimeTypes: ['application/pdf']))]
     UploadedFile ...$documents
 
-Handling custom names.
+Use the ``name`` option to rename the uploaded file to a custom value:
 
 .. code-block:: php-attributes
 
     #[MapUploadedFile(name: 'something-else')]
     UploadedFile $document
 
-Changing the ``HTTP Status`` thrown when constraint violations are detected.
+In addition, you can change the status code of the HTTP exception thrown when
+there are constraint violations:
 
 .. code-block:: php-attributes
 
