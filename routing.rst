@@ -1001,8 +1001,8 @@ Mapping Parameters
 By default, the name of the variable part (``{slug}`` for example) is the
 argument injected name to the method (``$slug``).
 
-You can change this behavior and define mapping between variable part and
-argument name with ``{variable_part_name:argument_name}``:
+You can change this behavior and define a mapping between variable part and
+an argument name with ``{variable_part_name:argument_name}``:
 
 .. configuration-block::
 
@@ -1022,7 +1022,7 @@ argument name with ``{variable_part_name:argument_name}``:
             #[Route('/blog/{slug:article}', name: 'blog_show')]
             public function show(string $article): Response
             {
-                // $article will equal the dynamic part of the URL
+                // $article will be equal to the dynamic part of the URL
                 // e.g. at /blog/yay-routing, then $article='yay-routing'
 
                 // ...
