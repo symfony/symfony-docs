@@ -1768,7 +1768,7 @@ during a request::
 
             $this->assertSame(200, $client->getResponse()->getStatusCode());
 
-            /* @var InMemoryTransport $transport */
+            /** @var InMemoryTransport $transport */
             $transport = $this->getContainer()->get('messenger.transport.async_priority_normal');
             $this->assertCount(1, $transport->getSent());
         }
