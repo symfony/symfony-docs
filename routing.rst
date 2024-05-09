@@ -998,11 +998,11 @@ convert them automatically to their scalar values.
 Mapping Parameters
 ~~~~~~~~~~~~~~~~~~
 
-By default, the name of the variable part (``{slug}`` for example) is the
-argument injected name to the method (``$slug``).
+By default, the route parameter (``{slug}`` for example) is the name of the argument
+injected to the controller method (``$slug``).
 
-You can change this behavior and define a mapping between variable part and
-an argument name with ``{variable_part_name:argument_name}``:
+You can change this behavior and define a mapping between route parameter and
+an argument name with ``{route_parameter_name:controller_argument_name}``:
 
 .. configuration-block::
 
@@ -1019,11 +1019,11 @@ an argument name with ``{variable_part_name:argument_name}``:
         {
             // ...
 
-            #[Route('/blog/{slug:article}', name: 'blog_show')]
-            public function show(string $article): Response
+            #[Route('/blog/{slug:articleSlug}', name: 'blog_show')]
+            public function show(string $articleSlug): Response
             {
-                // $article will be equal to the dynamic part of the URL
-                // e.g. at /blog/yay-routing, then $article='yay-routing'
+                // $articleSlug will be equal to the dynamic part of the URL
+                // e.g. at /blog/yay-routing, then $articleSlug='yay-routing'
 
                 // ...
             }
@@ -1033,7 +1033,7 @@ an argument name with ``{variable_part_name:argument_name}``:
 
         # config/routes.yaml
         blog_show:
-            path:       /blog/{slug:article}
+            path:       /blog/{slug:articleSlug}
             controller: App\Controller\BlogController::show
 
     .. code-block:: xml
@@ -1045,7 +1045,7 @@ an argument name with ``{variable_part_name:argument_name}``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_show" path="/blog/{slug:article}"
+            <route id="blog_show" path="/blog/{slug:articleSlug}"
                    controller="App\Controller\BlogController::show"/>
         </routes>
 
@@ -1056,7 +1056,7 @@ an argument name with ``{variable_part_name:argument_name}``:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes): void {
-            $routes->add('blog_show', '/blog/{slug:article}')
+            $routes->add('blog_show', '/blog/{slug:articleSlug}')
                 ->controller([BlogController::class, 'show'])
             ;
         };
@@ -1079,11 +1079,11 @@ an array:
         {
             // ...
 
-            #[Route('/blog/{id:article}/{slug:article}', name: 'blog_show')]
-            public function show(array $article): Response
+            #[Route('/blog/{id:articleData}/{slug:articleData}', name: 'blog_show')]
+            public function show(array $articleData): Response
             {
-                // $article will equal the dynamic part of the URL
-                // e.g. at /blog/12/yay-routing, then $article=['id' => '12', 'slug' => 'yay-routing']
+                // $articleData will equal the dynamic part of the URL
+                // e.g. at /blog/12/yay-routing, then $articleData=['id' => '12', 'slug' => 'yay-routing']
 
                 // ...
             }
@@ -1093,7 +1093,7 @@ an array:
 
         # config/routes.yaml
         blog_show:
-            path:       /blog/{id:article}/{slug:article}
+            path:       /blog/{id:articleData}/{slug:articleData}
             controller: App\Controller\BlogController::show
 
     .. code-block:: xml
@@ -1105,7 +1105,7 @@ an array:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="blog_show" path="/blog/{id:article}/{slug:article}"
+            <route id="blog_show" path="/blog/{id:articleData}/{slug:articleData}"
                    controller="App\Controller\BlogController::show"/>
         </routes>
 
@@ -1116,7 +1116,7 @@ an array:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes): void {
-            $routes->add('blog_show', '/blog/{id:article}/{slug:article}')
+            $routes->add('blog_show', '/blog/{id:articleData}/{slug:articleData}')
                 ->controller([BlogController::class, 'show'])
             ;
         };
