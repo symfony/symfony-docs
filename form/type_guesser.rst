@@ -44,14 +44,14 @@ This interface requires four methods:
 
 Start by creating the class and these methods. Next, you'll learn how to fill each in::
 
-    // src/Form/TypeGuesser/PHPDocTypeGuesser.php
+    // src/Form/TypeGuesser/PhpDocTypeGuesser.php
     namespace App\Form\TypeGuesser;
 
     use Symfony\Component\Form\FormTypeGuesserInterface;
     use Symfony\Component\Form\Guess\TypeGuess;
     use Symfony\Component\Form\Guess\ValueGuess;
 
-    class PHPDocTypeGuesser implements FormTypeGuesserInterface
+    class PhpDocTypeGuesser implements FormTypeGuesserInterface
     {
         public function guessType(string $class, string $property): ?TypeGuess
         {
@@ -90,9 +90,9 @@ The ``TypeGuess`` constructor requires three options:
   type with the highest confidence is used.
 
 With this knowledge, you can implement the ``guessType()`` method of the
-``PHPDocTypeGuesser``::
+``PhpDocTypeGuesser``::
 
-    // src/Form/TypeGuesser/PHPDocTypeGuesser.php
+    // src/Form/TypeGuesser/PhpDocTypeGuesser.php
     namespace App\Form\TypeGuesser;
 
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -102,7 +102,7 @@ With this knowledge, you can implement the ``guessType()`` method of the
     use Symfony\Component\Form\Guess\Guess;
     use Symfony\Component\Form\Guess\TypeGuess;
 
-    class PHPDocTypeGuesser implements FormTypeGuesserInterface
+    class PhpDocTypeGuesser implements FormTypeGuesserInterface
     {
         public function guessType(string $class, string $property): ?TypeGuess
         {
@@ -188,7 +188,7 @@ and tag it with ``form.type_guesser``:
         services:
             # ...
 
-            App\Form\TypeGuesser\PHPDocTypeGuesser:
+            App\Form\TypeGuesser\PhpDocTypeGuesser:
                 tags: [form.type_guesser]
 
     .. code-block:: xml
@@ -201,7 +201,7 @@ and tag it with ``form.type_guesser``:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="App\Form\TypeGuesser\PHPDocTypeGuesser">
+                <service id="App\Form\TypeGuesser\PhpDocTypeGuesser">
                     <tag name="form.type_guesser"/>
                 </service>
             </services>
@@ -210,9 +210,9 @@ and tag it with ``form.type_guesser``:
     .. code-block:: php
 
         // config/services.php
-        use App\Form\TypeGuesser\PHPDocTypeGuesser;
+        use App\Form\TypeGuesser\PhpDocTypeGuesser;
 
-        $container->register(PHPDocTypeGuesser::class)
+        $container->register(PhpDocTypeGuesser::class)
             ->addTag('form.type_guesser')
         ;
 
@@ -223,12 +223,12 @@ and tag it with ``form.type_guesser``:
     :method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuessers` of
     the ``FormFactoryBuilder`` to register new type guessers::
 
-        use App\Form\TypeGuesser\PHPDocTypeGuesser;
+        use App\Form\TypeGuesser\PhpDocTypeGuesser;
         use Symfony\Component\Form\Forms;
 
         $formFactory = Forms::createFormFactoryBuilder()
             // ...
-            ->addTypeGuesser(new PHPDocTypeGuesser())
+            ->addTypeGuesser(new PhpDocTypeGuesser())
             ->getFormFactory();
 
         // ...
