@@ -213,6 +213,32 @@ attribute on the controller action::
         // ... do something, like deleting an object
     }
 
+Suppose you want a CSRF token per item, so in the template you have something like the following:
+
+.. code-block:: html+twig
+
+    <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
+        {# the argument of csrf_token() is a dynamic id string used to generate the token #}
+        <input type="hidden" name="token" value="{{ csrf_token('delete-item-' ~ post.id) }}">
+
+        <button type="submit">Delete item</button>
+    </form>
+
+The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
+attribute also accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression`
+object evaluated to the id::
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+    // ...
+
+    #[IsCsrfTokenValid(new Expression('"delete-item-" ~ args["post"].id'), tokenKey: 'token')]
+    public function delete(Post $post): Response
+    {
+        // ... do something, like deleting an object
+    }
+
 .. versionadded:: 7.1
 
     The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
