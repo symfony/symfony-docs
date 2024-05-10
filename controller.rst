@@ -392,7 +392,7 @@ optional validation constraints::
 
     use Symfony\Component\Validator\Constraints as Assert;
 
-    class UserDTO
+    class UserDto
     {
         public function __construct(
             #[Assert\NotBlank]
@@ -410,14 +410,14 @@ optional validation constraints::
 You can then use the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString`
 attribute in your controller::
 
-    use App\Model\UserDTO;
+    use App\Model\UserDto;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 
     // ...
 
     public function dashboard(
-        #[MapQueryString] UserDTO $userDto
+        #[MapQueryString] UserDto $userDto
     ): Response
     {
         // ...
@@ -434,7 +434,7 @@ HTTP status to return if the validation fails::
         #[MapQueryString(
             validationGroups: ['strict', 'edit'],
             validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY
-        )] UserDTO $userDto
+        )] UserDto $userDto
     ): Response
     {
         // ...
@@ -445,14 +445,14 @@ The default status code returned if the validation fails is 404.
 If you need a valid DTO even when the request query string is empty, set a
 default value for your controller arguments::
 
-    use App\Model\UserDTO;
+    use App\Model\UserDto;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 
     // ...
 
     public function dashboard(
-        #[MapQueryString] UserDTO $userDto = new UserDTO()
+        #[MapQueryString] UserDto $userDto = new UserDto()
     ): Response
     {
         // ...
@@ -479,14 +479,14 @@ In this case, it is also possible to directly map this payload to your DTO by
 using the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload`
 attribute::
 
-    use App\Model\UserDTO;
+    use App\Model\UserDto;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 
     // ...
 
     public function dashboard(
-        #[MapRequestPayload] UserDTO $userDto
+        #[MapRequestPayload] UserDto $userDto
     ): Response
     {
         // ...
@@ -501,7 +501,7 @@ your DTO::
             serializationContext: ['...'],
             resolver: App\Resolver\UserDtoResolver
         )]
-        UserDTO $userDto
+        UserDto $userDto
     ): Response
     {
         // ...
@@ -519,7 +519,7 @@ the validation fails as well as supported payload formats::
             acceptFormat: 'json',
             validationGroups: ['strict', 'read'],
             validationFailedStatusCode: Response::HTTP_NOT_FOUND
-        )] UserDTO $userDto
+        )] UserDto $userDto
     ): Response
     {
         // ...
@@ -539,16 +539,16 @@ Make sure to install `phpstan/phpdoc-parser`_ and `phpdocumentor/type-resolver`_
 if you want to map a nested array of specific DTOs::
 
     public function dashboard(
-        #[MapRequestPayload()] EmployeesDTO $employeesDto
+        #[MapRequestPayload()] EmployeesDto $employeesDto
     ): Response
     {
         // ...
     }
 
-    final class EmployeesDTO
+    final class EmployeesDto
     {
         /**
-         * @param UserDTO[] $users
+         * @param UserDto[] $users
          */
         public function __construct(
             public readonly array $users = []
