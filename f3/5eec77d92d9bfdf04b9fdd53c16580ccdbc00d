@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by rcsofttech85 at 2024-05-08T07:21:13Z
+
+you may consider changing your code to this...
+
+```php
+    #[IsCsrfTokenValid(new Expression('"delete-item-" ~ args["post"].id'), tokenKey: 'token')]
+    public function delete(Post $post): Response
+    {
+        // ... do something, like deleting an object
+    }
+```
+post argument is mandatory in this case
+
+---------------------------------------------------------------------------
+
+by alamirault at 2024-05-08T08:35:54Z
+
+You're right, updated
