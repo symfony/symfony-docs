@@ -78,16 +78,22 @@ The following is the recommended directory structure of an AcmeBlogBundle:
     ├── LICENSE
     └── README.md
 
-This directory structure requires to configure the bundle path to its root
-directory as follows::
+.. note::
 
-    class AcmeBlogBundle extends Bundle
-    {
-        public function getPath(): string
+    This directory structure is used by default when your bundle class extends
+    the recommended :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`.
+    If your bundle extends the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`
+    class, you have to override the ``getPath()`` method as follows::
+
+        use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+        class AcmeBlogBundle extends Bundle
         {
-            return \dirname(__DIR__);
+            public function getPath(): string
+            {
+                return \dirname(__DIR__);
+            }
         }
-    }
 
 **The following files are mandatory**, because they ensure a structure convention
 that automated tools can rely on:
