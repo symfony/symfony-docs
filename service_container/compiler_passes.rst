@@ -75,9 +75,9 @@ method in the extension)::
 
     use App\DependencyInjection\Compiler\CustomPass;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-    class MyBundle extends Bundle
+    class MyBundle extends AbstractBundle
     {
         public function build(ContainerBuilder $container): void
         {
