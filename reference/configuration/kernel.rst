@@ -256,7 +256,7 @@ method of the kernel class, which you can override to return a different value.
 ``kernel.project_dir``
 ----------------------
 
-**type**: ``string`` **default**: the directory of the project ``composer.json``
+**type**: ``string`` **default**: the directory of the project's ``composer.json``
 
 This parameter stores the absolute path of the root directory of your Symfony application,
 which is used by applications to perform operations with file paths relative to
@@ -283,6 +283,8 @@ have deleted it entirely (for example in the production servers), override the
 
         public function getProjectDir(): string
         {
+            // when defining a hardcoded string, don't add the triailing slash to the path
+            // e.g. '/home/user/my_project', '/app', '/var/www/example.com'
             return \dirname(__DIR__);
         }
     }
