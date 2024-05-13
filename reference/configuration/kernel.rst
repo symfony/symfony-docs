@@ -261,11 +261,13 @@ method of the kernel class, which you can override to return a different value.
 ``kernel.project_dir``
 ----------------------
 
-**type**: ``string`` **default**: the directory of the project ``composer.json``
+**type**: ``string`` **default**: the directory of the project's ``composer.json``
 
 This parameter stores the absolute path of the root directory of your Symfony application,
 which is used by applications to perform operations with file paths relative to
 the project's root directory.
+
+Example: `/home/user/my_project`
 
 By default, its value is calculated automatically as the directory where the
 main ``composer.json`` file is stored. This value is also exposed via the
