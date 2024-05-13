@@ -1,0 +1,48 @@
+---------------------------------------------------------------------------
+
+by homersimpsons at 2024-05-03T21:10:26Z
+
+I'm not sure that such a big table is best. I can spread it over 2 columns, or maybe even group all operators that have the same precedence.
+
+Also I think I should split between unary and binary operators.
+
+---------------------------------------------------------------------------
+
+by homersimpsons at 2024-05-03T21:32:43Z
+
+> I'm not sure that such a big table is best. I can spread it over 2 columns, or maybe even group all operators that have the same precedence.
+
+So I grouped operators by precedence in a second commit.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-05-08T11:13:32Z
+
+@homersimpsons thanks for this. I think it's a good idea to display this information.
+
+However, I'm not entirely convinced by these two separate tables. I looked into how other languages solve this:
+
+* https://www.php.net/manual/en/language.operators.precedence.php
+* https://doc.rust-lang.org/reference/expressions.html#expression-precedence
+* https://go.dev/ref/spec#Operator_precedence
+* https://learn.microsoft.com/en-us/cpp/cpp/cpp-built-in-operators-precedence-and-associativity?view=msvc-170#c-operator-precedence-and-associativity-table
+
+All of them use a single table and some of these also display the associativity of the operator.
+
+So, maybe we can do this:
+
+* Only show one table
+* Don't show the actual numeric value of the precedence
+* List operators in rows, from most to least precedence
+* Also show the associativity ?
+
+---------------------------------------------------------------------------
+
+by homersimpsons at 2024-05-11T13:25:36Z
+
+> - Only show one table
+> - Don't show the actual numeric value of the precedence
+> - List operators in rows, from most to least precedence
+> - Also show the associativity
+
+@javiereguiluz I just did the changes
