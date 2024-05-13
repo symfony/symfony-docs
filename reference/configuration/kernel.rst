@@ -47,7 +47,7 @@ charset::
 Project Directory
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: the directory of the project ``composer.json``
+**type**: ``string`` **default**: the directory of the project's ``composer.json``
 
 This returns the absolute path of the root directory of your Symfony project,
 which is used by applications to perform operations with file paths relative to
@@ -75,6 +75,8 @@ method to return the right project directory::
 
         public function getProjectDir(): string
         {
+            // when defining a hardcoded string, don't add the trailing slash to the path
+            // e.g. '/home/user/my_project', '/app', '/var/www/example.com'
             return \dirname(__DIR__);
         }
     }
