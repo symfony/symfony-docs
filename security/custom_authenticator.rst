@@ -154,7 +154,7 @@ can define what happens in these cases:
 ``onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response``
     If the user is authenticated, this method is called with the
     authenticated ``$token``. This method can return a response (e.g.
-    redirect the user to the homepage).
+    redirect the user to some page).
 
     If ``null`` is returned, the request continues like normal (i.e. the
     controller matching the login route is called). This is useful for API
