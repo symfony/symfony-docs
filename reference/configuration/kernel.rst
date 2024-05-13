@@ -267,8 +267,6 @@ This parameter stores the absolute path of the root directory of your Symfony ap
 which is used by applications to perform operations with file paths relative to
 the project's root directory.
 
-Example: `/home/user/my_project`
-
 By default, its value is calculated automatically as the directory where the
 main ``composer.json`` file is stored. This value is also exposed via the
 :method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir` method of the
@@ -290,6 +288,8 @@ have deleted it entirely (for example in the production servers), override the
 
         public function getProjectDir(): string
         {
+            // when defining a hardcoded string, don't add the triailing slash to the path
+            // e.g. '/home/user/my_project', '/app', '/var/www/example.com'
             return \dirname(__DIR__);
         }
     }
