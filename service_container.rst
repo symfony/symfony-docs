@@ -1508,6 +1508,81 @@ implementing ``MessageFormatterInterface`` that will forward calls of
 ``MessageFormatterInterface::format()`` to your underlying service's method
 ``MessageUtils::format()``, with all its arguments.
 
+Injecting Anonymous Services / Inlined Services
+-----------------------------------------------
+
+In some cases it may happen where you'd want to inject a service that requires
+a specified parameter that can't be autowired.
+
+Let's take this here as an example::
+
+    class SomeSourceAwareLogger
+    {
+        public function __construct(
+            private readonly LoggerInterface $logger,
+            private readonly string $someSource,
+        ) {
+        }
+
+        public function error(string $someMessage): void
+        {
+            $this->logger->error(
+                sprintf('[%s]: %s', $this->someSource, $someMessage),
+            );
+        }
+    }
+
+Let's assume we'd want to provide a source depending on wherever we are to decorate
+our log messages with that information. We could also pass the source as a argument
+to a log method but that would cause unnecessary duplication / usages whenever we'd
+want to log something.
+
+For these cases there's now the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireInline`
+attribute that can be used to autowire a service / class and inject a new instance
+of the requested service.
+Let's see it in action::
+
+    namespace App\Service;
+
+    use App\Service\SomeSourceAwareLogger;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireInline;
+
+    class SomeService
+    {
+        public function __construct(
+            #[AutowireInline(SomeSourceAwareLogger::class, [
+                '$someSource' => 'SomeSelfDefinedSource',
+            ])]
+            private SomeSourceAwareLogger $logger1,
+            #[AutowireInline(SomeSourceAwareLogger::class, [
+                '$someSource' => 'SomeOtherSource',
+            ])]
+            private SomeSourceAwareLogger $logger2,
+        ) {
+        }
+
+        public function doSomething(): void
+        {
+            try {
+                // ...
+            } catch (\Exception $exception) {
+                $this->logger1->error($exception->getMessage());
+            }
+        }
+
+        public function doSomethingDifferent(): void
+        {
+            try {
+                // ...
+            } catch (\Exception $exception) {
+                $this->logger2->error($exception->getMessage());
+            }
+        }
+    }
+
+Instead of using the ``#[AutowireInline]`` attribute, you can still achieve
+the same by using the :ref:`configuration files <anonymous-services>`.
+
 Learn more
 ----------
 

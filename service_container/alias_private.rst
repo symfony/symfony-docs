@@ -255,6 +255,8 @@ The message is actually a message template, which replaces occurrences of the
 ``%alias_id%`` placeholder by the service alias id. You **must** have at least
 one occurrence of the ``%alias_id%`` placeholder in your template.
 
+.. _anonymous-services:
+
 Anonymous Services
 ------------------
 
