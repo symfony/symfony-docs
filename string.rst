@@ -222,8 +222,8 @@ Methods to Change Case
     u('foo BAR bάz')->localeUpper('el'); // 'FOO BAR BAZ'
 
     // changes all graphemes/code points to "title case"
-    u('foo ijssel')->title();     // 'Foo ijssel'
-    u('foo ijssel')->title(true); // 'Foo Ijssel'
+    u('foo ijssel')->title();               // 'Foo ijssel'
+    u('foo ijssel')->title(allWords: true); // 'Foo Ijssel'
     // changes all graphemes/code points to "title case" according to locale-specific case mappings
     u('foo ijssel')->localeTitle('en'); // 'Foo ijssel'
     u('foo ijssel')->localeTitle('nl'); // 'Foo IJssel'
@@ -269,20 +269,20 @@ Methods to Append and Prepend
     u('UserControllerController')->ensureEnd('Controller'); // 'UserController'
 
     // returns the contents found before/after the first occurrence of the given string
-    u('hello world')->before('world');   // 'hello '
-    u('hello world')->before('o');       // 'hell'
-    u('hello world')->before('o', true); // 'hello'
+    u('hello world')->before('world');                  // 'hello '
+    u('hello world')->before('o');                      // 'hell'
+    u('hello world')->before('o', includeNeedle: true); // 'hello'
 
-    u('hello world')->after('hello');   // ' world'
-    u('hello world')->after('o');       // ' world'
-    u('hello world')->after('o', true); // 'o world'
+    u('hello world')->after('hello');                  // ' world'
+    u('hello world')->after('o');                      // ' world'
+    u('hello world')->after('o', includeNeedle: true); // 'o world'
 
     // returns the contents found before/after the last occurrence of the given string
-    u('hello world')->beforeLast('o');       // 'hello w'
-    u('hello world')->beforeLast('o', true); // 'hello wo'
+    u('hello world')->beforeLast('o');                      // 'hello w'
+    u('hello world')->beforeLast('o', includeNeedle: true); // 'hello wo'
 
-    u('hello world')->afterLast('o');       // 'rld'
-    u('hello world')->afterLast('o', true); // 'orld'
+    u('hello world')->afterLast('o');                      // 'rld'
+    u('hello world')->afterLast('o', includeNeedle: true); // 'orld'
 
 Methods to Pad and Trim
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -395,17 +395,17 @@ Methods to Join, Split, Truncate and Reverse
     u('Lorem Ipsum')->truncate(80);            // 'Lorem Ipsum'
     // the second argument is the character(s) added when a string is cut
     // (the total length includes the length of this character(s))
-    u('Lorem Ipsum')->truncate(8, '…');        // 'Lorem I…'
+    u('Lorem Ipsum')->truncate(8, '…');             // 'Lorem I…'
     // if the third argument is false, the last word before the cut is kept
     // even if that generates a string longer than the desired length
-    u('Lorem Ipsum')->truncate(8, '…', false); // 'Lorem Ipsum'
+    u('Lorem Ipsum')->truncate(8, '…', cut: false); // 'Lorem Ipsum'
 
 ::
 
     // breaks the string into lines of the given length
-    u('Lorem Ipsum')->wordwrap(4);             // 'Lorem\nIpsum'
+    u('Lorem Ipsum')->wordwrap(4);                  // 'Lorem\nIpsum'
     // by default it breaks by white space; pass TRUE to break unconditionally
-    u('Lorem Ipsum')->wordwrap(4, "\n", true); // 'Lore\nm\nIpsu\nm'
+    u('Lorem Ipsum')->wordwrap(4, "\n", cut: true); // 'Lore\nm\nIpsu\nm'
 
     // replaces a portion of the string with the given contents:
     // the second argument is the position where the replacement starts;
@@ -419,7 +419,7 @@ Methods to Join, Split, Truncate and Reverse
     u('0123456789')->chunk(3);  // ['012', '345', '678', '9']
 
     // reverses the order of the string contents
-    u('foo bar')->reverse(); // 'rab oof'
+    u('foo bar')->reverse();  // 'rab oof'
     u('さよなら')->reverse(); // 'らなよさ'
 
 Methods Added by ByteString
