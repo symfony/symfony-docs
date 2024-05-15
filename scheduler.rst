@@ -634,7 +634,7 @@ being transferred and processed by its handler::
             return $this->schedule ??= (new Schedule())
                 ->with(
                     // ...
-                );
+                )
                 ->before(function(PreRunEvent $event) {
                     $message = $event->getMessage();
                     $messageContext = $event->getMessageContext();
@@ -647,13 +647,13 @@ being transferred and processed by its handler::
 
                     // allow to call the ShouldCancel() and avoid the message to be handled
                         $event->shouldCancel(true);
-                }
+                })
                 ->after(function(PostRunEvent $event) {
                     // Do what you want
-                }
+                })
                 ->onFailure(function(FailureEvent $event) {
                     // Do what you want
-                }
+                });
         }
     }
 

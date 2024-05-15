@@ -329,8 +329,8 @@ as follows:
 Build, Versioning & More Advanced CSS, JavaScript and Image Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For help building, versioning and minifying your JavaScript and
-CSS assets in a modern way, read about :doc:`Symfony's Asset Mapper </frontend>`.
+For help building and versioning your JavaScript and
+CSS assets in a modern way, read about :doc:`Symfony's AssetMapper </frontend>`.
 
 .. _twig-app-variable:
 
@@ -1077,7 +1077,7 @@ JavaScript library.
 
 First, include the `hinclude.js`_ library in your page
 :ref:`linking to it <templates-link-to-assets>` from the template or adding it
-to your application JavaScript :doc:`using Webpack Encore </frontend>`.
+to your application JavaScript :doc:`using AssetMapper </frontend>`.
 
 As the embedded content comes from another page (or controller for that matter),
 Symfony uses a version of the standard ``render()`` function to configure
