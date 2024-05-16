@@ -1205,10 +1205,6 @@ Option                          Description                                     
                                 following: ``<![CDATA[...]]>``
 ==============================  =================================================  ==========================
 
-.. versionadded:: 6.4
-
-    The `cdata_wrapping` option was introduced in Symfony 6.4.
-
 Example with custom ``context``::
 
     use Symfony\Component\Serializer\Encoder\XmlEncoder;
