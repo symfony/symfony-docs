@@ -1,0 +1,67 @@
+---------------------------------------------------------------------------
+
+by AndoniLarz at 2024-04-29T08:09:40Z
+
+Hi @xabbuh @OskarStark , I fixed the conflicts and updated the context option name following the code that has been merged.
+Does it look good to you ?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-29T08:44:27Z
+
+Please target 7.1 branch for now, thanks
+
+---------------------------------------------------------------------------
+
+by AndoniLarz at 2024-04-29T08:55:24Z
+
+> Please target 7.1 branch for now, thanks
+
+Even though the feature has been added in 6.4 ?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-29T09:04:02Z
+
+> Even though the feature has been added in 6.4 ?
+
+Ah sorry this is about another option. Sorry I mixed things up. No in this car 6.4 is fine, but a versionadded would be helpful at all:
+
+```
+
+.. versionadded:: 6.4
+
+    The `cdata_wrapping` option was introduced in Symfony 6.4.
+
+```
+
+---------------------------------------------------------------------------
+
+by AndoniLarz at 2024-04-29T09:29:01Z
+
+> > Even though the feature has been added in 6.4 ?
+>
+> Ah sorry this is about another option. Sorry I mixed things up. No in this car 6.4 is fine, but a versionadded would be helpful at all:
+>
+> ```
+>
+> .. versionadded:: 6.4
+>
+>     The `cdata_wrapping` option was introduced in Symfony 6.4.
+> ```
+
+Alright no problem. I'll make the changes soon
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-05-15T03:11:11Z
+
+Open for finishing this PR by handling my comments?
+
+---------------------------------------------------------------------------
+
+by AndoniLarz at 2024-05-15T12:30:54Z
+
+> Open for finishing this PR by handling my comments?
+
+It should be good now :smile:
