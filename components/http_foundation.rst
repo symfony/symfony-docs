@@ -729,7 +729,7 @@ The ``JsonResponse`` class sets the ``Content-Type`` header to
     Only methods that respond to GET requests are vulnerable to XSSI 'JSON Hijacking'.
     Methods responding to POST requests only remain unaffected.
 
-.. danger::
+.. warning::
 
     The ``JsonResponse`` constructor exhibits non-standard JSON encoding behavior
     and will treat ``null`` as an empty object if passed as a constructor argument,
