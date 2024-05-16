@@ -1200,10 +1200,16 @@ Option                          Description                                     
 ``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
                                 generated XML
 ``cdata_wrapping``              If set to false, will not wrap any value           ``true``
-                                containing one of the following characters (
-                                ``<``, ``>``, ``&``) in `a CDATA section`_ like
-                                following: ``<![CDATA[...]]>``
+                                matching the ``cdata_wrapping_pattern`` regex in
+                                `a CDATA section`_ like following:
+                                ``<![CDATA[...]]>``
+``cdata_wrapping_pattern``      A regular expression pattern to determine if a     ``/[<>&]/``
+                                value should be wrapped in a CDATA section
 ==============================  =================================================  ==========================
+
+.. versionadded:: 7.1
+
+    The `cdata_wrapping_pattern` option was introduced in Symfony 7.1.
 
 Example with custom ``context``::
 
