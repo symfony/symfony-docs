@@ -88,6 +88,13 @@ Financial and other Number Constraints
 * :doc:`Issn </reference/constraints/Issn>`
 * :doc:`Isin </reference/constraints/Isin>`
 
+Doctrine Constraints
+~~~~~~~~~~~~~~~~~~~~
+
+* :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
+* :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`
+
 Other Constraints
 ~~~~~~~~~~~~~~~~~
 
@@ -103,6 +110,3 @@ Other Constraints
 * :doc:`Traverse </reference/constraints/Traverse>`
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
-* :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
-* :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
-* :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`
