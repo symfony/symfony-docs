@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-05-15T03:12:08Z
+
+https://github.com/symfony/symfony-docs/pull/18155 should be merged first
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-05-15T03:12:43Z
+
+Please add a versionadded directive for your new option
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-05-16T05:15:07Z
+
+> https://github.com/symfony/symfony-docs/pull/18155 should be merged first
+
+Done, please rebase
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-05-16T11:22:39Z
+
+btw I fixed the DOCtor-RST build. I should be green after another rebase
