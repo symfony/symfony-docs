@@ -97,7 +97,7 @@ You can run tests using the ``bin/phpunit`` command:
 .. tip::
 
     In large test suites, it can make sense to create subdirectories for
-    each type of tests (e.g. ``tests/Unit/`` and ``tests/Functional/``).
+    each type of tests (e.g. ``tests/Unit/``, ``tests/Integration/`` and ``tests/Application/``).
 
 .. _integration-tests:
 
