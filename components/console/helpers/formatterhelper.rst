@@ -64,8 +64,9 @@ block will be formatted with more padding (one blank line above and below the
 messages and 2 spaces on the left and right).
 
 The exact "style" you use in the block is up to you. In this case, you're using
-the pre-defined ``error`` style, but there are other styles, or you can create
-your own. See :doc:`/console/coloring`.
+the pre-defined ``error`` style, but there are other styles (``info``,
+``comment``, ``question``), or you can create your own.
+See :doc:`/console/coloring`.
 
 Print Truncated Messages
 ------------------------
@@ -87,7 +88,7 @@ And the output will be:
 
     This is...
 
-The message is truncated to the given length, then the suffix is appended to end
+The message is truncated to the given length, then the suffix is appended to the end
 of that string.
 
 Negative String Length
@@ -109,7 +110,7 @@ Custom Suffix
 
 By default, the ``...`` suffix is used. If you wish to use a different suffix,
 pass it as the third argument to the method.
-The suffix is always appended, unless truncate length is longer than a message
+The suffix is always appended, unless truncated length is longer than a message
 and a suffix length.
 If you don't want to use suffix at all, pass an empty string::
 
