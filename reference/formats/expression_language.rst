@@ -446,9 +446,9 @@ Operators                                                associativity
 ``~``                                                    left
 ``+``, ``-``                                             left
 ``..``                                                   left
-``==``, ``===``, ``!=``, ``!==``,                        left
-``<``, ``>``, ``>=``, ``<=``,
-``not in``, ``in``, ``contains``,
+``==``, ``===``, ``!=``, ``!==``, \                      left
+``<``, ``>``, ``>=``, ``<=``, \
+``not in``, ``in``, ``contains``, \
 ``starts with``, ``ends with``, ``matches``
 ``&``                                                    left
 ``^``                                                    left
