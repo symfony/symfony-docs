@@ -555,6 +555,46 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     You can also test a whole console application by using
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`.
 
+    Here an example of a test using this class::
+
+        use Symfony\Bundle\FrameworkBundle\Console\Application;
+        use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+        use Symfony\Component\Console\Tester\ApplicationTester;
+        use Symfony\Component\Console\Tester\CommandTester;
+
+        class WelcomeCommandTest extends KernelTestCase
+        {
+            public function testPerson(): void
+            {
+                self::bootKernel();
+                $application = new Application(self::$kernel);
+                $application->setAutoExit(false);
+
+                $applicationTester = new ApplicationTester($application);
+
+                $input = [
+                    // Pass the command name
+                    'command' => 'app:welcome-person',
+                    
+                    // Pass the different arguments
+                    'firstName' => 'Michael',
+                    'lastName' => 'Jackson',
+                    'hobbies' => ['singing', 'dancing']
+                ];
+
+                // Call run to launch the application
+                $applicationTester->run($input);
+
+                $applicationTester->assertCommandIsSuccessful();
+
+                $output = $applicationTester->getDisplay();
+
+                // Here $output value is "The person is Michael Jackson and his hobbies are the following singing and dancing."
+                $this->assertStringContainsString('Michael Jackson', $output);
+                $this->assertStringContainsString('singing and dancing', $output);
+            }
+        }
+
 .. caution::
 
     When testing commands using the ``CommandTester`` class, console events are
@@ -566,7 +606,7 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     When testing commands using the :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`
     class, don't forget to disable the auto exit flag::
 
-        $application = new Application();
+        $application = new Application(self::$kernel);
         $application->setAutoExit(false);
 
         $tester = new ApplicationTester($application);
