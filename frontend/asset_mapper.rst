@@ -792,6 +792,12 @@ files) with component, as those must be used in a build system. See the
 `UX Vue.js Documentation`_ for more details about using with the AssetMapper
 component.
 
+Can I lint and format my code?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Yes! You can use `kocal/biome-js-bundle`_ to lint and format your front assets.
+It's ultra-fast and requires no configuration to handle your JavaScript, TypeScript, CSS, etc. files.
+
 .. _asset-mapper-ts:
 
 Using TypeScript
@@ -1163,3 +1169,4 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 .. _`package.json configuration file`: https://docs.npmjs.com/creating-a-package-json-file
 .. _Content Security Policy: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 .. _NelmioSecurityBundle: https://symfony.com/bundles/NelmioSecurityBundle/current/index.html#nonce-for-inline-script-handling
+.. _kocal/biome-js-bundle: https://github.com/Kocal/BiomeJsBundle
