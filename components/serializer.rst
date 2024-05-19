@@ -1075,7 +1075,7 @@ Option                  Description                                            D
 ``csv_escape_char``     Sets the escape character (at most one character)      empty string
 ``csv_key_separator``   Sets the separator for array's keys during its         ``.``
                         flattening
-``csv_headers``         Sets the order of the header and data columns          ``[]``, inferred from input data's keys
+``csv_headers``         Sets the header labels and the order of the columns    ``[]``, inferred from input data's keys
                         E.g.: if ``$data = ['c' => 3, 'a' => 1, 'b' => 2]``
                         and ``$options = ['csv_headers' => ['Label A' => 'a',
                         'b', 'Label C' => 'c']]``
