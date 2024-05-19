@@ -1075,11 +1075,12 @@ Option                  Description                                            D
 ``csv_escape_char``     Sets the escape character (at most one character)      empty string
 ``csv_key_separator``   Sets the separator for array's keys during its         ``.``
                         flattening
-``csv_headers``         Sets the order of the header and data columns
+``csv_headers``         Sets the order of the header and data columns          ``[]``, inferred from input data's keys
                         E.g.: if ``$data = ['c' => 3, 'a' => 1, 'b' => 2]``
-                        and ``$options = ['csv_headers' => ['a', 'b', 'c']]``
+                        and ``$options = ['csv_headers' => ['Label A' => 'a',
+                        'b', 'Label C' => 'c']]``
                         then ``serialize($data, 'csv', $options)`` returns
-                        ``a,b,c\n1,2,3``                                       ``[]``, inferred from input data's keys
+                        ``"Label A",b,"Label C"\n1,2,3``
 ``csv_escape_formulas`` Escapes fields containing formulas by prepending them  ``false``
                         with a ``\t`` character
 ``as_collection``       Always returns results as a collection, even if only   ``true``
