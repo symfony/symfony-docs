@@ -131,7 +131,7 @@ laziness, and supports lazy-autowiring of union types::
 
 .. versionadded:: 6.3
 
-    The ``lazy`` argument of the ``#[Autowire()]`` attribute was introduced in
+    The ``lazy`` argument of the ``#[Autowire]`` attribute was introduced in
     Symfony 6.3.
 
 Interface Proxifying

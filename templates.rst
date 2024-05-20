@@ -579,7 +579,7 @@ use the ``render()`` method of the ``twig`` service.
 
 .. _templates-template-attribute:
 
-Another option is to use the ``#[Template()]`` attribute on the controller method
+Another option is to use the ``#[Template]`` attribute on the controller method
 to define the template to render::
 
     // src/Controller/ProductController.php
@@ -596,7 +596,7 @@ to define the template to render::
         {
             // ...
 
-            // when using the #[Template()] attribute, you only need to return
+            // when using the #[Template] attribute, you only need to return
             // an array with the parameters to pass to the template (the attribute
             // is the one which will create and return the Response object).
             return [
@@ -608,7 +608,7 @@ to define the template to render::
 
 .. versionadded:: 6.2
 
-    The ``#[Template()]`` attribute was introduced in Symfony 6.2.
+    The ``#[Template]`` attribute was introduced in Symfony 6.2.
 
 The :ref:`base AbstractController <the-base-controller-classes-services>` also provides the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock`

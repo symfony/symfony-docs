@@ -231,7 +231,7 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
 
 .. versionadded:: 6.2
 
-    The ``#[Cache()]`` attribute was introduced in Symfony 6.2.
+    The ``#[Cache]`` attribute was introduced in Symfony 6.2.
 
 Thanks to this new code, your HTTP response will have the following header:
 
@@ -331,7 +331,7 @@ Additionally, most cache-related HTTP headers can be set via the single
 
 .. tip::
 
-    All these options are also available when using the ``#[Cache()]`` attribute.
+    All these options are also available when using the ``#[Cache]`` attribute.
 
 Cache Invalidation
 ------------------
