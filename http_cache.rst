@@ -327,7 +327,7 @@ Additionally, most cache-related HTTP headers can be set via the single
 
 .. tip::
 
-    All these options are also available when using the ``#[Cache()]`` attribute.
+    All these options are also available when using the ``#[Cache]`` attribute.
 
 Cache Invalidation
 ------------------

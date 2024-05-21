@@ -539,7 +539,7 @@ Make sure to install `phpstan/phpdoc-parser`_ and `phpdocumentor/type-resolver`_
 if you want to map a nested array of specific DTOs::
 
     public function dashboard(
-        #[MapRequestPayload()] EmployeesDto $employeesDto
+        #[MapRequestPayload] EmployeesDto $employeesDto
     ): Response
     {
         // ...

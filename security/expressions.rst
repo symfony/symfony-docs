@@ -7,7 +7,7 @@ Using Expressions in Security Access Controls
     the :doc:`Voter System </security/voters>`.
 
 In addition to security roles like ``ROLE_ADMIN``, the ``isGranted()`` method
-and ``#[IsGranted()]`` attribute also accept an
+and ``#[IsGranted]`` attribute also accept an
 :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object:
 
 .. configuration-block::
@@ -138,7 +138,7 @@ Additionally, you have access to a number of functions inside the expression:
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
 
-In case of the ``#[IsGranted()]`` attribute, the subject can also be an
+In case of the ``#[IsGranted]`` attribute, the subject can also be an
 :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     // src/Controller/MyController.php

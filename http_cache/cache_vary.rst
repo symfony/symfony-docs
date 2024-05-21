@@ -28,7 +28,7 @@ trigger a different representation of the requested resource:
     resource based on the URI and the value of the ``Accept-Encoding`` and
     ``User-Agent`` request header.
 
-Set the ``Vary`` header via the ``Response`` object methods or the ``#[Cache()]``
+Set the ``Vary`` header via the ``Response`` object methods or the ``#[Cache]``
 attribute::
 
 .. configuration-block::

@@ -61,7 +61,7 @@ or disadvantage to either.
 
 According to the HTTP specification, "the ``Expires`` header field gives
 the date/time after which the response is considered stale." The ``Expires``
-header can be set with the ``expires`` option of the ``#[Cache()]`` attribute or
+header can be set with the ``expires`` option of the ``#[Cache]`` attribute or
 the ``setExpires()`` ``Response`` method::
 
 .. configuration-block::
