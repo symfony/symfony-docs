@@ -2470,7 +2470,7 @@ will happen:
 .. _security-securing-controller-annotations:
 .. _security-securing-controller-attributes:
 
-Another way to secure one or more controller actions is to use the ``#[IsGranted()]`` attribute.
+Another way to secure one or more controller actions is to use the ``#[IsGranted]`` attribute.
 In the following example, all controller actions will require the
 ``ROLE_ADMIN`` permission, except for ``adminDashboard()``, which will require
 the ``ROLE_SUPER_ADMIN`` permission:

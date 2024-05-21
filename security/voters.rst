@@ -121,7 +121,7 @@ code like this:
             }
         }
 
-The ``#[IsGranted()]`` attribute or ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
+The ``#[IsGranted]`` attribute or ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
 calls out to the "voter" system. Right now, no voters will vote on whether or not
 the user can "view" or "edit" a ``Post``. But you can create your *own* voter that
 decides this using whatever logic you want.
