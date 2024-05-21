@@ -162,7 +162,7 @@ having to add any configuration in external files::
         }
     }
 
-You can add multiple ``#[AsEventListener()]`` attributes to configure different methods::
+You can add multiple ``#[AsEventListener]`` attributes to configure different methods::
 
     namespace App\EventListener;
 
@@ -198,7 +198,7 @@ can also be applied to methods directly::
 
     final class MyMultiListener
     {
-        #[AsEventListener()]
+        #[AsEventListener]
         public function onCustomEvent(CustomEvent $event): void
         {
             // ...
