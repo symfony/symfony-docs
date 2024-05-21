@@ -421,7 +421,7 @@ return a ``Response``.
 
     There is a default listener inside the Symfony Framework for the ``kernel.view``
     event. If your controller action returns an array, and you apply the
-    :ref:`#[Template()] attribute <templates-template-attribute>` to that
+    :ref:`#[Template] attribute <templates-template-attribute>` to that
     controller action, then this listener renders a template, passes the array
     you returned from your controller to that template, and creates a ``Response``
     containing the returned content from that template.

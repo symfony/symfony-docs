@@ -2525,7 +2525,7 @@ will happen:
 .. _security-securing-controller-annotations:
 .. _security-securing-controller-attributes:
 
-Another way to secure one or more controller actions is to use the ``#[IsGranted()]`` attribute.
+Another way to secure one or more controller actions is to use the ``#[IsGranted]`` attribute.
 In the following example, all controller actions will require the
 ``ROLE_ADMIN`` permission, except for ``adminDashboard()``, which will require
 the ``ROLE_SUPER_ADMIN`` permission:
@@ -2579,11 +2579,11 @@ that is thrown with the ``exceptionCode`` argument::
 
 .. versionadded:: 6.2
 
-    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
+    The ``#[IsGranted]`` attribute was introduced in Symfony 6.2.
 
 .. versionadded:: 6.3
 
-    The ``exceptionCode`` argument of the ``#[IsGranted()]`` attribute was
+    The ``exceptionCode`` argument of the ``#[IsGranted]`` attribute was
     introduced in Symfony 6.3.
 
 .. _security-template:
