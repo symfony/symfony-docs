@@ -162,7 +162,10 @@ having to add any configuration in external files::
         }
     }
 
-You can add multiple ``#[AsEventListener]`` attributes to configure different methods::
+You can add multiple ``#[AsEventListener]`` attributes to configure different methods.
+The ``method`` property is optional, and when not defined, it defaults to
+``on`` + uppercased event name. In the example below, the ``'foo'`` event listener
+doesn't explicitly define its method, so the ``onFoo()`` method will be called::
 
     namespace App\EventListener;
 
