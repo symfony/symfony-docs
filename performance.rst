@@ -382,9 +382,15 @@ All events that don't belong to any named section are added to the special secti
 called ``__root__``. This way you can get all stopwatch events, even if you don't
 know their names, as follows::
 
-    foreach($this->stopwatch->getSectionEvents('__root__') as $event) {
+    use Symfony\Component\Stopwatch\Stopwatch;
+
+    foreach($this->stopwatch->getSectionEvents(Stopwatch::ROOT) as $event) {
         echo (string) $event;
     }
+
+.. versionadded:: 7.2
+
+    The ``Stopwatch::ROOT`` constant as a shortcut for ``__root__`` was introduced in Symfony 7.2.
 
 Learn more
 ----------
