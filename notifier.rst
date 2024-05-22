@@ -165,6 +165,9 @@ Service
 `Smsapi`_           **Install**: ``composer require symfony/smsapi-notifier`` \
                     **DSN**: ``smsapi://TOKEN@default?from=FROM`` \
                     **Webhook support**: No
+`Smsbox`_           **Install**: ``composer require symfony/smsbox-notifier`` \
+                    **DSN**: ``smsbox://APIKEY@default?mode=MODE&strategy=STRATEGY&sender=SENDER`` \
+                    **Webhook support**: No
 `SmsBiuras`_        **Install**: ``composer require symfony/sms-biuras-notifier`` \
                     **DSN**: ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0`` \
                     **Webhook support**: No
@@ -189,6 +192,9 @@ Service
 `Twilio`_           **Install**: ``composer require symfony/twilio-notifier`` \
                     **DSN**: ``twilio://SID:TOKEN@default?from=FROM`` \
                     **Webhook support**: Yes
+`Unifonic`_         **Install**: ``composer require symfony/unifonic-notifier`` \
+                    **DSN**: ``unifonic://APP_SID@default?from=FROM`` \
+                    **Webhook support**: No
 `Vonage`_           **Install**: ``composer require symfony/vonage-notifier`` \
                     **DSN**: ``vonage://KEY:SECRET@default?from=FROM`` \
                     **Webhook support**: Yes
@@ -205,7 +211,8 @@ Service
 
 .. versionadded:: 7.1
 
-    The `SmsSluzba`_, `SMSense`_  and `LOX24`_ integrations were introduced in Symfony 7.1.
+    The ``Smsbox``, ``SmsSluzba``, ``SMSense``, ``LOX24`` and ``Unifonic``
+    integrations were introduced in Symfony 7.1.
 
 .. deprecated:: 7.1
 
@@ -348,8 +355,7 @@ Service                                  Package                               D
 
 .. versionadded:: 7.1
 
-    The ``Bluesky``, ``Unifonic`` and ``Smsbox`` integrations
-    were introduced in Symfony 7.1.
+    The ``Bluesky`` integration was introduced in Symfony 7.1.
 
 .. caution::
 
