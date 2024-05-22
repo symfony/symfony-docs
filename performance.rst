@@ -362,6 +362,13 @@ method does, which stops an event and then restarts it immediately::
     // Lap information is stored as "periods" within the event:
     // $event->getPeriods();
 
+    // Gets the last event period:
+    // $event->getLastPeriod();
+
+.. versionadded:: 7.2
+
+    The ``getLastPeriod`` method was introduced in Symfony 7.2.
+
 Profiling Sections
 ..................
 
