@@ -623,9 +623,7 @@ which will automatically do most of these things for you:
 - **Compress your assets**: Your web server should compress (e.g. using gzip)
   your assets (JavaScript, CSS, images) before sending them to the browser. This
   is automatically enabled in Caddy and can be activated in Nginx and Apache.
-  In Cloudflare, assets are compressed by default and you can also
-  enable `auto minify`_ to further compress your assets (e.g. removing
-  whitespace and comments from JavaScript and CSS files).
+  In Cloudflare, assets are compressed by default.
 
 - **Set long-lived cache expiry**: Your web server should set a long-lived
   ``Cache-Control`` HTTP header on your assets. Because the AssetMapper component includes a version
@@ -694,8 +692,8 @@ Does the AssetMapper Component Minify Assets?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Nope! Minifying or compressing assets *is* important, but can be
-done by your web server or a service like Cloudflare. See
-:ref:`Optimization <optimization>` for more details.
+done by your web server. See :ref:`Optimization <optimization>` for
+more details.
 
 Is the AssetMapper Component Production Ready? Is it Performant?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1116,7 +1114,6 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 .. _class syntax: https://caniuse.com/es6-class
 .. _UX React Documentation: https://symfony.com/bundles/ux-react/current/index.html
 .. _UX Vue.js Documentation: https://symfony.com/bundles/ux-vue/current/index.html
-.. _auto minify: https://developers.cloudflare.com/support/speed/optimization-file-size/using-cloudflare-auto-minify/
 .. _Lighthouse: https://developers.google.com/web/tools/lighthouse
 .. _Tailwind: https://tailwindcss.com/
 .. _BabdevPagerfantaBundle: https://github.com/BabDev/PagerfantaBundle
