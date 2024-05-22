@@ -56,7 +56,7 @@ their priorities:
 
 This event is dispatched after the controller has been resolved but before executing
 it. It's useful to initialize things later needed by the
-controller, such as `param converters`_, and even to change the controller
+controller, such as `value resolvers`_, and even to change the controller
 entirely::
 
     use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -297,4 +297,4 @@ their priorities:
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
-.. _`param converters`: https://symfony.com/doc/master/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`value resolvers`: https://symfony.com/doc/current/controller/value_resolver.html#managing-value-resolvers
