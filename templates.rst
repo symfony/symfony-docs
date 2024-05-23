@@ -705,6 +705,11 @@ provided by Symfony:
                     site_name: 'ACME'
                     theme: 'dark'
 
+                # optionally you can define HTTP headers to add to the response
+                headers:
+                    Content-Type: 'text/html'
+                    foo: 'bar'
+
     .. code-block:: xml
 
         <!-- config/routes.xml -->
@@ -733,6 +738,11 @@ provided by Symfony:
                 <default key="context">
                     <default key="site_name">ACME</default>
                     <default key="theme">dark</default>
+                </default>
+
+                <!-- optionally you can define HTTP headers to add to the response -->
+                <default key="headers">
+                    <default key="Content-Type">text/html</default>
                 </default>
             </route>
         </routes>
@@ -764,10 +774,19 @@ provided by Symfony:
                     'context' => [
                         'site_name' => 'ACME',
                         'theme' => 'dark',
+                        ],
+
+                    // optionally you can define HTTP headers to add to the response
+                    'headers' => [
+                        'Content-Type' => 'text/html',
                     ]
                 ])
             ;
         };
+
+.. versionadded:: 7.2
+
+    The ``headers`` option was introduced in Symfony 7.2.
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
