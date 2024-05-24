@@ -204,11 +204,21 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
         {
             return $this->children[$id];
         }
+
+        public function __isset($id): bool
+        {
+            return true;
+        }
     }
 
     $person = new Person();
 
     var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
+
+.. caution::
+
+    When implementing the magic ``__get()`` method, you also need to implement
+    ``__isset()``.
 
 .. versionadded:: 5.2
 
