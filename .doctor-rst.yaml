@@ -33,6 +33,7 @@ rules:
         max: 2
     max_colons: ~
     no_app_console: ~
+    no_attribute_redundant_parenthesis: ~
     no_blank_line_after_filepath_in_php_code_block: ~
     no_blank_line_after_filepath_in_twig_code_block: ~
     no_blank_line_after_filepath_in_xml_code_block: ~
