@@ -1132,9 +1132,6 @@ following methods::
     // casts the response JSON content to a PHP array
     $content = $response->toArray();
 
-    // casts the response content to a PHP stream resource
-    $content = $response->toStream();
-
     // cancels the request/response
     $response->cancel();
 
