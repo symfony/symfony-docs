@@ -128,3 +128,12 @@ The default message supplied when the password does not reach the minimum requir
         ])]
         protected $rawPassword;
     }
+
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    /validation/passwordStrength/*
