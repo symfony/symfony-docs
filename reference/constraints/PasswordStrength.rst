@@ -129,11 +129,86 @@ The default message supplied when the password does not reach the minimum requir
         protected $rawPassword;
     }
 
-Learn more
-----------
+Customizing the Password Strength Estimation
+--------------------------------------------
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
+.. versionadded:: 7.2
 
-    /validation/passwordStrength/*
+    The feature to customize the password strength estimation was introduced in Symfony 7.2.
+
+By default, this constraint calculates the strength of a password based on its
+length and the number of unique characters used. You can get the calculated
+password strength (e.g. to display it in the user interface) using the following
+static function::
+
+    use Symfony\Component\Validator\Constraints\PasswordStrengthValidator;
+
+    $passwordEstimatedStrength = PasswordStrengthValidator::estimateStrength($password);
+
+If you need to override the default password strength estimation algorithm, you
+can pass a ``Closure`` to the :class:`Symfony\\Component\\Validator\\Constraints\\PasswordStrengthValidator`
+constructor (e.g. using the :doc:`service closures </service_container/service_closures>`).
+
+First, create a custom password strength estimation algorithm within a dedicated
+callable class::
+
+    namespace App\Validator;
+
+    class CustomPasswordStrengthEstimator
+    {
+        /**
+         * @return PasswordStrength::STRENGTH_*
+         */
+        public function __invoke(string $password): int
+        {
+            // Your custom password strength estimation algorithm
+        }
+    }
+
+Then, configure the :class:`Symfony\\Component\\Validator\\Constraints\\PasswordStrengthValidator`
+service to use your own estimator:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            custom_password_strength_estimator:
+                class: App\Validator\CustomPasswordStrengthEstimator
+
+            Symfony\Component\Validator\Constraints\PasswordStrengthValidator:
+                arguments: [!service_closure '@custom_password_strength_estimator']
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="custom_password_strength_estimator" class="App\Validator\CustomPasswordStrengthEstimator"/>
+
+                <service id="Symfony\Component\Validator\Constraints\PasswordStrengthValidator">
+                    <argument type="service_closure" id="custom_password_strength_estimator"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Validator\Constraints\PasswordStrengthValidator;
+
+        return function (ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set('custom_password_strength_estimator', CustomPasswordStrengthEstimator::class);
+
+            $services->set(PasswordStrengthValidator::class)
+                ->args([service_closure('custom_password_strength_estimator')]);
+        };
