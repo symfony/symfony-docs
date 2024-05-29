@@ -55,58 +55,153 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==================  =====================================  ========================================================================================================================= ===============
-Service             Package                                DSN                                                                                                                       Webhook support
-==================  =====================================  ========================================================================================================================= ===============
-`46elks`_           ``symfony/forty-six-elks-notifier``    ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
-`AllMySms`_         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
-`AmazonSns`_        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
-`Bandwidth`_        ``symfony/bandwidth-notifier``         ``bandwidth://USERNAME:PASSWORD@default?from=FROM&account_id=ACCOUNT_ID&application_id=APPLICATION_ID&priority=PRIORITY``
-`Brevo`_            ``symfony/brevo-notifier``             ``brevo://API_KEY@default?sender=SENDER``
-`Clickatell`_       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TOKEN@default?from=FROM``
-`ContactEveryone`_  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
-`Esendex`_          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-`FakeSms`_          ``symfony/fake-sms-notifier``          ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
-`FreeMobile`_       ``symfony/free-mobile-notifier``       ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
-`GatewayApi`_       ``symfony/gateway-api-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
-`GoIP`_             ``symfony/goip-notifier``              ``goip://USERNAME:PASSWORD@HOST:80?sim_slot=SIM_SLOT``
-`Infobip`_          ``symfony/infobip-notifier``           ``infobip://AUTH_TOKEN@HOST?from=FROM``
-`Iqsms`_            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
-`KazInfoTeh`_       ``symfony/kaz-info-teh-notifier``      ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
-`LightSms`_         ``symfony/light-sms-notifier``         ``lightsms://LOGIN:TOKEN@default?from=PHONE``
-`LOX24`_            ``symfony/lox24-notifier``             ``lox24://USER:TOKEN@default?from=FROM``
-`Mailjet`_          ``symfony/mailjet-notifier``           ``mailjet://TOKEN@default?from=FROM``
-`MessageBird`_      ``symfony/message-bird-notifier``      ``messagebird://TOKEN@default?from=FROM``
-`MessageMedia`_     ``symfony/message-media-notifier``     ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
-`Mobyt`_            ``symfony/mobyt-notifier``             ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-`Nexmo`_            ``symfony/nexmo-notifier``             Abandoned in favor of Vonage (symfony/vonage-notifier).
-`Octopush`_         ``symfony/octopush-notifier``          ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
-`OrangeSms`_        ``symfony/orange-sms-notifier``        ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
-`OvhCloud`_         ``symfony/ovh-cloud-notifier``         ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-`Plivo`_            ``symfony/plivo-notifier``             ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM``
-`Redlink`_          ``symfony/redlink-notifier``           ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION``
-`RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
-`SMSFactor`_        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
-`Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
-`Seven.io`_         ``symfony/sevenio-notifier``           ``sevenio://API_KEY@default?from=FROM``
-`SimpleTextin`_     ``symfony/simple-textin-notifier``     ``simpletextin://API_KEY@default?from=FROM``
-`Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-`Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
-`SmsBiuras`_        ``symfony/sms-biuras-notifier``        ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
-`SmsSluzba`_        ``symfony/sms-sluzba-notifier``        ``sms-sluzba://USERNAME:PASSWORD@default``
-`Smsapi`_           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
-`Smsbox`_           ``symfony/smsbox-notifier``            ``smsbox://APIKEY@default?mode=MODE&strategy=STRATEGY&sender=SENDER``
-`Smsc`_             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
-`SMSense`_          ``symfony/smsense-notifier``           ``smsense://API_TOKEN@default?from=FROM``
-`SpotHit`_          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
-`Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
-`TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
-`Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``                                                                                  yes
-`Unifonic`_         ``symfony/unifonic-notifier``          ``unifonic://APP_SID@default?from=FROM``
-`Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``                                                                                 yes
-`Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
-`iSendPro`_         ``symfony/isendpro-notifier``          ``isendpro://ACCOUNT_KEY_ID@default?from=FROM&no_stop=NO_STOP&sandbox=SANDBOX``
-==================  =====================================  ========================================================================================================================= ===============
+==================  ====================================================================================================================================
+Service
+==================  ====================================================================================================================================
+`46elks`_           **Install**: ``composer require symfony/forty-six-elks-notifier`` \
+                    **DSN**: ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM`` \
+                    **Webhook support**: No
+`AllMySms`_         **Install**: ``composer require symfony/all-my-sms-notifier`` \
+                    **DSN**: ``allmysms://LOGIN:APIKEY@default?from=FROM`` \
+                    **Webhook support**: No
+`AmazonSns`_        **Install**: ``composer require symfony/amazon-sns-notifier`` \
+                    **DSN**: ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION`` \
+                    **Webhook support**: No
+`Bandwidth`_        **Install**: ``composer require symfony/bandwidth-notifier`` \
+                    **DSN**: ``bandwidth://USERNAME:PASSWORD@default?from=FROM&account_id=ACCOUNT_ID&application_id=APPLICATION_ID&priority=PRIORITY`` \
+                    **Webhook support**: No
+`Brevo`_            **Install**: ``composer require symfony/brevo-notifier`` \
+                    **DSN**: ``brevo://API_KEY@default?sender=SENDER`` \
+                    **Webhook support**: No
+`Clickatell`_       **Install**: ``composer require symfony/clickatell-notifier`` \
+                    **DSN**: ``clickatell://ACCESS_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`ContactEveryone`_  **Install**: ``composer require symfony/contact-everyone-notifier`` \
+                    **DSN**: ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY`` \
+                    **Webhook support**: No
+`Esendex`_          **Install**: ``composer require symfony/esendex-notifier`` \
+                    **DSN**: ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM`` \
+                    **Webhook support**: No
+`FakeSms`_          **Install**: ``composer require symfony/fake-sms-notifier`` \
+                    **DSN**: ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default`` \
+                    **Webhook support**: No
+`FreeMobile`_       **Install**: ``composer require symfony/free-mobile-notifier`` \
+                    **DSN**: ``freemobile://LOGIN:API_KEY@default?phone=PHONE`` \
+                    **Webhook support**: No
+`GatewayApi`_       **Install**: ``composer require symfony/gateway-api-notifier`` \
+                    **DSN**: ``gatewayapi://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`GoIP`_             **Install**: ``composer require symfony/goip-notifier`` \
+                    **DSN**: ``goip://USERNAME:PASSWORD@HOST:80?sim_slot=SIM_SLOT`` \
+                    **Webhook support**: No
+`Infobip`_          **Install**: ``composer require symfony/infobip-notifier`` \
+                    **DSN**: ``infobip://AUTH_TOKEN@HOST?from=FROM`` \
+                    **Webhook support**: No
+`Iqsms`_            **Install**: ``composer require symfony/iqsms-notifier`` \
+                    **DSN**: ``iqsms://LOGIN:PASSWORD@default?from=FROM`` \
+                    **Webhook support**: No
+`iSendPro`_         **Install**: ``composer require symfony/isendpro-notifier`` \
+                    **DSN**: ``isendpro://ACCOUNT_KEY_ID@default?from=FROM&no_stop=NO_STOP&sandbox=SANDBOX`` \
+                    **Webhook support**: No
+`KazInfoTeh`_       **Install**: ``composer require symfony/kaz-info-teh-notifier`` \
+                    **DSN**: ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM`` \
+                    **Webhook support**: No
+`LightSms`_         **Install**: ``composer require symfony/light-sms-notifier`` \
+                    **DSN**: ``lightsms://LOGIN:TOKEN@default?from=PHONE`` \
+                    **Webhook support**: No
+`LOX24`_            **Install**: ``composer require symfony/lox24-notifier`` \
+                    **DSN**: ``lox24://USER:TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Mailjet`_          **Install**: ``composer require symfony/mailjet-notifier`` \
+                    **DSN**: ``mailjet://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`MessageBird`_      **Install**: ``composer require symfony/message-bird-notifier`` \
+                    **DSN**: ``messagebird://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`MessageMedia`_     **Install**: ``composer require symfony/message-media-notifier`` \
+                    **DSN**: ``messagemedia://API_KEY:API_SECRET@default?from=FROM`` \
+                    **Webhook support**: No
+`Mobyt`_            **Install**: ``composer require symfony/mobyt-notifier`` \
+                    **DSN**: ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Nexmo`_            **Install**: ``composer require symfony/nexmo-notifier`` \
+                    Abandoned in favor of Vonage (see below) \
+`Octopush`_         **Install**: ``composer require symfony/octopush-notifier`` \
+                    **DSN**: ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE`` \
+                    **Webhook support**: No
+`OrangeSms`_        **Install**: ``composer require symfony/orange-sms-notifier`` \
+                    **DSN**: ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME`` \
+                    **Webhook support**: No
+`OvhCloud`_         **Install**: ``composer require symfony/ovh-cloud-notifier`` \
+                    **DSN**: ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME`` \
+                    **Webhook support**: No
+`Plivo`_            **Install**: ``composer require symfony/plivo-notifier`` \
+                    **DSN**: ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Redlink`_          **Install**: ``composer require symfony/redlink-notifier`` \
+                    **DSN**: ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION`` \
+                    **Webhook support**: No
+`RingCentral`_      **Install**: ``composer require symfony/ring-central-notifier`` \
+                    **DSN**: ``ringcentral://API_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Sendberry`_        **Install**: ``composer require symfony/sendberry-notifier`` \
+                    **DSN**: ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM`` \
+                    **Webhook support**: No
+`Sendinblue`_       **Install**: ``composer require symfony/sendinblue-notifier`` \
+                    **DSN**: ``sendinblue://API_KEY@default?sender=PHONE`` \
+                    **Webhook support**: No
+`Sms77`_            **Install**: ``composer require symfony/sms77-notifier`` \
+                    **DSN**: ``sms77://API_KEY@default?from=FROM`` \
+                    **Webhook support**: No
+`SimpleTextin`_     **Install**: ``composer require symfony/simple-textin-notifier`` \
+                    **DSN**: ``simpletextin://API_KEY@default?from=FROM`` \
+                    **Webhook support**: No
+`Sinch`_            **Install**: ``composer require symfony/sinch-notifier`` \
+                    **DSN**: ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`SmsSluzba`_        **Install**: ``composer require symfony/sms-sluzba-notifier`` \
+                    **DSN**: ``sms-sluzba://USERNAME:PASSWORD@default`` \
+                    **Webhook support**: No
+`Smsapi`_           **Install**: ``composer require symfony/smsapi-notifier`` \
+                    **DSN**: ``smsapi://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Smsbox`_           **Install**: ``composer require symfony/smsbox-notifier`` \
+                    **DSN**: ``smsbox://APIKEY@default?mode=MODE&strategy=STRATEGY&sender=SENDER`` \
+                    **Webhook support**: No
+`SmsBiuras`_        **Install**: ``composer require symfony/sms-biuras-notifier`` \
+                    **DSN**: ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0`` \
+                    **Webhook support**: No
+`Smsc`_             **Install**: ``composer require symfony/smsc-notifier`` \
+                    **DSN**: ``smsc://LOGIN:PASSWORD@default?from=FROM`` \
+                    **Webhook support**: No
+`SMSense`_          **Install**: ``composer require smsense-notifier`` \
+                    **DSN**: ``smsense://API_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`SMSFactor`_        **Install**: ``composer require symfony/sms-factor-notifier`` \
+                    **DSN**: ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE`` \
+                    **Webhook support**: No
+`SpotHit`_          **Install**: ``composer require symfony/spot-hit-notifier`` \
+                    **DSN**: ``spothit://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Telnyx`_           **Install**: ``composer require symfony/telnyx-notifier`` \
+                    **DSN**: ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID`` \
+                    **Webhook support**: No
+`TurboSms`_         **Install**: ``composer require symfony/turbo-sms-notifier`` \
+                    **DSN**: ``turbosms://AUTH_TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
+`Twilio`_           **Install**: ``composer require symfony/twilio-notifier`` \
+                    **DSN**: ``twilio://SID:TOKEN@default?from=FROM`` \
+                    **Webhook support**: Yes
+`Unifonic`_         **Install**: ``composer require symfony/unifonic-notifier`` \
+                    **DSN**: ``unifonic://APP_SID@default?from=FROM`` \
+                    **Webhook support**: No
+`Vonage`_           **Install**: ``composer require symfony/vonage-notifier`` \
+                    **DSN**: ``vonage://KEY:SECRET@default?from=FROM`` \
+                    **Webhook support**: Yes
+`Yunpian`_          **Install**: ``composer require symfony/yunpian-notifier`` \
+                    **DSN**: ``yunpian://APIKEY@default`` \
+                    **Webhook support**: No
+==================  ====================================================================================================================================
 
 .. tip::
 
@@ -116,7 +211,8 @@ Service             Package                                DSN                  
 
 .. versionadded:: 7.1
 
-    The `SmsSluzba`_, `SMSense`_  and `LOX24`_ integrations were introduced in Symfony 7.1.
+    The ``Smsbox``, ``SmsSluzba``, ``SMSense``, ``LOX24`` and ``Unifonic``
+    integrations were introduced in Symfony 7.1.
 
 .. deprecated:: 7.1
 
@@ -259,8 +355,7 @@ Service                                  Package                               D
 
 .. versionadded:: 7.1
 
-    The ``Bluesky``, ``Unifonic`` and ``Smsbox`` integrations
-    were introduced in Symfony 7.1.
+    The ``Bluesky`` integration was introduced in Symfony 7.1.
 
 .. caution::
 
@@ -1032,6 +1127,7 @@ is dispatched. Listeners receive a
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
+.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
 .. _`Seven.io`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sevenio/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
