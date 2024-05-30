@@ -954,15 +954,7 @@ path is part of the options you can set in your ``composer.json`` file:
           }
       }
 
-You can also set the ``SYMFONY_DOTENV_PATH`` environment variable at system
-level (e.g. in your web server configuration or in your Dockerfile):
-
-.. code-block:: bash
-
-    # .env (or .env.local)
-    SYMFONY_DOTENV_PATH=my/custom/path/to/.env
-
-Finally, you can directly invoke the ``Dotenv`` class in your
+As an alternate option, you can directly invoke the ``Dotenv`` class in your
 ``bootstrap.php`` file or any other file of your application::
 
     use Symfony\Component\Dotenv\Dotenv;
@@ -975,9 +967,13 @@ the local and environment-specific files (e.g. ``.*.local`` and
 :ref:`how to override environment variables <configuration-multiple-env-files>`
 to learn more about this.
 
+If you need to know the path to the ``.env`` file that Symfony is using, you can
+read the ``SYMFONY_DOTENV_PATH`` environment variable in your application.
+
 .. versionadded:: 7.1
 
-    The ``SYMFONY_DOTENV_PATH`` environment variable was introduced in Symfony 7.1.
+    The ``SYMFONY_DOTENV_PATH`` environment variable was introduced in Symfony
+    7.1.
 
 .. _configuration-secrets:
 
