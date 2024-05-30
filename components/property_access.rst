@@ -207,7 +207,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
         public function __isset($id): bool
         {
-            return true;
+            return array_key_exists($id, $this->children);
         }
     }
 
