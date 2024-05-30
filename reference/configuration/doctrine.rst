@@ -100,6 +100,36 @@ The following block shows all possible configuration keys:
             </doctrine:config>
         </container>
 
+    .. code-block:: php
+
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine): void {
+            $dbal = $doctrine->dbal();
+
+            $dbal = $dbal
+                ->connection('default')
+                ->dbname('database')
+                ->host('localhost')
+                ->port(1234)
+                ->user('user')
+                ->password('secret')
+                ->driver('pdo_mysql')
+                ->url('mysql://db_user:db_password@127.0.0.1:3306/db_name') // if the url option is specified, it will override the above config
+                ->driverClass(App\DBAL\MyDatabaseDriver::class) // the DBAL driverClass option
+                ->option('foo', 'bar') // the DBAL driverOptions option
+                ->path('%kernel.project_dir%/var/data/data.sqlite')
+                ->memory(true)
+                ->unixSocket('/tmp/mysql.sock')
+                ->wrapperClass(App\DBAL\MyConnectionWrapper::class) // the DBAL wrapperClass option
+                ->charset('utf8mb4')
+                ->logging('%kernel.debug%')
+                ->platformService(App\DBAL\MyDatabasePlatformService::class)
+                ->serverVersion('5.7')
+                ->mappingType('enum', 'string')
+                ->type('custom', App\DBAL\MyCustomType::class);
+        };
+
 .. note::
 
     The ``server_version`` option was added in Doctrine DBAL 2.5, which
@@ -125,24 +155,49 @@ The following block shows all possible configuration keys:
 If you want to configure multiple connections in YAML, put them under the
 ``connections`` key and give them a unique name:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    doctrine:
-        dbal:
-            default_connection:       default
-            connections:
-                default:
-                    dbname:           Symfony
-                    user:             root
-                    password:         null
-                    host:             localhost
-                    server_version:   '5.6'
-                customer:
-                    dbname:           customer
-                    user:             root
-                    password:         null
-                    host:             localhost
-                    server_version:   '5.7'
+    .. code-block:: yaml
+
+        doctrine:
+            dbal:
+                default_connection:       default
+                connections:
+                    default:
+                        dbname:           Symfony
+                        user:             root
+                        password:         null
+                        host:             localhost
+                        server_version:   '5.6'
+                    customer:
+                        dbname:           customer
+                        user:             root
+                        password:         null
+                        host:             localhost
+                        server_version:   '5.7'
+
+    .. code-block:: php
+
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine): void {
+            $dbal = $doctrine->dbal();
+            $dbal->defaultConnection('default');
+
+            $dbal->connection('default')
+                ->dbname('Symfony')
+                ->user('root')
+                ->password('null')
+                ->host('localhost')
+                ->serverVersion('5.6');
+
+            $dbal->connection('customer')
+                ->dbname('customer')
+                ->user('root')
+                ->password('null')
+                ->host('localhost')
+                ->serverVersion('5.7');
+        };
 
 The ``database_connection`` service always refers to the *default* connection,
 which is the first one defined or the one configured via the
@@ -172,20 +227,48 @@ Doctrine ORM Configuration
 This following configuration example shows all the configuration defaults
 that the ORM resolves to:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    doctrine:
-        orm:
-            auto_mapping: true
-            # the standard distribution overrides this to be true in debug, false otherwise
-            auto_generate_proxy_classes: false
-            proxy_namespace: Proxies
-            proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
-            default_entity_manager: default
-            metadata_cache_driver: array
-            query_cache_driver: array
-            result_cache_driver: array
-            naming_strategy: doctrine.orm.naming_strategy.default
+    .. code-block:: yaml
+
+        doctrine:
+            orm:
+                auto_mapping: true
+                # the standard distribution overrides this to be true in debug, false otherwise
+                auto_generate_proxy_classes: false
+                proxy_namespace: Proxies
+                proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
+                default_entity_manager: default
+                metadata_cache_driver: array
+                query_cache_driver: array
+                result_cache_driver: array
+                naming_strategy: doctrine.orm.naming_strategy.default
+
+    .. code-block:: php
+
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine): void {
+            $orm = $doctrine->orm();
+
+            $orm
+                ->entityManager('default')
+                ->connection('default')
+                ->autoMapping(true)
+                ->metadataCacheDriver()
+                    ->type('array')
+                ->queryCacheDriver()
+                    ->type('array')
+                ->resultCacheDriver()
+                    ->type('array')
+                ->namingStrategy('doctrine.orm.naming_strategy.default');
+
+            $orm
+                ->autoGenerateProxyClasses(false) // the standard distribution overrides this to be true in debug, false otherwise
+                ->proxyNamespace('Proxies')
+                ->proxyDir('%kernel.cache_dir%/doctrine/orm/Proxies')
+                ->defaultEntityManager('default');
+        };
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only.
@@ -230,35 +313,70 @@ Caching Drivers
 Use any of the existing :doc:`Symfony Cache </cache>` pools or define new pools
 to cache each of Doctrine ORM elements (queries, results, etc.):
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/prod/doctrine.yaml
-    framework:
-        cache:
-            pools:
-                doctrine.result_cache_pool:
-                    adapter: cache.app
-                doctrine.system_cache_pool:
-                    adapter: cache.system
+    .. code-block:: yaml
 
-    doctrine:
-        orm:
-            # ...
-            metadata_cache_driver:
-                type: pool
-                pool: doctrine.system_cache_pool
-            query_cache_driver:
-                type: pool
-                pool: doctrine.system_cache_pool
-            result_cache_driver:
-                type: pool
-                pool: doctrine.result_cache_pool
+        # config/packages/prod/doctrine.yaml
+        framework:
+            cache:
+                pools:
+                    doctrine.result_cache_pool:
+                        adapter: cache.app
+                    doctrine.system_cache_pool:
+                        adapter: cache.system
 
-            # in addition to Symfony Cache pools, you can also use the
-            # 'type: service' option to use any service as the cache
-            query_cache_driver:
-                type: service
-                id: App\ORM\MyCacheService
+        doctrine:
+            orm:
+                # ...
+                metadata_cache_driver:
+                    type: pool
+                    pool: doctrine.system_cache_pool
+                query_cache_driver:
+                    type: pool
+                    pool: doctrine.system_cache_pool
+                result_cache_driver:
+                    type: pool
+                    pool: doctrine.result_cache_pool
+
+                # in addition to Symfony Cache pools, you can also use the
+                # 'type: service' option to use any service as the cache
+                query_cache_driver:
+                    type: service
+                    id: App\ORM\MyCacheService
+
+    .. code-block:: php
+
+        use Symfony\Config\DoctrineConfig;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework, DoctrineConfig $doctrine): void {
+            $framework
+                ->cache()
+                    ->pool('doctrine.result_cache_pool')
+                        ->adapters('cache.app')
+                    ->pool('doctrine.system_cache_pool')
+                        ->adapters('cache.sytsem');
+
+            $doctrine->orm()
+                // ...
+                ->entityManager('default')
+                ->metadataCacheDriver()
+                    ->type('pool')
+                    ->pool('doctrine.system_cache_pool')
+                ->queryCacheDriver()
+                    ->type('pool')
+                    ->pool('doctrine.system_cache_pool')
+                ->resultCacheDriver()
+                    ->type('pool')
+                    ->pool('doctrine.result_cache_pool')
+
+                // in addition to Symfony Cache pools, you can also use the
+                // 'type: service' option to use any service as the cache
+                ->queryCacheDriver()
+                    ->type('service')
+                    ->id(App\ORM\MyCacheService::class);
+        };
 
 Mapping Configuration
 ~~~~~~~~~~~~~~~~~~~~~
