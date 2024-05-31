@@ -516,9 +516,6 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
         }
     }
 
-    // defines the timezone to use
-    #[AsPeriodicTask(frequency: '1 day', timezone: 'Africa/Malabo')]
-
 .. versionadded:: 6.4
 
     The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
