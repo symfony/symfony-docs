@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-05-31T07:38:38Z
+
+@alexandre-daubois FYI (related to #19444) :)
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2024-05-31T07:41:30Z
+
+Oops, don't know where I saw this, thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-05-31T07:53:45Z
+
+maybe a copy-and-paste mistake from the `AsCronTask` attribute
