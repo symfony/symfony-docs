@@ -493,9 +493,6 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
         }
     }
 
-    // defines the timezone to use
-    #[AsPeriodicTask(frequency: '1 day', timezone: 'Africa/Malabo')]
-
 Managing Scheduled Messages
 ---------------------------
 
