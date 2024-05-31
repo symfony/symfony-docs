@@ -108,12 +108,10 @@ to handle the rest of the job::
 
     use App\Lock\RefreshTaxonomy;
     use Symfony\Component\Lock\Key;
-    use Symfony\Component\Lock\Lock;
 
     $key = new Key('article.'.$article->getId());
-    $lock = new Lock(
+    $lock = $factory->createLockFromKey(
         $key,
-        $this->store,
         300,  // ttl
         false // autoRelease
     );
@@ -124,7 +122,7 @@ to handle the rest of the job::
 .. note::
 
     Don't forget to set the ``autoRelease`` argument to ``false`` in the
-    ``Lock`` constructor to avoid releasing the lock when the destructor is
+    ``Lock`` instantiation to avoid releasing the lock when the destructor is
     called.
 
 Not all stores are compatible with serialization and cross-process locking: for
@@ -402,20 +400,20 @@ Locks are created and managed in ``Stores``, which are classes that implement
 
 The component includes the following built-in store types:
 
-==========================================================  ======  ========  ======== =======
-Store                                                       Scope   Blocking  Expiring Sharing
-==========================================================  ======  ========  ======== =======
-:ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes
-:ref:`MemcachedStore <lock-store-memcached>`                remote  no        yes      no
-:ref:`MongoDbStore <lock-store-mongodb>`                    remote  no        yes      no
-:ref:`PdoStore <lock-store-pdo>`                            remote  no        yes      no
-:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  no        yes      no
-:ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes
-:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes
-:ref:`RedisStore <lock-store-redis>`                        remote  no        yes      yes
-:ref:`SemaphoreStore <lock-store-semaphore>`                local   yes       no       no
-:ref:`ZookeeperStore <lock-store-zookeeper>`                remote  no        no       no
-==========================================================  ======  ========  ======== =======
+==========================================================  ======  ========  ======== ======= =============
+Store                                                       Scope   Blocking  Expiring Sharing Serialization
+==========================================================  ======  ========  ======== ======= =============
+:ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
+:ref:`MemcachedStore <lock-store-memcached>`                remote  no        yes      no      yes
+:ref:`MongoDbStore <lock-store-mongodb>`                    remote  no        yes      no      yes
+:ref:`PdoStore <lock-store-pdo>`                            remote  no        yes      no      yes
+:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  no        yes      no      yes
+:ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
+:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes     no
+:ref:`RedisStore <lock-store-redis>`                        remote  no        yes      yes     yes
+:ref:`SemaphoreStore <lock-store-semaphore>`                local   yes       no       no      no
+:ref:`ZookeeperStore <lock-store-zookeeper>`                remote  no        no       no      no
+==========================================================  ======  ========  ======== ======= =============
 
 .. tip::
 
