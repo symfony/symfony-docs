@@ -1629,7 +1629,7 @@ The Redis transport DSN may looks like this:
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
     # TLS Example
-    MESSENGER_TRANSPORT_DSN=rediss://localhost:6379/messages
+    MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
     # Multiple Redis Sentinel Hosts Example
     MESSENGER_TRANSPORT_DSN=redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&sentinel_master=db
 
