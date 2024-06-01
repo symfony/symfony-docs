@@ -399,7 +399,7 @@ translation of *static blocks of text*:
 
 .. caution::
 
-    The twig tag ``trans`` are not valid if you use the `ICU MessageFormat`_  .
+    The twig tag ``trans`` is not valid if you use the `ICU MessageFormat`_  .
 
 .. tip::
 
