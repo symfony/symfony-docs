@@ -397,6 +397,10 @@ translation of *static blocks of text*:
     The ``%var%`` notation of placeholders is required when translating in
     Twig templates using the tag.
 
+.. caution::
+
+    The twig tag ``trans`` are not valid if you use the `ICU MessageFormat`_  .
+
 .. tip::
 
     If you need to use the percent character (``%``) in a string, escape it by
