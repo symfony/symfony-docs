@@ -121,4 +121,24 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+``mode``
+~~~~~~~~
+
+**type**: ``string`` **default**: ``strict``
+
+The mode in which the BIC is validated can be defined with this option. Valid values are:
+
+* ``strict`` uses the input BIC and validates it without modification.
+* ``case-insensitive`` converts the input value to uppercase before validating the BIC.
+
+.. tip::
+
+    The possible values of this option are also defined as PHP constants of
+    :class:`Symfony\\Component\\Validator\\Constraints\\BIC`
+    (e.g. ``BIC::VALIDATION_MODE_CASE_INSENSITIVE``).
+
+.. versionadded:: 7.2
+
+    The ``mode`` option was introduced in Symfony 7.2.
+
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code
