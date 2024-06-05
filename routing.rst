@@ -2697,7 +2697,7 @@ service, which you can inject in your services or controllers::
 For security reasons, it's common to make signed URIs expire after some time
 (e.g. when using them to reset user credentials). By default, signed URIs don't
 expire, but you can define an expiration date/time using the ``$expiration``
-argument of :phpmethod:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`::
+argument of :method:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`::
 
     // src/Service/SomeService.php
     namespace App\Service;
