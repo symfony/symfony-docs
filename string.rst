@@ -558,15 +558,20 @@ textual representation in all languages based on the `Unicode CLDR dataset`_::
     $transliterator->transliterate('Menus with 🍕 or 🍝');
     // => 'Menus with піца or спагеті'
 
+Transliterating Emoji Text Short Codes
+......................................
 
-The ``EmojiTransliterator`` also provides special locales that convert emojis to
-short codes and vice versa in specific platforms, such as GitHub, Gitlab and Slack.
-All theses platform are also combined in special locale ``text``.
+Services like GitHub and Slack allows to include emojis in your messages using
+text short codes (e.g. you can add the ``:+1:`` code to render the 👍 emoji).
 
-GitHub Emoji Transliteration
-............................
+Symfony also provides a feature to transliterate emojis into short codes and vice
+versa. The short codes are slightly different on each service, so you must pass
+the name of the service as an argument when creating the transliterator:
 
-Convert GitHub emojis to short codes with the ``emoji-github`` locale::
+GitHub Emoji Short Codes Transliteration
+########################################
+
+Convert emojis to GitHub short codes with the ``emoji-github`` locale::
 
     $transliterator = EmojiTransliterator::create('emoji-github');
     $transliterator->transliterate('Teenage 🐢 really love 🍕');
@@ -578,10 +583,10 @@ Convert GitHub short codes to emojis with the ``github-emoji`` locale::
     $transliterator->transliterate('Teenage :turtle: really love :pizza:');
     // => 'Teenage 🐢 really love 🍕'
 
-Gitlab Emoji Transliteration
-............................
+Gitlab Emoji Short Codes Transliteration
+########################################
 
-Convert Gitlab emojis to short codes with the ``emoji-gitlab`` locale::
+Convert emojis to Gitlab short codes with the ``emoji-gitlab`` locale::
 
     $transliterator = EmojiTransliterator::create('emoji-gitlab');
     $transliterator->transliterate('Breakfast with 🥝 or 🥛');
@@ -593,10 +598,10 @@ Convert Gitlab short codes to emojis with the ``gitlab-emoji`` locale::
     $transliterator->transliterate('Breakfast with :kiwi: or :milk:');
     // => 'Breakfast with 🥝 or 🥛'
 
-Slack Emoji Transliteration
-...........................
+Slack Emoji Short Codes Transliteration
+#######################################
 
-Convert Slack emojis to short codes with the ``emoji-slack`` locale::
+Convert emojis to Slack short codes with the ``emoji-slack`` locale::
 
     $transliterator = EmojiTransliterator::create('emoji-slack');
     $transliterator->transliterate('Menus with 🥗 or 🧆');
@@ -608,19 +613,22 @@ Convert Slack short codes to emojis with the ``slack-emoji`` locale::
     $transliterator->transliterate('Menus with :green_salad: or :falafel:');
     // => 'Menus with 🥗 or 🧆'
 
-Text Emoji Transliteration
-..........................
+Universal Emoji Short Codes Transliteration
+###########################################
 
-If you don't know where short codes come from, you can use the ``text-emoji`` locale.
-This locale will convert Github, Gitlab and Slack short codes to emojis::
+If you don't know which service was used to generate the short codes, you can use
+the ``text-emoji`` locale, which combines all codes from all services::
 
     $transliterator = EmojiTransliterator::create('text-emoji');
+
     // Github short codes
     $transliterator->transliterate('Breakfast with :kiwi-fruit: or :milk-glass:');
     // Gitlab short codes
     $transliterator->transliterate('Breakfast with :kiwi: or :milk:');
     // Slack short codes
     $transliterator->transliterate('Breakfast with :kiwifruit: or :glass-of-milk:');
+
+    // all the above examples produce the same result:
     // => 'Breakfast with 🥝 or 🥛'
 
 You can convert emojis to short codes with the ``emoji-text`` locale::
