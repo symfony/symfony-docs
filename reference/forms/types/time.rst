@@ -69,14 +69,14 @@ If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
-    $builder->add('startTime', 'time', [
+    $builder->add('startTime', TimeType::class, [
         'placeholder' => 'Select a value',
     ]);
 
 Alternatively, you can use an array that configures different placeholder
 values for the hour, minute and second fields::
 
-    $builder->add('startTime', 'time', [
+    $builder->add('startTime', TimeType::class, [
         'placeholder' => [
             'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
         ],
