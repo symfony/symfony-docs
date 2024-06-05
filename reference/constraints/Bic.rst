@@ -126,10 +126,10 @@ Parameter        Description
 
 **type**: ``string`` **default**: ``strict``
 
-The mode in which the BIC is validated can be defined with this option. Valid values are:
+This option defines how the BIC is validated:
 
-* ``strict`` uses the input BIC and validates it without modification.
-* ``case-insensitive`` converts the input value to uppercase before validating the BIC.
+* ``strict`` validates the given value without any modification;
+* ``case-insensitive`` converts the given value to uppercase before validating it.
 
 .. tip::
 
