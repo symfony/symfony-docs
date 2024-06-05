@@ -944,7 +944,7 @@ The default behavior for browser channel notifications is to add a
 However, you might prefer to map the importance level of the notification to the
 type of flash message, so you can tweak their style.
 
-you can do that by overriding the default ``notifier.flash_message_importance_mapper``
+You can do that by overriding the default ``notifier.flash_message_importance_mapper``
 service with your own implementation of
 :class:`Symfony\\Component\\Notifier\\FlashMessage\\FlashMessageImportanceMapperInterface`
 where you can provide your own "importance" to "alert level" mapping.
