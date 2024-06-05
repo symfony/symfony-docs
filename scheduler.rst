@@ -624,11 +624,15 @@ being transferred and processed by its handler::
     #[AsSchedule('uptoyou')]
     class SaleTaskProvider implements ScheduleProviderInterface
     {
+        public function __construct(private EventDispatcherInterface $dispatcher)
+        {
+        }
+
         public function getSchedule(): Schedule
         {
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
-            return $this->schedule ??= (new Schedule())
+            return $this->schedule ??= (new Schedule($this->dispatcher))
                 ->with(
                     // ...
                 )
@@ -643,7 +647,7 @@ being transferred and processed by its handler::
                     $schedule->removeById($messageContext->id);
 
                     // allow to call the ShouldCancel() and avoid the message to be handled
-                        $event->shouldCancel(true);
+                    $event->shouldCancel(true);
                 })
                 ->after(function(PostRunEvent $event) {
                     // Do what you want
