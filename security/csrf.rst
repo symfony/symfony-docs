@@ -233,7 +233,7 @@ object evaluated to the id::
     use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
     // ...
 
-    #[IsCsrfTokenValid(new Expression('"delete-item-" ~ args["post"].id'), tokenKey: 'token')]
+    #[IsCsrfTokenValid(new Expression('"delete-item-" ~ args["post"].getId()'), tokenKey: 'token')]
     public function delete(Post $post): Response
     {
         // ... do something, like deleting an object
