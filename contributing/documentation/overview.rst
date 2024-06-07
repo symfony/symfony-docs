@@ -136,38 +136,13 @@ even remove any content and do your best to comply with the
 
 **Step 6.** **Push** the changes to your forked repository:
 
-Rebase your branch
-~~~~~~~~~~~~~~~~~~
+Before submitting your PR, you may have to update your branch as described in :doc:`the code contribution guide </contributing/code/pull_requests#rebase-your-pull-request>`.
 
-Before submitting your PR, update your branch (needed if it takes you a
-while to finish your changes):
+Then, you can push your changes:
 
 .. code-block:: terminal
 
-    $ git checkout 6.x
-    $ git fetch upstream
-    $ git merge upstream/6.x
-    $ git checkout improve_install_article
-    $ git rebase 6.x
-
-.. tip::
-
-    Replace ``6.x`` with the branch you selected previously (e.g. ``5.4``).
-
-When doing the ``rebase`` command, you might have to fix merge conflicts.
-``git status`` will show you the *unmerged* files. Resolve all the conflicts,
-then continue the rebase:
-
-.. code-block:: terminal
-
-    $ git add ... # add resolved files
-    $ git rebase --continue
-
-Make sure that the docs still build correctly and push your branch remotely:
-
-.. code-block:: terminal
-
-    $ git push --force origin improve_install_article
+    $ git push origin improve_install_article
 
 The ``origin`` value is the name of the Git remote that corresponds to your
 forked repository and ``improve_install_article`` is the name of the branch you
