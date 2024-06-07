@@ -1209,7 +1209,7 @@ Option                          Description                                     
 
 .. versionadded:: 7.1
 
-    The `cdata_wrapping_pattern` option was introduced in Symfony 7.1.
+    The ``cdata_wrapping_pattern`` option was introduced in Symfony 7.1.
 
 Example with custom ``context``::
 
