@@ -137,7 +137,7 @@ even remove any content and do your best to comply with the
 **Step 6.** **Push** the changes to your forked repository:
 
 Rebase your branch
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 Before submitting your PR, update your branch (needed if it takes you a
 while to finish your changes):
