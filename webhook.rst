@@ -27,6 +27,7 @@ Brevo          ``mailer.webhook.request_parser.brevo``
 MailerSend     ``mailer.webhook.request_parser.mailersend``
 Mailgun        ``mailer.webhook.request_parser.mailgun``
 Mailjet        ``mailer.webhook.request_parser.mailjet``
+Mailomat       ``mailer.webhook.request_parser.mailomat``
 Postmark       ``mailer.webhook.request_parser.postmark``
 Resend         ``mailer.webhook.request_parser.resend``
 Sendgrid       ``mailer.webhook.request_parser.sendgrid``
@@ -35,6 +36,10 @@ Sendgrid       ``mailer.webhook.request_parser.sendgrid``
 .. versionadded:: 7.1
 
     The support for ``Resend`` and ``MailerSend`` were introduced in Symfony 7.1.
+
+.. versionadded:: 7.2
+
+    The ``Mailomat`` integration was introduced in Symfony 7.2.
 
 .. note::
 

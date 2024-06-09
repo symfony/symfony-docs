@@ -106,6 +106,7 @@ Service               Install with                                    Webhook su
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``     yes
 `Mailjet`_            ``composer require symfony/mailjet-mailer``     yes
+`Mailomat`_           ``composer require symfony/mailomat-mailer``    yes
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
@@ -118,6 +119,10 @@ Service               Install with                                    Webhook su
 .. versionadded:: 7.1
 
     The Azure and Resend integrations were introduced in Symfony 7.1.
+
+.. versionadded:: 7.2
+
+    The Mailomat integration was introduced in Symfony 7.2.
 
 .. note::
 
@@ -200,6 +205,10 @@ party provider:
 | `Mailjet`_             | - SMTP ``mailjet+smtp://ACCESS_KEY:SECRET_KEY@default`` |
 |                        | - HTTP n/a                                              |
 |                        | - API ``mailjet+api://ACCESS_KEY:SECRET_KEY@default``   |
++------------------------+---------------------------------------------------------+
+| `Mailomat`_            | - SMTP ``mailomat+smtp://USERNAME:PASSWORD@default``    |
+|                        | - HTTP n/a                                              |
+|                        | - API ``mailomat+api://KEY@default``                    |
 +------------------------+---------------------------------------------------------+
 | `MailPace`_            | - SMTP ``mailpace+api://API_TOKEN@default``             |
 |                        | - HTTP n/a                                              |
@@ -1979,6 +1988,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
 .. _`Markdown syntax`: https://commonmark.org/
+.. _`Mailomat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailomat/README.md
 .. _`MailPace`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailPace/README.md
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
