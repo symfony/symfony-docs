@@ -41,7 +41,7 @@ The database connection information is stored as an environment variable called
     # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.37"
 
     # to use mariadb:
     # Before doctrine/dbal < 3.7
@@ -53,7 +53,7 @@ The database connection information is stored as an environment variable called
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
 
     # to use postgresql:
-    # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
+    # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=12.19 (Debian 12.19-1.pgdg120+1)&charset=utf8"
 
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
@@ -76,7 +76,7 @@ database for you:
     $ php bin/console doctrine:database:create
 
 There are more options in ``config/packages/doctrine.yaml`` that you can configure,
-including your ``server_version`` (e.g. 5.7 if you're using MySQL 5.7), which may
+including your ``server_version`` (e.g. 8.0.37 if you're using MySQL 8.0.37), which may
 affect how Doctrine functions.
 
 .. tip::
