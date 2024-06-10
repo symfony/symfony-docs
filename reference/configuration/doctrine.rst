@@ -57,7 +57,7 @@ The following block shows all possible configuration keys:
                 charset:              utf8mb4
                 logging:              '%kernel.debug%'
                 platform_service:     App\DBAL\MyDatabasePlatformService
-                server_version:       '5.7'
+                server_version:       '8.0.37'
                 mapping_types:
                     enum: string
                 types:
@@ -91,7 +91,7 @@ The following block shows all possible configuration keys:
                     charset="utf8mb4"
                     logging="%kernel.debug%"
                     platform-service="App\DBAL\MyDatabasePlatformService"
-                    server-version="5.7">
+                    server-version="8.0.37">
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
@@ -136,13 +136,13 @@ If you want to configure multiple connections in YAML, put them under the
                     user:             root
                     password:         null
                     host:             localhost
-                    server_version:   '5.6'
+                    server_version:   '8.0.37'
                 customer:
                     dbname:           customer
                     user:             root
                     password:         null
                     host:             localhost
-                    server_version:   '5.7'
+                    server_version:   '8.2.0'
 
 The ``database_connection`` service always refers to the *default* connection,
 which is the first one defined or the one configured via the
