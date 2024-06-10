@@ -225,7 +225,7 @@ need in your ``.env.test`` file:
     # .env.test
 
     # ...
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=8.0.37"
 
 In the test environment, these env files are read (if vars are duplicated
 in them, files lower in the list override previous items):
@@ -341,7 +341,7 @@ env var:
 .. code-block:: env
 
     # .env.test.local
-    DATABASE_URL="mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=5.7"
+    DATABASE_URL="mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=8.0.37"
 
 This assumes that each developer/machine uses a different database for the
 tests. If the test set-up is the same on each machine, use the ``.env.test``
