@@ -261,7 +261,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
         public function __isset($id): bool
         {
-            return true;
+            return isset($this->children[$id]);
         }
     }
 
