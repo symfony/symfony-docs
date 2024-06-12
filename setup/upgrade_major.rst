@@ -171,8 +171,8 @@ this one. For instance, update it to ``6.0.*`` to upgrade to Symfony 6.0:
       "extra": {
           "symfony": {
               "allow-contrib": false,
-    -       "require": "5.4.*"
-    +       "require": "6.0.*"
+    -         "require": "5.4.*"
+    +         "require": "6.0.*"
           }
       }
 
