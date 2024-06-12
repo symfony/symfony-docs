@@ -306,7 +306,7 @@ For example, if you want to send customer reports daily except for holiday perio
             }
 
             // loop until you get the next run date that is not a holiday
-            while (!$this->isHoliday($nextRun) {
+            while ($this->isHoliday($nextRun)) {
                 $nextRun = $this->inner->getNextRunDate($nextRun);
             }
 
