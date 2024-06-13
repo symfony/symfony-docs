@@ -601,13 +601,13 @@ Installing and Configuring a Third Party Provider
 Before pushing/pulling translations to a third-party provider, you must install
 the package that provides integration with that provider:
 
-====================  ===========================================================
-Provider              Install with
-====================  ===========================================================
-Crowdin               ``composer require symfony/crowdin-translation-provider``
-Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
-Lokalise              ``composer require symfony/lokalise-translation-provider``
-====================  ===========================================================
+======================  ===========================================================
+Provider                Install with
+======================  ===========================================================
+`Crowdin`_              ``composer require symfony/crowdin-translation-provider``
+`Loco (localise.biz)`_  ``composer require symfony/loco-translation-provider``
+`Lokalise`_             ``composer require symfony/lokalise-translation-provider``
+======================  ===========================================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -632,13 +632,13 @@ pull translations via Loco. The *only* part you need to change is the
 
 This table shows the full list of available DSN formats for each provider:
 
-=====================  ==============================================================
-Provider               DSN
-=====================  ==============================================================
-Crowdin                ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
-Loco (localise.biz)    ``loco://API_KEY@default``
-Lokalise               ``lokalise://PROJECT_ID:API_KEY@default``
-=====================  ==============================================================
+======================  ==============================================================
+Provider                DSN
+======================  ==============================================================
+`Crowdin`_               ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
+`Loco (localise.biz)`_  ``loco://API_KEY@default``
+`Lokalise`_             ``lokalise://PROJECT_ID:API_KEY@default``
+======================  ==============================================================
 
 To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
@@ -1476,3 +1476,6 @@ Learn more
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`pseudolocalization`: https://en.wikipedia.org/wiki/Pseudolocalization
 .. _`Symfony Demo`: https://github.com/symfony/demo
+.. _`Crowdin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Crowdin/README.md
+.. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
+.. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
