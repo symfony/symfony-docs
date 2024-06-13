@@ -1343,7 +1343,7 @@ Symfony processes all the application translation files as part of the process
 that compiles the application code before executing it. If there's an error in
 any translation file, you'll see an error message explaining the problem.
 
-If you prefer, you can also validate the contents of any YAML and XLIFF
+If you prefer, you can also validate the syntax of any YAML and XLIFF
 translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
 
 .. code-block:: terminal
@@ -1383,6 +1383,22 @@ adapted to the format required by GitHub, but you can force that format too:
     .. code-block:: terminal
 
         $ php vendor/bin/yaml-lint translations/
+
+The ``lint:yaml`` and ``lint:xliff`` commands validate the YAML and XML syntax
+of the translation files, but not their contents. Use the following command
+to check that the translation contents are also correct:
+
+    .. code-block:: terminal
+
+        # checks the contents of all the translation catalogues in all locales
+        $ php bin/console lint:translations
+
+        # checks the contents of the translation catalogues for Italian (it) and Japanese (ja) locales
+        $ php bin/console lint:translations --locales=it --locales=ja
+
+.. versionadded:: 7.2
+
+    The ``lint:translations`` command was introduced in Symfony 7.2.
 
 Pseudo-localization translator
 ------------------------------
