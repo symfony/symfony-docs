@@ -604,14 +604,14 @@ Installing and Configuring a Third Party Provider
 Before pushing/pulling translations to a third-party provider, you must install
 the package that provides integration with that provider:
 
-====================  ===========================================================
-Provider              Install with
-====================  ===========================================================
-Crowdin               ``composer require symfony/crowdin-translation-provider``
-Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
-Lokalise              ``composer require symfony/lokalise-translation-provider``
-Phrase                ``composer require symfony/phrase-translation-provider``
-====================  ===========================================================
+======================  ===========================================================
+Provider                Install with
+======================  ===========================================================
+`Crowdin`_              ``composer require symfony/crowdin-translation-provider``
+`Loco (localise.biz)`_  ``composer require symfony/loco-translation-provider``
+`Lokalise`_             ``composer require symfony/lokalise-translation-provider``
+`Phrase`_                ``composer require symfony/phrase-translation-provider``
+======================  ===========================================================
 
 .. versionadded:: 6.4
 
@@ -640,14 +640,14 @@ pull translations via Loco. The *only* part you need to change is the
 
 This table shows the full list of available DSN formats for each provider:
 
-=====================  ==============================================================
-Provider               DSN
-=====================  ==============================================================
-Crowdin                ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
-Loco (localise.biz)    ``loco://API_KEY@default``
-Lokalise               ``lokalise://PROJECT_ID:API_KEY@default``
-Phrase                 ``phrase://PROJECT_ID:API_TOKEN@default?userAgent=myProject``
-=====================  ==============================================================
+======================  ==============================================================
+Provider                DSN
+======================  ==============================================================
+`Crowdin`_              ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
+`Loco (localise.biz)`_  ``loco://API_KEY@default``
+`Lokalise`_             ``lokalise://PROJECT_ID:API_KEY@default``
+`Phrase`_               ``phrase://PROJECT_ID:API_TOKEN@default?userAgent=myProject``
+======================  ==============================================================
 
 To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
@@ -1581,3 +1581,7 @@ Learn more
 .. _`Custom Language Codes`: https://support.crowdin.com/project-settings/#languages
 .. _`Identification via User-Agent`: https://developers.phrase.com/api/#overview--identification-via-user-agent
 .. _`Phrase Tag Bundle`: https://github.com/wickedOne/phrase-tag-bundle
+.. _`Crowdin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Crowdin/README.md
+.. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
+.. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
+.. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
