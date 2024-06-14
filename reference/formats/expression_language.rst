@@ -124,11 +124,10 @@ returns the right-hand side. Expressions can chain multiple coalescing operators
 * ``foo[3] ?? 'no'``
 * ``foo.baz ?? foo['baz'] ?? 'no'``
 
-.. note::
+.. versionadded:: 7.2
 
-    The main difference with the `null-coalescing operator in PHP`_ is that
-    ExpressionLanguage will throw an exception when trying to access a
-    non-existent variable.
+    Starting from Symfony 7.2, no exception is thrown when trying to access a
+    non-existent variable. This is the same behavior as the `null-coalescing operator in PHP`_.
 
 .. _component-expression-functions:
 
