@@ -3320,7 +3320,7 @@ You can also restrict the list to a specific bus by providing its name as an arg
 Redispatching a Message
 -----------------------
 
-It you want to redispatch a message (using the same transport and envelope), create
+If you want to redispatch a message (using the same transport and envelope), create
 a new :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
 it through your bus. Reusing the same ``SmsNotification`` example shown earlier::
 
