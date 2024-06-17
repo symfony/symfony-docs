@@ -693,17 +693,21 @@ cookies automatically.
 
 You can either :ref:`send cookies with the BrowserKit component <component-browserkit-sending-cookies>`,
 which integrates seamlessly with the HttpClient component, or manually setting
-the ``Cookie`` HTTP header as follows::
+`the Cookie HTTP request header`_ as follows::
 
     use Symfony\Component\HttpClient\HttpClient;
     use Symfony\Component\HttpFoundation\Cookie;
 
     $client = HttpClient::create([
         'headers' => [
-            'Cookie' => new Cookie('flavor', 'chocolate', strtotime('+1 day')),
+            // set one cookie as a name=value pair
+            'Cookie' => 'flavor=chocolate',
 
-            // you can also pass the cookie contents as a string
-            'Cookie' => 'flavor=chocolate; expires=Sat, 11 Feb 2023 12:18:13 GMT; Max-Age=86400; path=/'
+            // you can set multiple cookies at once separating them with a ;
+            'Cookie' => 'flavor=chocolate; size=medium',
+
+            // if needed, encode the cookie value to ensure that it contains valid characters
+            'Cookie' => sprintf("%s=%s", 'foo', rawurlencode('...')),
         ],
     ]);
 
@@ -2089,3 +2093,4 @@ test it in a real application::
 .. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
 .. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
 .. _`SSRF`: https://portswigger.net/web-security/ssrf
+.. _`the Cookie HTTP request header`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie
