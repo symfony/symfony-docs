@@ -709,6 +709,10 @@ create your own User from the claims, you must
 Using CAS 2.0
 -------------
 
+.. versionadded:: 7.1
+
+    The support for CAS token handlers was introduced in Symfony 7.1.
+
 `Central Authentication Service (CAS)`_ is an enterprise multilingual single
 sign-on solution and identity provider for the web and attempts to be a
 comprehensive platform for your authentication and authorization needs.
@@ -724,7 +728,7 @@ haven't installed it yet, run this command:
 
     $ composer require symfony/http-client
 
-You can configure a ``cas`` ``token_handler``:
+You can configure a ``cas`` token handler as follows:
 
 .. configuration-block::
 
