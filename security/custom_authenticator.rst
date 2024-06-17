@@ -342,7 +342,7 @@ would initialize the passport like this::
             $username = $request->getPayload()->get('username');
             $csrfToken = $request->getPayload()->get('csrf_token');
 
-            // ... validate no parameter is empty
+            // ...
 
             return new Passport(
                 new UserBadge($username),
