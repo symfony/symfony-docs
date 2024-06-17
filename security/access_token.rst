@@ -99,7 +99,7 @@ This handler must implement
 
             // and return a UserBadge object containing the user identifier from the found token
             // (this is the same identifier used in Security configuration; it can be an email,
-            // a UUUID, a username, a database ID, etc.)
+            // a UUID, a username, a database ID, etc.)
             return new UserBadge($accessToken->getUserId());
         }
     }
