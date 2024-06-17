@@ -111,8 +111,14 @@ words, it does everything for you.
     If you are doing this in WSL (Windows Subsystem for Linux), the newly created
     local certificate authority needs to be manually imported in Windows. The file
     is located in ``wsl`` at ``~/.symfony5/certs/default.p12``. The easiest way to
-    do so is to run ``explorer.exe \`wslpath -w $HOME/.symfony5/certs\``` from ``wsl``
-    and double-click the ``default.p12`` file.
+    do so is to run the following command from ``wsl``:
+
+    .. code-block:: terminal
+
+        $ explorer.exe `wslpath -w $HOME/.symfony5/certs`
+
+    In the file explorer window that just opened, double-click on the file
+    called ``default.p12``.
 
 Before browsing your local application with HTTPS instead of HTTP, restart its
 server stopping and starting it again.
