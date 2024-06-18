@@ -1194,10 +1194,6 @@ retry_failed
 
 **type**: ``array``
 
-.. versionadded:: 5.2
-
-    The ``retry_failed`` option was introduced in Symfony 5.2.
-
 This option configures the behavior of the HTTP client when some request fails,
 including which types of requests to retry and how many times. The behavior is
 defined with the following options:
