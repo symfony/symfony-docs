@@ -972,10 +972,6 @@ crypto_method
 The minimum version of TLS to accept. The value must be one of the
 ``STREAM_CRYPTO_METHOD_TLSv*_CLIENT`` constants defined by PHP.
 
-.. versionadded:: 6.3
-
-    The ``crypto_method`` option was introduced in Symfony 6.3.
-
 .. _reference-http-client-retry-delay:
 
 delay
