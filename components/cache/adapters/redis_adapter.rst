@@ -55,23 +55,17 @@ helper method allows creating and configuring the Redis client class instance us
         'redis://localhost'
     );
 
-The DSN can specify either an IP/host (and an optional port) or a socket path, as well as a
-password and a database index. To enable TLS for connections, the scheme ``redis`` must be
-replaced by ``rediss`` (the second ``s`` means "secure").
+The DSN can specify either an IP/host (and an optional port) or a socket path, as
+well as a database index. To enable TLS for connections, the scheme ``redis`` must
+be replaced by ``rediss`` (the second ``s`` means "secure").
 
 .. note::
 
-    A `Data Source Name (DSN)`_ for this adapter must use either one of the following formats.
+    A `Data Source Name (DSN)`_ for this adapter must use the following format.
 
     .. code-block:: text
 
         redis[s]://[pass@][ip|host|socket[:port]][/db-index]
-
-    .. code-block:: text
-
-        redis[s]:[[user]:pass@]?[ip|host|socket[:port]][&params]
-
-    Values for placeholders ``[user]``, ``[:port]``, ``[/db-index]`` and ``[&params]`` are optional.
 
 Below are common examples of valid DSNs showing a combination of available values::
 
@@ -89,11 +83,8 @@ Below are common examples of valid DSNs showing a combination of available value
     // socket "/var/run/redis.sock" and auth "bad-pass"
     RedisAdapter::createConnection('redis://bad-pass@/var/run/redis.sock');
 
-    // host "redis1" (docker container) with alternate DSN syntax and selecting database index "3"
-    RedisAdapter::createConnection('redis:?host[redis1:6379]&dbindex=3');
-
-    // providing credentials with alternate DSN syntax
-    RedisAdapter::createConnection('redis:default:verysecurepassword@?host[redis1:6379]&dbindex=3');
+    // a single DSN can define multiple servers using the following syntax:
+    // host[hostname-or-IP:port] (where port is optional). Sockets must include a trailing ':'
 
     // a single DSN can also define multiple servers
     RedisAdapter::createConnection(
@@ -106,16 +97,6 @@ parameter to set the name of your service group::
 
     RedisAdapter::createConnection(
         'redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
-    );
-
-    // providing credentials
-    RedisAdapter::createConnection(
-        'redis:default:verysecurepassword@?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster'
-    );
-
-    // providing credentials and selecting database index "3"
-    RedisAdapter::createConnection(
-        'redis:default:verysecurepassword@?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&redis_sentinel=mymaster&dbindex=3'
     );
 
 .. note::
