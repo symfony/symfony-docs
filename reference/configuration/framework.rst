@@ -913,37 +913,6 @@ If you use for example
 as the type and name of an argument, autowiring will inject the ``my_api.client``
 service into your autowired classes.
 
-.. _reference-http-client-retry-failed:
-
-By enabling the optional ``retry_failed`` configuration, the HTTP client service
-will automatically retry failed HTTP requests.
-
-.. code-block:: yaml
-
-    # config/packages/framework.yaml
-    framework:
-        # ...
-        http_client:
-            # ...
-            default_options:
-                retry_failed:
-                    # retry_strategy: app.custom_strategy
-                    http_codes:
-                        0: ['GET', 'HEAD']   # retry network errors if request method is GET or HEAD
-                        429: true            # retry all responses with 429 status code
-                        500: ['GET', 'HEAD']
-                    max_retries: 2
-                    delay: 1000
-                    multiplier: 3
-                    max_delay: 5000
-                    jitter: 0.3
-
-            scoped_clients:
-                my_api.client:
-                    # ...
-                    retry_failed:
-                        max_retries: 4
-
 auth_basic
 ..........
 
@@ -1058,6 +1027,8 @@ The minimum version of TLS to accept. The value must be one of the
 
     The ``crypto_method`` option was introduced in Symfony 6.3.
 
+.. _reference-http-client-retry-delay:
+
 delay
 .....
 
@@ -1097,6 +1068,8 @@ headers
 An associative array of the HTTP headers added before making the request. This
 value must use the format ``['header-name' => 'value0, value1, ...']``.
 
+.. _reference-http-client-retry-http-codes:
+
 http_codes
 ..........
 
@@ -1111,6 +1084,8 @@ http_version
 
 The HTTP version to use, typically ``'1.1'``  or ``'2.0'``. Leave it to ``null``
 to let Symfony select the best version automatically.
+
+.. _reference-http-client-retry-jitter:
 
 jitter
 ......
@@ -1138,6 +1113,8 @@ local_pk
 
 The path of a file that contains the `PEM formatted`_ private key of the
 certificate defined in the ``local_cert`` option.
+
+.. _reference-http-client-retry-max-delay:
 
 max_delay
 .........
@@ -1173,6 +1150,8 @@ max_redirects
 The maximum number of redirects to follow. Use ``0`` to not follow any
 redirection.
 
+.. _reference-http-client-retry-max-retries:
+
 max_retries
 ...........
 
@@ -1180,6 +1159,8 @@ max_retries
 
 The maximum number of retries for failing requests. When the maximum is reached,
 the client returns the last received response.
+
+.. _reference-http-client-retry-multiplier:
 
 multiplier
 ..........
@@ -1247,6 +1228,54 @@ client and to make your tests easier.
 
 The value of this option is an associative array of ``domain => IP address``
 (e.g ``['symfony.com' => '46.137.106.254', ...]``).
+
+.. _reference-http-client-retry-failed:
+
+retry_failed
+............
+
+**type**: ``array``
+
+.. versionadded:: 5.2
+
+    The ``retry_failed`` option was introduced in Symfony 5.2.
+
+This option configures the behavior of the HTTP client when some request fails,
+including which types of requests to retry and how many times. The behavior is
+defined with the following options:
+
+* :ref:`delay <reference-http-client-retry-delay>`
+* :ref:`http_codes <reference-http-client-retry-http-codes>`
+* :ref:`jitter <reference-http-client-retry-jitter>`
+* :ref:`max_delay <reference-http-client-retry-max-delay>`
+* :ref:`max_retries <reference-http-client-retry-max-retries>`
+* :ref:`multiplier <reference-http-client-retry-multiplier>`
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            # ...
+            default_options:
+                retry_failed:
+                    # retry_strategy: app.custom_strategy
+                    http_codes:
+                        0: ['GET', 'HEAD']   # retry network errors if request method is GET or HEAD
+                        429: true            # retry all responses with 429 status code
+                        500: ['GET', 'HEAD']
+                    max_retries: 2
+                    delay: 1000
+                    multiplier: 3
+                    max_delay: 5000
+                    jitter: 0.3
+
+            scoped_clients:
+                my_api.client:
+                    # ...
+                    retry_failed:
+                        max_retries: 4
 
 retry_strategy
 ..............
