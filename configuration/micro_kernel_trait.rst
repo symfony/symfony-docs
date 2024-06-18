@@ -124,6 +124,12 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
 
     The PHP attributes notation has been introduced in Symfony 6.1.
 
+.. note::
+
+    In addition to the ``index.php`` file, you'll need to create a directory called
+    ``config/`` in your project (even if it's empty because you define the configuration
+    options inside the ``configureContainer()`` method).
+
 That's it! To test it, start the :doc:`Symfony Local Web Server
 </setup/symfony_server>`:
 
