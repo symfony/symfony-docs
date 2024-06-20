@@ -264,7 +264,7 @@ Assume you have the following plain-old-PHP object::
         }
     }
 
-The definition of serialization can be specified using annotations, XML
+The definition of serialization can be specified using attributes, XML
 or YAML. The :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 that will be used by the normalizer must be aware of the format to use.
 
