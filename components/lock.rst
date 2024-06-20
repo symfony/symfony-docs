@@ -788,7 +788,7 @@ Using the above methods, a robust code would be::
             $lock->refresh();
         }
 
-        // Perform the task whose duration MUST be less than 5 minutes
+        // Perform the task whose duration MUST be less than 5 seconds
     }
 
 .. caution::
