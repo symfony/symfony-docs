@@ -613,6 +613,8 @@ Convert Slack short codes to emojis with the ``slack-emoji`` locale::
     $transliterator->transliterate('Menus with :green_salad: or :falafel:');
     // => 'Menus with 🥗 or 🧆'
 
+.. _string-text-emoji:
+
 Universal Emoji Short Codes Transliteration
 ###########################################
 
@@ -636,6 +638,33 @@ You can convert emojis to short codes with the ``emoji-text`` locale::
     $transliterator = EmojiTransliterator::create('emoji-text');
     $transliterator->transliterate('Breakfast with 🥝 or 🥛');
     // => 'Breakfast with :kiwifruit: or :milk-glass:
+
+Inverse Emoji Transliteration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.1
+
+    The inverse emoji transliteration was introduced in Symfony 7.1.
+
+Given the textual representation of an emoji, you can reverse it back to get the
+actual emoji thanks to the :ref:`emojify filter <reference-twig-filter-emojify>`:
+
+.. code-block:: twig
+
+    {{ 'I like :kiwi-fruit:'|emojify }} {# renders: I like 🥝 #}
+    {{ 'I like :kiwi:'|emojify }}       {# renders: I like 🥝 #}
+    {{ 'I like :kiwifruit:'|emojify }}  {# renders: I like 🥝 #}
+
+By default, ``emojify`` uses the :ref:`text catalog <string-text-emoji>`, which
+merges the emoji text codes of all services. If you prefer, you can select a
+specific catalog to use:
+
+.. code-block:: twig
+
+    {{ 'I :green-heart: this'|emojify }}                  {# renders: I 💚 this #}
+    {{ ':green_salad: is nice'|emojify('slack') }}        {# renders: 🥗 is nice #}
+    {{ 'My :turtle: has no name yet'|emojify('github') }} {# renders: My 🐢 has no name yet #}
+    {{ ':kiwi: is a great fruit'|emojify('gitlab') }}     {# renders: 🥝 is a great fruit #}
 
 Removing Emojis
 ~~~~~~~~~~~~~~~
