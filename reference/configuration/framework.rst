@@ -1629,7 +1629,8 @@ To see a list of all available storages, run:
 
 .. versionadded:: 5.3
 
-    The ``storage_factory_id`` option was introduced in Symfony 5.3 deprecating the ``storage_id`` option.
+    The ``storage_factory_id`` option was introduced in Symfony 5.3 as a replacement
+    of the ``storage_id`` option.
 
 .. _config-framework-session-handler-id:
 
