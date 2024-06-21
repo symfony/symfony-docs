@@ -2110,6 +2110,16 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
+.. note::
+
+    If a route being imported includes the special :ref:`_locale <routing-locale-parameter>`
+    parameter in its own definition, Symfony will only import it for that locale
+    and not for the other configured locale prefixes.
+
+    E.g. if a route contains ``locale: 'en'`` in its definition and it's being
+    imported with ``en`` (prefix: empty) and ``nl`` (prefix: ``/nl``) locales,
+    that route will be available only in ``en`` locale and not in ``nl``.
+
 Another common requirement is to host the website on a different domain
 according to the locale. This can be done by defining a different host for each
 locale.
