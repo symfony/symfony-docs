@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2024-06-19T11:26:43Z
+
+Javier thanks for opening this PR so quickly :)
+
+I was wondering if we could simplify the example even more by referencing the runtime autoload file instead and replace this code:
+```php
+$kernel = new Kernel('dev', true);
+$request = Request::createFromGlobals();
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);
+```
+with this other:
+```php
+return static function (array $context) {
+    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+}
+```
+wdyt?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-06-20T11:25:03Z
+
+I like your proposal Yonel. I updated the PR with your changes. Thanks for the review.
