@@ -1111,6 +1111,21 @@ setting:
             ;
         };
 
+It is also possible to define a service as public thanks to the ``#[Autoconfigure]``
+attribute. This attribute must be used directly on the class of the service
+you want to configure::
+
+    // src/Service/PublicService.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+    #[Autoconfigure(public: true)]
+    class PublicService
+    {
+        // ...
+    }
+
 .. _service-psr4-loader:
 
 Importing Many Services at once with resource
