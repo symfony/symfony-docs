@@ -2416,6 +2416,54 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
+.. tip::
+
+    If the special :ref:`_locale <routing-locale-parameter>` routing parameter
+    is set on any of the imported routes, that route will only be available
+    with the prefix for that locale. This is useful when you want to import
+    a collection of routes which contains a route that should only exist
+    in one of the locales:
+
+    .. configuration-block::
+
+        .. code-block:: php-annotations
+
+            // src/Controller/CompanyController.php
+            namespace App\Controller;
+
+            use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+            use Symfony\Component\HttpFoundation\Response;
+            use Symfony\Component\Routing\Annotation\Route;
+
+            class CompanyController extends AbstractController
+            {
+                /**
+                 * @Route("/about-us/en-only", locale="en", name="about_us")
+                 */
+                public function about(): Response
+                {
+                    // ...
+                }
+            }
+
+        .. code-block:: php-attributes
+
+            // src/Controller/CompanyController.php
+            namespace App\Controller;
+
+            use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+            use Symfony\Component\HttpFoundation\Response;
+            use Symfony\Component\Routing\Annotation\Route;
+
+            class CompanyController extends AbstractController
+            {
+                #[Route('/about-us/en-only', locale: 'en', name: 'about_us')]
+                public function about(): Response
+                {
+                    // ...
+                }
+            }
+
 Another common requirement is to host the website on a different domain
 according to the locale. This can be done by defining a different host for each
 locale.
