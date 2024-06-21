@@ -2416,53 +2416,15 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
-.. tip::
+.. note::
 
-    If the special :ref:`_locale <routing-locale-parameter>` routing parameter
-    is set on any of the imported routes, that route will only be available
-    with the prefix for that locale. This is useful when you want to import
-    a collection of routes which contains a route that should only exist
-    in one of the locales:
+    If a route being imported includes the special :ref:`_locale <routing-locale-parameter>`
+    parameter in its own definition, Symfony will only import it for that locale
+    and not for the other configured locale prefixes.
 
-    .. configuration-block::
-
-        .. code-block:: php-annotations
-
-            // src/Controller/CompanyController.php
-            namespace App\Controller;
-
-            use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-            use Symfony\Component\HttpFoundation\Response;
-            use Symfony\Component\Routing\Annotation\Route;
-
-            class CompanyController extends AbstractController
-            {
-                /**
-                 * @Route("/about-us/en-only", locale="en", name="about_us")
-                 */
-                public function about(): Response
-                {
-                    // ...
-                }
-            }
-
-        .. code-block:: php-attributes
-
-            // src/Controller/CompanyController.php
-            namespace App\Controller;
-
-            use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-            use Symfony\Component\HttpFoundation\Response;
-            use Symfony\Component\Routing\Annotation\Route;
-
-            class CompanyController extends AbstractController
-            {
-                #[Route('/about-us/en-only', locale: 'en', name: 'about_us')]
-                public function about(): Response
-                {
-                    // ...
-                }
-            }
+    E.g. if a route contains ``locale: 'en'`` in its definition and it's being
+    imported with ``en`` (prefix: empty) and ``nl`` (prefix: ``/nl``) locales,
+    that route will be available only in ``en`` locale and not in ``nl``.
 
 Another common requirement is to host the website on a different domain
 according to the locale. This can be done by defining a different host for each
