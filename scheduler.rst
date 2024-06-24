@@ -29,7 +29,7 @@ install the scheduler component:
 .. tip::
 
     Starting in `MakerBundle`_ ``v1.58.0``, you can run ``php bin/console make:schedule``
-    to generate a basic schedule, that you can customise to create your own Scheduler.
+    to generate a basic schedule, that you can customize to create your own Scheduler.
 
 Symfony Scheduler Basics
 ------------------------
