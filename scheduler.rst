@@ -26,6 +26,11 @@ install the scheduler component:
 
     $ composer require symfony/scheduler
 
+.. tip::
+
+    Starting in `MakerBundle`_ ``v1.58.0``, you can run ``php bin/console make:schedule``
+    to generate a basic schedule, that you can customise to create your own Scheduler.
+
 Symfony Scheduler Basics
 ------------------------
 
@@ -974,6 +979,7 @@ helping you identify those messages when needed.
     Automatically attaching a :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp`
     to redispatched messages was introduced in Symfony 6.4.
 
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
 .. _`cron command-line utility`: https://en.wikipedia.org/wiki/Cron
 .. _`crontab.guru website`: https://crontab.guru/
