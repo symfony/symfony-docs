@@ -553,16 +553,16 @@ If the argument is named ``$shoutyTransformer``,
 But, you can also manually wire any *other* service by specifying the argument
 under the arguments key.
 
-Another possibility is to use the ``#[Target]`` attribute. By using this attribute
-on the argument you want to autowire, you can define exactly which service to inject
-by passing the name of the argument used in the named alias. Thanks to this, you're able
-to have multiple services implementing the same interface and keep the argument name
-decorrelated of any implementation name (like shown in the example above).
+Another option is to use the ``#[Target]`` attribute. By adding this attribute
+to the argument you want to autowire, you can specify which service to inject by
+passing the name of the argument used in the named alias. This way, you can have
+multiple services implementing the same interface and keep the argument name
+separate from any implementation name (like shown in the example above).
 
 .. warning::
 
-    The ``#[Target]`` attribute only accepts the name of the argument used in the named
-    alias, it **does not** accept service ids or service aliases.
+    The ``#[Target]`` attribute only accepts the name of the argument used in the
+    named alias; it **does not** accept service ids or service aliases.
 
 Suppose you want to inject the ``App\Util\UppercaseTransformer`` service. You would use
 the ``#[Target]`` attribute by passing the name of the ``$shoutyTransformer`` argument::
@@ -584,8 +584,10 @@ the ``#[Target]`` attribute by passing the name of the ``$shoutyTransformer`` ar
         }
     }
 
-Since the ``#[Target]`` attribute normalizes the string passed to it to its camelCased form,
-name variations such as ``shouty.transformer`` also work.
+.. tip::
+
+    Since the ``#[Target]`` attribute normalizes the string passed to it to its
+    camelCased form, name variations (e.g. ``shouty.transformer``) also work.
 
 .. note::
 
