@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by javaDeveloperKid at 2024-04-14T16:25:13Z
+
+Good clarification. I've never understood how this attribute works :smile: I had two interpretations but both wrong.
+
+Btw. I think this should also be clarified in the source code above $name constructor parameter doc block and class doc block (the latter is a little better but still can be improved). https://github.com/symfony/symfony/blob/7.1/src/Symfony/Component/DependencyInjection/Attribute/Target.php
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-19T18:52:17Z
+
+@nicolas-grekas a final review from your side would be helpful, thanks
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2024-04-22T06:52:39Z
+
+LGTM but maybe we should tell about the debug:autowiring command, which does report the target name since https://github.com/symfony/symfony/pull/50718?
+
+---------------------------------------------------------------------------
+
+by HypeMC at 2024-04-22T08:57:20Z
+
+@nicolas-grekas Good idea, I've created a [followup PR](https://github.com/symfony/symfony-docs/pull/19814) since this one targets 5.4, and the feature was introduced in 6.4.
