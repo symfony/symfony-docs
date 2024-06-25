@@ -741,6 +741,20 @@ In the expression, the ``repository`` variable will be your entity's
 Repository class and any route wildcards - like ``{product_id}`` are
 available as variables.
 
+The repository method called in the expression can also return a list of entities.
+In that case, update the type of your controller argument::
+
+    #[Route('/posts_by/{author_id}')]
+    public function authorPosts(
+        #[MapEntity(class: Post::class, expr: 'repository.findBy({"author": author_id}, {}, 10)')]
+        iterable $posts
+    ): Response {
+    }
+
+.. versionadded:: 7.1
+
+    The mapping of the lists of entities was introduced in Symfony 7.1.
+
 This can also be used to help resolve multiple arguments::
 
     #[Route('/product/{id}/comments/{comment_id}')]
