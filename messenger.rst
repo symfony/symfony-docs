@@ -688,6 +688,14 @@ of some or all transports:
     # shows stats only for some transports
     $ php bin/console messenger:stats my_transport_name other_transport_name
 
+    # you can also output the stats in JSON format
+    $ php bin/console messenger:stats --format=json
+    $ php bin/console messenger:stats my_transport_name other_transport_name --format=json
+
+.. versionadded:: 7.2
+
+    The ``format`` option was introduced in Symfony 7.2.
+
 .. note::
 
     In order for this command to work, the configured transport's receiver must implement
