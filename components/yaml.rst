@@ -214,6 +214,8 @@ During the parsing of the YAML contents, all the ``_`` characters are removed
 from the numeric literal contents, so there is not a limit in the number of
 underscores you can include or the way you group contents.
 
+.. _yaml-flags:
+
 Advanced Usage: Flags
 ---------------------
 
