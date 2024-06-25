@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2024-06-25T07:50:09Z
+
+> I don't know how to express this --> YamlParser::PARSE_CONSTANT | YamlParser::PARSE_CUSTOM_TAGS | Yaml::PARSE_DATETIME in YAML and XML config formats
+
+If I'm right, you cannot. You have to deal with the integer result of the bit operation. It is indeed not ideal.
+
+Speaking of that, what would you think of a custom tag in the Yaml parser, like `!flags YamlParser::PARSE_CONSTANT | YamlParser::PARSE_CUSTOM_TAGS`? Would it make sense to you? I think it could be a nice addition to deal with flags in Yaml which seems still widely used in configs.
+
+Edit: worked on something to achieve this: https://github.com/symfony/symfony/pull/57522
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-06-25T14:35:45Z
+
+Alex, thanks for reviewing this. For now, I removed the advanced flags example for YAML and XML. We can always re-add that later if your proposal is accepted. Thanks!
