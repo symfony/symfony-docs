@@ -51,6 +51,7 @@ self-explanatory and not coupled to Symfony:
     │  └─ console
     ├─ config/
     │  ├─ packages/
+    │  ├─ routes/
     │  └─ services.yaml
     ├─ migrations/
     ├─ public/
