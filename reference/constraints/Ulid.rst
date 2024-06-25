@@ -73,6 +73,20 @@ Basic Usage
 Options
 -------
 
+``format``
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Ulid::FORMAT_BASE_32``
+
+The format of the ULID to validate. The following formats are available:
+
+* ``Ulid::FORMAT_BASE_32``: The ULID is encoded in base32 (default)
+* ``Ulid::FORMAT_BASE_58``: The ULID is encoded in base58
+
+.. versionadded:: 7.2
+
+    The ``format`` option was introduced in Symfony 7.2.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
