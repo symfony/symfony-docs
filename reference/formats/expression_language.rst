@@ -20,6 +20,11 @@ The component supports:
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
+* **comments** - using ``/*`` and ``*/`` (e.g. ``/* this is a comment */``)
+
+.. versionadded:: 7.2
+
+    The support for comments inside expressions was introduced in Symfony 7.2.
 
 .. caution::
 
