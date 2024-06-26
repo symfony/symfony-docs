@@ -963,6 +963,28 @@ rendered by the ``{{ importmap() }}`` Twig function:
             importmap_script_attributes:
                 crossorigin: 'anonymous'
 
+``framework.asset_mapper.config_reader_id``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes you may want to create your own config reader to load your importmap
+or use a custom one from a third party package. You can do this by creating
+a service that implements ``ImportMapConfigReaderInterface`` and then setting
+the ``config_reader_id`` option:
+
+.. versionadded:: 7.1
+
+    The ``framework.asset_mapper.config_reader_id`` was introduced in Symfony 7.1.
+
+.. code-block:: yaml
+
+    framework:
+        asset_mapper:
+            config_reader_id: App\MyCustomImportMapConfigReader
+
+.. tip::
+
+    Don't forget to define your service in your ``services.yaml`` file if further configuration is needed.
+
 Page-Specific CSS & JavaScript
 ------------------------------
 
