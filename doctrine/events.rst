@@ -391,9 +391,9 @@ listener in the Symfony application by creating a new service for it and
             ;
         };
 
-.. versionadded:: 2.7.2
+.. versionadded:: 2.8.0
 
-    The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.7.2.
+    The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.8.0.
 
 .. tip::
 
@@ -421,4 +421,4 @@ Instead, use any of the other alternatives shown above.
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
 .. _`DoctrineMongoDBBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`AsDoctrineListener`: https://github.com/doctrine/DoctrineBundle/blob/2.10.x/Attribute/AsDoctrineListener.php
+.. _`AsDoctrineListener`: https://github.com/doctrine/DoctrineBundle/blob/2.12.x/src/Attribute/AsDoctrineListener.php
