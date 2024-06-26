@@ -43,6 +43,7 @@ Dependency Injection
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
 * :ref:`When <service-container_limiting-to-env>`
+* :ref:`WhenNot <service-container_limiting-to-env>`
 
 EventDispatcher
 ~~~~~~~~~~~~~~~
