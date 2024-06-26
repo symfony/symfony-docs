@@ -161,13 +161,6 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
 
-.. caution::
-
-    When using variables in expressions, avoid passing untrusted data into the
-    array of variables. If you can't avoid that, sanitize non-alphanumeric
-    characters in untrusted data to prevent malicious users from injecting
-    control characters and altering the expression.
-
 .. _expression-language-caching:
 
 Caching
