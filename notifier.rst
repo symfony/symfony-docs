@@ -892,7 +892,7 @@ is dispatched. Listeners receive a
 
     $dispatcher->addListener(SentMessageEvent::class, function (SentMessageEvent $event) {
         // gets the message instance
-        $message = $event->getOriginalMessage();
+        $message = $event->getMessage();
 
         // log something
         $this->logger(sprintf('The message has been successfully sent and has id: %s', $message->getMessageId()));
