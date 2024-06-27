@@ -260,6 +260,32 @@ as a service in some environments::
         // ...
     }
 
+If you want to exclude a service from being registered in a specific
+environment, you can use the ``#[WhenNot]`` attribute::
+
+    use Symfony\Component\DependencyInjection\Attribute\WhenNot;
+
+    // SomeClass is registered in all environments except "dev"
+
+    #[WhenNot(env: 'dev')]
+    class SomeClass
+    {
+        // ...
+    }
+
+    // you can apply more than one WhenNot attribute to the same class
+
+    #[WhenNot(env: 'dev')]
+    #[WhenNot(env: 'test')]
+    class AnotherClass
+    {
+        // ...
+    }
+
+.. versionadded:: 7.2
+
+    The ``#[WhenNot]`` attribute was introduced in Symfony 7.2.
+
 .. _services-constructor-injection:
 
 Injecting Services/Config into a Service
