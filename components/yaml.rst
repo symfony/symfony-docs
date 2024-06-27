@@ -491,7 +491,7 @@ Add the ``--format`` option to get the output in JSON format:
 
 .. code-block:: terminal
 
-    $ php lint.php path/to/file.yaml --format json
+    $ php lint.php path/to/file.yaml --format=json
 
 .. tip::
 
