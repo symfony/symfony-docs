@@ -2282,7 +2282,26 @@ when making HTTP requests you might face errors at transport level.
 
 That's why it's useful to test how your application behaves in case of a transport
 error. :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` allows
-you to do so, by yielding the exception from its body::
+you to do so in multiple ways.
+
+In order to test errors that occur before headers have been received,
+set the ``error`` option value when creating the ``MockResponse``.
+Transport errors of this kind occur, for example, when a host name
+cannot be resolved or the host was unreachable. The
+``TransportException`` will be thrown as soon as a method like
+``getStatusCode()`` or ``getHeaders()`` is called.
+
+In order to test errors that occur while a response is being streamed
+(that is, after the headers have already been received), provide the
+exception to ``MockResponse`` as part of the ``body``
+parameter. You can either use an exception directly, or yield the
+exception from a callback. For exceptions of this kind,
+``getStatusCode()`` may indicate a success (200), but accessing
+``getContent()`` fails.
+
+The following example code illustrates all three options.
+
+body::
 
     // ExternalArticleServiceTest.php
     use PHPUnit\Framework\TestCase;
@@ -2297,10 +2316,16 @@ you to do so, by yielding the exception from its body::
         {
             $requestData = ['title' => 'Testing with Symfony HTTP Client'];
             $httpClient = new MockHttpClient([
-                // You can create the exception directly in the body...
+                // Mock a transport level error at a time before
+                // headers have been received (e. g. host unreachable)
+                new MockResponse(info: ['error' => 'host unreachable']),
+
+                // Mock a response with headers indicating
+                // success, but a failure while retrieving the body by
+                // creating the exception directly in the body...
                 new MockResponse([new \RuntimeException('Error at transport level')]),
 
-                // ... or you can yield the exception from a callback
+                // ... or by yielding it from a callback.
                 new MockResponse((static function (): \Generator {
                     yield new TransportException('Error at transport level');
                 })()),
