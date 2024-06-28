@@ -345,6 +345,55 @@ to multiple transports:
     name as its only argument. For more information about stamps, see
     `Envelopes & Stamps`_.
 
+.. _messenger-message-attribute:
+
+Configuring Routing Using Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can optionally use the `#[AsMessage]` attribute to configure message transport::
+
+    // src/Message/SmsNotification.php
+    namespace App\Message;
+
+    use Symfony\Component\Messenger\Attribute\AsMessage;
+
+    #[AsMessage(transport: 'async')]
+    class SmsNotification
+    {
+        public function __construct(
+            private string $content,
+        ) {
+        }
+
+        public function getContent(): string
+        {
+            return $this->content;
+        }
+    }
+
+.. note::
+
+    If you configure routing with both configuration and attributes, the
+    configuration will take precedence over the attributes and override
+    them. This allows to override routing on a per-environment basis
+    for example:
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        when@dev:
+            framework:
+                messenger:
+                    routing:
+                        # override class attribute
+                        'App\Message\SmsNotification': sync
+
+.. tip::
+
+    The `$transport` parameter can be either a `string` or an `array`: configuring multiple
+    transports is possible. You may also repeat the attribute if you prefer instead of using
+    an array.
+
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

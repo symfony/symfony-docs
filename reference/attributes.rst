@@ -79,6 +79,7 @@ HttpKernel
 Messenger
 ~~~~~~~~~
 
+* :ref:`AsMessage <messenger-message-attribute>`
 * :ref:`AsMessageHandler <messenger-handler>`
 
 RemoteEvent
