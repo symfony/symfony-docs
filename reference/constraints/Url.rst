@@ -317,6 +317,11 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
 
     The ``requiredTld`` option was introduced in Symfony 7.1.
 
+.. deprecated:: 7.1
+
+    Not setting the ``requireTld`` option is deprecated since Symfony 7.1
+    and will default to ``true`` in Symfony 8.0.
+
 By default, URLs like ``https://aaa`` or ``https://foobar`` are considered valid
 because they are tecnically correct according to the `URL spec`_. If you set this option
 to ``true``, the host part of the URL will have to include a TLD (top-level domain
