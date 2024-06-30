@@ -44,6 +44,14 @@ Dependency Injection
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
 * :ref:`When <service-container_limiting-to-env>`
 
+.. deprecated:: 7.1
+
+    The
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
+    and
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
+    were deprecated in Symfony 7.1.
+
 EventDispatcher
 ~~~~~~~~~~~~~~~
 
