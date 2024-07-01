@@ -315,7 +315,7 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
 
 .. versionadded:: 7.1
 
-    The ``requiredTld`` option was introduced in Symfony 7.1.
+    The ``requireTld`` option was introduced in Symfony 7.1.
 
 By default, URLs like ``https://aaa`` or ``https://foobar`` are considered valid
 because they are tecnically correct according to the `URL spec`_. If you set this option
