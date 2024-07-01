@@ -36,8 +36,6 @@ In addition, there are other groups created to manage specific topics:
 * **Security Team**: manages the whole security process (triaging reported vulnerabilities,
   fixing the reported issues, coordinating the release of security fixes, etc.)
 
-* **Recipes Team**: manages the recipes in the main and contrib recipe repositories.
-
 * **Documentation Team**: manages the whole `symfony-docs repository`_.
 
 Active Core Members
@@ -76,11 +74,6 @@ Active Core Members
   * **Fabien Potencier** (`fabpot`_);
   * **Michael Cullum** (`michaelcullum`_);
   * **Jérémy Derussé** (`jderusse`_).
-
-* **Recipes Team**:
-
-  * **Fabien Potencier** (`fabpot`_);
-  * **Tobias Nyholm** (`Nyholm`_).
 
 * **Documentation Team** (``@symfony/team-symfony-docs`` on GitHub):
 
