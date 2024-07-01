@@ -307,6 +307,14 @@ This is done by having ``getSubscribedServices()`` return an array of
         ];
     }
 
+.. deprecated:: 7.1
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
+    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
+    attributes were deprecated in Symfony 7.1 in favor of
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
+    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`.
+
 .. note::
 
     The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
@@ -432,13 +440,13 @@ or directly via PHP attributes:
         namespace App;
 
         use Psr\Container\ContainerInterface;
-        use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
         class CommandBus
         {
             public function __construct(
                 // creates a service locator with all the services tagged with 'app.handler'
-                #[TaggedLocator('app.handler')]
+                #[AutowireLocator('app.handler')]
                 private ContainerInterface $locator,
             ) {
             }
@@ -674,12 +682,12 @@ to index the services:
         namespace App;
 
         use Psr\Container\ContainerInterface;
-        use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
         class CommandBus
         {
             public function __construct(
-                #[TaggedLocator('app.handler', indexAttribute: 'key')]
+                #[AutowireLocator('app.handler', indexAttribute: 'key')]
                 private ContainerInterface $locator,
             ) {
             }
@@ -789,12 +797,12 @@ get the value used to index the services:
         namespace App;
 
         use Psr\Container\ContainerInterface;
-        use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
 
         class CommandBus
         {
             public function __construct(
-                #[TaggedLocator('app.handler', 'defaultIndexMethod: 'getLocatorKey')]
+                #[AutowireLocator('app.handler', 'defaultIndexMethod: 'getLocatorKey')]
                 private ContainerInterface $locator,
             ) {
             }

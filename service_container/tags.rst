@@ -674,13 +674,13 @@ directly via PHP attributes:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
                 // the attribute must be applied directly to the argument to autowire
-                #[TaggedIterator('app.handler')]
+                #[AutowireIterator('app.handler')]
                 iterable $handlers
             ) {
             }
@@ -766,12 +766,12 @@ iterator, add the ``exclude`` option:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', exclude: ['App\Handler\Three'])]
+                #[AutowireIterator('app.handler', exclude: ['App\Handler\Three'])]
                 iterable $handlers
             ) {
             }
@@ -849,12 +849,12 @@ disabled by setting the ``exclude_self`` option to ``false``:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', exclude: ['App\Handler\Three'], excludeSelf: false)]
+                #[AutowireIterator('app.handler', exclude: ['App\Handler\Three'], excludeSelf: false)]
                 iterable $handlers
             ) {
             }
@@ -999,12 +999,12 @@ you can define it in the configuration of the collecting service:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', defaultPriorityMethod: 'getPriority')]
+                #[AutowireIterator('app.handler', defaultPriorityMethod: 'getPriority')]
                 iterable $handlers
             ) {
             }
@@ -1073,12 +1073,12 @@ to index the services:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', indexAttribute: 'key')]
+                #[AutowireIterator('app.handler', indexAttribute: 'key')]
                 iterable $handlers
             ) {
             }
@@ -1187,12 +1187,12 @@ get the value used to index the services:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', defaultIndexMethod: 'getIndex')]
+                #[AutowireIterator('app.handler', defaultIndexMethod: 'getIndex')]
                 iterable $handlers
             ) {
             }
