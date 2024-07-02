@@ -109,6 +109,10 @@ Define these options as :ref:`parameters <configuration-parameters>` in the
 :ref:`environment <configuration-environments>` in the ``config/services_dev.yaml``
 and ``config/services_prod.yaml`` files.
 
+Unless the application configuration is reused multiple times and needs
+rigid validation, do *not* use the :doc:`Config component </components/config>`
+to define the options.
+
 Use Short and Prefixed Parameter Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
