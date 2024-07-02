@@ -66,7 +66,7 @@ based on reflection or a simple string::
     $type->getCollectionKeyType(); // returns an "int" Type instance
     $type->getCollectionValueType()->isNullable(); // returns true
 
-Each of this calls will return you a ``Type`` instance that corresponds to the
+Each of these calls will return you a ``Type`` instance that corresponds to the
 static method used. You can also resolve types from a string (as shown in the
 ``bool`` parameter of the previous example)
 
