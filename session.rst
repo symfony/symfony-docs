@@ -117,7 +117,7 @@ sessions for anonymous users, you must *completely* avoid accessing the session.
 
 .. note::
 
-    Sessions will also be created when using features that rely on them internally,
+    Sessions will also be started when using features that rely on them internally,
     such as the :ref:`CSRF protection in forms <csrf-protection-forms>`.
 
 .. _flash-messages:
