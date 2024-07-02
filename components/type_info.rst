@@ -1,16 +1,20 @@
 The TypeInfo Component
 ======================
 
-    The TypeInfo component extracts PHP types information. It aims to:
+The TypeInfo component extracts type information from PHP elements like properties,
+arguments and return types.
 
-    - Have a powerful Type definition that can handle union, intersections, and generics (and could be even more extended)
+This component provides:
 
-    - Being able to get types from anything, such as properties, method arguments, return types, and raw strings (and can also be extended).
+* A powerful ``Type`` definition that can handle unions, intersections, and generics
+  (and can be extended to support more types in the future);
+* A way to get types from PHP elements such as properties, method arguments,
+  return types, and raw strings.
 
 .. caution::
 
-    This component is :doc:`experimental </contributing/code/experimental>` and could be changed at any time
-    without prior notice.
+    This component is :doc:`experimental </contributing/code/experimental>` and
+    could be changed at any time without prior notice.
 
 Installation
 ------------
@@ -24,11 +28,11 @@ Installation
 Usage
 -----
 
-This component will gives you a :class:`Symfony\\Component\\TypeInfo\\Type` object that represents
-the PHP type of whatever you builded or asked to resolve.
+This component gives you a :class:`Symfony\\Component\\TypeInfo\\Type` object that
+represents the PHP type of anything you built or asked to resolve.
 
 There are two ways to use this component. First one is to create a type manually thanks
-to :class:`Symfony\\Component\\TypeInfo\\Type` static methods as following::
+to the :class:`Symfony\\Component\\TypeInfo\\Type` static methods as following::
 
     use Symfony\Component\TypeInfo\Type;
 
@@ -41,8 +45,8 @@ to :class:`Symfony\\Component\\TypeInfo\\Type` static methods as following::
     // Many others are available and can be
     // found in Symfony\Component\TypeInfo\TypeFactoryTrait
 
-
-Second way to use TypeInfo is to resolve a type based on reflection or a simple string::
+The second way of using the component is to use ``TypeInfo`` to resolve a type
+based on reflection or a simple string::
 
     use Symfony\Component\TypeInfo\Type;
     use Symfony\Component\TypeInfo\TypeResolver\TypeResolver;
@@ -62,9 +66,9 @@ Second way to use TypeInfo is to resolve a type based on reflection or a simple 
     $type->getCollectionKeyType(); // returns an "int" Type instance
     $type->getCollectionValueType()->isNullable(); // returns true
 
-Each of this rows will return you a Type instance that will corresponds to whatever static method you used to build it.
-We also can resolve a type from a string like we can see in this example with the `'bool'` parameter it is mostly
-designed that way so we can give TypeInfo a string from whatever was extracted from existing phpDoc within PropertyInfo.
+Each of this calls will return you a ``Type`` instance that corresponds to the
+static method used. You can also resolve types from a string (as shown in the
+``bool`` parameter of the previous example)
 
 .. note::
 
