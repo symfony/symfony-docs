@@ -110,13 +110,15 @@ By default, session attributes are key-value pairs managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
 class.
 
-.. tip::
+Sessions are automatically started whenever you read, write or even check for
+the existence of data in the session. This may hurt your application performance
+because all users will receive a session cookie. In order to prevent starting
+sessions for anonymous users, you must *completely* avoid accessing the session.
 
-    Sessions are automatically started whenever you read, write or even check
-    for the existence of data in the session. This may hurt your application
-    performance because all users will receive a session cookie. In order to
-    prevent starting sessions for anonymous users, you must *completely* avoid
-    accessing the session.
+.. note::
+
+    Sessions will also be created when using features that rely on them internally,
+    such as the :ref:`CSRF protection in forms <csrf-protection-forms>`.
 
 .. _flash-messages:
 
