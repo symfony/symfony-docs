@@ -159,6 +159,9 @@ Service
 `Sinch`_            **Install**: ``composer require symfony/sinch-notifier`` \
                     **DSN**: ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM`` \
                     **Webhook support**: No
+`Sipgate`_          **Install**: ``composer require symfony/sipgate-notifier`` \
+                    **DSN**: ``sipgate://TOKEN_ID:TOKEN@default?senderId=SENDER_ID`` \
+                    **Webhook support**: No
 `SmsSluzba`_        **Install**: ``composer require symfony/sms-sluzba-notifier`` \
                     **DSN**: ``sms-sluzba://USERNAME:PASSWORD@default`` \
                     **Webhook support**: No
@@ -213,6 +216,10 @@ Service
 
     The ``Smsbox``, ``SmsSluzba``, ``SMSense``, ``LOX24`` and ``Unifonic``
     integrations were introduced in Symfony 7.1.
+
+.. versionadded:: 7.2
+
+    The ``Sipgate`` integration was introduced in Symfony 7.2.
 
 .. deprecated:: 7.1
 
@@ -1131,6 +1138,7 @@ is dispatched. Listeners receive a
 .. _`Seven.io`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sevenio/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
+.. _`Sipgate`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sipgate/README.md
 .. _`Slack`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Slack/README.md
 .. _`Sms77`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sms77/README.md
 .. _`SmsBiuras`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsBiuras/README.md
