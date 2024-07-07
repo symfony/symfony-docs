@@ -94,7 +94,7 @@ you can retrieve a workflow from it and use it as follows::
 Initialization
 --------------
 
-If the property of your object is ``null`` and you want to set it with the
+If the marking property of your object is ``null`` and you want to set it with the
 ``initial_marking`` from the configuration, you can call the ``getMarking()``
 method to initialize the object property::
 
