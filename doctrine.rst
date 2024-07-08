@@ -818,6 +818,10 @@ If you need other services in the Expression you can alias original service ::
     ): Response {
     }
 
+.. versionadded:: 7.2
+
+    The variable loader was introduced in Symfony 7.2.
+
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
 
