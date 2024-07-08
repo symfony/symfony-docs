@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by mtarld at 2024-07-03T07:51:41Z
+
+@javiereguiluz, I just created the PR https://github.com/symfony/symfony/pull/57630 which rethinks and improves the component design and usage.
+
+Therefore, I'd wait for this PR to be either merged or closed before going further :slightly_smiling_face:
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-07-04T13:06:03Z
+
+Thanks Mathias ... but this PR only adds some short explanations about existing code examples. Even if your PR is accepted, it will merged in 7.2 branch, so I think it's OK to change this in 7.1 branch meanwhile.
