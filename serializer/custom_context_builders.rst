@@ -42,7 +42,7 @@ value is ``0000-00-00``. To do that you'll first have to create your normalizer:
 
         public function supportsDenormalization($data, string $type, ?string $format = null, array $context = []): bool
         {
-            return true === ($context['zero_datetime_to_null'] ?? false)
+            return ($context['zero_datetime_to_null'] ?? false)
                 && is_a($type, \DateTimeInterface::class, true);
         }
     }
