@@ -95,6 +95,14 @@ directive to pass requests for PHP files to PHP FPM:
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
 
+.. note::
+
+    If you are doing some quick tests with Apache, you can also run
+    ``composer require symfony/apache-pack``. This package creates an ``.htaccess``
+    file in the ``public/`` directory with the necessary rewrite rules needed to serve
+    the Symfony application. However, in production, it's recommended to move these
+    rules to the main Apache configuration file (as shown above) to improve performance.
+
 Nginx
 -----
 
