@@ -62,9 +62,20 @@ based on reflection or a simple string::
     $type = Type::list(Type::nullable(Type::bool()));
 
     // Type instances have several helper methods
-    $type->getBaseType() // returns an "array" Type instance
-    $type->getCollectionKeyType(); // returns an "int" Type instance
-    $type->getCollectionValueType()->isNullable(); // returns true
+
+    // returns the main type (e.g. in this example ir returns an "array" Type instance)
+    // for nullable types (e.g. string|null) returns the non-null type (e.g. string)
+    // and for compound types (e.g. int|string) it throws an exception because both types
+    // can be considered the main one, so there's no way to pick one
+    $baseType = $type->getBaseType();
+
+    // for collections, it returns the type of the item used as the key
+    // in this example, the collection is a list, so it returns and "int" Type instance
+    $keyType = $type->getCollectionKeyType();
+
+    // you can chain the utility methods e.g. to introspect the values of the collection
+    // the following code will return true
+    $isValueNullable = $type->getCollectionValueType()->isNullable();
 
 Each of these calls will return you a ``Type`` instance that corresponds to the
 static method used. You can also resolve types from a string (as shown in the
