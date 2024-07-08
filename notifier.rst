@@ -351,7 +351,6 @@ Service                                  Package                               D
 `Discord`_                               ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
 `FakeChat`_                              ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 `Firebase`_                              ``symfony/firebase-notifier``         ``firebase://USERNAME:PASSWORD@default``
-`Gitter`_                                ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
 `GoogleChat`_                            ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
 `LINE Notify`_                           ``symfony/line-notify-notifier``      ``linenotify://TOKEN@default``
 `LinkedIn`_                              ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
@@ -1105,7 +1104,6 @@ is dispatched. Listeners receive a
 .. _`Firebase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Firebase/README.md
 .. _`FreeMobile`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FreeMobile/README.md
 .. _`GatewayApi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GatewayApi/README.md
-.. _`Gitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Gitter/README.md
 .. _`GoIP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoIP/README.md
 .. _`GoogleChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoogleChat/README.md
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Infobip/README.md
