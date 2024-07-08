@@ -370,6 +370,11 @@ Service                                  Package                               D
 
     The ``Bluesky`` integration was introduced in Symfony 7.1.
 
+.. deprecated:: 7.2
+
+    The ``Gitter`` integration was removed in Symfony 7.2 because that service
+    no longer provides an API.
+
 .. caution::
 
     By default, if you have the :doc:`Messenger component </messenger>` installed,
