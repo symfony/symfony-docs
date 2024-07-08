@@ -782,7 +782,7 @@ variable. Let's say you want the first or the last comment of a product dependin
     }
 
 If you need to get other information from other services, you can also inject variables in your expression
-thanks to the ``VariableLoader`` service. By default only user is injected ::
+thanks to the ``VariableInjector`` service. By default only user is injected ::
 
     #[Route('/product/{id}/comments')]
     public function show(
@@ -793,8 +793,8 @@ thanks to the ``VariableLoader`` service. By default only user is injected ::
 
 If you need other services in the Expression you can alias original service ::
 
-    #[AsAlias(id: 'doctrine.orm.entity_value_resolver_variables_loader')]
-    class VariableLoader implements EntityValueResolverVariablesLoaderInterface
+    #[AsAlias(id: 'doctrine.orm.entity_value_resolver_variable_injector')]
+    class VariableInjector implements EntityValueResolverVariablesInjectorInterface
     {
         public function __construct(private TokenStorageInterface $tokenStorage, private MyService $myService)
         {
@@ -809,7 +809,7 @@ If you need other services in the Expression you can alias original service ::
         }
     }
 
-    and getting your variable in MapEntity Expression ::
+and getting your variable in MapEntity Expression ::
 
     #[Route('/product/{id}/comments')]
     public function show(
@@ -820,7 +820,7 @@ If you need other services in the Expression you can alias original service ::
 
 .. versionadded:: 7.2
 
-    The variable loader was introduced in Symfony 7.2.
+    The variable injector was introduced in Symfony 7.2.
 
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
