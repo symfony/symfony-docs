@@ -781,6 +781,43 @@ variable. Let's say you want the first or the last comment of a product dependin
     ): Response {
     }
 
+If you need to get other information from other services, you can also inject variables in your expression
+thanks to the ``VariableLoader`` service. By default only user is injected ::
+
+    #[Route('/product/{id}/comments')]
+    public function show(
+        #[MapEntity(class: Post::class, expr: 'repository.findBy({"author": user.id}, {}, 10)')]
+        iterable $posts
+    ): Response {
+    }
+
+If you need other services in the Expression you can alias original service ::
+
+    #[AsAlias(id: 'doctrine.orm.entity_value_resolver_variables_loader')]
+    class VariableLoader implements EntityValueResolverVariablesLoaderInterface
+    {
+        public function __construct(private TokenStorageInterface $tokenStorage, private MyService $myService)
+        {
+        }
+
+        public function getVariables(): array
+        {
+            return [
+                'user' => $this->tokenStorage?->getToken()?->getUser(),
+                'my_variable' => $this->myService->getMyVariable(),
+            ];
+        }
+    }
+
+    and getting your variable in MapEntity Expression ::
+
+    #[Route('/product/{id}/comments')]
+    public function show(
+        #[MapEntity(class: Post::class, expr: 'repository.findBy({"author": user.id, "other": my_variable}, {}, 10)')]
+        iterable $posts
+    ): Response {
+    }
+
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
 
