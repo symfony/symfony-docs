@@ -115,7 +115,7 @@ contents of the given file path and converts them to a PHP value::
 
     use Symfony\Component\Yaml\Yaml;
 
-    $value = Yaml::parseFile('/path/to/file.yaml');
+    $value = Yaml::parseFile(file_get_contents('/path/to/file.yaml'));
 
 If an error occurs during parsing, the parser throws a ``ParseException`` exception.
 
