@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by dbu at 2024-07-10T13:17:39Z
+
+note: the mercure bundle then wraps this in a `Symfony\Component\Mercure\Debug\TraceableHub` class. to make the service accessible in tests (i wrote a class that records all updates to make assertions in my tests) i needed to do:
+
+```
+services:
+    App\Tests\Functional\Stub\HubStub:
+        public: true
+
+    mercure.hub.default:
+        alias: App\Tests\Functional\Stub\HubStub
+```
+
+should i add this instead of the simple syntax fix?
+
+----
+
+furthermore, `config/packages/mercure.yaml` configures `public_url: '%env(MERCURE_PUBLIC_URL)%'` and when i replace the hub in tests, the container fails to build with an error about unused environment variable:
+
+```
+Symfony\Component\DependencyInjection\Exception\EnvParameterException: Environment variables "MERCURE_PUBLIC_URL" are never used. Please, check your container's configuration.
+```
+
+my workaround for that was to add a parameter in services_test.yaml:
+```
+parameters:
+    make_container_happy: '%env(MERCURE_PUBLIC_URL)%'
+```
+
+i assume this is a common issue. i don't know if there is a better solution, but ideally the guide would be complete to produce a working result without having to figure out these things. should i add this or something else?
