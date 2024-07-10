@@ -394,11 +394,16 @@ Methods to Join, Split, Truncate and Reverse
     u('Lorem Ipsum')->truncate(3);             // 'Lor'
     u('Lorem Ipsum')->truncate(80);            // 'Lorem Ipsum'
     // the second argument is the character(s) added when a string is cut
+    // the third argument is TruncateMode::Char by default
     // (the total length includes the length of this character(s))
-    u('Lorem Ipsum')->truncate(8, '…');             // 'Lorem I…'
-    // if the third argument is false, the last word before the cut is kept
-    // even if that generates a string longer than the desired length
-    u('Lorem Ipsum')->truncate(8, '…', cut: false); // 'Lorem Ipsum'
+    u('Lorem Ipsum')->truncate(8, '…');        // 'Lorem I…'
+    // use options to keep complete words
+    u('Lorem ipsum dolor sit amet')->truncate(10, '...', TruncateMode::WordBefore);  // 'Lorem...'
+    u('Lorem ipsum dolor sit amet')->truncate(14, '...', TruncateMode::WordAfter);  // 'Lorem ipsum...'
+
+.. versionadded:: 7.2
+
+    The TruncateMode argument for truncate function was introduced in Symfony 7.2.
 
 ::
 
