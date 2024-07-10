@@ -91,7 +91,7 @@ Service
 `GatewayApi`_       **Install**: ``composer require symfony/gateway-api-notifier`` \
                     **DSN**: ``gatewayapi://TOKEN@default?from=FROM`` \
                     **Webhook support**: No
-`GoIP`_             **Install**: ``composer require symfony/goip-notifier`` \
+`GoIP`_             **Install**: ``composer require symfony/go-ip-notifier`` \
                     **DSN**: ``goip://USERNAME:PASSWORD@HOST:80?sim_slot=SIM_SLOT`` \
                     **Webhook support**: No
 `Infobip`_          **Install**: ``composer require symfony/infobip-notifier`` \
