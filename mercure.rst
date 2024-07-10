@@ -673,8 +673,9 @@ sent:
 .. code-block:: yaml
 
     # config/services_test.yaml
-    mercure.hub.default:
-        class: App\Tests\Functional\Stub\HubStub
+    services:
+        mercure.hub.default:
+            class: App\Tests\Functional\Stub\HubStub
 
 As MercureBundle support multiple hubs, you may have to replace
 the other service definitions accordingly.
