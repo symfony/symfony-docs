@@ -407,7 +407,7 @@ Methods to Join, Split, Truncate and Reverse
 
 .. versionadded:: 7.2
 
-    The ``TruncateMode`` argument for truncate function was introduced in Symfony 7.2.
+    The ``TruncateMode`` parameter for truncate function was introduced in Symfony 7.2.
 
 ::
 
