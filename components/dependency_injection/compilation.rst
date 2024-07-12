@@ -500,7 +500,8 @@ serves at dumping the compiled container::
     The ``file_put_contents()`` function is not atomic. That could cause issues
     in a production environment with multiple concurrent requests. Instead, use
     the :ref:`dumpFile() method <filesystem-dumpfile>` from Symfony Filesystem
-    component or other methods provided by Symfony (e.g. ``$containerConfigCache->write()`` which is part of Symfony Config component)
+    component or other methods provided by Symfony (e.g. ``$containerConfigCache->write()``
+    which is part of the :doc:`Config component </components/config>`)
     which are atomic.
 
 ``ProjectServiceContainer`` is the default name given to the dumped container
