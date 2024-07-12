@@ -127,6 +127,30 @@ If you want to follow `symbolic links`_, use the ``followLinks()`` method::
 
     $finder->files()->followLinks();
 
+Note that this method follows links but it doesn't resolve them. Consider
+the following structure of files of directories:
+
+.. code-block:: text
+
+    ├── folder1/
+    │   ├──file1.txt
+    │   ├── file2link (symbolic link to folder2/file2.txt file)
+    │   └── folder3link (symbolic link to folder3/ directory)
+    ├── folder2/
+    │   └── file2.txt
+    └── folder3/
+        └── file3.txt
+
+If you try to find all files in ``folder1/`` via ``$finder->files()->in('/path/to/folder1/')``
+you'll get the following results:
+
+* When **not** using the ``followLinks()`` method: ``file1.txt`` and ``file2link``
+  (this link is not resolved). The ``folder3link`` doesn't appear in the results
+  because it's not followed or resolved;
+* When using the ``followLinks()`` method: ``file1.txt``, ``file2link`` (this link
+  is still not resolved) and ``folder3/file3.txt`` (this file appears in the results
+  because the ``folder1/folder3link`` link was followed).
+
 Version Control Files
 ~~~~~~~~~~~~~~~~~~~~~
 
