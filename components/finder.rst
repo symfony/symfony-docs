@@ -127,6 +127,10 @@ If you want to follow `symbolic links`_, use the ``followLinks()`` method::
 
     $finder->files()->followLinks();
 
+.. note::
+
+    Be careful, the ``followLinks`` method does not resolve links. This method makes the links to directories followed/traversed into. If we suppose a folder *followLinksFolder* which contains a folder with a file and a symlink of the folder *folder, file.txt and symlinkfolder*, thanks to the Finder component ``$finder->in('/home/user/followLinksFolder');`` will retrieve three elements *folder, folder/file.txt and symlinkfolder*. If, we use the ``followLinks`` method instead ``$finder->followLinks()->in('/home/user/followLinksFolder');``, we will retrieve also a fourth element *folder, folder/file.txt, symlinkfolder and symlinkfolder/file.txt*.
+
 Version Control Files
 ~~~~~~~~~~~~~~~~~~~~~
 
