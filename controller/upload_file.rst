@@ -175,16 +175,17 @@ Finally, you need to update the code of the controller that handles the form::
         }
     }
 
-Now, create the ``brochures_directory`` parameter that was used in the
-controller to specify the directory in which the brochures should be stored:
+Now, bind the ``$brochuresDirectory`` controller argument to its actual value
+using the service configuration:
 
 .. code-block:: yaml
 
     # config/services.yaml
-
-    # ...
-    parameters:
-        brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
+    services:
+        _defaults:
+            # ...
+            bind:
+                $brochuresDirectory: '%kernel.project_dir%/public/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 
