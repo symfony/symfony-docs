@@ -677,7 +677,7 @@ get the value used to index the services:
         class CommandBus
         {
             public function __construct(
-                #[TaggedLocator('app.handler', 'defaultIndexMethod: 'getLocatorKey')]
+                #[TaggedLocator('app.handler', defaultIndexMethod: 'getLocatorKey')]
                 private ContainerInterface $locator,
             ) {
             }
