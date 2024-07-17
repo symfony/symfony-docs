@@ -120,6 +120,7 @@ Finally, you need to update the code of the controller that handles the form::
     use App\Entity\Product;
     use App\Form\ProductType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
@@ -130,7 +131,11 @@ Finally, you need to update the code of the controller that handles the form::
     class ProductController extends AbstractController
     {
         #[Route('/product/new', name: 'app_product_new')]
-        public function new(Request $request, SluggerInterface $slugger, string $brochuresDirectory): Response
+        public function new(
+            Request $request,
+            SluggerInterface $slugger,
+            #[Autowire('%kernel.project_dir%/public/uploads/brochures')] string $brochuresDirectory
+        ): Response
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -170,17 +175,6 @@ Finally, you need to update the code of the controller that handles the form::
             ]);
         }
     }
-
-Now, create the ``brochures_directory`` parameter that was used in the
-controller to specify the directory in which the brochures should be stored:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-
-    # ...
-    parameters:
-        brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 
