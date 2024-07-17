@@ -669,6 +669,7 @@ when the streams are large)::
     $client->request('POST', 'https://...', [
         // ...
         'body' => $formData->bodyToString(),
+        'headers' => $formData->getPreparedHeaders()->toArray(),
     ]);
 
 If you need to add a custom HTTP header to the upload, you can do::
