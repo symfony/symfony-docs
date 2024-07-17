@@ -1,9 +1,17 @@
 The Config Component
 ====================
 
-    The Config component provides several classes to help you find, load,
-    combine, fill and validate configuration values of any kind, whatever
-    their source may be (YAML, XML, INI files, or for instance a database).
+The Config component provides utilities to define and manage the configuration
+options of PHP applications. It allows you to:
+
+* Define a configuration structure, its validation rules, default values and documentation;
+* Support different configuration formats (YAML, XML, INI, etc.);
+* Merge multiple configurations from different sources into a single configuration.
+
+.. note::
+
+    You don't have to use this component to configure Symfony applications.
+    Instead, read the docs about :doc:`how to configure Symfony applications </configuration>`.
 
 Installation
 ------------
