@@ -185,7 +185,7 @@ using the service configuration:
         _defaults:
             # ...
             bind:
-                $brochuresDirectory: '%kernel.project_dir%/public/uploads/brochures'
+                string $brochuresDirectory: '%kernel.project_dir%/public/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 
