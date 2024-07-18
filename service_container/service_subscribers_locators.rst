@@ -802,7 +802,7 @@ get the value used to index the services:
         class CommandBus
         {
             public function __construct(
-                #[AutowireLocator('app.handler', 'defaultIndexMethod: 'getLocatorKey')]
+                #[AutowireLocator('app.handler', defaultIndexMethod: 'getLocatorKey')]
                 private ContainerInterface $locator,
             ) {
             }
