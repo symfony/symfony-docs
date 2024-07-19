@@ -56,8 +56,8 @@ their priorities:
 
 This event is dispatched after the controller has been resolved but before executing
 it. It's useful to initialize things later needed by the
-controller, such as `value resolvers`_, and even to change the controller
-entirely::
+controller, such as :ref:`value resolvers <managing-value-resolvers>`, and
+even to change the controller entirely::
 
     use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
@@ -296,5 +296,3 @@ their priorities:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.exception
-
-.. _`value resolvers`: https://symfony.com/doc/current/controller/value_resolver.html#managing-value-resolvers
