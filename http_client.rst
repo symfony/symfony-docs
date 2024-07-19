@@ -489,6 +489,11 @@ each request (which overrides any global authentication):
 
 .. note::
 
+    Basic Authentication can be set by authority in the URL, like
+    http://user:pass@example.com/.
+
+.. note::
+
     The NTLM authentication mechanism requires using the cURL transport.
     By using ``HttpClient::createForBaseUri()``, we ensure that the auth credentials
     won't be sent to any other hosts than https://example.com/.
