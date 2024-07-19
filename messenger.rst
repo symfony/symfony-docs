@@ -2644,7 +2644,7 @@ provided in order to ease the declaration of these special handlers::
         // of the trait to define your own batch size...
         private function shouldFlush(): bool
         {
-            return $this->getBatchSize() <= \count($this->jobs);
+            return 100 <= \count($this->jobs);
         }
 
         // ... or redefine the `getBatchSize()` method if the default
