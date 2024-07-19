@@ -33,6 +33,7 @@ String Constraints
 * :doc:`NoSuspiciousCharacters </reference/constraints/NoSuspiciousCharacters>`
 * :doc:`Charset </reference/constraints/Charset>`
 * :doc:`MacAddress </reference/constraints/MacAddress>`
+* :doc:`WordCount </reference/constraints/WordCount>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
