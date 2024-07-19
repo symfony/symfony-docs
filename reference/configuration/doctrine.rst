@@ -272,7 +272,7 @@ One of ``annotation`` (for PHP annotations; it's the default value),
 ``attribute`` (for PHP attributes), ``xml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
 
-.. deprecated:: 3.0
+.. versionadded:: 3.0
 
     The ``yml`` mapping configuration is deprecated and will be removed in doctrine/orm 3.0.
 
