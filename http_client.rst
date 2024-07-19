@@ -489,8 +489,8 @@ each request (which overrides any global authentication):
 
 .. note::
 
-    Basic Authentication can be set by authority in the URL, like
-    http://user:pass@example.com/.
+    Basic Authentication can also be set by including the credentials in the URL,
+    such as: ``http://the-username:the-password@example.com``
 
 .. note::
 
