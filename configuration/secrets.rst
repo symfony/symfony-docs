@@ -271,10 +271,19 @@ manually store this file somewhere and deploy it. There are 2 ways to do that:
 
    .. code-block:: terminal
 
-       $ APP_RUNTIME_ENV=prod php bin/console secrets:decrypt-to-local --force
+       $ APP_RUNTIME_ENV=prod php bin/console secrets:decrypt-to-local --force --exit
 
    This will write all the decrypted secrets into the ``.env.prod.local`` file.
    After doing this, the decryption key does *not* need to remain on the server(s).
+
+   Note the usage of the ``--exit`` option: this forces all secrets to be successfully
+   decrypted, otherwise a non-zero exit code is returned.
+
+   If you wish to continue regardless of errors occurring during decryption, you may omit this option.
+
+   .. versionadded:: 7.2
+
+    The ``--exit`` option was introduced in Symfony 7.2.
 
 Rotating Secrets
 ----------------
