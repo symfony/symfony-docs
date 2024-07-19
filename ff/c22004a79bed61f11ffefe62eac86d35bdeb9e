@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-07-19T11:30:06Z
+
+But I wonder if we shouldn't simply not show this way to change the batch size but simply keep the overridden `getBatchSize()` method to showcase this use case?
