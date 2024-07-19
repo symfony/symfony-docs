@@ -2557,15 +2557,8 @@ provided in order to ease the declaration of these special handlers::
             }
         }
 
-        // Optionally, you can either redefine the `shouldFlush()` method
-        // of the trait to define your own batch size...
-        private function shouldFlush(): bool
-        {
-            return $this->getBatchSize() <= \count($this->jobs);
-        }
-
-        // ... or redefine the `getBatchSize()` method if the default
-        // flush behavior suits your needs
+        // Optionally, you can override some of the trait methods, such as the
+        // `getBatchSize()` method, to specify your own batch size...
         private function getBatchSize(): int
         {
             return 100;
