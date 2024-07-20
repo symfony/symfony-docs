@@ -17,6 +17,17 @@ Installation
 The Symfony server is part of the ``symfony`` binary created when you
 `install Symfony`_ and has support for Linux, macOS and Windows.
 
+.. tip::
+
+    The Symfony CLI supports auto completion for Bash, Zsh or Fish shells. You
+    have to install the completion script *once*. Run ``symfony completion
+    --help`` for the installation instructions for your shell. After installing
+    and restarting your terminal, you're all set to use completion (by default,
+    by pressing the Tab key).
+
+    The Symfony CLI will also provide completion for the ``composer`` command
+    and for the ``console`` command if it detects a Symfony project.
+
 .. note::
 
    You can view and contribute to the Symfony CLI source in the
