@@ -19,7 +19,7 @@ The Symfony server is part of the ``symfony`` binary created when you
 
 .. tip::
 
-    The Symfony CLI supports auto completion for Bash, Zsh or Fish shells. You
+    The Symfony CLI supports auto completion for Bash, Zsh, or Fish shells. You
     have to install the completion script *once*. Run ``symfony completion
     --help`` for the installation instructions for your shell. After installing
     and restarting your terminal, you're all set to use completion (by default,
