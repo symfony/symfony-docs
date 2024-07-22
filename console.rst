@@ -106,6 +106,15 @@ completion (by default, by pressing the Tab key).
         $ php vendor/bin/phpstan completion --help
         $ composer completion --help
 
+.. tip::
+
+    If you are using the :doc:`Symfony local web server
+    </setup/symfony_server>`, it is recommended to use the built-in completion
+    script that will ensure the right PHP version and configuration are used when
+    running the Console Completion. Run ``symfony completion --help`` for the
+    installation instructions for your shell. The Symfony CLI will provide
+    completion for the ``console`` and ``composer`` commands.
+
 Creating a Command
 ------------------
 
