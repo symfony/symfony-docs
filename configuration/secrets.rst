@@ -276,14 +276,16 @@ manually store this file somewhere and deploy it. There are 2 ways to do that:
    This will write all the decrypted secrets into the ``.env.prod.local`` file.
    After doing this, the decryption key does *not* need to remain on the server(s).
 
-   Note the usage of the ``--exit`` option: this forces all secrets to be successfully
-   decrypted, otherwise a non-zero exit code is returned.
+   Note the usage of the ``--exit`` option: this ensures that all secrets are
+   successfully decrypted. If any error occurs during the decryption process,
+   the command will return a non-zero exit code, indicating a failure.
 
-   If you wish to continue regardless of errors occurring during decryption, you may omit this option.
+   If you wish to continue regardless of errors occurring during decryption,
+   you may omit this option.
 
    .. versionadded:: 7.2
 
-    The ``--exit`` option was introduced in Symfony 7.2.
+       The ``--exit`` option was introduced in Symfony 7.2.
 
 Rotating Secrets
 ----------------
