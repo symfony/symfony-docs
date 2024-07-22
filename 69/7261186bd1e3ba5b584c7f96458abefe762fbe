@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by cosminsandu at 2024-07-19T11:08:12Z
+
+@xabbuh Now I get:
+```
+Error: You are not allowed to use version "3.0". Only major version "5" is allowed.
+Error: Please only provide ".. deprecated::" if the version is greater/equal "5.0"
+```
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-07-19T11:09:26Z
+
+I think you should be able to add an entry to the list in `.doctor-rst.yaml`.
