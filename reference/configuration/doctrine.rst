@@ -274,8 +274,7 @@ One of ``annotation`` (for PHP annotations; it's the default value),
 
 .. versionadded:: 3.0
 
-    The ``yml`` mapping configuration is deprecated and will be removed in doctrine/orm 3.0.
-
+    The ``yml`` mapping configuration is deprecated and was removed in Doctrine ORM 3.0.
 
 See `Doctrine Metadata Drivers`_ for more information about this option.
 
