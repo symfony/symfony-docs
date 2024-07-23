@@ -485,7 +485,7 @@ yaml_encode
 
 Transforms the input into YAML syntax.
 
-The ``inline`` argument is the level where you switch to inline YAML:
+The ``inline`` argument is the level where the generated output switches to inline YAML:
 
 .. code-block:: twig
 
@@ -499,12 +499,15 @@ The ``inline`` argument is the level where you switch to inline YAML:
     } %}
 
     {{ array|yaml_encode(inline = 0) }}
-    {# output: { a: { c: e }, b: { d: f } } #}
+    {# output:
+       { a: { c: e }, b: { d: f } } #}
 
     {{ array|yaml_encode(inline = 1) }}
-    {# output: a: { c: e } b: { d: f } #}
+    {# output:
+       a: { c: e }
+       b: { d: f } #}
 
-The ``dumpObjects`` argument is used to dump objects::
+The ``dumpObjects`` argument enables the dumping of PHP objects::
 
     // ...
     $object = new \stdClass();
@@ -538,7 +541,7 @@ yaml_dump
 Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
 the output.
 
-The ``inline`` argument is the level where you switch to inline YAML:
+The ``inline`` argument is the level where the generated output switches to inline YAML:
 
 .. code-block:: twig
 
@@ -552,12 +555,15 @@ The ``inline`` argument is the level where you switch to inline YAML:
     } %}
 
     {{ array|yaml_dump(inline = 0) }}
-    {# output: %array% { a: { c: e }, b: { d: f } } #}
+    {# output:
+       %array% { a: { c: e }, b: { d: f } } #}
 
     {{ array|yaml_dump(inline = 1) }}
-    {# output: %array% a: { c: e } b: { d: f } #}
+    {# output:
+       %array% a: { c: e }
+       b: { d: f } #}
 
-The ``dumpObjects`` argument is used to dump objects::
+The ``dumpObjects`` argument enables the dumping of PHP objects::
 
     // ...
     $object = new \stdClass();
