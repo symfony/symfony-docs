@@ -14,7 +14,11 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
+This constraint should be applied to untyped variables/properties. If a property
+or variable is typed and you pass a value of a different type, PHP will throw an
+exception before this constraint is checked.
+
+The following example checks if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
 ``firstName`` is of type ``string`` (using :phpfunction:`is_string` PHP function),
 ``age`` is an ``integer`` (using :phpfunction:`is_int` PHP function) and
 ``accessCode`` contains either only letters or only digits (using
