@@ -33,19 +33,19 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
         class Author
         {
             #[Assert\Type(Address::class)]
-            protected Address $emailAddress;
+            protected $emailAddress;
 
             #[Assert\Type('string')]
-            protected string $firstName;
+            protected $firstName;
 
             #[Assert\Type(
                 type: 'integer',
                 message: 'The value {{ value }} is not a valid {{ type }}.',
             )]
-            protected int $age;
+            protected $age;
 
             #[Assert\Type(type: ['alpha', 'digit'])]
-            protected string $accessCode;
+            protected $accessCode;
         }
 
     .. code-block:: yaml
