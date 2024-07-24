@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-26T07:24:58Z
+
+`symfony/phpunit-bridge` does not support PHPUnit 10 now, so the docs should reflect the config for PHPUnit 9.6, which is the current PHPUnit version.
+
+---------------------------------------------------------------------------
+
+by faissaloux at 2023-11-26T11:34:56Z
+
+> `symfony/phpunit-bridge` does not support PHPUnit 10 now, so the docs should reflect the config for PHPUnit 9.6, which is the current PHPUnit version.
+
+So we need to specify the version on the phpunit installation command, because it's installing the current version which is 10 and it conflicts with the rest of the doc.
+
+@OskarStark If accepted I'll update the installation command specifying the version 9.6 instead of updating the doc to phpunit10.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-22T19:44:53Z
+
+Sorry I missed this PR :-(
+
+---------------------------------------------------------------------------
+
+by faissaloux at 2024-04-22T21:18:04Z
+
+@OskarStark
+
+Will `symfony/phpunit-bridge` not support `phpunit10` anytime soon?
+
+Should I update the installation command specifying the version 9.6?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-04-23T05:06:04Z
+
+Please update it, as I don't know when it will be supported
+
+---------------------------------------------------------------------------
+
+by faissaloux at 2024-04-23T22:04:43Z
+
+@OskarStark Done!
