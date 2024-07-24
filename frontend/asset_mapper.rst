@@ -89,6 +89,13 @@ This will physically copy all the files from your mapped directories to
 ``public/assets/`` so that they're served directly by your web server.
 See :ref:`Deployment <asset-mapper-deployment>` for more details.
 
+.. caution::
+
+    If you run the ``asset-map:compile`` command on your development machine,
+    you won't see any changes made to your assets when reloading the page.
+    To resolve this, delete the contents of the ``public/assets/`` directory.
+    This will allow your Symfony application to serve those assets dynamically again.
+
 .. tip::
 
     If you need to copy the compiled assets to a different location (e.g. upload
