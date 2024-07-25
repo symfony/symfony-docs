@@ -40,7 +40,7 @@ displayed to the user::
             }
         }
 
-        public function checkPostAuth(UserInterface $user): void
+        public function checkPostAuth(UserInterface $user, TokenInterface $token): void
         {
             if (!$user instanceof AppUser) {
                 return;
