@@ -95,7 +95,7 @@ Typically, you would set this to ``php://stderr``:
     .. code-block:: php
 
         // config/packages/debug.php
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return static function (ContainerConfigurator $container): void {
             $container->extension('debug', [
