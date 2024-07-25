@@ -91,8 +91,13 @@ Typically, you would set this to ``php://stderr``:
     .. code-block:: php
 
         // config/packages/debug.php
-        $container->loadFromExtension('debug', [
-            'dump_destination' => 'php://stderr',
-        ]);
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('debug', [
+                'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
+            ]);
+        };
+
 
 Configure it to ``"tcp://%env(VAR_DUMPER_SERVER)%"`` in order to use the :ref:`ServerDumper feature <var-dumper-dump-server>`.
