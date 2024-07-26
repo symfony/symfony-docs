@@ -208,15 +208,26 @@ Symfony uses *marshallers* (classes which implement
 the cache items before storing them.
 
 The :class:`Symfony\\Component\\Cache\\Marshaller\\DefaultMarshaller` uses PHP's
-``serialize()`` or ``igbinary_serialize()`` if the `Igbinary extension`_ is installed.
-There are other *marshallers* that can encrypt or compress the data before storing it::
+``serialize()`` function by default, but you can optionally use the ``igbinary_serialize()``
+function from the `Igbinary extension`_:
 
     use Symfony\Component\Cache\Adapter\RedisAdapter;
     use Symfony\Component\Cache\DefaultMarshaller;
     use Symfony\Component\Cache\DeflateMarshaller;
 
     $marshaller = new DeflateMarshaller(new DefaultMarshaller());
+    // you can optionally use the Igbinary extension if you have it installed
+    // $marshaller = new DeflateMarshaller(new DefaultMarshaller(useIgbinarySerialize: true));
+
     $cache = new RedisAdapter(new \Redis(), 'namespace', 0, $marshaller);
+
+There are other *marshallers* that can encrypt or compress the data before storing it.
+
+.. versionadded:: 7.2
+
+    In Symfony versions prior to 7.2, the ``igbinary_serialize()`` function was
+    used by default when the Igbinary extension was installed. Starting from
+    Symfony 7.2, you have to enable Igbinary support explicitly.
 
 Advanced Usage
 --------------
