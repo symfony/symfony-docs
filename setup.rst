@@ -295,6 +295,15 @@ Run this command to create a new project based on the Symfony Demo application:
 
     $ symfony new my_project_directory --demo
 
+.. _setup-alternatives:
+
+Alternative Set up Methods
+--------------------------
+
+* :doc:`/setup/docker`
+* Using `Laravel Herd`_, a one-click PHP development environment for Windows
+  and macOS that replaces the previous solution based on Homestead/Vagrant
+
 Start Coding!
 -------------
 
@@ -307,10 +316,16 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    setup/docker
-    setup/homestead
+    setup/symfony_server
     setup/web_server_configuration
-    setup/*
+    setup/upgrade_major
+    setup/upgrade_minor
+    setup/upgrade_patch
+    setup/unstable_versions
+    setup/flex
+    setup/flex_private_recipes
+    setup/file_permissions
+    setup/bundles
 
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
@@ -331,3 +346,4 @@ Learn More
 .. _`Tokenizer`: https://www.php.net/book.tokenizer
 .. _`SimpleXML`: https://www.php.net/book.simplexml
 .. _`PCRE`: https://www.php.net/book.pcre
+.. _`Laravel Herd`: https://herd.laravel.com/

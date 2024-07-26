@@ -555,3 +555,4 @@
 /notifier/chatters /notifier#sending-chat-messages
 /notifier/texters /notifier#sending-sms
 /notifier/events /notifier#notifier-events
+/setup/homestead /setup#setup-alternatives
