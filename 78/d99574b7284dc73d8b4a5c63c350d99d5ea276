@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-07-26T13:10:05Z
+
+@sevjan thanks for this contribution.
+
+I know it looks a bit weird at first, but the current text (without the capitalized `A`) is the correct way of writing this title. The reason is that we use "Title Case" and one of the rules is: _"short prepositions (a, to, at, etc.) are not capitalized"_
+
+See https://en.wikipedia.org/wiki/Title_case
+
+So, we're closing this one without merging, but we're looking forward to your next contributions. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-07-26T14:37:03Z
+
+I'm reopening this PR because I'm an idiot 😊
+
+As you can see, I "explained" to you which are the title-case rules ... but you already followed those instructions to fix the current issue 🤦
+
+I'm sorry 🙏  Let's merge this.
