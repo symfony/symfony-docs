@@ -1,4 +1,4 @@
-How to Test A Doctrine Repository
+How to Test a Doctrine Repository
 =================================
 
 .. seealso::
