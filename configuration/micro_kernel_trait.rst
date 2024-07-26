@@ -57,7 +57,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
 
         return static function (array $context) {
             return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
-        }
+        };
 
     .. code-block:: php
 
@@ -98,7 +98,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
 
         return static function (array $context) {
             return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
-        }
+        };
 
 That's it! To test it, start the :doc:`Symfony Local Web Server
 </setup/symfony_server>`:
