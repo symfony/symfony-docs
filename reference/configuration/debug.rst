@@ -95,7 +95,7 @@ Typically, you would set this to ``php://stderr``:
 
         return static function (ContainerConfigurator $container): void {
             $container->extension('debug', [
-                'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
+                'dump_destination' => 'php://stderr',
             ]);
         };
 
