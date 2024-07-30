@@ -367,7 +367,7 @@ method does, which stops an event and then restarts it immediately::
 
 .. versionadded:: 7.2
 
-    The ``getLastPeriod`` method was introduced in Symfony 7.2.
+    The ``getLastPeriod()`` method was introduced in Symfony 7.2.
 
 Profiling Sections
 ..................
