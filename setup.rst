@@ -35,7 +35,7 @@ requirements. Open your console terminal and run this command:
 
 .. note::
 
-    The Symfony CLI is written in Go and you can contribute to it in the
+    The Symfony CLI is open source, and you can contribute to it in the
     `symfony-cli/symfony-cli GitHub repository`_.
 
 .. _creating-symfony-applications:
