@@ -283,6 +283,12 @@ if you are using Doctrine, the matching column definition should use the type ``
     this Doctrine type will store its value only as a string, resulting in the
     loss of the object's current place.
 
+.. tip::
+
+    On a database level, you can check the current place as follows:
+    ``[WHERE] JSON_CONTAINS_PATH(item.currentPlaces, 'one', '$.draft')``
+    (where `draft` is the place to be checked)
+
 Accessing the Workflow in a Class
 ---------------------------------
 
