@@ -285,8 +285,11 @@ if you are using Doctrine, the matching column definition should use the type ``
 
 .. tip::
 
-    On a database level, you can check the current place as follows:
-    ``[WHERE] JSON_CONTAINS_PATH(item.currentPlaces, 'one', '$.draft')``
+    On a database level, querying or filtering for multiple state marking stores
+    requires special handling. When using Doctrine with MySQL, you can install
+    `scienta/doctrine-json-functions` and enable the `JSON_CONTAINS_PATH` doctrine
+    function. Then you can filter for a current place as follows:
+    ``$qb->andWhere("JSON_CONTAINS_PATH(item.currentPlaces, 'one', '$.draft') <> 0")``
     (where `draft` is the place to be checked)
 
 Accessing the Workflow in a Class
