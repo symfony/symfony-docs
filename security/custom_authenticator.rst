@@ -152,12 +152,12 @@ or there was something wrong (e.g. incorrect password). The authenticator
 can define what happens in these cases:
 
 ``onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response``
-    If authentication is successful, this method is called with the 
+    If authentication is successful, this method is called with the
     authenticated ``$token``.
 
     This method can return a response (e.g. redirect the user to some page).
 
-    If ``null`` is returned, the current request will continue (and the 
+    If ``null`` is returned, the current request will continue (and the
     user will be authenticated). This is useful for API routes where each
     route is protected by an API key header.
 
@@ -168,8 +168,8 @@ can define what happens in these cases:
     This method can return a response (e.g. send a 401 Unauthorized in API
     routes).
 
-    If ``null`` is returned, the request continues (but the user will **not** 
-    be authenticated). This is useful for login forms, where the login 
+    If ``null`` is returned, the request continues (but the user will **not**
+    be authenticated). This is useful for login forms, where the login
     controller is run again with the login errors.
 
     If you're using :ref:`login throttling <security-login-throttling>`,
