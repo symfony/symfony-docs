@@ -93,7 +93,7 @@ class, you can add all the logic related to processing the configuration in that
             // the "$config" variable is already merged and processed so you can
             // use it directly to configure the service container (when defining an
             // extension class, you also have to do this merging and processing)
-            $containerConfigurator->services()
+            $container->services()
                 ->get('acme_social.twitter_client')
                 ->arg(0, $config['twitter']['client_id'])
                 ->arg(1, $config['twitter']['client_secret'])

@@ -163,7 +163,7 @@ Options
 ``htmlPattern``
 ~~~~~~~~~~~~~~~
 
-**type**: ``string|boolean`` **default**: ``null``
+**type**: ``string|null`` **default**: ``null``
 
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
 You usually don't need to specify this option because by default, the constraint
@@ -243,7 +243,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             }
         }
 
-Setting ``htmlPattern`` to false will disable client side validation.
+Setting ``htmlPattern`` to the empty string will disable client side validation.
 
 ``match``
 ~~~~~~~~~
