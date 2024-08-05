@@ -287,6 +287,10 @@ this complexity and defines some methods for the most common tasks::
     HeaderUtils::parseQuery('foo[bar.baz]=qux');
     // => ['foo' => ['bar.baz' => 'qux']]
 
+    // Generates an HTTP "Content-Disposition" field-value, with fallback filename.
+    HeaderUtils::makeDisposition('attachment', 'utf8_filename.txt', 'ascii_fallback.txt'));
+    // => 'attachment; filename=ascii_fallback.txt; filename*=utf-8\'\'utf8_filename.txt'
+
 .. versionadded:: 5.2
 
     The ``parseQuery()`` method was introduced in Symfony 5.2.
