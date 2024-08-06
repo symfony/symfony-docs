@@ -26,8 +26,12 @@ method::
         // is reached, cache follows the LRU model (least recently used items are deleted)
         $maxItems = 0,
 
-        // implementation of Psr\Clock\ClockInterface (e.g. Symfony\Component\Clock\Clock)
-        // or null. If clock is provided, cache items lifetime will be calculated
-        // based on time provided by this clock
-        $clock = null
+        // optional implementation of the Psr\Clock\ClockInterface that will be used
+        // to calculate the lifetime of cache items (for example to get predictable
+        // lifetimes in tests)
+        $clock = null,
     );
+
+.. versionadded:: 7.2
+
+    The optional ``$clock`` argument was introduced in Symfony 7.2.
