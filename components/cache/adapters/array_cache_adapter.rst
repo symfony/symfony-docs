@@ -24,5 +24,10 @@ method::
 
         // the maximum number of items that can be stored in the cache. When the limit
         // is reached, cache follows the LRU model (least recently used items are deleted)
-        $maxItems = 0
+        $maxItems = 0,
+
+        // implementation of Psr\Clock\ClockInterface (e.g. Symfony\Component\Clock\Clock)
+        // or null. If clock is provided, cache items lifetime will be calculated
+        // based on time provided by this clock
+        $clock = null
     );
