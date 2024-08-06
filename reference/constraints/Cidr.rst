@@ -112,7 +112,7 @@ It's a constraint for the lowest value a valid netmask may have.
 ``netmaskMax``
 ~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``32`` for IPv4 or ``128`` for IPv6
+**type**: ``integer`` **default**: ``32`` for IPv4 or ``128`` for IPv6
 
 It's a constraint for the biggest value a valid netmask may have.
 
