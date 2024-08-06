@@ -917,7 +917,7 @@ The second optional argument is used to override the default form field values.
 
 If you need access to the :class:`Symfony\\Component\\DomCrawler\\Form` object
 that provides helpful methods specific to forms (such as ``getUri()``,
-``getValues()`` and ``getFields()``) use the ``Crawler::selectButton()`` method instead::
+``getValues()`` and ``getFiles()``) use the ``Crawler::selectButton()`` method instead::
 
     $client = static::createClient();
     $crawler = $client->request('GET', '/post/hello-world');
