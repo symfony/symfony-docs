@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2024-08-02T19:21:04Z
+
+Wonder if this was not supposed to be `getFiles`
+
+---------------------------------------------------------------------------
+
+by mvhirsch at 2024-08-05T14:17:01Z
+
+> Wonder if this was not supposed to be getFiles
+
+Maybe yes. Should I just rename instead of removing it @smnandre ?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-08-05T14:23:09Z
+
+renaming `getFields()` to `getFiles()` looks good to me
