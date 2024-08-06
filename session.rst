@@ -168,15 +168,13 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
         // add flash messages
         $flashes->add(
-            'warning',
-            'Your config file is writable, it should be set read-only'
+            'notice',
+            'Your changes were saved'
         );
-        $flashes->add('error', 'Failed to update name');
-        $flashes->add('error', 'Another error');
 
-After processing the request, the controller sets a flash message in the session
-and then redirects. The message key (``warning`` and ``error`` in this example) can be anything:
-you'll use this key to retrieve the message.
+After processing the request, the controller sets a flash message in the
+session and then redirects. The message key (``notice`` in this example)
+can be anything. You'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
 read any flash messages from the session using the ``flashes()`` method provided
