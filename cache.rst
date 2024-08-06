@@ -618,8 +618,7 @@ to enable this feature. This could be added by using the following configuration
             cache:
                 pools:
                     my_cache_pool:
-                        adapter: cache.adapter.redis
-                        tags: true
+                        adapter: cache.adapter.redis_tag_aware
 
     .. code-block:: xml
 
