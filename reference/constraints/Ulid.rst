@@ -82,6 +82,7 @@ The format of the ULID to validate. The following formats are available:
 
 * ``Ulid::FORMAT_BASE_32``: The ULID is encoded in base32 (default)
 * ``Ulid::FORMAT_BASE_58``: The ULID is encoded in base58
+* ``Ulid::FORMAT_RFC4122``: The ULID is encoded in the RFC 4122 format
 
 .. versionadded:: 7.2
 
