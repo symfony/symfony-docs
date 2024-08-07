@@ -362,6 +362,24 @@ analysis purposes. Use the ``anonymize()`` method from the
     $anonymousIpv6 = IpUtils::anonymize($ipv6);
     // $anonymousIpv6 = '2a01:198:603:10::'
 
+Check If an IP Belongs to a CIDR Subnet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to know if an IP address is included in a CIDR subnet, you can use
+the ``checkIp()`` method from :class:`Symfony\\Component\\HttpFoundation\\IpUtils`::
+
+    use Symfony\Component\HttpFoundation\IpUtils;
+
+    $ipv4 = '192.168.1.56';
+    $CIDRv4 = '192.168.1.0/16';
+    $isIpInCIDRv4 = IpUtils::checkIp($ipv4, $CIDRv4);
+    // $isIpInCIDRv4 = true
+
+    $ipv6 = '2001:db8:abcd:1234::1';
+    $CIDRv6 = '2001:db8:abcd::/48';
+    $isIpInCIDRv6 = IpUtils::checkIp($ipv6, $CIDRv6);
+    // $isIpInCIDRv6 = true
+
 Check if an IP Belongs to a Private Subnet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
