@@ -651,7 +651,7 @@ to remove the ``kernel.reset`` tag from some services in your test environment::
 
         // ...
 
-        protected function process(ContainerBuilder $container): void
+        public function process(ContainerBuilder $container): void
         {
             if ('test' === $this->environment) {
                 // prevents the security token to be cleared
