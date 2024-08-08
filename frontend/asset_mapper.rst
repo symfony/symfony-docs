@@ -799,11 +799,12 @@ files) with component, as those must be used in a build system. See the
 `UX Vue.js Documentation`_ for more details about using with the AssetMapper
 component.
 
-Can I lint and format my code?
+Can I Lint and Format My Code?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Yes! You can use `kocal/biome-js-bundle`_ to lint and format your front assets.
-It's ultra-fast and requires no configuration to handle your JavaScript, TypeScript, CSS, etc. files.
+Not with AssetMapper, but you can install `kocal/biome-js-bundle`_ in your project
+to lint and format your front-end assets. It's much faster than alternatives like
+Prettier and requires no configuration to handle your JavaScript, TypeScript and CSS files.
 
 .. _asset-mapper-ts:
 
