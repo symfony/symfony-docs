@@ -80,9 +80,9 @@ Options
 
 The format of the ULID to validate. The following formats are available:
 
-* ``Ulid::FORMAT_BASE_32``: The ULID is encoded in base32 (default)
-* ``Ulid::FORMAT_BASE_58``: The ULID is encoded in base58
-* ``Ulid::FORMAT_RFC4122``: The ULID is encoded in the RFC 4122 format
+* ``Ulid::FORMAT_BASE_32``: The ULID is encoded in `base32`_ (default)
+* ``Ulid::FORMAT_BASE_58``: The ULID is encoded in `base58`_
+* ``Ulid::FORMAT_RFC4122``: The ULID is encoded in the `RFC 4122 format`_
 
 .. versionadded:: 7.2
 
@@ -111,3 +111,6 @@ Parameter        Description
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`Universally Unique Lexicographically Sortable Identifier (ULID)`: https://github.com/ulid/spec
+.. _`base32`: https://en.wikipedia.org/wiki/Base32
+.. _`base58`: https://en.wikipedia.org/wiki/Binary-to-text_encoding#Base58
+.. _`RFC 4122 format`: https://datatracker.ietf.org/doc/html/rfc4122
