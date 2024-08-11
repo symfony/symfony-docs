@@ -1475,7 +1475,7 @@ Writing a Twig Extension
 
 `Twig Extensions`_ allow the creation of custom functions, filters, and more to use
 in your Twig templates. Before writing your own Twig extension, check if
-the filter/function that you need is already implemented in:
+the filter/function that you need is not already implemented in:
 
 * The `default Twig filters and functions`_;
 * The :doc:`Twig filters and functions added by Symfony </reference/twig_reference>`;
