@@ -110,6 +110,7 @@ Service               Install with                                    Webhook su
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
+`Postal`_             ``composer require symfony/postal-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``    yes
 `Resend`_             ``composer require symfony/resend-mailer``      yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
@@ -122,7 +123,7 @@ Service               Install with                                    Webhook su
 
 .. versionadded:: 7.2
 
-    The Mailomat integration was introduced in Symfony 7.2.
+    The Mailomat and Postal integrations were introduced in Symfony 7.2.
 
 .. note::
 
@@ -213,6 +214,10 @@ party provider:
 | `MailPace`_            | - SMTP ``mailpace+api://API_TOKEN@default``             |
 |                        | - HTTP n/a                                              |
 |                        | - API ``mailpace+api://API_TOKEN@default``              |
++------------------------+---------------------------------------------------------+
+| `Postal`_              | - SMTP n/a                                              |
+|                        | - HTTP n/a                                              |
+|                        | - API ``postal+api://API_KEY@BASE_URL``                 |
 +------------------------+---------------------------------------------------------+
 | `Postmark`_            | - SMTP ``postmark+smtp://ID@default``                   |
 |                        | - HTTP n/a                                              |
@@ -1992,6 +1997,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`MailPace`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailPace/README.md
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
+.. _`Postal`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postal/README.md
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
 .. _`Resend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Resend/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
