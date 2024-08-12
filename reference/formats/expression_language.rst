@@ -1,7 +1,7 @@
 The Expression Syntax
 =====================
 
-The ExpressionLanguage component uses a specific syntax which is based on the
+The :doc:`ExpressionLanguage component </components/expression_language>` uses a specific syntax which is based on the
 expression syntax of Twig. In this document, you can find all supported
 syntaxes.
 
