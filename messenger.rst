@@ -717,7 +717,7 @@ If you use the Redis Transport, note that each worker needs a unique consumer
 name to avoid the same message being handled by multiple workers. One way to
 achieve this is to set an environment variable in the Supervisor configuration
 file, which you can then refer to in ``messenger.yaml``
-(see the ref:`Redis section <messenger-redis-transport>` below):
+(see the :ref:`Redis section <messenger-redis-transport>` below):
 
 .. code-block:: ini
 
