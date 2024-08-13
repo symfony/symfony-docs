@@ -55,23 +55,6 @@ The ``Workflow`` can now help you to decide what *transitions* (actions) are all
 on a blog post depending on what *place* (state) it is in. This will keep your domain
 logic in one place and not spread all over your application.
 
-When you define multiple workflows you should consider using a ``Registry``,
-which is an object that stores and provides access to different workflows.
-A registry will also help you to decide if a workflow supports the object you
-are trying to use it with::
-
-    use Acme\Entity\BlogPost;
-    use Acme\Entity\Newsletter;
-    use Symfony\Component\Workflow\Registry;
-    use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
-
-    $blogPostWorkflow = ...;
-    $newsletterWorkflow = ...;
-
-    $registry = new Registry();
-    $registry->addWorkflow($blogPostWorkflow, new InstanceOfSupportStrategy(BlogPost::class));
-    $registry->addWorkflow($newsletterWorkflow, new InstanceOfSupportStrategy(Newsletter::class));
-
 Usage
 -----
 
@@ -100,7 +83,6 @@ method to initialize the object property::
 
     // ...
     $blogPost = new BlogPost();
-    $workflow = $registry->get($blogPost);
 
     // initiate workflow
     $workflow->getMarking($blogPost);
