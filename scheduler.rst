@@ -889,6 +889,27 @@ This allows the system to retain the state of the schedule, ensuring that when a
         }
     }
 
+With ``stateful`` option, All missed messages will be handled, If you nedd handle your message only once you can use the ``processOnlyLastMissedRun`` option.::
+
+    // src/Scheduler/SaleTaskProvider.php
+    namespace App\Scheduler;
+
+    #[AsSchedule('uptoyou')]
+    class SaleTaskProvider implements ScheduleProviderInterface
+    {
+        public function getSchedule(): Schedule
+        {
+            $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
+
+            return $this->schedule ??= (new Schedule())
+                ->with(
+                    // ...
+                )
+                ->stateful($this->cache)
+                ->processOnlyLastMissedRun(true)
+        }
+    }
+
 To scale your schedules more effectively, you can use multiple workers. In such
 cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
 same task more than once::
