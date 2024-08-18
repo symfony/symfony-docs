@@ -11,7 +11,7 @@ created by Symfony based on that configuration.
 ``kernel.build_dir``
 --------------------
 
-**type**: ``string`` **default**: ``$this->getCacheDir()``
+**type**: ``string`` **default**: ``$this->getBuildDir()``
 
 This parameter stores the absolute path of a build directory of your Symfony application.
 This directory can be used to separate read-only cache (i.e. the compiled container)
