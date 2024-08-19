@@ -1064,30 +1064,35 @@ which defines the configuration options for the CsvEncoder an associative array:
 
 These are the options available:
 
-======================= =====================================================  ==========================
-Option                  Description                                            Default
-======================= =====================================================  ==========================
-``csv_delimiter``       Sets the field delimiter separating values (one        ``,``
+======================= ============================================================= ==========================
+Option                  Description                                                   Default
+======================= ============================================================= ==========================
+``csv_delimiter``       Sets the field delimiter separating values (one               ``,``
                         character only)
-``csv_enclosure``       Sets the field enclosure (one character only)          ``"``
-``csv_end_of_line``     Sets the character(s) used to mark the end of each     ``\n``
+``csv_enclosure``       Sets the field enclosure (one character only)                 ``"``
+``csv_end_of_line``     Sets the character(s) used to mark the end of each            ``\n``
                         line in the CSV file
-``csv_escape_char``     Sets the escape character (at most one character)      empty string
-``csv_key_separator``   Sets the separator for array's keys during its         ``.``
+``csv_escape_char``     Deprecated. Sets the escape character (at most one character) empty string
+``csv_key_separator``   Sets the separator for array's keys during its                ``.``
                         flattening
 ``csv_headers``         Sets the order of the header and data columns
                         E.g.: if ``$data = ['c' => 3, 'a' => 1, 'b' => 2]``
                         and ``$options = ['csv_headers' => ['a', 'b', 'c']]``
                         then ``serialize($data, 'csv', $options)`` returns
-                        ``a,b,c\n1,2,3``                                       ``[]``, inferred from input data's keys
-``csv_escape_formulas`` Escapes fields containing formulas by prepending them  ``false``
+                        ``a,b,c\n1,2,3``                                              ``[]``, inferred from input data's keys
+``csv_escape_formulas`` Escapes fields containing formulas by prepending them         ``false``
                         with a ``\t`` character
-``as_collection``       Always returns results as a collection, even if only   ``true``
+``as_collection``       Always returns results as a collection, even if only          ``true``
                         one line is decoded.
-``no_headers``          Setting to ``false`` will use first row as headers.    ``false``
+``no_headers``          Setting to ``false`` will use first row as headers.           ``false``
                         ``true`` generate numeric headers.
-``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
-======================= =====================================================  ==========================
+``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data          ``false``
+======================= ============================================================= ==========================
+
+.. deprecated:: 7.2
+
+    The ``csv_escape_char`` option and the ``CsvEncoder::ESCAPE_CHAR_KEY``
+    constant were deprecated in Symfony 7.2.
 
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
@@ -1303,6 +1308,11 @@ you can use "context builders" to define the context using a fluent interface::
 
     You can also :doc:`create custom context builders </serializer/custom_context_builders>`
     to deal with your context values.
+
+.. deprecated:: 7.2
+
+    The ``CsvEncoderContextBuilder::withEscapeChar()`` method was deprecated
+    in Symfony 7.2.
 
 Skipping ``null`` Values
 ------------------------
