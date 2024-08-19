@@ -400,6 +400,11 @@ Check out the Symfony config reference to learn more about the other available
     ``session.auto_start = 1`` This directive should be turned off in
     ``php.ini``, in the web server directives or in ``.htaccess``.
 
+.. deprecated:: 7.2
+
+    The ``sid_length`` and ``sid_bits_per_character`` options were deprecated
+    in Symfony 7.2 and will be ignored in Symfony 8.0.
+
 The session cookie is also available in :ref:`the Response object <component-http-foundation-response>`.
 This is useful to get that cookie in the CLI context or when using PHP runners
 like Roadrunner or Swoole.
