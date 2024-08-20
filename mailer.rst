@@ -115,6 +115,7 @@ Service               Install with                                    Webhook su
 `Resend`_             ``composer require symfony/resend-mailer``      yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``    yes
+`Sweego`_             ``composer require symfony/sweego-mailer``      yes
 ===================== =============================================== ===============
 
 .. versionadded:: 7.1
@@ -123,7 +124,7 @@ Service               Install with                                    Webhook su
 
 .. versionadded:: 7.2
 
-    The Mailomat and Postal integrations were introduced in Symfony 7.2.
+    The Mailomat, Postal and Sweego integrations were introduced in Symfony 7.2.
 
 .. note::
 
@@ -234,6 +235,10 @@ party provider:
 | `Sendgrid`_            | - SMTP ``sendgrid+smtp://KEY@default``                  |
 |                        | - HTTP n/a                                              |
 |                        | - API ``sendgrid+api://KEY@default``                    |
++------------------------+---------------------------------------------------------+
+| `Sweego`_              | - SMTP ``sweego+smtp://LOGIN:PASSWORD@HOST:PORT``       |
+|                        | - HTTP n/a                                              |
+|                        | - API ``sweego+api://API_KEY@default``                  |
 +------------------------+---------------------------------------------------------+
 
 .. caution::
@@ -2004,3 +2009,4 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
+.. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sweego/README.md
