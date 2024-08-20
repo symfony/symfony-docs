@@ -41,8 +41,8 @@ Symfony Profiler, which will look like this:
 
 .. note::
 
-    To limit the storage used by profiles on disk, they are probabilistically
-    removed after 2 days.
+    To limit the storage used by profiles on disk, old ones are randomly
+    removed when creating a new one.
 
 Accessing Profiling Data Programmatically
 -----------------------------------------
