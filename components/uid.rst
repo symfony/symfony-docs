@@ -314,6 +314,30 @@ UUID objects created with the ``Uuid`` class can use the following methods
     //   * int < 0 if $uuid1 is less than $uuid4
     $uuid1->compare($uuid4); // e.g. int(4)
 
+If you're working with different UUIDs format and want to validate them,
+you can use the ``$format`` parameter of the :method:`Symfony\\Component\\Uid\\Uuid::isValid`
+method to specify the UUID format you're expecting::
+
+    use Symfony\Component\Uid\Uuid;
+
+    $isValid = Uuid::isValid('90067ce4-f083-47d2-a0f4-c47359de0f97', Uuid::FORMAT_RFC_4122); // accept only RFC 4122 UUIDs
+    $isValid = Uuid::isValid('3aJ7CNpDMfXPZrCsn4Cgey', Uuid::FORMAT_BASE_32 | Uuid::FORMAT_BASE_58); // accept multiple formats
+
+The following constants are available:
+
+* ``Uuid::FORMAT_BINARY``
+* ``Uuid::FORMAT_BASE_32``
+* ``Uuid::FORMAT_BASE_58``
+* ``Uuid::FORMAT_RFC_4122``
+
+You can also use the ``Uuid::FORMAT_ALL`` constant to accept any UUID format.
+By default, only the RFC 4122 format is accepted.
+
+.. versionadded:: 7.2
+
+    The ``$format`` parameter of the :method:`Symfony\\Component\\Uid\\Uuid::isValid`
+    method and the related constants were introduced in Symfony 7.2.
+
 Storing UUIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
