@@ -632,6 +632,31 @@ This might come handy when dealing with blocks in
 :ref:`templates inheritance <template_inheritance-layouts>` or when using
 `Turbo Streams`_.
 
+Similarly, you can use the ``#[Template]`` attribute on the controller to specify a block
+to render::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bridge\Twig\Attribute\Template;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        #[Template('product.html.twig', block: 'price_block')]
+        public function price(): array
+        {
+            return [
+                // ...
+            ];
+        }
+    }
+
+.. versionadded:: 7.2
+
+    The ``#[Template]`` attribute's ``block`` argument was introduced in Symfony 7.2.
+
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
