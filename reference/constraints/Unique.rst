@@ -170,6 +170,15 @@ collection::
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
+``errorPath``
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+This option allows you to define a custom path for your message.
+``#[Assert\Unique(fields: ['latitude', 'longitude'], errorPath: 'point_of_interest')]``
+Instead of ``0: "Error message"``, it will be : ``0.point_of_interest: "Error message"``
+
 ``message``
 ~~~~~~~~~~~
 
