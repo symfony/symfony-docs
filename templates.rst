@@ -579,6 +579,8 @@ to define the template to render::
     class ProductController extends AbstractController
     {
         #[Template('product/index.html.twig')]
+        // You can also add the "block" parameter to use the block inside the template
+        #[Template('product/index.html.twig', block: 'main')]
         public function index(): array
         {
             // ...
