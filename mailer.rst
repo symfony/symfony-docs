@@ -800,6 +800,13 @@ provides access to the original message (``getOriginalMessage()``) and to some
 debug information (``getDebug()``) such as the HTTP calls done by the HTTP
 transports, which is useful to debug errors.
 
+But you have to keep in mind that using :class:`Symfony\\Component\\Mailer\\Transport\\TransportInterface`
+you can't rely on asynchronous sending emails.
+It doesn't use a bus to dispatch :class:`Symfony\\Component\\Mailer\\Messenger\\SendEmailMessage`.
+
+Use :class:`Symfony\\Component\\Mailer\\MailerInterface` if you want to have an opportunity
+to send emails asynchronously.
+
 .. note::
 
     If your code used :class:`Symfony\\Component\\Mailer\\MailerInterface`, you
