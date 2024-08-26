@@ -127,14 +127,11 @@ Below is the configuration for the pull request state machine.
 
             <framework:config>
                 <framework:workflow name="pull_request" type="state_machine">
-                    <framework:marking-store>
-                        <framework:type>method</framework:type>
-                        <framework:property>currentPlace</framework:property>
-                    </framework:marking-store>
+                    <framework:initial-marking>start</framework:initial-marking>
+
+                    <framework:marking-store type="method" property="currentPlace"/>
 
                     <framework:support>App\Entity\PullRequest</framework:support>
-
-                    <framework:initial_marking>start</framework:initial_marking>
 
                     <framework:place>start</framework:place>
                     <framework:place>coding</framework:place>
