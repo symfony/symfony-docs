@@ -1,8 +1,8 @@
 The YAML Format
 ---------------
 
-The Symfony Yaml Component implements a selected subset of features defined in
-the `YAML 1.2 version specification`_.
+The Symfony :doc:`Yaml Component </components/yaml>` implements a selected subset
+of features defined in the `YAML 1.2 version specification`_.
 
 Scalars
 ~~~~~~~
