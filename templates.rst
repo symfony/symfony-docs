@@ -632,8 +632,8 @@ This might come handy when dealing with blocks in
 :ref:`templates inheritance <template_inheritance-layouts>` or when using
 `Turbo Streams`_.
 
-Similarly, you can use the ``#[Template]`` attribute on the controller to specify a block
-to render::
+Similarly, you can use the ``#[Template]`` attribute on the controller to specify
+a block to render::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
