@@ -155,6 +155,19 @@ values for the year, month and day fields::
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
+``calendar``
+~~~~~~~~~~~~
+
+**type**: ``\IntlCalendar`` **default**: ``null``
+
+The calendar to use for formatting and parsing the date. The value should be
+an instance of the :phpclass:`IntlCalendar` to use. By default, the Gregorian
+calendar with the application default locale is used.
+
+.. versionadded:: 7.2
+
+    The ``calendar`` option was introduced in Symfony 7.2.
+
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
 .. include:: /reference/forms/types/options/years.rst.inc
