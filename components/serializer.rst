@@ -404,7 +404,7 @@ You are now able to serialize only attributes in the groups you want::
 
     $obj2 = $serializer->denormalize(
         ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
-        'MyObj',
+        MyObj::class,
         null,
         ['groups' => ['group1', 'group3']]
     );
@@ -413,7 +413,7 @@ You are now able to serialize only attributes in the groups you want::
     // To get all groups, use the special value `*` in `groups`
     $obj3 = $serializer->denormalize(
         ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
-        'MyObj',
+        MyObj::class,
         null,
         ['groups' => ['*']]
     );
