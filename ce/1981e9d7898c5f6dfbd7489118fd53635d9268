@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by lkolndeep at 2024-08-25T10:44:18Z
+
+> note that technically there is no difference as the example seems to assume that `MyObj` is part of the global namespace
+
+Hello @xabbuh,
+
+In the `MyObj` class, there is `namespace Acme;`.
+That is why, to avoid any confusion, I think, it is a better to use `MyObj::class`.
+
+Thanks for your feedback!
+
+Regards,
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-08-25T20:48:53Z
+
+Looks like we should add a `use` statement for the class then.
