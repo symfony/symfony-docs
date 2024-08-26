@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-08-26T12:53:34Z
+
+Thanks for proposing this. I'm trying to find the `auth_token` HTTP header in the link that you shared but I can't find it. What am I doing wrong?
+
+---------------------------------------------------------------------------
+
+by 94noni at 2024-08-26T13:11:29Z
+
+@javiereguiluz its only the 2nd paragraph, the goal is to remove the `x-`
+
+```
+Custom proprietary headers have historically been used with an X- prefix,
+but this convention was deprecated in June 2012 because of the inconveniences it caused when nonstandard fields became standard in [RFC 6648](https://datatracker.ietf.org/doc/html/rfc6648);
+others are listed in the [IANA HTTP Field Name Registry](https://www.iana.org/assignments/http-fields/http-fields.xhtml), whose original content was defined in [RFC 4229](https://datatracker.ietf.org/doc/html/rfc4229). The IANA registry lists headers, including [information about their status](https://github.com/protocol-registries/http-fields?tab=readme-ov-file#choosing-the-right-status), which may be "permanent" (standards-defined), "provisional" (new), "deprecated" (use not recommended), or "obsolete" (no longer in use).
+```
