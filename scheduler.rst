@@ -869,7 +869,8 @@ While this behavior may not necessarily pose a problem, there is a possibility t
 
 That's why the scheduler allows to remember the last execution date of a message
 via the ``stateful`` option (and the :doc:`Cache component </components/cache>`).
-This allows the system to retain the state of the schedule, ensuring that when a worker is restarted, it resumes from the point it left off.::
+This allows the system to retain the state of the schedule, ensuring that when a
+worker is restarted, it resumes from the point it left off::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -889,7 +890,8 @@ This allows the system to retain the state of the schedule, ensuring that when a
         }
     }
 
-With ``stateful`` option, All missed messages will be handled, If you nedd handle your message only once you can use the ``processOnlyLastMissedRun`` option.::
+With the ``stateful`` option, all missed messages will be handled. If you need to
+handle a message only once, you can use the ``processOnlyLastMissedRun`` option::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -909,6 +911,10 @@ With ``stateful`` option, All missed messages will be handled, If you nedd handl
                 ->processOnlyLastMissedRun(true)
         }
     }
+
+.. versionadded:: 7.2
+
+    The ``processOnlyLastMissedRun`` option was introduced in Symfony 7.2.
 
 To scale your schedules more effectively, you can use multiple workers. In such
 cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
