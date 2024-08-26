@@ -3,7 +3,7 @@ How to Translate Messages using the ICU MessageFormat
 
 Messages (i.e. strings) in applications are almost never completely static.
 They contain variables or other complex logic like pluralization. To
-handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
+handle this, the :doc:`Translator component </translation>` supports the `ICU MessageFormat`_ syntax.
 
 .. tip::
 
