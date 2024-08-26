@@ -176,7 +176,8 @@ These are used for rendering templates, sending emails, querying the database an
 any other "work" you can think of.
 
 If you need a service in a controller, type-hint an argument with its class
-(or interface) name. Symfony will automatically pass you the service you need::
+(or interface) name and Symfony will inject it automatically. This requires
+your :doc:`controller to be registered as a service </controller/service>`::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\HttpFoundation\Response;
