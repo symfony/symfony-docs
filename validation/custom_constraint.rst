@@ -502,6 +502,9 @@ A class constraint validator must be applied to the class itself:
 Testing Custom Constraints
 --------------------------
 
+Atomic Constraints
+~~~~~~~~~~~~~~~~~~
+
 Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase`
 class to simplify writing unit tests for your custom constraints::
 
@@ -545,3 +548,74 @@ class to simplify writing unit tests for your custom constraints::
             // ...
         }
     }
+
+Compound Constraints
+~~~~~~~~~~~~~~~~~~~~
+
+Let's say you create a compound constraint that checks if a string meets
+your minimum requirements for your password policy::
+
+    // src/Validator/PasswordRequirements.php
+    namespace App\Validator;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    #[\Attribute]
+    class PasswordRequirements extends Assert\Compound
+    {
+        protected function getConstraints(array $options): array
+        {
+            return [
+                new Assert\NotBlank(allowNull: false),
+                new Assert\Length(min: 8, max: 255),
+                new Assert\NotCompromisedPassword(),
+                new Assert\Type('string'),
+                new Assert\Regex('/[A-Z]+/'),
+            ];
+        }
+    }
+
+You can use the :class:`Symfony\\Component\\Validator\\Test\\CompoundConstraintTestCase`
+class to check precisely which of the constraints failed to pass::
+
+    // tests/Validator/PasswordRequirementsTest.php
+    namespace App\Tests\Validator;
+
+    use App\Validator\PasswordRequirements;
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Test\CompoundConstraintTestCase;
+
+    /**
+     * @extends CompoundConstraintTestCase<PasswordRequirements>
+     */
+    class PasswordRequirementsTest extends CompoundConstraintTestCase
+    {
+        public function createCompound(): Assert\Compound
+        {
+            return new PasswordRequirements();
+        }
+
+        public function testInvalidPassword(): void
+        {
+            $this->validateValue('azerty123');
+
+            // check all constraints pass except for the
+            // password leak and the uppercase letter checks
+            $this->assertViolationsRaisedByCompound([
+                new Assert\NotCompromisedPassword(),
+                new Assert\Regex('/[A-Z]+/'),
+            ]);
+        }
+
+        public function testValid(): void
+        {
+            $this->validateValue('VERYSTR0NGP4$$WORD#%!');
+
+            $this->assertNoViolation();
+        }
+    }
+
+.. versionadded:: 7.2
+
+    The :class:`Symfony\\Component\\Validator\\Test\\CompoundConstraintTestCase`
+    class was introduced in Symfony 7.2.
