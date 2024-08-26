@@ -552,8 +552,8 @@ class to simplify writing unit tests for your custom constraints::
 Compound Constraints
 ~~~~~~~~~~~~~~~~~~~~
 
-Let's say you create a compound constraint that checks if a string meets
-your minimum requirements for your password policy::
+Consider the following compound constraint that checks if a string meets
+the minimum requirements for your password policy::
 
     // src/Validator/PasswordRequirements.php
     namespace App\Validator;
