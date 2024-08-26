@@ -64,6 +64,7 @@ Date Constraints
 * :doc:`DateTime </reference/constraints/DateTime>`
 * :doc:`Time </reference/constraints/Time>`
 * :doc:`Timezone </reference/constraints/Timezone>`
+* :doc:`Week </reference/constraints/Week>`
 
 Choice Constraints
 ~~~~~~~~~~~~~~~~~~
