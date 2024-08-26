@@ -1496,7 +1496,7 @@ having unique identifiers::
 
     $encoder = new JsonEncoder();
     $defaultContext = [
-        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context): string {
+        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, ?string $format, array $context): string {
             return $object->getName();
         },
     ];
