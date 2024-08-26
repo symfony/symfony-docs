@@ -37,12 +37,12 @@ method that fits most use-cases::
          */
         public function supports(Request $request): ?bool
         {
-            return $request->headers->has('X-AUTH-TOKEN');
+            return $request->headers->has('auth-token');
         }
 
         public function authenticate(Request $request): Passport
         {
-            $apiToken = $request->headers->get('X-AUTH-TOKEN');
+            $apiToken = $request->headers->get('auth-token');
             if (null === $apiToken) {
                 // The token header was empty, authentication fails with HTTP Status
                 // Code 401 "Unauthorized"
