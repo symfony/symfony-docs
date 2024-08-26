@@ -388,6 +388,7 @@ Then, create your groups definition:
 
 You are now able to serialize only attributes in the groups you want::
 
+    use Acme\MyObj;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
