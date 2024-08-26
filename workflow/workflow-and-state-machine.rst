@@ -81,6 +81,7 @@ Below is the configuration for the pull request state machine.
                     marking_store:
                          type: 'method'
                          property: 'currentPlace'
+                    # The supports options is useful only if you are using twig functions ('workflow_*')
                     supports:
                         - App\Entity\PullRequest
                     initial_marking: start
@@ -131,6 +132,7 @@ Below is the configuration for the pull request state machine.
 
                     <framework:marking-store type="method" property="currentPlace"/>
 
+                    <!-- The supports options is useful only if you are using twig functions ('workflow_*') -->
                     <framework:support>App\Entity\PullRequest</framework:support>
 
                     <framework:place>start</framework:place>
@@ -199,6 +201,7 @@ Below is the configuration for the pull request state machine.
 
             $pullRequest
                 ->type('state_machine')
+                // The supports options is useful only if you are using twig functions ('workflow_*')
                 ->supports(['App\Entity\PullRequest'])
                 ->initialMarking(['start']);
 
@@ -248,33 +251,6 @@ Below is the configuration for the pull request state machine.
                     ->from(['closed'])
                     ->to(['review']);
         };
-
-In a Symfony application using the
-:ref:`default services.yaml configuration <service-container-services-load-example>`,
-you can get this state machine by injecting the Workflow registry service::
-
-    // ...
-    use App\Entity\PullRequest;
-    use Symfony\Component\Workflow\Registry;
-
-    class SomeService
-    {
-        private $workflows;
-
-        public function __construct(Registry $workflows)
-        {
-            $this->workflows = $workflows;
-        }
-
-        public function someMethod(PullRequest $pullRequest)
-        {
-            $stateMachine = $this->workflows->get($pullRequest, 'pull_request');
-            $stateMachine->apply($pullRequest, 'wait_for_review');
-            // ...
-        }
-
-        // ...
-    }
 
 Symfony automatically creates a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`)
 or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you
