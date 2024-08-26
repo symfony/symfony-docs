@@ -5,10 +5,9 @@ Week
 
     The ``Week`` constraint was introduced in Symfony 7.2.
 
-Validates that a string (or an object implementing the ``Stringable`` PHP interface)
-matches a given week number. The week number format is defined by `ISO-8601`_
-and should be composed of the year and the week number, separated by a hyphen
-(e.g. ``2022-W01``).
+Validates that a given string (or an object implementing the ``Stringable`` PHP
+interface) represents a valid week number according to the `ISO-8601`_ standard
+(e.g. ``2025-W01``).
 
 ==========  =======================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -87,10 +86,11 @@ the following:
             }
         }
 
-.. note::
-
-    The constraint also checks that the given week exists in the calendar. For example,
-    ``2022-W53`` is not a valid week number for 2022, because 2022 only had 52 weeks.
+This constraint not only checks that the value matches the week number pattern,
+but it also verifies that the specified week actually exists in the calendar.
+According to the ISO-8601 standard, years can have either 52 or 53 weeks. For example,
+``2022-W53`` is not a valid because 2022 only had 52 weeks; but ``2020-W53`` is
+valid because 2020 had 53 weeks.
 
 Options
 -------
@@ -169,4 +169,4 @@ Parameter         Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _ISO-8601: https://en.wikipedia.org/wiki/ISO_8601
+.. _`ISO-8601`: https://en.wikipedia.org/wiki/ISO_8601
