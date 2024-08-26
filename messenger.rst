@@ -2629,8 +2629,8 @@ to your message::
 
     public function index(MessageBusInterface $bus): void
     {
+        // wait 5 seconds before processing
         $bus->dispatch(new SmsNotification('...'), [
-            // wait 5 seconds before processing
             new DelayStamp(5000),
         ]);
 
