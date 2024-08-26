@@ -81,7 +81,7 @@ reflect the real structure of the configuration values::
                 ->defaultTrue()
             ->end()
             ->scalarNode('default_connection')
-                ->defaultValue('default')
+                ->defaultValue('mysql')
             ->end()
         ->end()
     ;
