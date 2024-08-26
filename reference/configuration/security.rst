@@ -350,10 +350,10 @@ form_only
 **type**: ``boolean`` **default**: ``false``
 
 Set this option to ``true`` to require that the login data is sent using a form
-(it checks that the request content-type is ``application/x-www-form-urlencoded``).
-This is useful for example to prevent the :ref:`form login authenticator <security-form-login>`
-from responding to requests that should be handled by the
-:ref:`JSON login authenticator <security-json-login>`.
+(it checks that the request content-type is ``application/x-www-form-urlencoded``
+or ``multipart/form-data``) This is useful for example to prevent the.
+:ref:`form login authenticator <security-form-login>` from responding to
+requests that should be handled by the :ref:`JSON login authenticator <security-json-login>`.
 
 .. versionadded:: 5.4
 
