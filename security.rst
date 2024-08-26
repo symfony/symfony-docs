@@ -2556,7 +2556,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
       class SalesReportManager
       {
     +     public function __construct(
-    +         Security $security,
+    +         private Security $security,
     +     ) {
     +     }
 
