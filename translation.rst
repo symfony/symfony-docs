@@ -33,8 +33,8 @@ The translation process has several steps:
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
 
-#. Abstract strings (i.e. "messages") by wrapping them in calls to the
-   ``Translator`` (":ref:`translation-basic`");
+#. Abstract strings (i.e. "messages") by :ref:`wrapping them in calls
+   <translation-basic>` to the ``Translator``;
 
 #. :ref:`Create translation resources/files <translation-resources>`
    for each supported locale that translate each message in the application;
@@ -164,8 +164,8 @@ different formats:
             'Symfony is great' => "J'aime Symfony",
         ];
 
-For information on where these files should be located, see
-:ref:`translation-resource-locations`.
+You can find more information on where these files
+:ref:`should be located <translation-resource-locations>`.
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
@@ -251,8 +251,8 @@ To actually translate the message, Symfony uses the following process when
 using the ``trans()`` method:
 
 #. The ``locale`` of the current user, which is stored on the request is
-   determined; this is typically set via a ``_locale`` attribute on your routes
-   (see :ref:`translation-locale-url`);
+   determined; this is typically set via a ``_locale`` :ref:`attribute on
+   your routes <translation-locale-url>`;
 
 #. A catalog of translated messages is loaded from translation resources
    defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
@@ -452,8 +452,8 @@ The ``translation:extract`` command looks for missing translations in:
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
   the ``translator`` service and makes calls to the ``trans()`` method.
 * Any PHP file/class stored in the ``src/`` directory that creates
-  :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
-  the ``trans()`` method.
+  :ref:`translatable objects <translatable-objects>` using the constructor or
+  the ``t()`` method or calls the ``trans()`` method.
 
 .. versionadded:: 5.3
 
@@ -1054,10 +1054,10 @@ unused translation messages templates:
 .. caution::
 
     The extractors can't find messages translated outside templates (like form
-    labels or controllers) unless using :ref:`translatable-objects` or calling
-    the ``trans()`` method on a translator (since Symfony 5.3). Dynamic
-    translations using variables or expressions in templates are not
-    detected either:
+    labels or controllers) unless using :ref:`translatable objects
+    <translatable-objects>` or calling the ``trans()`` method on a translator
+    (since Symfony 5.3). Dynamic translations using variables or expressions in
+    templates are not detected either:
 
     .. code-block:: twig
 
@@ -1066,9 +1066,10 @@ unused translation messages templates:
         {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured
-``en`` as the fallback locale (see :ref:`translation-configuration` and
-:ref:`translation-fallback` for how to configure these). And suppose
-you've already setup some translations for the ``fr`` locale:
+``en`` as the fallback locale (see :ref:`configuration
+<translation-configuration>` and :ref:`fallback <translation-fallback>` for
+how to configure these). And suppose you've already set up some translations
+for the ``fr`` locale:
 
 .. configuration-block::
 
