@@ -175,9 +175,16 @@ collection::
 
 **type**: ``string`` **default**: ``null``
 
-This option allows you to define a custom path for your message.
-``#[Assert\Unique(fields: ['latitude', 'longitude'], errorPath: 'point_of_interest')]``
-Instead of ``0: "Error message"``, it will be : ``0.point_of_interest: "Error message"``
+.. versionadded:: 7.2
+
+    The ``errorPath`` option was introduced in Symfony 7.2.
+
+If a validation error occurs, the error message is, by default, bound to the
+first element in the collection. Use this option to bind the error message to a
+specific field within the first item of the collection.
+
+The value of this option must use any :doc:`valid PropertyAccess syntax </components/property_access>`
+(e.g. ``'point_of_interest'``, ``'user.email'``).
 
 ``message``
 ~~~~~~~~~~~
