@@ -37,6 +37,7 @@ method that fits most use-cases::
          */
         public function supports(Request $request): ?bool
         {
+            // "auth_token" is an example of a custom, non-standard HTTP header used in this application
             return $request->headers->has('auth-token');
         }
 
