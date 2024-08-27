@@ -99,11 +99,11 @@ other hand, returns a boolean indicating if the expression is valid or not::
 
     $expressionLanguage = new ExpressionLanguage();
 
-    var_dump($expressionLanguage->parse('1 + 2'));
+    var_dump($expressionLanguage->parse('1 + 2', []));
     // displays the AST nodes of the expression which can be
     // inspected and manipulated
 
-    var_dump($expressionLanguage->lint('1 + 2')); // displays true
+    var_dump($expressionLanguage->lint('1 + 2', [])); // displays true
 
 Passing in Variables
 --------------------
