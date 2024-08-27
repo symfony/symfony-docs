@@ -49,6 +49,10 @@ method to access to its associated profile::
     // ... $profiler is the 'profiler' service
     $profile = $profiler->loadProfileFromResponse($response);
 
+.. note::
+
+    To declare the profiler service you can refer to :ref:`Enabling the Profiler Conditionally <enabling_the_profiler_conditionally_tag>`.
+
 When the profiler stores data about a request, it also associates a token with it;
 this token is available in the ``X-Debug-Token`` HTTP header of the response.
 Using this token, you can access the profile of any past response thanks to the
@@ -109,6 +113,8 @@ need to create a custom data collector. Instead, use the built-in utilities to
 
     Consider using a professional profiler such as `Blackfire`_ to measure and
     analyze the execution of your application in detail.
+
+.. _enabling_the_profiler_conditionally_tag:
 
 Enabling the Profiler Conditionally
 -----------------------------------
