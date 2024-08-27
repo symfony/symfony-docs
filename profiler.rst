@@ -58,6 +58,12 @@ method to access to its associated profile::
     // ... $profiler is the 'profiler' service
     $profile = $profiler->loadProfileFromResponse($response);
 
+.. note::
+
+    The ``profiler`` service will be :doc:`autowired </service_container/autowiring>`
+    automatically when type-hinting any service argument with the
+    :class:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler` class.
+
 When the profiler stores data about a request, it also associates a token with it;
 this token is available in the ``X-Debug-Token`` HTTP header of the response.
 Using this token, you can access the profile of any past response thanks to the
