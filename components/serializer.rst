@@ -752,8 +752,8 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $dateCallback = function (object $innerObject, object $outerObject, string $attributeName, ?string $format = null, array $context = []): string {
-        return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ATOM) : '';
+    $dateCallback = function (object $attributeValue, object $object, string $attributeName, ?string $format = null, array $context = []): string {
+        return $attributeValue instanceof \DateTime ? $attributeValue->format(\DateTime::ATOM) : '';
     };
 
     $defaultContext = [
