@@ -51,7 +51,9 @@ method to access to its associated profile::
 
 .. note::
 
-    To declare the profiler service you can refer to :ref:`Enabling the Profiler Conditionally <enabling_the_profiler_conditionally_tag>`.
+    The ``profiler`` service will be :doc:`autowired </service_container/autowiring>`
+    automatically when type-hinting any service argument with the
+    :class:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler` class.
 
 When the profiler stores data about a request, it also associates a token with it;
 this token is available in the ``X-Debug-Token`` HTTP header of the response.
