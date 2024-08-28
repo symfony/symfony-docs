@@ -1063,9 +1063,6 @@ the session must not be used when authenticating users:
             // ...
         };
 
-Routes under this firewall will be :ref:`configured stateless <stateless-routing>`
-when they are not explicitly configured stateless or not.
-
 User Checkers
 ~~~~~~~~~~~~~
 
