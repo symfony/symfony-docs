@@ -21,9 +21,9 @@ Channels
 --------
 
 Channels refer to the different mediums through which notifications can be delivered.
-These channels can include email, SMS, chat services, push notifications, etc.
-Each channel can integrate with different providers (e.g. Slack or Twilio SMS)
-by using transports.
+These channels include email, SMS, chat services, push notifications, etc. Each
+channel can integrate with different providers (e.g. Slack or Twilio SMS) by
+using transports.
 
 The notifier component supports the following channels:
 
