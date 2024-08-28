@@ -35,6 +35,7 @@ rules:
     no_blank_line_after_filepath_in_xml_code_block: ~
     no_blank_line_after_filepath_in_yaml_code_block: ~
     no_brackets_in_method_directive: ~
+    no_broken_ref_directive: ~
     no_composer_req: ~
     no_directive_after_shorthand: ~
     no_duplicate_use_statements: ~
