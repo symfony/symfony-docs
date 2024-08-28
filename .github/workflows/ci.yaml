@@ -21,7 +21,7 @@ jobs:
 
         steps:
             -   name: "Checkout"
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
 
             -   name: "Set-up PHP"
                 uses: shivammathur/setup-php@v2
@@ -57,7 +57,7 @@ jobs:
 
         steps:
             -   name: "Checkout"
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
 
             -   name: "Create cache dir"
                 run: mkdir .cache
@@ -86,7 +86,7 @@ jobs:
 
         steps:
             -   name: Checkout code
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     path: 'docs'
 
