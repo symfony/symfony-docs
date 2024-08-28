@@ -14,7 +14,7 @@ safe & easy!) and offers long-term support.
 Downloading Symfony
 -------------------
 
-First, make sure you've installed `Composer`_ and have PHP 8.1 or higher.
+First, make sure you've installed `Composer`_ and have PHP 8.2 or higher.
 
 Ready? In a terminal, run:
 
@@ -135,8 +135,46 @@ Try the page out by going to ``http://localhost:8000/hello/Symfony``. You should
 see: Hello Symfony! The value of the ``{name}`` in the URL is available as a ``$name``
 argument in your controller.
 
-But by using attributes, the route and controller live right next to each
-other. Need another page? Add another route and method in ``DefaultController``::
+But this can be even simpler! Comment-out the YAML route by adding the
+``#`` character. Uncomment previous code to avoid a notfound error.
+
+.. code-block:: diff
+
+// Uncomment the template code to avoid an error
+    controllers:
+      resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+
+      type: attribute
+    # config/routes.yaml
+    # index:
+    #     path: /hello/{name}
+    #     controller: 'App\Controller\DefaultController::index'
+
+Instead, add the route *right above* the controller method:
+
+.. code-block:: diff
+
+      <?php
+      // src/Controller/DefaultController.php
+      namespace App\Controller;
+
+      use Symfony\Component\HttpFoundation\Response;
+    + use Symfony\Component\Routing\Attribute\Route;
+
+      class DefaultController
+      {
+    +      #[Route('/hello/{name}', methods: ['GET'])]
+           public function index(string $name): Response
+           {
+               // ...
+           }
+      }
+
+This works just like before! But by using attributes, the route and controller
+live right next to each other. Need another page? Add another route and method
+in ``DefaultController``::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
