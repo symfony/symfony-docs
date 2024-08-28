@@ -17,12 +17,13 @@ Get the Notifier installed using:
 .. _channels-chatters-texters-email-and-browser:
 .. _channels-chatters-texters-email-browser-and-push:
 
-Channels: Chatters, Texters, Email, Browser, Push and Desktop
--------------------------------------------------------------
+Channels
+--------
 
-The notifier component can send notifications to different channels. Each
-channel can integrate with different providers (e.g. Slack or Twilio SMS)
-by using transports.
+Channels refer to the different mediums through which notifications can be delivered.
+These channels include email, SMS, chat services, push notifications, etc. Each
+channel can integrate with different providers (e.g. Slack or Twilio SMS) by
+using transports.
 
 The notifier component supports the following channels:
 
@@ -35,15 +36,15 @@ The notifier component supports the following channels:
 * :ref:`Push channel <notifier-push-channel>` sends notifications to phones and browsers via push notifications.
 * :ref:`Desktop channel <notifier-desktop-channel>` displays desktop notifications on the same host machine.
 
-.. tip::
-
-    Use :doc:`secrets </configuration/secrets>` to securely store your
-    API tokens.
-
 .. _notifier-sms-channel:
 
 SMS Channel
 ~~~~~~~~~~~
+
+The SMS channel uses :class:`Symfony\\Component\\Notifier\\Texter` classes
+to send SMS messages to mobile phones. This feature requires subscribing to
+a third-party service that sends SMS messages. Symfony provides integration
+with a couple popular SMS services:
 
 .. caution::
 
@@ -51,11 +52,6 @@ SMS Channel
     URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``), you must
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
-
-The SMS channel uses :class:`Symfony\\Component\\Notifier\\Texter` classes
-to send SMS messages to mobile phones. This feature requires subscribing to
-a third-party service that sends SMS messages. Symfony provides integration
-with a couple popular SMS services:
 
 ==================  ====================================================================================================================================
 Service
@@ -214,6 +210,11 @@ Service
 .. versionadded:: 7.2
 
     The ``Primotexto`` integration was introduced in Symfony 7.2.
+
+.. tip::
+
+    Use :doc:`Symfony configuration secrets </configuration/secrets>` to securely
+    store your API tokens.
 
 .. tip::
 
