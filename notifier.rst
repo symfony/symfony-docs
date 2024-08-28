@@ -16,8 +16,8 @@ Get the Notifier installed using:
 
 .. _channels-chatters-texters-email-and-browser:
 
-Channels: Chatters, Texters, Email, Browser and Push
-----------------------------------------------------
+Channels: Chatters, Texters, Email, Browser, Push and Desktop
+-------------------------------------------------------------
 
 The notifier component can send notifications to different channels. Each
 channel can integrate with different providers (e.g. Slack or Twilio SMS)
@@ -32,6 +32,7 @@ The notifier component supports the following channels:
 * :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
 * Browser channel uses :ref:`flash messages <flash-messages>`.
 * :ref:`Push channel <notifier-push-channel>` sends notifications to phones and browsers via push notifications.
+* :ref:`Desktop channel <notifier-desktop-channel>` displays desktop notifications on the same host machine.
 
 .. tip::
 
@@ -623,6 +624,79 @@ configure the ``texter_transports``:
             ;
         };
 
+.. _notifier-desktop-channel:
+
+Desktop Channel
+~~~~~~~~~~~~~~~
+
+The desktop channel is used to display desktop notifications on the same host machine using
+:class:`Symfony\\Component\\Notifier\\Texter` classes. Currently, Symfony
+is integrated with the following providers:
+
+===============  ====================================  ==============================================================================
+Provider         Package                               DSN
+===============  ====================================  ==============================================================================
+`JoliNotif`_     ``symfony/joli-notif-notifier``       ``jolinotif://default``
+===============  ====================================  ==============================================================================
+
+.. versionadded: 7.2
+
+    The JoliNotif bridge was introduced in Symfony 7.2.
+
+To enable a texter, add the correct DSN in your ``.env`` file and
+configure the ``texter_transports``:
+
+.. code-block:: bash
+
+    # .env
+    JOLINOTIF=jolinotif://default
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/notifier.yaml
+        framework:
+            notifier:
+                texter_transports:
+                    jolinotif: '%env(JOLINOTIF)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/notifier.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:notifier>
+                    <framework:texter-transport name="jolinotif">
+                        %env(JOLINOTIF)%
+                    </framework:texter-transport>
+                </framework:notifier>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->notifier()
+                ->texterTransport('jolinotif', env('JOLINOTIF'))
+            ;
+        };
+
+.. versionadded:: 7.2
+
+    The ``Desktop`` channel was introduced in Symfony 7.2.
+
 Configure to use Failover or Round-Robin Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -926,9 +1000,10 @@ and its ``asChatMessage()`` method::
 
 The
 :class:`Symfony\\Component\\Notifier\\Notification\\SmsNotificationInterface`,
-:class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`
-and
+:class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`,
 :class:`Symfony\\Component\\Notifier\\Notification\\PushNotificationInterface`
+and
+:class:`Symfony\\Component\\Notifier\\Notification\\DesktopNotificationInterface`
 also exists to modify messages sent to those channels.
 
 Customize Browser Notifications (Flash Messages)
@@ -1114,6 +1189,7 @@ is dispatched. Listeners receive a
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Infobip/README.md
 .. _`Iqsms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Iqsms/README.md
 .. _`iSendPro`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Isendpro/README.md
+.. _`JoliNotif`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/JoliNotif/README.md
 .. _`KazInfoTeh`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/KazInfoTeh/README.md
 .. _`LINE Notify`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LineNotify/README.md
 .. _`LightSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LightSms/README.md
