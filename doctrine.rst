@@ -174,13 +174,6 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     Confused why the price is an integer? Don't worry: this is just an example.
     But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
-.. note::
-
-    If you are using an SQLite database, you'll see the following error:
-    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
-    column with default value NULL*. Add a ``nullable=true`` option to the
-    ``description`` property to fix the problem.
-
 .. caution::
 
     There is a `limit of 767 bytes for the index key prefix`_ when using
@@ -322,6 +315,13 @@ This time, the SQL in the generated file will look like this:
 The migration system is *smart*. It compares all of your entities with the current
 state of the database and generates the SQL needed to synchronize them! Like
 before, execute your migrations:
+
+.. note::
+
+    If you are using an SQLite database, you'll see the following error:
+    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
+    column with default value NULL*. Add a ``nullable=true`` option to the
+    ``description`` property to fix the problem.
 
 .. code-block:: terminal
 
