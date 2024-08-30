@@ -3268,7 +3268,7 @@ settings from the base pool as defaults.
 
 .. note::
 
-    Your service **must** implement the ``Psr\Cache\CacheItemPoolInterface`` interface.
+    Your service needs to implement the ``Psr\Cache\CacheItemPoolInterface`` interface.
 
 public
 """"""
