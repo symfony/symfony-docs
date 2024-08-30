@@ -316,16 +316,16 @@ The migration system is *smart*. It compares all of your entities with the curre
 state of the database and generates the SQL needed to synchronize them! Like
 before, execute your migrations:
 
-.. note::
+.. code-block:: terminal
+
+    $ php bin/console doctrine:migrations:migrate
+
+.. caution::
 
     If you are using an SQLite database, you'll see the following error:
     *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
     column with default value NULL*. Add a ``nullable=true`` option to the
     ``description`` property to fix the problem.
-
-.. code-block:: terminal
-
-    $ php bin/console doctrine:migrations:migrate
 
 This will only execute the *one* new migration file, because DoctrineMigrationsBundle
 knows that the first migration was already executed earlier. Behind the scenes, it
