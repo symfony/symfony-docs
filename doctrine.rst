@@ -174,13 +174,6 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     Confused why the price is an integer? Don't worry: this is just an example.
     But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
-.. note::
-
-    If you are using an SQLite database, you'll see the following error:
-    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
-    column with default value NULL*. Add a ``nullable=true`` option to the
-    ``description`` property to fix the problem.
-
 .. caution::
 
     There is a `limit of 767 bytes for the index key prefix`_ when using
@@ -326,6 +319,13 @@ before, execute your migrations:
 .. code-block:: terminal
 
     $ php bin/console doctrine:migrations:migrate
+
+.. caution::
+
+    If you are using an SQLite database, you'll see the following error:
+    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
+    column with default value NULL*. Add a ``nullable=true`` option to the
+    ``description`` property to fix the problem.
 
 This will only execute the *one* new migration file, because DoctrineMigrationsBundle
 knows that the first migration was already executed earlier. Behind the scenes, it
