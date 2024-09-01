@@ -1679,14 +1679,10 @@ which is useful for debugging errors::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Mailer\Event\SentMessageEvent;
-    use Symfony\Component\Mailer\SentMessage;
 
     public function onMessage(SentMessageEvent $event): void
     {
         $message = $event->getMessage();
-        if (!$message instanceof SentMessage) {
-            return;
-        }
 
         // do something with the message
     }

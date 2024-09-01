@@ -49,9 +49,9 @@ to install ChromeDriver and geckodriver locally:
 
     $ vendor/bin/bdi detect drivers
 
-Panther will detect and use automatically drivers stored in the ``drivers/`` directory
+Panther will detect and automatically use drivers stored in the ``drivers/`` directory
 of your project when installing them manually. You can download `ChromeDriver`_
-for Chromium or Chromeand `GeckoDriver`_ for Firefox and put them anywhere in
+for Chromium or Chrome and `GeckoDriver`_ for Firefox and put them anywhere in
 your ``PATH`` or in the ``drivers/`` directory of your project.
 
 Alternatively, you can use the package manager of your operating system
@@ -132,7 +132,7 @@ Creating a TestCase
 ~~~~~~~~~~~~~~~~~~~
 
 The ``PantherTestCase`` class allows you to write end-to-end tests. It
-automatically starts your app using the built-in PHP web server and let
+automatically starts your app using the built-in PHP web server and lets
 you crawl it using Panther. To provide all the testing tools you're used
 to, it extends `PHPUnit`_'s ``TestCase``.
 
@@ -264,8 +264,7 @@ future::
         }
     }
 
-You can then run this test by using PHPUnit, like you would do for any other
-test:
+You can then run this test using PHPUnit, like you would for any other test:
 
 .. code-block:: terminal
 
@@ -498,13 +497,13 @@ Having a Multi-domain Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It happens that your PHP/Symfony application might serve several different
-domain names. As Panther saves the Client in memory between tests to improve
+domain names. As Panther saves the client in memory between tests to improve
 performance, you will have to run your tests in separate
 processes if you write several tests using Panther for different domain names.
 
 To do so, you can use the native ``@runInSeparateProcess`` PHPUnit annotation.
 Here is an example using the ``external_base_uri`` option to determine the
-domain name used by the Client when using separate processes::
+domain name used by the client when using separate processes::
 
     // tests/FirstDomainTest.php
     namespace App\Tests;
@@ -792,7 +791,7 @@ The following features are not currently supported:
 * Selecting invalid choices in select
 
 Also, there is a known issue if you are using Bootstrap 5. It implements a
-scrolling effect, which tends to mislead Panther. To fix this, we advise you to
+scrolling effect which tends to mislead Panther. To fix this, we advise you to
 deactivate this effect by setting the Bootstrap 5 ``$enable-smooth-scroll``
 variable to ``false`` in your style file:
 
