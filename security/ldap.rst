@@ -25,7 +25,7 @@ This means that the following scenarios will work:
   either the LDAP form login or LDAP HTTP Basic authentication providers.
 
 * Checking a user's password against an LDAP server while fetching user
-  information from another source like your main database for
+  information from another source (like your main database for
   example).
 
 * Loading user information from an LDAP server, while using another

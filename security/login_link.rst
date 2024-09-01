@@ -248,7 +248,7 @@ number::
                 return $this->render('security/login_link_sent.html.twig');
             }
 
-            return $this->render('security/login.html.twig');
+            return $this->render('security/request_login_link.html.twig');
         }
 
         // ...
@@ -641,7 +641,7 @@ user create this POST request (e.g. by clicking a button)::
         <h2>Hi! You are about to login to ...</h2>
 
         <!-- for instance, use a form with hidden fields to
-             create the POST request --->
+             create the POST request -->
         <form action="{{ path('login_check') }}" method="POST">
             <input type="hidden" name="expires" value="{{ expires }}">
             <input type="hidden" name="user" value="{{ user }}">
