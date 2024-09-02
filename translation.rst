@@ -462,13 +462,15 @@ The ``translation:extract`` command looks for missing translations in:
     The support of PHP files/classes that use constraint attributes was
     introduced in Symfony 6.2.
 
-To read PHP files, is used the new ``PhpAstExtractor`` service supports all kinds of ``trans()`` function calls, usages of :class:`Symfony\\Component\\Translation\\TranslatableMessage` class, messages defined in validation constraints, etc...
+.. tip::
 
-To use the new translation extractor, install the ``nikic/php-parser`` package using Composer, before using `translation:extract`.
+    Install the ``nikic/php-parser`` package in your project to improve the
+    results of the ``translation:extract`` command. This package enables an
+    `AST`_ parser that can find many more translatable items:
 
-.. code-block:: terminal
+    .. code-block:: terminal
 
-    $ composer require nikic/php-parser
+        $ composer require nikic/php-parser
 
 .. _translation-resource-locations:
 
@@ -1594,3 +1596,4 @@ Learn more
 .. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
 .. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
 .. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
+.. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
