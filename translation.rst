@@ -472,10 +472,6 @@ The ``translation:extract`` command looks for missing translations in:
 
         $ composer require nikic/php-parser
 
-    .. versionadded:: 6.2
-
-        The AST parser support was introduced in Symfony 6.2.
-
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
