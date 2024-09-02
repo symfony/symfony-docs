@@ -199,7 +199,7 @@ You can also set the style to ``box``::
 
 which outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
     ┌───────────────┬──────────────────────────┬──────────────────┐
     │ ISBN          │ Title                    │ Author           │
@@ -217,7 +217,7 @@ You can also set the style to ``box-double``::
 
 which outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
     ╔═══════════════╤══════════════════════════╤══════════════════╗
     ║ ISBN          │ Title                    │ Author           ║
