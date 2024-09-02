@@ -89,7 +89,7 @@ the following:
 This constraint not only checks that the value matches the week number pattern,
 but it also verifies that the specified week actually exists in the calendar.
 According to the ISO-8601 standard, years can have either 52 or 53 weeks. For example,
-``2022-W53`` is not a valid because 2022 only had 52 weeks; but ``2020-W53`` is
+``2022-W53`` is not valid because 2022 only had 52 weeks; but ``2020-W53`` is
 valid because 2020 had 53 weeks.
 
 Options
