@@ -1488,30 +1488,104 @@ Limit the Number of Requests
 ----------------------------
 
 This component provides a :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient`
-decorator that allows to limit the number of requests within a certain period.
+decorator that allows to limit the number of requests within a certain period,
+potentially delaying calls based on the rate limiting policy.
 
 The implementation leverages the
 :class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class under the hood
 so the :doc:`Rate Limiter component </rate_limiter>` needs to be
 installed in your application::
 
-    use Symfony\Component\HttpClient\HttpClient;
-    use Symfony\Component\HttpClient\ThrottlingHttpClient;
-    use Symfony\Component\RateLimiter\LimiterInterface;
+.. configuration-block::
 
-    $rateLimiter = ...; // $rateLimiter is an instance of Symfony\Component\RateLimiter\LimiterInterface
-    $client = HttpClient::create();
-    $client = new ThrottlingHttpClient($client, $rateLimiter);
+    .. code-block:: yaml
 
-    $requests = [];
-    for ($i = 0; $i < 100; $i++) {
-        $requests[] = $client->request('GET', 'https://example.com');
-    }
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    example.client:
+                        base_uri: 'https://example.com'
+                        rate_limiter: 'http_example_limiter'
 
-    foreach ($requests as $request) {
-        // Depending on rate limiting policy, calls will be delayed
-        $output->writeln($request->getContent());
-    }
+            rate_limiter:
+                # Don't send more than 10 requests in 5 seconds
+                http_example_limiter:
+                    policy: 'token_bucket'
+                    limit: 10
+                    rate: { interval: '5 seconds', amount: 10 }
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:scoped-client name="example.client"
+                        base-uri="https://example.com"
+                        rate-limiter="http_example_limiter"
+                    />
+                </framework:http-client>
+
+                <framework:rate-limiter>
+                    <!-- Don't send more than 10 requests in 5 seconds -->
+                    <framework:limiter name="http_example_limiter"
+                        policy="token_bucket"
+                        limit="10"
+                    >
+                        <framework:rate interval="5 seconds" amount="10"/>
+                    </framework:limiter>
+                </framework:rate-limiter>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->httpClient()->scopedClient('example.client')
+                ->baseUri('https://example.com')
+                ->rateLimiter('http_example_limiter');
+                // ...
+            ;
+
+            $framework->rateLimiter()
+                // Don't send more than 10 requests in 5 seconds
+                ->limiter('http_example_limiter')
+                    ->policy('token_bucket')
+                    ->limit(10)
+                    ->rate()
+                        ->interval('5 seconds')
+                        ->amount(10)
+                ;
+        };
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpClient\HttpClient;
+        use Symfony\Component\HttpClient\ThrottlingHttpClient;
+        use Symfony\Component\RateLimiter\RateLimiterFactory;
+        use Symfony\Component\RateLimiter\Storage\InMemoryStorage;
+
+        $factory = new RateLimiterFactory([
+            'id' => 'http_example_limiter',
+            'policy' => 'token_bucket',
+            'limit' => 10,
+            'rate' => ['interval' => '5 seconds', 'amount' => 10],
+        ], new InMemoryStorage());
+        $limiter = $factory->create();
+
+        $client = HttpClient::createForBaseUri('https://example.com');
+        $throttlingClient = new ThrottlingHttpClient($client, $limiter);
 
 .. versionadded:: 7.1
 
