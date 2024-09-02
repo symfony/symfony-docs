@@ -457,6 +457,16 @@ The ``translation:extract`` command looks for missing translations in:
 * Any PHP file/class stored in the ``src/`` directory that uses
   :ref:`Constraints Attributes <validation-constraints>`  with ``*message`` named argument(s).
 
+.. tip::
+
+    Install the ``nikic/php-parser`` package in your project to improve the
+    results of the ``translation:extract`` command. This package enables an
+    `AST`_ parser that can find many more translatable items:
+
+    .. code-block:: terminal
+
+        $ composer require nikic/php-parser
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
@@ -1563,3 +1573,4 @@ Learn more
 .. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
 .. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
 .. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
+.. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
