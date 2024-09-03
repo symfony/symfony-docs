@@ -387,7 +387,7 @@ then its dump representation::
 
 .. note::
 
-    `#14` is the internal object handle. It allows comparing two
+    ``#14`` is the internal object handle. It allows comparing two
     consecutive dumps of the same object.
 
 .. code-block:: php
