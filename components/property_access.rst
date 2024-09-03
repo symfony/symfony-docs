@@ -324,10 +324,12 @@ can use setters, the magic ``__set()`` method or properties to set values::
     $propertyAccessor->setValue($person, 'firstName', 'Wouter');
     $propertyAccessor->setValue($person, 'lastName', 'de Jong'); // setLastName is called
     $propertyAccessor->setValue($person, 'children', [new Person()]); // __set is called
+    $propertyAccessor->setValue($person, 'role', 'contributor'); // A new property 'role' is set dynamically
 
     var_dump($person->firstName); // 'Wouter'
     var_dump($person->getLastName()); // 'de Jong'
     var_dump($person->getChildren()); // [Person()];
+    var_dump($person->role); // 'contributor';
 
 You can also use ``__call()`` to set values but you need to enable the feature,
 see `Enable other Features`_::
