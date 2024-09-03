@@ -6,7 +6,7 @@ The Bundle System
 .. caution::
 
     In Symfony versions prior to 4.0, it was recommended to organize your own
-    application code using bundles. This is no longer recommended and bundles
+    application code using bundles. This is :ref:`no longer recommended <best-practice-no-application-bundles>` and bundles
     should only be used to share code and features between multiple applications.
 
 A bundle is similar to a plugin in other software, but even better. The core

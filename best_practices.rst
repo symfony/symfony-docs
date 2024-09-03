@@ -160,6 +160,8 @@ values is that it's complicated to redefine their values in your tests.
 Business Logic
 --------------
 
+.. _best-practice-no-application-bundles:
+
 Don't Create any Bundle to Organize your Application Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
