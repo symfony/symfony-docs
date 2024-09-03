@@ -203,7 +203,7 @@ Available Options
 
 ``redis_cluster`` (type: ``bool``, default: ``false``)
     Enables or disables redis cluster. The actual value passed is irrelevant as long as it passes loose comparison
-    checks: `redis_cluster=1` will suffice.
+    checks: ``redis_cluster=1`` will suffice.
 
 ``redis_sentinel`` (type: ``string``, default: ``null``)
     Specifies the master name connected to the sentinels.
