@@ -541,7 +541,7 @@ On production, there are a few important things to think about:
 
 **Use the Same Cache Between Deploys**
     If your deploy strategy involves the creation of new target directories, you
-    should set a value for the :ref:`cache.prefix.seed <reference-cache-prefix-seed>`
+    should set a value for the :ref:`cache.prefix_seed <reference-cache-prefix-seed>`
     configuration option in order to use the same cache namespace between deployments.
     Otherwise, the ``cache.app`` pool will use the value of the ``kernel.project_dir``
     parameter as base for the namespace, which will lead to different namespaces
