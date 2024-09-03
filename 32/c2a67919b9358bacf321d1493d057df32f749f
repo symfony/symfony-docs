@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by wkania at 2024-09-02T15:55:51Z
+
+This should target branch 6.4.
+Also [this](https://symfony.com/doc/current/best_practices.html#don-t-create-any-bundle-to-organize-your-application-logic) explain it better.
+
+---------------------------------------------------------------------------
+
+by landsman at 2024-09-03T07:40:35Z
+
+@wkania fixed
