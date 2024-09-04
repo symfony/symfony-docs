@@ -412,9 +412,10 @@ checks for messages to be generated::
                         new ExcludeHolidaysTrigger(
                             CronExpressionTrigger::fromSpec('@daily'),
                         ),
-                    // instead of being static as in the previous example
-                    new CallbackMessageProvider([$this, 'generateReports'], 'foo')),
-                    RecurringMessage::cron(‘3 8 * * 1’, new CleanUpOldSalesReport())
+                        // instead of being static as in the previous example
+                        new CallbackMessageProvider([$this, 'generateReports'], 'foo')
+                    ),
+                    RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport())
                 );
         }
 
