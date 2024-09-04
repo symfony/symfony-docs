@@ -685,7 +685,7 @@ fetch by primary key via the ``find()`` method.
     Prior to Symfony 7.1, automatic fetching was enabled on *all* of the
     of the wildcards in your route that are actually properties on your entity.
     This behavior is now disabled by default to only work on route wildcards
-    called ``id``. To do so, set the option 
+    called ``id``. To do so, set the option
     ``doctrine.orm.controller_resolver.auto_mapping`` to ``true``.
 
 When ``auto_mapping`` is disabled, you can configure the mapping explicitly for
