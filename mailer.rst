@@ -1718,7 +1718,7 @@ FailedMessageEvent
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\FailedMessageEvent`
 
-``FailedMessageEvent`` allows acting on the the initial message in case of a failure::
+``FailedMessageEvent`` allows acting on the initial message in case of a failure::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Mailer\Event\FailedMessageEvent;
