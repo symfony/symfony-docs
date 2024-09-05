@@ -1061,7 +1061,7 @@ Learn More
     /session
     /http_cache/*
 
-.. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
+.. _nginx: https://mattbrictson.com/blog/accelerated-rails-downloads
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
 .. _`valid JSON top-level value`: https://www.json.org/json-en.html
