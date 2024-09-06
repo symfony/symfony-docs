@@ -178,6 +178,7 @@ You can also specify the context on a per-property basis::
 
     .. code-block:: yaml
 
+        # config/serializer/custom_config.yaml
         App\Model\Person:
             attributes:
                 createdAt:
@@ -186,6 +187,7 @@ You can also specify the context on a per-property basis::
 
     .. code-block:: xml
 
+        <!-- config/serializer/custom_config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
