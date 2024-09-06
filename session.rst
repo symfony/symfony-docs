@@ -181,7 +181,10 @@ can be anything. You'll use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
 read any flash messages from the session using the ``flashes()`` method provided
-by the :ref:`Twig global app variable <twig-app-variable>`:
+by the :ref:`Twig global app variable <twig-app-variable>`.
+Alternatively, you can use the
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
+method instead to retrieve the message while keeping it in the bag.
 
 .. configuration-block::
 
@@ -191,6 +194,13 @@ by the :ref:`Twig global app variable <twig-app-variable>`:
 
         {# read and display just one flash message type #}
         {% for message in app.flashes('notice') %}
+            <div class="flash-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {# same but without clearing them from the flash bag #}
+        {% for message in app.session.flashbag.peek('notice') %}
             <div class="flash-notice">
                 {{ message }}
             </div>
@@ -214,12 +224,26 @@ by the :ref:`Twig global app variable <twig-app-variable>`:
             {% endfor %}
         {% endfor %}
 
+        {# or without clearing the flash bag #}
+        {% for label, messages in app.session.flashbag.peekAll() %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
     .. code-block:: php-standalone
 
         // display warnings
         foreach ($session->getFlashBag()->get('warning', []) as $message) {
             echo '<div class="flash-warning">'.$message.'</div>';
         }
+
+        // display warnings without clearing them from the flash bag
+        foreach ($session->getFlashBag()->peek('warning', []) as $message) {
+            echo '<div class="flash-warning">'.$message.'</div>';
+       }
 
         // display errors
         foreach ($session->getFlashBag()->get('error', []) as $message) {
@@ -233,15 +257,17 @@ by the :ref:`Twig global app variable <twig-app-variable>`:
             }
         }
 
+        // display all flashes at once without clearing the flash bag
+        foreach ($session->getFlashBag()->peekAll() as $type => $messages) {
+            foreach ($messages as $message) {
+                echo '<div class="flash-'.$type.'">'.$message.'</div>';
+            }
+        }
+
 It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
 different types of flash messages, but you can use any key that fits your
 needs.
 
-.. tip::
-
-    You can use the
-    :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
-    method instead to retrieve the message while keeping it in the bag.
 
 Configuration
 -------------
