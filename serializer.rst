@@ -411,7 +411,7 @@ their paths using a :doc:`valid PropertyAccess syntax </components/property_acce
 
         namespace App\Model;
 
-        use Symfony\Component\Serializer\Annotation\SerializedPath;
+        use Symfony\Component\Serializer\Attribute\SerializedPath;
 
         class Person
         {
