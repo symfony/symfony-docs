@@ -218,8 +218,8 @@ You can also specify the context on a per-property basis::
 
     .. code-block:: xml
 
-        <?xml version="1.0" encoding="UTF-8" ?>
         <!-- config/serializer/custom_config.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
