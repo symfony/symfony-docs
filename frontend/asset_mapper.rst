@@ -967,7 +967,7 @@ This option is enabled by default.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure the polyfill for older browsers. By default, the `ES module shim`_ is loaded
-via a CDN (i.e. the default value for this setting is `es-module-shims`):
+via a CDN (i.e. the default value for this setting is ``es-module-shims``):
 
 .. code-block:: yaml
 
