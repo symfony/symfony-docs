@@ -1852,11 +1852,13 @@ started on every session initialization. The probability is calculated by
 using ``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1%
 chance that the GC process will start on each request.
 
-If not set, ``php.ini``'s `session.gc_probability`_ directive will be relied on.
+If not set, Symfony will use the value of the `session.gc_probability`_ directive
+in the ``php.ini`` configuration file.
 
 .. versionadded:: 7.2
 
-    Relying on ``php.ini``'s directive as default for ``gc_probability`` was introduced in symfony 7.2.
+    Relying on ``php.ini``'s directive as default for ``gc_probability`` was
+    introduced in Symfony 7.2.
 
 gc_maxlifetime
 ..............
