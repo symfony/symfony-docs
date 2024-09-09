@@ -408,7 +408,7 @@ each request (which overrides any global authentication):
             http_client:
                 scoped_clients:
                     example_api:
-                        base_uri: 'https://example.com/'
+                        base_uri: 'https://example.com'
 
                         # HTTP Basic authentication
                         auth_basic: 'the-username:the-password'
