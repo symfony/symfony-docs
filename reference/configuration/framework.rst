@@ -1845,12 +1845,18 @@ If not set, ``php.ini``'s `session.gc_divisor`_ directive will be relied on.
 gc_probability
 ..............
 
-**type**: ``integer`` **default**: ``1``
+**type**: ``integer``
 
 This defines the probability that the garbage collector (GC) process is
 started on every session initialization. The probability is calculated by
 using ``gc_probability`` / ``gc_divisor``, e.g. 1/100 means there is a 1%
 chance that the GC process will start on each request.
+
+If not set, ``php.ini``'s `session.gc_probability`_ directive will be relied on.
+
+.. versionadded:: 7.2
+
+    Relying on ``php.ini``'s directive as default for ``gc_probability`` was introduced in symfony 7.2.
 
 gc_maxlifetime
 ..............
@@ -3893,6 +3899,7 @@ The attributes can also be added to interfaces directly::
 .. _`session.cookie_samesite`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-samesite
 .. _`session.cookie_secure`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-secure
 .. _`session.gc_divisor`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-divisor
+.. _`session.gc_probability`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-probability
 .. _`session.gc_maxlifetime`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
 .. _`session.sid_length`: https://www.php.net/manual/en/session.configuration.php#ini.session.sid-length
 .. _`session.sid_bits_per_character`: https://www.php.net/manual/en/session.configuration.php#ini.session.sid-bits-per-character
