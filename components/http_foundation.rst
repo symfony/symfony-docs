@@ -850,7 +850,7 @@ or change its ``Content-Disposition``::
 
     // ...
     $response->headers->set('Content-Type', 'text/plain');
-    $response->setContentDisposition(
+    $response->headers->set('Content-Disposition',
         ResponseHeaderBag::DISPOSITION_ATTACHMENT,
         'filename.txt'
     );
