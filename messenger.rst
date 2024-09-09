@@ -1679,7 +1679,7 @@ redis_sentinel           support is disabled
 
 .. versionadded:: 7.1
 
-    The option `redis_sentinel` as an alias for `sentinel_master` was introduced
+    The option ``redis_sentinel`` as an alias for ``sentinel_master`` was introduced
     in Symfony 7.1.
 
 .. caution::
