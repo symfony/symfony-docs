@@ -229,8 +229,7 @@ Options
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
-The expression that will be evaluated. If the expression evaluates to a false
-value (using ``==``, not ``===``), validation will fail. Learn more about the
+The expression that will be evaluated. Learn more about the
 :doc:`expression language syntax </reference/formats/expression_language>`.
 
 Depending on how you use the constraint, you have access to different variables
