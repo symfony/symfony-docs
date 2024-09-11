@@ -386,7 +386,7 @@ Emoji Transliteration
 ~~~~~~~~~~~~~~~~~~~~~
 
 Symfony provides utilities to translate emojis into their textual representation
-in all languages. Read the documentation on :ref:`working with emojis in strings <string-emoji-transliteration>`
+in all languages. Read the documentation about :ref:`emoji transliteration <emoji-transliteration>`
 to learn more about this feature.
 
 Disk Space
