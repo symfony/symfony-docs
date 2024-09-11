@@ -136,6 +136,10 @@ even remove any content and do your best to comply with the
 
 **Step 6.** **Push** the changes to your forked repository:
 
+Before submitting your PR, you may have to update your branch as described in :doc:`the code contribution guide </contributing/code/pull_requests#rebase-your-pull-request>`.
+
+Then, you can push your changes:
+
 .. code-block:: terminal
 
     $ git push origin improve_install_article
