@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by theofidry at 2023-02-26T11:42:32Z
+
+/cc @nicolas-grekas; I'm not sure if I'm missing anything there regarding that feature
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-10-17T18:43:09Z
+
+What do you think to had a link to https://github.com/symfony/symfony/blob/6.4/src/Symfony/Component/Runtime/Internal/autoload_runtime.template in order to show an example and/or the default runtime template ?
+
+---------------------------------------------------------------------------
+
+by theofidry at 2023-10-17T20:33:58Z
+
+👍 mind doing a PR to it?
