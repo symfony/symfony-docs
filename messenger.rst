@@ -2222,40 +2222,6 @@ wherever you need a query bus behavior instead of the ``MessageBusInterface``::
 Customizing Handlers
 --------------------
 
-Configuring Handlers Using Attributes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can configure your handler by passing options to the attribute::
-
-    // src/MessageHandler/SmsNotificationHandler.php
-    namespace App\MessageHandler;
-
-    use App\Message\OtherSmsNotification;
-    use App\Message\SmsNotification;
-    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-
-    #[AsMessageHandler(fromTransport: 'async', priority: 10)]
-    class SmsNotificationHandler
-    {
-        public function __invoke(SmsNotification $message): void
-        {
-            // ...
-        }
-    }
-
-Possible options to configure with the attribute are:
-
-==============================  ====================================================================================================
-Option                          Description
-==============================  ====================================================================================================
-``bus``                         Name of the bus from which the handler can receive messages, by default all buses.
-``fromTransport``               Name of the transport from which the handler can receive messages, by default all transports.
-``handles``                     Type of messages (FQCN) that can be processed by the handler, only needed if can't be guessed by
-                                type-hint.
-``method``                      Name of the method that will process the message, only if the target is a class.
-``priority``                    Priority of the handler when multiple handlers can process the same message.
-==============================  ====================================================================================================
-
 .. _messenger-handler-config:
 
 Manually Configuring Handlers
@@ -2263,9 +2229,28 @@ Manually Configuring Handlers
 
 Symfony will normally :ref:`find and register your handler automatically <messenger-handler>`.
 But, you can also configure a handler manually - and pass it some extra config -
-by tagging the handler service with ``messenger.message_handler``
+while using ``#AsMessageHandler`` attribute or tagging the handler service
+with ``messenger.message_handler``.
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/MessageHandler/SmsNotificationHandler.php
+        namespace App\MessageHandler;
+
+        use App\Message\OtherSmsNotification;
+        use App\Message\SmsNotification;
+        use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+        #[AsMessageHandler(fromTransport: 'async', priority: 10)]
+        class SmsNotificationHandler
+        {
+            public function __invoke(SmsNotification $message): void
+            {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
