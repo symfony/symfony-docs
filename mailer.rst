@@ -109,6 +109,7 @@ Service               Install with                                    Webhook su
 `Mailomat`_           ``composer require symfony/mailomat-mailer``    yes
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
+`Mailtrap`_           ``composer require symfony/mailtrap-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Postal`_             ``composer require symfony/postal-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``    yes
@@ -124,7 +125,7 @@ Service               Install with                                    Webhook su
 
 .. versionadded:: 7.2
 
-    The Mailomat, Postal and Sweego integrations were introduced in Symfony 7.2.
+    The Mailomat, Mailtrap, Postal and Sweego integrations were introduced in Symfony 7.2.
 
 .. note::
 
@@ -215,6 +216,10 @@ party provider:
 | `MailPace`_            | - SMTP ``mailpace+api://API_TOKEN@default``             |
 |                        | - HTTP n/a                                              |
 |                        | - API ``mailpace+api://API_TOKEN@default``              |
++------------------------+---------------------------------------------------------+
+| `Mailtrap`_            | - SMTP ``mailtrap+smtp://PASSWORD@default``             |
+|                        | - HTTP n/a                                              |
+|                        | - API ``mailtrap+api://API_TOKEN@default``              |
 +------------------------+---------------------------------------------------------+
 | `Postal`_              | - SMTP n/a                                              |
 |                        | - HTTP n/a                                              |
@@ -1581,6 +1586,7 @@ The following transports currently support tags and metadata:
 
 * Brevo
 * Mailgun
+* Mailtrap
 * Mandrill
 * Postmark
 * Sendgrid
@@ -2000,6 +2006,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`Postal`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postal/README.md
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
+.. _`Mailtrap`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailtrap/README.md
 .. _`Resend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Resend/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
