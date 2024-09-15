@@ -1294,7 +1294,7 @@ and leaves the repeated contents and HTML structure to some parent templates.
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/blog/index.html.twig #}
+        {# app/templates/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
 
         {# the line below is not captured by a "block" tag #}
@@ -1481,7 +1481,7 @@ templates under an automatic namespace created after the bundle name.
 
 For example, the templates of a bundle called ``AcmeBlogBundle`` are available
 under the ``AcmeBlog`` namespace. If this bundle includes the template
-``<your-project>/vendor/acme/blog-bundle/Resources/views/user/profile.html.twig``,
+``<your-project>/vendor/acme/blog-bundle/templates/user/profile.html.twig``,
 you can refer to it as ``@AcmeBlog/user/profile.html.twig``.
 
 .. tip::
