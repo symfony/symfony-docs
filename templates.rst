@@ -1294,7 +1294,7 @@ and leaves the repeated contents and HTML structure to some parent templates.
 
     .. code-block:: html+twig
 
-        {# app/templates/blog/index.html.twig #}
+        {# templates/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
 
         {# the line below is not captured by a "block" tag #}
