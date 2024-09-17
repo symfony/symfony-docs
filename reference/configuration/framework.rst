@@ -1882,6 +1882,10 @@ session IDs are harder to guess.
 
 If not set, ``php.ini``'s `session.sid_length`_ directive will be relied on.
 
+.. deprecated:: 7.2
+
+    The ``sid_length`` option was deprecated in Symfony 7.2.
+
 sid_bits_per_character
 ......................
 
@@ -1893,6 +1897,10 @@ The more bits results in stronger session ID. ``5`` is recommended value for
 most environments.
 
 If not set, ``php.ini``'s `session.sid_bits_per_character`_ directive will be relied on.
+
+.. deprecated:: 7.2
+
+    The ``sid_bits_per_character`` option was deprecated in Symfony 7.2.
 
 save_path
 .........
