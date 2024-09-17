@@ -329,6 +329,7 @@ The following constants are available:
 * ``Uuid::FORMAT_BASE_32``
 * ``Uuid::FORMAT_BASE_58``
 * ``Uuid::FORMAT_RFC_4122``
+* ``Uuid::FORMAT_RFC_9562`` (equivalent to ``Uuid::FORMAT_RFC_4122``)
 
 You can also use the ``Uuid::FORMAT_ALL`` constant to accept any UUID format.
 By default, only the RFC 4122 format is accepted.
