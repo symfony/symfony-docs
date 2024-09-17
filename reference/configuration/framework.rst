@@ -1884,7 +1884,8 @@ If not set, ``php.ini``'s `session.sid_length`_ directive will be relied on.
 
 .. deprecated:: 7.2
 
-    The ``sid_length`` option was deprecated in Symfony 7.2.
+    The ``sid_length`` option was deprecated in Symfony 7.2. No alternative is
+    provided as PHP 8.4 has deprecated the related option.
 
 sid_bits_per_character
 ......................
@@ -1900,7 +1901,8 @@ If not set, ``php.ini``'s `session.sid_bits_per_character`_ directive will be re
 
 .. deprecated:: 7.2
 
-    The ``sid_bits_per_character`` option was deprecated in Symfony 7.2.
+    The ``sid_bits_per_character`` option was deprecated in Symfony 7.2. No alternative
+    is provided as PHP 8.4 has deprecated the related option.
 
 save_path
 .........
