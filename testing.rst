@@ -318,7 +318,7 @@ concrete one::
         }
     }
 
-No further configuration in required, as the test service container is a special one
+No further configuration is required, as the test service container is a special one
 that allows you to interact with private services and aliases.
 
 .. _testing-databases:
