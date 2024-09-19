@@ -32,7 +32,7 @@ to compress the internal Symfony emoji data files using the PHP ``zlib`` extensi
 .. _emoji-transliteration:
 
 Emoji Transliteration
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 The ``EmojiTransliterator`` class offers a way to translate emojis into their
 textual representation in all languages based on the `Unicode CLDR dataset`_::
@@ -49,11 +49,13 @@ textual representation in all languages based on the `Unicode CLDR dataset`_::
     $transliterator->transliterate('Menus with 🍕 or 🍝');
     // => 'Menus with піца or спагеті'
 
-You can also combine the ``EmojiTransliterator`` with the :ref:`slugger <string-slugger-emoji>`
-to transform any emojis into their textual representation.
+.. tip::
+
+    When using the :ref:`slugger <string-slugger>` from the String component,
+    you can combine it with the ``EmojiTransliterator`` to :ref:`slugify emojis <string-slugger-emoji>`.
 
 Transliterating Emoji Text Short Codes
-......................................
+--------------------------------------
 
 Services like GitHub and Slack allows to include emojis in your messages using
 text short codes (e.g. you can add the ``:+1:`` code to render the 👍 emoji).
@@ -61,6 +63,9 @@ text short codes (e.g. you can add the ``:+1:`` code to render the 👍 emoji).
 Symfony also provides a feature to transliterate emojis into short codes and vice
 versa. The short codes are slightly different on each service, so you must pass
 the name of the service as an argument when creating the transliterator.
+
+GitHub Emoji Short Codes Transliteration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Convert emojis to GitHub short codes with the ``emoji-github`` locale::
 
@@ -74,15 +79,40 @@ Convert GitHub short codes to emojis with the ``github-emoji`` locale::
     $transliterator->transliterate('Teenage :turtle: really love :pizza:');
     // => 'Teenage 🐢 really love 🍕'
 
-.. note::
+Gitlab Emoji Short Codes Transliteration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Github, Gitlab and Slack are currently available services in
-    ``EmojiTransliterator``.
+Convert emojis to Gitlab short codes with the ``emoji-gitlab`` locale::
+
+    $transliterator = EmojiTransliterator::create('emoji-gitlab');
+    $transliterator->transliterate('Breakfast with 🥝 or 🥛');
+    // => 'Breakfast with :kiwi: or :milk:'
+
+Convert Gitlab short codes to emojis with the ``gitlab-emoji`` locale::
+
+    $transliterator = EmojiTransliterator::create('gitlab-emoji');
+    $transliterator->transliterate('Breakfast with :kiwi: or :milk:');
+    // => 'Breakfast with 🥝 or 🥛'
+
+Slack Emoji Short Codes Transliteration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Convert emojis to Slack short codes with the ``emoji-slack`` locale::
+
+    $transliterator = EmojiTransliterator::create('emoji-slack');
+    $transliterator->transliterate('Menus with 🥗 or 🧆');
+    // => 'Menus with :green_salad: or :falafel:'
+
+Convert Slack short codes to emojis with the ``slack-emoji`` locale::
+
+    $transliterator = EmojiTransliterator::create('slack-emoji');
+    $transliterator->transliterate('Menus with :green_salad: or :falafel:');
+    // => 'Menus with 🥗 or 🧆'
 
 .. _text-emoji:
 
 Universal Emoji Short Codes Transliteration
-###########################################
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you don't know which service was used to generate the short codes, you can use
 the ``text-emoji`` locale, which combines all codes from all services::
@@ -106,7 +136,7 @@ You can convert emojis to short codes with the ``emoji-text`` locale::
     // => 'Breakfast with :kiwifruit: or :milk-glass:
 
 Inverse Emoji Transliteration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Given the textual representation of an emoji, you can reverse it back to get the
 actual emoji thanks to the :ref:`emojify filter <reference-twig-filter-emojify>`:
@@ -129,7 +159,7 @@ specific catalog to use:
     {{ ':kiwi: is a great fruit'|emojify('gitlab') }}     {# renders: 🥝 is a great fruit #}
 
 Removing Emojis
-~~~~~~~~~~~~~~~
+---------------
 
 The ``EmojiTransliterator`` can also be used to remove all emojis from a string,
 via the special ``strip`` locale::
