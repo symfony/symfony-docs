@@ -1767,8 +1767,11 @@ You can log in a user programmatically using the ``login()`` method of the
             // you can also log in on a different firewall...
             $security->login($user, 'form_login', 'other_firewall');
 
-            // ...and add badges
+            // ... add badges...
             $security->login($user, 'form_login', 'other_firewall', [(new RememberMeBadge())->enable()]);
+
+            // ... and also add passport attributes
+            $security->login($user, 'form_login', 'other_firewall', [(new RememberMeBadge())->enable()], ['referer' => 'https://oauth.example.com']);
 
             // use the redirection logic applied to regular login
             $redirectResponse = $security->login($user);
@@ -1778,6 +1781,12 @@ You can log in a user programmatically using the ``login()`` method of the
             // return new RedirectResponse('...');
         }
     }
+
+.. versionadded:: 7.2
+
+    The support for passport attributes in the
+    :method:`Symfony\\Bundle\\SecurityBundle\\Security::login` method was
+    introduced in Symfony 7.2.
 
 .. _security-logging-out:
 
