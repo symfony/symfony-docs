@@ -1069,6 +1069,14 @@ application to production (e.g. in your continuous integration server):
 
     $ php bin/console lint:container
 
+    # optionally, you can force the resolution of environment variables;
+    # the command will fail if any of those environment variables are missing
+    $ php bin/console lint:container --resolve-env-vars
+
+.. versionadded:: 7.2
+
+    The ``--resolve-env-vars`` option was introduced in Symfony 7.2.
+
 Performing those checks whenever the container is compiled can hurt performance.
 That's why they are implemented in :doc:`compiler passes </service_container/compiler_passes>`
 called ``CheckTypeDeclarationsPass`` and ``CheckAliasValidityPass``, which are
