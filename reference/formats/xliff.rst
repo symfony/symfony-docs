@@ -29,12 +29,16 @@ loaded/dumped inside a Symfony application:
                     <note category="approved">true</note>
                     <note category="section" priority="1">user login</note>
                 </notes>
-                <segment>
+                <segment state="translated" subState="Some custom value">
                     <source>original-content</source>
                     <target>translated-content</target>
                 </segment>
             </unit>
         </file>
     </xliff>
+
+.. versionadded:: 7.2
+
+    The support of attributes in the ``<segment>`` element was introduced in Symfony 7.2.
 
 .. _XLIFF: https://docs.oasis-open.org/xliff/xliff-core/v2.1/xliff-core-v2.1.html
