@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-09-16T09:33:32Z
+
+Isn't the previous code enough because the application sends the required information as additional HTTP headers (see https://symfony.com/doc/current/web_link.html#how-does-it-work)?
+
+---------------------------------------------------------------------------
+
+by garak at 2024-09-16T10:26:05Z
+
+> Isn't the previous code enough because the application sends the required information as additional HTTP headers (see https://symfony.com/doc/current/web_link.html#how-does-it-work)?
+
+It's enough for the headers, not for the proper HTML tags in the `<head>`
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-09-19T13:22:13Z
+
+On symfony.com we have something like this on templates:
+
+```twig
+{% block importmap %}
+    {{ importmap(['app', 'search', 'home']) }}
+{% endblock %}
+```
+
+And that generates these HTML tags:
+
+```html
+<link rel="stylesheet" href="/assets/vendor/bootstrap/dist/css/bootstrap.min-1712f0378f8675ca7cd423d6262fcccf.css">
+<link rel="stylesheet" href="/assets/styles/app-c5e5f7501da9d82bf95c197610450518.css">
+<link rel="stylesheet" href="/assets/styles/search-8ccfaff80d2880d747e9efe1089469d2.css">
+<!-- ... -->
+```
+
+That alone is enough to enable the preloading of those assets:
+
+![image](https://github.com/user-attachments/assets/b9076456-607b-4821-bb31-ab1126540bce)
+
+But, we use Cloudflare. In the HTTP Response headers, we can see those early hints headers:
+
+![image](https://github.com/user-attachments/assets/de0fe90b-1c53-4224-835b-0fa0308dbe29)
+
+-----
+
+So, maybe let's ask @dunglas who knows a lot about these things. Is the change proposed in this PR really needed when you don't use Cloudflare or some similar server? Thanks!
