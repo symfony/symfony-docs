@@ -59,6 +59,8 @@ correct prioritization and the content security policy:
 
     <head>
         <!-- ... -->
+        {# note that you must add two <link> tags per asset:
+           one to link to it and the other one to tell the browser to preload it #}
         <link rel="preload" href="{{ preload('/app.css', {as: 'style'}) }}" as="style">
         <link rel="stylesheet" href="/app.css">
     </head>
@@ -66,6 +68,13 @@ correct prioritization and the content security policy:
 If you reload the page, the perceived performance will improve because the
 server responded with both the HTML page and the CSS file when the browser only
 requested the HTML page.
+
+.. tip::
+
+    When using the :doc:`AssetMapper component </frontend/asset_mapper>` to link
+    to assets (e.g. ``importmap('app')``), there's no need to add the ``<link rel="preload">``
+    tag. The ``importmap()`` Twig function automatically adds the ``Link`` HTTP
+    header for you when the WebLink component is available.
 
 .. note::
 
