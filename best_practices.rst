@@ -407,13 +407,12 @@ checks that all application URLs load successfully::
     // tests/ApplicationAvailabilityFunctionalTest.php
     namespace App\Tests;
 
+    use PHPUnit\Framework\Attributes\DataProvider;
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class ApplicationAvailabilityFunctionalTest extends WebTestCase
     {
-        /**
-         * @dataProvider urlProvider
-         */
+        #[DataProvider('urlProvider')]
         public function testPageIsSuccessful($url): void
         {
             $client = self::createClient();
@@ -432,6 +431,11 @@ checks that all application URLs load successfully::
             // ...
         }
     }
+
+.. note::
+
+    The ``#[DataProvider]`` attribute is available in PHPUnit 10 and later versions.
+    In previous versions, use the ``@dataPRovider`` PHPdoc annotation.
 
 Add this test while creating your application because it requires little effort
 and checks that none of your pages returns an error. Later, you'll add more
