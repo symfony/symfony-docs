@@ -143,8 +143,16 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
        framework:
            # ...
            # trust *all* requests (the 'REMOTE_ADDR' string is replaced at
-           # run time by $_SERVER['REMOTE_ADDR'])
+           # runtime by $_SERVER['REMOTE_ADDR'])
            trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+
+           # you can also use the 'PRIVATE_SUBNETS' string, which is replaced at
+           # runtime by the IpUtils::PRIVATE_SUBNETS constant
+           # trusted_proxies: '127.0.0.1,PRIVATE_SUBNETS'
+
+.. versionadded:: 7.2
+
+    The support for the ``'PRIVATE_SUBNETS'`` string was introduced in Symfony 7.2.
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
