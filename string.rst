@@ -820,11 +820,28 @@ class to convert English words from/to singular/plural with confidence::
 The value returned by both methods is always an array because sometimes it's not
 possible to determine a unique singular/plural form for the given word.
 
+Symfony also provides inflectors for other languages::
+
+    use Symfony\Component\String\Inflector\FrenchInflector;
+
+    $inflector = new FrenchInflector();
+    $result = $inflector->singularize('souris'); // ['souris']
+    $result = $inflector->pluralize('hôpital');  // ['hôpitaux']
+
+    use Symfony\Component\String\Inflector\SpanishInflector;
+
+    $inflector = new SpanishInflector();
+    $result = $inflector->singularize('aviones'); // ['avión']
+    $result = $inflector->pluralize('miércoles'); // ['miércoles']
+
+.. versionadded:: 7.2
+
+    The ``SpanishInflector`` class was introduced in Symfony 7.2.
+
 .. note::
 
-    Symfony also provides a :class:`Symfony\\Component\\String\\Inflector\\FrenchInflector`
-    and an :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface` if
-    you need to implement your own inflector.
+    Symfony provides a :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface`
+    in case you need to implement your own inflector.
 
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
 .. _`Unicode`: https://en.wikipedia.org/wiki/Unicode
