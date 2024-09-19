@@ -507,6 +507,11 @@ requested during the program execution. You can also create lazy strings from a
     // hash computation only if it's needed
     $lazyHash = LazyString::fromStringable(new Hash());
 
+Working with Emojis
+-------------------
+
+These contents have been moved to the :doc:`Emoji component docs </emoji>`.
+
 .. _string-slugger:
 
 Slugger
