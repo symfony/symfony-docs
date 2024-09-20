@@ -435,7 +435,7 @@ checks that all application URLs load successfully::
 .. note::
 
     The ``#[DataProvider]`` attribute is available in PHPUnit 10 and later versions.
-    In previous versions, use the ``@dataPRovider`` PHPdoc annotation.
+    In previous versions, use the ``@dataProvider`` PHPdoc annotation.
 
 Add this test while creating your application because it requires little effort
 and checks that none of your pages returns an error. Later, you'll add more
