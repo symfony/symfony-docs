@@ -674,7 +674,7 @@ Symfony also provides inflectors for other languages::
 
 .. note::
 
-    Symfony provides a :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface`
+    Symfony provides an :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface`
     in case you need to implement your own inflector.
 
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
