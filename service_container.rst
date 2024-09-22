@@ -1082,6 +1082,13 @@ your application.
 
 .. _container-public:
 
+If you wish to additionally check if all environment variables are set, you can append
+``--resolve-env-vars`` argument
+
+.. versionadded:: 7.2
+
+    The `--resolve-env-vars` flag was introduced in Symfony 7.2
+
 Public Versus Private Services
 ------------------------------
 
