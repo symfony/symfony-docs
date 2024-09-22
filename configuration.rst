@@ -382,6 +382,25 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
     They are useful when working with :ref:`Compiler Passes </service_container/compiler_passes>`
     to declare some temporary parameters that won't be available later in the application.
 
+Configuration parameters are usually validation-free, but you can ensure that
+essential parameters for your application's functionality are not empty::
+
+    // ContainerBuilder
+    $container->parameterCannotBeEmpty('app.private_key', 'Did you forget to configure a non-empty value for "app.private_key" parameter?');
+
+If a non-empty parameter is ``null``, an empty string ``''``, or an empty array ``[]``,
+Symfony will throw an exception with the custom error message when attempting to
+retrieve the value of this parameter.
+
+.. versionadded:: 7.2
+
+    Validating non-empty parameters was introduced in Symfony 7.2.
+
+.. note::
+
+    Please note that this validation will *only* occur if a non-empty parameter value
+    is retrieved; otherwise, no exception will be thrown.
+
 .. seealso::
 
     Later in this article you can read how to
