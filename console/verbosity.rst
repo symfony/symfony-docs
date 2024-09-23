@@ -7,7 +7,10 @@ messages, but you can control their verbosity with the ``-q`` and ``-v`` options
 
 .. code-block:: terminal
 
-    # do not output any message (not even the command result messages)
+    # suppress all output, including errors
+    $ php bin/console some-command --silent
+
+    # suppress all output (even the command result messages) but display errors
     $ php bin/console some-command -q
     $ php bin/console some-command --quiet
 
@@ -23,6 +26,10 @@ messages, but you can control their verbosity with the ``-q`` and ``-v`` options
     # display all messages (useful to debug errors)
     $ php bin/console some-command -vvv
 
+.. versionadded:: 7.2
+
+    The ``--silent`` option was introduced in Symfony 7.2.
+
 The verbosity level can also be controlled globally for all commands with the
 ``SHELL_VERBOSITY`` environment variable (the ``-q`` and ``-v`` options still
 have more precedence over the value of ``SHELL_VERBOSITY``):
@@ -30,6 +37,7 @@ have more precedence over the value of ``SHELL_VERBOSITY``):
 =====================  =========================  ===========================================
 Console option         ``SHELL_VERBOSITY`` value  Equivalent PHP constant
 =====================  =========================  ===========================================
+``--silent``           ``-2``                     ``OutputInterface::VERBOSITY_SILENT``
 ``-q`` or ``--quiet``  ``-1``                     ``OutputInterface::VERBOSITY_QUIET``
 (none)                 ``0``                      ``OutputInterface::VERBOSITY_NORMAL``
 ``-v``                 ``1``                      ``OutputInterface::VERBOSITY_VERBOSE``
@@ -58,7 +66,7 @@ level. For example::
                 'Password: '.$input->getArgument('password'),
             ]);
 
-            // available methods: ->isQuiet(), ->isVerbose(), ->isVeryVerbose(), ->isDebug()
+            // available methods: ->isSilent(), ->isQuiet(), ->isVerbose(), ->isVeryVerbose(), ->isDebug()
             if ($output->isVerbose()) {
                 $output->writeln('User class: '.get_class($user));
             }
@@ -73,9 +81,18 @@ level. For example::
         }
     }
 
-When the quiet level is used, all output is suppressed as the default
+.. versionadded:: 7.2
+
+    The ``isSilent()`` method was introduced in Symfony 7.2.
+
+When the silent or quiet level are used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
 without actually printing.
+
+.. tip::
+
+    When using the ``silent`` verbosity, errors won't be displayed in the console
+    but they will still be logged through the :doc:`Symfony logger </logging>` integration.
 
 .. tip::
 
