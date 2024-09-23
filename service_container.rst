@@ -1429,7 +1429,7 @@ Let's say you have the following functional interface::
 You also have a service that defines many methods and one of them is the same
 ``format()`` method of the previous interface::
 
-    // src/Service/MessageFormatterInterface.php
+    // src/Service/MessageUtils.php
     namespace App\Service;
 
     class MessageUtils
