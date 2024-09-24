@@ -9,8 +9,6 @@ a proper :ref:`Uuid object <uuid>` when submitting the form.
 +---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid UUID.                                            |
 +---------------------------+-----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                   |
-+---------------------------+-----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                         |
 +---------------------------+-----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UuidType`    |

@@ -13,8 +13,6 @@ if you want to handle submitted values like "0" or "false").
 +---------------------------+------------------------------------------------------------------------+
 | Default invalid message   | The checkbox has an invalid value.                                     |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                    |
-+---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                          |
 +---------------------------+------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |
