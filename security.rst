@@ -2771,7 +2771,7 @@ you have the following two options.
 
 Firstly, if you've given *every* user ``ROLE_USER``, you can check for that role.
 
-Secondly, you can use the special "attribute" ``IS_AUTHENTICATED_FULLY`` in place of a role::
+Secondly, you can use the special "attribute" ``IS_AUTHENTICATED`` in place of a role::
 
     // ...
 
