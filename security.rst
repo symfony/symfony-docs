@@ -1800,8 +1800,8 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
                     logout:
                         path: /logout
 
-                        # where to redirect after logout
-                        # target: app_any_route
+                        # where to redirect after logout (use path not route name)
+                        # target: /logout-redirect
 
     .. code-block:: xml
 
