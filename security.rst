@@ -449,6 +449,8 @@ the database::
     Doctrine repository class related to the user class must implement the
     :class:`Symfony\\Component\\Security\\Core\\User\\PasswordUpgraderInterface`.
 
+.. _security-make-registration-form:
+
 .. tip::
 
     The ``make:registration-form`` maker command can help you set-up the
