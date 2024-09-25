@@ -9,8 +9,6 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 +---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please choose a valid range.                                        |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                 |
-+---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |

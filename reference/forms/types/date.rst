@@ -14,8 +14,6 @@ and can understand a number of different input formats via the `input`_ option.
 +---------------------------+-----------------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid date.                                                  |
 +---------------------------+-----------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                         |
-+---------------------------+-----------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                               |
 +---------------------------+-----------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\DateType`          |

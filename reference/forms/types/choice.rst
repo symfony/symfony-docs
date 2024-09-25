@@ -11,8 +11,6 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | The selected choice is invalid.                                      |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType` |

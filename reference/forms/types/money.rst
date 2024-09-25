@@ -13,8 +13,6 @@ how the input and output of the data is handled.
 +---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid money amount.                                  |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                 |
-+---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                       |
 +---------------------------+---------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |

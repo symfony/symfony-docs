@@ -16,8 +16,6 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +---------------------------+------------------------------------------------------------------------+
 | Default invalid message   | Please select a valid timezone.                                        |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                    |
-+---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +---------------------------+------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |

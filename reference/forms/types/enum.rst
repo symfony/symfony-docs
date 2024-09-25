@@ -10,8 +10,6 @@ field and defines the same options.
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | The selected choice is invalid.                                      |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                    |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EnumType`   |
