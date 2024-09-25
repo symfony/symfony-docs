@@ -20,8 +20,6 @@ the option manually, but then you should just use the ``ChoiceType`` directly.
 +---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please select a valid country.                                        |
 +---------------------------+-----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                   |
-+---------------------------+-----------------------------------------------------------------------+
 | Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                     |
 +---------------------------+-----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CountryType` |

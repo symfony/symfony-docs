@@ -9,8 +9,6 @@ a proper :ref:`Ulid object <ulid>` when submitting the form.
 +---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid ULID.                                            |
 +---------------------------+-----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                   |
-+---------------------------+-----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                         |
 +---------------------------+-----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UlidType`    |

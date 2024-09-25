@@ -15,8 +15,6 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 +---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please enter an integer.                                              |
 +---------------------------+-----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                   |
-+---------------------------+-----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                         |
 +---------------------------+-----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\IntegerType` |

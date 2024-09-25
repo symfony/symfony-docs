@@ -9,8 +9,6 @@ special functionality supported by some browsers.
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid search term.                                    |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                        |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SearchType` |

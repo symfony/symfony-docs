@@ -15,8 +15,6 @@ to input phone numbers.
 +---------------------------+-------------------------------------------------------------------+
 | Default invalid message   | Please provide a valid phone number.                              |
 +---------------------------+-------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                               |
-+---------------------------+-------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                     |
 +---------------------------+-------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TelType` |

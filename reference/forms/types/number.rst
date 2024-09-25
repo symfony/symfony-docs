@@ -10,8 +10,6 @@ that you want to use for your number.
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | Please enter a number.                                               |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |

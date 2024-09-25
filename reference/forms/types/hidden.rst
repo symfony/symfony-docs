@@ -8,8 +8,6 @@ The hidden type represents a hidden input field.
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | The hidden field is invalid.                                         |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |

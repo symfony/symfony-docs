@@ -16,8 +16,6 @@ that is passed as the collection type field data.
 +---------------------------+--------------------------------------------------------------------------+
 | Default invalid message   | The collection is invalid.                                               |
 +---------------------------+--------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                      |
-+---------------------------+--------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                            |
 +---------------------------+--------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType` |

@@ -19,8 +19,6 @@ option defaults to 120 years ago to the current year.
 +---------------------------+-------------------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid birthdate.                                               |
 +---------------------------+-------------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                           |
-+---------------------------+-------------------------------------------------------------------------------+
 | Parent type               | :doc:`DateType </reference/forms/types/date>`                                 |
 +---------------------------+-------------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`        |

@@ -8,8 +8,6 @@ The ``FileType`` represents a file input in your form.
 +---------------------------+--------------------------------------------------------------------+
 | Default invalid message   | Please select a valid file.                                        |
 +---------------------------+--------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                |
-+---------------------------+--------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                      |
 +---------------------------+--------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType` |
