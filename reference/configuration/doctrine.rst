@@ -461,7 +461,7 @@ is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
 SSL Connection with MySQL
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to configure a secure SSL connection to MySQL in your Symfony application using Doctrine, you need to set specific options for the SSL certificates. Here's how to configure the connection using environment variables for the certificate paths:
 
