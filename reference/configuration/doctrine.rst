@@ -473,44 +473,44 @@ If you want to configure a secure SSL connection to MySQL in your Symfony applic
 
 .. configuration-block::
 
-.. code-block:: yaml
-
-    doctrine:
-        dbal:
-            url: '%env(DATABASE_URL)%'
-            server_version: '8.0.31'
-            driver: 'pdo_mysql'
-            options:
-                # SSL private key (PDO::MYSQL_ATTR_SSL_KEY)
-                1007: '%env(MYSQL_SSL_KEY)%'
-                # SSL certificate (PDO::MYSQL_ATTR_SSL_CERT)
-                1008: '%env(MYSQL_SSL_CERT)%'
-                # SSL CA authority (PDO::MYSQL_ATTR_SSL_CA)
-                1009: '%env(MYSQL_SSL_CA)%'
-
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd
-            http://symfony.com/schema/dic/doctrine
-            https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-        <doctrine:config>
-            <doctrine:dbal
-                url="%env(DATABASE_URL)%"
-                server-version="8.0.31"
-                driver="pdo_mysql">
-
-                <doctrine:option key="1007">%env(MYSQL_SSL_KEY)%</doctrine:option>
-                <doctrine:option key="1008">%env(MYSQL_SSL_CERT)%</doctrine:option>
-                <doctrine:option key="1009">%env(MYSQL_SSL_CA)%</doctrine:option>
-            </doctrine:dbal>
-        </doctrine:config>
-    </container>
+    .. code-block:: yaml
+    
+        doctrine:
+            dbal:
+                url: '%env(DATABASE_URL)%'
+                server_version: '8.0.31'
+                driver: 'pdo_mysql'
+                options:
+                    # SSL private key (PDO::MYSQL_ATTR_SSL_KEY)
+                    1007: '%env(MYSQL_SSL_KEY)%'
+                    # SSL certificate (PDO::MYSQL_ATTR_SSL_CERT)
+                    1008: '%env(MYSQL_SSL_CERT)%'
+                    # SSL CA authority (PDO::MYSQL_ATTR_SSL_CA)
+                    1009: '%env(MYSQL_SSL_CA)%'
+    
+    .. code-block:: xml
+    
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/doctrine
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+    
+            <doctrine:config>
+                <doctrine:dbal
+                    url="%env(DATABASE_URL)%"
+                    server-version="8.0.31"
+                    driver="pdo_mysql">
+    
+                    <doctrine:option key="1007">%env(MYSQL_SSL_KEY)%</doctrine:option>
+                    <doctrine:option key="1008">%env(MYSQL_SSL_CERT)%</doctrine:option>
+                    <doctrine:option key="1009">%env(MYSQL_SSL_CA)%</doctrine:option>
+                </doctrine:dbal>
+            </doctrine:config>
+        </container>
 
 Make sure that your environment variables are correctly set in your ``.env.local`` or ``.env.local.php`` file as follows:
 
