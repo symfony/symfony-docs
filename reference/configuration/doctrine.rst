@@ -473,8 +473,6 @@ If you want to configure a secure SSL connection to MySQL in your Symfony applic
 
 .. configuration-block::
 
-xml
-
 .. code-block:: yaml
 
     doctrine:
