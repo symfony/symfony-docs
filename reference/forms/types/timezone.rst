@@ -16,8 +16,6 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +---------------------------+------------------------------------------------------------------------+
 | Default invalid message   | Please select a valid timezone.                                        |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                    |
-+---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +---------------------------+------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
@@ -83,11 +81,15 @@ Inherited Options
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
+
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
@@ -124,6 +126,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

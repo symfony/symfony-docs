@@ -3,10 +3,6 @@
 
 **type**: ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``null``
 
-.. versionadded:: 5.1
-
-    The ``choice_filter`` option has been introduced in Symfony 5.1.
-
 When using predefined choice types from Symfony core or vendor libraries (i.e.
 :doc:`CountryType </reference/forms/types/country>`) this option lets you
 define a callable that takes each choice as the only argument and must return
@@ -22,7 +18,7 @@ define a callable that takes each choice as the only argument and must return
 
     class AddressType extends AbstractType
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver
                 ->setDefaults([
@@ -32,7 +28,7 @@ define a callable that takes each choice as the only argument and must return
             ;
         }
 
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $allowedCountries = $options['allowed_countries'];
 
@@ -41,7 +37,7 @@ define a callable that takes each choice as the only argument and must return
                 ->add('country', CountryType::class, [
                     // if the AddressType "allowed_countries" option is passed,
                     // use it to create a filter
-                    'choice_filter' => $allowedCountries ? function ($countryCode) use ($allowedCountries) {
+                    'choice_filter' => $allowedCountries ? function ($countryCode) use ($allowedCountries): bool {
                         return in_array($countryCode, $allowedCountries, true);
                     } : null,
 
@@ -73,7 +69,7 @@ The option can be a callable or a property path when choices are objects::
         'choice_filter' => $allowedCountries ? ChoiceList::filter(
             // pass the type as first argument
             $this,
-            function ($countryCode) use ($allowedCountries) {
+            function (string $countryCode) use ($allowedCountries): bool {
                 return in_array($countryCode, $allowedCountries, true);
             },
             // pass the option that makes the filter "vary" to compute a unique hash

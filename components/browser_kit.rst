@@ -4,13 +4,6 @@ The BrowserKit Component
     The BrowserKit component simulates the behavior of a web browser, allowing
     you to make requests, click on links and submit forms programmatically.
 
-.. note::
-
-    In Symfony versions prior to 4.3, the BrowserKit component could only make
-    internal requests to your application. Starting from Symfony 4.3, this
-    component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
-    when using it in combination with the :doc:`HttpClient component </http_client>`.
-
 Installation
 ------------
 
@@ -45,7 +38,7 @@ This method accepts a request and should return a response::
 
     class Client extends AbstractBrowser
     {
-        protected function doRequest($request)
+        protected function doRequest($request): Response
         {
             // ... convert request into a response
 
@@ -86,10 +79,6 @@ convert the request parameters into a JSON string and set the needed HTTP header
     // this encodes parameters as JSON and sets the required CONTENT_TYPE and HTTP_ACCEPT headers
     $crawler = $client->jsonRequest('GET', '/', ['some_parameter' => 'some_value']);
 
-.. versionadded:: 5.3
-
-    The ``jsonRequest()`` method was introduced in Symfony 5.3.
-
 The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
 make AJAX requests::
@@ -122,6 +111,24 @@ provides access to the link properties (e.g. ``$link->getMethod()``,
     $crawler = $client->request('GET', '/product/123');
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $client->click($link);
+
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::click` and
+:method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::clickLink` methods
+can take an optional ``serverParameters`` argument. This
+parameter allows to send additional information like headers when clicking
+on a link::
+
+    use Acme\Client;
+
+    $client = new Client();
+    $client->request('GET', '/product/123');
+
+    // works both with `click()`...
+    $link = $crawler->selectLink('Go elsewhere...')->link();
+    $client->click($link, ['X-Custom-Header' => 'Some data']);
+
+    // ... and `clickLink()`
+    $crawler = $client->clickLink('Go elsewhere...', ['X-Custom-Header' => 'Some data']);
 
 Submitting Forms
 ~~~~~~~~~~~~~~~~
@@ -174,11 +181,7 @@ provides access to the form properties (e.g. ``$form->getUri()``,
 Custom Header Handling
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``getHeaders()`` method was introduced in Symfony 5.2.
-
-The optional HTTP headers passed to the ``request()`` method follows the FastCGI
+The optional HTTP headers passed to the ``request()`` method follow the FastCGI
 request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).
 Before saving those headers to the request, they are lower-cased, with ``HTTP_``
 stripped, and underscores converted into dashes.
@@ -385,6 +388,16 @@ the requests you made. To do so, call the ``getResponse()`` method of the
 
     $browser->request('GET', 'https://foo.com');
     $response = $browser->getResponse();
+
+If you're making requests that result in a JSON response, you may use the
+``toArray()`` method to turn the JSON document into a PHP array without having
+to call ``json_decode()`` explicitly::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://api.foo.com');
+    $response = $browser->getResponse()->toArray();
+    // $response is a PHP array of the decoded JSON contents
 
 Learn more
 ----------

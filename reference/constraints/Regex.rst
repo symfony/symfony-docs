@@ -19,21 +19,6 @@ more word characters at the beginning of your string:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Regex("/^\w+/")
-             */
-            protected $description;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -44,7 +29,7 @@ more word characters at the beginning of your string:
         class Author
         {
             #[Assert\Regex('/^\w+/')]
-            protected $description;
+            protected string $description;
         }
 
     .. code-block:: yaml
@@ -82,7 +67,9 @@ more word characters at the beginning of your string:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('description', new Assert\Regex([
                     'pattern' => '/^\w+/',
@@ -96,25 +83,6 @@ assert that the ``firstName`` field does not contain any numbers and give
 it a custom message:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Regex(
-             *     pattern="/\d/",
-             *     match=false,
-             *     message="Your name cannot contain a number"
-             * )
-             */
-            protected $firstName;
-        }
 
     .. code-block:: php-attributes
 
@@ -130,7 +98,7 @@ it a custom message:
                 match: false,
                 message: 'Your name cannot contain a number',
             )]
-            protected $firstName;
+            protected string $firstName;
         }
 
     .. code-block:: yaml
@@ -173,7 +141,9 @@ it a custom message:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\Regex([
                     'pattern' => '/\d/',
@@ -193,7 +163,7 @@ Options
 ``htmlPattern``
 ~~~~~~~~~~~~~~~
 
-**type**: ``string|boolean`` **default**: ``null``
+**type**: ``string|null`` **default**: ``null``
 
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
 You usually don't need to specify this option because by default, the constraint
@@ -208,24 +178,6 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Regex(
-             *     pattern     = "/^[a-z]+$/i",
-             *     htmlPattern = "[a-zA-Z]+"
-             * )
-             */
-            protected $name;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -239,7 +191,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
                 pattern: '/^[a-z]+$/i',
                 htmlPattern: '^[a-zA-Z]+$'
             )]
-            protected $name;
+            protected string $name;
         }
 
     .. code-block:: yaml
@@ -280,7 +232,9 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new Assert\Regex([
                     'pattern' => '/^[a-z]+$/i',
@@ -289,7 +243,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
             }
         }
 
-Setting ``htmlPattern`` to false will disable client side validation.
+Setting ``htmlPattern`` to the empty string will disable client side validation.
 
 ``match``
 ~~~~~~~~~
@@ -310,16 +264,13 @@ This is the message that will be shown if this validator fails.
 
 You can use the following parameters in this message:
 
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ value }}``  The current (invalid) value
-``{{ label }}``  Corresponding form field label
-===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
+=================  ==============================================================
+Parameter          Description
+=================  ==============================================================
+``{{ value }}``    The current (invalid) value
+``{{ label }}``    Corresponding form field label
+``{{ pattern }}``  The expected matching pattern
+=================  ==============================================================
 
 ``pattern``
 ~~~~~~~~~~~

@@ -42,10 +42,8 @@ A Customer entity::
     use App\Model\InvoiceSubjectInterface;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="customer")
-     */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'customer')]
     class Customer extends BaseCustomer implements InvoiceSubjectInterface
     {
         // In this example, any methods defined in the InvoiceSubjectInterface
@@ -62,17 +60,13 @@ An Invoice entity::
 
     /**
      * Represents an Invoice.
-     *
-     * @ORM\Entity
-     * @ORM\Table(name="invoice")
      */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'invoice')]
     class Invoice
     {
-        /**
-         * @ORM\ManyToOne(targetEntity="App\Model\InvoiceSubjectInterface")
-         * @var InvoiceSubjectInterface
-         */
-        protected $subject;
+        #[ORM\ManyToOne(targetEntity: InvoiceSubjectInterface::class)]
+        protected InvoiceSubjectInterface $subject;
     }
 
 An InvoiceSubjectInterface::
@@ -137,7 +131,7 @@ about the replacement:
         use App\Model\InvoiceSubjectInterface;
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $orm = $doctrine->orm();
             // ...
             $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);

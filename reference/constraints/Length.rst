@@ -17,26 +17,6 @@ and ``50``, you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Participant.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Participant
-        {
-            /**
-             * @Assert\Length(
-             *      min = 2,
-             *      max = 50,
-             *      minMessage = "Your first name must be at least {{ limit }} characters long",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
-             * )
-             */
-            protected $firstName;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Participant.php
@@ -52,9 +32,8 @@ and ``50``, you might add the following:
                 minMessage: 'Your first name must be at least {{ limit }} characters long',
                 maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
             )]
-            protected $firstName;
+            protected string $firstName;
         }
-
 
     .. code-block:: yaml
 
@@ -102,7 +81,9 @@ and ``50``, you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\Length([
                     'min' => 2,
@@ -113,30 +94,10 @@ and ``50``, you might add the following:
             }
         }
 
-.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
 
 Options
 -------
-
-``allowEmptyString``
-~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``boolean``  **default**: ``false``
-
-.. deprecated:: 5.2
-
-    The ``allowEmptyString`` option is deprecated since Symfony 5.2. If you
-    want to allow empty strings too, combine the ``Length`` constraint with
-    the :doc:`Blank constraint </reference/constraints/Blank>` inside the
-    :doc:`AtLeastOneOf constraint </reference/constraints/AtLeastOneOf>`.
-
-If set to ``true``, empty strings are considered valid (which is the same
-behavior as previous Symfony versions). The default ``false`` value considers
-empty strings not valid.
-
-.. caution::
-
-    This option does not have any effect when no minimum length is given.
 
 ``charset``
 ~~~~~~~~~~~
@@ -163,6 +124,25 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
+``countUnit``
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Length::COUNT_CODEPOINTS``
+
+The character count unit to use for the length check. By default :phpfunction:`mb_strlen`
+is used, which counts Unicode code points.
+
+Can be one of the following constants of the
+:class:`Symfony\\Component\\Validator\\Constraints\\Length` class:
+
+* ``COUNT_BYTES``: Uses :phpfunction:`strlen` counting the length of the string in bytes.
+* ``COUNT_CODEPOINTS``: Uses :phpfunction:`mb_strlen` counting the length of the string in Unicode
+  code points. This was the sole behavior until Symfony 6.2 and is the default since Symfony 6.3.
+  Simple (multibyte) Unicode characters count as 1 character, while for example ZWJ sequences of
+  composed emojis count as multiple characters.
+* ``COUNT_GRAPHEMES``: Uses :phpfunction:`grapheme_strlen` counting the length of the string in
+  graphemes, i.e. even emojis and ZWJ sequences of composed emojis count as 1 character.
+
 ``exactly``
 ~~~~~~~~~~~
 
@@ -175,12 +155,7 @@ the given value's length is not **exactly** equal to this value.
 
     This option is the one being set by default when using the Length constraint
     without passing any named argument to it. This means that for example,
-    ``@Assert\Length(20)`` and ``@Assert\Length(exactly=20)`` are equivalent, as
-    well as ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]``.
-
-.. versionadded:: 5.2
-
-    The named argument ``exactly`` was introduced in Symfony 5.2.
+    ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]`` are equivalent.
 
 ``exactMessage``
 ~~~~~~~~~~~~~~~~
@@ -192,12 +167,13 @@ value's length is not exactly this value.
 
 You can use the following parameters in this message:
 
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The exact expected length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
+======================  ============================================================
+Parameter               Description
+======================  ============================================================
+``{{ limit }}``         The exact expected length
+``{{ value }}``         The current (invalid) value
+``{{ value_length }}``  The current value's length
+======================  ============================================================
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
@@ -221,12 +197,13 @@ than the `max`_ option.
 
 You can use the following parameters in this message:
 
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The expected maximum length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
+======================  ============================================================
+Parameter               Description
+======================  ============================================================
+``{{ limit }}``         The expected maximum length
+``{{ value }}``         The current (invalid) value
+``{{ value_length }}``  The current value's length
+======================  ============================================================
 
 ``min``
 ~~~~~~~
@@ -238,9 +215,9 @@ the given value's length is **less** than this min value.
 
 This option is required when the ``max`` option is not defined.
 
-It is important to notice that NULL values and empty strings are considered
-valid no matter if the constraint required a minimum length. Validators
-are triggered only if the value is not blank.
+It is important to notice that ``null`` values are considered
+valid no matter if the constraint requires a minimum length. Validators
+are triggered only if the value is not ``null``.
 
 ``minMessage``
 ~~~~~~~~~~~~~~
@@ -252,12 +229,13 @@ than the `min`_ option.
 
 You can use the following parameters in this message:
 
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The expected minimum length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
+======================  ============================================================
+Parameter               Description
+======================  ============================================================
+``{{ limit }}``         The expected minimum length
+``{{ value }}``         The current (invalid) value
+``{{ value_length }}``  The current value's length
+======================  ============================================================
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 

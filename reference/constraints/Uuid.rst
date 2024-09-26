@@ -17,21 +17,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/File.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class File
-        {
-            /**
-             * @Assert\Uuid
-             */
-            protected $identifier;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/File.php
@@ -42,7 +27,7 @@ Basic Usage
         class File
         {
             #[Assert\Uuid]
-            protected $identifier;
+            protected string $identifier;
         }
 
     .. code-block:: yaml
@@ -78,7 +63,9 @@ Basic Usage
 
         class File
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('identifier', new Assert\Uuid());
             }
@@ -107,10 +94,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
@@ -131,10 +114,11 @@ will allow alternate input formats like:
 ``versions``
 ~~~~~~~~~~~~
 
-**type**: ``int[]`` **default**: ``[1,2,3,4,5,6]``
+**type**: ``int[]|int`` **default**: ``[1,2,3,4,5,6,7,8]``
 
-This option can be used to only allow specific `UUID versions`_.  Valid versions are 1 - 6.
-The following PHP constants can also be used:
+This option can be used to only allow specific `UUID versions`_ (by default, all
+of them are allowed). Valid versions are 1 - 8. Instead of using numeric values,
+you can also use the following PHP constants to refer to each UUID version:
 
 * ``Uuid::V1_MAC``
 * ``Uuid::V2_DCE``
@@ -142,12 +126,8 @@ The following PHP constants can also be used:
 * ``Uuid::V4_RANDOM``
 * ``Uuid::V5_SHA1``
 * ``Uuid::V6_SORTABLE``
-
-All six versions are allowed by default.
-
-.. versionadded:: 5.2
-
-    The UUID 6 version support was introduced in Symfony 5.2.
+* ``Uuid::V7_MONOTONIC``
+* ``Uuid::V8_CUSTOM``
 
 .. _`Universally unique identifier (UUID)`: https://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122

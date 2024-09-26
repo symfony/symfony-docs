@@ -174,8 +174,9 @@ to and from the issue number and the ``Issue`` object::
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        public function __construct(private EntityManagerInterface $entityManager)
-        {
+        public function __construct(
+            private EntityManagerInterface $entityManager,
+        ) {
         }
 
         /**
@@ -258,11 +259,9 @@ and type-hint the new class::
     // ...
     class TaskType extends AbstractType
     {
-        private $transformer;
-
-        public function __construct(IssueToNumberTransformer $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            private IssueToNumberTransformer $transformer,
+        ) {
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -375,11 +374,9 @@ First, create the custom field type class::
 
     class IssueSelectorType extends AbstractType
     {
-        private $transformer;
-
-        public function __construct(IssueToNumberTransformer $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            private IssueToNumberTransformer $transformer,
+        ) {
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options): void

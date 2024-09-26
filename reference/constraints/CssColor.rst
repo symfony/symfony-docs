@@ -1,10 +1,6 @@
 CssColor
 ========
 
-.. versionadded:: 5.4
-
-    The ``CssColor`` constraint was introduced in Symfony 5.4.
-
 Validates that a value is a valid CSS color. The underlying value is
 casted to a string before being validated.
 
@@ -25,40 +21,6 @@ the named CSS colors:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Bulb.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Bulb
-        {
-            /**
-             * @Assert\CssColor
-             */
-            protected $defaultColor;
-
-            /**
-             * @Assert\CssColor(
-             *     formats = Assert\CssColor::HEX_LONG,
-             *     message = "The accent color must be a 6-character hexadecimal color."
-             * )
-             */
-            protected $accentColor;
-
-            /**
-             * @Assert\CssColor(
-             *     formats = {
-             *         Assert\CssColor::BASIC_NAMED_COLORS,
-             *         Assert\CssColor::EXTENDED_NAMED_COLORS
-             *     },
-             *     message = "The color '{{ value }}' is not a valid CSS color name."
-             * )
-             */
-            protected $currentColor;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Bulb.php
@@ -69,19 +31,19 @@ the named CSS colors:
         class Bulb
         {
             #[Assert\CssColor]
-            protected $defaultColor;
+            protected string $defaultColor;
 
             #[Assert\CssColor(
                 formats: Assert\CssColor::HEX_LONG,
                 message: 'The accent color must be a 6-character hexadecimal color.',
             )]
-            protected $accentColor;
+            protected string $accentColor;
 
             #[Assert\CssColor(
                 formats: [Assert\CssColor::BASIC_NAMED_COLORS, Assert\CssColor::EXTENDED_NAMED_COLORS],
                 message: 'The color '{{ value }}' is not a valid CSS color name.',
             )]
-            protected $currentColor;
+            protected string $currentColor;
         }
 
     .. code-block:: yaml
@@ -142,7 +104,9 @@ the named CSS colors:
 
         class Bulb
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('defaultColor', new Assert\CssColor());
 

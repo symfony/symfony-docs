@@ -30,7 +30,7 @@ an array containing all matches.
 Resource Loaders
 ----------------
 
-For each type of resource (YAML, XML, annotation, etc.) a loader must be
+For each type of resource (YAML, XML, attributes, etc.) a loader must be
 defined. Each loader should implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface` or extend the
 abstract :class:`Symfony\\Component\\Config\\Loader\\FileLoader` class,
@@ -43,7 +43,7 @@ which allows for recursively importing other resources::
 
     class YamlUserLoader extends FileLoader
     {
-        public function load($resource, $type = null)
+        public function load($resource, $type = null): void
         {
             $configValues = Yaml::parse(file_get_contents($resource));
 
@@ -54,7 +54,7 @@ which allows for recursively importing other resources::
             // $this->import('extra_users.yaml');
         }
 
-        public function supports($resource, $type = null)
+        public function supports($resource, $type = null): bool
         {
             return is_string($resource) && 'yaml' === pathinfo(
                 $resource,

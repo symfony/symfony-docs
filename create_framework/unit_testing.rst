@@ -12,7 +12,7 @@ using `PHPUnit`_. At first, install PHPUnit as a development dependency:
 
 .. code-block:: terminal
 
-    $ composer require --dev phpunit/phpunit
+    $ composer require --dev phpunit/phpunit:^9.6
 
 Then, create a PHPUnit configuration file in ``example.com/phpunit.xml.dist``:
 
@@ -21,7 +21,7 @@ Then, create a PHPUnit configuration file in ``example.com/phpunit.xml.dist``:
     <?xml version="1.0" encoding="UTF-8"?>
     <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
         backupGlobals="false"
         colors="true"
         bootstrap="vendor/autoload.php"
@@ -62,15 +62,11 @@ resolver. Modify the framework to make use of them::
 
     class Framework
     {
-        protected $matcher;
-        protected $controllerResolver;
-        protected $argumentResolver;
-
-        public function __construct(UrlMatcherInterface $matcher, ControllerResolverInterface $resolver, ArgumentResolverInterface $argumentResolver)
-        {
-            $this->matcher = $matcher;
-            $this->controllerResolver = $resolver;
-            $this->argumentResolver = $argumentResolver;
+        public function __construct(
+            private UrlMatcherInterface $matcher,
+            private ControllerResolverInterface $resolver,
+            private ArgumentResolverInterface $argumentResolver,
+        ) {
         }
 
         // ...
@@ -91,7 +87,7 @@ We are now ready to write our first test::
 
     class FrameworkTest extends TestCase
     {
-        public function testNotFoundHandling()
+        public function testNotFoundHandling(): void
         {
             $framework = $this->getFrameworkForException(new ResourceNotFoundException());
 
@@ -100,11 +96,9 @@ We are now ready to write our first test::
             $this->assertEquals(404, $response->getStatusCode());
         }
 
-        private function getFrameworkForException($exception)
+        private function getFrameworkForException($exception): Framework
         {
             $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
-            // use getMock() on PHPUnit 5.3 or below
-            // $matcher = $this->getMock(Routing\Matcher\UrlMatcherInterface::class);
 
             $matcher
                 ->expects($this->once())
@@ -143,7 +137,7 @@ either in the test or in the framework code!
 
 Adding a unit test for any exception thrown in a controller::
 
-    public function testErrorHandling()
+    public function testErrorHandling(): void
     {
         $framework = $this->getFrameworkForException(new \RuntimeException());
 
@@ -160,11 +154,9 @@ Response::
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
     // ...
 
-    public function testControllerResponse()
+    public function testControllerResponse(): void
     {
         $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
-        // use getMock() on PHPUnit 5.3 or below
-        // $matcher = $this->getMock(Routing\Matcher\UrlMatcherInterface::class);
 
         $matcher
             ->expects($this->once())

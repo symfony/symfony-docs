@@ -110,18 +110,25 @@ The current list of supported formats are the following:
 ===================  ==============================================================================
 Markup Format        Use It to Display
 ===================  ==============================================================================
-``html``             HTML
-``xml``              XML
-``php``              PHP
-``yaml``             YAML
-``twig``             Pure Twig markup
-``html+twig``        Twig markup blended with HTML
+``caddy``            Caddy web server configuration
+``env``              Bash files (like ``.env`` files)
 ``html+php``         PHP code blended with HTML
+``html+twig``        Twig markup blended with HTML
+``html``             HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
 ``php-attributes``   PHP Attributes
-``php-symfony``      PHP code example when using the Symfony framework
 ``php-standalone``   PHP code to be used in any PHP application using standalone Symfony components
+``php-symfony``      PHP code example when using the Symfony framework
+``php``              PHP
+``rst``              reStructuredText markup
+``terminal``         Renders the contents as a console terminal (use it to show which commands to run)
+``twig``             Pure Twig markup
+``varnish3``         Varnish Cache 3 configuration
+``varnish4``         Varnish Cache 4 configuration
+``vcl``              Varnish Configuration Language
+``xml``              XML
+``yaml``             YAML
 ===================  ==============================================================================
 
 Displaying Tabs
@@ -190,6 +197,29 @@ If you want to modify that title, use this alternative syntax:
 
         :doc:`environments`
 
+**Links to specific page sections** follow a different syntax. First, define a
+target above section you will link to (syntax: ``.. _`` + target name + ``:``):
+
+.. code-block:: rst
+
+    # /service_container/autowiring.rst
+
+    # define the target
+    .. _autowiring-calls:
+
+    Autowiring other Methods (e.g. Setters and Public Typed Properties)
+    -------------------------------------------------------------------
+
+    // section content ...
+
+Then, use the ``:ref::`` directive to link to that section from another file:
+
+.. code-block:: rst
+
+    # /reference/attributes.rst
+
+    :ref:`Required <autowiring-calls>`
+
 **Links to the API** follow a different syntax, where you must specify the type
 of the linked resource (``class`` or ``method``):
 
@@ -216,39 +246,39 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behavior change use the ``.. versionadded:: 5.x``
+For a new feature or a behavior change use the ``.. versionadded:: 7.x``
 directive:
 
 .. code-block:: rst
 
-    .. versionadded:: 5.2
+    .. versionadded:: 7.2
 
-        ... ... ... was introduced in Symfony 5.2.
+        ... ... ... was introduced in Symfony 7.2.
 
 If you are documenting a behavior change, it may be helpful to *briefly*
 describe how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 5.2
+    .. versionadded:: 7.2
 
-       ... ... ... was introduced in Symfony 5.2. Prior to this,
+       ... ... ... was introduced in Symfony 7.2. Prior to this,
        ... ... ... ... ... ... ... ... .
 
-For a deprecation use the ``.. deprecated:: 5.x`` directive:
+For a deprecation use the ``.. deprecated:: 7.x`` directive:
 
 .. code-block:: rst
 
-    .. deprecated:: 5.2
+    .. deprecated:: 7.2
 
-        ... ... ... was deprecated in Symfony 5.2.
+        ... ... ... was deprecated in Symfony 7.2.
 
-Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc), a new
+Whenever a new major version of Symfony is released (e.g. 8.0, 9.0, etc), a new
 branch of the documentation is created from the ``x.4`` branch of the previous
 major version. At this point, all the ``versionadded`` and ``deprecated`` tags
 for Symfony versions that have a lower major version will be removed. For
-example, if Symfony 6.0 were released today, 5.0 to 5.4 ``versionadded`` and
-``deprecated`` tags would be removed from the new ``6.0`` branch.
+example, if Symfony 8.0 were released today, 7.0 to 7.4 ``versionadded`` and
+``deprecated`` tags would be removed from the new ``8.0`` branch.
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _Sphinx: https://www.sphinx-doc.org/

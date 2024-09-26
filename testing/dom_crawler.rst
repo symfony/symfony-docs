@@ -48,10 +48,12 @@ narrow down your node selection by chaining the method calls::
 
     $crawler
         ->filter('h1')
-        ->reduce(function ($node, $i) {
+        ->reduce(function ($node, int $i): bool {
             if (!$node->attr('class')) {
                 return false;
             }
+
+            return true;
         })
         ->first()
     ;
@@ -86,6 +88,6 @@ The Crawler can extract information from the nodes::
     $info = $crawler->extract(['_text', 'href']);
 
     // executes a lambda for each node and return an array of results
-    $data = $crawler->each(function ($node, $i) {
+    $data = $crawler->each(function ($node, int $i): string {
         return $node->attr('href');
     });

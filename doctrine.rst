@@ -41,16 +41,19 @@ The database connection information is stored as an environment variable called
     # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.37"
 
     # to use mariadb:
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
+    # Before doctrine/dbal < 3.7
+    # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
+    # Since doctrine/dbal 3.7
+    # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=10.5.8-MariaDB"
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
 
     # to use postgresql:
-    # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
+    # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=12.19 (Debian 12.19-1.pgdg120+1)&charset=utf8"
 
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
@@ -58,11 +61,12 @@ The database connection information is stored as an environment variable called
 .. caution::
 
     If the username, password, host or database name contain any character considered
-    special in a URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``, ``%``),
-    you must encode them. See `RFC 3986`_ for the full list of reserved characters or
-    use the :phpfunction:`urlencode` function to encode them. In this case you need to
-    remove the ``resolve:`` prefix in ``config/packages/doctrine.yaml`` to avoid errors:
-    ``url: '%env(DATABASE_URL)%'``
+    special in a URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``),
+    you must encode them. See `RFC 3986`_ for the full list of reserved characters.
+    You can use the :phpfunction:`urlencode` function to encode them or
+    the :ref:`urlencode environment variable processor <urlencode_environment_variable_processor>`.
+    In this case you need to remove the ``resolve:`` prefix in ``config/packages/doctrine.yaml``
+    to avoid errors: ``url: '%env(DATABASE_URL)%'``
 
 Now that your connection parameters are setup, Doctrine can create the ``db_name``
 database for you:
@@ -72,7 +76,7 @@ database for you:
     $ php bin/console doctrine:database:create
 
 There are more options in ``config/packages/doctrine.yaml`` that you can configure,
-including your ``server_version`` (e.g. 5.7 if you're using MySQL 5.7), which may
+including your ``server_version`` (e.g. 8.0.37 if you're using MySQL 8.0.37), which may
 affect how Doctrine functions.
 
 .. tip::
@@ -154,21 +158,21 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
         // ... getter and setter methods
     }
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
+    ``--with-ulid`` to ``make:entity``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    this generates an entity with the ``id`` type as :ref:`Uuid <uuid>`
+    or :ref:`Ulid <ulid>` instead of ``int``.
+
 .. note::
 
-    Starting in v1.44.0 - MakerBundle only supports entities using PHP attributes.
+    Starting in v1.44.0 - `MakerBundle`_: only supports entities using PHP attributes.
 
 .. note::
 
     Confused why the price is an integer? Don't worry: this is just an example.
     But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
-
-.. note::
-
-    If you are using an SQLite database, you'll see the following error:
-    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
-    column with default value NULL*. Add a ``nullable=true`` option to the
-    ``description`` property to fix the problem.
 
 .. caution::
 
@@ -195,8 +199,8 @@ The ``make:entity`` command is a tool to make life easier. But this is *your* co
 add/remove fields, add/remove methods or update configuration.
 
 Doctrine supports a wide variety of field types, each with their own options.
-To see a full list, check out `Doctrine's Mapping Types documentation`_.
-If you want to use XML instead of annotations, add ``type: xml`` and
+Check out the `list of Doctrine mapping types`_ in the Doctrine documentation.
+If you want to use XML instead of attributes, add ``type: xml`` and
 ``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
 
@@ -205,8 +209,8 @@ If you want to use XML instead of annotations, add ``type: xml`` and
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
     for details on how to escape these. Or, change the table name with
-    ``#[ORM\Table(name: "groups")]`` above the class or configure the column name with
-    the ``name: "group_name"`` option.
+    ``#[ORM\Table(name: 'groups')]`` above the class or configure the column name with
+    the ``name: 'group_name'`` option.
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -221,6 +225,11 @@ already installed:
 .. code-block:: terminal
 
     $ php bin/console make:migration
+
+.. tip::
+
+    Starting in `MakerBundle`_: v1.56.0 - Passing ``--formatted`` to ``make:migration``
+    generates a nice and tidy migration file.
 
 If everything worked, you should see something like this:
 
@@ -278,13 +287,14 @@ methods:
 
       // src/Entity/Product.php
       // ...
+    +  use Doctrine\DBAL\Types\Types;
 
       class Product
       {
           // ...
 
-    +     #[ORM\Column(type: 'text')]
-    +     private $description;
+    +     #[ORM\Column(type: Types::TEXT)]
+    +     private string $description;
 
           // getDescription() & setDescription() were also added
       }
@@ -309,6 +319,13 @@ before, execute your migrations:
 .. code-block:: terminal
 
     $ php bin/console doctrine:migrations:migrate
+
+.. caution::
+
+    If you are using an SQLite database, you'll see the following error:
+    *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
+    column with default value NULL*. Add a ``nullable=true`` option to the
+    ``description`` property to fix the problem.
 
 This will only execute the *one* new migration file, because DoctrineMigrationsBundle
 knows that the first migration was already executed earlier. Behind the scenes, it
@@ -350,17 +367,15 @@ and save it::
 
     // ...
     use App\Entity\Product;
-    use Doctrine\Persistence\ManagerRegistry;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ProductController extends AbstractController
     {
         #[Route('/product', name: 'create_product')]
-        public function createProduct(ManagerRegistry $doctrine): Response
+        public function createProduct(EntityManagerInterface $entityManager): Response
         {
-            $entityManager = $doctrine->getManager();
-
             $product = new Product();
             $product->setName('Keyboard');
             $product->setPrice(1999);
@@ -394,21 +409,18 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 13** The ``ManagerRegistry $doctrine`` argument tells Symfony to
-  :ref:`inject the Doctrine service <services-constructor-injection>` into the
-  controller method.
+* **line 13** The ``EntityManagerInterface $entityManager`` argument tells Symfony
+  to :ref:`inject the Entity Manager service <services-constructor-injection>` into
+  the controller method. This object is responsible for saving objects to, and
+  fetching objects from, the database.
 
-* **line 15** The ``$doctrine->getManager()`` method gets Doctrine's
-  *entity manager* object, which is the most important object in Doctrine. It's
-  responsible for saving objects to, and fetching objects from, the database.
-
-* **lines 17-20** In this section, you instantiate and work with the ``$product``
+* **lines 15-18** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 23** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 26** When the ``flush()`` method is called, Doctrine looks through
+* **line 24** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
@@ -427,15 +439,19 @@ is smart enough to know if it should INSERT or UPDATE your entity.
 Validating Objects
 ------------------
 
-:doc:`The Symfony validator </validation>` reuses Doctrine metadata to perform
-some basic validation tasks::
+:doc:`The Symfony validator </validation>` can reuse Doctrine metadata to perform
+some basic validation tasks. First, add or configure the
+:ref:`auto_mapping option <reference-validation-auto-mapping>` to define which
+entities should be introspected by Symfony to add automatic validation constraints.
+
+Consider the following controller code::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
 
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
     // ...
 
@@ -445,12 +461,8 @@ some basic validation tasks::
         public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
-            // This will trigger an error: the column isn't nullable in the database
-            $product->setName(null);
-            // This will trigger a type mismatch error: an integer is expected
-            $product->setPrice('1999');
 
-            // ...
+            // ... update the product data somehow (e.g. with a form) ...
 
             $errors = $validator->validate($product);
             if (count($errors) > 0) {
@@ -462,9 +474,11 @@ some basic validation tasks::
     }
 
 Although the ``Product`` entity doesn't define any explicit
-:doc:`validation configuration </validation>`, Symfony introspects the Doctrine
-mapping configuration to infer some validation rules. For example, given that
-the ``name`` property can't be ``null`` in the database, a
+:doc:`validation configuration </validation>`, if the ``auto_mapping`` option
+includes it in the list of entities to introspect, Symfony will infer some
+validation rules for it and will apply them.
+
+For example, given that the ``name`` property can't be ``null`` in the database, a
 :doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
 to the property (if it doesn't contain that constraint already).
 
@@ -499,16 +513,17 @@ be able to go to ``/product/1`` to see your new product::
     namespace App\Controller;
 
     use App\Entity\Product;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
     {
         #[Route('/product/{id}', name: 'product_show')]
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(EntityManagerInterface $entityManager, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->find($id);
+            $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
                 throw $this->createNotFoundException(
@@ -533,7 +548,7 @@ and injected by the dependency injection container::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
@@ -558,7 +573,7 @@ job is to help you fetch entities of a certain class.
 
 Once you have a repository object, you have many helper methods::
 
-    $repository = $doctrine->getRepository(Product::class);
+    $repository = $entityManager->getRepository(Product::class);
 
     // look for a single Product by its primary key (usually "id")
     $product = $repository->find($id);
@@ -598,17 +613,19 @@ the :ref:`doctrine-queries` section.
     see the web debug toolbar, install the ``profiler`` :ref:`Symfony pack <symfony-packs>`
     by running this command: ``composer require --dev symfony/profiler-pack``.
 
-Automatically Fetching Objects (ParamConverter)
------------------------------------------------
+    For more information, read the :doc:`Symfony profiler documentation </profiler>`.
 
-In many cases, you can use the `SensioFrameworkExtraBundle`_ to do the query
-for you automatically! First, install the bundle in case you don't have it:
+.. _doctrine-entity-value-resolver:
 
-.. code-block:: terminal
+Automatically Fetching Objects (EntityValueResolver)
+----------------------------------------------------
 
-    $ composer require sensio/framework-extra-bundle
+.. versionadded:: 2.7.1
 
-Now, simplify your controller::
+    Autowiring of the ``EntityValueResolver`` was introduced in DoctrineBundle 2.7.1.
+
+In many cases, you can use the ``EntityValueResolver`` to do the query for you
+automatically! You can simplify the controller to::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -616,12 +633,12 @@ Now, simplify your controller::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        #[Route('/product/{id}', name: 'product_show')]
+        #[Route('/product/{id}')]
         public function show(Product $product): Response
         {
             // use the Product!
@@ -632,7 +649,217 @@ Now, simplify your controller::
 That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
 by the ``id`` column. If it's not found, a 404 page is generated.
 
-There are many more options you can use. Read more about the `ParamConverter`_.
+.. tip::
+
+    When enabled globally, it's possible to disable the behavior on a specific
+    controller, by using the ``MapEntity`` set to ``disabled``::
+
+        public function show(
+            #[CurrentUser]
+            #[MapEntity(disabled: true)]
+            User $user
+        ): Response {
+            // User is not resolved by the EntityValueResolver
+            // ...
+        }
+
+Fetch Automatically
+~~~~~~~~~~~~~~~~~~~
+
+If your route wildcards match properties on your entity, then the resolver
+will automatically fetch them::
+
+    /**
+     * Fetch via primary key because {id} is in the route.
+     */
+    #[Route('/product/{id}')]
+    public function showByPk(Product $product): Response
+    {
+    }
+
+    /**
+     * Perform a findOneBy() where the slug property matches {slug}.
+     */
+    #[Route('/product/{slug}')]
+    public function showBySlug(Product $product): Response
+    {
+    }
+
+Automatic fetching works in these situations:
+
+* If ``{id}`` is in your route, then this is used to fetch by
+  primary key via the ``find()`` method.
+
+* The resolver will attempt to do a ``findOneBy()`` fetch by using
+  *all* of the wildcards in your route that are actually properties
+  on your entity (non-properties are ignored).
+
+This behavior is enabled by default on all controllers. If you prefer, you can
+restrict this feature to only work on route wildcards called ``id`` to look for
+entities by primary key. To do so, set the option
+``doctrine.orm.controller_resolver.auto_mapping`` to ``false``.
+
+When ``auto_mapping`` is disabled, you can configure the mapping explicitly for
+any controller argument with the ``MapEntity`` attribute. You can even control
+the ``EntityValueResolver`` behavior by using the `MapEntity options`_ ::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use App\Entity\Product;
+    use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
+    // ...
+
+    class ProductController extends AbstractController
+    {
+        #[Route('/product/{slug}')]
+        public function show(
+            #[MapEntity(mapping: ['slug' => 'slug'])]
+            Product $product
+        ): Response {
+            // use the Product!
+            // ...
+        }
+    }
+
+Fetch via an Expression
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If automatic fetching doesn't work for your use case, you can write an expression
+using the :doc:`ExpressionLanguage component </components/expression_language>`::
+
+    #[Route('/product/{product_id}')]
+    public function show(
+        #[MapEntity(expr: 'repository.find(product_id)')]
+        Product $product
+    ): Response {
+    }
+
+In the expression, the ``repository`` variable will be your entity's
+Repository class and any route wildcards - like ``{product_id}`` are
+available as variables.
+
+The repository method called in the expression can also return a list of entities.
+In that case, update the type of your controller argument::
+
+    #[Route('/posts_by/{author_id}')]
+    public function authorPosts(
+        #[MapEntity(class: Post::class, expr: 'repository.findBy({"author": author_id}, {}, 10)')]
+        iterable $posts
+    ): Response {
+    }
+
+.. versionadded:: 7.1
+
+    The mapping of the lists of entities was introduced in Symfony 7.1.
+
+This can also be used to help resolve multiple arguments::
+
+    #[Route('/product/{id}/comments/{comment_id}')]
+    public function show(
+        Product $product,
+        #[MapEntity(expr: 'repository.find(comment_id)')]
+        Comment $comment
+    ): Response {
+    }
+
+In the example above, the ``$product`` argument is handled automatically,
+but ``$comment`` is configured with the attribute since they cannot both follow
+the default convention.
+
+If you need to get other information from the request to query the database, you
+can also access the request in your expression thanks to the ``request``
+variable. Let's say you want the first or the last comment of a product depending on a query parameter named ``sort``::
+
+    #[Route('/product/{id}/comments')]
+    public function show(
+        Product $product,
+        #[MapEntity(expr: 'repository.findOneBy({"product": id}, {"createdAt": request.query.get("sort", "DESC")})')]
+        Comment $comment
+    ): Response {
+    }
+
+MapEntity Options
+~~~~~~~~~~~~~~~~~
+
+A number of options are available on the ``MapEntity`` attribute to
+control behavior:
+
+``id``
+    If an ``id`` option is configured and matches a route parameter, then
+    the resolver will find by the primary key::
+
+        #[Route('/product/{product_id}')]
+        public function show(
+            #[MapEntity(id: 'product_id')]
+            Product $product
+        ): Response {
+        }
+
+``mapping``
+    Configures the properties and values to use with the ``findOneBy()``
+    method: the key is the route placeholder name and the value is the Doctrine
+    property name::
+
+        #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
+        public function show(
+            #[MapEntity(mapping: ['category' => 'category', 'slug' => 'slug'])]
+            Product $product,
+            #[MapEntity(mapping: ['comment_slug' => 'slug'])]
+            Comment $comment
+        ): Response {
+        }
+
+``exclude``
+    Configures the properties that should be used in the ``findOneBy()``
+    method by *excluding* one or more properties so that not *all* are used::
+
+        #[Route('/product/{slug}/{date}')]
+        public function show(
+            #[MapEntity(exclude: ['date'])]
+            Product $product,
+            \DateTime $date
+        ): Response {
+        }
+
+``stripNull``
+    If true, then when ``findOneBy()`` is used, any values that are
+    ``null`` will not be used for the query.
+
+``objectManager``
+    By default, the ``EntityValueResolver`` uses the *default*
+    object manager, but you can configure this::
+
+        #[Route('/product/{id}')]
+        public function show(
+            #[MapEntity(objectManager: 'foo')]
+            Product $product
+        ): Response {
+        }
+
+``evictCache``
+    If true, forces Doctrine to always fetch the entity from the database
+    instead of cache.
+
+``disabled``
+    If true, the ``EntityValueResolver`` will not try to replace the argument.
+
+``message``
+    An optional custom message displayed when there's a :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`,
+    but **only in the development environment** (you won't see this message in production)::
+
+        #[Route('/product/{product_id}')]
+        public function show(
+            #[MapEntity(id: 'product_id', message: 'The product does not exist')]
+            Product $product
+        ): Response {
+        }
+
+.. versionadded:: 7.1
+
+    The ``message`` option was introduced in Symfony 7.1.
 
 Updating an Object
 ------------------
@@ -645,16 +872,16 @@ with any PHP model::
 
     use App\Entity\Product;
     use App\Repository\ProductRepository;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     // ...
 
     class ProductController extends AbstractController
     {
         #[Route('/product/edit/{id}', name: 'product_edit')]
-        public function update(ManagerRegistry $doctrine, int $id): Response
+        public function update(EntityManagerInterface $entityManager, int $id): Response
         {
-            $entityManager = $doctrine->getManager();
             $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
@@ -703,7 +930,7 @@ You've already seen how the repository object allows you to run basic queries
 without any work::
 
     // from inside a controller
-    $repository = $doctrine->getRepository(Product::class);
+    $repository = $entityManager->getRepository(Product::class);
     $product = $repository->find($id);
 
 But what if you need a more complex query? When you generated your entity with
@@ -770,7 +997,7 @@ Now, you can call this method on the repository::
     // from inside a controller
     $minPrice = 1000;
 
-    $products = $doctrine->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
+    $products = $entityManager->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
 
     // ...
 
@@ -830,8 +1057,8 @@ In addition, you can query directly with SQL if you need to::
                 WHERE p.price > :price
                 ORDER BY p.price ASC
                 ';
-            $stmt = $conn->prepare($sql);
-            $resultSet = $stmt->executeQuery(['price' => $price]);
+
+            $resultSet = $conn->executeQuery($sql, ['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
             return $resultSet->fetchAllAssociative();
@@ -876,7 +1103,6 @@ Learn more
 
     doctrine/associations
     doctrine/events
-    doctrine/registration_form
     doctrine/custom_dql_functions
     doctrine/dbal
     doctrine/multiple_entity_managers
@@ -886,7 +1112,7 @@ Learn more
 
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`Doctrine's Mapping Types documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html
+.. _`list of Doctrine mapping types`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#reference-mapping-types
 .. _`Query Builder`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/query-builder.html
 .. _`Doctrine Query Language`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/dql-doctrine-query-language.html
 .. _`Reserved SQL keywords documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#quoting-reserved-words
@@ -894,11 +1120,10 @@ Learn more
 .. _`Transactions and Concurrency`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
 .. _`NativeQuery`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/native-sql.html
-.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-limits.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://www.php.net/pdo
 .. _`available Doctrine extensions`: https://github.com/doctrine-extensions/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

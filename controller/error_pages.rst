@@ -176,7 +176,7 @@ automatically when installing ``symfony/framework-bundle``):
         // config/routes/framework.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             if ('dev' === $routes->env()) {
                 $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
                     ->prefix('/_error')
@@ -216,7 +216,7 @@ contents, create a new Normalizer that supports the ``FlattenException`` input::
 
     class MyCustomProblemNormalizer implements NormalizerInterface
     {
-        public function normalize($exception, string $format = null, array $context = [])
+        public function normalize($exception, ?string $format = null, array $context = []): array
         {
             return [
                 'content' => 'This is my custom problem normalizer.',
@@ -227,7 +227,7 @@ contents, create a new Normalizer that supports the ``FlattenException`` input::
             ];
         }
 
-        public function supportsNormalization($data, string $format = null)
+        public function supportsNormalization($data, ?string $format = null, array $context = []): bool
         {
             return $data instanceof FlattenException;
         }
@@ -275,7 +275,7 @@ configuration option to point to it:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->errorController('App\Controller\ErrorController::show');
         };

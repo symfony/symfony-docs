@@ -37,13 +37,12 @@ example:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(AppExtension::class)
                 ->tag('twig.extension');
         };
-
 
 Services tagged with the ``twig.extension`` tag are collected during the
 initialization of TwigBundle and added to Twig as extensions.
@@ -103,7 +102,7 @@ If you want to apply tags automatically for your own services, use the
 
         use App\Security\CustomInterface;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // this config only applies to the services created by this file
@@ -137,10 +136,6 @@ base class or interface::
     If you need more capabilities to autoconfigure instances of your base class
     like their laziness, their bindings or their calls for example, you may rely
     on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
-
-.. versionadded:: 5.3
-
-    The ``#[Autoconfigure]`` and ``#[AutoconfigureTag]`` attributes were introduced in Symfony 5.3.
 
 For more advanced needs, you can define the automatic tags using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration` method.
@@ -177,7 +172,7 @@ In a Symfony bundle, call this method in the ``load()`` method of the
     }
 
 Autoconfiguration registering is not limited to interfaces. It is possible
-to use PHP 8 attributes to autoconfigure services by using the
+to use PHP attributes to autoconfigure services by using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
 method::
 
@@ -187,11 +182,9 @@ method::
     #[\Attribute(\Attribute::TARGET_CLASS)]
     class SensitiveElement
     {
-        private string $token;
-
-        public function __construct(string $token)
-        {
-            $this->token = $token;
+        public function __construct(
+            private string $token,
+        ) {
         }
 
         public function getToken(): string
@@ -220,7 +213,7 @@ method::
     }
 
 You can also make attributes usable on methods. To do so, update the previous
-example and add ``Attribute::TARGET_METHOD`::
+example and add ``Attribute::TARGET_METHOD``::
 
     // src/Attribute/SensitiveElement.php
     namespace App\Attribute;
@@ -267,16 +260,6 @@ call to support ``ReflectionMethod``::
     :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
     callable.
 
-.. versionadded:: 5.3
-
-    The :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
-    method was introduced in Symfony 5.3.
-
-.. versionadded:: 5.4
-
-    The support for autoconfigurable methods, properties and parameters was
-    introduced in Symfony 5.4.
-
 Creating custom Tags
 --------------------
 
@@ -298,12 +281,7 @@ To begin with, define the ``TransportChain`` class::
 
     class TransportChain
     {
-        private $transports;
-
-        public function __construct()
-        {
-            $this->transports = [];
-        }
+        private array $transports = [];
 
         public function addTransport(\MailerTransport $transport): void
         {
@@ -342,12 +320,11 @@ Then, define the chain as a service:
 
         use App\Mail\TransportChain;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(TransportChain::class);
         };
-
 
 Define Services with a Custom Tag
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -396,11 +373,10 @@ For example, you may add the following transports as services:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
-                // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer_host')])
                 ->tag('app.mail_transport')
             ;
@@ -482,6 +458,8 @@ or from your kernel::
     :ref:`components documentation <components-di-compiler-pass>` for more
     information.
 
+.. _tags_additional-attributes:
+
 Adding Additional Attributes on Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -493,12 +471,7 @@ To begin with, change the ``TransportChain`` class::
 
     class TransportChain
     {
-        private $transports;
-
-        public function __construct()
-        {
-            $this->transports = [];
-        }
+        private array $transports = [];
 
         public function addTransport(\MailerTransport $transport, $alias): void
         {
@@ -530,7 +503,7 @@ To answer this, change the service declaration:
 
             MailerSendmailTransport:
                 tags:
-                    - { name: 'app.mail_transport', alias: 'sendmail' }
+                    - { name: 'app.mail_transport', alias: ['sendmail', 'anotherAlias']}
 
     .. code-block:: xml
 
@@ -549,7 +522,12 @@ To answer this, change the service declaration:
                 </service>
 
                 <service id="MailerSendmailTransport">
-                    <tag name="app.mail_transport" alias="sendmail"/>
+                    <tag name="app.mail_transport">
+                        <attribute name="alias">
+                            <attribute name="0">sendmail</attribute>
+                            <attribute name="1">anotherAlias</attribute>
+                        </attribute>
+                    </tag>
                 </service>
             </services>
         </container>
@@ -559,17 +537,16 @@ To answer this, change the service declaration:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
-                // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer_host')])
                 ->tag('app.mail_transport', ['alias' => 'smtp'])
             ;
 
             $services->set(\MailerSendmailTransport::class)
-                ->tag('app.mail_transport', ['alias' => 'sendmail'])
+                ->tag('app.mail_transport', ['alias' => ['sendmail', 'anotherAlias']])
             ;
         };
 
@@ -612,11 +589,6 @@ To answer this, change the service declaration:
                     </service>
                 </services>
             </container>
-
-    .. versionadded:: 5.1
-
-        The possibility to add the ``name`` attribute to a tag in XML and YAML
-        formats was introduced in Symfony 5.1.
 
 .. tip::
 
@@ -702,13 +674,14 @@ directly via PHP attributes:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
                 // the attribute must be applied directly to the argument to autowire
-                #[TaggedIterator('app.handler')] iterable $handlers
+                #[AutowireIterator('app.handler')]
+                iterable $handlers
             ) {
             }
         }
@@ -758,7 +731,7 @@ directly via PHP attributes:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(App\Handler\One::class)
@@ -783,9 +756,170 @@ directly via PHP attributes:
     The reason is that those constructor arguments are both parameters and class
     properties. You can safely ignore this error message.
 
-.. versionadded:: 5.3
+If for some reason you need to exclude one or more services when using a tagged
+iterator, add the ``exclude`` option:
 
-    The ``#[TaggedIterator]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[AutowireIterator('app.handler', exclude: ['App\Handler\Three'])]
+                iterable $handlers
+            ) {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            # This is the service we want to exclude, even if the 'app.handler' tag is attached
+            App\Handler\Three:
+                tags: ['app.handler']
+
+            App\HandlerCollection:
+                arguments:
+                    - !tagged_iterator { tag: app.handler, exclude: ['App\Handler\Three'] }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- This is the service we want to exclude, even if the 'app.handler' tag is attached -->
+                <service id="App\Handler\Three">
+                    <tag name="app.handler"/>
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged_iterator" tag="app.handler">
+                        <exclude>App\Handler\Three</exclude>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
+
+            // ...
+
+            // This is the service we want to exclude, even if the 'app.handler' tag is attached
+            $services->set(App\Handler\Three::class)
+                ->tag('app.handler')
+            ;
+
+            $services->set(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged_iterator('app.handler', exclude: [App\Handler\Three::class])])
+            ;
+        };
+
+In the case the referencing service is itself tagged with the tag being used in the tagged
+iterator, it is automatically excluded from the injected iterable. This behavior can be
+disabled by setting the ``exclude_self`` option to ``false``:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[AutowireIterator('app.handler', exclude: ['App\Handler\Three'], excludeSelf: false)]
+                iterable $handlers
+            ) {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            # This is the service we want to exclude, even if the 'app.handler' tag is attached
+            App\Handler\Three:
+                tags: ['app.handler']
+
+            App\HandlerCollection:
+                arguments:
+                    - !tagged_iterator { tag: app.handler, exclude: ['App\Handler\Three'], exclude_self: false }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- This is the service we want to exclude, even if the 'app.handler' tag is attached -->
+                <service id="App\Handler\Three">
+                    <tag name="app.handler"/>
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged_iterator" tag="app.handler" exclude-self="false">
+                        <exclude>App\Handler\Three</exclude>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
+
+            // ...
+
+            // This is the service we want to exclude, even if the 'app.handler' tag is attached
+            $services->set(App\Handler\Three::class)
+                ->tag('app.handler')
+            ;
+
+            $services->set(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged_iterator('app.handler', exclude: [App\Handler\Three::class], excludeSelf: false)])
+            ;
+        };
 
 .. seealso::
 
@@ -831,7 +965,7 @@ the number, the earlier the tagged service will be located in the collection:
 
         use App\Handler\One;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(One::class)
@@ -865,12 +999,12 @@ you can define it in the configuration of the collecting service:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', defaultPriorityMethod: 'getPriority')]
+                #[AutowireIterator('app.handler', defaultPriorityMethod: 'getPriority')]
                 iterable $handlers
             ) {
             }
@@ -907,7 +1041,7 @@ you can define it in the configuration of the collecting service:
 
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             // ...
@@ -922,12 +1056,15 @@ you can define it in the configuration of the collecting service:
 Tagged Services with Index
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to retrieve a specific service within the injected collection
-you can use the ``index_by`` and ``default_index_method`` options of the
-argument in combination with ``!tagged_iterator``.
+By default, tagged services are indexed using their service IDs. You can change
+this behavior with two options of the tagged iterator (``index_by`` and
+``default_index_method``) which can be used independently or combined.
 
-Using the previous example, this service configuration creates a collection
-indexed by the ``key`` attribute:
+The ``index_by`` / ``indexAttribute`` Option
+............................................
+
+This option defines the name of the option/attribute that stores the value used
+to index the services:
 
 .. configuration-block::
 
@@ -936,12 +1073,12 @@ indexed by the ``key`` attribute:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', indexAttribute: 'key')]
+                #[AutowireIterator('app.handler', indexAttribute: 'key')]
                 iterable $handlers
             ) {
             }
@@ -995,7 +1132,7 @@ indexed by the ``key`` attribute:
         use App\Handler\Two;
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(One::class)
@@ -1012,10 +1149,9 @@ indexed by the ``key`` attribute:
             ;
         };
 
-After compilation the ``HandlerCollection`` is able to iterate over your
-application handlers. To retrieve a specific service from the iterator, call the
-``iterator_to_array()`` function and then use the ``key`` attribute to get the
-array element. For example, to retrieve the ``handler_two`` handler::
+In this example, the ``index_by`` option is ``key``. All services define that
+option/attribute, so that will be the value used to index the services. For example,
+to get the ``App\Handler\Two`` service::
 
     // src/Handler/HandlerCollection.php
     namespace App\Handler;
@@ -1026,43 +1162,23 @@ array element. For example, to retrieve the ``handler_two`` handler::
         {
             $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
+            // this value is defined in the `key` option of the service
             $handlerTwo = $handlers['handler_two'];
         }
     }
 
-You can omit the index attribute (``key`` in the previous example) by setting
-the ``index_by`` attribute on the ``tagged_iterator`` tag. In this case, you
-must define a static method whose name follows the pattern:
-``getDefault<CamelCase index_by value>Name``.
+If some service doesn't define the option/attribute configured in ``index_by``,
+Symfony applies this fallback process:
 
-For example, if ``index_by`` is ``handler``, the method name must be
-``getDefaultHandlerName()``:
+#. If the service class defines a static method called ``getDefault<CamelCase index_by value>Name``
+   (in this example, ``getDefaultKeyName()``), call it and use the returned value;
+#. Otherwise, fall back to the default behavior and use the service ID.
 
-.. code-block:: yaml
+The ``default_index_method`` Option
+...................................
 
-    # config/services.yaml
-        services:
-            # ...
-
-            App\HandlerCollection:
-                arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'handler' }]
-
-.. code-block:: php
-
-    // src/Handler/One.php
-    namespace App\Handler;
-
-    class One
-    {
-        // ...
-        public static function getDefaultHandlerName(): string
-        {
-            return 'handler_one';
-        }
-    }
-
-You also can define the name of the static method to implement on each service
-with the ``default_index_method`` attribute on the tagged argument:
+This option defines the name of the service class method that will be called to
+get the value used to index the services:
 
 .. configuration-block::
 
@@ -1071,12 +1187,12 @@ with the ``default_index_method`` attribute on the tagged argument:
         // src/HandlerCollection.php
         namespace App;
 
-        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', defaultIndexMethod: 'getIndex')]
+                #[AutowireIterator('app.handler', defaultIndexMethod: 'getIndex')]
                 iterable $handlers
             ) {
             }
@@ -1089,7 +1205,6 @@ with the ``default_index_method`` attribute on the tagged argument:
             # ...
 
             App\HandlerCollection:
-                # use getIndex() instead of getDefaultIndexName()
                 arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
 
     .. code-block:: xml
@@ -1105,7 +1220,6 @@ with the ``default_index_method`` attribute on the tagged argument:
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <!-- use getIndex() instead of getDefaultIndexName() -->
                     <argument type="tagged_iterator"
                         tag="app.handler"
                         default-index-method="getIndex"
@@ -1127,13 +1241,25 @@ with the ``default_index_method`` attribute on the tagged argument:
 
             // ...
 
-            // use getIndex() instead of getDefaultIndexName()
             $services->set(HandlerCollection::class)
                 ->args([
                     tagged_iterator('app.handler', null, 'getIndex'),
                 ])
             ;
         };
+
+If some service class doesn't define the method configured in ``default_index_method``,
+Symfony will fall back to using the service ID as its index inside the tagged services.
+
+Combining the ``index_by`` and ``default_index_method`` Options
+...............................................................
+
+You can combine both options in the same collection of tagged services. Symfony
+will process them in the following order:
+
+#. If the service defines the option/attribute configured in ``index_by``, use it;
+#. If the service class defines the method configured in ``default_index_method``, use it;
+#. Otherwise, fall back to using the service ID as its index inside the tagged services collection.
 
 .. _tags_as-tagged-item:
 
@@ -1154,9 +1280,5 @@ be used directly on the class of the service you want to configure::
     {
         // ...
     }
-
-.. versionadded:: 5.3
-
-    The ``#[AsTaggedItem]`` attribute was introduced in Symfony 5.3.
 
 .. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion

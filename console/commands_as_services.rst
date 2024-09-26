@@ -15,19 +15,17 @@ For example, suppose you want to log something from within your command::
     namespace App\Command;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        protected static $defaultName = 'app:sunshine';
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
-
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
             // you *must* call the parent constructor
             parent::__construct();
         }
@@ -65,12 +63,15 @@ command and start logging.
 Lazy Loading
 ------------
 
-To make your command lazily loaded, either define its ``$defaultName`` static property::
+To make your command lazily loaded, either define its name using the PHP
+``AsCommand`` attribute::
 
+    use Symfony\Component\Console\Attribute\AsCommand;
+    // ...
+
+    #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        protected static $defaultName = 'app:sunshine';
-
         // ...
     }
 
@@ -132,3 +133,5 @@ only when the ``app:sunshine`` command is actually called.
 .. caution::
 
     Calling the ``list`` command will instantiate all commands, including lazy commands.
+    However, if the command is a ``Symfony\Component\Console\Command\LazyCommand``, then
+    the underlying command factory will not be executed.

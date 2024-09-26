@@ -7,10 +7,6 @@ step-by-step, allowing to interrupt the validation once the first violation is r
 As an alternative in situations ``Sequentially`` cannot solve, you may consider
 using :doc:`GroupSequence </validation/sequence_provider>` which allows more control.
 
-.. versionadded:: 5.1
-
-    The ``Sequentially`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Sequentially`
@@ -40,30 +36,6 @@ You can validate each of these constraints sequentially to solve these issues:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Localization/Place.php
-        namespace App\Localization;
-
-        use App\Validator\Constraints as AcmeAssert;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Place
-        {
-            /**
-             * @var string
-             *
-             * @Assert\Sequentially({
-             *     @Assert\NotNull(),
-             *     @Assert\Type("string"),
-             *     @Assert\Length(min=10),
-             *     @Assert\Regex(Place::ADDRESS_REGEX),
-             *     @AcmeAssert\Geolocalizable(),
-             * })
-             */
-            public $address;
-        }
-
     .. code-block:: php-attributes
 
         // src/Localization/Place.php
@@ -72,7 +44,6 @@ You can validate each of these constraints sequentially to solve these issues:
         use App\Validator\Constraints as AcmeAssert;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Place
         {
             #[Assert\Sequentially([
@@ -82,7 +53,7 @@ You can validate each of these constraints sequentially to solve these issues:
                 new Assert\Regex(Place::ADDRESS_REGEX),
                 new AcmeAssert\Geolocalizable,
             ])]
-            public $address;
+            public string $address;
         }
 
     .. code-block:: yaml
@@ -134,7 +105,7 @@ You can validate each of these constraints sequentially to solve these issues:
 
         class Place
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('address', new Assert\Sequentially([
                     new Assert\NotNull(),
@@ -145,11 +116,6 @@ You can validate each of these constraints sequentially to solve these issues:
                 ]));
             }
         }
-
-.. versionadded:: 5.4
-
-    The ``#[Sequentially]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
 
 Options
 -------

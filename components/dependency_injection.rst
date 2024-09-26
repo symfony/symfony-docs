@@ -31,7 +31,7 @@ you want to make available as a service::
 
     class Mailer
     {
-        private $transport;
+        private string $transport;
 
         public function __construct()
         {
@@ -54,11 +54,9 @@ so this is passed into the constructor::
 
     class Mailer
     {
-        private $transport;
-
-        public function __construct($transport)
-        {
-            $this->transport = $transport;
+        public function __construct(
+            private string $transport,
+        ) {
         }
 
         // ...
@@ -95,11 +93,9 @@ like this::
 
     class NewsletterManager
     {
-        private $mailer;
-
-        public function __construct(\Mailer $mailer)
-        {
-            $this->mailer = $mailer;
+        public function __construct(
+            private \Mailer $mailer,
+        ) {
         }
 
         // ...
@@ -128,9 +124,9 @@ it was only optional then you could use setter injection instead::
 
     class NewsletterManager
     {
-        private $mailer;
+        private \Mailer $mailer;
 
-        public function setMailer(\Mailer $mailer)
+        public function setMailer(\Mailer $mailer): void
         {
             $this->mailer = $mailer;
         }
@@ -165,6 +161,35 @@ like this::
     // ...
 
     $newsletterManager = $container->get('newsletter_manager');
+
+Getting Services That Don't Exist
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, when you try to get a service that doesn't exist, you see an exception.
+You can override this behavior as follows::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
+
+    $containerBuilder = new ContainerBuilder();
+
+    // ...
+
+    // the second argument is optional and defines what to do when the service doesn't exist
+    $newsletterManager = $containerBuilder->get('newsletter_manager', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE);
+
+These are all the possible behaviors:
+
+ * ``ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE``: throws an exception
+   at compile time (this is the **default** behavior);
+ * ``ContainerInterface::RUNTIME_EXCEPTION_ON_INVALID_REFERENCE``: throws an
+   exception at runtime, when trying to access the missing service;
+ * ``ContainerInterface::NULL_ON_INVALID_REFERENCE``: returns ``null``;
+ * ``ContainerInterface::IGNORE_ON_INVALID_REFERENCE``: ignores the wrapping
+   command asking for the reference (for instance, ignore a setter if the service
+   does not exist);
+ * ``ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE``: ignores/returns
+   ``null`` for uninitialized services or invalid references.
 
 Avoiding your Code Becoming Dependent on the Container
 ------------------------------------------------------
@@ -287,7 +312,7 @@ config files:
 
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 // ...
                 ->set('mailer.transport', 'sendmail')
@@ -299,12 +324,10 @@ config files:
             ;
 
             $services->set('mailer', 'Mailer')
-                // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer.transport')])
             ;
 
             $services->set('newsletter_manager', 'NewsletterManager')
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->call('setMailer', [service('mailer')])
             ;
         };

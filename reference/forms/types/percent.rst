@@ -14,8 +14,6 @@ the input.
 +---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please enter a percentage value.                                      |
 +---------------------------+-----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                   |
-+---------------------------+-----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                         |
 +---------------------------+-----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PercentType` |
@@ -28,18 +26,10 @@ Field Options
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
-.. versionadded:: 5.1
-
-    The ``rounding_mode`` option was introduced in Symfony 5.1.
-
 html5
 ~~~~~
 
 **type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 5.2
-
-    This option was introduced in Symfony 5.2.
 
 If set to ``true``, the HTML input will be rendered as a native HTML5
 ``<input type="number">`` element.
@@ -123,6 +113,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

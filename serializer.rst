@@ -28,11 +28,12 @@ you need it or it can be used in a controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Serializer\SerializerInterface;
 
     class DefaultController extends AbstractController
     {
-        public function index(SerializerInterface $serializer)
+        public function index(SerializerInterface $serializer): Response
         {
             // keep reading for usage examples
         }
@@ -46,10 +47,6 @@ Or you can use the ``serialize`` Twig filter in a template:
 
 See the :doc:`twig reference </reference/twig_reference>` for
 more information.
-
-.. versionadded:: 5.3
-
-    A ``serialize`` filter was introduced in Symfony 5.3 that uses the Serializer component.
 
 Adding Normalizers and Encoders
 -------------------------------
@@ -78,11 +75,7 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
-
-.. versionadded:: 5.4
-
-    :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
-    was introduced in Symfony 5.4. PHP BackedEnum requires at least PHP 8.1.
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
 
 Other :ref:`built-in normalizers <component-serializer-normalizers>` and
 custom normalizers and/or encoders can also be loaded by tagging them as
@@ -90,7 +83,7 @@ custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
-.. caution::
+.. danger::
 
     Always make sure to load the ``DateTimeNormalizer`` when serializing the
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
@@ -112,11 +105,6 @@ resources. This context is passed to all normalizers. For example:
 * :class:`Symfony\\Component\\Serializer\\Serializer`
   uses ``empty_array_as_object`` to represent empty arrays as ``{}`` instead
   of ``[]`` in JSON.
-
-.. versionadded:: 5.4
-
-    The usage of the ``empty_array_as_object`` option in the
-    Serializer was introduced in Symfony 5.4.
 
 You can pass the context as follows::
 
@@ -141,6 +129,7 @@ configuration:
             serializer:
                 default_context:
                     enable_max_depth: true
+                    yaml_indentation: 2
 
     .. code-block:: xml
 
@@ -148,49 +137,29 @@ configuration:
         <framework:config>
             <!-- ... -->
             <framework:serializer>
-                <default-context enable-max-depth="true"/>
+                <default-context enable-max-depth="true" yaml-indentation="2"/>
             </framework:serializer>
         </framework:config>
 
     .. code-block:: php
 
         // config/packages/framework.php
+        use Symfony\Component\Serializer\Encoder\YamlEncoder;
         use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->serializer()
                 ->defaultContext([
-                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true
+                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
+                    YamlEncoder::YAML_INDENTATION => 2,
                 ])
             ;
         };
 
-.. versionadded:: 5.4
-
-    The ability to configure the ``default_context`` option in the
-    Serializer was introduced in Symfony 5.4.
-
 You can also specify the context on a per-property basis::
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Model;
-
-        use Symfony\Component\Serializer\Annotation\Context;
-        use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-
-        class Person
-        {
-            /**
-             * @Context({ DateTimeNormalizer::FORMAT_KEY = 'Y-m-d' })
-             */
-            public $createdAt;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -202,13 +171,14 @@ You can also specify the context on a per-property basis::
         class Person
         {
             #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
-            public $createdAt;
+            public \DateTimeInterface $createdAt;
 
             // ...
         }
 
     .. code-block:: yaml
 
+        # config/serializer/custom_config.yaml
         App\Model\Person:
             attributes:
                 createdAt:
@@ -217,6 +187,7 @@ You can also specify the context on a per-property basis::
 
     .. code-block:: xml
 
+        <!-- config/serializer/custom_config.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -243,9 +214,9 @@ Use the options to specify context specific to normalization or denormalization:
     {
         #[Context(
             normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'],
-            denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339],
+            denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => '!Y-m-d'], // To prevent to have the time from the moment of denormalization
         )]
-        public $createdAt;
+        public \DateTimeInterface $createdAt;
 
         // ...
     }
@@ -266,25 +237,79 @@ You can also restrict the usage of a context to some groups::
             context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
             groups: ['extended'],
         )]
-        public $createdAt;
+        public \DateTimeInterface $createdAt;
 
         // ...
     }
 
-The attribute/annotation can be repeated as much as needed on a single property.
-Context without group is always applied first. Then context for the matching groups are merged in the provided order.
+The attribute can be repeated as much as needed on a single property.
+Context without group is always applied first. Then context for the matching
+groups are merged in the provided order.
 
-.. versionadded:: 5.3
+If you repeat the same context in multiple properties, consider using the
+``#[Context]`` attribute on your class to apply that context configuration to
+all the properties of the class::
 
-    The ``Context`` attribute, annotation and the configuration options were introduced in Symfony 5.3.
+    namespace App\Model;
 
-.. _serializer-using-serialization-groups-annotations:
+    use Symfony\Component\Serializer\Annotation\Context;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
-Using Serialization Groups Annotations
---------------------------------------
+    #[Context([DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339])]
+    #[Context(
+        context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
+        groups: ['extended'],
+    )]
+    class Person
+    {
+        // ...
+    }
 
-You can add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
-to your class::
+.. _serializer-using-context-builders:
+
+Using Context Builders
+----------------------
+
+To define the (de)serialization context, you can use "context builders", which
+are objects that help you to create that context by providing autocompletion,
+validation, and documentation::
+
+    use Symfony\Component\Serializer\Context\Normalizer\DateTimeNormalizerContextBuilder;
+
+    $contextBuilder = (new DateTimeNormalizerContextBuilder())->withFormat('Y-m-d H:i:s');
+    $serializer->serialize($something, 'json', $contextBuilder->toArray());
+
+Each normalizer/encoder has its related :ref:`context builder <component-serializer-context-builders>`.
+To create a more complex (de)serialization context, you can chain them using the
+``withContext()`` method::
+
+    use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
+    use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+    $initialContext = [
+        'custom_key' => 'custom_value',
+    ];
+
+    $contextBuilder = (new ObjectNormalizerContextBuilder())
+        ->withContext($initialContext)
+        ->withGroups(['group1', 'group2']);
+
+    $contextBuilder = (new CsvEncoderContextBuilder())
+        ->withContext($contextBuilder)
+        ->withDelimiter(';');
+
+    $serializer->serialize($something, 'csv', $contextBuilder->toArray());
+
+You can also :doc:`create your context builders </serializer/custom_context_builders>`
+to have autocompletion, validation, and documentation for your custom context values.
+
+.. _serializer-using-serialization-groups-attributes:
+
+Using Serialization Groups Attributes
+-------------------------------------
+
+You can add :ref:`#[Groups] attributes <component-serializer-attributes-groups-attributes>`
+to your class properties::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -292,45 +317,64 @@ to your class::
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Serializer\Annotation\Groups;
 
-    /**
-     * @ORM\Entity()
-     */
+    #[ORM\Entity]
     class Product
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         * @Groups({"show_product", "list_product"})
-         */
-        private $id;
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column(type: 'integer')]
+        #[Groups(['show_product', 'list_product'])]
+        private int $id;
 
-        /**
-         * @ORM\Column(type="string", length=255)
-         * @Groups({"show_product", "list_product"})
-         */
-        private $name;
+        #[ORM\Column(type: 'string', length: 255)]
+        #[Groups(['show_product', 'list_product'])]
+        private string $name;
 
-        /**
-         * @ORM\Column(type="text")
-         * @Groups({"show_product"})
-         */
-        private $description;
+        #[ORM\Column(type: 'text')]
+        #[Groups(['show_product'])]
+        private string $description;
     }
 
-You can now choose which groups to use when serializing::
+You can also use the ``#[Groups]`` attribute on class level::
 
-    $json = $serializer->serialize(
-        $product,
-        'json',
-        ['groups' => 'show_product']
-    );
+    #[ORM\Entity]
+    #[Groups(['show_product'])]
+    class Product
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column(type: 'integer')]
+        #[Groups(['list_product'])]
+        private int $id;
+
+        #[ORM\Column(type: 'string', length: 255)]
+        #[Groups(['list_product'])]
+        private string $name;
+
+        #[ORM\Column(type: 'text')]
+        private string $description;
+    }
+
+In this example, the ``id`` and the ``name`` properties belong to the
+``show_product`` and ``list_product`` groups. The ``description`` property
+only belongs to the ``show_product`` group.
+
+Now that your groups are defined, you can choose which groups to use when
+serializing::
+
+    use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+    $context = (new ObjectNormalizerContextBuilder())
+        ->withGroups('show_product')
+        ->toArray();
+
+    $json = $serializer->serialize($product, 'json', $context);
 
 .. tip::
 
     The value of the ``groups`` key can be a single string, or an array of strings.
 
-In addition to the ``@Groups`` annotation, the Serializer component also
+In addition to the ``#[Groups]`` attribute, the Serializer component also
 supports YAML or XML files. These files are automatically loaded when being
 stored in one of the following locations:
 
@@ -341,7 +385,79 @@ stored in one of the following locations:
 * All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
 
+.. note::
+
+    The groups used by default when normalizing and denormalizing objects are
+    ``Default`` and the group that matches the class name. For example, if you
+    are normalizing a ``App\Entity\Product`` object, the groups used are
+    ``Default`` and ``Product``.
+
+    .. versionadded:: 7.1
+
+        The default use of the class name and ``Default`` groups when normalizing
+        and denormalizing objects was introduced in Symfony 7.1.
+
 .. _serializer-enabling-metadata-cache:
+
+Using Nested Attributes
+-----------------------
+
+To map nested properties, use the ``SerializedPath`` configuration to define
+their paths using a :doc:`valid PropertyAccess syntax </components/property_access>`:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Attribute\SerializedPath;
+
+        class Person
+        {
+            #[SerializedPath('[profile][information][birthday]')]
+            private string $birthday;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\Model\Person:
+            attributes:
+                dob:
+                    serialized_path: '[profile][information][birthday]'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Model\Person">
+                <attribute name="dob" serialized-path="[profile][information][birthday]"/>
+            </class>
+        </serializer>
+
+Using the configuration from above, denormalizing with a metadata-aware
+normalizer will write the ``birthday`` field from ``$data`` onto the ``Person``
+object::
+
+    $data = [
+        'profile' => [
+            'information' => [
+                'birthday' => '01-01-1970',
+            ],
+        ],
+    ];
+    $person = $normalizer->denormalize($data, Person::class, 'any');
+    $person->getBirthday(); // 01-01-1970
+
+When using attributes, the ``SerializedPath`` can either
+be set on the property or the associated _getter_ method. The ``SerializedPath``
+cannot be used in combination with a ``SerializedName`` for the same property.
 
 Configuring the Metadata Cache
 ------------------------------
@@ -385,9 +501,50 @@ value:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->serializer()->nameConverter('serializer.name_converter.camel_case_to_snake_case');
         };
+
+Debugging the Serializer
+------------------------
+
+Use the ``debug:serializer`` command to dump the serializer metadata of a
+given class:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:serializer 'App\Entity\Book'
+
+        App\Entity\Book
+        ---------------
+
+        +----------+------------------------------------------------------------+
+        | Property | Options                                                    |
+        +----------+------------------------------------------------------------+
+        | name     | [                                                          |
+        |          |   "groups" => [                                            |
+        |          |       "book:read",                                         |
+        |          |       "book:write",                                        |
+        |          |   ],                                                       |
+        |          |   "maxDepth" => 1,                                         |
+        |          |   "serializedName" => "book_name",                         |
+        |          |   "serializedPath" => null,                                |
+        |          |   "ignore" => false,                                       |
+        |          |   "normalizationContexts" => [],                           |
+        |          |   "denormalizationContexts" => []                          |
+        |          | ]                                                          |
+        | isbn     | [                                                          |
+        |          |   "groups" => [                                            |
+        |          |       "book:read",                                         |
+        |          |   ],                                                       |
+        |          |   "maxDepth" => null,                                      |
+        |          |   "serializedName" => null,                                |
+        |          |   "serializedPath" => [data][isbn],                        |
+        |          |   "ignore" => false,                                       |
+        |          |   "normalizationContexts" => [],                           |
+        |          |   "denormalizationContexts" => []                          |
+        |          | ]                                                          |
+        +----------+------------------------------------------------------------+
 
 Going Further with the Serializer
 ---------------------------------
@@ -416,6 +573,7 @@ take a look at how this bundle works.
 
     serializer/custom_encoders
     serializer/custom_normalizer
+    serializer/custom_context_builders
 
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: https://json-ld.org

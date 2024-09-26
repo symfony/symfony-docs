@@ -17,25 +17,6 @@ you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Participant.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Participant
-        {
-            /**
-             * @Assert\Range(
-             *      min = 120,
-             *      max = 180,
-             *      notInRangeMessage = "You must be between {{ min }}cm and {{ max }}cm tall to enter",
-             * )
-             */
-            protected $height;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Participant.php
@@ -50,7 +31,7 @@ you might add the following:
                 max: 180,
                 notInRangeMessage: 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
             )]
-            protected $height;
+            protected int $height;
         }
 
     .. code-block:: yaml
@@ -93,7 +74,9 @@ you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('height', new Assert\Range([
                     'min' => 120,
@@ -113,24 +96,6 @@ date must lie within the current year like this:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Event.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Event
-        {
-            /**
-             * @Assert\Range(
-             *      min = "first day of January",
-             *      max = "first day of January next year"
-             * )
-             */
-            protected $startDate;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Event.php
@@ -144,7 +109,7 @@ date must lie within the current year like this:
                 min: 'first day of January',
                 max: 'first day of January next year',
             )]
-            protected $startDate;
+            protected \DateTimeInterface $startDate;
         }
 
     .. code-block:: yaml
@@ -185,7 +150,9 @@ date must lie within the current year like this:
 
         class Event
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startDate', new Assert\Range([
                     'min' => 'first day of January',
@@ -198,24 +165,6 @@ Be aware that PHP will use the server's configured timezone to interpret these
 dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Event.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Event
-        {
-            /**
-             * @Assert\Range(
-             *      min = "first day of January UTC",
-             *      max = "first day of January next year UTC"
-             * )
-             */
-            protected $startDate;
-        }
 
     .. code-block:: php-attributes
 
@@ -230,7 +179,7 @@ dates. If you want to fix the timezone, append it to the date string:
                 min: 'first day of January UTC',
                 max: 'first day of January next year UTC',
             )]
-            protected $startDate;
+            protected \DateTimeInterface $startDate;
         }
 
     .. code-block:: yaml
@@ -271,7 +220,9 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Event
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startDate', new Assert\Range([
                     'min' => 'first day of January UTC',
@@ -284,24 +235,6 @@ The ``DateTime`` class also accepts relative dates or times. For example, you
 can check that a delivery date starts within the next five hours like this:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\Range(
-             *      min = "now",
-             *      max = "+5 hours"
-             * )
-             */
-            protected $deliveryDate;
-        }
 
     .. code-block:: php-attributes
 
@@ -316,7 +249,7 @@ can check that a delivery date starts within the next five hours like this:
                 min: 'now',
                 max: '+5 hours',
             )]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -357,7 +290,9 @@ can check that a delivery date starts within the next five hours like this:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\Range([
                     'min' => 'now',
@@ -375,10 +310,6 @@ Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
-
-.. versionadded:: 5.2
-
-    The ``invalidDateTimeMessage`` option was introduced in Symfony 5.2.
 
 The message displayed when the ``min`` and ``max`` values are PHP datetimes but
 the given value is not.
@@ -407,10 +338,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 ``max``
 ~~~~~~~

@@ -79,6 +79,13 @@ This will generate your new entity class::
         // ... getters and setters
     }
 
+.. tip::
+
+    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
+    ``--with-ulid`` to ``make:entity``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    this generates an entity with the ``id`` type as :ref:`Uuid <uuid>`
+    or :ref:`Ulid <ulid>` instead of ``int``.
+
 Mapping the ManyToOne Relationship
 ----------------------------------
 
@@ -91,7 +98,7 @@ From the perspective of the ``Product`` entity, this is a many-to-one relationsh
 From the perspective of the ``Category`` entity, this is a one-to-many relationship.
 
 To map this, first create a ``category`` property on the ``Product`` class with
-the ``ManyToOne`` annotation. You can do this by hand, or by using the ``make:entity``
+the ``ManyToOne`` attribute. You can do this by hand, or by using the ``make:entity``
 command, which will ask you several questions about your relationship. If you're
 not sure of the answer, don't worry! You can always change the settings later:
 
@@ -137,34 +144,6 @@ the ``Product`` entity (and getter & setter methods):
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Product.php
-        namespace App\Entity;
-
-        // ...
-        class Product
-        {
-            // ...
-
-            /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
-             */
-            private $category;
-
-            public function getCategory(): ?Category
-            {
-                return $this->category;
-            }
-
-            public function setCategory(?Category $category): self
-            {
-                $this->category = $category;
-
-                return $this;
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Product.php
@@ -175,8 +154,8 @@ the ``Product`` entity (and getter & setter methods):
         {
             // ...
 
-            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: "products")]
-            private $category;
+            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+            private Category $category;
 
             public function getCategory(): ?Category
             {
@@ -234,40 +213,6 @@ class that will hold these objects:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Category.php
-        namespace App\Entity;
-
-        // ...
-        use Doctrine\Common\Collections\ArrayCollection;
-        use Doctrine\Common\Collections\Collection;
-
-        class Category
-        {
-            // ...
-
-            /**
-             * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
-             */
-            private $products;
-
-            public function __construct()
-            {
-                $this->products = new ArrayCollection();
-            }
-
-            /**
-             * @return Collection|Product[]
-             */
-            public function getProducts(): Collection
-            {
-                return $this->products;
-            }
-
-            // addProduct() and removeProduct() were also added
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Category.php
@@ -281,8 +226,8 @@ class that will hold these objects:
         {
             // ...
 
-            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category")]
-            private $products;
+            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
+            private Collection $products;
 
             public function __construct()
             {
@@ -290,7 +235,7 @@ class that will hold these objects:
             }
 
             /**
-             * @return Collection|Product[]
+             * @return Collection<int, Product>
              */
             public function getProducts(): Collection
             {
@@ -372,14 +317,14 @@ Now you can see this new code in action! Imagine you're inside a controller::
     // ...
     use App\Entity\Category;
     use App\Entity\Product;
-    use Doctrine\Persistence\ManagerRegistry;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ProductController extends AbstractController
     {
         #[Route('/product', name: 'product')]
-        public function index(ManagerRegistry $doctrine): Response
+        public function index(EntityManagerInterface $entityManager): Response
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -392,7 +337,6 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relates this product to the category
             $product->setCategory($category);
 
-            $entityManager = $doctrine->getManager();
             $entityManager->persist($category);
             $entityManager->persist($product);
             $entityManager->flush();
@@ -441,9 +385,9 @@ before. First, fetch a ``$product`` object and then access its related
 
     class ProductController extends AbstractController
     {
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(ProductRepository $productRepository, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->find($id);
+            $product = $productRepository->find($id);
             // ...
 
             $categoryName = $product->getCategory()->getName();
@@ -477,9 +421,9 @@ direction::
     // ...
     class ProductController extends AbstractController
     {
-        public function showProducts(ManagerRegistry $doctrine, int $id): Response
+        public function showProducts(CategoryRepository $categoryRepository, int $id): Response
         {
-            $category = $doctrine->getRepository(Category::class)->find($id);
+            $category = $categoryRepository->find($id);
 
             $products = $category->getProducts();
 
@@ -498,7 +442,7 @@ by adding JOINs.
     a "proxy" object in place of the true object. Look again at the above
     example::
 
-        $product = $doctrine->getRepository(Product::class)->find($id);
+        $product = $productRepository->find($id);
 
         $category = $product->getCategory();
 
@@ -568,9 +512,9 @@ object and its related ``Category`` in one query::
     // ...
     class ProductController extends AbstractController
     {
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(ProductRepository $productRepository, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->findOneByIdJoinedToCategory($id);
+            $product = $productRepository->findOneByIdJoinedToCategory($id);
 
             $category = $product->getCategory();
 
@@ -591,7 +535,7 @@ To update a relationship in the database, you *must* set the relationship on the
 *owning* side. The owning side is always where the ``ManyToOne`` mapping is set
 (for a ``ManyToMany`` relation, you can choose which side is the owning side).
 
-Does this means it's not possible to call ``$category->addProduct()`` or
+Does this mean it's not possible to call ``$category->addProduct()`` or
 ``$category->removeProduct()`` to update the database? Actually, it *is* possible,
 thanks to some clever code that the ``make:entity`` command generated::
 
@@ -644,22 +588,20 @@ also generated a ``removeProduct()`` method::
 Thanks to this, if you call ``$category->removeProduct($product)``, the ``category_id``
 on that ``Product`` will be set to ``null`` in the database.
 
+.. warning::
+
+    Please be aware that the inverse side could be associated with a large amount of records.
+    I.e. there could be a large amount of products with the same category.
+    In this case ``$this->products->contains($product)`` could lead to unwanted database
+    requests and very high memory consumption with the risk of hard to debug "Out of memory" errors.
+
+    So make sure if you need an inverse side and check if the generated code could lead to such issues.
+
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``
 to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose
 that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Category.php
-
-        // ...
-
-        /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
-         */
-        private $products;
 
     .. code-block:: php-attributes
 
@@ -667,9 +609,8 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
         // ...
 
-        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category", orphanRemoval: true)]
-        private $products;
-
+        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category', orphanRemoval: true)]
+        private array $products;
 
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be
 removed from the database entirely.
@@ -684,11 +625,12 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. note::
 
-    If you're using annotations, you'll need to prepend all annotations with
-    ``@ORM\`` (e.g. ``@ORM\OneToMany``), which is not reflected in Doctrine's
+    If you're using attributes, you'll need to prepend all attributes with
+    ``#[ORM\]`` (e.g. ``#[ORM\OneToMany]``), which is not reflected in Doctrine's
     documentation.
 
 .. _`Association Mapping Documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/association-mapping.html
 .. _`orphanRemoval`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-associations.html#orphan-removal
 .. _`Mastering Doctrine Relations`: https://symfonycasts.com/screencast/doctrine-relations
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
+.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

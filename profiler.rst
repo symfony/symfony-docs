@@ -4,7 +4,7 @@ Profiler
 The profiler is a powerful **development tool** that gives detailed information
 about the execution of any request.
 
-.. caution::
+.. danger::
 
     **Never** enable the profiler in production environments
     as it will lead to major security vulnerabilities in your project.
@@ -35,10 +35,15 @@ Symfony Profiler, which will look like this:
     in the ``X-Debug-Token-Link`` HTTP response header. Browse the ``/_profiler``
     URL to see all profiles.
 
+.. note::
+
+    To limit the storage used by profiles on disk, they are probabilistically
+    removed after 2 days.
+
 Accessing Profiling Data Programmatically
 -----------------------------------------
 
-Most of the times, the profiler information is accessed and analyzed using its
+Most of the time, the profiler information is accessed and analyzed using its
 web-based interface. However, you can also retrieve profiling information
 programmatically thanks to the methods provided by the ``profiler`` service.
 
@@ -48,6 +53,12 @@ method to access to its associated profile::
 
     // ... $profiler is the 'profiler' service
     $profile = $profiler->loadProfileFromResponse($response);
+
+.. note::
+
+    The ``profiler`` service will be :doc:`autowired </service_container/autowiring>`
+    automatically when type-hinting any service argument with the
+    :class:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler` class.
 
 When the profiler stores data about a request, it also associates a token with it;
 this token is available in the ``X-Debug-Token`` HTTP header of the response.
@@ -70,8 +81,11 @@ look for tokens based on some criteria::
     // gets the latest 10 tokens
     $tokens = $profiler->find('', '', 10, '', '', '');
 
-    // gets the latest 10 tokens for all URL containing /admin/
+    // gets the latest 10 tokens for all URLs containing /admin/
     $tokens = $profiler->find('', '/admin/', 10, '', '', '');
+
+    // gets the latest 10 tokens for all URLs not containing /api/
+    $tokens = $profiler->find('', '!/api/', 10, '', '', '');
 
     // gets the latest 10 tokens for local POST requests
     $tokens = $profiler->find('127.0.0.1', '', 10, 'POST', '', '');
@@ -110,16 +124,12 @@ need to create a custom data collector. Instead, use the built-in utilities to
     Consider using a professional profiler such as `Blackfire`_ to measure and
     analyze the execution of your application in detail.
 
-Enabling the Profiler Conditionally
------------------------------------
+.. _enabling-the-profiler-programmatically:
 
-.. caution::
+Enabling the Profiler Programmatically or Conditionally
+-------------------------------------------------------
 
-    The possibility to use a matcher to enable the profiler conditionally was
-    removed in Symfony 4.0.
-
-Symfony Profiler cannot be enabled/disabled conditionally using matchers, because
-that feature was removed in Symfony 4.0. However, you can use the ``enable()``
+Symfony Profiler can be enabled and disabled programmatically. You can use the ``enable()``
 and ``disable()`` methods of the :class:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler`
 class in your controllers to manage the profiler programmatically::
 
@@ -130,7 +140,7 @@ class in your controllers to manage the profiler programmatically::
     {
         // ...
 
-        public function someMethod(?Profiler $profiler)
+        public function someMethod(?Profiler $profiler): Response
         {
             // $profiler won't be set if your environment doesn't have the profiler (like prod, by default)
             if (null !== $profiler) {
@@ -174,6 +184,31 @@ create an alias pointing to the existing ``profiler`` service:
 
         $container->setAlias(Profiler::class, 'profiler');
 
+.. _enabling-the-profiler-conditionally:
+
+Enabling the Profiler Conditionally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of enabling the profiler programmatically as explained in the previous
+section, you can also enable it when a certain condition is met (e.g. a certain
+parameter is included in the URL):
+
+.. code-block:: yaml
+
+    # config/packages/dev/web_profiler.yaml
+        framework:
+            profiler:
+                collect: false
+                collect_parameter: 'profile'
+
+This configuration disables the profiler by default (``collect: false``) to
+improve the application performance; but enables it for requests that include a
+query parameter called ``profile`` (you can freely choose this query parameter name).
+
+In addition to the query parameter, this feature also works when submitting a
+form field with that name (useful to enable the profiler in ``POST`` requests)
+or when including it as a request attribute.
+
 Updating the Web Debug Toolbar After AJAX Requests
 --------------------------------------------------
 
@@ -183,16 +218,15 @@ pages from a server.
 
 By default, the debug toolbar displays the information of the initial page load
 and doesn't refresh after each AJAX request. However, you can set the
-``Symfony-Debug-Toolbar-Replace`` header to a value of ``1`` in the response to
+``Symfony-Debug-Toolbar-Replace`` header to a value of ``'1'`` in the response to
 the AJAX request to force the refresh of the toolbar::
 
-    $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
+    $response->headers->set('Symfony-Debug-Toolbar-Replace', '1');
 
 Ideally this header should only be set during development and not for
 production. To do that, create an :doc:`event subscriber </event_dispatcher>`
 and listen to the :ref:`kernel.response <component-http-kernel-kernel-response>`
 event::
-
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -202,13 +236,14 @@ event::
 
     class MySubscriber implements EventSubscriberInterface
     {
-        public function __construct(private KernelInterface $kernel)
-        {
+        public function __construct(
+            private KernelInterface $kernel,
+        ) {
         }
 
         // ...
 
-        public function onKernelResponse(ResponseEvent $event)
+        public function onKernelResponse(ResponseEvent $event): void
         {
             if (!$this->kernel->isDebug()) {
                 return;
@@ -220,7 +255,7 @@ event::
             }
 
             $response = $event->getResponse();
-            $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
+            $response->headers->set('Symfony-Debug-Toolbar-Replace', '1');
         }
     }
 
@@ -240,10 +275,6 @@ For convenience, your data collectors can also extend from the
 class, which implements the interface and provides some utilities and the
 ``$this->data`` property to store the collected information.
 
-.. versionadded:: 5.2
-
-    The ``AbstractDataCollector`` class was introduced in Symfony 5.2.
-
 The following example shows a custom collector that stores information about the
 request::
 
@@ -256,7 +287,7 @@ request::
 
     class RequestCollector extends AbstractDataCollector
     {
-        public function collect(Request $request, Response $response, \Throwable $exception = null)
+        public function collect(Request $request, Response $response, ?\Throwable $exception = null): void
         {
             $this->data = [
                 'method' => $request->getMethod(),
@@ -323,6 +354,7 @@ template access to the collected information::
     namespace App\DataCollector;
 
     use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
+    use Symfony\Component\VarDumper\Cloner\Data;
 
     class RequestCollector extends AbstractDataCollector
     {
@@ -333,14 +365,20 @@ template access to the collected information::
             return 'data_collector/template.html.twig';
         }
 
-        public function getMethod()
+        public function getMethod(): string
         {
             return $this->data['method'];
         }
 
-        public function getAcceptableContentTypes()
+        public function getAcceptableContentTypes(): array
         {
             return $this->data['acceptable_content_types'];
+        }
+
+        public function getSomeObject(): Data
+        {
+            // use the cloneVar() method to dump collected data in the profiler
+            return $this->cloneVar($this->data['method']);
         }
     }
 
@@ -378,6 +416,12 @@ block and set the value of two variables called ``icon`` and ``text``:
            show a section in the web profiler #}
         {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
     {% endblock %}
+
+.. tip::
+
+    Symfony Profiler icons are selected from `Tabler icons`_, a large and open
+    source collection of SVG icons. It's recommended to also use those icons for
+    your own profiler panels to get a consistent look.
 
 .. tip::
 
@@ -439,6 +483,11 @@ must also define additional blocks:
                 <td>{{ type }}</td>
             </tr>
             {% endfor %}
+
+            {# use the profiler_dump() function to render the contents of dumped objects #}
+            <tr>
+                {{ profiler_dump(collector.someObject) }}
+            </tr>
         </table>
     {% endblock %}
 
@@ -512,7 +561,7 @@ you'll need to configure the data collector explicitly:
 
         use App\DataCollector\RequestCollector;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(RequestCollector::class)
@@ -527,3 +576,4 @@ you'll need to configure the data collector explicitly:
 
 .. _`Single-page applications`: https://en.wikipedia.org/wiki/Single-page_application
 .. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=profiler
+.. _`Tabler icons`: https://github.com/tabler/tabler-icons

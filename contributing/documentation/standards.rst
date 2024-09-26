@@ -88,9 +88,9 @@ Configuration examples should show all supported formats using
 (and their orders) are:
 
 * **Configuration** (including services): YAML, XML, PHP
-* **Routing**: Attributes, Annotations, YAML, XML, PHP
-* **Validation**: Attributes, Annotations, YAML, XML, PHP
-* **Doctrine Mapping**: Attributes, Annotations, YAML, XML, PHP
+* **Routing**: Attributes, YAML, XML, PHP
+* **Validation**: Attributes, YAML, XML, PHP
+* **Doctrine Mapping**: Attributes, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
 * **Code Examples** (if applicable): PHP Symfony, PHP Standalone
 
@@ -109,7 +109,7 @@ Example
     {
         // ...
 
-        public function foo($bar)
+        public function foo($bar): mixed
         {
             // set foo with a value of bar
             $foo = ...;
@@ -174,7 +174,6 @@ Images and Diagrams
         <object data="_images/example-diagram.svg" type="image/svg+xml"
             alt="Some concise description."
         ></object>
-
 
 English Language Standards
 --------------------------

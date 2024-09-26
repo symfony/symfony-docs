@@ -16,7 +16,7 @@ more control::
             'no' => false,
             'maybe' => null,
         ],
-        'choice_label' => function ($choice, $key, $value) {
+        'choice_label' => function ($choice, string $key, mixed $value): TranslatableMessage|string {
             if (true === $choice) {
                 return 'Definitely!';
             }
@@ -28,11 +28,6 @@ more control::
             //return new TranslatableMessage($key, false === $choice ? [] : ['%status%' => $value], 'store');
         },
     ]);
-
-.. versionadded:: 5.2
-
-    The support for ``TranslatableMessage`` objects in ``choice_label`` was
-    introduced in Symfony 5.2.
 
 This method is called for *each* choice, passing you the ``$choice`` and
 ``$key`` from the choices array (additional ``$value`` is related to `choice_value`_).

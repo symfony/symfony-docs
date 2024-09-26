@@ -414,6 +414,7 @@
 /security/entity_provider /security/user_provider
 /session/avoid_session_start /session
 /session/sessions_directory /session
+/session/configuring_ttl /session#session-configure-ttl
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
 /configuration/external_parameters /configuration/environment_variables
 /contributing/code/patches /contributing/code/pull_requests
@@ -525,8 +526,10 @@
 /components https://symfony.com/components
 /components/index https://symfony.com/components
 /serializer/normalizers /components/serializer#normalizers
+/components/serializer#component-serializer-attributes-groups-annotations /components/serializer#component-serializer-attributes-groups-attributes
 /logging/monolog_regex_based_excludes /logging/monolog_exclude_http_codes
 /security/named_encoders /security/named_hashers
+/components/inflector /string#inflector
 /security/experimental_authenticators /security
 /security/user_provider /security/user_providers
 /security/reset_password /security/passwords#reset-password
@@ -555,3 +558,15 @@
 /notifier/chatters /notifier#sending-chat-messages
 /notifier/texters /notifier#sending-sms
 /notifier/events /notifier#notifier-events
+/email /mailer
+/frontend/assetic /frontend
+/frontend/assetic/index /frontend
+/controller/argument_value_resolver /controller/value_resolver
+/frontend/ux https://symfony.com/bundles/StimulusBundle/current/index.html
+/messenger/handler_results /messenger#messenger-getting-handler-results
+/messenger/dispatch_after_current_bus /messenger#messenger-transactional-messages
+/messenger/multiple_buses /messenger#messenger-multiple-buses
+/frontend/encore/server-data /frontend/server-data
+/components/string /string
+/testing/http_authentication /testing#testing_logging_in_users
+/doctrine/registration_form /security#security-make-registration-form

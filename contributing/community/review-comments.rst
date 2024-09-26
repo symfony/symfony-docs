@@ -149,7 +149,6 @@ you don't have to use "Please" all the time. But it wouldn't hurt.
 It may not seem like much, but saying "Thank you" does make others feel
 more welcome.
 
-
 Preventing Escalations
 ----------------------
 

@@ -66,13 +66,6 @@ tree.
     isn't meant to dump content, you can see the "fixed" version of your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
-.. note::
-
-    If you need better support for HTML5 contents or want to get rid of the
-    inconsistencies of PHP's DOM extension, install the `html5-php library`_.
-    The DomCrawler component will use it automatically when the content has
-    an HTML5 doctype.
-
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -96,9 +89,9 @@ An anonymous function can be used to filter with more complex criteria::
 
     $crawler = $crawler
         ->filter('body > p')
-        ->reduce(function (Crawler $node, $i) {
+        ->reduce(function (Crawler $node, $i): bool {
             // filters every other node
-            return ($i % 2) == 0;
+            return ($i % 2) === 0;
         });
 
 To remove a node, the anonymous function must return ``false``.
@@ -188,10 +181,6 @@ Get all the child or ancestor nodes::
     $crawler->filter('body')->children();
     $crawler->filter('body > p')->ancestors();
 
-.. versionadded:: 5.3
-
-    The ``ancestors()`` method was introduced in Symfony 5.3.
-
 Get all the direct child nodes matching a CSS selector::
 
     $crawler->filter('body')->children('p.lorem');
@@ -221,24 +210,35 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
-    // by default, text() trims white spaces, including the internal ones
+    // by default, text() trims whitespace characters, including the internal ones
     // (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
     // pass FALSE as the second argument to return the original text unchanged
     $crawler->filterXPath('//body/p')->text('Default text content', false);
 
-    // innerText() is similar to text() but only returns the text that is
-    // the direct descendant of the current node, excluding any child nodes
+    // innerText() is similar to text() but returns only text that is a direct
+    // descendant of the current node, excluding text from child nodes
     $text = $crawler->filterXPath('//body/p')->innerText();
-    // if content is <p>Foo <span>Bar</span></p>
-    // innerText() returns 'Foo' and text() returns 'Foo Bar'
+    // if content is <p>Foo <span>Bar</span></p> or <p><span>Bar</span> Foo</p>
+    // innerText() returns 'Foo' in both cases; and text() returns 'Foo Bar' and 'Bar Foo' respectively
 
-.. versionadded:: 5.4
+    // if there are multiple text nodes, between other child nodes, like
+    // <p>Foo <span>Bar</span> Baz</p>
+    // innerText() returns only the first text node 'Foo'
 
-    The ``innerText()`` method was introduced in Symfony 5.4.
+    // like text(), innerText() also trims whitespace characters by default,
+    // but you can get the unchanged text by passing FALSE as argument
+    $text = $crawler->filterXPath('//body/p')->innerText(false);
 
 Access the attribute value of the first node of the current selection::
 
     $class = $crawler->filterXPath('//body/p')->attr('class');
+
+.. tip::
+
+    You can define the default value to use if the node or attribute is empty
+    by using the second argument of the ``attr()`` method::
+
+        $class = $crawler->filterXPath('//body/p')->attr('class', 'my-default-class');
 
 Extract attribute and/or node values from the list of nodes::
 
@@ -257,7 +257,7 @@ Call an anonymous function on each node of the list::
     use Symfony\Component\DomCrawler\Crawler;
     // ...
 
-    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i): string {
         return $node->text();
     });
 
@@ -267,7 +267,7 @@ The result is an array of values returned by the anonymous function calls.
 When using nested crawler, beware that ``filterXPath()`` is evaluated in the
 context of the crawler::
 
-    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i) {
+    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i): avoid {
         // DON'T DO THIS: direct child can not be found
         $subCrawler = $parentCrawler->filterXPath('sub-tag/sub-child-tag');
 
@@ -639,10 +639,6 @@ the whole form or specific field(s)::
 Resolving a URI
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\DomCrawler\\UriResolver` helper class was added in Symfony 5.1.
-
 The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes a URI
 (relative, absolute, fragment, etc.) and turns it into an absolute URI against
 another given base URI::
@@ -653,10 +649,23 @@ another given base URI::
     UriResolver::resolve('?a=b', 'http://localhost/bar#foo'); // http://localhost/bar?a=b
     UriResolver::resolve('../../', 'http://localhost/'); // http://localhost/
 
+Using a HTML5 Parser
+~~~~~~~~~~~~~~~~~~~~
+
+If you need the :class:`Symfony\\Component\\DomCrawler\\Crawler` to use an HTML5
+parser, set its ``useHtml5Parser`` constructor argument to ``true``::
+
+    use Symfony\Component\DomCrawler\Crawler;
+
+    $crawler = new Crawler(null, $uri, useHtml5Parser: true);
+
+By doing so, the crawler will use the HTML5 parser provided by the `masterminds/html5`_
+library to parse the documents.
+
 Learn more
 ----------
 
 * :doc:`/testing`
 * :doc:`/components/css_selector`
 
-.. _`html5-php library`: https://github.com/Masterminds/html5-php
+.. _`masterminds/html5`: https://packagist.org/packages/masterminds/html5

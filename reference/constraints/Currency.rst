@@ -17,21 +17,6 @@ a valid currency, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\Currency
-             */
-            protected $currency;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php
@@ -42,7 +27,7 @@ a valid currency, you could do the following:
         class Order
         {
             #[Assert\Currency]
-            protected $currency;
+            protected string $currency;
         }
 
     .. code-block:: yaml
@@ -78,7 +63,9 @@ a valid currency, you could do the following:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('currency', new Assert\Currency());
             }
@@ -106,10 +93,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

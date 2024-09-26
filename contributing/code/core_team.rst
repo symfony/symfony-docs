@@ -36,8 +36,6 @@ In addition, there are other groups created to manage specific topics:
 * **Security Team**: manages the whole security process (triaging reported vulnerabilities,
   fixing the reported issues, coordinating the release of security fixes, etc.)
 
-* **Recipes Team**: manages the recipes in the main and contrib recipe repositories.
-
 * **Documentation Team**: manages the whole `symfony-docs repository`_.
 
 Active Core Members
@@ -52,19 +50,16 @@ Active Core Members
   * **Nicolas Grekas** (`nicolas-grekas`_);
   * **Christophe Coevoet** (`stof`_);
   * **Christian Flothmann** (`xabbuh`_);
-  * **Tobias Schultze** (`Tobion`_);
   * **Kévin Dunglas** (`dunglas`_);
   * **Javier Eguiluz** (`javiereguiluz`_);
   * **Grégoire Pineau** (`lyrixx`_);
   * **Ryan Weaver** (`weaverryan`_);
   * **Robin Chalas** (`chalasr`_);
-  * **Maxime Steinhausser** (`ogizanagi`_);
   * **Yonel Ceruto** (`yceruto`_);
   * **Tobias Nyholm** (`Nyholm`_);
   * **Wouter De Jong** (`wouterj`_);
   * **Alexander M. Turek** (`derrabus`_);
   * **Jérémy Derussé** (`jderusse`_);
-  * **Titouan Galopin** (`tgalopin`_);
   * **Oskar Stark** (`OskarStark`_);
   * **Thomas Calvet** (`fancyweb`_);
   * **Mathieu Santostefano** (`welcomattic`_);
@@ -74,13 +69,7 @@ Active Core Members
 * **Security Team** (``@symfony/security`` on GitHub):
 
   * **Fabien Potencier** (`fabpot`_);
-  * **Michael Cullum** (`michaelcullum`_);
   * **Jérémy Derussé** (`jderusse`_).
-
-* **Recipes Team**:
-
-  * **Fabien Potencier** (`fabpot`_);
-  * **Tobias Nyholm** (`Nyholm`_).
 
 * **Documentation Team** (``@symfony/team-symfony-docs`` on GitHub):
 
@@ -104,7 +93,11 @@ Symfony contributions:
 * **Lukas Kahwe Smith** (`lsmith77`_);
 * **Jules Pietri** (`HeahDude`_);
 * **Jakub Zalas** (`jakzal`_);
-* **Samuel Rozé** (`sroze`_).
+* **Samuel Rozé** (`sroze`_);
+* **Tobias Schultze** (`Tobion`_);
+* **Maxime Steinhausser** (`ogizanagi`_);
+* **Titouan Galopin** (`tgalopin`_);
+* **Michael Cullum** (`michaelcullum`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

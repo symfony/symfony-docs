@@ -1,12 +1,6 @@
 How to Add "Remember Me" Login Functionality
 ============================================
 
-.. caution::
-
-    This article documents the remember me system that was introduced in
-    the new authenticator system in 5.3. If you're using the deprecated
-    security system, refer to the `5.2 version of this documentation`_.
-
 Once a user is authenticated, their credentials are typically stored in the
 session. This means that when the session ends they will be logged out and
 have to provide their login details again next time they wish to access the
@@ -68,7 +62,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -90,9 +84,9 @@ which is defined using the ``APP_SECRET`` environment variable.
 After enabling the ``remember_me`` system in the configuration, there are a
 couple more things to do before remember me works correctly:
 
-#. :ref:`Add an opt-in checkbox to active remember me <security-remember-me-activate>`;
+#. :ref:`Add an opt-in checkbox to activate remember me <security-remember-me-activate>`;
 #. :ref:`Use an authenticator that supports remember me <security-remember-me-authenticator>`;
-#. Optionally, :ref:`configure the how remember me cookies are stored and validated <security-remember-me-storage>`.
+#. Optionally, :ref:`configure how remember me cookies are stored and validated <security-remember-me-storage>`.
 
 After this, the remember me cookie will be created upon successful
 authentication. For some pages/actions, you can
@@ -114,6 +108,9 @@ Using the remember me cookie is not always appropriate (e.g. you should not
 use it on a shared PC). This is why by default, Symfony requires your users
 to opt-in to the remember me system via a request parameter.
 
+Remember Me for Form Login
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 This request parameter is often set via a checkbox in the login form. This
 checkbox must have a name of ``_remember_me``:
 
@@ -134,7 +131,26 @@ checkbox must have a name of ``_remember_me``:
 .. note::
 
     Optionally, you can configure a custom name for this checkbox using the
-    ``remember_me_parameter`` setting under the ``remember_me`` section.
+    ``name`` setting under the ``remember_me`` section.
+
+Remember Me for JSON Login
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you implement the login via an API that uses :ref:`JSON Login <json-login>`
+you can add a ``_remember_me`` key to the body of your POST request.
+
+.. code-block:: json
+
+    {
+        "username": "dunglas@example.com",
+        "password": "MyPassword",
+        "_remember_me": true
+    }
+
+.. note::
+
+    Optionally, you can configure a custom name for this key using the
+    ``name`` setting under the ``remember_me`` section of your firewall.
 
 Always activating Remember Me
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -190,7 +206,7 @@ allow users to opt-out. In these cases, you can use the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -219,7 +235,7 @@ present:
 .. image:: /_images/security/profiler-badges.png
     :alt: The Security page of the Symfony profiler, with the "Authenticators" tab showing the remember me badge in the passport object.
 
-Without this badge, remember me will be not be activated (regardless of all
+Without this badge, remember me will not be activated (regardless of all
 other settings).
 
 Add Remember Me Support to Custom Authenticators
@@ -284,11 +300,6 @@ Persistent tokens
     (or implements :class:`Symfony\\Component\\Security\\Http\\RememberMe\\RememberMeHandlerInterface`).
     You can then configure this custom handler by configuring the service
     ID in the ``service`` option under ``remember_me``.
-
-    .. versionadded:: 5.1
-
-        The ``service`` option was introduced in Symfony 5.1.
-
 
 .. _security-remember-me-signature:
 
@@ -359,7 +370,7 @@ are fetched from the user object using the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -443,7 +454,7 @@ You can enable the doctrine token provider using the ``doctrine`` setting:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -532,7 +543,7 @@ Then, configure the service ID of your custom token provider as ``service``:
         use App\Security\RememberMe\CustomTokenProvider;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -586,10 +597,6 @@ users to change their password. You can do this by leveraging a few special
     There is also a ``IS_REMEMBERED`` attribute that grants access *only*
     when the user is authenticated via the remember me mechanism.
 
-.. versionadded:: 5.1
-
-    The ``IS_REMEMBERED`` attribute was introduced in Symfony 5.1.
-
 Customizing the Remember Me Cookie
 ----------------------------------
 
@@ -628,5 +635,3 @@ cookie created by the system:
 ``samesite`` (default value: ``null``)
     If set to ``strict``, the cookie associated with this feature will not
     be sent along with cross-site requests, even when following a regular link.
-
-.. _`5.2 version of this documentation`: https://symfony.com/doc/5.2/security/remember_me.html

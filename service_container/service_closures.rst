@@ -1,10 +1,6 @@
 Service Closures
 ================
 
-.. versionadded:: 5.4
-
-    The ``service_closure()`` function was introduced in Symfony 5.4.
-
 This feature wraps the injected service into a closure allowing it to be
 lazily loaded when and if needed.
 This is useful if the service being injected is a bit heavy to instantiate
@@ -21,13 +17,11 @@ all subsequent calls return the same instance, unless the service is
     class MyService
     {
         /**
-         * @var callable(): MailerInterface
+         * @param callable(): MailerInterface
          */
-        private \Closure $mailer;
-
-        public function __construct(\Closure $mailer)
-        {
-            $this->mailer = $mailer;
+        public function __construct(
+            private \Closure $mailer,
+        ) {
         }
 
         public function doSomething(): void
@@ -85,7 +79,7 @@ argument of type ``service_closure``:
 
         use App\Service\MyService;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MyService::class)
@@ -95,6 +89,11 @@ argument of type ``service_closure``:
             // $services->set(MyService::class)
             //     ->args([service_closure('mailer')->ignoreOnInvalid()]);
         };
+
+.. seealso::
+
+    Service closures can be injected :ref:`by using autowiring <autowiring_closures>`
+    and its dedicated attributes.
 
 .. seealso::
 

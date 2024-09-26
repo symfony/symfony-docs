@@ -37,9 +37,9 @@ In this example, the validation metadata is retrieved executing the
 
     class User
     {
-        protected $name;
+        protected string $name;
 
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
             $metadata->addPropertyConstraint('name', new Assert\NotBlank());
             $metadata->addPropertyConstraint('name', new Assert\Length([
@@ -83,41 +83,27 @@ configure the locations of these files::
     :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addXmlMappings`
     to configure an array of file paths.
 
-The AnnotationLoader
---------------------
+The AttributeLoader
+-------------------
 
-At last, the component provides an
-:class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AnnotationLoader` to get
-the metadata from the annotations of the class. Annotations are defined as ``@``
-prefixed classes included in doc block comments (``/** ... */``). For example::
+The component provides an
+:class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AttributeLoader` to get
+the metadata from the attributes of the class. For example::
 
     use Symfony\Component\Validator\Constraints as Assert;
     // ...
 
     class User
     {
-        /**
-         * @Assert\NotBlank
-         */
-        protected $name;
+        #[Assert\NotBlank]
+        protected string $name;
     }
 
-To enable the annotation loader, call the
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method
-and then call ``addDefaultDoctrineAnnotationReader()`` to use Doctrine's
-annotation reader::
-
-    use Symfony\Component\Validator\Validation;
-
-    $validator = Validation::createValidatorBuilder()
-        ->enableAnnotationMapping(true)
-        ->addDefaultDoctrineAnnotationReader()
-        ->getValidator();
+To enable the attribute loader, call the
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAttributeMapping` method.
 
 To disable the annotation loader after it was enabled, call
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAnnotationMapping`.
-
-.. include:: /_includes/_annotation_loader_tip.rst.inc
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAttributeMapping`.
 
 Using Multiple Loaders
 ----------------------
@@ -132,8 +118,7 @@ multiple mappings::
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->enableAnnotationMapping(true)
-        ->addDefaultDoctrineAnnotationReader()
+        ->enableAttributeMapping()
         ->addMethodMapping('loadValidatorMetadata')
         ->addXmlMapping('validator/validation.xml')
         ->getValidator();
@@ -148,7 +133,7 @@ instance.
 
 To solve this problem, call the :method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMappingCache`
 method of the Validator builder and pass your own caching class (which must
-implement the PSR-6 interface :class:`Psr\\Cache\\CacheItemPoolInterface`)::
+implement the PSR-6 interface ``Psr\Cache\CacheItemPoolInterface``)::
 
     use Symfony\Component\Validator\Validation;
 

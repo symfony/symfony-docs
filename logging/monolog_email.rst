@@ -97,7 +97,7 @@ it is broken down.
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $mainHandler = $monolog->handler('main')
                 ->type('fingers_crossed')
                 // 500 errors are logged at the critical level
@@ -176,7 +176,7 @@ You can adjust the time period using the ``time`` option:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             // ...
 
             $monolog->handler('deduplicated')
@@ -285,14 +285,14 @@ get logged on the server as well as the emails being sent:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('main')
                 ->type('fingers_crossed')
                 ->actionLevel('critical')
                 ->handler('grouped')
             ;
 
-            $monolog->handler('group')
+            $monolog->handler('grouped')
                 ->type('group')
                 ->members(['streamed', 'deduplicated'])
             ;
@@ -322,7 +322,7 @@ get logged on the server as well as the emails being sent:
             ;
         };
 
-This uses the ``group`` handler to send the messages to the two
+This uses the ``grouped`` handler to send the messages to the two
 group members, the ``deduplicated`` and the ``stream`` handlers. The messages will
 now be both written to the log file and emailed.
 

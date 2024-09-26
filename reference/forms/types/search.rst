@@ -4,14 +4,10 @@ SearchType Field
 This renders an ``<input type="search">`` field, which is a text box with
 special functionality supported by some browsers.
 
-Read about the input search field at `DiveIntoHTML5.info`_
-
 +---------------------------+----------------------------------------------------------------------+
 | Rendered as               | ``input search`` field                                               |
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid search term.                                    |
-+---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
 +---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                        |
 +---------------------------+----------------------------------------------------------------------+
@@ -54,6 +50,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
@@ -63,5 +61,3 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
-
-.. _`DiveIntoHTML5.info`: http://diveintohtml5.info/forms.html#type-search

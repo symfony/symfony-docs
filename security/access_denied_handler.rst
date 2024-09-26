@@ -33,14 +33,12 @@ unauthenticated user tries to access a protected resource::
 
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
-        private $urlGenerator;
-
-        public function __construct(UrlGeneratorInterface $urlGenerator)
-        {
-            $this->urlGenerator = $urlGenerator;
+        public function __construct(
+            private UrlGeneratorInterface $urlGenerator,
+        ) {
         }
 
-        public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
+        public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
         {
             // add a custom flash message and redirect to the login page
             $request->getSession()->getFlashBag()->add('note', 'You have to login in order to access this page.');
@@ -91,7 +89,7 @@ Now, configure this service ID as the entry point for the firewall:
         use App\Security\AuthenticationEntryPoint;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 // ....
                 ->entryPoint(AuthenticationEntryPoint::class)
@@ -167,7 +165,7 @@ configure it under your firewall:
         use App\Security\AccessDeniedHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 // ....
                 ->accessDeniedHandler(AccessDeniedHandler::class)

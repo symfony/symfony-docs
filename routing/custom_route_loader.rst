@@ -4,8 +4,8 @@ How to Create a custom Route Loader
 Basic applications can define all their routes in a single configuration file -
 usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
 However, in most applications it's common to import routes definitions from
-different resources: PHP annotations in controller files, YAML, XML or PHP
-files stored in some directory, etc.
+different resources: PHP attributes in controller files, YAML, XML
+or PHP files stored in some directory, etc.
 
 Built-in Route Loaders
 ----------------------
@@ -21,10 +21,22 @@ Symfony provides several route loaders for the most common needs:
             # loads routes from the given routing file stored in some bundle
             resource: '@AcmeBundle/Resources/config/routing.yaml'
 
-        app_annotations:
-            # loads routes from the PHP annotations of the controllers found in that directory
+        app_psr4:
+            # loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root
+            resource:
+                path: '../src/Controller/'
+                namespace: App\Controller
+            type: attribute
+
+        app_attributes:
+            # loads routes from the PHP attributes of the controllers found in that directory
             resource: '../src/Controller/'
-            type:     annotation
+            type:     attribute
+
+        app_class_attributes:
+            # loads routes from the PHP attributes of the given class
+            resource: App\Controller\MyController
+            type:     attribute
 
         app_directory:
             # loads routes from the YAML, XML or PHP files found in that directory
@@ -48,8 +60,16 @@ Symfony provides several route loaders for the most common needs:
             <!-- loads routes from the given routing file stored in some bundle -->
             <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
 
-            <!-- loads routes from the PHP annotations of the controllers found in that directory -->
-            <import resource="../src/Controller/" type="annotation"/>
+            <!-- loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root -->
+            <import type="attribute">
+                <resource path="../src/Controller/" namespace="App\Controller"/>
+            </import>
+
+            <!-- loads routes from the PHP attributes of the controllers found in that directory -->
+            <import resource="../src/Controller/" type="attribute"/>
+
+            <!-- loads routes from the PHP attributes of the given class -->
+            <import resource="App\Controller\MyController" type="attribute"/>
 
             <!-- loads routes from the YAML or XML files found in that directory -->
             <import resource="../legacy/routing/" type="directory"/>
@@ -63,12 +83,23 @@ Symfony provides several route loaders for the most common needs:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             // loads routes from the given routing file stored in some bundle
             $routes->import('@AcmeBundle/Resources/config/routing.yaml');
 
-            // loads routes from the PHP annotations of the controllers found in that directory
-            $routes->import('../src/Controller/', 'annotation');
+            // loads routes from the PHP attributes (#[Route(...)])
+            // of the controllers found in the given PSR-4 namespace root
+            $routes->import(
+                ['path' => '../src/Controller/', 'namespace' => 'App\Controller'],
+                'attribute',
+            );
+
+            // loads routes from the PHP attributes (#[Route(...)])
+            // of the controllers found in that directory
+            $routes->import('../src/Controller/', 'attribute');
+
+            // loads routes from the PHP attributes (#[Route(...)]) of the given class
+            $routes->import('App\Controller\MyController', 'attribute');
 
             // loads routes from the YAML or XML files found in that directory
             $routes->import('../legacy/routing/', 'directory');
@@ -91,7 +122,7 @@ What is a Custom Route Loader
 A custom route loader enables you to generate routes based on some
 conventions, patterns or integrations. An example for this use-case is the
 `OpenAPI-Symfony-Routing`_ library where routes are generated based on
-OpenAPI/Swagger annotations. Another example is the `SonataAdminBundle`_ that
+OpenAPI/Swagger attributes. Another example is the `SonataAdminBundle`_ that
 creates routes based on CRUD conventions.
 
 Loading Routes
@@ -100,7 +131,7 @@ Loading Routes
 The routes in a Symfony application are loaded by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
-different types, for instance YAML files or ``@Route`` annotations in controller
+different types, for instance YAML files or ``#[Route]`` attributes in controller
 files. The specialized loaders implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`
 and therefore have two important methods:
@@ -116,7 +147,7 @@ Take these lines from the ``routes.yaml``:
         # config/routes.yaml
         controllers:
             resource: ../src/Controller/
-            type: annotation
+            type: attribute
 
     .. code-block:: xml
 
@@ -127,7 +158,7 @@ Take these lines from the ``routes.yaml``:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../src/Controller" type="annotation"/>
+            <import resource="../src/Controller" type="attribute"/>
         </routes>
 
     .. code-block:: php
@@ -135,14 +166,14 @@ Take these lines from the ``routes.yaml``:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
-            $routes->import('../src/Controller', 'annotation');
+        return static function (RoutingConfigurator $routes): void {
+            $routes->import('../src/Controller', 'attribute');
         };
 
 When the main loader parses this, it tries all registered delegate loaders and calls
 their :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 method with the given resource (``../src/Controller/``)
-and type (``annotation``) as arguments. When one of the loader returns ``true``,
+and type (``attribute``) as arguments. When one of the loader returns ``true``,
 its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
 will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
 containing :class:`Symfony\\Component\\Routing\\Route` objects.
@@ -189,7 +220,7 @@ and configure the service and method to call:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('admin_route_loader::loadRoutes', 'service');
         };
 
@@ -211,12 +242,12 @@ tag it manually with ``routing.route_loader``.
 
 .. tip::
 
-    If your service is invokable, you don't need to precise the method to use.
+    If your service is invokable, you don't need to specify the method to use.
 
 Creating a custom Loader
 ------------------------
 
-To load routes from some custom source (i.e. from something other than annotations,
+To load routes from some custom source (i.e. from something other than attributes,
 YAML or XML files), you need to create a custom route loader. This loader
 has to implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
@@ -238,9 +269,9 @@ you do. The resource name itself is not actually used in the example::
 
     class ExtraLoader extends Loader
     {
-        private $isLoaded = false;
+        private bool $isLoaded = false;
 
-        public function load($resource, string $type = null)
+        public function load($resource, ?string $type = null): RouteCollection
         {
             if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
@@ -267,7 +298,7 @@ you do. The resource name itself is not actually used in the example::
             return $routes;
         }
 
-        public function supports($resource, string $type = null)
+        public function supports($resource, ?string $type = null): bool
         {
             return 'extra' === $type;
         }
@@ -284,7 +315,7 @@ have to create an ``extra()`` method in the ``ExtraController``::
 
     class ExtraController extends AbstractController
     {
-        public function extra($parameter)
+        public function extra(mixed $parameter): Response
         {
             return new Response($parameter);
         }
@@ -328,7 +359,7 @@ Now define a service for the ``ExtraLoader``:
 
         use App\Routing\ExtraLoader;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(ExtraLoader::class)
@@ -373,7 +404,7 @@ What remains to do is adding a few lines to the routing configuration:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('.', 'extra');
         };
 
@@ -412,7 +443,7 @@ configuration file - you can call the
 
     class AdvancedLoader extends Loader
     {
-        public function load($resource, string $type = null)
+        public function load($resource, ?string $type = null): RouteCollection
         {
             $routes = new RouteCollection();
 
@@ -426,7 +457,7 @@ configuration file - you can call the
             return $routes;
         }
 
-        public function supports($resource, string $type = null)
+        public function supports($resource, ?string $type = null): bool
         {
             return 'advanced_extra' === $type;
         }
@@ -436,7 +467,7 @@ configuration file - you can call the
 
     The resource name and type of the imported routing configuration can
     be anything that would normally be supported by the routing configuration
-    loader (YAML, XML, PHP, annotation, etc.).
+    loader (YAML, XML, PHP, attribute, etc.).
 
 .. note::
 

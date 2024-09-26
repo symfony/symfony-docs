@@ -19,16 +19,19 @@ things:
 1. Matching Options
 -------------------
 
-Symfony creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
-for each ``access_control`` entry, which determines whether or not a given
-access control should be used on this request. The following ``access_control``
-options are used for matching:
+Symfony uses :class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` for
+each ``access_control`` entry, which determines which implementation of
+:class:`Symfony\\Component\\HttpFoundation\\RequestMatcherInterface` should be used
+on this request. The following ``access_control`` options are used for matching:
 
 * ``path``: a regular expression (without delimiters)
 * ``ip`` or ``ips``: netmasks are also supported (can be a comma-separated string)
 * ``port``: an integer
 * ``host``: a regular expression
-* ``methods``: one or many methods
+* ``methods``: one or many HTTP methods
+* ``request_matcher``: a service implementing ``RequestMatcherInterface``
+* ``attributes``: an array, which can be used to specify one or more :ref:`request attributes <accessing-request-data>` that must match exactly
+* ``route``: a route name
 
 Take the following ``access_control`` entries as an example:
 
@@ -51,6 +54,13 @@ Take the following ``access_control`` entries as an example:
                 # ips can be comma-separated, which is especially useful when using env variables
                 - { path: '^/admin', roles: ROLE_USER_IP, ips: '%env(TRUSTED_IPS)%' }
                 - { path: '^/admin', roles: ROLE_USER_IP, ips: [127.0.0.1, ::1, '%env(TRUSTED_IPS)%'] }
+
+                # for custom matching needs, use a request matcher service
+                - { roles: ROLE_USER, request_matcher: App\Security\RequestMatcher\MyRequestMatcher }
+
+                # require ROLE_ADMIN for 'admin' route. You can use the shortcut "route: "xxx", instead of "attributes": ["_route": "xxx"]
+                - { attributes: {'_route': 'admin'}, roles: ROLE_ADMIN }
+                - { route: 'admin', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -82,6 +92,15 @@ Take the following ``access_control`` entries as an example:
                     <ip>::1</ip>
                     <ip>%env(TRUSTED_IPS)%</ip>
                 </rule>
+
+                <!-- for custom matching needs, use a request matcher service -->
+                <rule role="ROLE_USER" request-matcher="App\Security\RequestMatcher\MyRequestMatcher"/>
+
+                <!-- require ROLE_ADMIN for 'admin' route. You can use the shortcut route="xxx" -->
+                <rule role="ROLE_ADMIN">
+                    <attribute key="_route">admin</attribute>
+                </rule>
+                <rule route="admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -91,7 +110,7 @@ Take the following ``access_control`` entries as an example:
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Config\SecurityConfig;
 
-        return static function (ContainerBuilder $container, SecurityConfig $security) {
+        return static function (ContainerBuilder $container, SecurityConfig $security): void {
             $container->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
             // ...
 
@@ -127,43 +146,72 @@ Take the following ``access_control`` entries as an example:
                 ->roles(['ROLE_USER_IP'])
                 ->ips(['127.0.0.1', '::1', env('TRUSTED_IPS')])
             ;
+
+            // for custom matching needs, use a request matcher service
+            $security->accessControl()
+                ->roles(['ROLE_USER'])
+                ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
+            ;
+
+            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') method,
+            // instead of attributes(['_route' => 'xxx']) method
+            $security->accessControl()
+                ->roles(['ROLE_ADMIN'])
+                ->attributes(['_route' => 'admin'])
+            ;
+            $security->accessControl()
+                ->roles(['ROLE_ADMIN'])
+                ->route('admin')
+            ;
         };
-
-.. versionadded:: 5.2
-
-    Support for comma-separated IP addresses was introduced in Symfony 5.2.
 
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
 and the request method. Remember, the first rule that matches is used, and
 if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
-``access_control`` will match any ``ip``, ``port``, ``host`` or ``method``:
+``access_control`` will match any ``ip``, ``port``, ``host`` or ``method``.
+See the following examples:
 
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| URI             | IP          | PORT        | HOST        | METHOD     | ``access_control``             | Why?                                                        |
-+=================+=============+=============+=============+============+================================+=============================================================+
-| ``/admin/user`` | 127.0.0.1   | 80          | example.com | GET        | rule #2 (``ROLE_USER_IP``)     | The URI matches ``path`` and the IP matches ``ip``.         |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | 80          | symfony.com | GET        | rule #2 (``ROLE_USER_IP``)     | The ``path`` and ``ip`` still match. This would also match  |
-|                 |             |             |             |            |                                | the ``ROLE_USER_HOST`` entry, but *only* the **first**      |
-|                 |             |             |             |            |                                | ``access_control`` match is used.                           |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 127.0.0.1   | 8080        | symfony.com | GET        | rule #1 (``ROLE_USER_PORT``)   | The ``path``, ``ip`` and ``port`` match.                    |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | GET        | rule #3 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match neither the first rule nor the     |
-|                 |             |             |             |            |                                | second rule. So the third rule (which matches) is used.     |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | POST       | rule #3 (``ROLE_USER_HOST``)   | The third rule still matches. This would also match the     |
-|                 |             |             |             |            |                                | fourth rule (``ROLE_USER_METHOD``), but only the **first**  |
-|                 |             |             |             |            |                                | matched ``access_control`` is used.                         |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | example.com | POST       | rule #4 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first three         |
-|                 |             |             |             |            |                                | entries, but the fourth - ``ROLE_USER_METHOD`` - matches    |
-|                 |             |             |             |            |                                | and is used.                                                |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/foo``        | 127.0.0.1   | 80          | symfony.com | POST       | matches no entries             | This doesn't match any ``access_control`` rules, since its  |
-|                 |             |             |             |            |                                | URI doesn't match any of the ``path`` values.               |
-+-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
+Example #1:
+  * **URI** ``/admin/user``
+  * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``example.com``, **Method**: ``GET``
+  * **Rule applied**: rule #2 (``ROLE_USER_IP``)
+  * **Why?** The URI matches ``path`` and the IP matches ``ip``.
+Example #2:
+  * **URI** ``/admin/user``
+  * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``GET``
+  * **Rule applied**: rule #2 (``ROLE_USER_IP``)
+  * **Why?** The ``path`` and ``ip`` still match. This would also match the
+    ``ROLE_USER_HOST`` entry, but *only* the **first** ``access_control`` match is used.
+Example #3:
+  * **URI** ``/admin/user``
+  * **IP**: ``127.0.0.1``, **Port**: ``8080``, **Host**: ``symfony.com``, **Method**: ``GET``
+  * **Rule applied**: rule #1 (``ROLE_USER_PORT``)
+  * **Why?** The ``path``, ``ip`` and ``port`` match.
+Example #4:
+  * **URI** ``/admin/user``
+  * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``GET``
+  * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
+  * **Why?** The ``ip`` doesn't match neither the first rule nor the second rule.
+  * So the third rule (which matches) is used.
+Example #5:
+  * **URI** ``/admin/user``
+  * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``POST``
+  * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
+  * **Why?** The third rule still matches. This would also match the fourth rule
+  * (``ROLE_USER_METHOD``), but only the **first** matched ``access_control`` is used.
+Example #6:
+  * **URI** ``/admin/user``
+  * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``example.com``, **Method**: ``POST``
+  * **Rule applied**: rule #4 (``ROLE_USER_METHOD``)
+  * **Why?** The ``ip`` and ``host`` don't match the first three entries, but
+  * the fourth - ``ROLE_USER_METHOD`` - matches and is used.
+Example #7:
+  * **URI** ``/foo``
+  * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``POST``
+  * **Rule applied**: matches no entries
+  * **Why?** This doesn't match any ``access_control`` rules, since its URI
+  * doesn't match any of the ``path`` values.
 
 .. caution::
 
@@ -274,7 +322,7 @@ pattern so that it is only accessible by requests from the local server itself:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()
@@ -362,7 +410,7 @@ key:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()
@@ -440,7 +488,7 @@ access those URLs via a specific port. This could be useful for example for
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()
@@ -494,7 +542,7 @@ the user will be redirected to ``https``:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()

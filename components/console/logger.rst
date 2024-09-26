@@ -16,14 +16,12 @@ PSR-3 compliant logger::
 
     class MyDependency
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
-        public function doStuff()
+        public function doStuff(): void
         {
             $this->logger->info('I love Tony Vairelles\' hairdresser.');
         }
@@ -34,30 +32,26 @@ You can rely on the logger to use this dependency inside a command::
     namespace Acme\Console\Command;
 
     use Acme\MyDependency;
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Logger\ConsoleLogger;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    #[AsCommand(
+        name: 'my:command',
+        description: 'Use an external dependency requiring a PSR-3 logger'
+    )]
     class MyCommand extends Command
     {
-        protected static $defaultName = 'my:command';
-
-        protected function configure()
-        {
-            $this
-                ->setDescription(
-                    'Use an external dependency requiring a PSR-3 logger'
-                )
-            ;
-        }
-
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $logger = new ConsoleLogger($output);
 
             $myDependency = new MyDependency($logger);
             $myDependency->doStuff();
+
+            return Command::SUCCESS;
         }
     }
 

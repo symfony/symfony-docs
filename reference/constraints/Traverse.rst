@@ -19,74 +19,6 @@ that all have constraints on their properties.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/BookCollection.php
-        namespace App\Entity;
-
-        use Doctrine\Common\Collections\ArrayCollection;
-        use Doctrine\Common\Collections\Collection;
-        use Doctrine\ORM\Mapping as ORM;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @ORM\Entity
-         * @Assert\Traverse
-         */
-        class BookCollection implements \IteratorAggregate
-        {
-            /**
-             * @var string
-             *
-             * @ORM\Column
-             *
-             * @Assert\NotBlank
-             */
-            protected $name = '';
-
-            /**
-             * @var Collection|Book[]
-             *
-             * @ORM\ManyToMany(targetEntity="App\Entity\Book")
-             */
-            protected $books;
-
-            // some other properties
-
-            public function __construct()
-            {
-                $this->books = new ArrayCollection();
-            }
-
-            // ... setter for name, adder and remover for books
-
-            // the name can be validated by calling the getter
-            public function getName(): string
-            {
-                return $this->name;
-            }
-
-            /**
-             * @return \Generator|Book[] The books for a given author
-             */
-            public function getBooksForAuthor(Author $author): iterable
-            {
-                foreach ($this->books as $book) {
-                    if ($book->isAuthoredBy($author)) {
-                        yield $book;
-                    }
-                }
-            }
-
-            // neither the method above nor any other specific getter
-            // could be used to validated all nested books;
-            // this object needs to be traversed to call the iterator
-            public function getIterator()
-            {
-                return $this->books->getIterator();
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/BookCollection.php
@@ -107,13 +39,13 @@ that all have constraints on their properties.
              */
             #[ORM\Column]
             #[Assert\NotBlank]
-            protected $name = '';
+            protected string $name = '';
 
             /**
              * @var Collection|Book[]
              */
             #[ORM\ManyToMany(targetEntity: Book::class)]
-            protected $books;
+            protected ArrayCollection $books;
 
             // some other properties
 
@@ -145,7 +77,7 @@ that all have constraints on their properties.
             // neither the method above nor any other specific getter
             // could be used to validated all nested books;
             // this object needs to be traversed to call the iterator
-            public function getIterator()
+            public function getIterator(): \Iterator
             {
                 return $this->books->getIterator();
             }
@@ -183,7 +115,7 @@ that all have constraints on their properties.
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Traverse());
             }
@@ -214,21 +146,6 @@ Instances of ``\Traversable`` are traversed by default, use this option to
 disable validating:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/BookCollection.php
-
-        // ... same as above
-
-        /**
-         * ...
-         * @Assert\Traverse(false)
-         */
-         class BookCollection implements \IteratorAggregate
-         {
-             // ...
-         }
 
     .. code-block:: php-attributes
 
@@ -277,7 +194,7 @@ disable validating:
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Traverse(false));
             }

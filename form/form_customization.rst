@@ -17,8 +17,8 @@ enough to render an entire form, including all its fields and error messages:
 
 .. code-block:: twig
 
-    {# form is a variable passed from the controller via either
-      $this->renderForm('...', ['form' => $form])
+    {# form is a variable passed from the controller via
+      $this->render('...', ['form' => $form])
       or $this->render('...', ['form' => $form->createView()]) #}
     {{ form(form) }}
 
@@ -128,10 +128,6 @@ fields, so you no longer have to deal with form themes:
             <option value="{{ value }}">{{ label }}</option>
         {% endfor %}
     </select>
-
-.. versionadded:: 5.2
-
-    The ``field_*()`` helpers were introduced in Symfony 5.2.
 
 Form Rendering Variables
 ------------------------

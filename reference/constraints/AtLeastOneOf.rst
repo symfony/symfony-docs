@@ -4,10 +4,6 @@ AtLeastOneOf
 This constraint checks that the value satisfies at least one of the given
 constraints. The validation stops as soon as one constraint is satisfied.
 
-.. versionadded:: 5.1
-
-    The ``AtLeastOneOf`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\AtLeastOneOf`
@@ -26,34 +22,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Student.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Student
-        {
-            /**
-             * @Assert\AtLeastOneOf({
-             *     @Assert\Regex("/#/"),
-             *     @Assert\Length(min=10)
-             * })
-             */
-            protected $password;
-
-            /**
-             * @Assert\AtLeastOneOf({
-             *     @Assert\Count(min=3),
-             *     @Assert\All(
-             *         @Assert\GreaterThanOrEqual(5)
-             *     )
-             * })
-             */
-            protected $grades;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Student.php
@@ -61,14 +29,13 @@ The following constraints ensure that:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Student
         {
             #[Assert\AtLeastOneOf([
                 new Assert\Regex('/#/'),
                 new Assert\Length(min: 10),
             ])]
-            protected $plainPassword;
+            protected string $plainPassword;
 
             #[Assert\AtLeastOneOf([
                 new Assert\Count(min: 3),
@@ -76,7 +43,7 @@ The following constraints ensure that:
                     new Assert\GreaterThanOrEqual(5)
                 ),
             ])]
-            protected $grades;
+            protected array $grades;
         }
 
     .. code-block:: yaml
@@ -146,7 +113,7 @@ The following constraints ensure that:
 
         class Student
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('password', new Assert\AtLeastOneOf([
                     'constraints' => [
@@ -167,11 +134,6 @@ The following constraints ensure that:
                 ]));
             }
         }
-
-.. versionadded:: 5.4
-
-    The ``#[AtLeastOneOf]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
 
 Options
 -------

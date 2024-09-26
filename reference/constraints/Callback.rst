@@ -28,25 +28,6 @@ Configuration
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\Context\ExecutionContextInterface;
-
-        class Author
-        {
-            /**
-             * @Assert\Callback
-             */
-            public function validate(ExecutionContextInterface $context, $payload)
-            {
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -58,7 +39,7 @@ Configuration
         class Author
         {
             #[Assert\Callback]
-            public function validate(ExecutionContextInterface $context, $payload)
+            public function validate(ExecutionContextInterface $context, mixed $payload): void
             {
                 // ...
             }
@@ -94,12 +75,12 @@ Configuration
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Callback('validate'));
             }
 
-            public function validate(ExecutionContextInterface $context, $payload)
+            public function validate(ExecutionContextInterface $context, mixed $payload): void
             {
                 // ...
             }
@@ -118,9 +99,9 @@ field those errors should be attributed::
     class Author
     {
         // ...
-        private $firstName;
+        private string $firstName;
 
-        public function validate(ExecutionContextInterface $context, $payload)
+        public function validate(ExecutionContextInterface $context, mixed $payload): void
         {
             // somehow you have an array of "fake names"
             $fakeNames = [/* ... */];
@@ -140,13 +121,13 @@ Static Callbacks
 You can also use the constraint with static methods. Since static methods don't
 have access to the object instance, they receive the object as the first argument::
 
-    public static function validate($object, ExecutionContextInterface $context, $payload)
+    public static function validate(mixed $value, ExecutionContextInterface $context, mixed $payload): void
     {
         // somehow you have an array of "fake names"
         $fakeNames = [/* ... */];
 
         // check if the name is actually a fake name
-        if (in_array($object->getFirstName(), $fakeNames)) {
+        if (in_array($value->getFirstName(), $fakeNames)) {
             $context->buildViolation('This name sounds totally fake!')
                 ->atPath('firstName')
                 ->addViolation()
@@ -168,7 +149,7 @@ Suppose your validation function is ``Acme\Validator::validate()``::
 
     class Validator
     {
-        public static function validate($object, ExecutionContextInterface $context, $payload)
+        public static function validate(mixed $value, ExecutionContextInterface $context, mixed $payload): void
         {
             // ...
         }
@@ -177,20 +158,6 @@ Suppose your validation function is ``Acme\Validator::validate()``::
 You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Assert\Callback({"Acme\Validator", "validate"})
-         */
-        class Author
-        {
-        }
 
     .. code-block:: php-attributes
 
@@ -239,7 +206,7 @@ You can then use the following configuration to invoke this validator:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Callback([
                     Validator::class,
@@ -268,9 +235,9 @@ constructor of the Callback constraint::
 
     class Author
     {
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
-            $callback = function ($object, ExecutionContextInterface $context, $payload) {
+            $callback = function (mixed $value, ExecutionContextInterface $context, mixed $payload): void {
                 // ...
             };
 
@@ -280,8 +247,8 @@ constructor of the Callback constraint::
 
 .. caution::
 
-    Using a ``Closure`` together with annotation configuration will disable the
-    annotation cache for that class/property/method because ``Closure`` cannot
+    Using a ``Closure`` together with attribute configuration will disable the
+    attribute cache for that class/property/method because ``Closure`` cannot
     be cached. For best performance, it's recommended to use a static callback method.
 
 Options

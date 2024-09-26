@@ -8,25 +8,19 @@ However, sometimes commands are not intended to be run by end-users; for
 example, commands for the legacy parts of the application, commands exclusively
 run through scheduled tasks, etc.
 
-In those cases, you can define the command as **hidden** by setting the
-``setHidden()`` method to ``true`` in the command configuration::
+In those cases, you can define the command as **hidden** by setting to ``true``
+the ``hidden`` property of the ``AsCommand`` attribute::
 
     // src/Command/LegacyCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
 
+    #[AsCommand(name: 'app:legacy', hidden: true)]
     class LegacyCommand extends Command
     {
-        protected static $defaultName = 'app:legacy';
-
-        protected function configure(): void
-        {
-            $this
-                ->setHidden(true)
-                // ...
-            ;
-        }
+        // ...
     }
 
 Hidden commands behave the same as normal commands but they are no longer displayed

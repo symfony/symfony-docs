@@ -21,31 +21,6 @@ Use the ``payload`` option to configure the error level for each constraint:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\NotBlank(payload={"severity"="error"})
-             */
-            protected $username;
-
-            /**
-             * @Assert\NotBlank(payload={"severity"="error"})
-             */
-            protected $password;
-
-            /**
-             * @Assert\Iban(payload={"severity"="warning"})
-             */
-            protected $bankAccountNumber;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -56,13 +31,13 @@ Use the ``payload`` option to configure the error level for each constraint:
         class User
         {
             #[Assert\NotBlank(payload: ['severity' => 'error'])]
-            protected $username;
+            protected string $username;
 
             #[Assert\NotBlank(payload: ['severity' => 'error'])]
-            protected $password;
+            protected string $password;
 
             #[Assert\Iban(payload: ['severity' => 'warning'])]
-            protected $bankAccountNumber;
+            protected string $bankAccountNumber;
         }
 
     .. code-block:: yaml
@@ -126,7 +101,9 @@ Use the ``payload`` option to configure the error level for each constraint:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank([
                     'payload' => ['severity' => 'error'],

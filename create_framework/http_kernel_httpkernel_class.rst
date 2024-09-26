@@ -69,7 +69,7 @@ Our code is now much more concise and surprisingly more robust and more
 powerful than ever. For instance, use the built-in ``ErrorListener`` to
 make your error management configurable::
 
-    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception) {
+    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception): Response {
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());
@@ -96,7 +96,7 @@ The error controller reads as follows::
 
     class ErrorController
     {
-        public function exception(FlattenException $exception)
+        public function exception(FlattenException $exception): Response
         {
             $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
@@ -114,11 +114,6 @@ client; that's what the ``ResponseListener`` does::
 
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-If you want out of the box support for streamed responses, subscribe
-to ``StreamedResponseListener``::
-
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\StreamedResponseListener());
-
 And in your controller, return a ``StreamedResponse`` instance instead of a
 ``Response`` instance.
 
@@ -133,7 +128,7 @@ instead of a full Response object::
 
     class LeapYearController
     {
-        public function index($year)
+        public function index(int $year): string
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {
@@ -158,7 +153,7 @@ only if needed::
 
     class StringResponseListener implements EventSubscriberInterface
     {
-        public function onView(ViewEvent $event)
+        public function onView(ViewEvent $event): void
         {
             $response = $event->getControllerResult();
 
@@ -167,7 +162,7 @@ only if needed::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return ['kernel.view' => 'onView'];
         }

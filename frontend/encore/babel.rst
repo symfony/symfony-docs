@@ -1,5 +1,5 @@
-Configuring Babel
-=================
+Configuring Babel with Encore
+=============================
 
 `Babel`_ is automatically configured for all ``.js`` and ``.jsx`` files via the
 ``babel-loader`` with sensible defaults (e.g. with the ``@babel/preset-env`` and
@@ -49,6 +49,23 @@ cache directory:
     # On Unix run this command. On Windows, clear this directory manually
     $ rm -rf node_modules/.cache/babel-loader/
 
+If you want to customize the ``preset-env`` configuration, use the ``configureBabelPresetEnv()``
+method to add any of the `@babel/preset-env configuration options`_:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .configureBabelPresetEnv((config) => {
+            config.useBuiltIns = 'usage';
+            config.corejs = 3;
+        })
+    ;
+
 Creating a ``.babelrc`` File
 ----------------------------
 
@@ -63,3 +80,4 @@ As soon as a ``.babelrc`` file is present, it will take priority over the Babel
 configuration added by Encore.
 
 .. _`Babel`: https://babeljs.io/
+.. _`@babel/preset-env configuration options`: https://babeljs.io/docs/babel-preset-env

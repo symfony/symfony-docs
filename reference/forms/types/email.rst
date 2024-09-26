@@ -9,8 +9,6 @@ The ``EmailType`` field is a text field that is rendered using the HTML5
 +---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid email address.                                 |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                 |
-+---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\EmailType` |
@@ -53,6 +51,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

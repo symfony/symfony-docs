@@ -1,4 +1,4 @@
-**type**: ``string`` **default**: ``choice``
+**type**: ``string`` **default**: ``single_text``
 
 The basic way in which this field should be rendered. Can be one of the
 following:

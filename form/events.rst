@@ -16,7 +16,7 @@ register an event listener to the ``FormEvents::PRE_SUBMIT`` event as follows::
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
-    $listener = function (FormEvent $event) {
+    $listener = function (FormEvent $event): void {
         // ...
     };
 
@@ -67,13 +67,14 @@ The method :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
 is locked since the event is dispatched from it and will throw an exception
 if called from a listener.
 
-===============  ========
-Data Type        Value
-===============  ========
-Model data       ``null``
-Normalized data  ``null``
-View data        ``null``
-===============  ========
+====================  ======================================
+Data Type             Value
+====================  ======================================
+Event data            Model data injected into ``setData()``
+Form model data       ``null``
+Form normalized data  ``null``
+Form view data        ``null``
+====================  ======================================
 
 .. seealso::
 
@@ -98,13 +99,14 @@ The ``FormEvents::POST_SET_DATA`` event is dispatched at the end of the
 method. This event can be used to modify a form depending on the populated data
 (adding or removing fields dynamically).
 
-===============  ====================================================
-Data Type        Value
-===============  ====================================================
-Model data       Model data injected into ``setData()``
-Normalized data  Model data transformed using a model transformer
-View data        Normalized data transformed using a view transformer
-===============  ====================================================
+====================  ====================================================
+Data Type             Value
+====================  ====================================================
+Event data            Model data injected into ``setData()``
+Form model data       Model data injected into ``setData()``
+Form normalized data  Model data transformed using a model transformer
+Form view data        Normalized data transformed using a view transformer
+====================  ====================================================
 
 .. seealso::
 
@@ -144,13 +146,14 @@ It can be used to:
 * Change data from the request, before submitting the data to the form;
 * Add or remove form fields, before submitting the data to the form.
 
-===============  ========================================
-Data Type        Value
-===============  ========================================
-Model data       Same as in ``FormEvents::POST_SET_DATA``
-Normalized data  Same as in ``FormEvents::POST_SET_DATA``
-View data        Same as in ``FormEvents::POST_SET_DATA``
-===============  ========================================
+====================  ========================================
+Data Type             Value
+====================  ========================================
+Event data            Data from the request
+Form model data       Same as in ``FormEvents::POST_SET_DATA``
+Form normalized data  Same as in ``FormEvents::POST_SET_DATA``
+Form view data        Same as in ``FormEvents::POST_SET_DATA``
+====================  ========================================
 
 .. seealso::
 
@@ -175,13 +178,14 @@ transforms back the normalized data to the model and view data.
 
 It can be used to change data from the normalized representation of the data.
 
-===============  ===================================================================================
-Data Type        Value
-===============  ===================================================================================
-Model data       Same as in ``FormEvents::POST_SET_DATA``
-Normalized data  Data from the request reverse-transformed from the request using a view transformer
-View data        Same as in ``FormEvents::POST_SET_DATA``
-===============  ===================================================================================
+====================  ===================================================================================
+Data Type             Value
+====================  ===================================================================================
+Event data            Data from the request reverse-transformed from the request using a view transformer
+Form model data       Same as in ``FormEvents::POST_SET_DATA``
+Form normalized data  Same as in ``FormEvents::POST_SET_DATA``
+Form view data        Same as in ``FormEvents::POST_SET_DATA``
+====================  ===================================================================================
 
 .. seealso::
 
@@ -207,13 +211,14 @@ model and view data have been denormalized.
 
 It can be used to fetch data after denormalization.
 
-===============  =============================================================
-Data Type        Value
-===============  =============================================================
-Model data       Normalized data reverse-transformed using a model transformer
-Normalized data  Same as in ``FormEvents::SUBMIT``
-View data        Normalized data transformed using a view transformer
-===============  =============================================================
+====================  ===================================================================================
+Data Type             Value
+====================  ===================================================================================
+Event data            Normalized data transformed using a view transformer
+Form model data       Normalized data reverse-transformed using a model transformer
+Form normalized data  Data from the request reverse-transformed from the request using a view transformer
+Form view data        Normalized data transformed using a view transformer
+====================  ===================================================================================
 
 .. seealso::
 
@@ -269,16 +274,16 @@ method of the ``FormFactory``::
 
     // ...
 
+    use Symfony\Component\Form\Event\PreSubmitEvent;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
     $form = $formFactory->createBuilder()
         ->add('username', TextType::class)
         ->add('showEmail', CheckboxType::class)
-        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        ->addEventListener(FormEvents::PRE_SUBMIT, function (PreSubmitEvent $event): void {
             $user = $event->getData();
             $form = $event->getForm();
 
@@ -306,9 +311,9 @@ callback for better readability::
     // src/Form/SubscriptionType.php
     namespace App\Form;
 
+    use Symfony\Component\Form\Event\PreSetDataEvent;
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
     // ...
@@ -326,7 +331,7 @@ callback for better readability::
             ;
         }
 
-        public function onPreSetData(FormEvent $event): void
+        public function onPreSetData(PreSetDataEvent $event): void
         {
             // ...
         }
@@ -347,8 +352,9 @@ Consider the following example of a form event subscriber::
     namespace App\Form\EventListener;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Form\Event\PreSetDataEvent;
+    use Symfony\Component\Form\Event\PreSubmitEvent;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
-    use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
     class AddEmailFieldListener implements EventSubscriberInterface
@@ -361,7 +367,7 @@ Consider the following example of a form event subscriber::
             ];
         }
 
-        public function onPreSetData(FormEvent $event): void
+        public function onPreSetData(PreSetDataEvent $event): void
         {
             $user = $event->getData();
             $form = $event->getForm();
@@ -373,7 +379,7 @@ Consider the following example of a form event subscriber::
             }
         }
 
-        public function onPreSubmit(FormEvent $event): void
+        public function onPreSubmit(PreSubmitEvent $event): void
         {
             $user = $event->getData();
             $form = $event->getForm();

@@ -8,10 +8,14 @@ key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php bin/console config:dump-reference debug
+    $ php bin/console config:dump-reference framework
 
     # displays the actual config values used by your application
-    $ php bin/console debug:config debug
+    $ php bin/console debug:config framework
+
+    # displays the config values used by your application and replaces the
+    # environment variables with their actual values
+    $ php bin/console debug:config --resolve-env framework
 
 .. note::
 
@@ -87,8 +91,13 @@ Typically, you would set this to ``php://stderr``:
     .. code-block:: php
 
         // config/packages/debug.php
-        $container->loadFromExtension('debug', [
-            'dump_destination' => 'php://stderr',
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('debug', [
+                'dump_destination' => 'php://stderr',
+            ]);
+        };
+
 
 Configure it to ``"tcp://%env(VAR_DUMPER_SERVER)%"`` in order to use the :ref:`ServerDumper feature <var-dumper-dump-server>`.

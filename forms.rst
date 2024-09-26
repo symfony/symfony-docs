@@ -43,8 +43,9 @@ following ``Task`` class::
 
     class Task
     {
-        protected $task;
-        protected $dueDate;
+        protected string $task;
+
+        protected ?\DateTimeInterface $dueDate;
 
         public function getTask(): string
         {
@@ -56,12 +57,12 @@ following ``Task`` class::
             $this->task = $task;
         }
 
-        public function getDueDate(): ?\DateTime
+        public function getDueDate(): ?\DateTimeInterface
         {
             return $this->dueDate;
         }
 
-        public function setDueDate(?\DateTime $dueDate): void
+        public function setDueDate(?\DateTimeInterface $dueDate): void
         {
             $this->dueDate = $dueDate;
         }
@@ -144,7 +145,7 @@ use the ``createFormBuilder()`` helper::
             // creates a task object and initializes some data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTime('tomorrow'));
+            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
@@ -225,7 +226,7 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
             // creates a task object and initializes some data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTime('tomorrow'));
+            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
             $form = $this->createForm(TaskType::class, $task);
 
@@ -288,20 +289,14 @@ Now that the form has been created, the next step is to render it::
 
             $form = $this->createForm(TaskType::class, $task);
 
-            return $this->renderForm('task/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form,
             ]);
         }
     }
 
-In versions prior to Symfony 5.3, controllers used the method
-``$this->render('...', ['form' => $form->createView()])`` to render the form.
-The ``renderForm()`` method abstracts this logic and it also sets the 422 HTTP
-status code in the response automatically when the submitted form is not valid.
-
-.. versionadded:: 5.3
-
-    The ``renderForm()`` method was introduced in Symfony 5.3.
+Internally, the ``render()`` method calls ``$form->createView()`` to
+transform the form into a *form view* instance.
 
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
@@ -367,7 +362,7 @@ can set this option to generate forms compatible with the Bootstrap 5 CSS framew
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...
@@ -421,7 +416,7 @@ written into the form object::
                 return $this->redirectToRoute('task_success');
             }
 
-            return $this->renderForm('task/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form,
             ]);
         }
@@ -439,7 +434,12 @@ possible paths:
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated (validation is explained in the next section). If it is invalid,
    :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns
-   ``false`` and the form is rendered again, but now with validation errors;
+   ``false`` and the form is rendered again, but now with validation errors.
+
+   By passing ``$form`` to the ``render()`` method (instead of
+   ``$form->createView()``), the response code is automatically set to
+   `HTTP 422 Unprocessable Content`_. This ensures compatibility with tools
+   relying on the HTTP specification, like `Symfony UX Turbo`_;
 
 #. When the user submits the form with valid data, the submitted data is again
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
@@ -482,31 +482,10 @@ to a class. You can add them either to the entity class or by using the
 
 To see the first approach - adding constraints to the entity - in action,
 add the validation constraints, so that the ``task`` field cannot be empty,
-and the ``dueDate`` field cannot be empty, and must be a valid ``DateTime``
+and the ``dueDate`` field cannot be empty, and must be a valid ``DateTimeImmutable``
 object.
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Task.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Task
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            public $task;
-
-            /**
-             * @Assert\NotBlank
-             * @Assert\Type("\DateTime")
-             */
-            protected $dueDate;
-        }
 
     .. code-block:: php-attributes
 
@@ -518,11 +497,11 @@ object.
         class Task
         {
             #[Assert\NotBlank]
-            public $task;
+            public string $task;
 
             #[Assert\NotBlank]
-            #[Assert\Type(\DateTime::class)]
-            protected $dueDate;
+            #[Assert\Type(\DateTimeInterface::class)]
+            protected \DateTimeInterface $dueDate;
         }
 
     .. code-block:: yaml
@@ -534,7 +513,7 @@ object.
                     - NotBlank: ~
                 dueDate:
                     - NotBlank: ~
-                    - Type: \DateTime
+                    - Type: \DateTimeInterface
 
     .. code-block:: xml
 
@@ -551,7 +530,7 @@ object.
                 </property>
                 <property name="dueDate">
                     <constraint name="NotBlank"/>
-                    <constraint name="Type">\DateTime</constraint>
+                    <constraint name="Type">\DateTimeInterface</constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -576,7 +555,7 @@ object.
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
                 $metadata->addPropertyConstraint(
                     'dueDate',
-                    new Type(\DateTime::class)
+                    new Type(\DateTimeInterface::class)
                 );
             }
         }
@@ -586,52 +565,6 @@ corresponding errors printed out with the form.
 
 To see the second approach - adding constraints to the form - refer to
 :ref:`this section <form-option-constraints>`. Both approaches can be used together.
-
-Form Validation Messages
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The ``legacy_error_messages`` option was introduced in Symfony 5.2
-
-The form types have default error messages that are more clear and
-user-friendly than the ones provided by the validation constraints. To enable
-these new messages set the ``legacy_error_messages`` option to ``false``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            form:
-                legacy_error_messages: false
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:form legacy-error-messages="false"/>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $framework->form()->legacyErrorMessages(false);
-        };
 
 Other Common Form Features
 --------------------------
@@ -840,7 +773,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
     that stores this method. The form will be submitted in a normal ``POST``
     request, but :doc:`Symfony's routing </routing>` is capable of detecting the
     ``_method`` parameter and will interpret it as a ``PUT``, ``PATCH`` or
-    ``DELETE`` request. The :ref:`configuration-framework-http_method_override`
+    ``DELETE`` request. The :ref:`http_method_override <configuration-framework-http_method_override>`
     option must be enabled for this to work.
 
 Changing the Form Name
@@ -1083,3 +1016,5 @@ Misc.:
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`HTTP 422 Unprocessable Content`: https://www.rfc-editor.org/rfc/rfc9110.html#name-422-unprocessable-content
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo

@@ -26,18 +26,18 @@ properties::
 
     class BlogPost
     {
-        private $category;
+        private string $category;
 
-        private $isTechnicalPost;
+        private bool $isTechnicalPost;
 
         // ...
 
-        public function getCategory()
+        public function getCategory(): string
         {
             return $this->category;
         }
 
-        public function setIsTechnicalPost($isTechnicalPost)
+        public function setIsTechnicalPost(bool $isTechnicalPost): void
         {
             $this->isTechnicalPost = $isTechnicalPost;
         }
@@ -54,24 +54,6 @@ B) If ``isTechnicalPost`` is false, then ``category`` can be anything.
 One way to accomplish this is with the Expression constraint:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Model/BlogPost.php
-        namespace App\Model;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Assert\Expression(
-         *     "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()",
-         *     message="If this is a tech post, the category should be either php or symfony!"
-         * )
-         */
-        class BlogPost
-        {
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -127,7 +109,7 @@ One way to accomplish this is with the Expression constraint:
 
         class BlogPost
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Expression([
                     'expression' => 'this.getCategory() in ["php", "symfony"] or !this.isTechnicalPost()',
@@ -142,6 +124,9 @@ The :ref:`expression <reference-constraint-expression-option>` option is the
 expression that must return true in order for validation to pass. Learn more
 about the :doc:`expression language syntax </reference/formats/expression_language>`.
 
+Alternatively, you can set the ``negate`` option to ``false`` in order to
+assert that the expression must return ``true`` for validation to fail.
+
 .. sidebar:: Mapping the Error to a Specific Field
 
     You can also attach the constraint to a specific property and still validate
@@ -150,28 +135,6 @@ about the :doc:`expression language syntax </reference/formats/expression_langua
     of ``isTechnicalPost``.
 
     .. configuration-block::
-
-        .. code-block:: php-annotations
-
-            // src/Model/BlogPost.php
-            namespace App\Model;
-
-            use Symfony\Component\Validator\Constraints as Assert;
-
-            class BlogPost
-            {
-                // ...
-
-                /**
-                 * @Assert\Expression(
-                 *     "this.getCategory() in ['php', 'symfony'] or value == false",
-                 *     message="If this is a tech post, the category should be either php or symfony!"
-                 * )
-                 */
-                private $isTechnicalPost;
-
-                // ...
-            }
 
         .. code-block:: php-attributes
 
@@ -188,7 +151,7 @@ about the :doc:`expression language syntax </reference/formats/expression_langua
                     "this.getCategory() in ['php', 'symfony'] or value == false",
                     message: 'If this is a tech post, the category should be either php or symfony!',
                 )]
-                private $isTechnicalPost;
+                private bool $isTechnicalPost;
 
                 // ...
             }
@@ -235,7 +198,7 @@ about the :doc:`expression language syntax </reference/formats/expression_langua
 
             class BlogPost
             {
-                public static function loadValidatorMetadata(ClassMetadata $metadata)
+                public static function loadValidatorMetadata(ClassMetadata $metadata): void
                 {
                     $metadata->addPropertyConstraint('isTechnicalPost', new Assert\Expression([
                         'expression' => 'this.getCategory() in ["php", "symfony"] or value == false',
@@ -277,6 +240,9 @@ in your expression:
 * ``value``: The value of the property being validated (only available when
   the constraint is applied directly to a property);
 
+You also have access to the ``is_valid()`` function in your expression. This function
+checks that the data passed to function doesn't raise any validation violation.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
@@ -295,9 +261,12 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
+``negate``
+~~~~~~~~~~
 
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
+**type**: ``boolean`` **default**: ``true``
+
+If ``false``, the validation fails when expression returns ``true``.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
@@ -310,26 +279,6 @@ The values of the custom variables used in the expression. Values can be of any
 type (numeric, boolean, strings, null, etc.)
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Model/Analysis.php
-        namespace App\Model;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Analysis
-        {
-            /**
-             * @Assert\Expression(
-             *     "value + error_margin < threshold",
-             *     values = { "error_margin": 0.25, "threshold": 1.5 }
-             * )
-             */
-            private $metric;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -344,7 +293,7 @@ type (numeric, boolean, strings, null, etc.)
                 'value + error_margin < threshold',
                 values: ['error_margin' => 0.25, 'threshold' => 1.5],
             )]
-            private $metric;
+            private float $metric;
 
             // ...
         }
@@ -392,7 +341,7 @@ type (numeric, boolean, strings, null, etc.)
 
         class Analysis
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('metric', new Assert\Expression([
                     'expression' => 'value + error_margin < threshold',

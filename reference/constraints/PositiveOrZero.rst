@@ -18,21 +18,6 @@ is positive or zero:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\PositiveOrZero
-             */
-            protected $siblings;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -43,7 +28,7 @@ is positive or zero:
         class Person
         {
             #[Assert\PositiveOrZero]
-            protected $siblings;
+            protected int $siblings;
         }
 
     .. code-block:: yaml
@@ -79,7 +64,9 @@ is positive or zero:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\PositiveOrZero());
             }

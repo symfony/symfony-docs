@@ -65,7 +65,7 @@ a relative/absolute URL or a Symfony route name:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -123,7 +123,7 @@ previously requested URL and always redirect to the default page:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -139,22 +139,22 @@ previously requested URL and always redirect to the default page:
 Control the Redirect Using Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The URL to redirect after the login can be defined using the ``_target_path``
-parameter of GET and POST requests. Its value must be a relative or absolute
+The URL to redirect to after the login can be dynamically defined using the ``_target_path``
+parameter of the GET or POST request. Its value must be a relative or absolute
 URL, not a Symfony route name.
 
-Defining the redirect URL via GET using a query string parameter:
+For GET, use a query string parameter:
 
 .. code-block:: text
 
     http://example.com/some/path?_target_path=/dashboard
 
-Defining the redirect URL via POST using a hidden form field:
+For POST, use a hidden form field:
 
 .. code-block:: html+twig
 
-    {# templates/security/login.html.twig #}
-    <form action="{{ path('login') }}" method="post">
+    {# templates/login/index.html.twig #}
+    <form action="{{ path('app_login') }}" method="post">
         {# ... #}
 
         <input type="hidden" name="_target_path" value="{{ path('account') }}">
@@ -211,7 +211,7 @@ parameter is included in the request, you may use the value of the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -278,7 +278,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -355,7 +355,7 @@ redirects can be customized using the  ``target_path_parameter`` and
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')

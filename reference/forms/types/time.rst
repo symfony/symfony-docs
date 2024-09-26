@@ -14,8 +14,6 @@ stored as a ``DateTime`` object, a string, a timestamp or an array.
 +---------------------------+-----------------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid time.                                                  |
 +---------------------------+-----------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                         |
-+---------------------------+-----------------------------------------------------------------------------+
 | Parent type               | FormType                                                                    |
 +---------------------------+-----------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimeType`          |
@@ -69,14 +67,14 @@ If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. When the placeholder value is a string,
 it will be used as the **blank value** of all select boxes::
 
-    $builder->add('startTime', 'time', [
+    $builder->add('startTime', TimeType::class, [
         'placeholder' => 'Select a value',
     ]);
 
 Alternatively, you can use an array that configures different placeholder
 values for the hour, minute and second fields::
 
-    $builder->add('startTime', 'time', [
+    $builder->add('startTime', TimeType::class, [
         'placeholder' => [
             'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
         ],

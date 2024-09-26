@@ -25,6 +25,39 @@ in method parameters:
            resource: '../src/Controller/'
            tags: ['controller.service_arguments']
 
+.. note::
+
+    If you don't use either :doc:`autowiring </service_container/autowiring>`
+    or :ref:`autoconfiguration <services-autoconfigure>` and you extend the
+    ``AbstractController``, you'll need to apply other tags and make some method
+    calls to register your controllers as services:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+
+        # this extended configuration is only required when not using autowiring/autoconfiguration,
+        # which is uncommon and not recommended
+
+        abstract_controller.locator:
+            class: Symfony\Component\DependencyInjection\ServiceLocator
+            arguments:
+                -
+                    router: '@router'
+                    request_stack: '@request_stack'
+                    http_kernel: '@http_kernel'
+                    session: '@session'
+                    parameter_bag: '@parameter_bag'
+                    # you can add more services here as you need them (e.g. the `serializer`
+                    # service) and have a look at the AbstractController class to see
+                    # which services are defined in the locator
+
+        App\Controller\:
+            resource: '../src/Controller/'
+            tags: ['controller.service_arguments']
+            calls:
+                - [setContainer, ['@abstract_controller.locator']]
+
 If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
 apply the ``controller.service_arguments`` tag to your controller services::
 
@@ -33,7 +66,7 @@ apply the ``controller.service_arguments`` tag to your controller services::
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\AsController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     #[AsController]
     class HelloController
@@ -44,10 +77,6 @@ apply the ``controller.service_arguments`` tag to your controller services::
             // ...
         }
     }
-
-.. versionadded:: 5.3
-
-    The ``#[AsController]`` attribute was introduced in Symfony 5.3.
 
 Registering your controller as a service is the first step, but you also need to
 update your routing config to reference the service properly, so that Symfony
@@ -60,31 +89,13 @@ a service like: ``App\Controller\HelloController::index``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/HelloController.php
-        namespace App\Controller;
-
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class HelloController
-        {
-            /**
-             * @Route("/hello", name="hello", methods={"GET"})
-             */
-            public function index(): Response
-            {
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/HelloController.php
         namespace App\Controller;
 
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class HelloController
         {
@@ -122,7 +133,7 @@ a service like: ``App\Controller\HelloController::index``:
         use App\Controller\HelloController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('hello', '/hello')
                 ->controller([HelloController::class, 'index'])
                 ->methods(['GET'])
@@ -140,32 +151,13 @@ which is a common practice when following the `ADR pattern`_
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/Hello.php
-        namespace App\Controller;
-
-        use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        /**
-         * @Route("/hello/{name}", name="hello")
-         */
-        class Hello
-        {
-            public function __invoke(string $name = 'World'): Response
-            {
-                return new Response(sprintf('Hello %s!', $name));
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/Hello.php
         namespace App\Controller;
 
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         #[Route('/hello/{name}', name: 'hello')]
         class Hello
@@ -230,11 +222,9 @@ service and use it directly::
 
     class HelloController
     {
-        private Environment $twig;
-
-        public function __construct(Environment $twig)
-        {
-            $this->twig = $twig;
+        public function __construct(
+            private Environment $twig,
+        ) {
         }
 
         public function index(string $name): Response

@@ -1,4 +1,4 @@
-Preventing Duplication by "Splitting" Shared Code into Separate Files
+Preventing Duplication by "Splitting" Shared Code with Webpack Encore
 =====================================================================
 
 Suppose you have multiple entry files and *each* requires ``jquery``. In this
@@ -21,7 +21,6 @@ To enable this, call ``splitEntryChunks()``:
           .addEntry('store', './assets/store.js')
 
     +     .splitEntryChunks()
-
 
 Now, each output file (e.g. ``homepage.js``) *may* be split into multiple file
 (e.g. ``homepage.js`` & ``vendors-node_modules_jquery_dist_jquery_js.js`` - the

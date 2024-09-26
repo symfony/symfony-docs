@@ -25,10 +25,6 @@ assets.package
 
 **Purpose**: Add an asset package to the application
 
-.. versionadded:: 5.3
-
-    The ``assets.package`` tag was introduced in Symfony 5.3.
-
 This is an alternative way to declare an :ref:`asset package <asset-packages>`.
 The name of the package is set in this order:
 
@@ -122,7 +118,7 @@ services:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
@@ -184,7 +180,7 @@ the generic ``app.lock`` service can be defined as follows:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
@@ -206,13 +202,6 @@ wrapping their names with ``%`` characters).
     services as private. However, doing that (like in the above example) makes
     sense most of the times to prevent accessing those services directly instead
     of using the generic service alias.
-
-.. versionadded:: 5.1
-
-    In Symfony versions prior to 5.1, you needed to manually add the
-    ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
-    compiler pass to the container for this feature to work. This compiler pass
-    is now added automatically.
 
 console.command
 ---------------
@@ -245,10 +234,6 @@ container.no_preload
 --------------------
 
 **Purpose**: Remove a class from the list of classes preloaded by PHP
-
-.. versionadded:: 5.1
-
-    The ``container.no_preload`` tag was introduced in Symfony 5.1.
 
 Add this tag to a service and its class won't be preloaded when using
 `PHP class preloading`_:
@@ -295,10 +280,6 @@ container.preload
 -----------------
 
 **Purpose**: Add some class to the list of classes preloaded by PHP
-
-.. versionadded:: 5.1
-
-    The ``container.preload`` tag was introduced in Symfony 5.1.
 
 When using `PHP class preloading`_, this tag allows you to define which PHP
 classes should be preloaded. This can improve performance by making some of the
@@ -352,7 +333,7 @@ controller.argument_value_resolver
 **Purpose**: Register a value resolver for controller arguments such as ``Request``
 
 Value resolvers implement the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ValueResolverInterface`
 and are used to resolve argument values for controllers as described here:
 :doc:`/controller/argument_value_resolver`.
 
@@ -435,7 +416,7 @@ service class::
 
     class MyClearer implements CacheClearerInterface
     {
-        public function clear(string $cacheDirectory)
+        public function clear(string $cacheDirectory): void
         {
             // clear your cache
         }
@@ -502,7 +483,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp($cacheDirectory)
+        public function warmUp(string $cacheDir, ?string $buildDir = null): array
         {
             // ... do some sort of operations to "warm" your cache
 
@@ -518,7 +499,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
             return $filesAndClassesToPreload;
         }
 
-        public function isOptional()
+        public function isOptional(): bool
         {
             return true;
         }
@@ -527,12 +508,9 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 The ``warmUp()`` method must return an array with the files and classes to
 preload. Files must be absolute paths and classes must be fully-qualified class
 names. The only restriction is that files must be stored in the cache directory.
-If you don't need to preload anything, return an empty array
-
-.. deprecated:: 5.1
-
-    Not returning an array from the ``warmUp()`` method with the files to
-    preload is deprecated since Symfony 5.1.
+If you don't need to preload anything, return an empty array. If read-only
+artifacts need to be created, you can store them in a different directory
+with the ``$buildDir`` parameter of the ``warmUp()`` method.
 
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
@@ -659,12 +637,12 @@ the :class:`Symfony\\Contracts\\Translation\\LocaleAwareInterface` interface::
 
     class MyCustomLocaleHandler implements LocaleAwareInterface
     {
-        public function setLocale($locale)
+        public function setLocale(string $locale): void
         {
             $this->locale = $locale;
         }
 
-        public function getLocale()
+        public function getLocale(): string
         {
             return $this->locale;
         }
@@ -977,22 +955,6 @@ This tag is used to automatically register :ref:`expression function providers
 component. Using these providers, you can add custom functions to the security
 expression language.
 
-security.remember_me_aware
---------------------------
-
-**Purpose**: To allow remember me authentication
-
-This tag is used internally to allow remember-me authentication to work.
-If you have a custom authentication method where a user can be remember-me
-authenticated, then you may need to use this tag.
-
-If your custom authentication factory extends
-:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\AbstractFactory`
-and your custom authentication listener extends
-:class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`,
-then your custom authentication listener will automatically have this tag
-applied and it will function automatically.
-
 security.voter
 --------------
 
@@ -1104,9 +1066,15 @@ file
 
 When executing the ``translation:extract`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
-has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
-:class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`, which
-help to find and extract translation keys from Twig templates and PHP files.
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` to find and
+extract translation keys from Twig templates.
+
+If you also want to find and extract translation keys from PHP files, install
+the following dependency to activate the :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`:
+
+.. code-block:: terminal
+
+    $ composer require nikic/php-parser
 
 You can create your own extractor by creating a class that implements
 :class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`
@@ -1121,12 +1089,12 @@ required option: ``alias``, which defines the name of the extractor::
 
     class FooExtractor implements ExtractorInterface
     {
-        protected $prefix;
+        protected string $prefix;
 
         /**
          * Extracts translation messages from a template directory to the catalog.
          */
-        public function extract($directory, MessageCatalogue $catalog)
+        public function extract(string $directory, MessageCatalogue $catalog): void
         {
             // ...
         }
@@ -1134,7 +1102,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Sets the prefix that should be used for new found messages.
          */
-        public function setPrefix(string $prefix)
+        public function setPrefix(string $prefix): void
         {
             $this->prefix = $prefix;
         }
@@ -1228,6 +1196,49 @@ This is the name that's used to determine which dumper should be used.
         $container->register(JsonFileDumper::class)
             ->addTag('translation.dumper', ['alias' => 'json']);
 
+.. _reference-dic-tags-translation-provider-factory:
+
+translation.provider_factory
+----------------------------
+
+**Purpose**: to register a factory related to custom translation providers
+
+When creating custom :ref:`translation providers <translation-providers>`, you
+must register your factory as a service and tag it with ``translation.provider_factory``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Translation\CustomProviderFactory:
+                tags:
+                    - { name: translation.provider_factory }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Translation\CustomProviderFactory">
+                    <tag name="translation.provider_factory"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Translation\CustomProviderFactory;
+
+        $container
+            ->register(CustomProviderFactory::class)
+            ->addTag('translation.provider_factory')
+        ;
+
 .. _reference-dic-tags-twig-extension:
 
 twig.extension
@@ -1296,8 +1307,7 @@ twig.loader
 
 **Purpose**: Register a custom service that loads Twig templates
 
-By default, Symfony uses only one `Twig Loader`_ -
-:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+By default, Symfony uses only one `Twig Loader`_ - `FilesystemLoader`_. If you need
 to load Twig templates from another resource, you can create a service for
 the new loader and tag it with ``twig.loader``.
 
@@ -1414,6 +1424,7 @@ Then, tag it with the ``validator.initializer`` tag (it has no options).
 For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
+.. _`FilesystemLoader`: https://github.com/twigphp/Twig/blob/3.x/src/Loader/FilesystemLoader.php
 .. _`Twig's documentation`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
 .. _`Twig Loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
 .. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload

@@ -23,23 +23,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\Locale(
-             *     canonicalize = true
-             * )
-             */
-            protected $locale;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -52,7 +35,7 @@ Basic Usage
             #[Assert\Locale(
                 canonicalize: true,
             )]
-            protected $locale;
+            protected string $locale;
         }
 
     .. code-block:: yaml
@@ -91,7 +74,9 @@ Basic Usage
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('locale', new Assert\Locale([
                     'canonicalize' => true,
@@ -121,10 +106,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

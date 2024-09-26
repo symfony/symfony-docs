@@ -32,7 +32,7 @@ Then configure the ``DATABASE_URL`` environment variable in ``.env``:
     # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
     # customize this line!
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.37"
 
 Further things can be configured in ``config/packages/doctrine.yaml`` - see
 :ref:`reference-dbal-configuration`. Remove the ``orm`` key in that file
@@ -104,7 +104,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         use App\Type\CustomSecond;
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $dbal = $doctrine->dbal();
             $dbal->type('custom_first')->class(CustomFirst::class);
             $dbal->type('custom_second')->class(CustomSecond::class);
@@ -153,7 +153,7 @@ mapping type:
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $dbalDefault = $doctrine->dbal()
                 ->connection('default');
             $dbalDefault->mappingType('enum', 'string');

@@ -57,7 +57,7 @@ The following block shows all possible configuration keys:
                 charset:              utf8mb4
                 logging:              '%kernel.debug%'
                 platform_service:     App\DBAL\MyDatabasePlatformService
-                server_version:       '5.7'
+                server_version:       '8.0.37'
                 mapping_types:
                     enum: string
                 types:
@@ -91,7 +91,7 @@ The following block shows all possible configuration keys:
                     charset="utf8mb4"
                     logging="%kernel.debug%"
                     platform-service="App\DBAL\MyDatabasePlatformService"
-                    server-version="5.7">
+                    server-version="8.0.37">
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
@@ -109,7 +109,9 @@ The following block shows all possible configuration keys:
     version).
 
     If you are running a MariaDB database, you must prefix the ``server_version``
-    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.14``).
+    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.14``). This will
+    change in Doctrine DBAL 4.x, where you must define the version as output by
+    the server (e.g. ``10.4.14-MariaDB``).
 
     Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
@@ -134,13 +136,13 @@ If you want to configure multiple connections in YAML, put them under the
                     user:             root
                     password:         null
                     host:             localhost
-                    server_version:   '5.6'
+                    server_version:   '8.0.37'
                 customer:
                     dbname:           customer
                     user:             root
                     password:         null
                     host:             localhost
-                    server_version:   '5.7'
+                    server_version:   '8.2.0'
 
 The ``database_connection`` service always refers to the *default* connection,
 which is the first one defined or the one configured via the
@@ -155,10 +157,10 @@ you can access it using the ``getConnection()`` method and the name of the conne
 
     class SomeController
     {
-        public function someMethod(ManagerRegistry $doctrine)
+        public function someMethod(ManagerRegistry $doctrine): void
         {
             $connection = $doctrine->getConnection('customer');
-            $result = $connection->fetchAll('SELECT name FROM customer');
+            $result = $connection->fetchAllAssociative('SELECT name FROM customer');
 
             // ...
         }
@@ -268,9 +270,13 @@ you can control. The following configuration options exist for a mapping:
 ``type``
 ........
 
-One of ``annotation`` (for PHP annotations; it's the default value),
-``attribute`` (for PHP attributes), ``xml``, ``yml``, ``php`` or
-``staticphp``. This specifies which type of metadata type your mapping uses.
+One of ``attribute`` (for PHP attributes; it's the default value),
+``xml``, ``php`` or ``staticphp``. This specifies which
+type of metadata type your mapping uses.
+
+.. versionadded:: 3.0
+
+    The ``yml`` mapping configuration is deprecated and was removed in Doctrine ORM 3.0.
 
 See `Doctrine Metadata Drivers`_ for more information about this option.
 
@@ -304,7 +310,7 @@ to organize the application code.
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine's ``auto_mapping`` feature loads annotation configuration from
+Doctrine's ``auto_mapping`` feature loads attribute configuration from
 the ``Entity/`` directory of each bundle *and* looks for other formats (e.g.
 YAML, XML) in the ``Resources/config/doctrine`` directory.
 
@@ -355,7 +361,7 @@ directory instead:
 
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $emDefault = $doctrine->orm()->entityManager('default');
 
             $emDefault->autoMapping(true);
@@ -383,7 +389,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                     mappings:
                         # ...
                         SomeEntityNamespace:
-                            type: annotation
+                            type: attribute
                             dir: '%kernel.project_dir%/src/Entity'
                             is_bundle: false
                             prefix: App\Entity
@@ -401,7 +407,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
             <doctrine:config>
                 <doctrine:orm>
                     <mapping name="SomeEntityNamespace"
-                        type="annotation"
+                        type="attribute"
                         dir="%kernel.project_dir%/src/Entity"
                         is-bundle="false"
                         prefix="App\Entity"
@@ -415,12 +421,12 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $emDefault = $doctrine->orm()->entityManager('default');
 
             $emDefault->autoMapping(true);
             $emDefault->mapping('SomeEntityNamespace')
-                ->type('annotation')
+                ->type('attribute')
                 ->dir('%kernel.project_dir%/src/Entity')
                 ->isBundle(false)
                 ->prefix('App\Entity')
@@ -444,14 +450,14 @@ configuration format. The bundle will stop as soon as it locates one.
 
 If it wasn't possible to determine a configuration format for a bundle,
 the DoctrineBundle will check if there is an ``Entity`` folder in the bundle's
-root directory. If the folder exist, Doctrine will fall back to using an
-annotation driver.
+root directory. If the folder exist, Doctrine will fall back to using
+attributes.
 
 Default Value of Dir
 ....................
 
 If ``dir`` is not specified, then its default value depends on which configuration
-driver is being used. For drivers that rely on the PHP files (annotation,
+driver is being used. For drivers that rely on the PHP files (attribute,
 ``staticphp``) it will be ``[Bundle]/Entity``. For drivers that are using
 configuration files (XML, YAML, ...) it will be
 ``[Bundle]/Resources/config/doctrine``.

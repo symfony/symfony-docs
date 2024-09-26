@@ -9,18 +9,17 @@ you may have multiple repository classes which need the
     // src/Repository/BaseDoctrineRepository.php
     namespace App\Repository;
 
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
     use Psr\Log\LoggerInterface;
 
     // ...
     abstract class BaseDoctrineRepository
     {
-        protected $objectManager;
-        protected $logger;
+        protected LoggerInterface $logger;
 
-        public function __construct(ObjectManager $objectManager)
-        {
-            $this->objectManager = $objectManager;
+        public function __construct(
+            protected EntityManager $entityManager,
+        ) {
         }
 
         public function setLogger(LoggerInterface $logger): void
@@ -119,13 +118,12 @@ avoid duplicated service definitions:
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(BaseDoctrineRepository::class)
                 ->abstract()
                 ->args([service('doctrine.orm.entity_manager')])
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->call('setLogger', [service('logger')])
             ;
 
@@ -229,7 +227,7 @@ the child class:
         use App\Repository\DoctrineUserRepository;
         // ...
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(BaseDoctrineRepository::class)

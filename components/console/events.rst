@@ -34,7 +34,7 @@ dispatched. Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
-    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event): void {
         // gets the input instance
         $input = $event->getInput();
 
@@ -65,7 +65,7 @@ C/C++ standard::
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
-    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event): void {
         // gets the command to be executed
         $command = $event->getCommand();
 
@@ -98,7 +98,7 @@ Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleErrorEvent;
 
-    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleErrorEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleErrorEvent $event): void {
         $output = $event->getOutput();
 
         $command = $event->getCommand();
@@ -132,7 +132,7 @@ Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 
-    $dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event): void {
         // gets the output
         $output = $event->getOutput();
 
@@ -151,6 +151,12 @@ Listeners receive a
     This event is also dispatched when an exception is thrown by the command.
     It is then dispatched just after the ``ConsoleEvents::ERROR`` event.
     The exit code received in this case is the exception code.
+
+    Additionally, the event is dispatched when the command is being exited on
+    a signal. You can learn more about signals in the
+    :ref:`the dedicated section <console-events_signal>`.
+
+.. _console-events_signal:
 
 The ``ConsoleEvents::SIGNAL`` Event
 -----------------------------------
@@ -171,20 +177,36 @@ Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleSignalEvent;
 
-    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event): void {
 
         // gets the signal number
         $signal = $event->getHandlingSignal();
+
+        // sets the exit code
+        $event->setExitCode(0);
 
         if (\SIGINT === $signal) {
             echo "bye bye!";
         }
     });
 
+It is also possible to abort the exit if you want the command to continue its
+execution even after the event has been dispatched, thanks to the
+:method:`Symfony\\Component\\Console\\Event\\ConsoleSignalEvent::abortExit`
+method::
+
+    use Symfony\Component\Console\ConsoleEvents;
+    use Symfony\Component\Console\Event\ConsoleSignalEvent;
+
+    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+        $event->abortExit();
+    });
+
 .. tip::
 
     All the available signals (``SIGINT``, ``SIGQUIT``, etc.) are defined as
-    `constants of the PCNTL PHP extension`_.
+    `constants of the PCNTL PHP extension`_. The extension has to be installed
+    for these constants to be available.
 
 If you use the Console component inside a Symfony application, commands can
 handle signals themselves. To do so, implement the
@@ -206,20 +228,30 @@ handle signals themselves. To do so, implement the
             return [\SIGINT, \SIGTERM];
         }
 
-        public function handleSignal(int $signal): void
+        public function handleSignal(int $signal): int|false
         {
             if (\SIGINT === $signal) {
                 // ...
             }
 
             // ...
+
+            // return an integer to set the exit code, or
+            // false to continue normal execution
+            return 0;
         }
     }
 
-.. versionadded:: 5.2
+Symfony doesn't handle any signal received by the command (not even ``SIGKILL``,
+``SIGTERM``, etc). This behavior is intended, as it gives you the flexibility to
+handle all signals e.g. to do some tasks before terminating the command.
 
-    The ``ConsoleSignalEvent`` and ``SignalableCommandInterface`` classes were
-    introduced in Symfony 5.2.
+.. tip::
+
+    If you need to fetch the signal name from its integer value (e.g. for logging),
+    you can use the
+    :method:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap::getSignalName`
+    method.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)

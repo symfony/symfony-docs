@@ -179,25 +179,17 @@ listed in the manifest::
     echo $package->getUrl('not-found.css');
     // error:
 
-.. versionadded:: 5.4
-
-    The ``$strictMode`` option was introduced in Symfony 5.4.
-
 If your JSON file is not on your local filesystem but is accessible over HTTP,
-use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
+use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`
 with the :doc:`HttpClient component </http_client>`::
 
     use Symfony\Component\Asset\Package;
-    use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
+    use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
     use Symfony\Component\HttpClient\HttpClient;
 
     $httpClient = HttpClient::create();
     $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
-    $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
-
-.. versionadded:: 5.1
-
-    The ``RemoteJsonManifestVersionStrategy`` was introduced in Symfony 5.1.
+    $package = new Package(new JsonManifestVersionStrategy($manifestUrl, $httpClient));
 
 Custom Version Strategies
 .........................
@@ -211,19 +203,19 @@ every day::
 
     class DateVersionStrategy implements VersionStrategyInterface
     {
-        private $version;
+        private string $version;
 
         public function __construct()
         {
             $this->version = date('Ymd');
         }
 
-        public function getVersion(string $path)
+        public function getVersion(string $path): string
         {
             return $this->version;
         }
 
-        public function applyVersion(string $path)
+        public function applyVersion(string $path): string
         {
             return sprintf('%s?v=%s', $path, $this->getVersion($path));
         }

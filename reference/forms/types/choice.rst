@@ -11,8 +11,6 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | The selected choice is invalid.                                      |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType` |
@@ -73,21 +71,21 @@ method::
         // a callback to return the label for a given choice
         // if a placeholder is used, its empty value (null) may be passed but
         // its label is defined by its own "placeholder" option
-        'choice_label' => function (?Category $category) {
+        'choice_label' => function (?Category $category): string {
             return $category ? strtoupper($category->getName()) : '';
         },
         // returns the html attributes for each option input (may be radio/checkbox)
-        'choice_attr' => function (?Category $category) {
+        'choice_attr' => function (?Category $category): array {
             return $category ? ['class' => 'category_'.strtolower($category->getName())] : [];
         },
         // every option can use a string property path or any callable that get
         // passed each choice as argument, but it may not be needed
-        'group_by' => function () {
+        'group_by' => function (): string {
             // randomly assign things into 2 groups
-            return rand(0, 1) == 1 ? 'Group A' : 'Group B';
+            return rand(0, 1) === 1 ? 'Group A' : 'Group B';
         },
         // a callback to return whether a category is preferred
-        'preferred_choices' => function (?Category $category) {
+        'preferred_choices' => function (?Category $category): bool {
             return $category && 100 < $category->getArticleCounts();
         },
     ]);
@@ -144,11 +142,6 @@ To get fancier, use the `group_by`_ option instead.
 Field Options
 -------------
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class was
-    introduced in Symfony 5.1, to help configuring choices options.
-
 choices
 ~~~~~~~
 
@@ -193,6 +186,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
+
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
@@ -201,7 +196,35 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
+
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+``separator``
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``-------------------``
+
+This option allows you to customize the visual separator shown after the preferred
+choices. You can use HTML elements like ``<hr>`` to display a more modern separator,
+but you'll also need to set the `separator_html`_ option to ``true``.
+
+.. versionadded:: 7.1
+
+    The ``separator`` option was introduced in Symfony 7.1.
+
+``separator_html``
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is true, the `separator`_ option will be displayed as HTML instead
+of text. This is useful when using HTML elements (e.g. ``<hr>``) as a more modern
+visual separator.
+
+.. versionadded:: 7.1
+
+    The ``separator_html`` option was introduced in Symfony 7.1.
 
 Overridden Options
 ------------------
@@ -263,6 +286,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
@@ -299,6 +324,8 @@ Field Variables
 +----------------------------+--------------+-------------------------------------------------------------------+
 | placeholder                | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                            |              | ``null``.                                                         |
++----------------------------+--------------+-------------------------------------------------------------------+
+| placeholder_attr           | ``array``    | The value of the `placeholder_attr`_ option.                      |
 +----------------------------+--------------+-------------------------------------------------------------------+
 | choice_translation_domain  | ``mixed``    | ``boolean``, ``null`` or ``string`` to determine if the value     |
 |                            |              | should be translated.                                             |

@@ -1,9 +1,11 @@
 Couchbase Bucket Cache Adapter
 ==============================
 
-.. versionadded:: 5.1
+.. deprecated:: 7.1
 
-    The Couchbase Bucket adapter was introduced in Symfony 5.1.
+    The ``CouchbaseBucketAdapter`` is deprecated since Symfony 7.1, use the
+    :doc:`CouchbaseCollectionAdapter </components/cache/adapters/couchbasecollection_adapter>`
+    instead.
 
 This adapter stores the values in-memory using one (or more) `Couchbase server`_
 instances. Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
@@ -39,7 +41,6 @@ the second and third parameters::
         $defaultLifetime
     );
 
-
 Configure the Connection
 ------------------------
 
@@ -70,7 +71,6 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
     $client = CouchbaseBucketAdapter::createConnection(
         'couchbase:?host[localhost]&host[localhost:12345]'
     );
-
 
 Configure the Options
 ---------------------

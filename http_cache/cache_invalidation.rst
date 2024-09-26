@@ -58,7 +58,7 @@ to support the ``PURGE`` HTTP method. First create a caching kernel that overrid
 
     class CacheKernel extends HttpCache
     {
-        protected function invalidate(Request $request, bool $catch = false)
+        protected function invalidate(Request $request, bool $catch = false): Response
         {
             if ('PURGE' !== $request->getMethod()) {
                 return parent::invalidate($request, $catch);
@@ -86,6 +86,22 @@ Then, register the class as a service that :doc:`decorates </service_container/s
 ``http_cache``::
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/CacheKernel.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(bind: ['$surrogate' => '@?esi'])]
+        #[AsDecorator(decorates: 'http_cache')]
+        class CacheKernel extends HttpCache
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -123,7 +139,7 @@ Then, register the class as a service that :doc:`decorates </service_container/s
 
         use App\CacheKernel;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(CacheKernel::class)
@@ -136,7 +152,7 @@ Then, register the class as a service that :doc:`decorates </service_container/s
             ;
         };
 
-.. caution::
+.. danger::
 
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data.

@@ -7,7 +7,7 @@ want to allow zero as value, use :doc:`/reference/constraints/Negative` instead.
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NegativeOrZero`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanOrEqualValidator`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanOrEqualValidator`
 ==========  ===================================================================
 
 Basic Usage
@@ -17,21 +17,6 @@ The following constraint ensures that the ``level`` of a ``UnderGroundGarage``
 is a negative number or equal to zero:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/TransferItem.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class UnderGroundGarage
-        {
-            /**
-             * @Assert\NegativeOrZero
-             */
-            protected $level;
-        }
 
     .. code-block:: php-attributes
 
@@ -43,7 +28,7 @@ is a negative number or equal to zero:
         class UnderGroundGarage
         {
             #[Assert\NegativeOrZero]
-            protected $level;
+            protected int $level;
         }
 
     .. code-block:: yaml
@@ -79,7 +64,9 @@ is a negative number or equal to zero:
 
         class UnderGroundGarage
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('level', new Assert\NegativeOrZero());
             }

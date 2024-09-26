@@ -25,7 +25,7 @@ This means that the following scenarios will work:
   either the LDAP form login or LDAP HTTP Basic authentication providers.
 
 * Checking a user's password against an LDAP server while fetching user
-  information from another source (database using FOSUserBundle, for
+  information from another source (like your main database for
   example).
 
 * Loading user information from an LDAP server, while using another
@@ -184,7 +184,7 @@ use the ``ldap`` user provider.
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->provider('ldap_users')
                 ->ldap()
                     ->service(Ldap::class)
@@ -196,7 +196,6 @@ use the ``ldap`` user provider.
                     ->extraFields(['email'])
             ;
         };
-
 
 .. caution::
 
@@ -287,14 +286,14 @@ filter
 
 This key lets you configure which LDAP query will be used. The ``{uid_key}``
 string will be replaced by the value of the ``uid_key`` configuration value
-(by default, ``sAMAccountName``), and the ``{username}`` string will be
-replaced by the username you are trying to load.
+(by default, ``sAMAccountName``), and the ``{user_identifier}`` string will be
+replaced by the user identified you are trying to load.
 
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 
 If you pass ``null`` as the value of this option, the default filter is used
-``({uid_key}={username})``.
+``({uid_key}={user_identifier})``.
 
 To prevent `LDAP injection`_, the username will be escaped.
 
@@ -321,15 +320,15 @@ number or contain white spaces.
 dn_string
 .........
 
-**type**: ``string`` **default**: ``{username}``
+**type**: ``string`` **default**: ``{user_identifier}``
 
 This key defines the form of the string used to compose the
-DN of the user, from the username. The ``{username}`` string is
+DN of the user, from the username. The ``{user_identifier}`` string is
 replaced by the actual username of the person trying to authenticate.
 
 For example, if your users have DN strings in the form
 ``uid=einstein,dc=example,dc=com``, then the ``dn_string`` will be
-``uid={username},dc=example,dc=com``.
+``uid={user_identifier},dc=example,dc=com``.
 
 query_string
 ............
@@ -339,8 +338,8 @@ query_string
 This (optional) key makes the user provider search for a user and then use the
 found DN for the bind process. This is useful when using multiple LDAP user
 providers with different ``base_dn``. The value of this option must be a valid
-search string (e.g. ``uid="{username}"``). The placeholder value will be
-replaced by the actual username.
+search string (e.g. ``uid="{user_identifier}"``). The placeholder value will be
+replaced by the actual user identifier.
 
 When this option is used, ``query_string`` will search in the DN specified by
 ``dn_string`` and the DN resulted of the ``query_string`` will be used to
@@ -373,7 +372,7 @@ Configuration example for form login
                     form_login_ldap:
                         # ...
                         service: Symfony\Component\Ldap\Ldap
-                        dn_string: 'uid={username},dc=example,dc=com'
+                        dn_string: 'uid={user_identifier},dc=example,dc=com'
 
     .. code-block:: xml
 
@@ -390,7 +389,7 @@ Configuration example for form login
             <config>
                 <firewall name="main">
                     <form-login-ldap service="Symfony\Component\Ldap\Ldap"
-                        dn-string="uid={username},dc=example,dc=com"/>
+                        dn-string="uid={user_identifier},dc=example,dc=com"/>
                 </firewall>
             </config>
         </srv:container>
@@ -401,11 +400,11 @@ Configuration example for form login
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->formLoginLdap()
                     ->service(Ldap::class)
-                    ->dnString('uid={username},dc=example,dc=com')
+                    ->dnString('uid={user_identifier},dc=example,dc=com')
             ;
         };
 
@@ -425,7 +424,7 @@ Configuration example for HTTP Basic
                     stateless: true
                     http_basic_ldap:
                         service: Symfony\Component\Ldap\Ldap
-                        dn_string: 'uid={username},dc=example,dc=com'
+                        dn_string: 'uid={user_identifier},dc=example,dc=com'
 
     .. code-block:: xml
 
@@ -444,7 +443,7 @@ Configuration example for HTTP Basic
 
                 <firewall name="main" stateless="true">
                     <http-basic-ldap service="Symfony\Component\Ldap\Ldap"
-                        dn-string="uid={username},dc=example,dc=com"/>
+                        dn-string="uid={user_identifier},dc=example,dc=com"/>
                 </firewall>
             </config>
         </srv:container>
@@ -455,12 +454,12 @@ Configuration example for HTTP Basic
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->stateless(true)
                 ->formLoginLdap()
                     ->service(Ldap::class)
-                    ->dnString('uid={username},dc=example,dc=com')
+                    ->dnString('uid={user_identifier},dc=example,dc=com')
             ;
         };
 
@@ -481,7 +480,7 @@ Configuration example for form login and query_string
                     form_login_ldap:
                         service: Symfony\Component\Ldap\Ldap
                         dn_string: 'dc=example,dc=com'
-                        query_string: '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
+                        query_string: '(&(uid={user_identifier})(memberOf=cn=users,ou=Services,dc=example,dc=com))'
                         search_dn: '...'
                         search_password: 'the-raw-password'
 
@@ -502,7 +501,7 @@ Configuration example for form login and query_string
                     <!-- ... -->
                     <form-login-ldap service="Symfony\Component\Ldap\Ldap"
                         dn-string="dc=example,dc=com"
-                        query-string="(&amp;(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))"
+                        query-string="(&amp;(uid={user_identifier})(memberOf=cn=users,ou=Services,dc=example,dc=com))"
                         search-dn="..."
                         search-password="the-raw-password"/>
                 </firewall>
@@ -515,13 +514,13 @@ Configuration example for form login and query_string
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->stateless(true)
                 ->formLoginLdap()
                     ->service(Ldap::class)
                     ->dnString('dc=example,dc=com')
-                    ->queryString('(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))')
+                    ->queryString('(&(uid={user_identifier})(memberOf=cn=users,ou=Services,dc=example,dc=com))')
                     ->searchDn('...')
                     ->searchPassword('the-raw-password')
             ;
@@ -530,4 +529,3 @@ Configuration example for form login and query_string
 .. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: https://datatracker.ietf.org/doc/rfc4515/
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection
-

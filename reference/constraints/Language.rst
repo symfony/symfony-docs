@@ -15,21 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\Language
-             */
-            protected $preferredLanguage;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -40,7 +25,7 @@ Basic Usage
         class User
         {
             #[Assert\Language]
-            protected $preferredLanguage;
+            protected string $preferredLanguage;
         }
 
     .. code-block:: yaml
@@ -76,7 +61,9 @@ Basic Usage
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('preferredLanguage', new Assert\Language());
             }
@@ -89,10 +76,6 @@ Options
 
 alpha3
 ~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``alpha3`` option was introduced in Symfony 5.1.
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -117,10 +100,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

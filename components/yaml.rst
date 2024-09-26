@@ -239,7 +239,7 @@ And parse them by using the ``PARSE_OBJECT`` flag::
 The YAML component uses PHP's ``serialize()`` method to generate a string
 representation of the object.
 
-.. caution::
+.. danger::
 
     Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
@@ -330,6 +330,51 @@ syntax to parse them as proper PHP constants::
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = ['foo' => 'PHP_INT_SIZE', 'bar' => 8];
 
+Parsing PHP Enumerations
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The YAML parser supports `PHP enumerations`_, both unit and backed enums.
+By default, they are parsed as regular strings. Use the ``PARSE_CONSTANT`` flag
+and the special ``!php/enum`` syntax to parse them as proper PHP enums::
+
+    enum FooEnum: string
+    {
+        case Foo = 'foo';
+        case Bar = 'bar';
+    }
+
+    // ...
+
+    $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
+    // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => FooEnum::Foo];
+
+    $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo->value }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
+    // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => 'foo'];
+
+You can also use ``!php/enum`` to get all the enumeration cases by only
+giving the enumeration FQCN::
+
+    enum FooEnum: string
+    {
+        case Foo = 'foo';
+        case Bar = 'bar';
+    }
+
+    // ...
+
+    $yaml = '{ bar: !php/enum FooEnum }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = ['bar' => ['foo', 'bar']];
+
+.. versionadded:: 7.1
+
+    The support for using the enum FQCN without specifying a case
+    was introduced in Symfony 7.1.
+
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -381,6 +426,18 @@ you can dump them as ``~`` with the ``DUMP_NULL_AS_TILDE`` flag::
     $dumped = Yaml::dump(['foo' => null], 2, 4, Yaml::DUMP_NULL_AS_TILDE);
     // foo: ~
 
+Dumping Numeric Keys as Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, digit-only array keys are dumped as integers. You can use the
+``DUMP_NUMERIC_KEY_AS_STRING`` flag if you want to dump string-only keys::
+
+    $dumped = Yaml::dump([200 => 'foo']);
+    // 200: foo
+
+    $dumped = Yaml::dump([200 => 'foo'], 2, 4, Yaml::DUMP_NUMERIC_KEY_AS_STRING);
+    // '200': foo
+
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
@@ -427,16 +484,12 @@ Then, execute the script for validating contents:
     # you can also exclude one or more files from linting
     $ php lint.php path/to/directory --exclude=path/to/directory/foo.yaml --exclude=path/to/directory/bar.yaml
 
-.. versionadded:: 5.4
-
-    The ``--exclude`` option was introduced in Symfony 5.4.
-
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
 .. code-block:: terminal
 
-    $ php lint.php path/to/file.yaml --format json
+    $ php lint.php path/to/file.yaml --format=json
 
 .. tip::
 
@@ -446,3 +499,4 @@ Add the ``--format`` option to get the output in JSON format:
 
 .. _`YAML`: https://yaml.org/
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
+.. _`PHP enumerations`: https://www.php.net/manual/en/language.types.enumerations.php

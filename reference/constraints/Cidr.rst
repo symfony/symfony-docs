@@ -1,10 +1,6 @@
 Cidr
 ====
 
-.. versionadded:: 5.4
-
-    The ``Cidr`` constraint was introduced in Symfony 5.4.
-
 Validates that a value is a valid `CIDR`_ (Classless Inter-Domain Routing) notation.
 By default, this will validate the CIDR's IP and netmask both for version 4 and 6,
 with the option of allowing only one type of IP version to be valid. It also supports
@@ -21,21 +17,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/NetworkSettings.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class NetworkSettings
-        {
-            /**
-             * @Assert\Cidr
-             */
-            protected $cidrNotation;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/NetworkSettings.php
@@ -46,7 +27,7 @@ Basic Usage
         class NetworkSettings
         {
             #[Assert\Cidr]
-            protected $cidrNotation;
+            protected string $cidrNotation;
         }
 
     .. code-block:: yaml
@@ -82,7 +63,9 @@ Basic Usage
 
         class NetworkSettings
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('cidrNotation', new Assert\Cidr());
             }
@@ -112,7 +95,7 @@ It's a constraint for the lowest value a valid netmask may have.
 ``netmaskMax``
 ~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``32`` for IPv4 or ``128`` for IPv6
+**type**: ``integer`` **default**: ``32`` for IPv4 or ``128`` for IPv6
 
 It's a constraint for the biggest value a valid netmask may have.
 
@@ -141,10 +124,10 @@ Parameter        Description
 **type**: ``string`` **default**: ``all``
 
 This determines exactly *how* the CIDR notation is validated and can take one
-of these values:
+of :ref:`IP version ranges <reference-constraint-ip-version>`.
 
-* ``4``: validates for CIDR notations that have an IPv4;
-* ``6``: validates for CIDR notations that have an IPv6;
-* ``all``: validates all CIDR formats.
+.. versionadded:: 7.1
+
+    The support of all IP version ranges was introduced in Symfony 7.1.
 
 .. _`CIDR`: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing

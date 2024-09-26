@@ -14,7 +14,7 @@ safe & easy!) and offers long-term support.
 Downloading Symfony
 -------------------
 
-First, make sure you've installed `Composer`_ and have PHP 7.1.3 or higher.
+First, make sure you've installed `Composer`_ and have PHP 8.1 or higher.
 
 Ready? In a terminal, run:
 
@@ -39,7 +39,7 @@ Symfony application:
     ├─ var/
     └─ vendor/
 
-Can we already load the project in a browser? Yes! You can setup
+Can we already load the project in a browser? Yes! You can set up
 :doc:`Nginx or Apache </setup/web_server_configuration>` and configure their
 document root to be the ``public/`` directory. But, for development, it's better
 to :doc:`install the Symfony local web server </setup/symfony_server>` and run
@@ -63,20 +63,6 @@ web app, or a microservice. Symfony starts small, but scales with you.
 
 But before we go too far, let's dig into the fundamentals by building our first page.
 
-Start in ``config/routes.yaml``: this is where *we* can define the URL to our new
-page. Uncomment the example that already lives in the file:
-
-.. code-block:: yaml
-
-    # config/routes.yaml
-    index:
-        path: /
-        controller: 'App\Controller\DefaultController::index'
-
-This is called a *route*: it defines the URL to your page (``/``) and the "controller":
-the *function* that will be called whenever anyone goes to this URL. That function
-doesn't exist yet, so let's create it!
-
 In ``src/Controller``, create a new ``DefaultController`` class and an ``index``
 method inside::
 
@@ -84,10 +70,12 @@ method inside::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController
     {
-        public function index()
+        #[Route('/', name: 'index')]
+        public function index(): Response
         {
             return new Response('Hello!');
         }
@@ -104,11 +92,21 @@ But the routing system is *much* more powerful. So let's make the route more int
 
 .. code-block:: diff
 
-      # config/routes.yaml
-      index:
-    -     path: /
-    +     path: /hello/{name}
-          controller: 'App\Controller\DefaultController::index'
+      // src/Controller/DefaultController.php
+      namespace App\Controller;
+
+      use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\Routing\Attribute\Route;
+
+      class DefaultController
+      {
+    -     #[Route('/', name: 'index')]
+    +     #[Route('/hello/{name}', name: 'index')]
+          public function index(): Response
+          {
+              return new Response('Hello!');
+          }
+      }
 
 The URL to this page has changed: it is *now* ``/hello/*``: the ``{name}`` acts
 like a wildcard that matches anything. And it gets better! Update the controller too:
@@ -120,11 +118,13 @@ like a wildcard that matches anything. And it gets better! Update the controller
       namespace App\Controller;
 
       use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\Routing\Attribute\Route;
 
       class DefaultController
       {
+          #[Route('/hello/{name}', name: 'index')]
     -     public function index()
-    +     public function index($name)
+    +     public function index(string $name): Response
           {
     -         return new Response('Hello!');
     +         return new Response("Hello $name!");
@@ -135,60 +135,21 @@ Try the page out by going to ``http://localhost:8000/hello/Symfony``. You should
 see: Hello Symfony! The value of the ``{name}`` in the URL is available as a ``$name``
 argument in your controller.
 
-But this can be even simpler! So let's install annotations support:
-
-.. code-block:: terminal
-
-    $ composer require annotations
-
-Now, comment-out the YAML route by adding the ``#`` character:
-
-.. code-block:: yaml
-
-    # config/routes.yaml
-    # index:
-    #     path: /hello/{name}
-    #     controller: 'App\Controller\DefaultController::index'
-
-Instead, add the route *right above* the controller method:
-
-.. code-block:: diff
-
-      <?php
-      // src/Controller/DefaultController.php
-      namespace App\Controller;
-
-      use Symfony\Component\HttpFoundation\Response;
-    + use Symfony\Component\Routing\Annotation\Route;
-
-      class DefaultController
-      {
-    +    /**
-    +     * @Route("/hello/{name}")
-    +     */
-           public function index($name) {
-               // ...
-           }
-      }
-
-This works just like before! But by using annotations, the route and controller
-live right next to each other. Need another page? Add another route and method
-in ``DefaultController``::
+But by using attributes, the route and controller live right next to each
+other. Need another page? Add another route and method in ``DefaultController``::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController
     {
         // ...
 
-        /**
-         * @Route("/simplicity")
-         */
-        public function simple()
+        #[Route('/simplicity', methods: ['GET'])]
+        public function simple(): Response
         {
             return new Response('Simple! Easy! Great!');
         }

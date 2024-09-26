@@ -53,7 +53,7 @@ that handles persistent SSE connections with the clients.
 The Symfony app publishes the updates to the hub, that will broadcast them to
 clients.
 
-Thanks to :ref:`the Docker integration of Symfony </setup/docker>`,
+Thanks to :doc:`the Docker integration of Symfony </setup/docker>`,
 :ref:`Flex <symfony-flex>` proposes to install a Mercure hub.
 Run ``docker-compose up`` to start the hub if you have chosen this option.
 
@@ -108,14 +108,14 @@ the publicly available URL (e.g. ``https://example.com/.well-known/mercure``).
 The clients must also bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates and, sometimes, to subscribe.
 
-This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeMe!`` if you use the Docker integration).
+This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeThisMercureHubJWTSecretKey!`` if you use the Docker integration).
 This secret key must be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 MercureBundle will use it to automatically generate and sign the needed JWTs.
 
 In addition to these environment variables,
 MercureBundle provides a more advanced configuration:
 
-* ``secret``: the key to use to sign the JWT (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
+* ``secret``: the key to use to sign the JWT - A key of the same size as the hash output (for instance, 256 bits for "HS256") or larger MUST be used. (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
 * ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
 * ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
 * ``algorithm``: The algorithm to use to sign the JWT (only usable when ``secret`` is provided)
@@ -133,7 +133,7 @@ MercureBundle provides a more advanced configuration:
                 default:
                     url: https://mercure-hub.example.com/.well-known/mercure
                     jwt:
-                        secret: '!ChangeMe!'
+                        secret: '!ChangeThisMercureHubJWTSecretKey!'
                         publish: ['foo', 'https://example.com/foo']
                         subscribe: ['bar', 'https://example.com/bar']
                         algorithm: 'hmac.sha256'
@@ -151,7 +151,7 @@ MercureBundle provides a more advanced configuration:
                 url="https://mercure-hub.example.com/.well-known/mercure"
             >
                 <jwt
-                    secret="!ChangeMe!"
+                    secret="!ChangeThisMercureHubJWTSecretKey!"
                     algorithm="hmac.sha256"
                     provider="My\Provider"
                     factory="My\Factory"
@@ -173,7 +173,7 @@ MercureBundle provides a more advanced configuration:
                 'default' => [
                     'url' => 'https://mercure-hub.example.com/.well-known/mercure',
                     'jwt' => [
-                        'secret' => '!ChangeMe!',
+                        'secret' => '!ChangeThisMercureHubJWTSecretKey!',
                         'publish' => ['foo', 'https://example.com/foo'],
                         'subscribe' => ['bar', 'https://example.com/bar'],
                         'algorithm' => 'hmac.sha256',
@@ -501,13 +501,11 @@ And here is the controller::
         }
     }
 
-
 .. tip::
 
     You cannot use the ``mercure()`` helper and the ``setCookie()``
     method at the same time (it would set the cookie twice on a single request). Choose
     either one method or the other.
-
 
 Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------
@@ -637,7 +635,7 @@ You can instead make use of the ``MockHub`` class::
 
     class MessageControllerTest extends TestCase
     {
-        public function testPublishing()
+        public function testPublishing(): void
         {
             $hub = new MockHub('https://internal/.well-known/mercure', new StaticTokenProvider('foo'), function(Update $update): string {
                 // $this->assertTrue($update->isPrivate());
@@ -675,8 +673,9 @@ sent:
 .. code-block:: yaml
 
     # config/services_test.yaml
-    mercure.hub.default:
-        class: App\Tests\Functional\Stub\HubStub
+    services:
+        mercure.hub.default:
+            class: App\Tests\Functional\Stub\HubStub
 
 As MercureBundle support multiple hubs, you may have to replace
 the other service definitions accordingly.

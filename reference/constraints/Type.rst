@@ -14,46 +14,17 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 Basic Usage
 -----------
 
-This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
+This constraint should be applied to untyped variables/properties. If a property
+or variable is typed and you pass a value of a different type, PHP will throw an
+exception before this constraint is checked.
+
+The following example checks if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
 ``firstName`` is of type ``string`` (using :phpfunction:`is_string` PHP function),
 ``age`` is an ``integer`` (using :phpfunction:`is_int` PHP function) and
 ``accessCode`` contains either only letters or only digits (using
 :phpfunction:`ctype_alpha` and :phpfunction:`ctype_digit` PHP functions).
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Type("Symfony\Component\Mime\Address")
-             */
-            protected $emailAddress;
-
-            /**
-             * @Assert\Type("string")
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\Type(
-             *     type="integer",
-             *     message="The value {{ value }} is not a valid {{ type }}."
-             * )
-             */
-            protected $age;
-
-            /**
-             * @Assert\Type(type={"alpha", "digit"})
-             */
-            protected $accessCode;
-        }
 
     .. code-block:: php-attributes
 
@@ -148,7 +119,9 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('emailAddress', new Assert\Type(Address::class));
 
@@ -189,10 +162,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _reference-constraint-type-type:
@@ -225,6 +194,11 @@ PHP class/interface or a valid PHP datatype (checked by PHP's ``is_()`` function
 * :phpfunction:`resource <is_resource>`
 * :phpfunction:`null <is_null>`
 
+If you're dealing with arrays, you can use the following types in the constraint:
+
+* ``list`` which uses :phpfunction:`array_is_list <array_is_list>` internally
+* ``associative_array`` which is true for any **non-empty** array that is not a list
+
 Also, you can use ``ctype_*()`` functions from corresponding
 `built-in PHP extension`_. Consider `a list of ctype functions`_:
 
@@ -242,6 +216,17 @@ Also, you can use ``ctype_*()`` functions from corresponding
 
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
+
+.. versionadded:: 7.1
+
+    The ``list`` and ``associative_array`` types were introduced in Symfony
+    7.1.
+
+Finally, you can use aggregated functions:
+
+* ``number``: ``is_int || is_float && !is_nan``
+* ``finite-float``: ``is_float && is_finite``
+* ``finite-number``: ``is_int || is_float && is_finite``
 
 .. _built-in PHP extension: https://www.php.net/book.ctype
 .. _a list of ctype functions: https://www.php.net/ref.ctype

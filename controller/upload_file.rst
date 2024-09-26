@@ -21,10 +21,8 @@ add a PDF brochure for each product. To do so, add a new property called
     {
         // ...
 
-        /**
-         * @ORM\Column(type="string")
-         */
-        private $brochureFilename;
+        #[ORM\Column(type: 'string')]
+        private string $brochureFilename;
 
         public function getBrochureFilename(): string
         {
@@ -60,7 +58,7 @@ so Symfony doesn't try to get/set its value from the related entity::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -74,7 +72,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                     // every time you edit the Product details
                     'required' => false,
 
-                    // unmapped fields can't define their validation using annotations
+                    // unmapped fields can't define their validation using attributes
                     // in the associated entity, so you can use the PHP constraint classes
                     'constraints' => [
                         new File([
@@ -122,19 +120,22 @@ Finally, you need to update the code of the controller that handles the form::
     use App\Entity\Product;
     use App\Form\ProductType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\String\Slugger\SluggerInterface;
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/new", name="app_product_new")
-         */
-        public function new(Request $request, SluggerInterface $slugger): Response
+        #[Route('/product/new', name: 'app_product_new')]
+        public function new(
+            Request $request,
+            SluggerInterface $slugger,
+            #[Autowire('%kernel.project_dir%/public/uploads/brochures')] string $brochuresDirectory
+        ): Response
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -154,10 +155,7 @@ Finally, you need to update the code of the controller that handles the form::
 
                     // Move the file to the directory where brochures are stored
                     try {
-                        $brochureFile->move(
-                            $this->getParameter('brochures_directory'),
-                            $newFilename
-                        );
+                        $brochureFile->move($brochuresDirectory, $newFilename);
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
                     }
@@ -172,22 +170,11 @@ Finally, you need to update the code of the controller that handles the form::
                 return $this->redirectToRoute('app_product_list');
             }
 
-            return $this->renderForm('product/new.html.twig', [
+            return $this->render('product/new.html.twig', [
                 'form' => $form,
             ]);
         }
     }
-
-Now, create the ``brochures_directory`` parameter that was used in the
-controller to specify the directory in which the brochures should be stored:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-
-    # ...
-    parameters:
-        brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
 
 There are some important things to consider in the code of the above controller:
 
@@ -198,12 +185,23 @@ There are some important things to consider in the code of the above controller:
    users. This also applies to the files uploaded by your visitors. The ``UploadedFile``
    class provides methods to get the original file extension
    (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalExtension`),
-   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`)
-   and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`).
+   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`),
+   the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`)
+   and the original file path (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalPath`).
    However, they are considered *not safe* because a malicious user could tamper
    that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
+
+.. note::
+
+    If a directory was uploaded, ``getClientOriginalPath()`` will contain
+    the **webkitRelativePath** as provided by the browser. Otherwise this
+    value will be identical to ``getClientOriginalName()``.
+
+.. versionadded:: 7.1
+
+    The ``getClientOriginalPath()`` method was introduced in Symfony 7.1.
 
 You can use the following code to link to the PDF brochure of a product:
 
@@ -223,7 +221,7 @@ You can use the following code to link to the PDF brochure of a product:
         // ...
 
         $product->setBrochureFilename(
-            new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename())
+            new File($brochuresDirectory.DIRECTORY_SEPARATOR.$product->getBrochureFilename())
         );
 
 Creating an Uploader Service
@@ -241,13 +239,10 @@ logic to a separate service::
 
     class FileUploader
     {
-        private $targetDirectory;
-        private $slugger;
-
-        public function __construct($targetDirectory, SluggerInterface $slugger)
-        {
-            $this->targetDirectory = $targetDirectory;
-            $this->slugger = $slugger;
+        public function __construct(
+            private string $targetDirectory,
+            private SluggerInterface $slugger,
+        ) {
         }
 
         public function upload(UploadedFile $file): string
@@ -319,7 +314,7 @@ Then, define a service for this class:
 
         use App\Service\FileUploader;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(FileUploader::class)
@@ -334,9 +329,10 @@ Now you're ready to use this service in the controller::
 
     use App\Service\FileUploader;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         // ...
 

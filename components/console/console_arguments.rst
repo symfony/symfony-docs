@@ -11,6 +11,7 @@ Have a look at the following command that has three options::
 
     namespace Acme\Console\Command;
 
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputDefinition;
@@ -18,14 +19,12 @@ Have a look at the following command that has three options::
     use Symfony\Component\Console\Input\InputOption;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    #[AsCommand(name: 'demo:args', description: 'Describe args behaviors')]
     class DemoArgsCommand extends Command
     {
-        protected static $defaultName = 'demo:args';
-
-        protected function configure()
+        protected function configure(): void
         {
             $this
-                ->setDescription('Describe args behaviors')
                 ->setDefinition(
                     new InputDefinition([
                         new InputOption('foo', 'f'),
@@ -35,7 +34,7 @@ Have a look at the following command that has three options::
                 );
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
         }

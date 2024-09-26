@@ -61,7 +61,7 @@ unit test for the above code::
 
     class IndexTest extends TestCase
     {
-        public function testHello()
+        public function testHello(): void
         {
             $_GET['name'] = 'Fabien';
 
@@ -176,20 +176,20 @@ fingertips thanks to a nice and simple API::
     // the URI being requested (e.g. /about) minus any query parameters
     $request->getPathInfo();
 
-    // retrieve GET and POST variables respectively
+    // retrieves GET and POST variables respectively
     $request->query->get('foo');
-    $request->request->get('bar', 'default value if bar does not exist');
+    $request->getPayload()->get('bar', 'default value if bar does not exist');
 
-    // retrieve SERVER variables
+    // retrieves SERVER variables
     $request->server->get('HTTP_HOST');
 
     // retrieves an instance of UploadedFile identified by foo
     $request->files->get('foo');
 
-    // retrieve a COOKIE value
+    // retrieves a COOKIE value
     $request->cookies->get('PHPSESSID');
 
-    // retrieve an HTTP request header, with normalized, lowercase keys
+    // retrieves a HTTP request header, with normalized, lowercase keys
     $request->headers->get('host');
     $request->headers->get('content-type');
 
@@ -255,7 +255,7 @@ code in production without a proxy, it becomes trivially easy to abuse your
 system. That's not the case with the ``getClientIp()`` method as you must
 explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
-    Request::setTrustedProxies(['10.0.0.1']);
+    Request::setTrustedProxies(['10.0.0.1'], Request::HEADER_X_FORWARDED_FOR);
 
     if ($myIp === $request->getClientIp()) {
         // the client is a known one, so give it some more privilege

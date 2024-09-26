@@ -1,5 +1,5 @@
-Enabling Vue.js (``vue-loader``)
-================================
+Enabling Vue.js (``vue-loader``) with Webpack Encore
+====================================================
 
 .. admonition:: Screencast
     :class: screencast
@@ -9,7 +9,7 @@ Enabling Vue.js (``vue-loader``)
 .. tip::
 
     Check out live demos of Symfony UX Vue.js component at `https://ux.symfony.com/vue`_!
-    
+
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
@@ -73,10 +73,6 @@ your Vue.js app update *without* a browser refresh! To activate it, use the
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn encore dev-server
-
-    # if you use the npm package manager
     $ npm run dev-server
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But

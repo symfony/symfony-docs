@@ -10,26 +10,18 @@ This authentication method can help you eliminate most of the customer support
 related to authentication (e.g. I forgot my password, how can I change or reset
 my password, etc.)
 
-.. note::
-
-    Login links are only supported by Symfony when using the
-    :doc:`authenticator system </security>`. Before using this
-    authenticator, make sure you have enabled it with
-    ``enable_authenticator_manager: true`` in your ``security.yaml`` file.
-
 Using the Login Link Authenticator
 ----------------------------------
 
-This guide assumes you have setup security and have created a user object
-in your application. Follow :doc:`the main security guide </security>` if
-this is not yet the case.
+This guide assumes you have :doc:`setup security and have created a user object </security>`
+in your application.
 
 1) Configure the Login Link Authenticator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The login link authenticator is configured using the ``login_link`` option
-under the firewall. You must configure a ``check_route`` and
-``signature_properties`` when enabling this authenticator:
+under the firewall and requires defining two options called ``check_route``
+and ``signature_properties`` (explained below):
 
 .. configuration-block::
 
@@ -69,7 +61,7 @@ under the firewall. You must configure a ``check_route`` and
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -82,31 +74,12 @@ contain at least one property of your ``User`` object that uniquely
 identifies this user (e.g. the user ID). Read more about this setting
 :ref:`further down below <security-login-link-signature>`.
 
-The ``check_route`` must be an existing route and it will be used to
+The ``check_route`` must be the name of an existing route and it will be used to
 generate the login link that will authenticate the user. You don't need a
 controller (or it can be empty) because the login link authenticator will
 intercept requests to this route:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Controller/SecurityController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class SecurityController extends AbstractController
-        {
-            /**
-             * @Route("/login_check", name="login_check")
-             */
-            public function check()
-            {
-                throw new \LogicException('This code should never be reached');
-            }
-        }
 
     .. code-block:: php-attributes
 
@@ -114,12 +87,12 @@ intercept requests to this route:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class SecurityController extends AbstractController
         {
             #[Route('/login_check', name: 'login_check')]
-            public function check()
+            public function check(): never
             {
                 throw new \LogicException('This code should never be reached');
             }
@@ -152,7 +125,7 @@ intercept requests to this route:
         use App\Controller\DefaultController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             // ...
             $routes->add('login_check', '/login_check');
         };
@@ -160,9 +133,8 @@ intercept requests to this route:
 2) Generate the Login Link
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that the authenticator is able to check the login links, you must
-create a page where a user can request a login link and log in to your
-website.
+Now that the authenticator is able to check the login links, you can
+create a page where a user can request a login link.
 
 The login link can be generated using the
 :class:`Symfony\\Component\\Security\\Http\\LoginLink\\LoginLinkHandlerInterface`.
@@ -175,20 +147,19 @@ this interface::
     use App\Repository\UserRepository;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
-        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+        #[Route('/login', name: 'login')]
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
-            // check if login form is submitted
+            // check if form is submitted
             if ($request->isMethod('POST')) {
                 // load the user in some way (e.g. using the form input)
-                $email = $request->request->get('email');
+                $email = $request->getPayload()->get('email');
                 $user = $userRepository->findOneBy(['email' => $email]);
 
                 // create a login link for $user this returns an instance
@@ -199,8 +170,8 @@ this interface::
                 // ... send the link and return a response (see next section)
             }
 
-            // if it's not submitted, render the "login" form
-            return $this->render('security/login.html.twig');
+            // if it's not submitted, render the form to request the "login link"
+            return $this->render('security/request_login_link.html.twig');
         }
 
         // ...
@@ -208,7 +179,7 @@ this interface::
 
 .. code-block:: html+twig
 
-    {# templates/security/login.html.twig #}
+    {# templates/security/request_login_link.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block body %}
@@ -253,13 +224,11 @@ number::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
-        public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+        #[Route('/login', name: 'login')]
+        public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
             if ($request->isMethod('POST')) {
-                $email = $request->request->get('email');
+                $email = $request->getPayload()->get('email');
                 $user = $userRepository->findOneBy(['email' => $email]);
 
                 $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
@@ -279,7 +248,7 @@ number::
                 return $this->render('security/login_link_sent.html.twig');
             }
 
-            return $this->render('security/login.html.twig');
+            return $this->render('security/request_login_link.html.twig');
         }
 
         // ...
@@ -310,11 +279,13 @@ This will send an email like this to the user:
         // src/Notifier/CustomLoginLinkNotification
         namespace App\Notifier;
 
+        use Symfony\Component\Notifier\Message\EmailMessage;
+        use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
         use Symfony\Component\Security\Http\LoginLink\LoginLinkNotification;
 
         class CustomLoginLinkNotification extends LoginLinkNotification
         {
-            public function asEmailMessage(EmailRecipientInterface $recipient, string $transport = null): ?EmailMessage
+            public function asEmailMessage(EmailRecipientInterface $recipient, ?string $transport = null): ?EmailMessage
             {
                 $emailMessage = parent::asEmailMessage($recipient, $transport);
 
@@ -343,6 +314,8 @@ configuration decisions are discussed:
 * `Limit Login Link Lifetime`_
 * `Invalidate Login Links`_
 * `Allow a Link to only be Used Once`_
+
+.. _login-link-lifetime:
 
 Limit Login Link Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -392,7 +365,7 @@ seconds). You can customize this using the ``lifetime`` option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -400,6 +373,10 @@ seconds). You can customize this using the ``lifetime`` option:
                     ->lifetime(300)
             ;
         };
+
+.. tip::
+
+    You can also :ref:`customize the lifetime per link <customizing-link-lifetime>`.
 
 .. _security-login-link-signature:
 
@@ -473,7 +450,7 @@ You can add more properties to the ``hash`` by using the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -545,7 +522,7 @@ cache. Enable this support by setting the ``max_uses`` option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -618,7 +595,7 @@ the authenticator only handle HTTP POST methods:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -638,10 +615,8 @@ user create this POST request (e.g. by clicking a button)::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login_check", name="login_check")
-         */
-        public function check(Request $request)
+        #[Route('/login_check', name: 'login_check')]
+        public function check(Request $request): Response
         {
             // get the login link query parameters
             $expires = $request->query->get('expires');
@@ -666,7 +641,7 @@ user create this POST request (e.g. by clicking a button)::
         <h2>Hi! You are about to login to ...</h2>
 
         <!-- for instance, use a form with hidden fields to
-             create the POST request --->
+             create the POST request -->
         <form action="{{ path('login_check') }}" method="POST">
             <input type="hidden" name="expires" value="{{ expires }}">
             <input type="hidden" name="user" value="{{ user }}">
@@ -692,6 +667,8 @@ Once this first hash is processed and encoded in Base64, a new one is created
 from the first hash value and the ``kernel.secret`` container parameter. This
 allows Symfony to sign this final hash, which is contained in the login URL.
 The final hash is also a Base64 encoded SHA-256 hash.
+
+.. _login-link_customize-success-handler:
 
 Customizing the Success Handler
 -------------------------------
@@ -766,7 +743,7 @@ Then, configure this service ID as the ``success_handler``:
         use App\Security\Authentication\AuthenticationSuccessHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -785,10 +762,6 @@ Then, configure this service ID as the ``success_handler``:
 Customizing the Login Link
 --------------------------
 
-.. versionadded:: 5.3
-
-    The possibility to customize the login link was introduced in Symfony 5.3.
-
 The ``createLoginLink()`` method accepts a second optional argument to pass the
 ``Request`` object used when generating the login link. This allows to customize
 features such as the locale used to generate the link::
@@ -802,10 +775,8 @@ features such as the locale used to generate the link::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
-        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
+        #[Route('/login', name: 'login')]
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request): Response
         {
             // check if login form is submitted
             if ($request->isMethod('POST')) {
@@ -822,8 +793,18 @@ features such as the locale used to generate the link::
                 // ...
             }
 
-            return $this->render('security/login.html.twig');
+            return $this->render('security/request_login_link.html.twig');
         }
 
         // ...
     }
+
+.. _customizing-link-lifetime:
+
+By default, generated links use :ref:`the lifetime configured globally <login-link-lifetime>`
+but you can change the lifetime per link using the third argument of the
+``createLoginLink()`` method::
+
+    // the third optional argument is the lifetime in seconds
+    $loginLinkDetails = $loginLinkHandler->createLoginLink($user, null, 60);
+    $loginLink = $loginLinkDetails->getUrl();

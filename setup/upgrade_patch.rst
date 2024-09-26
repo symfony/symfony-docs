@@ -1,4 +1,4 @@
-Upgrading a Patch Version (e.g. 5.0.0 to 5.0.1)
+Upgrading a Patch Version (e.g. 6.0.0 to 6.0.1)
 ===============================================
 
 When a new patch version is released (only the last number changed), it is a

@@ -15,21 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/UnitAccount.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class UnitAccount
-        {
-            /**
-             * @Assert\Isin
-             */
-            protected $isin;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/UnitAccount.php
@@ -40,7 +25,7 @@ Basic Usage
         class UnitAccount
         {
             #[Assert\Isin]
-            protected $isin;
+            protected string $isin;
         }
 
     .. code-block:: yaml
@@ -76,7 +61,9 @@ Basic Usage
 
         class UnitAccount
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('isin', new Assert\Isin());
             }
@@ -104,10 +91,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

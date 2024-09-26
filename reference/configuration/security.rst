@@ -25,8 +25,6 @@ Configuration
 **Basic Options**:
 
 * `access_denied_url`_
-* `always_authenticate_before_granting`_
-* `delete_cookies`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -49,20 +47,6 @@ access_denied_url
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
-
-always_authenticate_before_granting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 5.4
-
-    The ``always_authenticate_before_granting`` option was deprecated in
-    Symfony 5.4 and it will be removed in Symfony 6.0.
-
-If ``true``, the user is asked to authenticate before each call to the
-``isGranted()`` method in services and controllers or ``is_granted()`` from
-templates.
 
 delete_cookies
 ~~~~~~~~~~~~~~
@@ -119,25 +103,21 @@ user logs out::
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
             // ...
-            'firewalls' => [
-                'main' => [
-                    'logout' => [
-                        'delete_cookies' => [
-                            'cookie1-name' => null,
-                            'cookie2-name' => [
-                                'path' => '/',
-                            ],
-                            'cookie3-name' => [
-                                'path' => null,
-                                'domain' => 'example.com',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->deleteCookie('cookie1-name')
+                    ->deleteCookie('cookie2-name')
+                        ->path('/')
+                    ->deleteCookie('cookie3-name')
+                        ->path(null)
+                        ->domain('example.com');
+        };
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -240,7 +220,7 @@ application:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             // 'main' is the name of the firewall (can be chosen freely)
@@ -303,11 +283,6 @@ the ``debug:firewall`` command:
     # about the event listeners for the firewall
     $ php bin/console debug:firewall main --events
 
-.. versionadded:: 5.3
-
-    The ``debug:firewall`` command was introduced in Symfony 5.3.
-
-
 .. _reference-security-firewall-form-login:
 
 ``form_login`` Authentication
@@ -327,7 +302,7 @@ is set to ``true``) when they try to access a protected resource but aren't
 fully authenticated.
 
 This path **must** be accessible by a normal, unauthenticated user, else
-you may create a redirect loop.
+you might create a redirect loop.
 
 check_path
 ..........
@@ -355,14 +330,10 @@ form_only
 **type**: ``boolean`` **default**: ``false``
 
 Set this option to ``true`` to require that the login data is sent using a form
-(it checks that the request content-type is ``application/x-www-form-urlencoded``).
-This is useful for example to prevent the :ref:`form login authenticator <security-form-login>`
-from responding to requests that should be handled by the
-:ref:`JSON login authenticator <security-json-login>`.
-
-.. versionadded:: 5.4
-
-    The ``form_only`` option was introduced in Symfony 5.4.
+(it checks that the request content-type is ``application/x-www-form-urlencoded``
+or ``multipart/form-data``). This is useful for example to prevent the
+:ref:`form login authenticator <security-form-login>` from responding to
+requests that should be handled by the :ref:`JSON login authenticator <security-json-login>`.
 
 use_forward
 ...........
@@ -453,6 +424,142 @@ logout
 
 You can configure logout options.
 
+delete_cookies
+..............
+
+**type**: ``array`` **default**: ``[]``
+
+Lists the names (and other optional features) of the cookies to delete when the
+user logs out::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        delete_cookies:
+                            cookie1-name: null
+                            cookie2-name:
+                                path: '/'
+                            cookie3-name:
+                                path: null
+                                domain: example.com
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="...">
+                        <delete-cookie name="cookie1-name"/>
+                        <delete-cookie name="cookie2-name" path="/"/>
+                        <delete-cookie name="cookie3-name" domain="example.com"/>
+                    </logout>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
+            // ...
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->deleteCookie('cookie1-name')
+                    ->deleteCookie('cookie2-name')
+                        ->path('/')
+                    ->deleteCookie('cookie3-name')
+                        ->path(null)
+                        ->domain('example.com');
+        };
+
+clear_site_data
+...............
+
+**type**: ``array`` **default**: ``[]``
+
+The ``Clear-Site-Data`` HTTP header clears browsing data (cookies, storage, cache)
+associated with the requesting website. It allows web developers to have more
+control over the data stored by a client browser for their origins.
+
+Allowed values are ``cache``, ``cookies``, ``storage`` and ``executionContexts``.
+It's also possible to use ``*`` as a wildcard for all directives:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        clear_site_data:
+                            - cookies
+                            - storage
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout>
+                        <clear-site-data>cookies</clear-site-data>
+                        <clear-site-data>storage</clear-site-data>
+                    </logout>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
+            // ...
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->clearSiteData(['cookies', 'storage']);
+        };
+
 invalidate_session
 ..................
 
@@ -465,8 +572,6 @@ all the other firewalls.
 The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
-
-.. _reference-security-logout-success-handler:
 
 ``path``
 ........
@@ -484,24 +589,16 @@ The relative path (if the value starts with ``/``), or absolute URL (if it
 starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
 
-success_handler
-...............
-
-.. deprecated:: 5.1
-
-    This option is deprecated since Symfony 5.1. Register an
-    :doc:`event listener </event_dispatcher>` on the
-    :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
-    instead.
-
-**type**: ``string`` **default**: ``security.logout.success_handler``
-
-The service ID used for handling a successful logout. The service must implement
-:class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
-
-If it is set, the logout ``target`` option will be ignored.
-
 .. _reference-security-logout-csrf:
+
+enable_csrf
+...........
+
+**type**: ``boolean`` **default**: ``null``
+
+Set this option to ``true`` to enable CSRF protection in the logout process
+using Symfony's default CSRF token manager. Set also the ``csrf_token_manager``
+option if you need to use a custom CSRF token manager.
 
 csrf_parameter
 ..............
@@ -510,8 +607,8 @@ csrf_parameter
 
 The name of the parameter that stores the CSRF token value.
 
-csrf_token_generator
-....................
+csrf_token_manager
+..................
 
 **type**: ``string`` **default**: ``null``
 
@@ -603,7 +700,7 @@ The security configuration should be:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->lazy(true);
             $mainFirewall->jsonLogin()
@@ -652,9 +749,9 @@ This is the name of your configured LDAP client.
 dn_string
 .........
 
-**type**: ``string`` **default**: ``{username}``
+**type**: ``string`` **default**: ``{user_identifier}``
 
-This is the string which will be used as the bind DN. The ``{username}``
+This is the string which will be used as the bind DN. The ``{user_identifier}``
 placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
@@ -664,7 +761,7 @@ query_string
 
 **type**: ``string`` **default**: ``null``
 
-This is the string which will be used to query for the DN. The ``{username}``
+This is the string which will be used to query for the DN. The ``{user_identifier}``
 placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you will need to override
 this value. This setting is only necessary if the user's DN cannot be derived
@@ -694,9 +791,10 @@ X.509 Authentication
                 main:
                     # ...
                     x509:
-                        provider:    your_user_provider
-                        user:        SSL_CLIENT_S_DN_Email
-                        credentials: SSL_CLIENT_S_DN
+                        provider:        your_user_provider
+                        user:            SSL_CLIENT_S_DN_Email
+                        credentials:     SSL_CLIENT_S_DN
+                        user_identifier: emailAddress
 
     .. code-block:: xml
 
@@ -718,6 +816,7 @@ X.509 Authentication
                     <x509 provider="your_user_provider"
                         user="SSL_CLIENT_S_DN_Email"
                         credentials="SSL_CLIENT_S_DN"
+                        user_identifier="emailAddress"
                     />
                 </firewall>
             </config>
@@ -728,12 +827,13 @@ X.509 Authentication
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->x509()
                 ->provider('your_user_provider')
                 ->user('SSL_CLIENT_S_DN_Email')
                 ->credentials('SSL_CLIENT_S_DN')
+                ->userIdentifier('emailAddress')
             ;
         };
 
@@ -754,7 +854,20 @@ If the ``user`` parameter is not available, the name of the ``$_SERVER``
 parameter containing the full "distinguished name" of the certificate
 (exposed by e.g. Nginx).
 
-Symfony identifies the value following ``emailAddress=`` in this parameter.
+By default, Symfony identifies the value following ``emailAddress=`` in this
+parameter. This can be changed using the ``user_identifier`` option.
+
+user_identifier
+...............
+
+**type**: ``string`` **default**: ``emailAddress``
+
+The value of this option tells Symfony which parameter to use to find the user
+identifier in the "distinguished name".
+
+For example, if the "distinguished name" is
+``Subject: C=FR, O=My Organization, CN=user1, emailAddress=user1@myorg.fr``,
+and the value of this option is ``'CN'``, the user identifier will be ``'user1'``.
 
 .. _reference-security-firewall-remote-user:
 
@@ -799,7 +912,7 @@ Remote User Authentication
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->remoteUser()
                 ->provider('your_user_provider')
@@ -880,7 +993,7 @@ multiple firewalls, the "context" could actually be shared:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('somename')
                 // ...
                 ->context('my_context')
@@ -898,6 +1011,8 @@ multiple firewalls, the "context" could actually be shared:
     must set its ``stateless`` option to ``false``. Otherwise, the context is
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
+
+.. _reference-security-stateless:
 
 stateless
 ~~~~~~~~~
@@ -942,7 +1057,7 @@ the session must not be used when authenticating users:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->stateless(true);
             // ...
@@ -1001,15 +1116,11 @@ Firewalls can configure a list of required badges that must be present on the au
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $mainFirewall = $security->firewall('main');
             $mainFirewall->requiredBadges(['CsrfTokenBadge', 'My\Badge']);
             // ...
         };
-
-.. versionadded:: 5.3
-
-    The ``required_badges`` option was introduced in Symfony 5.3.
 
 providers
 ---------

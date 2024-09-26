@@ -15,21 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Journal.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Journal
-        {
-            /**
-             * @Assert\Issn
-             */
-            protected $issn;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Journal.php
@@ -40,7 +25,7 @@ Basic Usage
         class Journal
         {
             #[Assert\Issn]
-            protected $issn;
+            protected string $issn;
         }
 
     .. code-block:: yaml
@@ -76,7 +61,9 @@ Basic Usage
 
         class Journal
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('issn', new Assert\Issn());
             }
@@ -112,10 +99,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

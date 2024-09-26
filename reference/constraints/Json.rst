@@ -16,23 +16,6 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Book.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Book
-        {
-            /**
-             * @Assert\Json(
-             *     message = "You've entered an invalid Json."
-             * )
-             */
-            private $chapters;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Book.php
@@ -45,7 +28,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
             #[Assert\Json(
                 message: "You've entered an invalid Json."
             )]
-            private $chapters;
+            private string $chapters;
         }
 
     .. code-block:: yaml
@@ -84,7 +67,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
 
         class Book
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('chapters', new Assert\Json([
                     'message' => 'You\'ve entered an invalid Json.',

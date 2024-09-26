@@ -59,15 +59,15 @@ The steps for the review are:
 #. **Is the Report Complete?**
 
    Good bug reports contain a link to a project (the "reproduction project")
-   created with the `Symfony skeleton`_ or the `Symfony website skeleton`_
-   that reproduces the bug. If it doesn't, the report should at least contain
-   enough information and code samples to reproduce the bug.
+   created with the `Symfony skeleton`_ that reproduces the bug. If it
+   doesn't, the report should at least contain enough information and code
+   samples to reproduce the bug.
 
 #. **Reproduce the Bug**
 
    Download the reproduction project and test whether the bug can be reproduced
    on your system. If the reporter did not provide a reproduction project,
-   create one based on one `Symfony skeleton`_ (or the `Symfony website skeleton`_).
+   create one based on one `Symfony skeleton`_.
 
 #. **Update the Issue Status**
 
@@ -134,9 +134,9 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 #. **Reproduce the Problem**
 
    Read the issue that the pull request is supposed to fix. Reproduce the
-   problem on a new project created with the `Symfony skeleton`_ (or the
-   `Symfony website skeleton`_) and try to understand why it exists. If the
-   linked issue already contains such a project, install it and run it on your system.
+   problem on a new project created with the `Symfony skeleton`_ and try to
+   understand why it exists. If the linked issue already contains such a
+   project, install it and run it on your system.
 
 #. **Review the Code**
 
@@ -167,7 +167,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
    PR by running the following Git commands. Insert the PR ID (that's the number
    after the ``#`` in the PR title) for the ``<ID>`` placeholders:
 
-   .. code-block:: text
+   .. code-block:: terminal
 
        $ cd vendor/symfony/symfony
        $ git fetch origin pull/<ID>/head:pr<ID>
@@ -175,7 +175,7 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
    For example:
 
-   .. code-block:: text
+   .. code-block:: terminal
 
        $ git fetch origin pull/15723/head:pr15723
        $ git checkout pr15723
@@ -212,7 +212,6 @@ Pick a pull request from the `PRs in need of review`_ and follow these steps:
 .. _GitHub: https://github.com
 .. _Symfony issue tracker: https://github.com/symfony/symfony/issues
 .. _`Symfony skeleton`: https://github.com/symfony/skeleton
-.. _`Symfony website skeleton`: https://github.com/symfony/website-skeleton
 .. _create a GitHub account: https://help.github.com/github/getting-started-with-github/signing-up-for-a-new-github-account
 .. _bug reports in need of review: https://github.com/symfony/symfony/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22Bug%22+label%3A%22Status%3A+Needs+Review%22+
 .. _PRs in need of review: https://github.com/symfony/symfony/pulls?q=is%3Aopen+is%3Apr+label%3A%22Status%3A+Needs+Review%22

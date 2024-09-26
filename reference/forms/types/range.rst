@@ -9,8 +9,6 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 +---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please choose a valid range.                                        |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                 |
-+---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RangeType` |
@@ -68,6 +66,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 

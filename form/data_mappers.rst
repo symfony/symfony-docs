@@ -33,15 +33,11 @@ using an immutable color object::
 
     final class Color
     {
-        private $red;
-        private $green;
-        private $blue;
-
-        public function __construct(int $red, int $green, int $blue)
-        {
-            $this->red = $red;
-            $this->green = $green;
-            $this->blue = $blue;
+        public function __construct(
+            private int $red,
+            private int $green,
+            private int $blue,
+        ) {
         }
 
         public function getRed(): int
@@ -193,7 +189,7 @@ fields and only one of them needs to be mapped in some special way or you only
 need to change how it's written into the underlying object. In that case, register
 a PHP callable that is able to write or read to/from that specific object::
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 
@@ -218,10 +214,6 @@ a PHP callable that is able to write or read to/from that specific object::
 If available, these options have priority over the property path accessor and
 the default data mapper will still use the :doc:`PropertyAccess component </components/property_access>`
 for the other form fields.
-
-.. versionadded:: 5.2
-
-    The ``getter`` and ``setter`` options were introduced in Symfony 5.2.
 
 .. caution::
 

@@ -18,26 +18,6 @@ you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Participant.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Participant
-        {
-            /**
-             * @Assert\Count(
-             *      min = 1,
-             *      max = 5,
-             *      minMessage = "You must specify at least one email",
-             *      maxMessage = "You cannot specify more than {{ limit }} emails"
-             * )
-             */
-            protected $emails = [];
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Participant.php
@@ -53,7 +33,7 @@ you might add the following:
                 minMessage: 'You must specify at least one email',
                 maxMessage: 'You cannot specify more than {{ limit }} emails',
             )]
-            protected $emails = [];
+            protected array $emails = [];
         }
 
     .. code-block:: yaml
@@ -98,7 +78,9 @@ you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('emails', new Assert\Count([
                     'min' => 1,
@@ -117,10 +99,6 @@ Options
 
 **type**: ``integer`` **default**: ``null``
 
-.. versionadded:: 5.1
-
-    The ``divisibleBy`` option was introduced in Symfony 5.1.
-
 Validates that the number of elements of the given collection is divisible by
 a certain number.
 
@@ -134,10 +112,6 @@ a certain number.
 ~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The number of elements in this collection should be a multiple of {{ compared_value }}.``
-
-.. versionadded:: 5.1
-
-    The ``divisibleByMessage`` option was introduced in Symfony 5.1.
 
 The message that will be shown if the number of elements of the given collection
 is not divisible by the number defined in the ``divisibleBy`` option.

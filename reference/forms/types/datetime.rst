@@ -10,11 +10,9 @@ the data can be a ``DateTime`` object, a string, a timestamp or an array.
 +---------------------------+-----------------------------------------------------------------------------+
 | Underlying Data Type      | can be ``DateTime``, string, timestamp, or array (see the ``input`` option) |
 +---------------------------+-----------------------------------------------------------------------------+
-| Rendered as               | single text box or three select fields                                      |
+| Rendered as               | single text box or five select fields                                       |
 +---------------------------+-----------------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid date and time.                                         |
-+---------------------------+-----------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                         |
 +---------------------------+-----------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                               |
 +---------------------------+-----------------------------------------------------------------------------+

@@ -23,7 +23,7 @@ You start defining a ``NewsletterManager`` class like this::
 
     class NewsletterManager implements EmailFormatterAwareInterface
     {
-        private $enabledFormatters;
+        private array $enabledFormatters;
 
         public function setEnabledFormatters(array $enabledFormatters): void
         {
@@ -40,7 +40,7 @@ and also a ``GreetingCardManager`` class::
 
     class GreetingCardManager implements EmailFormatterAwareInterface
     {
-        private $enabledFormatters;
+        private array $enabledFormatters;
 
         public function setEnabledFormatters(array $enabledFormatters): void
         {
@@ -82,11 +82,9 @@ to create a configurator class to configure these instances::
 
     class EmailConfigurator
     {
-        private $formatterManager;
-
-        public function __construct(EmailFormatterManager $formatterManager)
-        {
-            $this->formatterManager = $formatterManager;
+        public function __construct(
+            private EmailFormatterManager $formatterManager,
+        ) {
         }
 
         public function configure(EmailFormatterAwareInterface $emailManager): void
@@ -169,14 +167,13 @@ all the classes are already loaded as services. All you need to do is specify th
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // Registers all 4 classes as services, including App\Mail\EmailConfigurator
             $services->load('App\\', '../src/*');
 
             // override the services to set the configurator
-            // In versions earlier to Symfony 5.1 the service() function was called ref()
             $services->set(NewsletterManager::class)
                 ->configurator([service(EmailConfigurator::class), 'configure']);
 
@@ -239,7 +236,7 @@ Services can be configured via invokable configurators (replacing the
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // Registers all 4 classes as services, including App\Mail\EmailConfigurator

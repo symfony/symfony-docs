@@ -81,6 +81,7 @@ Below is the configuration for the pull request state machine.
                     marking_store:
                          type: 'method'
                          property: 'currentPlace'
+                    # The "supports" option is useful only if you are using Twig functions ('workflow_*')
                     supports:
                         - App\Entity\PullRequest
                     initial_marking: start
@@ -127,14 +128,12 @@ Below is the configuration for the pull request state machine.
 
             <framework:config>
                 <framework:workflow name="pull_request" type="state_machine">
-                    <framework:marking-store>
-                        <framework:type>method</framework:type>
-                        <framework:property>currentPlace</framework:property>
-                    </framework:marking-store>
+                    <framework:initial-marking>start</framework:initial-marking>
 
+                    <framework:marking-store type="method" property="currentPlace"/>
+
+                    <!-- The "supports" option is useful only if you are using Twig functions ('workflow_*') -->
                     <framework:support>App\Entity\PullRequest</framework:support>
-
-                    <framework:initial_marking>start</framework:initial_marking>
 
                     <framework:place>start</framework:place>
                     <framework:place>coding</framework:place>
@@ -197,11 +196,12 @@ Below is the configuration for the pull request state machine.
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $pullRequest = $framework->workflows()->workflows('pull_request');
 
             $pullRequest
                 ->type('state_machine')
+                // The "supports" option is useful only if you are using Twig functions ('workflow_*')
                 ->supports(['App\Entity\PullRequest'])
                 ->initialMarking(['start']);
 
@@ -252,55 +252,39 @@ Below is the configuration for the pull request state machine.
                     ->to(['review']);
         };
 
-In a Symfony application using the
-:ref:`default services.yaml configuration <service-container-services-load-example>`,
-you can get this state machine by injecting the Workflow registry service::
+.. tip::
 
-    // ...
-    use App\Entity\PullRequest;
-    use Symfony\Component\Workflow\Registry;
+    You can omit the ``places`` option if your transitions define all the places
+    that are used in the workflow. Symfony will automatically extract the places
+    from the transitions.
 
-    class SomeService
-    {
-        private $workflows;
+    .. versionadded:: 7.1
 
-        public function __construct(Registry $workflows)
-        {
-            $this->workflows = $workflows;
-        }
-
-        public function someMethod(PullRequest $pullRequest)
-        {
-            $stateMachine = $this->workflows->get($pullRequest, 'pull_request');
-            $stateMachine->apply($pullRequest, 'wait_for_review');
-            // ...
-        }
-
-        // ...
-    }
+        The support for omitting the ``places`` option was introduced in
+        Symfony 7.1.
 
 Symfony automatically creates a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`)
 or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you
-have defined in your configuration. This means that you can use ``workflow.pull_request``
-or ``state_machine.pull_request`` respectively in your service definitions
-to access the proper service::
+have defined in your configuration. You can use the workflow inside a class by using
+:doc:`service autowiring </service_container/autowiring>` and using
+``camelCased workflow name + Workflow`` as parameter name. If it is a state
+machine type, use ``camelCased workflow name + StateMachine``::
 
     // ...
     use App\Entity\PullRequest;
-    use Symfony\Component\Workflow\StateMachine;
+    use Symfony\Component\Workflow\WorkflowInterface;
 
     class SomeService
     {
-        private $stateMachine;
-
-        public function __construct(StateMachine $stateMachine)
-        {
-            $this->stateMachine = $stateMachine;
+        public function __construct(
+            // Symfony will inject the 'pull_request' state machine configured before
+            private WorkflowInterface $pullRequestStateMachine,
+        ) {
         }
 
-        public function someMethod(PullRequest $pullRequest)
+        public function someMethod(PullRequest $pullRequest): void
         {
-            $this->stateMachine->apply($pullRequest, 'wait_for_review', [
+            $this->pullRequestStateMachine->apply($pullRequest, 'wait_for_review', [
                 'log_comment' => 'My logging comment for the wait for review transition.',
             ]);
             // ...

@@ -3,7 +3,6 @@ Akamai
 analytics
 Ansi
 Ansible
-Assetic
 async
 authenticator
 authenticators

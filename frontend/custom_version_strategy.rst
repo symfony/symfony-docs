@@ -49,32 +49,21 @@ version string::
 
     class GulpBusterVersionStrategy implements VersionStrategyInterface
     {
-        /**
-         * @var string
-         */
-        private $manifestPath;
-
-        /**
-         * @var string
-         */
-        private $format;
+        private string $format;
 
         /**
          * @var string[]
          */
-        private $hashes;
+        private array $hashes;
 
-        /**
-         * @param string      $manifestPath
-         * @param string|null $format
-         */
-        public function __construct(string $manifestPath, string $format = null)
-        {
-            $this->manifestPath = $manifestPath;
+        public function __construct(
+            private string $manifestPath,
+            ?string $format = null,
+        ) {
             $this->format = $format ?: '%s?%s';
         }
 
-        public function getVersion(string $path)
+        public function getVersion(string $path): string
         {
             if (!is_array($this->hashes)) {
                 $this->hashes = $this->loadManifest();
@@ -83,7 +72,7 @@ version string::
             return $this->hashes[$path] ?? '';
         }
 
-        public function applyVersion(string $path)
+        public function applyVersion(string $path): string
         {
             $version = $this->getVersion($path);
 
@@ -94,7 +83,7 @@ version string::
             return sprintf($this->format, $path, $version);
         }
 
-        private function loadManifest()
+        private function loadManifest(): array
         {
             return json_decode(file_get_contents($this->manifestPath), true);
         }
@@ -140,7 +129,7 @@ After creating the strategy PHP class, register it as a Symfony service.
 
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(GulpBusterVersionStrategy::class)
@@ -151,7 +140,6 @@ After creating the strategy PHP class, register it as a Symfony service.
                     ]
                 );
         };
-
 
 Finally, enable the new asset versioning for all the application assets or just
 for some :ref:`asset package <reference-framework-assets-packages>` thanks to
@@ -188,7 +176,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->versionStrategy(GulpBusterVersionStrategy::class)

@@ -228,10 +228,6 @@ There are five option variants you can use:
     Accept either the flag (e.g. ``--yell``) or its negation (e.g.
     ``--no-yell``).
 
-.. versionadded:: 5.3
-
-    The ``InputOption::VALUE_NEGATABLE`` constant was introduced in Symfony 5.3.
-
 You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
 
@@ -315,12 +311,44 @@ The above code can be simplified as follows because ``false !== null``::
     $yell = ($optionValue !== false);
     $yellLouder = ($optionValue === 'louder');
 
+Fetching The Raw Command Input
+------------------------------
+
+Symfony provides a :method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens`
+method to fetch the raw input that was passed to the command. This is useful if
+you want to parse the input yourself or when you need to pass the input to another
+command without having to worry about the number of arguments or options::
+
+    // ...
+    use Symfony\Component\Process\Process;
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        // if this command was run as:
+        // php bin/console app:my-command foo --bar --baz=3 --qux=value1 --qux=value2
+
+        $tokens = $input->getRawTokens();
+        // $tokens = ['app:my-command', 'foo', '--bar', '--baz=3', '--qux=value1', '--qux=value2'];
+
+        // pass true as argument to not include the original command name
+        $tokens = $input->getRawTokens(true);
+        // $tokens = ['foo', '--bar', '--baz=3', '--qux=value1', '--qux=value2'];
+
+        // pass the raw input to any other command (from Symfony or the operating system)
+        $process = new Process(['app:other-command', ...$input->getRawTokens(true)]);
+        $process->setTty(true);
+        $process->mustRun();
+
+        // ...
+    }
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens`
+    method was introduced in Symfony 7.1.
+
 Adding Argument/Option Value Completion
 ---------------------------------------
-
-.. versionadded:: 5.4
-
-    Console completion was introduced in Symfony 5.4.
 
 If :ref:`Console completion is installed <console-completion-setup>`,
 command and option names will be auto completed by the shell. However, you
@@ -328,7 +356,7 @@ can also implement value completion for the input in your commands. For
 instance, you may want to complete all usernames from the database in the
 ``name`` argument of your greet command.
 
-To achieve this, override the ``complete()`` method in the command::
+To achieve this, use the 5th argument of ``addArgument()``/``addOption``::
 
     // ...
     use Symfony\Component\Console\Completion\CompletionInput;
@@ -337,23 +365,28 @@ To achieve this, override the ``complete()`` method in the command::
     class GreetCommand extends Command
     {
         // ...
-
-        public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
+        protected function configure(): void
         {
-            if ($input->mustSuggestArgumentValuesFor('names')) {
-                // the user asks for completion input for the "names" option
+            $this
+                ->addArgument(
+                    'names',
+                    InputArgument::IS_ARRAY,
+                    'Who do you want to greet (separate multiple names with a space)?',
+                    null,
+                    function (CompletionInput $input): array {
+                        // the value the user already typed, e.g. when typing "app:greet Fa" before
+                        // pressing Tab, this will contain "Fa"
+                        $currentValue = $input->getCompletionValue();
 
-                // the value the user already typed, e.g. when typing "app:greet Fa" before
-                // pressing Tab, this will contain "Fa"
-                $currentValue = $input->getCompletionValue();
+                        // get the list of username names from somewhere (e.g. the database)
+                        // you may use $currentValue to filter down the names
+                        $availableUsernames = ...;
 
-                // get the list of username names from somewhere (e.g. the database)
-                // you may use $currentValue to filter down the names
-                $availableUsernames = ...;
-
-                // then add the retrieved names as suggested values
-                $suggestions->suggestValues($availableUsernames);
-            }
+                        // then suggested the usernames as values
+                        return $availableUsernames;
+                    }
+                )
+            ;
         }
     }
 
@@ -362,7 +395,7 @@ tab after typing ``app:greet Fa`` will give you these names as a suggestion.
 
 .. tip::
 
-    The bash shell is able to handle huge amounts of suggestions and will
+    The shell script is able to handle huge amounts of suggestions and will
     automatically filter the suggested values based on the existing input
     from the user. You do not have to implement any filter logic in the
     command.
@@ -383,7 +416,7 @@ to help you unit test the completion logic::
 
     class GreetCommandTest extends TestCase
     {
-        public function testComplete()
+        public function testComplete(): void
         {
             $application = new Application();
             $application->add(new GreetCommand());

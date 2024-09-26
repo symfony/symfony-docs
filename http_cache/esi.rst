@@ -86,7 +86,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->esi()
                 ->enabled(true)
             ;
@@ -162,20 +162,43 @@ used ``render()``.
 The embedded action can now specify its own caching rules entirely independently
 of the main page::
 
-    // src/Controller/NewsController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    // ...
-    class NewsController extends AbstractController
-    {
-        public function latest(int $maxPerPage): Response
+    .. code-block:: php-attributes
+
+        // src/Controller/NewsController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        class NewsController extends AbstractController
         {
-            // sets to public and adds some expiration
-            $response->setSharedMaxAge(60);
-
-            return $response;
+            #[Cache(smaxage: 60)]
+            public function latest(int $maxPerPage): Response
+            {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php
+
+        // src/Controller/NewsController.php
+        namespace App\Controller;
+
+        // ...
+        class NewsController extends AbstractController
+        {
+            public function latest(int $maxPerPage): Response
+            {
+                // ...
+
+                // sets to public and adds some expiration
+                $response->setSharedMaxAge(60);
+
+                return $response;
+            }
+        }
 
 In this example, the embedded action is cached publicly too because the contents
 are the same for all requests. However, in other cases you may need to make this
@@ -225,7 +248,7 @@ that must be enabled in your configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()
                 ->path('/_fragment')
@@ -242,7 +265,7 @@ possible.
     signed when using the fragment renderer and the ``render_esi`` Twig
     function.
 
-The ``render_esi`` helper supports two other useful options:
+The ``render_esi`` helper supports three other useful options:
 
 ``alt``
     Used as the ``alt`` attribute on the ESI tag, which allows you to specify an
@@ -252,5 +275,8 @@ The ``render_esi`` helper supports two other useful options:
     If set to true, an ``onerror`` attribute will be added to the ESI with a value
     of ``continue`` indicating that, in the event of a failure, the gateway cache
     will remove the ESI tag silently.
+
+``absolute_uri``
+     If set to true, an absolute URI will be generated. **default**: ``false``
 
 .. _`ESI`: https://www.w3.org/TR/esi-lang/

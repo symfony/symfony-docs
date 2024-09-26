@@ -51,6 +51,7 @@ self-explanatory and not coupled to Symfony:
     │  └─ console
     ├─ config/
     │  ├─ packages/
+    │  ├─ routes/
     │  └─ services.yaml
     ├─ migrations/
     ├─ public/
@@ -108,6 +109,10 @@ Define these options as :ref:`parameters <configuration-parameters>` in the
 :ref:`environment <configuration-environments>` in the ``config/services_dev.yaml``
 and ``config/services_prod.yaml`` files.
 
+Unless the application configuration is reused multiple times and needs
+rigid validation, do *not* use the :doc:`Config component </components/config>`
+to define the options.
+
 Use Short and Prefixed Parameter Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -154,6 +159,8 @@ values is that it's complicated to redefine their values in your tests.
 
 Business Logic
 --------------
+
+.. _best-practice-no-application-bundles:
 
 Don't Create any Bundle to Organize your Application Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -207,9 +214,6 @@ Doctrine supports several metadata formats, but it's recommended to use PHP
 attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
 
-If your PHP version doesn't support attributes yet, use annotations, which is
-similar but requires installing some extra dependencies in your project.
-
 Controllers
 -----------
 
@@ -227,43 +231,37 @@ nothing more than a few lines of *glue-code*, so you are not coupling the
 important parts of your application.
 
 .. _best-practice-controller-annotations:
+.. _best-practice-controller-attributes:
 
-Use Attributes or Annotations to Configure Routing, Caching, and Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Attributes to Configure Routing, Caching, and Security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using attributes or annotations for routing, caching, and security simplifies
+Using attributes for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
 formats (YAML, XML, PHP): all the configuration is just where you  require it,
 and it only uses one format.
 
-Don't Use Annotations to Configure the Controller Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The ``@Template`` annotation is useful, but also involves some *magic*.
-Moreover, most of the time ``@Template`` is used without any parameters, which
-makes it more difficult to know which template is being rendered. It also hides
-the fact that a controller should always return a ``Response`` object.
-
 Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you extend the base ``AbstractController``, you can only access to the most
+If you extend the base ``AbstractController``, you can only get access to the most
 common services (e.g ``twig``, ``router``, ``doctrine``, etc.), directly from the
 container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
 constructor arguments.
 
-Use ParamConverters If They Are Convenient
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Entity Value Resolvers If They Are Convenient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using :doc:`Doctrine </doctrine>`, then you can *optionally* use the
-`ParamConverter`_ to automatically query for an entity and pass it as an argument
-to your controller. It will also show a 404 page if no entity can be found.
+If you're using :doc:`Doctrine </doctrine>`, then you can *optionally* use
+the :ref:`EntityValueResolver <doctrine-entity-value-resolver>` to
+automatically query for an entity and pass it as an argument to your
+controller. It will also show a 404 page if no entity can be found.
 
 If the logic to get an entity from a route variable is more complex, instead of
-configuring the ParamConverter, it's better to make the Doctrine query inside
-the controller (e.g. by calling to a :doc:`Doctrine repository method </doctrine>`).
+configuring the EntityValueResolver, it's better to make the Doctrine query
+inside the controller (e.g. by calling to a :doc:`Doctrine repository method </doctrine>`).
 
 Templates
 ---------
@@ -291,7 +289,7 @@ Define your Forms as PHP Classes
 
 Creating :ref:`forms in classes <creating-forms-in-classes>` allows reusing
 them in different parts of the application. Besides, not creating forms in
-controllers simplify the code and maintenance of the controllers.
+controllers simplifies the code and maintenance of the controllers.
 
 Add Form Buttons in Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -373,30 +371,27 @@ Use the ``auto`` Password Hasher
 
 The :ref:`auto password hasher <reference-security-encoder-auto>` automatically
 selects the best possible encoder/hasher depending on your PHP installation.
-Starting from Symfony 5.3, the default auto hasher is ``bcrypt``.
+Currently, the default auto hasher is ``bcrypt``.
 
 Use Voters to Implement Fine-grained Security Restrictions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your security logic is complex, you should create custom
 :doc:`security voters </security/voters>` instead of defining long expressions
-inside the ``#[Security]`` attribute (or in the ``@Security`` annotation if your
-PHP version doesn't support attributes yet).
+inside the ``#[Security]`` attribute.
 
 Web Assets
 ----------
 
-Use Webpack Encore to Process Web Assets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _use-webpack-encore-to-process-web-assets:
 
-Web assets are things like CSS, JavaScript, and image files that make the
-frontend of your site look and work great. `Webpack`_ is the leading JavaScript
-module bundler that compiles, transforms and packages assets for usage in a browser.
+Use AssetMapper to Manage Web Assets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`Webpack Encore </frontend>` is a JavaScript library that gets rid of most
-of Webpack complexity without hiding any of its features or distorting its usage
-and philosophy. It was created for Symfony applications, but it works
-for any application using any technology.
+Web assets are the CSS, JavaScript, and image files that make the frontend of
+your site look and work great. :doc:`AssetMapper </frontend/asset_mapper>` lets
+you write modern JavaScript and CSS without the complexity of using a bundler
+such as `Webpack`_ (directly or via :doc:`Webpack Encore </frontend/encore/index>`).
 
 Tests
 -----
@@ -419,7 +414,7 @@ checks that all application URLs load successfully::
         /**
          * @dataProvider urlProvider
          */
-        public function testPageIsSuccessful($url)
+        public function testPageIsSuccessful($url): void
         {
             $client = self::createClient();
             $client->request('GET', $url);
@@ -427,7 +422,7 @@ checks that all application URLs load successfully::
             $this->assertResponseIsSuccessful();
         }
 
-        public function urlProvider()
+        public function urlProvider(): \Generator
         {
             yield ['/'];
             yield ['/posts'];
@@ -459,7 +454,6 @@ you must set up a redirection.
 .. _`Symfony Demo`: https://github.com/symfony/demo
 .. _`download Symfony`: https://symfony.com/download
 .. _`Composer`: https://getcomposer.org/
-.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/

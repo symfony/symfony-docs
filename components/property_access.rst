@@ -1,7 +1,7 @@
 The PropertyAccess Component
 ============================
 
-    The PropertyAccess component provides function to read and write from/to an
+    The PropertyAccess component provides functions to read and write from/to an
     object or array using a simple string notation.
 
 Installation
@@ -59,6 +59,9 @@ method::
     // Symfony\Component\PropertyAccess\Exception\NoSuchIndexException
     $value = $propertyAccessor->getValue($person, '[age]');
 
+    // You can avoid the exception by adding the nullsafe operator
+    $value = $propertyAccessor->getValue($person, '[age?]');
+
 You can also use multi dimensional arrays::
 
     // ...
@@ -73,6 +76,18 @@ You can also use multi dimensional arrays::
 
     var_dump($propertyAccessor->getValue($persons, '[0][first_name]')); // 'Wouter'
     var_dump($propertyAccessor->getValue($persons, '[1][first_name]')); // 'Ryan'
+
+.. tip::
+
+    If the key of the array contains a dot ``.`` or a left square bracket ``[``,
+    you must escape those characters with a backslash. In the above example,
+    if the array key was ``first.name`` instead of ``first_name``, you should
+    access its value as follows::
+
+        var_dump($propertyAccessor->getValue($persons, '[0][first\.name]')); // 'Wouter'
+        var_dump($propertyAccessor->getValue($persons, '[1][first\.name]')); // 'Ryan'
+
+    Right square brackets ``]`` don't need to be escaped in array keys.
 
 Reading from Objects
 --------------------
@@ -115,9 +130,9 @@ it with ``get``. So the actual method becomes ``getFirstName()``::
     // ...
     class Person
     {
-        private $firstName = 'Wouter';
+        private string $firstName = 'Wouter';
 
-        public function getFirstName()
+        public function getFirstName(): string
         {
             return $this->firstName;
         }
@@ -137,15 +152,15 @@ getters, this means that you can do something like this::
     // ...
     class Person
     {
-        private $author = true;
-        private $children = [];
+        private bool $author = true;
+        private array $children = [];
 
-        public function isAuthor()
+        public function isAuthor(): bool
         {
             return $this->author;
         }
 
-        public function hasChildren()
+        public function hasChildren(): bool
         {
             return 0 !== count($this->children);
         }
@@ -174,7 +189,7 @@ method::
     // ...
     class Person
     {
-        public $name;
+        public string $name;
     }
 
     $person = new Person();
@@ -186,6 +201,35 @@ method::
     // instead of throwing an exception the following code returns null
     $value = $propertyAccessor->getValue($person, 'birthday');
 
+Accessing Nullable Property Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following PHP code::
+
+    class Person
+    {
+    }
+
+    class Comment
+    {
+        public ?Person $person = null;
+        public string $message;
+    }
+
+    $comment = new Comment();
+    $comment->message = 'test';
+
+Given that ``$person`` is nullable, an object graph like ``comment.person.profile``
+will trigger an exception when the ``$person`` property is ``null``. The solution
+is to mark all nullable properties with the nullsafe operator (``?``)::
+
+    // This code throws an exception of type
+    // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException
+    var_dump($propertyAccessor->getValue($comment, 'person.firstname'));
+
+    // If a property marked with the nullsafe operator is null, the expression is
+    // no longer evaluated and null is returned immediately without throwing an exception
+    var_dump($propertyAccessor->getValue($comment, 'person?.firstname')); // null
 
 .. _components-property-access-magic-get:
 
@@ -197,13 +241,18 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
     // ...
     class Person
     {
-        private $children = [
+        private array $children = [
             'Wouter' => [...],
         ];
 
-        public function __get($id)
+        public function __get($id): mixed
         {
             return $this->children[$id];
+        }
+
+        public function __isset($id): bool
+        {
+            return isset($this->children[$id]);
         }
     }
 
@@ -211,10 +260,10 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
     var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
 
-.. versionadded:: 5.2
+.. caution::
 
-    The magic ``__get()`` method can be disabled since in Symfony 5.2.
-    see `Enable other Features`_.
+    When implementing the magic ``__get()`` method, you also need to implement
+    ``__isset()``.
 
 .. _components-property-access-magic-call:
 
@@ -227,11 +276,11 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     // ...
     class Person
     {
-        private $children = [
+        private array $children = [
             'wouter' => [...],
         ];
 
-        public function __call($name, $args)
+        public function __call($name, $args): mixed
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
@@ -285,26 +334,26 @@ can use setters, the magic ``__set()`` method or properties to set values::
     // ...
     class Person
     {
-        public $firstName;
-        private $lastName;
-        private $children = [];
+        public string $firstName;
+        private string $lastName;
+        private array $children = [];
 
-        public function setLastName($name)
+        public function setLastName($name): void
         {
             $this->lastName = $name;
         }
 
-        public function getLastName()
+        public function getLastName(): string
         {
             return $this->lastName;
         }
 
-        public function getChildren()
+        public function getChildren(): array
         {
             return $this->children;
         }
 
-        public function __set($property, $value)
+        public function __set($property, $value): void
         {
             $this->$property = $value;
         }
@@ -326,9 +375,9 @@ see `Enable other Features`_::
     // ...
     class Person
     {
-        private $children = [];
+        private array $children = [];
 
-        public function __call($name, $args)
+        public function __call($name, $args): mixed
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
@@ -352,10 +401,10 @@ see `Enable other Features`_::
 
     var_dump($person->getWouter()); // [...]
 
-.. versionadded:: 5.2
+.. note::
 
-    The magic ``__set()`` method can be disabled since in Symfony 5.2.
-    see `Enable other Features`_.
+    The ``__set()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
 
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -369,7 +418,7 @@ properties through *adder* and *remover* methods::
         /**
          * @var string[]
          */
-        private $children = [];
+        private array $children = [];
 
         public function getChildren(): array
         {
@@ -396,7 +445,7 @@ The PropertyAccess component checks for methods called ``add<SingularOfTheProper
 and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.
 For instance, in the previous example, the component looks for the ``addChild()``
 and ``removeChild()`` methods to access the ``children`` property.
-`The Inflector component`_ is used to find the singular of a property name.
+`The String component`_ inflector is used to find the singular of a property name.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
 
@@ -406,20 +455,21 @@ Using non-standard adder/remover methods
 Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`` prefix, like in this example::
 
     // ...
-    class PeopleList
+    class Team
     {
         // ...
 
-        public function joinPeople(string $people): void
+        public function joinTeam(string $person): void
         {
-            $this->peoples[] = $people;
+            $this->team[] = $person;
         }
 
-        public function leavePeople(string $people): void
+        public function leaveTeam(string $person): void
         {
-            foreach ($this->peoples as $id => $item) {
-                if ($people === $item) {
-                    unset($this->peoples[$id]);
+            foreach ($this->team as $id => $item) {
+                if ($person === $item) {
+                    unset($this->team[$id]);
+
                     break;
                 }
             }
@@ -429,12 +479,12 @@ Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
     use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-    $list = new PeopleList();
+    $list = new Team();
     $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
     $propertyAccessor = new PropertyAccessor(PropertyAccessor::DISALLOW_MAGIC_METHODS, PropertyAccessor::THROW_ON_INVALID_PROPERTY_PATH, null, $reflectionExtractor, $reflectionExtractor);
-    $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
+    $propertyAccessor->setValue($person, 'team', ['kevin', 'wouter']);
 
-    var_dump($person->getPeoples()); // ['kevin', 'wouter']
+    var_dump($person->getTeam()); // ['kevin', 'wouter']
 
 Instead of calling ``add<SingularOfThePropertyName>()`` and ``remove<SingularOfThePropertyName>()``, the PropertyAccess
 component will call ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
@@ -471,15 +521,15 @@ You can also mix objects and arrays::
     // ...
     class Person
     {
-        public $firstName;
-        private $children = [];
+        public string $firstName;
+        private array $children = [];
 
-        public function setChildren($children)
+        public function setChildren($children): void
         {
             $this->children = $children;
         }
 
-        public function getChildren()
+        public function getChildren(): array
         {
             return $this->children;
         }
@@ -534,4 +584,4 @@ Or you can pass parameters directly to the constructor (not the recommended way)
     // enable handling of magic __call, __set but not __get:
     $propertyAccessor = new PropertyAccessor(PropertyAccessor::MAGIC_CALL | PropertyAccessor::MAGIC_SET);
 
-.. _The Inflector component: https://github.com/symfony/inflector
+.. _`The String component`: https://github.com/symfony/string

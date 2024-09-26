@@ -33,8 +33,8 @@ The translation process has several steps:
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
    translation service;
 
-#. Abstract strings (i.e. "messages") by wrapping them in calls to the
-   ``Translator`` (":ref:`translation-basic`");
+#. Abstract strings (i.e. "messages") by :ref:`wrapping them in calls
+   <translation-basic>` to the ``Translator``;
 
 #. :ref:`Create translation resources/files <translation-resources>`
    for each supported locale that translate each message in the application;
@@ -84,10 +84,9 @@ are located:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config default-locale="en">
-                <framework:translator>
-                    <framework:default-path>'%kernel.project_dir%/translations'</framework:default-path>
-                    <!-- ... -->
-                </framework:translator>
+                <framework:translator
+                    default-path="%kernel.project_dir%/translations"
+                />
             </framework:config>
         </container>
 
@@ -96,7 +95,7 @@ are located:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework
                 ->defaultLocale('en')
@@ -104,6 +103,11 @@ are located:
                     ->defaultPath('%kernel.project_dir%/translations')
             ;
         };
+
+.. tip::
+
+    You can also define the :ref:`enabled_locales option <reference-translator-enabled-locales>`
+    to restrict the locales that your application is available in.
 
 .. _translation-basic:
 
@@ -120,7 +124,7 @@ controller::
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
 
-    public function index(TranslatorInterface $translator)
+    public function index(TranslatorInterface $translator): Response
     {
         $translated = $translator->trans('Symfony is great');
 
@@ -165,8 +169,8 @@ different formats:
             'Symfony is great' => "J'aime Symfony",
         ];
 
-For information on where these files should be located, see
-:ref:`translation-resource-locations`.
+You can find more information on where these files
+:ref:`should be located <translation-resource-locations>`.
 
 Now, if the language of the user's locale is French (e.g. ``fr_FR`` or ``fr_BE``),
 the message will be translated into ``J'aime Symfony``. You can also translate
@@ -252,14 +256,15 @@ To actually translate the message, Symfony uses the following process when
 using the ``trans()`` method:
 
 #. The ``locale`` of the current user, which is stored on the request is
-   determined; this is typically set via a ``_locale`` attribute on your routes
-   (see :ref:`translation-locale-url`);
+   determined; this is typically set via a ``_locale`` :ref:`attribute on
+   your routes <translation-locale-url>`;
 
 #. A catalog of translated messages is loaded from translation resources
    defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-   :ref:`fallback locale <translation-fallback>` are also loaded and added to
-   the catalog if they don't already exist. The end result is a large
-   "dictionary" of translations.
+   :ref:`fallback locale <translation-fallback>` and the
+   :ref:`enabled locales <reference-translator-enabled-locales>` are also
+   loaded and added to the catalog if they don't already exist. The end result
+   is a large "dictionary" of translations.
 
 #. If the message is located in the catalog, the translation is returned. If
    not, the translator returns the original message.
@@ -296,10 +301,6 @@ using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 Translatable Objects
 --------------------
 
-.. versionadded:: 5.2
-
-    Translatable objects were introduced in Symfony 5.2.
-
 Sometimes translating contents in templates is cumbersome because you need the
 original message, the translation parameters and the translation domain for
 each content. Making the translation in the controller or services simplifies
@@ -326,6 +327,10 @@ Templates are now much simpler because you can pass translatable objects to the
 
     <h1>{{ message|trans }}</h1>
     <p>{{ status|trans }}</p>
+
+.. tip::
+
+    The translation parameters can also be a :class:`Symfony\\Component\\Translation\\TranslatableMessage`.
 
 .. tip::
 
@@ -439,27 +444,28 @@ with these tasks:
     # check out the command help to see its options (prefix, output format, domain, sorting, etc.)
     $ php bin/console translation:extract --help
 
-.. deprecated:: 5.4
-
-    In previous Symfony versions, the ``translation:extract`` command was called
-    ``translation:update``, but that name was deprecated in Symfony 5.4
-    and it will be removed in Symfony 6.0.
-
 The ``translation:extract`` command looks for missing translations in:
 
 * Templates stored in the ``templates/`` directory (or any other directory
   defined in the :ref:`twig.default_path <config-twig-default-path>` and
   :ref:`twig.paths <config-twig-paths>` config options);
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
-  the ``translator`` service and makes calls to the ``trans()`` method.
+  the ``translator`` service and makes calls to the ``trans()`` method;
 * Any PHP file/class stored in the ``src/`` directory that creates
-  :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
-  the ``trans()`` method.
+  :ref:`translatable objects <translatable-objects>` using the constructor or
+  the ``t()`` method or calls the ``trans()`` method;
+* Any PHP file/class stored in the ``src/`` directory that uses
+  :ref:`Constraints Attributes <validation-constraints>`  with ``*message`` named argument(s).
 
-.. versionadded:: 5.3
+.. tip::
 
-    Support for extracting Translatable objects has been introduced in
-    Symfony 5.3.
+    Install the ``nikic/php-parser`` package in your project to improve the
+    results of the ``translation:extract`` command. This package enables an
+    `AST`_ parser that can find many more translatable items:
+
+    .. code-block:: terminal
+
+        $ composer require nikic/php-parser
 
 .. _translation-resource-locations:
 
@@ -469,7 +475,8 @@ Translation Resource/File Names and Locations
 Symfony looks for message files (i.e. translations) in the following default locations:
 
 * the ``translations/`` directory (at the root of the project);
-* the ``Resources/translations/`` directory inside of any bundle.
+* the ``translations/`` directory inside of any bundle (and also their
+  ``Resources/translations/`` directory, which is no longer recommended for bundles).
 
 The locations are listed here with the highest priority first. That is, you can
 override the translation messages of a bundle in the first directory.
@@ -490,18 +497,18 @@ must be named according to the following path: ``domain.locale.loader``:
   ``php``, ``yaml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
-provides many loaders:
+provides many loaders which are selected based on the following file extensions:
 
-* ``.yaml``: YAML file
-* ``.xlf``: XLIFF file;
-* ``.php``: Returning a PHP array;
+* ``.yaml``: YAML file (you can also use the ``.yml`` file extension);
+* ``.xlf``: XLIFF file (you can also use the ``.xliff`` file extension);
+* ``.php``: a PHP file that returns an array with the translations;
 * ``.csv``: CSV file;
 * ``.json``: JSON file;
 * ``.ini``: INI file;
-* ``.dat``, ``.res``: ICU resource bundle;
-* ``.mo``: Machine object format;
-* ``.po``: Portable object format;
-* ``.qt``: QT Translations XML file;
+* ``.dat``, ``.res``: `ICU resource bundle`_;
+* ``.mo``: `Machine object format`_;
+* ``.po``: `Portable object format`_;
+* ``.qt``: `QT Translations TS XML`_ file;
 
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use YAML for simple projects and use XLIFF
@@ -556,7 +563,7 @@ if you're generating translations with specialized programs or teams.
             // config/packages/translation.php
             use Symfony\Config\FrameworkConfig;
 
-            return static function (FrameworkConfig $framework) {
+            return static function (FrameworkConfig $framework): void {
                 $framework->translator()
                     ->paths(['%kernel.project_dir%/custom/path/to/translations'])
                 ;
@@ -583,10 +590,6 @@ interface. See the :ref:`dic-tags-translation-loader` tag for more information.
 Translation Providers
 ---------------------
 
-.. versionadded:: 5.3
-
-    Translation providers were introduced in Symfony 5.3.
-
 When using external translators to translate your application, you must send
 them the new contents to translate frequently and merge the results back in the
 application.
@@ -602,13 +605,14 @@ Installing and Configuring a Third Party Provider
 Before pushing/pulling translations to a third-party provider, you must install
 the package that provides integration with that provider:
 
-====================  ===========================================================
-Provider              Install with
-====================  ===========================================================
-Crowdin               ``composer require symfony/crowdin-translation-provider``
-Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
-Lokalise              ``composer require symfony/lokalise-translation-provider``
-====================  ===========================================================
+======================  ===========================================================
+Provider                Install with
+======================  ===========================================================
+`Crowdin`_              ``composer require symfony/crowdin-translation-provider``
+`Loco (localise.biz)`_  ``composer require symfony/loco-translation-provider``
+`Lokalise`_             ``composer require symfony/lokalise-translation-provider``
+`Phrase`_                ``composer require symfony/phrase-translation-provider``
+======================  ===========================================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -633,13 +637,14 @@ pull translations via Loco. The *only* part you need to change is the
 
 This table shows the full list of available DSN formats for each provider:
 
-=====================  ==========================================================
-Provider               DSN
-=====================  ==========================================================
-Crowdin                crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
-Loco (localise.biz)    loco://API_KEY@default
-Lokalise               lokalise://PROJECT_ID:API_KEY@default
-=====================  ==========================================================
+======================  ==============================================================
+Provider                DSN
+======================  ==============================================================
+`Crowdin`_              ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
+`Loco (localise.biz)`_  ``loco://API_KEY@default``
+`Lokalise`_             ``lokalise://PROJECT_ID:API_KEY@default``
+`Phrase`_               ``phrase://PROJECT_ID:API_TOKEN@default?userAgent=myProject``
+======================  ==============================================================
 
 To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
@@ -697,6 +702,21 @@ configure the ``providers`` option:
             ],
         ]);
 
+.. important::
+
+    If you use Phrase as a provider you must configure a user agent in your dsn. See
+    `Identification via User-Agent`_ for reasoning and some examples.
+
+    Also make the locale _names_ in Phrase should be as defined in RFC4646 (e.g. pt-BR rather than pt_BR).
+    Not doing so will result in Phrase creating a new locale for the imported keys.
+
+.. tip::
+
+    If you use Crowdin as a provider and some of your locales are different from
+    the `Crowdin Language Codes`_, you have to set the `Custom Language Codes`_ in the Crowdin project
+    for each of your locales, in order to override the default value. You need to select the
+    "locale" placeholder and specify the custom code in the "Custom Code" field.
+
 .. tip::
 
     If you use Lokalise as a provider and a locale format following the `ISO
@@ -705,6 +725,12 @@ configure the ``providers`` option:
     default value (which follow the `ISO 639-1`_ succeeded by a sub-code in
     capital letters that specifies the national variety (e.g. "GB" or "US"
     according to `ISO 3166-1 alpha-2`_)).
+
+.. tip::
+
+    The Phrase provider uses Phrase's tag feature to map translations to Symfony's translation
+    domains. If you need some assistance with organising your tags in Phrase, you might want
+    to consider the `Phrase Tag Bundle`_ which provides some commands helping you with that.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -747,6 +773,23 @@ now use the following commands to push (upload) and pull (download) translations
     # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
     $ php bin/console translation:pull --help
 
+    # the "--as-tree" option will write YAML messages as a tree-like structure instead
+    # of flat keys
+    $ php bin/console translation:pull loco --force --as-tree
+
+Creating Custom Providers
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to using Symfony's built-in translation providers, you can create
+your own providers. To do so, you need to create two classes:
+
+#. The first class must implement :class:`Symfony\\Component\\Translation\\Provider\\ProviderInterface`;
+#. The second class needs to be a factory which will create instances of the first class. It must implement
+:class:`Symfony\\Component\\Translation\\Provider\\ProviderFactoryInterface` (you can extend :class:`Symfony\\Component\\Translation\\Provider\\AbstractProviderFactory` to simplify its creation).
+
+After creating these two classes, you need to register your factory as a service
+and tag it with :ref:`translation.provider_factory <reference-dic-tags-translation-provider-factory>`.
+
 .. _translation-locale:
 
 Handling the User's Locale
@@ -757,7 +800,7 @@ is stored in the request and is accessible via the ``Request`` object::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function index(Request $request)
+    public function index(Request $request): void
     {
         $locale = $request->getLocale();
     }
@@ -766,7 +809,7 @@ To set the user's locale, you may want to create a custom event listener so
 that it's set before any other parts of the system (i.e. the translator) need
 it::
 
-        public function onKernelRequest(RequestEvent $event)
+        public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -812,28 +855,6 @@ A better policy is to include the locale in the URL using the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/ContactController.php
-        namespace App\Controller;
-
-        // ...
-        class ContactController extends AbstractController
-        {
-            /**
-             * @Route(
-             *     "/{_locale}/contact",
-             *     name="contact",
-             *     requirements={
-             *         "_locale": "en|fr|de",
-             *     }
-             * )
-             */
-            public function contact()
-            {
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/ContactController.php
@@ -849,8 +870,9 @@ A better policy is to include the locale in the URL using the
                     '_locale' => 'en|fr|de',
                 ],
             )]
-            public function contact()
+            public function contact(): Response
             {
+                // ...
             }
         }
 
@@ -884,7 +906,7 @@ A better policy is to include the locale in the URL using the
         use App\Controller\ContactController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('contact', '/{_locale}/contact')
                 ->controller([ContactController::class, 'index'])
                 ->requirements([
@@ -944,12 +966,37 @@ the framework:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->defaultLocale('en');
         };
 
 This ``default_locale`` is also relevant for the translator, as shown in the
 next section.
+
+Selecting the Language Preferred by the User
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your application supports multiple languages, the first time a user visits your
+site it's common to redirect them to the best possible language according to their
+preferences. This is achieved with the ``getPreferredLanguage()`` method of the
+:ref:`Request object <controller-request-argument>`::
+
+    // get the Request object somehow (e.g. as a controller argument)
+    $request = ...
+    // pass an array of the locales (their script and region parts are optional) supported
+    // by your application and the method returns the best locale for the current user
+    $locale = $request->getPreferredLanguage(['pt', 'fr_Latn_CH', 'en_US'] );
+
+Symfony finds the best possible language based on the locales passed as argument
+and the value of the ``Accept-Language`` HTTP header. If it can't find a perfect
+match between them, Symfony will try to find a partial match based on the language
+(e.g. ``fr_CA`` would match ``fr_Latn_CH`` because their language is the same).
+If there's no perfect or partial match, this method returns the first locale passed
+as argument (that's why the order of the passed locales is important).
+
+.. versionadded:: 7.1
+
+    The feature to match locales partially was introduced in Symfony 7.1.
 
 .. _translation-fallback:
 
@@ -1009,7 +1056,7 @@ checks translation resources for several locales:
            // config/packages/translation.php
            use Symfony\Config\FrameworkConfig;
 
-            return static function (FrameworkConfig $framework) {
+            return static function (FrameworkConfig $framework): void {
                 // ...
                 $framework->translator()
                     ->fallbacks(['en'])
@@ -1021,6 +1068,72 @@ checks translation resources for several locales:
     When Symfony can't find a translation in the given locale, it will
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
+
+.. _locale-switcher:
+
+Switch Locale Programmatically
+------------------------------
+
+Sometimes you need to change the locale of the application dynamically
+just to run some code. Imagine a console command that renders Twig templates
+of emails in different languages. You need to change the locale only to
+render those templates.
+
+The ``LocaleSwitcher`` class allows you to change at once the locale
+of:
+
+* All the services that are tagged with ``kernel.locale_aware``;
+* ``\Locale::setDefault()``;
+* If the ``RequestContext`` service is available, the ``_locale``
+  parameter (so urls are generated with the new locale)::
+
+    use Symfony\Component\Translation\LocaleSwitcher;
+
+    class SomeService
+    {
+        public function __construct(
+            private LocaleSwitcher $localeSwitcher,
+        ) {
+        }
+
+        public function someMethod(): void
+        {
+            // you can get the current application locale like this:
+            $currentLocale = $this->localeSwitcher->getLocale();
+
+            // you can set the locale for the entire application like this:
+            // (from now on, the application will use 'fr' (French) as the
+            // locale; including the default locale used to translate Twig templates)
+            $this->localeSwitcher->setLocale('fr');
+
+            // reset the current locale of your application to the configured default locale
+            // in config/packages/translation.yaml, by option 'default_locale'
+            $this->localeSwitcher->reset();
+
+            // you can also run some code with a certain locale, without
+            // changing the locale for the rest of the application
+            $this->localeSwitcher->runWithLocale('es', function() {
+
+                // e.g. render here some Twig templates using 'es' (Spanish) locale
+
+            });
+
+            // you can optionally declare an argument in your callback to receive the
+            // injected locale
+            $this->localeSwitcher->runWithLocale('es', function(string $locale) {
+
+                // here, the $locale argument will be set to 'es'
+
+            });
+
+            // ...
+        }
+    }
+
+When using :ref:`autowiring <services-autowire>`, type-hint any controller or
+service argument with the :class:`Symfony\\Component\\Translation\\LocaleSwitcher`
+class to inject the locale switcher service. Otherwise, configure your services
+manually and inject the ``translation.locale_switcher`` service.
 
 .. _translation-debug:
 
@@ -1042,10 +1155,10 @@ unused translation messages templates:
 .. caution::
 
     The extractors can't find messages translated outside templates (like form
-    labels or controllers) unless using :ref:`translatable-objects` or calling
-    the ``trans()`` method on a translator (since Symfony 5.3). Dynamic
-    translations using variables or expressions in templates are not
-    detected either:
+    labels or controllers) unless using :ref:`translatable objects
+    <translatable-objects>` or calling the ``trans()`` method on a translator
+    (since Symfony 5.3). Dynamic translations using variables or expressions in
+    templates are not detected either:
 
     .. code-block:: twig
 
@@ -1054,9 +1167,10 @@ unused translation messages templates:
         {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured
-``en`` as the fallback locale (see :ref:`translation-configuration` and
-:ref:`translation-fallback` for how to configure these). And suppose
-you've already setup some translations for the ``fr`` locale:
+``en`` as the fallback locale (see :ref:`configuration
+<translation-configuration>` and :ref:`fallback <translation-fallback>` for
+how to configure these). And suppose you've already set up some translations
+for the ``fr`` locale:
 
 .. configuration-block::
 
@@ -1231,10 +1345,6 @@ These constants are defined as "bit masks", so you can combine them as follows::
         // ... there are missing and/or unused translations
     }
 
-.. versionadded:: 5.1
-
-    The exit codes were introduced in Symfony 5.1
-
 .. _translation-lint:
 
 How to Find Errors in Translation Files
@@ -1276,11 +1386,6 @@ adapted to the format required by GitHub, but you can force that format too:
     $ php bin/console lint:yaml translations/ --format=github
     $ php bin/console lint:xliff translations/ --format=github
 
-.. versionadded:: 5.3
-
-    The ``github`` output format was introduced in Symfony 5.3 for ``lint:yaml``
-    and in Symfony 5.4 for ``lint:xliff``.
-
 .. tip::
 
     The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
@@ -1290,16 +1395,8 @@ adapted to the format required by GitHub, but you can force that format too:
 
         $ php vendor/bin/yaml-lint translations/
 
-    .. versionadded:: 5.1
-
-        The ``yaml-lint`` binary was introduced in Symfony 5.1.
-
 Pseudo-localization translator
 ------------------------------
-
-.. versionadded:: 5.2
-
-    The pseudolocalization translator was introduced in Symfony 5.2.
 
 .. note::
 
@@ -1461,6 +1558,19 @@ Learn more
 .. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
 .. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes
+.. _`ICU resource bundle`: https://github.com/unicode-org/icu-docs/blob/main/design/bnf_rb.txt
+.. _`Portable object format`: https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html
+.. _`Machine object format`: https://www.gnu.org/software/gettext/manual/html_node/MO-Files.html
+.. _`QT Translations TS XML`: https://doc.qt.io/qt-5/linguist-ts-file-format.html
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`pseudolocalization`: https://en.wikipedia.org/wiki/Pseudolocalization
 .. _`Symfony Demo`: https://github.com/symfony/demo
+.. _`Crowdin Language Codes`: https://developer.crowdin.com/language-codes
+.. _`Custom Language Codes`: https://support.crowdin.com/project-settings/#languages
+.. _`Identification via User-Agent`: https://developers.phrase.com/api/#overview--identification-via-user-agent
+.. _`Phrase Tag Bundle`: https://github.com/wickedOne/phrase-tag-bundle
+.. _`Crowdin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Crowdin/README.md
+.. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
+.. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
+.. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
+.. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree

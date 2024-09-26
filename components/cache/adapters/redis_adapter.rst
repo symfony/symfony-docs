@@ -19,9 +19,9 @@ to utilize a cluster of servers to provide redundancy and/or fail-over is also a
 
     **Requirements:** At least one `Redis server`_ must be installed and running to use this
     adapter. Additionally, this adapter requires a compatible extension or library that implements
-    ``\Redis``, ``\RedisArray``, ``RedisCluster``, or ``\Predis``.
+    ``\Redis``, ``\RedisArray``, ``RedisCluster``, ``\Relay\Relay`` or ``\Predis``.
 
-This adapter expects a `Redis`_, `RedisArray`_, `RedisCluster`_, or `Predis`_ instance to be
+This adapter expects a `Redis`_, `RedisArray`_, `RedisCluster`_, `Relay`_ or `Predis`_ instance to be
 passed as the first parameter. A namespace and default cache lifetime can optionally be passed
 as the second and third parameters::
 
@@ -44,7 +44,7 @@ as the second and third parameters::
 Configure the Connection
 ------------------------
 
-The :method:`Symfony\\Component\\Cache\\Adapter\\RedisAdapter::createConnection`
+The :method:`Symfony\\Component\\Cache\\Traits\\RedisTrait::createConnection`
 helper method allows creating and configuring the Redis client class instance using a
 `Data Source Name (DSN)`_::
 
@@ -160,9 +160,9 @@ Available Options
 ~~~~~~~~~~~~~~~~~
 
 ``class`` (type: ``string``, default: ``null``)
-    Specifies the connection library to return, either ``\Redis`` or ``\Predis\Client``.
-    If none is specified, it will return ``\Redis`` if the ``redis`` extension is
-    available, and ``\Predis\Client`` otherwise. Explicitly set this to ``\Predis\Client`` for Sentinel if you are
+    Specifies the connection library to return, either ``\Redis``, ``\Relay\Relay`` or ``\Predis\Client``.
+    If none is specified, fallback value is in following order, depending which one is available first:
+    ``\Redis``, ``\Relay\Relay``, ``\Predis\Client``. Explicitly set this to ``\Predis\Client`` for Sentinel if you are
     running into issues when retrieving master information.
 
 ``persistent`` (type: ``int``, default: ``0``)
@@ -195,10 +195,13 @@ Available Options
 
 ``redis_cluster`` (type: ``bool``, default: ``false``)
     Enables or disables redis cluster. The actual value passed is irrelevant as long as it passes loose comparison
-    checks: `redis_cluster=1` will suffice.
+    checks: ``redis_cluster=1`` will suffice.
 
 ``redis_sentinel`` (type: ``string``, default: ``null``)
     Specifies the master name connected to the sentinels.
+
+``sentinel_master`` (type: ``string``, default: ``null``)
+    Alias of ``redis_sentinel`` option.
 
 ``dbindex`` (type: ``int``, default: ``0``)
     Specifies the database index to select.
@@ -211,6 +214,11 @@ Available Options
 ``ssl`` (type: ``array``, default: ``null``)
     SSL context options. See `php.net/context.ssl`_ for more information.
 
+.. versionadded:: 7.1
+
+    The option `sentinel_master` as an alias for `redis_sentinel` was introduced
+    in Symfony 7.1.
+
 .. note::
 
     When using the `Predis`_ library some additional Predis-specific options are available.
@@ -218,19 +226,8 @@ Available Options
 
 .. _redis-tag-aware-adapter:
 
-Working with Tags
------------------
-
-In order to use tag-based invalidation, you can wrap your adapter in :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but when Redis is used as backend, it's often more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag invalidation logic is implemented in Redis itself, this adapter offers better performance when using tag-based invalidation::
-
-    use Symfony\Component\Cache\Adapter\RedisAdapter;
-    use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
-
-    $client = RedisAdapter::createConnection('redis://localhost');
-    $cache = new RedisTagAwareAdapter($client);
-
 Configuring Redis
-~~~~~~~~~~~~~~~~~
+-----------------
 
 When using Redis as cache, you should configure the ``maxmemory`` and ``maxmemory-policy``
 settings. By setting ``maxmemory``, you limit how much memory Redis is allowed to consume.
@@ -245,13 +242,36 @@ try to add data when no memory is available. An example setting could look as fo
     maxmemory 100mb
     maxmemory-policy allkeys-lru
 
+Working with Tags
+-----------------
+
+In order to use tag-based invalidation, you can wrap your adapter in
+:class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`. However, when Redis
+is used as backend, it's often more interesting to use the dedicated
+:class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag
+invalidation logic is implemented in Redis itself, this adapter offers better
+performance when using tag-based invalidation::
+
+    use Symfony\Component\Cache\Adapter\RedisAdapter;
+    use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
+
+    $client = RedisAdapter::createConnection('redis://localhost');
+    $cache = new RedisTagAwareAdapter($client);
+
+.. note::
+
+    When using RedisTagAwareAdapter, in order to maintain relationships between
+    tags and cache items, you have to use either ``noeviction`` or ``volatile-*``
+    in the Redis ``maxmemory-policy`` eviction policy.
+
 Read more about this topic in the official `Redis LRU Cache Documentation`_.
 
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Redis server`: https://redis.io/
 .. _`Redis`: https://github.com/phpredis/phpredis
-.. _`RedisArray`: https://github.com/phpredis/phpredis/blob/master/arrays.markdown#readme
-.. _`RedisCluster`: https://github.com/phpredis/phpredis/blob/master/cluster.markdown#readme
+.. _`RedisArray`: https://github.com/phpredis/phpredis/blob/develop/arrays.md
+.. _`RedisCluster`: https://github.com/phpredis/phpredis/blob/develop/cluster.md
+.. _`Relay`: https://relay.so/
 .. _`Predis`: https://packagist.org/packages/predis/predis
 .. _`Predis Connection Parameters`: https://github.com/nrk/predis/wiki/Connection-Parameters#list-of-connection-parameters
 .. _`TCP-keepalive`: https://redis.io/topics/clients#tcp-keepalive

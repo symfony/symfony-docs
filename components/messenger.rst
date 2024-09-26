@@ -113,7 +113,7 @@ that will do the required processing for your message::
 
     class MyMessageHandler
     {
-        public function __invoke(MyMessage $message)
+        public function __invoke(MyMessage $message): void
         {
             // Message processing...
         }
@@ -142,26 +142,30 @@ through the transport layer, use the ``SerializerStamp`` stamp::
 
 Here are some important envelope stamps that are shipped with the Symfony Messenger:
 
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`,
-   to delay handling of an asynchronous message.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
-   to make the message be handled after the current bus has executed. Read more
-   at :doc:`/messenger/dispatch_after_current_bus`.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
-   a stamp that marks the message as handled by a specific handler.
-   Allows accessing the handler returned value and the handler name.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
-   an internal stamp that marks the message as received from a transport.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\SentStamp`,
-   a stamp that marks the message as sent by a specific sender.
-   Allows accessing the sender FQCN and the alias if available from the
-   :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
-   to configure the serialization groups used by the transport.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
-   to configure the validation groups used when the validation middleware is enabled.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
-   an internal stamp when a message fails due to an exception in the handler.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`,
+  to delay handling of an asynchronous message.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
+  to make the message be handled after the current bus has executed. Read more
+  at :ref:`messenger-transactional-messages`.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
+  a stamp that marks the message as handled by a specific handler.
+  Allows accessing the handler returned value and the handler name.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
+  an internal stamp that marks the message as received from a transport.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\SentStamp`,
+  a stamp that marks the message as sent by a specific sender.
+  Allows accessing the sender FQCN and the alias if available from the
+  :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
+  to configure the serialization groups used by the transport.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
+  to configure the validation groups used when the validation middleware is enabled.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
+  an internal stamp when a message fails due to an exception in the handler.
+* :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp`,
+  a stamp that marks the message as produced by a scheduler. This helps
+  differentiate it from messages created "manually". You can learn more about it
+  in the :doc:`Scheduler documentation </scheduler>`.
 
 .. note::
 
@@ -173,11 +177,6 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
     method. This exception is normalized thanks to the
     :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Normalizer\\FlattenExceptionNormalizer`
     which helps error reporting in the Messenger context.
-
-.. versionadded:: 5.2
-
-    The ``ErrorDetailsStamp`` stamp and the ``FlattenExceptionNormalizer``
-    were introduced in Symfony 5.2.
 
 Instead of dealing directly with the messages in the middleware you receive the envelope.
 Hence you can inspect the envelope content and its stamps, or add any::
@@ -248,13 +247,10 @@ you can create your own message sender::
 
     class ImportantActionToEmailSender implements SenderInterface
     {
-        private $mailer;
-        private $toEmail;
-
-        public function __construct(MailerInterface $mailer, string $toEmail)
-        {
-            $this->mailer = $mailer;
-            $this->toEmail = $toEmail;
+        public function __construct(
+            private MailerInterface $mailer,
+            private string $toEmail,
+        ) {
         }
 
         public function send(Envelope $envelope): Envelope
@@ -300,19 +296,22 @@ do is to write your own CSV receiver::
 
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
-        private $serializer;
-        private $filePath;
+        private $connection;
 
-        public function __construct(SerializerInterface $serializer, string $filePath)
-        {
-            $this->serializer = $serializer;
-            $this->filePath = $filePath;
+        public function __construct(
+            private SerializerInterface $serializer,
+            private string $filePath,
+        ) {
+            // Available connection bundled with the Messenger component
+            // can be found in "Symfony\Component\Messenger\Bridge\*\Transport\Connection".
+            $this->connection = /* create your connection */;
         }
 
         public function get(): iterable
         {
             // Receive the envelope according to your transport ($yourEnvelope here),
             // in most cases, using a connection is the easiest solution.
+            $yourEnvelope = $this->connection->get();
             if (null === $yourEnvelope) {
                 return [];
             }
@@ -338,7 +337,9 @@ do is to write your own CSV receiver::
         public function reject(Envelope $envelope): void
         {
             // In the case of a custom connection
-            $this->connection->reject($this->findCustomStamp($envelope)->getId());
+            $id = /* get the message id thanks to information or stamps present in the envelope */;
+
+            $this->connection->reject($id);
         }
     }
 

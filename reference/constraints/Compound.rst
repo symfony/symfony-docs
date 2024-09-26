@@ -5,10 +5,6 @@ To the contrary to the other constraints, this constraint cannot be used on its 
 Instead, it allows you to create your own set of reusable constraints, representing
 rules to use consistently across your application, by extending the constraint.
 
-.. versionadded:: 5.1
-
-    The ``Compound`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>` or :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Compound`
@@ -22,30 +18,6 @@ Suppose that you have different places where a user password must be validated,
 you can create your own named set or requirements to be reused consistently everywhere:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Validator/Constraints/PasswordRequirements.php
-        namespace App\Validator\Constraints;
-
-        use Symfony\Component\Validator\Constraints\Compound;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Annotation
-         */
-        class PasswordRequirements extends Compound
-        {
-            protected function getConstraints(array $options): array
-            {
-                return [
-                    new Assert\NotBlank(),
-                    new Assert\Type('string'),
-                    new Assert\Length(['min' => 12]),
-                    new Assert\NotCompromisedPassword(),
-                ];
-            }
-        }
 
     .. code-block:: php-attributes
 
@@ -65,38 +37,18 @@ you can create your own named set or requirements to be reused consistently ever
                     new Assert\Type('string'),
                     new Assert\Length(['min' => 12]),
                     new Assert\NotCompromisedPassword(),
+                    new Assert\PasswordStrength(['minScore' => 4]),
                 ];
             }
         }
 
-Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
-use it as an annotation/attribute in other classes. If the constraint has
+Add ``#[\Attribute]`` to the constraint class if you want to
+use it as an attribute in other classes. If the constraint has
 configuration options, define them as public properties on the constraint class.
-
-.. versionadded:: 5.2
-
-    The ability to use PHP attributes to configure constraints was introduced in
-    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
-    annotate constraints.
 
 You can now use it anywhere you need it:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity\User;
-
-        use App\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\PasswordRequirements()
-             */
-            public $plainPassword;
-        }
 
     .. code-block:: php-attributes
 
@@ -108,7 +60,7 @@ You can now use it anywhere you need it:
         class User
         {
             #[Assert\PasswordRequirements]
-            public $plainPassword;
+            public string $plainPassword;
         }
 
     .. code-block:: yaml
@@ -144,7 +96,7 @@ You can now use it anywhere you need it:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('plainPassword', new Assert\PasswordRequirements());
             }

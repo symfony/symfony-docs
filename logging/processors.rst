@@ -19,25 +19,25 @@ using a processor::
     // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
+    use Monolog\LogRecord;
+    use Monolog\Processor\ProcessorInterface;
     use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
     use Symfony\Component\HttpFoundation\RequestStack;
 
-    class SessionRequestProcessor
+    class SessionRequestProcessor implements ProcessorInterface
     {
-        private $requestStack;
-
-        public function __construct(RequestStack $requestStack)
-        {
-            $this->requestStack = $requestStack;
+        public function __construct(
+            private RequestStack $requestStack
+        ) {
         }
 
-        // this method is called for each log record; optimize it to not hurt performance
-        public function __invoke(array $record)
+        // method is called for each log record; optimize it to not hurt performance
+        public function __invoke(LogRecord $record): LogRecord
         {
             try {
                 $session = $this->requestStack->getSession();
             } catch (SessionNotFoundException $e) {
-                return;
+                return $record;
             }
             if (!$session->isStarted()) {
                 return $record;
@@ -45,7 +45,7 @@ using a processor::
 
             $sessionId = substr($session->getId(), 0, 8) ?: '????????';
 
-            $record['extra']['token'] = $sessionId.'-'.substr(uniqid('', true), -8);
+            $record->extra['token'] = $sessionId.'-'.substr(uniqid('', true), -8);
 
             return $record;
         }
@@ -151,7 +151,7 @@ Finally, set the formatter to be used on whatever handler you want:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('main')
                 ->type('stream')
                 ->path('%kernel.logs_dir%/%kernel.environment%.log')
@@ -203,10 +203,6 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\SwitchUserTokenProcessor`
     Adds information about the user who is impersonating the logged in user,
     namely username, roles and whether the user is authenticated.
-
-    .. versionadded:: 5.2
-
-        The ``SwitchUserTokenProcessor`` was introduced in Symfony 5.2.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor`
     Overrides data from the request using the data inside Symfony's request
@@ -270,8 +266,8 @@ the ``monolog.processor`` tag:
 Registering Processors per Channel
 ----------------------------------
 
-You can register a processor per channel using the ``channel`` option of
-the ``monolog.processor`` tag:
+By default, processors are applied to all channels. Add the ``channel`` option
+to the ``monolog.processor`` tag to only apply a processor for the given channel:
 
 .. configuration-block::
 
@@ -281,7 +277,7 @@ the ``monolog.processor`` tag:
         services:
             App\Logger\SessionRequestProcessor:
                 tags:
-                    - { name: monolog.processor, channel: main }
+                    - { name: monolog.processor, channel: 'app' }
 
     .. code-block:: xml
 
@@ -297,7 +293,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" channel="main"/>
+                    <tag name="monolog.processor" channel="app"/>
                 </service>
             </services>
         </container>
@@ -309,7 +305,7 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', ['channel' => 'main']);
+            ->addTag('monolog.processor', ['channel' => 'app']);
 
 .. _`Monolog`: https://github.com/Seldaek/monolog
 .. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/main/src/Monolog/Processor

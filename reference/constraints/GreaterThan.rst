@@ -22,28 +22,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\GreaterThan(5)
-             */
-            protected $siblings;
-
-            /**
-             * @Assert\GreaterThan(
-             *     value = 18
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -54,12 +32,12 @@ The following constraints ensure that:
         class Person
         {
             #[Assert\GreaterThan(5)]
-            protected $siblings;
+            protected int $siblings;
 
             #[Assert\GreaterThan(
                 value: 18,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -105,7 +83,9 @@ The following constraints ensure that:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\GreaterThan(5));
 
@@ -124,21 +104,6 @@ that a date must at least be the next day:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\GreaterThan("today")
-             */
-            protected $deliveryDate;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php
@@ -149,7 +114,7 @@ that a date must at least be the next day:
         class Order
         {
             #[Assert\GreaterThan('today')]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -185,7 +150,9 @@ that a date must at least be the next day:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('today'));
             }
@@ -195,21 +162,6 @@ Be aware that PHP will use the server's configured timezone to interpret these
 dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\GreaterThan("today UTC")
-             */
-            protected $deliveryDate;
-        }
 
     .. code-block:: php-attributes
 
@@ -221,7 +173,7 @@ dates. If you want to fix the timezone, append it to the date string:
         class Order
         {
             #[Assert\GreaterThan('today UTC')]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -257,7 +209,9 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('today UTC'));
             }
@@ -269,21 +223,6 @@ current time:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\GreaterThan("+5 hours")
-             */
-            protected $deliveryDate;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php
@@ -294,7 +233,7 @@ current time:
         class Order
         {
             #[Assert\GreaterThan('+5 hours')]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -330,7 +269,9 @@ current time:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\GreaterThan('+5 hours'));
             }

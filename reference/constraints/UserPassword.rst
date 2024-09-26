@@ -31,23 +31,6 @@ the user's current password:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Form/Model/ChangePassword.php
-        namespace App\Form\Model;
-
-        use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
-
-        class ChangePassword
-        {
-            /**
-             * @SecurityAssert\UserPassword(
-             *     message = "Wrong value for your current password"
-             * )
-             */
-            protected $oldPassword;
-        }
-
     .. code-block:: php-attributes
 
         // src/Form/Model/ChangePassword.php
@@ -60,7 +43,7 @@ the user's current password:
             #[SecurityAssert\UserPassword(
                 message: 'Wrong value for your current password',
             )]
-            protected $oldPassword;
+            protected string $oldPassword;
         }
 
     .. code-block:: yaml
@@ -101,7 +84,9 @@ the user's current password:
 
         class ChangePassword
         {
-            public static function loadValidatorData(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorData(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint(
                     'oldPassword',

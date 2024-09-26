@@ -26,14 +26,13 @@ use the logger in a controller, add a new argument type-hinted with ``LoggerInte
 
     use Psr\Log\LoggerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/hello/{name}")
-         */
-        public function index($name, LoggerInterface $logger)
+        #[Route('/hello/{name}', methods: ['GET'])]
+        public function index(string $name, LoggerInterface $logger): Response
         {
             $logger->info("Saying hello to $name!");
 
@@ -66,13 +65,13 @@ What other possible classes or interfaces could you use? Find out by running:
       # this is just a *small* sample of the output...
 
       Describes a logger instance.
-      Psr\Log\LoggerInterface (monolog.logger)
+      Psr\Log\LoggerInterface - alias:monolog.logger
 
       Request stack that controls the lifecycle of requests.
-      Symfony\Component\HttpFoundation\RequestStack (request_stack)
+      Symfony\Component\HttpFoundation\RequestStack - alias:request_stack
 
       RouterInterface is the interface that all Router classes must implement.
-      Symfony\Component\Routing\RouterInterface (router.default)
+      Symfony\Component\Routing\RouterInterface - alias:router.default
 
       [...]
 
@@ -91,7 +90,7 @@ this code directly in your controller, create a new class::
 
     class GreetingGenerator
     {
-        public function getRandomGreeting()
+        public function getRandomGreeting(): string
         {
             $greetings = ['Hey', 'Yo', 'Aloha'];
             $greeting = $greetings[array_rand($greetings)];
@@ -100,7 +99,7 @@ this code directly in your controller, create a new class::
         }
     }
 
-Great! You can use this immediately in your controller::
+Great! You can use it immediately in your controller::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
@@ -108,14 +107,13 @@ Great! You can use this immediately in your controller::
     use App\GreetingGenerator;
     use Psr\Log\LoggerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/hello/{name}")
-         */
-        public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+        #[Route('/hello/{name}', methods: ['GET'])]
+        public function index(string $name, LoggerInterface $logger, GreetingGenerator $generator): Response
         {
             $greeting = $generator->getRandomGreeting();
 
@@ -138,14 +136,12 @@ difference is that it's done in the constructor:
 
       class GreetingGenerator
       {
-    +     private $logger;
-    +
-    +     public function __construct(LoggerInterface $logger)
-    +     {
-    +         $this->logger = $logger;
+    +     public function __construct(
+    +         private LoggerInterface $logger,
+    +     ) {
     +     }
 
-          public function getRandomGreeting()
+          public function getRandomGreeting(): string
           {
               // ...
 
@@ -174,21 +170,19 @@ that extends ``AbstractExtension``::
 
     class GreetExtension extends AbstractExtension
     {
-        private $greetingGenerator;
-
-        public function __construct(GreetingGenerator $greetingGenerator)
-        {
-            $this->greetingGenerator = $greetingGenerator;
+        public function __construct(
+            private GreetingGenerator $greetingGenerator,
+        ) {
         }
 
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 new TwigFilter('greet', [$this, 'greetUser']),
             ];
         }
 
-        public function greetUser($name)
+        public function greetUser(string $name): string
         {
             $greeting =  $this->greetingGenerator->getRandomGreeting();
 
@@ -286,7 +280,7 @@ using the special ``when@`` keyword:
 
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework, ContainerConfigurator $container) {
+        return static function (FrameworkConfig $framework, ContainerConfigurator $container): void {
             $framework->router()
                 ->utf8(true)
             ;

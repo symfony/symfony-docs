@@ -1,10 +1,6 @@
 Rate Limiter
 ============
 
-.. versionadded:: 5.2
-
-    The RateLimiter component was introduced in Symfony 5.2.
-
 A "rate limiter" controls how frequently some event (e.g. an HTTP request or a
 login attempt) is allowed to happen. Rate limiting is commonly used as a
 defensive measure to protect services from excessive use (intended or not) and
@@ -15,7 +11,7 @@ Symfony uses these rate limiters in built-in features like :ref:`login throttlin
 which limits how many failed login attempts a user can make in a given period of
 time, but you can use them for your own features too.
 
-.. caution::
+.. danger::
 
     By definition, the Symfony rate limiters require Symfony to be booted
     in a PHP process. This makes them not useful to protect against `DoS attacks`_.
@@ -184,7 +180,7 @@ enforce different levels of service (free or paid):
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // use 'sliding_window' if you prefer that policy
@@ -219,6 +215,17 @@ at a rate of another 500 requests every 15 minutes. If you don't make that
 number of requests, the unused ones don't accumulate (the ``limit`` option
 prevents that number from being higher than 5,000).
 
+.. tip::
+
+    All rate-limiters are tagged with the ``rate_limiter`` tag, so you can
+    find them with a :doc:`tagged iterator </service_container/tags>` or
+    :doc:`locator </service_container/service_subscribers_locators>`.
+
+    .. versionadded:: 7.1
+
+        The automatic addition of the ``rate_limiter`` tag was introduced
+        in Symfony 7.1.
+
 Rate Limiting in Action
 -----------------------
 
@@ -232,6 +239,7 @@ the number of requests to the API::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
     use Symfony\Component\RateLimiter\RateLimiterFactory;
 
@@ -239,7 +247,7 @@ the number of requests to the API::
     {
         // if you're using service autowiring, the variable name must be:
         // "rate limiter name" (in camelCase) + "Limiter" suffix
-        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
+        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter): Response
         {
             // create a limiter based on a unique identifier of the client
             // (e.g. the client's IP address, a username/email, an API key, etc.)
@@ -281,11 +289,12 @@ using the ``reserve()`` method::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\RateLimiter\RateLimiterFactory;
 
     class ApiController extends AbstractController
     {
-        public function registerUser(Request $request, RateLimiterFactory $authenticatedApiLimiter)
+        public function registerUser(Request $request, RateLimiterFactory $authenticatedApiLimiter): Response
         {
             $apiKey = $request->headers->get('apikey');
             $limiter = $authenticatedApiLimiter->create($apiKey);
@@ -344,13 +353,13 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
 
     class ApiController extends AbstractController
     {
-        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
+        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter): Response
         {
             $limiter = $anonymousApiLimiter->create($request->getClientIp());
             $limit = $limiter->consume();
             $headers = [
                 'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp(),
+                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp() - time(),
                 'X-RateLimit-Limit' => $limit->getLimit(),
             ];
 
@@ -425,7 +434,7 @@ You can use the ``cache_pool`` option to override the cache used by a specific l
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // ...
@@ -511,7 +520,7 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // ...
@@ -524,13 +533,9 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
                 ;
         };
 
-.. versionadded:: 5.3
-
-    The login throttling doesn't use any lock since Symfony 5.3 to avoid extra load.
-
 .. _`DoS attacks`: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html
 .. _`NGINX rate limiting`: https://www.nginx.com/blog/rate-limiting-nginx/
 .. _`token bucket algorithm`: https://en.wikipedia.org/wiki/Token_bucket
-.. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative
+.. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
 .. _`Race conditions`: https://en.wikipedia.org/wiki/Race_condition

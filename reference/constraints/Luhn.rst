@@ -19,21 +19,6 @@ will contain a credit card number.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Transaction.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\Luhn(message="Please check your credit card number.")
-             */
-            protected $cardNumber;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
@@ -44,7 +29,7 @@ will contain a credit card number.
         class Transaction
         {
             #[Assert\Luhn(message: 'Please check your credit card number.')]
-            protected $cardNumber;
+            protected string $cardNumber;
         }
 
     .. code-block:: yaml
@@ -83,7 +68,9 @@ will contain a credit card number.
 
         class Transaction
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\Luhn([
                     'message' => 'Please check your credit card number',
@@ -113,10 +100,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

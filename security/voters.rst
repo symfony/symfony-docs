@@ -44,66 +44,84 @@ which makes creating a voter even easier::
 
     abstract class Voter implements VoterInterface
     {
-        abstract protected function supports(string $attribute, $subject) bool;
-        abstract protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool;
+        abstract protected function supports(string $attribute, mixed $subject): bool;
+        abstract protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool;
     }
 
 .. _how-to-use-the-voter-in-a-controller:
 
 .. tip::
 
-    Checking each voter several times can be time consumming for applications
+    Checking each voter several times can be time consuming for applications
     that perform a lot of permission checks. To improve performance in those cases,
     you can make your voters implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`.
     This allows the access decision manager to remember the attribute and type
     of subject supported by the voter, to only call the needed voters each time.
-
-    .. versionadded:: 5.4
-
-        The ``CacheableVoterInterface`` interface was introduced in Symfony 5.4.
 
 Setup: Checking for Access in a Controller
 ------------------------------------------
 
 Suppose you have a ``Post`` object and you need to decide whether or not the current
 user can *edit* or *view* the object. In your controller, you'll check access with
-code like this::
+code like this:
 
-    // src/Controller/PostController.php
+.. configuration-block::
 
-    // ...
-    class PostController extends AbstractController
-    {
-        /**
-         * @Route("/posts/{id}", name="post_show")
-         */
-        public function show($id): Response
+    .. code-block:: php-attributes
+
+        // src/Controller/PostController.php
+
+        // ...
+        use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+        class PostController extends AbstractController
         {
-            // get a Post object - e.g. query for it
-            $post = ...;
-
+            #[Route('/posts/{id}', name: 'post_show')]
             // check for "view" access: calls all voters
-            $this->denyAccessUnlessGranted('view', $post);
+            #[IsGranted('view', 'post')]
+            public function show(Post $post): Response
+            {
+                // ...
+            }
 
-            // ...
-        }
-
-        /**
-         * @Route("/posts/{id}/edit", name="post_edit")
-         */
-        public function edit($id): Response
-        {
-            // get a Post object - e.g. query for it
-            $post = ...;
-
+            #[Route('/posts/{id}/edit', name: 'post_edit')]
             // check for "edit" access: calls all voters
-            $this->denyAccessUnlessGranted('edit', $post);
-
-            // ...
+            #[IsGranted('edit', 'post')]
+            public function edit(Post $post): Response
+            {
+                // ...
+            }
         }
-    }
 
-The ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
+    .. code-block:: php
+
+        // src/Controller/PostController.php
+
+        // ...
+        use App\Security\PostVoter;
+
+        class PostController extends AbstractController
+        {
+            #[Route('/posts/{id}', name: 'post_show')]
+            public function show(Post $post): Response
+            {
+                // check for "view" access: calls all voters
+                $this->denyAccessUnlessGranted(PostVoter::VIEW, $post);
+
+                // ...
+            }
+
+            #[Route('/posts/{id}/edit', name: 'post_edit')]
+            public function edit(Post $post): Response
+            {
+                // check for "edit" access: calls all voters
+                $this->denyAccessUnlessGranted(PostVoter::EDIT, $post);
+
+                // ...
+            }
+        }
+
+The ``#[IsGranted]`` attribute or ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
 calls out to the "voter" system. Right now, no voters will vote on whether or not
 the user can "view" or "edit" a ``Post``. But you can create your *own* voter that
 decides this using whatever logic you want.
@@ -130,7 +148,7 @@ would look like this::
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        protected function supports(string $attribute, $subject): bool
+        protected function supports(string $attribute, mixed $subject): bool
         {
             // if the attribute isn't one we support, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
@@ -145,7 +163,7 @@ would look like this::
             return true;
         }
 
-        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+        protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
         {
             $user = $token->getUser();
 
@@ -158,14 +176,11 @@ would look like this::
             /** @var Post $post */
             $post = $subject;
 
-            switch ($attribute) {
-                case self::VIEW:
-                    return $this->canView($post, $user);
-                case self::EDIT:
-                    return $this->canEdit($post, $user);
-            }
-
-            throw new \LogicException('This code should not be reached!');
+            return match($attribute) {
+                self::VIEW => $this->canView($post, $user),
+                self::EDIT => $this->canEdit($post, $user),
+                default => throw new \LogicException('This code should not be reached!')
+            };
         }
 
         private function canView(Post $post, User $user): bool
@@ -190,7 +205,7 @@ That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a
 
 To recap, here's what's expected from the two abstract methods:
 
-``Voter::supports(string $attribute, $subject)``
+``Voter::supports(string $attribute, mixed $subject)``
     When ``isGranted()`` (or ``denyAccessUnlessGranted()``) is called, the first
     argument is passed here as ``$attribute`` (e.g. ``ROLE_USER``, ``edit``) and
     the second argument (if any) is passed as ``$subject`` (e.g. ``null``, a ``Post``
@@ -200,7 +215,7 @@ To recap, here's what's expected from the two abstract methods:
     return ``true`` if the attribute is ``view`` or ``edit`` and if the object is
     a ``Post`` instance.
 
-``voteOnAttribute(string $attribute, $subject, TokenInterface $token)``
+``voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token)``
     If you return ``true`` from ``supports()``, then this method is called. Your
     job is to return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any). In this
@@ -223,27 +238,25 @@ Checking for Roles inside a Voter
 
 What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
 to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting
-the :class:`Symfony\\Component\\Security\\Core\\Security`
+the :class:`Symfony\\Bundle\\SecurityBundle\\Security`
 into your voter. You can use this to, for example, *always* allow access to a user
 with ``ROLE_SUPER_ADMIN``::
 
     // src/Security/PostVoter.php
 
     // ...
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
 
     class PostVoter extends Voter
     {
         // ...
 
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+        protected function voteOnAttribute($attribute, mixed $subject, TokenInterface $token): bool
         {
             // ...
 
@@ -289,10 +302,6 @@ There are four strategies available:
     This grants or denies access by the first voter that does not abstain,
     based on their service priority;
 
-    .. versionadded:: 5.1
-
-        The ``priority`` version strategy was introduced in Symfony 5.1.
-
 Regardless the chosen strategy, if all voters abstained from voting, the
 decision is based on the ``allow_if_all_abstain`` config option (which
 defaults to ``false``).
@@ -335,7 +344,7 @@ security configuration:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->accessDecisionManager()
                 ->strategy('unanimous')
                 ->allowIfAllAbstain(false)
@@ -344,10 +353,6 @@ security configuration:
 
 Custom Access Decision Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.4
-
-    The ``strategy_service`` option was introduced in Symfony 5.4.
 
 If none of the built-in strategies fits your use case, define the ``strategy_service``
 option to use a custom service (your service must implement the
@@ -386,7 +391,7 @@ option to use a custom service (your service must implement the
         use App\Security\MyCustomAccessDecisionStrategy;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->accessDecisionManager()
                 ->strategyService(MyCustomAccessDecisionStrategy::class)
                 // ...
@@ -433,9 +438,41 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
         use App\Security\MyCustomAccessDecisionManager;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->accessDecisionManager()
                 ->service(MyCustomAccessDecisionManager::class)
                 // ...
             ;
         };
+
+.. _security-voters-change-message-and-status-code:
+
+Changing the message and status code returned
+---------------------------------------------
+
+By default, the ``#[IsGranted]`` attribute will throw a
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+and return an http **403** status code with **Access Denied** as message.
+
+However, you can change this behavior by specifying the message and status code returned::
+
+    // src/Controller/PostController.php
+
+    // ...
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class PostController extends AbstractController
+    {
+        #[Route('/posts/{id}', name: 'post_show')]
+        #[IsGranted('show', 'post', 'Post not found', 404)]
+        public function show(Post $post): Response
+        {
+            // ...
+        }
+    }
+
+.. tip::
+
+    If the status code is different than 403, an
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
+    will be thrown instead.

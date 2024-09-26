@@ -5,10 +5,6 @@ This constraint ensures that the given value is a valid host name (internally it
 uses the ``FILTER_VALIDATE_DOMAIN`` option of the :phpfunction:`filter_var` PHP
 function).
 
-.. versionadded:: 5.1
-
-    The ``Hostname`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Hostname`
@@ -23,21 +19,6 @@ will contain a host name.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/ServerSettings.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class ServerSettings
-        {
-            /**
-             * @Assert\Hostname(message="The server name must be a valid hostname.")
-             */
-            protected $name;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/ServerSettings.php
@@ -48,7 +29,7 @@ will contain a host name.
         class ServerSettings
         {
             #[Assert\Hostname(message: 'The server name must be a valid hostname.')]
-            protected $name;
+            protected string $name;
         }
 
     .. code-block:: yaml
@@ -87,7 +68,9 @@ will contain a host name.
 
         class ServerSettings
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new Assert\Hostname([
                     'message' => 'The server name must be a valid hostname.',
@@ -121,10 +104,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

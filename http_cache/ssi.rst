@@ -27,7 +27,7 @@ The SSI instructions are done via HTML comments:
 There are some other `available directives`_ but
 Symfony manages only the ``#include virtual`` one.
 
-.. caution::
+.. danger::
 
     Be careful with SSI, your website may fall victim to injections.
     Please read this `OWASP article`_ first!
@@ -74,7 +74,7 @@ First, to use SSI, be sure to enable it in your application configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->ssi()
                 ->enabled(true)
             ;
@@ -84,28 +84,55 @@ Suppose you have a page with private content like a Profile page and you want
 to cache a static GDPR content block. With SSI, you can add some expiration
 on this block and keep the page private::
 
-    // src/Controller/ProfileController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    // ...
-    class ProfileController extends AbstractController
-    {
-        public function index(): Response
+    .. code-block:: php-attributes
+
+        // src/Controller/ProfileController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        class ProfileController extends AbstractController
         {
-            // by default, responses are private
-            return $this->render('profile/index.html.twig');
+            public function index(): Response
+            {
+                // by default, responses are private
+                return $this->render('profile/index.html.twig');
+            }
+
+            #[Cache(smaxage: 600)]
+            public function gdpr(): Response
+            {
+                return $this->render('profile/gdpr.html.twig');
+            }
         }
 
-        public function gdpr(): Response
+    .. code-block:: php
+
+        // src/Controller/ProfileController.php
+        namespace App\Controller;
+
+        // ...
+        class ProfileController extends AbstractController
         {
-            $response = $this->render('profile/gdpr.html.twig');
+            public function index(): Response
+            {
+                // by default, responses are private
+                return $this->render('profile/index.html.twig');
+            }
 
-            // sets to public and adds some expiration
-            $response->setSharedMaxAge(600);
+            public function gdpr(): Response
+            {
+                $response = $this->render('profile/gdpr.html.twig');
 
-            return $response;
+                // sets to public and adds some expiration
+                $response->setSharedMaxAge(600);
+
+                return $response;
+            }
         }
-    }
 
 The profile index page has not public caching, but the GDPR block has
 10 minutes of expiration. Let's include this block into the main one:

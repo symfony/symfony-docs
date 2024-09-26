@@ -1,10 +1,6 @@
 UuidType Field
 ==============
 
-.. versionadded:: 5.3
-
-    The ``UuidType`` field was introduced in Symfony 5.3.
-
 Renders an input text field with the UUID string value and transforms it back to
 a proper :ref:`Uuid object <uuid>` when submitting the form.
 
@@ -12,8 +8,6 @@ a proper :ref:`Uuid object <uuid>` when submitting the form.
 | Rendered as               | ``input`` ``text`` field                                              |
 +---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid UUID.                                            |
-+---------------------------+-----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                   |
 +---------------------------+-----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                         |
 +---------------------------+-----------------------------------------------------------------------+
@@ -61,6 +55,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

@@ -19,13 +19,20 @@ published through a *time-based model*:
 
 .. tip::
 
-    `Subscribe to Symfony Roadmap notifications`_ to receive an email when a new
+    `Subscribe to Symfony Release notifications`_ to receive an email when a new
     Symfony version is published or when a Symfony version reaches its end of life.
 
 .. _contributing-release-development:
 
 Development
 -----------
+
+.. note::
+
+    The Symfony project is an open-source community-driven development framework.
+    There is no roadmap written or defined in advance. Every feature request
+    may or may not be developed in future versions based on the community.
+    Symfony Core Team members can help move things forward if there's enough interest.
 
 The full development period for any major or minor version lasts six months and
 is divided into two phases:
@@ -43,7 +50,7 @@ final release.
 
 .. tip::
 
-    Check out the `Symfony Roadmap`_ to learn more about any specific version.
+    Check out the `Symfony Release`_ to learn more about any specific version.
 
 .. _contributing-release-maintenance:
 .. _symfony-versions:
@@ -155,6 +162,6 @@ period to upgrade. Companies wanting more stability use the LTS versions: a new
 version is published every two years and there is a year to upgrade.
 
 .. _`semantic versioning`: https://semver.org/
-.. _`Subscribe to Symfony Roadmap notifications`: https://symfony.com/account/notifications
-.. _`Symfony Roadmap`: https://symfony.com/releases
+.. _`Subscribe to Symfony Release notifications`: https://symfony.com/account/notifications
+.. _`Symfony Release`: https://symfony.com/releases
 .. _`professional Symfony support`: https://sensiolabs.com/

@@ -1,10 +1,6 @@
 ULID
 ====
 
-.. versionadded:: 5.2
-
-    The ULID validator was introduced in Symfony 5.2.
-
 Validates that a value is a valid `Universally Unique Lexicographically Sortable Identifier (ULID)`_.
 
 ==========  ===================================================================
@@ -18,21 +14,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/File.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class File
-        {
-            /**
-             * @Assert\Ulid
-             */
-            protected $identifier;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/File.php
@@ -43,7 +24,7 @@ Basic Usage
         class File
         {
             #[Assert\Ulid]
-            protected $identifier;
+            protected string $identifier;
         }
 
     .. code-block:: yaml
@@ -79,7 +60,9 @@ Basic Usage
 
         class File
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('identifier', new Assert\Ulid());
             }
@@ -111,6 +94,5 @@ Parameter        Description
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
-
 
 .. _`Universally Unique Lexicographically Sortable Identifier (ULID)`: https://github.com/ulid/spec

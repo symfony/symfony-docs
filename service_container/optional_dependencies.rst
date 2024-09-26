@@ -38,11 +38,10 @@ if the service does not exist:
 
         use App\Newsletter\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([service('logger')->nullOnInvalid()]);
         };
 
@@ -95,7 +94,7 @@ call if the service exists and remove the method call if it does not:
 
         use App\Newsletter\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)

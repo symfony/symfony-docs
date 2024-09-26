@@ -37,19 +37,24 @@ method that fits most use-cases::
          */
         public function supports(Request $request): ?bool
         {
-            return $request->headers->has('X-AUTH-TOKEN');
+            // "auth-token" is an example of a custom, non-standard HTTP header used in this application
+            return $request->headers->has('auth-token');
         }
 
         public function authenticate(Request $request): Passport
         {
-            $apiToken = $request->headers->get('X-AUTH-TOKEN');
+            $apiToken = $request->headers->get('auth-token');
             if (null === $apiToken) {
                 // The token header was empty, authentication fails with HTTP Status
                 // Code 401 "Unauthorized"
                 throw new CustomUserMessageAuthenticationException('No API token provided');
             }
 
-            return new SelfValidatingPassport(new UserBadge($apiToken));
+            // implement your own logic to get the user identifier from `$apiToken`
+            // e.g. by looking up a user in the database using its API key
+            $userIdentifier = /** ... */;
+
+            return new SelfValidatingPassport(new UserBadge($userIdentifier));
         }
 
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
@@ -86,7 +91,6 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
         # config/packages/security.yaml
         security:
-            enable_authenticator_manager: true
 
             # ...
             firewalls:
@@ -106,7 +110,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                 http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
-            <config enable-authenticator-manager="true">
+            <config>
                 <!-- ... -->
 
                 <firewall name="main">
@@ -121,7 +125,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
         use App\Security\ApiKeyAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->enableAuthenticatorManager(true);
             // ....
 
@@ -130,20 +134,12 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
             ;
         };
 
-.. deprecated:: 5.4
+.. tip::
 
-    If you have registered multiple user providers, you must set the
-    ``provider`` key to one of the configured providers, even if your
-    custom authenticators don't use it. Not doing so is deprecated in Symfony 5.4.
-
-.. versionadded:: 5.2
-
-    Starting with Symfony 5.2, the custom authenticator is automatically
-    registered as an entry point if it implements ``AuthenticationEntryPointInterface``.
-
-    Prior to 5.2, you had to configure the entry point separately using the
-    ``entry_point`` option. Read :doc:`/security/entry_point` for more
-    information.
+    You may want your authenticator to implement
+    ``AuthenticationEntryPointInterface``. This defines the response sent
+    to users to start authentication (e.g. when they visit a protected
+    page). Read more about it in :doc:`/security/entry_point`.
 
 The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &
@@ -159,7 +155,7 @@ can define what happens in these cases:
 ``onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response``
     If the user is authenticated, this method is called with the
     authenticated ``$token``. This method can return a response (e.g.
-    redirect the user to the homepage).
+    redirect the user to some page).
 
     If ``null`` is returned, the request continues like normal (i.e. the
     controller matching the login route is called). This is useful for API
@@ -199,11 +195,6 @@ can define what happens in these cases:
 Security Passports
 ------------------
 
-.. versionadded:: 5.2
-
-    The ``UserBadge`` was introduced in Symfony 5.2. Prior to 5.2, the user
-    instance was provided directly to the passport.
-
 A passport is an object that contains the user that will be authenticated as
 well as other pieces of information, like whether a password should be checked
 or if "remember me" functionality should be enabled.
@@ -225,6 +216,11 @@ using :ref:`the user provider <security-user-providers>`::
 
 .. note::
 
+    The maximum length allowed for the user identifier is 4096 characters to
+    prevent `session storage flooding`_ attacks.
+
+.. note::
+
     You can optionally pass a user loader as second argument to the
     ``UserBadge``. This callable receives the ``$userIdentifier``
     and must return a ``UserInterface`` object (otherwise a
@@ -238,11 +234,9 @@ using :ref:`the user provider <security-user-providers>`::
 
         class CustomAuthenticator extends AbstractAuthenticator
         {
-            private $userRepository;
-
-            public function __construct(UserRepository $userRepository)
-            {
-                $this->userRepository = $userRepository;
+            public function __construct(
+                private UserRepository $userRepository,
+            ) {
             }
 
             public function authenticate(Request $request): Passport
@@ -250,7 +244,7 @@ using :ref:`the user provider <security-user-providers>`::
                 // ...
 
                 return new Passport(
-                    new UserBadge($email, function (string $userIdentifier) {
+                    new UserBadge($email, function (string $userIdentifier): ?UserInterface {
                         return $this->userRepository->findOneBy(['email' => $userIdentifier]);
                     }),
                     $credentials
@@ -280,14 +274,13 @@ The following credential classes are supported by default:
             // If this function returns anything else than `true`, the credentials
             // are marked as invalid.
             // The $credentials parameter is equal to the next argument of this class
-            function ($credentials, UserInterface $user) {
+            function (string $credentials, UserInterface $user): bool {
                 return $user->getApiToken() === $credentials;
             },
 
             // The custom credentials
             $apiToken
         ));
-
 
 Self Validating Passport
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -325,10 +318,10 @@ the following badges are supported:
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
 
-.. versionadded:: 5.2
+.. note::
 
-    Since 5.2, the ``PasswordUpgradeBadge`` is automatically added to
-    the passport if the passport has ``PasswordCredentials``.
+    The ``PasswordUpgradeBadge`` is automatically added to the passport if the
+    passport has ``PasswordCredentials``.
 
 For instance, if you want to add CSRF to your custom authenticator, you
 would initialize the passport like this::
@@ -346,11 +339,11 @@ would initialize the passport like this::
     {
         public function authenticate(Request $request): Passport
         {
-            $password = $request->request->get('password');
-            $username = $request->request->get('username');
-            $csrfToken = $request->request->get('csrf_token');
+            $password = $request->getPayload()->get('password');
+            $username = $request->getPayload()->get('username');
+            $csrfToken = $request->getPayload()->get('csrf_token');
 
-            // ... validate no parameter is empty
+            // ...
 
             return new Passport(
                 new UserBadge($username),
@@ -363,10 +356,6 @@ would initialize the passport like this::
 Passport Attributes
 -------------------
 
-.. versionadded:: 5.2
-
-    Passport attributes were introduced in Symfony 5.2.
-
 Besides badges, passports can define attributes, which allows the ``authenticate()``
 method to store arbitrary information in the passport to access it from other
 authenticator methods (e.g. ``createToken()``)::
@@ -378,7 +367,7 @@ authenticator methods (e.g. ``createToken()``)::
     {
         // ...
 
-        public function authenticate(Request $request): PassportInterface
+        public function authenticate(Request $request): Passport
         {
             // ... process the request
 
@@ -390,9 +379,11 @@ authenticator methods (e.g. ``createToken()``)::
             return $passport;
         }
 
-        public function createToken(PassportInterface $passport, string $firewallName): TokenInterface
+        public function createToken(Passport $passport, string $firewallName): TokenInterface
         {
             // read the attribute value
             return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
         }
     }
+
+.. _`session storage flooding`: https://symfony.com/blog/cve-2016-4423-large-username-storage-in-session

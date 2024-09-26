@@ -10,7 +10,7 @@ The following example shows a typical usage of the cache::
     use Symfony\Contracts\Cache\ItemInterface;
 
     // The callable will only be executed on a cache miss.
-    $value = $pool->get('my_cache_key', function (ItemInterface $item) {
+    $value = $pool->get('my_cache_key', function (ItemInterface $item): string {
         $item->expiresAfter(3600);
 
         // ... do some HTTP request or heavy computations
@@ -24,13 +24,8 @@ The following example shows a typical usage of the cache::
     // ... and to remove the cache key
     $pool->delete('my_cache_key');
 
-Symfony supports Cache Contracts, PSR-6/16 and Doctrine Cache interfaces.
+Symfony supports Cache Contracts and PSR-6/16 interfaces.
 You can read more about these at the :doc:`component documentation </components/cache>`.
-
-.. deprecated:: 5.4
-
-    Support for Doctrine Cache was deprecated in Symfony 5.4
-    and it will be removed in Symfony 6.0.
 
 .. _cache-configuration-with-frameworkbundle:
 
@@ -92,7 +87,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->app('cache.adapter.filesystem')
                 ->system('cache.adapter.system')
@@ -108,7 +103,6 @@ The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
-* :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>` (deprecated)
 * :doc:`cache.adapter.doctrine_dbal </components/cache/adapters/doctrine_dbal_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
@@ -117,10 +111,6 @@ The Cache component comes with a series of adapters pre-configured:
 * :doc:`cache.adapter.redis </components/cache/adapters/redis_adapter>`
 * :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
 
-.. versionadded:: 5.2
-
-    ``cache.adapter.redis_tag_aware`` has been introduced in Symfony 5.2.
-
 .. note::
 
     There's also a special ``cache.adapter.system`` adapter. It's recommended to
@@ -128,8 +118,7 @@ The Cache component comes with a series of adapters pre-configured:
     logic to dynamically select the best possible storage based on your system
     (either PHP files or APCu).
 
-Some of these adapters could be configured via shortcuts. Using these shortcuts
-will create pools with service IDs that follow the pattern ``cache.[type]``.
+Some of these adapters could be configured via shortcuts.
 
 .. configuration-block::
 
@@ -140,15 +129,10 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
 
-                # service: cache.doctrine_dbal
                 default_doctrine_dbal_provider: 'doctrine.dbal.default_connection'
-                # service: cache.psr6
                 default_psr6_provider: 'app.my_psr6_service'
-                # service: cache.redis
                 default_redis_provider: 'redis://localhost'
-                # service: cache.memcached
                 default_memcached_provider: 'memcached://localhost'
-                # service: cache.pdo
                 default_pdo_provider: 'pgsql:host=localhost'
 
     .. code-block:: xml
@@ -164,13 +148,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
             <framework:config>
-                <!--
-                default-doctrine-dbal-provider: Service: cache.doctrine_dbal
-                default-psr6-provider: Service: cache.psr6
-                default-redis-provider: Service: cache.redis
-                default-memcached-provider: Service: cache.memcached
-                default-pdo-provider: Service: cache.pdo
-                -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
                     default-doctrine-dbal-provider="doctrine.dbal.default_connection"
@@ -187,27 +164,22 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
-                // Service: cache.doctrine_dbal
+
                 ->defaultDoctrineDbalProvider('doctrine.dbal.default_connection')
-                // Service: cache.psr6
                 ->defaultPsr6Provider('app.my_psr6_service')
-                // Service: cache.redis
                 ->defaultRedisProvider('redis://localhost')
-                // Service: cache.memcached
                 ->defaultMemcachedProvider('memcached://localhost')
-                // Service: cache.pdo
                 ->defaultPdoProvider('pgsql:host=localhost')
             ;
         };
 
-.. deprecated:: 5.4
+.. versionadded:: 7.1
 
-    The ``default_doctrine_provider`` option was deprecated in Symfony 5.4 and
-    it will be removed in Symfony 6.0.
+    Using a DSN as the provider for the PDO adapter was introduced in Symfony 7.1.
 
 .. _cache-create-pools:
 
@@ -295,7 +267,7 @@ You can also create more customized pools:
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $cache = $framework->cache();
             $cache->defaultMemcachedProvider('memcached://localhost');
 
@@ -338,15 +310,16 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
 ``Psr\Cache\CacheItemPoolInterface``::
 
     use Symfony\Contracts\Cache\CacheInterface;
+    // ...
 
     // from a controller method
-    public function listProducts(CacheInterface $customThingCache)
+    public function listProducts(CacheInterface $customThingCache): Response
     {
         // ...
     }
 
     // in a service
-    public function __construct(CacheInterface $customThingCache)
+    public function __construct(private CacheInterface $customThingCache)
     {
         // ...
     }
@@ -394,7 +367,7 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return function(ContainerConfigurator $container) {
+            return function(ContainerConfigurator $container): void {
                 $container->services()
                     // ...
 
@@ -475,12 +448,11 @@ and use that when configuring the pool.
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+        return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('cache.my_redis')
                     ->adapters(['cache.adapter.redis'])
                     ->provider('app.my_custom_redis_provider');
-
 
             $container->register('app.my_custom_redis_provider', \Redis::class)
                 ->setFactory([RedisAdapter::class, 'createConnection'])
@@ -555,7 +527,7 @@ Symfony stores the item automatically in all the missing pools.
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('my_cache_pool')
                     ->defaultLifetime(31536000) // One year
@@ -573,30 +545,28 @@ Using Cache Tags
 In applications with many cache keys it could be useful to organize the data stored
 to be able to invalidate the cache more efficiently. One way to achieve that is to
 use cache tags. One or more tags could be added to the cache item. All items with
-the same key could be invalidated with one function call::
+the same tag could be invalidated with one function call::
 
     use Symfony\Contracts\Cache\ItemInterface;
     use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
     class SomeClass
     {
-        private $myCachePool;
-
         // using autowiring to inject the cache pool
-        public function __construct(TagAwareCacheInterface $myCachePool)
-        {
-            $this->myCachePool = $myCachePool;
+        public function __construct(
+            private TagAwareCacheInterface $myCachePool,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
-            $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item) {
+            $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item): string {
                 $item->tag(['foo', 'bar']);
 
                 return 'debug';
             });
 
-            $value1 = $this->myCachePool->get('item_1', function (ItemInterface $item) {
+            $value1 = $this->myCachePool->get('item_1', function (ItemInterface $item): string {
                 $item->tag('foo');
 
                 return 'debug';
@@ -619,8 +589,7 @@ to enable this feature. This could be added by using the following configuration
             cache:
                 pools:
                     my_cache_pool:
-                        adapter: cache.adapter.redis
-                        tags: true
+                        adapter: cache.adapter.redis_tag_aware
 
     .. code-block:: xml
 
@@ -649,7 +618,7 @@ to enable this feature. This could be added by using the following configuration
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('my_cache_pool')
                     ->tags(true)
@@ -703,7 +672,7 @@ achieved by specifying the adapter.
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('my_cache_pool')
                     ->tags('tag_pool')
@@ -755,19 +724,42 @@ Clear all custom pools:
 
     $ php bin/console cache:pool:clear cache.app_clearer
 
+Clear all cache pools:
+
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:clear --all
+
+Clear all cache pools except some:
+
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:clear --all --exclude=my_cache_pool --exclude=another_cache_pool
+
 Clear all caches everywhere:
 
 .. code-block:: terminal
 
     $ php bin/console cache:pool:clear cache.global_clearer
 
+Clear cache by tag(s):
+
+.. code-block:: terminal
+
+    # invalidate tag1 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1
+
+    # invalidate tag1 & tag2 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2
+
+    # invalidate tag1 & tag2 from cache.app pool
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 --pool=cache.app
+
+    # invalidate tag1 & tag2 from cache1 & cache2 pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 -p cache1 -p cache2
+
 Encrypting the Cache
 --------------------
-
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
-    class was introduced in Symfony 5.1.
 
 To encrypt the cache using ``libsodium``, you can use the
 :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.
@@ -795,7 +787,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                     - ['%env(base64:CACHE_DECRYPTION_KEY)%']
                     # use multiple keys in order to rotate them
                     #- ['%env(base64:CACHE_DECRYPTION_KEY)%', '%env(base64:OLD_CACHE_DECRYPTION_KEY)%']
-                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+                    - '@.inner'
 
     .. code-block:: xml
 
@@ -818,7 +810,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                         <!-- use multiple keys in order to rotate them -->
                         <!-- <argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument> -->
                     </argument>
-                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                    <argument type="service" id=".inner"/>
                 </service>
             </services>
         </container>
@@ -835,7 +827,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
             ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)'])
             // use multiple keys in order to rotate them
             //->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
-            ->addArgument(new Reference(SodiumMarshaller::class.'.inner'));
+            ->addArgument(new Reference('.inner'));
 
 .. caution::
 
@@ -849,10 +841,6 @@ cache items encrypted with the old key have expired, you can completely remove
 
 Computing Cache Values Asynchronously
 -------------------------------------
-
-.. versionadded:: 5.2
-
-    The feature to compute cache values asynchronously was introduced in Symfony 5.2.
 
 The Cache component uses the `probabilistic early expiration`_ algorithm to
 protect against the :ref:`cache stampede <cache_stampede-prevention>` problem.
@@ -896,19 +884,17 @@ In the following example, the value is requested from a controller::
 
     use App\Cache\CacheComputation;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Contracts\Cache\CacheInterface;
     use Symfony\Contracts\Cache\ItemInterface;
 
     class CacheController extends AbstractController
     {
-        /**
-         * @Route("/cache", name="cache")
-         */
+        #[Route('/cache', name: 'cache')]
         public function index(CacheInterface $asyncCache): Response
         {
             // pass to the cache the service method that refreshes the item
-            $cachedValue = $cache->get('my_value', [CacheComputation::class, 'compute'])
+            $cachedValue = $asyncCache->get('my_value', [CacheComputation::class, 'compute'])
 
             // ...
         }
@@ -926,13 +912,13 @@ a message bus to compute values in a worker:
             cache:
                 pools:
                     async.cache:
-                        early_expiration_message_bus: async_bus
+                        early_expiration_message_bus: messenger.default_bus
 
             messenger:
                 transports:
                     async_bus: '%env(MESSENGER_TRANSPORT_DSN)%'
                 routing:
-                    Symfony\Component\Cache\Messenger\Message\EarlyExpirationMessage: async_bus
+                    'Symfony\Component\Cache\Messenger\EarlyExpirationMessage': async_bus
 
     .. code-block:: xml
 
@@ -948,12 +934,12 @@ a message bus to compute values in a worker:
         >
             <framework:config>
                 <framework:cache>
-                    <framework:pool name="async.cache" early-expiration-message-bus="async_bus"/>
+                    <framework:pool name="async.cache" early-expiration-message-bus="messenger.default_bus"/>
                 </framework:cache>
 
                 <framework:messenger>
                     <framework:transport name="async_bus">%env(MESSENGER_TRANSPORT_DSN)%</framework:transport>
-                    <framework:routing message-class="Symfony\Component\Cache\Messenger\Message\EarlyExpirationMessage">
+                    <framework:routing message-class="Symfony\Component\Cache\Messenger\EarlyExpirationMessage">
                         <framework:sender service="async_bus"/>
                     </framework:routing>
                 </framework:messenger>
@@ -970,7 +956,7 @@ a message bus to compute values in a worker:
         return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('async.cache')
-                    ->earlyExpirationMessageBus('async_bus');
+                    ->earlyExpirationMessageBus('messenger.default_bus');
 
             $framework->messenger()
                 ->transport('async_bus')

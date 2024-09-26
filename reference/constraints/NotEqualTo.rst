@@ -26,28 +26,6 @@ the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\NotEqualTo("Mary")
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\NotEqualTo(
-             *     value = 15
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -58,12 +36,12 @@ the following:
         class Person
         {
             #[Assert\NotEqualTo('Mary')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\NotEqualTo(
                 value: 15,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -109,7 +87,9 @@ the following:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotEqualTo('Mary'));
 

@@ -53,6 +53,7 @@ this behavior by using the ``lock`` key like:
             lock: 'rediss://r1.docker?ssl[verify_peer]=1&ssl[cafile]=...'
             lock: 'zookeeper://z1.docker'
             lock: 'zookeeper://z1.docker,z2.docker'
+            lock: 'zookeeper://localhost01,localhost02:2181'
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
@@ -100,6 +101,8 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>zookeeper://z1.docker,z2.docker</framework:resource>
 
+                    <framework:resource>zookeeper://localhost01,localhost02:2181</framework:resource>
+
                     <framework:resource>sqlite:///%kernel.project_dir%/var/lock.db</framework:resource>
 
                     <framework:resource>mysql:host=127.0.0.1;dbname=app</framework:resource>
@@ -129,7 +132,7 @@ this behavior by using the ``lock`` key like:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('default', ['flock'])
                 ->resource('default', ['flock:///path/to/file'])
@@ -140,6 +143,7 @@ this behavior by using the ``lock`` key like:
                 ->resource('default', ['redis://r1.docker', 'redis://r2.docker'])
                 ->resource('default', ['zookeeper://z1.docker'])
                 ->resource('default', ['zookeeper://z1.docker,z2.docker'])
+                ->resource('default', ['zookeeper://localhost01,localhost02:2181'])
                 ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
                 ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
@@ -165,14 +169,13 @@ To lock the default resource, autowire the lock factory using
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
-        /**
-         * @Route("/download/terms-of-use.pdf")
-         */
-        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf)
+        #[Route('/download/terms-of-use.pdf')]
+        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf): Response
         {
             $lock = $factory->createLock('pdf-creation');
             $lock->acquire(true);
@@ -206,14 +209,13 @@ processes asking for the same ``$version``::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
-        /**
-         * @Route("/download/{version}/terms-of-use.pdf")
-         */
-        public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
+        #[Route('/download/{version}/terms-of-use.pdf')]
+        public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf): Response
         {
             $lock = $lockFactory->createLock('pdf-creation-'.$version);
             $lock->acquire(true);
@@ -270,7 +272,7 @@ provides :ref:`named lock <reference-lock-resources-name>`:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('invoice', ['semaphore', 'redis://r2.docker'])
                 ->resource('report', ['semaphore']);
@@ -288,26 +290,14 @@ For instance, the ``invoice`` lock can be injected by naming the argument
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/terms-of-use.pdf')]
-        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf)
+        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf): Response
         {
             // ...
         }
     }
-
-Blocking Store
---------------
-
-If you want to use the ``RetryTillSaveStore`` for :ref:`non-blocking locks <lock-blocking-locks>`,
-you can do it by :doc:`decorating the store </service_container/service_decoration>` service:
-
-.. code-block:: yaml
-
-    lock.default.retry_till_save.store:
-        class: Symfony\Component\Lock\Store\RetryTillSaveStore
-        decorates: lock.default.store
-        arguments: ['@.inner', 100, 50]

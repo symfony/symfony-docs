@@ -59,12 +59,22 @@ correct prioritization and the content security policy:
 
     <head>
         <!-- ... -->
-        <link rel="preload" href="{{ preload('/app.css', { as: 'style' }) }}">
+        {# note that you must add two <link> tags per asset:
+           one to link to it and the other one to tell the browser to preload it #}
+        <link rel="preload" href="{{ preload('/app.css', {as: 'style'}) }}" as="style">
+        <link rel="stylesheet" href="/app.css">
     </head>
 
 If you reload the page, the perceived performance will improve because the
 server responded with both the HTML page and the CSS file when the browser only
 requested the HTML page.
+
+.. tip::
+
+    When using the :doc:`AssetMapper component </frontend/asset_mapper>` to link
+    to assets (e.g. ``importmap('app')``), there's no need to add the ``<link rel="preload">``
+    tag. The ``importmap()`` Twig function automatically adds the ``Link`` HTTP
+    header for you when the WebLink component is available.
 
 .. note::
 
@@ -74,7 +84,8 @@ requested the HTML page.
 
         <head>
             <!-- ... -->
-            <link rel="preload" href="{{ preload(asset('build/app.css')) }}">
+            <link rel="preload" href="{{ preload(asset('build/app.css')) }}" as="style">
+            <!-- ... -->
         </head>
 
 Additionally, according to `the Priority Hints specification`_, you can signal
@@ -84,7 +95,8 @@ the priority of the resource to download using the ``importance`` attribute:
 
     <head>
         <!-- ... -->
-        <link rel="preload" href="{{ preload('/app.css', { as: 'style', importance: 'low' }) }}">
+        <link rel="preload" href="{{ preload('/app.css', {as: 'style', importance: 'low'}) }}" as="style">
+        <!-- ... -->
     </head>
 
 How does it work?
@@ -108,7 +120,8 @@ issuing an early separate HTTP request, use the ``nopush`` option:
 
     <head>
         <!-- ... -->
-        <link rel="preload" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
+        <link rel="preload" href="{{ preload('/app.css', {as: 'style', nopush: true}) }}" as="style">
+        <!-- ... -->
     </head>
 
 Resource Hints
@@ -142,7 +155,8 @@ any link implementing the `PSR-13`_ standard. For instance, any
     <head>
         <!-- ... -->
         <link rel="alternate" href="{{ link('/index.jsonld', 'alternate') }}">
-        <link rel="preload" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
+        <link rel="preload" href="{{ preload('/app.css', {as: 'style', nopush: true}) }}" as="style">
+        <!-- ... -->
     </head>
 
 The previous snippet will result in this HTTP header being sent to the client:
@@ -155,15 +169,16 @@ You can also add links to the HTTP response directly from controllers and servic
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\WebLink\GenericLinkProvider;
     use Symfony\Component\WebLink\Link;
 
     class BlogController extends AbstractController
     {
-        public function index(Request $request)
+        public function index(Request $request): Response
         {
             // using the addLink() shortcut provided by AbstractController
-            $this->addLink($request, new Link('preload', '/app.css'));
+            $this->addLink($request, (new Link('preload', '/app.css'))->withAttribute('as', 'style'));
 
             // alternative if you don't want to use the addLink() shortcut
             $linkProvider = $request->attributes->get('_links', new GenericLinkProvider());

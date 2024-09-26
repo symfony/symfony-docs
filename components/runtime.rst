@@ -2,12 +2,8 @@ The Runtime Component
 =====================
 
     The Runtime Component decouples the bootstrapping logic from any global state
-    to make sure the application can run with runtimes like PHP-PM, ReactPHP,
-    Swoole, etc. without any changes.
-
-.. versionadded:: 5.3
-
-    The Runtime component was introduced in Symfony 5.3.
+    to make sure the application can run with runtimes like `PHP-PM`_, `ReactPHP`_,
+    `Swoole`_, etc. without any changes.
 
 Installation
 ------------
@@ -31,7 +27,7 @@ to look like this::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): Kernel {
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
     };
 
@@ -65,7 +61,7 @@ To make a console application, the bootstrap code would look like::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): Application {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
 
         // returning an "Application" makes the Runtime run a Console
@@ -101,6 +97,23 @@ Use the ``APP_RUNTIME`` environment variable or by specifying the
         }
     }
 
+If modifying the runtime class isn't enough, you can create your own runtime template:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "...": "..."
+        },
+        "extra": {
+            "runtime": {
+                "autoload_template": "resources/runtime/autoload_runtime.template"
+            }
+        }
+    }
+
+Symfony provides a `runtime template file`_ that you can use to create your own.
+
 Using the Runtime
 -----------------
 
@@ -116,12 +129,13 @@ Resolvable Arguments
 The closure returned from the front-controller may have zero or more arguments::
 
     // public/index.php
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (InputInterface $input, OutputInterface $output) {
+    return function (InputInterface $input, OutputInterface $output): Application {
         // ...
     };
 
@@ -139,7 +153,7 @@ The following arguments are supported by the ``SymfonyRuntime``:
 :class:`Symfony\\Component\\Console\\Application`
     An application for creating CLI applications.
 
-:class:`Symfony\\Component\\Command\\Command`
+:class:`Symfony\\Component\\Console\\Command\\Command`
     For creating one line command CLI applications (using
     ``Command::setCode()``).
 
@@ -166,7 +180,7 @@ a number of different applications are supported::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function () {
+    return static function (): Kernel {
         return new Kernel('prod', false);
     };
 
@@ -185,7 +199,7 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return static function (): Response {
             return new Response('Hello world');
         };
 
@@ -199,8 +213,8 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function (Command $command) {
-            $command->setCode(function (InputInterface $input, OutputInterface $output) {
+        return static function (Command $command): Command {
+            $command->setCode(static function (InputInterface $input, OutputInterface $output): void {
                 $output->write('Hello World');
             });
 
@@ -218,9 +232,9 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function (array $context) {
+        return static function (array $context): Application {
             $command = new Command('hello');
-            $command->setCode(function (InputInterface $input, OutputInterface $output) {
+            $command->setCode(static function (InputInterface $input, OutputInterface $output): void {
                 $output->write('Hello World');
             });
 
@@ -243,7 +257,7 @@ applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return static function (): RunnerInterface {
             return new class implements RunnerInterface {
                 public function run(): int
                 {
@@ -261,8 +275,8 @@ applications:
         // public/index.php
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
-            $app = function() {
+        return static function (): callable {
+            $app = static function(): int {
                 echo 'Hello World';
 
                 return 0;
@@ -277,7 +291,7 @@ applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return function (): void {
             echo 'Hello world';
         };
 
@@ -350,10 +364,6 @@ these options:
     Defines the name of the env var that stores the value of the
     :ref:`debug mode <debug-mode>` flag to use when running the application.
 
-.. versionadded:: 5.4
-
-    The ``env_var_name`` and ``debug_var_name`` options were introduced in Symfony 5.4.
-
 Create Your Own Runtime
 -----------------------
 
@@ -363,12 +373,6 @@ Using the Runtime component will benefit maintainers because the bootstrap
 logic could be versioned as a part of a normal package. If the application
 author decides to use this component, the package maintainer of the Runtime
 class will have more control and can fix bugs and add features.
-
-.. note::
-
-    Before Symfony 5.3, the Symfony bootstrap logic was part of a Flex recipe.
-    Since recipes are rarely updated by users, bug patches would rarely be
-    installed.
 
 The Runtime component is designed to be totally generic and able to run any
 application outside of the global state in 6 steps:
@@ -406,6 +410,7 @@ the `PSR-15`_ interfaces for HTTP request handling.
 However, a ReactPHP application will need some special logic to *run*. That logic
 is added in a new class implementing :class:`Symfony\\Component\\Runtime\\RunnerInterface`::
 
+    use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Server\RequestHandlerInterface;
     use React\EventLoop\Factory as ReactFactory;
@@ -415,13 +420,10 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
 
     class ReactPHPRunner implements RunnerInterface
     {
-        private $application;
-        private $port;
-
-        public function __construct(RequestHandlerInterface $application, int $port)
-        {
-            $this->application = $application;
-            $this->port = $port;
+        public function __construct(
+            private RequestHandlerInterface $application,
+            private int $port,
+        ) {
         }
 
         public function run(): int
@@ -432,7 +434,7 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
             // configure ReactPHP to correctly handle the PSR-15 application
             $server = new ReactHttpServer(
                 $loop,
-                function (ServerRequestInterface $request) use ($application) {
+                function (ServerRequestInterface $request) use ($application): ResponseInterface {
                     return $application->handle($request);
                 }
             );
@@ -455,7 +457,7 @@ always using this ``ReactPHPRunner``::
 
     class ReactPHPRuntime extends GenericRuntime
     {
-        private $port;
+        private int $port;
 
         public function __construct(array $options)
         {
@@ -479,9 +481,12 @@ The end user will now be able to create front controller like::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): SomeCustomPsr15Application {
         return new SomeCustomPsr15Application();
     };
 
+.. _PHP-PM: https://github.com/php-pm/php-pm
+.. _Swoole: https://openswoole.com/
 .. _ReactPHP: https://reactphp.org/
 .. _`PSR-15`: https://www.php-fig.org/psr/psr-15/
+.. _`runtime template file`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Runtime/Internal/autoload_runtime.template

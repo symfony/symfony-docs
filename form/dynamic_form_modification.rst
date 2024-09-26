@@ -9,7 +9,7 @@ how to customize your form based on three common use-cases:
    Example: you have a "Product" form and need to modify/add/remove a field
    based on the data on the underlying Product being edited.
 
-2) :ref:`How to dynamically Generate Forms Based on user Data <form-events-user-data>`
+2) :ref:`How to Dynamically Generate Forms Based on User Data <form-events-user-data>`
 
    Example: you create a "Friend Message" form and need to build a drop-down
    that contains only users that are friends with the *current* authenticated
@@ -93,7 +93,7 @@ creating that particular field is delegated to an event listener::
         {
             $builder->add('price');
 
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 // ... adding the name field if needed
             });
         }
@@ -109,7 +109,7 @@ the event listener might look like the following::
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $product = $event->getData();
             $form = $event->getForm();
 
@@ -188,7 +188,7 @@ Great! Now use that in your form class::
 
 .. _form-events-user-data:
 
-How to dynamically Generate Forms Based on user Data
+How to Dynamically Generate Forms Based on User Data
 ----------------------------------------------------
 
 Sometimes you want a form to be generated dynamically based not only on data
@@ -220,7 +220,7 @@ Using an event listener, your form might look like this::
                 ->add('subject', TextType::class)
                 ->add('body', TextareaType::class)
             ;
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 // ... add a choice list of friends of the current application user
             });
         }
@@ -230,16 +230,14 @@ The problem is now to get the current user and create a choice field that
 contains only this user's friends. This can be done by injecting the ``Security``
 service into the form type so you can get the current user object::
 
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         // ....
@@ -257,18 +255,16 @@ security helper to fill in the listener logic::
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    use Symfony\Bundle\SecurityBundle\Security;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Security\Core\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -286,7 +282,7 @@ security helper to fill in the listener logic::
                 );
             }
 
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user): void {
                 if (null !== $event->getData()->getFriend()) {
                     // we don't need to add the friend field because
                     // the message will be addressed to a fixed friend
@@ -298,7 +294,7 @@ security helper to fill in the listener logic::
                 $formOptions = [
                     'class' => User::class,
                     'choice_label' => 'fullName',
-                    'query_builder' => function (UserRepository $userRepository) use ($user) {
+                    'query_builder' => function (UserRepository $userRepository) use ($user): void {
                         // call a method on your repository that returns the query builder
                         // return $userRepository->createFriendsQueryBuilder($user);
                     },
@@ -396,7 +392,7 @@ sport like this::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) {
+                function (FormEvent $event): void {
                     $form = $event->getForm();
 
                     // this would be your entity, i.e. SportMeetup
@@ -459,7 +455,7 @@ The type would now look like::
                 ])
             ;
 
-            $formModifier = function (FormInterface $form, Sport $sport = null) {
+            $formModifier = function (FormInterface $form, ?Sport $sport = null): void {
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
@@ -471,7 +467,7 @@ The type would now look like::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($formModifier) {
+                function (FormEvent $event) use ($formModifier): void {
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
@@ -481,7 +477,7 @@ The type would now look like::
 
             $builder->get('sport')->addEventListener(
                 FormEvents::POST_SUBMIT,
-                function (FormEvent $event) use ($formModifier) {
+                function (FormEvent $event) use ($formModifier): void {
                     // It's important here to fetch $event->getForm()->getData(), as
                     // $event->getData() will get you the client data (that is, the ID)
                     $sport = $event->getForm()->getData();
@@ -491,6 +487,10 @@ The type would now look like::
                     $formModifier($event->getForm()->getParent(), $sport);
                 }
             );
+
+            // by default, action does not appear in the <form> tag
+            // you can set this value by passing the controller route
+            $builder->setAction($options['action']);
         }
 
         // ...
@@ -522,16 +522,17 @@ your application. Assume that you have a sport meetup creation controller::
 
     class MeetupController extends AbstractController
     {
+        #[Route('/create', name: 'app_meetup_create', methods: ['GET', 'POST'])]
         public function create(Request $request): Response
         {
             $meetup = new SportMeetup();
-            $form = $this->createForm(SportMeetupType::class, $meetup);
+            $form = $this->createForm(SportMeetupType::class, $meetup, ['action' => $this->generateUrl('app_meetup_create')]);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
                 // ... save the meetup, redirect etc.
             }
 
-            return $this->renderForm('meetup/create.html.twig', [
+            return $this->render('meetup/create.html.twig', [
                 'form' => $form,
             ]);
         }
@@ -545,36 +546,49 @@ field according to the current selection in the ``sport`` field:
 .. code-block:: html+twig
 
     {# templates/meetup/create.html.twig #}
-    {{ form_start(form) }}
+    {{ form_start(form, { attr: { id: 'sport_meetup_form' } }) }}
         {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
         {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
         {# ... #}
     {{ form_end(form) }}
 
     <script>
-    var $sport = $('#meetup_sport');
-    // When sport gets selected ...
-    $sport.change(function() {
-      // ... retrieve the corresponding form.
-      var $form = $(this).closest('form');
-      // Simulate form data, but only include the selected sport value.
-      var data = {};
-      data[$sport.attr('name')] = $sport.val();
-      // Submit data via AJAX to the form's action path.
-      $.ajax({
-        url : $form.attr('action'),
-        type: $form.attr('method'),
-        data : data,
-        complete: function(html) {
-          // Replace current position field ...
-          $('#meetup_position').replaceWith(
-            // ... with the returned one from the AJAX response.
-            $(html.responseText).find('#meetup_position')
-          );
-          // Position field now displays the appropriate positions.
-        }
-      });
-    });
+        const form = document.getElementById('sport_meetup_form');
+        const form_select_sport = document.getElementById('meetup_sport');
+        const form_select_position = document.getElementById('meetup_position');
+
+        const updateForm = async (data, url, method) => {
+          const req = await fetch(url, {
+            method: method,
+            body: data,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'charset': 'utf-8'
+            }
+          });
+
+          const text = await req.text();
+
+          return text;
+        };
+
+        const parseTextToHtml = (text) => {
+          const parser = new DOMParser();
+          const html = parser.parseFromString(text, 'text/html');
+
+          return html;
+        };
+
+        const changeOptions = async (e) => {
+          const requestBody = e.target.getAttribute('name') + '=' + e.target.value;
+          const updateFormResponse = await updateForm(requestBody, form.getAttribute('action'), form.getAttribute('method'));
+          const html = parseTextToHtml(updateFormResponse);
+
+          const new_form_select_position = html.getElementById('meetup_position');
+          form_select_position.innerHTML = new_form_select_position.innerHTML;
+        };
+
+        form_select_sport.addEventListener('change', (e) => changeOptions(e));
     </script>
 
 The major benefit of submitting the whole form to just extract the updated

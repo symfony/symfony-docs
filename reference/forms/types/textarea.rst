@@ -19,6 +19,13 @@ Renders a ``textarea`` HTML element.
     ``<textarea>``, consider using the FOSCKEditorBundle community bundle. Read
     `its documentation`_ to learn how to integrate it in your Symfony application.
 
+.. caution::
+
+    When allowing users to type HTML code in the textarea (or using a
+    WYSIWYG) editor, the application is vulnerable to :ref:`XSS injection <xss-attacks>`,
+    clickjacking or CSS injection. Use the `sanitize_html`_ option to
+    protect against these types of attacks.
+
 Inherited Options
 -----------------
 
@@ -52,6 +59,8 @@ an empty string, explicitly set the ``empty_data`` option to an empty string.
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
@@ -59,6 +68,10 @@ an empty string, explicitly set the ``empty_data`` option to an empty string.
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. include:: /reference/forms/types/options/sanitize_html.rst.inc
+
+.. include:: /reference/forms/types/options/sanitizer.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 

@@ -25,37 +25,17 @@ you have the following method::
 
     class Author
     {
-        protected $token;
+        protected string $token;
 
-        public function isTokenValid()
+        public function isTokenValid(): bool
         {
-            return $this->token == $this->generateToken();
+            return $this->token === $this->generateToken();
         }
     }
 
 Then you can validate this method with ``IsTrue`` as follows:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            protected $token;
-
-            /**
-             * @Assert\IsTrue(message="The token is invalid.")
-             */
-            public function isTokenValid()
-            {
-                return $this->token == $this->generateToken();
-            }
-        }
 
     .. code-block:: php-attributes
 
@@ -66,13 +46,15 @@ Then you can validate this method with ``IsTrue`` as follows:
 
         class Author
         {
-            protected $token;
+            protected string $token;
 
             #[Assert\IsTrue(message: 'The token is invalid.')]
-            public function isTokenValid()
+            public function isTokenValid(): bool
             {
-                return $this->token == $this->generateToken();
+                return $this->token === $this->generateToken();
             }
+
+            // ...
         }
 
     .. code-block:: yaml
@@ -111,17 +93,21 @@ Then you can validate this method with ``IsTrue`` as follows:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('tokenValid', new IsTrue([
                     'message' => 'The token is invalid.',
                 ]));
             }
 
-            public function isTokenValid()
+            public function isTokenValid(): bool
             {
-                return $this->token == $this->generateToken();
+                return $this->token === $this->generateToken();
             }
+
+            // ...
         }
 
 If the ``isTokenValid()`` returns false, the validation will fail.
@@ -148,9 +134,5 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

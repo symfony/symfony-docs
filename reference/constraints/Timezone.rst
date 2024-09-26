@@ -17,21 +17,6 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/UserSettings.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class UserSettings
-        {
-            /**
-             * @Assert\Timezone
-             */
-            protected $timezone;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/UserSettings.php
@@ -42,7 +27,7 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
         class UserSettings
         {
             #[Assert\Timezone]
-            protected $timezone;
+            protected string $timezone;
         }
 
     .. code-block:: yaml
@@ -78,7 +63,9 @@ string which contains any of the `PHP timezone identifiers`_ (e.g. ``America/New
 
         class UserSettings
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('timezone', new Assert\Timezone());
             }
@@ -132,10 +119,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

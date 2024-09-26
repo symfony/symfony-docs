@@ -45,19 +45,13 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
 
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->router()
                 ->httpPort('%env(int:HTTP_PORT)%')
                 // or
                 ->httpPort(env('HTTP_PORT')->int())
             ;
         };
-
-.. versionadded:: 5.3
-
-    The ``env()`` configurator syntax was introduced in 5.3.
-    In ``PHP`` configuration files, it will allow to autocomplete methods based
-    on processors name (i.e. ``env('SOME_VAR')->default('foo')``).
 
 Built-In Environment Variable Processors
 ----------------------------------------
@@ -104,14 +98,15 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
                 $container->setParameter('env(SECRET)', 'some_secret');
                 $framework->secret(env('SECRET')->string());
             };
 
 ``env(bool:FOO)``
-    Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``
-    and all numbers except ``0`` and ``0.0``; everything else is ``false``):
+    Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``,
+    all numbers except ``0`` and ``0.0`` and all numeric strings except ``'0'``
+    and ``'0.0'``; everything else is ``false``):
 
     .. configuration-block::
 
@@ -150,17 +145,12 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
                 $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
                 $framework->httpMethodOverride(env('HTTP_METHOD_OVERRIDE')->bool());
             };
 
 ``env(not:FOO)``
-
-    .. versionadded:: 5.3
-
-        The ``not:`` env var processor was introduced in Symfony 5.3.
-
     Casts ``FOO`` to a bool (just as ``env(bool:...)`` does) except it returns the inverted value
     (falsy values are returned as ``true``, truthy values are returned as ``false``):
 
@@ -242,7 +232,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\SecurityConfig;
 
-            return static function (ContainerBuilder $container, SecurityConfig $security) {
+            return static function (ContainerBuilder $container, SecurityConfig $security): void {
                 $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
                 $security->accessControl()
                     ->path('^/health-check$')
@@ -291,7 +281,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container) {
+            return static function (ContainerBuilder $container): void {
                 $container->setParameter('env(ALLOWED_LANGUAGES)', '["en","de","es"]');
                 $container->setParameter('app_allowed_languages', '%env(json:ALLOWED_LANGUAGES)%');
             };
@@ -375,9 +365,58 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container) {
+            return static function (ContainerBuilder $container): void {
                 $container->setParameter('env(ALLOWED_LANGUAGES)', 'en,de,es');
                 $container->setParameter('app_allowed_languages', '%env(csv:ALLOWED_LANGUAGES)%');
+            };
+
+``env(shuffle:FOO)``
+    Randomly shuffles values of the ``FOO`` env var, which must be an array.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(REDIS_NODES): "127.0.0.1:6380,127.0.0.1:6381"
+            services:
+                RedisCluster:
+                    class: RedisCluster
+                    arguments: [null, "%env(shuffle:csv:REDIS_NODES)%"]
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(REDIS_NODES)">redis://127.0.0.1:6380,redis://127.0.0.1:6381</parameter>
+                </parameters>
+
+                <services>
+                    <service id="RedisCluster" class="RedisCluster">
+                        <argument>null</argument>
+                        <argument>%env(shuffle:csv:REDIS_NODES)%</argument>
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+            return static function (ContainerConfigurator $containerConfigurator): void {
+                $container = $containerConfigurator->services()
+                    ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
             };
 
 ``env(file:FOO)``
@@ -699,6 +738,137 @@ Symfony provides the following env var processors:
                 ],
             ]);
 
+``env(enum:FooEnum:BAR)``
+    Tries to convert an environment variable to an actual ``\BackedEnum`` value.
+    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument::
+
+        // App\Enum\Suit.php
+        enum Suit: string
+        {
+            case Clubs = 'clubs';
+            case Spades = 'spades';
+            case Diamonds = 'diamonds';
+            case Hearts = 'hearts';
+        }
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                suit: '%env(enum:App\Enum\Suit:CARD_SUIT)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="suit">%env(enum:App\Enum\Suit:CARD_SUIT)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('suit', '%env(enum:App\Enum\Suit:CARD_SUIT)%');
+
+    The value stored in the ``CARD_SUIT`` env var would be a string (e.g. ``'spades'``)
+    but the application will use the enum value (e.g. ``Suit::Spades``).
+
+``env(defined:NO_FOO)``
+    Evaluates to ``true`` if the env var exists and its value is not ``''``
+    (an empty string) or ``null``; it returns ``false`` otherwise.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                typed_env: '%env(defined:FOO)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="typed_env"'%env(defined:FOO)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('typed_env', '%env(defined:FOO)%');
+
+.. _urlencode_environment_variable_processor:
+
+``env(urlencode:FOO)``
+    Encodes the content of the ``FOO`` env var using the :phpfunction:`urlencode`
+    PHP function. This is especially useful when ``FOO`` value is not compatible
+    with DSN syntax.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(DATABASE_URL): 'mysql://db_user:foo@b$r@127.0.0.1:3306/db_name'
+                encoded_database_url: '%env(urlencode:DATABASE_URL)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(DATABASE_URL)">mysql://db_user:foo@b$r@127.0.0.1:3306/db_name</parameter>
+                    <parameter key="encoded_database_url">%env(urlencode:DATABASE_URL)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(DATABASE_URL)', 'mysql://db_user:foo@b$r@127.0.0.1:3306/db_name');
+                $container->setParameter('encoded_database_url', '%env(urlencode:DATABASE_URL)%');
+            };
+
+    .. versionadded:: 7.1
+
+        The ``env(urlencode:...)`` env var processor was introduced in Symfony 7.1.
+
 It is also possible to combine any number of processors:
 
 .. configuration-block::
@@ -761,14 +931,14 @@ create a class that implements
 
     class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
     {
-        public function getEnv(string $prefix, string $name, \Closure $getEnv)
+        public function getEnv(string $prefix, string $name, \Closure $getEnv): string
         {
             $env = $getEnv($name);
 
             return strtolower($env);
         }
 
-        public static function getProvidedTypes()
+        public static function getProvidedTypes(): array
         {
             return [
                 'lowercase' => 'string',

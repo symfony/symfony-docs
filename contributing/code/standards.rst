@@ -49,19 +49,16 @@ short example containing most features described below::
     {
         public const SOME_CONST = 42;
 
-        /**
-         * @var string
-         */
-        private $fooBar;
-        private $qux;
+        private string $fooBar;
 
         /**
          * @param $dummy some argument description
          */
-        public function __construct(string $dummy, Qux $qux)
-        {
+        public function __construct(
+            string $dummy,
+            private Qux $qux,
+        ) {
             $this->fooBar = $this->transformText($dummy);
-            $this->qux = $qux;
         }
 
         /**
@@ -114,7 +111,7 @@ short example containing most features described below::
         /**
          * Performs some basic operations for a given value.
          */
-        private function performOperations(mixed $value = null, bool $theSwitch = false)
+        private function performOperations(mixed $value = null, bool $theSwitch = false): void
         {
             if (!$theSwitch) {
                 return;

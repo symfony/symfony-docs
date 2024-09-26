@@ -92,7 +92,11 @@ Pseudo-classes are partially supported:
 * Not supported: ``*:first-of-type``, ``*:last-of-type``, ``*:nth-of-type`` and
   ``*:nth-last-of-type`` (all these work with an element name (e.g.
   ``li:first-of-type``) but not with the ``*`` selector).
-* Supported: ``*:only-of-type``.
+* Supported: ``*:only-of-type``, ``*:scope``, ``*:is`` and ``*:where``.
+
+.. versionadded:: 7.1
+
+    The support for ``*:is`` and ``*:where`` was introduced in Symfony 7.1.
 
 Learn more
 ----------

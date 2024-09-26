@@ -3,7 +3,7 @@ Service Method Calls and Setter Injection
 
 .. tip::
 
-    If you're using autowiring, you can use ``#[Required]`` or ``@required`` to
+    If you're using autowiring, you can use ``#[Required]`` to
     :ref:`automatically configure method calls <autowiring-calls>`.
 
 Usually, you'll want to inject your dependencies via the constructor. But sometimes,
@@ -17,7 +17,7 @@ example::
 
     class MessageGenerator
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function setLogger(LoggerInterface $logger): void
         {
@@ -66,11 +66,10 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(MessageGenerator::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->call('setLogger', [service('logger')]);
         };
 
@@ -85,7 +84,7 @@ instead of mutating the object they were called on::
 
     class MessageGenerator
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function withLogger(LoggerInterface $logger): self
         {
@@ -143,14 +142,11 @@ The configuration to tell the container it should do so would be like:
 
 .. tip::
 
-    If autowire is enabled, you can also use annotations; with the previous
+    If autowire is enabled, you can also use attributes; with the previous
     example it would be::
 
-        /**
-         * @required
-         * @return static
-         */
-        public function withLogger(LoggerInterface $logger)
+        #[Required]
+        public function withLogger(LoggerInterface $logger): static
         {
             $new = clone $this;
             $new->logger = $logger;
@@ -158,13 +154,7 @@ The configuration to tell the container it should do so would be like:
             return $new;
         }
 
-    You can also leverage the PHP 8 ``static`` return type instead of the
-    ``@return static`` annotation. If you don't want a method with a
-    PHP 8 ``static`` return type and a ``@required`` annotation to behave as
-    a wither, you can add a ``@return $this`` annotation to disable the
-    *returns clone* feature.
-
-    .. versionadded:: 5.1
-
-        Support for the PHP 8 ``static`` return type was introduced in
-        Symfony 5.1.
+    If you don't want a method with a ``static`` return type and
+    a ``#[Required]`` attribute to behave as a wither, you can
+    add a ``@return $this`` annotation to disable the *returns clone*
+    feature.

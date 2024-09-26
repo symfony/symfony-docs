@@ -224,10 +224,9 @@ computer, and execute the following command:
 
 .. code-block:: terminal
 
-    $ composer config --global --auth gitlab-oauth.gitlab.com [token]
+    $ composer config --global --auth gitlab-token.gitlab.com [token]
 
 Replace ``[token]`` with the value of your Gitlab personal access token.
-
 
 Configure Your Project's ``composer.json`` File
 -----------------------------------------------
@@ -308,4 +307,3 @@ install the new private recipes, run the following command:
 
 .. _`release of version 1.16`: https://github.com/symfony/cli
 .. _`Symfony recipe files`: https://github.com/symfony/recipes/tree/flex/main
-

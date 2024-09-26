@@ -33,39 +33,13 @@ compiled again automatically.
 
 .. _config-twig-autoescape:
 
-autoescape
-~~~~~~~~~~
-
-**type**: ``boolean`` or ``string`` **default**: ``name``
-
-If set to ``false``, automatic escaping is disabled (you can still escape each content
-individually in the templates).
-
-.. caution::
-
-    Setting this option to ``false`` is dangerous and it will make your
-    application vulnerable to `XSS attacks`_ because most third-party bundles
-    assume that auto-escaping is enabled and they don't escape contents
-    themselves.
-
-If set to a string, the template contents are escaped using the strategy with
-that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
-and ``name``. The default value is ``name``. This strategy escapes contents
-according to the template name extension (e.g. it uses ``html`` for ``*.html.twig``
-templates and ``js`` for ``*.js.twig`` templates).
-
-.. tip::
-
-    See `autoescape_service`_ and `autoescape_service_method`_ to define your
-    own escaping strategy.
-
 autoescape_service
 ~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
-The escaping strategy applied by default to the template is determined during
-compilation time based on the filename of the template. This means for example
+The escaping strategy applied by default to the template (to prevent :ref:`XSS attacks <xss-attacks>`)
+is determined during compilation time based on the filename of the template. This means for example
 that the contents of a ``*.html.twig`` template are escaped for HTML and the
 contents of ``*.js.twig`` are escaped for JavaScript.
 
@@ -80,10 +54,17 @@ autoescape_service_method
 If ``autoescape_service`` option is defined, then this option defines the method
 called to determine the default escaping applied to the template.
 
+If the service defined in ``autoescape_service`` is invocable (i.e. it defines
+the `__invoke() PHP magic method`_) you can omit this option.
+
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Twig\Template``
+
+.. deprecated:: 7.1
+
+    The ``base_template_class`` option is deprecated since Symfony 7.1.
 
 Twig templates are compiled into PHP classes before using them to render
 contents. This option defines the base class from which all the template classes
@@ -166,6 +147,66 @@ The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
 the :ref:`paths <config-twig-paths>`  option too.
 
+.. _config-twig-file-name-pattern:
+
+file_name_pattern
+~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` or ``array`` of ``string`` **default**: ``[]``
+
+Some applications store their front-end assets in the same directory as Twig
+templates. The ``lint:twig`` command filters those files to only lint the ones
+that match the ``*.twig`` filename pattern.
+
+However, the ``cache:warmup`` command tries to compile all files, including
+non-Twig templates (and it ignores compilation errors). The result is an
+unnecessary consumption of CPU and disk resources.
+
+In those cases, use this option to define the filename pattern(s) of the files
+that are Twig templates (the rest of files will be ignored by ``cache:warmup``).
+The value of this option can be a regular expression, a glob, or a string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            file_name_pattern: ['*.twig', 'specific_file.html']
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:file-name-pattern>*.twig</twig:file-name-pattern>
+                <twig:file-name-pattern>specific_file.html</twig:file-name-pattern>
+                <!-- ... -->
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig): void {
+            $twig->fileNamePattern([
+                '*.twig',
+                'specific_file.html',
+            ]);
+
+            // ...
+        };
+
 .. _config-twig-form-themes:
 
 form_themes
@@ -208,7 +249,7 @@ all the forms of the application:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
                 'bootstrap_5_layout.html.twig',
                 'form/my_theme.html.twig',
@@ -232,6 +273,21 @@ globals
 
 It defines the global variables injected automatically into all Twig templates.
 Learn more about :ref:`Twig global variables <templating-global-variables>`.
+
+mailer
+~~~~~~
+
+.. _config-twig-html-to-text-converter:
+
+html_to_text_converter
+......................
+
+**type**: ``string`` **default**: ````
+
+The service implementing
+:class:`Symfony\\Component\\Mime\\HtmlToTextConverter\\HtmlToTextConverterInterface`
+that will be used to automatically create the text part of an email from its
+HTML contents when not explicitly defined.
 
 number_format
 ~~~~~~~~~~~~~
@@ -324,7 +380,7 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->path('email/default/templates', null);
@@ -345,4 +401,4 @@ attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
 .. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
-.. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`__invoke() PHP magic method`: https://www.php.net/manual/en/language.oop5.magic.php#object.invoke

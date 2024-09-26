@@ -1,10 +1,6 @@
 EnumType Field
 ==============
 
-.. versionadded:: 5.4
-
-   The ``EnumType`` form field was introduced in Symfony 5.4.
-
 A multi-purpose field used to allow the user to "choose" one or more options
 defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </reference/forms/types/choice>`
 field and defines the same options.
@@ -13,8 +9,6 @@ field and defines the same options.
 | Rendered as               | can be various tags (see below)                                      |
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | The selected choice is invalid.                                      |
-+---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
 +---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`ChoiceType </reference/forms/types/choice>`                    |
 +---------------------------+----------------------------------------------------------------------+
@@ -55,17 +49,34 @@ these values as ``<input type="checkbox">`` or ``<input type="radio">``.
 
 The label displayed in the ``<option>`` elements of the ``<select>`` is the enum
 name. PHP defines some strict rules for these names (e.g. they can't contain
-dots or spaces). If you need more flexibility for these labels, use the
-``choice_label`` option and define a function that returns the custom label::
+dots or spaces). If you need more flexibility for these labels, your enum can
+implement ``TranslatableInterface`` to translate or display custom labels::
 
-    ->add('textAlign', EnumType::class, [
-        'class' => TextAlign::class,
-        'choice_label' => fn ($choice) => match ($choice) {
-            TextAlign::Left => 'text_align.left.label',
-            TextAlign::Center => 'text_align.center.label',
-            TextAlign::Right  => 'text_align.right.label',
-        },
-    ]);
+    // src/Config/TextAlign.php
+    namespace App\Config;
+
+    use Symfony\Contracts\Translation\TranslatableInterface;
+    use Symfony\Contracts\Translation\TranslatorInterface;
+
+    enum TextAlign: string implements TranslatableInterface
+    {
+        case Left = 'Left aligned';
+        case Center = 'Center aligned';
+        case Right = 'Right aligned';
+
+        public function trans(TranslatorInterface $translator, ?string $locale = null): string
+        {
+            // Translate enum from name (Left, Center or Right)
+            return $translator->trans($this->name, locale: $locale);
+
+            // Translate enum using custom labels
+            return match ($this) {
+                self::Left  => $translator->trans('text_align.left.label', locale: $locale),
+                self::Center => $translator->trans('text_align.center.label', locale: $locale),
+                self::Right  => $translator->trans('text_align.right.label', locale: $locale),
+            };
+        }
+    }
 
 Field Options
 -------------
@@ -142,9 +153,13 @@ This callback will group choices in 3 categories: ``Upper``, ``Lower`` and ``Oth
 
 If you return ``null``, the option won't be grouped.
 
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
+
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
@@ -171,6 +186,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

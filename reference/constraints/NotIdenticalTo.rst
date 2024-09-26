@@ -27,28 +27,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\NotIdenticalTo("Mary")
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\NotIdenticalTo(
-             *     value = 15
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -59,12 +37,12 @@ The following constraints ensure that:
         class Person
         {
             #[Assert\NotIdenticalTo('Mary')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\NotIdenticalTo(
                 value: 15,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -110,7 +88,9 @@ The following constraints ensure that:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('age', new Assert\NotIdenticalTo('Mary'));
 

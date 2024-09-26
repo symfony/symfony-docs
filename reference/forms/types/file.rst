@@ -8,8 +8,6 @@ The ``FileType`` represents a file input in your form.
 +---------------------------+--------------------------------------------------------------------+
 | Default invalid message   | Please select a valid file.                                        |
 +---------------------------+--------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                |
-+---------------------------+--------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                      |
 +---------------------------+--------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType` |
@@ -33,7 +31,7 @@ be used to move the ``attachment`` file to a permanent location::
 
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-    public function upload()
+    public function upload(): Response
     {
         // ...
 
@@ -55,6 +53,10 @@ You might calculate the filename in one of the following ways::
     // use the original file name
     $file->move($directory, $file->getClientOriginalName());
 
+    // when "webkitdirectory" upload was used
+    // otherwise the value will be the same as getClientOriginalName
+    // $file->move($directory, $file->getClientOriginalPath());
+
     // compute a random name and try to guess the extension (more secure)
     $extension = $file->guessExtension();
     if (!$extension) {
@@ -63,9 +65,9 @@ You might calculate the filename in one of the following ways::
     }
     $file->move($directory, rand(1, 99999).'.'.$extension);
 
-Using the original name via ``getClientOriginalName()`` is not safe as it
-could have been manipulated by the end-user. Moreover, it can contain
-characters that are not allowed in file names. You should sanitize the name
+Using the original name via ``getClientOriginalName()`` or ``getClientOriginalPath``
+is not safe as it could have been manipulated by the end-user. Moreover, it can contain
+characters that are not allowed in file names. You should sanitize the value
 before using it directly.
 
 Read :doc:`/controller/upload_file` for an example of how to manage a file
@@ -128,6 +130,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

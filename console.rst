@@ -67,31 +67,25 @@ command, for instance:
 Console Completion
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.4
-
-    Console completion for Bash was introduced in Symfony 5.4.
-
-If you are using the Bash shell, you can install Symfony's completion
-script to get auto completion when typing commands in the terminal. All
-commands support name and option completion, and some can even complete
-values.
+If you are using the Bash, Zsh or Fish shell, you can install Symfony's
+completion script to get auto completion when typing commands in the
+terminal. All commands support name and option completion, and some can
+even complete values.
 
 .. image:: /_images/components/console/completion.gif
     :alt: The terminal completes the command name "secrets:remove" and the argument "SOME_OTHER_SECRET".
 
-First, make sure you installed and setup the "bash completion" package for
-your OS (typically named ``bash-completion``). Then, install the Symfony
-completion bash script *once* by running the ``completion`` command in a
-Symfony app installed on your computer:
+First, you have to install the completion script *once*. Run
+``bin/console completion --help`` for the installation instructions for
+your shell.
 
-.. code-block:: terminal
+.. note::
 
-    $ php bin/console completion bash | sudo tee /etc/bash_completion.d/console-events-terminate
-    # after the installation, restart the shell
+    When using Bash, make sure you installed and setup the "bash completion"
+    package for your OS (typically named ``bash-completion``).
 
-Now you are all set to use the auto completion for all Symfony Console
-applications on your computer. By default, you can get a list of complete
-options by pressing the Tab key.
+After installing and restarting your terminal, you're all set to use
+completion (by default, by pressing the Tab key).
 
 .. tip::
 
@@ -101,7 +95,17 @@ options by pressing the Tab key.
 
     .. code-block:: terminal
 
-        $ php vendor/bin/phpstan completion bash | sudo tee /etc/bash_completion.d/phpstan
+        $ php vendor/bin/phpstan completion --help
+        $ composer completion --help
+
+.. tip::
+
+    If you are using the :doc:`Symfony local web server
+    </setup/symfony_server>`, it is recommended to use the built-in completion
+    script that will ensure the right PHP version and configuration are used when
+    running the Console Completion. Run ``symfony completion --help`` for the
+    installation instructions for your shell. The Symfony CLI will provide
+    completion for the ``console`` and ``composer`` commands.
 
 Creating a Command
 ------------------
@@ -113,15 +117,15 @@ want a command to create a user::
     // src/Command/CreateUserCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    // the name of the command is what users type after "php bin/console"
+    #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
-        // the name of the command (the part after "bin/console")
-        protected static $defaultName = 'app:create-user';
-
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ... put here the code to create the user
@@ -143,15 +147,6 @@ want a command to create a user::
         }
     }
 
-.. versionadded:: 5.1
-
-    The ``Command::SUCCESS`` and ``Command::FAILURE`` constants were introduced
-    in Symfony 5.1.
-
-.. versionadded:: 5.3
-
-    The ``Command::INVALID`` constant was introduced in Symfony 5.3
-
 Configuring the Command
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -164,13 +159,12 @@ You can optionally define a description, help message and the
     // ...
     class CreateUserCommand extends Command
     {
-        // the command description shown when running "php bin/console list"
-        protected static $defaultDescription = 'Creates a new user.';
-
         // ...
         protected function configure(): void
         {
             $this
+                // the command description shown when running "php bin/console list"
+                ->setDescription('Creates a new user.')
                 // the command help shown when running the command with the "--help" option
                 ->setHelp('This command allows you to create a user...')
             ;
@@ -179,20 +173,16 @@ You can optionally define a description, help message and the
 
 .. tip::
 
-    Defining the ``$defaultDescription`` static property instead of using the
-    ``setDescription()`` method allows to get the command description without
+    Using the ``#[AsCommand]`` attribute to define a description instead of
+    using the ``setDescription()`` method allows to get the command description without
     instantiating its class. This makes the ``php bin/console list`` command run
     much faster.
 
     If you want to always run the ``list`` command fast, add the ``--short`` option
     to it (``php bin/console list --short``). This will avoid instantiating command
     classes, but it won't show any description for commands that use the
-    ``setDescription()`` method instead of the static property.
-
-.. versionadded:: 5.3
-
-    The ``$defaultDescription`` static property and the ``--short`` option
-    were introduced in Symfony 5.3.
+    ``setDescription()`` method instead of the attribute to define the command
+    description.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -231,8 +221,7 @@ available in the ``configure()`` method::
 Registering the Command
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In PHP 8 and newer versions, you can register the command by adding the
-``AsCommand`` attribute to it::
+You can register the command by adding the ``AsCommand`` attribute to it::
 
     // src/Command/CreateUserCommand.php
     namespace App\Command;
@@ -240,8 +229,6 @@ In PHP 8 and newer versions, you can register the command by adding the
     use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
 
-    // the "name" and "description" arguments of AsCommand replace the
-    // static $defaultName and $defaultDescription properties
     #[AsCommand(
         name: 'app:create-user',
         description: 'Creates a new user.',
@@ -252,11 +239,6 @@ In PHP 8 and newer versions, you can register the command by adding the
     {
         // ...
     }
-
-.. versionadded:: 5.3
-
-    The ability to use PHP attributes to configure commands was introduced in
-    Symfony 5.3.
 
 If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
@@ -346,20 +328,30 @@ method, which returns an instance of
 
             $section1->writeln('Hello');
             $section2->writeln('World!');
+            sleep(1);
             // Output displays "Hello\nWorld!\n"
 
             // overwrite() replaces all the existing section contents with the given content
             $section1->overwrite('Goodbye');
+            sleep(1);
             // Output now displays "Goodbye\nWorld!\n"
 
             // clear() deletes all the section contents...
             $section2->clear();
+            sleep(1);
             // Output now displays "Goodbye\n"
 
             // ...but you can also delete a given number of lines
             // (this example deletes the last two lines of the section)
             $section1->clear(2);
+            sleep(1);
             // Output is now completely empty!
+
+            // setting the max height of a section will make new lines replace the old ones
+            $section1->setMaxHeight(2);
+            $section1->writeln('Line1');
+            $section1->writeln('Line2');
+            $section1->writeln('Line3');
 
             return Command::SUCCESS;
         }
@@ -373,6 +365,11 @@ Output sections let you manipulate the Console output in advanced ways, such as
 :ref:`displaying multiple progress bars <console-multiple-progress-bars>` which
 are updated independently and :ref:`appending rows to tables <console-modify-rendered-tables>`
 that have already been rendered.
+
+.. caution::
+
+    Terminals only allow overwriting the visible content, so you must take into
+    account the console height when trying to write/overwrite section contents.
 
 Console Input
 -------------
@@ -435,12 +432,9 @@ as a service, you can use normal dependency injection. Imagine you have a
 
     class CreateUserCommand extends Command
     {
-        private $userManager;
-
-        public function __construct(UserManager $userManager)
-        {
-            $this->userManager = $userManager;
-
+        public function __construct(
+            private UserManager $userManager,
+        ){
             parent::__construct();
         }
 
@@ -502,10 +496,10 @@ console::
 
     class CreateUserCommandTest extends KernelTestCase
     {
-        public function testExecute()
+        public function testExecute(): void
         {
-            $kernel = self::bootKernel();
-            $application = new Application($kernel);
+            self::bootKernel();
+            $application = new Application(self::$kernel);
 
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
@@ -532,15 +526,6 @@ console::
 If you are using a :doc:`single-command application </components/console/single_command_tool>`,
 call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
 
-.. versionadded:: 5.2
-
-    The ``setAutoExit()`` method for single-command applications was introduced
-    in Symfony 5.2.
-
-.. versionadded:: 5.4
-
-    The ``assertCommandIsSuccessful()`` method was introduced in Symfony 5.4.
-
 .. tip::
 
     You can also test a whole console application by using
@@ -562,20 +547,40 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 
         $tester = new ApplicationTester($application);
 
-
 .. caution::
 
-    When testing ``InputOption::VALUE_NONE`` command options, you must pass an
-    empty value to them::
+    When testing ``InputOption::VALUE_NONE`` command options, you must pass ``true``
+    to them::
 
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['--some-option' => '']);
+        $commandTester->execute(['--some-option' => true]);
 
 .. note::
 
     When using the Console component in a standalone project, use
     :class:`Symfony\\Component\\Console\\Application`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
+
+When testing your commands, it could be useful to understand how your command
+reacts on different settings like the width and the height of the terminal, or
+even the color mode being used. You have access to such information thanks to the
+:class:`Symfony\\Component\\Console\\Terminal` class::
+
+    use Symfony\Component\Console\Terminal;
+
+    $terminal = new Terminal();
+
+    // gets the number of lines available
+    $height = $terminal->getHeight();
+
+    // gets the number of columns available
+    $width = $terminal->getWidth();
+
+    // gets the color mode
+    $colorMode = $terminal->getColorMode();
+
+    // changes the color mode
+    $colorMode = $terminal->setColorMode(AnsiColorMode::Ansi24);
 
 Logging Command Errors
 ----------------------
@@ -591,6 +596,35 @@ Using Events And Handling Signals
 
 When a command is running, many events are dispatched, one of them allows to
 react to signals, read more in :doc:`this section </components/console/events>`.
+
+Profiling Commands
+------------------
+
+Symfony allows to profile the execution of any command, including yours. First,
+make sure that the :ref:`debug mode <debug-mode>` and the :doc:`profiler </profiler>`
+are enabled. Then, add the ``--profile`` option when running the command:
+
+.. code-block:: terminal
+
+    $ php bin/console --profile app:my-command
+
+Symfony will now collect data about the command execution, which is helpful to
+debug errors or check other issues. When the command execution is over, the
+profile is accessible through the web page of the profiler.
+
+.. tip::
+
+    If you run the command in verbose mode (adding the ``-v`` option), Symfony
+    will display in the output a clickable link to the command profile (if your
+    terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
+    also see the time and memory consumed by the command.
+
+.. caution::
+
+    When profiling the ``messenger:consume`` command from the :doc:`Messenger </messenger>`
+    component, add the ``--no-reset`` option to the command or you won't get any
+    profile. Moreover, consider using the ``--limit`` option to only process a few
+    messages to make the profile more readable in the profiler.
 
 Learn More
 ----------

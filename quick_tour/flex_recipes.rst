@@ -23,10 +23,10 @@ are included in your ``composer.json`` file:
 
     "require": {
         "...",
-        "symfony/console": "^4.1",
-        "symfony/flex": "^1.0",
-        "symfony/framework-bundle": "^4.1",
-        "symfony/yaml": "^4.1"
+        "symfony/console": "^6.1",
+        "symfony/flex": "^2.0",
+        "symfony/framework-bundle": "^6.1",
+        "symfony/yaml": "^6.1"
     }
 
 This makes Symfony different from any other PHP framework! Instead of starting with
@@ -79,17 +79,15 @@ Thanks to Flex, after one command, you can start using Twig immediately:
       // src/Controller/DefaultController.php
       namespace App\Controller;
 
-      use Symfony\Component\Routing\Annotation\Route;
-    - use Symfony\Component\HttpFoundation\Response;
+      use Symfony\Component\Routing\Attribute\Route;
+      use Symfony\Component\HttpFoundation\Response;
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class DefaultController
     + class DefaultController extends AbstractController
       {
-           /**
-            * @Route("/hello/{name}")
-            */
-           public function index($name)
+           #[Route('/hello/{name}', methods: ['GET'])]
+           public function index(string $name): Response
            {
     -        return new Response("Hello $name!");
     +        return $this->render('default/index.html.twig', [
@@ -158,16 +156,15 @@ Are you building an API? You can already return JSON from any controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class DefaultController extends AbstractController
     {
         // ...
 
-        /**
-         * @Route("/api/hello/{name}")
-         */
-        public function apiExample($name)
+        #[Route('/api/hello/{name}', methods: ['GET'])]
+        public function apiHello(string $name): JsonResponse
         {
             return $this->json([
                 'name' => $name,
@@ -188,7 +185,7 @@ Security components, as well as the Doctrine ORM. In fact, Flex installed *5* re
 
 But like usual, we can immediately start using the new library. Want to create a
 rich API for a ``product`` table? Create a ``Product`` entity and give it the
-``@ApiResource()`` annotation::
+``#[ApiResource]`` attribute::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -196,28 +193,20 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
     use ApiPlatform\Core\Annotation\ApiResource;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity()
-     * @ApiResource()
-     */
+    #[ORM\Entity]
+    #[ApiResource]
     class Product
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="AUTO")
-         * @ORM\Column(type="integer")
-         */
-        private $id;
+        #[ORM\Id]
+        #[ORM\GeneratedValue(strategy: 'AUTO')]
+        #[ORM\Column(type: 'integer')]
+        private int $id;
 
-        /**
-         * @ORM\Column(type="string")
-         */
-        private $name;
+        #[ORM\Column(type: 'string')]
+        private string $name;
 
-        /**
-         * @ORM\Column(type="int")
-         */
-        private $price;
+        #[ORM\Column(type: 'integer')]
+        private int $price;
 
         // ...
     }

@@ -13,23 +13,6 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Validator/ContainsAlphanumeric.php
-        namespace App\Validator;
-
-        use Symfony\Component\Validator\Constraint;
-
-        /**
-         * @Annotation
-         */
-        class ContainsAlphanumeric extends Constraint
-        {
-            public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-            // If the constraint has configuration options, define them as public properties
-            public string $mode = 'strict';
-        }
-
     .. code-block:: php-attributes
 
         // src/Validator/ContainsAlphanumeric.php
@@ -40,18 +23,44 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
         #[\Attribute]
         class ContainsAlphanumeric extends Constraint
         {
-            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-            public $mode = 'strict'; // If the constraint has configuration options, define them as public properties
+            public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+            public string $mode = 'strict';
+
+            // all configurable options must be passed to the constructor
+            public function __construct(?string $mode = null, ?string $message = null, ?array $groups = null, $payload = null)
+            {
+                parent::__construct([], $groups, $payload);
+
+                $this->mode = $mode ?? $this->mode;
+                $this->message = $message ?? $this->message;
+            }
         }
 
-Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
-use it as an annotation/attribute in other classes.
+Add ``#[\Attribute]`` to the constraint class if you want to
+use it as an attribute in other classes.
 
-.. versionadded:: 5.2
+You can use ``#[HasNamedArguments]`` to make some constraint options required::
 
-    The ability to use PHP attributes to configure constraints was introduced in
-    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
-    annotate constraints.
+    // src/Validator/ContainsAlphanumeric.php
+    namespace App\Validator;
+
+    use Symfony\Component\Validator\Attribute\HasNamedArguments;
+    use Symfony\Component\Validator\Constraint;
+
+    #[\Attribute]
+    class ContainsAlphanumeric extends Constraint
+    {
+        public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+
+        #[HasNamedArguments]
+        public function __construct(
+            public string $mode,
+            ?array $groups = null,
+            mixed $payload = null,
+        ) {
+            parent::__construct([], $groups, $payload);
+        }
+    }
 
 Creating the Validator itself
 -----------------------------
@@ -62,7 +71,7 @@ class is specified by the constraint's ``validatedBy()`` method, which
 has this default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return static::class.'Validator';
     }
@@ -83,7 +92,7 @@ The validator class only has one required method ``validate()``::
 
     class ContainsAlphanumericValidator extends ConstraintValidator
     {
-        public function validate($value, Constraint $constraint): void
+        public function validate(mixed $value, Constraint $constraint): void
         {
             if (!$constraint instanceof ContainsAlphanumeric) {
                 throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
@@ -108,12 +117,14 @@ The validator class only has one required method ``validate()``::
                 // ...
             }
 
-            if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
-                // the argument must be a string or an object implementing __toString()
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ string }}', $value)
-                    ->addViolation();
+            if (preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
+                return;
             }
+
+            // the argument must be a string or an object implementing __toString()
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ string }}', $value)
+                ->addViolation();
         }
     }
 
@@ -131,27 +142,6 @@ You can use custom validators like the ones provided by Symfony itself:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use App\Validator as AcmeAssert;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            // ...
-
-            /**
-             * @Assert\NotBlank
-             * @AcmeAssert\ContainsAlphanumeric(mode="loose")
-             */
-            protected string $name = '';
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/AcmeEntity.php
@@ -166,7 +156,7 @@ You can use custom validators like the ones provided by Symfony itself:
 
             #[Assert\NotBlank]
             #[AcmeAssert\ContainsAlphanumeric(mode: 'loose')]
-            protected $name;
+            protected string $name;
 
             // ...
         }
@@ -237,106 +227,50 @@ Constraint Validators with Custom Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to add some configuration options to your custom constraint, first
-define those options as public properties on the constraint class:
+define those options as public properties on the constraint class::
 
-.. configuration-block::
+    // src/Validator/Foo.php
+    namespace App\Validator;
 
-    .. code-block:: php-annotations
+    use Symfony\Component\Validator\Constraint;
 
-        // src/Validator/Foo.php
-        namespace App\Validator;
+    #[\Attribute]
+    class Foo extends Constraint
+    {
+        public $mandatoryFooOption;
+        public $message = 'This value is invalid';
+        public $optionalBarOption = false;
 
-        use Symfony\Component\Validator\Constraint;
-
-        /**
-         * @Annotation
-         */
-        class Foo extends Constraint
-        {
-            public $mandatoryFooOption;
-            public $message = 'This value is invalid';
-            public $optionalBarOption = false;
-
-            public function __construct(
-                $mandatoryFooOption,
-                string $message = null,
-                bool $optionalBarOption = null,
-                array $groups = null,
-                $payload = null,
-                array $options = []
-            ) {
-                if (\is_array($mandatoryFooOption)) {
-                    $options = array_merge($mandatoryFooOption, $options);
-                } elseif (null !== $mandatoryFooOption) {
-                    $options['value'] = $mandatoryFooOption;
-                }
-
-                parent::__construct($options, $groups, $payload);
-
-                $this->message = $message ?? $this->message;
-                $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
+        public function __construct(
+            $mandatoryFooOption,
+            ?string $message = null,
+            ?bool $optionalBarOption = null,
+            ?array $groups = null,
+            $payload = null,
+            array $options = []
+        ) {
+            if (\is_array($mandatoryFooOption)) {
+                $options = array_merge($mandatoryFooOption, $options);
+            } elseif (null !== $mandatoryFooOption) {
+                $options['value'] = $mandatoryFooOption;
             }
 
-            public function getDefaultOption()
-            {
-                // If no associative array is passed to the constructor this
-                // property is set instead.
+            parent::__construct($options, $groups, $payload);
 
-                return 'mandatoryFooOption';
-            }
-
-            public function getRequiredOptions()
-            {
-                // return names of options which must be set.
-
-                return ['mandatoryFooOption'];
-            }
+            $this->message = $message ?? $this->message;
+            $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
         }
 
-    .. code-block:: php-attributes
-
-        // src/Validator/Foo.php
-        namespace App\Validator;
-
-        use Symfony\Component\Validator\Constraint;
-
-        #[\Attribute]
-        class Foo extends Constraint
+        public function getDefaultOption(): string
         {
-            public $mandatoryFooOption;
-            public $message = 'This value is invalid';
-            public $optionalBarOption = false;
-
-            public function __construct(
-                $mandatoryFooOption,
-                string $message = null,
-                bool $optionalBarOption = null,
-                array $groups = null,
-                $payload = null,
-                array $options = []
-            ) {
-                if (\is_array($mandatoryFooOption)) {
-                    $options = array_merge($mandatoryFooOption, $options);
-                } elseif (null !== $mandatoryFooOption) {
-                    $options['value'] = $mandatoryFooOption;
-                }
-
-                parent::__construct($options, $groups, $payload);
-
-                $this->message = $message ?? $this->message;
-                $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
-            }
-
-            public function getDefaultOption()
-            {
-                return 'mandatoryFooOption';
-            }
-
-            public function getRequiredOptions()
-            {
-                return ['mandatoryFooOption'];
-            }
+            return 'mandatoryFooOption';
         }
+
+        public function getRequiredOptions(): array
+        {
+            return ['mandatoryFooOption'];
+        }
+    }
 
 Then, inside the validator class you can access these options directly via the
 constraint class passes to the ``validate()`` method::
@@ -358,30 +292,6 @@ When using this constraint in your own application, you can pass the value of
 the custom options like you pass any other option in built-in constraints:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/AcmeEntity.php
-        namespace App\Entity;
-
-        use App\Validator as AcmeAssert;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class AcmeEntity
-        {
-            // ...
-
-            /**
-             * @Assert\NotBlank
-             * @AcmeAssert\Foo(
-             *     mandatoryFooOption="bar",
-             *     optionalBarOption=true
-             * )
-             */
-            protected $name;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -464,10 +374,6 @@ Create a Reusable Set of Constraints
 In case you need to consistently apply a common set of constraints
 across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
 
-.. versionadded:: 5.1
-
-    The ``Compound`` constraint was introduced in Symfony 5.1.
-
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -483,9 +389,7 @@ email. First, create a constraint and override the ``getTargets()`` method::
 
     use Symfony\Component\Validator\Constraint;
 
-    /**
-     * @Annotation
-     */
+    #[\Attribute]
     class ConfirmedPaymentReceipt extends Constraint
     {
         public string $userDoesNotMatchMessage = 'User\'s e-mail address does not match that of the receipt';
@@ -543,21 +447,6 @@ A class constraint validator must be applied to the class itself:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/PaymentReceipt.php
-        namespace App\Entity;
-
-        use App\Validator\ConfirmedPaymentReceipt;
-
-        /**
-         * @ConfirmedPaymentReceipt
-         */
-        class PaymentReceipt
-        {
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/AcmeEntity.php
@@ -613,7 +502,7 @@ A class constraint validator must be applied to the class itself:
 Testing Custom Constraints
 --------------------------
 
-Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase``
+Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase`
 class to simplify writing unit tests for your custom constraints::
 
     // tests/Validator/ContainsAlphanumericValidatorTest.php
@@ -621,16 +510,17 @@ class to simplify writing unit tests for your custom constraints::
 
     use App\Validator\ContainsAlphanumeric;
     use App\Validator\ContainsAlphanumericValidator;
+    use Symfony\Component\Validator\ConstraintValidatorInterface;
     use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
     class ContainsAlphanumericValidatorTest extends ConstraintValidatorTestCase
     {
-        protected function createValidator()
+        protected function createValidator(): ConstraintValidatorInterface
         {
             return new ContainsAlphanumericValidator();
         }
 
-        public function testNullIsValid()
+        public function testNullIsValid(): void
         {
             $this->validator->validate(null, new ContainsAlphanumeric());
 
@@ -640,7 +530,7 @@ class to simplify writing unit tests for your custom constraints::
         /**
          * @dataProvider provideInvalidConstraints
          */
-        public function testTrueIsInvalid(ContainsAlphanumeric $constraint)
+        public function testTrueIsInvalid(ContainsAlphanumeric $constraint): void
         {
             $this->validator->validate('...', $constraint);
 
@@ -649,7 +539,7 @@ class to simplify writing unit tests for your custom constraints::
                 ->assertRaised();
         }
 
-        public function provideInvalidConstraints(): iterable
+        public function provideInvalidConstraints(): \Generator
         {
             yield [new ContainsAlphanumeric(message: 'myMessage')];
             // ...

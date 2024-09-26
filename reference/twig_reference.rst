@@ -78,10 +78,6 @@ fragment_uri
 
 Generates the URI of :ref:`a fragment <fragments-path-config>`.
 
-.. versionadded:: 5.3
-
-    The ``fragment_uri()`` function was introduced in Symfony 5.3.
-
 controller
 ~~~~~~~~~~
 
@@ -120,8 +116,10 @@ the application is installed (e.g. in case the project is accessed in a host
 subdirectory) and the optional asset package base path.
 
 Symfony provides various cache busting implementations via the
-:ref:`reference-framework-assets-version`, :ref:`reference-assets-version-strategy`,
-and :ref:`reference-assets-json-manifest-path` configuration options.
+:ref:`assets.version <reference-framework-assets-version>`,
+:ref:`assets.version_strategy <reference-assets-version-strategy>`,
+and :ref:`assets.json_manifest_path <reference-assets-json-manifest-path>`
+configuration options.
 
 .. seealso::
 
@@ -290,6 +288,33 @@ expression
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
 to the :doc:`ExpressionLanguage component </components/expression_language>`.
 
+impersonation_path
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_path(identifier) }}
+
+``identifier``
+    **type**: ``string``
+
+Generates a URL that you can visit to
+:doc:`impersonate a user </security/impersonating_user>`, identified by the
+``identifier`` argument.
+
+impersonation_url
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_url(identifier) }}
+
+``identifier``
+    **type**: ``string``
+
+It's similar to the `impersonation_path`_ function, but it generates
+absolute URLs instead of relative URLs.
+
 impersonation_exit_path
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -299,10 +324,6 @@ impersonation_exit_path
 
 ``exitTo`` *(optional)*
     **type**: ``string``
-
-.. versionadded:: 5.2
-
-    The ``impersonation_exit_path()`` function was introduced in Symfony 5.2.
 
 Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
 After exiting impersonation, the user is redirected to the current URI. If you
@@ -319,10 +340,6 @@ impersonation_exit_url
 
 ``exitTo`` *(optional)*
     **type**: ``string``
-
-.. versionadded:: 5.2
-
-    The ``impersonation_exit_url()`` function was introduced in Symfony 5.2.
 
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
@@ -343,12 +360,14 @@ t
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``messages``
 
-.. versionadded:: 5.2
-
-    The ``t()`` function was introduced in Symfony 5.2.
-
 Creates a ``Translatable`` object that can be passed to the
 :ref:`trans filter <reference-twig-filter-trans>`.
+
+importmap
+~~~~~~~~~
+
+Outputs the ``importmap`` & a few other items when using
+:doc:`the Asset component </frontend/asset_mapper>`.
 
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -389,9 +408,18 @@ humanize
 ``text``
     **type**: ``string``
 
-Makes a technical name human readable (i.e. replaces underscores by spaces
-or transforms camelCase text like ``helloWorld`` to ``hello world``
-and then capitalizes the string).
+Transforms the given string into a human readable string (by replacing underscores
+with spaces, capitalizing the string, etc.) It's useful e.g. when displaying
+the names of PHP properties/variables to end users:
+
+.. code-block:: twig
+
+    {{ 'dateOfBirth'|humanize }}    {# renders: Date of birth #}
+    {{ 'DateOfBirth'|humanize }}    {# renders: Date of birth #}
+    {{ 'date-of-birth'|humanize }}  {# renders: Date-of-birth #}
+    {{ 'date_of_birth'|humanize }}  {# renders: Date of birth #}
+    {{ 'date of birth'|humanize }}  {# renders: Date of birth #}
+    {{ 'Date Of Birth'|humanize }}  {# renders: Date of birth #}
 
 .. _reference-twig-filter-trans:
 
@@ -411,12 +439,23 @@ trans
 ``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
 
-.. versionadded:: 5.2
-
-    ``message`` accepting ``Translatable`` as a valid type was introduced in Symfony 5.2.
-
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
+
+sanitize_html
+~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ body|sanitize_html(sanitizer = "default") }}
+
+``body``
+    **type**: ``string``
+``sanitizer`` *(optional)*
+    **type**: ``string`` **default**: ``"default"``
+
+Sanitizes the text using the HTML Sanitizer component. More information in
+:ref:`HTML Sanitizer <html-sanitizer-twig>`.
 
 yaml_encode
 ~~~~~~~~~~~
@@ -432,8 +471,46 @@ yaml_encode
 ``dumpObjects`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
-Transforms the input into YAML syntax. See :ref:`components-yaml-dump` for
-more information.
+Transforms the input into YAML syntax.
+
+The ``inline`` argument is the level where the generated output switches to inline YAML:
+
+.. code-block:: twig
+
+    {% set array = {
+        'a': {
+            'c': 'e'
+        },
+        'b': {
+            'd': 'f'
+        }
+    } %}
+
+    {{ array|yaml_encode(inline = 0) }}
+    {# output:
+       { a: { c: e }, b: { d: f } } #}
+
+    {{ array|yaml_encode(inline = 1) }}
+    {# output:
+       a: { c: e }
+       b: { d: f } #}
+
+The ``dumpObjects`` argument enables the dumping of PHP objects::
+
+    // ...
+    $object = new \stdClass();
+    $object->foo = 'bar';
+    // ...
+
+.. code-block:: twig
+
+    {{ object|yaml_encode(dumpObjects = false) }}
+    {# output: null #}
+
+    {{ object|yaml_encode(dumpObjects = true) }}
+    {# output: !php/object 'O:8:"stdClass":1:{s:5:"foo";s:7:"bar";}' #}
+
+See :ref:`components-yaml-dump` for more information.
 
 yaml_dump
 ~~~~~~~~~
@@ -451,6 +528,43 @@ yaml_dump
 
 Does the same as `yaml_encode() <yaml_encode>`_, but includes the type in
 the output.
+
+The ``inline`` argument is the level where the generated output switches to inline YAML:
+
+.. code-block:: twig
+
+    {% set array = {
+        'a': {
+            'c': 'e'
+        },
+        'b': {
+            'd': 'f'
+        }
+    } %}
+
+    {{ array|yaml_dump(inline = 0) }}
+    {# output:
+       %array% { a: { c: e }, b: { d: f } } #}
+
+    {{ array|yaml_dump(inline = 1) }}
+    {# output:
+       %array% a: { c: e }
+       b: { d: f } #}
+
+The ``dumpObjects`` argument enables the dumping of PHP objects::
+
+    // ...
+    $object = new \stdClass();
+    $object->foo = 'bar';
+    // ...
+
+.. code-block:: twig
+
+    {{ object|yaml_dump(dumpObjects = false) }}
+    {# output: %object% null #}
+
+    {{ object|yaml_dump(dumpObjects = true) }}
+    {# output: %object% !php/object 'O:8:"stdClass":1:{s:3:"foo";s:3:"bar";}' #}
 
 abbr_class
 ~~~~~~~~~~
@@ -603,12 +717,39 @@ serialize
 ``context`` *(optional)*
     **type**: ``array``
 
-.. versionadded:: 5.3
-
-    The ``serialize`` filter was introduced in Symfony 5.3.
-
 Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
 and returns a serialized string in the specified ``format``.
+
+.. _reference-twig-filter-emojify:
+
+emojify
+~~~~~~~
+
+.. versionadded:: 7.1
+
+    The ``emojify`` filter was introduced in Symfony 7.1.
+
+.. code-block:: twig
+
+    {{ text|emojify(catalog = null) }}
+
+``text``
+    **type**: ``string``
+
+``catalog`` *(optional)*
+    **type**: ``string`` | ``null``
+
+    The emoji set used to generate the textual representation (``slack``,
+    ``github``, ``gitlab``, etc.)
+
+It transforms the textual representation of an emoji (e.g. ``:wave:``) into the
+actual emoji (👋):
+
+.. code-block:: twig
+
+    {{ ':+1:'|emojify }}                 {# renders: 👍 #}
+    {{ ':+1:'|emojify('github') }}       {# renders: 👍 #}
+    {{ ':thumbsup:'|emojify('gitlab') }} {# renders: 👍 #}
 
 .. _reference-twig-tags:
 

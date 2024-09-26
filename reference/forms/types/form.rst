@@ -7,8 +7,6 @@ on all types for which ``FormType`` is the parent.
 +---------------------------+--------------------------------------------------------------------+
 | Default invalid message   | This value is not valid.                                           |
 +---------------------------+--------------------------------------------------------------------+
-| Legacy invalid message    | This value is not valid.                                           |
-+---------------------------+--------------------------------------------------------------------+
 | Parent                    | none                                                               |
 +---------------------------+--------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
@@ -90,10 +88,6 @@ the underlying object that will be used to populate the form field.
 
 More details are available in the section on :doc:`/form/data_mappers`.
 
-.. versionadded:: 5.2
-
-    Form mapping callbacks were added in Symfony 5.2.
-
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
@@ -139,10 +133,6 @@ When provided, this callable will be invoked to map the form value
 back to the underlying object.
 
 More details are available in the section on :doc:`/form/data_mappers`.
-
-.. versionadded:: 5.2
-
-    Form mapping callbacks were added in Symfony 5.2.
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 

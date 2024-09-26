@@ -97,7 +97,8 @@ You can run tests using the ``bin/phpunit`` command:
 .. tip::
 
     In large test suites, it can make sense to create subdirectories for
-    each type of tests (e.g. ``tests/Unit/`` and ``tests/Functional/``).
+    each type of test (``tests/Unit/``, ``tests/Integration/``,
+    ``tests/Application/``, etc.).
 
 .. _integration-tests:
 
@@ -120,7 +121,7 @@ class to help you creating and booting the kernel in your tests using
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             self::bootKernel();
 
@@ -187,7 +188,7 @@ code to production:
         // config/packages/test/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->strictVariables(true);
         };
 
@@ -225,7 +226,7 @@ need in your ``.env.test`` file:
     # .env.test
 
     # ...
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=5.7"
+    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_test?serverVersion=8.0.37"
 
 In the test environment, these env files are read (if vars are duplicated
 in them, files lower in the list override previous items):
@@ -254,7 +255,7 @@ the container is returned by ``static::getContainer()``::
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // (1) boot the Symfony kernel
             self::bootKernel();
@@ -295,7 +296,7 @@ concrete one::
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // ... same bootstrap as the section above
 
@@ -308,7 +309,6 @@ concrete one::
                 ])
             ;
 
-            // the following line won't work unless the alias is made public
             $container->set(NewsRepositoryInterface::class, $newsRepository);
 
             // will be injected the mocked repository
@@ -318,52 +318,8 @@ concrete one::
         }
     }
 
-In order to make the alias public, you will need to update configuration for
-the ``test`` environment as follows:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services_test.yaml
-        services:
-            # redefine the alias as it should be while making it public
-            App\Contracts\Repository\NewsRepositoryInterface:
-                alias: App\Repository\NewsRepository
-                public: true
-
-    .. code-block:: xml
-
-        <!-- config/services_test.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-        ">
-            <services>
-                <!-- redefine the alias as it should be while making it public -->
-                <service id="App\Contracts\Repository\NewsRepositoryInterface"
-                    alias="App\Repository\NewsRepository"
-                />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services_test.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Contracts\Repository\NewsRepositoryInterface;
-        use App\Repository\NewsRepository;
-
-        return static function (ContainerConfigurator $container) {
-            $container->services()
-                // redefine the alias as it should be while making it public
-                ->alias(NewsRepositoryInterface::class, NewsRepository::class)
-                    ->public()
-            ;
-        };
+No further configuration is required, as the test service container is a special one
+that allows you to interact with private services and aliases.
 
 .. _testing-databases:
 
@@ -381,7 +337,7 @@ env var:
 .. code-block:: env
 
     # .env.test.local
-    DATABASE_URL="mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=5.7"
+    DATABASE_URL="mysql://USERNAME:PASSWORD@127.0.0.1:3306/DB_NAME?serverVersion=8.0.37"
 
 This assumes that each developer/machine uses a different database for the
 tests. If the test set-up is the same on each machine, use the ``.env.test``
@@ -478,7 +434,7 @@ instance, to load ``Product`` objects into Doctrine, use::
 
     class ProductFixture extends Fixture
     {
-        public function load(ObjectManager $manager)
+        public function load(ObjectManager $manager): void
         {
             $product = new Product();
             $product->setName('Priceless widget');
@@ -600,13 +556,13 @@ returns a ``Crawler`` instance.
 
 The full signature of the ``request()`` method is::
 
-    request(
+    public function request(
         string $method,
         string $uri,
         array $parameters = [],
         array $files = [],
         array $server = [],
-        string $content = null,
+        ?string $content = null,
         bool $changeHistory = true
     ): Crawler
 
@@ -639,32 +595,27 @@ to remove the ``kernel.reset`` tag from some services in your test environment::
     // src/Kernel.php
     namespace App;
 
-    use App\DependencyInjection\Compiler\CustomPass;
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-    class Kernel extends BaseKernel
+    class Kernel extends BaseKernel implements CompilerPassInterface
     {
         use MicroKernelTrait;
 
         // ...
 
-        protected function build(ContainerBuilder $container): void
+        public function process(ContainerBuilder $container): void
         {
             if ('test' === $this->environment) {
-                $container->addCompilerPass(new class() implements CompilerPassInterface {
-                    public function process(ContainerBuilder $container): void
-                    {
-                        // prevents the security token to be cleared
-                        $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
+                // prevents the security token to be cleared
+                $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
 
-                        // prevents Doctrine entities to be detached
-                        $container->getDefinition('doctrine')->clearTag('kernel.reset');
+                // prevents Doctrine entities to be detached
+                $container->getDefinition('doctrine')->clearTag('kernel.reset');
 
-                        // ...
-                    }
-                });
+                // ...
             }
         }
     }
@@ -710,10 +661,6 @@ will no longer be followed::
 Logging in Users (Authentication)
 .................................
 
-.. versionadded:: 5.1
-
-    The ``loginUser()`` method was introduced in Symfony 5.1.
-
 When you want to add application tests for protected pages, you have to
 first "login" as a user. Reproducing the actual steps - such as
 submitting a login form - makes a test very slow. For this reason, Symfony
@@ -739,7 +686,7 @@ to simulate a login request::
     {
         // ...
 
-        public function testVisitingWhileLoggedIn()
+        public function testVisitingWhileLoggedIn(): void
         {
             $client = static::createClient();
             $userRepository = static::getContainer()->get(UserRepository::class);
@@ -761,7 +708,9 @@ You can pass any
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance to
 ``loginUser()``. This method creates a special
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
-stores in the session of the test client.
+stores in the session of the test client. If you need to define custom
+attributes in this token, you can use the ``tokenAttributes`` argument of the
+:method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method.
 
 .. note::
 
@@ -921,7 +870,7 @@ The second optional argument is used to override the default form field values.
 
 If you need access to the :class:`Symfony\\Component\\DomCrawler\\Form` object
 that provides helpful methods specific to forms (such as ``getUri()``,
-``getValues()`` and ``getFields()``) use the ``Crawler::selectButton()`` method instead::
+``getValues()`` and ``getFiles()``) use the ``Crawler::selectButton()`` method instead::
 
     $client = static::createClient();
     $crawler = $client->request('GET', '/post/hello-world');
@@ -1012,18 +961,19 @@ Response Assertions
     Asserts that the response was successful (HTTP status is 2xx).
 ``assertResponseStatusCodeSame(int $expectedCode, string $message = '')``
     Asserts a specific HTTP status code.
-``assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = '')``
+``assertResponseRedirects(?string $expectedLocation = null, ?int $expectedCode = null, string $message = '')``
     Asserts the response is a redirect response (optionally, you can check
-    the target location and status code).
+    the target location and status code). The excepted location can be either
+    an absolute or a relative path.
 ``assertResponseHasHeader(string $headerName, string $message = '')``/``assertResponseNotHasHeader(string $headerName, string $message = '')``
     Asserts the given header is (not) available on the response, e.g. ``assertResponseHasHeader('content-type');``.
 ``assertResponseHeaderSame(string $headerName, string $expectedValue, string $message = '')``/``assertResponseHeaderNotSame(string $headerName, string $expectedValue, string $message = '')``
     Asserts the given header does (not) contain the expected value on the
     response, e.g. ``assertResponseHeaderSame('content-type', 'application/octet-stream');``.
-``assertResponseHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``/``assertResponseNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``
+``assertResponseHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``/``assertResponseNotHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie is present in the response (optionally
     checking for a specific cookie path or domain).
-``assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
+``assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie is present and set to the expected value.
 ``assertResponseFormatSame(?string $expectedFormat, string $message = '')``
     Asserts the response format returned by the
@@ -1031,14 +981,6 @@ Response Assertions
     is the same as the expected value.
 ``assertResponseIsUnprocessable(string $message = '')``
     Asserts the response is unprocessable (HTTP status is 422)
-
-.. versionadded:: 5.3
-
-    The ``assertResponseFormatSame()`` method was introduced in Symfony 5.3.
-
-.. versionadded:: 5.4
-
-    The ``assertResponseIsUnprocessable()`` method was introduced in Symfony 5.4.
 
 Request Assertions
 ..................
@@ -1052,10 +994,10 @@ Request Assertions
 Browser Assertions
 ..................
 
-``assertBrowserHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``/``assertBrowserNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``
+``assertBrowserHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``/``assertBrowserNotHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts that the test Client does (not) have the given cookie set
     (meaning, the cookie was set by any response in the test).
-``assertBrowserCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
+``assertBrowserCookieValueSame(string $name, string $expectedValue, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie in the test Client is set to the expected
     value.
 ``assertThatForClient(Constraint $constraint, string $message = '')``
@@ -1068,22 +1010,26 @@ Browser Assertions
             self::assertThatForClient(new SomeCustomConstraint());
         }
 
-.. versionadded:: 5.4
-
-    The ``assertThatForClient()`` method was introduced in Symfony 5.4.
-
 Crawler Assertions
 ..................
 
 ``assertSelectorExists(string $selector, string $message = '')``/``assertSelectorNotExists(string $selector, string $message = '')``
     Asserts that the given selector does (not) match at least one element
     in the response.
+``assertSelectorCount(int $expectedCount, string $selector, string $message = '')``
+    Asserts that the expected number of selector elements are in the response
 ``assertSelectorTextContains(string $selector, string $text, string $message = '')``/``assertSelectorTextNotContains(string $selector, string $text, string $message = '')``
     Asserts that the first element matching the given selector does (not)
     contain the expected text.
+``assertAnySelectorTextContains(string $selector, string $text, string $message = '')``/``assertAnySelectorTextNotContains(string $selector, string $text, string $message = '')``
+    Asserts that any element matching the given selector does (not)
+    contain the expected text.
 ``assertSelectorTextSame(string $selector, string $text, string $message = '')``
     Asserts that the contents of the first element matching the given
-    selector does (not) equal the expected text.
+    selector does equal the expected text.
+``assertAnySelectorTextSame(string $selector, string $text, string $message = '')``
+    Asserts that the any element matching the given selector does equal the
+    expected text.
 ``assertPageTitleSame(string $expectedTitle, string $message = '')``
     Asserts that the ``<title>`` element is equal to the given title.
 ``assertPageTitleContains(string $expectedTitle, string $message = '')``
@@ -1097,34 +1043,23 @@ Crawler Assertions
     Asserts that value of the field of the first form matching the given
     selector does (not) equal the expected value.
 
-.. versionadded:: 5.2
-
-    The ``assertCheckboxChecked()``, ``assertCheckboxNotChecked()``,
-    ``assertFormValue()`` and ``assertNoFormValue()`` methods were introduced
-    in Symfony 5.2.
-
 .. _mailer-assertions:
 
 Mailer Assertions
 .................
 
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, the following assertions no longer require to make
-    a request with the ``Client`` in a test case extending the ``WebTestCase`` class.
-
-``assertEmailCount(int $count, string $transport = null, string $message = '')``
+``assertEmailCount(int $count, ?string $transport = null, string $message = '')``
     Asserts that the expected number of emails was sent.
-``assertQueuedEmailCount(int $count, string $transport = null, string $message = '')``
+``assertQueuedEmailCount(int $count, ?string $transport = null, string $message = '')``
     Asserts that the expected number of emails was queued (e.g. using the
     Messenger component).
 ``assertEmailIsQueued(MessageEvent $event, string $message = '')``/``assertEmailIsNotQueued(MessageEvent $event, string $message = '')``
     Asserts that the given mailer event is (not) queued. Use
-    ``getMailerEvent(int $index = 0, string $transport = null)`` to
+    ``getMailerEvent(int $index = 0, ?string $transport = null)`` to
     retrieve a mailer event by index.
 ``assertEmailAttachmentCount(RawMessage $email, int $count, string $message = '')``
     Asserts that the given email has the expected number of attachments. Use
-    ``getMailerMessage(int $index = 0, string $transport = null)`` to
+    ``getMailerMessage(int $index = 0, ?string $transport = null)`` to
     retrieve a specific email by index.
 ``assertEmailTextBodyContains(RawMessage $email, string $text, string $message = '')``/``assertEmailTextBodyNotContains(RawMessage $email, string $text, string $message = '')``
     Asserts that the text body of the given email does (not) contain the
@@ -1141,13 +1076,68 @@ Mailer Assertions
     Asserts that the given address header equals the expected e-mail
     address. This assertion normalizes addresses like ``Jane Smith
     <jane@example.com>`` into ``jane@example.com``.
+``assertEmailSubjectContains(RawMessage $email, string $expectedValue, string $message = '')``/``assertEmailSubjectNotContains(RawMessage $email, string $expectedValue, string $message = '')``
+    Asserts that the subject of the given email does (not) contain the
+    expected subject.
 
-.. TODO
-..  End to End Tests (E2E)
-..  ----------------------
-..  * panther
-..  * testing javascript
-..  * UX or form collections as example?
+Notifier Assertions
+...................
+
+``assertNotificationCount(int $count, ?string $transportName = null, string $message = '')``
+    Asserts that the given number of notifications has been created
+    (in total or for the given transport).
+``assertQueuedNotificationCount(int $count, ?string $transportName = null, string $message = '')``
+    Asserts that the given number of notifications are queued
+    (in total or for the given transport).
+``assertNotificationIsQueued(MessageEvent $event, string $message = '')``
+    Asserts that the given notification is queued.
+``assertNotificationIsNotQueued(MessageEvent $event, string $message = '')``
+    Asserts that the given notification is not queued.
+``assertNotificationSubjectContains(MessageInterface $notification, string $text, string $message = '')``
+    Asserts that the given text is included in the subject of
+    the given notification.
+``assertNotificationSubjectNotContains(MessageInterface $notification, string $text, string $message = '')``
+    Asserts that the given text is not included in the subject of
+    the given notification.
+``assertNotificationTransportIsEqual(MessageInterface $notification, string $transportName, string $message = '')``
+    Asserts that the name of the transport for the given notification
+    is the same as the given text.
+``assertNotificationTransportIsNotEqual(MessageInterface $notification, string $transportName, string $message = '')``
+    Asserts that the name of the transport for the given notification
+    is not the same as the given text.
+
+HttpClient Assertions
+.....................
+
+.. tip::
+
+    For all the following assertions, ``$client->enableProfiler()`` must be
+    called before the code that will trigger HTTP request(s).
+
+``assertHttpClientRequest(string $expectedUrl, string $expectedMethod = 'GET', string|array|null $expectedBody = null, array $expectedHeaders = [], string $httpClientId = 'http_client')``
+    Asserts that the given URL has been called using, if specified,
+    the given method body and headers. By default it will check on the HttpClient,
+    but you can also pass a specific HttpClient ID.
+    (It will succeed if the request has been called multiple times.)
+
+``assertNotHttpClientRequest(string $unexpectedUrl, string $expectedMethod = 'GET', string $httpClientId = 'http_client')``
+    Asserts that the given URL has not been called using GET or the specified method.
+    By default it will check on the HttpClient, but a HttpClient id can be specified.
+
+``assertHttpClientRequestCount(int $count, string $httpClientId = 'http_client')``
+    Asserts that the given number of requests has been made on the HttpClient.
+    By default it will check on the HttpClient, but you can also pass a specific
+    HttpClient ID.
+
+End to End Tests (E2E)
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to test the application as a whole, including the JavaScript
+code, you can use a real browser instead of the test client. This is
+called an end-to-end test and it's a great way to test the application.
+
+This can be achieved thanks to the Panther component. You can learn more
+about it in :doc:`the dedicated page </testing/end_to_end>`.
 
 Learn more
 ----------
@@ -1162,12 +1152,12 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://docs.phpunit.de/
-.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://docs.phpunit.de/en/9.6/configuration.html
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/10.5/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/10.5/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/9.6/assertions.html
+.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/10.3/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

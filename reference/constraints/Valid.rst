@@ -24,8 +24,9 @@ stores an ``Address`` instance in the ``$address`` property::
 
     class Address
     {
-        protected $street;
-        protected $zipCode;
+        protected string $street;
+
+        protected string $zipCode;
     }
 
 .. code-block:: php
@@ -35,54 +36,14 @@ stores an ``Address`` instance in the ``$address`` property::
 
     class Author
     {
-        protected $firstName;
-        protected $lastName;
-        protected $address;
+        protected string $firstName;
+
+        protected string $lastName;
+
+        protected Address $address;
     }
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Address.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Address
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            protected $street;
-
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(max=5)
-             */
-            protected $zipCode;
-        }
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(min=4)
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\NotBlank
-             */
-            protected $lastName;
-
-            protected $address;
-        }
 
     .. code-block:: php-attributes
 
@@ -94,11 +55,11 @@ stores an ``Address`` instance in the ``$address`` property::
         class Address
         {
             #[Assert\NotBlank]
-            protected $street;
+            protected string $street;
 
             #[Assert\NotBlank]
             #[Assert\Length(max: 5)]
-            protected $zipCode;
+            protected string $zipCode;
         }
 
         // src/Entity/Author.php
@@ -110,12 +71,12 @@ stores an ``Address`` instance in the ``$address`` property::
         {
             #[Assert\NotBlank]
             #[Assert\Length(min: 4)]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\NotBlank]
-            protected $lastName;
+            protected string $lastName;
 
-            protected $address;
+            protected Address $address;
         }
 
     .. code-block:: yaml
@@ -182,7 +143,9 @@ stores an ``Address`` instance in the ``$address`` property::
 
         class Address
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('street', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('zipCode', new Assert\NotBlank());
@@ -198,7 +161,9 @@ stores an ``Address`` instance in the ``$address`` property::
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('firstName', new Assert\Length(['min' => 4]));
@@ -212,21 +177,6 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Valid
-             */
-            protected $address;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -237,7 +187,7 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
         class Author
         {
             #[Assert\Valid]
-            protected $address;
+            protected Address $address;
         }
 
     .. code-block:: yaml
@@ -273,7 +223,9 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('address', new Assert\Valid());
             }
@@ -296,6 +248,13 @@ Options
 -------
 
 .. include:: /reference/constraints/_groups-option.rst.inc
+
+.. note::
+
+    Unlike other constraints, the ``Valid`` constraint does not use the ``Default``
+    group. This means that it will always be applied by default, **even** if you
+    specify a group when calling the validator. If you want to restrict the
+    constraint to a subset of groups, you have to define the ``groups`` option.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

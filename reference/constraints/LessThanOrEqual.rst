@@ -21,28 +21,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\LessThanOrEqual(5)
-             */
-            protected $siblings;
-
-            /**
-             * @Assert\LessThanOrEqual(
-             *     value = 80
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -53,12 +31,12 @@ The following constraints ensure that:
         class Person
         {
             #[Assert\LessThanOrEqual(5)]
-            protected $siblings;
+            protected int $siblings;
 
             #[Assert\LessThanOrEqual(
                 value: 80,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -104,7 +82,9 @@ The following constraints ensure that:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\LessThanOrEqual(5));
 
@@ -123,21 +103,6 @@ that a date must be today or in the past like this:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\LessThanOrEqual("today")
-             */
-            protected $dateOfBirth;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -148,7 +113,7 @@ that a date must be today or in the past like this:
         class Person
         {
             #[Assert\LessThanOrEqual('today')]
-            protected $dateOfBirth;
+            protected \DateTimeInterface $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -184,7 +149,9 @@ that a date must be today or in the past like this:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThanOrEqual('today'));
             }
@@ -194,21 +161,6 @@ Be aware that PHP will use the server's configured timezone to interpret these
 dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\LessThanOrEqual("today UTC")
-             */
-            protected $dateOfBirth;
-        }
 
     .. code-block:: php-attributes
 
@@ -220,7 +172,7 @@ dates. If you want to fix the timezone, append it to the date string:
         class Person
         {
             #[Assert\LessThanOrEqual('today UTC')]
-            protected $dateOfBirth;
+            protected \DateTimeInterface $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -256,7 +208,9 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThanOrEqual('today UTC'));
             }
@@ -266,21 +220,6 @@ The ``DateTime`` class also accepts relative dates or times. For example, you
 can check that a person must be at least 18 years old like this:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\LessThanOrEqual("-18 years")
-             */
-            protected $dateOfBirth;
-        }
 
     .. code-block:: php-attributes
 
@@ -292,7 +231,7 @@ can check that a person must be at least 18 years old like this:
         class Person
         {
             #[Assert\LessThanOrEqual('-18 years')]
-            protected $dateOfBirth;
+            protected \DateTimeInterface $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -328,7 +267,9 @@ can check that a person must be at least 18 years old like this:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThanOrEqual('-18 years'));
             }

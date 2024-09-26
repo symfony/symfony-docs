@@ -14,16 +14,14 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
-How can the Expression Engine Help Me?
-
 .. _how-can-the-expression-engine-help-me:
 
 How can the Expression Language Help Me?
 ----------------------------------------
 
 The purpose of the component is to allow users to use expressions inside
-configuration for more complex logic. For some examples, the Symfony Framework
-uses expressions in security, for validation rules and in route matching.
+configuration for more complex logic. For example, the Symfony Framework uses
+expressions in security, for validation rules and in route matching.
 
 Besides using the component in the framework itself, the ExpressionLanguage
 component is a perfect candidate for the foundation of a *business rule engine*.
@@ -43,9 +41,10 @@ way without using PHP and without introducing security problems:
     # Send an alert when
     product.stock < 15
 
-Expressions can be seen as a very restricted PHP sandbox and are immune to
-external injections as you must explicitly declare which variables are available
-in an expression.
+Expressions can be seen as a very restricted PHP sandbox and are less vulnerable
+to external injections because you must explicitly declare which variables are
+available in an expression (but you should still sanitize any data given by end
+users and passed to expressions).
 
 Usage
 -----
@@ -78,6 +77,57 @@ The main class of the component is
     See :doc:`/reference/formats/expression_language` to learn the syntax of
     the ExpressionLanguage component.
 
+Null Coalescing Operator
+........................
+
+.. note::
+
+    This content has been moved to the :ref:`null coalescing operator <component-expression-null-coalescing-operator>`
+    section of ExpressionLanguage syntax reference page.
+
+Parsing and Linting Expressions
+...............................
+
+The ExpressionLanguage component provides a way to parse and lint expressions.
+The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
+method returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`
+instance that can be used to inspect and manipulate the expression. The
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::lint`, on the
+other hand, returns a boolean indicating if the expression is valid or not::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    var_dump($expressionLanguage->parse('1 + 2', []));
+    // displays the AST nodes of the expression which can be
+    // inspected and manipulated
+
+    var_dump($expressionLanguage->lint('1 + 2', [])); // displays true
+
+The behavior of these methods can be configured with some flags defined in the
+:class:`Symfony\\Component\\ExpressionLanguage\\Parser` class:
+
+* ``IGNORE_UNKNOWN_VARIABLES``: don't throw an exception if a variable is not
+  defined in the expression;
+* ``IGNORE_UNKNOWN_FUNCTIONS``: don't throw an exception if a function is not
+  defined in the expression.
+
+This is how you can use these flags::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+    use Symfony\Component\ExpressionLanguage\Parser;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    // this returns true because the unknown variables and functions are ignored
+    var_dump($expressionLanguage->lint('unknown_var + unknown_function()', Parser::IGNORE_UNKNOWN_VARIABLES | Parser::IGNORE_UNKNOWN_FUNCTIONS));
+
+.. versionadded:: 7.1
+
+    The support for flags in the ``parse()`` and ``lint()`` methods
+    was introduced in Symfony 7.1.
+
 Passing in Variables
 --------------------
 
@@ -90,7 +140,7 @@ PHP type (including objects)::
 
     class Apple
     {
-        public $variety;
+        public string $variety;
     }
 
     $apple = new Apple();
@@ -110,13 +160,6 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
-
-.. caution::
-
-    When using variables in expressions, avoid passing untrusted data into the
-    array of variables. If you can't avoid that, sanitize non-alphanumeric
-    characters in untrusted data to prevent malicious users from injecting
-    control characters and altering the expression.
 
 .. _expression-language-caching:
 
@@ -195,7 +238,7 @@ It's difficult to manipulate or inspect the expressions created with the Express
 component, because the expressions are plain strings. A better approach is to
 turn those expressions into an AST. In computer science, `AST`_ (*Abstract
 Syntax Tree*) is *"a tree representation of the structure of source code written
-in a programming language"*. In Symfony, a ExpressionLanguage AST is a set of
+in a programming language"*. In Symfony, an ExpressionLanguage AST is a set of
 nodes that contain PHP classes representing the given expression.
 
 Dumping the AST
@@ -267,9 +310,9 @@ Example::
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     $expressionLanguage = new ExpressionLanguage();
-    $expressionLanguage->register('lowercase', function ($str) {
+    $expressionLanguage->register('lowercase', function ($str): string {
         return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
-    }, function ($arguments, $str) {
+    }, function ($arguments, $str): string {
         if (!is_string($str)) {
             return $str;
         }
@@ -305,12 +348,12 @@ register::
 
     class StringExpressionLanguageProvider implements ExpressionFunctionProviderInterface
     {
-        public function getFunctions()
+        public function getFunctions(): array
         {
             return [
-                new ExpressionFunction('lowercase', function ($str) {
+                new ExpressionFunction('lowercase', function ($str): string {
                     return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
-                }, function ($arguments, $str) {
+                }, function ($arguments, $str): string {
                     if (!is_string($str)) {
                         return $str;
                     }
@@ -358,7 +401,7 @@ or by using the second argument of the constructor::
 
         class ExpressionLanguage extends BaseExpressionLanguage
         {
-            public function __construct(CacheItemPoolInterface $cache = null, array $providers = [])
+            public function __construct(?CacheItemPoolInterface $cache = null, array $providers = [])
             {
                 // prepends the default provider to let users override it
                 array_unshift($providers, new StringExpressionLanguageProvider());

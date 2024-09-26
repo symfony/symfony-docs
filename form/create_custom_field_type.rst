@@ -273,7 +273,8 @@ to define, validate and process their values::
 
             // optionally you can transform the given values for the options to
             // simplify the further processing of those options
-            $resolver->setNormalizer('allowed_states', static function (Options $options, $states) {
+            $resolver->setNormalizer('allowed_states', static function (Options $options, $states): ?array
+            {
                 if (null === $states) {
                     return $states;
                 }
@@ -362,9 +363,8 @@ fragments used to render the types:
 
     {# ... here you will add the Twig code ... #}
 
-Then, update the :ref:`form_themes option <reference-twig-tag-form-theme>` to
-add this new template at the beginning of the list (the first one overrides the
-rest of files):
+Then, update the :ref:`form_themes option <config-twig-form-themes>` to
+add this new template at the end of the list (each theme overrides all the previous ones):
 
 .. configuration-block::
 
@@ -373,8 +373,8 @@ rest of files):
         # config/packages/twig.yaml
         twig:
             form_themes:
-                - 'form/custom_types.html.twig'
                 - '...'
+                - 'form/custom_types.html.twig'
 
     .. code-block:: xml
 
@@ -389,8 +389,8 @@ rest of files):
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>form/custom_types.html.twig</twig:form-theme>
                 <twig:form-theme>...</twig:form-theme>
+                <twig:form-theme>form/custom_types.html.twig</twig:form-theme>
             </twig:config>
         </container>
 
@@ -399,10 +399,10 @@ rest of files):
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
-                'form/custom_types.html.twig',
                 '...',
+                'form/custom_types.html.twig',
             ]);
         };
 
@@ -465,7 +465,6 @@ Symfony passes a series of variables to the template used to render the form
 type. You can also pass your own variables, which can be based on the options
 defined by the form or be completely independent::
 
-
     // src/Form/Type/PostalAddressType.php
     namespace App\Form\Type;
 
@@ -476,11 +475,9 @@ defined by the form or be completely independent::
 
     class PostalAddressType extends AbstractType
     {
-        private $entityManager;
-
-        public function __construct(EntityManagerInterface $entityManager)
-        {
-            $this->entityManager = $entityManager;
+        public function __construct(
+            private EntityManagerInterface $entityManager,
+        ) {
         }
 
         // ...

@@ -60,7 +60,7 @@ container into a single file, which could improve performance when using
         # config/services.yaml
         parameters:
             # ...
-            container.dumper.inline_factories: true
+            .container.dumper.inline_factories: true
 
     .. code-block:: xml
 
@@ -72,18 +72,25 @@ container into a single file, which could improve performance when using
 
             <parameters>
                 <!-- ... -->
-                <parameter key="container.dumper.inline_factories">true</parameter>
+                <parameter key=".container.dumper.inline_factories">true</parameter>
             </parameters>
         </container>
 
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->parameters()->set('container.dumper.inline_factories', true);
+        return function(ContainerConfigurator $container): void {
+            $container->parameters()->set('.container.dumper.inline_factories', true);
+        };
 
 .. _performance-use-opcache:
+
+.. tip::
+
+    The ``.`` prefix denotes a parameter that is only used during compilation of the container.
+    See :ref:`Configuration Parameters <configuration-parameters>` for more details.
 
 Use the OPcache Byte Code Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,7 +98,7 @@ Use the OPcache Byte Code Cache
 OPcache stores the compiled PHP files to avoid having to recompile them for
 every request. There are some `byte code caches`_ available, but as of PHP
 5.5, PHP comes with `OPcache`_ built-in. For older versions, the most widely
-used byte code cache is `APC`_.
+used byte code cache is APC.
 
 .. _performance-use-preloading:
 
@@ -214,6 +221,48 @@ deployment process too):
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
+Disable Dumping the Container as XML in Debug Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In :ref:`debug mode <debug-mode>`, Symfony generates an XML file with all the
+:doc:`service container </service_container>` information (services, arguments, etc.)
+This XML file is used by various debugging commands such as ``debug:container``
+and ``debug:autowiring``.
+
+When the container grows larger and larger, so does the size of the file and the
+time to generate it. If the benefit of this XML file does not outweigh the decrease
+in performance, you can stop generating the file as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            # ...
+            debug.container.dump: false
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <!-- ... -->
+                <parameter key="debug.container.dump">false</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+
+        // ...
+        $container->parameters()->set('debug.container.dump', false);
+
 .. _profiling-applications:
 
 Profiling Symfony Applications
@@ -245,14 +294,12 @@ and Symfony will inject the ``debug.stopwatch`` service::
 
     class DataExporter
     {
-        private $stopwatch;
-
-        public function __construct(Stopwatch $stopwatch)
-        {
-            $this->stopwatch = $stopwatch;
+        public function __construct(
+            private Stopwatch $stopwatch,
+        ) {
         }
 
-        public function export()
+        public function export(): void
         {
             // the argument is the name of the "profiling event"
             $this->stopwatch->start('export-data');
@@ -347,7 +394,6 @@ Learn more
 .. _`byte code caches`: https://en.wikipedia.org/wiki/List_of_PHP_accelerators
 .. _`OPcache`: https://www.php.net/manual/en/book.opcache.php
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
-.. _`APC`: https://www.php.net/manual/en/book.apc.php
 .. _`APCu Polyfill component`: https://github.com/symfony/polyfill-apcu
 .. _`APCu PHP functions`: https://www.php.net/manual/en/ref.apcu.php
 .. _`cachetool`: https://github.com/gordalina/cachetool

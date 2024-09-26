@@ -91,7 +91,7 @@ notify Symfony that it is an event listener by using a special "tag":
 
         use App\EventListener\ExceptionListener;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(ExceptionListener::class)
@@ -162,7 +162,10 @@ having to add any configuration in external files::
         }
     }
 
-You can add multiple ``#[AsEventListener()]`` attributes to configure different methods::
+You can add multiple ``#[AsEventListener]`` attributes to configure different methods.
+The ``method`` property is optional, and when not defined, it defaults to
+``on`` + uppercased event name. In the example below, the ``'foo'`` event listener
+doesn't explicitly define its method, so the ``onFoo()`` method will be called::
 
     namespace App\EventListener;
 
@@ -198,7 +201,7 @@ can also be applied to methods directly::
 
     final class MyMultiListener
     {
-        #[AsEventListener()]
+        #[AsEventListener]
         public function onCustomEvent(CustomEvent $event): void
         {
             // ...
@@ -263,17 +266,17 @@ listen to the same ``kernel.exception`` event::
             ];
         }
 
-        public function processException(ExceptionEvent $event)
+        public function processException(ExceptionEvent $event): void
         {
             // ...
         }
 
-        public function logException(ExceptionEvent $event)
+        public function logException(ExceptionEvent $event): void
         {
             // ...
         }
 
-        public function notifyException(ExceptionEvent $event)
+        public function notifyException(ExceptionEvent $event): void
         {
             // ...
         }
@@ -306,10 +309,8 @@ a "main" request or a "sub request"::
 
     class RequestListener
     {
-        public function onKernelRequest(RequestEvent $event)
+        public function onKernelRequest(RequestEvent $event): void
         {
-            // The isMainRequest() method was introduced in Symfony 5.3.
-            // In previous versions it was called isMasterRequest()
             if (!$event->isMainRequest()) {
                 // don't do anything if it's not the main request
                 return;
@@ -359,7 +360,7 @@ name (FQCN) of the corresponding event class::
             ];
         }
 
-        public function onKernelRequest(RequestEvent $event)
+        public function onKernelRequest(RequestEvent $event): void
         {
             // ...
         }
@@ -383,7 +384,7 @@ compiler pass ``AddEventAliasesPass``::
 
     class Kernel extends BaseKernel
     {
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $container): void
         {
             $container->addCompilerPass(new AddEventAliasesPass([
                 MyCustomEvent::class => 'my_custom_event',
@@ -419,10 +420,6 @@ or can get everything which partial matches the event name:
     $ php bin/console debug:event-dispatcher kernel // matches "kernel.exception", "kernel.response" etc.
     $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
 
-.. versionadded:: 5.3
-
-    The ability to match partial event names was introduced in Symfony 5.3.
-
 The :doc:`security </security>` system uses an event dispatcher per
 firewall. Use the ``--dispatcher`` option to get the registered listeners
 for a particular event dispatcher:
@@ -430,10 +427,6 @@ for a particular event dispatcher:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
-
-.. versionadded:: 5.3
-
-    The ``dispatcher`` option was introduced in Symfony 5.3.
 
 .. _event-dispatcher-before-after-filters:
 
@@ -529,11 +522,12 @@ A controller that implements this interface looks like this::
 
     use App\Controller\TokenAuthenticatedController;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
 
     class FooController extends AbstractController implements TokenAuthenticatedController
     {
         // An action that needs authentication
-        public function bar()
+        public function bar(): Response
         {
             // ...
         }
@@ -557,14 +551,12 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
 
     class TokenSubscriber implements EventSubscriberInterface
     {
-        private $tokens;
-
-        public function __construct($tokens)
-        {
-            $this->tokens = $tokens;
+        public function __construct(
+            private array $tokens
+        ) {
         }
 
-        public function onKernelController(ControllerEvent $event)
+        public function onKernelController(ControllerEvent $event): void
         {
             $controller = $event->getController();
 
@@ -582,7 +574,7 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 KernelEvents::CONTROLLER => 'onKernelController',
@@ -621,7 +613,7 @@ For example, take the ``TokenSubscriber`` from the previous example and first
 record the authentication token inside the request attributes. This will
 serve as a basic flag that this request underwent token authentication::
 
-    public function onKernelController(ControllerEvent $event)
+    public function onKernelController(ControllerEvent $event): void
     {
         // ...
 
@@ -643,7 +635,7 @@ header on the response if it's found::
     // add the new use statement at the top of your file
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         // check to see if onKernelController marked this as a token "auth'ed" request
         if (!$token = $event->getRequest()->attributes->get('auth_token')) {
@@ -657,7 +649,7 @@ header on the response if it's found::
         $response->headers->set('X-CONTENT-HASH', $hash);
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'onKernelController',
@@ -685,7 +677,7 @@ end of the method::
     {
         // ...
 
-        public function send($subject, $message)
+        public function send(string $subject, string $message): mixed
         {
             // dispatch an event before the method
             $event = new BeforeSendMailEvent($subject, $message);
@@ -722,31 +714,28 @@ this::
 
     class BeforeSendMailEvent extends Event
     {
-        private $subject;
-        private $message;
-
-        public function __construct($subject, $message)
-        {
-            $this->subject = $subject;
-            $this->message = $message;
+        public function __construct(
+            private string $subject,
+            private string $message,
+        ) {
         }
 
-        public function getSubject()
+        public function getSubject(): string
         {
             return $this->subject;
         }
 
-        public function setSubject($subject)
+        public function setSubject(string $subject): string
         {
             $this->subject = $subject;
         }
 
-        public function getMessage()
+        public function getMessage(): string
         {
             return $this->message;
         }
 
-        public function setMessage($message)
+        public function setMessage(string $message): void
         {
             $this->message = $message;
         }
@@ -761,19 +750,17 @@ And the ``AfterSendMailEvent`` even like this::
 
     class AfterSendMailEvent extends Event
     {
-        private $returnValue;
-
-        public function __construct($returnValue)
-        {
-            $this->returnValue = $returnValue;
+        public function __construct(
+            private mixed $returnValue,
+        ) {
         }
 
-        public function getReturnValue()
+        public function getReturnValue(): mixed
         {
             return $this->returnValue;
         }
 
-        public function setReturnValue($returnValue)
+        public function setReturnValue(mixed $returnValue): void
         {
             $this->returnValue = $returnValue;
         }
@@ -793,7 +780,7 @@ could listen to the ``mailer.post_send`` event and change the method's return va
 
     class MailPostSendSubscriber implements EventSubscriberInterface
     {
-        public function onMailerPostSend(AfterSendMailEvent $event)
+        public function onMailerPostSend(AfterSendMailEvent $event): void
         {
             $returnValue = $event->getReturnValue();
             // modify the original $returnValue value
@@ -801,7 +788,7 @@ could listen to the ``mailer.post_send`` event and change the method's return va
             $event->setReturnValue($returnValue);
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'mailer.post_send' => 'onMailerPostSend',

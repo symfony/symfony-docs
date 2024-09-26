@@ -7,8 +7,8 @@ The PHPUnit Bridge
 
 It comes with the following features:
 
-* Forces the tests to use a consistent locale (``C``) (if you create
-  locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
+* Sets by default a consistent locale (``C``) for your tests (if you
+  create locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
 
 * Auto-register ``class_exists`` to load Doctrine annotations (when used);
 
@@ -19,10 +19,11 @@ It comes with the following features:
 * Provides a ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
   sensitive to time, network or class existence;
 
-* Provides a modified version of PHPUnit that allows 1. separating the
-  dependencies of your app from those of phpunit to prevent any unwanted
-  constraints to apply; 2. running tests in parallel when a test suite is split
-  in several phpunit.xml files; 3. recording and replaying skipped tests;
+* Provides a modified version of PHPUnit that allows:
+
+  #. separating the dependencies of your app from those of phpunit to prevent any unwanted constraints to apply;
+  #. running tests in parallel when a test suite is split in several phpunit.xml files;
+  #. recording and replaying skipped tests;
 
 * It allows to create tests that are compatible with multiple PHPUnit versions
   (because it provides polyfills for missing methods, namespaced aliases for
@@ -287,13 +288,38 @@ Here is a summary that should help you pick the right configuration:
 |                        | cannot afford to use one of the modes above.        |
 +------------------------+-----------------------------------------------------+
 
-Baseline Deprecations
+Ignoring Deprecations
 .....................
 
 If your application has some deprecations that you can't fix for some reasons,
-you can tell Symfony to ignore them. The trick is to create a file with the
-allowed deprecations and define it as the "deprecation baseline". Deprecations
-inside that file are ignored but the rest of deprecations are still reported.
+you can tell Symfony to ignore them.
+
+You need first to create a text file where each line is a deprecation to ignore
+defined as a regular expression. Lines beginning with a hash (``#``) are
+considered comments:
+
+.. code-block:: terminal
+
+    # This file contains patterns to be ignored while testing for use of
+    # deprecated code.
+
+    %The "Symfony\\Component\\Validator\\Context\\ExecutionContextInterface::.*\(\)" method is considered internal Used by the validator engine\. (Should not be called by user\W+code\. )?It may change without further notice\. You should not extend it from "[^"]+"\.%
+    %The "PHPUnit\\Framework\\TestCase::addWarning\(\)" method is considered internal%
+
+Then, you can run the following command to use that file and ignore those deprecations:
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='ignoreFile=./tests/baseline-ignore' ./vendor/bin/simple-phpunit
+
+Baseline Deprecations
+.....................
+
+You can also take a snapshot of deprecations currently triggered by your application
+code, and ignore those during your test runs, still reporting newly added ones.
+The trick is to create a file with the allowed deprecations and define it as the
+"deprecation baseline". Deprecations inside that file are ignored but the rest of
+deprecations are still reported.
 
 First, generate the file with the allowed deprecations (run the same command
 whenever you want to update the existing file):
@@ -311,11 +337,6 @@ Then, you can run the following command to use that file and ignore those deprec
 
     $ SYMFONY_DEPRECATIONS_HELPER='baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
 
-.. versionadded:: 5.2
-
-    The ``baselineFile`` and ``generateBaseline`` options were introduced in
-    Symfony 5.2.
-
 Disabling the Verbose Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -330,10 +351,6 @@ It's also possible to change verbosity per deprecation type. For example, using
 The ``quiet`` option hides details for the specified deprecation types, but will
 not change the outcome in terms of exit code. That's what :ref:`max <making-tests-fail>`
 is for, and both settings are orthogonal.
-
-.. versionadded:: 5.1
-
-    The ``quiet`` option was introduced in Symfony 5.1.
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -375,19 +392,44 @@ the compiling and warming up of the container:
 
     $ php bin/console debug:container --deprecations
 
-.. versionadded:: 5.1
-
-    The ``--deprecations`` option was introduced in Symfony 5.1.
-
 Log Deprecations
 ~~~~~~~~~~~~~~~~
 
 For turning the verbose output off and write it to a log file instead you can use
 ``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
 
-.. versionadded:: 5.3
+Setting The Locale For Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The ``logFile`` option was introduced in Symfony 5.3.
+By default, the PHPUnit Bridge forces the locale to ``C`` to avoid locale
+issues in tests. This behavior can be changed by setting the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to the desired locale:
+
+.. code-block:: bash
+
+    # .env.test
+    SYMFONY_PHPUNIT_LOCALE="fr_FR"
+
+Alternatively, you can set this environment variable in the PHPUnit
+configuration file:
+
+.. code-block:: xml
+
+    <!-- https://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <php>
+            <!-- ... -->
+            <env name="SYMFONY_PHPUNIT_LOCALE" value="fr_FR"/>
+        </php>
+    </phpunit>
+
+Finally, if you want to avoid the bridge to force any locale, you can set the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to ``0``.
 
 .. _write-assertions-about-deprecations:
 
@@ -412,7 +454,7 @@ times (order matters)::
         /**
          * @group legacy
          */
-        public function testDeprecatedCode()
+        public function testDeprecatedCode(): void
         {
             // test some code that triggers the following deprecation:
             // trigger_deprecation('vendor-name/package-name', '5.1', 'This "Foo" method is deprecated.');
@@ -425,11 +467,6 @@ times (order matters)::
             $this->expectDeprecation('Since vendor-name/package-name 4.4: The second argument of the "%s" method is deprecated.');
         }
     }
-
-.. deprecated:: 5.1
-
-    Symfony versions previous to 5.1 also included a ``@expectedDeprecation``
-    annotation to test deprecations, but it was deprecated in favor of the method.
 
 Display the Full Stack Trace
 ----------------------------
@@ -482,36 +519,6 @@ PHPUnit to remove the return type (introduced in PHPUnit 8) from ``setUp()``,
 ``tearDown()``, ``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods.
 This allows you to write a test compatible with both PHP 5 and PHPUnit 8.
 
-Alternatively, you can use the trait :class:`Symfony\\Bridge\\PhpUnit\\SetUpTearDownTrait`,
-which provides the right signature for the ``setUp()``, ``tearDown()``,
-``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods and delegates the
-call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
-``doTearDownAfterClass()`` methods::
-
-    use PHPUnit\Framework\TestCase;
-    use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
-
-    class MyTest extends TestCase
-    {
-        // when using the SetUpTearDownTrait, methods like doSetUp() can
-        // be defined with and without the 'void' return type, as you wish
-        use SetUpTearDownTrait;
-
-        private function doSetUp()
-        {
-            // ...
-        }
-
-        protected function doSetUp(): void
-        {
-            // ...
-        }
-    }
-
-.. deprecated:: 5.3
-
-    The ``SetUpTearDownTrait`` was deprecated in Symfony 5.3.
-
 Using Namespaced PHPUnit Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -533,7 +540,7 @@ If you have this kind of time-related tests::
 
     class MyTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $stopwatch = new Stopwatch();
 
@@ -559,8 +566,9 @@ Clock Mocking
 
 The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``,
-``sleep()``, ``usleep()`` and ``gmdate()``. Additionally the function ``date()``
-is mocked so it uses the mocked time if no timestamp is specified.
+``sleep()``, ``usleep()``, ``gmdate()``, and ``hrtime()``. Additionally the
+function ``date()`` is mocked so it uses the mocked time if no timestamp is
+specified.
 
 Other functions with an optional timestamp parameter that defaults to ``time()``
 will still use the system time instead of the mocked time. This means that you
@@ -599,7 +607,7 @@ test::
      */
     class MyTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $stopwatch = new Stopwatch();
 
@@ -627,7 +635,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
 
     class MyClass
     {
-        public function getTimeInHours()
+        public function getTimeInHours(): void
         {
             return time() / 3600;
         }
@@ -645,7 +653,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
      */
     class MyTest extends TestCase
     {
-        public function testGetTimeInHours()
+        public function testGetTimeInHours(): void
         {
             ClockMock::register(MyClass::class);
 
@@ -693,7 +701,7 @@ associated to a valid host::
 
     class MyTest extends TestCase
     {
-        public function testEmail()
+        public function testEmail(): void
         {
             $validator = new DomainValidator(['checkDnsRecord' => true]);
             $isValid = $validator->validate('example.com');
@@ -715,7 +723,7 @@ the data you expect to get for the given hosts::
      */
     class DomainValidatorTest extends TestCase
     {
-        public function testEmails()
+        public function testEmails(): void
         {
             DnsMock::withMockedHosts([
                 'example.com' => [['type' => 'A', 'ip' => '1.2.3.4']],
@@ -756,6 +764,7 @@ reason, this component also provides mocks for these PHP functions:
 * :phpfunction:`class_exists`
 * :phpfunction:`interface_exists`
 * :phpfunction:`trait_exists`
+* :phpfunction:`enum_exists`
 
 Use Case
 ~~~~~~~~
@@ -785,7 +794,7 @@ are installed during tests) would look like::
 
     class MyClassTest extends TestCase
     {
-        public function testHello()
+        public function testHello(): void
         {
             $class = new MyClass();
             $result = $class->hello(); // "The dependency behavior."
@@ -806,7 +815,7 @@ classes, interfaces and/or traits for the code to run::
     {
         // ...
 
-        public function testHelloDefault()
+        public function testHelloDefault(): void
         {
             ClassExistsMock::register(MyClass::class);
             ClassExistsMock::withMockedClasses([DependencyClass::class => false]);
@@ -817,6 +826,16 @@ classes, interfaces and/or traits for the code to run::
             // ...
         }
     }
+
+Note that mocking a class with ``ClassExistsMock::withMockedClasses()``
+will make :phpfunction:`class_exists`, :phpfunction:`interface_exists`
+and :phpfunction:`trait_exists` return true.
+
+To register an enumeration and mock :phpfunction:`enum_exists`,
+``ClassExistsMock::withMockedEnums()`` must be used. Note that, like in
+PHP 8.1 and later, calling ``class_exists`` on a enum will return ``true``.
+That's why calling ``ClassExistsMock::withMockedEnums()`` will also register the enum
+as a mocked class.
 
 Troubleshooting
 ---------------
@@ -929,11 +948,6 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     of PHPUnit to be considered. This is useful when testing a framework that does
     not support the latest version(s) of PHPUnit.
 
-.. versionadded:: 5.2
-
-    The ``SYMFONY_MAX_PHPUNIT_VERSION`` env variable was introduced in
-    Symfony 5.2.
-
 .. tip::
 
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
@@ -957,11 +971,6 @@ If you have installed the bridge through Composer, you can run it by calling e.g
             <env name="SYMFONY_PHPUNIT_REQUIRE" value="vendor/name:^1.2 vendor/name2:^3"/>
         </php>
 
-    .. versionadded:: 5.3
-
-        The ``SYMFONY_PHPUNIT_REQUIRE`` env variable was introduced in
-        Symfony 5.3.
-
 Code Coverage Listener
 ----------------------
 
@@ -974,7 +983,7 @@ Consider the following example::
 
     class Bar
     {
-        public function barMethod()
+        public function barMethod(): string
         {
             return 'bar';
         }
@@ -982,14 +991,12 @@ Consider the following example::
 
     class Foo
     {
-        private $bar;
-
-        public function __construct(Bar $bar)
-        {
-            $this->bar = $bar;
+        public function __construct(
+            private Bar $bar,
+        ) {
         }
 
-        public function fooMethod()
+        public function fooMethod(): string
         {
             $this->bar->barMethod();
 
@@ -999,7 +1006,7 @@ Consider the following example::
 
     class FooTest extends PHPUnit\Framework\TestCase
     {
-        public function test()
+        public function test(): void
         {
             $bar = new Bar();
             $foo = new Foo($bar);

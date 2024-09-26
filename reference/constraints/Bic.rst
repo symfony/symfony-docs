@@ -20,21 +20,6 @@ will contain a Business Identifier Code (BIC).
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Transaction.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\Bic
-             */
-            protected $businessIdentifierCode;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
@@ -45,7 +30,7 @@ will contain a Business Identifier Code (BIC).
         class Transaction
         {
             #[Assert\Bic]
-            protected $businessIdentifierCode;
+            protected string $businessIdentifierCode;
         }
 
     .. code-block:: yaml
@@ -81,7 +66,7 @@ will contain a Business Identifier Code (BIC).
 
         class Transaction
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('businessIdentifierCode', new Assert\Bic());
             }

@@ -33,21 +33,6 @@ strings:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\Unique
-             */
-            protected $contactEmails;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -58,7 +43,7 @@ strings:
         class Person
         {
             #[Assert\Unique]
-            protected $contactEmails;
+            protected array $contactEmails;
         }
 
     .. code-block:: yaml
@@ -94,7 +79,9 @@ strings:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('contactEmails', new Assert\Unique());
             }
@@ -102,6 +89,84 @@ strings:
 
 Options
 -------
+
+``fields``
+~~~~~~~~~~
+
+**type**: ``array`` | ``string``
+
+This is defines the key or keys in a collection that should be checked for
+uniqueness. By default, all collection keys are checked for uniqueness.
+
+For instance, assume you have a collection of items that contain a
+``latitude``, ``longitude`` and ``label`` fields. By default, you can have
+duplicate coordinates as long as the label is different. By setting the
+``fields`` option, you can force latitude+longitude to be unique in the
+collection::
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/PointOfInterest.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class PointOfInterest
+        {
+            #[Assert\Unique(fields: ['latitude', 'longitude'])]
+            protected array $coordinates;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\PointOfInterest:
+            properties:
+                coordinates:
+                    - Unique:
+                          fields: [latitude, longitude]
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\PointOfInterest">
+                <property name="coordinates">
+                    <constraint name="Unique">
+                        <option name="fields">
+                            <value>latitude</value>
+                            <value>longitude</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/PointOfInterest.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class PointOfInterest
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('coordinates', new Assert\Unique([
+                    'fields' => ['latitude', 'longitude'],
+                ]));
+            }
+        }
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
@@ -125,10 +190,6 @@ Parameter                      Description
 ~~~~~~~~~~~~~~
 
 **type**: a `PHP callable`_ **default**: ``null``
-
-.. versionadded:: 5.3
-
-    The ``normalizer`` option was introduced in Symfony 5.3.
 
 This option defined the PHP callable applied to each element of the given
 collection before checking if the collection is valid.

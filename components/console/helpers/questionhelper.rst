@@ -52,7 +52,9 @@ the following to your command::
     }
 
 In this case, the user will be asked "Continue with this action?". If the user
-answers with ``y`` it returns ``true`` or ``false`` if they answer with ``n``.
+answers with ``y`` (or any word, expression starting with ``y`` due to default
+answer regex, e.g ``yeti``) it returns ``true`` or ``false`` otherwise, e.g. ``n``.
+
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
 is the default value to return if the user doesn't enter any valid input. If
@@ -111,8 +113,10 @@ Let the User Choose from a List of Answers
 
 If you have a predefined set of answers the user can choose from, you
 could use a :class:`Symfony\\Component\\Console\\Question\\ChoiceQuestion`
-which makes sure that the user can only enter a valid string
-from a predefined list::
+which makes sure that the user can only enter a valid string or the index
+of the choice from a predefined list. In the example below, typing ``blue``
+or ``1`` is the same choice for the user. A default value is set with ``0``
+but ``red`` could be set instead (could be more explicit)::
 
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
@@ -136,10 +140,6 @@ from a predefined list::
 
         return Command::SUCCESS;
     }
-
-.. versionadded:: 5.2
-
-    Support for using PHP objects as choice values was introduced in Symfony 5.2.
 
 The option which should be selected by default is provided with the third
 argument of the constructor. The default is ``null``, which means that no
@@ -180,7 +180,9 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
     }
 
 Now, when the user enters ``1,2``, the result will be:
-``You have just selected: blue, yellow``.
+``You have just selected: blue, yellow``. The user can also enter strings
+(e.g. ``blue,yellow``) and even mix strings and the index of the choices
+(e.g. ``blue,2``).
 
 If the user does not enter anything, the result will be:
 ``You have just selected: red, blue``.
@@ -234,7 +236,7 @@ provide a callback function to dynamically generate suggestions::
             // where files and dirs can be found
             $foundFilesAndDirs = @scandir($inputPath) ?: [];
 
-            return array_map(function ($dirOrFile) use ($inputPath) {
+            return array_map(function (string $dirOrFile) use ($inputPath): string {
                 return $inputPath.$dirOrFile;
             }, $foundFilesAndDirs);
         };
@@ -275,11 +277,6 @@ You can also specify if you want to not trim the answer by setting it directly w
 
 Accept Multiline Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The ``setMultiline()`` and ``isMultiline()`` methods were introduced in
-    Symfony 5.2.
 
 By default, the question helper stops reading user input when it receives a newline
 character (i.e., when the user hits ``ENTER`` once). However, you may specify that
@@ -383,7 +380,7 @@ method::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-        $question->setNormalizer(function ($value) {
+        $question->setNormalizer(function (string $value): string {
             // $value can be null here
             return $value ? trim($value) : '';
         });
@@ -421,7 +418,7 @@ method::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-        $question->setValidator(function ($answer) {
+        $question->setValidator(function (string $answer): string {
             if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {
                 throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
@@ -481,10 +478,10 @@ You can also use a validator with a hidden question::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter your password');
-        $question->setNormalizer(function ($value) {
+        $question->setNormalizer(function (?string $value): string {
             return $value ?? '';
         });
-        $question->setValidator(function ($value) {
+        $question->setValidator(function (string $value): string {
             if ('' === trim($value)) {
                 throw new \Exception('The password cannot be empty');
             }
@@ -510,7 +507,7 @@ from the command line, you need to set the inputs that the command expects::
     use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
-    public function testExecute()
+    public function testExecute(): void
     {
         // ...
         $commandTester = new CommandTester($command);

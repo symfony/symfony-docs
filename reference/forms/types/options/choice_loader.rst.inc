@@ -17,7 +17,7 @@ if you want to take advantage of lazy loading::
     // ...
 
     $builder->add('loaded_choices', ChoiceType::class, [
-        'choice_loader' => new CallbackChoiceLoader(function () {
+        'choice_loader' => new CallbackChoiceLoader(static function (): array {
             return StaticClass::getConstants();
         }),
     ]);
@@ -36,11 +36,6 @@ the interface so you'll only have to implement the
 :method:`Symfony\\Component\\Form\\ChoiceList\\Loader\\AbstractChoiceLoader::loadChoices`
 method to have a fully functional choice loader.
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\AbstractChoiceLoader`
-    class was introduced in Symfony 5.1.
-
 When you're defining a custom choice type that may be reused in many fields
 (like entries of a collection) or reused in multiple forms at once, you
 should use the :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList`
@@ -51,6 +46,7 @@ better performance::
     use App\StaticClass;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\ChoiceList\ChoiceList;
+    use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\OptionsResolver\Options;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -62,17 +58,17 @@ better performance::
             return ChoiceType::class;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 // the example below will create a CallbackChoiceLoader from the callable
-                'choice_loader' => ChoiceList::lazy($this, function() {
+                'choice_loader' => ChoiceList::lazy($this, function () {
                     return StaticClass::getConstants();
                 }),
 
                 // you can pass your own loader as well, depending on other options
                 'some_key' => null,
-                'choice_loader' => function (Options $options) {
+                'choice_loader' => function (Options $options): ChoiceLoaderInterface {
                     return ChoiceList::loader(
                         // pass the instance of the type or type extension which is
                         // currently configuring the choice list as first argument

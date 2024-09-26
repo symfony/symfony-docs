@@ -16,8 +16,6 @@ element.
 +---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please select a valid color.                                        |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                 |
-+---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                       |
 +---------------------------+---------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ColorType` |
@@ -32,10 +30,6 @@ html5
 ~~~~~
 
 **type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 5.1
-
-    This option was introduced in Symfony 5.1.
 
 When this option is set to ``true``, the form type checks that its value matches
 the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn't match it,
@@ -76,6 +70,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

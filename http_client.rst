@@ -28,11 +28,9 @@ automatically when type-hinting for :class:`Symfony\\Contracts\\HttpClient\\Http
 
         class SymfonyDocs
         {
-            private $client;
-
-            public function __construct(HttpClientInterface $client)
-            {
-                $this->client = $client;
+            public function __construct(
+                private HttpClientInterface $client,
+            ) {
             }
 
             public function fetchGitHubInformation(): array
@@ -124,7 +122,7 @@ You can configure the global options using the ``default_options`` option:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->defaultOptions()
                     ->maxRedirects(7)
@@ -142,12 +140,27 @@ method to retrieve a new instance of the client with new default options::
 
     $this->client = $client->withOptions([
         'base_uri' => 'https://...',
-        'headers' => ['header-name' => 'header-value']
+        'headers' => ['header-name' => 'header-value'],
+        'extra' => ['my-key' => 'my-value'],
     ]);
 
-.. versionadded:: 5.3
+Alternatively, the :class:`Symfony\\Component\\HttpClient\\HttpOptions` class
+brings most of the available options with type-hinted getters and setters::
 
-    The ``withOptions()`` method was introduced in Symfony 5.3.
+    $this->client = $client->withOptions(
+        (new HttpOptions())
+            ->setBaseUri('https://...')
+            // replaces *all* headers at once, and deletes the headers you do not provide
+            ->setHeaders(['header-name' => 'header-value'])
+            // set or replace a single header using addHeader()
+            ->setHeader('another-header-name', 'another-header-value')
+            ->toArray()
+    );
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::setHeader`
+    method was introduced in Symfony 7.1.
 
 Some options are described in this guide:
 
@@ -157,6 +170,7 @@ Some options are described in this guide:
 * `Redirects`_
 * `Retry Failed Requests`_
 * `HTTP Proxies`_
+* `Using URI Templates`_
 
 Check out the full :ref:`http_client config reference <reference-http-client>`
 to learn about all the options.
@@ -197,7 +211,7 @@ The HTTP client also has one configuration option called
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->maxHostConnections(10)
                 // ...
@@ -280,7 +294,7 @@ autoconfigure the HTTP client based on the requested URL:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // only requests matching scope will use these options
             $framework->httpClient()->scopedClient('github.client')
                 ->scope('https://api\.github\.com')
@@ -437,7 +451,7 @@ each request (which overrides any global authentication):
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()->scopedClient('example_api')
                 ->baseUri('https://example.com/')
                 // HTTP Basic authentication
@@ -476,6 +490,11 @@ each request (which overrides any global authentication):
 
         // ...
     ]);
+
+.. note::
+
+    Basic Authentication can also be set by including the credentials in the URL,
+    such as: ``http://the-username:the-password@example.com``
 
 .. note::
 
@@ -539,7 +558,7 @@ Use the ``headers`` option to define the default headers added to all requests:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->defaultOptions()
                     ->header('User-Agent', 'My Fancy App')
@@ -611,22 +630,16 @@ A generator or any ``Traversable`` can also be used instead of a closure.
 
         $decodedPayload = $response->toArray();
 
-To submit a form with file uploads, it is your responsibility to encode the body
-according to the ``multipart/form-data`` content-type. The
-:doc:`Symfony Mime </components/mime>` component makes it a few lines of code::
+To submit a form with file uploads, pass the file handle to the ``body`` option::
 
-    use Symfony\Component\Mime\Part\DataPart;
-    use Symfony\Component\Mime\Part\Multipart\FormDataPart;
+    $fileHandle = fopen('/path/to/the/file', 'r');
+    $client->request('POST', 'https://...', ['body' => ['the_file' => $fileHandle]]);
 
-    $formFields = [
-        'regular_field' => 'some value',
-        'file_field' => DataPart::fromPath('/path/to/uploaded/file'),
-    ];
-    $formData = new FormDataPart($formFields);
-    $client->request('POST', 'https://...', [
-        'headers' => $formData->getPreparedHeaders()->toArray(),
-        'body' => $formData->bodyToIterable(),
-    ]);
+By default, this code will populate the filename and content-type with the data
+of the opened file, but you can configure both with the PHP streaming configuration::
+
+    stream_context_set_option($fileHandle, 'http', 'filename', 'the-name.txt');
+    stream_context_set_option($fileHandle, 'http', 'content_type', 'my/content-type');
 
 .. tip::
 
@@ -653,10 +666,6 @@ according to the ``multipart/form-data`` content-type. The
         $formData->getParts(); // Returns two instances of TextPart both
                                // with the name "array_field"
 
-    .. versionadded:: 5.2
-
-        The alternative array structure was introduced in Symfony 5.2.
-
 By default, HttpClient streams the body contents when uploading them. This might
 not work with all servers, resulting in HTTP status code 411 ("Length Required")
 because there is no ``Content-Length`` header. The solution is to turn the body
@@ -666,6 +675,7 @@ when the streams are large)::
     $client->request('POST', 'https://...', [
         // ...
         'body' => $formData->bodyToString(),
+        'headers' => $formData->getPreparedHeaders()->toArray(),
     ]);
 
 If you need to add a custom HTTP header to the upload, you can do::
@@ -683,17 +693,21 @@ cookies automatically.
 
 You can either :ref:`send cookies with the BrowserKit component <component-browserkit-sending-cookies>`,
 which integrates seamlessly with the HttpClient component, or manually setting
-the ``Cookie`` HTTP header as follows::
+`the Cookie HTTP request header`_ as follows::
 
     use Symfony\Component\HttpClient\HttpClient;
     use Symfony\Component\HttpFoundation\Cookie;
 
     $client = HttpClient::create([
         'headers' => [
-            'Cookie' => new Cookie('flavor', 'chocolate', strtotime('+1 day')),
+            // set one cookie as a name=value pair
+            'Cookie' => 'flavor=chocolate',
 
-            // you can also pass the cookie contents as a string
-            'Cookie' => 'flavor=chocolate; expires=Sat, 11 Feb 2023 12:18:13 GMT; Max-Age=86400; path=/'
+            // you can set multiple cookies at once separating them with a ;
+            'Cookie' => 'flavor=chocolate; size=medium',
+
+            // if needed, encode the cookie value to ensure that it contains valid characters
+            'Cookie' => sprintf("%s=%s", 'foo', rawurlencode('...')),
         ],
     ]);
 
@@ -713,10 +727,6 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
 Retry Failed Requests
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The feature to retry failed HTTP requests was introduced in Symfony 5.2.
-
 Sometimes, requests fail because of network issues or temporary server errors.
 Symfony's HttpClient allows to retry failed requests automatically using the
 :ref:`retry_failed option <reference-http-client-retry-failed>`.
@@ -725,7 +735,8 @@ By default, failed requests are retried up to 3 times, with an exponential delay
 between retries (first retry = 1 second; third retry: 4 seconds) and only for
 the following HTTP status codes: ``423``, ``425``, ``429``, ``502`` and ``503``
 when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
-an HTTP `idempotent method`_.
+an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the
+amount of times a request is retried.
 
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
 to learn how to tweak each of them to fit your application needs.
@@ -742,6 +753,55 @@ The :class:`Symfony\\Component\\HttpClient\\RetryableHttpClient` uses a
 :class:`Symfony\\Component\\HttpClient\\Retry\\RetryStrategyInterface` to
 decide if the request should be retried, and to define the waiting time between
 each retry.
+
+Retry Over Several Base URIs
+............................
+
+The ``RetryableHttpClient`` can be configured to use multiple base URIs. This
+feature provides increased flexibility and reliability for making HTTP
+requests. Pass an array of base URIs as option ``base_uri`` when making a
+request::
+
+    $response = $client->request('GET', 'some-page', [
+        'base_uri' => [
+            // first request will use this base URI
+            'https://example.com/a/',
+            // if first request fails, the following base URI will be used
+            'https://example.com/b/',
+        ],
+    ]);
+
+When the number of retries is higher than the number of base URIs, the
+last base URI will be used for the remaining retries.
+
+If you want to shuffle the order of base URIs for each retry attempt, nest the
+base URIs you want to shuffle in an additional array::
+
+    $response = $client->request('GET', 'some-page', [
+        'base_uri' => [
+            [
+                // a single random URI from this array will be used for the first request
+                'https://example.com/a/',
+                'https://example.com/b/',
+            ],
+            // non-nested base URIs are used in order
+            'https://example.com/c/',
+        ],
+    ]);
+
+This feature allows for a more randomized approach to handling retries,
+reducing the likelihood of repeatedly hitting the same failed base URI.
+
+By using a nested array for the base URI, you can use this feature
+to distribute the load among many nodes in a cluster of servers.
+
+You can also configure the array of base URIs using the ``withOptions()``
+method::
+
+    $client = $client->withOptions(['base_uri' => [
+        'https://example.com/a/',
+        'https://example.com/b/',
+    ]]);
 
 HTTP Proxies
 ~~~~~~~~~~~~
@@ -794,10 +854,6 @@ recommended in production.
 SSRF (Server-side request forgery) Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The SSRF protection was introduced in Symfony 5.1.
-
 `SSRF`_ allows an attacker to induce the backend application to make HTTP
 requests to an arbitrary domain. These attacks can also target the internal
 hosts and IPs of the attacked server.
@@ -837,9 +893,87 @@ in your requests::
 
 This setting won’t affect other clients.
 
-.. versionadded:: 5.2
+Using URI Templates
+~~~~~~~~~~~~~~~~~~~
 
-    The ``extra.trace_content`` option was introduced in Symfony 5.2.
+The :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient` provides
+a client that eases the use of URI templates, as described in the `RFC 6570`_::
+
+    $client = new UriTemplateHttpClient();
+
+    // this will make a request to the URL http://example.org/users?page=1
+    $client->request('GET', 'http://example.org/{resource}{?page}', [
+        'vars' => [
+            'resource' => 'users',
+            'page' => 1,
+        ],
+    ]);
+
+Before using URI templates in your applications, you must install a third-party
+package that expands those URI templates to turn them into URLs:
+
+.. code-block:: terminal
+
+    $ composer require league/uri
+
+    # Symfony also supports the following URI template packages:
+    # composer require guzzlehttp/uri-template
+    # composer require rize/uri-template
+
+When using this client in the framework context, all existing HTTP clients
+are decorated by the :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient`.
+This means that URI template feature is enabled by default for all HTTP clients
+you may use in your application.
+
+You can configure variables that will be replaced globally in all URI templates
+of your application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                default_options:
+                    vars:
+                        - secret: 'secret-token'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:default-options>
+                        <framework:vars name="secret">secret-token</framework:vars>
+                    </framework:default-options>
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->defaultOptions()
+                    ->vars(['secret' => 'secret-token'])
+            ;
+        };
+
+If you want to define your own logic to handle variables of URI templates, you
+can do so by redefining the ``http_client.uri_template_expander`` alias. Your
+service must be invokable.
 
 Performance
 -----------
@@ -863,10 +997,6 @@ when using cURL or ``amphp/http-client``.
 
     To use the :class:`Symfony\\Component\\HttpClient\\AmpHttpClient`, the
     `amphp/http-client`_ package must be installed.
-
-.. versionadded:: 5.1
-
-    Integration with ``amphp/http-client`` was introduced in Symfony 5.1.
 
 The :method:`Symfony\\Component\\HttpClient\\HttpClient::create` method
 selects the cURL transport if the `cURL PHP extension`_ is enabled. It falls
@@ -894,10 +1024,6 @@ is installed and enabled, and will fall back as explained above.
 
 Configuring CurlHttpClient Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The feature to configure extra cURL options was introduced in Symfony 5.2.
 
 PHP allows to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
 function. In order to make the component more portable when not using cURL, the
@@ -929,14 +1055,19 @@ HTTP Compression
 
 The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
 
-* When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
-* When using the native HTTP client: `Zlib PHP extension`_ is installed
+* using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* using the native HTTP client: `Zlib PHP extension`_ is installed
 
 If the server does respond with a gzipped response, it's decoded transparently.
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
 
 Chunked transfer encoding is enabled automatically if both your PHP runtime and
-the remote server supports it.
+the remote server support it.
+
+.. caution::
+
+    If you set ``Accept-Encoding`` to e.g. ``gzip``, you will need to handle the
+    decompression yourself.
 
 HTTP/2 Support
 ~~~~~~~~~~~~~~
@@ -946,12 +1077,6 @@ following tools is installed:
 
 * The `libcurl`_ package version 7.36 or higher, used with PHP >= 7.2.17 / 7.3.4;
 * The `amphp/http-client`_ Packagist package version 4.2 or higher.
-
-.. versionadded:: 5.1
-
-    Integration with ``amphp/http-client`` was introduced in Symfony 5.1.
-    Prior to this version, HTTP/2 was only supported when ``libcurl`` was
-    installed.
 
 To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
 ``http_version`` option:
@@ -989,7 +1114,7 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->defaultOptions()
                     ->httpVersion('2.0')
@@ -1056,10 +1181,6 @@ following methods::
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
-
-.. versionadded:: 5.2
-
-    The ``pause_handler`` info item was introduced in Symfony 5.2.
 
 .. _http-client-streaming-responses:
 
@@ -1283,6 +1404,8 @@ response and get remaining contents that might come back in a new timeout, etc.
 
     Use the ``max_duration`` option to limit the time a full request/response can last.
 
+.. _http-client_network-errors:
+
 Dealing with Network Errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1358,15 +1481,119 @@ installed in your application::
     // this won't hit the network if the resource is already in the cache
     $response = $client->request('GET', 'https://example.com/cacheable-resource');
 
-:class:`Symfony\\Component\\HttpClient\\CachingHttpClient`` accepts a third argument
+:class:`Symfony\\Component\\HttpClient\\CachingHttpClient` accepts a third argument
 to set the options of the :class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache`.
+
+Limit the Number of Requests
+----------------------------
+
+This component provides a :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient`
+decorator that allows to limit the number of requests within a certain period,
+potentially delaying calls based on the rate limiting policy.
+
+The implementation leverages the
+:class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class under the hood
+so the :doc:`Rate Limiter component </rate_limiter>` needs to be
+installed in your application::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    example.client:
+                        base_uri: 'https://example.com'
+                        rate_limiter: 'http_example_limiter'
+
+            rate_limiter:
+                # Don't send more than 10 requests in 5 seconds
+                http_example_limiter:
+                    policy: 'token_bucket'
+                    limit: 10
+                    rate: { interval: '5 seconds', amount: 10 }
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:scoped-client name="example.client"
+                        base-uri="https://example.com"
+                        rate-limiter="http_example_limiter"
+                    />
+                </framework:http-client>
+
+                <framework:rate-limiter>
+                    <!-- Don't send more than 10 requests in 5 seconds -->
+                    <framework:limiter name="http_example_limiter"
+                        policy="token_bucket"
+                        limit="10"
+                    >
+                        <framework:rate interval="5 seconds" amount="10"/>
+                    </framework:limiter>
+                </framework:rate-limiter>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->httpClient()->scopedClient('example.client')
+                ->baseUri('https://example.com')
+                ->rateLimiter('http_example_limiter');
+                // ...
+            ;
+
+            $framework->rateLimiter()
+                // Don't send more than 10 requests in 5 seconds
+                ->limiter('http_example_limiter')
+                    ->policy('token_bucket')
+                    ->limit(10)
+                    ->rate()
+                        ->interval('5 seconds')
+                        ->amount(10)
+                ;
+        };
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpClient\HttpClient;
+        use Symfony\Component\HttpClient\ThrottlingHttpClient;
+        use Symfony\Component\RateLimiter\RateLimiterFactory;
+        use Symfony\Component\RateLimiter\Storage\InMemoryStorage;
+
+        $factory = new RateLimiterFactory([
+            'id' => 'http_example_limiter',
+            'policy' => 'token_bucket',
+            'limit' => 10,
+            'rate' => ['interval' => '5 seconds', 'amount' => 10],
+        ], new InMemoryStorage());
+        $limiter = $factory->create();
+
+        $client = HttpClient::createForBaseUri('https://example.com');
+        $throttlingClient = new ThrottlingHttpClient($client, $limiter);
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient` was
+    introduced in Symfony 7.1.
 
 Consuming Server-Sent Events
 ----------------------------
-
-.. versionadded:: 5.2
-
-    The feature to consume server-sent events was introduced in Symfony 5.2.
 
 `Server-sent events`_ is an Internet standard used to push data to web pages.
 Its JavaScript API is built around an `EventSource`_ object, which listens to
@@ -1413,6 +1640,12 @@ to wrap your HTTP client, open a connection to a server that responds with a
         }
     }
 
+.. tip::
+
+    If you know that the content of the ``ServerSentEvent`` is in the JSON format, you can
+    use the :method:`Symfony\\Component\\HttpClient\\Chunk\\ServerSentEvent::getArrayData`
+    method to directly get the decoded JSON as array.
+
 Interoperability
 ----------------
 
@@ -1438,11 +1671,9 @@ interface you need to code against when a client is needed::
 
     class MyApiLayer
     {
-        private $client;
-
-        public function __construct(HttpClientInterface $client)
-        {
-            $this->client = $client;
+        public function __construct(
+            private HttpClientInterface $client,
+        ) {
         }
 
         // [...]
@@ -1490,11 +1721,9 @@ Now you can make HTTP requests with the PSR-18 client as follows:
 
         class Symfony
         {
-            private $client;
-
-            public function __construct(ClientInterface $client)
-            {
-                $this->client = $client;
+            public function __construct(
+                private ClientInterface $client,
+            ) {
             }
 
             public function getAvailableVersions(): array
@@ -1516,6 +1745,23 @@ Now you can make HTTP requests with the PSR-18 client as follows:
         $response = $client->sendRequest($request);
 
         $content = json_decode($response->getBody()->getContents(), true);
+
+You can also pass a set of default options to your client thanks to the
+``Psr18Client::withOptions()`` method::
+
+    use Symfony\Component\HttpClient\Psr18Client;
+
+    $client = (new Psr18Client())
+        ->withOptions([
+            'base_uri' => 'https://symfony.com',
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+    $request = $client->createRequest('GET', '/versions.json');
+
+    // ...
 
 HTTPlug
 ~~~~~~~
@@ -1544,26 +1790,24 @@ Let's say you want to instantiate a class with the following constructor,
 that requires HTTPlug dependencies::
 
     use Http\Client\HttpClient;
-    use Http\Message\RequestFactory;
     use Http\Message\StreamFactory;
 
     class SomeSdk
     {
         public function __construct(
             HttpClient $httpClient,
-            RequestFactory $requestFactory,
             StreamFactory $streamFactory
         )
         // [...]
     }
 
-Because :class:`Symfony\\Component\\HttpClient\\HttplugClient` implements the
-three interfaces, you can use it this way::
+Because :class:`Symfony\\Component\\HttpClient\\HttplugClient` implements these
+interfaces,you can use it this way::
 
     use Symfony\Component\HttpClient\HttplugClient;
 
     $httpClient = new HttplugClient();
-    $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
+    $apiClient = new SomeSdk($httpClient, $httpClient);
 
 If you'd like to work with promises, :class:`Symfony\\Component\\HttpClient\\HttplugClient`
 also implements the ``HttpAsyncClient`` interface. To use it, you need to install the
@@ -1582,12 +1826,12 @@ Then you're ready to go::
     $request = $httpClient->createRequest('GET', 'https://my.api.com/');
     $promise = $httpClient->sendAsyncRequest($request)
         ->then(
-            function (ResponseInterface $response) {
+            function (ResponseInterface $response): ResponseInterface {
                 echo 'Got status '.$response->getStatusCode();
 
                 return $response;
             },
-            function (\Throwable $exception) {
+            function (\Throwable $exception): never {
                 echo 'Error: '.$exception->getMessage();
 
                 throw $exception;
@@ -1605,6 +1849,20 @@ Then you're ready to go::
 
     // wait for all remaining promises to resolve
     $httpClient->wait();
+
+You can also pass a set of default options to your client thanks to the
+``HttplugClient::withOptions()`` method::
+
+    use Psr\Http\Message\ResponseInterface;
+    use Symfony\Component\HttpClient\HttplugClient;
+
+    $httpClient = (new HttplugClient())
+        ->withOptions([
+            'base_uri' => 'https://my.api.com',
+        ]);
+    $request = $httpClient->createRequest('GET', '/');
+
+    // ...
 
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
@@ -1639,11 +1897,10 @@ If you want to extend the behavior of a base HTTP client, you can use
 
     class MyExtendedHttpClient implements HttpClientInterface
     {
-        private $decoratedClient;
-
-        public function __construct(HttpClientInterface $decoratedClient = null)
-        {
-            $this->decoratedClient = $decoratedClient ?? HttpClient::create();
+        public function __construct(
+            private ?HttpClientInterface $decoratedClient = null
+        ) {
+            $this->decoratedClient ??= HttpClient::create();
         }
 
         public function request(string $method, string $url, array $options = []): ResponseInterface
@@ -1657,7 +1914,7 @@ If you want to extend the behavior of a base HTTP client, you can use
             return $response;
         }
 
-        public function stream($responses, float $timeout = null): ResponseStreamInterface
+        public function stream($responses, ?float $timeout = null): ResponseStreamInterface
         {
             return $this->decoratedClient->stream($responses, $timeout);
         }
@@ -1686,7 +1943,7 @@ processing the stream of chunks as they come back from the network::
         {
             // process and/or change the $method, $url and/or $options as needed
 
-            $passthru = function (ChunkInterface $chunk, AsyncContext $context) {
+            $passthru = function (ChunkInterface $chunk, AsyncContext $context): \Generator {
                 // do what you want with chunks, e.g. split them
                 // in smaller chunks, group them, skip some, etc.
 
@@ -1731,10 +1988,6 @@ has many safety checks that will throw a ``LogicException`` if the chunk
 passthru doesn't behave correctly; e.g. if a chunk is yielded after an ``isLast()``
 one, or if a content chunk is yielded before an ``isFirst()`` one, etc.
 
-.. versionadded:: 5.2
-
-    :class:`Symfony\\Component\\HttpClient\\AsyncDecoratorTrait` was introduced in Symfony 5.2.
-
 Testing
 -------
 
@@ -1778,13 +2031,27 @@ in order when requests are made::
     $response1 = $client->request('...'); // returns $responses[0]
     $response2 = $client->request('...'); // returns $responses[1]
 
+It is also possible to create a
+:class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` directly
+from a file, which is particularly useful when storing your response
+snapshots in files::
+
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $response = MockResponse::fromFile('tests/fixtures/response.xml');
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\Response\\MockResponse::fromFile`
+    method was introduced in Symfony 7.1.
+
 Another way of using :class:`Symfony\\Component\\HttpClient\\MockHttpClient` is to
 pass a callback that generates the responses dynamically when it's called::
 
     use Symfony\Component\HttpClient\MockHttpClient;
     use Symfony\Component\HttpClient\Response\MockResponse;
 
-    $callback = function ($method, $url, $options) {
+    $callback = function ($method, $url, $options): MockResponse {
         return new MockResponse('...');
     };
 
@@ -1795,13 +2062,13 @@ You can also pass a list of callbacks if you need to perform specific
 assertions on the request before returning the mocked response::
 
     $expectedRequests = [
-        function ($method, $url, $options) {
+        function ($method, $url, $options): MockResponse {
             $this->assertSame('GET', $method);
             $this->assertSame('https://example.com/api/v1/customer', $url);
 
             return new MockResponse('...');
         },
-        function ($method, $url, $options) {
+        function ($method, $url, $options): MockResponse {
             $this->assertSame('POST', $method);
             $this->assertSame('https://example.com/api/v1/customer/1/products', $url);
 
@@ -1809,14 +2076,9 @@ assertions on the request before returning the mocked response::
         },
     ];
 
-    $client = new MockHttpClient($expectedRequest);
+    $client = new MockHttpClient($expectedRequests);
 
     // ...
-
-.. versionadded:: 5.1
-
-    Passing a list of callbacks to the ``MockHttpClient`` was introduced
-    in Symfony 5.1.
 
 .. tip::
 
@@ -1832,11 +2094,6 @@ assertions on the request before returning the mocked response::
 
         $client = new MockHttpClient();
         $client->setResponseFactory($responses);
-
-    .. versionadded:: 5.4
-
-        The :method:`Symfony\\Component\\HttpClient\\MockHttpClient::setResponseFactory`
-        method was introduced in Symfony 5.4.
 
 If you need to test responses with HTTP status codes different than 200,
 define the ``http_code`` option::
@@ -1859,7 +2116,7 @@ will work (e.g. ``$this->createMock(ResponseInterface::class)``).
 However, using :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`
 allows simulating chunked responses and timeouts::
 
-    $body = function () {
+    $body = function (): \Generator {
         yield 'hello';
         // empty strings are turned into timeouts so that they are easy to test
         yield '';
@@ -1867,10 +2124,6 @@ allows simulating chunked responses and timeouts::
     };
 
     $mockResponse = new MockResponse($body());
-
-.. versionadded:: 5.2
-
-    The feature explained below was introduced in Symfony 5.2.
 
 Finally, you can also create an invokable or iterable class that generates the
 responses and use it as a callback in functional tests::
@@ -1940,11 +2193,44 @@ Then configure Symfony to use your callback:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->mockResponseFactory(MockClientCallback::class)
             ;
         };
+
+To return json, you would normally do::
+
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $response = new MockResponse(json_encode([
+            'foo' => 'bar',
+        ]), [
+        'response_headers' => [
+            'content-type' => 'application/json',
+        ],
+    ]);
+
+You can use :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse` instead::
+
+    use Symfony\Component\HttpClient\Response\JsonMockResponse;
+
+    $response = new JsonMockResponse([
+        'foo' => 'bar',
+    ]);
+
+Just like :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`, you can
+also create a :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse`
+directly from a file::
+
+    use Symfony\Component\HttpClient\Response\JsonMockResponse;
+
+    $response = JsonMockResponse::fromFile('tests/fixtures/response.json');
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse::fromFile`
+    method was introduced in Symfony 7.1.
 
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -1956,12 +2242,6 @@ with some helper methods to test the request:
 * ``getRequestUrl()`` - returns the URL the request would be sent to;
 * ``getRequestOptions()`` - returns an array containing other information about
   the request such as headers, query parameters, body content etc.
-
-.. versionadded:: 5.2
-
-    The :method:`Symfony\\Component\\HttpClient\\Response\\MockResponse::getRequestMethod`
-    and :method:`Symfony\\Component\\HttpClient\\Response\\MockResponse::getRequestUrl`
-    methods were introduced in Symfony 5.2.
 
 Usage example::
 
@@ -1995,11 +2275,9 @@ test it in a real application::
 
     final class ExternalArticleService
     {
-        private HttpClientInterface $httpClient;
-
-        public function __construct(HttpClientInterface $httpClient)
-        {
-            $this->httpClient = $httpClient;
+        public function __construct(
+            private HttpClientInterface $httpClient,
+        ) {
         }
 
         public function createArticle(array $requestData): array
@@ -2066,6 +2344,116 @@ test it in a real application::
         }
     }
 
+Testing Using HAR Files
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Modern browsers (via their network tab) and HTTP clients allow to export the
+information of one or more HTTP requests using the `HAR`_ (HTTP Archive) format.
+You can use those ``.har`` files to perform tests with Symfony's HTTP Client.
+
+First, use a browser or HTTP client to perform the HTTP request(s) you want to
+test. Then, save that information as a ``.har`` file somewhere in your application::
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        public function testSubmitData(): void
+        {
+            // Arrange
+            $fixtureDir = sprintf('%s/tests/fixtures/HTTP', static::getContainer()->getParameter('kernel.project_dir'));
+            $factory = new HarFileResponseFactory("$fixtureDir/example.com_archive.har");
+            $httpClient = new MockHttpClient($factory, 'https://example.com');
+            $service = new ExternalArticleService($httpClient);
+
+            // Act
+            $responseData = $service->createArticle($requestData);
+
+            // Assert
+            self::assertSame($responseData, 'the expected response');
+        }
+    }
+
+If your service performs multiple requests or if your ``.har`` file contains multiple
+request/response pairs, the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory`
+will find the associated response based on the request method, URL and body (if any).
+Note that **this won't work** if the request body or URI is random / always
+changing (e.g. if it contains current date or random UUIDs).
+
+Testing Network Transport Exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As explained in the :ref:`Network Errors section <http-client_network-errors>`,
+when making HTTP requests you might face errors at transport level.
+
+That's why it's useful to test how your application behaves in case of a transport
+error. :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` allows
+you to do so in multiple ways.
+
+In order to test errors that occur before headers have been received,
+set the ``error`` option value when creating the ``MockResponse``.
+Transport errors of this kind occur, for example, when a host name
+cannot be resolved or the host was unreachable. The
+``TransportException`` will be thrown as soon as a method like
+``getStatusCode()`` or ``getHeaders()`` is called.
+
+In order to test errors that occur while a response is being streamed
+(that is, after the headers have already been received), provide the
+exception to ``MockResponse`` as part of the ``body``
+parameter. You can either use an exception directly, or yield the
+exception from a callback. For exceptions of this kind,
+``getStatusCode()`` may indicate a success (200), but accessing
+``getContent()`` fails.
+
+The following example code illustrates all three options.
+
+body::
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        // ...
+
+        public function testTransportLevelError(): void
+        {
+            $requestData = ['title' => 'Testing with Symfony HTTP Client'];
+            $httpClient = new MockHttpClient([
+                // Mock a transport level error at a time before
+                // headers have been received (e. g. host unreachable)
+                new MockResponse(info: ['error' => 'host unreachable']),
+
+                // Mock a response with headers indicating
+                // success, but a failure while retrieving the body by
+                // creating the exception directly in the body...
+                new MockResponse([new \RuntimeException('Error at transport level')]),
+
+                // ... or by yielding it from a callback.
+                new MockResponse((static function (): \Generator {
+                    yield new TransportException('Error at transport level');
+                })()),
+            ]);
+
+            $service = new ExternalArticleService($httpClient);
+
+            try {
+                $service->createArticle($requestData);
+
+                // An exception should have been thrown in `createArticle()`, so this line should never be reached
+                $this->fail();
+            } catch (TransportException $e) {
+                $this->assertEquals(new \RuntimeException('Error at transport level'), $e->getPrevious());
+                $this->assertSame('Error at transport level', $e->getMessage());
+            }
+        }
+    }
+
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`Zlib PHP extension`: https://www.php.net/zlib
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
@@ -2079,3 +2467,6 @@ test it in a real application::
 .. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
 .. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
 .. _`SSRF`: https://portswigger.net/web-security/ssrf
+.. _`RFC 6570`: https://www.rfc-editor.org/rfc/rfc6570
+.. _`HAR`: https://w3c.github.io/web-performance/specs/HAR/Overview.html
+.. _`the Cookie HTTP request header`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie

@@ -56,32 +56,31 @@ together and - thanks to the first ``app`` argument - output final ``app.js`` an
 
 .. _encore-build-assets:
 
-To build the assets, run the following if you use the Yarn package manager:
+To build the assets, run the following if you use the npm package manager:
 
 .. code-block:: terminal
 
     # compile assets and automatically re-compile when files change
-    $ yarn watch
-    # or
     $ npm run watch
 
     # or, run a dev-server that can sometimes update your code without refreshing the page
-    $ yarn dev-server
-    # or
     $ npm run dev-server
 
     # compile assets once
-    $ yarn dev
-    # or
     $ npm run dev
 
     # on deploy, create a production build
-    $ yarn build
-    # or
     $ npm run build
 
 All of these commands - e.g. ``dev`` or ``watch`` - are shortcuts that are defined
 in your ``package.json`` file.
+
+.. tip::
+
+    If you're using the Symfony CLI tool, you can configure workers to be
+    automatically run along with the webserver. You can find more information
+    in the :ref:`Symfony CLI Workers <symfony-server_configuring-workers>`
+    documentation.
 
 .. caution::
 
@@ -179,10 +178,6 @@ We'll use jQuery to print this message on the page. Install it via:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn add jquery --dev
-
-    # if you use the npm package manager
     $ npm install jquery --save-dev
 
 Great! Use ``import`` to import ``jquery`` and ``greet.js``:
@@ -268,10 +263,8 @@ via Ajax - those will instantly work: no need to reinitialize anything.
 Ready to learn more about Stimulus?
 
 * Read the `Stimulus Documentation`_
-* Find out more about how the :doc:`Symfony UX system works </frontend/ux>`
-* See a :ref:`list of all Symfony UX packages <ux-packages-list>`
-* Learn more about the `Symfony Stimulus Bridge`_ - including the superpower of
-  making your controllers load lazily!
+* Learn more about `StimulusBundle & the UX System`_
+* Browse `all the Symfony UX packages`_
 
   .. admonition:: Screencast
       :class: screencast
@@ -365,10 +358,6 @@ and restart Encore:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn watch
-
-    # if you use the npm package manager
     $ npm run watch
 
 Webpack will now output a new ``checkout.js`` file and a new ``account.js`` file
@@ -430,18 +419,12 @@ Encore. When you do, you'll see an error!
 .. code-block:: terminal
 
     >   Error: Install sass-loader & sass to use enableSassLoader()
-    >     yarn add sass-loader@^13.0.0 sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn add sass-loader@^13.0.0 sass --dev
-    $ yarn encore dev --watch
-
-    # if you use the npm package manager
     $ npm install sass-loader@^13.0.0 sass --save-dev
     $ npm run watch
 
@@ -480,7 +463,8 @@ Encore supports many more features! For a full list of what you can do, see
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
 .. _`Stimulus`: https://stimulus.hotwired.dev/
 .. _`Stimulus Documentation`: https://stimulus.hotwired.dev/handbook/introduction
-.. _`Symfony Stimulus Bridge`: https://github.com/symfony/stimulus-bridge
+.. _StimulusBundle & the UX System: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _all the Symfony UX packages: https://symfony.com/bundles/StimulusBundle/current/index.html#ux-packages
 .. _`Turbo`: https://turbo.hotwired.dev/
 .. _`symfony/ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`Stimulus Screencast`: https://symfonycasts.com/screencast/stimulus

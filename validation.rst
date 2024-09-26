@@ -16,7 +16,7 @@ install the validator before using it:
 
 .. code-block:: terminal
 
-    $ composer require symfony/validator doctrine/annotations
+    $ composer require symfony/validator
 
 .. note::
 
@@ -36,7 +36,7 @@ your application::
 
     class Author
     {
-        private $name;
+        private string $name;
     }
 
 So far, this is an ordinary class that serves some purpose inside your
@@ -44,29 +44,13 @@ application. The goal of validation is to tell you if the data of an object is
 valid. For this to work, you'll configure a list of rules (called
 :ref:`constraints <validation-constraints>`) that the object must follow in
 order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
+attributes but they can also be defined as ``.yaml`` or ``.xml`` files inside
 the ``config/validator/`` directory:
 
 For example, to indicate that the ``$name`` property must not be empty, add the
 following:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            private $name;
-        }
 
     .. code-block:: php-attributes
 
@@ -79,7 +63,7 @@ following:
         class Author
         {
             #[Assert\NotBlank]
-            private $name;
+            private string $name;
         }
 
     .. code-block:: yaml
@@ -116,9 +100,9 @@ following:
 
         class Author
         {
-            private $name;
+            private string $name;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
             }
@@ -152,7 +136,7 @@ returned. Take this simple example from inside a controller::
     use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function author(ValidatorInterface $validator)
+    public function author(ValidatorInterface $validator): Response
     {
         $author = new Author();
 
@@ -215,7 +199,9 @@ Inside the template, you can output the list of errors exactly as needed:
 .. note::
 
     Each validation error (called a "constraint violation"), is represented by
-    a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
+    a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object. This
+    object allows you, among other things, to get the constraint that caused this
+    violation thanks to the ``ConstraintViolation::getConstraint()`` method.
 
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
@@ -230,14 +216,6 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
-
-.. versionadded:: 5.1
-
-    ``Validation::createCallable()`` was introduced in Symfony 5.1.
-
-.. versionadded:: 5.3
-
-    ``Validation::createIsValidCallable()`` was introduced in Symfony 5.3.
 
 .. _validation-constraints:
 
@@ -278,27 +256,6 @@ literature genre mostly associated with the author, which can be set to either
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Choice(
-             *     choices = {"fiction", "non-fiction"},
-             *     message = "Choose a valid genre."
-             * )
-             */
-            private $genre;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -313,7 +270,7 @@ literature genre mostly associated with the author, which can be set to either
                 choices: ['fiction', 'non-fiction'],
                 message: 'Choose a valid genre.',
             )]
-            private $genre;
+            private string $genre;
 
             // ...
         }
@@ -362,11 +319,11 @@ literature genre mostly associated with the author, which can be set to either
 
         class Author
         {
-            private $genre;
+            private string $genre;
 
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 // ...
 
@@ -386,24 +343,6 @@ options can be specified in this way.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Choice({"fiction", "non-fiction"})
-             */
-            private $genre;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -415,7 +354,7 @@ options can be specified in this way.
         class Author
         {
             #[Assert\Choice(['fiction', 'non-fiction'])]
-            private $genre;
+            private string $genre;
 
             // ...
         }
@@ -461,9 +400,9 @@ options can be specified in this way.
 
         class Author
         {
-            private $genre;
+            private string $genre;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 // ...
 
@@ -487,7 +426,7 @@ Constraints in Form Classes
 Constraints can be defined while building the form via the ``constraints`` option
 of the form fields::
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('myField', TextType::class, [
@@ -520,22 +459,6 @@ class to have at least 3 characters.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(min=3)
-             */
-            private $firstName;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -547,7 +470,7 @@ class to have at least 3 characters.
         {
             #[Assert\NotBlank]
             #[Assert\Length(min: 3)]
-            private $firstName;
+            private string $firstName;
         }
 
     .. code-block:: yaml
@@ -590,9 +513,9 @@ class to have at least 3 characters.
 
         class Author
         {
-            private $firstName;
+            private string $firstName;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
                 $metadata->addPropertyConstraint(
@@ -624,25 +547,6 @@ this method must return ``true``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\IsTrue(message="The password cannot match your first name")
-             */
-            public function isPasswordSafe()
-            {
-                // ... return true or false
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -654,7 +558,7 @@ this method must return ``true``:
         class Author
         {
             #[Assert\IsTrue(message: 'The password cannot match your first name')]
-            public function isPasswordSafe()
+            public function isPasswordSafe(): bool
             {
                 // ... return true or false
             }
@@ -697,7 +601,7 @@ this method must return ``true``:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue([
                     'message' => 'The password cannot match your first name',
@@ -707,7 +611,7 @@ this method must return ``true``:
 
 Now, create the ``isPasswordSafe()`` method and include the logic you need::
 
-    public function isPasswordSafe()
+    public function isPasswordSafe(): bool
     {
         return $this->firstName !== $this->password;
     }
@@ -741,15 +645,11 @@ properties even if the child properties override those constraints**. Symfony
 will always merge the parent constraints for each property.
 
 You can't change this behavior, but you can overcome it by defining the parent
-and the child contraints in different :doc:`validation groups </validation/groups>`
+and the child constraints in different :doc:`validation groups </validation/groups>`
 and then select the appropriate group when validating each object.
 
 Debugging the Constraints
 -------------------------
-
-.. versionadded:: 5.2
-
-    The ``debug:validator`` command was introduced in Symfony 5.2.
 
 Use the ``debug:validator`` command to list the validation constraints of a
 given class:

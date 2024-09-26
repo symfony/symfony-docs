@@ -60,7 +60,7 @@ follows:
                     supports:
                         - App\Entity\BlogPost
                     initial_marking: draft
-                    places:
+                    places:          # defining places manually is optional
                         - draft
                         - reviewed
                         - rejected
@@ -97,10 +97,13 @@ follows:
                     </framework:marking-store>
                     <framework:support>App\Entity\BlogPost</framework:support>
                     <framework:initial-marking>draft</framework:initial-marking>
+
+                    <!-- defining places manually is optional -->
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
+
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
                         <framework:to>reviewed</framework:to>
@@ -123,7 +126,7 @@ follows:
         use App\Entity\BlogPost;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             $blogPublishing
                 ->type('workflow') // or 'state_machine'
@@ -135,6 +138,7 @@ follows:
                 ->type('method')
                 ->property('currentPlace');
 
+            // defining places manually is optional
             $blogPublishing->place()->name('draft');
             $blogPublishing->place()->name('reviewed');
             $blogPublishing->place()->name('rejected');
@@ -168,6 +172,17 @@ follows:
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
 
+.. tip::
+
+    You can omit the ``places`` option if your transitions define all the places
+    that are used in the workflow. Symfony will automatically extract the places
+    from the transitions.
+
+    .. versionadded:: 7.1
+
+        The support for omitting the ``places`` option was introduced in
+        Symfony 7.1.
+
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
@@ -176,23 +191,54 @@ The configured property will be used via its implemented getter/setter methods b
     class BlogPost
     {
         // the configured marking store property must be declared
-        private $currentPlace;
-        private $title;
-        private $content;
+        private string $currentPlace;
+        private string $title;
+        private string $content;
 
         // getter/setter methods must exist for property access by the marking store
-        public function getCurrentPlace()
+        public function getCurrentPlace(): string
         {
             return $this->currentPlace;
         }
 
-        public function setCurrentPlace($currentPlace, $context = [])
+        public function setCurrentPlace(string $currentPlace, array $context = []): void
         {
             $this->currentPlace = $currentPlace;
         }
 
         // you don't need to set the initial marking in the constructor or any other method;
         // this is configured in the workflow with the 'initial_marking' option
+    }
+
+It is also possible to use public properties for the marking store. The above
+class would become the following::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    class BlogPost
+    {
+        // the configured marking store property must be declared
+        public string $currentPlace;
+        public string $title;
+        public string $content;
+    }
+
+When using public properties, context is not supported. In order to support it,
+you must declare a setter to write your property::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    class BlogPost
+    {
+        public string $currentPlace;
+        // ...
+
+        public function setCurrentPlace(string $currentPlace, array $context = []): void
+        {
+            // assign the property and do something with the context
+        }
     }
 
 .. note::
@@ -248,6 +294,41 @@ what actions are allowed on a blog post::
     // See a specific available transition for the post in the current state
     $transition = $workflow->getEnabledTransition($post, 'publish');
 
+Using a multiple state marking store
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you are creating a :doc:`workflow </workflow/workflow-and-state-machine>`,
+your marking store may need to contain multiple places at the same time. That's why,
+if you are using Doctrine, the matching column definition should use the type ``json``::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    use Doctrine\DBAL\Types\Types;
+    use Doctrine\ORM\Mapping as ORM;
+
+    #[ORM\Entity]
+    class BlogPost
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
+        private int $id;
+
+        #[ORM\Column(type: Types::JSON)]
+        private array $currentPlaces;
+
+        // ...
+    }
+
+.. caution::
+
+    You should not use the type ``simple_array`` for your marking store. Inside
+    a multiple state marking store, places are stored as keys with a value of one,
+    such as ``['draft' => 1]``. If the marking store contains only one place,
+    this Doctrine type will store its value only as a string, resulting in the
+    loss of the object's current place.
+
 Accessing the Workflow in a Class
 ---------------------------------
 
@@ -261,15 +342,13 @@ machine type, use ``camelCased workflow name + StateMachine``::
 
     class MyClass
     {
-        private $blogPublishingWorkflow;
-
-        // Symfony will inject the 'blog_publishing' workflow configured before
-        public function __construct(WorkflowInterface $blogPublishingWorkflow)
-        {
-            $this->blogPublishingWorkflow = $blogPublishingWorkflow;
+        public function __construct(
+            // Symfony will inject the 'blog_publishing' workflow configured before
+            private WorkflowInterface $blogPublishingWorkflow,
+        ) {
         }
 
-        public function toReview(BlogPost $post)
+        public function toReview(BlogPost $post): void
         {
             // Update the currentState on the post
             try {
@@ -281,10 +360,62 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
+To get the enabled transition of a Workflow, you can use
+:method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
+method.
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
+    method was introduced in Symfony 7.1.
+
+Workflows can also be injected thanks to their name and the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
+attribute::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Component\Workflow\WorkflowInterface;
+
+    class MyClass
+    {
+        public function __construct(
+            #[Target('blog_publishing')]
+            private WorkflowInterface $workflow
+        ) {
+        }
+
+        // ...
+    }
+
+This allows you to decorrelate the argument name of any implementation
+name.
+
+.. tip::
+
+    If you want to retrieve all workflows, for documentation purposes for example,
+    you can :doc:`inject all services </service_container/service_subscribers_locators>`
+    with the following tag:
+
+    * ``workflow``: all workflows and all state machine;
+    * ``workflow.workflow``: all workflows;
+    * ``workflow.state_machine``: all state machines.
+
+    Note that workflow metadata are attached to tags under the ``metadata`` key,
+    giving you more context and information about the workflow at disposal.
+    Learn more about :ref:`tag attributes <tags_additional-attributes>` and
+    :ref:`storing workflow metadata <workflow_storing-metadata>`.
+
+    .. versionadded:: 7.1
+
+        The attached configuration to the tag was introduced in Symfony 7.1.
+
 .. tip::
 
     You can find the list of available workflow services with the
     ``php bin/console debug:autowiring workflow`` command.
+
+.. _workflow_using-events:
 
 Using Events
 ------------
@@ -380,22 +511,6 @@ order:
 
         $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 
-    .. versionadded:: 5.1
-
-        The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    In Symfony 5.2, the context is customizable for all events except for
-    ``workflow.guard`` events, which will not receive the custom ``$context``::
-
-        // $context must be an array
-        $context = ['context_key' => 'context_value'];
-        $workflow->apply($subject, $transitionName, $context);
-
-        // in an event listener
-        $context = $event->getContext(); // returns ['context']
-
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
@@ -416,17 +531,16 @@ workflow leaves a place::
     use Psr\Log\LoggerInterface;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Workflow\Event\Event;
+    use Symfony\Component\Workflow\Event\LeaveEvent;
 
     class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
-        public function onLeave(Event $event)
+        public function onLeave(Event $event): void
         {
             $this->logger->alert(sprintf(
                 'Blog post (id: "%s") performed transition "%s" from "%s" to "%s"',
@@ -437,13 +551,26 @@ workflow leaves a place::
             ));
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
-                'workflow.blog_publishing.leave' => 'onLeave',
+                LeaveEvent::getName('blog_publishing') => 'onLeave',
+                // if you prefer, you can write the event name manually like this:
+                // 'workflow.blog_publishing.leave' => 'onLeave',
             ];
         }
     }
+
+.. tip::
+
+    All built-in workflow events define the ``getName(?string $workflowName, ?string $transitionOrPlaceName)``
+    method to build the full event name without having to deal with strings.
+    You can also use this method in your custom events via the
+    :class:`Symfony\\Component\\Workflow\\Event\\EventNameTrait`.
+
+    .. versionadded:: 7.1
+
+        The ``getName()`` method was introduced in Symfony 7.1.
 
 If some listeners update the context during a transition, you can retrieve
 it via the marking::
@@ -453,9 +580,35 @@ it via the marking::
     // contains the new value
     $marking->getContext();
 
-.. versionadded:: 5.4
+It is also possible to listen to these events by declaring event listeners
+with the following attributes:
 
-    The ability to get the new value from the marking was introduced in Symfony 5.4.
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsAnnounceListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsCompletedListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsEnterListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsEnteredListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsGuardListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsLeaveListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsTransitionListener`
+
+These attributes do work like the
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+attributes::
+
+    class ArticleWorkflowEventListener
+    {
+        #[AsTransitionListener(workflow: 'my-workflow', transition: 'published')]
+        public function onPublishedTransition(TransitionEvent $event): void
+        {
+            // ...
+        }
+
+        // ...
+    }
+
+You may refer to the documentation about
+:ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
+for further use.
 
 .. _workflow-usage-guard-events:
 
@@ -484,7 +637,7 @@ missing a title::
 
     class BlogPostReviewSubscriber implements EventSubscriberInterface
     {
-        public function guardReview(GuardEvent $event)
+        public function guardReview(GuardEvent $event): void
         {
             /** @var BlogPost $post */
             $post = $event->getSubject();
@@ -495,7 +648,7 @@ missing a title::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.guard.to_review' => ['guardReview'],
@@ -503,18 +656,10 @@ missing a title::
         }
     }
 
-.. versionadded:: 5.1
-
-    The optional second argument of ``setBlocked()`` was introduced in Symfony 5.1.
-
 .. _workflow-chosing-events-to-dispatch:
 
 Choosing which Events to Dispatch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    Ability to choose which events to dispatch was introduced in Symfony 5.2.
 
 If you prefer to control which events are fired when performing each transition,
 use the ``events_to_dispatch`` configuration option. This option does not apply
@@ -565,7 +710,7 @@ to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
 
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
@@ -606,13 +751,7 @@ events specified in the workflow configuration. In the above example the
 ``workflow.leave`` event will not be fired, even if it has been specified as an
 event to be dispatched for all transitions in the workflow configuration.
 
-.. versionadded:: 5.1
-
-    The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The constants for other events (as seen below) were introduced in Symfony 5.2.
+These are all the available constants:
 
     * ``Workflow::DISABLE_LEAVE_EVENT``
     * ``Workflow::DISABLE_TRANSITION_EVENT``
@@ -745,7 +884,7 @@ transition. The value of this option is any valid expression created with the
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             // ... previous configuration
 
@@ -790,7 +929,7 @@ place::
 
     class BlogPostPublishSubscriber implements EventSubscriberInterface
     {
-        public function guardPublish(GuardEvent $event)
+        public function guardPublish(GuardEvent $event): void
         {
             $eventTransition = $event->getTransition();
             $hourLimit = $event->getMetadata('hour_limit', $eventTransition);
@@ -805,13 +944,96 @@ place::
             $event->addTransitionBlocker(new TransitionBlocker($explanation , '0'));
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.guard.publish' => ['guardPublish'],
             ];
         }
     }
+
+Creating Your Own Marking Store
+-------------------------------
+
+You may need to implement your own store to execute some additional logic
+when the marking is updated. For example, you may have some specific needs
+to store the marking on certain workflows. To do this, you need to implement
+the
+:class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`::
+
+    namespace App\Workflow\MarkingStore;
+
+    use Symfony\Component\Workflow\Marking;
+    use Symfony\Component\Workflow\MarkingStore\MarkingStoreInterface;
+
+    final class BlogPostMarkingStore implements MarkingStoreInterface
+    {
+        /**
+         * @param BlogPost $subject
+         */
+        public function getMarking(object $subject): Marking
+        {
+            return new Marking([$subject->getCurrentPlace() => 1]);
+        }
+
+        /**
+         * @param BlogPost $subject
+         */
+        public function setMarking(object $subject, Marking $marking, array $context = []): void
+        {
+            $marking = key($marking->getPlaces());
+            $subject->setCurrentPlace($marking);
+        }
+    }
+
+Once your marking store is implemented, you can configure your workflow to use
+it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # ...
+                    marking_store:
+                        service: 'App\Workflow\MarkingStore\BlogPostMarkingStore'
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <!-- ... -->
+                    <framework:marking-store service="App\Workflow\MarkingStore\BlogPostMarkingStore"/>
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        use App\Workflow\MarkingStore\ReflectionMarkingStore;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ...
+
+            $blogPublishing->markingStore()
+                ->service(BlogPostMarkingStore::class);
+        };
 
 Usage in Twig
 -------------
@@ -873,6 +1095,8 @@ The following example shows these functions in action:
     {% for blocker in workflow_transition_blockers(post, 'publish') %}
         <span class="error">{{ blocker.message }}</span>
     {% endfor %}
+
+.. _workflow_storing-metadata:
 
 Storing Metadata
 ----------------
@@ -956,7 +1180,7 @@ be only the title of the workflow or very complex objects:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             // ... previous configuration
 
@@ -999,7 +1223,7 @@ Then you can access this metadata in your controller as follows::
     use Symfony\Component\Workflow\WorkflowInterface;
     // ...
 
-    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post)
+    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post): Response
     {
         $title = $blogPublishingWorkflow
             ->getMetadataStore()

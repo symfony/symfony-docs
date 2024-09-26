@@ -105,10 +105,6 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn encore dev --config-name firstConfig
-
-    # if you use the npm package manager
     $ npm run dev -- --config-name firstConfig
 
 Next, define the output directories of each build:
@@ -147,6 +143,60 @@ functions to specify which build to use:
     {# Using the entrypoints.json file located in ./public/second_build #}
     {{ encore_entry_script_tags('mobile', null, 'secondConfig') }}
     {{ encore_entry_link_tags('mobile', null, 'secondConfig') }}
+
+Avoid Missing CSS When Rendering Multiple Templates
+---------------------------------------------------
+
+When you render two or more templates in the same request, such as two emails,
+you should call the ``reset()`` method on the ``EntrypointLookupInterface`` interface.
+To do this, inject the ``EntrypointLookupInterface`` interface::
+
+    public function __construct(EntrypointLookupInterface $entryPointLookup) {}
+
+    public function send() {
+        $this->twig->render($emailOne);
+        $this->entryPointLookup->reset();
+        $this->render($emailTwo);
+    }
+
+If you are using multiple Webpack configurations (e.g. one for the admin and one
+for emails) you will need to inject the right ``EntrypointLookupInterface`` service.
+Use the following command to find the right service:
+
+.. code-block:: terminal
+
+    $ php bin/console console debug:container entrypoint_lookup
+
+    # You will see a result similar to this:
+    Select one of the following services to display its information:
+    [0] webpack_encore.entrypoint_lookup_collection
+    [1] webpack_encore.entrypoint_lookup.cache_warmer
+    [2] webpack_encore.entrypoint_lookup[_default]
+    [3] webpack_encore.entrypoint_lookup[admin]
+    [4] webpack_encore.entrypoint_lookup[email]
+
+In this example, the configuration related to the ``email`` configuration is
+the one called ``webpack_encore.entrypoint_lookup[email]``.
+
+To inject this service into your class, use the ``bind`` option:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        _defaults
+            bind:
+                Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface $entryPointLookupEmail: '@webpack_encore.entrypoint_lookup[email]'
+
+Now you can inject your service into your class::
+
+    public function __construct(EntrypointLookupInterface $entryPointLookupEmail) {}
+
+    public function send() {
+        $this->twig->render($emailOne);
+        $this->entryPointLookupEmail->reset();
+        $this->render($emailTwo);
+    }
 
 Generating a Webpack Configuration Object without using the Command-Line Interface
 ----------------------------------------------------------------------------------
@@ -236,7 +286,49 @@ The following loaders are configurable with ``configureLoaderRule()``:
   - ``typescript`` (alias ``ts``)
   - ``handlebars``
 
+Configuring Aliases When Importing or Requiring Modules
+-------------------------------------------------------
+
+The `Webpack resolve.alias option`_ allows to create aliases to simplify the
+``import`` or ``require`` of certain modules (e.g. by aliasing commonly used ``src/``
+folders). In Webpack Encore you can use this option via the ``addAliases()`` method:
+
+.. code-block:: javascript
+
+    Encore.addAliases({
+        Utilities: path.resolve(__dirname, 'src/utilities/'),
+        Templates: path.resolve(__dirname, 'src/templates/')
+    })
+
+With the above config, you could now import certain modules more concisely:
+
+.. code-block:: diff
+
+    -import Utility from '../../utilities/utility';
+    +import Utility from 'Utilities/utility';
+
+Excluding Some Dependencies from Output Bundles
+-----------------------------------------------
+
+The `Webpack externals option`_ allows to prevent bundling of certain imported
+packages and instead retrieve those external dependencies at runtime. This feature
+is mostly useful for JavaScript library developers, so you probably won't need it.
+
+In Webpack Encore you can use this option via the ``addExternals()`` method:
+
+.. code-block:: javascript
+
+    // this won't include jQuery and React in the output bundles generated
+    // by Webpack Encore. You'll need to load those dependencies yourself
+    // (e.g with a `<script>` tag) to make the application or website work.
+    Encore.addExternals({
+        jquery: 'jQuery',
+        react: 'react'
+    })
+
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`array of configurations`: https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations
 .. _`Karma`: https://karma-runner.github.io
 .. _`Watching Options`: https://webpack.js.org/configuration/watch/#watchoptions
+.. _`Webpack resolve.alias option`: https://webpack.js.org/configuration/resolve/#resolvealias
+.. _`Webpack externals option`: https://webpack.js.org/configuration/externals/

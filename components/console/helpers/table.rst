@@ -154,6 +154,27 @@ The output of this command will be:
     |                (the rest of the rows...)            |
     +-------+------------+--------------------------------+
 
+By default, table contents are displayed horizontally. You can change this behavior
+via the :method:`Symfony\\Component\\Console\\Helper\\Table::setVertical` method::
+
+    // ...
+    $table->setVertical();
+    $table->render();
+
+The output of this command will be:
+
+.. code-block:: terminal
+
+    +------------------------------+
+    |   ISBN: 99921-58-10-7        |
+    |  Title: Divine Comedy        |
+    | Author: Dante Alighieri      |
+    |------------------------------|
+    |   ISBN: 9971-5-0210-0        |
+    |  Title: A Tale of Two Cities |
+    | Author: Charles Dickens      |
+    +------------------------------+
+
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 
@@ -199,7 +220,7 @@ You can also set the style to ``box``::
 
 which outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
     ┌───────────────┬──────────────────────────┬──────────────────┐
     │ ISBN          │ Title                    │ Author           │
@@ -217,7 +238,7 @@ You can also set the style to ``box-double``::
 
 which outputs:
 
-.. code-block:: text
+.. code-block:: terminal
 
     ╔═══════════════╤══════════════════════════╤══════════════════╗
     ║ ISBN          │ Title                    │ Author           ║
@@ -268,10 +289,6 @@ Here is a full list of things you can customize:
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.
-
-.. versionadded:: 5.2
-
-    The option to style table cells was introduced in Symfony 5.2.
 
 In addition to the built-in table styles, you can also apply different styles
 to each table cell via :class:`Symfony\\Component\\Console\\Helper\\TableCellStyle`::
@@ -432,3 +449,24 @@ This will display the following table in the terminal:
     | Love    |
     | Symfony |
     +---------+
+
+.. tip::
+
+    You can create multiple lines using the :method:`Symfony\\Component\\Console\\Helper\\Table::addRows` method::
+
+        // ...
+        $table->addRows([
+            ['Hello', 'World'],
+            ['Love', 'Symfony'],
+        ]);
+        $table->render();
+        // ...
+
+    This will display:
+
+    .. code-block:: terminal
+
+        +-------+---------+
+        | Hello | World   |
+        | Love  | Symfony |
+        +-------+---------+

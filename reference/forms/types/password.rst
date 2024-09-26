@@ -8,8 +8,6 @@ The ``PasswordType`` field renders an input password text box.
 +---------------------------+------------------------------------------------------------------------+
 | Default invalid message   | The password is invalid.                                               |
 +---------------------------+------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                    |
-+---------------------------+------------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                          |
 +---------------------------+------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |
@@ -31,6 +29,46 @@ with the ``value`` attribute set to its true value only upon submission.
 
 If you want to render your password field *with* the password value already
 entered into the box, set this to false and submit the form.
+
+``hash_property_path``
+~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+If set, the password will be hashed using the
+:doc:`PasswordHasher component </security/passwords>` and stored in the
+property defined by the given :doc:`PropertyAccess expression </components/property_access>`.
+
+Data passed to the form must be a
+:class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
+object.
+
+.. caution::
+
+    To minimize the risk of leaking the plain password, this option can
+    only be used with the :ref:`"mapped" option <reference-form-password-mapped>`
+    set to ``false``::
+
+        $builder->add('plainPassword', PasswordType::class, [
+            'hash_property_path' => 'password',
+            'mapped' => false,
+        ]);
+
+    or if you want to use it with the ``RepeatedType``::
+
+        $builder->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'first_options'  => ['label' => 'Password', 'hash_property_path' => 'password'],
+            'second_options' => ['label' => 'Repeat Password'],
+            'mapped' => false,
+        ]);
+
+``toggle``
+~~~~~~~~~~
+**type**: ``boolean`` **requires**: `symfony/ux-toggle-password`_
+
+Adds "Show"/"Hide" links to the field which toggle the password field to plaintext when clicked.
+See `symfony/ux-toggle-password`_ for more details.
 
 Overridden Options
 ------------------
@@ -76,10 +114,16 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
+
+.. _reference-form-password-mapped:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. _`symfony/ux-toggle-password`: https://symfony.com/bundles/ux-toggle-password/current/index.html

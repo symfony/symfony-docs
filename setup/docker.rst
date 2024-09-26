@@ -19,7 +19,7 @@ Flex Recipes & Docker Configuration
 
 The :ref:`Flex recipe <symfony-flex>` for some packages also include Docker configuration.
 For example, when you run ``composer require doctrine`` (to get ``symfony/orm-pack``),
-your ``docker-compose.yml`` file will automatically be updated to include a
+your ``compose.yaml`` file will automatically be updated to include a
 ``database`` service.
 
 The first time you install a recipe containing Docker config, Flex will ask you
@@ -51,4 +51,10 @@ If you're using the :ref:`symfony binary web server <symfony-local-web-server>` 
 then it can automatically detect your Docker services and expose them as environment
 variables. See :ref:`symfony-server-docker`.
 
+.. note::
+
+    macOS users need to explicitly allow the default Docker socket to be used
+    for the Docker integration to work `as explained in the Docker documentation`_.
+
 .. _`https://github.com/dunglas/symfony-docker`: https://github.com/dunglas/symfony-docker
+.. _`as explained in the Docker documentation`: https://docs.docker.com/desktop/mac/permission-requirements/

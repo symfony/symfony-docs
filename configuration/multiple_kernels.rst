@@ -53,7 +53,7 @@ requirements, so it's up to you to decide which best suits your project.
 
 First, create a new ``apps`` directory at the root of your project, which will
 hold all the necessary applications. Each application will follow a simplified
-directory structure like the one described in :ref:`Symfony Best Practice </best_practices>`:
+directory structure like the one described in :doc:`Symfony Best Practice </best_practices>`:
 
 .. code-block:: text
 
@@ -117,7 +117,10 @@ resources::
     // src/Kernel.php
     namespace Shared;
 
-    // ...
+    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
     class Kernel extends BaseKernel
     {
@@ -205,7 +208,7 @@ resources::
             }
 
             if (false !== ($fileName = (new \ReflectionObject($this))->getFileName())) {
-                $routes->import($fileName, 'annotation');
+                $routes->import($fileName, 'attribute');
             }
         }
     }
@@ -244,7 +247,7 @@ application::
     use Shared\Kernel;
     // ...
 
-    return function (array $context) {
+    return function (array $context): Kernel {
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG'], $context['APP_ID']);
     };
 
@@ -257,9 +260,11 @@ the application ID to run under CLI context::
 
     // bin/console
     use Shared\Kernel;
-    // ...
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Input\InputOption;
 
-    return function (InputInterface $input, array $context) {
+    return function (InputInterface $input, array $context): Application {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG'], $input->getParameterOption(['--id', '-i'], $context['APP_ID']));
 
         $application = new Application($kernel);
@@ -319,7 +324,7 @@ Rendering Templates
 -------------------
 
 Let's consider that you need to create another app called ``admin``. If you
-follow the :ref:`Symfony Best Practices </best_practices>`, the shared Kernel
+follow the :doc:`Symfony Best Practices </best_practices>`, the shared Kernel
 templates will be located in the ``templates/`` directory at the project's root.
 For admin-specific templates, you can create a new directory
 ``apps/admin/templates/`` which you will need to manually configure under the

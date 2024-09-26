@@ -41,7 +41,7 @@ When overriding an existing definition, the original service is lost:
         use App\Mailer;
         use App\NewMailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class);
@@ -58,6 +58,20 @@ it in the new one. This configuration replaces ``App\Mailer`` with a new one,
 but keeps a reference of the old one as ``.inner``:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/DecoratingMailer.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+
+        #[AsDecorator(decorates: Mailer::class)]
+        class DecoratingMailer
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -98,7 +112,7 @@ but keeps a reference of the old one as ``.inner``:
         use App\DecoratingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class);
@@ -121,6 +135,27 @@ inject the decorated service explicitly (the ID of the decorated service is
 automatically changed to ``'.inner'``):
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/DecoratingMailer.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
+
+        #[AsDecorator(decorates: Mailer::class)]
+        class DecoratingMailer
+        {
+            public function __construct(
+                #[AutowireDecorated]
+                private object $inner,
+            ) {
+            }
+
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -161,7 +196,7 @@ automatically changed to ``'.inner'``):
         use App\DecoratingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class);
@@ -169,14 +204,8 @@ automatically changed to ``'.inner'``):
             $services->set(DecoratingMailer::class)
                 ->decorate(Mailer::class)
                 // pass the old service as an argument
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([service('.inner')]);
         };
-
-.. versionadded:: 5.1
-
-    The special ``.inner`` value was introduced in Symfony 5.1. In previous
-    versions you needed to use: ``decorating_service_id + '.inner'``.
 
 .. tip::
 
@@ -233,7 +262,7 @@ automatically changed to ``'.inner'``):
             use App\DecoratingMailer;
             use App\Mailer;
 
-            return function(ContainerConfigurator $container) {
+            return function(ContainerConfigurator $container): void {
                 $services = $container->services();
 
                 $services->set(Mailer::class);
@@ -251,6 +280,35 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
 ``0`` and higher priorities mean that decorators will be applied earlier.
 
 .. configuration-block::
+
+        .. code-block:: php-attributes
+
+            // ...
+            use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+            use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
+
+            #[AsDecorator(decorates: Foo::class, priority: 5)]
+            class Bar
+            {
+                public function __construct(
+                    #[AutowireDecorated]
+                    private $inner,
+                ) {
+                }
+                // ...
+            }
+
+            #[AsDecorator(decorates: Foo::class, priority: 1)]
+            class Baz
+            {
+                public function __construct(
+                    #[AutowireDecorated]
+                    private $inner,
+                ) {
+                }
+
+                // ...
+            }
 
     .. code-block:: yaml
 
@@ -295,7 +353,7 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(\Foo::class);
@@ -308,7 +366,6 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
                 ->decorate(\Foo::class, null, 1)
                 ->args([service('.inner')]);
         };
-
 
 The generated code will be the following::
 
@@ -382,7 +439,7 @@ ordered services, each one decorating the next:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $container->services()
                 ->stack('decorated_foo_stack', [
                     inline_service(\Baz::class)->args([service('.inner')]),
@@ -465,7 +522,7 @@ advanced example of composition:
         use App\Decorated;
         use App\Decorator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $container->services()
                 ->set('some_decorator', Decorator::class)
 
@@ -530,10 +587,6 @@ The result will be::
 
     The ``Baz`` frame id will now be ``.decorated_foo_stack.second``.
 
-.. versionadded:: 5.1
-
-    The ability to define ``stack`` was introduced in Symfony 5.1.
-
 Control the Behavior When the Decorated Service Does Not Exist
 --------------------------------------------------------------
 
@@ -547,6 +600,24 @@ Three different behaviors are available:
 * ``null``: The container will keep the decorator service and will set the decorated one to ``null``.
 
 .. configuration-block::
+
+        .. code-block:: php-attributes
+
+            // ...
+            use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+            use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
+            use Symfony\Component\DependencyInjection\ContainerInterface;
+
+            #[AsDecorator(decorates: Mailer::class, onInvalid: ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]
+            class Bar
+            {
+                public function __construct(
+                    private #[AutowireDecorated] $inner,
+                ) {
+                }
+
+                // ...
+            }
 
     .. code-block:: yaml
 
@@ -583,7 +654,7 @@ Three different behaviors are available:
 
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class);
@@ -606,11 +677,9 @@ Three different behaviors are available:
 
         class DecoratorService
         {
-            private $decorated;
-
-            public function __construct(?OptionalService $decorated)
-            {
-                $this->decorated = $decorated;
+            public function __construct(
+                private ?OptionalService $decorated,
+            ) {
             }
 
             public function tellInterestingStuff(): string

@@ -78,7 +78,7 @@ exists in your project::
         private int $age;
         private string $name;
         private bool $sportsperson;
-        private ?\DateTime $createdAt;
+        private ?\DateTimeInterface $createdAt;
 
         // Getters
         public function getAge(): int
@@ -91,7 +91,7 @@ exists in your project::
             return $this->name;
         }
 
-        public function getCreatedAt()
+        public function getCreatedAt(): ?\DateTimeInterface
         {
             return $this->createdAt;
         }
@@ -118,7 +118,7 @@ exists in your project::
             $this->sportsperson = $sportsperson;
         }
 
-        public function setCreatedAt(\DateTime $createdAt = null): void
+        public function setCreatedAt(?\DateTimeInterface $createdAt = null): void
         {
             $this->createdAt = $createdAt;
         }
@@ -233,7 +233,7 @@ data.
 Context
 -------
 
-Many Serializer features can be configured :doc:`using a context </serializer#serializer-context>`.
+Many Serializer features can be configured :ref:`using a context <serializer_serializer-context>`.
 
 .. _component-serializer-attributes-groups:
 
@@ -249,35 +249,34 @@ Assume you have the following plain-old-PHP object::
 
     class MyObj
     {
-        public $foo;
+        public string $foo;
 
-        private $bar;
+        private string $bar;
 
-        public function getBar()
+        public function getBar(): string
         {
             return $this->bar;
         }
 
-        public function setBar($bar)
+        public function setBar($bar): string
         {
             return $this->bar = $bar;
         }
     }
 
-The definition of serialization can be specified using annotations, XML
-or YAML. The :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
+The definition of serialization can be specified using attributes, XML or YAML.
+The :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 that will be used by the normalizer must be aware of the format to use.
 
 The following code shows how to initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 for each format:
 
-* Annotations in PHP files::
+* Attributes in PHP files::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
 * YAML files::
 
@@ -293,40 +292,11 @@ for each format:
 
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
-.. _component-serializer-attributes-groups-annotations:
+.. _component-serializer-attributes-groups-attributes:
 
 Then, create your groups definition:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace Acme;
-
-        use Symfony\Component\Serializer\Annotation\Groups;
-
-        class MyObj
-        {
-            /**
-             * @Groups({"group1", "group2"})
-             */
-            public $foo;
-
-            /**
-             * @Groups({"group4"})
-             */
-            public $anotherProperty;
-
-            /**
-             * @Groups("group3")
-             */
-            public function getBar() // is* methods are also supported
-            {
-                return $this->bar;
-            }
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -337,10 +307,10 @@ Then, create your groups definition:
         class MyObj
         {
             #[Groups(['group1', 'group2'])]
-            public $foo;
+            public string $foo;
 
             #[Groups(['group4'])]
-            public $anotherProperty;
+            public string $anotherProperty;
 
             #[Groups(['group3'])]
             public function getBar() // is* methods are also supported
@@ -388,6 +358,7 @@ Then, create your groups definition:
 
 You are now able to serialize only attributes in the groups you want::
 
+    use Acme\MyObj;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
@@ -404,7 +375,7 @@ You are now able to serialize only attributes in the groups you want::
 
     $obj2 = $serializer->denormalize(
         ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
-        'MyObj',
+        MyObj::class,
         null,
         ['groups' => ['group1', 'group3']]
     );
@@ -413,15 +384,11 @@ You are now able to serialize only attributes in the groups you want::
     // To get all groups, use the special value `*` in `groups`
     $obj3 = $serializer->denormalize(
         ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
-        'MyObj',
+        MyObj::class,
         null,
         ['groups' => ['*']]
     );
     // $obj2 = MyObj(foo: 'foo', anotherProperty: 'anotherProperty', bar: 'bar')
-
-.. versionadded:: 5.2
-
-    The ``*`` special value for ``groups`` was introduced in Symfony 5.2.
 
 .. _ignoring-attributes-when-serializing:
 
@@ -436,15 +403,15 @@ It is also possible to serialize only a set of specific attributes::
 
     class User
     {
-        public $familyName;
-        public $givenName;
-        public $company;
+        public string $familyName;
+        public string $givenName;
+        public Company $company;
     }
 
     class Company
     {
-        public $name;
-        public $address;
+        public string $name;
+        public string $address;
     }
 
     $company = new Company();
@@ -471,29 +438,13 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-All attributes are included by default when serializing objects. There are two
-options to ignore some of those attributes.
+All accessible attributes are included by default when serializing objects.
+There are two options to ignore some of those attributes.
 
-Option 1: Using ``@Ignore`` Annotation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 1: Using ``#[Ignore]`` Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Model;
-
-        use Symfony\Component\Serializer\Annotation\Ignore;
-
-        class MyClass
-        {
-            public $foo;
-
-            /**
-             * @Ignore()
-             */
-            public $bar;
-        }
 
     .. code-block:: php-attributes
 
@@ -503,10 +454,10 @@ Option 1: Using ``@Ignore`` Annotation
 
         class MyClass
         {
-            public $foo;
+            public string $foo;
 
             #[Ignore]
-            public $bar;
+            public string $bar;
         }
 
     .. code-block:: yaml
@@ -583,8 +534,8 @@ Given you have the following object::
 
     class Company
     {
-        public $name;
-        public $address;
+        public string $name;
+        public string $address;
     }
 
 And in the serialized form, all attributes must be prefixed by ``org_`` like
@@ -598,15 +549,15 @@ A custom name converter can handle such cases::
 
     class OrgPrefixNameConverter implements NameConverterInterface
     {
-        public function normalize(string $propertyName)
+        public function normalize(string $propertyName): string
         {
             return 'org_'.$propertyName;
         }
 
-        public function denormalize(string $propertyName)
+        public function denormalize(string $propertyName): string
         {
             // removes 'org_' prefix
-            return 'org_' === substr($propertyName, 0, 4) ? substr($propertyName, 4) : $propertyName;
+            return str_starts_with($propertyName, 'org_') ? substr($propertyName, 4) : $propertyName;
         }
     }
 
@@ -660,14 +611,12 @@ processes::
 
     class Person
     {
-        private $firstName;
-
-        public function __construct($firstName)
-        {
-            $this->firstName = $firstName;
+        public function __construct(
+            private string $firstName,
+        ) {
         }
 
-        public function getFirstName()
+        public function getFirstName(): string
         {
             return $this->firstName;
         }
@@ -695,7 +644,7 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
 
@@ -709,27 +658,6 @@ defines a ``Person`` entity with a ``firstName`` property:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        namespace App\Entity;
-
-        use Symfony\Component\Serializer\Annotation\SerializedName;
-
-        class Person
-        {
-            /**
-             * @SerializedName("customer_name")
-             */
-            private $firstName;
-
-            public function __construct($firstName)
-            {
-                $this->firstName = $firstName;
-            }
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         namespace App\Entity;
@@ -738,12 +666,10 @@ defines a ``Person`` entity with a ``firstName`` property:
 
         class Person
         {
-            #[SerializedName('customer_name')]
-            private $firstName;
-
-            public function __construct($firstName)
-            {
-                $this->firstName = $firstName;
+            public function __construct(
+                #[SerializedName('customer_name')]
+                private string $firstName,
+            ) {
             }
 
             // ...
@@ -775,15 +701,48 @@ deserializing objects::
     $serialized = $serializer->serialize(new Person('Kévin'), 'json');
     // {"customer_name": "Kévin"}
 
-Serializing Boolean Attributes
-------------------------------
+.. _serializing-boolean-attributes:
+
+Handling Boolean Attributes And Values
+--------------------------------------
+
+During Serialization
+~~~~~~~~~~~~~~~~~~~~
 
 If you are using isser methods (methods prefixed by ``is``, like
 ``App\Model\Person::isSportsperson()``), the Serializer component will
 automatically detect and use it to serialize related attributes.
 
-The ``ObjectNormalizer`` also takes care of methods starting with ``has`` and
-``get``.
+The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``get``,
+and ``can``.
+
+During Deserialization
+~~~~~~~~~~~~~~~~~~~~~~
+
+PHP considers many different values as true or false. For example, the
+strings ``true``, ``1``, and ``yes`` are considered true, while
+``false``, ``0``, and ``no`` are considered false.
+
+When deserializing, the Serializer component can take care of this
+automatically. This can be done by using the ``AbstractNormalizer::FILTER_BOOL``
+context option::
+
+    use Acme\Person;
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $normalizer = new ObjectNormalizer();
+    $serializer = new Serializer([$normalizer]);
+
+    $data = $serializer->denormalize(['sportsperson' => 'yes'], Person::class, context: [AbstractNormalizer::FILTER_BOOL => true]);
+
+This context makes the deserialization process behave like the
+:phpfunction:`filter_var` function with the ``FILTER_VALIDATE_BOOL`` flag.
+
+.. versionadded:: 7.1
+
+    The ``AbstractNormalizer::FILTER_BOOL`` context option was introduced in Symfony 7.1.
 
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
@@ -798,8 +757,8 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $dateCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
-        return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
+    $dateCallback = function (object $attributeValue, object $object, string $attributeName, ?string $format = null, array $context = []): string {
+        return $attributeValue instanceof \DateTime ? $attributeValue->format(\DateTime::ATOM) : '';
     };
 
     $defaultContext = [
@@ -847,12 +806,12 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     This normalizer leverages the :doc:`PropertyAccess Component </components/property_access>`
     to read and write in the object. It means that it can access to properties
-    directly and through getters, setters, hassers, issers, adders and removers. It supports
-    calling the constructor during the denormalization process.
+    directly and through getters, setters, hassers, issers, canners, adders and removers.
+    It supports calling the constructor during the denormalization process.
 
     Objects are normalized to a map of property names and values (names are
-    generated by removing the ``get``, ``set``, ``has``, ``is``, ``add`` or ``remove`` prefix from
-    the method name and transforming the first letter to lowercase; e.g.
+    generated by removing the ``get``, ``set``, ``has``, ``is``, ``can``, ``add`` or ``remove``
+    prefix from the method name and transforming the first letter to lowercase; e.g.
     ``getFirstName()`` -> ``firstName``).
 
     The ``ObjectNormalizer`` is the most powerful normalizer. It is configured by
@@ -875,6 +834,11 @@ The Serializer component provides several built-in normalizers:
 
     Objects are normalized to a map of property names to property values.
 
+    If you prefer to only normalize certain properties (e.g. only public properties)
+    set the ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and
+    combine the following values: ``PropertyNormalizer::NORMALIZE_PUBLIC``,
+    ``PropertyNormalizer::NORMALIZE_PROTECTED`` or ``PropertyNormalizer::NORMALIZE_PRIVATE``.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 
@@ -890,8 +854,14 @@ The Serializer component provides several built-in normalizers:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
-    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
-    By default, it uses the `RFC3339`_ format.
+    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings,
+    integers or floats. By default, it converts them to strings using the `RFC3339`_ format.
+    To convert the objects to integers or floats, set the serializer context option
+    ``DateTimeNormalizer::CAST_KEY`` to ``int`` or ``float``.
+
+    .. versionadded:: 7.1
+
+        The ``DateTimeNormalizer::CAST_KEY`` context option was introduced in Symfony 7.1.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
     This normalizer converts :phpclass:`DateTimeZone` objects into strings that
@@ -908,10 +878,8 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
     This normalizer converts a \BackedEnum objects into strings or integers.
 
-    .. versionadded:: 5.4
-
-        The ``BackedEnumNormalizer`` was introduced in Symfony 5.4.
-        PHP BackedEnum requires at least PHP 8.1.
+    By default, an exception is thrown when data is not a valid backed enumeration. If you
+    want ``null`` instead, you can set the ``BackedEnumNormalizer::ALLOW_INVALID_VALUES`` option.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
     This normalizer works with classes that implement
@@ -931,7 +899,7 @@ The Serializer component provides several built-in normalizers:
     Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
-    This normalizer converts objects that implement
+    This normalizer converts objects that extend
     :class:`Symfony\\Component\\Uid\\AbstractUid` into strings.
     The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Uuid`
     is the `RFC 4122`_ format (example: ``d9e7a184-5d5b-11ea-a62a-3499710062d0``).
@@ -944,13 +912,14 @@ The Serializer component provides several built-in normalizers:
     Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
-.. versionadded:: 5.2
-
-    The ``UidNormalizer`` was introduced in Symfony 5.2.
-
-.. versionadded:: 5.3
-
-    The ``UidNormalizer`` normalization formats were introduced in Symfony 5.3.
+:class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
+    This normalizer converts objects that implement
+    :class:`Symfony\\Contracts\\Translation\\TranslatableInterface` into
+    translated strings, using the
+    :method:`Symfony\\Contracts\\Translation\\TranslatableInterface::trans`
+    method. You can define the locale to use to translate the object by
+    setting the ``TranslatableNormalizer::NORMALIZATION_LOCALE_KEY`` serializer
+    context option.
 
 .. note::
 
@@ -1003,7 +972,7 @@ faster alternative to the
 
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->services()
                 // ...
                 ->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
@@ -1069,6 +1038,18 @@ context to pass in these options using the key ``json_encode_options`` or
 
     $this->serializer->serialize($data, 'json', ['json_encode_options' => \JSON_PRESERVE_ZERO_FRACTION]);
 
+These are the options available:
+
+===============================  =========================================================================================================== ================================
+Option                           Description                                                                                                 Default
+===============================  ==========================================================================================================  ================================
+``json_decode_associative``      If set to true returns the result as an array, returns a nested ``stdClass`` hierarchy otherwise.           ``false``
+``json_decode_detailed_errors``  If set to true, exceptions thrown on parsing of JSON are more specific. Requires `seld/jsonlint`_ package.  ``false``
+``json_decode_options``          `$flags`_ passed to :phpfunction:`json_decode` function.                                                    ``0``
+``json_encode_options``          `$flags`_ passed to :phpfunction:`json_encode` function.                                                    ``\JSON_PRESERVE_ZERO_FRACTION``
+``json_decode_recursion_depth``  Sets maximum recursion depth.                                                                               ``512``
+===============================  ==========================================================================================================  ================================
+
 The ``CsvEncoder``
 ~~~~~~~~~~~~~~~~~~
 
@@ -1104,13 +1085,10 @@ Option                  Description                                            D
                         with a ``\t`` character
 ``as_collection``       Always returns results as a collection, even if only   ``true``
                         one line is decoded.
-``no_headers``          Disables header in the encoded CSV                     ``false``
+``no_headers``          Setting to ``false`` will use first row as headers.    ``false``
+                        ``true`` generate numeric headers.
 ``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
 ======================= =====================================================  ==========================
-
-.. versionadded:: 5.3
-
-    The ``csv_end_of_line`` option was introduced in Symfony 5.3.
 
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~
@@ -1162,14 +1140,34 @@ the key  ``#comment`` can be used for encoding XML comments::
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
 
+.. note::
+
+    You may need to add some attributes on the root node::
+
+        $encoder = new XmlEncoder();
+        $encoder->encode([
+            '@attribute1' => 'foo',
+            '@attribute2' => 'bar',
+            '#' => ['foo' => ['@bar' => 'value', '#' => 'baz']]
+        ], 'xml');
+
+        // will return:
+        // <?xml version="1.0"?>
+        // <response attribute1="foo" attribute2="bar">
+        // <foo bar="value">baz</foo>
+        // </response>
+
 .. tip::
 
     XML comments are ignored by default when decoding contents, but this
     behavior can be changed with the optional context key ``XmlEncoder::DECODER_IGNORED_NODE_TYPES``.
 
     Data with ``#comment`` keys are encoded to XML comments by default. This can be
-    changed with the optional ``$encoderIgnoredNodeTypes`` argument of the
-    ``XmlEncoder`` class constructor.
+    changed by adding the ``\XML_COMMENT_NODE`` option to the ``XmlEncoder::ENCODER_IGNORED_NODE_TYPES``
+    key of the ``$defaultContext`` of the ``XmlEncoder`` constructor or
+    directly to the ``$context`` argument of the ``encode()`` method::
+
+        $xmlEncoder->encode($array, 'xml', [XmlEncoder::ENCODER_IGNORED_NODE_TYPES => [\XML_COMMENT_NODE]]);
 
 The ``XmlEncoder`` Context Options
 ..................................
@@ -1199,9 +1197,20 @@ Option                          Description                                     
 ``encoder_ignored_node_types``  Array of node types (`DOM XML_* constants`_)       ``[]``
                                 to be ignored while encoding
 ``load_options``                XML loading `options with libxml`_                 ``\LIBXML_NONET | \LIBXML_NOBLANKS``
+``save_options``                XML saving `options with libxml`_                  ``0``
 ``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
                                 generated XML
+``cdata_wrapping``              If set to false, will not wrap any value           ``true``
+                                matching the ``cdata_wrapping_pattern`` regex in
+                                `a CDATA section`_ like following:
+                                ``<![CDATA[...]]>``
+``cdata_wrapping_pattern``      A regular expression pattern to determine if a     ``/[<>&]/``
+                                value should be wrapped in a CDATA section
 ==============================  =================================================  ==========================
+
+.. versionadded:: 7.1
+
+    The ``cdata_wrapping_pattern`` option was introduced in Symfony 7.1.
 
 Example with custom ``context``::
 
@@ -1262,6 +1271,40 @@ Option          Description                                               Defaul
                 to customize the encoding / decoding YAML string
 =============== ========================================================  ==========================
 
+.. _component-serializer-context-builders:
+
+Context Builders
+----------------
+
+Instead of passing plain PHP arrays to the :ref:`serialization context <serializer_serializer-context>`,
+you can use "context builders" to define the context using a fluent interface::
+
+    use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
+    use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+    $initialContext = [
+        'custom_key' => 'custom_value',
+    ];
+
+    $contextBuilder = (new ObjectNormalizerContextBuilder())
+        ->withContext($initialContext)
+        ->withGroups(['group1', 'group2']);
+
+    $contextBuilder = (new CsvEncoderContextBuilder())
+        ->withContext($contextBuilder)
+        ->withDelimiter(';');
+
+    $serializer->serialize($something, 'csv', $contextBuilder->toArray());
+
+.. note::
+
+    The Serializer component provides a context builder
+    for each :ref:`normalizer <component-serializer-normalizers>`
+    and :ref:`encoder <component-serializer-encoders>`.
+
+    You can also :doc:`create custom context builders </serializer/custom_context_builders>`
+    to deal with your context values.
+
 Skipping ``null`` Values
 ------------------------
 
@@ -1270,13 +1313,35 @@ You can change this behavior by setting the ``AbstractObjectNormalizer::SKIP_NUL
 to ``true``::
 
     $dummy = new class {
-        public $foo;
-        public $bar = 'notNull';
+        public ?string $foo = null;
+        public string $bar = 'notNull';
     };
 
     $normalizer = new ObjectNormalizer();
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
+
+Require all Properties
+----------------------
+
+By default, the Serializer will add ``null`` to nullable properties when the parameters for those are not provided.
+You can change this behavior by setting the ``AbstractNormalizer::REQUIRE_ALL_PROPERTIES`` context option
+to ``true``::
+
+    class Dummy
+    {
+        public function __construct(
+            public string $foo,
+            public ?string $bar,
+        ) {
+        }
+    }
+
+    $data = ['foo' => 'notNull'];
+
+    $normalizer = new ObjectNormalizer();
+    $result = $normalizer->denormalize($data, Dummy::class, 'json', [AbstractNormalizer::REQUIRE_ALL_PROPERTIES => true]);
+    // throws Symfony\Component\Serializer\Exception\MissingConstructorArgumentException
 
 Skipping Uninitialized Properties
 ---------------------------------
@@ -1307,11 +1372,6 @@ context option to ``false``::
     with ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` context option set
     to ``false`` will throw an ``\Error`` instance if the given object has uninitialized
     properties as the normalizer cannot read them (directly or via getter/isser methods).
-
-.. versionadded:: 5.4
-
-    The ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` constant was
-    introduced in Symfony 5.4.
 
 .. _component-serializer-handling-circular-references:
 
@@ -1344,10 +1404,6 @@ collect all exceptions at once, and to get the object partially denormalized::
         return $this->json($violations, 400);
     }
 
-.. versionadded:: 5.4
-
-    The ``COLLECT_DENORMALIZATION_ERRORS`` option was introduced in Symfony 5.4.
-
 Handling Circular References
 ----------------------------
 
@@ -1355,25 +1411,25 @@ Circular references are common when dealing with entity relations::
 
     class Organization
     {
-        private $name;
-        private $members;
+        private string $name;
+        private array $members;
 
-        public function setName($name)
+        public function setName($name): void
         {
             $this->name = $name;
         }
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setMembers(array $members)
+        public function setMembers(array $members): void
         {
             $this->members = $members;
         }
 
-        public function getMembers()
+        public function getMembers(): array
         {
             return $this->members;
         }
@@ -1381,25 +1437,25 @@ Circular references are common when dealing with entity relations::
 
     class Member
     {
-        private $name;
-        private $organization;
+        private string $name;
+        private Organization $organization;
 
-        public function setName($name)
+        public function setName(string $name): void
         {
             $this->name = $name;
         }
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setOrganization(Organization $organization)
+        public function setOrganization(Organization $organization): void
         {
             $this->organization = $organization;
         }
 
-        public function getOrganization()
+        public function getOrganization(): Organization
         {
             return $this->organization;
         }
@@ -1431,7 +1487,7 @@ having unique identifiers::
 
     $encoder = new JsonEncoder();
     $defaultContext = [
-        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, ?string $format, array $context): string {
             return $object->getName();
         },
     ];
@@ -1454,12 +1510,12 @@ structure::
 
     class MyObj
     {
-        public $foo;
+        public string $foo;
 
         /**
          * @var self
          */
-        public $child;
+        public MyObj $child;
     }
 
     $level1 = new MyObj();
@@ -1478,22 +1534,6 @@ Here, we set it to 2 for the ``$child`` property:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        namespace Acme;
-
-        use Symfony\Component\Serializer\Annotation\MaxDepth;
-
-        class MyObj
-        {
-            /**
-             * @MaxDepth(2)
-             */
-            public $child;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         namespace Acme;
@@ -1503,7 +1543,7 @@ Here, we set it to 2 for the ``$child`` property:
         class MyObj
         {
             #[MaxDepth(2)]
-            public $child;
+            public MyObj $child;
 
             // ...
         }
@@ -1555,22 +1595,19 @@ Instead of throwing an exception, a custom callable can be executed when the
 maximum depth is reached. This is especially useful when serializing entities
 having unique identifiers::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
     use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
     class Foo
     {
-        public $id;
+        public int $id;
 
-        /**
-         * @MaxDepth(1)
-         */
-        public $child;
+        #[MaxDepth(1)]
+        public MyObj $child;
     }
 
     $level1 = new Foo();
@@ -1584,10 +1621,10 @@ having unique identifiers::
     $level3->id = 3;
     $level2->child = $level3;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $maxDepthHandler = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $maxDepthHandler = function (object $innerObject, object $outerObject, string $attributeName, ?string $format = null, array $context = []): string {
         return '/foos/'.$innerObject->id;
     };
 
@@ -1665,17 +1702,14 @@ context option::
 
     class MyObj
     {
-        private $foo;
-        private $bar;
-
-        public function __construct($foo, $bar)
-        {
-            $this->foo = $foo;
-            $this->bar = $bar;
+        public function __construct(
+            private string $foo,
+            private string $bar,
+        ) {
         }
     }
 
-    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $normalizer = new ObjectNormalizer();
     $serializer = new Serializer([$normalizer]);
 
     $data = $serializer->denormalize(
@@ -1709,34 +1743,34 @@ parameter of the ``ObjectNormalizer``::
 
     class ObjectOuter
     {
-        private $inner;
-        private $date;
+        private ObjectInner $inner;
+        private \DateTimeInterface $date;
 
-        public function getInner()
+        public function getInner(): ObjectInner
         {
             return $this->inner;
         }
 
-        public function setInner(ObjectInner $inner)
+        public function setInner(ObjectInner $inner): void
         {
             $this->inner = $inner;
         }
 
-        public function setDate(\DateTimeInterface $date)
-        {
-            $this->date = $date;
-        }
-
-        public function getDate()
+        public function getDate(): \DateTimeInterface
         {
             return $this->date;
+        }
+
+        public function setDate(\DateTimeInterface $date): void
+        {
+            $this->date = $date;
         }
     }
 
     class ObjectInner
     {
-        public $foo;
-        public $bar;
+        public string $foo;
+        public string $bar;
     }
 
     $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
@@ -1788,7 +1822,7 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
 
@@ -1802,23 +1836,6 @@ defines an abstract ``CodeRepository`` class extended by ``GitHubCodeRepository`
 and ``BitBucketCodeRepository`` classes:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App;
-
-        use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
-
-        /**
-         * @DiscriminatorMap(typeProperty="type", mapping={
-         *    "github"="App\GitHubCodeRepository",
-         *    "bitbucket"="App\BitBucketCodeRepository"
-         * })
-         */
-        abstract class CodeRepository
-        {
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -1861,6 +1878,11 @@ and ``BitBucketCodeRepository`` classes:
                 </discriminator-map>
             </class>
         </serializer>
+
+.. note::
+
+    The values of the ``mapping`` array option must be strings.
+    Otherwise, they will be cast into strings automatically.
 
 Once configured, the serializer uses the mapping to pick the correct class::
 
@@ -1907,3 +1929,6 @@ Learn more
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
 .. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
 .. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+.. _seld/jsonlint: https://github.com/Seldaek/jsonlint
+.. _$flags: https://www.php.net/manual/en/json.constants.php
+.. _`a CDATA section`: https://en.wikipedia.org/wiki/CDATA

@@ -21,11 +21,11 @@ but is most commonly useful in the latter case. For example, suppose that
 you want to guarantee that some ``state`` property is *not* in a dynamic
 ``invalidStates`` array. First, you'd create a "getter" method::
 
-    protected $state;
+    protected string $state;
 
-    protected $invalidStates = [];
+    protected array $invalidStates = [];
 
-    public function isStateInvalid()
+    public function isStateInvalid(): bool
     {
         return in_array($this->state, $this->invalidStates);
     }
@@ -34,26 +34,6 @@ In this case, the underlying object is only valid if the ``isStateInvalid()``
 method returns **false**:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\IsFalse(
-             *     message = "You've entered an invalid state."
-             * )
-             */
-            public function isStateInvalid()
-            {
-                // ...
-            }
-        }
 
     .. code-block:: php-attributes
 
@@ -67,7 +47,7 @@ method returns **false**:
             #[Assert\IsFalse(
                 message: "You've entered an invalid state."
             )]
-            public function isStateInvalid()
+            public function isStateInvalid(): bool
             {
                 // ...
             }
@@ -109,14 +89,16 @@ method returns **false**:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse([
                     'message' => "You've entered an invalid state.",
                 ]));
             }
 
-            public function isStateInvalid()
+            public function isStateInvalid(): bool
             {
                 // ...
             }
@@ -144,9 +126,5 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

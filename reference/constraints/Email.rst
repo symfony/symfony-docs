@@ -15,23 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Email(
-             *     message = "The email '{{ value }}' is not a valid email."
-             * )
-             */
-            protected $email;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -44,7 +27,7 @@ Basic Usage
             #[Assert\Email(
                 message: 'The email {{ value }} is not a valid email.',
             )]
-            protected $email;
+            protected string $email;
         }
 
     .. code-block:: yaml
@@ -83,7 +66,9 @@ Basic Usage
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('email', new Assert\Email([
                     'message' => 'The email "{{ value }}" is not a valid email.',
@@ -114,24 +99,19 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. _reference-constraint-email-mode:
 
 ``mode``
 ~~~~~~~~
 
-**type**: ``string`` **default**: (see below)
+**type**: ``string`` **default**: ``html5``
 
 This option defines the pattern used to validate the email address. Valid values are:
 
-* ``loose`` uses a simple regular expression (just checks that at least one ``@``
-  character is present, etc.). This validation is too simple and it's recommended
-  to use one of the other modes instead;
-* ``html5`` uses the same regular expression as the `HTML5 email input element`_,
-  making the backend validation consistent with the one provided by browsers;
+* ``html5`` uses the regular expression of the `HTML5 email input element`_,
+  except it enforces a tld to be present.
+* ``html5-allow-no-tld`` uses exactly the same regular expression as the `HTML5 email input element`_,
+  making the backend validation consistent with the one provided by browsers.
 * ``strict`` validates the address according to `RFC 5322`_ using the
   `egulias/email-validator`_ library (which is already installed when using
   :doc:`Symfony Mailer </mailer>`; otherwise, you must install it separately).
@@ -141,7 +121,6 @@ This option defines the pattern used to validate the email address. Valid values
     The possible values of this option are also defined as PHP constants of
     :class:`Symfony\\Component\\Validator\\Constraints\\Email`
     (e.g. ``Email::VALIDATION_MODE_STRICT``).
-
 
 The default value used by this option is set in the
 :ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`

@@ -19,24 +19,6 @@ on an object that will contain a credit card number.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Transaction.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\CardScheme(
-             *     schemes={"VISA"},
-             *     message="Your credit card number is invalid."
-             * )
-             */
-            protected $cardNumber;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
@@ -50,7 +32,7 @@ on an object that will contain a credit card number.
                 schemes: [Assert\CardScheme::VISA],
                 message: 'Your credit card number is invalid.',
             )]
-            protected $cardNumber;
+            protected string $cardNumber;
         }
 
     .. code-block:: yaml
@@ -93,7 +75,7 @@ on an object that will contain a credit card number.
 
         class Transaction
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme([
                     'schemes' => [
@@ -126,10 +108,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

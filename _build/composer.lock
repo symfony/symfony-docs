@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c3437f0f5d5b44eb1a339dd720bbc38",
+    "content-hash": "8a771cef10c68c570bff7875e4bdece3",
     "packages": [
         {
             "name": "doctrine/deprecations",
@@ -466,16 +466,16 @@
         },
         {
             "name": "symfony-tools/docs-builder",
-            "version": "v0.20.5",
+            "version": "v0.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-tools/docs-builder.git",
-                "reference": "11d9d81e3997e771ad1a57eabaa51fc22c500b35"
+                "reference": "7ab92db15e9be7d6af51b86db87c7e41a14ba18b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/11d9d81e3997e771ad1a57eabaa51fc22c500b35",
-                "reference": "11d9d81e3997e771ad1a57eabaa51fc22c500b35",
+                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/7ab92db15e9be7d6af51b86db87c7e41a14ba18b",
+                "reference": "7ab92db15e9be7d6af51b86db87c7e41a14ba18b",
                 "shasum": ""
             },
             "require": {
@@ -514,9 +514,9 @@
             "description": "The build system for Symfony's documentation",
             "support": {
                 "issues": "https://github.com/symfony-tools/docs-builder/issues",
-                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.20.5"
+                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.21.0"
             },
-            "time": "2023-04-28T09:41:45+00:00"
+            "time": "2023-07-11T15:21:07+00:00"
         },
         {
             "name": "symfony/console",

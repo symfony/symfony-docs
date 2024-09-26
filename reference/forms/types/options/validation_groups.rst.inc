@@ -11,7 +11,7 @@ For ``null`` the validator will just use the ``Default`` group.
 If you specify the groups as an array or string they will be used by the
 validator as they are::
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'validation_groups' => 'Registration',
@@ -31,10 +31,10 @@ the option. Symfony will then pass the form when calling it::
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
     // ...
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups' => function (FormInterface $form): array {
                 $entity = $form->getData();
 
                 return $entity->isUser() ? ['User'] : ['Company'];
@@ -69,7 +69,7 @@ Here's an example::
     class MyType extends AbstractType
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'validation_groups' => new GroupSequence(['First', 'Second']),

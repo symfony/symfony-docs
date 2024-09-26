@@ -4,7 +4,7 @@ Installing & Setting up the Symfony Framework
 .. admonition:: Screencast
     :class: screencast
 
-    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Harmonious Development with Symfony`_
     screencast series.
 
 .. _symfony-tech-requirements:
@@ -14,15 +14,16 @@ Technical Requirements
 
 Before creating your first Symfony application you must:
 
-* Install PHP 7.2.5 or higher and these PHP extensions (which are installed and
-  enabled by default in most PHP 7 installations): `Ctype`_, `iconv`_, `JSON`_,
+* Install PHP 8.2 or higher and these PHP extensions (which are installed and
+  enabled by default in most PHP 8 installations): `Ctype`_, `iconv`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
-
 * `Install Composer`_, which is used to install PHP packages.
 
-Optionally, you can also `install Symfony CLI`_. This creates a binary called
-``symfony`` that provides all the tools you need to develop and run your
-Symfony application locally.
+.. _setup-symfony-cli:
+
+Also, `install the Symfony CLI`_. This is optional, but it gives you a
+helpful binary called ``symfony`` that provides all tools you need to
+develop and run your Symfony application locally.
 
 The ``symfony`` binary also provides a tool to check if your computer meets all
 requirements. Open your console terminal and run this command:
@@ -33,7 +34,7 @@ requirements. Open your console terminal and run this command:
 
 .. note::
 
-    The Symfony CLI is written in Go and you can contribute to it in the
+    The Symfony CLI is open source, and you can contribute to it in the
     `symfony-cli/symfony-cli GitHub repository`_.
 
 .. _creating-symfony-applications:
@@ -47,14 +48,14 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_directory --version=5.4 --webapp
+    $ symfony new my_project_directory --version="7.1.*" --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_directory --version=5.4
+    $ symfony new my_project_directory --version="7.1.*"
 
 The only difference between these two commands is the number of packages
-installed by default. The ``--webapp`` option installs all the packages that you
-usually need to build web applications, so the installation size will be bigger.
+installed by default. The ``--webapp`` option installs extra packages to give
+you everything you need to build a web application.
 
 If you're not using the Symfony binary, run these commands to create the new
 Symfony application using Composer:
@@ -62,12 +63,12 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
+    $ composer create-project symfony/skeleton:"7.1.*" my_project_directory
     $ cd my_project_directory
     $ composer require webapp
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
+    $ composer create-project symfony/skeleton:"7.1.*" my_project_directory
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_directory/`` directory, download some dependencies
@@ -148,6 +149,7 @@ Symfony Docker Integration
 If you'd like to use Docker with Symfony, see :doc:`/setup/docker`.
 
 .. _symfony-flex:
+.. _flex-quick-intro:
 
 Installing Packages
 -------------------
@@ -219,16 +221,15 @@ which in turn installs several packages like ``symfony/debug-bundle``,
 You won't see the ``symfony/debug-pack`` dependency in your ``composer.json``,
 as Flex automatically unpacks the pack. This means that it only adds the real
 packages as dependencies (e.g. you will see a new ``symfony/var-dumper`` in
-``require-dev``). While it is not recommended, you can use the ``composer
-require --no-unpack ...`` option to disable unpacking.
+``require-dev``).
 
 .. _security-checker:
 
 Checking Security Vulnerabilities
 ---------------------------------
 
-The ``symfony`` binary created when you `install Symfony CLI`_ provides a command
-to check whether your project's dependencies contain any known security
+The ``symfony`` binary created when you installed the :ref:`Symfony CLI <setup-symfony-cli>`
+provides a command to check whether your project's dependencies contain any known security
 vulnerability:
 
 .. code-block:: terminal
@@ -271,14 +272,14 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
     $ symfony new my_project_directory --version=next
 
     # you can also select an exact specific Symfony version
-    $ symfony new my_project_directory --version=5.4
+    $ symfony new my_project_directory --version="6.4.*"
 
 The ``lts`` and ``next`` shortcuts are only available when using Symfony to
 create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
+    $ composer create-project symfony/skeleton:"6.4.*" my_project_directory
 
 The Symfony Demo application
 ----------------------------
@@ -310,9 +311,9 @@ Learn More
     setup/web_server_configuration
     setup/*
 
-.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
+.. _`Harmonious Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
-.. _`install Symfony CLI`: https://symfony.com/download
+.. _`install the Symfony CLI`: https://symfony.com/download
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
@@ -323,7 +324,6 @@ Learn More
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
 .. _`Symfony Recipes documentation`: https://github.com/symfony/recipes/blob/master/README.rst
 .. _`iconv`: https://www.php.net/book.iconv
-.. _`JSON`: https://www.php.net/book.json
 .. _`Session`: https://www.php.net/book.session
 .. _`Ctype`: https://www.php.net/book.ctype
 .. _`Tokenizer`: https://www.php.net/book.tokenizer

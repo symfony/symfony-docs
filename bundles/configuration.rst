@@ -42,15 +42,114 @@ as integration of other related components:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->form()->enabled(true);
         };
+
+There are two different ways of creating friendly configuration for a bundle:
+
+#. :ref:`Using the main bundle class <bundle-friendly-config-bundle-class>`:
+   this is recommended for new bundles and for bundles following the
+   :ref:`recommended directory structure <bundles-directory-structure>`;
+#. :ref:`Using the Bundle extension class <bundle-friendly-config-extension>`:
+   this was the traditional way of doing it, but nowadays it's only recommended for
+   bundles following the :ref:`legacy directory structure <bundles-legacy-directory-structure>`.
+
+.. _using-the-bundle-class:
+.. _bundle-friendly-config-bundle-class:
+
+Using the AbstractBundle Class
+------------------------------
+
+In bundles extending the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class, you can add all the logic related to processing the configuration in that class::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    ->arrayNode('twitter')
+                        ->children()
+                            ->integerNode('client_id')->end()
+                            ->scalarNode('client_secret')->end()
+                        ->end()
+                    ->end() // twitter
+                ->end()
+            ;
+        }
+
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // the "$config" variable is already merged and processed so you can
+            // use it directly to configure the service container (when defining an
+            // extension class, you also have to do this merging and processing)
+            $container->services()
+                ->get('acme_social.twitter_client')
+                ->arg(0, $config['twitter']['client_id'])
+                ->arg(1, $config['twitter']['client_secret'])
+            ;
+        }
+    }
+
+.. note::
+
+    The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
+
+.. tip::
+
+    The ``AbstractBundle::configure()`` method also allows to import the
+    configuration definition from one or more files::
+
+        // src/AcmeSocialBundle.php
+        namespace Acme\SocialBundle;
+
+        // ...
+        class AcmeSocialBundle extends AbstractBundle
+        {
+            public function configure(DefinitionConfigurator $definition): void
+            {
+                $definition->import('../config/definition.php');
+                // you can also use glob patterns
+                //$definition->import('../config/definition/*.php');
+            }
+
+            // ...
+        }
+
+    .. code-block:: php
+
+        // config/definition.php
+        use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+
+        return static function (DefinitionConfigurator $definition): void {
+            $definition->rootNode()
+                ->children()
+                    ->scalarNode('foo')->defaultValue('bar')->end()
+                ->end()
+            ;
+        };
+
+.. _bundle-friendly-config-extension:
 
 Using the Bundle Extension
 --------------------------
 
+This is the traditional way of creating friendly configuration for bundles. For new
+bundles it's recommended to :ref:`use the main bundle class <bundle-friendly-config-bundle-class>`,
+but the traditional way of creating an extension class still works.
+
 Imagine you are creating a new bundle - AcmeSocialBundle - which provides
-integration with Twitter. To make your bundle configurable to the user, you
+integration with X/Twitter. To make your bundle configurable to the user, you
 can add some configuration that looks like this:
 
 .. configuration-block::
@@ -85,7 +184,7 @@ can add some configuration that looks like this:
         // config/packages/acme_social.php
         use Symfony\Config\AcmeSocialConfig;
 
-        return static function (AcmeSocialConfig $acmeSocial) {
+        return static function (AcmeSocialConfig $acmeSocial): void {
             $acmeSocial->twitter()
                 ->clientId(123)
                 ->clientSecret('your_secret');
@@ -110,7 +209,7 @@ load correct services and parameters inside an "Extension" class.
 
     If a bundle provides an Extension class, then you should *not* generally
     override any service container parameters from that bundle. The idea
-    is that if an Extension class is present, every setting that should be
+    is that if an extension class is present, every setting that should be
     configurable should be present in the configuration made available by
     that class. In other words, the extension class defines all the public
     configuration settings for which backward compatibility will be maintained.
@@ -175,7 +274,7 @@ of your bundle's configuration.
 
 The ``Configuration`` class to handle the sample configuration looks like::
 
-    // src/Acme/SocialBundle/DependencyInjection/Configuration.php
+    // src/DependencyInjection/Configuration.php
     namespace Acme\SocialBundle\DependencyInjection;
 
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -183,7 +282,7 @@ The ``Configuration`` class to handle the sample configuration looks like::
 
     class Configuration implements ConfigurationInterface
     {
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('acme_social');
 
@@ -216,8 +315,8 @@ This class can now be used in your ``load()`` method to merge configurations and
 force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
-    // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-    public function load(array $configs, ContainerBuilder $container)
+    // src/DependencyInjection/AcmeSocialExtension.php
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
 
@@ -236,7 +335,7 @@ For example, imagine your bundle has the following example config:
 
 .. code-block:: xml
 
-    <!-- src/Acme/SocialBundle/Resources/config/services.xml -->
+    <!-- src/config/services.xml -->
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -244,7 +343,7 @@ For example, imagine your bundle has the following example config:
             https://symfony.com/schema/dic/services/services-1.0.xsd"
     >
         <services>
-            <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
+            <service id="acme_social.twitter_client" class="Acme\SocialBundle\TwitterClient">
                 <argument></argument> <!-- will be filled in with client_id dynamically -->
                 <argument></argument> <!-- will be filled in with client_secret dynamically -->
             </service>
@@ -253,13 +352,13 @@ For example, imagine your bundle has the following example config:
 
 In your extension, you can load this and dynamically set its arguments::
 
-    // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-    // ...
+    // src/DependencyInjection/AcmeSocialExtension.php
+    namespace Acme\SocialBundle\DependencyInjection;
 
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
         $loader->load('services.xml');
@@ -267,7 +366,7 @@ In your extension, you can load this and dynamically set its arguments::
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $definition = $container->getDefinition('acme.social.twitter_client');
+        $definition = $container->getDefinition('acme_social.twitter_client');
         $definition->replaceArgument(0, $config['twitter']['client_id']);
         $definition->replaceArgument(1, $config['twitter']['client_secret']);
     }
@@ -279,7 +378,7 @@ In your extension, you can load this and dynamically set its arguments::
     :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\ConfigurableExtension`
     to do this automatically for you::
 
-        // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+        // src/DependencyInjection/HelloExtension.php
         namespace Acme\HelloBundle\DependencyInjection;
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -288,7 +387,7 @@ In your extension, you can load this and dynamically set its arguments::
         class AcmeHelloExtension extends ConfigurableExtension
         {
             // note that this method is called loadInternal and not load
-            protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+            protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
             {
                 // ...
             }
@@ -304,7 +403,7 @@ In your extension, you can load this and dynamically set its arguments::
     (e.g. by overriding configurations and using :phpfunction:`isset` to check
     for the existence of a value). Be aware that it'll be very hard to support XML::
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             $config = [];
             // let resources override the previous set value
@@ -330,7 +429,7 @@ The ``config:dump-reference`` command dumps the default configuration of a
 bundle in the console using the Yaml format.
 
 As long as your bundle's configuration is located in the standard location
-(``YourBundle\DependencyInjection\Configuration``) and does not have
+(``<YourBundle>/src/DependencyInjection/Configuration``) and does not have
 a constructor, it will work automatically. If you
 have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getConfiguration>`
@@ -364,14 +463,15 @@ URL nor does it need to exist). By default, the namespace for a bundle is
 ``http://example.org/schema/dic/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
 the extension. You might want to change this to a more professional URL::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
+    namespace Acme\HelloBundle\DependencyInjection;
 
     // ...
     class AcmeHelloExtension extends Extension
     {
         // ...
 
-        public function getNamespace()
+        public function getNamespace(): string
         {
             return 'http://acme_company.com/schema/dic/hello';
         }
@@ -393,19 +493,20 @@ namespace is then replaced with the XSD validation base path returned from
 method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 
-By convention, the XSD file lives in the ``Resources/config/schema/``, but you
+By convention, the XSD file lives in ``config/schema/`` directory, but you
 can place it anywhere you like. You should return this path as the base path::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
+    namespace Acme\HelloBundle\DependencyInjection;
 
     // ...
     class AcmeHelloExtension extends Extension
     {
         // ...
 
-        public function getXsdValidationBasePath()
+        public function getXsdValidationBasePath(): string
         {
-            return __DIR__.'/../Resources/config/schema';
+            return __DIR__.'/../config/schema';
         }
     }
 

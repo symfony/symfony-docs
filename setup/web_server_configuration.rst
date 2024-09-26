@@ -36,7 +36,7 @@ listen on. Each pool can also be run under a different UID and GID:
 
 .. code-block:: ini
 
-    ; /etc/php/7.4/fpm/pool.d/www.conf
+    ; /etc/php/8.3/fpm/pool.d/www.conf
 
     ; a pool called www
     [www]
@@ -44,7 +44,7 @@ listen on. Each pool can also be run under a different UID and GID:
     group = www-data
 
     ; use a unix domain socket
-    listen = /var/run/php/php7.4-fpm.sock
+    listen = /var/run/php/php8.3-fpm.sock
 
     ; or listen on a TCP connection
     ; listen = 127.0.0.1:9000
@@ -72,7 +72,7 @@ directive to pass requests for PHP files to PHP FPM:
 
         <FilesMatch \.php$>
             # when using PHP-FPM as a unix socket
-            SetHandler proxy:unix:/var/run/php/php7.4-fpm.sock|fcgi://dummy
+            SetHandler proxy:unix:/var/run/php/php8.3-fpm.sock|fcgi://dummy
 
             # when PHP-FPM is configured to use TCP
             # SetHandler proxy:fcgi://127.0.0.1:9000
@@ -94,6 +94,14 @@ directive to pass requests for PHP files to PHP FPM:
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
+
+.. note::
+
+    If you are doing some quick tests with Apache, you can also run
+    ``composer require symfony/apache-pack``. This package creates an ``.htaccess``
+    file in the ``public/`` directory with the necessary rewrite rules needed to serve
+    the Symfony application. However, in production, it's recommended to move these
+    rules to the main Apache configuration file (as shown above) to improve performance.
 
 Nginx
 -----
@@ -121,7 +129,7 @@ The **minimum configuration** to get your application running under Nginx is:
 
         location ~ ^/index\.php(/|$) {
             # when using PHP-FPM as a unix socket
-            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
 
             # when PHP-FPM is configured to use TCP
             # fastcgi_pass 127.0.0.1:9000;
@@ -197,9 +205,8 @@ When using Caddy on the server, you can use a configuration like this:
         encode zstd gzip
         file_server
 
-
         # otherwise, use PHP-FPM (replace "unix//var/..." with "127.0.0.1:9000" when using TCP)
-        php_fastcgi unix//var/run/php/php7.4-fpm.sock {
+        php_fastcgi unix//var/run/php/php8.3-fpm.sock {
             # optionally set the value of the environment variables used in the application
             # env APP_ENV "prod"
             # env APP_SECRET "<app-secret-id>"

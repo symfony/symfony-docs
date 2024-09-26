@@ -56,7 +56,7 @@ In Symfony, you can register your custom DQL functions as follows:
         use App\DQL\StringFunction;
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $defaultDql = $doctrine->orm()
                 ->entityManager('default')
                     // ...
@@ -123,7 +123,7 @@ In Symfony, you can register your custom DQL functions as follows:
             use App\DQL\DatetimeFunction;
             use Symfony\Config\DoctrineConfig;
 
-            return static function (DoctrineConfig $doctrine) {
+            return static function (DoctrineConfig $doctrine): void {
                 $doctrine->orm()
                     // ...
                     ->entityManager('example_manager')

@@ -55,12 +55,27 @@ You can also control the ``public`` option on a service-by-service basis:
 
         use App\Service\Foo;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class)
                 ->public();
         };
+
+It is also possible to define a service as public thanks to the ``#[Autoconfigure]``
+attribute. This attribute must be used directly on the class of the service
+you want to configure::
+
+    // src/Service/Foo.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+    #[Autoconfigure(public: true)]
+    class Foo
+    {
+        // ...
+    }
 
 .. _services-why-private:
 
@@ -91,6 +106,20 @@ do so by aliasing them and, furthermore, you can even alias non-public
 services.
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Mail/PhpMailer.php
+        namespace App\Mail;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+
+        #[AsAlias(id: 'app.mailer', public: true)]
+        class PhpMailer
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -127,7 +156,7 @@ services.
 
         use App\Mail\PhpMailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(PhpMailer::class)
@@ -152,14 +181,27 @@ This means that when using the container directly, you can access the
             # ...
             app.mailer: '@App\Mail\PhpMailer'
 
+.. tip::
+
+    When using ``#[AsAlias]`` attribute, you may omit passing ``id`` argument
+    if the class implements exactly one interface. ``MailerInterface`` will be
+    alias of ``PhpMailer``::
+
+        // src/Mail/PhpMailer.php
+        namespace App\Mail;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+        use Symfony\Component\Mailer\MailerInterface;
+
+        #[AsAlias]
+        class PhpMailer implements MailerInterface
+        {
+            // ...
+        }
+
 Deprecating Service Aliases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``package`` and ``version`` options were introduced in Symfony 5.1.
-    Prior to 5.1, you had to use ``deprecated: true`` or
-    ``deprecated: 'Custom message'``.
 
 If you decide to deprecate the use of a service alias (because it is outdated
 or you decided not to maintain it anymore), you can deprecate its definition:
@@ -275,11 +317,10 @@ The following example shows how to inject an anonymous service into another serv
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class)
-                // In versions earlier to Symfony 5.1 the inline_service() function was called inline()
                 ->args([inline_service(AnonymousBar::class)]);
         };
 
@@ -327,7 +368,7 @@ Using an anonymous service as a factory looks like this:
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class)
@@ -373,7 +414,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         use App\Service\OldService;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(OldService::class)
@@ -383,12 +424,6 @@ or you decided not to maintain it anymore), you can deprecate its definition:
                     'The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.'
                 );
         };
-
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, the ``deprecated`` YAML option, the ``<deprecated>``
-    XML tag and the ``deprecate()`` PHP function require three arguments (the
-    package name, the version and the deprecation message).
 
 Now, every time this service is used, a deprecation warning is triggered,
 advising you to stop or to change your uses of that service.

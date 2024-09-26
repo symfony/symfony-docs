@@ -169,10 +169,6 @@ Content Methods
     styled according to the Symfony Style Guide, which allows you to use
     features such as dynamically appending rows.
 
-.. versionadded:: 5.4
-
-    The ``createTable()`` method was introduced in Symfony 5.4.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
     most of the times you won't need it at all. The reason is that every helper
@@ -263,10 +259,6 @@ Progress Bar Methods
             // ... do some work
         }
 
-.. versionadded:: 5.4
-
-    The ``progressIterate`` method was introduced in Symfony 5.4.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
     styled according to the Symfony Style Guide.
@@ -289,7 +281,7 @@ User Input Methods
     In case you need to validate the given value, pass a callback validator as
     the third argument::
 
-        $io->ask('Number of workers to start', '1', function ($number) {
+        $io->ask('Number of workers to start', '1', function (string $number): int {
             if (!is_numeric($number)) {
                 throw new \RuntimeException('You must type a number.');
             }
@@ -306,7 +298,7 @@ User Input Methods
     In case you need to validate the given value, pass a callback validator as
     the second argument::
 
-        $io->askHidden('What is your password?', function ($password) {
+        $io->askHidden('What is your password?', function (string $password): string {
             if (empty($password)) {
                 throw new \RuntimeException('Password cannot be empty.');
             }
@@ -335,10 +327,23 @@ User Input Methods
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], 'queue1');
 
+    Finally, you can allow users to select multiple choices. To do so, users must
+    separate each choice with a comma (e.g. typing ``1, 2`` will select choice 1
+    and 2)::
+
+        $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
+
 .. _symfony-style-blocks:
 
 Result Methods
 ~~~~~~~~~~~~~~
+
+.. note::
+
+    If you print any URL it won't be broken/cut, it will be clickable - if the terminal provides it. If the "well
+    formatted output" is more important, you can switch it off::
+
+        $io->getOutputWrapper()->setAllowCutUrls(true);
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::success`
     It displays the given string or array of strings highlighted as a successful
@@ -374,10 +379,6 @@ Result Methods
             'Consectetur adipiscing elit',
         ]);
 
-.. versionadded:: 5.2
-
-    The ``info()`` method was introduced in Symfony 5.2.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::warning`
     It displays the given string or array of strings highlighted as a warning
     message (with a red background and the ``[WARNING]`` label). It's meant to be
@@ -411,6 +412,34 @@ Result Methods
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
         ]);
+
+Configuring the Default Styles
+------------------------------
+
+By default, Symfony Styles wrap all contents to avoid having lines of text that
+are too long. The only exception is URLs, which are not wrapped, no matter how
+long they are. This is done to enable clickable URLs in terminals that support them.
+
+If you prefer to wrap all contents, including URLs, use this method::
+
+    // src/Command/GreetCommand.php
+    namespace App\Command;
+
+    // ...
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    class GreetCommand extends Command
+    {
+        // ...
+
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            $io = new SymfonyStyle($input, $output);
+            $io->getOutputWrapper()->setAllowCutUrls(true);
+
+            // ...
+        }
+    }
 
 Defining your Own Styles
 ------------------------

@@ -10,7 +10,6 @@ To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualT
     equal. Use :doc:`/reference/constraints/IdenticalTo` to compare with
     ``===``.
 
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\EqualTo`
@@ -25,28 +24,6 @@ and that the ``age`` is ``20``, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\EqualTo("Mary")
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\EqualTo(
-             *     value = 20
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -57,12 +34,12 @@ and that the ``age`` is ``20``, you could do the following:
         class Person
         {
             #[Assert\EqualTo('Mary')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\EqualTo(
                 value: 20,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -108,7 +85,9 @@ and that the ``age`` is ``20``, you could do the following:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\EqualTo('Mary'));
 

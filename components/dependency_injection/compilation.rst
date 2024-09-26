@@ -61,7 +61,7 @@ A very simple extension may just load configuration files into the container::
 
     class AcmeDemoExtension implements ExtensionInterface
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             $loader = new XmlFileLoader(
                 $container,
@@ -90,7 +90,7 @@ The Extension must specify a ``getAlias()`` method to implement the interface::
     {
         // ...
 
-        public function getAlias()
+        public function getAlias(): string
         {
             return 'acme_demo';
         }
@@ -132,7 +132,7 @@ are loaded::
 The values from those sections of the config files are passed into the first
 argument of the ``load()`` method of the extension::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $foo = $configs[0]['foo']; //fooValue
         $bar = $configs[0]['bar']; //barValue
@@ -150,7 +150,7 @@ will look like this::
         ],
     ]
 
-Whilst you can manually manage merging the different files, it is much better
+While you can manually manage merging the different files, it is much better
 to use :doc:`the Config component </components/config>` to
 merge and validate the config values. Using the configuration processing
 you could access the config value this way::
@@ -158,7 +158,7 @@ you could access the config value this way::
     use Symfony\Component\Config\Definition\Processor;
     // ...
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $processor = new Processor();
@@ -175,12 +175,12 @@ namespace so that the relevant parts of an XML config file are passed to
 the extension. The other to specify the base path to XSD files to validate
 the XML configuration::
 
-    public function getXsdValidationBasePath()
+    public function getXsdValidationBasePath(): string
     {
         return __DIR__.'/../Resources/config/';
     }
 
-    public function getNamespace()
+    public function getNamespace(): string
     {
         return 'http://www.example.com/symfony/schema/';
     }
@@ -219,7 +219,7 @@ The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
 additional benefit of merging multiple files and validation of the configuration::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $processor = new Processor();
@@ -234,7 +234,7 @@ More complex configuration requirements can be catered for in the Extension
 classes. For example, you may choose to load a main service configuration
 file but also load a secondary one only if a certain parameter is set::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $processor = new Processor();
@@ -250,6 +250,33 @@ file but also load a secondary one only if a certain parameter is set::
             $loader->load('advanced.xml');
         }
     }
+
+You can also deprecate container parameters in your extension to warn users
+about not using them anymore. This helps with the migration across major versions
+of an extension.
+
+Deprecation is only possible when using PHP to configure the extension, not when
+using XML or YAML. Use the ``ContainerBuilder::deprecateParameter()`` method to
+provide the deprecation details::
+
+    public function load(array $configs, ContainerBuilder $containerBuilder)
+    {
+        // ...
+
+        $containerBuilder->setParameter('acme_demo.database_user', $configs['db_user']);
+
+        $containerBuilder->deprecateParameter(
+            'acme_demo.database_user',
+            'acme/database-package',
+            '1.3',
+            // optionally you can set a custom deprecation message
+            '"acme_demo.database_user" is deprecated, you should configure database credentials with the "acme_demo.database_dsn" parameter instead.'
+        );
+    }
+
+The parameter being deprecated must be set before being declared as deprecated.
+Otherwise a :class:`Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException`
+exception will be thrown.
 
 .. note::
 
@@ -292,7 +319,7 @@ method is called by implementing
     {
         // ...
 
-        public function prepend(ContainerBuilder $container)
+        public function prepend(ContainerBuilder $container): void
         {
             // ...
 
@@ -323,7 +350,7 @@ compilation::
 
     class AcmeDemoExtension implements ExtensionInterface, CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // ... do something during the compilation
         }
@@ -377,7 +404,7 @@ class implementing the ``CompilerPassInterface``::
 
     class CustomPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // ... do something during the compilation
         }
@@ -475,7 +502,7 @@ serves at dumping the compiled container::
     the :ref:`dumpFile() method <filesystem-dumpfile>` from Symfony Filesystem
     component or other methods provided by Symfony (e.g. ``$containerConfigCache->write()``)
     which are atomic.
-    
+
 ``ProjectServiceContainer`` is the default name given to the dumped container
 class. However, you can change this with the ``class`` option when you
 dump it::

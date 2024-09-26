@@ -127,6 +127,30 @@ If you want to follow `symbolic links`_, use the ``followLinks()`` method::
 
     $finder->files()->followLinks();
 
+Note that this method follows links but it doesn't resolve them. Consider
+the following structure of files of directories:
+
+.. code-block:: text
+
+    ├── folder1/
+    │   ├──file1.txt
+    │   ├── file2link (symbolic link to folder2/file2.txt file)
+    │   └── folder3link (symbolic link to folder3/ directory)
+    ├── folder2/
+    │   └── file2.txt
+    └── folder3/
+        └── file3.txt
+
+If you try to find all files in ``folder1/`` via ``$finder->files()->in('/path/to/folder1/')``
+you'll get the following results:
+
+* When **not** using the ``followLinks()`` method: ``file1.txt`` and ``file2link``
+  (this link is not resolved). The ``folder3link`` doesn't appear in the results
+  because it's not followed or resolved;
+* When using the ``followLinks()`` method: ``file1.txt``, ``file2link`` (this link
+  is still not resolved) and ``folder3/file3.txt`` (this file appears in the results
+  because the ``folder1/folder3link`` link was followed).
+
 Version Control Files
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -152,10 +176,6 @@ The rules of a directory always override the rules of its parent directories.
     Symfony's Finder behavior is different and it looks for ``.gitignore`` files
     starting from the directory used to search files/directories. To be consistent
     with Git behavior, you should explicitly search from the Git repository root.
-
-.. versionadded:: 5.4
-
-    Recursive support for ``.gitignore`` files was introduced in Symfony 5.4.
 
 File Name
 ~~~~~~~~~
@@ -333,13 +353,23 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
+The ``filter()`` method includes a second optional argument to prune directories.
+If set to ``true``, this method completely skips the excluded directories instead
+of traversing the entire file/directory structure and excluding them later. When
+using a closure, return ``false`` for the directories which you want to prune.
+
+Pruning directories early can improve performance significantly depending on the
+file/directory hierarchy complexity and the number of excluded directories.
+
 Sorting Results
 ---------------
 
-Sort the results by name or by type (directories first, then files)::
+Sort the results by name, extension, size or type (directories first, then files)::
 
     $finder->sortByName();
-
+    $finder->sortByCaseInsensitiveName();
+    $finder->sortByExtension();
+    $finder->sortBySize();
     $finder->sortByType();
 
 .. tip::
@@ -348,6 +378,11 @@ Sort the results by name or by type (directories first, then files)::
     function (e.g. ``file1.txt``, ``file10.txt``, ``file2.txt``). Pass ``true``
     as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
     ``file1.txt``, ``file2.txt``, ``file10.txt``).
+
+    The ``sortByCaseInsensitiveName()`` method uses the case insensitive
+    :phpfunction:`strcasecmp` PHP function. Pass ``true`` as its argument to use
+    PHP's case insensitive `natural sort order`_ algorithm instead (i.e. the
+    :phpfunction:`strnatcasecmp` PHP function)
 
 Sort the files and directories by the last accessed, changed or modified time::
 
@@ -359,7 +394,7 @@ Sort the files and directories by the last accessed, changed or modified time::
 
 You can also define your own sorting algorithm with the ``sort()`` method::
 
-    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
+    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b): int {
         return strcmp($a->getRealPath(), $b->getRealPath());
     });
 

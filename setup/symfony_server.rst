@@ -17,6 +17,17 @@ Installation
 The Symfony server is part of the ``symfony`` binary created when you
 `install Symfony`_ and has support for Linux, macOS and Windows.
 
+.. tip::
+
+    The Symfony CLI supports auto completion for Bash, Zsh, or Fish shells. You
+    have to install the completion script *once*. Run ``symfony completion
+    --help`` for the installation instructions for your shell. After installing
+    and restarting your terminal, you're all set to use completion (by default,
+    by pressing the Tab key).
+
+    The Symfony CLI will also provide completion for the ``composer`` command
+    and for the ``console`` command if it detects a Symfony project.
+
 .. note::
 
    You can view and contribute to the Symfony CLI source in the
@@ -65,11 +76,7 @@ run the Symfony server in the background:
 
     .. code-block:: terminal
 
-        # find the installed version of the Symfony binary
-        $ symfony version
-
-        # change the path to the location of your Symfony binary and replace {version} too
-        $ sudo codesign --force --deep --sign - /opt/homebrew/Cellar/symfony-cli/{version}/bin/symfony
+        $ sudo codesign --force --deep --sign - $(whereis -q symfony)
 
 Enabling PHP-FPM
 ----------------
@@ -109,6 +116,20 @@ This command creates a local certificate authority, registers it in your system
 trust store, registers it in Firefox (this is required only for that browser)
 and creates a default certificate for ``localhost`` and ``127.0.0.1``. In other
 words, it does everything for you.
+
+.. tip::
+
+    If you are doing this in WSL (Windows Subsystem for Linux), the newly created
+    local certificate authority needs to be manually imported in Windows. The file
+    is located in ``wsl`` at ``~/.symfony5/certs/default.p12``. The easiest way to
+    do so is to run the following command from ``wsl``:
+
+    .. code-block:: terminal
+
+        $ explorer.exe `wslpath -w $HOME/.symfony5/certs`
+
+    In the file explorer window that just opened, double-click on the file
+    called ``default.p12``.
 
 Before browsing your local application with HTTPS instead of HTTP, restart its
 server stopping and starting it again.
@@ -209,6 +230,7 @@ If this is the first time you run the proxy, you must configure it as follows:
    * `Proxy settings in Ubuntu`_.
 
 #. Set the following URL as the value of the **Automatic Proxy Configuration**:
+
    ``http://127.0.0.1:7080/proxy.pac``
 
 Now run this command to start the proxy:
@@ -226,6 +248,9 @@ If the proxy doesn't work as explained in the following sections, check these:
 * Some Operating Systems (e.g. macOS) don't apply by default the proxy settings
   to local hosts and domains. You may need to remove ``*.local`` and/or other
   IP addresses from that list.
+* Windows Operating System **requires** ``localhost`` instead of ``127.0.0.1``
+  when configuring the automatic proxy, otherwise you won't be able to access
+  your local domain from your browser running in Windows.
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -269,7 +294,7 @@ domains work:
     # Example with Cypress
     $ https_proxy=$(symfony proxy:url) ./node_modules/bin/cypress open
 
-.. note::
+.. caution::
 
     Although env var names are always defined in uppercase, the ``https_proxy``
     env var `is treated differently`_ than other env vars and its name must be
@@ -292,7 +317,7 @@ server provides a ``run`` command to wrap them as follows:
 
     # compile Webpack assets using Symfony Encore ... but do that in the
     # background to not block the terminal
-    $ symfony run -d yarn encore dev --watch
+    $ symfony run -d npx encore dev --watch
 
     # continue working and running other commands...
 
@@ -302,18 +327,13 @@ server provides a ``run`` command to wrap them as follows:
     # and you can also check if the command is still running
     $ symfony server:status
     Web server listening on ...
-    Command "yarn ..." running with PID ...
+    Command "npx ..." running with PID ...
 
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
 Configuration file
 ------------------
-
-.. caution::
-
-    This feature is experimental and could change or be removed at any time
-    without prior notice.
 
 There are several options that you can set using a ``.symfony.local.yaml`` config file:
 
@@ -335,12 +355,15 @@ There are several options that you can set using a ``.symfony.local.yaml`` confi
         no_tls: true # Use HTTP instead of HTTPS
         daemon: true # Run the server in the background
         use_gzip: true # Toggle GZIP compression
+        no_workers: true # Do not start workers
 
 .. caution::
 
     Setting domains in this configuration file will override any domains you set
     using the ``proxy:domain:attach`` command for the current project when you start
     the server.
+
+.. _symfony-server_configuring-workers:
 
 Configuring Workers
 ~~~~~~~~~~~~~~~~~~~
@@ -353,9 +376,9 @@ If you like some processes to start automatically, along with the webserver
     # .symfony.local.yaml
     workers:
         # built-in command that builds and watches front-end assets
-        # yarn_encore_watch:
-        #     cmd: ['yarn', 'encore', 'dev', '--watch']
-        yarn_encore_watch: ~
+        # npm_encore_watch:
+        #     cmd: ['npx', 'encore', 'dev', '--watch']
+        npm_encore_watch: ~
 
         # built-in command that starts messenger consumer
         # messenger_consume_async:
@@ -365,7 +388,15 @@ If you like some processes to start automatically, along with the webserver
 
         # you can also add your own custom commands
         build_spa:
-            cmd: ['yarn', '--cwd', './spa/', 'dev']
+            cmd: ['npm', '--cwd', './spa/', 'dev']
+
+        # auto start Docker compose when starting server (available since Symfony CLI 5.7.0)
+        docker_compose: ~
+
+.. tip::
+
+    You may want to not start workers on some environments like CI. You can use the
+    ``--no-workers`` option to start the server without starting workers.
 
 .. _symfony-server-docker:
 
@@ -386,7 +417,7 @@ Consider the following configuration:
 
 .. code-block:: yaml
 
-    # docker-compose.yaml
+    # compose.yaml
     services:
         database:
             ports: [3306]
@@ -399,12 +430,12 @@ variables accordingly with the service name (``database``) as a prefix:
 If the service is not in the supported list below, generic environment
 variables are set: ``PORT``, ``IP``, and ``HOST``.
 
-If the ``docker-compose.yaml`` names do not match Symfony's conventions, add a
+If the ``compose.yaml`` names do not match Symfony's conventions, add a
 label to override the environment variables prefix:
 
 .. code-block:: yaml
 
-    # docker-compose.yaml
+    # compose.yaml
     services:
         db:
             ports: [3306]
@@ -469,7 +500,7 @@ check the "Symfony Server" section in the web debug toolbar; you'll see that
 
     .. code-block:: yaml
 
-        # docker-compose.yaml
+        # compose.yaml
         services:
             db:
                 ports: [3306]
@@ -483,10 +514,10 @@ its location, same as for ``docker-compose``:
 .. code-block:: bash
 
     # start your containers:
-    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
+    COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
 
     # run any Symfony CLI command:
-    COMPOSE_FILE=docker/docker-compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
+    COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export
 
 .. note::
 
@@ -524,9 +555,9 @@ help debug any issues.
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`Platform.sh`: https://symfony.com/cloud/
-.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/current/cloud/index.html
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
-.. _`is treated differently`: https://ec.haxx.se/usingcurl/usingcurl-proxies#http_proxy-in-lower-case-only
+.. _`is treated differently`: https://superuser.com/a/1799209
 .. _`Docker compose CLI env var reference`: https://docs.docker.com/compose/reference/envvars/

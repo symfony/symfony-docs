@@ -24,7 +24,7 @@ To attach tags to cached items, you need to use the
 :method:`Symfony\\Contracts\\Cache\\ItemInterface::tag` method that is implemented by
 cache items::
 
-    $item = $cache->get('cache_key', function (ItemInterface $item) {
+    $item = $cache->get('cache_key', function (ItemInterface $item): string {
         // [...]
         // add one or more tags
         $item->tag('tag_1');

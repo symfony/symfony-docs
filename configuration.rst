@@ -57,36 +57,6 @@ configure your applications, but lets you choose between YAML, XML and PHP.
 Throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
-.. note::
-
-    By default, Symfony only loads the configuration files defined in YAML
-    format. If you define configuration in XML and/or PHP formats, update the
-    ``src/Kernel.php`` file::
-
-        // src/Kernel.php
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-
-        class Kernel extends BaseKernel
-        {
-            // ...
-
-            private function configureContainer(ContainerConfigurator $container): void
-            {
-                $configDir = $this->getConfigDir();
-
-                $container->import($configDir.'/{packages}/*.{yaml,php}');
-                $container->import($configDir.'/{packages}/'.$this->environment.'/*.{yaml,php}');
-
-                if (is_file($configDir.'/services.yaml')) {
-                    $container->import($configDir.'/services.yaml');
-                    $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
-                } else {
-                    $container->import($configDir.'/{services}.php');
-                }
-            }
-        }
-
 There isn't any practical difference between formats. In fact, Symfony
 transforms all of them into PHP and caches them before running the application,
 so there's not even any performance difference.
@@ -100,6 +70,16 @@ readable. These are the main advantages and disadvantages of each format:
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
 * **PHP**: very powerful and it allows you to create dynamic configuration with
   arrays or a :ref:`ConfigBuilder <config-config-builder>`.
+
+.. note::
+
+    By default Symfony loads the configuration files defined in YAML and PHP
+    formats. If you define configuration in XML format, update the
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureContainer`
+    and/or
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureRoutes`
+    methods in the ``src/Kernel.php`` file to add support for the ``.xml`` file
+    extension.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -156,7 +136,7 @@ configuration files, even if they use a different format:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->import('legacy_config.php');
 
             // glob expressions are also supported to load multiple files
@@ -206,6 +186,9 @@ reusable configuration value. By convention, parameters are defined under the
             app.some_constant: !php/const GLOBAL_CONSTANT
             app.another_constant: !php/const App\Entity\BlogPost::MAX_ITEMS
 
+            # Enum case as parameter values
+            app.some_enum: !php/enum App\Enum\PostState::Published
+
         # ...
 
     .. code-block:: xml
@@ -243,6 +226,9 @@ reusable configuration value. By convention, parameters are defined under the
                 <!-- PHP constants as parameter values -->
                 <parameter key="app.some_constant" type="constant">GLOBAL_CONSTANT</parameter>
                 <parameter key="app.another_constant" type="constant">App\Entity\BlogPost::MAX_ITEMS</parameter>
+
+                <!-- Enum case as parameter values -->
+                <parameter key="app.some_enum" type="enum">App\Enum\PostState::Published</parameter>
             </parameters>
 
             <!-- ... -->
@@ -254,8 +240,9 @@ reusable configuration value. By convention, parameters are defined under the
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Entity\BlogPost;
+        use App\Enum\PostState;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
@@ -272,20 +259,32 @@ reusable configuration value. By convention, parameters are defined under the
 
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
-                ->set('app.another_constant', BlogPost::MAX_ITEMS);
+                ->set('app.another_constant', BlogPost::MAX_ITEMS)
+
+                // Enum case as parameter values
+                ->set('app.some_enum', PostState::Published);
         };
 
         // ...
 
 .. caution::
 
-    When using XML configuration, the values between ``<parameter>`` tags are
-    not trimmed. This means that the value of the following parameter will be
+    By default and when using XML configuration, the values between ``<parameter>``
+    tags are not trimmed. This means that the value of the following parameter will be
     ``'\n    something@example.com\n'``:
 
     .. code-block:: xml
 
         <parameter key="app.admin_email">
+            something@example.com
+        </parameter>
+
+    If you want to trim the value of your parameter, use the ``trim`` attribute.
+    When using it, the value of the following parameter will be ``something@example.com``:
+
+    .. code-block:: xml
+
+        <parameter key="app.admin_email" trim="true">
             something@example.com
         </parameter>
 
@@ -326,7 +325,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
         use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('some_package', [
                 // when using the param() function, you only have to pass the parameter name...
                 'email_address' => param('app.admin_email'),
@@ -337,7 +336,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
                 'email_address' => '%app.admin_email%',
             ]);
         };
-
 
 .. note::
 
@@ -366,7 +364,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $container) {
+            return static function (ContainerConfigurator $container): void {
                 $container->parameters()
                     ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
             };
@@ -376,6 +374,13 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 Configuration parameters are very common in Symfony applications. Some packages
 even define their own parameters (e.g. when installing the translation package,
 a new ``locale`` parameter is added to the ``config/services.yaml`` file).
+
+.. tip::
+
+    By convention, parameters whose names start with a dot ``.`` (for example,
+    ``.mailer.transport``), are available only during the container compilation.
+    They are useful when working with :ref:`Compiler Passes </service_container/compiler_passes>`
+    to declare some temporary parameters that won't be available later in the application.
 
 .. seealso::
 
@@ -432,11 +437,6 @@ all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
 .. tip::
-
-    .. versionadded:: 5.3
-
-        The ability to defined different environments in a single file was
-        introduced in Symfony 5.3.
 
     You can also define options for different environments in a single
     configuration file using the special ``when`` keyword:
@@ -502,7 +502,7 @@ files directly in the ``config/packages/`` directory.
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
             use Symfony\Config\WebpackEncoreConfig;
 
-            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container) {
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container): void {
                 $webpackEncore
                     ->outputPath('%kernel.project_dir%/public/build')
                     ->strictMode(true)
@@ -638,18 +638,12 @@ This example shows how you could configure the application secret using an env v
         // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('framework', [
                 // by convention the env var names are always uppercase
                 'secret' => '%env(APP_SECRET)%',
             ]);
         };
-
-.. versionadded:: 5.3
-
-    The ``env()`` configurator syntax was introduced in 5.3.
-    In ``PHP`` configuration files, it will allow to autocomplete methods based
-    on processors name (i.e. ``env('SOME_VAR')->default('foo')``).
 
 .. note::
 
@@ -674,6 +668,56 @@ To define the value of an env var, you have several options:
 * :ref:`Encrypt the value as a secret <configuration-secrets>`;
 * Set the value as a real environment variable in your shell or your web server.
 
+If your application tries to use an env var that hasn't been defined, you'll see
+an exception. You can prevent that by defining a default value for the env var.
+To do so, define a parameter with the same name as the env var using this syntax:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        parameters:
+            # if the SECRET env var value is not defined anywhere, Symfony uses this value
+            env(SECRET): 'some_secret'
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <parameters>
+                <!-- if the SECRET env var value is not defined anywhere, Symfony uses this value -->
+                <parameter key="env(SECRET)">some_secret</parameter>
+            </parameters>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            // if the SECRET env var value is not defined anywhere, Symfony uses this value
+            $container->setParameter('env(SECRET)', 'some_secret');
+
+            // ...
+        };
+
 .. tip::
 
     Some hosts - like Platform.sh - offer easy `utilities to manage env vars`_
@@ -687,7 +731,7 @@ To define the value of an env var, you have several options:
     always exists, because its value will be ``null`` when the related env var
     is not defined.
 
-.. caution::
+.. danger::
 
     Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
     or outputting the ``phpinfo()`` contents will display the values of the
@@ -814,13 +858,35 @@ the right situation:
   but the overrides only apply to one environment.
 
 *Real* environment variables always win over env vars created by any of the
-``.env`` files.
+``.env`` files. Note that this behavior depends on the
+`variables_order <http://php.net/manual/en/ini.core.php#ini.variables-order>`_
+configuration, which must contain an ``E`` to expose the ``$_ENV`` superglobal.
+This is the default configuration in PHP.
 
 The ``.env`` and ``.env.<environment>`` files should be committed to the
 repository because they are the same for all developers and machines. However,
 the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.local``)
 **should not be committed** because only you will use them. In fact, the
 ``.gitignore`` file that comes with Symfony prevents them from being committed.
+
+Overriding Environment Variables Defined By The System
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to override an environment variable defined by the system, use the
+``overrideExistingVars`` parameter defined by the
+:method:`Symfony\\Component\\Dotenv\\Dotenv::loadEnv`,
+:method:`Symfony\\Component\\Dotenv\\Dotenv::bootEnv`, and
+:method:`Symfony\\Component\\Dotenv\\Dotenv::populate` methods::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    $dotenv = new Dotenv();
+    $dotenv->loadEnv(__DIR__.'/.env', overrideExistingVars: true);
+
+    // ...
+
+This will override environment variables defined by the system but it **won't**
+override environment variables defined in ``.env`` files.
 
 .. _configuration-env-var-in-prod:
 
@@ -831,41 +897,83 @@ In production, the ``.env`` files are also parsed and loaded on each request. So
 the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
-To improve performance, you can optionally run the ``dotenv:dump`` command (available
-in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered
-by default, so you must register first in your services:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand:
-            - '%kernel.project_dir%/.env'
-            - '%kernel.environment%'
-
-In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
-(which is the default):
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-
-Then, run the command:
+To improve performance, you can optionally run the ``dump-env`` Composer command:
 
 .. code-block:: terminal
 
     # parses ALL .env files and dumps their final values to .env.local.php
-    $ php bin/console dotenv:dump prod
+    $ composer dump-env prod
+
+.. sidebar:: Dumping Environment Variables without Composer
+
+    If you don't have Composer installed in production, you can use the
+    ``dotenv:dump`` command instead (available in :ref:`Symfony Flex <symfony-flex>`
+    1.2 or later). The command is not registered by default, so you must register
+    first in your services:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+    Then, run the command:
+
+    .. code-block:: terminal
+
+        # parses ALL .env files and dumps their final values to .env.local.php
+        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
 
 After running this command, Symfony will load the ``.env.local.php`` file to
 get the environment variables and will not spend time parsing the ``.env`` files.
 
 .. tip::
 
-    Update your deployment tools/workflow to run the ``dump-env`` command after
+    Update your deployment tools/workflow to run the ``dotenv:dump`` command after
     each deploy to improve the application performance.
+
+Storing Environment Variables In Other Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the environment variables are stored in the ``.env`` file located
+at the root of your project. However, you can store them in other files in
+multiple ways.
+
+If you use the :doc:`Runtime component </components/runtime>`, the dotenv
+path is part of the options you can set in your ``composer.json`` file:
+
+.. code-block:: json
+
+      {
+          // ...
+          "extra": {
+              // ...
+              "runtime": {
+                  "dotenv_path": "my/custom/path/to/.env"
+              }
+          }
+      }
+
+As an alternate option, you can directly invoke the ``Dotenv`` class in your
+``bootstrap.php`` file or any other file of your application::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    (new Dotenv())->bootEnv(dirname(__DIR__).'my/custom/path/to/.env');
+
+Symfony will then look for the environment variables in that file, but also in
+the local and environment-specific files (e.g. ``.*.local`` and
+``.*.<environment>.local``). Read
+:ref:`how to override environment variables <configuration-multiple-env-files>`
+to learn more about this.
+
+If you need to know the path to the ``.env`` file that Symfony is using, you can
+read the ``SYMFONY_DOTENV_PATH`` environment variable in your application.
+
+.. versionadded:: 7.1
+
+    The ``SYMFONY_DOTENV_PATH`` environment variable was introduced in Symfony
+    7.1.
 
 .. _configuration-secrets:
 
@@ -908,30 +1016,99 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
      ALICE      BOB     BOB        bob
     ---------- ------- ---------- ------
 
-.. versionadded:: 5.4
-
-    The ``debug:dotenv`` command was introduced in Symfony 5.4.
+    # look for a specific variable passing its full or partial name as an argument
+    $ php bin/console debug:dotenv foo
 
 Additionally, and regardless of how you set environment variables, you can see all
-environment variables, with their values, referenced in Symfony's container configuration:
+environment variables, with their values, referenced in Symfony's container configuration,
+you can also see the number of occurrences of each environment variable in the container:
 
 .. code-block:: terminal
 
     $ php bin/console debug:container --env-vars
 
-    ---------------- ----------------- ---------------------------------------------
-     Name             Default value     Real value
-    ---------------- ----------------- ---------------------------------------------
-     APP_SECRET       n/a               "471a62e2d601a8952deb186e44186cb3"
-     FOO              "[1, "2.5", 3]"   n/a
-     BAR              null              n/a
-    ---------------- ----------------- ---------------------------------------------
+    ------------ ----------------- ------------------------------------ -------------
+     Name         Default value     Real value                           Usage count
+    ------------ ----------------- ------------------------------------ -------------
+     APP_SECRET   n/a               "471a62e2d601a8952deb186e44186cb3"   2
+     BAR          n/a               n/a                                  1
+     BAZ          n/a               "value"                              0
+     FOO          "[1, "2.5", 3]"   n/a                                  1
+    ------------ ----------------- ------------------------------------ -------------
 
     # you can also filter the list of env vars by name:
     $ php bin/console debug:container --env-vars foo
 
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
+
+Creating Your Own Logic To Load Env Vars
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can implement your own logic to load environment variables if the default
+Symfony behavior doesn't fit your needs. To do so, create a service whose class
+implements :class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterface`.
+
+.. note::
+
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    the autoconfiguration feature will enable and tag this service automatically.
+    Otherwise, you need to register and :doc:`tag your service </service_container/tags>`
+    with the ``container.env_var_loader`` tag.
+
+Let's say you have a JSON file named ``env.json`` containing your environment
+variables:
+
+.. code-block:: json
+
+    {
+        "vars": {
+            "APP_ENV": "prod",
+            "APP_DEBUG": false
+        }
+    }
+
+You can define a class like the following ``JsonEnvVarLoader`` to populate the
+environment variables from the file::
+
+    namespace App\DependencyInjection;
+
+    use Symfony\Component\DependencyInjection\EnvVarLoaderInterface;
+
+    final class JsonEnvVarLoader implements EnvVarLoaderInterface
+    {
+        private const ENV_VARS_FILE = 'env.json';
+
+        public function loadEnvVars(): array
+        {
+            $fileName = __DIR__.\DIRECTORY_SEPARATOR.self::ENV_VARS_FILE;
+            if (!is_file($fileName)) {
+                // throw an exception or just ignore this loader, depending on your needs
+            }
+
+            $content = json_decode(file_get_contents($fileName), true);
+
+            return $content['vars'];
+        }
+    }
+
+That's it! Now the application will look for a ``env.json`` file in the
+current directory to populate environment variables (in addition to the
+already existing ``.env`` files).
+
+.. tip::
+
+    If you want an env var to have a value on a certain environment but to fallback
+    on loaders on another environment, assign an empty value to the env var for
+    the environment you want to use loaders:
+
+    .. code-block:: bash
+
+        # .env (or .env.local)
+        APP_ENV=prod
+
+        # .env.prod (or .env.prod.local) - this will fallback on the loaders you defined
+        APP_ENV=
 
 .. _configuration-accessing-parameters:
 
@@ -1014,7 +1191,7 @@ doesn't work for parameters:
 
         use App\Service\MessageGenerator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 ->set('app.contents_dir', '...');
 
@@ -1069,7 +1246,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->services()
                 ->defaults()
                     // pass this value to any $projectDir argument for any service
@@ -1098,14 +1275,12 @@ parameters at once by type-hinting any of its constructor arguments with the
 
     class MessageGenerator
     {
-        private $params;
-
-        public function __construct(ContainerBagInterface $params)
-        {
-            $this->params = $params;
+        public function __construct(
+            private ContainerBagInterface $params,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // get any container parameter from $this->params, which stores all of them
             $sender = $this->params->get('mailer_sender');
@@ -1117,10 +1292,6 @@ parameters at once by type-hinting any of its constructor arguments with the
 
 Using PHP ConfigBuilders
 ------------------------
-
-.. versionadded:: 5.3
-
-    The "ConfigBuilders" feature was introduced in Symfony 5.3.
 
 Writing PHP config is sometimes difficult because you end up with large nested
 arrays and you have no autocompletion help from your favorite IDE. A way to
@@ -1135,18 +1306,18 @@ namespace ``Symfony\Config``::
     // config/packages/security.php
     use Symfony\Config\SecurityConfig;
 
-    return static function (SecurityConfig $security) {
+    return static function (SecurityConfig $security): void {
         $security->firewall('main')
             ->pattern('^/*')
             ->lazy(true)
-            ->anonymous();
+            ->security(false);
 
         $security
             ->roleHierarchy('ROLE_ADMIN', ['ROLE_USER'])
             ->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'])
             ->accessControl()
                 ->path('^/user')
-                ->role('ROLE_USER');
+                ->roles('ROLE_USER');
 
         $security->accessControl(['path' => '^/admin', 'roles' => 'ROLE_ADMIN']);
     };
@@ -1156,6 +1327,12 @@ namespace ``Symfony\Config``::
     Only root classes in the namespace ``Symfony\Config`` are ConfigBuilders.
     Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
     PHP objects which aren't autowired when using them as an argument type.
+
+.. note::
+
+    In order to get ConfigBuilders autocompletion in your IDE/editor, make sure
+    to not exclude the directory where these classes are generated (by default,
+    in ``var/cache/dev/Symfony/Config/``).
 
 Keep Going!
 -----------

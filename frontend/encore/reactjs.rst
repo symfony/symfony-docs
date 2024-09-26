@@ -1,5 +1,5 @@
-Enabling React.js
-=================
+Enabling React.js with Webpack Encore
+=====================================
 
 .. admonition:: Screencast
     :class: screencast
@@ -9,15 +9,11 @@ Enabling React.js
 .. tip::
 
     Check out live demos of Symfony UX React component at `https://ux.symfony.com/react`_!
-    
-Using React? First add some dependencies with Yarn:
+
+Using React? First add some dependencies with npm:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn add react react-dom prop-types
-
-    # if you use the npm package manager
     $ npm install react react-dom prop-types --save
 
 Enable react in your ``webpack.config.js``:
@@ -31,7 +27,6 @@ Enable react in your ``webpack.config.js``:
           // ...
     +     .enableReactPreset()
       ;
-
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting

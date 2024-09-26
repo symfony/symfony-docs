@@ -23,13 +23,11 @@ class::
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class LuckyController
     {
-        /**
-         * @Route("/lucky/number/{max}", name="app_lucky_number")
-         */
+        #[Route('/lucky/number/{max}', name: 'app_lucky_number')]
         public function number(int $max): Response
         {
             $number = random_int(0, $max);
@@ -55,17 +53,17 @@ This controller is pretty straightforward:
 * *line 7*: The class can technically be called anything, but it's suffixed
   with ``Controller`` by convention.
 
-* *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
+* *line 10*: The action method is allowed to have a ``$max`` argument thanks to the
   ``{max}`` :doc:`wildcard in the route </routing>`.
 
-* *line 16*: The controller creates and returns a ``Response`` object.
+* *line 14*: The controller creates and returns a ``Response`` object.
 
 Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to *view* the result of this controller, you need to map a URL to it via
-a route. This was done above with the ``@Route("/lucky/number/{max}")``
-:ref:`route annotation <annotation-routes>`.
+a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
+:ref:`route attribute <attribute-routes>`.
 
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
@@ -146,7 +144,7 @@ and ``redirect()`` methods::
         return $this->redirect('http://symfony.com/doc');
     }
 
-.. caution::
+.. danger::
 
     The ``redirect()`` method does not check its destination in any way. If you
     redirect to a URL provided by end-users, your application may be open
@@ -178,15 +176,14 @@ These are used for rendering templates, sending emails, querying the database an
 any other "work" you can think of.
 
 If you need a service in a controller, type-hint an argument with its class
-(or interface) name. Symfony will automatically pass you the service you need::
+(or interface) name and Symfony will inject it automatically. This requires
+your :doc:`controller to be registered as a service </controller/service>`::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    /**
-     * @Route("/lucky/number/{max}")
-     */
+    #[Route('/lucky/number/{max}')]
     public function number(int $max, LoggerInterface $logger): Response
     {
         $logger->info('We are logging!');
@@ -202,66 +199,40 @@ command:
 
     $ php bin/console debug:autowiring
 
-If you need control over the *exact* value of an argument, you can :ref:`bind <services-binding>`
-the argument by its name:
+.. tip::
 
-.. configuration-block::
+    If you need control over the *exact* value of an argument, or require a parameter,
+    you can use the ``#[Autowire]`` attribute::
 
-    .. code-block:: yaml
+        // ...
+        use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Attribute\Autowire;
+        use Symfony\Component\HttpFoundation\Response;
 
-        # config/services.yaml
-        services:
-            # ...
+        class LuckyController extends AbstractController
+        {
+            public function number(
+                int $max,
 
-            # explicitly configure the service
-            App\Controller\LuckyController:
-                tags: [controller.service_arguments]
-                bind:
-                    # for any $logger argument, pass this specific service
-                    $logger: '@monolog.logger.doctrine'
-                    # for any $projectDir argument, pass this parameter value
-                    $projectDir: '%kernel.project_dir%'
+                // inject a specific logger service
+                #[Autowire(service: 'monolog.logger.request')]
+                LoggerInterface $logger,
 
-    .. code-block:: xml
+                // or inject parameter values
+                #[Autowire('%kernel.project_dir%')]
+                string $projectDir
+            ): Response
+            {
+                $logger->info('We are logging!');
+                // ...
+            }
+        }
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+    You can read more about this attribute in :ref:`autowire-attribute`.
 
-            <services>
-                <!-- ... -->
-
-                <!-- Explicitly configure the service -->
-                <service id="App\Controller\LuckyController">
-                    <tag name="controller.service_arguments"/>
-                    <bind key="$logger"
-                        type="service"
-                        id="monolog.logger.doctrine"
-                    />
-                    <bind key="$projectDir">%kernel.project_dir%</bind>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use App\Controller\LuckyController;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register(LuckyController::class)
-            ->addTag('controller.service_arguments')
-            ->setBindings([
-                '$logger' => new Reference('monolog.logger.doctrine'),
-                '$projectDir' => '%kernel.project_dir%',
-            ])
-        ;
-
-Like with all services, you can also use regular :ref:`constructor injection <services-constructor-injection>`
-in your controllers.
+Like with all services, you can also use regular
+:ref:`constructor injection <services-constructor-injection>` in your
+controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
@@ -362,6 +333,361 @@ object. To access it in your controller, add it as an argument and
 :ref:`Keep reading <request-object-info>` for more information about using the
 Request object.
 
+.. _controller_map-request:
+
+Automatic Mapping Of The Request
+--------------------------------
+
+It is possible to automatically map request's payload and/or query parameters to
+your controller's action arguments with attributes.
+
+Mapping Query Parameters Individually
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let's say a user sends you a request with the following query string:
+``https://example.com/dashboard?firstName=John&lastName=Smith&age=27``.
+Thanks to the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter`
+attribute, arguments of your controller's action can be automatically fulfilled::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryParameter] string $firstName,
+        #[MapQueryParameter] string $lastName,
+        #[MapQueryParameter] int $age,
+    ): Response
+    {
+        // ...
+    }
+
+``#[MapQueryParameter]`` can take an optional argument called ``filter``. You can use the
+`Validate Filters`_ constants defined in PHP::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryParameter(filter: \FILTER_VALIDATE_REGEXP, options: ['regexp' => '/^\w+$/'])] string $firstName,
+        #[MapQueryParameter] string $lastName,
+        #[MapQueryParameter(filter: \FILTER_VALIDATE_INT)] int $age,
+    ): Response
+    {
+        // ...
+    }
+
+.. _controller-mapping-query-string:
+
+Mapping The Whole Query String
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another possibility is to map the entire query string into an object that will hold
+available query parameters. Let's say you declare the following DTO with its
+optional validation constraints::
+
+    namespace App\Model;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class UserDto
+    {
+        public function __construct(
+            #[Assert\NotBlank]
+            public string $firstName,
+
+            #[Assert\NotBlank]
+            public string $lastName,
+
+            #[Assert\GreaterThan(18)]
+            public int $age,
+        ) {
+        }
+    }
+
+You can then use the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString`
+attribute in your controller::
+
+    use App\Model\UserDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryString] UserDto $userDto
+    ): Response
+    {
+        // ...
+    }
+
+You can customize the validation groups used during the mapping and also the
+HTTP status to return if the validation fails::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryString(
+            validationGroups: ['strict', 'edit'],
+            validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY
+        )] UserDto $userDto
+    ): Response
+    {
+        // ...
+    }
+
+The default status code returned if the validation fails is 404.
+
+If you need a valid DTO even when the request query string is empty, set a
+default value for your controller arguments::
+
+    use App\Model\UserDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryString] UserDto $userDto = new UserDto()
+    ): Response
+    {
+        // ...
+    }
+
+.. _controller-mapping-request-payload:
+
+Mapping Request Payload
+~~~~~~~~~~~~~~~~~~~~~~~
+
+When creating an API and dealing with other HTTP methods than ``GET`` (like
+``POST`` or ``PUT``), user's data are not stored in the query string
+but directly in the request payload, like this:
+
+.. code-block:: json
+
+    {
+        "firstName": "John",
+        "lastName": "Smith",
+        "age": 28
+    }
+
+In this case, it is also possible to directly map this payload to your DTO by
+using the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload`
+attribute::
+
+    use App\Model\UserDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestPayload] UserDto $userDto
+    ): Response
+    {
+        // ...
+    }
+
+This attribute allows you to customize the serialization context as well
+as the class responsible of doing the mapping between the request and
+your DTO::
+
+    public function dashboard(
+        #[MapRequestPayload(
+            serializationContext: ['...'],
+            resolver: App\Resolver\UserDtoResolver
+        )]
+        UserDto $userDto
+    ): Response
+    {
+        // ...
+    }
+
+You can also customize the validation groups used, the status code to return if
+the validation fails as well as supported payload formats::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestPayload(
+            acceptFormat: 'json',
+            validationGroups: ['strict', 'read'],
+            validationFailedStatusCode: Response::HTTP_NOT_FOUND
+        )] UserDto $userDto
+    ): Response
+    {
+        // ...
+    }
+
+The default status code returned if the validation fails is 422.
+
+.. tip::
+
+    If you build a JSON API, make sure to declare your route as using the JSON
+    :ref:`format <routing-format-parameter>`. This will make the error handling
+    output a JSON response in case of validation errors, rather than an HTML page::
+
+        #[Route('/dashboard', name: 'dashboard', format: 'json')]
+
+Make sure to install `phpstan/phpdoc-parser`_ and `phpdocumentor/type-resolver`_
+if you want to map a nested array of specific DTOs::
+
+    public function dashboard(
+        #[MapRequestPayload] EmployeesDto $employeesDto
+    ): Response
+    {
+        // ...
+    }
+
+    final class EmployeesDto
+    {
+        /**
+         * @param UserDto[] $users
+         */
+        public function __construct(
+            public readonly array $users = []
+        ) {}
+    }
+
+Instead of returning an array of DTO objects, you can tell Symfony to transform
+each DTO object into an array and return something like this:
+
+.. code-block:: json
+
+    [
+        {
+            "firstName": "John",
+            "lastName": "Smith",
+            "age": 28
+        },
+        {
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "age": 30
+        }
+    ]
+
+To do so, map the parameter as an array and configure the type of each element
+using the ``type`` option of the attribute::
+
+    public function dashboard(
+        #[MapRequestPayload(type: UserDTO::class)] array $users
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 7.1
+
+    The ``type`` option of ``#[MapRequestPayload]`` was introduced in Symfony 7.1.
+
+.. _controller_map-uploaded-file:
+
+Mapping Uploaded Files
+~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony provides an attribute called ``#[MapUploadedFile]`` to map one or more
+``UploadedFile`` objects to controller arguments::
+
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class UserController extends AbstractController
+    {
+        #[Route('/user/picture', methods: ['PUT'])]
+        public function changePicture(
+            #[MapUploadedFile] UploadedFile $picture,
+        ): Response {
+            // ...
+        }
+    }
+
+In this example, the associated :doc:`argument resolver <controller/value_resolver>`
+fetches the ``UploadedFile`` based on the argument name (``$picture``). If no file
+is submitted, an ``HttpException`` is thrown. You can change this by making the
+controller argument nullable:
+
+.. code-block:: php-attributes
+
+    #[MapUploadedFile]
+    ?UploadedFile $document
+
+The ``#[MapUploadedFile]`` attribute also allows to pass a list of constraints
+to apply to the uploaded file::
+
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapUploadedFile;
+    use Symfony\Component\Routing\Attribute\Route;
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class UserController extends AbstractController
+    {
+        #[Route('/user/picture', methods: ['PUT'])]
+        public function changePicture(
+            #[MapUploadedFile([
+                new Assert\File(mimeTypes: ['image/png', 'image/jpeg']),
+                new Assert\Image(maxWidth: 3840, maxHeight: 2160),
+            ])]
+            UploadedFile $picture,
+        ): Response {
+            // ...
+        }
+    }
+
+The validation constraints are checked before injecting the ``UploadedFile`` into
+the controller argument. If there's a constraint violation, an ``HttpException``
+is thrown and the controller's action is not executed.
+
+If you need to upload a collection of files, map them to an array or a variadic
+argument. The given constraint will be applied to all files and if any of them
+fails, an ``HttpException`` is thrown:
+
+.. code-block:: php-attributes
+
+    #[MapUploadedFile(new Assert\File(mimeTypes: ['application/pdf']))]
+    array $documents
+
+    #[MapUploadedFile(new Assert\File(mimeTypes: ['application/pdf']))]
+    UploadedFile ...$documents
+
+Use the ``name`` option to rename the uploaded file to a custom value:
+
+.. code-block:: php-attributes
+
+    #[MapUploadedFile(name: 'something-else')]
+    UploadedFile $document
+
+In addition, you can change the status code of the HTTP exception thrown when
+there are constraint violations:
+
+.. code-block:: php-attributes
+
+    #[MapUploadedFile(
+        constraints: new Assert\File(maxSize: '2M'),
+        validationFailedStatusCode: Response::HTTP_REQUEST_ENTITY_TOO_LARGE
+    )]
+    UploadedFile $document
+
+.. versionadded:: 7.1
+
+    The ``#[MapUploadedFile]`` attribute was introduced in Symfony 7.1.
+
 Managing the Session
 --------------------
 
@@ -421,7 +747,7 @@ the ``Request`` class::
 
         // retrieves GET and POST variables respectively
         $request->query->get('page');
-        $request->request->get('page');
+        $request->getPayload()->get('page');
 
         // retrieves SERVER variables
         $request->server->get('HTTP_HOST');
@@ -532,6 +858,57 @@ The ``file()`` helper provides some arguments to configure its behavior::
         return $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
+Sending Early Hints
+~~~~~~~~~~~~~~~~~~~
+
+`Early hints`_ tell the browser to start downloading some assets even before the
+application sends the response content. This improves perceived performance
+because the browser can prefetch resources that will be needed once the full
+response is finally sent. These resources are commonly Javascript or CSS files,
+but they can be any type of resource.
+
+.. note::
+
+    In order to work, the `SAPI`_ you're using must support this feature, like
+    `FrankenPHP`_.
+
+You can send early hints from your controller action thanks to the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::sendEarlyHints`
+method::
+
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Attribute\Route;
+    use Symfony\Component\WebLink\Link;
+
+    class HomepageController extends AbstractController
+    {
+        #[Route("/", name: "homepage")]
+        public function index(): Response
+        {
+            $response = $this->sendEarlyHints([
+                new Link(rel: 'preconnect', href: 'https://fonts.google.com'),
+                (new Link(href: '/style.css'))->withAttribute('as', 'stylesheet'),
+                (new Link(href: '/script.js'))->withAttribute('as', 'script'),
+            ]);
+
+            // prepare the contents of the response...
+
+            return $this->render('homepage/index.html.twig', response: $response);
+        }
+    }
+
+Technically, Early Hints are an informational HTTP response with the status code
+``103``. The ``sendEarlyHints()`` method creates a ``Response`` object with that
+status code and sends its headers immediately.
+
+This way, browsers can start downloading the assets immediately; like the
+``style.css`` and ``script.js`` files in the above example. The
+``sendEarlyHints()`` method also returns the ``Response`` object, which you
+must use to create the full response sent from the controller action.
+
 Final Thoughts
 --------------
 
@@ -566,3 +943,9 @@ Learn more about Controllers
 
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`unvalidated redirects security vulnerability`: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+.. _`Early hints`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103
+.. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
+.. _`FrankenPHP`: https://frankenphp.dev
+.. _`Validate Filters`: https://www.php.net/manual/en/filter.filters.validate.php
+.. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser
+.. _`phpdocumentor/type-resolver`: https://packagist.org/packages/phpdocumentor/type-resolver

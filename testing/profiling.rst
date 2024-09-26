@@ -46,7 +46,7 @@ tests significantly. That's why Symfony disables it by default:
         // config/packages/test/web_profiler.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->profiler()
                 ->enabled(true)
@@ -73,7 +73,7 @@ provided by the collectors obtained through the ``$client->getProfile()`` call::
 
     class LuckyControllerTest extends WebTestCase
     {
-        public function testRandomNumber()
+        public function testRandomNumber(): void
         {
             $client = static::createClient();
 

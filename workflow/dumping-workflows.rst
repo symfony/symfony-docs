@@ -9,10 +9,6 @@ applications needed to generate the images:
 * `Mermaid CLI`_, provides the ``mmdc`` command;
 * `PlantUML`_, provides the ``plantuml.jar`` file (which requires Java).
 
-.. versionadded:: 5.3
-
-    The ``mermaid`` dump format was introduced in Symfony 5.3.
-
 If you are defining the workflow inside a Symfony application, run this command
 to dump it as an image:
 
@@ -68,6 +64,21 @@ files and ``PlantUmlDumper`` to create the PlantUML files::
 
 Styling
 -------
+
+You can use ``--with-metadata`` option in the ``workflow:dump`` command to include places, transitions and
+workflow's metadata.
+
+The DOT image will look like this :
+
+.. image:: /_images/components/workflow/blogpost_metadata.png
+
+.. note::
+
+    The ``--with-metadata`` option only works for the DOT dumper for now.
+
+.. note::
+
+    The ``label`` metadata is not included in the dumped metadata, because it is used as a place's title.
 
 You can use ``metadata`` with the following keys to style the workflow:
 
@@ -253,7 +264,7 @@ Below is the configuration for the pull request state machine with styling added
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $pullRequest = $framework->workflows()->workflows('pull_request');
 

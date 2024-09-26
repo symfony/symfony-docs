@@ -1,17 +1,13 @@
-ExpressionLanguageSyntax
-========================
+ExpressionSyntax
+================
 
 This constraint checks that the value is valid as an `ExpressionLanguage`_
 expression.
 
-.. versionadded:: 5.1
-
-    The ``ExpressionLanguageSyntax`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Class       :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntax`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntaxValidator`
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionSyntax`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionSyntaxValidator`
 ==========  ===================================================================
 
 Basic Usage
@@ -26,28 +22,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\ExpressionLanguageSyntax
-             */
-            protected $promotion;
-
-            /**
-             * @Assert\ExpressionLanguageSyntax(
-             *     allowedVariables={"user", "shipping_centers"}
-             * )
-             */
-            protected $shippingOptions;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php
@@ -57,13 +31,13 @@ The following constraints ensure that:
 
         class Order
         {
-            #[Assert\ExpressionLanguageSyntax]
-            protected $promotion;
+            #[Assert\ExpressionSyntax]
+            protected string $promotion;
 
-            #[Assert\ExpressionLanguageSyntax(
+            #[Assert\ExpressionSyntax(
                 allowedVariables: ['user', 'shipping_centers'],
             )]
-            protected $shippingOptions;
+            protected string $shippingOptions;
         }
 
     .. code-block:: yaml
@@ -72,9 +46,9 @@ The following constraints ensure that:
         App\Entity\Order:
             properties:
                 promotion:
-                    - ExpressionLanguageSyntax: ~
+                    - ExpressionSyntax: ~
                 shippingOptions:
-                    - ExpressionLanguageSyntax:
+                    - ExpressionSyntax:
                         allowedVariables: ['user', 'shipping_centers']
 
     .. code-block:: xml
@@ -87,10 +61,10 @@ The following constraints ensure that:
 
             <class name="App\Entity\Order">
                 <property name="promotion">
-                    <constraint name="ExpressionLanguageSyntax"/>
+                    <constraint name="ExpressionSyntax"/>
                 </property>
                 <property name="shippingOptions">
-                    <constraint name="ExpressionLanguageSyntax">
+                    <constraint name="ExpressionSyntax">
                         <option name="allowedVariables">
                             <value>user</value>
                             <value>shipping_centers</value>
@@ -110,11 +84,13 @@ The following constraints ensure that:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
-            {
-                $metadata->addPropertyConstraint('promotion', new Assert\ExpressionLanguageSyntax());
+            // ...
 
-                $metadata->addPropertyConstraint('shippingOptions', new Assert\ExpressionLanguageSyntax([
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('promotion', new Assert\ExpressionSyntax());
+
+                $metadata->addPropertyConstraint('shippingOptions', new Assert\ExpressionSyntax([
                     'allowedVariables' => ['user', 'shipping_centers'],
                 ]));
             }

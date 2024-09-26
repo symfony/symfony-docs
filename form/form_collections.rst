@@ -11,13 +11,12 @@ Let's start by creating a ``Task`` entity::
     // src/Entity/Task.php
     namespace App\Entity;
 
-    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
 
     class Task
     {
-        protected $description;
-        protected $tags;
+        protected string $description;
+        protected Collection $tags;
 
         public function __construct()
         {
@@ -53,7 +52,7 @@ objects::
 
     class Tag
     {
-        private $name;
+        private string $name;
 
         public function getName(): string
         {
@@ -161,7 +160,7 @@ In your controller, you'll create a new form from the ``TaskType``::
                 // ... do your form processing, like saving the Task and Tag entities
             }
 
-            return $this->renderForm('task/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form,
             ]);
         }
@@ -241,7 +240,11 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 
 The ``allow_add`` option also makes a ``prototype`` variable available to you.
 This "prototype" is a little "template" that contains all the HTML needed to
-dynamically create any new "tag" forms with JavaScript. To render the prototype, add
+dynamically create any new "tag" forms with JavaScript.
+
+Let's start with plain JavaScript (Vanilla JS) – if you're using Stimulus, see below.
+
+To render the prototype, add
 the following ``data-prototype`` attribute to the existing ``<ul>`` in your
 template:
 
@@ -311,7 +314,7 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
 
 .. code-block:: javascript
 
-    const addFormToCollection = (e) => {
+    function addFormToCollection(e) {
       const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
       const item = document.createElement('li');
@@ -336,6 +339,49 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
+
+JavaScript with Stimulus
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using `Stimulus`_, wrap everything in a ``<div>``:
+
+.. code-block:: html+twig
+
+    <div {{ stimulus_controller('form-collection') }}
+        data-form-collection-index-value="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+        data-form-collection-prototype-value="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"
+    >
+        <ul {{ stimulus_target('form-collection', 'collectionContainer') }}></ul>
+        <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Add a tag</button>
+    </div>
+
+Then create the controller:
+
+.. code-block:: javascript
+
+    // assets/controllers/form-collection_controller.js
+
+    import { Controller } from '@hotwired/stimulus';
+
+    export default class extends Controller {
+        static targets = ["collectionContainer"]
+
+        static values = {
+            index    : Number,
+            prototype: String,
+        }
+
+        addCollectionElement(event)
+        {
+            const item = document.createElement('li');
+            item.innerHTML = this.prototypeValue.replace(/__name__/g, this.indexValue);
+            this.collectionContainerTarget.appendChild(item);
+            this.indexValue++;
+        }
+    }
+
+Handling the new Tags in PHP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
@@ -412,16 +458,14 @@ you will learn about next!).
 
     .. configuration-block::
 
-        .. code-block:: php-annotations
+        .. code-block:: php-attributes
 
             // src/Entity/Task.php
 
             // ...
 
-            /**
-             * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
-             */
-            protected $tags;
+            #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
+            protected Collection $tags;
 
         .. code-block:: yaml
 
@@ -529,14 +573,14 @@ Now, you need to put some code into the ``removeTag()`` method of ``Task``::
         }
     }
 
-
 The ``allow_delete`` option means that if an item of a collection
 isn't sent on submission, the related data is removed from the collection
 on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
-First, add a "delete this tag" link to each tag form:
+In the JavaScript code, add a "delete" button to each existing tag on the page.
+Then, append the "add delete button" method in the function that adds the new tags:
 
 .. code-block:: javascript
 
@@ -548,7 +592,7 @@ First, add a "delete this tag" link to each tag form:
 
     // ... the rest of the block from above
 
-    const addFormToCollection = (e) => {
+    function addFormToCollection(e) {
         // ...
 
         // add a delete link to the new form
@@ -559,7 +603,7 @@ The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    const addTagFormDeleteLink = (item) => {
+    function addTagFormDeleteLink(item) {
         const removeFormButton = document.createElement('button');
         removeFormButton.innerText = 'Delete this tag';
 
@@ -664,3 +708,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
 .. _`Symfony UX Demo of Form Collections`: https://ux.symfony.com/live-component/demos/form-collection-type
+.. _`Stimulus`: https://symfony.com/doc/current/frontend/encore/simple-example.html#stimulus-symfony-ux

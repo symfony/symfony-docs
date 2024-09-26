@@ -15,22 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Date
-             * @var string A "Y-m-d" formatted value
-             */
-            protected $birthday;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -41,7 +25,7 @@ Basic Usage
         class Author
         {
             #[Assert\Date]
-            protected $birthday;
+            protected string $birthday;
         }
 
     .. code-block:: yaml
@@ -80,9 +64,9 @@ Basic Usage
            /**
             * @var string A "Y-m-d" formatted value
             */
-            protected $birthday;
+            protected string $birthday;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('birthday', new Assert\Date());
             }
@@ -110,9 +94,5 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc

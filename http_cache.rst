@@ -104,7 +104,7 @@ Use the ``framework.http_cache`` option to enable the proxy for the
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) use ($env) {
+        return static function (FrameworkConfig $framework, string $env): void {
             if ('prod' === $env) {
                 $framework->httpCache()->enabled(true);
             }
@@ -195,24 +195,39 @@ Expiration Caching
 
 The *easiest* way to cache a response is by caching it for a specific amount of time::
 
-    // src/Controller/BlogController.php
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
+.. configuration-block::
 
-    public function index(): Response
-    {
-        // somehow create a Response object, like by rendering a template
-        $response = $this->render('blog/index.html.twig', []);
+    .. code-block:: php-attributes
 
-        // cache publicly for 3600 seconds
-        $response->setPublic();
-        $response->setMaxAge(3600);
+        // src/Controller/BlogController.php
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
 
-        // (optional) set a custom Cache-Control directive
-        $response->headers->addCacheControlDirective('must-revalidate', true);
+        #[Cache(public: true, maxage: 3600, mustRevalidate: true)]
+        public function index(): Response
+        {
+            return $this->render('blog/index.html.twig', []);
+        }
 
-        return $response;
-    }
+    .. code-block:: php
+
+        // src/Controller/BlogController.php
+        use Symfony\Component\HttpFoundation\Response;
+
+        public function index(): Response
+        {
+            // somehow create a Response object, like by rendering a template
+            $response = $this->render('blog/index.html.twig', []);
+
+            // cache publicly for 3600 seconds
+            $response->setPublic();
+            $response->setMaxAge(3600);
+
+            // (optional) set a custom Cache-Control directive
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+
+            return $response;
+        }
 
 Thanks to this new code, your HTTP response will have the following header:
 
@@ -310,10 +325,9 @@ Additionally, most cache-related HTTP headers can be set via the single
         'etag'             => 'abcdef'
     ]);
 
-.. versionadded:: 5.1
+.. tip::
 
-    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
-    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
+    All these options are also available when using the ``#[Cache]`` attribute.
 
 Cache Invalidation
 ------------------

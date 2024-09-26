@@ -10,8 +10,6 @@ that you want to use for your number.
 +---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | Please enter a number.                                               |
 +---------------------------+----------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                  |
-+---------------------------+----------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
 +---------------------------+----------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
@@ -55,6 +53,11 @@ to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
+When the ``html5`` option is set to ``false``, the ``<input>`` element will
+include an `inputmode HTML attribute`_ which depends on the value of this option.
+If the ``scale`` value is ``0``, ``inputmode`` will be ``numeric``; if ``scale``
+is set to any value greater than ``0``, ``inputmode`` will be ``decimal``.
+
 Overridden Options
 ------------------
 
@@ -95,6 +98,8 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
@@ -102,3 +107,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. _`inputmode HTML attribute`: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode

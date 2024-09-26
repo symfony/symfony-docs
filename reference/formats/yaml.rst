@@ -1,8 +1,8 @@
 The YAML Format
 ---------------
 
-The Symfony Yaml Component implements a selected subset of features defined in
-the `YAML 1.2 version specification`_.
+The Symfony :doc:`Yaml Component </components/yaml>` implements a selected subset
+of features defined in the `YAML 1.2 version specification`_.
 
 Scalars
 ~~~~~~~
@@ -34,12 +34,10 @@ must be doubled to escape it:
 
     'A single quote '' inside a single-quoted string'
 
-Strings containing any of the following characters must be quoted. Although you
-can use double quotes, for these characters it is more convenient to use single
-quotes, which avoids having to escape any backslash ``\``:
-
-* ``:``, ``{``, ``}``, ``[``, ``]``, ``,``, ``&``, ``*``, ``#``, ``?``, ``|``,
-  ``-``, ``<``, ``>``, ``=``, ``!``, ``%``, ``@``, `````
+Strings containing any of the following characters must be quoted:
+``: { } [ ] , & * # ? | - < > = ! % @`` Although you can use double quotes, for
+these characters it is more convenient to use single quotes, which avoids having
+to escape any backslash ``\``.
 
 The double-quoted style provides a way to express arbitrary strings, by
 using ``\`` to escape characters and sequences. For instance, it is very useful
@@ -52,11 +50,11 @@ when you need to embed a ``\n`` or a Unicode character in a string.
 If the string contains any of the following control characters, it must be
 escaped with double quotes:
 
-* ``\0``, ``\x01``, ``\x02``, ``\x03``, ``\x04``, ``\x05``, ``\x06``, ``\a``,
-  ``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\x0e``, ``\x0f``, ``\x10``,
-  ``\x11``, ``\x12``, ``\x13``, ``\x14``, ``\x15``, ``\x16``, ``\x17``, ``\x18``,
-  ``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
-  ``\_``, ``\L``, ``\P``
+``\0``, ``\x01``, ``\x02``, ``\x03``, ``\x04``, ``\x05``, ``\x06``, ``\a``,
+``\b``, ``\t``, ``\n``, ``\v``, ``\f``, ``\r``, ``\x0e``, ``\x0f``, ``\x10``,
+``\x11``, ``\x12``, ``\x13``, ``\x14``, ``\x15``, ``\x16``, ``\x17``, ``\x18``,
+``\x19``, ``\x1a``, ``\e``, ``\x1c``, ``\x1d``, ``\x1e``, ``\x1f``, ``\N``,
+``\_``, ``\L``, ``\P``
 
 Finally, there are other cases when the strings must be quoted, no matter if
 you're using single or double quotes:
@@ -117,12 +115,6 @@ Numbers
 
     # an octal
     0o14
-
-.. deprecated:: 5.1
-
-    In YAML 1.1, octal numbers use the notation ``0...``, whereas in YAML 1.2
-    the notation changes to ``0o...``. Symfony 5.1 added support for YAML 1.2
-    notation and deprecated support for YAML 1.1 notation.
 
 .. code-block:: yaml
 
@@ -340,6 +332,30 @@ official YAML specification but are useful in Symfony applications:
 
       data:
           my_object: !php/object 'O:8:"stdClass":1:{s:3:"bar";i:2;}'
+
+* ``!php/enum`` allows to use a PHP enum case. This tag takes the fully-qualified
+  class name of the enum case as its argument:
+
+  .. code-block:: yaml
+
+      data:
+          # You can use the typed enum case...
+          operator_type: !php/enum App\Operator\Enum\Type::Or
+          # ... or you can also use "->value" to directly use the value of a BackedEnum case
+          operator_type: !php/enum App\Operator\Enum\Type::Or->value
+
+  This tag allows to omit the enum case and only provide the enum FQCN
+  to return an array of all available enum cases:
+
+  .. code-block:: yaml
+
+      data:
+          operator_types: !php/enum App\Operator\Enum\Type
+
+  .. versionadded:: 7.1
+
+    The support for using the enum FQCN without specifying a case
+    was introduced in Symfony 7.1.
 
 Unsupported YAML Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~

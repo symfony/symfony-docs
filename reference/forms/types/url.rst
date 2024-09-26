@@ -10,8 +10,6 @@ have a protocol.
 +---------------------------+-------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid URL.                                         |
 +---------------------------+-------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                               |
-+---------------------------+-------------------------------------------------------------------+
 | Parent type               | :doc:`TextType </reference/forms/types/text>`                     |
 +---------------------------+-------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\UrlType` |
@@ -30,6 +28,11 @@ Field Options
 If a value is submitted that doesn't begin with some protocol (e.g. ``http://``,
 ``ftp://``, etc), this protocol will be prepended to the string when
 the data is submitted to the form.
+
+.. deprecated:: 7.1
+
+    Not setting the ``default_protocol`` option is deprecated since Symfony 7.1
+    and will default to ``null`` in Symfony 8.0.
 
 Overridden Options
 ------------------
@@ -66,6 +69,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

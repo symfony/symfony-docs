@@ -23,27 +23,27 @@ Switching a Channel to a different Handler
 Now, suppose you want to log the ``security`` channel to a different file.
 To do this, create a new handler and configure it to log only messages
 from the ``security`` channel. The following example does that only in the
-``prod`` :ref:`configuration environment <configuration-environments>` but you
-can do it in any (or all) environments:
+``prod`` :ref:`configuration environment <configuration-environments>`:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/packages/prod/monolog.yaml
-        monolog:
-            handlers:
-                security:
-                    # log all messages (since debug is the lowest level)
-                    level:    debug
-                    type:     stream
-                    path:     '%kernel.logs_dir%/security.log'
-                    channels: [security]
+        # config/packages/monolog.yaml
+        when@prod:
+            monolog:
+                handlers:
+                    security:
+                        # log all messages (since debug is the lowest level)
+                        level:    debug
+                        type:     stream
+                        path:     '%kernel.logs_dir%/security.log'
+                        channels: [security]
 
-                # an example of *not* logging security channel messages for this handler
-                main:
-                    # ...
-                    # channels: ['!security']
+                    # an example of *not* logging security channel messages for this handler
+                    main:
+                        # ...
+                        # channels: ['!security']
 
     .. code-block:: xml
 
@@ -56,12 +56,15 @@ can do it in any (or all) environments:
                 http://symfony.com/schema/dic/monolog
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <monolog:config>
-                <monolog:handler name="security" type="stream" path="%kernel.logs_dir%/security.log">
-                    <monolog:channels>
-                        <monolog:channel>security</monolog:channel>
-                    </monolog:channels>
-                </monolog:handler>
+            <when env="prod">
+                <monolog:config>
+                    <monolog:handler name="security" type="stream" path="%kernel.logs_dir%/security.log">
+                        <monolog:channels>
+                            <monolog:channel>security</monolog:channel>
+                        </monolog:channels>
+                    </monolog:handler>
+                </monolog:config>
+            </when>
 
                 <monolog:handler name="main" type="stream" path="%kernel.logs_dir%/main.log">
                     <!-- ... -->
@@ -75,18 +78,21 @@ can do it in any (or all) environments:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
-            $monolog->handler('security')
-                ->type('stream')
-                ->path('%kernel.logs_dir%/security.log')
-                ->channels()->elements(['security']);
+        return static function (MonologConfig $monolog, ContainerConfigurator $container) {
+            if ('prod' === $container->env()) {
+                $monolog->handler('security')
+                    ->type('stream')
+                    ->path(param('kernel.logs_dir') . \DIRECTORY_SEPARATOR . 'security.log')
+                    ->channels()->elements(['security']);
 
-            $monolog->handler('main')
-                 // ...
+                $monolog->handler('main')
+                     // ...
 
-                ->channels()->elements(['!security']);
+                    ->channels()->elements(['!security']);
+            }
         };
 
 .. caution::
@@ -131,13 +137,13 @@ You can also configure additional channels without the need to tag your services
 
     .. code-block:: yaml
 
-        # config/packages/prod/monolog.yaml
+        # config/packages/monolog.yaml
         monolog:
             channels: ['foo', 'bar', 'foo_bar']
 
     .. code-block:: xml
 
-        <!-- config/packages/prod/monolog.xml -->
+        <!-- config/packages/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -155,10 +161,10 @@ You can also configure additional channels without the need to tag your services
 
     .. code-block:: php
 
-        // config/packages/prod/monolog.php
+        // config/packages/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->channels(['foo', 'bar', 'foo_bar']);
         };
 
@@ -182,10 +188,41 @@ change your constructor like this:
 
 .. code-block:: diff
 
-    -     public function __construct(LoggerInterface $logger)
-    +     public function __construct(LoggerInterface $fooBarLogger)
-        {
-            $this->logger = $fooBarLogger;
+        public function __construct(
+    -     LoggerInterface $logger,
+    +     LoggerInterface $fooBarLogger,
+        ) {
         }
 
+Configure Logger Channels with Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Starting from `Monolog`_ 3.5 you can also configure the logger channel
+by using the ``#[WithMonologChannel]`` attribute directly on your service
+class::
+
+    // src/Service/MyFixtureService.php
+    namespace App\Service;
+
+    use Monolog\Attribute\WithMonologChannel;
+    use Psr\Log\LoggerInterface;
+    use Symfony\Bridge\Monolog\Logger;
+
+    #[WithMonologChannel('fixtures')]
+    class MyFixtureService
+    {
+        public function __construct(LoggerInterface $logger)
+        {
+            // ...
+        }
+    }
+
+This way you can avoid declaring your service manually to use a specific
+channel.
+
+.. versionadded:: 3.5
+
+    The ``#[WithMonologChannel]`` attribute was introduced in Monolog 3.5.0.
+
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle
+.. _`Monolog`: https://github.com/Seldaek/monolog

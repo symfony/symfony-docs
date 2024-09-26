@@ -20,23 +20,6 @@ will contain an International Bank Account Number.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Transaction.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\Iban(
-             *     message="This is not a valid International Bank Account Number (IBAN)."
-             * )
-             */
-            protected $bankAccountNumber;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
@@ -49,7 +32,7 @@ will contain an International Bank Account Number.
             #[Assert\Iban(
                 message: 'This is not a valid International Bank Account Number (IBAN).',
             )]
-            protected $bankAccountNumber;
+            protected string $bankAccountNumber;
         }
 
     .. code-block:: yaml
@@ -90,9 +73,9 @@ will contain an International Bank Account Number.
 
         class Transaction
         {
-            protected $bankAccountNumber;
+            // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bankAccountNumber', new Assert\Iban([
                     'message' => 'This is not a valid International Bank Account Number (IBAN).',
@@ -122,10 +105,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

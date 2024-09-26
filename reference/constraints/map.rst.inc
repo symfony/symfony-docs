@@ -16,7 +16,7 @@ String Constraints
 ~~~~~~~~~~~~~~~~~~
 
 * :doc:`Email </reference/constraints/Email>`
-* :doc:`ExpressionLanguageSyntax </reference/constraints/ExpressionLanguageSyntax>`
+* :doc:`ExpressionSyntax </reference/constraints/ExpressionSyntax>`
 * :doc:`Length </reference/constraints/Length>`
 * :doc:`Url </reference/constraints/Url>`
 * :doc:`Regex </reference/constraints/Regex>`
@@ -28,7 +28,11 @@ String Constraints
 * :doc:`Ulid </reference/constraints/Ulid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+* :doc:`PasswordStrength </reference/constraints/PasswordStrength>`
 * :doc:`CssColor </reference/constraints/CssColor>`
+* :doc:`NoSuspiciousCharacters </reference/constraints/NoSuspiciousCharacters>`
+* :doc:`Charset </reference/constraints/Charset>`
+* :doc:`MacAddress </reference/constraints/MacAddress>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -86,6 +90,13 @@ Financial and other Number Constraints
 * :doc:`Issn </reference/constraints/Issn>`
 * :doc:`Isin </reference/constraints/Isin>`
 
+Doctrine Constraints
+~~~~~~~~~~~~~~~~~~~~
+
+* :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
+* :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`
+
 Other Constraints
 ~~~~~~~~~~~~~~~~~
 
@@ -94,12 +105,10 @@ Other Constraints
 * :doc:`Compound </reference/constraints/Compound>`
 * :doc:`Callback </reference/constraints/Callback>`
 * :doc:`Expression </reference/constraints/Expression>`
+* :doc:`When </reference/constraints/When>`
 * :doc:`All </reference/constraints/All>`
 * :doc:`Valid </reference/constraints/Valid>`
 * :doc:`Cascade </reference/constraints/Cascade>`
 * :doc:`Traverse </reference/constraints/Traverse>`
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
-* :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
-* :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
-* :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`

@@ -9,7 +9,6 @@ each possible section of your Symfony configuration.
 * :doc:`framework </reference/configuration/framework>`
 * :doc:`doctrine </reference/configuration/doctrine>`
 * :doc:`security </reference/configuration/security>`
-* :doc:`swiftmailer </reference/configuration/swiftmailer>`
 * :doc:`twig </reference/configuration/twig>`
 * :doc:`monolog </reference/configuration/monolog>`
 * :doc:`web_profiler </reference/configuration/web_profiler>`

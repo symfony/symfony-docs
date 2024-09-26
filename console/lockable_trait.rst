@@ -43,8 +43,28 @@ that adds two convenient methods to lock and release commands::
         }
     }
 
-.. versionadded:: 5.1
+The LockableTrait will use the ``SemaphoreStore`` if available and will default
+to ``FlockStore`` otherwise. You can override this behavior by setting
+a ``$lockFactory`` property with your own lock factory::
 
-    The ``Command::SUCCESS`` constant was introduced in Symfony 5.1.
+    // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Command\LockableTrait;
+    use Symfony\Component\Lock\LockFactory;
+
+    class UpdateContentsCommand extends Command
+    {
+        use LockableTrait;
+
+        public function __construct(private LockFactory $lockFactory)
+        {
+        }
+
+        // ...
+    }
+
+.. versionadded::  7.1
+
+    The ``$lockFactory`` property was introduced in Symfony 7.1.
 
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)

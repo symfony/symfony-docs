@@ -19,21 +19,6 @@ positive number (greater than zero):
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Employee.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Employee
-        {
-            /**
-             * @Assert\Positive
-             */
-            protected $income;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Employee.php
@@ -44,7 +29,7 @@ positive number (greater than zero):
         class Employee
         {
             #[Assert\Positive]
-            protected $income;
+            protected int $income;
         }
 
     .. code-block:: yaml
@@ -78,10 +63,11 @@ positive number (greater than zero):
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-
         class Employee
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('income', new Assert\Positive());
             }

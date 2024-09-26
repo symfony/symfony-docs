@@ -1,15 +1,11 @@
-The String Component
-====================
+Creating and Manipulating Strings
+=================================
 
-    The String component provides a single object-oriented API to work with
-    three "unit systems" of strings: bytes, code points and grapheme clusters.
+Symfony provides an object-oriented API to work with Unicode strings (as bytes,
+code points and grapheme clusters). This API is available via the String component,
+which you must first install in your application:
 
-.. versionadded:: 5.0
-
-    The String component was introduced in Symfony 5.0.
-
-Installation
-------------
+.. _installation:
 
 .. code-block:: terminal
 
@@ -125,10 +121,6 @@ to make your code more concise::
     // creates a UnicodeString object
     $foo = s('अनुच्छेद');
 
-.. versionadded:: 5.1
-
-    The ``s()`` function was introduced in Symfony 5.1.
-
 There are also some specialized constructors::
 
     // ByteString can create a random string of the given length
@@ -141,10 +133,6 @@ There are also some specialized constructors::
     // CodePointString and UnicodeString can create a string from code points
     $foo = UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
     // equivalent to: $foo = new UnicodeString('नमस्ते');
-
-.. versionadded:: 5.1
-
-    The second argument of ``ByteString::fromRandom()`` was introduced in Symfony 5.1.
 
 Methods to Transform String Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -215,7 +203,10 @@ Methods to Change Case
 ::
 
     // changes all graphemes/code points to lower case
-    u('FOO Bar')->lower();  // 'foo bar'
+    u('FOO Bar Brİan')->lower();  // 'foo bar bri̇an'
+    // changes all graphemes/code points to lower case according to locale-specific case mappings
+    u('FOO Bar Brİan')->localeLower('en');  // 'foo bar bri̇an'
+    u('FOO Bar Brİan')->localeLower('lt');  // 'foo bar bri̇̇an'
 
     // when dealing with different languages, uppercase/lowercase is not enough
     // there are three cases (lower, upper, title), some characters have no case,
@@ -225,11 +216,17 @@ Methods to Change Case
     u('Die O\'Brian Straße')->folded(); // "die o'brian strasse"
 
     // changes all graphemes/code points to upper case
-    u('foo BAR')->upper(); // 'FOO BAR'
+    u('foo BAR bάz')->upper(); // 'FOO BAR BΆZ'
+    // changes all graphemes/code points to upper case according to locale-specific case mappings
+    u('foo BAR bάz')->localeUpper('en'); // 'FOO BAR BΆZ'
+    u('foo BAR bάz')->localeUpper('el'); // 'FOO BAR BAZ'
 
     // changes all graphemes/code points to "title case"
-    u('foo bar')->title();     // 'Foo bar'
-    u('foo bar')->title(true); // 'Foo Bar'
+    u('foo ijssel')->title();               // 'Foo ijssel'
+    u('foo ijssel')->title(allWords: true); // 'Foo Ijssel'
+    // changes all graphemes/code points to "title case" according to locale-specific case mappings
+    u('foo ijssel')->localeTitle('en'); // 'Foo ijssel'
+    u('foo ijssel')->localeTitle('nl'); // 'Foo IJssel'
 
     // changes all graphemes/code points to camelCase
     u('Foo: Bar-baz.')->camel(); // 'fooBarBaz'
@@ -237,6 +234,11 @@ Methods to Change Case
     u('Foo: Bar-baz.')->snake(); // 'foo_bar_baz'
     // other cases can be achieved by chaining methods. E.g. PascalCase:
     u('Foo: Bar-baz.')->camel()->title(); // 'FooBarBaz'
+
+.. versionadded:: 7.1
+
+    The ``localeLower()``, ``localeUpper()`` and ``localeTitle()`` methods were
+    introduced in Symfony 7.1.
 
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
@@ -267,20 +269,20 @@ Methods to Append and Prepend
     u('UserControllerController')->ensureEnd('Controller'); // 'UserController'
 
     // returns the contents found before/after the first occurrence of the given string
-    u('hello world')->before('world');   // 'hello '
-    u('hello world')->before('o');       // 'hell'
-    u('hello world')->before('o', true); // 'hello'
+    u('hello world')->before('world');                  // 'hello '
+    u('hello world')->before('o');                      // 'hell'
+    u('hello world')->before('o', includeNeedle: true); // 'hello'
 
-    u('hello world')->after('hello');   // ' world'
-    u('hello world')->after('o');       // ' world'
-    u('hello world')->after('o', true); // 'o world'
+    u('hello world')->after('hello');                  // ' world'
+    u('hello world')->after('o');                      // ' world'
+    u('hello world')->after('o', includeNeedle: true); // 'o world'
 
     // returns the contents found before/after the last occurrence of the given string
-    u('hello world')->beforeLast('o');       // 'hello w'
-    u('hello world')->beforeLast('o', true); // 'hello wo'
+    u('hello world')->beforeLast('o');                      // 'hello w'
+    u('hello world')->beforeLast('o', includeNeedle: true); // 'hello wo'
 
-    u('hello world')->afterLast('o');       // 'rld'
-    u('hello world')->afterLast('o', true); // 'orld'
+    u('hello world')->afterLast('o');                      // 'rld'
+    u('hello world')->afterLast('o', includeNeedle: true); // 'orld'
 
 Methods to Pad and Trim
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -314,10 +316,6 @@ Methods to Pad and Trim
     // when passing an array of prefix/suffix, only the first one found is trimmed
     u('file-image-0001.png')->trimPrefix(['file-', 'image-']); // 'image-0001.png'
     u('template.html.twig')->trimSuffix(['.twig', '.html']);   // 'template.html'
-
-.. versionadded:: 5.4
-
-    The ``trimPrefix()`` and ``trimSuffix()`` methods were introduced in Symfony 5.4.
 
 Methods to Search and Replace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -368,13 +366,9 @@ Methods to Search and Replace
     // replaces all occurrences of the given regular expression
     u('(+1) 206-555-0100')->replaceMatches('/[^A-Za-z0-9]++/', ''); // '12065550100'
     // you can pass a callable as the second argument to perform advanced replacements
-    u('123')->replaceMatches('/\d/', function ($match) {
+    u('123')->replaceMatches('/\d/', function (string $match): string {
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
-
-.. versionadded:: 5.1
-
-    The ``containsAny()`` method was introduced in Symfony 5.1.
 
 Methods to Join, Split, Truncate and Reverse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -401,21 +395,17 @@ Methods to Join, Split, Truncate and Reverse
     u('Lorem Ipsum')->truncate(80);            // 'Lorem Ipsum'
     // the second argument is the character(s) added when a string is cut
     // (the total length includes the length of this character(s))
-    u('Lorem Ipsum')->truncate(8, '…');        // 'Lorem I…'
+    u('Lorem Ipsum')->truncate(8, '…');             // 'Lorem I…'
     // if the third argument is false, the last word before the cut is kept
     // even if that generates a string longer than the desired length
-    u('Lorem Ipsum')->truncate(8, '…', false); // 'Lorem Ipsum'
-
-.. versionadded:: 5.1
-
-    The third argument of ``truncate()`` was introduced in Symfony 5.1.
+    u('Lorem Ipsum')->truncate(8, '…', cut: false); // 'Lorem Ipsum'
 
 ::
 
     // breaks the string into lines of the given length
-    u('Lorem Ipsum')->wordwrap(4);             // 'Lorem\nIpsum'
+    u('Lorem Ipsum')->wordwrap(4);                  // 'Lorem\nIpsum'
     // by default it breaks by white space; pass TRUE to break unconditionally
-    u('Lorem Ipsum')->wordwrap(4, "\n", true); // 'Lore\nm\nIpsu\nm'
+    u('Lorem Ipsum')->wordwrap(4, "\n", cut: true); // 'Lore\nm\nIpsu\nm'
 
     // replaces a portion of the string with the given contents:
     // the second argument is the position where the replacement starts;
@@ -429,12 +419,8 @@ Methods to Join, Split, Truncate and Reverse
     u('0123456789')->chunk(3);  // ['012', '345', '678', '9']
 
     // reverses the order of the string contents
-    u('foo bar')->reverse(); // 'rab oof'
+    u('foo bar')->reverse();  // 'rab oof'
     u('さよなら')->reverse(); // 'らなよさ'
-
-.. versionadded:: 5.1
-
-    The ``reverse()`` method was introduced in Symfony 5.1.
 
 Methods Added by ByteString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -489,7 +475,7 @@ class that allows to store a string whose value is only generated when you need 
 
     use Symfony\Component\String\LazyString;
 
-    $lazyString = LazyString::fromCallable(function () {
+    $lazyString = LazyString::fromCallable(function (): string {
         // Compute the string value...
         $value = ...;
 
@@ -521,10 +507,12 @@ requested during the program execution. You can also create lazy strings from a
     // hash computation only if it's needed
     $lazyHash = LazyString::fromStringable(new Hash());
 
-.. versionadded:: 5.1
+Working with Emojis
+-------------------
 
-    The :class:`Symfony\\Component\\String\\LazyString` class was introduced
-    in Symfony 5.1.
+These contents have been moved to the :doc:`Emoji component docs </emoji>`.
+
+.. _string-slugger:
 
 Slugger
 -------
@@ -551,21 +539,9 @@ that only includes safe ASCII characters::
     // $slug = '10-percent-or-5-euro'
 
     // for more dynamic substitutions, pass a PHP closure instead of an array
-    $slugger = new AsciiSlugger('en', function ($string, $locale) {
+    $slugger = new AsciiSlugger('en', function (string $string, string $locale): string {
         return str_replace('❤️', 'love', $string);
     });
-
-.. versionadded:: 5.1
-
-    The feature to define additional substitutions was introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The feature to use a PHP closure to define substitutions was introduced in Symfony 5.2.
-
-.. versionadded:: 5.3
-
-    The feature to fallback to the parent locale's symbols map was introduced in Symfony 5.3.
 
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
@@ -594,27 +570,51 @@ the injected slugger is the same as the request locale::
 
     class MyService
     {
-        private $slugger;
-
-        public function __construct(SluggerInterface $slugger)
-        {
-            $this->slugger = $slugger;
+        public function __construct(
+            private SluggerInterface $slugger,
+        ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             $slug = $this->slugger->slug('...');
         }
     }
 
+.. _string-slugger-emoji:
+
+Slug Emojis
+~~~~~~~~~~~
+
+You can also combine the :ref:`emoji transliterator <emoji-transliteration>`
+with the slugger to transform any emojis into their textual representation::
+
+    use Symfony\Component\String\Slugger\AsciiSlugger;
+
+    $slugger = new AsciiSlugger();
+    $slugger = $slugger->withEmoji();
+
+    $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁 go to 🏞️', '-', 'en');
+    // $slug = 'a-grinning-cat-black-cat-and-a-lion-go-to-national-park';
+
+    $slug = $slugger->slug('un 😺, 🐈‍⬛, et un 🦁 vont au 🏞️', '-', 'fr');
+    // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
+
+If you want to use a specific locale for the emoji, or to use the short codes
+from GitHub, Gitlab or Slack, use the first argument of ``withEmoji()`` method::
+
+    use Symfony\Component\String\Slugger\AsciiSlugger;
+
+    $slugger = new AsciiSlugger();
+    $slugger = $slugger->withEmoji('github'); // or "en", or "fr", etc.
+
+    $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁');
+    // $slug = 'a-smiley-cat-black-cat-and-a-lion';
+
 .. _string-inflector:
 
 Inflector
 ---------
-
-.. versionadded:: 5.1
-
-    The inflector feature was introduced in Symfony 5.1.
 
 In some scenarios such as code generation and code introspection, you need to
 convert words from/to singular/plural. For example, to know the property

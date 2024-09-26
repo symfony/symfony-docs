@@ -10,7 +10,6 @@ Installation
 
     $ composer require symfony/process
 
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage
@@ -101,10 +100,6 @@ with a non-zero code)::
 Configuring Process Options
 ---------------------------
 
-.. versionadded:: 5.2
-
-    The feature to configure process options was introduced in Symfony 5.2.
-
 Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
 You can configure the options passed to the ``other_options`` argument of
 ``proc_open()`` using the ``setOptions()`` method::
@@ -112,6 +107,12 @@ You can configure the options passed to the ``other_options`` argument of
     $process = new Process(['...', '...', '...']);
     // this option allows a subprocess to continue running after the main script exited
     $process->setOptions(['create_new_console' => true]);
+
+.. caution::
+
+    Most of the options defined by ``proc_open()`` (such as ``create_new_console``
+    and ``suppress_errors``) are only supported on Windows operating systems.
+    Check out the `PHP documentation for proc_open()`_ before using them.
 
 Using Features From the OS Shell
 --------------------------------
@@ -188,7 +189,7 @@ anonymous function to the
     use Symfony\Component\Process\Process;
 
     $process = new Process(['ls', '-lsa']);
-    $process->run(function ($type, $buffer) {
+    $process->run(function ($type, $buffer): void {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
@@ -251,7 +252,7 @@ are done doing other stuff::
     **synchronously** inside this event. Be aware that ``kernel.terminate``
     is called only if you use PHP-FPM.
 
-.. caution::
+.. danger::
 
     Beware also that if you do that, the said PHP-FPM process will not be
     available to serve any new request until the subprocess is finished. This
@@ -266,7 +267,7 @@ in the output and its type::
     $process = new Process(['ls', '-lsa']);
     $process->start();
 
-    $process->wait(function ($type, $buffer) {
+    $process->wait(function ($type, $buffer): void {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
@@ -285,7 +286,7 @@ process and checks its output to wait until its fully initialized::
     // ... do other things
 
     // waits until the given anonymous function returns true
-    $process->waitUntil(function ($type, $output) {
+    $process->waitUntil(function ($type, $output): bool {
         return $output === 'Ready. Waiting for commands...';
     });
 
@@ -414,6 +415,36 @@ instead::
     );
     $process->run();
 
+Executing a PHP Child Process with the Same Configuration
+---------------------------------------------------------
+
+When you start a PHP process, it uses the default configuration defined in
+your ``php.ini`` file. You can bypass these options with the ``-d`` command line
+option. For example, if ``memory_limit`` is set to ``256M``, you can disable this
+memory limit when running some command like this:
+``php -d memory_limit=-1 bin/console app:my-command``.
+
+However, if you run the command via the Symfony ``Process`` class, PHP will use
+the settings defined in the ``php.ini`` file. You can solve this issue by using
+the :class:`Symfony\\Component\\Process\\PhpSubprocess` class to run the command::
+
+    use Symfony\Component\Process\Process;
+
+    class MyCommand extends Command
+    {
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            // the memory_limit (and any other config option) of this command is
+            // the one defined in php.ini instead of the new values (optionally)
+            // passed via the '-d' command option
+            $childProcess = new Process(['bin/console', 'cache:pool:prune']);
+
+            // the memory_limit (and any other config option) of this command takes
+            // into account the values (optionally) passed via the '-d' command option
+            $childProcess = new PhpSubprocess(['bin/console', 'cache:pool:prune']);
+        }
+    }
+
 Process Timeout
 ---------------
 
@@ -448,10 +479,6 @@ check regularly::
 
     You can get the process start time using the ``getStartTime()`` method.
 
-    .. versionadded:: 5.1
-
-        The ``getStartTime()`` method was introduced in Symfony 5.1.
-
 .. _reference-process-signal:
 
 Process Idle Timeout
@@ -483,6 +510,20 @@ When running a program asynchronously, you can send it POSIX signals with the
 
     // will send a SIGKILL to the process
     $process->signal(SIGKILL);
+
+You can make the process ignore signals by using the
+:method:`Symfony\\Component\\Process\\Process::setIgnoredSignals`
+method. The given signals won't be propagated to the child process::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process(['find', '/', '-name', 'rabbit']);
+    $process->setIgnoredSignals([SIGKILL, SIGUSR1]);
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Process\\Process::setIgnoredSignals`
+    method was introduced in Symfony 7.1.
 
 Process Pid
 -----------
@@ -571,3 +612,4 @@ whether `TTY`_ is supported on the current operating system::
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`output_buffering`: https://www.php.net/manual/en/outcontrol.configuration.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)
+.. _`PHP documentation for proc_open()`: https://www.php.net/manual/en/function.proc-open.php

@@ -3,13 +3,6 @@ The Intl Component
 
     This component provides access to the localization data of the `ICU library`_.
 
-.. caution::
-
-    The replacement layer is limited to the ``en`` locale. If you want to use
-    other locales, you should `install the intl extension`_. There is no conflict
-    between the two because, even if you use the extension, this package can still
-    be useful to access the ICU data.
-
 .. seealso::
 
     This article explains how to use the Intl features as an independent component
@@ -178,6 +171,37 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha2Code = Countries::getAlpha2Code($alpha3Code);
 
+Numeric Country Codes
+~~~~~~~~~~~~~~~~~~~~~
+
+The `ISO 3166-1 numeric`_ standard defines three-digit country codes to represent
+countries, dependent territories, and special areas of geographical interest.
+
+The main advantage over the ISO 3166-1 alphabetic codes (alpha-2 and alpha-3) is
+that these numeric codes are independent from the writing system. The alphabetic
+codes use the 26-letter English alphabet, which might be unavailable or difficult
+to use for people and systems using non-Latin scripts (e.g. Arabic or Japanese).
+
+The :class:`Symfony\\Component\\Intl\\Countries` class provides access to these
+numeric country codes::
+
+    use Symfony\Component\Intl\Countries;
+
+    \Locale::setDefault('en');
+
+    $numericCodes = Countries::getNumericCodes();
+    // ('alpha2Code' => 'numericCode')
+    // => ['AA' => '958', 'AD' => '020', ...]
+
+    $numericCode = Countries::getNumericCode('FR');
+    // => '250'
+
+    $alpha2 = Countries::getAlpha2FromNumeric('250');
+    // => 'FR'
+
+    $exists = Countries::numericCodeExists('250');
+    // => true
+
 Locales
 ~~~~~~~
 
@@ -246,10 +270,6 @@ can change if the number is used in cash transactions or in other scenarios
     $fractionDigits = Currencies::getFractionDigits('SEK');         // returns: 2
     $cashFractionDigits = Currencies::getCashFractionDigits('SEK'); // returns: 0
 
-.. versionadded:: 5.3
-
-    The ``getCashFractionDigits()`` method was introduced in Symfony 5.3.
-
 Some currencies require to round numbers to the nearest increment of some value
 (e.g. 5 cents). This increment might be different if numbers are formatted for
 cash transactions or other scenarios (e.g. accounting)::
@@ -263,10 +283,6 @@ cash transactions or other scenarios (e.g. accounting)::
     // 5 cents (e.g. if price is 7.42 you pay 7.40; if price is 7.48 you pay 7.50)
     $roundingIncrement = Currencies::getRoundingIncrement('CAD');         // returns: 0
     $cashRoundingIncrement = Currencies::getCashRoundingIncrement('CAD'); // returns: 5
-
-.. versionadded:: 5.3
-
-    The ``getCashRoundingIncrement()`` method was introduced in Symfony 5.3.
 
 All methods (except for ``getFractionDigits()``, ``getCashFractionDigits()``,
 ``getRoundingIncrement()`` and ``getCashRoundingIncrement()``) accept the
@@ -364,6 +380,27 @@ to catching the exception, you can also check if a given timezone ID is valid::
 
     $isValidTimezone = Timezones::exists($timezoneId);
 
+.. _component-intl-emoji-transliteration:
+
+Emoji Transliteration
+~~~~~~~~~~~~~~~~~~~~~
+
+Symfony provides utilities to translate emojis into their textual representation
+in all languages. Read the documentation about :ref:`emoji transliteration <emoji-transliteration>`
+to learn more about this feature.
+
+Disk Space
+----------
+
+If you need to save disk space (e.g. because you deploy to some service with tight size
+constraints), run this command (e.g. as an automated script after ``composer install``) to compress the
+internal Symfony Intl data files using the PHP ``zlib`` extension:
+
+.. code-block:: terminal
+
+    # adjust the path to the 'compress' binary based on your application installation
+    $ php ./vendor/symfony/intl/Resources/bin/compress
+
 Learn more
 ----------
 
@@ -377,11 +414,11 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: https://icu.unicode.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 .. _`ISO 3166-1 alpha-3`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+.. _`ISO 3166-1 numeric`: https://en.wikipedia.org/wiki/ISO_3166-1_numeric
 .. _`UTC/GMT time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
 .. _`daylight saving time (DST)`: https://en.wikipedia.org/wiki/Daylight_saving_time
 .. _`ISO 639-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_639-1

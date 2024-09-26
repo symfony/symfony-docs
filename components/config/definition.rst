@@ -54,7 +54,7 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
 
     class DatabaseConfiguration implements ConfigurationInterface
     {
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('database');
 
@@ -81,7 +81,7 @@ reflect the real structure of the configuration values::
                 ->defaultTrue()
             ->end()
             ->scalarNode('default_connection')
-                ->defaultValue('default')
+                ->defaultValue('mysql')
             ->end()
         ->end()
     ;
@@ -147,6 +147,29 @@ values::
 
 This will restrict the ``delivery`` options to be either ``standard``,
 ``expedited``  or ``priority``.
+
+You can also provide enum values to ``enumNode()``. Let's define an enumeration
+describing the possible states of the example above::
+
+    enum Delivery: string
+    {
+        case Standard = 'standard';
+        case Expedited = 'expedited';
+        case Priority = 'priority';
+    }
+
+The configuration can now be written like this::
+
+    $rootNode
+        ->children()
+            ->enumNode('delivery')
+                // You can provide all values of the enum...
+                ->values(Delivery::cases())
+                // ... or you can pass only some values next to other scalar values
+                ->values([Delivery::Priority, Delivery::Standard, 'other', false])
+            ->end()
+        ->end()
+    ;
 
 Array Nodes
 ~~~~~~~~~~~
@@ -432,13 +455,6 @@ The following example shows these methods in practice::
 Deprecating the Option
 ----------------------
 
-.. versionadded:: 5.1
-
-    The signature of the ``setDeprecated()`` method changed from
-    ``setDeprecated(?string $message)`` to
-    ``setDeprecated(string $package, string $version, ?string $message)``
-    in Symfony 5.1.
-
 You can deprecate options using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::setDeprecated`
 method::
@@ -547,7 +563,9 @@ be large and you may want to split it up into sections. You can do this
 by making a section a separate node and then appending it into the main
 tree with ``append()``::
 
-    public function getConfigTreeBuilder()
+    use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('database');
 
@@ -576,7 +594,7 @@ tree with ``append()``::
         return $treeBuilder;
     }
 
-    public function addParametersNode()
+    public function addParametersNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('parameters');
 
@@ -744,7 +762,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function ($v) { return ['name' => $v]; })
+                    ->then(function (string $v): array { return ['name' => $v]; })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()->end()
@@ -784,7 +802,7 @@ the following ways:
 - ``ifTrue()``
 - ``ifString()``
 - ``ifNull()``
-- ``ifEmpty()`` (since Symfony 3.2)
+- ``ifEmpty()``
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``

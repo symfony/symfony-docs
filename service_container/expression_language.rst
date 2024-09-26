@@ -55,7 +55,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
         use App\Mail\MailerConfiguration;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(MailerConfiguration::class);
@@ -67,12 +67,14 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
 
 Learn more about the :doc:`expression language syntax </reference/formats/expression_language>`.
 
-In this context, you have access to 2 functions:
+In this context, you have access to 3 functions:
 
 ``service``
     Returns a given service (see the example above).
 ``parameter``
     Returns a specific parameter value (syntax is like ``service``).
+``env``
+    Returns the value of an env variable.
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:
@@ -110,7 +112,7 @@ via a ``container`` variable. Here's another example:
 
         use App\Mailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class)
@@ -118,4 +120,5 @@ via a ``container`` variable. Here's another example:
         };
 
 Expressions can be used in ``arguments``, ``properties``, as arguments with
-``configurator`` and as arguments to ``calls`` (method calls).
+``configurator``, as arguments to ``calls`` (method calls) and in
+``factories`` (:doc:`service factories </service_container/factories>`).

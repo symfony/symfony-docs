@@ -11,10 +11,7 @@ store them by using Symfony's secrets management system - sometimes called a
 
 .. note::
 
-    The Secrets system requires the sodium PHP extension that is bundled
-    with PHP 7.2. If you're using an earlier PHP version, you can
-    install the `libsodium`_ PHP extension or use the
-    `paragonie/sodium_compat`_ package.
+    The Secrets system requires the Sodium PHP extension.
 
 .. _secrets-generate-keys:
 
@@ -50,7 +47,7 @@ running:
 This will generate ``config/secrets/prod/prod.encrypt.public.php`` and
 ``config/secrets/prod/prod.decrypt.private.php``.
 
-.. caution::
+.. danger::
 
     The ``prod.decrypt.private.php`` file is highly sensitive. Your team of developers
     and even Continuous Integration services don't need that key. If the
@@ -142,7 +139,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $doctrine->dbal()
                 ->connection('default')
                     ->password(env('DATABASE_PASSWORD'))
@@ -168,6 +165,22 @@ secrets' values by passing the ``--reveal`` option:
      ------------------- ------------ -------------
       DATABASE_PASSWORD   "my secret"
      ------------------- ------------ -------------
+
+Reveal Existing Secrets
+-----------------------
+
+If you have the **decryption key**, the ``secrets:reveal`` command allows
+you to reveal a single secret's value.
+
+.. code-block:: terminal
+
+    $ php bin/console secrets:reveal DATABASE_PASSWORD
+
+     my secret
+
+.. versionadded:: 7.1
+
+    The ``secrets:reveal`` command was introduced in Symfony 7.1.
 
 Remove Secrets
 --------------
@@ -312,14 +325,10 @@ The secrets system is enabled by default and some of its behavior can be configu
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->secrets()
                 // ->vaultDirectory('%kernel.project_dir%/config/secrets/%kernel.environment%')
                 // ->localDotenvFile('%kernel.project_dir%/.env.%kernel.environment%.local')
                 // ->decryptionEnvVar('base64:default::SYMFONY_DECRYPTION_SECRET')
             ;
         };
-
-
-.. _`libsodium`: https://pecl.php.net/package/libsodium
-.. _`paragonie/sodium_compat`: https://github.com/paragonie/sodium_compat

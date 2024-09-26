@@ -16,8 +16,6 @@ that is passed as the collection type field data.
 +---------------------------+--------------------------------------------------------------------------+
 | Default invalid message   | The collection is invalid.                                               |
 +---------------------------+--------------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                      |
-+---------------------------+--------------------------------------------------------------------------+
 | Parent type               | :doc:`FormType </reference/forms/types/form>`                            |
 +---------------------------+--------------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CollectionType` |
@@ -160,7 +158,7 @@ the value is removed from the collection. For example::
 
     $builder->add('users', CollectionType::class, [
         // ...
-        'delete_empty' => function (User $user = null) {
+        'delete_empty' => function (?User $user = null): bool {
             return null === $user || empty($user->getFirstName());
         },
     ]);
@@ -195,6 +193,29 @@ type::
         ],
     ]);
 
+prototype_options
+~~~~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``[]``
+
+This is the array that's passed to the form type specified in the `entry_type`_
+option when creating its prototype. It allows to have different options depending
+on whether you are adding a new entry or editing an existing entry::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    // ...
+
+    $builder->add('names', CollectionType::class, [
+        'entry_type' => TextType::class,
+        'entry_options' => [
+            'help' => 'You can edit this name here.',
+        ],
+        'prototype_options'  => [
+            'help' => 'You can enter a new name here.',
+        ],
+    ]);
+
 entry_type
 ~~~~~~~~~~
 
@@ -205,6 +226,27 @@ This is the field type for each item in this collection (e.g. ``TextType``,
 you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, pass the form type class as this
 option (e.g. ``MyFormType::class``).
+
+keep_as_list
+~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+When set to ``true``, the ``keep_as_list`` option affects the reindexing
+of nested form names within a collection. This feature is particularly useful
+when working with collection types and removing items from the collection
+during form submission.
+
+When this option is set to ``false``, if you have a collection of 3 items and
+you remove the second item, the indexes will be ``0`` and ``2`` when validating
+the collection. However, by enabling the ``keep_as_list`` option and setting
+it to ``true``, the indexes will be reindexed as ``0`` and ``1``. This ensures
+that the indexes remain consecutive and do not have gaps, providing a clearer
+and more predictable structure for your nested forms.
+
+.. versionadded:: 7.1
+
+    The ``keep_as_list`` option was introduced in Symfony 7.1.
 
 prototype
 ~~~~~~~~~
@@ -309,6 +351,8 @@ error_bubbling
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

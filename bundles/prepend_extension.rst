@@ -31,7 +31,7 @@ To give an Extension the power to do this, it needs to implement
     {
         // ...
 
-        public function prepend(ContainerBuilder $container)
+        public function prepend(ContainerBuilder $container): void
         {
             // ...
         }
@@ -52,7 +52,7 @@ a configuration setting in multiple bundles as well as disable a flag in multipl
 in case a specific other bundle is not registered::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         // get all bundles
         $bundles = $container->getParameter('kernel.bundles');
@@ -61,18 +61,16 @@ in case a specific other bundle is not registered::
             // disable AcmeGoodbyeBundle in bundles
             $config = ['use_acme_goodbye' => false];
             foreach ($container->getExtensions() as $name => $extension) {
-                switch ($name) {
-                    case 'acme_something':
-                    case 'acme_other':
-                        // set use_acme_goodbye to false in the config of
-                        // acme_something and acme_other
-                        //
-                        // note that if the user manually configured
-                        // use_acme_goodbye to true in config/services.yaml
-                        // then the setting would in the end be true and not false
-                        $container->prependExtensionConfig($name, $config);
-                        break;
-                }
+                match ($name) {
+                    // set use_acme_goodbye to false in the config of
+                    // acme_something and acme_other
+                    //
+                    // note that if the user manually configured
+                    // use_acme_goodbye to true in config/services.yaml
+                    // then the setting would in the end be true and not false
+                    'acme_something', 'acme_other' => $container->prependExtensionConfig($name, $config),
+                    default => null
+                };
             }
         }
 
@@ -141,7 +139,7 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
         // config/packages/acme_something.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('acme_something', [
                 // ...
                 'use_acme_goodbye' => false,
@@ -152,6 +150,70 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
                 'use_acme_goodbye' => false,
             ]);
         };
+
+Prepending Extension in the Bundle Class
+----------------------------------------
+
+You can also prepend extension configuration directly in your
+Bundle class if you extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class and define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension`
+method::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class FooBundle extends AbstractBundle
+    {
+        public function prependExtension(ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
+        {
+            // prepend
+            $containerBuilder->prependExtensionConfig('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ]);
+
+            // prepend config from a file
+            $containerConfigurator->import('../config/packages/cache.php');
+        }
+    }
+
+.. note::
+
+    The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
+
+.. versionadded:: 7.1
+
+    Starting from Symfony 7.1, calling the :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::import`
+    method inside ``prependExtension()`` will prepend the given configuration.
+    In previous Symfony versions, this method appended the configuration.
+
+Alternatively, you can use the ``prepend`` parameter of the
+:method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
+method::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class FooBundle extends AbstractBundle
+    {
+        public function prependExtension(ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
+        {
+            // ...
+
+            $containerConfigurator->extension('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ], prepend: true);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 7.1
+
+    The ``prepend`` parameter of the
+    :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
+    method was added in Symfony 7.1.
 
 More than one Bundle using PrependExtensionInterface
 ----------------------------------------------------

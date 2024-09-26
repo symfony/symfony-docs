@@ -15,8 +15,6 @@ If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/ty
 +---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please select a valid option.                                       |
 +---------------------------+---------------------------------------------------------------------+
-| Legacy invalid message    | The value {{ value }} is not valid.                                 |
-+---------------------------+---------------------------------------------------------------------+
 | Parent type               | :doc:`CheckboxType </reference/forms/types/checkbox>`               |
 +---------------------------+---------------------------------------------------------------------+
 | Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RadioType` |
@@ -59,6 +57,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

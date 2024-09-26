@@ -1,10 +1,6 @@
 Couchbase Collection Cache Adapter
 ==================================
 
-.. versionadded:: 5.4
-
-    The Couchbase Collection adapter was introduced in Symfony 5.4.
-
 This adapter stores the values in-memory using one (or more) `Couchbase server`_
 instances. Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Memcached adapter </components/cache/adapters/memcached_adapter>`, it is not limited to the current server's
@@ -36,7 +32,6 @@ the second and third parameters::
         $defaultLifetime
     );
 
-
 Configure the Connection
 ------------------------
 
@@ -67,7 +62,6 @@ helper method allows creating and configuring a `Couchbase Collection`_ class in
     $client = CouchbaseCollectionAdapter::createConnection(
         'couchbase:?host[localhost]&host[localhost:12345]'
     );
-
 
 Configure the Options
 ---------------------

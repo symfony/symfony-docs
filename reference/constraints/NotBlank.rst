@@ -20,21 +20,6 @@ class were not blank, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            protected $firstName;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -45,7 +30,7 @@ class were not blank, you could do the following:
         class Author
         {
             #[Assert\NotBlank]
-            protected $firstName;
+            protected string $firstName;
         }
 
     .. code-block:: yaml
@@ -81,7 +66,9 @@ class were not blank, you could do the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
             }
@@ -115,10 +102,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 

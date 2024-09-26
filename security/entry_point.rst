@@ -18,7 +18,6 @@ You can configure this using the ``entry_point`` setting:
 
         # config/packages/security.yaml
         security:
-            enable_authenticator_manager: true
 
             # ...
             firewalls:
@@ -43,7 +42,7 @@ You can configure this using the ``entry_point`` setting:
                 http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
-            <config enable-authenticator-manager="true">
+            <config>
                 <!-- ... -->
 
                 <!-- entry-point: configure the form authentication as the entry
@@ -64,10 +63,9 @@ You can configure this using the ``entry_point`` setting:
         use App\Security\SocialConnectAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->enableAuthenticatorManager(true);
             // ....
-
 
             // allow authentication using a form or HTTP basic
             $mainFirewall = $security->firewall('main');
@@ -155,7 +153,7 @@ split the configuration into two separate firewalls:
         use App\Security\LoginFormAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $apiFirewall = $security->firewall('api');
             $apiFirewall
                 ->pattern('^/api')

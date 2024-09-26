@@ -21,10 +21,8 @@ creating the ``Category`` class::
 
     class Category
     {
-        /**
-         * @Assert\NotBlank
-         */
-        public $name;
+        #[Assert\NotBlank]
+        public string $name;
     }
 
 Next, add a new ``category`` property to the ``Task`` class::
@@ -35,11 +33,9 @@ Next, add a new ``category`` property to the ``Task`` class::
     {
         // ...
 
-        /**
-         * @Assert\Type(type="App\Entity\Category")
-         * @Assert\Valid
-         */
-        protected $category;
+        #[Assert\Type(type: Category::class)]
+        #[Assert\Valid]
+        protected ?Category $category = null;
 
         // ...
 
@@ -48,7 +44,7 @@ Next, add a new ``category`` property to the ``Task`` class::
             return $this->category;
         }
 
-        public function setCategory(?Category $category)
+        public function setCategory(?Category $category): void
         {
             $this->category = $category;
         }

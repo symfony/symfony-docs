@@ -44,7 +44,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testSubmitValidData()
+        public function testSubmitValidData(): void
         {
             $formData = [
                 'test' => 'test',
@@ -68,7 +68,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $this->assertEquals($expected, $model);
         }
 
-        public function testCustomFormView()
+        public function testCustomFormView(): void
         {
             $formData = new TestObject();
             // ... prepare the data as you need
@@ -147,27 +147,27 @@ make sure the ``FormRegistry`` uses the created instance::
     namespace App\Tests\Form\Type;
 
     use App\Form\Type\TestedType;
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
     use Symfony\Component\Form\PreloadedExtension;
     use Symfony\Component\Form\Test\TypeTestCase;
     // ...
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $objectManager;
+        private MockObject&EntityManager $entityManager;
 
         protected function setUp(): void
         {
             // mock any dependencies
-            $this->objectManager = $this->createMock(ObjectManager::class);
+            $this->entityManager = $this->createMock(EntityManager::class);
 
             parent::setUp();
         }
 
-        protected function getExtensions()
+        protected function getExtensions(): array
         {
             // create a type instance with the mocked dependencies
-            $type = new TestedType($this->objectManager);
+            $type = new TestedType($this->entityManager);
 
             return [
                 // register the type instances with the PreloadedExtension
@@ -175,7 +175,7 @@ make sure the ``FormRegistry`` uses the created instance::
             ];
         }
 
-        public function testSubmitValidData()
+        public function testSubmitValidData(): void
         {
             // ...
 
@@ -210,14 +210,13 @@ allows you to return a list of extensions to register::
 
     class TestedTypeTest extends TypeTestCase
     {
-        protected function getExtensions()
+        protected function getExtensions(): array
         {
             $validator = Validation::createValidator();
 
             // or if you also need to read constraints from annotations
             $validator = Validation::createValidatorBuilder()
-                ->enableAnnotationMapping(true)
-                ->addDefaultDoctrineAnnotationReader()
+                ->enableAttributeMapping()
                 ->getValidator();
 
             return [
@@ -240,5 +239,14 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeExtensions`
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
+
+When testing the themes of your forms, consider making your test extend the
+:class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class. This saves a lot
+of boilerplate and code duplication by implementing the
+:class:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase` methods for you.
+All you need to do is to implement the
+:method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTemplatePaths`, the
+:method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTwigExtensions` and
+the :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getThemes` methods.
 
 .. _`PHPUnit data providers`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html#data-providers

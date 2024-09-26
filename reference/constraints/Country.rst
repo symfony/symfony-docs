@@ -14,21 +14,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\Country
-             */
-            protected $country;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -39,7 +24,7 @@ Basic Usage
         class User
         {
             #[Assert\Country]
-            protected $country;
+            protected string $country;
         }
 
     .. code-block:: yaml
@@ -75,7 +60,9 @@ Basic Usage
 
         class User
         {
-            public static function loadValidationMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidationMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('country', new Assert\Country());
             }
@@ -88,10 +75,6 @@ Options
 
 alpha3
 ~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``alpha3`` option was introduced in Symfony 5.1.
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -120,4 +103,3 @@ Parameter        Description
 
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 3166-1 alpha-3`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3#Current_codes
-

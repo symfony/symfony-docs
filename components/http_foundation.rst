@@ -139,8 +139,18 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
     Returns the parameter value converted to integer;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
+    Returns the parameter value converted to a PHP enum;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
+    Returns the parameter value as a string;
+
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
+    If invalid values are found, a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
+    is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
+    values.
 
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
@@ -164,18 +174,18 @@ doesn't support returning arrays, so you need to use the following code::
     // the query string is '?foo[bar]=baz'
 
     // don't use $request->query->get('foo'); use the following instead:
-    $request->query->all()['foo'];
+    $request->query->all('foo');
     // returns ['bar' => 'baz']
+
+    // if the requested parameter does not exist, an empty array is returned:
+    $request->query->all('qux');
+    // returns []
 
     $request->query->get('foo[bar]');
     // returns null
 
     $request->query->all()['foo']['bar'];
     // returns 'baz'
-
-.. deprecated:: 5.1
-
-    The array support in ``get()`` method was deprecated in Symfony 5.1.
 
 .. _component-foundation-attributes:
 
@@ -198,9 +208,12 @@ If the request body is a JSON string, it can be accessed using
 
     $data = $request->toArray();
 
-.. versionadded:: 5.2
+If the request data could be ``$_POST`` data *or* a JSON string, you can use
+the :method:`Symfony\\Component\\HttpFoundation\\Request::getPayload` method
+which returns an instance of :class:`Symfony\\Component\\HttpFoundation\\InputBag`
+wrapping this data::
 
-    The ``toArray()`` method was introduced in Symfony 5.2.
+    $data = $request->getPayload();
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -287,10 +300,6 @@ this complexity and defines some methods for the most common tasks::
     HeaderUtils::parseQuery('foo[bar.baz]=qux');
     // => ['foo' => ['bar.baz' => 'qux']]
 
-.. versionadded:: 5.2
-
-    The ``parseQuery()`` method was introduced in Symfony 5.2.
-
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -352,6 +361,89 @@ analysis purposes. Use the ``anonymize()`` method from the
     $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
     $anonymousIpv6 = IpUtils::anonymize($ipv6);
     // $anonymousIpv6 = '2a01:198:603:10::'
+
+Check If an IP Belongs to a CIDR Subnet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to know if an IP address is included in a CIDR subnet, you can use
+the ``checkIp()`` method from :class:`Symfony\\Component\\HttpFoundation\\IpUtils`::
+
+    use Symfony\Component\HttpFoundation\IpUtils;
+
+    $ipv4 = '192.168.1.56';
+    $CIDRv4 = '192.168.1.0/16';
+    $isIpInCIDRv4 = IpUtils::checkIp($ipv4, $CIDRv4);
+    // $isIpInCIDRv4 = true
+
+    $ipv6 = '2001:db8:abcd:1234::1';
+    $CIDRv6 = '2001:db8:abcd::/48';
+    $isIpInCIDRv6 = IpUtils::checkIp($ipv6, $CIDRv6);
+    // $isIpInCIDRv6 = true
+
+Check if an IP Belongs to a Private Subnet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to know if an IP address belongs to a private subnet, you can
+use the ``isPrivateIp()`` method from the
+:class:`Symfony\\Component\\HttpFoundation\\IpUtils` to do that::
+
+    use Symfony\Component\HttpFoundation\IpUtils;
+
+    $ipv4 = '192.168.1.1';
+    $isPrivate = IpUtils::isPrivateIp($ipv4);
+    // $isPrivate = true
+
+    $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
+    $isPrivate = IpUtils::isPrivateIp($ipv6);
+    // $isPrivate = false
+
+Matching a Request Against a Set of Rules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The HttpFoundation component provides some matcher classes that allow you to
+check if a given request meets certain conditions (e.g. it comes from some IP
+address, it uses a certain HTTP method, etc.):
+
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HeaderRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\QueryParameterRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
+
+You can use them individually or combine them using the
+:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` class::
+
+    use Symfony\Component\HttpFoundation\ChainRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\SchemeRequestMatcher;
+
+    // use only one criteria to match the request
+    $schemeMatcher = new SchemeRequestMatcher('https');
+    if ($schemeMatcher->matches($request)) {
+        // ...
+    }
+
+    // use a set of criteria to match the request
+    $matcher = new ChainRequestMatcher([
+        new HostRequestMatcher('example.com'),
+        new PathRequestMatcher('/admin'),
+    ]);
+
+    if ($matcher->matches($request)) {
+        // ...
+    }
+
+.. versionadded:: 7.1
+
+    The ``HeaderRequestMatcher`` and ``QueryParameterRequestMatcher`` were
+    introduced in Symfony 7.1.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -444,6 +536,14 @@ Sending the response to the client is done by calling the method
 
     $response->send();
 
+The ``send()`` method takes an optional ``flush`` argument. If set to
+``false``, functions like ``fastcgi_finish_request()`` or
+``litespeed_finish_request()`` are not called. This is useful when debugging
+your application to see which exceptions are thrown in listeners of the
+:class:`Symfony\\Component\\HttpKernel\\Event\\TerminateEvent`. You can learn
+more about it in
+:ref:`the dedicated section about Kernel events <http-kernel-creating-listener>`.
+
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
@@ -474,9 +574,15 @@ a new object with the modified property::
         ->withDomain('.example.com')
         ->withSecure(true);
 
-.. versionadded:: 5.1
+It is possible to define partitioned cookies, also known as `CHIPS`_, by using the
+:method:`Symfony\\Component\\HttpFoundation\\Cookie::withPartitioned` method::
 
-    The ``with*()`` methods were introduced in Symfony 5.1.
+    $cookie = Cookie::create('foo')
+        ->withValue('bar')
+        ->withPartitioned();
+
+    // you can also set the partitioned argument to true when using the `create()` factory method
+    $cookie = Cookie::create('name', 'value', partitioned: true);
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -490,6 +596,8 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleIfError`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleWhileRevalidate`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
@@ -517,15 +625,12 @@ call::
         'proxy_revalidate' => false,
         'max_age'          => 600,
         's_maxage'         => 600,
+        'stale_if_error'   => 86400,
+        'stale_while_revalidate' => 60,
         'immutable'        => true,
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef',
     ]);
-
-.. versionadded:: 5.1
-
-    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
-    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
@@ -563,7 +668,7 @@ represented by a PHP callable instead of a string::
     use Symfony\Component\HttpFoundation\StreamedResponse;
 
     $response = new StreamedResponse();
-    $response->setCallback(function () {
+    $response->setCallback(function (): void {
         var_dump('Hello World');
         flush();
         sleep(2);
@@ -585,6 +690,98 @@ represented by a PHP callable instead of a string::
 
         // disables FastCGI buffering in nginx only for this response
         $response->headers->set('X-Accel-Buffering', 'no');
+
+Streaming a JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows to
+stream large JSON responses using PHP generators to keep the used resources low.
+
+The class constructor expects an array which represents the JSON structure and
+includes the list of contents to stream. In addition to PHP generators, which are
+recommended to minimize memory usage, it also supports any kind of PHP Traversable
+containing JSON serializable data::
+
+    use Symfony\Component\HttpFoundation\StreamedJsonResponse;
+
+    // any method or function returning a PHP Generator
+    function loadArticles(): \Generator {
+        yield ['title' => 'Article 1'];
+        yield ['title' => 'Article 2'];
+        yield ['title' => 'Article 3'];
+    };
+
+    $response = new StreamedJsonResponse(
+        // JSON structure with generators in which will be streamed as a list
+        [
+            '_embedded' => [
+                'articles' => loadArticles(),
+            ],
+        ],
+    );
+
+When loading data via Doctrine, you can use the ``toIterable()`` method to
+fetch results row by row and minimize resources consumption.
+See the `Doctrine Batch processing`_ documentation for more::
+
+    public function __invoke(): Response
+    {
+        return new StreamedJsonResponse(
+            [
+                '_embedded' => [
+                    'articles' => $this->loadArticles(),
+                ],
+            ],
+        );
+    }
+
+    public function loadArticles(): \Generator
+    {
+        // get the $entityManager somehow (e.g. via constructor injection)
+        $entityManager = ...
+
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->from(Article::class, 'article');
+        $queryBuilder->select('article.id')
+            ->addSelect('article.title')
+            ->addSelect('article.description');
+
+        return $queryBuilder->getQuery()->toIterable();
+    }
+
+If you return a lot of data, consider calling the :phpfunction:`flush` function
+after some specific item count to send the contents to the browser::
+
+    public function loadArticles(): \Generator
+    {
+        // ...
+
+        $count = 0;
+        foreach ($queryBuilder->getQuery()->toIterable() as $article) {
+            yield $article;
+
+            if (0 === ++$count % 100) {
+                flush();
+            }
+        }
+    }
+
+Alternatively, you can also pass any iterable to ``StreamedJsonResponse``,
+including generators::
+
+    public function loadArticles(): \Generator
+    {
+        yield ['title' => 'Article 1'];
+        yield ['title' => 'Article 2'];
+        yield ['title' => 'Article 3'];
+    }
+
+    public function __invoke(): Response
+    {
+        // ...
+
+        return new StreamedJsonResponse(loadArticles());
+    }
 
 .. _component-http-foundation-serving-files:
 
@@ -662,6 +859,23 @@ It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
+Alternatively, ``BinaryFileResponse`` supports instances of ``\SplTempFileObject``.
+This is useful when you want to serve a file that has been created in memory
+and that will be automatically deleted after the response is sent::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+    $file = new \SplTempFileObject();
+    $file->fwrite('Hello World');
+    $file->rewind();
+
+    $response = new BinaryFileResponse($file);
+
+.. versionadded:: 7.1
+
+    The support for ``\SplTempFileObject`` in ``BinaryFileResponse``
+    was introduced in Symfony 7.1.
+
 If the size of the served file is unknown (e.g. because it's being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
 instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
@@ -718,7 +932,7 @@ class, which can make this even easier::
 The ``JsonResponse`` class sets the ``Content-Type`` header to
 ``application/json`` and encodes your data to JSON when needed.
 
-.. caution::
+.. danger::
 
     To avoid XSSI `JSON Hijacking`_, you should pass an associative array
     as the outermost array to ``JsonResponse`` and not an indexed array so
@@ -728,6 +942,16 @@ The ``JsonResponse`` class sets the ``Content-Type`` header to
 
     Only methods that respond to GET requests are vulnerable to XSSI 'JSON Hijacking'.
     Methods responding to POST requests only remain unaffected.
+
+.. warning::
+
+    The ``JsonResponse`` constructor exhibits non-standard JSON encoding behavior
+    and will treat ``null`` as an empty object if passed as a constructor argument,
+    despite null being a `valid JSON top-level value`_.
+
+    This behavior cannot be changed without backwards-compatibility concerns, but
+    it's possible to call ``setData`` and pass the value there to opt-out of the
+    behavior.
 
 JSONP Callback
 ~~~~~~~~~~~~~~
@@ -765,11 +989,6 @@ Symfony offers two methods to interact with this preference:
 * :method:`Symfony\\Component\\HttpFoundation\\Request::preferSafeContent`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setContentSafe`;
 
-.. versionadded:: 5.1
-
-    The ``preferSafeContent()`` and ``setContentSafe()`` methods were introduced
-    in Symfony 5.1.
-
 The following example shows how to detect if the user agent prefers "safe" content::
 
     if ($request->preferSafeContent()) {
@@ -781,10 +1000,6 @@ The following example shows how to detect if the user agent prefers "safe" conte
 
 Generating Relative and Absolute URLs
 -------------------------------------
-
-.. versionadded:: 5.4
-
-    The feature to generate relative and absolute URLs was introduced in Symfony 5.4.
 
 Generating absolute and relative URLs for a given path is a common need
 in some applications. In Twig templates you can use the
@@ -802,14 +1017,12 @@ methods. You can inject this as a service anywhere in your application::
 
     class UserApiNormalizer
     {
-        private UrlHelper $urlHelper;
-
-        public function __construct(UrlHelper $urlHelper)
-        {
-            $this->urlHelper = $urlHelper;
+        public function __construct(
+            private UrlHelper $urlHelper,
+        ) {
         }
 
-        public function normalize($user)
+        public function normalize($user): array
         {
             return [
                 'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),
@@ -829,8 +1042,11 @@ Learn More
     /session
     /http_cache/*
 
-.. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
+.. _nginx: https://mattbrictson.com/blog/accelerated-rails-downloads
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
+.. _`valid JSON top-level value`: https://www.json.org/json-en.html
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
 .. _RFC 8674: https://tools.ietf.org/html/rfc8674
+.. _Doctrine Batch processing: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/batch-processing.html#iterating-results
+.. _`CHIPS`: https://developer.mozilla.org/en-US/docs/Web/Privacy/Partitioned_cookies

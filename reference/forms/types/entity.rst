@@ -49,16 +49,18 @@ Using a Custom Query for the Entities
 
 If you want to create a custom query to use when fetching the entities
 (e.g. you only want to return some entities, or need to order them), use
-the `query_builder`_ option::
+the `query_builder`_ option (which must be a ``QueryBuilder`` object, a closure
+returning a ``QueryBuilder`` object or ``null`` to load all entities)::
 
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
+    use Doctrine\ORM\QueryBuilder;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
     $builder->add('users', EntityType::class, [
         'class' => User::class,
-        'query_builder' => function (EntityRepository $er) {
+        'query_builder' => function (EntityRepository $er): QueryBuilder {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
@@ -124,7 +126,7 @@ method. You can also pass a callback function for more control::
 
     $builder->add('category', EntityType::class, [
         'class' => Category::class,
-        'choice_label' => function ($category) {
+        'choice_label' => function (Category $category): string {
             return $category->getDisplayName();
         }
     ]);
@@ -173,7 +175,7 @@ instead of the ``default`` entity manager.
 **type**: ``Doctrine\ORM\QueryBuilder`` or a ``callable`` **default**: ``null``
 
 Allows you to create a custom query for your choices. See
-:ref:`ref-form-entity-query-builder` for an example.
+:ref:`how to use it <ref-form-entity-query-builder>` for an example.
 
 The value of this option can either be a ``QueryBuilder`` object, a callable or
 ``null`` (which will load all entities). When using a callable, you will be
@@ -210,7 +212,7 @@ submitted.
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
-See :ref:`reference-forms-entity-choices`.
+See :ref:`how to use choices <reference-forms-entity-choices>`.
 
 ``data_class``
 ~~~~~~~~~~~~~~
@@ -252,6 +254,8 @@ Doctrine's Array Collection.
     is a complete example in the :doc:`/form/form_collections` article.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
+
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
 
 ``preferred_choices``
 ~~~~~~~~~~~~~~~~~~~~~
@@ -319,6 +323,8 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

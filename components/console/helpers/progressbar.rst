@@ -5,7 +5,7 @@ When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
 .. image:: /_images/components/console/progressbar.gif
-    :alt: Console output showing a progress bar advance to 100%, with the esimated time left, the memory usage and a special message that changes when the bar closes completion.
+    :alt: Console output showing a progress bar advance to 100%, with the estimated time left, the memory usage and a special message that changes when the bar closes completion.
 
 .. note::
 
@@ -56,6 +56,18 @@ Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
+
+If you are resuming long-standing tasks, it's useful to start drawing the progress
+bar at a certain point. Use the second optional argument of ``start()`` to set
+that starting point::
+
+    use Symfony\Component\Console\Helper\ProgressBar;
+
+    // creates a new progress bar (100 units)
+    $progressBar = new ProgressBar($output, 100);
+
+    // displays the progress bar starting at 25 completed units
+    $progressBar->start(null, 25);
 
 .. tip::
 
@@ -227,10 +239,14 @@ current progress of the bar. Here is a list of the built-in placeholders:
 * ``memory``: The current memory usage;
 * ``message``: used to display arbitrary messages in the progress bar (as explained later).
 
+The time fields ``elapsed``, ``remaining`` and ``estimated`` are displayed with
+a precision of 2. That means ``172799`` seconds are displayed as
+``1 day, 23 hrs`` instead of ``1 day, 23 hrs, 59 mins, 59 secs``.
+
 For instance, here is how you could set the format to be the same as the
 ``debug`` one::
 
-    $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
+    $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:16s%/%estimated:-16s% %memory:6s%');
 
 Notice the ``:6s`` part added to some placeholders? That's how you can tweak
 the appearance of the bar (formatting and alignment). The part after the colon
@@ -310,7 +326,7 @@ to display it can be customized::
 .. caution::
 
     For performance reasons, Symfony redraws the screen once every 100ms. If this is too
-    fast or to slow for your application, use the methods
+    fast or too slow for your application, use the methods
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws` and
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::maxSecondsBetweenRedraws`::
 
@@ -338,12 +354,22 @@ display that are not available in the list of built-in placeholders, you can
 create your own. Let's see how you can create a ``remaining_steps`` placeholder
 that displays the number of remaining steps::
 
+    // This definition is globally registered for all ProgressBar instances
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
-        function (ProgressBar $progressBar, OutputInterface $output) {
+        function (ProgressBar $progressBar, OutputInterface $output): int {
             return $progressBar->getMaxSteps() - $progressBar->getProgress();
         }
     );
+
+It is also possible to set a placeholder formatter per ProgressBar instance
+with the ``setPlaceholderFormatter`` method::
+
+    $progressBar = new ProgressBar($output, 3, 0);
+    $progressBar->setFormat('%countdown% [%bar%]');
+    $progressBar->setPlaceholderFormatter('countdown', function (ProgressBar $progressBar) {
+        return $progressBar->getMaxSteps() - $progressBar->getProgress();
+    });
 
 Custom Messages
 ~~~~~~~~~~~~~~~

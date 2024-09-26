@@ -44,15 +44,15 @@ Here is a simplified example of a database transport::
 
     class YourTransport implements TransportInterface
     {
-        private $db;
-        private $serializer;
+        private SerializerInterface $serializer;
 
         /**
          * @param FakeDatabase $db is used for demo purposes. It is not a real class.
          */
-        public function __construct(FakeDatabase $db, SerializerInterface $serializer = null)
-        {
-            $this->db = $db;
+        public function __construct(
+            private FakeDatabase $db,
+            ?SerializerInterface $serializer = null,
+        ) {
             $this->serializer = $serializer ?? new PhpSerializer();
         }
 
@@ -126,11 +126,16 @@ Here is a simplified example of a database transport::
 
 The implementation above is not runnable code but illustrates how a
 :class:`Symfony\\Component\\Messenger\\Transport\\TransportInterface` could
-be implemented. For real implementations see :class:`Symfony\\Component\\Messenger\\Transport\\InMemoryTransport`
+be implemented. For real implementations see :class:`Symfony\\Component\\Messenger\\Transport\\InMemory\\InMemoryTransport`
 and :class:`Symfony\\Component\\Messenger\\Bridge\\Doctrine\\Transport\\DoctrineReceiver`.
 
 Register your Factory
 ---------------------
+
+Before using your factory, you must register it. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+Otherwise, add the following:
 
 .. configuration-block::
 
@@ -205,7 +210,7 @@ named transport using your own DSN:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->messenger()
                 ->transport('yours')
                     ->dsn('my-transport://...')

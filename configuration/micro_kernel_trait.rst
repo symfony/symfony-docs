@@ -20,55 +20,111 @@ via Composer:
       symfony/http-foundation symfony/routing \
       symfony/dependency-injection symfony/framework-bundle
 
-Next, create an ``index.php`` file that defines the kernel class and runs it::
+Next, create an ``index.php`` file that defines the kernel class and runs it:
 
-    // index.php
-    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-    use Symfony\Component\HttpFoundation\JsonResponse;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+.. configuration-block::
 
-    require __DIR__.'/vendor/autoload.php';
+    .. code-block:: php-attributes
 
-    class Kernel extends BaseKernel
-    {
-        use MicroKernelTrait;
+        // index.php
+        use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpFoundation\JsonResponse;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+        use Symfony\Component\Routing\Attribute\Route;
 
-        public function registerBundles(): array
+        require __DIR__.'/vendor/autoload.php';
+
+        class Kernel extends BaseKernel
         {
-            return [
-                new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            ];
+            use MicroKernelTrait;
+
+            public function registerBundles(): array
+            {
+                return [
+                    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                ];
+            }
+
+            protected function configureContainer(ContainerConfigurator $container): void
+            {
+                // PHP equivalent of config/packages/framework.yaml
+                $container->extension('framework', [
+                    'secret' => 'S0ME_SECRET'
+                ]);
+            }
+
+            #[Route('/random/{limit}', name: 'random_number')]
+            public function randomNumber(int $limit): JsonResponse
+            {
+                return new JsonResponse([
+                    'number' => random_int(0, $limit),
+                ]);
+            }
         }
 
-        protected function configureContainer(ContainerConfigurator $container): void
+        $kernel = new Kernel('dev', true);
+        $request = Request::createFromGlobals();
+        $response = $kernel->handle($request);
+        $response->send();
+        $kernel->terminate($request, $response);
+
+    .. code-block:: php
+
+        // index.php
+        use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpFoundation\JsonResponse;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        require __DIR__.'/vendor/autoload.php';
+
+        class Kernel extends BaseKernel
         {
-            // PHP equivalent of config/packages/framework.yaml
-            $container->extension('framework', [
-                'secret' => 'S0ME_SECRET'
-            ]);
+            use MicroKernelTrait;
+
+            public function registerBundles(): array
+            {
+                return [
+                    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                ];
+            }
+
+            protected function configureContainer(ContainerConfigurator $container): void
+            {
+                // PHP equivalent of config/packages/framework.yaml
+                $container->extension('framework', [
+                    'secret' => 'S0ME_SECRET'
+                ]);
+            }
+
+            protected function configureRoutes(RoutingConfigurator $routes): void
+            {
+                $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
+            }
+
+            public function randomNumber(int $limit): JsonResponse
+            {
+                return new JsonResponse([
+                    'number' => random_int(0, $limit),
+                ]);
+            }
         }
 
-        protected function configureRoutes(RoutingConfigurator $routes): void
-        {
-            $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
-        }
+        $kernel = new Kernel('dev', true);
+        $request = Request::createFromGlobals();
+        $response = $kernel->handle($request);
+        $response->send();
+        $kernel->terminate($request, $response);
 
-        public function randomNumber(int $limit): JsonResponse
-        {
-            return new JsonResponse([
-                'number' => random_int(0, $limit),
-            ]);
-        }
-    }
+.. note::
 
-    $kernel = new Kernel('dev', true);
-    $request = Request::createFromGlobals();
-    $response = $kernel->handle($request);
-    $response->send();
-    $kernel->terminate($request, $response);
+    In addition to the ``index.php`` file, you'll need to create a directory called
+    ``config/`` in your project (even if it's empty because you define the configuration
+    options inside the ``configureContainer()`` method).
 
 That's it! To test it, start the :doc:`Symfony Local Web Server
 </setup/symfony_server>`:
@@ -112,12 +168,6 @@ be automatically registered as an extension. You can learn more about it in
 the dedicated section about
 :ref:`managing configuration with extensions <components-dependency-injection-extension>`.
 
-.. versionadded:: 5.2
-
-    The automatic registration of the kernel as an extension when implementing the
-    :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
-    was introduced in Symfony 5.2.
-
 It is also possible to implement the ``EventSubscriberInterface`` to handle
 events directly from the kernel, again it will be registered automatically::
 
@@ -152,7 +202,7 @@ Advanced Example: Twig, Annotations and the Web Debug Toolbar
 -------------------------------------------------------------
 
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
-Instead, its goal to give you the power to choose your bundles and structure.
+Instead, its goal is to give you the power to choose your bundles and structure.
 
 First, you'll probably want to put your PHP classes in an ``src/`` directory. Configure
 your ``composer.json`` file to load from there:
@@ -172,14 +222,17 @@ your ``composer.json`` file to load from there:
 
 Then, run ``composer dump-autoload`` to dump your new autoload config.
 
-Now, suppose you want to use Twig and load routes via annotations. Instead of
-putting *everything* in ``index.php``, create a new ``src/Kernel.php`` to
-hold the kernel. Now it looks like this::
+Now, suppose you want to define a custom configuration for your app,
+use Twig and load routes via annotations. Instead of putting *everything*
+in ``index.php``, create a new ``src/Kernel.php`` to hold the kernel.
+Now it looks like this::
 
     // src/Kernel.php
     namespace App;
 
+    use App\DependencyInjection\AppExtension;
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
     use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -195,11 +248,16 @@ hold the kernel. Now it looks like this::
                 new \Symfony\Bundle\TwigBundle\TwigBundle(),
             ];
 
-            if ($this->getEnvironment() == 'dev') {
+            if ('dev' === $this->getEnvironment()) {
                 $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             }
 
             return $bundles;
+        }
+
+        protected function build(ContainerBuilder $containerBuilder): void
+        {
+            $containerBuilder->registerExtension(new AppExtension());
         }
 
         protected function configureContainer(ContainerConfigurator $container): void
@@ -230,8 +288,9 @@ hold the kernel. Now it looks like this::
                 $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml')->prefix('/_profiler');
             }
 
-            // load the annotation routes
-            $routes->import(__DIR__.'/Controller/', 'annotation');
+            // load the routes defined as PHP attributes
+            // (use 'annotation' as the second argument if you define routes as annotations)
+            $routes->import(__DIR__.'/Controller/', 'attribute');
         }
 
         // optional, to use the standard Symfony cache directory
@@ -251,7 +310,36 @@ Before continuing, run this command to add support for the new dependencies:
 
 .. code-block:: terminal
 
-    $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
+    $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle
+
+Next, create a new extension class that defines your app configuration and
+add a service conditionally based on the ``foo`` value::
+
+    // src/DependencyInjection/AppExtension.php
+    namespace App\DependencyInjection;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class AppExtension extends AbstractExtension
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    ->booleanNode('foo')->defaultTrue()->end()
+                ->end();
+        }
+
+        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
+        {
+            if ($config['foo']) {
+                $containerBuilder->register('foo_service', \stdClass::class);
+            }
+        }
+    }
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
@@ -285,7 +373,7 @@ because the configuration started to get bigger:
         // config/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework
                 ->secret('SOME_SECRET')
                 ->profiler()
@@ -293,7 +381,7 @@ because the configuration started to get bigger:
             ;
         };
 
-This also loads annotation routes from an ``src/Controller/`` directory, which
+This also loads attribute routes from an ``src/Controller/`` directory, which
 has one file in it::
 
     // src/Controller/MicroController.php
@@ -301,13 +389,11 @@ has one file in it::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class MicroController extends AbstractController
     {
-        /**
-         * @Route("/random/{limit}")
-         */
+        #[Route('/random/{limit}')]
         public function randomNumber(int $limit): Response
         {
             $number = random_int(0, $limit);

@@ -3,8 +3,8 @@ The HttpKernel Component
 
     The HttpKernel component provides a structured process for converting
     a ``Request`` into a ``Response`` by making use of the EventDispatcher
-    component. It's flexible enough to create a full-stack framework (Symfony),
-    a micro-framework (Silex) or an advanced CMS system (Drupal).
+    component. It's flexible enough to create a full-stack framework (Symfony)
+    or an advanced CMS (Drupal).
 
 Installation
 ------------
@@ -15,8 +15,10 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
-The Workflow of a Request
--------------------------
+.. _the-workflow-of-a-request:
+
+The Request-Response Lifecycle
+------------------------------
 
 .. seealso::
 
@@ -26,11 +28,10 @@ The Workflow of a Request
     :doc:`/event_dispatcher` articles to learn about how to use it to create
     controllers and define events in Symfony applications.
 
-
 Every HTTP web interaction begins with a request and ends with a response.
 Your job as a developer is to create PHP code that reads the request information
 (e.g. the URL) and creates and returns a response (e.g. an HTML page or JSON string).
-This is a simplified overview of the request workflow in Symfony applications:
+This is a simplified overview of the request-response lifecycle in Symfony applications:
 
 #. The **user** asks for a **resource** in a **browser**;
 #. The **browser** sends a **request** to the **server**;
@@ -62,12 +63,12 @@ that system::
             Request $request,
             int $type = self::MAIN_REQUEST,
             bool $catch = true
-        );
+        ): Response;
     }
 
 Internally, :method:`HttpKernel::handle() <Symfony\\Component\\HttpKernel\\HttpKernel::handle>` -
 the concrete implementation of :method:`HttpKernelInterface::handle() <Symfony\\Component\\HttpKernel\\HttpKernelInterface::handle>` -
-defines a workflow that starts with a :class:`Symfony\\Component\\HttpFoundation\\Request`
+defines a lifecycle that starts with a :class:`Symfony\\Component\\HttpFoundation\\Request`
 and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
 
 .. raw:: html
@@ -76,7 +77,7 @@ and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
         alt="A flow diagram showing all HTTP Kernel events in the Request-Response lifecycle. Each event is numbered 1 to 8 and described in detail in the following subsections."
     ></object>
 
-The exact details of this workflow are the key to understanding how the kernel
+The exact details of this lifecycle are the key to understanding how the kernel
 (and the Symfony Framework or any other library that uses the kernel) works.
 
 HttpKernel: Driven by Events
@@ -260,11 +261,6 @@ on the request's information.
     b) A new instance of your controller class is instantiated with no
        constructor arguments.
 
-    c) If the controller implements :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface`,
-       ``setContainer()`` is called on the controller object and the container
-       is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
-       sub-class used by the Symfony Framework.
-
 .. _component-http-kernel-kernel-controller:
 
 3) The ``kernel.controller`` Event
@@ -279,7 +275,11 @@ After the controller callable has been determined, ``HttpKernel::handle()``
 dispatches the ``kernel.controller`` event. Listeners to this event might initialize
 some part of the system that needs to be initialized after certain things
 have been determined (e.g. the controller, routing information) but before
-the controller is executed. For some examples, see the Symfony section below.
+the controller is executed.
+
+Another typical use-case for this event is to retrieve the attributes from
+the controller using the :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::getAttributes`
+method. See the Symfony section below for some examples.
 
 Listeners to this event can also change the controller callable completely
 by calling :method:`ControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::setController>`
@@ -287,18 +287,15 @@ on the event object that's passed to listeners on this event.
 
 .. sidebar:: ``kernel.controller`` in the Symfony Framework
 
-    There are a few minor listeners to the ``kernel.controller`` event in
-    the Symfony Framework, and many deal with collecting profiler data when
-    the profiler is enabled.
+    An interesting listener to ``kernel.controller`` in the Symfony
+    Framework is :class:`Symfony\\Component\\HttpKernel\\EventListener\\CacheAttributeListener`.
+    This class fetches ``#[Cache]`` attribute configuration from the
+    controller and uses it to configure :doc:`HTTP caching </http_cache>`
+    on the response.
 
-    One interesting listener comes from the `SensioFrameworkExtraBundle`_. This
-    listener's `@ParamConverter`_ functionality allows you to pass a full object
-    (e.g. a ``Post`` object) to your controller instead of a scalar value (e.g.
-    an ``id`` parameter that was on your route). The listener -
-    ``ParamConverterListener`` - uses reflection to look at each of the
-    arguments of the controller and tries to use different methods to convert
-    those to objects, which are then stored in the ``attributes`` property of
-    the ``Request`` object. Read the next section to see why this is important.
+    There are a few other minor listeners to the ``kernel.controller`` event in
+    the Symfony Framework that deal with collecting profiler data when the
+    profiler is enabled.
 
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -337,10 +334,10 @@ of arguments that should be passed when executing that callable.
        available through the `variadic`_ argument.
 
     This functionality is provided by resolvers implementing the
-    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`.
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ValueResolverInterface`.
     There are four implementations which provide the default behavior of
     Symfony but customization is the key here. By implementing the
-    ``ArgumentValueResolverInterface`` yourself and passing this to the
+    ``ValueResolverInterface`` yourself and passing this to the
     ``ArgumentResolver``, you can extend this functionality.
 
 .. _component-http-kernel-calling-controller:
@@ -399,12 +396,12 @@ return a ``Response``.
 
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
-    There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, `SensioFrameworkExtraBundle`_ *does* add a listener to this
-    event. If your controller returns an array, and you place the `@Template`_
-    annotation above the controller, then this listener renders a template,
-    passes the array you returned from your controller to that template, and
-    creates a ``Response`` containing the returned content from that template.
+    There is a default listener inside the Symfony Framework for the ``kernel.view``
+    event. If your controller action returns an array, and you apply the
+    :ref:`#[Template] attribute <templates-template-attribute>` to that
+    controller action, then this listener renders a template, passes the array
+    you returned from your controller to that template, and creates a ``Response``
+    containing the returned content from that template.
 
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
@@ -490,8 +487,8 @@ as possible to the client (e.g. sending emails).
 
 .. _component-http-kernel-kernel-exception:
 
-Handling Exceptions: the ``kernel.exception`` Event
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9) Handling Exceptions: the ``kernel.exception`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Handle some type of exception and create an appropriate
 ``Response`` to return for the exception
@@ -522,6 +519,17 @@ creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
+
+The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` exposes the
+:method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::isKernelTerminating`
+method, which you can use to determine if the kernel is currently terminating
+at the moment the exception was thrown.
+
+.. versionadded:: 7.1
+
+    The
+    :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::isKernelTerminating`
+    method was introduced in Symfony 7.1.
 
 .. note::
 
@@ -629,7 +637,7 @@ else that can be used to create a working example::
 
     $routes = new RouteCollection();
     $routes->add('hello', new Route('/hello/{name}', [
-        '_controller' => function (Request $request) {
+        '_controller' => function (Request $request): Response {
             return new Response(
                 sprintf("Hello %s", $request->get('name'))
             );
@@ -700,7 +708,7 @@ look like this::
     use Symfony\Component\HttpKernel\Event\RequestEvent;
     // ...
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;
@@ -709,25 +717,31 @@ look like this::
         // ...
     }
 
+.. note::
+
+    The default value of the ``_format`` request attribute is ``html``. If your
+    sub request returns a different format (e.g. ``json``) you can set it by
+    defining the ``_format`` attribute explicitly on the request::
+
+        $request->attributes->set('_format', 'json');
+
 .. _http-kernel-resource-locator:
 
 Locating Resources
 ------------------
 
 The HttpKernel component is responsible of the bundle mechanism used in Symfony
-applications. The key feature of the bundles is that they allow to override any
-resource used by the application (config files, templates, controllers,
-translation files, etc.)
+applications. One of the key features of the bundles is that you can use logic
+paths instead of physical paths to refer to any of their resources (config files,
+templates, controllers, translation files, etc.)
 
-This overriding mechanism works because resources are referenced not by their
-physical path but by their logical path. For example, the ``services.xml`` file
-stored in the ``Resources/config/`` directory of a bundle called FooBundle is
-referenced as ``@FooBundle/Resources/config/services.xml``. This logical path
-will work when the application overrides that file and even if you change the
-directory of FooBundle.
+This allows to import resources even if you don't know where in the filesystem a
+bundle will be installed. For example, the ``services.xml`` file stored in the
+``Resources/config/`` directory of a bundle called FooBundle can be referenced as
+``@FooBundle/Resources/config/services.xml`` instead of ``__DIR__/Resources/config/services.xml``.
 
-The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
-which can be used to transform logical paths into physical paths::
+This is possible thanks to the :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
+method provided by the kernel, which transforms logical paths into physical paths::
 
     $path = $kernel->locateResource('@FooBundle/Resources/config/services.xml');
 
@@ -743,7 +757,4 @@ Learn more
 .. _reflection: https://www.php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`PHP FPM`: https://www.php.net/manual/en/install.fpm.php
-.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
 .. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

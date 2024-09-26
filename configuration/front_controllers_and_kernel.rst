@@ -186,7 +186,7 @@ parameter used, for example, to turn Twig's debug mode on:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
             $twig->debug('%kernel.debug%');
         };
@@ -237,7 +237,7 @@ the directory of the environment you're using (most commonly ``dev/`` while
 developing and debugging). While it can vary, the ``var/cache/dev/`` directory
 includes the following:
 
-``srcApp_KernelDevDebugContainer.php``
+``App_KernelDevDebugContainer.php``
     The cached "service container" that represents the cached application
     configuration.
 

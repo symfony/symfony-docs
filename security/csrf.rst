@@ -1,15 +1,44 @@
 How to Implement CSRF Protection
 ================================
 
-CSRF - or `Cross-site request forgery`_ - is a method by which a malicious
-user attempts to make your legitimate users unknowingly submit data that
-they don't intend to submit.
+CSRF, or `Cross-site request forgery`_, is a type of attack where a malicious actor
+tricks a user into performing actions on a web application without their knowledge
+or consent.
 
-CSRF protection works by adding a hidden field to your form that contains a
-value that only you and your user know. This ensures that the user - not some
-other entity - is submitting the given data.
+The attack is based on the trust that a web application has in a user's browser
+(e.g. on session cookies). Here's a real example of a CSRF attack: a malicious
+actor could create the following website:
 
-Before using the CSRF protection, install it in your project:
+.. code-block:: html
+
+    <html>
+        <body>
+            <form action="https://example.com/settings/update-email" method="POST">
+                <input type="hidden" name="email" value="malicious-actor-address@some-domain.com"/>
+            </form>
+            <script>
+                document.forms[0].submit();
+            </script>
+
+            <!-- some content here to distract the user -->
+        </body>
+    </html>
+
+If you visit this website (e.g. by clicking on some email link or some social
+network post) and you were already logged in on the ``https://example.com`` site,
+the malicious actor could change the email address associated to your account
+(effectively taking over your account) without you even being aware of it.
+
+An effective way of preventing CSRF attacks is to use anti-CSRF tokens. These are
+unique tokens added to forms as hidden fields. The legit server validates them to
+ensure that the request originated from the expected source and not some other
+malicious website.
+
+Installation
+------------
+
+Symfony provides all the needed features to generate and validate the anti-CSRF
+tokens. Before using them, install this package in your project:
 
 .. code-block:: terminal
 
@@ -50,7 +79,7 @@ for more information):
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->csrfProtection()
                 ->enabled(true)
             ;
@@ -72,17 +101,66 @@ protected forms. As an alternative, you can:
   load the CSRF token with an uncached AJAX request and replace the form
   field value with it.
 
+.. _csrf-protection-forms:
+
 CSRF Protection in Symfony Forms
 --------------------------------
 
-Forms created with the Symfony Form component include CSRF tokens by default
-and Symfony checks them automatically, so you don't have to do anything to be
-protected against CSRF attacks.
+:doc:`Symfony Forms </forms>` include CSRF tokens by default and Symfony also
+checks them automatically for you. So, when using Symfony Forms, you don't have
+to do anything to be protected against CSRF attacks.
 
 .. _form-csrf-customization:
 
 By default Symfony adds the CSRF token in a hidden field called ``_token``, but
-this can be customized on a form-by-form basis::
+this can be customized (1) globally for all forms and (2) on a form-by-form basis.
+Globally, you can configure it under the ``framework.form`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            form:
+                csrf_protection:
+                    enabled: true
+                    field_name: 'custom_token_name'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:form>
+                    <framework:csrf-protection enabled="true" field-name="custom_token_name"/>
+                </framework:form>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->csrfProtection()
+                ->enabled(true)
+                ->fieldName('custom_token_name')
+            ;
+        };
+
+On a form-by-form basis, you can configure the CSRF protection in the ``setDefaults()``
+method of each form::
 
     // src/Form/TaskType.php
     namespace App\Form;
@@ -117,12 +195,15 @@ You can also customize the rendering of the CSRF form field creating a custom
 the field (e.g. define ``{% block csrf_token_widget %} ... {% endblock %}`` to
 customize the entire form field contents).
 
-CSRF Protection in Login Forms
-------------------------------
+.. _csrf-protection-in-login-forms:
 
-See :ref:`form_login-csrf` for a login form that is protected from CSRF
-attacks. You can also configure the
-:ref:`CSRF protection for the logout action <reference-security-logout-csrf>`.
+CSRF Protection in Login Form and Logout Action
+-----------------------------------------------
+
+Read the following:
+
+* :ref:`CSRF Protection in Login Forms <form_login-csrf>`;
+* :ref:`CSRF protection for the logout action <reference-security-logout-csrf>`.
 
 .. _csrf-protection-in-html-forms:
 
@@ -156,13 +237,61 @@ method to check its validity::
 
     public function delete(Request $request): Response
     {
-        $submittedToken = $request->request->get('token');
+        $submittedToken = $request->getPayload()->get('token');
 
         // 'delete-item' is the same value used in the template to generate the token
         if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
             // ... do something, like deleting an object
         }
     }
+
+.. _csrf-controller-attributes:
+
+Alternatively you can use the
+:class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
+attribute on the controller action::
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+    // ...
+
+    #[IsCsrfTokenValid('delete-item', tokenKey: 'token')]
+    public function delete(): Response
+    {
+        // ... do something, like deleting an object
+    }
+
+Suppose you want a CSRF token per item, so in the template you have something like the following:
+
+.. code-block:: html+twig
+
+    <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
+        {# the argument of csrf_token() is a dynamic id string used to generate the token #}
+        <input type="hidden" name="token" value="{{ csrf_token('delete-item-' ~ post.id) }}">
+
+        <button type="submit">Delete item</button>
+    </form>
+
+The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
+attribute also accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression`
+object evaluated to the id::
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+    // ...
+
+    #[IsCsrfTokenValid(new Expression('"delete-item-" ~ args["post"].getId()'), tokenKey: 'token')]
+    public function delete(Post $post): Response
+    {
+        // ... do something, like deleting an object
+    }
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
+    attribute was introduced in Symfony 7.1.
 
 CSRF Tokens and Compression Side-Channel Attacks
 ------------------------------------------------
@@ -172,10 +301,6 @@ compression. Attackers can leverage information leaked by compression to recover
 targeted parts of the plaintext. To mitigate these attacks, and prevent an
 attacker from guessing the CSRF tokens, a random mask is prepended to the token
 and used to scramble it.
-
-.. versionadded:: 5.3
-
-    The randomization of tokens was introduced in Symfony 5.3
 
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`BREACH`: https://en.wikipedia.org/wiki/BREACH

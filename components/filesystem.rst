@@ -216,15 +216,17 @@ systems (unlike PHP's :phpfunction:`readlink` function)::
     // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
     $filesystem->readlink('/path/to/link', true);
 
-Its behavior is the following::
+Its behavior is the following:
 
-* When ``$canonicalize`` is ``false`` (the default value):
-    * if ``$path`` does not exist or is not a link, it returns ``null``.
-    * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
+* When ``$canonicalize`` is ``false``:
+
+  * if ``$path`` does not exist or is not a link, it returns ``null``.
+  * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
 
 * When ``$canonicalize`` is ``true``:
-    * if ``$path`` does not exist, it returns null.
-    * if ``$path`` exists, it returns its absolute fully resolved final version.
+
+  * if ``$path`` does not exist, it returns null.
+  * if ``$path`` exists, it returns its absolute fully resolved final version.
 
 .. note::
 
@@ -282,20 +284,17 @@ exception on failure::
     // returns a path like : /tmp/prefix_wyjgtF.png
     $filesystem->tempnam('/tmp', 'prefix_', '.png');
 
-.. versionadded:: 5.1
-
-    The option to set a suffix in  ``tempnam()`` was introduced in Symfony 5.1.
-
 .. _filesystem-dumpfile:
 
 ``dumpFile``
 ~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
-contents into a file. It does this in an atomic manner: it writes a temporary
-file first and then moves it to the new file location when it's finished.
-This means that the user will always see either the complete old file or
-complete new file (but never a partially-written file)::
+contents into a file (creating the file and its directory if they don't exist).
+It does this in an atomic manner: it writes a temporary file first and then moves
+it to the new file location when it's finished. This means that the user will
+always see either the complete old file or complete new file (but never a
+partially-written file)::
 
     $filesystem->dumpFile('file.txt', 'Hello World');
 
@@ -314,16 +313,24 @@ contents at the end of some file::
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
 
-.. versionadded:: 5.4
+``readFile``
+~~~~~~~~~~~~
 
-    The third argument of ``appendToFile()`` was introduced in Symfony 5.4.
+.. versionadded:: 7.1
+
+    The ``readFile()`` method was introduced in Symfony 7.1.
+
+:method:`Symfony\\Component\\Filesystem\\Filesystem::readFile` returns all the
+contents of a file as a string. Unlike the :phpfunction:`file_get_contents` function
+from PHP, it throws an exception when the given file path is not readable and
+when passing the path to a directory instead of a file::
+
+    $contents = $filesystem->readFile('/some/path/to/file.txt');
+
+The ``$contents`` variable now stores all the contents of the ``file.txt`` file.
 
 Path Manipulation Utilities
 ---------------------------
-
-.. versionadded:: 5.4
-
-    The :class:`Symfony\\Component\\Filesystem\\Path` class was introduced in Symfony 5.4.
 
 Dealing with file paths usually involves some difficulties:
 
@@ -435,7 +442,7 @@ Especially when storing many paths, the amount of duplicated information is
 noticeable. You can use :method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath`
 to check a list of paths for a common base path::
 
-    Path::getLongestCommonBasePath(
+    $basePath = Path::getLongestCommonBasePath(
         '/var/www/vhosts/project/httpdocs/config/config.yaml',
         '/var/www/vhosts/project/httpdocs/config/routing.yaml',
         '/var/www/vhosts/project/httpdocs/config/services.yaml',
@@ -444,17 +451,14 @@ to check a list of paths for a common base path::
     );
     // => /var/www/vhosts/project/httpdocs
 
-Use this path together with :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`
-to shorten the stored paths::
-
-    $bp = '/var/www/vhosts/project/httpdocs';
+Use this common base path to shorten the stored paths::
 
     return [
-        $bp.'/config/config.yaml',
-        $bp.'/config/routing.yaml',
-        $bp.'/config/services.yaml',
-        $bp.'/images/banana.gif',
-        $bp.'/uploads/images/nicer-banana.gif',
+        $basePath.'/config/config.yaml',
+        $basePath.'/config/routing.yaml',
+        $basePath.'/config/services.yaml',
+        $basePath.'/images/banana.gif',
+        $basePath.'/uploads/images/nicer-banana.gif',
     ];
 
 :method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath` always

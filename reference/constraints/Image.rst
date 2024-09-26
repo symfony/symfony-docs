@@ -33,14 +33,14 @@ would be a ``file`` type. The ``Author`` class might look as follows::
 
     class Author
     {
-        protected $headshot;
+        protected File $headshot;
 
-        public function setHeadshot(File $file = null)
+        public function setHeadshot(?File $file = null): void
         {
             $this->headshot = $file;
         }
 
-        public function getHeadshot()
+        public function getHeadshot(): File
         {
             return $this->headshot;
         }
@@ -51,31 +51,12 @@ that it is between a certain size, add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Image(
-             *     minWidth = 200,
-             *     maxWidth = 400,
-             *     minHeight = 200,
-             *     maxHeight = 400
-             * )
-             */
-            protected $headshot;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Symfony\Component\HttpFoundation\File\File;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -86,7 +67,7 @@ that it is between a certain size, add the following:
                 minHeight: 200,
                 maxHeight: 400,
             )]
-            protected $headshot;
+            protected File $headshot;
         }
 
     .. code-block:: yaml
@@ -131,7 +112,9 @@ that it is between a certain size, add the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('headshot', new Assert\Image([
                     'minWidth' => 200,
@@ -151,29 +134,12 @@ following code:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Image(
-             *     allowLandscape = false,
-             *     allowPortrait = false
-             * )
-             */
-            protected $headshot;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Symfony\Component\HttpFoundation\File\File;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -182,7 +148,7 @@ following code:
                 allowLandscape: false,
                 allowPortrait: false,
             )]
-            protected $headshot;
+            protected File $headshot;
         }
 
     .. code-block:: yaml
@@ -217,7 +183,9 @@ following code:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('headshot', new Assert\Image([
                     'allowLandscape' => false,
@@ -366,7 +334,7 @@ value.
 ``maxPixelsMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
+**type**: ``string`` **default**: ``The image has too many pixels ({{ pixels }} pixels).
 Maximum amount expected is {{ max_pixels }} pixels.``
 
 The error message if the amount of pixels of the image exceeds `maxPixels`_.
@@ -443,6 +411,11 @@ You can find a list of existing image mime types on the `IANA website`_.
 ~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This file is not a valid image.``
+
+If all the values of the `mimeTypes`_ option are a subset of ``image/*``, the
+error message will be instead: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
+
+.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
 
 ``minHeight``
 ~~~~~~~~~~~~~

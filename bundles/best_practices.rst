@@ -78,16 +78,22 @@ The following is the recommended directory structure of an AcmeBlogBundle:
     ├── LICENSE
     └── README.md
 
-This directory structure requires to configure the bundle path to its root
-directory as follows::
+.. note::
 
-    class AcmeBlogBundle extends Bundle
-    {
-        public function getPath(): string
+    This directory structure is used by default when your bundle class extends
+    the recommended :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`.
+    If your bundle extends the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`
+    class, you have to override the ``getPath()`` method as follows::
+
+        use Symfony\Component\HttpKernel\Bundle\Bundle;
+
+        class AcmeBlogBundle extends Bundle
         {
-            return \dirname(__DIR__);
+            public function getPath(): string
+            {
+                return \dirname(__DIR__);
+            }
         }
-    }
 
 **The following files are mandatory**, because they ensure a structure convention
 that automated tools can rely on:
@@ -125,8 +131,8 @@ Configuration (routes, services, etc.)               ``config/``
 Web Assets (compiled CSS and JS, images)             ``public/``
 Web Asset sources (``.scss``, ``.ts``, Stimulus)     ``assets/``
 Translation files                                    ``translations/``
-Validation (when not using annotations)              ``config/validation/``
-Serialization (when not using annotations)           ``config/serialization/``
+Validation (when not using attributes)               ``config/validation/``
+Serialization (when not using attributes)            ``config/serialization/``
 Templates                                            ``templates/``
 Unit and Functional Tests                            ``tests/``
 ===================================================  ========================================
@@ -165,13 +171,7 @@ If the bundle includes Doctrine ORM entities and/or ODM documents, it's
 recommended to define their mapping using XML files stored in
 ``config/doctrine/``. This allows to override that mapping using the
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
-This is not possible when using annotations/attributes to define the mapping.
-
-.. caution::
-
-    The recommended bundle structure was changed in Symfony 5, read the
-    `Symfony 4.4 bundle documentation`_ for information about the old
-    structure.
+This is not possible when using attributes to define the mapping.
 
 Tests
 -----
@@ -298,7 +298,7 @@ following standardized instructions in your ``README.md`` file.
         Open a command console, enter your project directory and execute:
 
         ```console
-        $ composer require <package-name>
+        composer require <package-name>
         ```
 
         Applications that don't use Symfony Flex
@@ -310,7 +310,7 @@ following standardized instructions in your ``README.md`` file.
         following command to download the latest stable version of this bundle:
 
         ```console
-        $ composer require <package-name>
+        composer require <package-name>
         ```
 
         ### Step 2: Enable the Bundle
@@ -339,9 +339,9 @@ following standardized instructions in your ``README.md`` file.
 
         Open a command console, enter your project directory and execute:
 
-        .. code-block:: bash
+        .. code-block:: terminal
 
-            $ composer require <package-name>
+            composer require <package-name>
 
         Applications that don't use Symfony Flex
         ----------------------------------------
@@ -354,7 +354,7 @@ following standardized instructions in your ``README.md`` file.
 
         .. code-block:: terminal
 
-            $ composer require <package-name>
+            composer require <package-name>
 
         Step 2: Enable the Bundle
         ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -444,7 +444,7 @@ The end user can provide values in any configuration file:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 ->set('acme_blog.author.email', 'fabien@example.com')
             ;
@@ -481,6 +481,13 @@ can be used for autowiring.
 
 Services should not use autowiring or autoconfiguration. Instead, all services should
 be defined explicitly.
+
+.. tip::
+
+    If there is no intention for the service id to be used by the end user, you can
+    mark it as *hidden* by prefixing it with a dot (e.g. ``.acme_blog.logger``).
+    This prevents the service from being listed in the default ``debug:container``
+    command output.
 
 .. seealso::
 
@@ -537,16 +544,12 @@ Resources
 ---------
 
 If the bundle references any resources (config files, translation files, etc.),
-don't use physical paths (e.g. ``__DIR__/config/services.xml``) but logical
-paths (e.g. ``@AcmeBlogBundle/config/services.xml``).
+you can use physical paths (e.g. ``__DIR__/config/services.xml``).
 
-The logical paths are required because of the bundle overriding mechanism that
-lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
-for more details about transforming physical paths into logical paths.
-
-Beware that templates use a simplified version of the logical path shown above.
-For example, an ``index.html.twig`` template located in the ``templates/Default/``
-directory of the AcmeBlogBundle, is referenced as ``@AcmeBlog/Default/index.html.twig``.
+In the past, we recommended to only use logical paths (e.g.
+``@AcmeBlogBundle/config/services.xml``) and resolve them with the
+:ref:`resource locator <http-kernel-resource-locator>` provided by the Symfony
+kernel, but this is no longer a recommended practice.
 
 Learn more
 ----------
@@ -562,4 +565,3 @@ Learn more
 .. _`valid license identifier`: https://spdx.org/licenses/
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`Travis CI`: https://docs.travis-ci.com/
-.. _`Symfony 4.4 bundle documentation`: https://symfony.com/doc/4.4/bundles.html#bundle-directory-structure

@@ -64,8 +64,9 @@ block will be formatted with more padding (one blank line above and below the
 messages and 2 spaces on the left and right).
 
 The exact "style" you use in the block is up to you. In this case, you're using
-the pre-defined ``error`` style, but there are other styles, or you can create
-your own. See :doc:`/console/coloring`.
+the pre-defined ``error`` style, but there are other styles (``info``,
+``comment``, ``question``), or you can create your own.
+See :doc:`/console/coloring`.
 
 Print Truncated Messages
 ------------------------
@@ -87,7 +88,7 @@ And the output will be:
 
     This is...
 
-The message is truncated to the given length, then the suffix is appended to end
+The message is truncated to the given length, then the suffix is appended to the end
 of that string.
 
 Negative String Length
@@ -109,7 +110,7 @@ Custom Suffix
 
 By default, the ``...`` suffix is used. If you wish to use a different suffix,
 pass it as the third argument to the method.
-The suffix is always appended, unless truncate length is longer than a message
+The suffix is always appended, unless truncated length is longer than a message
 and a suffix length.
 If you don't want to use suffix at all, pass an empty string::
 
@@ -119,3 +120,28 @@ If you don't want to use suffix at all, pass an empty string::
     $truncatedMessage = $formatter->truncate('test', 10);
     // result: test
     // because length of the "test..." string is shorter than 10
+
+Formatting Time
+---------------
+
+Sometimes you want to format seconds to time. This is possible with the
+:method:`Symfony\\Component\\Console\\Helper\\Helper::formatTime` method.
+The first argument is the seconds to format and the second argument is the
+precision (default ``1``) of the result::
+
+    Helper::formatTime(42);        // 42 secs
+    Helper::formatTime(125);       // 2 mins
+    Helper::formatTime(125, 2);    // 2 mins, 5 secs
+    Helper::formatTime(172799, 4); // 1 day, 23 hrs, 59 mins, 59 secs
+
+Formatting Memory
+-----------------
+
+Sometimes you want to format memory to GiB, MiB, KiB and B. This is possible with the
+:method:`Symfony\\Component\\Console\\Helper\\Helper::formatMemory` method.
+The only argument is the memory size to format::
+
+    Helper::formatMemory(512);                // 512 B
+    Helper::formatMemory(1024);               // 1 KiB
+    Helper::formatMemory(1024 * 1024);        // 1.0 MiB
+    Helper::formatMemory(1024 * 1024 * 1024); // 1 GiB

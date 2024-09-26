@@ -1,4 +1,4 @@
-How to Test A Doctrine Repository
+How to Test a Doctrine Repository
 =================================
 
 .. seealso::
@@ -20,20 +20,18 @@ Suppose the class you want to test looks like this::
     namespace App\Salary;
 
     use App\Entity\Employee;
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
 
     class SalaryCalculator
     {
-        private $objectManager;
-
-        public function __construct(ObjectManager $objectManager)
-        {
-            $this->objectManager = $objectManager;
+        public function __construct(
+            private EntityManager $entityManager,
+        ) {
         }
 
-        public function calculateTotalSalary($id)
+        public function calculateTotalSalary(int $id): int
         {
-            $employeeRepository = $this->objectManager
+            $employeeRepository = $this->entityManager
                 ->getRepository(Employee::class);
             $employee = $employeeRepository->find($id);
 
@@ -49,37 +47,33 @@ constructor, you can pass a mock object within a test::
 
     use App\Entity\Employee;
     use App\Salary\SalaryCalculator;
-    use Doctrine\Persistence\ObjectManager;
-    use Doctrine\Persistence\ObjectRepository;
+    use Doctrine\ORM\EntityManager;
+    use Doctrine\ORM\EntityRepository;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase
     {
-        public function testCalculateTotalSalary()
+        public function testCalculateTotalSalary(): void
         {
             $employee = new Employee();
             $employee->setSalary(1000);
             $employee->setBonus(1100);
 
             // Now, mock the repository so it returns the mock of the employee
-            $employeeRepository = $this->createMock(ObjectRepository::class);
-            // use getMock() on PHPUnit 5.3 or below
-            // $employeeRepository = $this->getMock(ObjectRepository::class);
+            $employeeRepository = $this->createMock(EntityRepository::class);
             $employeeRepository->expects($this->any())
                 ->method('find')
                 ->willReturn($employee);
 
             // Last, mock the EntityManager to return the mock of the repository
             // (this is not needed if the class being tested injects the
-            // repository it uses instead of the entire object manager)
-            $objectManager = $this->createMock(ObjectManager::class);
-            // use getMock() on PHPUnit 5.3 or below
-            // $objectManager = $this->getMock(ObjectManager::class);
-            $objectManager->expects($this->any())
+            // repository it uses instead of the entire entity manager)
+            $entityManager = $this->createMock(EntityManager::class);
+            $entityManager->expects($this->any())
                 ->method('getRepository')
                 ->willReturn($employeeRepository);
 
-            $salaryCalculator = new SalaryCalculator($objectManager);
+            $salaryCalculator = new SalaryCalculator($entityManager);
             $this->assertEquals(2100, $salaryCalculator->calculateTotalSalary(1));
         }
     }
@@ -89,7 +83,7 @@ the employee which gets returned by the ``Repository``, which itself gets
 returned by the ``EntityManager``. This way, no real class is involved in
 testing.
 
-Functional Testing of A Doctrine Repository
+Functional Testing of a Doctrine Repository
 -------------------------------------------
 
 In :ref:`functional tests <functional-tests>` you'll make queries to the
@@ -100,14 +94,12 @@ so, get the entity manager via the service container as follows::
     namespace App\Tests\Repository;
 
     use App\Entity\Product;
+    use Doctrine\ORM\EntityManager;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
     class ProductRepositoryTest extends KernelTestCase
     {
-        /**
-         * @var \Doctrine\ORM\EntityManager
-         */
-        private $entityManager;
+        private ?EntityManager $entityManager;
 
         protected function setUp(): void
         {
@@ -118,7 +110,7 @@ so, get the entity manager via the service container as follows::
                 ->getManager();
         }
 
-        public function testSearchByName()
+        public function testSearchByName(): void
         {
             $product = $this->entityManager
                 ->getRepository(Product::class)

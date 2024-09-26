@@ -1,5 +1,5 @@
-FAQ and Common Issues
-=====================
+WebpackEncore: FAQ and Common Issues
+====================================
 
 .. _how-do-i-deploy-my-encore-assets:
 
@@ -53,7 +53,7 @@ and the built files. Your ``.gitignore`` file should include:
     # whatever path you're passing to Encore.setOutputPath()
     /public/build
 
-You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock`` or ``package-lock.json``.
+You *should* commit all of your source asset files, ``package.json`` and ``package-lock.json``.
 
 My App Lives under a Subdirectory
 ---------------------------------
@@ -105,8 +105,8 @@ file script tag is rendered automatically.
 This dependency was not found: some-module in ./path/to/file.js
 ---------------------------------------------------------------
 
-Usually, after you install a package via yarn or npm, you can require / import
-it to use it. For example, after running ``yarn add respond.js`` or ``npm install respond.js``,
+Usually, after you install a package via npm, you can require / import
+it to use it. For example, after running ``npm install respond.js``,
 you try to require that module:
 
 .. code-block:: javascript
@@ -137,8 +137,6 @@ For performance, Encore does not process libraries inside ``node_modules/`` thro
 Babel. But, you can change that via the ``configureBabel()`` method. See
 :doc:`/frontend/encore/babel` for details.
 
-.. _`rsync`: https://rsync.samba.org/
-
 How Do I Integrate my Encore Configuration with my IDE?
 -------------------------------------------------------
 
@@ -153,7 +151,7 @@ productive (for example by resolving aliases). However, you may face this error:
     calling Encore directly.
 
 It fails because the Encore Runtime Environment is only configured when you are
-running it (e.g. when executing ``yarn encore dev``). Fix this issue calling to
+running it (e.g. when executing ``npx encore dev``). Fix this issue calling to
 ``Encore.isRuntimeEnvironmentConfigured()`` and
 ``Encore.configureRuntimeEnvironment()`` methods:
 
@@ -167,8 +165,6 @@ running it (e.g. when executing ``yarn encore dev``). Fix this issue calling to
     }
 
     // ... the rest of the Encore configuration
-
-.. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html
 
 My Tests are Failing Because of ``entrypoints.json`` File
 ---------------------------------------------------------
@@ -194,3 +190,6 @@ functions to trigger exceptions when there's no ``entrypoints.json`` file):
     webpack_encore:
         strict_mode: false
         # ...
+
+.. _`rsync`: https://rsync.samba.org/
+.. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html

@@ -18,22 +18,6 @@ of the day when the event starts:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Event.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Event
-        {
-            /**
-             * @Assert\Time
-             * @var string A "H:i:s" formatted value
-             */
-            protected $startsAt;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Event.php
@@ -47,7 +31,7 @@ of the day when the event starts:
              * @var string A "H:i:s" formatted value
              */
             #[Assert\Time]
-            protected $startsAt;
+            protected string $startsAt;
         }
 
     .. code-block:: yaml
@@ -86,9 +70,9 @@ of the day when the event starts:
            /**
             * @var string A "H:i:s" formatted value
             */
-            protected $startsAt;
+            protected string $startsAt;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startsAt', new Assert\Time());
             }
@@ -117,8 +101,18 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
+``withSeconds``
+~~~~~~~~~~~~~~~
 
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
+**type**: ``boolean`` **default**: ``true``
+
+This option allows you to specify whether the time should include seconds.
+
+=========  ===============================  ==============  ================
+Option     Pattern                          Correct value   Incorrect value
+=========  ===============================  ==============  ================
+``true``   ``/^(\d{2}):(\d{2}):(\d{2})$/``  ``12:00:00``    ``12:00``
+``false``  ``/^(\d{2}):(\d{2})$/``          ``12:00``       ``12:00:00``
+=========  ===============================  ==============  ================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

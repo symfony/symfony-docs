@@ -33,12 +33,12 @@ of a collection individually. Take the following example::
 
     class Author
     {
-        protected $profileData = [
+        protected array $profileData = [
             'personal_email' => '...',
             'short_bio' => '...',
         ];
 
-        public function setProfileData($key, $value)
+        public function setProfileData($key, $value): void
         {
             $this->profileData[$key] = $value;
         }
@@ -51,36 +51,6 @@ following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Collection(
-             *     fields = {
-             *         "personal_email" = @Assert\Email,
-             *         "short_bio" = {
-             *             @Assert\NotBlank,
-             *             @Assert\Length(
-             *                 max = 100,
-             *                 maxMessage = "Your short bio is too long!"
-             *             )
-             *         }
-             *     },
-             *     allowMissingFields = true
-             * )
-             */
-            protected $profileData = [
-                'personal_email' => '...',
-                'short_bio' => '...',
-            ];
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -88,7 +58,6 @@ following:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Author
         {
             #[Assert\Collection(
@@ -104,7 +73,7 @@ following:
                 ],
                 allowMissingFields: true,
             )]
-            protected $profileData = [
+            protected array $profileData = [
                 'personal_email' => '...',
                 'short_bio' => '...',
             ];
@@ -166,7 +135,9 @@ following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection([
                     'fields' => [
@@ -183,11 +154,6 @@ following:
                 ]));
             }
         }
-
-.. versionadded:: 5.4
-
-    The ``#[Collection]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
 
 Presence and Absence of Fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,26 +185,6 @@ you can do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Collection(
-             *     fields={
-             *         "personal_email"  = @Assert\Required({@Assert\NotBlank, @Assert\Email}),
-             *         "alternate_email" = @Assert\Optional(@Assert\Email)
-             *     }
-             * )
-             */
-            protected $profileData = ['personal_email' => 'email@example.com'];
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -259,7 +205,7 @@ you can do the following:
                     ),
                 ],
             )]
-            protected $profileData = ['personal_email' => 'email@example.com'];
+            protected array $profileData = ['personal_email' => 'email@example.com'];
         }
 
     .. code-block:: yaml
@@ -317,9 +263,9 @@ you can do the following:
 
         class Author
         {
-            protected $profileData = ['personal_email'];
+            // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('profileData', new Assert\Collection([
                     'fields' => [
