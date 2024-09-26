@@ -1103,7 +1103,6 @@ Learn more
 
     doctrine/associations
     doctrine/events
-    doctrine/registration_form
     doctrine/custom_dql_functions
     doctrine/dbal
     doctrine/multiple_entity_managers
