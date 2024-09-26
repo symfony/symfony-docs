@@ -15,6 +15,12 @@ Twig: a flexible, fast, and secure template engine.
 Twig Templating Language
 ------------------------
 
+To intsall Twig, run:
+
+.. code-block:: bash
+
+    composer require symfony/twig-bundle
+
 The `Twig`_ templating language allows you to write concise, readable templates
 that are more friendly to web designers and, in several ways, more powerful than
 PHP templates. Take a look at the following Twig template example. Even if it's
