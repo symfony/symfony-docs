@@ -23,7 +23,7 @@ configuration.
 .. _`reference-dbal-configuration`:
 
 Doctrine DBAL Configuration
----------------------------
+----------------------------
 
 DoctrineBundle supports all parameters that default Doctrine drivers
 accept, converted to the XML or YAML naming standards that Symfony
