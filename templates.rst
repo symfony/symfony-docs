@@ -6,6 +6,16 @@ whether you need to render HTML from a :doc:`controller </controller>` or genera
 the :doc:`contents of an email </mailer>`. Templates in Symfony are created with
 Twig: a flexible, fast, and secure template engine.
 
+Installation
+------------
+
+In applications using :ref:`Symfony Flex <symfony-flex>`, run the following command
+to install both Twig language support and its integration with Symfony applications:
+
+.. code-block:: terminal
+
+    $ composer require symfony/twig-bundle
+
 .. _twig-language:
 
 Twig Templating Language
