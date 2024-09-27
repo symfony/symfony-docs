@@ -964,7 +964,6 @@ Advanced Features:
 
     /controller/upload_file
     /security/csrf
-    /form/form_dependencies
     /form/create_custom_field_type
     /form/data_transformers
     /form/data_mappers
