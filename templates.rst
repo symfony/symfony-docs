@@ -15,7 +15,7 @@ Twig: a flexible, fast, and secure template engine.
 Twig Templating Language
 ------------------------
 
-To intsall Twig, run:
+To install Twig, run:
 
 .. code-block:: bash
 
