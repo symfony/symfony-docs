@@ -17,7 +17,7 @@ Twig Templating Language
 
 To install Twig, run:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     composer require symfony/twig-bundle
 
