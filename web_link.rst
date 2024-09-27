@@ -19,6 +19,16 @@ servers (Apache, nginx, Caddy, etc.) support this, but you can also use the
 `Docker installer and runtime for Symfony`_ created by Kévin Dunglas, from the
 Symfony community.
 
+Installation
+------------
+
+In applications using :ref:`Symfony Flex <symfony-flex>`, run the following command
+to install the WebLink feature before using it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/web-link
+
 Preloading Assets
 -----------------
 
