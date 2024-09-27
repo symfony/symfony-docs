@@ -84,14 +84,14 @@ affect how Doctrine functions.
     There are many other Doctrine commands. Run ``php bin/console list doctrine``
     to see a full list.
 
+.. _doctrine-adding-mapping:
+
 Creating an Entity Class
 ------------------------
 
 Suppose you're building an application where products need to be displayed.
 Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products.
-
-.. _doctrine-adding-mapping:
 
 You can use the ``make:entity`` command to create this class and any fields you
 need. The command will ask you some questions - answer them like done below:
@@ -1107,7 +1107,6 @@ Learn more
     doctrine/dbal
     doctrine/multiple_entity_managers
     doctrine/resolve_target_entity
-    doctrine/reverse_engineering
     testing/database
 
 .. _`Doctrine`: https://www.doctrine-project.org/
