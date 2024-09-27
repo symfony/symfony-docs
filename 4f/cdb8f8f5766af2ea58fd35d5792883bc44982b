@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2024-09-23T09:27:47Z
+
+You're fast Javier. thank you!
+
+I was thinking we might also want to document `$output->isSilent()` somewhere. E.g. I can think of a pattern where you write some information to a logger when a command is run in silent mode (if the command is ran both manually and programmatically). If we do it, it's good to mention that errors will always be logged to the logger by the Symfony framework integration.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-09-23T10:49:49Z
+
+Wouter, you are right! I added some more content. Let me know if it's OK. Thanks.
