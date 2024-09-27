@@ -10,16 +10,20 @@ Twig: a flexible, fast, and secure template engine.
 
     Starting from Symfony 5.0, PHP templates are no longer supported.
 
+Installation
+------------
+
+In applications using :ref:`Symfony Flex <symfony-flex>`, run the following command
+to install both Twig language support and its integration with Symfony applications:
+
+.. code-block:: terminal
+
+    $ composer require symfony/twig-bundle
+
 .. _twig-language:
 
 Twig Templating Language
 ------------------------
-
-To intsall Twig, run:
-
-.. code-block:: bash
-
-    composer require symfony/twig-bundle
 
 The `Twig`_ templating language allows you to write concise, readable templates
 that are more friendly to web designers and, in several ways, more powerful than
