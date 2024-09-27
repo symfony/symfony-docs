@@ -446,11 +446,16 @@ The Console component adds some predefined options to all commands:
 
 * ``--verbose``: sets the verbosity level (e.g. ``1`` the default, ``2`` and
   ``3``, or you can use respective shortcuts ``-v``, ``-vv`` and ``-vvv``)
-* ``--quiet``: disables output and interaction
+* ``--silent``: disables all output and interaction, including errors
+* ``--quiet``: disables output and interaction, but errors are still displayed
 * ``--no-interaction``: disables interaction
 * ``--version``: outputs the version number of the console application
 * ``--help``: displays the command help
 * ``--ansi|--no-ansi``: whether to force of disable coloring the output
+
+.. versionadded:: 7.2
+
+    The ``--silent`` option was introduced in Symfony 7.2.
 
 When using the ``FrameworkBundle``, two more options are predefined:
 
