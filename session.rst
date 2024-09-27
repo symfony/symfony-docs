@@ -184,7 +184,7 @@ read any flash messages from the session using the ``flashes()`` method provided
 by the :ref:`Twig global app variable <twig-app-variable>`.
 Alternatively, you can use the
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
-method instead to retrieve the message while keeping it in the bag.
+method to retrieve the message while keeping it in the bag:
 
 .. configuration-block::
 
@@ -267,7 +267,6 @@ method instead to retrieve the message while keeping it in the bag.
 It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
 different types of flash messages, but you can use any key that fits your
 needs.
-
 
 Configuration
 -------------
