@@ -28,6 +28,7 @@ MailerSend     ``mailer.webhook.request_parser.mailersend``
 Mailgun        ``mailer.webhook.request_parser.mailgun``
 Mailjet        ``mailer.webhook.request_parser.mailjet``
 Mailomat       ``mailer.webhook.request_parser.mailomat``
+Mailtrap       ``mailer.webhook.request_parser.mailtrap``
 Postmark       ``mailer.webhook.request_parser.postmark``
 Resend         ``mailer.webhook.request_parser.resend``
 Sendgrid       ``mailer.webhook.request_parser.sendgrid``
@@ -40,7 +41,8 @@ Sweego         ``mailer.webhook.request_parser.sweego``
 
 .. versionadded:: 7.2
 
-    The ``Mailomat`` and ``Sweego`` integrations were introduced in Symfony 7.2.
+    The ``Mailomat``, ``Mailtrap``, and ``Sweego`` integrations were introduced in
+    Symfony 7.2.
 
 .. note::
 
