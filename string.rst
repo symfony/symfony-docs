@@ -232,6 +232,8 @@ Methods to Change Case
     u('Foo: Bar-baz.')->camel(); // 'fooBarBaz'
     // changes all graphemes/code points to snake_case
     u('Foo: Bar-baz.')->snake(); // 'foo_bar_baz'
+    // changes all graphemes/code points to kebab-case
+    u('Foo: Bar-baz.')->kebab(); // 'foo-bar-baz'
     // other cases can be achieved by chaining methods. E.g. PascalCase:
     u('Foo: Bar-baz.')->camel()->title(); // 'FooBarBaz'
 
@@ -239,6 +241,10 @@ Methods to Change Case
 
     The ``localeLower()``, ``localeUpper()`` and ``localeTitle()`` methods were
     introduced in Symfony 7.1.
+
+.. versionadded:: 7.2
+
+    The ``kebab()`` method was introduced in Symfony 7.2.
 
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
