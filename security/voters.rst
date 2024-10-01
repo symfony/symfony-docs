@@ -51,7 +51,7 @@ which makes creating a voter even easier::
 
 The Cacheable Voter Interface
 -----------------------------
-When Symfony calls the isGranted() method during runtime, it checks each voter
+When Symfony calls the ``isGranted()`` method during runtime, it checks each voter
 until it meets the access decision strategy set by the configuration.
 While this generally works well, it can slow down performance in some cases.
 
@@ -59,8 +59,8 @@ Imagine a backend displaying 20 items, each with 6 properties and 3 actions
 (like edit, show, delete). Checking permissions for all these requires 180 calls
 to each voter. With 5 voters, that's 900 calls.
 
-Usually, voters only need to focus on a specific permission (e.g., EDIT_BLOG_POST)
-or object type (e.g., User). This focus makes voters cacheable, so Symfony 5.4 introduces a
+Usually, voters only need to focus on a specific permission (e.g., ``EDIT_BLOG_POST``)
+or object type (e.g., ``User``). This focus makes voters cacheable, so Symfony 5.4 introduces a
 :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`
 
     namespace Symfony\Component\Security\Core\Authorization\Voter;
@@ -69,7 +69,7 @@ or object type (e.g., User). This focus makes voters cacheable, so Symfony 5.4 i
     {
         public function supportsAttribute(string $attribute): bool;
     
-        // $subjectType is the value returned by `get_class($subject)` or `get_debug_type($subject)`
+        // $subjectType is the value returned by get_class($subject) or get_debug_type($subject)
         public function supportsType(string $subjectType): bool;
     }
 
@@ -77,10 +77,10 @@ If your voter returns false for these methods, it will cache this result,
 and your voter won't be called again for that attribute or type.
 
 If you extend from the abstract Voter class, you don't need to implement
-the interface directly—just override supportsAttribute() and/or supportsType().
+the interface directly - just override ``supportsAttribute()`` and/or ``supportsType()``.
 
 For instance, if your voter handles multiple object types but all permissions
-are prefixed with `APPROVE_`, do this:
+are prefixed with ``APPROVE_``, do this:
 
     namespace App\Security;
     
