@@ -110,7 +110,7 @@ Service               Install with                                    Webhook su
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mailtrap`_           ``composer require symfony/mailtrap-mailer``    yes
-`Mandrill`_           ``composer require symfony/mailchimp-mailer``
+`Mandrill`_           ``composer require symfony/mailchimp-mailer``   yes
 `Postal`_             ``composer require symfony/postal-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``    yes
 `Resend`_             ``composer require symfony/resend-mailer``      yes
