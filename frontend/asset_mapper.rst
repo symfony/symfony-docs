@@ -137,6 +137,28 @@ This will show you all the mapped paths and the assets inside of each:
 The "Logical Path" is the path to use when referencing the asset, like
 from a template.
 
+The ``debug:asset-map`` command provides several options to filter results:
+
+.. code-block:: terminal
+
+    # provide an asset name or dir to only show results that match it
+    $ php bin/console debug:asset-map bootstrap.js
+    $ php bin/console debug:asset-map style/
+
+    # provide an extension to only show that file type
+    $ php bin/console debug:asset-map --ext=css
+
+    # you can also only show assets in vendor/ dir or exclude any results from it
+    $ php bin/console debug:asset-map --vendor
+    $ php bin/console debug:asset-map --no-vendor
+
+    # you can also combine all filters (e.g. find bold web fonts in your own asset dirs)
+    $ php bin/console debug:asset-map bold --no-vendor --ext=woff2
+
+.. versionadded:: 7.2
+
+    The options to filter ``debug:asset-map`` results were introduced in Symfony 7.2.
+
 .. _importmaps-javascript:
 
 Importmaps & Writing JavaScript
