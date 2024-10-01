@@ -116,22 +116,6 @@ If your voter handles various permissions for a specific type, do this:
         // ...
     }
 
-You can also combine the logic and avoid code repetition by implementing the `supports()` function like this:
-
-    namespace App\Security;
-    
-    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-    
-    class MyVoter extends Voter
-    {
-        public function supports(string $attribute, mixed $subject): bool
-        {
-            $this->supportsAttribute($attribute) && $this->supportsType(get_debug_type($subject));
-        }
-    
-        // ...
-    }
-
 .. _how-to-use-the-voter-in-a-controller:
 
 Setup: Checking for Access in a Controller
