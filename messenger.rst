@@ -1173,6 +1173,8 @@ to retry them:
     $ php bin/console messenger:failed:show 20 -vv
 
     # view and retry messages one-by-one
+    # for each message the command asks whether the message should be retried,
+    # skipped or deleted
     $ php bin/console messenger:failed:retry -vv
 
     # retry specific messages
@@ -1190,6 +1192,11 @@ to retry them:
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
+
+.. versionadded:: 7.2
+
+    The possibility to skip a message in the `messenger:failed:retry`
+    command was introduced in Symfony 7.2
 
 Multiple Failed Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
