@@ -759,6 +759,10 @@ You can pass any
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
 stores in the session of the test client.
 
+To set a specific firewall (``main`` is set by default)::
+
+    $client->loginUser($testUser, 'my_firewall');
+
 .. note::
 
     By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
