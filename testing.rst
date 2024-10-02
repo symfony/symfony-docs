@@ -717,6 +717,10 @@ stores in the session of the test client. If you need to define custom
 attributes in this token, you can use the ``tokenAttributes`` argument of the
 :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method.
 
+To set a specific firewall (``main`` is set by default)::
+
+    $client->loginUser($testUser, 'my_firewall');
+
 .. note::
 
     By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
