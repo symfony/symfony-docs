@@ -1436,7 +1436,7 @@ You also have a service that defines many methods and one of them is the same
     // src/Service/MessageUtils.php
     namespace App\Service;
 
-    class MessageUtils
+    class MessageUtils implements MessageFormatterInterface
     {
         // other methods...
 
