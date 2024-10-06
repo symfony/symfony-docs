@@ -95,6 +95,26 @@ The progress indicator will now look like this:
      ⠹ Processing...
      ⢸ Processing...
 
+Custom Finished Indicator
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Once the progress indicator is finished, it keeps by default the latest indicator value. You can replace it with a your own::
+
+    $progressIndicator->finish('Finished', '✅');
+
+Then the progress indicator will render like this:
+
+.. code-block:: text
+
+     ⠏ Processing...
+     ⠛ Processing...
+     ✅ Finished
+
+.. versionadded:: 7.2
+
+    The ``finishedIndicator`` parameter for method ``finish()`` was introduced in Symfony 7.2.
+
+
 Customize Placeholders
 ~~~~~~~~~~~~~~~~~~~~~~
 
