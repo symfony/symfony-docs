@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by mtarld at 2024-09-30T07:01:49Z
+
+IMO yes, you should delete that note block.
+And I think you should update the `OrgPrefixNameConverter` example as well
+
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2024-10-01T19:11:57Z
+
+I've also deleted the `deprecated` block that I'd added because `AdvancedNameConverterInterface` no longer refers to it in the documentation, so I don't think it's relevant to leave it.
+
+Why do I need to update the example `OrgPrefixNameConverter`? `AdvancedNameConverterInterface` does not refer in this example
+
+I may have not understood the changes that could occur with your PR, could you explain?
+
+---------------------------------------------------------------------------
+
+by mtarld at 2024-10-02T07:19:39Z
+
+It is because the `NameConverterInterface` signature has changed as well and triggers deprecations if not updated:
+```php
+    public function normalize(string $propertyName/* , ?string $class = null, ?string $format = null, array $context = [] */): string;
+```
+
+It now must be used as the `AdvancedNameConverterInterface` was (same for the denormalization)
+
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2024-10-02T18:10:16Z
+
+Thank you for taking the time to explain
+
+I've updated the `OrgPrefixNameConverter` example. do you approve?
