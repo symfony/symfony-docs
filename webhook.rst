@@ -24,6 +24,7 @@ Currently, the following third-party mailer providers support webhooks:
 Mailer Service Parser service name
 ============== ============================================
 Brevo          ``mailer.webhook.request_parser.brevo``
+Mandrill       ``mailer.webhook.request_parser.mailchimp``
 MailerSend     ``mailer.webhook.request_parser.mailersend``
 Mailgun        ``mailer.webhook.request_parser.mailgun``
 Mailjet        ``mailer.webhook.request_parser.mailjet``
@@ -41,7 +42,7 @@ Sweego         ``mailer.webhook.request_parser.sweego``
 
 .. versionadded:: 7.2
 
-    The ``Mailomat``, ``Mailtrap``, and ``Sweego`` integrations were introduced in
+    The ``Mandrill``,  ``Mailomat``, ``Mailtrap``, and ``Sweego`` integrations were introduced in
     Symfony 7.2.
 
 .. note::
