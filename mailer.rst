@@ -542,6 +542,10 @@ both strings or address objects::
         // email address as a simple string
         ->from('fabien@example.com')
 
+        // non-ASCII characters are supported both in the local part and the domain;
+        // if the SMTP server doesn't support this feature, you'll see an exception
+        ->from('jânë.dœ@ëxãmplę.com')
+
         // email address as an object
         ->from(new Address('fabien@example.com'))
 
@@ -555,6 +559,11 @@ both strings or address objects::
 
         // ...
     ;
+
+.. versionadded:: 7.2
+
+    Support for non-ASCII email addresses (e.g. ``jânë.dœ@ëxãmplę.com``)
+    was introduced in Symfony 7.2.
 
 .. tip::
 
