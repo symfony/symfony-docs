@@ -549,12 +549,12 @@ A custom name converter can handle such cases::
 
     class OrgPrefixNameConverter implements NameConverterInterface
     {
-        public function normalize(string $propertyName): string
+        public function normalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
         {
             return 'org_'.$propertyName;
         }
 
-        public function denormalize(string $propertyName): string
+        public function denormalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
         {
             // removes 'org_' prefix
             return str_starts_with($propertyName, 'org_') ? substr($propertyName, 4) : $propertyName;
@@ -583,12 +583,6 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
     // {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
     $companyCopy = $serializer->deserialize($json, Company::class, 'json');
     // Same data as $company
-
-.. note::
-
-    You can also implement
-    :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
-    to access the current class name, format and context.
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
