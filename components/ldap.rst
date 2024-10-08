@@ -74,6 +74,19 @@ distinguished name (DN) and the password of a user::
 
     When the LDAP server allows unauthenticated binds, a blank password will always be valid.
 
+You can also use the :method:`Symfony\\Component\\Ldap\\Ldap::saslBind` method
+for binding to an LDAP server using `SASL`_::
+
+    // this method defines other optional arguments like $mech, $realm, $authcId, etc.
+    $ldap->saslBind($dn, $password);
+
+After binding to the LDAP server, you can use the :method:`Symfony\\Component\\Ldap\\Ldap::whoami`
+method to get the distinguished name (DN) of the authenticated and authorized user.
+
+.. versionadded:: 7.2
+
+    The ``saslBind()`` and ``whoami()`` methods were introduced in Symfony 7.2.
+
 Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
 :method:`Symfony\\Component\\Ldap\\Ldap::query` method::
@@ -183,3 +196,5 @@ Possible operation types are ``LDAP_MODIFY_BATCH_ADD``, ``LDAP_MODIFY_BATCH_REMO
 ``LDAP_MODIFY_BATCH_REMOVE_ALL``, ``LDAP_MODIFY_BATCH_REPLACE``. Parameter
 ``$values`` must be ``NULL`` when using ``LDAP_MODIFY_BATCH_REMOVE_ALL``
 operation type.
+
+.. _`SASL`: https://en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer
