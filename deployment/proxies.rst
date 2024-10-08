@@ -22,7 +22,11 @@ Solution: ``setTrustedProxies()``
 ---------------------------------
 
 To fix this, you need to tell Symfony which reverse proxy IP addresses to trust
-and what headers your reverse proxy uses to send information:
+and what headers your reverse proxy uses to send information.
+
+You can do that by setting the ``SYMFONY_TRUSTED_PROXIES`` and ``SYMFONY_TRUSTED_HEADERS``
+environment variables on your machine. Alternatively, you can configure them
+using the following configuration options:
 
 .. configuration-block::
 
@@ -92,6 +96,11 @@ and what headers your reverse proxy uses to send information:
 
     ``private_ranges`` as a shortcut for private IP address ranges for the
     ``trusted_proxies`` option was introduced in Symfony 7.1.
+
+.. versionadded:: 7.2
+
+    Support for the ``SYMFONY_TRUSTED_PROXIES`` and ``SYMFONY_TRUSTED_HEADERS``
+    environment variables was introduced in Symfony 7.2.
 
 .. caution::
 

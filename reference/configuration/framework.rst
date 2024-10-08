@@ -198,7 +198,12 @@ named ``kernel.http_method_override``.
 trust_x_sendfile_type_header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%env(bool:default::SYMFONY_TRUST_X_SENDFILE_TYPE_HEADER)%``
+
+.. versionadded:: 7.2
+
+    In Symfony 7.2, the default value of this option was changed from ``false`` to the
+    value stored in the ``SYMFONY_TRUST_X_SENDFILE_TYPE_HEADER`` environment variable.
 
 ``X-Sendfile`` is a special HTTP header that tells web servers to replace the
 response contents by the file that is defined in that header. This improves
@@ -450,7 +455,12 @@ in debug mode.
 trusted_hosts
 ~~~~~~~~~~~~~
 
-**type**: ``array`` | ``string`` **default**: ``[]``
+**type**: ``array`` | ``string`` **default**: ``['%env(default::SYMFONY_TRUSTED_HOSTS)%']``
+
+.. versionadded:: 7.2
+
+    In Symfony 7.2, the default value of this option was changed from ``[]`` to the
+    value stored in the ``SYMFONY_TRUSTED_HOSTS`` environment variable.
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
