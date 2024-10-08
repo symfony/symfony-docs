@@ -258,6 +258,14 @@ Make public or protected                                                  Yes
 Remove private property                                                   Yes
 **Constructors**
 Add constructor without mandatory arguments                               Yes             :ref:`[1] <note-1>`
+:ref:`Add argument without a default value <add-argument-public-method>`  No
+Add argument with a default value                                         Yes             :ref:`[11] <note-11>`
+Remove argument                                                           No              :ref:`[3] <note-3>`
+Add default value to an argument                                          Yes
+Remove default value of an argument                                       No
+Add type hint to an argument                                              No
+Remove type hint of an argument                                           Yes
+Change argument type                                                      No
 Remove constructor                                                        No
 Reduce visibility of a public constructor                                 No
 Reduce visibility of a protected constructor                              No              :ref:`[7] <note-7>`
@@ -472,6 +480,10 @@ a return type is only possible with a child type.
 **[10]** Parameter names are only covered by the compatibility promise for
 constructors of Attribute classes. Using PHP named arguments might break your
 code when upgrading to newer Symfony versions.
+
+.. _note-11:
+
+**[11]** Only optional argument(s) of a constructor at last position may be added.
 
 Making Code Changes in a Backward Compatible Way
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
