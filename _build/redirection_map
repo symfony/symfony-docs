@@ -570,3 +570,5 @@
 /components/string /string
 /testing/http_authentication /testing#testing_logging_in_users
 /doctrine/registration_form /security#security-make-registration-form
+/form/form_dependencies /form/create_custom_field_type
+/doctrine/reverse_engineering /doctrine#doctrine-adding-mapping
