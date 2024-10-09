@@ -473,7 +473,9 @@ the path of the bundle.
 SSL Connection with MySQL
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to configure a secure SSL connection to MySQL in your Symfony application using Doctrine, you need to set specific options for the SSL certificates. Here's how to configure the connection using environment variables for the certificate paths:
+To securely configure an SSL connection to MySQL in your Symfony application
+with Doctrine, you need to specify the SSL certificate options. Here's how to
+set up the connection using environment variables for the certificate paths:
 
 .. configuration-block::
 
@@ -516,7 +518,27 @@ If you want to configure a secure SSL connection to MySQL in your Symfony applic
             </doctrine:config>
         </container>
 
-Make sure that your environment variables are correctly set in your ``.env.local`` or ``.env.local.php`` file as follows:
+    .. code-block:: php
+
+        // config/packages/doctrine.php
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine): void {
+            $doctrine->dbal()
+                ->connection('default')
+                ->url(env('DATABASE_URL')->resolve())
+                ->serverVersion('8.0.31')
+                ->driver('pdo_mysql');
+
+            $doctrine->dbal()->defaultConnection('default');
+
+            $doctrine->dbal()->option(\PDO::MYSQL_ATTR_SSL_KEY, '%env(MYSQL_SSL_KEY)%');
+            $doctrine->dbal()->option(\PDO::MYSQL_SSL_CERT, '%env(MYSQL_ATTR_SSL_CERT)%');
+            $doctrine->dbal()->option(\PDO::MYSQL_SSL_CA, '%env(MYSQL_ATTR_SSL_CA)%');
+        };
+
+Ensure your environment variables are correctly set in the ``.env.local`` or
+``.env.local.php`` file as follows:
 
 .. code-block:: bash
 
