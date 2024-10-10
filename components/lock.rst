@@ -406,6 +406,14 @@ Store                                                       Scope   Blocking  Ex
     A special ``InMemoryStore`` is available for saving locks in memory during
     a process, and can be useful for testing.
 
+.. tip::
+
+    A special ``NullStore`` is available and persist nothing, it can be useful for testing.
+
+.. versionadded:: 7.2
+
+    The :class:`Symfony\\Component\\Lock\\Store\\NullStore` was introduced in Symfony 7.2.
+
 .. _lock-store-flock:
 
 FlockStore
