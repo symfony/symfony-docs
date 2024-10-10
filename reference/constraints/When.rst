@@ -163,7 +163,7 @@ validation of constraints won't be triggered.
 To learn more about the expression language syntax, see
 :doc:`/reference/formats/expression_language`.
 
-Depending on how you use the constraint, you have access to 1 or 2 variables
+Depending on how you use the constraint, you have access to 1 or 3 variables
 in your expression:
 
 ``this``
@@ -171,6 +171,8 @@ in your expression:
 ``value``
     The value of the property being validated (only available when
     the constraint is applied to a property).
+``context``
+    This is the context that is used in validation
 
 The ``value`` variable can be used when you want to execute more complex
 validation based on its value:
