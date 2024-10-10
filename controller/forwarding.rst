@@ -11,7 +11,7 @@ and calls the defined controller. The ``forward()`` method returns the
 :class:`Symfony\\Component\\HttpFoundation\\Response` object that is returned
 from *that* controller::
 
-    public function index($name): Response
+    public function index(string $name): Response
     {
         $response = $this->forward('App\Controller\OtherController::fancy', [
             'name'  => $name,
