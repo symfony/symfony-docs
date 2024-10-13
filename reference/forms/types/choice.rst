@@ -178,6 +178,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_loader.rst.inc
 
+.. include:: /reference/forms/types/options/choice_lazy.rst.inc
+
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_domain_enabled.rst.inc
