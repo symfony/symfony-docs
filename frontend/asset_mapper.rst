@@ -73,6 +73,8 @@ If you look at the HTML in your page, the URL will be something
 like: ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``. If you change
 the file, the version part of the URL will also change automatically.
 
+.. _asset-mapper-compile-assets:
+
 Serving Assets in dev vs prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
