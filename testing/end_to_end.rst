@@ -799,6 +799,55 @@ variable to ``false`` in your style file:
 
     $enable-smooth-scroll: false;
 
+Assets not loading (PHP built-in server only)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You may face cases where your assets are not loaded while running your tests.
+Because Panther use the `PHP built-in server`_ to serve your app, if your assets files
+(or any requested URI that not a ``.php`` file) does not exist in your public directory
+(e.g. rendered by your Symfony app), the built-in server will return a 404 not found.
+
+This can happen when using :doc:`AssetMapper component </frontend/asset_mapper>`
+if you let your Symfony app handle your assets in dev environment.
+
+To solve this, add a ``tests/router.php``::
+
+    // tests/router.php
+    if (is_file($_SERVER['DOCUMENT_ROOT'].\DIRECTORY_SEPARATOR.$_SERVER['SCRIPT_NAME'])) {
+        return false;
+    }
+
+    $script = 'index.php';
+
+    $_SERVER = array_merge($_SERVER, $_ENV);
+    $_SERVER['SCRIPT_FILENAME'] = $_SERVER['DOCUMENT_ROOT'].\DIRECTORY_SEPARATOR.$script;
+
+    $_SERVER['SCRIPT_NAME'] = \DIRECTORY_SEPARATOR.$script;
+    $_SERVER['PHP_SELF'] = \DIRECTORY_SEPARATOR.$script;
+
+    require $script;
+
+Then declare it as a router for Panther server in ``phpunit.xml.dist`` using ``PANTHER_WEB_SERVER_ROUTER`` var:
+
+.. code-block:: xml
+
+    <!-- phpunit.xml.dist -->
+    <phpunit>
+        <!-- ... -->
+        <php>
+            <!-- ... -->
+            <server name="PANTHER_WEB_SERVER_ROUTER" value="../tests/router.php"/>
+        </php>
+    </phpunit>
+
+Credit from `Testing Part 2 Functional Testing on Symfony cast`_ were you can see more about this case.
+
+.. note::
+
+    When using :doc:`AssetMapper component </frontend/asset_mapper>`, you can also compile your assets before running
+    your tests. It will make your tests faster because Symfony will not have to handle them, the built-in server
+    will serve them directly.
+
 Additional Documentation
 ------------------------
 
@@ -825,3 +874,5 @@ documentation:
 .. _`Gitlab CI`: https://docs.gitlab.com/ee/ci/
 .. _`AppVeyor`: https://www.appveyor.com/
 .. _`LiipFunctionalTestBundle`: https://github.com/liip/LiipFunctionalTestBundle
+.. _`PHP built-in server`: https://www.php.net/manual/en/features.commandline.webserver.php
+.. _`Testing Part 2 Functional Testing on Symfony cast`: https://symfonycasts.com/screencast/last-stack/testing
