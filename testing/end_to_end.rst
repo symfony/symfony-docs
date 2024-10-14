@@ -808,7 +808,7 @@ URI that's not a ``.php`` file) aren't in your public directory, the built-in
 server will return a 404 error. This often happens when letting the :doc:`AssetMapper component </frontend/asset_mapper>`
 handle your application assets in the ``dev`` environment.
 
-One solution when using AssetMapper is to ref:`compile assets <asset-mapper-compile-assets>`
+One solution when using AssetMapper is to :ref:`compile assets <asset-mapper-compile-assets>`
 before running your tests. This will also speed up your tests, as Symfony won't
 need to handle the assets, allowing the PHP built-in server to serve them directly.
 
