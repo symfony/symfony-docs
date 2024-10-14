@@ -34,6 +34,7 @@ String Constraints
 * :doc:`Charset </reference/constraints/Charset>`
 * :doc:`MacAddress </reference/constraints/MacAddress>`
 * :doc:`WordCount </reference/constraints/WordCount>`
+* :doc:`Yaml </reference/constraints/Yaml>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
