@@ -799,18 +799,20 @@ variable to ``false`` in your style file:
 
     $enable-smooth-scroll: false;
 
-Assets not loading (PHP built-in server only)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Assets not Loading when Using the PHP Built-In Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You may face cases where your assets are not loaded while running your tests.
-Because Panther use the `PHP built-in server`_ to serve your app, if your assets files
-(or any requested URI that not a ``.php`` file) does not exist in your public directory
-(e.g. rendered by your Symfony app), the built-in server will return a 404 not found.
+Sometimes, your assets might not load during tests. This happens because Panther
+uses the `PHP built-in server`_ to serve your app. If asset files (or any requested
+URI that's not a ``.php`` file) aren't in your public directory, the built-in
+server will return a 404 error. This often happens when letting the :doc:`AssetMapper component </frontend/asset_mapper>`
+handle your application assets in the ``dev`` environment.
 
-This can happen when using :doc:`AssetMapper component </frontend/asset_mapper>`
-if you let your Symfony app handle your assets in dev environment.
+One solution when using AssetMapper is to ref:`compile assets <asset-mapper-compile-assets>`
+before running your tests. This will also speed up your tests, as Symfony won't
+need to handle the assets, allowing the PHP built-in server to serve them directly.
 
-To solve this, add a ``tests/router.php``::
+Another option is to create a file called ``tests/router.php`` and add the following to it::
 
     // tests/router.php
     if (is_file($_SERVER['DOCUMENT_ROOT'].\DIRECTORY_SEPARATOR.$_SERVER['SCRIPT_NAME'])) {
@@ -827,7 +829,8 @@ To solve this, add a ``tests/router.php``::
 
     require $script;
 
-Then declare it as a router for Panther server in ``phpunit.xml.dist`` using ``PANTHER_WEB_SERVER_ROUTER`` var:
+Then declare it as a router for Panther server in ``phpunit.xml.dist`` using the
+``PANTHER_WEB_SERVER_ROUTER`` environment variable:
 
 .. code-block:: xml
 
@@ -836,17 +839,13 @@ Then declare it as a router for Panther server in ``phpunit.xml.dist`` using ``P
         <!-- ... -->
         <php>
             <!-- ... -->
-            <server name="PANTHER_WEB_SERVER_ROUTER" value="../tests/router.php"/>
+            <server name="PANTHER_WEB_SERVER_ROUTER" value="./tests/router.php"/>
         </php>
     </phpunit>
 
-Credit from `Testing Part 2 Functional Testing on Symfony cast`_ were you can see more about this case.
+.. seealso::
 
-.. note::
-
-    When using :doc:`AssetMapper component </frontend/asset_mapper>`, you can also compile your assets before running
-    your tests. It will make your tests faster because Symfony will not have to handle them, the built-in server
-    will serve them directly.
+    See the `Functional Testing tutorial`_ on SymfonyCasts.
 
 Additional Documentation
 ------------------------
@@ -875,4 +874,4 @@ documentation:
 .. _`AppVeyor`: https://www.appveyor.com/
 .. _`LiipFunctionalTestBundle`: https://github.com/liip/LiipFunctionalTestBundle
 .. _`PHP built-in server`: https://www.php.net/manual/en/features.commandline.webserver.php
-.. _`Testing Part 2 Functional Testing on Symfony cast`: https://symfonycasts.com/screencast/last-stack/testing
+.. _`Functional Testing tutorial`: https://symfonycasts.com/screencast/last-stack/testing
