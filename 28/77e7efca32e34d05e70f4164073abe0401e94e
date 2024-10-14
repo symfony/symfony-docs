@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by tarjei at 2024-09-09T12:38:37Z
+
+@phansys  thanks! Done :)
+
+---------------------------------------------------------------------------
+
+by phansys at 2024-09-09T14:08:28Z
+
+IIUC, the support for this option was actually added after [this fix](https://github.com/symfony/symfony/pull/54673/commits/6a1f08db12271d6f02a5fff7cae7fcb6e2ff2dd9), in version `6.4.7`.
+So, I guess this PR should target (at least) the branch 6.4.
+
+---------------------------------------------------------------------------
+
+by tarjei at 2024-09-09T14:10:55Z
+
+@phansys  should I change the suggested branch for the PR?
+
+---------------------------------------------------------------------------
+
+by phansys at 2024-09-09T14:24:56Z
+
+>@phansys should I change the suggested branch for the PR?
+
+I'd say yes, at least to branch 6.4. Maybe the core members could suggest a previous one.
+
+BTW, if the `ssl` option is intended to expose the [PHP SSL context](https://www.php.net/manual/en/context.ssl.php), I guess we should add a link to the documentation for these options, document the current ones and left a comment that they might change with the time.
+
+---------------------------------------------------------------------------
+
+by tarjei at 2024-09-10T07:40:00Z
+
+@phansys  I tried changing the base, but I'll wait untill @xabbuh  or @OskarStark  comment on the issue of correct branch.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-09-10T09:39:51Z
+
+6.4 looks correct to me
