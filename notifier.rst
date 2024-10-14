@@ -207,10 +207,6 @@ Service
                     **Webhook support**: No
 ==================  ====================================================================================================================================
 
-.. versionadded:: 7.2
-
-    The ``Primotexto`` integration was introduced in Symfony 7.2.
-
 .. tip::
 
     Use :doc:`Symfony configuration secrets </configuration/secrets>` to securely
@@ -229,7 +225,7 @@ Service
 
 .. versionadded:: 7.2
 
-    The ``Sipgate`` integration was introduced in Symfony 7.2.
+    The ``Primotexto`` and ``Sipgate`` integrations were introduced in Symfony 7.2.
 
 .. deprecated:: 7.1
 
