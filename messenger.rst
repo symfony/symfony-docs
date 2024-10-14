@@ -656,7 +656,7 @@ Limit Consuming to Specific Queues
 Some transports (notably AMQP) have the concept of exchanges and queues. A Symfony
 transport is always bound to an exchange. By default, the worker consumes from all
 queues attached to the exchange of the specified transport. However, there are use
-cases to want a worker to only consume from specific queues.
+cases to want a worker to only consume from specific queue(s).
 
 You can limit the worker to only process messages from specific queue(s):
 
@@ -1407,65 +1407,109 @@ the exchange, queues binding keys and more. See the documentation on
 
 The transport has a number of options:
 
-============================================  =================================================  ===================================
-     Option                                   Description                                        Default
-============================================  =================================================  ===================================
-``auto_setup``                                Whether the exchanges and queues should be         ``true``
-                                              created automatically during send / get.
-``cacert``                                    Path to the CA cert file in PEM format.
-``cert``                                      Path to the client certificate in PEM format.
-``channel_max``                               Specifies highest channel number that the server
-                                              permits. 0 means standard extension limit
-``confirm_timeout``                           Timeout in seconds for confirmation; if none
-                                              specified, transport will not wait for message
-                                              confirmation. Note: 0 or greater seconds. May be
-                                              fractional.
-``connect_timeout``                           Connection timeout. Note: 0 or greater seconds.
-                                              May be fractional.
-``frame_max``                                 The largest frame size that the server proposes
-                                              for the connection, including frame header and
-                                              end-byte. 0 means standard extension limit
-                                              (depends on librabbimq default frame size limit)
-``heartbeat``                                 The delay, in seconds, of the connection
-                                              heartbeat that the server wants. 0 means the
-                                              server does not want a heartbeat. Note,
-                                              librabbitmq has limited heartbeat support, which
-                                              means heartbeats checked only during blocking
-                                              calls.
-``host``                                      Hostname of the AMQP service
-``key``                                       Path to the client key in PEM format.
-``login``                                     Username to use to connect the AMQP service
-``password``                                  Password to use to connect to the AMQP service
-``persistent``                                                                                   ``'false'``
-``port``                                      Port of the AMQP service
-``read_timeout``                              Timeout in for income activity. Note: 0 or
-                                              greater seconds. May be fractional.
+``auto_setup`` (default: ``true``)
+    Whether the exchanges and queues should be created automatically during send / get.
+
+``cacert``
+    Path to the CA cert file in PEM format.
+
+``cert``
+    Path to the client certificate in PEM format.
+
+``channel_max``
+    Specifies highest channel number that the server permits. ``0`` means standard
+    extension limit
+
+``confirm_timeout``
+    Timeout in seconds for confirmation; if none specified, transport will not
+    wait for message confirmation. Note: ``0`` or greater seconds. May be fractional.
+
+``connect_timeout``
+    Connection timeout. Note: 0 or greater seconds. May be fractional.
+
+``frame_max``
+    The largest frame size that the server proposes for the connection, including
+    frame header and end-byte. ``0`` means standard extension limit (depends on
+    librabbimq default frame size limit)
+
+``heartbeat``
+    The delay, in seconds, of the connection heartbeat that the server wants.
+    ``0`` means the server does not want a heartbeat. Note, librabbitmq has limited
+    heartbeat support, which means heartbeats checked only during blocking calls.
+
+``host``
+    Hostname of the AMQP service
+
+``key``
+    Path to the client key in PEM format.
+
+``login``
+    Username to use to connect the AMQP service
+
+``password``
+    Password to use to connect to the AMQP service
+
+``persistent`` (default: ``'false'``)
+
+
+``port``
+    Port of the AMQP service
+
+``read_timeout``
+    Timeout in for income activity. Note: 0 or greater seconds. May be fractional.
+
 ``retry``
+    (no description available)
+
 ``sasl_method``
-``connection_name``                           For custom connection names (requires at least
-                                              version 1.10 of the PHP AMQP extension)
-``verify``                                    Enable or disable peer verification. If peer
-                                              verification is enabled then the common name in
-                                              the server certificate must match the server
-                                              name. Peer verification is enabled by default.
-``vhost``                                     Virtual Host to use with the AMQP service
-``write_timeout``                             Timeout in for outcome activity. Note: 0 or
-                                              greater seconds. May be fractional.
-``delay[queue_name_pattern]``                 Pattern to use to create the queues                ``delay_%exchange_name%_%routing_key%_%delay%``
-``delay[exchange_name]``                      Name of the exchange to be used for the            ``delays``
-                                              delayed/retried messages
-``queues[name][arguments]``                   Extra arguments
-``queues[name][binding_arguments]``           Arguments to be used while binding the queue.
-``queues[name][binding_keys]``                The binding keys (if any) to bind to this queue
-``queues[name][flags]``                       Queue flags                                        ``AMQP_DURABLE``
-``exchange[arguments]``                       Extra arguments for the exchange (e.g.
-                                              ``alternate-exchange``)
-``exchange[default_publish_routing_key]``     Routing key to use when publishing, if none is
-                                              specified on the message
-``exchange[flags]``                           Exchange flags                                     ``AMQP_DURABLE``
-``exchange[name]``                            Name of the exchange
-``exchange[type]``                            Type of exchange                                   ``fanout``
-============================================  =================================================  ===================================
+    (no description available)
+
+``connection_name``
+    For custom connection names (requires at least version 1.10 of the PHP AMQP extension)
+
+``verify``
+    Enable or disable peer verification. If peer verification is enabled then the
+    common name in the server certificate must match the server name. Peer verification
+    is enabled by default.
+
+``vhost``
+    Virtual Host to use with the AMQP service
+
+``write_timeout``
+    Timeout in for outcome activity. Note: ``0`` or greater seconds. May be fractional.
+
+``delay[queue_name_pattern]`` (default: ``delay_%exchange_name%_%routing_key%_%delay%``)
+    Pattern to use to create the queues
+
+``delay[exchange_name]`` (default: ``delays``)
+    Name of the exchange to be used for the delayed/retried messages
+
+``queues[name][arguments]``
+    Extra arguments
+
+``queues[name][binding_arguments]``
+    Arguments to be used while binding the queue.
+
+``queues[name][binding_keys]``
+    The binding keys (if any) to bind to this queue
+
+``queues[name][flags]`` (default: ``AMQP_DURABLE``)
+    Queue flags
+
+``exchange[arguments]``
+    Extra arguments for the exchange (e.g. ``alternate-exchange``)
+
+``exchange[default_publish_routing_key]``
+    Routing key to use when publishing, if none is specified on the message
+
+``exchange[flags]`` (default: ``AMQP_DURABLE``)
+    Exchange flags
+
+``exchange[name]``
+    Name of the exchange
+
+``exchange[type]`` (default: ``fanout``)
+    Type of exchange
 
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
@@ -1538,28 +1582,24 @@ Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 
 The transport has a number of options:
 
-==================  =====================================  ======================
-Option              Description                            Default
-==================  =====================================  ======================
-table_name          Name of the table                      messenger_messages
-queue_name          Name of the queue (a column in the     default
-                    table, to use one table for
-                    multiple transports)
-redeliver_timeout   Timeout before retrying a message      3600
-                    that's in the queue but in the
-                    "handling" state (if a worker stopped
-                    for some reason, this will occur,
-                    eventually you should retry the
-                    message) - in seconds.
-auto_setup          Whether the table should be created
-                    automatically during send / get.       true
-==================  =====================================  ======================
+``table_name`` (default: ``messenger_messages``)
+    Name of the table
 
-.. note::
+``queue_name`` (default: ``default``)
+    Name of the queue (a column in the table, to use one table for multiple transports)
 
-    Set ``redeliver_timeout`` to a greater value than your slowest message
-    duration. Otherwise, some messages will start a second time while the
-    first one is still being handled.
+``redeliver_timeout`` (default: ``3600``)
+    Timeout (in seconds) before retrying a message that's in the queue but in the
+    "handling" state (if a worker stopped for some reason, this will occur, eventually
+    you should retry the message).
+
+    .. note::
+
+        Set ``redeliver_timeout`` to a greater value than your slowest message duration.
+        Otherwise, some messages will start a second time while the first one is still being handled.
+
+``auto_setup`` (default: ``true``)
+    Whether the table should be created automatically during send / get.
 
 When using PostgreSQL, you have access to the following options to leverage
 the `LISTEN/NOTIFY`_ feature. This allow for a more performant approach
@@ -1567,17 +1607,14 @@ than the default polling behavior of the Doctrine transport because
 PostgreSQL will directly notify the workers when a new message is inserted
 in the table.
 
-=======================  ==========================================  ======================
-Option                   Description                                 Default
-=======================  ==========================================  ======================
-use_notify               Whether to use LISTEN/NOTIFY.               true
-check_delayed_interval   The interval to check for delayed           60000
-                         messages, in milliseconds.
-                         Set to 0 to disable checks.
-get_notify_timeout       The length of time to wait for a            0
-                         response when calling
-                         ``PDO::pgsqlGetNotify``, in milliseconds.
-=======================  ==========================================  ======================
+``use_notify`` (default: ``true``)
+    Whether to use LISTEN/NOTIFY.
+
+``check_delayed_interval`` (default: ``60000``)
+    The interval to check for delayed messages, in milliseconds. Set to ``0`` to disable checks.
+
+``get_notify_timeout`` (default: ``0``)
+    The length of time to wait for a response when calling ``PDO::pgsqlGetNotify``, in milliseconds.
 
 Beanstalkd Transport
 ~~~~~~~~~~~~~~~~~~~~
@@ -1601,20 +1638,15 @@ The Beanstalkd transport DSN may looks like this:
 
 The transport has a number of options:
 
-==================  ===================================  ======================
-     Option         Description                          Default
-==================  ===================================  ======================
-tube_name           Name of the queue                    default
-timeout             Message reservation timeout          0 (will cause the
-                    - in seconds.                        server to immediately
-                                                         return either a
-                                                         response or a
-                                                         TransportException
-                                                         will be thrown)
-ttr                 The message time to run before it
-                    is put back in the ready queue
-                    - in seconds.                        90
-==================  ===================================  ======================
+``tube_name`` (default: ``default``)
+    Name of the queue
+
+``timeout`` (default: ``0``)
+    Message reservation timeout in seconds. The default ``0`` value will cause the
+    server to immediately return either a response or a ``TransportException`` will be thrown.
+
+``ttr`` (default: ``90``)
+    The message time (in seconds) to run before it is put back in the ready queue.
 
 .. _messenger-redis-transport:
 
@@ -1649,56 +1681,63 @@ The Redis transport DSN may looks like this:
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-=======================  =====================================  =================================
-Option                   Description                            Default
-=======================  =====================================  =================================
-stream                   The Redis stream name                  messages
-group                    The Redis consumer group name          symfony
-consumer                 Consumer name used in Redis            consumer
-auto_setup               Create the Redis group automatically?  true
-auth                     The Redis password
-delete_after_ack         If ``true``, messages are deleted      true
-                         automatically after processing them
-delete_after_reject      If ``true``, messages are deleted      true
-                         automatically if they are rejected
-lazy                     Connect only when a connection is      false
-                         really needed
-serializer               How to serialize the final payload     ``Redis::SERIALIZER_PHP``
-                         in Redis (the
-                         ``Redis::OPT_SERIALIZER`` option)
-stream_max_entries       The maximum number of entries which    ``0`` (which means "no trimming")
-                         the stream will be trimmed to. Set
-                         it to a large enough number to
-                         avoid losing pending messages
-redeliver_timeout        Timeout before retrying a pending      ``3600``
-                         message which is owned by an
-                         abandoned consumer (if a worker died
-                         for some reason, this will occur,
-                         eventually you should retry the
-                         message) - in seconds.
-claim_interval           Interval on which pending/abandoned    ``60000`` (1 Minute)
-                         messages should be checked for to
-                         claim - in milliseconds
-persistent_id            String, if null connection is          null
-                         non-persistent.
-retry_interval           Int, value in milliseconds             ``0``
-read_timeout             Float, value in seconds                ``0``
-                         default indicates unlimited
-timeout                  Connection timeout. Float, value in    ``0``
-                         seconds default indicates unlimited
-sentinel_master          String, if null or empty Sentinel      null
-redis_sentinel           support is disabled
-ssl                      Map of TLS options.                    null
-=======================  =====================================  =================================
+``stream`` (default: ``messages``)
+    The Redis stream name
 
-.. versionadded:: 7.1
+``group`` (default: ``symfony``)
+    The Redis consumer group name
 
-    The option ``redis_sentinel`` as an alias for ``sentinel_master`` was introduced
-    in Symfony 7.1.
+``consumer`` (default: ``consumer``)
+    Consumer name used in Redis
 
-The ``ssl`` option can be used to change requirements for the TLS channel, e.g. in tests:
+``auto_setup`` (default: ``true``)
+    Create the Redis group automatically?
 
-.. configuration-block::
+``auth``
+    The Redis password
+
+``delete_after_ack`` (default: ``true``)
+    If ``true``, messages are deleted automatically after processing them
+
+``delete_after_reject`` (default: ``true``)
+    If ``true``, messages are deleted automatically if they are rejected
+
+``lazy`` (default: ``false``)
+    Connect only when a connection is really needed
+
+``serializer`` (default: ``Redis::SERIALIZER_PHP``)
+    How to serialize the final payload in Redis (the ``Redis::OPT_SERIALIZER`` option)
+
+``stream_max_entries`` (default: ``0``, which means no trimming)
+    The maximum number of entries which the stream will be trimmed to. Set it to
+    a large enough number to avoid losing pending messages
+
+``redeliver_timeout`` (default: ``3600``)
+    Timeout (in seconds) before retrying a pending message which is owned by an
+    abandoned consumer (if a worker died for some reason, this will occur, eventually
+    you should retry the message).
+
+``claim_interval`` (default: ``60000``, which is 1 minute)
+    Interval (in milliseconds) on which pending/abandoned messages should be checked for to claim.
+
+``persistent_id``
+    String, if null connection is non-persistent.
+
+``retry_interval`` (default: ``0``)
+    Int, value in milliseconds
+
+``read_timeout`` (default: ``0``)
+    Float, value in seconds default indicates unlimited
+
+``timeout`` (default: ``0``)
+    Connection timeout. Float, value in seconds default indicates unlimited
+
+``sentinel_master``
+    String, if null or empty Sentinel support is disabled
+
+``ssl``
+    Map of TLS options. The ``ssl`` option can be used to change requirements
+    for the TLS channel, e.g. in tests:
 
     .. code-block:: yaml
 
@@ -1854,27 +1893,44 @@ The SQS transport DSN may looks like this:
 
 The transport has a number of options:
 
-======================  ======================================  ===================================
-     Option             Description                             Default
-======================  ======================================  ===================================
-``access_key``          AWS access key                          must be urlencoded
-``account``             Identifier of the AWS account           The owner of the credentials
-``auto_setup``          Whether the queue should be created     ``true``
-                        automatically during send / get.
-``buffer_size``         Number of messages to prefetch          9
-``debug``               If ``true`` it logs all HTTP requests   ``false``
-                        and responses (it impacts performance)
-``endpoint``            Absolute URL to the SQS service         https://sqs.eu-west-1.amazonaws.com
-``poll_timeout``        Wait for new message duration in        0.1
-                        seconds
-``queue_name``          Name of the queue                       messages
-``region``              Name of the AWS region                  eu-west-1
-``secret_key``          AWS secret key                          must be urlencoded
-``session_token``       AWS session token
-``visibility_timeout``  Amount of seconds the message will      Queue's configuration
-                        not be visible (`Visibility Timeout`_)
-``wait_time``           `Long polling`_ duration in seconds     20
-======================  ======================================  ===================================
+``access_key``
+    AWS access key (must be urlencoded)
+
+``account`` (default: ``The owner of the credentials``)
+    Identifier of the AWS account
+
+``auto_setup`` (default: ``true``)
+    Whether the queue should be created automatically during send / get.
+
+``buffer_size`` (default: ``9``)
+    Number of messages to prefetch
+
+``debug`` (default: ``false``)
+    If ``true`` it logs all HTTP requests and responses (it impacts performance)
+
+``endpoint`` (default: ``https://sqs.eu-west-1.amazonaws.com``)
+    Absolute URL to the SQS service
+
+``poll_timeout`` (default: ``0.1``)
+    Wait for new message duration in seconds
+
+``queue_name`` (default: ``messages``)
+    Name of the queue
+
+``region`` (default: ``eu-west-1``)
+    Name of the AWS region
+
+``secret_key``
+    AWS secret key (must be urlencoded)
+
+``session_token``
+    AWS session token
+
+``visibility_timeout`` (default: Queue's configuration)
+    Amount of seconds the message will not be visible (`Visibility Timeout`_)
+
+``wait_time`` (default: ``20``)
+    `Long polling`_ duration in seconds
 
 .. note::
 
@@ -2283,16 +2339,21 @@ with ``messenger.message_handler``.
 
 Possible options to configure with tags are:
 
-============================  ====================================================================================================
-Option                        Description
-============================  ====================================================================================================
-``bus``                       Name of the bus from which the handler can receive messages, by default all buses.
-``from_transport``            Name of the transport from which the handler can receive messages, by default all transports.
-``handles``                   Type of messages (FQCN) that can be processed by the handler, only needed if can't be guessed by
-                              type-hint.
-``method``                    Name of the method that will process the message.
-``priority``                  Priority of the handler when multiple handlers can process the same message.
-============================  ====================================================================================================
+``bus``
+    Name of the bus from which the handler can receive messages, by default all buses.
+
+``from_transport``
+    Name of the transport from which the handler can receive messages, by default all transports.
+
+``handles``
+    Type of messages (FQCN) that can be processed by the handler, only needed if
+    can't be guessed by type-hint.
+
+``method``
+    Name of the method that will process the message.
+
+``priority``
+    Priority of the handler when multiple handlers can process the same message.
 
 .. _handler-subscriber-options:
 
