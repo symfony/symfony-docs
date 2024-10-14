@@ -355,6 +355,7 @@ Service                                  Package                               D
 `FakeChat`_                              ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 `Firebase`_                              ``symfony/firebase-notifier``         ``firebase://USERNAME:PASSWORD@default``
 `GoogleChat`_                            ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
+`LINE Bot`_                              ``symfony/line-bot-notifier``         ``linebot://TOKEN@default?receiver=RECEIVER``
 `LINE Notify`_                           ``symfony/line-notify-notifier``      ``linenotify://TOKEN@default``
 `LinkedIn`_                              ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
 `Mastodon`_                              ``symfony/mastodon-notifier``         ``mastodon://ACCESS_TOKEN@HOST``
@@ -368,6 +369,10 @@ Service                                  Package                               D
 `Zendesk`_                               ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
+
+.. versionadded:: 7.2
+
+    The ``LINE Bot`` integration was introduced in Symfony 7.2.
 
 .. versionadded:: 7.1
 
@@ -1193,6 +1198,7 @@ is dispatched. Listeners receive a
 .. _`iSendPro`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Isendpro/README.md
 .. _`JoliNotif`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/JoliNotif/README.md
 .. _`KazInfoTeh`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/KazInfoTeh/README.md
+.. _`LINE Bot`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LineBot/README.md
 .. _`LINE Notify`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LineNotify/README.md
 .. _`LightSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LightSms/README.md
 .. _`LinkedIn`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LinkedIn/README.md
