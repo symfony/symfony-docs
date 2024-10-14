@@ -1694,10 +1694,7 @@ redis_sentinel           support is disabled
 ssl                      Map of TLS options.                    null
 =======================  =====================================  =================================
 
-SSL options
------------
-
-The SSL options can be used change requirements for the TLS channel:
+The ``ssl`` option can be used to change requirements for the TLS channel, e.g. in tests:
 
 .. configuration-block::
 
