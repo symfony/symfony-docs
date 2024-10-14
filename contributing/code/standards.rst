@@ -211,8 +211,8 @@ Naming Conventions
 * Use `camelCase`_ for PHP variables, function and method names, arguments
   (e.g. ``$acceptableContentTypes``, ``hasSession()``);
 
-* Use `snake_case`_ for configuration parameters and Twig template variables
-  (e.g. ``framework.csrf_protection``, ``http_status_code``);
+Use `snake_case`_ for configuration parameters, route names and Twig template
+  variables (e.g. ``framework.csrf_protection``, ``http_status_code``);
 
 * Use SCREAMING_SNAKE_CASE for constants (e.g. ``InputArgument::IS_ARRAY``);
 
