@@ -1690,10 +1690,36 @@ read_timeout             Float, value in seconds                ``0``
 timeout                  Connection timeout. Float, value in    ``0``
                          seconds default indicates unlimited
 sentinel_master          String, if null or empty Sentinel      null
-                         support is disabled
+redis_sentinel           support is disabled
+ssl                      Map of TLS options.                    null
 =======================  =====================================  =================================
 
-.. versionadded:: 6.1
+SSL options
+-----------
+
+The SSL options can be used change requirements for the TLS channel:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    redis:
+                        dsn: "rediss://localhost"
+                        options:
+                            ssl:
+                                allow_self_signed: true
+                                capture_peer_cert: true
+                                capture_peer_cert_chain: true
+                                disable_compression: true
+                                SNI_enabled: true
+                                verify_peer: true
+                                verify_peer_name: true
+
+.. versionadded:: 7.1
 
     The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
     ``sentinel_master`` options were introduced in Symfony 6.1.
