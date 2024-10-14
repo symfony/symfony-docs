@@ -370,13 +370,13 @@ Service                                  Package                               D
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
 
-.. versionadded:: 7.2
-
-    The ``LINE Bot`` integration was introduced in Symfony 7.2.
-
 .. versionadded:: 7.1
 
     The ``Bluesky`` integration was introduced in Symfony 7.1.
+
+.. versionadded:: 7.2
+
+    The ``LINE Bot`` integration was introduced in Symfony 7.2.
 
 .. deprecated:: 7.2
 
