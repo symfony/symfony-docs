@@ -1688,12 +1688,35 @@ timeout                  Connection timeout. Float, value in    ``0``
                          seconds default indicates unlimited
 sentinel_master          String, if null or empty Sentinel      null
 redis_sentinel           support is disabled
+ssl                      Map of TLS options.                    null
 =======================  =====================================  =================================
 
 .. versionadded:: 7.1
 
     The option ``redis_sentinel`` as an alias for ``sentinel_master`` was introduced
     in Symfony 7.1.
+
+The ``ssl`` option can be used to change requirements for the TLS channel, e.g. in tests:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    redis:
+                        dsn: "rediss://localhost"
+                        options:
+                            ssl:
+                                allow_self_signed: true
+                                capture_peer_cert: true
+                                capture_peer_cert_chain: true
+                                disable_compression: true
+                                SNI_enabled: true
+                                verify_peer: true
+                                verify_peer_name: true
 
 .. caution::
 
