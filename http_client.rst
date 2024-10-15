@@ -152,7 +152,7 @@ brings most of the available options with type-hinted getters and setters::
             ->setBaseUri('https://...')
             // replaces *all* headers at once, and deletes the headers you do not provide
             ->setHeaders(['header-name' => 'header-value'])
-            // set or replace a single header using addHeader()
+            // set or replace a single header using setHeader()
             ->setHeader('another-header-name', 'another-header-value')
             ->toArray()
     );
