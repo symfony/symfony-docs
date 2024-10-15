@@ -274,6 +274,59 @@ each with a single field.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
+``identifierFieldNames``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``null``
+
+When updating an entity through a PHP class (e.g. DTOs), this option can be used to
+define the class properties that are used as the Doctrine entity key (or composite key).
+
+Consider this Doctrine entity ::
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+
+    #[ORM\Entity]
+    class User
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
+        private int $id;
+
+        #[ORM\Column]
+        private string $name;
+    }
+
+    // ... getter and setter methods
+
+For exemple, in a :doc:`Messenger component </components/messenger>` message that
+updates ``User`` entities, you can check its uniqueness by defining its identifier::
+
+    // src/Message/UpdateEmployeeProfile
+    namespace App\Message;
+
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+    #[UniqueEntity(
+        fields: ['name'],
+        entityClass: User::class,
+        // 'uid' is the property name in the PHP class and 'id' is the name of
+        // the Doctrine entity property used as the primary key
+        identifierFieldNames: ['uid' => 'id'],
+    )]
+    class UpdateEmployeeProfile
+    {
+        public function __construct(
+            private string $uid,
+            private string $name,
+        ) {
+        }
+    }
+
 ``ignoreNull``
 ~~~~~~~~~~~~~~
 
