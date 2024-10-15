@@ -1696,7 +1696,7 @@ ssl                      Map of TLS options.                    null
     The option ``redis_sentinel`` as an alias for ``sentinel_master`` was introduced
     in Symfony 7.1.
 
-The ``ssl`` option can be used to change requirements for the TLS channel, e.g. in tests:
+The ``ssl`` option can be used to provide `SSL context options`_ for the TLS channel, e.g. in tests:
 
 .. configuration-block::
 
@@ -3417,3 +3417,4 @@ Learn more
 .. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
 .. _`high connection churn`: https://www.rabbitmq.com/connections.html#high-connection-churn
 .. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html
+.. _`SSL context options`: https://php.net/context.ssl
