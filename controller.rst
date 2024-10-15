@@ -578,7 +578,7 @@ To do so, map the parameter as an array and configure the type of each element
 using the ``type`` option of the attribute::
 
     public function dashboard(
-        #[MapRequestPayload(type: UserDTO::class)] array $users
+        #[MapRequestPayload(type: UserDto::class)] array $users
     ): Response
     {
         // ...
