@@ -232,7 +232,7 @@ reusable configuration value. By convention, parameters are defined under the
                 <parameter key="app.another_constant" type="constant">App\Entity\BlogPost::MAX_ITEMS</parameter>
 
                 <!-- Enum case as parameter values -->
-                <parameter key="app.some_enum" type="enum">App\Enum\PostState::Published</parameter>
+                <parameter key="app.some_enum" type="constant">App\Enum\PostState::Published</parameter>
             </parameters>
 
             <!-- ... -->
