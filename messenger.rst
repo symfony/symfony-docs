@@ -1694,7 +1694,7 @@ redis_sentinel           support is disabled
 ssl                      Map of TLS options.                    null
 =======================  =====================================  =================================
 
-The ``ssl`` option can be used to change requirements for the TLS channel, e.g. in tests:
+The ``ssl`` option can be used to provide SSL context options (`php.net/context.ssl`_) for the TLS channel, e.g. in tests:
 
 .. configuration-block::
 
@@ -3488,3 +3488,4 @@ Learn more
 .. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
 .. _`high connection churn`: https://www.rabbitmq.com/connections.html#high-connection-churn
 .. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html
+.. _`php.net/context.ssl`: https://php.net/context.ssl
