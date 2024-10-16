@@ -138,10 +138,28 @@ as in the above example, the ``App\`` definition creates services for classes
 found in ``../src/*``. If your imported file defines services for those classes
 too, they will be overridden.
 
-A possible solution for this is to add the classes and/or directories of the
-imported files in the ``exclude`` option of the ``App\`` definition. Another
-solution is to not use imports and add the service definitions in the same file,
-but after the ``App\`` definition to override it.
+There are exactly three possible solutions in order services not to get overriden:
+1. Include the file with ``App\`` statement in the ``imports`` as the first element.
+In order to the fact that the ``imports`` statement not override existing services, it checks if the services exists,
+also take into account that the last element of the ``imports`` has the highest priority and will be executed first,
+having included ``App\`` as a first element of ``imports`` (with the lowest priority) it will be imported in the end.
+And being the last import element it will only add not existing services in the container.
+2. Include the path to the service in the ``exclude`` section.
+3. Write service definitions down the ``App\`` statement to override it
+
+It's recommended to use the 1st approach to define services in the container
+Using the first approach the whole ``services.yaml`` file will look the foolowing way:
+
+.. configuration-block::
+    .. code-block:: yaml
+    ###> imports are loaded first (imports not overrides existing services) ###
+    imports:
+        -   resource: 'services_yaml/resource_services.yaml'    # PRIORITY 1 (last) (contains App\ with resource statement)
+        -   resource: 'services_yaml/services/'                 # PRIORITY 2
+        -   resource: 'services_yaml/parameters/'               # PRIORITY 3 (first)
+
+    ###> then services.yaml (what below overrides imports) ###
+    ###>... it's better to use only imports
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
