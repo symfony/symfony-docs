@@ -225,7 +225,7 @@ automatically changed to ``'.inner'``):
 
 .. note::
 
-    All custom :ref:`service tags </service_container/tags>`_ from the decorated
+    All custom :ref:`service tags </service_container/tags>` from the decorated
     service are removed in the new service. Only certain built-in service tags
     defined by Symfony are retained: ``container.service_locator``, ``container.service_subscriber``,
     ``kernel.event_subscriber``, ``kernel.event_listener``, ``kernel.locale_aware``,
