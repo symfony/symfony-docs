@@ -244,7 +244,7 @@ call to support ``ReflectionMethod``::
                 // update the union type to support multiple types of reflection
                 // you can also use the "\Reflector" interface
                 \ReflectionClass|\ReflectionMethod $reflector): void {
-                    if ($reflection instanceof \ReflectionMethod) {
+                    if ($reflector instanceof \ReflectionMethod) {
                         // ...
                     }
                 }
