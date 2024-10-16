@@ -2002,7 +2002,8 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
         {
             #[Route(path: [
                 'en' => '/about-us',
-                'nl' => '/over-ons'
+                'nl' => '/over-ons',
+                '/about-us'                // Default path for undefined locales
             ], name: 'about_us')]
             public function about(): Response
             {
