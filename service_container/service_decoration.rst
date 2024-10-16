@@ -207,11 +207,19 @@ automatically changed to ``'.inner'``):
                 ->args([service('.inner')]);
         };
 
-.. tip::
+.. note::
 
     The visibility of the decorated ``App\Mailer`` service (which is an alias
     for the new service) will still be the same as the original ``App\Mailer``
     visibility.
+
+.. note::
+
+    All custom :ref:`service tags </service_container/tags>`_ from the decorated
+    service are removed in the new service. Only certain built-in service tags
+    defined by Symfony are retained: ``container.service_locator``, ``container.service_subscriber``,
+    ``kernel.event_subscriber``, ``kernel.event_listener``, ``kernel.locale_aware``,
+    and ``kernel.reset``.
 
 .. note::
 
