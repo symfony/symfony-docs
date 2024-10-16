@@ -203,7 +203,22 @@ Routing Messages to a Transport
 Now that you have a transport configured, instead of handling a message immediately,
 you can configure them to be sent to a transport:
 
+.. _messenger-message-attribute:
+
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Message/SmsNotification.php
+        namespace App\Message;
+
+        use Symfony\Component\Messenger\Attribute\AsMessage;
+
+        #[AsMessage('async')]
+        class SmsNotification
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -251,15 +266,26 @@ you can configure them to be sent to a transport:
             ;
         };
 
+.. versionadded:: 7.2
+
+    The ``#[AsMessage]`` attribute was introduced in Symfony 7.2.
+
 Thanks to this, the ``App\Message\SmsNotification`` will be sent to the ``async``
 transport and its handler(s) will *not* be called immediately. Any messages not
 matched under ``routing`` will still be handled immediately, i.e. synchronously.
 
 .. note::
 
-    You may use a partial PHP namespace like ``'App\Message\*'`` to match all
-    the messages within the matching namespace. The only requirement is that the
-    ``'*'`` wildcard has to be placed at the end of the namespace.
+    If you configure routing with both YAML/XML/PHP configuration files and
+    PHP attributes, the configuration always takes precedence over the class
+    attribute. This behavior allows you to override routing on a per-environment basis.
+
+.. note::
+
+    When configuring the routing in separate YAML/XML/PHP files, you can use a partial
+    PHP namespace like ``'App\Message\*'`` to match all the messages within the
+    matching namespace. The only requirement is that the ``'*'`` wildcard has to
+    be placed at the end of the namespace.
 
     You may use ``'*'`` as the message class. This will act as a default routing
     rule for any message not matched under ``routing``. This is useful to ensure
@@ -274,6 +300,27 @@ You can also route classes by their parent class or interface. Or send messages
 to multiple transports:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Message/SmsNotification.php
+        namespace App\Message;
+
+        use Symfony\Component\Messenger\Attribute\AsMessage;
+
+        #[AsMessage(['async', 'audit'])]
+        class SmsNotification
+        {
+            // ...
+        }
+
+        // if you prefer, you can also apply multiple attributes to the message class
+        #[AsMessage('async')]
+        #[AsMessage('audit')]
+        class SmsNotification
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -344,55 +391,6 @@ to multiple transports:
     the envelope of the message. This stamp takes an array of transport
     name as its only argument. For more information about stamps, see
     `Envelopes & Stamps`_.
-
-.. _messenger-message-attribute:
-
-Configuring Routing Using Attributes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-You can optionally use the `#[AsMessage]` attribute to configure message transport::
-
-    // src/Message/SmsNotification.php
-    namespace App\Message;
-
-    use Symfony\Component\Messenger\Attribute\AsMessage;
-
-    #[AsMessage(transport: 'async')]
-    class SmsNotification
-    {
-        public function __construct(
-            private string $content,
-        ) {
-        }
-
-        public function getContent(): string
-        {
-            return $this->content;
-        }
-    }
-
-.. note::
-
-    If you configure routing with both configuration and attributes, the
-    configuration will take precedence over the attributes and override
-    them. This allows to override routing on a per-environment basis
-    for example:
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        when@dev:
-            framework:
-                messenger:
-                    routing:
-                        # override class attribute
-                        'App\Message\SmsNotification': sync
-
-.. tip::
-
-    The `$transport` parameter can be either a `string` or an `array`: configuring multiple
-    transports is possible. You may also repeat the attribute if you prefer instead of using
-    an array.
 
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
