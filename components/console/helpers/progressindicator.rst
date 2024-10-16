@@ -99,9 +99,10 @@ The progress indicator will now look like this:
      ⢸ Processing...
      ✔ Finished
 
-Once the progress indicator is finished, it uses the finishedIndicator value (which defaults to ✔). You can replace it with your own::
+Once the progress finishes, it displays a special finished indicator (which defaults
+to ✔). You can replace it with your own::
 
-    $progressIndicator = new ProgressIndicator($output, 'verbose', 100, null, '🎉');
+    $progressIndicator = new ProgressIndicator($output, finishedIndicatorValue: '🎉');
     
     try {
         /* do something */
@@ -110,6 +111,15 @@ Once the progress indicator is finished, it uses the finishedIndicator value (wh
         $progressIndicator->finish('Failed', '🚨');
     }
 
+The progress indicator will now look like this:
+
+.. code-block:: text
+
+     \ Processing...
+     | Processing...
+     / Processing...
+     - Processing...
+     🎉 Finished
 
 .. versionadded:: 7.2
 
