@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2024-06-30T17:50:25Z
+
+I think we should also add it to the [Attribute Overwiew page](https://symfony.com/doc/7.2/reference/attributes.html)
+
+---------------------------------------------------------------------------
+
+by pounard at 2024-07-03T12:11:56Z
+
+Sorry, I took a few days off. I'll be back in a few days for fixing this.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-08-30T08:42:29Z
+
+@pounard friendly ping. This is almost ready, so I hope you can find some time to finish it. Thanks a lot!
+
+---------------------------------------------------------------------------
+
+by pounard at 2024-08-30T08:51:19Z
+
+> @pounard friendly ping. This is almost ready, so I hope you can find some time to finish it. Thanks a lot!
+
+I'm sorry, I spent more time off work than it was initially planned. I will be back in september.
+
+---------------------------------------------------------------------------
+
+by pounard at 2024-09-30T09:18:26Z
+
+@MrYamous
+
+> I think we should also add it to the [Attribute Overwiew page](https://symfony.com/doc/7.2/reference/attributes.html)
+
+I just added it, thanks for pointing this.
+
+---------------------------------------------------------------------------
+
+by pounard at 2024-09-30T09:19:52Z
+
+@javiereguiluz Ready for review once again! Sorry for keeping this waiting.
+
+---------------------------------------------------------------------------
+
+by pounard at 2024-09-30T15:52:53Z
+
+I have really no idea why the "Code Blocks" action fails. Any ideas?
