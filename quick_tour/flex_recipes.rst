@@ -36,7 +36,7 @@ small, simple and *fast*. And you're in total control of what you add.
 Flex Recipes and Aliases
 ------------------------
 
-So how can we install and configure Twig? By running one single command:
+How can we install and configure Twig? By running one single command:
 
 .. code-block:: terminal
 

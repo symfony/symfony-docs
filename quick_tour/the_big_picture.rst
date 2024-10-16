@@ -40,7 +40,7 @@ Symfony application:
     └─ vendor/
 
 Can we already load the project in a browser? Yes! You can setup
-:doc:`Nginx or Apache </setup/web_server_configuration>` and configure their
+:doc:`nginx or Apache </setup/web_server_configuration>` and configure their
 document root to be the ``public/`` directory. But, for development, it's better
 to :doc:`install the Symfony local web server </setup/symfony_server>` and run
 it as follows:
@@ -100,7 +100,7 @@ A controller is just a normal function with *one* rule: it must return a Symfony
 ``Response`` object. But that response can contain anything: simple text, JSON or
 a full HTML page.
 
-But the routing system is *much* more powerful. So let's make the route more interesting:
+But the routing system is *much* more powerful. Let's make the route more interesting:
 
 .. code-block:: diff
 
@@ -135,7 +135,7 @@ Try the page out by going to ``http://localhost:8000/hello/Symfony``. You should
 see: Hello Symfony! The value of the ``{name}`` in the URL is available as a ``$name``
 argument in your controller.
 
-But this can be even simpler! So let's install annotations support:
+But this can be even simpler! Let's install annotations support:
 
 .. code-block:: terminal
 

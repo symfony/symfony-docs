@@ -114,7 +114,7 @@ to run this command which displays information about the project:
 Running Symfony Applications
 ----------------------------
 
-In production, you should install a web server like Nginx or Apache and
+In production, you should install a web server like nginx or Apache and
 :doc:`configure it to run Symfony </setup/web_server_configuration>`. This
 method can also be used if you're not using the Symfony local web server for
 development.
@@ -211,7 +211,7 @@ Symfony Packs
 
 Sometimes a single feature requires installing several packages and bundles.
 Instead of installing them individually, Symfony provides **packs**, which are
-Composer metapackages that include several dependencies.
+Composer meta-packages that include several dependencies.
 
 For example, to add debugging features in your application, you can run the
 ``composer require --dev debug`` command. This installs the ``symfony/debug-pack``,
