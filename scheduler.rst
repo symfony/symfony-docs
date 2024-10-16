@@ -473,6 +473,20 @@ The attribute takes more parameters to customize the trigger::
     // defines the timezone to use
     #[AsCronTask('0 0 * * *', timezone: 'Africa/Malabo')]
 
+Arguments/options for Symfony commands are passed as plain string::
+
+    use Symfony\Component\Console\Command\Command;
+
+    #[AsCronTask('0 0 * * *', arguments: 'arg --my-option')]
+    class MyCommand extends Command
+    {
+        protected function configure(): void
+        {
+            $this->addArgument('my-arg');
+            $this->addOption('my-option');
+        }
+    }
+
 .. versionadded:: 6.4
 
     The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
@@ -519,6 +533,20 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
         public function sendEmail(string $email): void
         {
             // ...
+        }
+    }
+
+Arguments/options for Symfony commands are passed as plain string::
+
+    use Symfony\Component\Console\Command\Command;
+
+    #[AsPeriodicTask(frequency: '1 day', arguments: 'arg --my-option')]
+    class MyCommand extends Command
+    {
+        protected function configure(): void
+        {
+            $this->addArgument('my-arg');
+            $this->addOption('my-option');
         }
     }
 
