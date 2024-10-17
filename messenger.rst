@@ -1605,6 +1605,11 @@ in the table.
 ``use_notify`` (default: ``true``)
     Whether to use LISTEN/NOTIFY.
 
+    .. note::
+
+        ``use_notify`` will work incorrectly if you use "Prioritized
+        Transports". Disable the LISTEN/NOTIFY feature in this case.
+
 ``check_delayed_interval`` (default: ``60000``)
     The interval to check for delayed messages, in milliseconds. Set to 0 to
     disable checks.
