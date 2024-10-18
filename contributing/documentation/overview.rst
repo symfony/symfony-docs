@@ -185,6 +185,9 @@ changes and push the new changes:
 
     $ git push
 
+It's rare, but you might be asked to rebase your pull request to target another
+Symfony branch. Read the :ref:`guide on rebasing pull requests <rebase-your-patch>`.
+
 **Step 10.** After your pull request is eventually accepted and merged in the
 Symfony documentation, you will be included in the `Symfony Documentation
 Contributors`_ list. Moreover, if you happen to have a `SymfonyConnect`_
