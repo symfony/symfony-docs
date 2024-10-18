@@ -22,7 +22,7 @@ it suffers from a few problems::
     printf('Hello %s', $name);
 
 First, if the ``name`` query parameter is not defined in the URL query string,
-you will get a PHP warning; so let's fix it::
+you will get a PHP warning; let's fix it::
 
     // framework/index.php
     $name = $_GET['name'] ?? 'World';
@@ -93,8 +93,8 @@ reading this book now and go back to whatever code you were working on before.
 Going OOP with the HttpFoundation Component
 -------------------------------------------
 
-Writing web code is about interacting with HTTP. So, the fundamental
-principles of our framework should be around the `HTTP specification`_.
+Writing web code is about interacting with HTTP. The fundamental principles
+of our framework should be around the `HTTP specification`_.
 
 The HTTP specification describes how a client (a browser for instance)
 interacts with a server (our application via a web server). The dialog between
@@ -261,7 +261,7 @@ explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
         // the client is a known one, so give it some more privilege
     }
 
-So, the ``getClientIp()`` method works securely in all circumstances. You can
+The ``getClientIp()`` method works securely in all circumstances. You can
 use it in all your projects, whatever the configuration is, it will behave
 correctly and safely. That's one of the goals of using a framework. If you were
 to write a framework from scratch, you would have to think about all these

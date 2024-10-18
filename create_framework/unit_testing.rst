@@ -196,7 +196,7 @@ controller. We check that the response status is 200 and that its content is
 the one we have set in the controller.
 
 To check that we have covered all possible use cases, run the PHPUnit test
-coverage feature (you need to enable `XDebug`_ first):
+coverage feature (you need to enable `Xdebug`_ first):
 
 .. code-block:: terminal
 
