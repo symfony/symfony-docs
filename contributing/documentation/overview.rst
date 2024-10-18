@@ -136,10 +136,6 @@ even remove any content and do your best to comply with the
 
 **Step 6.** **Push** the changes to your forked repository:
 
-Before submitting your PR, you may have to update your branch as described in :doc:`the code contribution guide </contributing/code/pull_requests#rebase-your-pull-request>`.
-
-Then, you can push your changes:
-
 .. code-block:: terminal
 
     $ git push origin improve_install_article
@@ -188,6 +184,9 @@ changes and push the new changes:
     # ... do your changes
 
     $ git push
+
+It's rare, but you might be asked to rebase your pull request to target another
+Symfony branch. Read the :ref:`guide on rebasing pull requests <rebase-your-patch>`.
 
 **Step 10.** After your pull request is eventually accepted and merged in the
 Symfony documentation, you will be included in the `Symfony Documentation
