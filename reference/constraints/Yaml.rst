@@ -145,6 +145,57 @@ Parameter        Description
 ``{{ line }}``   The line where the YAML syntax error happened
 ===============  ==============================================================
 
+``collection``
+~~~~~~~~~~~~~~~
+
+**type**: :class:``Symfony\Component\Validator\Constraints`` **default**: ``null``
+
+This option apply a :class:``Symfony\Component\Validator\Constraints\Collection`` constraint to Yaml parsed data.
+You can apply validation on the content of your Yaml.
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Report.php
+        namespace App\Entity;
+
+        use App\Yaml\MyConfiguration;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Report
+        {
+            #[Assert\Yaml(
+                collection: new Assert\Collection([
+                    'foo' => new Assert\NotNull(),
+                ]),
+            )]
+            private string $customConfiguration;
+        }
+
+    .. code-block:: php
+
+        // src/Entity/Report.php
+        namespace App\Entity;
+
+        use App\Yaml\MyConfiguration;
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Report
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('customConfiguration', new Assert\Yaml([
+                    collection: new Assert\Collection([
+                        'foo' => new Assert\NotNull(),
+                    ]),
+                ]));
+            }
+        }
+
+See :doc:`Collection constraint </reference/constraints/Collection>` for more info.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
