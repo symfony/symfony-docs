@@ -817,6 +817,13 @@ The exceptions related to mailer transports (those which implement
 :class:`Symfony\\Component\\Mailer\\Exception\\TransportException`) also provide
 this debug information via the ``getDebug()`` method.
 
+But you have to keep in mind that using :class:`Symfony\\Component\\Mailer\\Transport\\TransportInterface`
+you can't rely on asynchronous sending emails.
+It doesn't use a bus to dispatch :class:`Symfony\\Component\\Mailer\\Messenger\\SendEmailMessage`.
+
+Use :class:`Symfony\\Component\\Mailer\\MailerInterface` if you want to have an opportunity
+to send emails asynchronously.
+
 .. _mailer-twig:
 
 Twig: HTML & CSS
