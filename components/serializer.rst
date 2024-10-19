@@ -623,6 +623,40 @@ processes::
     $anne = $normalizer->denormalize(['first_name' => 'Anne'], 'Person');
     // Person object with firstName: 'Anne'
 
+.. _using-underscored-method-names-for-camelized-attributes:
+
+snake_case to CamelCase
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony provides a built-in name converter designed to transform between
+snake_case and CamelCased styles during serialization and deserialization
+processes::
+
+    use Symfony\Component\Serializer\NameConverter\SnakeCaseToCamelCaseNameConverter;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+    $normalizer = new ObjectNormalizer(null, new SnakeCaseToCamelCaseNameConverter());
+
+    class Person
+    {
+        public function __construct(
+            private string $fullName,
+        ) {
+        }
+
+        public function getFullName(): string
+        {
+            return $this->fullName;
+        }
+    }
+
+    $john = new Person('john_doe');
+    $normalizer->normalize($john);
+    // ['full_name' => 'johnDoe'];
+
+    $john = $normalizer->denormalize(['full_name' => 'johnDoe'], 'Person');
+    // Person object with fullName: 'jonh_doe'
+
 .. _serializer_name-conversion:
 
 Configure name conversion using metadata
