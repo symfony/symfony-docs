@@ -2838,8 +2838,8 @@ and a different instance will be created per bus.
 
 .. tip::
 
-    If you have installed the :doc:`Maker bundle </bundles/SymfonyMakerBundle>`, you can use
-    the ``make:messenger-middleware`` command to bootstrap the creation your own messenger middleware.
+    If you have installed the Maker bundle, you can use the ``make:messenger-middleware`` command
+    to bootstrap the creation your own messenger middleware.
 
 .. _middleware-doctrine:
 
