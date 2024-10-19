@@ -153,22 +153,25 @@ or there was something wrong (e.g. incorrect password). The authenticator
 can define what happens in these cases:
 
 ``onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response``
-    If the user is authenticated, this method is called with the
-    authenticated ``$token``. This method can return a response (e.g.
-    redirect the user to some page).
+    If authentication is successful, this method is called with the
+    authenticated ``$token``.
 
-    If ``null`` is returned, the request continues like normal (i.e. the
-    controller matching the login route is called). This is useful for API
-    routes where each route is protected by an API key header.
+    This method can return a response (e.g. redirect the user to some page).
+
+    If ``null`` is returned, the current request will continue (and the
+    user will be authenticated). This is useful for API routes where each
+    route is protected by an API key header.
 
 ``onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response``
-    If an ``AuthenticationException`` is thrown during authentication, the
-    process fails and this method is called. This method can return a
-    response (e.g. to return a 401 Unauthorized response in API routes).
+    If authentication failed (e. g. wrong username password), this method
+    is called with the ``AuthenticationException`` thrown.
 
-    If ``null`` is returned, the request continues like normal. This is
-    useful for e.g. login forms, where the login controller is run again
-    with the login errors.
+    This method can return a response (e.g. send a 401 Unauthorized in API
+    routes).
+
+    If ``null`` is returned, the request continues (but the user will **not**
+    be authenticated). This is useful for login forms, where the login
+    controller is run again with the login errors.
 
     If you're using :ref:`login throttling <security-login-throttling>`,
     you can check if ``$exception`` is an instance of
