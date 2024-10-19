@@ -187,6 +187,9 @@ Service
 `SpotHit`_          **Install**: ``composer require symfony/spot-hit-notifier`` \
                     **DSN**: ``spothit://TOKEN@default?from=FROM`` \
                     **Webhook support**: No
+`Sweego`_           **Install**: ``composer require symfony/sweego-notifier`` \
+                    **DSN**: ``sweego://API_KEY@default?region=REGION&campaign_type=CAMPAIGN_TYPE`` \
+                    **Webhook support**: Yes
 `Telnyx`_           **Install**: ``composer require symfony/telnyx-notifier`` \
                     **DSN**: ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID`` \
                     **Webhook support**: No
@@ -225,7 +228,7 @@ Service
 
 .. versionadded:: 7.2
 
-    The ``Primotexto`` and ``Sipgate`` integrations were introduced in Symfony 7.2.
+    The ``Primotexto``, ``Sipgate`` and ``Sweego`` integrations were introduced in Symfony 7.2.
 
 .. deprecated:: 7.1
 
@@ -1239,6 +1242,7 @@ is dispatched. Listeners receive a
 .. _`SMSense`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SMSense/README.md
 .. _`SmsSluzba`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsSluzba/README.md
 .. _`SpotHit`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SpotHit/README.md
+.. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sweego/README.md
 .. _`Telegram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telegram/README.md
 .. _`Telnyx`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telnyx/README.md
 .. _`TurboSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/TurboSms/README.md
