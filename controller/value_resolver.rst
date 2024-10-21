@@ -110,6 +110,13 @@ Symfony ships with the following value resolvers in the
     Injects a service if type-hinted with a valid service class or interface. This
     works like :doc:`autowiring </service_container/autowiring>`.
 
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\SessionParameterValueResolver.php`
+    Pass a session parameter to a controller argument.
+
+    Because this is a :ref:`targeted value resolver <value-resolver-targeted>`,
+    you'll have to use the :ref:`MapSessionParameter <session-passing-session-parameter>` attribute
+    in order to use this resolver.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\SessionValueResolver`
     Injects the configured session class implementing ``SessionInterface`` if
     type-hinted with ``SessionInterface`` or a class implementing
