@@ -524,7 +524,7 @@
 /testing/functional_tests_assertions /testing#testing-application-assertions
 /components https://symfony.com/components
 /components/index https://symfony.com/components
-/serializer/normalizers /components/serializer#normalizers
+/serializer/normalizers /serializer#serializer-built-in-normalizers
 /logging/monolog_regex_based_excludes /logging/monolog_exclude_http_codes
 /security/named_encoders /security/named_hashers
 /security/experimental_authenticators /security
@@ -555,3 +555,5 @@
 /notifier/chatters /notifier#sending-chat-messages
 /notifier/texters /notifier#sending-sms
 /notifier/events /notifier#notifier-events
+/components/serializer /serializer
+/serializer/custom_encoder /serializer/encoders#serializer-custom-encoder

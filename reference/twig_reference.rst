@@ -598,6 +598,8 @@ project's root directory:
 If the given file path is out of the project directory, a ``null`` value
 will be returned.
 
+.. _reference-twig-filter-serialize:
+
 serialize
 ~~~~~~~~~
 

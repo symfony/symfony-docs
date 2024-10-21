@@ -26,6 +26,8 @@ default configuration::
 
     $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
+.. _property-access-reading-arrays:
+
 Reading from Arrays
 -------------------
 

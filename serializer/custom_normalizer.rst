@@ -1,10 +1,11 @@
 How to Create your Custom Normalizer
 ====================================
 
-The :doc:`Serializer component </components/serializer>` uses
-normalizers to transform any data into an array. The component provides several
-:ref:`built-in normalizers <component-serializer-normalizers>` but you may need to create
-your own normalizer to transform an unsupported data structure.
+The :doc:`Serializer component </serializer>` uses normalizers to transform
+any data into an array. The component provides several
+ref:`built-in normalizers <serializer-built-in-normalizers>` but you may
+need to create your own normalizer to transform an unsupported data
+structure.
 
 Creating a New Normalizer
 -------------------------
@@ -59,6 +60,63 @@ a service and :doc:`tagged </service_container/tags>` with ``serializer.normaliz
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is done automatically!
 
+If you're not using ``autoconfigure``, you have to tag the service with
+``serializer.normalizer``. You can also use this method to set a priority
+(higher means it's called earlier in the process):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\Serializer\TopicNormalizer:
+                tags:
+                    # register the normalizer with a high priority (called earlier)
+                    - { name: 'serializer.normalizer', priority: 500 }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="App\Serializer\TopicNormalizer">
+                    <!-- register the normalizer with a high priority (called earlier) -->
+                    <tag name="serializer.normalizer"
+                        priority="500"
+                    />
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Serializer\TopicNormalizer;
+
+        return function(ContainerConfigurator $container) {
+            // ...
+
+            // if you're using autoconfigure, the tag will be automatically applied
+            $services->set(TopicNormalizer::class)
+                // register the normalizer with a high priority (called earlier)
+                ->tag('serializer.normalizer', [
+                    'priority' => 500,
+                ])
+            ;
+        };
+
 Performance
 -----------
 
@@ -82,7 +140,7 @@ is called.
 
 .. note::
 
-    All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
+    All built-in :ref:`normalizers and denormalizers <serializer-built-in-normalizers>`
     as well the ones included in `API Platform`_ natively implement this interface.
 
 .. _`API Platform`: https://api-platform.com
