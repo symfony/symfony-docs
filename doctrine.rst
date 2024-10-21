@@ -677,27 +677,16 @@ will automatically fetch them::
     {
     }
 
-    /**
-     * Perform a findOneBy() where the slug property matches {slug}.
-     */
-    #[Route('/product/{slug}')]
-    public function showBySlug(Product $product): Response
-    {
-    }
+Automatic fetching works if ``{id}`` is in your route, then this is used to
+fetch by primary key via the ``find()`` method.
 
-Automatic fetching works in these situations:
+.. versionadded:: 7.1
 
-* If ``{id}`` is in your route, then this is used to fetch by
-  primary key via the ``find()`` method.
-
-* The resolver will attempt to do a ``findOneBy()`` fetch by using
-  *all* of the wildcards in your route that are actually properties
-  on your entity (non-properties are ignored).
-
-This behavior is enabled by default on all controllers. If you prefer, you can
-restrict this feature to only work on route wildcards called ``id`` to look for
-entities by primary key. To do so, set the option
-``doctrine.orm.controller_resolver.auto_mapping`` to ``false``.
+    Prior to Symfony 7.1, automatic fetching was enabled on *all* of the
+    of the wildcards in your route that are actually properties on your entity.
+    This behavior is now disabled by default to only work on route wildcards
+    called ``id``. To do so, set the option
+    ``doctrine.orm.controller_resolver.auto_mapping`` to ``true``.
 
 When ``auto_mapping`` is disabled, you can configure the mapping explicitly for
 any controller argument with the ``MapEntity`` attribute. You can even control
