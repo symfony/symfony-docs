@@ -1405,7 +1405,7 @@ to check that the translation contents are also correct:
         $ php bin/console lint:translations
 
         # checks the contents of the translation catalogues for Italian (it) and Japanese (ja) locales
-        $ php bin/console lint:translations --locales=it --locales=ja
+        $ php bin/console lint:translations --locale=it --locale=ja
 
 .. versionadded:: 7.2
 
