@@ -3534,7 +3534,7 @@ Learn more
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
 .. _`PCNTL`: https://www.php.net/manual/book.pcntl.php
-.. _`systemd docs`: https://www.freedesktop.org/wiki/Software/systemd/
+.. _`systemd docs`: https://systemd.io/
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
 .. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
