@@ -995,6 +995,136 @@ convert them automatically to their scalar values.
         }
     }
 
+Mapping Parameters
+~~~~~~~~~~~~~~~~~~
+
+By default, the route parameter (``{slug}`` for example) is the name of the argument
+injected to the controller method (``$slug``).
+
+You can change this behavior and define a mapping between route parameter and
+an argument name with ``{route_parameter_name:controller_argument_name}``:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Attribute\Route;
+
+        class BlogController extends AbstractController
+        {
+            // ...
+
+            #[Route('/blog/{slug:articleSlug}', name: 'blog_show')]
+            public function show(string $articleSlug): Response
+            {
+                // $articleSlug will be equal to the dynamic part of the URL
+                // e.g. at /blog/yay-routing, then $articleSlug='yay-routing'
+
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_show:
+            path:       /blog/{slug:articleSlug}
+            controller: App\Controller\BlogController::show
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_show" path="/blog/{slug:articleSlug}"
+                   controller="App\Controller\BlogController::show"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes): void {
+            $routes->add('blog_show', '/blog/{slug:articleSlug}')
+                ->controller([BlogController::class, 'show'])
+            ;
+        };
+
+When two or more variable parts target the same argument name, argument will be
+an array:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Attribute\Route;
+
+        class BlogController extends AbstractController
+        {
+            // ...
+
+            #[Route('/blog/{id:articleData}/{slug:articleData}', name: 'blog_show')]
+            public function show(array $articleData): Response
+            {
+                // $articleData will equal the dynamic part of the URL
+                // e.g. at /blog/12/yay-routing, then $articleData=['id' => '12', 'slug' => 'yay-routing']
+
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_show:
+            path:       /blog/{id:articleData}/{slug:articleData}
+            controller: App\Controller\BlogController::show
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="blog_show" path="/blog/{id:articleData}/{slug:articleData}"
+                   controller="App\Controller\BlogController::show"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\BlogController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes): void {
+            $routes->add('blog_show', '/blog/{id:articleData}/{slug:articleData}')
+                ->controller([BlogController::class, 'show'])
+            ;
+        };
+
+.. versionadded:: 7.1
+
+    The mapping of route parameters was introduced in Symfony 7.1.
+
 Special Parameters
 ~~~~~~~~~~~~~~~~~~
 
