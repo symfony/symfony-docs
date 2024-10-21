@@ -125,6 +125,48 @@ inside the task form itself::
         }
     }
 
+.. note::
+
+    If you want to access the linked data, you will need to use events::
+
+        // src/Form/TagType.php
+
+        // ...
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            // ...
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $data = $event->getData();
+                // ...
+            });
+        }
+        // ...
+
+    And when the form (which call the CollectionType) sets the ``by_reference`` option
+    to false, the entire form must to be inside a ``PRE_SET_DATA`` event::
+
+        // src/Form/TaskType.php
+
+        // ...
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            // ...
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $form = $event->getForm();
+                $form->add('tags', CollectionType::class, [
+                    'entry_type' => TagType::class,
+                    'by_reference' => false,
+                ]);
+            });
+            // ...
+        }
+        // ...
+
+.. seealso::
+
+    If you want to learn more about the form events, read :ref:`events`
+    and :ref:`dynamic_form_modification`.
+
 In your controller, you'll create a new form from the ``TaskType``::
 
     // src/Controller/TaskController.php
