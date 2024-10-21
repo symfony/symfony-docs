@@ -305,7 +305,7 @@ project:
 Most of the time, you'll be working in ``src/``, ``templates/`` or ``config/``.
 As you keep reading, you'll learn what can be done inside each of these.
 
-So what about the other directories in the project?
+What about the other directories in the project?
 
 ``bin/``
     The famous ``bin/console`` file lives here (and other, less important

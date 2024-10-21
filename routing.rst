@@ -1098,9 +1098,9 @@ Parameter Conversion
 
 A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
-represents the user). This feature is called a "param converter".
+represents the user). This feature is called a "parameter converter".
 
-To add support for "param converters" we need SensioFrameworkExtraBundle:
+To add support for "parameter converters" we need SensioFrameworkExtraBundle:
 
 .. code-block:: terminal
 
@@ -1133,11 +1133,11 @@ controller action. Instead of ``string $slug``, add ``BlogPost $post``::
     }
 
 If your controller arguments include type-hints for objects (``BlogPost`` in
-this case), the "param converter" makes a database request to find the object
+this case), the "parameter converter" makes a database request to find the object
 using the request parameters (``slug`` in this case). If no object is found,
 Symfony generates a 404 response automatically.
 
-Read the `full param converter documentation`_ to learn about the converters
+Read the `full parameter converter documentation`_ to learn about the converters
 provided by Symfony and how to configure them.
 
 Special Parameters
@@ -2645,7 +2645,7 @@ use the ``generateUrl()`` helper::
 .. caution::
 
     While objects are converted to string when used as placeholders, they are not
-    converted when used as extra parameters. So, if you're passing an object (e.g. an Uuid)
+    converted when used as extra parameters. If you're passing an object (e.g. an UUID)
     as value of an extra parameter, you need to explicitly convert it to a string::
 
         $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid()]);
@@ -3077,5 +3077,5 @@ Learn more about Routing
 
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
 .. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
-.. _`full param converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`full parameter converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

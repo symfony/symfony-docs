@@ -104,7 +104,7 @@ Generating URLs
 ~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::generateUrl`
-method is just a helper method that generates the URL for a given route::
+method is just a helper method that generates the URL of a given route::
 
     $url = $this->generateUrl('app_lucky_number', ['max' => 10]);
 
@@ -459,7 +459,7 @@ In Symfony, a controller is required to return a ``Response`` object::
     $response->headers->set('Content-Type', 'text/css');
 
 To facilitate this, different response objects are included to address different
-response types.  Some of these are mentioned below. To learn more about the
+response types. Some of these are mentioned below. To learn more about the
 ``Request`` and ``Response`` (and different ``Response`` classes), see the
 :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 

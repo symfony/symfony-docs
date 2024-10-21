@@ -895,9 +895,9 @@ override environment variables defined in ``.env`` files.
 Configuring Environment Variables in Production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In production, the ``.env`` files are also parsed and loaded on each request. So
-the easiest way to define env vars is by creating a ``.env.local`` file on your
-production server(s) with your production values.
+In production, the ``.env`` files are also parsed and loaded on each request.
+The easiest way to define env vars is by creating a ``.env.local`` file on your
+production servers with your production values.
 
 To improve performance, you can optionally run the ``dump-env`` Composer command:
 
