@@ -819,7 +819,7 @@ Learn More
 ----------
 
 Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
 
 .. toctree::
     :maxdepth: 1
@@ -829,7 +829,8 @@ Security
     :ref:`Other Events <security-other-events>`
 
 Other
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+
 .. toctree::
     :maxdepth: 1
 
