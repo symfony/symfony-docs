@@ -2590,6 +2590,8 @@ implement :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`.
 Then, your ``isEqualTo()`` method will be called when comparing users instead
 of the core logic.
 
+.. _security-security-events:
+
 Security Events
 ---------------
 
@@ -2657,6 +2659,8 @@ for these events.
                     ]);
             };
 
+.. _security-authentication-events:
+
 Authentication Events
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -2690,6 +2694,8 @@ Authentication Events
     Dispatched after an ``AuthenticationException`` was thrown during
     authentication. Listeners to this event can modify the error response
     sent back to the user.
+
+.. _security-other-events:
 
 Other Events
 ~~~~~~~~~~~~
