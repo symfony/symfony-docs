@@ -814,3 +814,25 @@ could listen to the ``mailer.post_send`` event and change the method's return va
 
 That's it! Your subscriber should be called automatically (or read more about
 :ref:`event subscriber configuration <ref-event-subscriber-configuration>`).
+
+Learn More
+----------
+
+Security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. toctree::
+    :maxdepth: 1
+
+    :ref:`Security Events <security-security-events>`
+    :ref:`Authentication Events <security-authentication-events>`
+    :ref:`Other Events <security-other-events>`
+
+Other
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. toctree::
+    :maxdepth: 1
+
+    reference/events
+    components/event_dispatcher
+    :ref:`The Request-Response Lifecycle <the-workflow-of-a-request>`
