@@ -155,13 +155,13 @@ method::
                 ->add('red', IntegerType::class, [
                     // enforce the strictness of the type to ensure the constructor
                     // of the Color class doesn't break
-                    'empty_data' => '0',
+                    'empty_data' => 0,
                 ])
                 ->add('green', IntegerType::class, [
-                    'empty_data' => '0',
+                    'empty_data' => 0,
                 ])
                 ->add('blue', IntegerType::class, [
-                    'empty_data' => '0',
+                    'empty_data' => 0,
                 ])
                 // configure the data mapper for this FormType
                 ->setDataMapper($this)
