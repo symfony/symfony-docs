@@ -182,15 +182,11 @@ party provider:
 | `Azure`_               | - API ``azure+api://ACS_RESOURCE_NAME:KEY@default``     |
 +------------------------+---------------------------------------------------------+
 | `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default``       |
-|                        | - HTTP n/a                                              |
 |                        | - API ``brevo+api://KEY@default``                       |
 +------------------------+---------------------------------------------------------+
 | `Google Gmail`_        | - SMTP ``gmail+smtp://USERNAME:APP-PASSWORD@default``   |
-|                        | - HTTP n/a                                              |
-|                        | - API n/a                                               |
 +------------------------+---------------------------------------------------------+
 | `Infobip`_             | - SMTP ``infobip+smtp://KEY@default``                   |
-|                        | - HTTP n/a                                              |
 |                        | - API ``infobip+api://KEY@BASE_URL``                    |
 +------------------------+---------------------------------------------------------+
 | `Mandrill`_            | - SMTP ``mandrill+smtp://USERNAME:PASSWORD@default``    |
@@ -198,7 +194,6 @@ party provider:
 |                        | - API ``mandrill+api://KEY@default``                    |
 +------------------------+---------------------------------------------------------+
 | `MailerSend`_          | - SMTP ``mailersend+smtp://KEY@default``                |
-|                        | - HTTP n/a                                              |
 |                        | - API ``mailersend+api://KEY@BASE_URL``                 |
 +------------------------+---------------------------------------------------------+
 | `Mailgun`_             | - SMTP ``mailgun+smtp://USERNAME:PASSWORD@default``     |
@@ -206,43 +201,32 @@ party provider:
 |                        | - API ``mailgun+api://KEY:DOMAIN@default``              |
 +------------------------+---------------------------------------------------------+
 | `Mailjet`_             | - SMTP ``mailjet+smtp://ACCESS_KEY:SECRET_KEY@default`` |
-|                        | - HTTP n/a                                              |
 |                        | - API ``mailjet+api://ACCESS_KEY:SECRET_KEY@default``   |
 +------------------------+---------------------------------------------------------+
 | `Mailomat`_            | - SMTP ``mailomat+smtp://USERNAME:PASSWORD@default``    |
-|                        | - HTTP n/a                                              |
 |                        | - API ``mailomat+api://KEY@default``                    |
 +------------------------+---------------------------------------------------------+
 | `MailPace`_            | - SMTP ``mailpace+api://API_TOKEN@default``             |
-|                        | - HTTP n/a                                              |
 |                        | - API ``mailpace+api://API_TOKEN@default``              |
 +------------------------+---------------------------------------------------------+
 | `Mailtrap`_            | - SMTP ``mailtrap+smtp://PASSWORD@default``             |
-|                        | - HTTP n/a                                              |
 |                        | - API ``mailtrap+api://API_TOKEN@default``              |
 +------------------------+---------------------------------------------------------+
-| `Postal`_              | - SMTP n/a                                              |
-|                        | - HTTP n/a                                              |
-|                        | - API ``postal+api://API_KEY@BASE_URL``                 |
+| `Postal`_              | - API ``postal+api://API_KEY@BASE_URL``                 |
 +------------------------+---------------------------------------------------------+
 | `Postmark`_            | - SMTP ``postmark+smtp://ID@default``                   |
-|                        | - HTTP n/a                                              |
 |                        | - API ``postmark+api://KEY@default``                    |
 +------------------------+---------------------------------------------------------+
 | `Resend`_              | - SMTP ``resend+smtp://resend:API_KEY@default``         |
-|                        | - HTTP n/a                                              |
 |                        | - API ``resend+api://API_KEY@default``                  |
 +------------------------+---------------------------------------------------------+
 | `Scaleway`_            | - SMTP ``scaleway+smtp://PROJECT_ID:API_KEY@default``   |
-|                        | - HTTP n/a                                              |
 |                        | - API ``scaleway+api://PROJECT_ID:API_KEY@default``     |
 +------------------------+---------------------------------------------------------+
 | `Sendgrid`_            | - SMTP ``sendgrid+smtp://KEY@default``                  |
-|                        | - HTTP n/a                                              |
 |                        | - API ``sendgrid+api://KEY@default``                    |
 +------------------------+---------------------------------------------------------+
 | `Sweego`_              | - SMTP ``sweego+smtp://LOGIN:PASSWORD@HOST:PORT``       |
-|                        | - HTTP n/a                                              |
 |                        | - API ``sweego+api://API_KEY@default``                  |
 +------------------------+---------------------------------------------------------+
 
