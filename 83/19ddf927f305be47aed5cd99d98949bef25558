@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-12-03T11:46:58Z
+
+@MrYamous actually, the arguments do work and I'd personally love to use that in the examples.
+
+But, after discussing internally in the Core Team, we decided to not use named arguments in Symfony Docs and the Symfony Blog. This is because Symfony can change the name of those arguments; they are not covered by the BC Promise.
