@@ -2197,6 +2197,8 @@ test it in a real application::
         }
     }
 
+::
+
     // ExternalArticleServiceTest.php
     use PHPUnit\Framework\TestCase;
     use Symfony\Component\HttpClient\MockHttpClient;
