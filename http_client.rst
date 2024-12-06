@@ -2192,9 +2192,8 @@ test it in a real application::
             // ... other checks
 
             $responseJson = $response->getContent();
-            $responseData = json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);
 
-            return $responseData;
+            return json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);
         }
     }
 
