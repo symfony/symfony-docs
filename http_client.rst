@@ -2197,7 +2197,7 @@ test it in a real application::
         }
     }
 
-::
+.. code-block:: php
 
     // ExternalArticleServiceTest.php
     use PHPUnit\Framework\TestCase;
