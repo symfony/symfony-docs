@@ -1,0 +1,47 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-12-03T07:33:39Z
+
+Good catch Thomas.
+
+I wonder: shouldn't we remove this note?
+
+```rst
+.. note::
+
+    The local part of the address (what goes before the ``@``) can include UTF-8
+    characters, except for the sender address (to avoid issues with bounced emails).
+    For example: ``föóbàr@example.com``, ``用户@example.com``, ``θσερ@example.com``, etc.
+```
+
+We say that ONLY the local part can contain UTF-8 chars ... but before we say that BOTH parts can contain UTF-8 chars.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-12-03T14:53:58Z
+
+I started a discussion about this at the PR (feel free to join!), in order to figure out what the best approach is: https://github.com/symfony/symfony/pull/58361#issuecomment-2513023333
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-12-05T21:56:32Z
+
+I figured out what the status-quo is:
+
+Symfony works in 2 steps:
+1. If the *domain* contains utf8-characters, it's converted to punycode. This is supported by all SMTP servers.
+2. If the *localpart* contains utf8-characters, Symfony sends the `SMTPUTF8` command. This is not supported by  all SMTP servers.
+
+So the message for the docs would be:
+1. Using an utf-domain is fine.
+2. If you're using an utf-localpart, you should:
+    1. Find out if *your* SMTP server supports it (by opening a telnet session, then send `EHLO`, and look at the answer). If it doesn't support it, Symfony will throw an exception; i.e. it's better to filter those cases *in advance*.
+    2. If you can, find out if the *receiving* SMTP server supports it (same telnet procedure). If it doesn't, then *your* SMTP server will send you a bounce DSN back.
+    So depending on which server (yours or the remote) doesn't support it, you'll get the error message in a different way.
+
+Besides, using an utf-localpart as *sender* address is always bad, since if *any* (unrelated) problem occurs with that, the currently-in-charge SMTP might not be able to send you a bounce (no `SMTPUTF8` support).
+
+I'm 99% sure that this is correct. So I'm suggesting: First, you need to decide on how much detail you want. Then somebody (you, me, whoever) needs to write it, then somebody needs to doublecheck it.
+Cause if you don't want too much detail, there's no need to doublecheck everything...
+
+BTW: You should fix https://symfony.com/blog/new-in-symfony-7-2-mime-improvements#comment-25595
