@@ -195,6 +195,9 @@ Structure
     - throw new \Exception(sprintf('Command "%s" failed.', $command::class));
     + throw new \Exception(sprintf('Command "%s" failed.', get_debug_type($command)));
 
+* User-oriented exception, error and deprecation messages must not use ``must``. Instead,
+  alternative phrasing should be used: ``should``, ``needs to``, ``has to``, etc.
+
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
 
