@@ -282,7 +282,14 @@ You can find a list of existing mime types on the `IANA website`_.
 The message displayed if the extension of the file is not a valid extension
 per the `extensions`_ option.
 
-.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
+====================  =============================================================
+Parameter             Description
+====================  =============================================================
+``{{ file }}``        Absolute file path
+``{{ limit }}``       Maximum file size allowed
+``{{ extension }}``   The extension of the given file
+``{{ extensions }}``  The list of allowed file extensions
+====================  =============================================================
 
 ``mimeTypesMessage``
 ~~~~~~~~~~~~~~~~~~~~
