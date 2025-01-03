@@ -778,7 +778,7 @@ but they can be any type of resource.
 .. note::
 
     In order to work, the `SAPI`_ you're using must support this feature, like
-    `FrankenPHP`_.
+    `FrankenPHP`_ and have symfony/web-link as a dependency.
 
 You can send early hints from your controller action thanks to the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::sendEarlyHints`
