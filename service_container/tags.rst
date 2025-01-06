@@ -1281,4 +1281,24 @@ be used directly on the class of the service you want to configure::
         // ...
     }
 
+The attribute can be repeated on the same class to define multiple tags
+with different indexes and priorities::
+
+    // src/Handler/One.php
+    namespace App\Handler;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+
+    #[AsTaggedItem(index: 'handler_one', priority: 10)]
+    #[AsTaggedItem(index: 'handler_two', priority: 20)]
+    class One
+    {
+        // ...
+    }
+
+.. versionadded:: 7.3
+
+    The support for repeated ``#[AsTaggedItem]`` attributes was introduced in
+    Symfony 7.3.
+
 .. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
