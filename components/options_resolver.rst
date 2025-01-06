@@ -304,11 +304,13 @@ correctly. To validate the types of the options, call
             $resolver->setAllowedTypes('host', 'string');
 
             // specify multiple allowed types
-            $resolver->setAllowedTypes('port', ['null', 'int']);
+            $resolver->setAllowedTypes('port', ['int', 'null']);
+            $resolver->setAllowedTypes('port', 'int|null');
 
             // check all items in an array recursively for a type
-            $resolver->setAllowedTypes('dates', 'DateTime[]');
             $resolver->setAllowedTypes('ports', 'int[]');
+            $resolver->setAllowedTypes('dates', 'DateTime[]');
+            $resolver->setAllowedTypes('dates', '(DateTime|DateTimeImmutable)[]');
         }
     }
 
@@ -330,6 +332,10 @@ is thrown::
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
+
+.. versionadded:: 7.3
+
+    The support of union types was introduced in Symfony 7.3.
 
 .. _optionsresolver-validate-value:
 
