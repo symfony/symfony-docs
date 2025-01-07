@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by tcoch at 2025-01-06T16:43:59Z
+
+@xabbuh Can you please help me understand the CI failure ?
+`[Missing class] Class, interface or trait with name "Symfony\Component\Validator\Constraints" does not exist`
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-01-07T07:21:57Z
+
+@tcoch you can ignore the failure
