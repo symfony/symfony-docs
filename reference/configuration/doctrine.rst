@@ -52,6 +52,10 @@ The following block shows all possible configuration keys:
                 path:                 '%kernel.project_dir%/var/data/data.sqlite'
                 memory:               true
                 unix_socket:          /tmp/mysql.sock
+                replicas:
+                    read_only_replica:
+                        url: mysql://db_user:db_password@127.0.0.1:3306/db_name_replica
+                keep_replica: true
                 # the DBAL wrapperClass option
                 wrapper_class:        App\DBAL\MyConnectionWrapper
                 charset:              utf8mb4
@@ -87,11 +91,22 @@ The following block shows all possible configuration keys:
                     path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
+                    keep-replica="true"
                     wrapper-class="App\DBAL\MyConnectionWrapper"
                     charset="utf8mb4"
                     logging="%kernel.debug%"
                     platform-service="App\DBAL\MyDatabasePlatformService"
                     server-version="8.0.37">
+
+                    <doctrine:replica
+                        name="read_only_replica"
+                        dbname="database"
+                        host="localhost"
+                        port="1234"
+                        user="user"
+                        password="secret"
+                        driver="pdo_mysql"
+                    />
 
                     <doctrine:option key="foo">bar</doctrine:option>
                     <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
