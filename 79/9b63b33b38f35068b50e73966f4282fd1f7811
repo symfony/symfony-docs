@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by quilius at 2025-01-17T14:49:39Z
+
+I've replaced all occurrences of `.. versionadded:: 7.3` with `.. deprecated:: 7.3` because DOCtor-RST was failing.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-01-18T09:28:45Z
+
+@quilius please revert the `versionadded` to `deprecated` changes, we have fixed the build in #20584
