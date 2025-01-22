@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2025-01-18T10:38:56Z
+
+Hi ! Can this be applied to version 6.4?
+
+---------------------------------------------------------------------------
+
+by phansys at 2025-01-18T12:09:00Z
+
+>Hi ! Can this be applied to version 6.4?
+
+The merge process should apply these changes in newer branches, including `6.4`.
