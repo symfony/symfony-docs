@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-01-23T06:07:38Z
+
+I think we can replace that with a value replaced by the docs-builder
+
+You can have a look at the notifier links at the end of the file, but I think there we use the current version an not the latest LTS version.
+
+cc @alamirault
