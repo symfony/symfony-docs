@@ -1654,7 +1654,19 @@ The transport has a number of options:
 
         Set ``redeliver_timeout`` to a greater value than your slowest message
         duration. Otherwise, some messages will start a second time while the
-        first one is still being handled.
+        first one is still being handled. 
+
+    .. versionadded:: 7.3
+
+        The Doctrine transport now supports the **keepalive** feature, which prevents
+        messages from being prematurely redelivered during long-running processing.
+        This updates the ``delivered_at`` timestamp periodically to ensure the message
+        is marked as "in progress." Use the ``--keepalive`` option with Messenger commands
+        to enable this:
+
+        .. code-block:: terminal
+
+            bin/console messenger:consume --keepalive=5
 
 ``auto_setup``
     Whether the table should be created automatically during send / get.
