@@ -1666,7 +1666,7 @@ The transport has a number of options:
 
         .. code-block:: terminal
 
-            bin/console messenger:consume --keepalive=5
+            php bin/console messenger:consume --keepalive=5
 
 ``auto_setup``
     Whether the table should be created automatically during send / get.
