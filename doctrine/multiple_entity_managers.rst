@@ -273,4 +273,40 @@ The same applies to repository calls::
 
     You should now always fetch this repository using ``ManagerRegistry::getRepository()``.
 
+    To correctly autowiring entity manager to the repository, set the name of the EntityManagerInterface parameter in the conststructor with a prefix ($***EntityManager) some as the name of the entity_manager in doctrine.yaml::
+
+        // src/Repository/CustomerRepository.php
+        namespace App\Repository;
+
+        use Doctrine\ORM\EntityRepository;
+        use Doctrine\ORM\EntityManagerInterface;
+        use AcmeStoreBundle\Entity\Customer;
+
+        class CustomerRepository extends EntityRepository
+        {
+            public function __construct(EntityManagerInterface $customerEntityManager)
+            {
+                parent::__construct($customerEntityManager, $customerEntityManager->getClassMetadata(Customer::class));
+            }
+        }
+
+    You should now simply autowiring this repository in controller::
+
+        // src/Controller/UserController.php
+        namespace App\Controller;
+        use App\Repository\CustomerRepository;
+        
+        // ...
+    
+        class UserController extends AbstractController
+        {
+            public function index(CustomerRepository $customerRepository): Response
+            {
+                // Just use of the repository some as repository from default Entity Manager
+                $customers = $customerRepository->findAll();
+    
+                // ...
+            }
+        }
+
 .. _`several alternatives`: https://stackoverflow.com/a/11494543
