@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2024-06-27T11:04:58Z
+
+Hi! Can you please explain why this env var is needed and where it is used?
+
+Searching through the Symfony code for this env var, I cannot find it: https://github.com/search?q=repo%3Asymfony%2Fsymfony%20MESSENGER_CONSUMER_NAME&type=code
+
+---------------------------------------------------------------------------
+
+by DubbleClick at 2024-06-27T11:38:57Z
+
+https://symfony.com/doc/current/messenger.html#supervisor-configuration
+
+> If you use the Redis Transport, note that each worker needs a unique consumer name to avoid the same message being handled by multiple workers. One way to achieve this is to set an environment variable in the Supervisor configuration file, which you can then refer to in messenger.yaml (see the ref:`Redis section <messenger-redis-transport>` below):
+>
+> `environment=MESSENGER_CONSUMER_NAME=%(program_name)s_%(process_num)02d`
