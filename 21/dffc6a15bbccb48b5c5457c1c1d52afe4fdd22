@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2024-11-27T08:50:28Z
+
+Shouldn't we also add the other `choice_*` options?
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-11-27T11:31:29Z
+
+OK, I copied everything called "choice_*" - but please doublecheck if they really exist an an EnumType ;-)
