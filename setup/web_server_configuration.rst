@@ -91,6 +91,14 @@ directive to pass requests for PHP files to PHP FPM:
         #     Options FollowSymlinks
         # </Directory>
 
+        # optionally disable the fallback resource for the asset directories
+        # which will allow Apache to return a 404 error when files are
+        # not found instead of passing the request to Symfony
+        # <Directory /var/www/project/public/bundles>
+        #     DirectoryIndex disabled
+        #     FallbackResource disabled
+        # </Directory>
+
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
