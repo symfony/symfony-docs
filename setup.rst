@@ -249,9 +249,9 @@ workflows to make them fail when there are vulnerabilities.
 .. tip::
 
     In continuous integration services you can check security vulnerabilities
-    using a different stand-alone project called `Local PHP Security Checker`_.
-    This is the same project used internally by ``check:security`` but much
-    smaller in size than the entire Symfony CLI.
+    by invoking `composer audit`. This uses the same data internally as
+    ``check:security`` but does not require installing the entire Symfony CLI
+    during CI or on CI workers.
 
 Symfony LTS Versions
 --------------------
@@ -318,7 +318,6 @@ Learn More
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`Local PHP Security Checker`: https://github.com/fabpot/local-php-security-checker
 .. _`Symfony releases`: https://symfony.com/releases
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
