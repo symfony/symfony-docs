@@ -181,11 +181,27 @@ The table style can be changed to any built-in styles via
     // same as calling nothing
     $table->setStyle('default');
 
-    // changes the default style to compact
+    // changes the default style to markdown
+    $table->setStyle('markdown');
+    $table->render();
+
+This outputs the table in the Markdown format:
+
+.. code-block:: terminal
+
+    | ISBN          | Title                    | Author           |
+    |---------------|--------------------------|------------------|
+    | 99921-58-10-7 | Divine Comedy            | Dante Alighieri  |
+    | 9971-5-0210-0 | A Tale of Two Cities     | Charles Dickens  |
+    | 960-425-059-0 | The Lord of the Rings    | J. R. R. Tolkien |
+    | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
+
+You can also set the style to ``compact``::
+
     $table->setStyle('compact');
     $table->render();
 
-This code results in:
+which outputs:
 
 .. code-block:: terminal
 
