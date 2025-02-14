@@ -201,7 +201,7 @@ You can also set the style to ``compact``::
     $table->setStyle('compact');
     $table->render();
 
-which outputs:
+The output of this command will be:
 
 .. code-block:: terminal
 
