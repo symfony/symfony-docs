@@ -363,7 +363,7 @@ providers until the user is found:
             ;
 
             $allProviders = $security->provider('all_users')->chain()
-                ->providers([$backendProvider, $legacyProvider, $userProvider])
+                ->providers(['backend_users', 'legacy_users', 'users'])
             ;
         };
 
