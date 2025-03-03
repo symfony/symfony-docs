@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-03-03T13:27:40Z
+
+Don't we now have to replace `~~~~~` underlines with `-----` underlines?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-03-03T14:18:58Z
+
+@xabbuh no ... because reStructuredText allows many different markers for section titles and doesn't impose any specific order. The first marker found is considered h1, the second different marker found in the document is considered h2, etc. See https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#sections
+
+For consistency, we could update this ... but it's going to be a nightmare to merge into upper branches 😓
+
+I built the docs locally to double check that our tooling supports this, and it looks like it does:
+
+![](https://github.com/user-attachments/assets/80efed2c-0994-453a-94cc-682f3d3cf24f)
