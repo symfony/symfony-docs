@@ -1,0 +1,69 @@
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2025-02-24T17:56:14Z
+
+I think this is an oversight, because for [Amazon SQS transport](https://github.com/symfony/amazon-sqs-messenger/blob/7.2/Transport/Connection.php#L310), the `keepalive` option still exists.
+
+I've also noticed that the option `keepalive` is missing from the list of options for Beanstalkd Transport
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-02-25T07:41:14Z
+
+Maxime, thanks for reviewing this. I've added some content based on the docs of these services. But, I have no experience in this, so please review it. Thanks!
+
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2025-02-26T18:34:15Z
+
+I have little experience in this and I'm not familiar with this transports, especially as there can be differences depending on the type of transport.
+
+In my opinion and according to my research, it looks good but I'm not sure.
+
+Need review for the `keepalive` option for the Amazon SQS transport and Beanstalkd transport, can you review this please ?
+
+cc @HypeMC @valtzu
+
+---------------------------------------------------------------------------
+
+by valtzu at 2025-02-26T18:54:52Z
+
+I don't think we added anything to the transport options – what was added was support for `--keepalive` in `messenger:consume` command, for these specific transports.
+
+How SQS works with `--keepalive`:
+
+```bash
+bin/console messenger:consume --keepalive=10 async
+```
+```yaml
+framework:
+  messenger:
+    transports:
+      async: 'sqs://...?visibility_timeout=15'
+```
+
+Every 10 seconds, for all the messages that are still being processed, the visibility of a message is re-set to `visibility_timeout`.
+
+When using `--keepalive`, `visibility_timeout` must be bigger than `--keepalive` value.
+
+This mechanism allows to keep `visibility_timeout` rather small, thus, in case the worker dies, the message is redelivered faster. Without `--keepalive`, a message that takes more than `visibility_timeout` to process would lead into double-processing as SQS would redeliver it while it's already being processed.
+
+---------------------------------------------------------------------------
+
+by HypeMC at 2025-02-27T00:32:36Z
+
+> I don't think we added anything to the transport options – what was added was support for `--keepalive` in `messenger:consume` command, for these specific transports.
+
+Ok, I just noticed that this was added to the list of transport options. @valtzu is right, there were no options added to the transports themselves, only to the `messenger:consume` and `messenger:failed:retry` commands. These console command options tell the Worker to asynchronously use the transport's keepalive mechanism if it's implemented.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-02-27T11:32:51Z
+
+Thanks a lot folks! I now understand this. I made some changes based on your comments.
+
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2025-02-27T19:46:27Z
+
+Thanks a lot for explaining this, I understand better.
