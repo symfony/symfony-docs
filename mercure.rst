@@ -46,7 +46,7 @@ Run this command to install the Mercure support:
 
 .. code-block:: terminal
 
-    $ composer require mercure
+    $ composer require symfony/mercure
 
 Running a Mercure Hub
 ~~~~~~~~~~~~~~~~~~~~~
