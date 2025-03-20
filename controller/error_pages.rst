@@ -336,3 +336,24 @@ time and again, you can have just one (or several) listeners deal with them.
     your application (like :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`)
     and takes measures like redirecting the user to the login page, logging them
     out and other things.
+
+Particular Error Scenarios
+--------------------------
+
+There are a multitude of error scenarios when customising error pages. Here are a few of them:
+
+### PHP Errors
+
+If you encounter PHP errors like TypeError or Division by zero, you can customize the error handling by overriding the `Symfony\\Component\\HttpKernel\\Controller\\ErrorController` using the service.yaml when in the production environment. Although the default error pages may not capture all PHP errors, you can still utilize Twig for rendering (:ref:`override the default error controller <custom-error-controller>`).
+
+### Errors Before Twig Initialization
+
+In cases where errors occur before Twig is initialized, such as when there is no connection to the database, you can set the template of HtmlErrorRenderer on your kernel:
+
+```php
+HtmlErrorRenderer::setTemplate($this->getProjectDir().'/templates/error.html');
+
+.. note::
+
+    While these approaches might not cover every edge case,
+    they provide additional customization options beyond the default error templates or error controller overrides.
