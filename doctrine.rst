@@ -861,6 +861,83 @@ control behavior:
 
     The ``message`` option was introduced in Symfony 7.1.
 
+Mapped Route Parameters
+~~~~~~~~~~~~~~~~~~~~~~~
+
+When many route parameters are used to find more than one entity, it is mandatory to use #[MapEntity] attributes and this can become cumbersome::
+
+    #[Route('/document/{slug}/{id}-{name}/')]
+    public function showDocument(
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Category $category,
+        #[MapEntity(mapping: ['id' => 'id', 'name' => 'name'])]
+        Document $document,
+    ): Response
+    {
+        // the database queries in this case would be:
+        // $document = $documentRepository->findOneBy(['id' => 'the id', 'name' => 'the name']);
+        // $category = $categoryRepository->findOneBy(['slug' => 'the slug']);
+    }
+
+As an alternative, you can also use Mapped Route Parameters.
+
+When adding route parameters, you can now define the mapping between the route parameter and the controller argument::
+
+    #[Route('/document/{slug:category}/{id:document}-{name:document}/')]
+    public function showDocument(Document $document, Category $category): Response
+    {
+        // the database queries in this case would be:
+        // $document = $documentRepository->findOneBy(['id' => 'the id', 'name' => 'the name']);
+        // $category = $categoryRepository->findOneBy(['slug' => 'the slug']);
+    }
+
+.. versionadded:: 7.1
+
+    The ``Mapped Route Parameters`` was introduced in Symfony 7.1.
+
+But when two properties have the same name, you will catach an error if you try ::
+
+    #[Route('/document/{slug:category}/{id:document}-{slug:document}/')]
+    public function showDocument(Document $document, Category $category): Response
+    {
+        // category entity and document entity have the same property ``slug`` but in the route_parameters we can't have two ``slug`` arguments.
+    }
+
+In this case we have to return to MapEntiy::
+
+    #[Route('/document/{slugCategory}/{id}-{slugDocument}/')]
+    public function showDocument(
+        #[MapEntity(mapping: ['slugCategory' => 'slug'])]
+        Category $category
+        #[MapEntity(mapping: ['id' => 'id', 'slugDocument' => 'slug'])]
+        Document $document,
+    ): Response
+    {
+        // the database queries in this case would be:
+        // $document = $documentRepository->findOneBy(['id' => 'the id', 'slug' => 'the slug document']);
+        // $category = $categoryRepository->findOneBy(['slug' => 'the slug category']);
+    }
+
+As an alternative, tou can use ``Aliased Mapped Route Parameters``.
+
+When adding route parameters, you can now define the mapping between the route parameter and the controller argument with an alias::
+
+    #[Route('/document/{slugCategory:category.slug}/{id:document}-{slugDocument:document.slug}/')]
+    public function showDocument(Document $document, Category $category): Response
+    {
+        // the database queries in this case would be:
+        // $document = $documentRepository->findOneBy(['id' => 'the id', 'slug' => 'the slug document']);
+        // $category = $categoryRepository->findOneBy(['slug' => 'the slug category']);
+    }
+
+In this case, _route_mapping keys will be slugCategory and slugDocument, and used by path twig option::
+
+    {{ path('showDocument', {slugCategory: 'invoices', id: 25, slugDocument: 'invoice_CFD025125'}) }}
+
+.. versionadded:: 7.3
+
+    The ``Aliased Mapped Route Parameters`` was introduced in Symfony 7.3.
+
 Updating an Object
 ------------------
 
