@@ -865,7 +865,7 @@ Mapped Route Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 When many route parameters are used to find more than one entity,
-it is mandatory to use #[MapEntity] attributes and this can become cumbersome::
+it is mandatory to use ``#[MapEntity]`` attributes and this can become cumbersome::
 
     #[Route('/document/{slug}/{id}-{name}/')]
     public function showDocument(
