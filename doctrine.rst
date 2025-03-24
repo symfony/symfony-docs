@@ -861,6 +861,41 @@ control behavior:
 
     The ``message`` option was introduced in Symfony 7.1.
 
+Mapped Route Parameters
+~~~~~~~~~~~~~~~~~~~~~~~
+
+When many route parameters are used to find more than one entity,
+it is mandatory to use ``#[MapEntity]`` attributes and this can become cumbersome::
+
+    #[Route('/document/{slug}/{id}-{name}/')]
+    public function showDocument(
+        #[MapEntity(mapping: ['slug' => 'slug'])]
+        Category $category,
+        #[MapEntity(mapping: ['id' => 'id', 'name' => 'name'])]
+        Document $document,
+    ): Response
+    {
+        // the database queries in this case would be:
+        // $document = $documentRepository->findOneBy(['id' => 'the id', 'name' => 'the name']);
+        // $category = $categoryRepository->findOneBy(['slug' => 'the slug']);
+    }
+
+As an alternative, you can also use Mapped Route Parameters.
+
+When adding route parameters, you can now define the mapping between the route parameter and the controller argument::
+
+    #[Route('/document/{slug:category}/{id:document}-{name:document}/')]
+    public function showDocument(Document $document, Category $category): Response
+    {
+        // the database queries in this case would be:
+        // $document = $documentRepository->findOneBy(['id' => 'the id', 'name' => 'the name']);
+        // $category = $categoryRepository->findOneBy(['slug' => 'the slug']);
+    }
+
+.. versionadded:: 7.1
+
+    The ``Mapped Route Parameters`` was introduced in Symfony 7.1.
+
 Updating an Object
 ------------------
 
