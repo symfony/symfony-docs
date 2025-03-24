@@ -864,7 +864,8 @@ control behavior:
 Mapped Route Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-When many route parameters are used to find more than one entity, it is mandatory to use #[MapEntity] attributes and this can become cumbersome::
+When many route parameters are used to find more than one entity,
+it is mandatory to use #[MapEntity] attributes and this can become cumbersome::
 
     #[Route('/document/{slug}/{id}-{name}/')]
     public function showDocument(
@@ -918,7 +919,7 @@ In this case we have to return to MapEntiy::
         // $category = $categoryRepository->findOneBy(['slug' => 'the slug category']);
     }
 
-As an alternative, tou can use ``Aliased Mapped Route Parameters``.
+As an alternative, you can use ``Aliased Mapped Route Parameters``.
 
 When adding route parameters, you can now define the mapping between the route parameter and the controller argument with an alias::
 
