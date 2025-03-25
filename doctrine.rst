@@ -937,7 +937,7 @@ In this case, _route_mapping keys will be slugCategory and slugDocument, and use
 
 .. versionadded:: 7.3
 
-    The aliased mapped route parameters were introduced in Symfony 7.3.
+    Aliased mapped route parameters were introduced in Symfony 7.3.
 
 Updating an Object
 ------------------
