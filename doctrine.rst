@@ -867,7 +867,7 @@ Mapped Route Parameters
 When many route parameters are used to find more than one entity,
 it is mandatory to use ``#[MapEntity]`` attributes and this can become cumbersome::
 
-    #[Route('/document/{slug}/{id}-{name}/')]
+    #[Route('/document/{slug}/{id}-{name}')]
     public function showDocument(
         #[MapEntity(mapping: ['slug' => 'slug'])]
         Category $category,
@@ -884,7 +884,7 @@ As an alternative, you can also use Mapped Route Parameters.
 
 When adding route parameters, you can now define the mapping between the route parameter and the controller argument::
 
-    #[Route('/document/{slug:category}/{id:document}-{name:document}/')]
+    #[Route('/document/{slug:category}/{id:document}-{name:document}')]
     public function showDocument(Document $document, Category $category): Response
     {
         // the database queries in this case would be:
@@ -894,11 +894,11 @@ When adding route parameters, you can now define the mapping between the route p
 
 .. versionadded:: 7.1
 
-    The ``Mapped Route Parameters`` was introduced in Symfony 7.1.
+    The Mapped Route Parameters was introduced in Symfony 7.1.
 
 But when two properties have the same name, you will catach an error if you try ::
 
-    #[Route('/document/{slug:category}/{id:document}-{slug:document}/')]
+    #[Route('/document/{slug:category}/{id:document}-{slug:document}')]
     public function showDocument(Document $document, Category $category): Response
     {
         // category entity and document entity have the same property ``slug`` but in the route_parameters we can't have two ``slug`` arguments.
@@ -906,7 +906,7 @@ But when two properties have the same name, you will catach an error if you try 
 
 In this case we have to return to MapEntiy::
 
-    #[Route('/document/{slugCategory}/{id}-{slugDocument}/')]
+    #[Route('/document/{slugCategory}/{id}-{slugDocument}')]
     public function showDocument(
         #[MapEntity(mapping: ['slugCategory' => 'slug'])]
         Category $category
@@ -919,11 +919,11 @@ In this case we have to return to MapEntiy::
         // $category = $categoryRepository->findOneBy(['slug' => 'the slug category']);
     }
 
-As an alternative, you can use ``Aliased Mapped Route Parameters``.
+As an alternative, you can use Aliased Mapped Route Parameters.
 
 When adding route parameters, you can now define the mapping between the route parameter and the controller argument with an alias::
 
-    #[Route('/document/{slugCategory:category.slug}/{id:document}-{slugDocument:document.slug}/')]
+    #[Route('/document/{slugCategory:category.slug}/{id:document}-{slugDocument:document.slug}')]
     public function showDocument(Document $document, Category $category): Response
     {
         // the database queries in this case would be:
@@ -937,7 +937,7 @@ In this case, _route_mapping keys will be slugCategory and slugDocument, and use
 
 .. versionadded:: 7.3
 
-    The ``Aliased Mapped Route Parameters`` was introduced in Symfony 7.3.
+    The Aliased Mapped Route Parameters was introduced in Symfony 7.3.
 
 Updating an Object
 ------------------
