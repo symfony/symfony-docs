@@ -909,7 +909,7 @@ In this case we have to return to MapEntiy::
     #[Route('/document/{slugCategory}/{id}-{slugDocument}')]
     public function showDocument(
         #[MapEntity(mapping: ['slugCategory' => 'slug'])]
-        Category $category
+        Category $category,
         #[MapEntity(mapping: ['id' => 'id', 'slugDocument' => 'slug'])]
         Document $document,
     ): Response
@@ -931,7 +931,9 @@ When adding route parameters, you can now define the mapping between the route p
         // $category = $categoryRepository->findOneBy(['slug' => 'the slug category']);
     }
 
-In this case, _route_mapping keys will be slugCategory and slugDocument, and used by path twig option::
+In this case, _route_mapping keys will be slugCategory and slugDocument, and used by path twig option.
+
+.. code-block:: twig
 
     {{ path('showDocument', {slugCategory: 'invoices', id: 25, slugDocument: 'invoice_CFD025125'}) }}
 
