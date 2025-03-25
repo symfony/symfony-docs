@@ -894,7 +894,7 @@ When adding route parameters, you can now define the mapping between the route p
 
 .. versionadded:: 7.1
 
-    The Mapped Route Parameters was introduced in Symfony 7.1.
+    The mapped route parameters were introduced in Symfony 7.1.
 
 But when two properties have the same name, you will catach an error if you try ::
 
@@ -939,7 +939,7 @@ In this case, _route_mapping keys will be slugCategory and slugDocument, and use
 
 .. versionadded:: 7.3
 
-    The Aliased Mapped Route Parameters was introduced in Symfony 7.3.
+    The aliased mapped route parameters were introduced in Symfony 7.3.
 
 Updating an Object
 ------------------
