@@ -894,7 +894,7 @@ When adding route parameters, you can now define the mapping between the route p
 
 .. versionadded:: 7.1
 
-    The Mapped Route Parameters was introduced in Symfony 7.1.
+    The mapped route parameters were introduced in Symfony 7.1.
 
 Updating an Object
 ------------------
