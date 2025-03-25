@@ -875,26 +875,24 @@ it is mandatory to use ``#[MapEntity]`` attributes and this can become cumbersom
         Document $document,
     ): Response
     {
-        // the database queries in this case would be:
+        // this would result in the following database queries:
         // $document = $documentRepository->findOneBy(['id' => 'the id', 'name' => 'the name']);
         // $category = $categoryRepository->findOneBy(['slug' => 'the slug']);
     }
 
-As an alternative, you can also use Mapped Route Parameters.
-
-When adding route parameters, you can now define the mapping between the route parameter and the controller argument::
+By using mapped route parameters, you can define the mapping between the route parameter and the controller argument::
 
     #[Route('/document/{slug:category}/{id:document}-{name:document}')]
     public function showDocument(Document $document, Category $category): Response
     {
-        // the database queries in this case would be:
+        // this would result in the following database queries:
         // $document = $documentRepository->findOneBy(['id' => 'the id', 'name' => 'the name']);
         // $category = $categoryRepository->findOneBy(['slug' => 'the slug']);
     }
 
 .. versionadded:: 7.1
 
-    The mapped route parameters were introduced in Symfony 7.1.
+    Mapped route parameters were introduced in Symfony 7.1.
 
 Updating an Object
 ------------------
