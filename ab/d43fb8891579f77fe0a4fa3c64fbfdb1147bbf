@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2025-03-07T11:27:18Z
+
+> Minor is self-explanatory and everybody is used to it. Peripheral is an euphemism that needs to be explained in order to know exactly what it refers to. I don't think "minor" is offensive or problematic at all. Some changes, some work, some ideas, etc. are minor compared to others. I think that's fine.
+
+See https://github.com/symfony/symfony-docs/pull/20720#discussion_r1980232389. This doesn't have anything to do with offensive wording, but rather using 2 separate definitions of "minor change". One is when you should merge a PR as minor/bug/feature, and the one I changed to "peripheral" is what is referred to as typo fixes/cs fixes that core team members are allowed to push to the repository directly (e.g. after a merge).
+
+---------------------------------------------------------------------------
+
+by fabpot at 2025-03-07T11:35:09Z
+
+> > Minor is self-explanatory and everybody is used to it. Peripheral is an euphemism that needs to be explained in order to know exactly what it refers to. I don't think "minor" is offensive or problematic at all. Some changes, some work, some ideas, etc. are minor compared to others. I think that's fine.
+>
+> See [#20720 (comment)](https://github.com/symfony/symfony-docs/pull/20720#discussion_r1980232389). This doesn't have anything to do with offensive wording, but rather using 2 separate definitions of "minor change". One is when you should merge a PR as minor/bug/feature, and the one I changed to "peripheral" is what is referred to as typo fixes/cs fixes that core team members are allowed to push to the repository directly (e.g. after a merge).
+
+Maybe "insignificant" changes would do? Or "unsubtantial"?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-03-10T09:56:45Z
+
+I disagree about the need to split the current "minor change" concept into two concepts: minor and peripheral/insignificant.
+
+I think we need simpler processes and rules, instead of making them more complicated.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2025-03-10T10:04:37Z
+
+We don't change any rules, the document as it currently is live uses "minor change" for 2 different definitions. This is just to remove confusion by making sure each term only has 1 definition.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-03-10T10:10:23Z
+
+That's where we disagree. The current document only has one type of `minor` change that comprises this:
+
+> Minor changes comprise typos, DocBlock fixes, code standards
+> violations, and minor CSS, JavaScript and HTML modifications.
+
+This has served us well for so many years that, in my opinion, we shouldn't make any change about it.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2025-03-10T10:19:41Z
+
+We have two:
+
+![image](https://github.com/user-attachments/assets/580e1f17-dd08-44bb-b1c5-348f894cab78)
+
+The first one allows more changes than the second one. Currently, the document can confuse new team members into thinking that only PRs containing exclusively "typos, CS, docblock fixes, minor CSS/JS/HTML modification" should be merged as "minor". Which is not the case and results in a more convoluted changelog. This is why I think it's important to disconnect the two of them.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-03-10T10:49:07Z
+
+Ah, I see my misunderstanding now. Thanks 🙏
+
+I consider both the same. To me, all the things listed in both cases are _"minor things that don't need to be listed in the CHANGELOG file"_:
+
+* Typos
+* Changes in Markdown files
+* Adding test files
+* Adding or updating translations
+* Docblock fixes
+* Code syntax fixes
+* CSS/JS/HTML updates
+
+---------------------------------------------------------------------------
+
+by wouterj at 2025-03-10T10:53:43Z
+
+But I don't think we want core team members to push PHP logic changing commits to the version branches without PR, which would be the case if we combined it into one definition.
