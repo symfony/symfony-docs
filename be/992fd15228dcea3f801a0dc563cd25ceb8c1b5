@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2024-12-10T13:12:08Z
+
+This option is (very) briefly mentioned [here](https://symfony.com/doc/current/security.html#the-firewall) but I think it would be a good idea to add more specific documentation :)
+
+---------------------------------------------------------------------------
+
+by 94noni at 2024-12-10T16:15:33Z
+
+> This option is (very) briefly mentioned [here](https://symfony.com/doc/current/security.html#the-firewall)
+
+indeed, that's the only ref on recent doc, but it feel very related to the doc context, not the security config
