@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by praad at 2024-12-18T08:50:03Z
+
+@Param annotation not working in a Standalone instantiation according to my tests. Given example can save for others a lot of time. Feel free to modify it. Thanks.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-02-06T08:00:43Z
+
+@wouterj would you agree on adding this example inside the list of normalizers as proposed? Thanks!
