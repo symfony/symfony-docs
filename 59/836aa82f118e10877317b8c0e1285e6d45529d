@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by Spomky at 2025-04-02T10:22:56Z
+
+Hi @Fan2Shrek,
+
+This looks good to me.
+I would have added the example showed in https://github.com/symfony/symfony/pull/42124#issuecomment-2541483856 as well (it is more relevant to me compared to the `DoctrineFlushStamp` stamp)
