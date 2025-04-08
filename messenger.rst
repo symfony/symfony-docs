@@ -2778,6 +2778,8 @@ provided in order to ease the declaration of these special handlers::
                     $ack->nack($e);
                 }
             }
+
+            // Do something in batch that is costly (e.g. sending data to a 3rd party API).
         }
 
         // Optionally, you can override some of the trait methods, such as the
