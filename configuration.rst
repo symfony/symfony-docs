@@ -594,6 +594,13 @@ going to production:
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
 
+.. warning::
+
+    Some characters are not allowed in environment name, e.g. the
+    ``-`` character. If you try to use it, it will throw this exception:
+     The environment "%s" contains invalid characters, it can only contain
+     characters allowed in PHP class names.
+
 Instead of creating new environments, you can use environment variables as
 explained in the following section. This way you can use the same application
 and environment (e.g. ``prod``) but change its behavior thanks to the
