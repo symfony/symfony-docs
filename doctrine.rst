@@ -174,6 +174,22 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     Confused why the price is an integer? Don't worry: this is just an example.
     But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
+.. note::
+
+   For a property name `Enum` get the path (e.g. App\Entity\Enums\etat)
+   A State.php example ``src/Entity/Enums/State.php`` file::
+   
+    // src/Entity/Enums/State.php
+    namespace App\Entity\Enums;
+
+    enum Etat: string
+    {
+        case IN_PROGRESS = 'In progress';
+        case COMPLETED = 'Completed';
+        case PENDING = 'Pending';
+    }
+
+
 .. warning::
 
     There is a `limit of 767 bytes for the index key prefix`_ when using
