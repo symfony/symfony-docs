@@ -172,9 +172,9 @@ would look like this::
                 return false;
             }
 
-            // you know $subject is a Post object, thanks to `supports()`
-            /** @var Post $post */
+            // $subject is a Post object, thanks to `supports()` above
             $post = $subject;
+            assert($post instanceof Post);
 
             return match($attribute) {
                 self::VIEW => $this->canView($post, $user),
