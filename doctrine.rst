@@ -176,7 +176,7 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
 .. note::
 
-   For a property name `Enum` get the path (e.g. App\Entity\Enums\etat)
+   For a property name ``Enum``  get the path (e.g. `` App\Entity\Enums\Etat``)
    A State.php example ``src/Entity/Enums/State.php`` file::
    
     // src/Entity/Enums/State.php
