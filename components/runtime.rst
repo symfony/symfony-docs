@@ -36,6 +36,8 @@ So how does this front-controller work? At first, the special
 the component. This file runs the following logic:
 
 #. It instantiates a :class:`Symfony\\Component\\Runtime\\RuntimeInterface`;
+#. The runtime includes the front-controller script -- in this case
+   ``public/index.php`` -- making it run again. Make sure this doesn't cause problems.
 #. The callable (returned by ``public/index.php``) is passed to the Runtime, whose job
    is to resolve the arguments (in this example: ``array $context``);
 #. Then, this callable is called to get the application (``App\Kernel``);
