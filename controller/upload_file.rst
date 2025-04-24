@@ -286,7 +286,9 @@ Then, define a service for this class:
 
         # config/services.yaml
         services:
-            # ...
+            _defaults:
+                bind:
+                    string $targetDirectory: '%brochures_directory%'
 
             App\Service\FileUploader:
                 arguments:
