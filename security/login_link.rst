@@ -468,7 +468,10 @@ The properties are fetched from the user object using the
     invalidating logic to your login links. For instance, if you store a
     ``$lastLinkRequestedAt`` property on your users that you update in the
     ``requestLoginLink()`` controller, you can invalidate all login links
-    whenever a user requests a new link.
+    whenever a user requests a new link. If you use DateTimeInterface
+    objects, make sure to add ``lastLinkRequestedAt.timestamp`` to the
+    signature properties, so it does not fail on different instances of
+    the object.
 
 Configure a Maximum Use of a Link
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
