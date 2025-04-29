@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-04-28T11:51:08Z
+
+@symfony/docs Do we actually still need those `map.rst.inc` files or couldn't we just get rid of them?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-04-28T16:18:06Z
+
+TBH I don't know, but if we don't add it here, its clearly missing, so I guess yes.
