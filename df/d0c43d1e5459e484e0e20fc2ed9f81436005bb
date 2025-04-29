@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-04-29T06:36:17Z
+
+Thanks Aubert ... and congrats on your first Symfony Docs contribution 🎉
+
+I checked and it's correct to merge in 7.2 because in 6.4 the signature in code is still the old one.
