@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-04-28T11:52:39Z
+
+> I added type `php` exlicitly. I think perf are better, (PhpFileLoader is used). Tell me if it's ok or not
+
+I am not against it, but I wouldn't expect this to actually make a real difference.
