@@ -397,6 +397,75 @@ attribute::
         }
     }
 
+Another way to use 
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
+attribute is location class tagged with a specific :doc:`tag </service_container/tags>`
+
+Tagging allows you to add classes without having to explicitly list classes in 
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
+attribute
+
+It is also possible to use the #[AutoconfigureTag] attribute directly on the base class or interface and all classes implementing this interface will be automatically tagged and included in 
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
+attribute::
+
+    // src/CommandBus.php
+    namespace App;
+
+    use Psr\Container\ContainerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
+
+    class CommandBus
+    {
+        public function __construct(
+            #[AutowireLocator("command_handler")]
+            private ContainerInterface $handlers,
+        ) {
+        }
+
+        public function handle(Object $command, string $handlerClassName): mixed
+        {
+            if ($this->handlers->has($handlerClassName)) {
+                $handler = $this->handlers->get($handlerClassName);
+
+                return $handler->handle($command);
+            }
+        }
+    }
+
+    // src/CommandHandler/CommandHandlerInterface.php
+    namespace App\CommandHandler;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('command_handler')]
+    interface CommandHandlerInterface
+    {
+        public function handle(object $command);
+    }
+
+    // src/CommandHandler/FooHandler.php
+    namespace App\CommandHandler;
+
+    class FooHandler implements CommandHandlerInterface
+    {
+        public function handle(object $command)
+        {
+            dump("Foo", $command);
+        }
+    }
+
+    // src/CommandHandler/BarHandler.php
+    namespace App\CommandHandler;
+
+    class BarHandler implements CommandHandlerInterface
+    {
+        public function handle(object $command)
+        {
+            dump("Bar", $command);
+        }
+    }
+
 .. _service-locator_autowire-iterator:
 
 The AutowireIterator Attribute
