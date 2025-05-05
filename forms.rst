@@ -392,9 +392,11 @@ of an object. To make this happen, the submitted data from the user must be
 written into the form object::
 
     // src/Controller/TaskController.php
-
+    
     // ...
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class TaskController extends AbstractController
     {
