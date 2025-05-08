@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-05-05T08:28:12Z
+
+I don't know much about this 🙏 but the previous example looked pretty convenient.
+
+Is it really a bad practice? If it's not, maybe we can show both alternatives?
+
+---------------------------------------------------------------------------
+
+by alamirault at 2025-05-06T21:07:28Z
+
+I thinks it's ok, but I don't really know others possible implementations
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-05-07T07:18:38Z
+
+Let's ask @Spomky. Could you please tell us if the example currently shown on Symfony Docs works and is valid? If it is, I think we should display both the current example and the new proposed ones (so folks don't overcomplicate things when not necessary). Thanks!
+
+---------------------------------------------------------------------------
+
+by Spomky at 2025-05-07T07:25:14Z
+
+Hi @alamirault and @javiereguiluz,
+
+Yes, the example looks good.
+The storage strategy is entirely up to the developers and in this example it is simply a folder-based approach.
+
+The purpose of the `SmimeCertificateRepositoryInterface` is to resolve the certificate file path for a given email address, as the S/MIME encrypter expects a valid local file path to the certificate.
