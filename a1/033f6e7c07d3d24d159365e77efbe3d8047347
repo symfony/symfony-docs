@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-03-24T17:25:12Z
+
+CI should be green after a rebase on `7.3`
+
+---------------------------------------------------------------------------
+
+by soyuka at 2025-03-27T11:42:59Z
+
+I've rebased, this also documents https://github.com/symfony/symfony/pull/60028 as it's quite mandatory for many real world use cases.
+
+Interfaces are now matching the merged code. At the beginning I've used real word examples @94noni could you let me know your thoughts and if you think I should apply the same logic accross the whole documentation?
+
+---------------------------------------------------------------------------
+
+by soyuka at 2025-04-14T15:21:44Z
+
+The new version needs https://github.com/symfony/symfony/pull/60028
+
+---------------------------------------------------------------------------
+
+by soyuka at 2025-05-07T10:09:30Z
+
+Thanks for the review @Spomky ! I think this is a good first shot to the documentation that can be improved later on.
