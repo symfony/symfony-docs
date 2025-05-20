@@ -1,0 +1,205 @@
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-02-25T12:56:53Z
+
+@javiereguiluz this one could be merged to unlock https://github.com/symfony/symfony-docs/pull/20638
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-02-26T07:27:23Z
+
+I'm not sure about these changes. I think the previous description (old route + new route) was more clear.
+
+The new names (some route + alias to some route) could be less clear, especially the new route name. Including "alias" as part of the route alias is unnecessarily long in my opinion and could make some readers think that the route alias must contain that `alias` prefix.
+
+Let me ask @xabbuh and @OskarStark about this. Thanks!
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-02-26T08:41:02Z
+
+> I'm not sure about these changes. I think the previous description (old route + new route) was more clear.
+>
+> The new names (some route + alias to some route) could be less clear, especially the new route name. Including "alias" as part of the route alias is unnecessarily long in my opinion and could make some readers think that the route alias must contain that `alias` prefix.
+>
+> Let me ask @xabbuh and @OskarStark about this. Thanks!
+
+I can replace "alias" with "new", but it implies underlying use case: replacing the `some_route` usage with the alias. In my mind aliases are not necessarily here to replace existing routes, but to co-exists.
+Imagine 2 websites sharing the same codebase except templates, 1 for BrandA and another for BrandB. Route aliases can be used to name route according to the Brand name in dedicated templates.
+
+We can add a site note to mention the alias name is not mandatory to contain "alias" word.
+
+These changes are on purpose to clarify the behavior using the Attribute way to alias route.
+
+---------------------------------------------------------------------------
+
+by stof at 2025-02-26T08:55:59Z
+
+If you want to replace, you will generaly define the route with the new name and add a BC alias for the old name (especially when you want to deprecate it). That was the main confusion with the existing example. `new_route_name` is the deprecated name.
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-03-04T08:35:59Z
+
+I think we do not have to presume what users will do with route aliasing feature (e.g creating new route and create an alias with the old route name). Just showing how to generally use route aliasing with generic terms, and then users will adapt to their needs/preferences. WDYT?
+
+EDIT: I've update the PR by adding a small paragaph to explain clearly how route aliasing can be used to provide BC for renamed routes.
+
+cc @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-03-11T07:20:20Z
+
+Maybe it's me, but this looks very confusing:
+
+![](https://github.com/user-attachments/assets/df517ee5-d0e3-4ea5-86d5-7a4e8c767b18)
+
+You create an alias ... and immediately deprecate it. The alias, being a new thing that you add, feels like the new route name, not the legacy route name.
+
+-----
+
+I still think we should use names like "new_route_name" and "original_route_name" or "legacy_route_name". It's true that this alias feature can be used in different ways, but I think we should focus on its main usage and use terms that are impossible to misunderstand.
+
+---------------------------------------------------------------------------
+
+by damienfern at 2025-03-12T12:52:53Z
+
+I understand @javiereguiluz POV because I had the same feeling about aliases. Isn't this a sign that aliases on routes are plugged in a wrong way ?
+
+IMHO, here is how it should be (a first draft, I don't know if it's doable):
+
+```yaml
+some_route_name:
+    path: /some-path
+    controller: App\Controller\SomeController::index
+    alias:
+          alias_to_some_route_name:
+              # this outputs the following generic deprecation message:
+              # Since acme/package 1.2: The "alias_to_some_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+              deprecated:
+                  package: 'acme/package'
+                  version: '1.2'
+```
+
+---------------------------------------------------------------------------
+
+by Jean-Beru at 2025-04-07T14:53:37Z
+
+IMO, the [blog post](https://symfony.com/blog/new-in-symfony-5-4-route-aliasing#deprecating-routes) explains clearly the concept of deprecating a route. We could update the documentation in that way. eg:
+
+My current route.
+```yaml
+some_route_name:
+    path: /some-path
+    controller: App\Controller\SomeController::index
+```
+
+I want to deprecate it in favor of `new_route_name`.
+```yaml
+some_route_name:
+    alias: new_route_name
+    # this outputs the following generic deprecation message:
+    # Since acme/package 1.2: The "some_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+    deprecated:
+        package: 'acme/package'
+        version: '1.2'
+
+new_route_name:
+    path: /some-path
+    controller: App\Controller\SomeController::index
+```
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-04-16T16:40:58Z
+
+I've addressed comments, now examples are more explicit and I hope clearer:
+
+First code block with initial route definition
+```yaml
+# config/routes.yaml
+some_route_name:
+    path: /some-path
+    controller: App\Controller\SomeController::index
+```
+
+Second code block with an alias to the initial route
+
+```yaml
+# config/routes.yaml
+some_route_name:
+    path: /some-path
+    controller: App\Controller\SomeController::index
+
+new_route_name:
+    # "alias" option refers to the name of the route declared above
+    alias: some_route_name
+```
+
+Third code block where we "invert" the alias to be able to deprecate the initial route
+
+```yaml
+# Move the concrete route definition under ``new_route_name``
+new_route_name:
+    path: /some-path
+    controller: App\Controller\SomeController::index
+
+# Define the alias and the deprecation under the ``some_route_name`` definition
+some_route_name:
+    alias: new_route_name
+
+    # this outputs the following generic deprecation message:
+    # Since acme/package 1.2: The "some_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+    deprecated:
+        package: 'acme/package'
+        version: '1.2'
+
+    # or
+
+    # you can also define a custom deprecation message (%alias_id% placeholder is available)
+    deprecated:
+        package: 'acme/package'
+        version: '1.2'
+        message: 'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
+```
+
+I've also rephrased text paragraphs before and after each code block to explicitly explain what is the goal in each code block.
+
+@javiereguiluz @Jean-Beru @damienfern @stof let me know if this version is good to you 🙏
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-05-05T16:56:17Z
+
+Can we use something like `product_show` as old and `product_detail` as aliased route to add more real world feeling?
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-05-05T20:36:29Z
+
+@OskarStark thanks for you review. I've fixed minor comments and renamed example routes.
+
+I think we hit the most clear version we can:
+- Real life route names
+- Not confusing naming
+- Clear explaination of each code block
+- Common thread between Route Alias and Route Deprecation features
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-05-20T07:37:33Z
+
+Merging this one will unlock https://github.com/symfony/symfony-docs/pull/20638 and allow me to finish Route Alias documentation refreshing 🙏
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-05-20T07:48:11Z
+
+@symfony/docs can we get another approval please? Thanks
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-05-20T08:42:33Z
+
+@symfony/docs comments addressed, ready to be merged 🎉
