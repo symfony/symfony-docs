@@ -147,7 +147,7 @@ Field Options
 choices
 ~~~~~~~
 
-**type**: ``array`` **default**: ``[]``
+**type**: ``array``, ``callable`` **default**: ``[]``
 
 This is the most basic way to specify the choices that should be used
 by this field. The ``choices`` option is an array, where the array key
