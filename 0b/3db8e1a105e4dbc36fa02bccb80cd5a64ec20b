@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-02-13T09:09:13Z
+
+@stof for review
+
+I've fixed issues we talk about in private.
+
+But, as we discussed, we need to make this Route Alias part of the documentation a bit clearer on lower branches. This PR documents the new way to create route aliases using Attributes (which differs from the way to do in YAML, XML and PHP, if I've understood correctly).
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2025-05-20T13:20:18Z
+
+@symfony/docs I reworked this PR to only add PHP Attribute code blocks about Route Aliasing and Deprecated Route Aliases. Your review is welcome 🙏
+
+Status: Needs review
