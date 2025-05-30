@@ -1566,7 +1566,7 @@ the Twig filter::
 
     class AppExtension
     {
-        #[AsTwigFilter('price')]
+        #[AsTwigFilter(name: 'price')]
         public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
@@ -1588,7 +1588,7 @@ If you want to create a function instead of a filter, use the
 
     class AppExtension
     {
-        #[AsTwigFunction('area')]
+        #[AsTwigFunction(name: 'area')]
         public function calculateArea(int $width, int $length): int
         {
             return $width * $length;
