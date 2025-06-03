@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by JoaoGabrielD at 2025-06-01T21:06:40Z
+
+Another useful information is the possibility of setting an array with multiple of those values.
+I've tested this, and it worked:
+
+```yaml
+framework:
+    asset_mapper:
+        # ...
+        precompress:
+            format: [
+                'gzip',
+                'brotli',
+                'zstandard',
+            ]
+```
