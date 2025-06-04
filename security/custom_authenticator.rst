@@ -319,10 +319,10 @@ and storage::
     // src/Security/NormalizedUserBadge.php
     namespace App\Security;
 
-    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\FooBadge;
     use function Symfony\Component\String\u;
 
-    final class NormalizedUserBadge extends UserBadge
+    final class NormalizedUserBadge extends FooBadge
     {
         public function __construct(string $identifier)
         {
@@ -332,7 +332,7 @@ and storage::
         }
     }
 
-.. code-block:: php
+::
 
     // src/Security/PasswordAuthenticator.php
     namespace App\Security;
