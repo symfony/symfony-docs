@@ -332,7 +332,7 @@ and storage::
         }
     }
 
-::
+..code-block:: php
 
     // src/Security/PasswordAuthenticator.php
     namespace App\Security;
