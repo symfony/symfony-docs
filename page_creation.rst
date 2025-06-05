@@ -36,7 +36,7 @@ Creating a Page: Route and Controller
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
 random) number and prints it. To do that, create a "Controller" class and a
-"controller" method inside of it::
+"number" method inside of it::
 
     <?php
     // src/Controller/LuckyController.php
