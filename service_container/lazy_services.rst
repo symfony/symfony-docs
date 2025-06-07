@@ -23,8 +23,8 @@ until you interact with the proxy in some way.
 
 .. warning::
 
-    Lazy services do not support `final`_ or ``readonly`` classes, but you can use
-    `Interface Proxifying`_ to work around this limitation.
+    Lazy services support for `final`_ or ``readonly`` classes was introduced in Symfony 7.3, and
+    requires PHP 8.4 or newer. You can use `Interface Proxifying`_ to work around this limitation.
 
 .. _lazy-services_configuration:
 
@@ -145,9 +145,9 @@ It defines an optional parameter used to define interfaces for proxy and interse
 Interface Proxifying
 --------------------
 
-Under the hood, proxies generated to lazily load services inherit from the class
-used by the service. However, sometimes this is not possible at all (e.g. because
-the class is `final`_ and can not be extended) or not convenient.
+Under the hood, lazy services leverage `lazy objects`_ since PHP 8.4 and Symfony 7.3. In earlier version,
+proxy objects inheriting from the service's class are generated. One of the limitations of proxy objects
+is inability to extend `final`_ or ``readonly`` classes.
 
 To workaround this limitation, you can configure a proxy to only implement
 specific interfaces.
@@ -231,4 +231,5 @@ implement multiple interfaces by adding new "proxy" tags.
 
 .. _`ghost object`: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
 .. _`final`: https://www.php.net/manual/en/language.oop5.final.php
+.. _`lazy objects`: https://www.php.net/manual/en/language.oop5.lazy-objects.php
 .. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
