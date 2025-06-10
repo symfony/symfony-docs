@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-06-02T06:38:03Z
+
+Is there an alternative for this removed function? If there is, let's mention it. If there's not, let's mention this too. Thanks.
+
+---------------------------------------------------------------------------
+
+by alamirault at 2025-06-02T17:37:06Z
+
+There is no replacement to this function.
+
+Documentation explain available functions and explain below we can use an expression language.
+
+Deprecation was done in 5.4 and removed in 6.0 so I think there is nothing to mention on 6.4 branch
