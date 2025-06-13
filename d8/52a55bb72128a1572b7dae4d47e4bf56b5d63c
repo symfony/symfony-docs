@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by niconoe- at 2025-06-13T10:14:55Z
+
+Sorry, someone noticed me that also `{{ limit }}` parameter is not explained for the `minMessage` and `maxMessage` option. I added them.
