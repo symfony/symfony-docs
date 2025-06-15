@@ -827,6 +827,10 @@ the Messenger component:
     This ensures workers are running continuously. For more details, refer to the
     `Deploying to Production`_ section of the Messenger component documentation.
 
+.. note::
+    Add a new transport in your ``messenger.yaml`` config file to reflect the name of your schedule. 
+    For example: If you are using the ``default`` scheduler, add this new entry under transports: ```scheduler_default: "%env(MESSENGER_TRANSPORT_DSN)%"```
+
 Creating a Consumer Programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
