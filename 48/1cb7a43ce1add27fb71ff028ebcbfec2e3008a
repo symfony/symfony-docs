@@ -1,0 +1,52 @@
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2025-06-19T09:02:18Z
+
+@alamirault a `composer require phpunit/phpunit --dev` is it necessary to correct [this CI work](https://github.com/symfony/symfony-docs/actions/runs/15753771079/job/44404442480?pr=21090)? I can make a PR if necessary.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-19T09:49:08Z
+
+> @alamirault a composer require phpunit/phpunit --dev is it necessary to correct [this CI work](https://github.com/symfony/symfony-docs/actions/runs/15753771079/job/44404442480?pr=21090)? I can make a PR if necessary.
+
+Might be a good idea, @symfony/docs WDYT?
+
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2025-06-19T10:05:47Z
+
+Rebased from 7.3 ✅
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-19T10:14:17Z
+
+~80 chars 😄 not a hard limit, but an orientation
+
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2025-06-19T13:27:50Z
+
+@alexandre-daubois Done for 80 👍
+
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2025-06-19T13:31:16Z
+
+But for lisst when I rendenring them it's look like :/ @alexandre-daubois @OskarStark
+![image](https://github.com/user-attachments/assets/af268f0a-2d9e-47d1-9579-9e91a10029ce)
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2025-06-19T13:49:45Z
+
+Try indenting with the rest, i.e. two spaces for each line under the list item
+
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2025-06-19T13:59:24Z
+
+> Try indenting with the rest, i.e. two spaces for each line under the list item
+
+Done everywhere, its works as expected! 👍
