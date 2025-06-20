@@ -184,6 +184,10 @@ You can optionally define a description, help message and the
     ``setDescription()`` method instead of the attribute to define the command
     description.
 
+    If you want to configure the command description and the command name, use the
+    ``AsCommand`` attribute to it, as follows:
+    ``#[AsCommand(name: 'app:create-user', description:'Creates users')]``.
+
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
