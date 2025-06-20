@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-10T15:24:03Z
+
+Please let's do it close to the 8.0 release and not now. The reason is, otherwise every upmerge from a new 7.4 feature would make the CI red in 8.0
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-06-10T15:38:32Z
+
+Oskar, can you please explain this a bit? I don't understand why that would happen. Thanks.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-10T19:02:26Z
+
+Imagine a 7.4 new feature, with a 7.4 versionadded. If you then upmerge to 8.0 branch, doctor on 8.0 will fail as 7.4 versionadded directives would not be allowed per config anymore, so you would need to manually adjust 8.0 then. I would postpone this close to the 8.0 release. Hope it's clear now
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-06-11T06:55:30Z
+
+I disagree with this. If we don't merge this, 8.0 branch will be perpetually red, so we could miss legit errors reported by DOCtor-RST. Although 8.0 doesn't receive new features, but the removal of some deprecations might require to change some contents ... and we could make mistakes there.
+
+You are right that when upmerging 7.4 to 8.0 we'll see an error for any new `versionadded` directive. But that's common in this repo. E.g. when we still maintained 5.4 and 6.x and 7.x, I had to remove `versionadded` directives frequently when upmerging between them. I'd say this is expected.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-16T16:18:55Z
+
+Allright then, I am in
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-19T10:01:41Z
+
+@alamirault open to finish this PR?
