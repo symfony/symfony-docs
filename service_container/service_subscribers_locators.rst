@@ -302,14 +302,6 @@ This is done by having ``getSubscribedServices()`` return an array of
         ];
     }
 
-.. deprecated:: 7.1
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
-    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
-    attributes were deprecated in Symfony 7.1 in favor of
-    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
-    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`.
-
 .. note::
 
     The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
