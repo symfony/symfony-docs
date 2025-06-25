@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by vinceAmstoutz at 2025-06-23T09:41:05Z
+
+> I'm afraid I don't understand this change.
+>
+> We had `$verbose = true` and now we repaced it by `$verbose = null` but in the `versionadded` we say that "$verbose = true" is introduced.
+>
+> Also, should we mention somewhere what "verbose" option means or what it does?
+>
+> Thanks!
+
+@javiereguiluz In the latest update, I included an explanation to enhance clarity. Specifically, I clarified the purpose of `$defaultVerboseMode = true;` (as seen in [this source](https://github.com/symfony/framework-bundle/blob/7e7dc61bd75bc254b5a02fa60decac738a4821b4/Test/BrowserKitAssertionsTrait.php#L31)) and the `$verbose` method parameters.
