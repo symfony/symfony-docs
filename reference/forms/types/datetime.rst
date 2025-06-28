@@ -38,10 +38,9 @@ for more details.
 date_label
 ~~~~~~~~~~
 
-**type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
+**type**: ``string`` | ``null`` **default**: ``null``
 
-Sets the label that will be used when rendering the date widget. Setting it to
-``false`` will suppress the label::
+Sets the label that will be used when rendering the date widget::
 
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
@@ -136,10 +135,9 @@ input_format
 time_label
 ~~~~~~~~~~
 
-**type**: ``string`` | ``null`` **default**: The label is "guessed" from the field name
+**type**: ``string`` | ``null`` **default**: ``null``
 
-Sets the label that will be used when rendering the time widget. Setting it to
-``false`` will suppress the label::
+Sets the label that will be used when rendering the time widget::
 
     use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
