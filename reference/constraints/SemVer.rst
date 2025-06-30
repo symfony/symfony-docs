@@ -7,6 +7,7 @@ version formats including partial versions, pre-release versions, and
 build metadata.
 
 .. versionadded:: 7.4
+
     The ``SemVer`` constraint was introduced in Symfony 7.4.
 
 ==========  ===================================================================
