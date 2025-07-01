@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2025-05-05T18:05:43Z
+
+Thanks @alamirault and @OskarStark for your review 🙏
+
+I’m actively looking for someone to help me refactor `console.rst`, as I’m running out of free-time before the final release.
+
+---------------------------------------------------------------------------
+
+by 94noni at 2025-05-05T19:21:49Z
+
+> Pending docs to be updated:
+
+I would also add https://symfony.com/doc/current/console/input.html, wdyt @yceruto ?
+I can help on this in a separate unitary PR if its ok
+
+---------------------------------------------------------------------------
+
+by yceruto at 2025-05-05T20:46:06Z
+
+Thanks, Antoine! Sure, go for it.
+
+Here we're discussing input related topics https://github.com/symfony/symfony/pull/59602
+
+---------------------------------------------------------------------------
+
+by yceruto at 2025-05-13T15:25:02Z
+
+Thanks @wouterj, @94noni, and @javiereguiluz for your feedback! I will try to address it ASAP
+
+---------------------------------------------------------------------------
+
+by yceruto at 2025-05-28T22:09:52Z
+
+FYI, `console.rst` file is ready for review.
+
+Working on `console/input.rst`...
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-06-19T10:03:11Z
+
+open to finish this PR @yceruto ? 🙏
+
+---------------------------------------------------------------------------
+
+by yceruto at 2025-06-19T11:42:35Z
+
+No time to finish this soon :( sorry, looking for help to finish the remaining docs 🙏
