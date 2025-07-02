@@ -1,9 +1,9 @@
 SemVer
 ======
 
-Validates that a value is a valid semantic version string according to the 
-`Semantic Versioning`_ specification. This constraint supports various 
-version formats including partial versions, pre-release versions, and 
+Validates that a value is a valid semantic version string according to the
+`Semantic Versioning`_ specification. This constraint supports various
+version formats including partial versions, pre-release versions, and
 build metadata.
 
 .. versionadded:: 7.4
@@ -85,7 +85,7 @@ Options
 
 **type**: ``boolean`` **default**: ``true``
 
-When set to ``true``, the version must strictly follow the official 
+When set to ``true``, the version must strictly follow the official
 `Semantic Versioning`_ specification. This means:
 
 - No "v" prefix is allowed (use "1.2.3", not "v1.2.3")
