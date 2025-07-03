@@ -52,7 +52,7 @@ Basic Usage
 
             <class name="App\Entity\Package">
                 <property name="version">
-                    <constraint name="SemVer" />
+                    <constraint name="SemVer"/>
                 </property>
             </class>
         </constraint-mapping>
