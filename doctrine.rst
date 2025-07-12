@@ -73,7 +73,7 @@ database for you:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:database:create
+    $ php bin/console doctrine:database:create db_name
 
 There are more options in ``config/packages/doctrine.yaml`` that you can configure,
 including your ``server_version`` (e.g. 8.0.37 if you're using MySQL 8.0.37), which may
