@@ -789,17 +789,17 @@ URLs of ``<a>`` elements:
                 ->sanitizer('app.post_sanitizer')
                     // if `true`, all URLs using the `http://` scheme will be converted to
                     // use the `https://` scheme instead. `http` still needs to be
-                    // allowed in `allowedLinkSchemes`
+                    // allowed in `allowLinkSchemes`
                     ->forceHttpsUrls(true)
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
                     // attribute will be dropped
-                    ->allowedLinkSchemes(['http', 'https', 'mailto'])
+                    ->allowLinkSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the
                     // URL contains a different host. Subdomains are allowed: e.g. the following
                     // config would also allow 'www.symfony.com', 'live.symfony.com', etc.
-                    ->allowedLinkHosts(['symfony.com'])
+                    ->allowLinkHosts(['symfony.com'])
 
                     // whether to allow relative links (i.e. URLs without scheme and host)
                     ->allowRelativeLinks(true)
@@ -815,16 +815,16 @@ URLs of ``<a>`` elements:
             (new HtmlSanitizerConfig())
                 // if `true`, all URLs using the `http://` scheme will be converted to
                 // use the `https://` scheme instead. `http` still needs to be
-                // allowed in `allowedLinkSchemes`
+                // allowed in `allowLinkSchemes`
                 ->forceHttpsUrls()
 
                 // specifies the allowed URL schemes. If the URL has a different scheme, the
                 // attribute will be dropped
-                ->allowedLinkSchemes(['http', 'https', 'mailto'])
+                ->allowLinkSchemes(['http', 'https', 'mailto'])
 
                 // specifies the allowed hosts, the attribute will be dropped if the
                 // URL contains a different host which is not a subdomain of the allowed host
-                ->allowedLinkHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
+                ->allowLinkHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                 // whether to allow relative links (i.e. URLs without scheme and host)
                 ->allowRelativeLinks()
@@ -909,16 +909,16 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 ->sanitizer('app.post_sanitizer')
                     // if `true`, all URLs using the `http://` scheme will be converted to
                     // use the `https://` scheme instead. `http` still needs to be
-                    // allowed in `allowedMediaSchemes`
+                    // allowed in `allowMediaSchemes`
                     ->forceHttpsUrls(true)
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
                     // attribute will be dropped
-                    ->allowedMediaSchemes(['http', 'https', 'mailto'])
+                    ->allowMediaSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the URL
                     // contains a different host which is not a subdomain of the allowed host
-                    ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
+                    ->allowMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                     // whether to allow relative URLs (i.e. URLs without scheme and host)
                     ->allowRelativeMedias(true)
@@ -934,16 +934,16 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
             (new HtmlSanitizerConfig())
                 // if `true`, all URLs using the `http://` scheme will be converted to
                 // use the `https://` scheme instead. `http` still needs to be
-                // allowed in `allowedMediaSchemes`
+                // allowed in `allowMediaSchemes`
                 ->forceHttpsUrls()
 
                 // specifies the allowed URL schemes. If the URL has a different scheme, the
                 // attribute will be dropped
-                ->allowedMediaSchemes(['http', 'https', 'mailto'])
+                ->allowMediaSchemes(['http', 'https', 'mailto'])
 
                 // specifies the allowed hosts, the attribute will be dropped if the URL
                 // contains a different host which is not a subdomain of the allowed host
-                ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
+                ->allowMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                 // whether to allow relative URLs (i.e. URLs without scheme and host)
                 ->allowRelativeMedias()
