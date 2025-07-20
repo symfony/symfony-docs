@@ -293,6 +293,8 @@ Run this command to create a new project based on the Symfony Demo application:
 .. code-block:: terminal
 
     $ symfony new my_project_directory --demo
+    $ cd my_project_directory
+    $ php bin/console secrets:set APP_SECRET
 
 Start Coding!
 -------------
