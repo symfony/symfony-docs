@@ -473,6 +473,100 @@ This can also be used to remove elements from the allow list.
                 ->dropElement('figure')
         );
 
+.. _html-sanitizer-default-action:
+
+Default Action for Unconfigured Elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.2
+
+    The ``defaultAction()`` method was introduced in Symfony 7.2.
+
+By default, elements that are not explicitly allowed, blocked, or dropped
+will be removed along with their children. You can change this behavior
+by configuring the default action using the ``defaultAction()`` method.
+
+The method accepts an ``HtmlSanitizerAction`` enum with three possible values:
+
+* ``HtmlSanitizerAction::Drop`` (default): Remove the element and its children
+* ``HtmlSanitizerAction::Block``: Remove the element but keep its children
+* ``HtmlSanitizerAction::Allow``: Keep the element (without any attributes)
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/html_sanitizer.yaml
+        framework:
+            html_sanitizer:
+                sanitizers:
+                    app.post_sanitizer:
+                        # set the default action for unconfigured elements
+                        default_action: 'block' # or 'allow', 'drop'
+                        allow_elements:
+                            p: '*'
+
+    .. code-block:: xml
+
+        <!-- config/packages/html_sanitizer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:html-sanitizer>
+                    <!-- set the default action for unconfigured elements -->
+                    <framework:sanitizer name="app.post_sanitizer" default-action="block">
+                        <framework:allow-element name="p">
+                            <framework:attribute>*</framework:attribute>
+                        </framework:allow-element>
+                    </framework:sanitizer>
+                </framework:html-sanitizer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->htmlSanitizer()
+                ->sanitizer('app.post_sanitizer')
+                    // set the default action for unconfigured elements
+                    ->defaultAction('block') // or 'allow', 'drop'
+                    ->allowElement('p', '*')
+            ;
+        };
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizerAction;
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+
+        $postSanitizer = new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                // set the default action for unconfigured elements
+                ->defaultAction(HtmlSanitizerAction::Block)
+                ->allowElement('p')
+        );
+
+With this configuration, if the input HTML contains an element that is not
+explicitly configured (e.g., ``<span>``), the sanitizer will remove the
+``<span>`` element but keep its children, instead of dropping both the
+element and its children.
+
+.. note::
+
+    When using ``HtmlSanitizerAction::Allow`` as the default action, the
+    unconfigured elements will be preserved but without any attributes for
+    security reasons.
+
 Allow Attributes
 ~~~~~~~~~~~~~~~~
 
