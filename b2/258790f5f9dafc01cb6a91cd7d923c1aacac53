@@ -1,0 +1,71 @@
+---------------------------------------------------------------------------
+
+by mtarld at 2024-12-20T15:43:47Z
+
+The remaining failure is due to the fact that the https://github.com/symfony-tools/symfony-application application does not have the `src/Encodable` folder.
+
+Should we create it? Or should we add the issue to the baseline? Or maybe commenting that configuration?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2024-12-21T15:34:35Z
+
+Hi @mtarld. Thanks a lot for starting this and providing so much valuable documentation early in the development phase!
+
+Before reviewing the whole document, we must think about the position of the component in the documentation. We've mostly stopped using the `components/` directory. Instead, we focus on the "guides" and document framework usage. This component is a bit more challenging, as it belongs to the "Serialization" topic that currently belongs to the Serializer component. We've discussed this a bit with the core team during the SymfonyCon:
+
+I think the best way would be to move this article to `serializer/json_encoder.rst`, and add a little section at the start of `serializer.rst` mentioning this component and when you should use instead of the Serializer component (e.g. a compact version of the "Serializer or JsonEncoder?" section). But we're of course open if people have better ideas on how to position this new component in the ecosystem!
+
+---
+
+Something that might also be interesting is adding a `php-standalone` tab to some of the code examples, showing how to use this component standalone. You can see this in use in the main `serializer.rst` for instance.
+
+---------------------------------------------------------------------------
+
+by SirRFI at 2025-04-23T09:39:04Z
+
+The documentation requires update, because the component and it's contents has been renamed - see https://github.com/symfony/symfony/pull/59863
+
+---------------------------------------------------------------------------
+
+by SirRFI at 2025-04-23T09:45:26Z
+
+Can you provide minimum code required to use the component in custom service inside Symfony project? Could be also useful for "New in Symfony 7.3" blog series.
+
+I tried following the documentation (with updated names), but I get `Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException: You have requested a non-existent service "Symfony\Component\JsonStreamer\StreamReaderInterface".` despite it's visible in `bin/console debug:container`. Also tried `json.stream_reader` alias. All Symfony dependencies are updated to `7.3.*-dev`.
+
+---------------------------------------------------------------------------
+
+by mtarld at 2025-04-23T12:58:35Z
+
+Hey @SirRFI , thanks for keeping track of it. I'm aware of these points yes! 🙂
+
+I'm really busy these days, but as soon as I have time, I'll update this PR (containing your suggestions) - it's part of my top priorities.
+
+---------------------------------------------------------------------------
+
+by SirRFI at 2025-06-11T16:19:31Z
+
+Now that Symfony 7.3 is released, I tried using the component again. I stumbled upon this:
+```
+ArgumentCountError: Too few arguments to function App\CustomObject::__construct(), 0 passed in /app/vendor/symfony/json-streamer/Read/Instantiator.php on line 38 and exactly 4 expected
+```
+Eventually I came to conclusion that the component currently does not support PHP 8.0's constructor property promotion and `readonly`.
+
+I wanted to try the decoding part of things first, so I missed the following sentence:
+> The JsonStreamer works with simple PHP classes that are composed by public properties only.
+
+**I think this is important information, therefore my suggestion is to make it more visible.** Maybe moving to the main section and putting into warning/yellow borders would do, or whatever are the guidelines for such cases.
+
+While on it, I have to ask: **Is it possible for the component to support these language features?** Properties defined this way can be still public arguably, so if there is technical limitation for that - it shall be mentioned as well.
+
+Thank you for your work.
+
+---------------------------------------------------------------------------
+
+by mtarld at 2025-06-19T11:28:52Z
+
+Thanks @SirRFI, I think you're right!
+
+- It must be said that objects cannot have a constructor. I'll make sure to try to update it accordingly.
+- About supporting this feature, yes, it could be great, I'll give it a try ASAP
