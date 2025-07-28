@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-07-25T08:26:31Z
+
+I can't find the details, but I'm sure we did this on purpose to fix some issue.
+
+For example, if you visit https://symfony.com/doc/6.4/components/string.html today, you see this in the version selector:
+
+<img width="251" height="344" alt="version-selector-6-4" src="https://github.com/user-attachments/assets/041a5114-b453-4935-a13a-56f2544b4971" />
+
+And when you visit the version of the page after the redirect: https://symfony.com/doc/current/string.html you see this in the version selector:
+
+<img width="251" height="184" alt="version-selector-7-3" src="https://github.com/user-attachments/assets/c145ac83-6eaa-443b-902b-a5f4d9c1b6f0" />
+
+-----
+
+My guess is that this is a bug in symfony.com. The code that detects all the moved contents struggles a bit with situations like this.
+
+-----
+
+I'd say today's situation is better and we should not merge this because:
+
+* If you visit the old version of the String docs, you see all the newer versions links
+* If you visit the new version of the String docs, you miss the legacy versions like 6.4 and older, but that should be OK for most readers
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-07-25T15:02:26Z
+
+But 6.4 is not legacy but LTS
+
+---------------------------------------------------------------------------
+
+by clement-michelet at 2025-07-25T16:08:20Z
+
+> I'd say today's situation is better and we should not merge this because:
+>
+> * If you visit the old version of the String docs, you see all the newer versions links
+> * If you visit the new version of the String docs, you miss the legacy versions like 6.4 and older, but that should be OK for most readers
+
+First, 6.4 is the current LTS so, no, it's not a legacy version.
+Second, I cannot visit the old version by using the website because I'm redirected to the newer documentation which does not allow to select 6.4. I have to use a workaround : copy/past the old link from the search, change the version in url 🤦
+
+I just want to be able to simply go to the older but **maintained version** documentation, I don't care how (duplicate result, selector with redirect, whatever). Telling readers to read 7.x version and do the burden to check if it's applicable to 6.x is not a suitable solution.
