@@ -361,6 +361,146 @@ this option to specify one or more fields to only ignore ``null`` values on them
     database, you might see insertion errors when your application attempts to
     persist entities that the ``UniqueEntity`` constraint considers valid.
 
+``comparator``
+~~~~~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+.. versionadded:: 7.4
+
+    The ``comparator`` option was introduced in Symfony 7.4.
+
+The default strategy to check for equality of the found entity (if any) and
+the current validation subject, when using the `entityClass`_ option in
+combination with the `identifierFieldNames`_ option, is to compare each
+mapping in `identifierFieldNames`_ using strict equality (``===``). Optionally
+after **casting** each to string, if they implement ``\Stringable``.
+
+This works in most cases, but fails if either side of the mapping entry is
+not ``\Stringable`` and doesn't refer to the same value or object. This can
+happen if, for example, the referred-to value in the found entity is a value
+object or an association mapped as part of the entity identity.
+
+To still be able to check for equality, you can supply a ``callable`` which
+will be used instead of the default strategy.
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Form/Data/BlogPostTranslationFormData.php
+        namespace App\Form\Data;
+
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Uid\Uuid;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use App\Entity\BlogPostTranslation;
+
+        #[UniqueEntity(
+            fields: ['locale', 'slug'],
+            message: 'This slug is already used by another post in this language.',
+            entityClass: BlogPostTranslation::class,
+            comparator: [BlogPostTranslationFormData::class, 'compare'],
+            errorPath: 'slug'
+        )]
+        class BlogPostTranslationFormData
+        {
+            public function __construct(
+                public readonly Uuid $postId,
+                public readonly string $locale,
+
+                #[NotBlank]
+                public ?string $slug = null,
+            ) {}
+
+            public static function compare(self $subject, BlogPostTranslation $foundEntity): bool
+            {
+                return $foundEntity->getPost()->getId()->equals($this->postId)
+                    && $foundEntity->getLocale() === $this->locale;
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Form\Data\BlogPostTranslationFormData:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                    fields: [locale, slug]
+                    message: 'This slug is already used by another post in this language.'
+                    entityClass: App\Entity\BlogPostTranslation,
+                    comparator: [App\Form\Data\BlogPostTranslationFormData, compare]
+                    errorPath: slug
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Form\Data\BlogPostTranslationFormData">
+                <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                    <option name="fields">
+                        <value>locale</value>
+                        <value>slug</value>
+                    </option>
+                    <option name="message">This slug is already used by another post in this language.</option>
+                    <option name="entityClass">App\Entity\BlogPostTranslation</option>
+                    <option name="comparator">
+                        <value>App\Form\Data\BlogPostTranslationFormData</value>
+                        <value>compare</value>
+                    </option>
+                    <option name="errorPath">slug</option>
+                </constraint>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Form/Data/BlogPostTranslationFormData.php
+        namespace App\Form\Data;
+
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Uid\Uuid;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use App\Entity\BlogPostTranslation;
+
+        class BlogPostTranslationFormData
+        {
+            public function __construct(
+                public readonly Uuid $postId,
+                public readonly string $locale,
+
+                #[NotBlank]
+                public ?string $slug = null,
+            ) {}
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addConstraint(UniqueEntity(
+                    fields: ['locale', 'slug'],
+                    message: 'This slug is already used by another post in this language.',
+                    entityClass: BlogPostTranslation::class,
+                    comparator: [self::class, 'compare'],
+                    errorPath: 'slug'
+                ));
+            }
+
+            public static function compare(self $subject, BlogPostTranslation $foundEntity): bool
+            {
+                return $foundEntity->getPost()->getId()->equals($this->postId)
+                    && $foundEntity->getLocale() === $this->locale;
+            }
+        }
+
+
+.. warning::
+
+    This option cannot be used in conjunction with the `identifierFieldNames`_
+    option.
+
 ``message``
 ~~~~~~~~~~~
 
