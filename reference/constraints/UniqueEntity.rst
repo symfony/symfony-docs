@@ -391,10 +391,10 @@ will be used instead of the default strategy.
         // src/Form/Data/BlogPostTranslationFormData.php
         namespace App\Form\Data;
 
+        use App\Entity\BlogPostTranslation;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         use Symfony\Component\Uid\Uuid;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use App\Entity\BlogPostTranslation;
 
         #[UniqueEntity(
             fields: ['locale', 'slug'],
@@ -462,10 +462,10 @@ will be used instead of the default strategy.
         // src/Form/Data/BlogPostTranslationFormData.php
         namespace App\Form\Data;
 
+        use App\Entity\BlogPostTranslation;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         use Symfony\Component\Uid\Uuid;
         use Symfony\Component\Validator\Constraints\NotBlank;
-        use App\Entity\BlogPostTranslation;
 
         class BlogPostTranslationFormData
         {
