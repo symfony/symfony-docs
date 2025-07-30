@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-07-28T14:56:54Z
+
+For 6.4?
+
+---------------------------------------------------------------------------
+
+by rosier at 2025-07-28T15:23:57Z
+
+> For 6.4?
+
+The last time only the title was change for Symfony 6  in https://github.com/symfony/symfony-docs/pull/16900
+
+So I think we only need to update it for Symfony 7 this time
