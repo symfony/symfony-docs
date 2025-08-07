@@ -2106,6 +2106,11 @@ accessed via the ``getUser()`` shortcut in the
         {
             // $user is an instance of \App\Entity\User
         }
+
+        public function profile(#[CurrentUser] ?User $user): Response
+        {
+            // $user is an instance of \App\Entity\User or null as unauthenticated
+        }
     }
 
 Fetching the User from a Service
