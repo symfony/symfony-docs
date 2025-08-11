@@ -179,7 +179,9 @@ party provider:
 |                        | - HTTP ``ses+https://ACCESS_KEY:SECRET_KEY@default``    |
 |                        | - API ``ses+api://ACCESS_KEY:SECRET_KEY@default``       |
 +------------------------+---------------------------------------------------------+
-| `Azure`_               | - API ``azure+api://ACS_RESOURCE_NAME:KEY@default``     |
+| `Azure`_               | - SMTP n/a                                              |
+|                        | - HTTP n/a                                              |
+|                        | - API ``azure+api://ACS_RESOURCE_NAME:KEY@default``     |
 +------------------------+---------------------------------------------------------+
 | `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default``       |
 |                        | - HTTP n/a                                              |
