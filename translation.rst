@@ -1601,7 +1601,7 @@ Learn more
 .. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-.. _`PHP intl extension`: https://www.php.net/manual/en/book.intl.php
+.. _`PHP intl extension`: https://php.net/book.intl
 .. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
 .. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes
