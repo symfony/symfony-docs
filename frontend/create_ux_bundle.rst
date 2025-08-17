@@ -205,3 +205,111 @@ to the container::
             return is_file($bundlesMetadata['FrameworkBundle']['path'] . '/Resources/config/asset_mapper.php');
         }
     }
+
+Expose an entrypoint
+--------------------
+
+An entrypoint is a file that need to be always loaded, to usually start your application.
+
+It's usefull if your bundle have dedicated views, for example :
+
+* /admin
+* /translations
+* /dashboard
+
+
+On a Standard symfony app, it's the ``app`` loaded by webpack encore or importmap.
+
+With Webpack Encore
+~~~~~~~~~~~~~~~~~~~
+
+In the ``package.json`` file, define your entrypoint inside the ``symfony.entrypoints`` key:
+
+.. code-block:: json
+
+    {
+        "name": "@acme/feature",
+        "symfony": {
+            "entrypoints": {
+                "@acme/feature/entrypoint": "../node_modules/@acme/feature/entrypoint.js"
+            }
+        }
+    }
+
+
+The key is the entry that will be called in your templates, and the value is the path that webpack will use to load the file.
+
+.. note::
+
+    The path must be relative to ``assets`` folder of the symfony application.
+
+
+That value will be copied inside the ``assets/controllers.json`` file after the bundle installation.
+
+In your templates, make sure to load that entry :
+
+.. code-block:: html+twig
+
+    {# templates/my-bundle-base.html.twig #}
+    ...
+     {% block stylesheets %}
+        {{ encore_entry_link_tags('@acme/feature/entrypoint') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('@acme/feature/entrypoint') }}
+    {% endblock %}
+
+
+.. warning::
+
+   Is it mandatory to have stimulus-bundle and the ``.enableStimulusBridge('./assets/controllers.json')`` added to the webpack.config.js to be able to use the entrypoints.
+
+
+With Asset Mapper
+~~~~~~~~~~~~~~~~~
+
+In the ``package.json`` file, define your entrypoint inside the ``symfony.importmap`` key:
+
+.. code-block:: json
+
+    {
+        "name": "@acme/feature",
+        "symfony": {
+            "importmap": {
+                "@acme/feature/entrypoint": "entrypoint:%PACKAGE%/entrypoint.js"
+            }
+        }
+    }
+
+.. versionadded:: 2.7.0
+
+    The ``entrypoint`` keyword support was introduced in Symfony Flex 2.7.0
+
+
+After installation, the entry will be added to the ``importmap.php``:
+
+.. code-block:: php
+
+    // importmap.php
+    return [
+        'app' => [
+            'path' => './assets/app.js',
+            'entrypoint' => true,
+        ],
+        // ...
+        '@acme/feature/entrypoint' => [
+            'path' => './vendor/acme/feature-bundle/assets/entrypoint.js',
+            'entrypoint' => true,
+        ],
+    ];
+
+In your templates, make sure to load that entry :
+
+.. code-block:: html+twig
+
+    {# templates/my-bundle-base.html.twig #}
+    ...
+    {% block javascripts %}
+        {% block importmap %}{{ importmap('@acme/feature/entrypoint') }}{% endblock %}
+    {% endblock %}
