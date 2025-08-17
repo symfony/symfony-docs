@@ -109,6 +109,7 @@ whitelist:
         - '.. versionadded:: 1.18' # Flex in setup/upgrade_minor.rst
         - '.. versionadded:: 1.0.0' # Encore
         - '.. versionadded:: 2.7.1' # Doctrine
+        - '.. versionadded:: 2.7.0' # Flex in frontend/create_ux_bundle.rst
         - '123,' # assertion for var_dumper - components/var_dumper.rst
         - '"foo",' # assertion for var_dumper - components/var_dumper.rst
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'

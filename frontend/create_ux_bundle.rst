@@ -205,3 +205,103 @@ to the container::
             return is_file($bundlesMetadata['FrameworkBundle']['path'] . '/Resources/config/asset_mapper.php');
         }
     }
+
+Exposing an Entrypoint
+----------------------
+
+An entrypoint is a JavaScript file that must be loaded whenever a specific
+part of the application is rendered. It usually initializes the frontend
+behavior of that part. In a standard Symfony application, this role is played
+by the ``app`` entrypoint, loaded via Webpack Encore or AssetMapper.
+
+Exposing an entrypoint is useful when your bundle provides its own sections or
+layouts (e.g. an admin backend, a translation editor, a dashboard, etc.). To do
+so, declare the entrypoint in the ``package.json`` file of your bundle. When
+installing the bundle, Symfony Flex registers it in the application so it can
+be built with Webpack Encore or loaded with AssetMapper.
+
+Webpack Encore
+~~~~~~~~~~~~~~
+
+Define the entrypoint under the ``symfony.entrypoints`` key of your
+``package.json`` file:
+
+.. code-block:: json
+
+    {
+        "name": "@acme/feature",
+        "symfony": {
+            "entrypoints": {
+                "@acme/feature/entrypoint": "../node_modules/@acme/feature/entrypoint.js"
+            }
+        }
+    }
+
+The key is the name of the entry used in templates and the value is the path
+of the JavaScript file. This path must be relative to the ``assets/`` directory
+of the application.
+
+When installing the bundle, Flex copies this entrypoint into the
+``assets/controllers.json`` file of the application. Encore only reads the
+entrypoints of that file when the Stimulus bridge is enabled, so make sure
+that your ``webpack.config.js`` file contains
+``.enableStimulusBridge('./assets/controllers.json')``.
+
+Then, load the entry in the templates of your bundle:
+
+.. code-block:: html+twig
+
+    {# templates/layout.html.twig #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('@acme/feature/entrypoint') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('@acme/feature/entrypoint') }}
+    {% endblock %}
+
+AssetMapper
+~~~~~~~~~~~
+
+Define the entrypoint under the ``symfony.importmap`` key of your
+``package.json`` file, using the ``entrypoint:`` prefix:
+
+.. code-block:: json
+
+    {
+        "name": "@acme/feature",
+        "symfony": {
+            "importmap": {
+                "@acme/feature/entrypoint": "entrypoint:%PACKAGE%/entrypoint.js"
+            }
+        }
+    }
+
+.. versionadded:: 2.7.0
+
+    Support for the ``entrypoint:`` prefix was introduced in Symfony Flex 2.7.0.
+
+When installing the bundle, Flex adds the entrypoint to the ``importmap.php``
+file of the application::
+
+    // importmap.php
+    return [
+        'app' => [
+            'path' => './assets/app.js',
+            'entrypoint' => true,
+        ],
+        // ...
+        '@acme/feature/entrypoint' => [
+            'path' => './vendor/acme/feature-bundle/assets/entrypoint.js',
+            'entrypoint' => true,
+        ],
+    ];
+
+Then, load the entry in the templates of your bundle:
+
+.. code-block:: html+twig
+
+    {# templates/layout.html.twig #}
+    {% block javascripts %}
+        {{ importmap('@acme/feature/entrypoint') }}
+    {% endblock %}
