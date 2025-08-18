@@ -1019,6 +1019,12 @@ After this, you have protected your login form against CSRF attacks.
     the token ID by setting  ``csrf_token_id`` in your configuration. See
     :ref:`reference-security-firewall-form-login` for more details.
 
+.. tip::
+
+    the ``data-controller`` part is related to the usage of
+    https://symfony.com/doc/current/security/csrf.html#generating-csrf-token-using-javascript
+    It can be removed if you use statefull session storage, not stateless.
+
 .. _security-json-login:
 
 JSON Login
