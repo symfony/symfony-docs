@@ -6,8 +6,8 @@ In such a case, having to pass the command name each time is tedious. Fortunatel
 it is possible to remove this need by declaring a single command application::
 
     #!/usr/bin/env php
-    <?php
-    require __DIR__.'/vendor/autoload.php';
+    <?php // bin/file-counter.php
+    require __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\Console\Input\InputArgument;
     use Symfony\Component\Console\Input\InputInterface;
@@ -16,14 +16,30 @@ it is possible to remove this need by declaring a single command application::
     use Symfony\Component\Console\SingleCommandApplication;
 
     (new SingleCommandApplication())
-        ->setName('My Super Command') // Optional
+        ->setName('File Counter') // Optional
         ->setVersion('1.0.0') // Optional
-        ->addArgument('foo', InputArgument::OPTIONAL, 'The directory')
-        ->addOption('bar', null, InputOption::VALUE_REQUIRED)
+        ->addArgument('dir', InputArgument::OPTIONAL, 'The directory', default: '.')
+        ->addOption('all', 'a', InputOption::VALUE_NONE, 'count all files')
         ->setCode(function (InputInterface $input, OutputInterface $output): int {
-            // output arguments and options
+            $dir = realpath($input->getArgument('dir'));
+            $all = $input->getOption('all');
+            $finder = (new Symfony\Component\Finder\Finder())
+                ->in($dir)
+                ->files()
+                ->ignoreVCSIgnored(!$all)
+            ;
+            $count = iterator_count($finder);
+            $output->writeln( "$dir has $count " .
+                ($all ? "files" : "files in source control"));
+            return SingleCommandApplication::SUCCESS;
         })
         ->run();
+
+Now run it with
+
+    php bin/file-counter.php
+
+    php bin/file-counter.php --all
 
 You can still register a command as usual::
 
