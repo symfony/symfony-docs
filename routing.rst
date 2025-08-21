@@ -269,8 +269,15 @@ given value:
 
         class DefaultController extends AbstractController
         {
-            #[Route('/tools', name: 'tools', env: 'dev')]
+            // Using the Route attribute, you can specify multiple environments
+            #[Route('/tools', name: 'tools', env: ['test', 'dev'])]
             public function developerTools(): Response
+            {
+                // ...
+            }
+
+            #[Route('/test', name: 'test', env: 'test')]
+            public function testScenario(): Response
             {
                 // ...
             }
