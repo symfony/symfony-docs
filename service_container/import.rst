@@ -74,7 +74,7 @@ a relative or absolute path to the imported file:
         imports:
             - { resource: services/mailer.yaml }
             # If you want to import a whole directory:
-            - { resource: services/ }
+            - { resource: services/* }
         services:
             _defaults:
                 autowire: true
