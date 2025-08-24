@@ -1196,7 +1196,7 @@ both ``app`` and ``checkout``:
         Override an "importmap" block from base.html.twig.
         If you don't have that block, add it around the {{ importmap('app') }} call.
     #}
-    {% block importmap %}
+    {% block javascripts %}
         {# do NOT call parent() #}
 
         {{ importmap(['app', 'checkout']) }}
@@ -1209,7 +1209,7 @@ above, the ``app.js`` file *and* the ``checkout.js`` file).
 
 .. warning::
 
-    Do not call ``parent()`` inside the ``{% block importmap %}`` Twig block. Each
+    Do not call ``parent()`` inside the ``{% block javascripts %}`` Twig block. Each
     page can include only one import map, so ``importmap()`` must be called exactly once.
 
 If you want to execute *only* ``checkout.js`` (and not ``app.js``), call
