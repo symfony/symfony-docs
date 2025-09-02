@@ -735,10 +735,11 @@ configuration to ensure it exists and can be authenticated::
     # config/packages/security.yaml
     when@test:
         security:
-            users_in_memory:
-                memory:
-                    users:
-                        admin: { password: password, roles: ROLE_ADMIN }
+            providers:
+                users_in_memory:
+                    memory:
+                        users:
+                            admin: { password: password, roles: ROLE_ADMIN }
 
 To set a specific firewall (``main`` is set by default)::
 
