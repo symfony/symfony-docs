@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-09-09T08:33:19Z
+
+We might have to fix this in a different way. I asked GPT-5:
+
+```
+In Symfony Docs, the recommended spelling for that heading in title case would be:
+
+What Is It?
+
+Reasoning:
+
+Symfony Docs follow [title case rules][1], which are based on the Chicago Manual of Style:
+
+* Capitalize the first and last word.
+* Capitalize all major words (nouns, pronouns, verbs, adjectives, adverbs, subordinating conjunctions).
+* Lowercase short articles, coordinating conjunctions, and prepositions (unless they're the first/last word).
+
+So in your case:
+
+* "What" → capitalized (first word, interrogative pronoun)
+* "Is" → capitalized (verb)
+* "It" → capitalized (pronoun)
+
+[1]: https://symfony.com/doc/current/contributing/documentation/standards.html#headings
+```
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2025-09-09T12:11:29Z
+
+I think it doesn't look great when each word start with uppercase, because of the uppercase “i”:
+
+> <img width="332" height="108" alt="image" src="https://github.com/user-attachments/assets/fc34e7c0-3ca2-4bed-a901-e8b652ff9ee2" />
