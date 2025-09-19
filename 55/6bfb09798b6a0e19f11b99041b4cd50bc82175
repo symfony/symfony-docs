@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by santysisi at 2025-06-04T02:09:11Z
+
+Add doc for this [PR](https://github.com/symfony/symfony/pull/60395)
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-09-15T13:30:49Z
+
+we need to make some more changes due to symfony/symfony#61756 (@santysisi is already aware)
+
+Status: Needs work
