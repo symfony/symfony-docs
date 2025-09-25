@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-09-24T17:45:29Z
+
+I don't understand the reported issue:
+
+```
+!!
+!!  In ArrayNode.php line 304:
+!!
+!!    Unrecognized option "exception_controller" under "twig". Available options
+!!    are "auto_reload", "autoescape_service", "autoescape_service_method", "base
+!!    _template_class", "cache", "charset", "date", "debug", "default_path", "fil
+!!    e_name_pattern", "form_themes", "globals", "mailer", "number_format", "opti
+!!    mizations", "paths", "strict_variables".
+!!
+```
+
+I started seeing this error in other projects too. Why is it happening now? If Symfony changed this option, it'd do it in a BC-compatible way.
