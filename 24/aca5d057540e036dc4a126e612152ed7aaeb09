@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-09-25T07:44:55Z
+
+Is this feature to add LOX24 already merged in Symfony code repo? Can you please link to the PR in that code repo ... or to the issue in this repo if it exists? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-09-25T09:00:05Z
+
+looks like this PR is meant to document symfony/symfony#61838
+
+---------------------------------------------------------------------------
+
+by alebedev80 at 2025-09-25T10:22:01Z
+
+@javiereguiluz https://github.com/symfony/symfony/pull/61838
