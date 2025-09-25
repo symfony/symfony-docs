@@ -297,6 +297,17 @@ If you :doc:`use Doctrine </doctrine>` to work with databases, consider using th
 
     The ``DatePointType`` was introduced in Symfony 7.3.
 
+.. tip::
+
+    Use the ``'day_point'`` and ``'time_point'`` types, and the
+    :class:`Symfony\\Component\\Clock\\DatePoint` class when the property stores
+    only a date or a time instead of a full datetime.
+
+    .. versionadded:: 7.4
+
+        The ``'day_point'`` and ``'time_point'`` types and the ``DatePoint`` class
+        was introduced in Symfony 7.4.
+
 .. _clock_writing-tests:
 
 Writing Time-Sensitive Tests
