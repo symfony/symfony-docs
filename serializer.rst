@@ -33,11 +33,6 @@ install the serializer :ref:`Symfony pack <symfony-packs>` before using it:
     ``symfony/serializer`` package and install optional dependencies if you
     need them.
 
-.. seealso::
-
-    A popular alternative to the Symfony Serializer component is the third-party
-    library, `JMS serializer`_.
-
 Serializing an Object
 ---------------------
 
