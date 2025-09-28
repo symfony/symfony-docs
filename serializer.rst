@@ -2575,7 +2575,6 @@ Going Further with the Serializer
 
     serializer/*
 
-.. _`JMS serializer`: https://github.com/schmittjoh/serializer
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: https://json-ld.org
 .. _`Hydra Core Vocabulary`: https://www.hydra-cg.com/
