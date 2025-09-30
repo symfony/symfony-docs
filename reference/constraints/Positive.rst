@@ -45,9 +45,9 @@ positive number (greater than zero):
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Entity\Employee">
                 <property name="income">
                     <constraint name="Positive"></constraint>

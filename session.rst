@@ -295,12 +295,11 @@ configuration <config-framework-session>` in
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <!--
                     Enables session support. Note that the session will ONLY be started if you read or write from it.
@@ -378,12 +377,11 @@ session metadata files:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:session enabled="true"
                                    handler-id="session.handler.native_file"
@@ -576,9 +574,9 @@ a Symfony service for the connection to the Redis server:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <services>
                 <!-- you can also use \RedisArray, \RedisCluster, \Relay\Relay or \Predis\Client classes -->
                 <service id="Redis" class="Redis">
@@ -655,13 +653,11 @@ configuration option to tell Symfony to use this service as the session handler:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <!-- ... -->
                 <framework:session handler-id="Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler"/>
@@ -730,12 +726,11 @@ To use it, first register a new handler service with your database credentials:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                     <argument>%env(DATABASE_URL)%</argument>
@@ -793,13 +788,11 @@ configuration option to tell Symfony to use this service as the session handler:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <!-- ... -->
                 <framework:session
@@ -845,10 +838,9 @@ passed to the ``PdoSessionHandler`` service:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                     <argument>%env(DATABASE_URL)%</argument>
@@ -1040,12 +1032,11 @@ the MongoDB connection as argument, and the required parameters:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler">
                     <argument type="service">doctrine_mongodb.odm.default_connection</argument>
@@ -1093,13 +1084,11 @@ configuration option to tell Symfony to use this service as the session handler:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <!-- ... -->
                 <framework:session
@@ -1159,10 +1148,9 @@ configure these values with the second argument passed to the
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler">
                     <argument type="service">doctrine_mongodb.odm.default_connection</argument>
@@ -1440,10 +1428,9 @@ via some "Change Locale" route & controller), or create a route with the
             <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+            >
                 <services>
                     <service id="App\EventSubscriber\LocaleSubscriber">
                         <argument>%kernel.default_locale%</argument>
@@ -1569,11 +1556,10 @@ Symfony to use your session handler instead of the default one:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <framework:config>
                 <framework:session handler-id="App\Session\CustomSessionHandler"/>
             </framework:config>
@@ -1668,9 +1654,8 @@ Then, register the ``SodiumMarshaller`` service using this key:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
         >
             <services>
                 <service id="Symfony\Component\Cache\Marshaller\SodiumMarshaller" decorates="session.marshaller">
@@ -1777,11 +1762,10 @@ for the ``handler_id``:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <framework:config>
                 <framework:session storage-factory-id="session.storage.factory.php_bridge"
                     handler-id="null"
@@ -1837,11 +1821,10 @@ the example below:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <framework:config>
                 <framework:session storage-id="session.storage.factory.php_bridge"
                     handler-id="session.handler.native_file"

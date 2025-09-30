@@ -55,10 +55,9 @@ property is not empty, add the following:
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
-                https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Entity\Author">
                 <property name="name">
                     <constraint name="NotBlank">
@@ -174,13 +173,11 @@ The default translation domain can be changed globally using the
         <!-- config/packages/validator.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:validation
                     translation-domain="validation_errors"

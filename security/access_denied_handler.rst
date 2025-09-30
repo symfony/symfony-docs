@@ -69,11 +69,10 @@ Now, configure this service ID as the entry point for the firewall:
         <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <config>
                 <firewall name="main"
                     entry-point="App\Security\AuthenticationEntryPoint"
@@ -145,11 +144,10 @@ configure it under your firewall:
         <!-- config/packages/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <config>
                 <firewall name="main"
                     access-denied-handler="App\Security\AccessDeniedHandler"

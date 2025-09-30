@@ -85,8 +85,9 @@ One way to accomplish this is with the Expression constraint:
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Model\BlogPost">
                 <constraint name="Expression">
                     <option name="expression">
@@ -175,9 +176,9 @@ assert that the expression must return ``true`` for validation to fail.
             <!-- config/validator/validation.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+                xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+            >
                 <class name="App\Model\BlogPost">
                     <property name="isTechnicalPost">
                         <constraint name="Expression">
@@ -325,9 +326,9 @@ type (numeric, boolean, strings, null, etc.)
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Model\Analysis">
                 <property name="metric">
                     <constraint name="Expression">

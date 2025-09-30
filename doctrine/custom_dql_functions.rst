@@ -27,13 +27,11 @@ In Symfony, you can register your custom DQL functions as follows:
 
         <!-- config/packages/doctrine.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/doctrine-1.0.xsd"
+        >
             <doctrine:config>
                 <doctrine:orm>
                     <!-- ... -->
@@ -94,13 +92,11 @@ In Symfony, you can register your custom DQL functions as follows:
             <!-- config/packages/doctrine.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
                 xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/doctrine
-                    https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
+                xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                    https://symfony.com/schema/doctrine-1.0.xsd"
+            >
                 <doctrine:config>
                     <doctrine:orm>
                         <!-- ... -->

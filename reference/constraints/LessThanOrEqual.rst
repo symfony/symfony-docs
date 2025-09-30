@@ -55,9 +55,9 @@ The following constraints ensure that:
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Entity\Person">
                 <property name="siblings">
                     <constraint name="LessThanOrEqual">
@@ -129,9 +129,9 @@ that a date must be today or in the past like this:
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Entity\Person">
                 <property name="dateOfBirth">
                     <constraint name="LessThanOrEqual">today</constraint>
@@ -188,9 +188,9 @@ dates. If you want to fix the timezone, append it to the date string:
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Entity\Person">
                 <property name="dateOfBirth">
                     <constraint name="LessThanOrEqual">today UTC</constraint>
@@ -247,9 +247,9 @@ can check that a person must be at least 18 years old like this:
         <!-- config/validator/validation.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/constraint-mapping-1.0.xsd"
+        >
             <class name="App\Entity\Person">
                 <property name="dateOfBirth">
                     <constraint name="LessThanOrEqual">-18 years</constraint>

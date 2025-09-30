@@ -125,10 +125,9 @@ the ``BlogController``:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <!-- the controller value has the format 'controller_class::method_name' -->
             <route id="blog_list" path="/blog"
                    controller="App\Controller\BlogController::list"/>
@@ -213,10 +212,9 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="api_post_show" path="/api/posts/{id}"
                 controller="App\Controller\BlogApiController::show"
                 methods="GET|HEAD"/>
@@ -292,10 +290,9 @@ given value:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <when env="dev">
                 <route id="tools" path="/tools" controller="App\Controller\DefaultController::developerTools"/>
             </when>
@@ -383,10 +380,9 @@ arbitrary matching logic:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="contact" path="/contact" controller="App\Controller\DefaultController::contact">
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
                 <!-- expressions can also include configuration parameters: -->
@@ -596,10 +592,9 @@ For example, the route to display the blog post contents is defined as ``/blog/{
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="blog_show" path="/blog/{slug}"
                    controller="App\Controller\BlogController::show"/>
         </routes>
@@ -682,10 +677,9 @@ the ``{page}`` parameter using the ``requirements`` option:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <requirement key="page">\d+</requirement>
             </route>
@@ -833,10 +827,9 @@ concise, but it can decrease route readability when requirements are complex:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="blog_list" path="/blog/{page<\d+>}"
                    controller="App\Controller\BlogController::list"/>
 
@@ -907,10 +900,9 @@ other configuration formats they are defined with the ``defaults`` option:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="blog_list" path="/blog/{page}" controller="App\Controller\BlogController::list">
                 <default key="page">1</default>
 
@@ -989,10 +981,9 @@ parameter:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="blog_list" path="/blog/{page<\d+>?1}"
                    controller="App\Controller\BlogController::list"/>
 
@@ -1209,10 +1200,9 @@ and in route imports. Symfony defines some special attributes with the same name
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="article_search"
                 path="/articles/{_locale}/search.{_format}"
                 controller="App\Controller\ArticleController::search"
@@ -1286,10 +1276,9 @@ the controllers of the routes:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="blog_index" path="/blog/{page}" controller="App\Controller\BlogController::index">
                 <default key="page">1</default>
                 <default key="title">Hello world!</default>
@@ -1358,10 +1347,9 @@ A possible solution is to change the parameter requirements to be more permissiv
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="share" path="/share/{token}" controller="App\Controller\DefaultController::share">
                 <requirement key="token">.+</requirement>
             </route>
@@ -1422,10 +1410,9 @@ have been renamed. Let's say you have a route called ``product_show``:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="product_show" path="/product/{id}" controller="App\Controller\ProductController::show"/>
         </routes>
 
@@ -1462,10 +1449,9 @@ Instead of duplicating the original route, you can create an alias for it.
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="product_show" path="/product/{id}" controller="App\Controller\ProductController::show"/>
             <!-- "alias" attribute value refers to the name of the route declared above -->
             <route id="product_details" alias="product_show"/>
@@ -1535,10 +1521,9 @@ This way, the ``product_show`` alias could be deprecated.
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <!-- Move the concrete route definition under ``product_details`` -->
             <route id="product_details" path="/product/{id}" controller="App\Controller\ProductController::show"/>
 
@@ -1652,10 +1637,9 @@ when importing the routes.
         <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <!--
                 the 'prefix' value is added to the beginning of all imported route URLs
                 the 'name-prefix' value is added to the beginning of all imported route names
@@ -1747,10 +1731,9 @@ defined in the class attribute.
             <!-- config/routes/attributes.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <routes xmlns="http://symfony.com/schema/routing"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/routing
-                    https://symfony.com/schema/routing/routing-1.0.xsd">
-
+                xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+            >
                 <import resource="../../src/Controller/"
                     type="attribute"
                     prefix="/blog"
@@ -1880,10 +1863,9 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="doc_shortcut" path="/doc"
                    controller="Symfony\Bundle\FrameworkBundle\Controller\RedirectController">
                 <default key="route">doc_page</default>
@@ -2023,10 +2005,9 @@ host name:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="mobile_homepage"
                 path="/"
                 host="m.example.com"
@@ -2108,10 +2089,9 @@ multi-tenant applications) and these parameters can be validated too with
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="mobile_homepage"
                 path="/"
                 host="{subdomain}.example.com"
@@ -2220,10 +2200,9 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="about_us" controller="App\Controller\CompanyController::about">
                 <path locale="en">/about-us</path>
                 <path locale="nl">/over-ons</path>
@@ -2280,10 +2259,9 @@ with a locale. This can be done by defining a different prefix for each locale
         <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <import resource="../../src/Controller/" type="attribute">
                 <!-- don't prefix URLs for English, the default locale -->
                 <prefix locale="en"></prefix>
@@ -2337,9 +2315,9 @@ locale.
         <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <import resource="../../src/Controller/" type="attribute">
                 <host locale="en">www.example.com</host>
                 <host locale="nl">www.example.nl</host>
@@ -2405,9 +2383,9 @@ session shouldn't be used when matching a request:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="homepage" controller="App\Controller\MainController::homepage" path="/" stateless="true"/>
         </routes>
 
@@ -2639,13 +2617,11 @@ The solution is to configure the ``default_uri`` option to define the
         <!-- config/packages/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:router default-uri="https://example.org/my/path/">
                     <!-- ... -->
@@ -2763,10 +2739,9 @@ method) or globally with these configuration parameters:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <parameters>
                 <parameter key="router.request_context.scheme">https</parameter>
                 <parameter key="asset.request_context.secure">true</parameter>
@@ -2819,9 +2794,9 @@ each route explicitly:
         <?xml version="1.0" encoding="UTF-8" ?>
 
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="login" path="/login" schemes="https"
                    controller="App\Controller\SecurityController::login"/>
         </routes>
@@ -2877,10 +2852,9 @@ defined as attributes:
         <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <import resource="../../src/Controller/" type="attribute" schemes="https"/>
         </routes>
 

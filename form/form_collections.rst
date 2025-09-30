@@ -483,10 +483,9 @@ you will learn about next!).
             <!-- src/Resources/config/doctrine/Task.orm.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
-                                https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-
+                xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+            >
                 <entity name="App\Entity\Task">
                     <!-- ... -->
                     <one-to-many field="tags" target-entity="Tag">

@@ -322,12 +322,11 @@ instance to disallow extra fields while deserializing:
         <!-- config/packages/serializer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:serializer>
                     <framework:default-context>
@@ -465,9 +464,8 @@ property. For instance, to configure the datetime format:
         <!-- config/serializer/person.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="createdAt">
@@ -528,9 +526,8 @@ You can also specify a context specific to normalization or denormalization:
         <!-- config/serializer/person.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="createdAt">
@@ -591,9 +588,8 @@ You can also restrict the usage of a context to some
         <!-- config/serializer/person.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="createdAt">
@@ -745,9 +741,8 @@ them using the ``#[Ignore]`` attribute:
 
         <?xml version="1.0" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="potentiallySpamUser" ignore="true"/>
@@ -873,9 +868,8 @@ You can add the ``#[Groups]`` attribute to your class:
         <!-- config/serializer/person.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="age">
@@ -1063,9 +1057,8 @@ using :doc:`valid PropertyAccess syntax </components/property_access>`:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="username" serialized-path="[profile][username]"/>
@@ -1132,9 +1125,8 @@ the ``#[SerializedName]`` attribute:
         <!-- config/serializer/person.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Entity\Person">
                 <attribute name="name" serialized-name="customer_name"/>
@@ -1212,12 +1204,11 @@ setting the ``name_converter`` setting to
         <!-- config/packages/serializer.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:serializer
                     name-converter="serializer.name_converter.camel_case_to_snake_case"
@@ -1423,10 +1414,9 @@ like:
         <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <services>
                 <!-- ... -->
 
@@ -1782,9 +1772,8 @@ can set the max depth to ``1`` to always only serialize someone's mother
         <!-- config/serializer/person.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\Person">
                 <attribute name="mother" max-depth="1"/>
@@ -1994,9 +1983,8 @@ these type names to the real PHP class name when deserializing:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
-                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\InvoiceItemInterface">
                 <discriminator-map type-property="type">

@@ -18,7 +18,7 @@ configuration.
 
     When using XML, you must use the ``http://symfony.com/schema/dic/doctrine``
     namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd``
+    ``https://symfony.com/schema/doctrine-1.0.xsd``
 
 .. _`reference-dbal-configuration`:
 
@@ -67,13 +67,11 @@ The following block shows all possible configuration keys:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/doctrine-1.0.xsd"
+        >
             <doctrine:config>
                 <doctrine:dbal
                     name="default"
@@ -464,11 +462,10 @@ directory instead:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <doctrine:config>
                 <doctrine:orm auto-mapping="true">
                     <mapping name="AppBundle" dir="SomeResources/config/doctrine" type="xml"/>
@@ -518,11 +515,10 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
+        >
             <doctrine:config>
                 <doctrine:orm>
                     <mapping name="SomeEntityNamespace"
@@ -613,13 +609,11 @@ set up the connection using environment variables for the certificate paths:
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/doctrine-1.0.xsd"
+        >
             <doctrine:config>
                 <doctrine:dbal
                     url="%env(DATABASE_URL)%"

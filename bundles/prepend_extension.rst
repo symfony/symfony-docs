@@ -113,14 +113,11 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
         <!-- config/packages/acme_something.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-something="http://example.org/schema/dic/acme_something"
             xmlns:acme-other="http://example.org/schema/dic/acme_other"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://example.org/schema/dic/acme_something
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
                 https://example.org/schema/dic/acme_something/acme_something-1.0.xsd
-                http://example.org/schema/dic/acme_other
                 https://example.org/schema/dic/acme_something/acme_other-1.0.xsd"
         >
             <acme-something:config use-acme-goodbye="false">

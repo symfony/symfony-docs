@@ -25,12 +25,10 @@ as integration of other related components:
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/symfony-1.0.xsd"
         >
             <framework:config>
                 <framework:form/>
@@ -171,10 +169,9 @@ can add some configuration that looks like this:
         <!-- config/packages/acme_social.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-social="http://example.org/schema/dic/acme_social"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
         >
             <acme-social:config>
                 <acme-social:twitter client-id="123"
@@ -342,9 +339,8 @@ For example, imagine your bundle has the following example config:
     <!-- src/config/services.xml -->
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd"
+        xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd"
     >
         <services>
             <service id="acme_social.twitter_client" class="Acme\SocialBundle\TwitterClient">
@@ -514,20 +510,18 @@ can place it anywhere you like. You should return this path as the base path::
         }
     }
 
-Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
-``https://acme_company.com/schema/dic/hello/hello-1.0.xsd``:
+Assuming the XSD file is called ``hello-1.0.xsd``, the schema location should be
+``https://acme_company.com/schema/hello-1.0.xsd``:
 
 .. code-block:: xml
 
     <!-- config/packages/acme_hello.xml -->
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme-hello="http://acme_company.com/schema/dic/hello"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd
-            http://acme_company.com/schema/dic/hello
-            https://acme_company.com/schema/dic/hello/hello-1.0.xsd"
+        xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+            https://acme_company.com/schema/hello-1.0.xsd"
     >
         <acme-hello:config>
             <!-- ... -->

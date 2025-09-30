@@ -196,12 +196,10 @@ The XML version of the config would then look like this:
 
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:acme-demo="http://www.example.com/schema/dic/acme_demo"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd
-            http://www.example.com/schema/dic/acme_demo
-            https://www.example.com/schema/dic/acme_demo/acme_demo-1.0.xsd"
+        xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+        xmlns:acme-demo="https://example.com/schema/dic/acme_demo"
+        xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+            https://example.com/schema/dic/acme_demo/acme_demo-1.0.xsd"
     >
         <acme-demo:config>
             <acme_demo:foo>fooValue</acme_demo:foo>

@@ -119,10 +119,9 @@ a service like: ``App\Controller\HelloController::index``:
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="hello" path="/hello" controller="App\Controller\HelloController::index" methods="GET"/>
 
         </routes>
@@ -180,10 +179,9 @@ which is a common practice when following the `ADR pattern`_
         <!-- config/routes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="https://symfony.com/schema/routing-1.0.xsd"
+        >
             <route id="hello" path="/hello/{name}">
                 <default key="_controller">App\Controller\HelloController</default>
             </route>

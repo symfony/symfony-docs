@@ -49,13 +49,11 @@ from the ``security`` channel. The following example does that only in the
 
         <!-- config/packages/prod/monolog.xml-->
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/monolog-1.0.xsd"
+        >
             <when env="prod">
                 <monolog:config>
                     <monolog:handler name="security" type="stream" path="%kernel.logs_dir%/security.log">
@@ -145,13 +143,11 @@ You can also configure additional channels without the need to tag your services
 
         <!-- config/packages/monolog.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+                https://symfony.com/schema/monolog-1.0.xsd"
+        >
             <monolog:config>
                 <monolog:channel>foo</monolog:channel>
                 <monolog:channel>bar</monolog:channel>

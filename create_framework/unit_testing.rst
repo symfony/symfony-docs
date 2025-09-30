@@ -20,7 +20,7 @@ Then, create a PHPUnit configuration file in ``example.com/phpunit.dist.xml``:
 
     <?xml version="1.0" encoding="UTF-8"?>
     <phpunit
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.0/phpunit.xsd"
         backupGlobals="false"
         colors="true"

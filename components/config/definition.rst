@@ -650,7 +650,6 @@ The example results in the following:
                 password=""
                 memory="false"
             >
-
                 <!-- prototype -->
                 <!-- value: Required -->
                 <parameters

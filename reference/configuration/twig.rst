@@ -17,7 +17,7 @@ under the ``twig`` key in your application configuration.
 
     When using XML, you must use the ``http://symfony.com/schema/dic/twig``
     namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/twig/twig-1.0.xsd``
+    ``https://symfony.com/schema/twig-1.0.xsd``
 
 auto_reload
 ~~~~~~~~~~~
@@ -213,12 +213,11 @@ The value of this option can be a regular expression, a glob, or a string:
         <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+               https://symfony.com/schema/twig-1.0.xsd"
+        >
             <twig:config>
                 <twig:file-name-pattern>*.twig</twig:file-name-pattern>
                 <twig:file-name-pattern>specific_file.html</twig:file-name-pattern>
@@ -264,12 +263,11 @@ all the forms of the application:
         <!-- config/packages/twig.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+               https://symfony.com/schema/twig-1.0.xsd"
+        >
             <twig:config>
                 <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
                 <twig:form-theme>form/my_theme.html.twig</twig:form-theme>
@@ -399,12 +397,11 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
 
         <!-- config/packages/twig.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
             xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
+            xsi:schemaLocation="https://symfony.com/schema/services-1.0.xsd
+               https://symfony.com/schema/twig-1.0.xsd"
+        >
             <twig:config>
                 <!-- ... -->
                 <twig:path>email/default/templates</twig:path>
