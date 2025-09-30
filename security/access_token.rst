@@ -434,7 +434,7 @@ Next, configure the ``base_uri`` and ``discovery`` options:
                             oidc_user_info:
                                 base_uri: https://www.example.com/realms/demo/
                                 discovery:
-                                    cache: 
+                                    cache:
                                         id: cache.app
 
     .. code-block:: xml
@@ -745,7 +745,7 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                                 issuers: ['https://oidc.example.com']
                                 discovery:
                                     base_uri: https://www.example.com/realms/demo/
-                                    cache: 
+                                    cache:
                                         id: cache.app
 
     .. code-block:: xml
