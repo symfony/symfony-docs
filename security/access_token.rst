@@ -1,7 +1,7 @@
 How to use Access Token Authentication
 ======================================
 
-Access tokens or API tokens are commonly used as authentication mechanism
+Access tokens or API tokens are a commonly used authentication mechanism
 in API contexts. The access token is a string, obtained during authentication
 (using the application or an authorization server). The access token's role
 is to verify the user identity and receive consent before the token is
@@ -349,7 +349,7 @@ Using OpenID Connect (OIDC)
 `OpenID Connect (OIDC)`_ is the third generation of OpenID technology and it's a
 RESTful HTTP API that uses JSON as its data format. OpenID Connect is an
 authentication layer on top of the OAuth 2.0 authorization framework. It allows
-to verify the identity of an end user based on the authentication performed by
+verification of the identity of an end user based on the authentication performed by
 an authorization server.
 
 1) Configure the OidcUserInfoTokenHandler
@@ -434,7 +434,8 @@ Next, configure the ``base_uri`` and ``discovery`` options:
                             oidc_user_info:
                                 base_uri: https://www.example.com/realms/demo/
                                 discovery:
-                                    cache: cache.app
+                                    cache: 
+                                        id: cache.app
 
     .. code-block:: xml
 
@@ -744,7 +745,8 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                                 issuers: ['https://oidc.example.com']
                                 discovery:
                                     base_uri: https://www.example.com/realms/demo/
-                                    cache: cache.app
+                                    cache: 
+                                        id: cache.app
 
     .. code-block:: xml
 
