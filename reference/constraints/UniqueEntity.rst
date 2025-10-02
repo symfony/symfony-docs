@@ -273,7 +273,7 @@ If you need to require two fields to be individually unique (e.g. a unique
 each with a single field.
 
 ``identifierFieldNames``
-~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array``
 
