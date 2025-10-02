@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-09-30T13:30:55Z
+
+Pinging @lyrixx in case he has some time to review this change. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-10-02T07:05:15Z
+
+Grég, thanks for such a fantastic review 🙇
+
+I made all the changes and fixes that you pointed out. Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-10-02T14:36:32Z
+
+Yes, `#[Target]` is better, but I preferred to keep consistency with the other examples of the docs.
+
+Let's do something. Let's change this in 8.0 branch after the Symfony 8.0 release and let's show only the `#[Target]` config while adding the other way in a small `note` for each example.
