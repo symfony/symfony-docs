@@ -272,6 +272,28 @@ If you need to require two fields to be individually unique (e.g. a unique
 ``email`` and a unique ``username``), you use two ``UniqueEntity`` entries,
 each with a single field.
 
+``identifierFieldNames``
+~~~~~~~~~~
+
+**type**: ``array``
+
+When applying the constraint to a non-entity class, this allows you to specify
+which field(s), on the object being validated, should be used to determine
+whether the object being validated is the same as an existing entity found
+with matching field value(s).
+
+If the value(s) found in the object being validated's ``identifierFieldNames``
+fields match the itentifiers of the object found in the databased, then that
+match is permitted.  If the identifiers to not match, then the found record
+will cause the valudation to fail.
+
+.. warning::
+
+    The array of values given should be the same as the identifier fields on
+    the entity class, otherwise a
+    ``\Symfony\Component\Validator\Exception\ConstraintDefinitionException``
+    will be thrown during validation.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``ignoreNull``
