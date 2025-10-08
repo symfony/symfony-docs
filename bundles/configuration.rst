@@ -228,7 +228,7 @@ First things first, you have to create an extension class as explained in
 Whenever a user includes the ``acme_social`` key (which is the DI alias) in a
 configuration file, the configuration under it is added to an array of
 configurations and passed to the ``load()`` method of your extension (Symfony
-automatically converts XML and YAML to an array).
+automatically converts YAML to an array).
 
 For the configuration example in the previous section, the array passed to your
 ``load()`` method will look like this::
@@ -304,7 +304,7 @@ The ``Configuration`` class to handle the sample configuration looks like::
 .. seealso::
 
     The ``Configuration`` class can be much more complicated than shown here,
-    supporting "prototype" nodes, advanced validation, XML-specific normalization
+    supporting "prototype" nodes, advanced validation, normalization
     and advanced merging. You can read more about this in
     :doc:`the Config component documentation </components/config/definition>`. You
     can also see it in action by checking out some core Configuration
@@ -331,24 +331,24 @@ in the ``Configuration`` class to validate, normalize and merge all the
 configuration arrays together.
 
 Now, you can use the ``$config`` variable to modify a service provided by your bundle.
-For example, imagine your bundle has the following example config:
+For example, imagine your bundle has the following example config::
 
-.. code-block:: xml
+    // config/services.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-    <!-- src/config/services.xml -->
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd"
-    >
-        <services>
-            <service id="acme_social.twitter_client" class="Acme\SocialBundle\TwitterClient">
-                <argument></argument> <!-- will be filled in with client_id dynamically -->
-                <argument></argument> <!-- will be filled in with client_secret dynamically -->
-            </service>
-        </services>
-    </container>
+    use Acme\SocialBundle\TwitterClient;
+
+    return static function (ContainerConfigurator $container): void {
+        $services = $container->services();
+
+        $services
+            ->set('acme_social.twitter_client', TwitterClient::class)
+            ->args([
+                param('client_id'),    // dynamically filled
+                param('client_secret') // dynamically filled
+            ])
+        ;
+    };
 
 In your extension, you can load this and dynamically set its arguments::
 
@@ -356,12 +356,12 @@ In your extension, you can load this and dynamically set its arguments::
     namespace Acme\SocialBundle\DependencyInjection;
 
     use Symfony\Component\Config\FileLocator;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
     public function load(array $configs, ContainerBuilder $container): void
     {
-        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../../config'));
+        $loader->load('services.php');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -438,118 +438,40 @@ method and return an instance of your ``Configuration``.
 Supporting XML
 --------------
 
-Symfony allows people to provide the configuration in three different formats:
-Yaml, XML and PHP. Both Yaml and PHP use the same syntax and are supported by
-default when using the Config component. Supporting XML requires you to do some
-more things. But when sharing your bundle with others, it is recommended that
-you follow these steps.
+Before Symfony 8.0, it was recommended that reusable bundles use XML as their
+configuration format. XML support was deprecated in Symfony 7.4 and removed in
+Symfony 8.0.
 
-Make your Config Tree ready for XML
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Starting with Symfony 8.0, the supported configuration formats are YAML and PHP.
+Symfony recommends that reusable bundles use PHP and define their configuration
+with the fluent interface methods::
 
-The Config component provides some methods by default to allow it to correctly
-process XML configuration. See ":ref:`component-config-normalization`" of the
-component documentation. However, you can do some optional things as well, this
-will improve the experience of using XML configuration:
-
-Choosing an XML Namespace
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In XML, the `XML namespace`_ is used to determine which elements belong to the
-configuration of a specific bundle. The namespace is returned from the
-:method:`Extension::getNamespace() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getNamespace>`
-method. By convention, the namespace is a URL (it doesn't have to be a valid
-URL nor does it need to exist). By default, the namespace for a bundle is
-``http://example.org/schema/dic/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
-the extension. You might want to change this to a more professional URL::
-
-    // src/DependencyInjection/AcmeHelloExtension.php
-    namespace Acme\HelloBundle\DependencyInjection;
+    // config/services.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
     // ...
-    class AcmeHelloExtension extends Extension
-    {
-        // ...
+    use Symfony\Component\DependencyInjection\ServiceLocator;
 
-        public function getNamespace(): string
-        {
-            return 'http://acme_company.com/schema/dic/hello';
-        }
-    }
+    return static function (ContainerConfigurator $container) {
+        $container->parameters()
+            ->set('your_bundle.some_parameter_name', '...')
+        ;
 
-.. deprecated:: 7.4
+        $container->services()
+            ->set('your_bundle.some_service', SomeService::class)
+                ->args([
+                    service('...'),
+                    service('...'),
+                ])
+            ->alias(AnotherClass::class, 'your_bundle.another_name')
 
-    The ``getNamespace()`` method, together with XML support, is deprecated
-    since Symfony 7.4 and will be removed in Symfony 8.0.
+            ->set('your_bundle.other_service', OtherService::class)
+                ->tag('kernel.reset', ['method' => '...'])
 
-    If your bundle needs to remain compatible with older Symfony versions that
-    still support XML, keep this method and add the ``@deprecated`` annotation to it.
+            ->set('your_bundle.another_service', AnotherService::class)
 
-Providing an XML Schema
-~~~~~~~~~~~~~~~~~~~~~~~
-
-XML has a very useful feature called `XML schema`_. This allows you to
-describe all possible elements and attributes and their values in an XML Schema
-Definition (an XSD file). This XSD file is used by IDEs for auto completion and
-it is used by the Config component to validate the elements.
-
-In order to use the schema, the XML configuration file must provide an
-``xsi:schemaLocation`` attribute pointing to the XSD file for a certain XML
-namespace. This location always starts with the XML namespace. This XML
-namespace is then replaced with the XSD validation base path returned from
-:method:`Extension::getXsdValidationBasePath() <Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface::getXsdValidationBasePath>`
-method. This namespace is then followed by the rest of the path from the base
-path to the file itself.
-
-By convention, the XSD file lives in ``config/schema/`` directory, but you
-can place it anywhere you like. You should return this path as the base path::
-
-    // src/DependencyInjection/AcmeHelloExtension.php
-    namespace Acme\HelloBundle\DependencyInjection;
-
-    // ...
-    class AcmeHelloExtension extends Extension
-    {
-        // ...
-
-        public function getXsdValidationBasePath(): string
-        {
-            return __DIR__.'/../config/schema';
-        }
-    }
-
-.. deprecated:: 7.4
-
-    The ``getXsdValidationBasePath()`` method, together with XML support, is
-    deprecated since Symfony 7.4 and will be removed in Symfony 8.0.
-
-    If your bundle needs to remain compatible with older Symfony versions that
-    still support XML, keep this method and add the ``@deprecated`` annotation to it.
-
-Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
-``https://acme_company.com/schema/dic/hello/hello-1.0.xsd``:
-
-.. code-block:: xml
-
-    <!-- config/packages/acme_hello.xml -->
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:acme-hello="http://acme_company.com/schema/dic/hello"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd
-            http://acme_company.com/schema/dic/hello
-            https://acme_company.com/schema/dic/hello/hello-1.0.xsd"
-    >
-        <acme-hello:config>
-            <!-- ... -->
-        </acme-hello:config>
-
-        <!-- ... -->
-    </container>
+            // ...
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
-.. _`XML namespace`: https://en.wikipedia.org/wiki/XML_namespace
-.. _`XML schema`: https://en.wikipedia.org/wiki/XML_schema
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
