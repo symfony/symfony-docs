@@ -361,11 +361,11 @@ and transitions:
             <framework:config>
                 <!-- or type="state_machine" -->
                 <framework:workflow name="blog_publishing" type="workflow" places="App\Enumeration\BlogPostStatus::*">
-                    <framework:marking-store type="single_state">
+                    <framework:initial-marking>draft</framework:initial-marking>
+                    <framework:marking-store type="method">
                         <framework:argument>status</framework:argument>
                     </framework:marking-store>
                     <framework:support>App\Entity\BlogPost</framework:support>
-                    <framework:initial-marking>draft</framework:initial-marking>
 
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
@@ -391,32 +391,35 @@ and transitions:
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
-            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing = $framework->workflows()->workflow('blog_publishing');
             $blogPublishing
                 ->type('workflow')
                 ->supports([BlogPost::class])
-                ->initialMarking([BlogPostStatus::Draft]);
+                ->initialMarking([BlogPostStatus::Draft->value]);
 
             $blogPublishing->markingStore()
                 ->type('method')
                 ->property('status');
 
-            $blogPublishing->places(BlogPostStatus::cases());
+            $blogPublishing->place(BlogPostStatus::Draft->value);
+            $blogPublishing->place(BlogPostStatus::Reviewed->value);
+            $blogPublishing->place(BlogPostStatus::Published->value);
+            $blogPublishing->place(BlogPostStatus::Rejected->value);
 
             $blogPublishing->transition()
                 ->name('to_review')
-                    ->from(BlogPostStatus::Draft)
-                    ->to([BlogPostStatus::Reviewed]);
+                    ->from([BlogPostStatus::Draft->value])
+                    ->to([BlogPostStatus::Reviewed->value]);
 
             $blogPublishing->transition()
                 ->name('publish')
-                    ->from([BlogPostStatus::Reviewed])
-                    ->to([BlogPostStatus::Published]);
+                    ->from([BlogPostStatus::Reviewed->value])
+                    ->to([BlogPostStatus::Published->value]);
 
             $blogPublishing->transition()
                 ->name('reject')
-                    ->from([BlogPostStatus::Reviewed])
-                    ->to([BlogPostStatus::Rejected]);
+                    ->from([BlogPostStatus::Reviewed->value])
+                    ->to([BlogPostStatus::Rejected->value]);
         };
 
 The component will now transparently cast the enum to its backing value
