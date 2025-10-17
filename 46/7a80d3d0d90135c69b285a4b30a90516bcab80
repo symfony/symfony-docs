@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2025-10-01T14:37:44Z
+
+Thanks for starting this!
+
+I think we should only do this change in the docs on 8.0 for 2 reasons:
+* The doc examples will be the resource people use to convert their XML config to Yaml/PHP. It's a bit of a bummer to have to version switch to 7.3 each time for this.
+* This is emphasized by a recent change to only show x.4 for eol major versions. We have the same problem with the big security refactor: because I rewrote the entire docs in 5.3 already, people still using the old system on 5.4 will now have to switch back all the way to 4.4 for the older security documentation.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2025-10-02T06:48:41Z
+
+Works for me. PR rebased to target 8.0
+Not sure what should be done on 7.4. If someone else can take care of that aspect that'd be cool!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2025-10-02T08:35:22Z
+
+>  Not sure what should be done on 7.4. If someone else can take care of that aspect that'd be cool!
+
+For 7.4, I guess we can leave the examples as-is, and only update this section in 7.4 to no longer mention XML: https://symfony.com/doc/current/configuration.html#configuration-formats. And probably add a `.. deprecated:: 7.4` directive so people looking for it can still find some informatio. That way, we don't lead new users to choose a format that is deprecated.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-10-09T08:08:31Z
+
+The changes need to be rebased and the CI failures look legit to me.
