@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by maxbaldanza at 2025-10-21T17:17:57Z
+
+@javiereguiluz this fixes the build after: https://github.com/symfony/symfony-docs/commit/44d3761a7e0f3c32c7fe582c0fec88e691abfe1a
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-10-21T18:16:50Z
+
+Thanks for fixing this Max. However, could you please do the reverse fix? Keep the `shared` word in the text but fix it in the link reference? It looks like the correct term is "shared cache", so I made the mistake in the reference link. Thanks!
+
+---------------------------------------------------------------------------
+
+by maxbaldanza at 2025-10-21T18:34:29Z
+
+> Thanks for fixing this Max. However, could you please do the reverse fix? Keep the `shared` word in the text but fix it in the link reference? It looks like the correct term is "shared cache", so I made the mistake in the reference link. Thanks!
+
+Whoops sorry 🤦
+
+Just updated
