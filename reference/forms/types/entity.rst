@@ -64,7 +64,7 @@ returning a ``QueryBuilder`` object or ``null`` to load all entities)::
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
-        'choice_label' => 'username',
+        'choice_label' => 'username', // or create `__toString()` in the entity
     ]);
 
 .. note::
