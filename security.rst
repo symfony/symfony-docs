@@ -426,10 +426,7 @@ the database::
             $plaintextPassword = ...;
 
             // hash the password (based on the security.yaml config for the $user class)
-            $hashedPassword = $passwordHasher->hashPassword(
-                $user,
-                $plaintextPassword
-            );
+            $hashedPassword = $this->passwordHasher->hash($plaintextPassword);
             $user->setPassword($hashedPassword);
 
             // ...
