@@ -3245,6 +3245,28 @@ The transport has a number of options:
     message has already been consumed or deleted from the queue. See the
     `SQS message deduplication`_ documentation for details.
 
+.. note::
+
+    Standard queues can also use a message group ID to enable `SQS fair queues`_.
+    They prevent a single noisy group of messages (e.g. the messages of one
+    tenant in a multi-tenant application) from delaying the messages of the
+    other groups. Use the
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFairQueueStamp`
+    to set the message group ID::
+
+        use Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\AmazonSqsFairQueueStamp;
+
+        $bus->dispatch(new GenerateInvoice($invoiceId), [
+            new AmazonSqsFairQueueStamp('tenant-'.$tenantId),
+        ]);
+
+    If the message also has an ``AmazonSqsFifoStamp``, its message group ID
+    takes precedence and the fair queue stamp is ignored.
+
+    .. versionadded:: 8.2
+
+        The ``AmazonSqsFairQueueStamp`` was introduced in Symfony 8.2.
+
 The SQS transport supports the ``--keepalive`` option by using the ``ChangeMessageVisibility``
 action to periodically update the ``VisibilityTimeout`` of the message.
 
@@ -5805,6 +5827,7 @@ Learn more
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
 .. _`SQS message deduplication`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html#SQS-SendMessage-request-MessageDeduplicationId
+.. _`SQS fair queues`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-fair-queues.html
 .. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
 .. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
 .. _`high connection churn`: https://www.rabbitmq.com/connections.html#high-connection-churn
