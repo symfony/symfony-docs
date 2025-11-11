@@ -1971,6 +1971,23 @@ The transport has a number of options:
     FIFO queues don't support setting a delay per message, a value of ``delay: 0``
     is required in the retry strategy settings.
 
+.. note::
+
+    AWS SQS supports fair queue processing in standard queues (not FIFO queues)
+    by using the ``MessageGroupId`` parameter. This allows messages to be
+    processed fairly across multiple message groups without requiring a FIFO
+    queue, which is useful for multi-tenant applications where you want to
+    prevent one tenant from monopolizing queue processing.
+
+    To enable fair queue processing, add the
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFairQueueStamp`
+    to your message envelope with a tenant or group identifier. If both
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
+    and
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFairQueueStamp`
+    are present on the same message, the FIFO stamp takes precedence. The fair queue stamp
+    only works on standard queues and has no effect on FIFO queues.
+
 The SQS transport supports the ``--keepalive`` option by using the ``ChangeMessageVisibility``
 action to periodically update the ``VisibilityTimeout`` of the message.
 
