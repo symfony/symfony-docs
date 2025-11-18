@@ -901,7 +901,7 @@ the following options will be guessed too:
 
 If you'd like to change one of the guessed values, override it in the options field array::
 
-    ->add('task', options: ['attr' => ['maxlength' => 4]])
+    $builder->add('task', options: ['attr' => ['maxlength' => 4]])
 
 .. seealso::
 
