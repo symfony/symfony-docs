@@ -850,8 +850,7 @@ In the above example, Symfony can guess from the validation rules that the
 ``task`` field is a normal ``TextType`` field and the ``dueDate`` field is a
 ``DateType`` field.
 
-To enable Symfony's "guessing mechanism", omit the second argument to the ``add()`` method, or
-pass ``null`` to it::
+To enable Symfony's "guessing mechanism", omit the second argument to the ``add()`` method::
 
     // src/Form/Type/TaskType.php
     namespace App\Form\Type;
@@ -869,8 +868,8 @@ pass ``null`` to it::
             $builder
                 // if you don't define field options, you can omit the second argument
                 ->add('task')
-                // if you define field options, pass NULL as second argument
-                ->add('dueDate', null, ['required' => false])
+                // if you define field options, use named argument
+                ->add('dueDate', options: ['required' => false])
                 ->add('save', SubmitType::class)
             ;
         }
@@ -902,7 +901,7 @@ the following options will be guessed too:
 
 If you'd like to change one of the guessed values, override it in the options field array::
 
-    ->add('task', null, ['attr' => ['maxlength' => 4]])
+    ->add('task', options: ['attr' => ['maxlength' => 4]])
 
 .. seealso::
 
