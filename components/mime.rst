@@ -106,7 +106,7 @@ Now, enable the extension::
     $twig->addExtension(new CssInlinerExtension());
 
 The same process should be used for enabling other extensions, like the
-:ref:`MarkdownExtension <mailer-markdown>` and :ref:`InkyExtension <mailer-inky>`.
+:ref:`MarkdownExtension <mailer-markdown>`.
 
 Creating Raw Email Messages
 ---------------------------

@@ -2219,7 +2219,6 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
-.. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
 .. _`Google Gmail`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Google/README.md
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Infobip/README.md
