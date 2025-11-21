@@ -869,7 +869,7 @@ First, create a service that will compute the item's value::
 
     class CacheComputation
     {
-        public function compute(ItemInterface $item): string
+        public static function compute(ItemInterface $item): string
         {
             $item->expiresAfter(5);
 
