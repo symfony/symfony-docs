@@ -1255,62 +1255,6 @@ the entire email contents from Markdown to HTML:
         [Activate your account]({{ url('...') }})
     {% endapply %}
 
-.. _mailer-inky:
-
-Inky Email Templating Language
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Creating beautifully designed emails that work on every email client is so
-complex that there are HTML/CSS frameworks dedicated to that. One of the most
-popular frameworks is called `Inky`_. It defines a syntax based on some HTML-like
-tags which are later transformed into the real HTML code sent to users:
-
-.. code-block:: html
-
-    <!-- a simplified example of the Inky syntax -->
-    <container>
-        <row>
-            <columns>This is a column.</columns>
-        </row>
-    </container>
-
-Twig provides integration with Inky via the ``InkyExtension``. First, install
-the extension in your application:
-
-.. code-block:: terminal
-
-    $ composer require twig/extra-bundle twig/inky-extra
-
-The extension adds an ``inky_to_html`` filter, which can be used to convert
-parts or the entire email contents from Inky to HTML:
-
-.. code-block:: html+twig
-
-    {% apply inky_to_html %}
-        <container>
-            <row class="header">
-                <columns>
-                    <spacer size="16"></spacer>
-                    <h1 class="text-center">Welcome {{ email.toName }}!</h1>
-                </columns>
-
-                {# ... #}
-            </row>
-        </container>
-    {% endapply %}
-
-You can combine all filters to create complex email messages:
-
-.. code-block:: twig
-
-    {% apply inky_to_html|inline_css(source('@styles/foundation-emails.css')) %}
-        {# ... #}
-    {% endapply %}
-
-This makes use of the :ref:`styles Twig namespace <mailer-css-namespace>` we created
-earlier. You could, for example, `download the foundation-emails.css file`_
-directly from GitHub and save it in ``assets/styles``.
-
 .. _signing-and-encrypting-messages:
 
 Signing and Encrypting Messages
@@ -2279,7 +2223,6 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Google Gmail`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Google/README.md
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Infobip/README.md
-.. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 .. _`MailerSend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailerSend/README.md
