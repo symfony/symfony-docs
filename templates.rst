@@ -175,7 +175,7 @@ in the following order:
    exception if the :ref:`strict_variables <config-twig-strict-variables>`
    option is enabled).
 
-This allows to evolve your application code without having to change the
+This allows you to evolve your application code without having to change the
 template code (you can start with array variables for the application proof of
 concept, then move to objects with methods, etc.)
 

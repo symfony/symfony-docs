@@ -747,7 +747,7 @@ applications. One of the key features of the bundles is that you can use logic
 paths instead of physical paths to refer to any of their resources (config files,
 templates, controllers, translation files, etc.)
 
-This allows to import resources even if you don't know where in the filesystem a
+This allows you to import resources even if you don't know where in the filesystem a
 bundle will be installed. For example, the ``services.xml`` file stored in the
 ``Resources/config/`` directory of a bundle called FooBundle can be referenced as
 ``@FooBundle/Resources/config/services.xml`` instead of ``__DIR__/Resources/config/services.xml``.

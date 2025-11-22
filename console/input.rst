@@ -144,7 +144,7 @@ how many times in a row the message should be printed::
             InputOption::VALUE_REQUIRED,
             // the option description displayed when showing the command help
             'How many times should the message be printed?',
-            // the default value of the option (for those which allow to pass values)
+            // the default value of the option (for those which allow you to pass values)
             1
         )
     ;

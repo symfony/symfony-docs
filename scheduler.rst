@@ -159,7 +159,7 @@ the frequency of the message. Symfony provides different types of triggers:
 :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger`
     A trigger that adds a random jitter to a given trigger. The jitter is some
     time that is added to the original triggering date/time. This
-    allows to distribute the load of the scheduled tasks instead of running them
+    allows you to distribute the load of the scheduled tasks instead of running them
     all at the exact same time.
 
 :class:`Symfony\\Component\\Scheduler\\Trigger\\PeriodicalTrigger`
@@ -278,7 +278,7 @@ For example::
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
 
-These triggers allows to configure the frequency using different data types
+These triggers allow you to configure the frequency using different data types
 (``string``, ``integer``, ``DateInterval``). They also support the `relative formats`_
 defined by PHP datetime functions::
 
@@ -323,7 +323,7 @@ is scheduled hourly, it will run at 9:33, 10:33, 11:33, etc.
 Custom Triggers
 ~~~~~~~~~~~~~~~
 
-Custom triggers allow to configure any frequency dynamically. They are created
+Custom triggers allow you to configure any frequency dynamically. They are created
 as services that implement :class:`Symfony\\Component\\Scheduler\\Trigger\\TriggerInterface`.
 
 For example, if you want to send customer reports daily except for holiday periods::
@@ -716,7 +716,7 @@ being transferred and processed by its handler::
                     // can target directly the RecurringMessage being processed
                     $schedule->removeById($messageContext->id);
 
-                    // allow to call the ShouldCancel() and avoid the message to be handled
+                    // allow you to call the ShouldCancel() and avoid the message to be handled
                     $event->shouldCancel(true);
                 })
                 ->after(function(PostRunEvent $event) {
@@ -736,7 +736,7 @@ PreRunEvent
 
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent`
 
-``PreRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+``PreRunEvent`` allows you to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
 or cancel a message before it's consumed::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -766,7 +766,7 @@ PostRunEvent
 
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PostRunEvent`
 
-``PostRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+``PostRunEvent`` allows you to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
 after a message is consumed::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -793,7 +793,7 @@ FailureEvent
 
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\FailureEvent`
 
-``FailureEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+``FailureEvent`` allows you to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
 when a message consumption throws an exception::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -984,7 +984,7 @@ If a worker is restarted on day 2, the message will be sent 3 days from the rest
 
 While this behavior may not necessarily pose a problem, there is a possibility that it may not align with what you are seeking.
 
-That's why the scheduler allows to remember the last execution date of a message
+That's why the scheduler allows you to remember the last execution date of a message
 via the ``stateful`` option (and the :doc:`Cache component </components/cache>`).
 This allows the system to retain the state of the schedule, ensuring that when a worker is restarted, it resumes from the point it left off.::
 

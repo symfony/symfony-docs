@@ -111,7 +111,7 @@ class, you can add all the logic related to processing the configuration in that
 
 .. tip::
 
-    The ``AbstractBundle::configure()`` method also allows to import the
+    The ``AbstractBundle::configure()`` method also allows you to import the
     configuration definition from one or more files::
 
         // src/AcmeSocialBundle.php

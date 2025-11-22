@@ -193,7 +193,7 @@ determine which instance is passed.
             ->addTag('kernel.event_subscriber');
 
     ``RegisterListenersPass`` resolves aliased class names which for instance
-    allows to refer to an event via the fully qualified class name (FQCN) of the
+    allows you to refer to an event via the fully qualified class name (FQCN) of the
     event class. The pass will read the alias mapping from a dedicated container
     parameter. This parameter can be extended by registering another compiler pass,
     ``AddEventAliasesPass``::

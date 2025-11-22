@@ -763,7 +763,7 @@ Customizing the Login Link
 --------------------------
 
 The ``createLoginLink()`` method accepts a second optional argument to pass the
-``Request`` object used when generating the login link. This allows to customize
+``Request`` object used when generating the login link. This allows you to customize
 features such as the locale used to generate the link::
 
     // src/Controller/SecurityController.php

@@ -179,7 +179,7 @@ You can optionally define a description, help message and the
 .. tip::
 
     Defining the ``$defaultDescription`` static property instead of using the
-    ``setDescription()`` method allows to get the command description without
+    ``setDescription()`` method allows you to get the command description without
     instantiating its class. This makes the ``php bin/console list`` command run
     much faster.
 
@@ -620,13 +620,13 @@ message whenever a command doesn't finish with the ``0`` `exit status`_.
 Using Events And Handling Signals
 ---------------------------------
 
-When a command is running, many events are dispatched, one of them allows to
+When a command is running, many events are dispatched, one of them allows you to
 react to signals, read more in :doc:`this section </components/console/events>`.
 
 Profiling Commands
 ------------------
 
-Symfony allows to profile the execution of any command, including yours. First,
+Symfony allows you to profile the execution of any command, including yours. First,
 make sure that the :ref:`debug mode <debug-mode>` and the :doc:`profiler </profiler>`
 are enabled. Then, add the ``--profile`` option when running the command:
 
@@ -675,7 +675,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program
-* :doc:`/components/console/helpers/processhelper`: allows to run processes using ``DebugFormatterHelper``
-* :doc:`/components/console/helpers/cursor`: allows to manipulate the cursor in the terminal
+* :doc:`/components/console/helpers/processhelper`: allows you to run processes using ``DebugFormatterHelper``
+* :doc:`/components/console/helpers/cursor`: allows you to manipulate the cursor in the terminal
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status

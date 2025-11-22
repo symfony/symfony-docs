@@ -317,7 +317,7 @@ The following loaders are configurable with ``configureLoaderRule()``:
 Configuring Aliases When Importing or Requiring Modules
 -------------------------------------------------------
 
-The `Webpack resolve.alias option`_ allows to create aliases to simplify the
+The `Webpack resolve.alias option`_ allows you to create aliases to simplify the
 ``import`` or ``require`` of certain modules (e.g. by aliasing commonly used ``src/``
 folders). In Webpack Encore you can use this option via the ``addAliases()`` method:
 
@@ -338,7 +338,7 @@ With the above config, you could now import certain modules more concisely:
 Excluding Some Dependencies from Output Bundles
 -----------------------------------------------
 
-The `Webpack externals option`_ allows to prevent bundling of certain imported
+The `Webpack externals option`_ allows you to prevent bundling of certain imported
 packages and instead retrieve those external dependencies at runtime. This feature
 is mostly useful for JavaScript library developers, so you probably won't need it.
 

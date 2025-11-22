@@ -25,7 +25,7 @@ It comes with the following features:
   #. running tests in parallel when a test suite is split in several phpunit.xml files;
   #. recording and replaying skipped tests;
 
-* It allows to create tests that are compatible with multiple PHPUnit versions
+* It allows you to create tests that are compatible with multiple PHPUnit versions
   (because it provides polyfills for missing methods, namespaced aliases for
   non-namespaced classes, etc.).
 

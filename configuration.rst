@@ -478,7 +478,7 @@ files directly in the ``config/packages/`` directory.
                 webpack_encore:
                     strict_mode: false
 
-            # YAML syntax allows to reuse contents using "anchors" (&some_name) and "aliases" (*some_name).
+            # YAML syntax allows you to reuse contents using "anchors" (&some_name) and "aliases" (*some_name).
             # In this example, 'test' configuration uses the exact same configuration as in 'prod'
             when@prod: &webpack_prod
                 webpack_encore:

@@ -246,7 +246,7 @@ indicates its priority, so the first returned extension is the preferred one.
 Guessing the MIME Type
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Another useful utility allows to guess the MIME type of any given file::
+Another useful utility allows you to guess the MIME type of any given file::
 
     use Symfony\Component\Mime\MimeTypes;
 

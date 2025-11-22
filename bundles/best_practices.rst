@@ -169,7 +169,7 @@ Doctrine Entities/Documents
 
 If the bundle includes Doctrine ORM entities and/or ODM documents, it's
 recommended to define their mapping using XML files stored in
-``config/doctrine/``. This allows to override that mapping using the
+``config/doctrine/``. This allows you to override that mapping using the
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
 This is not possible when using attributes to define the mapping.
 

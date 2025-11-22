@@ -1700,7 +1700,7 @@ MessageEvent
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent`
 
-``MessageEvent`` allows to change the Mailer message and the envelope before
+``MessageEvent`` allows you to change the Mailer message and the envelope before
 the email is sent::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;

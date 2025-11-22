@@ -623,7 +623,7 @@ Chrome Specific Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``PANTHER_NO_SANDBOX``
-    Disable `Chrome's sandboxing`_ (unsafe, but allows to use Panther in containers)
+    Disable `Chrome's sandboxing`_ (unsafe, but allows you to use Panther in containers)
 ``PANTHER_CHROME_ARGUMENTS``
     Customize Chrome arguments. You need to set ``PANTHER_NO_HEADLESS`` to ``1``
     to fully customize

@@ -622,7 +622,7 @@ hypermedia API, and automatic update broadcasting through the Mercure hub::
     }
 
 As showcased `in this recording`_, the API Platform Client Generator also
-allows to scaffold complete React and React Native applications from this API.
+allows you to scaffold complete React and React Native applications from this API.
 These applications will render the content of Mercure updates in real-time.
 
 Checkout `the dedicated API Platform documentation`_ to learn more about

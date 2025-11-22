@@ -154,7 +154,7 @@ Set-up your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The tests create a kernel that runs in the ``test``
-:ref:`environment <configuration-environments>`. This allows to have
+:ref:`environment <configuration-environments>`. This allows you to have
 special settings for your tests inside ``config/packages/test/``.
 
 If you have Symfony Flex installed, some packages already installed some

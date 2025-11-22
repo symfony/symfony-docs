@@ -121,7 +121,7 @@ provides access to the link properties (e.g. ``$link->getMethod()``,
 The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::click` and
 :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::clickLink` methods
 can take an optional ``serverParameters`` argument. This
-parameter allows to send additional information like headers when clicking
+parameter allows you to send additional information like headers when clicking
 on a link::
 
     use Acme\Client;

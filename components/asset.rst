@@ -28,7 +28,7 @@ simple. Hardcoding URLs can be a disadvantage because:
   versioning strategies for each package;
 * **Moving assets' location** is cumbersome and error-prone: it requires you to
   carefully update the URLs of all assets included in all templates. The Asset
-  component allows to move assets effortlessly just by changing the base path
+  component allows you to move assets effortlessly just by changing the base path
   value associated with the package of assets;
 * **It's nearly impossible to use multiple CDNs**: this technique requires
   you to change the URL of the asset randomly for each request. The Asset component
@@ -382,7 +382,7 @@ they all have different base paths::
 
     $packages = new Packages($defaultPackage, $namedPackages);
 
-The ``Packages`` class allows to define a default package, which will be applied
+The ``Packages`` class allows you to define a default package, which will be applied
 to assets that don't define the name of the package to use. In addition, this
 application defines a package named ``img`` to serve images from an external
 domain and a ``doc`` package to avoid repeating long paths when linking to a

@@ -440,7 +440,7 @@ different sequences of code points represent the same character. For example,
 the Swedish letter ``å`` can be a single code point (``U+00E5`` = *"latin small
 letter A with ring above"*) or a sequence of two code points (``U+0061`` =
 *"latin small letter A"* + ``U+030A`` = *"combining ring above"*). The
-``normalize()`` method allows to pick the normalization mode::
+``normalize()`` method allows you to pick the normalization mode::
 
     // these encode the letter as a single code point: U+00E5
     u('å')->normalize(UnicodeString::NFC);
@@ -457,7 +457,7 @@ is not optimal. For example, consider a hash value that requires certain
 computation to obtain and which you might end up not using it.
 
 In those cases, it's better to use the :class:`Symfony\\Component\\String\\LazyString`
-class that allows to store a string whose value is only generated when you need it::
+class that allows you to store a string whose value is only generated when you need it::
 
     use Symfony\Component\String\LazyString;
 

@@ -15,7 +15,7 @@ perform checks before and after user authentication. If one or more conditions
 are not met, throw an exception which extends the
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccountStatusException` class.
 Consider using :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAccountStatusException`,
-which extends ``AccountStatusException`` and allows to customize the error message
+which extends ``AccountStatusException`` and allows you to customize the error message
 displayed to the user::
 
     namespace App\Security;

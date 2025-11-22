@@ -36,7 +36,7 @@ Usage
 -----
 
 The :class:`Symfony\\Component\\Clock\\Clock` class returns the current time and
-allows to use any `PSR-20`_ compatible implementation as a global clock in your
+allows you to use any `PSR-20`_ compatible implementation as a global clock in your
 application::
 
     use Symfony\Component\Clock\Clock;

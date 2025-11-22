@@ -83,7 +83,7 @@ and replaced by its placeholder::
 Selecting Different Messages Based on a Condition
 -------------------------------------------------
 
-The curly brace syntax allows to "modify" the output of the variable. One of
+The curly brace syntax allows you to "modify" the output of the variable. One of
 these functions is the ``select`` function. It acts like PHP's `switch statement`_
 and allows you to use different strings based on the value of the variable. A
 typical usage of this is gender:

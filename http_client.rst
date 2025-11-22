@@ -743,7 +743,7 @@ Retry Failed Requests
 ~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes, requests fail because of network issues or temporary server errors.
-Symfony's HttpClient allows to retry failed requests automatically using the
+Symfony's HttpClient allows you to retry failed requests automatically using the
 :ref:`retry_failed option <reference-http-client-retry-failed>`.
 
 By default, failed requests are retried up to 3 times, with an exponential delay
@@ -1053,7 +1053,7 @@ is installed and enabled, and will fall back as explained above.
 Configuring CurlHttpClient Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PHP allows to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
+PHP allows you to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
 function. In order to make the component more portable when not using cURL, the
 :class:`Symfony\\Component\\HttpClient\\CurlHttpClient` only uses some of those
 options (and they are ignored in the rest of clients).
@@ -1196,7 +1196,7 @@ following methods::
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
 
-    // the special "pause_handler" info item is a callable that allows to delay the request
+    // the special "pause_handler" info item is a callable that allows you to delay the request
     // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
     $response->getInfo('pause_handler')(2);
 

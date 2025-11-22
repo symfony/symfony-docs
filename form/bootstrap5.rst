@@ -138,7 +138,7 @@ Form type or ``ChoiceType`` configuration) to the label class.
 Switches
 ~~~~~~~~
 
-Bootstrap 5 allows to render checkboxes as `switches`_. You can enable this
+Bootstrap 5 allows you to render checkboxes as `switches`_. You can enable this
 feature on your Symfony Form ``CheckboxType`` by adding the ``checkbox-switch``
 class to the label:
 

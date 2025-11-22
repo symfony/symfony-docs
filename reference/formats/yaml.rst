@@ -316,7 +316,7 @@ Symfony Specific Features
 The Yaml component provides some additional features that are not part of the
 official YAML specification but are useful in Symfony applications:
 
-* ``!php/const`` allows to get the value of a PHP constant. This tag takes the
+* ``!php/const`` allows you to get the value of a PHP constant. This tag takes the
   fully-qualified class name of the constant as its argument:
 
   .. code-block:: yaml
@@ -324,7 +324,7 @@ official YAML specification but are useful in Symfony applications:
       data:
           page_limit: !php/const App\Pagination\Paginator::PAGE_LIMIT
 
-* ``!php/object`` allows to pass the serialized representation of a PHP
+* ``!php/object`` allows you to pass the serialized representation of a PHP
   object (created with the `serialize()`_ function), which will be deserialized
   when parsing the YAML file:
 
@@ -333,7 +333,7 @@ official YAML specification but are useful in Symfony applications:
       data:
           my_object: !php/object 'O:8:"stdClass":1:{s:3:"bar";i:2;}'
 
-* ``!php/enum`` allows to use a PHP enum case. This tag takes the fully-qualified
+* ``!php/enum`` allows you to use a PHP enum case. This tag takes the fully-qualified
   class name of the enum case as its argument:
 
   .. code-block:: yaml

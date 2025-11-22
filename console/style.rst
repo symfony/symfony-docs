@@ -37,7 +37,7 @@ unnecessarily.
 
 In order to reduce that boilerplate code, Symfony commands can optionally use the
 **Symfony Style Guide**. These styles are implemented as a set of helper methods
-which allow to create *semantic* commands and forget about their styling.
+which allow you to create *semantic* commands and forget about their styling.
 
 Basic Usage
 -----------

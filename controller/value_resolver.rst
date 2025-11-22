@@ -231,7 +231,7 @@ Managing Value Resolvers
 For each argument, every resolver tagged with ``controller.argument_value_resolver``
 will be called until one provides a value. The order in which they are called depends
 on their priority. For example, the ``SessionValueResolver`` will be called before the
-``DefaultValueResolver`` because its priority is higher. This allows to write e.g.
+``DefaultValueResolver`` because its priority is higher. This allows you to write e.g.
 ``SessionInterface $session = null`` to get the session if there is one, or ``null``
 if there is none.
 
@@ -276,7 +276,7 @@ You can target a resolver by passing its name as ``ValueResolver``'s first argum
 For convenience, built-in resolvers' name are their FQCN.
 
 A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
-argument to ``true``; this is how :ref:`MapEntity allows to disable the
+argument to ``true``; this is how :ref:`MapEntity allows you to disable the
 EntityValueResolver for a specific controller <doctrine-entity-value-resolver>`.
 Yes, ``MapEntity`` extends ``ValueResolver``!
 
