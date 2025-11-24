@@ -734,7 +734,7 @@ To do so, define a parameter with the same name as the env var using this syntax
 
 .. tip::
 
-    Some hosts - like Platform.sh - offer easy `utilities to manage env vars`_
+    Some hosts - like Upsun - offer easy `utilities to manage env vars`_
     in production.
 
 .. note::

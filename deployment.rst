@@ -61,7 +61,7 @@ Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony
-app quickly. There are many PaaS, but we recommend `Platform.sh`_ as it
+app quickly. There are many PaaS, but we recommend `Upsun`_ as it
 provides a dedicated Symfony integration and helps fund the Symfony development.
 
 Using Build Scripts and other Tools
@@ -268,6 +268,6 @@ Learn More
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: https://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
-.. _`Platform.sh`: https://symfony.com/cloud
+.. _`Upsun`: https://symfony.com/cloud
 .. _`Symfony CLI`: https://symfony.com/download
 .. _`symfony/apache-pack`: https://packagist.org/packages/symfony/apache-pack

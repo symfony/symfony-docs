@@ -126,7 +126,7 @@ as a starting point for your own GitHub CI configuration:
             runs-on: ubuntu-latest
             continue-on-error: ${{ matrix.stability == 'dev' }}
             steps:
-                - uses: actions/checkout@v5
+                - uses: actions/checkout@v6
 
                 - name: Setup PHP, with composer and extensions
                   uses: shivammathur/setup-php@v2

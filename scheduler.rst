@@ -566,8 +566,8 @@ schedule and consider all changes in real-time.
 Strategies for Adding, Removing, and Modifying Entries within the Schedule
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The schedule provides you with the ability to :method:`Symfony\\Component\\Scheduler\Schedule::add`,
-:method:`Symfony\\Component\\Scheduler\Schedule::remove`, or :method:`Symfony\\Component\\Scheduler\Schedule::clear`
+The schedule provides you with the ability to :method:`Symfony\\Component\\Scheduler\\Schedule::add`,
+:method:`Symfony\\Component\\Scheduler\\Schedule::remove`, or :method:`Symfony\\Component\\Scheduler\\Schedule::clear`
 all associated recurring messages, resulting in the reset and recalculation of
 the in-memory stack of recurring messages.
 
@@ -575,13 +575,13 @@ For instance, for various reasons, if there's no need to generate a report, a
 callback can be employed to conditionally skip generating of some or all reports.
 
 However, if the intention is to completely remove a recurring message and its recurrence,
-the :class:`Symfony\\Component\\Scheduler\Schedule` offers a :method:`Symfony\\Component\\Scheduler\Schedule::remove`
-or a :method:`Symfony\\Component\\Scheduler\Schedule::removeById` method. This can
+the :class:`Symfony\\Component\\Scheduler\\Schedule` offers a :method:`Symfony\\Component\\Scheduler\\Schedule::remove`
+or a :method:`Symfony\\Component\\Scheduler\\Schedule::removeById` method. This can
 be particularly useful in your case, especially if you need to halt the generation
 of the recurring message, which involves deleting old reports.
 
 In your handler, you can check a condition and, if affirmative, access the
-:class:`Symfony\\Component\\Scheduler\Schedule` and invoke this method::
+:class:`Symfony\\Component\\Scheduler\\Schedule` and invoke this method::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;

@@ -1975,7 +1975,7 @@ SentMessageEvent
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\SentMessageEvent`
 
-``SentMessageEvent`` allows you to act on the :class:`Symfony\\Component\\\Mailer\\\SentMessage`
+``SentMessageEvent`` allows you to act on the :class:`Symfony\\Component\\Mailer\\SentMessage`
 class to access the original message (``getOriginalMessage()``) and some
 :ref:`debugging information <mailer-debugging-emails>` (``getDebug()``) such as
 the HTTP calls made by the HTTP transports, which is useful for debugging errors::

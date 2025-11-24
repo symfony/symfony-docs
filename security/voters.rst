@@ -468,7 +468,7 @@ Custom Access Decision Strategy
 
 If none of the built-in strategies fits your use case, define the ``strategy_service``
 option to use a custom service (your service must implement the
-:class:`Symfony\\Component\\Security\\Core\Authorization\\Strategy\\AccessDecisionStrategyInterface`):
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Strategy\\AccessDecisionStrategyInterface`):
 
 .. configuration-block::
 

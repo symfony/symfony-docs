@@ -21,7 +21,7 @@ jobs:
 
         steps:
             -   name: "Checkout"
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
 
             -   name: "Set-up PHP"
                 uses: shivammathur/setup-php@v2
@@ -56,7 +56,7 @@ jobs:
 
         steps:
             -   name: "Checkout"
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
 
             -   name: "Create cache dir"
                 run: mkdir .cache
@@ -72,7 +72,7 @@ jobs:
                     key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
 
             -   name: "Run DOCtor-RST"
-                uses: docker://oskarstark/doctor-rst:1.70.1
+                uses: docker://oskarstark/doctor-rst:1.70.2
                 with:
                     args: --short --error-format=github --cache-file=/github/workspace/.cache/doctor-rst.cache
 
@@ -85,7 +85,7 @@ jobs:
 
         steps:
             -   name: Checkout code
-                uses: actions/checkout@v4
+                uses: actions/checkout@v6
                 with:
                     path: 'docs'
 

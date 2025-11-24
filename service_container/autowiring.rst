@@ -796,7 +796,7 @@ by using the property name as method name::
 
 .. versionadded:: 7.1
 
-    The :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireMethodOf`
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireMethodOf`
     attribute was introduced in Symfony 7.1.
 
 .. _autowiring-calls:

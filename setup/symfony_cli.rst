@@ -598,11 +598,11 @@ Symfony Cloud Integration
 -------------------------
 
 The Symfony CLI provides seamless integration with `Symfony Cloud`_ (powered by
-`Platform.sh`_):
+`Upsun`_):
 
 .. code-block:: terminal
 
-    # open Platform.sh web UI
+    # open Upsun web UI
     $ symfony cloud:web
 
     # deploy your project to production
@@ -647,8 +647,8 @@ variables are properly exposed:
 .. _`symfony.com/download`: https://symfony.com/download
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`Symfony Cloud`: https://symfony.com/cloud/
-.. _`Platform.sh`: https://platform.sh/
-.. _`Symfony Cloud documentation`: https://docs.platform.sh/frameworks/symfony.html
+.. _`Upsun`: https://upsun.com/
+.. _`Symfony Cloud documentation`: https://docs.upsun.com/get-started/stacks/symfony/integration.html
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
