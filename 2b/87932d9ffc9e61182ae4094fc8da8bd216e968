@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-11-25T08:08:51Z
+
+I guess this does also address the concerns raised in #20874?
+
+---------------------------------------------------------------------------
+
+by mboelsterli at 2025-11-25T08:13:36Z
+
+> I guess this does also address the concerns raised in #20874?
+
+Yes, this is exactly the issue i had and would be fixed with this pr.
