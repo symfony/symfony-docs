@@ -1678,12 +1678,16 @@ This can be configured by replacing the ``dsn`` configuration entry with a
         use Symfony\Config\FrameworkConfig;
         use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->mailer()
-                ->transport('main', env('MAILER_DSN'))
-                ->transport('alternative', env('MAILER_DSN_IMPORTANT'))
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'mailer' => [
+                    'transports' => [
+                        'main' => env('MAILER_DSN'),
+                        'alternative' => env('MAILER_DSN_IMPORTANT'),
+                    ]
+                ]
+            ]
+        ]);
 
 By default the first transport is used. The other transports can be selected by
 adding an ``X-Transport`` header (which Mailer will remove automatically from
