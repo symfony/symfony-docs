@@ -1675,7 +1675,6 @@ This can be configured by replacing the ``dsn`` configuration entry with a
     .. code-block:: php
 
         // config/packages/mailer.php
-        use Symfony\Config\FrameworkConfig;
         use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
 
         return App::config([
