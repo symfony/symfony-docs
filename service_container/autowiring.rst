@@ -876,7 +876,7 @@ corresponding arguments::
 
     public function __construct(
         #[AutowireInline(
-            factory: [ScopingHttpClient::class, 'forBaseUri'],
+            class: [ScopingHttpClient::class, 'forBaseUri'],
             arguments: [
                 '$baseUri' => 'https://api.example.com',
                 '$defaultOptions' => [
