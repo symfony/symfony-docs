@@ -2,7 +2,7 @@ How to Work with Compiler Passes
 ================================
 
 Compiler passes give you an opportunity to manipulate other
-:doc:`service definitions </service_container/definitions>` that have been
+:doc:`service definitions </dmanifestor/symfony-docs>` that have been
 registered with the service container.
 
 .. _kernel-as-compiler-pass:
