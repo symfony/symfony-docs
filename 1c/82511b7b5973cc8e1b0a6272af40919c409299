@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by stof at 2025-12-03T18:21:54Z
+
+> Honestly I don't totally understand what the "mode" option/variable in the 2nd and 3rd examples is doing so I'm not sure if some other change needs to be made for those ones.
+
+Those are examples of settings support by that custom constraint.
