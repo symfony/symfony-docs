@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2025-12-17T12:23:39Z
+
+Thinking a bit more about it, maybe it's not necessary to remove this documentation. Instead, we can just add a few lines to make it work:
+```php
+class MyBundle extends AbstractBundle implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container): void
+        {
+             // ...
+        }
+
+        public function build(ContainerBuilder $container): void
+        {
+            $container->addCompilerPass($this); // self-registration
+        }
+    }
+```
+Then, in 8.1 we can just remove the `build()` method. What do you think?
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2025-12-17T12:29:25Z
+
+Ah didn’t even think about this; but yes this feels like a pretty good alternative :+1:
+
+---------------------------------------------------------------------------
+
+by MatTheCat at 2025-12-17T12:39:22Z
+
+PR updated. Not sure about the call to `parent::build()` though: I don’t think it is required?
+
+---------------------------------------------------------------------------
+
+by yceruto at 2025-12-17T13:45:46Z
+
+>parent::build($container);
+
+it's not required, you can safely remove it
