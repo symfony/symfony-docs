@@ -133,6 +133,7 @@ The validator class only has one required method ``validate()``::
 
     class ContainsAlphanumericValidator extends ConstraintValidator
     {
+        #[\Override]
         public function validate(mixed $value, Constraint $constraint): void
         {
             if (!$constraint instanceof ContainsAlphanumeric) {
