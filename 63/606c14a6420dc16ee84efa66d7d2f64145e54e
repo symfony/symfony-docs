@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-11-29T10:27:18Z
+
+This is true ... but reading https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.max-accelerated-files seems that not all primes are valid. It must be one of this specific set:
+
+`{ 223, 463, 983, 1979, 3907, 7963, 16229, 32531, 65407, 130987, 262237, 524521, 1048793 }`
+
+---------------------------------------------------------------------------
+
+by Spomky at 2025-11-29T11:17:03Z
+
+> This is true ... but reading https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.max-accelerated-files seems that not all primes are valid. It must be one of this specific set:
+>
+> `{ 223, 463, 983, 1979, 3907, 7963, 16229, 32531, 65407, 130987, 262237, 524521, 1048793 }`
+
+Correct, except 1048793 that is greater than 1,000,000 and `The maximum value is 1000000` (I don't know why 1048793 is listed).
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2025-12-21T09:02:26Z
+
+Oh, reading this more clearly..
+
+Basically, you can set any value (between 200 and 1_000_000) and PHP will increase it to one of the mentioned ones
+
+```
+{ 223, 463, 983, 1979, 3907, 7963, 16229, 32531, 65407, 130987, 262237, 524521, 1048793 }
+```
+
+I agree with the current state of the PR, set it to 32531 because 16229 is a little bit too small.
