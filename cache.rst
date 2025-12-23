@@ -84,14 +84,16 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
     .. code-block:: php
 
         // config/packages/cache.php
-        use Symfony\Config\FrameworkConfig;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\App;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->cache()
-                ->app('cache.adapter.filesystem')
-                ->system('cache.adapter.system')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'app' => 'cache.adapter.filesystem',
+                    'system' => 'cache.adapter.system',
+                ],
+            ],
+        ]);
 
 .. tip::
 
