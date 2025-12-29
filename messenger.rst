@@ -1092,29 +1092,31 @@ this is configurable for each transport:
 
 .. configuration-block::
 
-   .. code-block:: yaml
+  .. code-block:: yaml
 
-    # config/packages/messenger.yaml
-    framework:
-        messenger:
-            transports:
-                async_priority_high:
-                    dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+      # config/packages/messenger.yaml
+      framework:
+          messenger:
+              transports:
+                  async_priority_high:
+                      dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
-                    # retry strategy configuration
-                    retry_strategy:
-                        max_retries: 3          # maximum number of retries
-                        delay: 1000             # initial delay in milliseconds
-                        multiplier: 2           # increases delay exponentially before each retry
-                        max_delay: 10000        # maximum delay in milliseconds
-                        jitter: 0.1             # randomness to avoid thundering herd effect
-                        # service: null         # optionally override with a custom RetryStrategyInterface service
+                      # retry strategy configuration
+                      retry_strategy:
+                          max_retries: 3          # maximum number of retries
+                          delay: 1000             # initial delay in milliseconds
+                          multiplier: 2           # increases delay exponentially before each retry
+                          max_delay: 10000        # maximum delay in milliseconds
+                          jitter: 0.1             # randomness to avoid thundering herd effect
+                          # service: null         # optionally override with a custom RetryStrategyInterface service
 
-.. note::
+  .. note::
 
-    You can configure the retry strategy for a Messenger transport using options like
-    ``max_retries``, ``delay``, ``multiplier``, ``max_delay`` and ``jitter``.
-    This allows controlling how failed messages are retried and the delay between attempts.
+      You can configure the retry strategy for a Messenger transport using options like
+      ``max_retries``, ``delay``, ``multiplier``, ``max_delay`` and ``jitter``.
+      This allows controlling how failed messages are retried and the delay between attempts.
+
+::
 
 
 
