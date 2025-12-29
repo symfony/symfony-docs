@@ -1116,8 +1116,6 @@ this is configurable for each transport:
       ``max_retries``, ``delay``, ``multiplier``, ``max_delay`` and ``jitter``.
       This allows controlling how failed messages are retried and the delay between attempts.
 
-::
-
 
 
     .. code-block:: xml
