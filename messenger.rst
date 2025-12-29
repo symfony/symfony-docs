@@ -1092,30 +1092,28 @@ this is configurable for each transport:
 
 .. configuration-block::
 
-    .. code-block:: yaml
+   .. code-block:: yaml
 
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                transports:
-                    async_priority_high:
-                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+    # config/packages/messenger.yaml
+    framework:
+        messenger:
+            transports:
+                async_priority_high:
+                    dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
-                        # default configuration
-                        retry_strategy:
-                            max_retries: 3
-                            # milliseconds delay
-                            delay: 1000
-                            # causes the delay to be higher before each retry
-                            # e.g. 1 second delay, 2 seconds, 4 seconds
-                            multiplier: 2
-                            max_delay: 0
-                            # applies randomness to the delay that can prevent the thundering herd effect
-                            # the value (between 0 and 1.0) is the percentage of 'delay' that will be added/subtracted
-                            jitter: 0.1
-                            # override all of this with a service that
-                            # implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
-                            # service: null
+                    # retry strategy configuration
+                    retry_strategy:
+                        max_retries: 3          # maximum number of retries
+                        delay: 1000             # initial delay in milliseconds
+                        multiplier: 2           # increases delay exponentially before each retry
+                        max_delay: 10000        # maximum delay in milliseconds
+                        jitter: 0.1             # randomness to avoid thundering herd effect
+                        # service: null         # optionally override with a custom RetryStrategyInterface service
+
+You can configure the retry strategy for a Messenger transport using options like
+`max_retries`, `delay`, `multiplier`, `max_delay` and `jitter`. This allows controlling
+how failed messages are retried and the delay between attempts.
+
 
     .. code-block:: xml
 
