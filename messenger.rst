@@ -1110,7 +1110,7 @@ this is configurable for each transport:
                           jitter: 0.1             # randomness to avoid thundering herd effect
                           # service: null         # optionally override with a custom RetryStrategyInterface service
 
-  .. note::
+.. note::
 
       You can configure the retry strategy for a Messenger transport using options like
       ``max_retries``, ``delay``, ``multiplier``, ``max_delay`` and ``jitter``.
