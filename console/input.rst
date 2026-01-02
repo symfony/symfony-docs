@@ -14,20 +14,18 @@ or required. For example, to add an optional ``last_name`` argument to the comma
 and make the ``name`` argument required::
 
     // ...
-    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Attribute\Argument;
     use Symfony\Component\Console\Input\InputArgument;
 
-    class GreetCommand extends Command
+    #[AsCommand(name: 'app:greet')]    
+    class GreetCommand
     {
-        // ...
-
-        protected function configure(): void
+        public function __invoke(
+            #[Argument(description: 'Who do you want to greet?'] string $name,
+            #[Argument(description: "Person's last name?"] ?string $lastName=null): void
+        )
         {
-            $this
-                // ...
-                ->addArgument('name', InputArgument::REQUIRED, 'Who do you want to greet?')
-                ->addArgument('last_name', InputArgument::OPTIONAL, 'Your last name?')
-            ;
+            // ...
         }
     }
 
