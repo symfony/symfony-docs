@@ -1,0 +1,62 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2025-10-18T16:47:09Z
+
+PR ready.
+This took me quite some time to do manually, but with some LLM help, I shouldn't have made much mistakes.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-10-20T06:21:45Z
+
+Thanks for this! We should merge this soon to aovid merge conflicts with other PRs.
+
+However, GitHub shows errors on these 5 files, so we should fix those:
+
+* logging/channels_handlers.rst
+* logging/monolog_console.rst
+* service_container/import.rst
+* configuration.rst
+* http_client.rst
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2025-10-22T17:09:46Z
+
+PR updated after https://github.com/symfony/symfony/pull/62129
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2025-10-23T18:10:50Z
+
+I replaced examples that used `config/package/env/` pattern to `when@env`. This topic would deserves closer attention after merging. I think we can stop telling so much bout the subdir pattern.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2025-10-24T11:05:01Z
+
+Thanks @GromNaN, comments addressed.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-10-27T14:56:00Z
+
+Just asking: the "code blocks" check is reporting many issues (https://github.com/symfony/symfony-docs/actions/runs/18777842138/job/53576516241?pr=21511) but I don't know if they are legit or just false positives because the review tooling is not ready to review this new format properly?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2025-11-03T18:10:40Z
+
+Thanks @GromNaN, comments addressed (bis)
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-01-08T14:07:40Z
+
+Nicolas, I know this is a lot but, if you have some time for this, let's try to finish it so we can merge it. Thanks a lot.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-01-08T15:16:58Z
+
+PR rebase, please merge ASAP and as is, we can fix remaining issues in smaller follow ups.
