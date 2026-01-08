@@ -1185,6 +1185,10 @@ to get the ``App\Handler\Two`` service::
         }
     }
 
+.. hint::
+
+    A Segmentation fault with ``iterator_to_array`` in ``__construct`` happens if you have a dependency cycle.
+
 If some service doesn't define the option/attribute configured in ``index_by``,
 Symfony applies this fallback process:
 
