@@ -460,21 +460,23 @@ constant should not be changed.
 
 .. _note-6:
 
-**[6]** Allowed using the ``@final`` annotation.
+**[6]** Allowed using the ``@final since Symfony x.y`` annotation.
+The ``since Symfony x.y`` part must be removed in the next major version
+when switching to just ``@final`` or to the native ``final`` keyword.
 
 .. _note-7:
 
-**[7]** Allowed if the class is final. Classes that received the ``@final``
-annotation after their first release are considered final in their next major
-version. Changing an argument type is only possible with a parent type. Changing
-a return type is only possible with a child type.
+**[7]** Allowed if the class is final. Classes with the ``@final``
+annotation are considered final if the annotation is not followed with
+``since Symfony x.y``. Changing an argument type is only possible with a
+parent type. Changing a return type is only possible with a child type.
 
 .. _note-8:
 
-**[8]** Allowed if the method is final. Methods that received the ``@final``
-annotation after their first release are considered final in their next major
-version. Changing an argument type is only possible with a parent type. Changing
-a return type is only possible with a child type.
+**[8]** Allowed if the method is final. Methods with the ``@final``
+annotation are considered final if the annotation is not followed with
+``since Symfony x.y``. Changing an argument type is only possible with a
+parent type. Changing a return type is only possible with a child type.
 
 .. _note-9:
 
@@ -554,5 +556,39 @@ If that's the case, here is how to do it properly in a minor version:
 #. In the next major version (``X.0``), uncomment the argument, remove the
    PHPDoc if there is no need for a description, and remove the
    ``func_get_arg`` code and the warning if any.
+
+The ``final`` keyword
+.....................
+
+It is possible to prevent the extension of a class or the overriding of
+a method, property or constant by making it final.
+However, doing so is a breaking change.
+Likewise, it is possible to mark a class, method, property or constant
+as final without effectively making it final by using the ``@final``
+phpdoc annotation.
+Although that is not a breaking change, it does reduce the list of
+things that are considered a breaking change.
+For instance, making a ``private`` property ``public`` is not a breaking
+change for final classes, as there is no risk of collision with a
+property of the same name in children classes.
+For that reason, the addition of an ``@final`` annotation should never
+happen in a minor release, unless it is qualified with a
+``since Symfony x.y`` part, as explained below.
+
+In order to signal that a class method, property or constant is going to
+be made final in the next major version, you can use the
+``@final since Symfony x.y`` annotation.
+It lets users know that they should not extend or override it anymore,
+and it lets contributors know that it should not be
+considered final yet.
+
+In the next major version, the annotation is removed in favor of using
+the native ``final`` keyword, or the ``since Symfony x.y`` part is
+removed, leaving only the ``@final`` annotation.
+
+Note that in most applications, the ``DebugErrorHandler`` will be in use
+and include the tag description in the deprecation message, verbatim.
+Specifying e.g. ``since last friday`` will print
+``The class … is considered final since last friday``.
 
 .. _`Semantic Versioning`: https://semver.org/
