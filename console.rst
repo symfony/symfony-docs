@@ -396,8 +396,11 @@ as a service, you can use normal dependency injection. Imagine you have a
 Command Lifecycle
 -----------------
 
-Commands have three lifecycle methods that are invoked when running the
-command:
+Commands have lifecycle methods that are invoked when running the command,
+depending on how it is defined.
+The method ``__invoke()`` or ``execute()`` is executed in all situations but
+your commands should extends :class:`Symfony\\Component\\Console\\Command\\Command`
+to allow ``interact()`` or ``initialize()`` usage.
 
 :method:`Symfony\\Component\\Console\\Command\\Command::initialize` *(optional)*
     This method is executed before the ``interact()`` and the ``execute()``
