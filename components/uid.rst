@@ -553,6 +553,27 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     // this method returns $ulid1 <=> $ulid2
     $ulid1->compare($ulid2); // e.g. int(-1)
 
+If you're working with different ULID format and want to validate them,
+you can use the ``$format`` parameter of the :method:`Symfony\\Component\\Uid\\Ulid::isValid`
+method to specify the ULID format you're expecting::
+
+    use Symfony\Component\Uid\Ulid;
+
+    $isValid = Ulid::isValid('90067ce4-f083-47d2-a0f4-c47359de0f97', Ulid::FORMAT_RFC_4122); // accept only RFC 4122 UUIDs
+    $isValid = Ulid::isValid('3aJ7CNpDMfXPZrCsn4Cgey', Ulid::FORMAT_BASE_32 | Ulid::FORMAT_BASE_58); // accept multiple formats
+
+The following constants are available:
+
+* ``Ulid::FORMAT_BINARY``
+* ``Ulid::FORMAT_BASE_32``
+* ``Ulid::FORMAT_BASE_58``
+* ``Ulid::FORMAT_RFC_4122``
+* ``Ulid::FORMAT_RFC_9562`` (equivalent to ``Ulid::FORMAT_RFC_4122``)
+
+You can also use the ``Ulid::FORMAT_ALL`` constant to accept any UUID format.
+By default, only the Base 32 format is accepted, since this is the default format when using `Ulid::toString`
+
+
 Storing ULIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
