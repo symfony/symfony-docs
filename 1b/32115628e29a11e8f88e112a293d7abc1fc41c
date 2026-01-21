@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by Arkalo2 at 2025-04-02T13:24:40Z
+
+The `getExtraData` function exist long time ago, I don't know which version I should base this pull request.
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2025-04-04T03:28:55Z
+
+> The `getExtraData` function exist long time ago, I don't know which version I should base this pull request.
+
+You can use 6.4 as it's the oldest maintained branch.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-05-05T18:59:51Z
+
+We should probably also document that one needs to enable the `allow_extra_fields` option so that the validation does not error with the extra data given.
+
+---------------------------------------------------------------------------
+
+by Arkalo2 at 2025-10-06T15:32:55Z
+
+What's missing from this PR ? What can I do to help ?
