@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by tcoch at 2026-01-23T09:05:09Z
+
+@javiereguiluz Can you please check why the CI failed to build the doc ? It doesn't seem directly related to this PR to me
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-01-23T11:00:58Z
+
+This was my fault. Some references related to removed pages weren't updated properly. I think I fixed it for good now. Please, rebase your PR on the latest changes of the 8.1 branch. Thanks.
