@@ -96,7 +96,7 @@ make AJAX requests::
     $crawler = $client->xmlHttpRequest('GET', '/');
 
 Wrapping Response Content
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 7.4
 
