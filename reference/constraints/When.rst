@@ -248,7 +248,13 @@ applied but the constraints defined in ``otherwise`` option (if provided) will b
                     - When:
                         expression: "value == 'percent'"
                         constraints:
-                            - Callback: doComplexValidation
+                            - Callback:
+                                callback: doComplexValidation
+
+    .. versionadded:: 8.0
+
+        Constraint options must be explicitly named in YAML and XML mappings.
+        Implicit option configuration is no longer supported.
 
     .. code-block:: xml
 
