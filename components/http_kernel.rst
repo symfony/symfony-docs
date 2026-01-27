@@ -281,6 +281,22 @@ Another typical use-case for this event is to retrieve the attributes from
 the controller using the :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::getAttributes`
 method. See the Symfony section below for some examples.
 
+.. note::
+
+    Starting from Symfony 8.1, attributes retrieved from controllers are stored and
+    returned as a flat list of attribute instances.
+
+    When calling
+    :method:`ControllerEvent::getAttributes('*') <Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::getAttributes>`
+    or
+    :method:`ControllerArgumentsEvent::getAttributes('*') <Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent::getAttributes>`,
+    the method returns a list of attribute objects instead of an array grouped by
+    attribute class.
+
+    Passing grouped attributes (``[AttributeClass => [...]]``) to
+    :method:``ControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::setController>``
+    is deprecated and automatically flattened.
+
 Listeners to this event can also change the controller callable completely
 by calling :method:`ControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::setController>`
 on the event object that's passed to listeners on this event.
