@@ -482,6 +482,42 @@ With this configuration, ObjectMapper maps each item in the ``products`` array
 according to the usual mapping rules. Without ``transform: new MapCollection()``,
 the array is left unchanged.
 
+Mapping Collections to a Different Target Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+By default, each item in a collection is mapped using the ObjectMapper's
+standard target resolution rules (for example, the ``#[Map(target: ...)]``
+attribute defined on the source class).
+
+Starting from Symfony 8.1, you can override this behavior by specifying a
+``targetClass`` option on the ``MapCollection`` transform. This allows mapping
+a collection to a different target class **without adding a ``#[Map]``
+attribute on the collection items' source class**.
+
+This is especially useful when you want to reuse source objects in different
+contexts or avoid polluting shared DTOs with mapping metadata.
+
+Example::
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Transform\MapCollection;
+
+    #[Map(target: OrderTarget::class)]
+    class OrderSource
+    {
+        #[Map(transform: new MapCollection(targetClass: LineItemTarget::class))]
+        public array $items = [];
+    }
+
+In this example, each element of the ``items`` collection is explicitly mapped
+to ``LineItemTarget``, regardless of any mapping configuration defined on the
+source item class.
+
+Without the ``targetClass`` option, the ObjectMapper would rely on the default
+target resolution strategy for each collection item.
+
 Mapping Multiple Targets
 ------------------------
 
