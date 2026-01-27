@@ -147,7 +147,7 @@ If you can't use PHP attributes, register the command as a service and
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-You can also use ``#[AsCommand]`` to add a description, usage exampless, and
+You can also use ``#[AsCommand]`` to add a description, usage examples, and
 longer help text for the command::
 
     #[AsCommand(
@@ -194,6 +194,91 @@ and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
             // ...
         }
     }
+
+Method-based Commands
+~~~~~~~~~~~~~~~~~~~~~
+
+You can define multiple console commands inside the same class by annotating
+individual public methods with ``#[AsCommand]``.
+
+This is useful to group related commands while sharing common dependencies.
+
+.. versionadded:: 8.1
+
+    Support for method-based console commands was introduced.
+
+Basic Example
+~~~~~~~~~~~~~
+
+Each method annotated with ``#[AsCommand]`` becomes an independent command::
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    class UserCommands
+    {
+        #[AsCommand('app:user:create')]
+        public function create(OutputInterface $output): int
+        {
+            $output->writeln('User created');
+
+            return Command::SUCCESS;
+        }
+
+        #[AsCommand('app:user:delete')]
+        public function delete(OutputInterface $output): int
+        {
+            $output->writeln('User deleted');
+
+            return Command::SUCCESS;
+        }
+    }
+
+The constructor of the class can be used to inject shared services.
+
+Using ``__invoke()``
+~~~~~~~~~~~~~~~~~~~~
+
+You can also define a command using the ``__invoke()`` method::
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    #[AsCommand('app:user:default')]
+    class UserDefaultCommand
+    {
+        public function __invoke(OutputInterface $output): int
+        {
+            $output->writeln('Default command');
+
+            return Command::SUCCESS;
+        }
+    }
+
+Manual Registration
+~~~~~~~~~~~~~~~~~~~
+
+Method-based commands can also be registered manually when using the Console
+component without the service container::
+
+    $instance = new UserCommands();
+
+    $application = new Application();
+    $application->addCommand($instance->create(...));
+    $application->addCommand($instance->delete(...));
+
+Testing Method-based Commands
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Method-based commands can be tested like any other command::
+
+    $instance = new UserCommands();
+
+    $tester = new CommandTester($instance->create(...));
+    $tester->execute([]);
+
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
