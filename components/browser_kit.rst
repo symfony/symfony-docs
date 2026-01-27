@@ -95,6 +95,39 @@ make AJAX requests::
     // the required HTTP_X_REQUESTED_WITH header is added automatically
     $crawler = $client->xmlHttpRequest('GET', '/');
 
+Wrapping Response Content
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.4
+
+When fetching HTML fragments that are not valid standalone documents
+(e.g. ``<tr>`` or ``<td>`` elements), the native HTML5 parser may drop or
+rewrite those elements because they lack proper context.
+
+To solve this, BrowserKit allows wrapping the response content before it
+is parsed, using :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::wrapContent`.
+
+For example, when a controller returns an HTML fragment like this::
+
+    <tr><td>Cell content</td></tr>
+
+Parsing it directly may remove the ``tr`` and ``td`` elements. You can
+wrap the fragment in a valid parent structure::
+
+    use Acme\Client;
+
+    $client = new Client();
+    $client->wrapContent('<table>%s</table>');
+
+    $crawler = $client->xmlHttpRequest('GET', '/fragment');
+
+    echo $crawler->html();
+
+.. note::
+    The wrapper pattern must contain a ``%s`` placeholder, which will be
+    replaced by the original response content. The wrapped content is only
+    used for parsing and does not modify the actual HTTP response.
+
 Clicking Links
 ~~~~~~~~~~~~~~
 
