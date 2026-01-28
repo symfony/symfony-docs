@@ -20,7 +20,7 @@ Forms and Validation
 
 * :doc:`Form Field Type Reference </reference/forms/types>`
 * :doc:`Validation Constraints Reference </reference/constraints>`
-* :ref:`Twig Template Function and Variable Reference <reference-form-twig-functions-variables>`
+* :ref:`Twig Template Function and Variable Reference <twig-reference-form-variables>`
 
 Format Specifications
 ---------------------
