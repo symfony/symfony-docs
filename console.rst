@@ -480,6 +480,10 @@ console::
 
             $commandTester->assertCommandIsSuccessful();
 
+            // you can also check for a failed or invalid command:
+            // $commandTester->assertCommandFailed();
+            // $commandTester->assertCommandIsInvalid();
+
             // the output of the command in the console
             $output = $commandTester->getDisplay();
             $this->assertStringContainsString('Username: Wouter', $output);
@@ -487,6 +491,11 @@ console::
             // ...
         }
     }
+
+.. versionadded:: 8.1
+
+    The ``assertCommandFailed()`` and ``assertCommandIsInvalid()`` methods were
+    introduced in Symfony 8.1.
 
 If you are using a :doc:`single-command application </components/console/single_command_tool>`,
 call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
