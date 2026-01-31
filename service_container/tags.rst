@@ -147,6 +147,87 @@ When no tag name is specified, the fully qualified class name (FQCN) of the targ
     like their laziness, their bindings or their calls for example, you may rely
     on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
 
+.. _di-resource-tags:
+
+Resource Tags
+.............
+
+When using :ref:`service auto-discovery <service-container-services-load-example>`,
+you can use the ``#[AutoconfigureResourceTag]`` attribute to tag services that are
+loaded via the ``resource`` directive. This is similar to ``#[AutoconfigureTag]``,
+but only applies to services that are auto-discovered::
+
+    // src/Handler/HandlerInterface.php
+    namespace App\Handler;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.handler')]
+    interface HandlerInterface
+    {
+        // ...
+    }
+
+Services implementing ``HandlerInterface`` will only be tagged with ``app.handler``
+when they are loaded via auto-discovery (``resource`` directive), not when they are
+explicitly defined in the configuration.
+
+You can also define resource tags directly in your configuration files:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _defaults:
+                autowire: true
+                autoconfigure: true
+                resource_tags:
+                    - 'app.handler'
+
+            App\:
+                resource: '../src/'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <defaults autowire="true" autoconfigure="true">
+                    <resource-tag name="app.handler"/>
+                </defaults>
+
+                <prototype namespace="App\" resource="../src/"/>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services()
+                ->defaults()
+                    ->autowire()
+                    ->autoconfigure()
+                    ->resourceTag('app.handler')
+            ;
+
+            $services->load('App\\', '../src/');
+        };
+
+.. versionadded:: 7.4
+
+    The ``#[AutoconfigureResourceTag]`` attribute and the ``resource_tags`` configuration
+    option were introduced in Symfony 7.4.
+
 For more advanced needs, you can define the automatic tags using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration` method.
 
