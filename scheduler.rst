@@ -999,8 +999,8 @@ handle a message only once, you can use the ``processOnlyLastMissedRun`` option:
     }
 
 To scale your schedules more effectively, you can use multiple workers. In such
-cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
-same task more than once::
+cases, a good practice is to add a :doc:`lock </components/lock>` to prevent running
+the same task more than once::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
