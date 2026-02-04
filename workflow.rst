@@ -51,7 +51,7 @@ follows:
         framework:
             workflows:
                 blog_publishing:
-                    type: 'workflow' # or 'state_machine'
+                    type: 'state_machine' # or 'workflow'
                     audit_trail:
                         enabled: true
                     marking_store:
@@ -89,8 +89,8 @@ follows:
             https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- or type="state_machine" -->
-                <framework:workflow name="blog_publishing" type="workflow">
+                <!-- or type="workflow" -->
+                <framework:workflow name="blog_publishing" type="state_machine">
                     <framework:audit-trail enabled="true"/>
                     <framework:marking-store type="single_state">
                         <framework:argument>currentPlace</framework:argument>
@@ -126,7 +126,7 @@ follows:
         return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             $blogPublishing
-                ->type('workflow') // or 'state_machine'
+                ->type('state_machine') // or 'workflow'
                 ->supports([BlogPost::class])
                 ->initialMarking(['draft']);
 
@@ -273,7 +273,7 @@ what actions are allowed on a blog post::
     // you don't need to set the initial marking with code; this is configured
     // in the workflow with the 'initial_marking' option
 
-    $workflow = $this->container->get('workflow.blog_publishing');
+    $workflow = $this->container->get('state_machine.blog_publishing');
     $workflow->can($post, 'publish'); // False
     $workflow->can($post, 'to_review'); // True
 
@@ -293,8 +293,38 @@ Using a multiple state marking store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are creating a :doc:`workflow </workflow/workflow-and-state-machine>`,
-your marking store may need to contain multiple places at the same time. That's why,
-if you are using Doctrine, the matching column definition should use the type ``json``::
+your marking store may need to contain multiple places at the same time. In this
+case, the ``type`` of the workflow must be ``workflow``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    type: 'workflow'
+                    # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <framework:config>
+            <framework:workflow name="blog_publishing" type="workflow">
+                <!-- ... -->
+            </framework:workflow>
+        </framework:config>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+        $blogPublishing
+            ->type('workflow')
+            // ...
+
+That's why, if you are using Doctrine, the matching column definition should use the type ``json``::
 
     // src/Entity/BlogPost.php
     namespace App\Entity;
