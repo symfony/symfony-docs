@@ -2523,6 +2523,20 @@ that is thrown with the ``exceptionCode`` argument::
         // ...
     }
 
+When using :doc:`voters </security/voters>`, you can pass a controller argument
+as the subject by referencing its name. Symfony resolves it automatically from
+the controller method signature::
+
+    use App\Entity\Post;
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    // 'post' refers to the $post parameter of the controller method
+    #[IsGranted('edit', 'post')]
+    public function edit(Post $post): Response
+    {
+        // ...
+    }
+
 .. _security-template:
 
 Access Control in Templates
