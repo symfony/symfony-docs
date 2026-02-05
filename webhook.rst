@@ -217,5 +217,92 @@ Creating a Custom Webhook
     to generate the request parser and consumer files needed to create your own
     Webhook.
 
+Sending Webhooks
+----------------
+
+The Webhook component can also send webhooks to external systems. A webhook is
+sent as a POST request with a JSON body and the following headers:
+
+* ``Webhook-Event``: the event name
+* ``Webhook-Id``: a unique identifier for the event
+* ``Webhook-Signature``: an HMAC-SHA256 signature of the payload, allowing the
+  receiver to verify authenticity
+
+To send a webhook, create a
+:class:`Symfony\\Component\\Webhook\\Subscriber` (representing the remote
+endpoint) and a :class:`Symfony\\Component\\RemoteEvent\\RemoteEvent`, then
+dispatch a
+:class:`Symfony\\Component\\Webhook\\Messenger\\SendWebhookMessage` via the
+message bus::
+
+    use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\RemoteEvent\RemoteEvent;
+    use Symfony\Component\Webhook\Messenger\SendWebhookMessage;
+    use Symfony\Component\Webhook\Subscriber;
+
+    class WebhookNotifier
+    {
+        public function __construct(
+            private MessageBusInterface $bus,
+        ) {
+        }
+
+        public function notifyExternalService(): void
+        {
+            $subscriber = new Subscriber(
+                'https://example.com/webhook-endpoint',
+                'your_shared_secret'
+            );
+
+            $event = new RemoteEvent('user.created', 'event-id-123', [
+                'user_id' => 42,
+                'email' => 'user@example.com',
+            ]);
+
+            $this->bus->dispatch(new SendWebhookMessage($subscriber, $event));
+        }
+    }
+
+The message is handled asynchronously by the Messenger component. Make sure the
+``webhook`` transport is configured in your messenger routing:
+
+.. code-block:: yaml
+
+    # config/packages/messenger.yaml
+    framework:
+        messenger:
+            routing:
+                'Symfony\Component\Webhook\Messenger\SendWebhookMessage': async
+
+You can also send webhooks synchronously by injecting the
+:class:`Symfony\\Component\\Webhook\\Server\\TransportInterface` directly::
+
+    use Symfony\Component\RemoteEvent\RemoteEvent;
+    use Symfony\Component\Webhook\Server\TransportInterface;
+    use Symfony\Component\Webhook\Subscriber;
+
+    class WebhookNotifier
+    {
+        public function __construct(
+            private TransportInterface $webhookTransport,
+        ) {
+        }
+
+        public function notifyExternalService(): void
+        {
+            $subscriber = new Subscriber(
+                'https://example.com/webhook-endpoint',
+                'your_shared_secret'
+            );
+
+            $event = new RemoteEvent('user.created', 'event-id-123', [
+                'user_id' => 42,
+                'email' => 'user@example.com',
+            ]);
+
+            $this->webhookTransport->send($subscriber, $event);
+        }
+    }
+
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`Webhook Component for Email Events screencast`: https://symfonycasts.com/screencast/mailtrap/email-event-webhook
