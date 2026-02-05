@@ -112,6 +112,48 @@ their priorities:
 
     $ php bin/console debug:event-dispatcher kernel.controller_arguments
 
+.. _controller-metadata-in-events:
+
+Accessing Controller Metadata in Events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All kernel events dispatched after controller resolution (``kernel.controller_arguments``,
+``kernel.view``, ``kernel.response``, ``kernel.finish_request`` and
+``kernel.exception``) provide access to the controller metadata through the
+``getControllerMetadata()`` method. This allows listeners to inspect the
+controller's attributes and arguments without re-reflecting the controller::
+
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
+
+    public function onKernelResponse(ResponseEvent $event): void
+    {
+        $metadata = $event->getControllerMetadata();
+
+        if (null === $metadata) {
+            return;
+        }
+
+        // get the PHP attributes declared on the controller
+        $attributes = $metadata->getAttributes();
+
+        // if the event happens after controller_arguments, you also get
+        // access to the resolved controller arguments
+        $namedArguments = $metadata->getNamedArguments();
+    }
+
+The
+:class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ControllerMetadata`
+class provides ``getController()``, ``getReflector()`` and ``getAttributes()``.
+The
+:class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ControllerArgumentsMetadata`
+subclass (available from ``kernel.controller_arguments`` onwards) additionally
+provides ``getArguments()`` and ``getNamedArguments()``.
+
+.. versionadded:: 8.1
+
+    The ``getControllerMetadata()`` method on kernel events was introduced in
+    Symfony 8.1.
+
 ``kernel.view``
 ~~~~~~~~~~~~~~~
 

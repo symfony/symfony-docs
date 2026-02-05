@@ -340,6 +340,20 @@ of arguments that should be passed when executing that callable.
     ``ValueResolverInterface`` yourself and passing this to the
     ``ArgumentResolver``, you can extend this functionality.
 
+.. note::
+
+    Once the controller and its arguments are resolved, the kernel exposes a
+    :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ControllerMetadata`
+    object on all subsequent kernel events (``kernel.view``, ``kernel.response``,
+    ``kernel.finish_request``, ``kernel.exception``). This gives any listener
+    access to the controller's PHP attributes and resolved arguments via the
+    ``$event->getControllerMetadata()`` method.
+
+.. versionadded:: 8.1
+
+    The ``ControllerMetadata`` and ``ControllerArgumentsMetadata`` classes were
+    introduced in Symfony 8.1.
+
 .. _component-http-kernel-calling-controller:
 
 5) Calling the Controller
