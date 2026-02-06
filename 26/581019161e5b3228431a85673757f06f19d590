@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-02-05T10:04:29Z
+
+IIRC we are not used to document Bridge options here in favor of corresponding `readme` file
+
+Maybe just add `&sslmode=SSLMODE` is DSN example as we did for Matrix is enough to make obvious this option exists ?
