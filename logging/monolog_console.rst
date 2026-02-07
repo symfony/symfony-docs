@@ -128,6 +128,14 @@ The Monolog console handler is enabled by default:
             ;
         };
 
+In this configuration, ``console`` is an arbitrary handler name (it could be
+named anything). The ``type: console`` option tells Monolog to use the
+:class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler`, which writes log
+messages to the console output. The ``channels`` option excludes noisy channels
+using the ``!`` prefix: ``!event`` (event dispatcher), ``!doctrine`` (Doctrine
+database queries) and ``!console`` (console command lifecycle events, which would
+otherwise create redundant output in the console handler).
+
 Now, log messages will be shown on the console based on the log levels and verbosity.
 By default (normal verbosity level), warnings and higher will be shown. But in
 :doc:`full verbosity mode </console/verbosity>`, all messages will be shown.
