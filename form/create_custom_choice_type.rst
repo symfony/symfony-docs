@@ -1,8 +1,5 @@
-.. index::
-   single: Form; Custom choice type
-
 How to Create a Custom Choice Field Type
-=========================================
+========================================
 
 The :doc:`ChoiceType </reference/forms/types/choice>` is one of the most
 powerful form types in Symfony. When you need to reuse the same set of choices
@@ -121,7 +118,7 @@ to ensure a separate cache entry per combination::
     }
 
 Creating a Custom Choice Loader
---------------------------------
+-------------------------------
 
 When the loading logic is too complex for a simple callback, implement a
 dedicated choice loader. The easiest way is to extend
@@ -164,7 +161,7 @@ methods:
 
 ``doLoadValuesForChoices(array $choices)``
     Returns the string values for the given choices. This is an alternative to
-    the :ref:`choice_value <reference-form-choice-value>` option.
+    the ``choice_value`` option.
 
 ::
 
@@ -217,7 +214,7 @@ caching::
     }
 
 Using ``choice_lazy`` for Large Datasets
------------------------------------------
+----------------------------------------
 
 When dealing with a very large number of choices (e.g. thousands of users),
 rendering them all in a ``<select>`` element is impractical. Set the
