@@ -226,8 +226,9 @@ parameter is included in the request, you may use the value of the
 
     In Symfony 6.4 and later, the behavior for redirecting after login has slightly changed.
     The previously requested URL is stored in the session, but the redirect logic now respects
-    the `default_target_path`, `always_use_default_target_path`, and `use_referer` options more strictly.
+    the ``default_target_path``, ``always_use_default_target_path``, and ``use_referer`` options more strictly.
     Developers should review these options to ensure the desired redirect behavior.
+
 
 .. _redirecting-on-login-failure:
 
