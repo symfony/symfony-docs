@@ -1036,6 +1036,54 @@ actual emoji (👋):
     {{ ':+1:'|emojify('github') }}       {# renders: 👍 #}
     {{ ':thumbsup:'|emojify('gitlab') }} {# renders: 👍 #}
 
+.. _reference-twig-filter-form-encode-currency:
+
+form_encode_currency
+~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    This filter is used internally by Symfony's form themes to render
+    currency symbols. It is not intended to be used directly in application
+    templates.
+
+.. code-block:: twig
+
+    {{ text|form_encode_currency(widget) }}
+
+``text``
+    **type**: ``string``
+``widget`` *(optional)*
+    **type**: ``string`` **default**: ``''``
+
+Encodes the currency text for safe HTML output and replaces the
+``{{ widget }}`` placeholder with the given widget value. This filter is
+used in form themes (e.g. ``MoneyType``) to render currency symbols alongside
+form inputs.
+
+.. _reference-twig-filter-format-log-message:
+
+format_log_message
+~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    This filter is used internally by the Symfony WebProfiler to render log
+    messages. It is not intended to be used directly in application templates.
+
+.. code-block:: twig
+
+    {{ message|format_log_message(context) }}
+
+``message``
+    **type**: ``string``
+``context`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Formats a log message by replacing ``{placeholder}`` patterns with the
+corresponding values from the context array and escapes the result for safe
+HTML output. This filter is used in the WebProfiler's logger panel.
+
 .. _reference-twig-tags:
 
 Tags
