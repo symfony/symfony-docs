@@ -224,7 +224,7 @@ or layouts, such as:
 * /dashboard
 
 To make your bundle's assets consumable, declare an *entrypoint* in your
-bundle’s `package.json`. This will tell to Symfony how to locate and render the
+bundle’s ``package.json``. This will tell to Symfony how to locate and render the
 associated compiled assets from either Webpack Encore or the modern AssetMapper
 with importmap.
 
