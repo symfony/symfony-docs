@@ -209,19 +209,27 @@ to the container::
 Expose an entrypoint
 --------------------
 
-An entrypoint is a file that need to be always loaded, to usually start your application.
+An entrypoint is a JavaScript file that must be loaded
+whenever a specific part of the application is rendered. It typically
+initializes the frontend behavior for that area.
 
-It's usefull if your bundle have dedicated views, for example :
+In a standard Symfony application, this role is usually fulfilled by the
+``app`` entrypoint, loaded via Webpack Encore or importmap.
+
+Exposing an entrypoint is useful when your bundle provides dedicated sections
+or layouts, such as:
 
 * /admin
 * /translations
 * /dashboard
 
+To make your bundle's assets consumable, declare an *entrypoint* in your
+bundle’s `package.json`. This will tell to Symfony how to locate and render the
+associated compiled assets from either Webpack Encore or the modern AssetMapper
+with importmap.
 
-On a Standard symfony app, it's the ``app`` loaded by webpack encore or importmap.
-
-With Webpack Encore
-~~~~~~~~~~~~~~~~~~~
+Webpack Encore entrypoint
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``package.json`` file, define your entrypoint inside the ``symfony.entrypoints`` key:
 
@@ -266,8 +274,8 @@ In your templates, make sure to load that entry :
    It's mandatory to have stimulus-bundle and the ``.enableStimulusBridge('./assets/controllers.json')`` added to the webpack.config.js to be able to use the entrypoints.
 
 
-With Asset Mapper
-~~~~~~~~~~~~~~~~~
+AssetMapper + importmap entrypoint
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``package.json`` file, define your entrypoint inside the ``symfony.importmap`` key:
 
