@@ -100,7 +100,7 @@ RemoteEvent
 Routing
 ~~~~~~~
 
-* :ref:`DeprecatedAlias <routing-alias-deprecation>``
+* :ref:`DeprecatedAlias <routing-alias-deprecation>`
 * :doc:`Route </routing>`
 
 Scheduler
