@@ -248,7 +248,7 @@ That value will be copied inside the ``assets/controllers.json`` file after the 
 
 In your templates, make sure to load that entry :
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# templates/my-bundle-base.html.twig #}
     ...
@@ -263,7 +263,7 @@ In your templates, make sure to load that entry :
 
 .. warning::
 
-   Is it mandatory to have stimulus-bundle and the ``.enableStimulusBridge('./assets/controllers.json')`` added to the webpack.config.js to be able to use the entrypoints.
+   It's mandatory to have stimulus-bundle and the ``.enableStimulusBridge('./assets/controllers.json')`` added to the webpack.config.js to be able to use the entrypoints.
 
 
 With Asset Mapper
@@ -287,9 +287,7 @@ In the ``package.json`` file, define your entrypoint inside the ``symfony.import
     The ``entrypoint`` keyword support was introduced in Symfony Flex 2.7.0
 
 
-After installation, the entry will be added to the ``importmap.php``:
-
-.. code-block:: php
+After installation, the entry will be added to the ``importmap.php``::
 
     // importmap.php
     return [
@@ -306,7 +304,7 @@ After installation, the entry will be added to the ``importmap.php``:
 
 In your templates, make sure to load that entry :
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# templates/my-bundle-base.html.twig #}
     ...
