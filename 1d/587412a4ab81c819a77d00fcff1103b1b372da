@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2025-03-22T06:39:21Z
+
+> Question:
+Shouldn't this `dev` firewall be loaded in DEV environment only? (i.e. under something like `when@dev`)
+
+The security config is not merged between environments. So you would have to repeat everything for the `dev` environment.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2025-03-22T09:57:58Z
+
+Is this true for *all* parts of the config?
+Cause at https://symfony.com/doc/current/security/passwords.html#configuring-a-password-hasher (green box) it's recommended to reconfigure the password hasher in `config/packages/test/security.php`, and I did this in `config/packages/security.php` like this:
+```php
+if ('test' === $containerConfigurator->env()) {
+    // ...
+}
+```
+
+---------------------------------------------------------------------------
+
+by wouterj at 2025-03-22T21:45:43Z
+
+> Is this true for all parts of the config?
+
+Not to all parts, and some parts behave differently. We don't merge configuration from `security.role_hierarchy` and `security.password_hashers`, and we don't allow new items in `security.firewalls` (i.e. you may change options of the firewalls, but you can't add new firewalls).
+
+---
+
+About this PR, I think it makes sense, but let's wait for the recipe to be accepted as the documentation have to be in sync with the generated recipes.
+
+---------------------------------------------------------------------------
+
+by smnandre at 2025-06-08T04:47:07Z
+
+What is the problem this PR solves ? I mean, is there any real life problem with AssetMapper or Webpack ?
+
+(even if for the first I seriously doubt it, as the dev server priority is greater than security listeners in dev and ... it does not work in prod)
