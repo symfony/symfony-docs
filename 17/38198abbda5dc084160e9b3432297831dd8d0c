@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by ckrack at 2026-02-02T09:28:32Z
+
+The Code Blocks check fails, as the webhook component is not part of the symfony demo application that is used in that check.
+
+---------------------------------------------------------------------------
+
+by ckrack at 2026-02-17T20:45:13Z
+
+@javiereguiluz I've integrated some wording improvements thanks to @thePanz.
+Should be ready now 👍🏼
