@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-02-03T15:37:17Z
+
+From related code PR :
+
+> Note that options must have a default value using modern ("invokable'") commands so there's no relevant way to work around the issue in userland
+
+I think it is important to mention this point in documentation
