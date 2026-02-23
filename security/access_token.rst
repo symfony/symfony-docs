@@ -877,6 +877,127 @@ create your own User from the claims, you must
         }
     }
 
+3) Configure the Oauth2TokenHandler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony provides a generic access token handler that calls the configured token introspection endpoint to validate the token and retrieve the user information from it.
+It requires the ``symfony/http-client`` package to make the needed HTTP requests. If you haven't installed it yet, run this command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-client
+
+First, configure a dedicated scoped HTTP client for the token handler:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    oauth2.client:
+                        base_uri: 'https://authorization-server.example.com/introspection'
+                        scope: 'https://authorization-server\.example\.com'
+                        headers:
+                            Authorization: 'Basic Y2xpZW50OnBhc3N3b3Jk'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:scoped-client name="oauth2.client"
+                        base-uri="https://authorization-server.example.com/introspection"
+                        scope="https://authorization-server\.example\.com"
+                    >
+                        <!-- Introspection Endpoint usually requires client authentication -->
+                        <framework:header name="Authorization">Basic Y2xpZW50OnBhc3N3b3Jk</framework:header>
+                    </framework:scoped-client>
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->httpClient()->scopedClient('oauth2.client')
+                ->baseUri('https://authorization-server.example.com/introspection')
+                ->scope('https://authorization-server\.example\.com')
+                ->header('Authorization', 'Basic Y2xpZW50OnBhc3N3b3Jk') // Introspection Endpoint usually requires client authentication
+            ;
+        };
+
+Then, configure the ``oauth2`` token handler to use this scoped HTTP client:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    pattern: ^/
+                    access_token:
+                        token_handler:
+                            oauth2: ~
+                        token_extractors: 'header'
+                        realm: 'My API'
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <access-token>
+                        <token-handler>
+                            <oauth2/>
+                        </token-handler>
+                    </access-token>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->accessToken()
+                    ->tokenHandler()
+                        ->oauth2()
+                    ->tokenExtractors('header')
+                    ->realm('My API')
+            ;
+        };
+
+.. versionadded:: 7.3
+
+    The support for OAuth2 Token Introspection handler was introduced in Symfony 7.3.
+
 Using CAS 2.0
 -------------
 
