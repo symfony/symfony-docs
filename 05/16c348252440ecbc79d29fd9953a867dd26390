@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-02-12T21:26:39Z
+
+Cool thanks.
+Ppl are also looking for differentiating sentinel vs master auth, see https://github.com/symfony/symfony/pull/62218
+Let's hint about this use case!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-02-14T18:07:05Z
+
+Let's account for https://github.com/symfony/symfony/pull/63391 here also, and likely update the messenger doc too. 🙏
+
+---------------------------------------------------------------------------
+
+by ckrack at 2026-02-14T20:35:10Z
+
+> Let's account for [symfony/symfony#63391](https://github.com/symfony/symfony/pull/63391) here also, and likely update the messenger doc too. 🙏
+
+Should i target 7.4 then?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-02-14T22:26:01Z
+
+Ah right, yes, 7.4 is good enough
+
+---------------------------------------------------------------------------
+
+by ckrack at 2026-02-17T21:11:40Z
+
+@nicolas-grekas rebased onto 7.4 and added examples and notes to both component docs.
+
+Sorry for the codeowner ping @xabbuh, that's due to a rebase on 7.4
