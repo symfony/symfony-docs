@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-02-19T09:15:38Z
+
+If the PR only proposes these changes, I'm afraid we'll close it because it doesn't make relevant enough changes.
+
+But, if you add the other changes related to frankenPHP, then we'll merge it. I hae tried but I don't use FrankenPHP, so we'll. have to wait for FrankenPHP users to review the proposed changes. Thanks!
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2026-02-19T10:20:03Z
+
+OK, here's what I did in the second commit:
+* Renamed the "Caddy" section to "FrakenPHP / Caddy". I think that a dedicated "FrankenPHP" section would be more confusing (since it's basically the same as Caddy). And I think that today most people going for Caddy, will take the FrankenPHP&Caddy combo anyway.
+* Moved this section on top. Not because it's the most popular ;-) But because Symfony should push it, cause it has the best integration with Symfony (e.g. 103 Early Hints)
+  I didn't change anything in the Caddyfile code block (just this one line that I mentioned)
+* I kept `.. code-block:: nginx` for the Caddyfile, which looks a little weird - so maybe you could think about creating a `.. code-block:: caddyfile`?
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2026-02-19T12:37:24Z
+
+Now I added Brotli (`br`) compression too.
