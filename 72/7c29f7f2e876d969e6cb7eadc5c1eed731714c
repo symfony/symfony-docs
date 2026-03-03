@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by lacatoire at 2026-03-02T19:45:04Z
+
+Nice initiative! would be useful to add
+- RST indentation & blank lines: 4-space indentation for directive content, mandatory blank line before and after directives, alignment for multi-line list items.
+- Admonition directives: A quick reference for .. note::, .. tip::, .. warning:: and .. seealso::
+- YAML indentation in config blocks:  4 spaces, not the usual 2.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-03-02T20:35:55Z
+
+Great suggestions! I updated the AGENTS.md file with all this.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-03-02T21:02:53Z
+
+I disagree. To be effective with AI, we really need an hyper-optimized AGENTS.md file. To work well, it has to be both as complete and as concise as possible. The full contribution guideliens are too verbose and would consume too many resources to process them every time.
