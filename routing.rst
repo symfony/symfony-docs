@@ -800,6 +800,32 @@ URL                       Route          Parameters
                 // ...
             };
 
+    The following constants are available:
+
+    ========================  ====================================================
+    Constant                  Description
+    ========================  ====================================================
+    ``ASCII_SLUG``            An ASCII slug (e.g. ``my-first-post``)
+    ``CATCH_ALL``             Matches anything (including slashes)
+    ``DATE_YMD``              A date in ``YYYY-MM-DD`` format
+    ``DIGITS``                One or more digits
+    ``MONGODB_ID``            A MongoDB ObjectId (24 hex characters)
+    ``POSITIVE_INT``          A positive integer (no leading zero)
+    ``UID_BASE32``            A UID in base-32 format
+    ``UID_BASE58``            A UID in base-58 format
+    ``UID_RFC4122``           A UID in RFC 4122 format
+    ``UID_RFC9562``           Alias for ``UID_RFC4122``
+    ``ULID``                  A ULID
+    ``UUID``                  Any UUID (versions 1, 3, 4, 5, 6, 7 and 8)
+    ``UUID_V1``               A UUID version 1
+    ``UUID_V3``               A UUID version 3
+    ``UUID_V4``               A UUID version 4
+    ``UUID_V5``               A UUID version 5
+    ``UUID_V6``               A UUID version 6
+    ``UUID_V7``               A UUID version 7
+    ``UUID_V8``               A UUID version 8
+    ========================  ====================================================
+
 .. tip::
 
     Route requirements (and route paths too) can include
