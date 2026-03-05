@@ -239,6 +239,91 @@ Form view data        Normalized data transformed using a view transformer
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
     automatically validate the denormalized object.
 
+How Events Propagate in Nested Forms
+------------------------------------
+
+A Symfony form is a tree: a parent form contains child fields, which may
+themselves contain children. Understanding how events propagate through this
+tree is essential when working with nested or dynamic forms.
+
+During Pre-Population (``setData()``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When ``setData()`` is called on the root form, events propagate **top-down**:
+
+#. The **parent** dispatches ``PRE_SET_DATA``
+#. The parent's data is transformed and mapped to its children
+   (via the data mapper, which calls ``setData()`` on each child)
+#. Each **child** dispatches ``PRE_SET_DATA``, then maps data to its own
+   children, and so on recursively
+#. Once all children are populated, the **parent** dispatches ``POST_SET_DATA``
+
+This means that when a ``PRE_SET_DATA`` listener runs on the parent, the
+children have **not yet received their data**. You can safely add or remove
+fields at this point, and the newly added fields will receive their data
+during the mapping step that follows.
+
+During Submission (``handleRequest()``/``submit()``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a form is submitted, the propagation order is different:
+
+#. The **parent** dispatches ``PRE_SUBMIT``
+#. Each **child** is submitted recursively (which dispatches ``PRE_SUBMIT``,
+   then submits its own children, and so on)
+#. The children's data is mapped back to the parent (via the data mapper)
+#. The **parent** dispatches ``SUBMIT``
+#. The **parent** dispatches ``POST_SUBMIT``
+
+This means that in a ``PRE_SUBMIT`` listener on the parent, the children
+have **not yet been submitted**. You can add or remove fields based on the
+submitted data, and the new fields will be submitted during the child
+iteration that follows.
+
+.. tip::
+
+    The key takeaway: during both pre-population and submission, the parent's
+    first event (``PRE_SET_DATA`` or ``PRE_SUBMIT``) is the right place to add
+    or remove child fields dynamically, because children are processed **after**
+    that event.
+
+Dynamic Fields and the Lifecycle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you add a child field inside a ``PRE_SET_DATA`` or ``PRE_SUBMIT``
+listener, that new field participates in the rest of the lifecycle normally.
+For example::
+
+    // src/Form/Type/EventType.php
+    namespace App\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Event\PreSetDataEvent;
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\Form\FormEvents;
+
+    class EventType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (PreSetDataEvent $event): void {
+                $data = $event->getData();
+                $form = $event->getForm();
+
+                // add a field conditionally based on the data
+                if ($data?->isOnline()) {
+                    $form->add('url', TextType::class);
+                } else {
+                    $form->add('location', TextType::class);
+                }
+            });
+        }
+    }
+
+The ``url`` or ``location`` field is added before the data mapper runs, so
+it will receive its value from the model data like any other field.
+
 Registering Event Listeners or Event Subscribers
 ------------------------------------------------
 
