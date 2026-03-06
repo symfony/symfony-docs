@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-02-16T11:32:24Z
+
+This will need to account for https://github.com/symfony/symfony/pull/63402
+
+---------------------------------------------------------------------------
+
+by d-ph at 2026-02-17T11:15:44Z
+
+Louis-Arnaud, it would be great if the following comment is also included in your PR: https://github.com/symfony/symfony-docs/issues/21927#issuecomment-3914076872.
+
+Thanks!
