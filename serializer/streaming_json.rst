@@ -565,10 +565,11 @@ When callables are not enough, you can use a service implementing the
     // src/Transformer/DogUrlTransformer.php
     namespace App\Transformer;
 
+    use Symfony\Component\JsonStreamer\Transformer\PropertyValueTransformerInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\TypeInfo\Type;
 
-    class DogUrlTransformer implements \Symfony\Component\JsonStreamer\Transformer\PropertyValueTransformerInterface
+    class DogUrlTransformer implements PropertyValueTransformerInterface
     {
         public function __construct(
             private UrlGeneratorInterface $urlGenerator,
