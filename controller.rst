@@ -651,6 +651,66 @@ instance automatically::
             // ...
         }
 
+.. _controller_map-request-header:
+
+Mapping Request Headers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``#[MapRequestHeader]`` attribute was introduced in Symfony 8.1.
+
+The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestHeader`
+attribute maps an HTTP request header to a controller argument::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestHeader;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestHeader] string $acceptLanguage,
+    ): Response
+    {
+        // ...
+    }
+
+By default, the argument name is converted from camelCase to kebab-case to
+match the header name (e.g. ``$acceptLanguage`` maps to the ``accept-language``
+header). Use the ``name`` option to map to a different header::
+
+    public function dashboard(
+        #[MapRequestHeader(name: 'x-custom-token')] string $token,
+    ): Response
+    {
+        // ...
+    }
+
+The attribute supports the following argument types:
+
+* ``string``: returns the header value as a string;
+* ``array``: returns the header values as an array. For the ``accept``,
+  ``accept-charset``, ``accept-language`` and ``accept-encoding`` headers, the
+  values are automatically parsed (e.g. ``accept-language: en-us,en;q=0.5``
+  returns ``['en_US', 'en']``);
+* :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader`: returns a parsed
+  ``AcceptHeader`` object for advanced quality-value handling.
+
+If the header is missing and the argument has no default value and is not
+nullable, a ``400 Bad Request`` response is returned. You can customize this
+status code with the ``validationFailedStatusCode`` option::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestHeader(validationFailedStatusCode: Response::HTTP_NOT_FOUND)] string $accept,
+    ): Response
+    {
+        // ...
+    }
+
 .. _controller_map-uploaded-file:
 
 Mapping Uploaded Files
