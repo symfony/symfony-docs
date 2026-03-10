@@ -675,9 +675,10 @@ attribute maps an HTTP request header to a controller argument::
         // ...
     }
 
-By default, the argument name is converted from camelCase to kebab-case to
-match the header name (e.g. ``$acceptLanguage`` maps to the ``accept-language``
-header). Use the ``name`` option to map to a different header::
+By default, the header name is converted from kebab-case to camelCase to
+match the argument name (e.g. the ``accept-language`` header maps to the
+``$acceptLanguage`` argument). Use the ``name`` option to map to a different
+header::
 
     public function dashboard(
         #[MapRequestHeader(name: 'x-custom-token')] string $token,
