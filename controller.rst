@@ -651,8 +651,6 @@ instance automatically::
             // ...
         }
 
-.. _controller_map-request-header:
-
 Mapping Request Headers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
