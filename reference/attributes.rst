@@ -68,6 +68,7 @@ HttpKernel
 * :ref:`MapDateTime <functionality-shipped-with-the-httpkernel>`
 * :ref:`MapQueryParameter <controller_map-request>`
 * :ref:`MapQueryString <controller_map-request>`
+* :ref:`MapRequestHeader <controller_map-request>`
 * :ref:`MapRequestPayload <controller_map-request>`
 * :ref:`MapUploadedFile <controller_map-uploaded-file>`
 * :ref:`Serialize <controller_serialize>`
