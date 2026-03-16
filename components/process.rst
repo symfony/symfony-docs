@@ -172,8 +172,8 @@ running the process::
     $process->run(null, ['ENV_VAR_NAME' => 'value']);
 
 In addition to the env vars passed explicitly, processes inherit all the env
-vars defined in your system. You can prevent this by setting to ``false`` the
-env vars you want to remove::
+vars defined in your system. You can prevent this by setting the env vars you want
+to remove to  ``false``::
 
     $process = new Process(['...'], null, [
         'APP_ENV' => false,
