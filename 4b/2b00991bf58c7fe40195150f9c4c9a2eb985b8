@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2024-02-07T07:54:11Z
+
+Code merged in 7.1
+
+---------------------------------------------------------------------------
+
+by thomasbeaujean at 2024-02-13T08:45:58Z
+
+Hi, I rebase this doc PR on 7.1 (code merged in 7.1)
+
+---------------------------------------------------------------------------
+
+by epitre at 2024-11-25T16:04:23Z
+
+@OskarStark @nicolas-grekas
+this is not visible in 7.1 documentation : https://symfony.com/doc/current/messenger.html
+![image](https://github.com/user-attachments/assets/53cc19c5-689f-47e5-ae63-9cd29662f697)
+
+Has it been merged/released ?
