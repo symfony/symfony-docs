@@ -174,9 +174,14 @@ Apply ``#[Map]`` to the target class toe defined its default mapping source::
 
 .. tip::
 
-    When using ObjectMapper with Symfony Framework, you only need to use the
+    When using ObjectMapper with Symfony framework, you only need to use the
     :class:`Symfony\\Component\\ObjectMapper\\ObjectMapperInterface`.
     Symfony will handle everything for you.
+
+    .. versionadded:: 8.1
+
+        The automatic class-map array when using ObjectMapper with Symfony framework
+        was introduced in Symfony 8.1.
 
 Configuring Property Mapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
