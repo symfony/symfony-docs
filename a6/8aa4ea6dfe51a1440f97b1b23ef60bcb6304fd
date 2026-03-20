@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-03-16T13:52:20Z
+
+Will be renamed `ContainerProviderInterface` in https://github.com/symfony/symfony/pull/63650.
