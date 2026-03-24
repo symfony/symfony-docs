@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by jmsche at 2026-03-23T14:58:37Z
+
+Hi @lacatoire, maybe it would be useful to add a section about using FormFlow with Turbo?
+
+See https://github.com/symfony/symfony/discussions/62666
+
+---------------------------------------------------------------------------
+
+by tjveldhuizen at 2026-03-23T19:30:14Z
+
+I think it would be useful to add something about processing a multi-step form. I haven't had the time to use this feature, yet, but to start doing that I would like to read about that. But maybe, it's because I'm used to `craue/formflow-bundle` which requires some specific operations [in the action](https://github.com/craue/CraueFormFlowBundle?tab=readme-ov-file#create-an-action).
