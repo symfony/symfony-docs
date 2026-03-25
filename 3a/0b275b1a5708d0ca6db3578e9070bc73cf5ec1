@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2026-02-08T19:23:57Z
+
+Not sure CPP is needed here
+
+---------------------------------------------------------------------------
+
+by Mynyx at 2026-02-08T19:48:12Z
+
+The constructor is empty and the other examples also include CPP.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2026-02-09T07:14:58Z
+
+I agree the ctor is empty makes it useless, but when we change this line, it would showcase that you can use these attributes without being forced to use CPP, no?
