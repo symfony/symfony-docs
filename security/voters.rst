@@ -168,8 +168,12 @@ would look like this::
             return true;
         }
 
-        protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
-        {
+        protected function voteOnAttribute(
+            string $attribute, 
+            mixed $subject, 
+            TokenInterface $token, 
+            ?Vote $vote = null
+        ): bool {
             $user = $token->getUser();
 
             if (!$user instanceof User) {
