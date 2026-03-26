@@ -145,19 +145,18 @@ Navigable settings panel with value cycling and submenus.
 
 **Keyboard:**
 
-========================  ==============================
+========================  =========================================
 Key                       Action
-========================  ==============================
+========================  =========================================
 Up                        Move selection up
 Down                      Move selection down
 Page Up                   Page up
 Page Down                 Page down
-Enter, Space              Activate (cycle value or open
-                          submenu)
+Enter, Space              Activate (cycle value or open submenu)
 Right, Ctrl+F             Cycle value forward
 Left, Ctrl+B              Cycle value backward
 Escape, Ctrl+C            Cancel
-========================  ==============================
+========================  =========================================
 
 CancellableLoaderWidget
 -----------------------

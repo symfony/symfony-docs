@@ -10,7 +10,7 @@ When to Use
 
 Use ``ProgressBarWidget`` when you can measure or estimate the
 progress of an operation: file downloads, batch processing, indexing,
-etc. For operations without measurable progress, use :doc:`loader`
+etc. For operations without measurable progress, use :doc:`/tui/widgets/loader`
 instead.
 
 Basic Usage

@@ -10,7 +10,7 @@ When to Use
 
 Use ``MarkdownWidget`` when you need to display rich formatted text:
 AI assistant responses, documentation previews, changelogs, README
-files, etc. For plain unformatted text, use :doc:`text` instead.
+files, etc. For plain unformatted text, use :doc:`/tui/widgets/text` instead.
 
 Basic Usage
 -----------
@@ -38,7 +38,7 @@ GitHub Flavored Markdown extensions:
   ``#`` prefix and heading styling.
 * **Bold** (``**text**``) and **italic** (``*text*``).
 * **Strikethrough** (``~~text~~``).
-* **Inline code** (````code````), highlighted with code styling.
+* **Inline code** (``code``), highlighted with code styling.
 * **Fenced code blocks** with syntax highlighting for most languages.
 * **Indented code blocks**.
 * **Block quotes** (``> text``), rendered with a vertical border.

@@ -24,9 +24,7 @@ blocking operations. Since Amp is built on Revolt (the same event
 loop Tui uses), they integrate without any glue code.
 
 **Processes**: use ``amphp/process`` instead of ``proc_open()`` or
-Symfony Process:
-
-.. code-block:: php
+Symfony Process::
 
     use Amp\Process\Process;
 
@@ -34,9 +32,7 @@ Symfony Process:
     $stdout = $process->getStdout()->read();
 
 **HTTP**: use Symfony HttpClient with its Amp integration
-(``symfony/http-client`` + ``amphp/http-client``):
-
-.. code-block:: php
+(``symfony/http-client`` + ``amphp/http-client``)::
 
     use Symfony\Component\HttpClient\AmpHttpClient;
 
@@ -44,9 +40,7 @@ Symfony Process:
     $response = $client->request('GET', 'https://example.com');
     $body = $response->getContent();
 
-**Timers and delays**: use ``Amp\delay()`` instead of ``sleep()``:
-
-.. code-block:: php
+**Timers and delays**: use ``Amp\delay()`` instead of ``sleep()``::
 
     \Amp\delay(2); // yields to the event loop for 2 seconds
 
@@ -54,9 +48,7 @@ Running Async Work
 ------------------
 
 Use ``Amp\async()`` to run work in a fiber. The fiber yields to the
-event loop whenever it performs I/O, keeping the UI responsive:
-
-.. code-block:: php
+event loop whenever it performs I/O, keeping the UI responsive::
 
     use Amp\Process\Process;
     use function Amp\async;
@@ -69,9 +61,7 @@ event loop whenever it performs I/O, keeping the UI responsive:
         return $output;
     });
 
-Check whether the future is complete in your tick callback:
-
-.. code-block:: php
+Check whether the future is complete in your tick callback::
 
     use Symfony\Component\Tui\Event\TickEvent;
 
@@ -86,7 +76,7 @@ Check whether the future is complete in your tick callback:
 
 The tick callback returns ``true`` while work is in progress (the
 Tui ticks at high frequency) and ``false`` when idle. See
-:doc:`/topics/tick_loop` for the full tick loop API.
+:doc:`/tui/topics/tick_loop` for the full tick loop API.
 
 Common Pitfalls
 ---------------
