@@ -60,7 +60,7 @@ Register a callback that fires whenever focus changes::
 Focus and Styling
 -----------------
 
-Focusable widgets automatically report a ``:focused`` state flag
+Focusable widgets automatically report a ``:focus`` state flag
 when they have focus. Use this in stylesheet rules to change
 appearance based on focus.
 
@@ -72,7 +72,7 @@ appearance based on focus.
     $stylesheet->addRule('.editor', new Style(
         border: Border::all(1, 'rounded', 'gray'),
     ));
-    $stylesheet->addRule('.editor:focused', new Style(
+    $stylesheet->addRule('.editor:focus', new Style(
         border: Border::all(1, 'rounded', 'cyan'),
     ));
 
@@ -94,6 +94,6 @@ instances of a widget type::
     use Symfony\Component\Tui\Widget\InputWidget;
 
     $stylesheet->addRule(
-        InputWidget::class.':focused',
+        InputWidget::class.':focus',
         new Style(bold: true),
     );
