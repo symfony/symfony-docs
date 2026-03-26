@@ -55,9 +55,7 @@ Output After the Tui Stops
 --------------------------
 
 Query widget state after ``run()`` returns to produce Console
-output:
-
-.. code-block:: php
+output::
 
     $tui->run();
 
@@ -72,9 +70,7 @@ Using Console Input
 -------------------
 
 Read Console arguments and options before starting the Tui to
-configure widgets:
-
-.. code-block:: php
+configure widgets::
 
     protected function execute(
         InputInterface $input,
@@ -94,9 +90,7 @@ configure widgets:
 Stylesheets
 -----------
 
-Pass a stylesheet to the Tui constructor to theme your command:
-
-.. code-block:: php
+Pass a stylesheet to the Tui constructor to theme your command::
 
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Style\StyleSheet;
@@ -111,7 +105,7 @@ Pass a stylesheet to the Tui constructor to theme your command:
 
     $tui = new Tui($stylesheet);
 
-See :doc:`/style/index` for the full styling documentation.
+See :doc:`/tui/style/index` for the full styling documentation.
 
 Handling Signals
 ----------------

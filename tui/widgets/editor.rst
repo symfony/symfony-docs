@@ -9,7 +9,7 @@ When to Use
 
 Use ``EditorWidget`` when you need multi-line text editing: a message
 composer, a code snippet editor, a configuration file viewer, etc.
-For single-line input, use :doc:`input` instead.
+For single-line input, use :doc:`/tui/widgets/input` instead.
 
 Basic Usage
 -----------

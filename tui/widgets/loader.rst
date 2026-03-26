@@ -10,8 +10,8 @@ When to Use
 Use ``LoaderWidget`` to indicate that a background operation is in
 progress: loading data, waiting for a network response, processing
 files, etc. For operations that can be cancelled, use
-:doc:`cancellable_loader`. For operations with measurable progress,
-use :doc:`progress_bar`.
+:doc:`/tui/widgets/cancellable_loader`. For operations with measurable progress,
+use :doc:`/tui/widgets/progress_bar`.
 
 Basic Usage
 -----------
