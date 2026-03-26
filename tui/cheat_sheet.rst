@@ -170,3 +170,5 @@ Key                   Action
 ====================  ==============================
 Escape, Ctrl+C        Cancel the operation
 ====================  ==============================
+
+.. _`Bracketed paste`: https://en.wikipedia.org/wiki/Bracketed-paste
