@@ -62,7 +62,7 @@ class::
     ));
 
 **Pseudo-class selector**, matches when a widget is in a specific
-state (e.g. ``:root``, ``:focused``). Use it standalone or combined
+state (e.g. ``:root``, ``:focus``). Use it standalone or combined
 with FQCN or CSS class selectors::
 
     use Symfony\Component\Tui\Style\Border;
@@ -71,17 +71,17 @@ with FQCN or CSS class selectors::
 
     // Bare pseudo-class: matches any widget in that state
     $stylesheet->addRule(':root', new Style(gap: 1));
-    $stylesheet->addRule(':focused', new Style(bold: true));
+    $stylesheet->addRule(':focus', new Style(bold: true));
 
     // Combined with FQCN
     $stylesheet->addRule(
-        InputWidget::class.':focused',
+        InputWidget::class.':focus',
         new Style(bold: true),
     );
 
     // Combined with CSS class
     $stylesheet->addRule(
-        '.sidebar:focused',
+        '.sidebar:focus',
         new Style(border: Border::all(1, 'rounded', 'cyan')),
     );
 
@@ -123,7 +123,7 @@ of a widget without subclassing::
 
     // Different style when the widget is focused
     $stylesheet->addRule(
-        SelectListWidget::class.'::selected:focused',
+        SelectListWidget::class.'::selected:focus',
         new Style(bold: true, color: 'cyan'),
     );
 
