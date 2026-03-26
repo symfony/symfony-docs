@@ -61,21 +61,33 @@ class::
         color: 'cyan',
     ));
 
-**State selector**, matches when a widget is in a specific state
-(e.g. ``:focused``). Combine with FQCN or CSS class selectors::
+**Pseudo-class selector**, matches when a widget is in a specific
+state (e.g. ``:root``, ``:focused``). Use it standalone or combined
+with FQCN or CSS class selectors::
 
     use Symfony\Component\Tui\Style\Border;
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Widget\InputWidget;
 
+    // Bare pseudo-class: matches any widget in that state
+    $stylesheet->addRule(':root', new Style(gap: 1));
+    $stylesheet->addRule(':focused', new Style(bold: true));
+
+    // Combined with FQCN
     $stylesheet->addRule(
         InputWidget::class.':focused',
         new Style(bold: true),
     );
+
+    // Combined with CSS class
     $stylesheet->addRule(
         '.sidebar:focused',
         new Style(border: Border::all(1, 'rounded', 'cyan')),
     );
+
+The ``:root`` pseudo-class matches the root widget of the tree
+(the widget with no parent). This is the recommended way to style
+the root container created by the Tui.
 
 Cascade Order
 -------------
@@ -86,7 +98,7 @@ When multiple rules match a widget, they are merged in this order
 1. Universal selector (``*``)
 2. FQCN selector (parent classes first, concrete class last)
 3. CSS class selectors
-4. State selectors (FQCN + state, then CSS class + state)
+4. Pseudo-class selectors (bare, then FQCN + state, then CSS class + state)
 5. Responsive breakpoint rules (see below)
 6. Utility class styles (see :doc:`/tui/style/tailwind`)
 7. Instance style (``widget->setStyle()``)
