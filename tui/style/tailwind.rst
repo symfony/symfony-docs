@@ -11,7 +11,7 @@ When to Use
 
 Use utility classes for rapid prototyping, one-off styling or when a
 full stylesheet rule feels like overkill. For consistent theming
-across many widgets, prefer :doc:`stylesheets`.
+across many widgets, prefer :doc:`/tui/style/stylesheets`.
 
 Setup
 -----
@@ -102,9 +102,7 @@ Class                       Pattern
 ==========================  ==========================================
 
 Border color classes use the same color syntax as text and background
-(see below).
-
-.. code-block:: php
+(see below)::
 
     $widget->addStyleClass('border');
     $widget->addStyleClass('border-rounded');
@@ -181,17 +179,16 @@ Available bundled fonts: ``big``, ``small``, ``slant``, ``standard``,
 Layout
 ------
 
-========================  ==========================================
+========================  ====================================================
 Class                     Effect
-========================  ==========================================
+========================  ====================================================
 ``flex-row``              Horizontal layout direction
 ``flex-col``              Vertical layout direction
-``flex-{n}``              Flex grow weight (``0`` = intrinsic width,
-                          ``1+`` = proportional)
+``flex-{n}``              Flex grow (``0`` = intrinsic, ``1+`` = proportional)
 ``gap-{n}``               Gap between children
 ``hidden``                Hide the widget
 ``visible``               Show the widget
-========================  ==========================================
+========================  ====================================================
 
 Alignment
 ---------
