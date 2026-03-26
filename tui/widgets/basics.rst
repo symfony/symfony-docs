@@ -38,7 +38,7 @@ them at any time:
     $widget->removeStyleClass('highlighted');
 
 A widget can have multiple style classes. The stylesheet resolves
-all matching rules and merges them (see :doc:`/style/stylesheets`).
+all matching rules and merges them (see :doc:`/tui/style/stylesheets`).
 
 Tailwind-style utility classes work the same way:
 
@@ -48,7 +48,7 @@ Tailwind-style utility classes work the same way:
     $widget->addStyleClass('bold');
     $widget->addStyleClass('bg-red-500');
 
-See :doc:`/style/tailwind` for the full list of utility classes.
+See :doc:`/tui/style/tailwind` for the full list of utility classes.
 
 Inline Styles
 -------------
@@ -69,7 +69,7 @@ stylesheet:
 
     $widget->setStyle(null);
 
-See :doc:`/style/style` for all available style properties.
+See :doc:`/tui/style/style` for all available style properties.
 
 Per-Widget Event Listeners
 --------------------------
@@ -94,7 +94,7 @@ generic ``on()`` method:
 
 Per-widget listeners are automatically scoped to the target widget
 and cleaned up when the widget is detached from the tree. See
-:doc:`/topics/events` for global listeners and the full event
+:doc:`/tui/topics/events` for global listeners and the full event
 system.
 
 Vertical Expansion

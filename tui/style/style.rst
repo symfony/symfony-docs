@@ -261,7 +261,7 @@ Layout Properties
 -----------------
 
 These properties control how containers arrange their children. See
-:doc:`/widgets/container` for usage examples.
+:doc:`/tui/widgets/container` for usage examples.
 
 =====================  ===================================================
 Property               Description

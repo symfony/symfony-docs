@@ -19,7 +19,6 @@ the focus manager can route key events to them.
     input
     editor
     select_list
-    tabs
     settings_list
     loader
     cancellable_loader

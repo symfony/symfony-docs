@@ -100,7 +100,7 @@ callback, then stop when done::
         return true;
     });
 
-See :doc:`/integrations/revolt` for more on non-blocking I/O.
+See :doc:`/tui/integrations/revolt` for more on non-blocking I/O.
 
 Game Loops
 ----------

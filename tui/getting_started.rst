@@ -172,4 +172,3 @@ Next Steps
 * :doc:`/tui/topics/events` for advanced event handling.
 * :doc:`/tui/topics/keybindings` for customizing keyboard shortcuts.
 * :doc:`/tui/topics/tick_loop` for async work and the tick callback.
-* :doc:`/tui/topics/templates` for declarative widget trees with Twig.
