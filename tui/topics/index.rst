@@ -7,7 +7,6 @@ application.
 .. toctree::
     :maxdepth: 1
 
-    templates
     focus
     events
     keybindings
