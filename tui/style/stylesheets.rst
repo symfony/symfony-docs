@@ -88,7 +88,7 @@ When multiple rules match a widget, they are merged in this order
 3. CSS class selectors
 4. State selectors (FQCN + state, then CSS class + state)
 5. Responsive breakpoint rules (see below)
-6. Utility class styles (see :doc:`tailwind`)
+6. Utility class styles (see :doc:`/tui/style/tailwind`)
 7. Instance style (``widget->setStyle()``)
 
 Within each level, ``null`` properties are skipped so that
@@ -99,9 +99,7 @@ Sub-elements
 
 Widgets can expose internal parts as sub-elements using CSS
 pseudo-element syntax (``::``). This allows styling individual pieces
-of a widget without subclassing.
-
-.. code-block:: php
+of a widget without subclassing::
 
     use Symfony\Component\Tui\Widget\SelectListWidget;
 

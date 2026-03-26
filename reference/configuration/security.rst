@@ -78,7 +78,7 @@ The possible values of this option are:
   other session attributes are lost.
 
 erase_credentials
-------------------
+-----------------
 
 **type**: ``boolean`` **default**: ``true``
 

@@ -10,13 +10,13 @@ There are three ways to style a widget:
 
 1. **Inline style**: call ``setStyle()`` on a widget instance. This
    has the highest priority and overrides everything else
-   (see :doc:`style`).
+   (see :doc:`/tui/style/style`).
 2. **Stylesheet rules**: add CSS-like rules that match widgets by
    class name, FQCN, state or sub-element
-   (see :doc:`stylesheets`).
+   (see :doc:`/tui/style/stylesheets`).
 3. **Utility classes**: add Tailwind-like class names to widgets
    for quick, composable styling without writing stylesheet rules
-   (see :doc:`tailwind`).
+   (see :doc:`/tui/style/tailwind`).
 
 .. toctree::
     :maxdepth: 1

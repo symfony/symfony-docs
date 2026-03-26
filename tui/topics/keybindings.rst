@@ -8,9 +8,7 @@ How It Works
 ------------
 
 A ``Keybindings`` instance is a map from action names (strings) to
-lists of key identifiers:
-
-.. code-block:: php
+lists of key identifiers::
 
     use Symfony\Component\Tui\Input\Key;
     use Symfony\Component\Tui\Input\Keybindings;
@@ -50,9 +48,7 @@ Overriding Widget Keybindings
 -----------------------------
 
 Pass a ``Keybindings`` instance to the widget constructor to
-override specific actions:
-
-.. code-block:: php
+override specific actions::
 
     use Symfony\Component\Tui\Input\Key;
     use Symfony\Component\Tui\Input\Keybindings;
@@ -80,9 +76,7 @@ When a widget checks its keybindings, three layers are merged
    instance via ``setKeybindings()`` or the constructor.
 
 This lets you set application-wide overrides at the Tui level while
-still allowing per-widget customization:
-
-.. code-block:: php
+still allowing per-widget customization::
 
     use Symfony\Component\Tui\Input\Keybindings;
     use Symfony\Component\Tui\Tui;
@@ -122,7 +116,7 @@ Action                      Meaning
 ==========================  ==========================================
 
 macOS: Option Key as Alt/Meta
-------------------------------
+-----------------------------
 
 On macOS, the Option key acts as a compose key by default (for typing
 accented characters like e, n). Terminal applications that rely on Alt

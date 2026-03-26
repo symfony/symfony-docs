@@ -15,9 +15,7 @@ The Compositor
 
 The ``Compositor`` class merges layers in order. Layer 0 is the
 base (typically opaque, filling the entire screen); subsequent
-layers are painted on top:
-
-.. code-block:: php
+layers are painted on top::
 
     use Symfony\Component\Tui\Render\Compositor;
     use Symfony\Component\Tui\Render\Layer;
@@ -38,9 +36,7 @@ first line.
 The Layer Value Object
 ----------------------
 
-A ``Layer`` describes content to composite:
-
-.. code-block:: php
+A ``Layer`` describes content to composite::
 
     use Symfony\Component\Tui\Render\Layer;
 
@@ -84,9 +80,7 @@ Positioned Layers
 -----------------
 
 Layers can be offset from the top-left corner. This is useful for
-compositing smaller content at a specific position:
-
-.. code-block:: php
+compositing smaller content at a specific position::
 
     $lines = Compositor::composite(
         new Layer($fullScreenBackground),
@@ -100,9 +94,7 @@ Multiple Layers
 ---------------
 
 Any number of layers can be composited. They are applied in order,
-so layer N can see the merged result of layers 0 through N-1:
-
-.. code-block:: php
+so layer N can see the merged result of layers 0 through N-1::
 
     $lines = Compositor::composite(
         new Layer($background),

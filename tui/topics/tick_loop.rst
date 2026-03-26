@@ -9,9 +9,7 @@ Registering a Tick Callback
 ---------------------------
 
 Use ``Tui::onTick()`` to register a callback that runs on every
-tick:
-
-.. code-block:: php
+tick::
 
     use Symfony\Component\Tui\Event\TickEvent;
 
@@ -45,9 +43,7 @@ progress:
 You control this by signaling whether you are busy. There are two
 equivalent ways:
 
-**Return a boolean** from the callback:
-
-.. code-block:: php
+**Return a boolean** from the callback::
 
     $tui->onTick(function (TickEvent $event) use ($future) {
         if ($future->isComplete()) {
@@ -60,9 +56,7 @@ equivalent ways:
         return true; // busy, keep ticking fast
     });
 
-**Call** ``setBusy()`` **on the event**:
-
-.. code-block:: php
+**Call** ``setBusy()`` **on the event**::
 
     $tui->onTick(function (TickEvent $event) use ($runner) {
         $runner->tick();
@@ -77,9 +71,7 @@ Typical Pattern
 ---------------
 
 A common pattern is to start async work, poll it in the tick
-callback, then stop when done:
-
-.. code-block:: php
+callback, then stop when done::
 
     use Amp\Process\Process;
     use Symfony\Component\Tui\Event\TickEvent;
@@ -115,9 +107,7 @@ Game Loops
 
 Games and real-time animations need the tick callback to run
 continuously. Call ``$event->setBusy()`` so the Tui keeps ticking
-at 10 ms intervals instead of going idle:
-
-.. code-block:: php
+at 10 ms intervals instead of going idle::
 
     use Symfony\Component\Tui\Event\TickEvent;
 
@@ -136,9 +126,7 @@ Fixed Timestep
 
 When game logic must run at a deterministic rate (physics,
 collision detection), use ``PeriodicStepper`` to convert variable
-delta time into a fixed number of steps per tick:
-
-.. code-block:: php
+delta time into a fixed number of steps per tick::
 
     use Symfony\Component\Tui\Loop\PeriodicStepper;
 

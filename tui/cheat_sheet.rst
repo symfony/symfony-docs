@@ -7,7 +7,7 @@ interactive features for every focusable widget.
 .. tip::
 
     **F6** / **Shift+F6** cycle focus between widgets in any
-    application. See :doc:`topics/focus` for details.
+    application. See :doc:`/tui/topics/focus` for details.
 
 Bracketed Paste
 ---------------
@@ -75,10 +75,8 @@ Shift+Enter                   Insert newline
 Escape, Ctrl+C                Cancel (or close autocomplete)
 Tab                           Trigger autocomplete
 Shift+Space                   Insert a space
-Up                            Move cursor up (or start of
-                              line when on first line)
-Down                          Move cursor down (or end of
-                              line when on last line)
+Up                            Move up (start of first line)
+Down                          Move down (end of last line)
 Left, Ctrl+B                  Move cursor left
 Right, Ctrl+F                 Move cursor right
 Alt+Left, Ctrl+Left, Alt+B    Move word left
