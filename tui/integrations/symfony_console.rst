@@ -103,7 +103,7 @@ Pass a stylesheet to the Tui constructor to theme your command:
     use Symfony\Component\Tui\Style\VerticalAlign;
 
     $stylesheet = new StyleSheet([
-        '.root' => new Style(
+        ':root' => new Style(
             gap: 1,
             verticalAlign: VerticalAlign::Bottom,
         ),

@@ -99,8 +99,9 @@ source widget), see :doc:`topics/events`.
 Styling the Root Container
 --------------------------
 
-The root container has the style class ``root``. Style it through a
-stylesheet to control the global layout:
+The root container is matched by the ``:root`` pseudo-class
+selector, like in CSS. Style it through a stylesheet to control
+the global layout:
 
 .. code-block:: php
 
@@ -109,7 +110,7 @@ stylesheet to control the global layout:
     use Symfony\Component\Tui\Style\VerticalAlign;
 
     $stylesheet = new StyleSheet();
-    $stylesheet->addRule('.root', new Style(
+    $stylesheet->addRule(':root', new Style(
         gap: 1,
         verticalAlign: VerticalAlign::Bottom,
     ));
@@ -164,7 +165,7 @@ Putting it all together:
     use Symfony\Component\Tui\Widget\TextWidget;
 
     $tui = new Tui(new StyleSheet([
-        '.root' => new Style(gap: 1),
+        ':root' => new Style(gap: 1),
     ]));
     $tui->quitOn('ctrl+c');
 
