@@ -1,7 +1,7 @@
 CancellableLoaderWidget
 =======================
 
-``CancellableLoaderWidget`` extends :doc:`loader` with focus and
+``CancellableLoaderWidget`` extends :doc:`/tui/widgets/loader` with focus and
 keyboard support so the user can cancel the operation by pressing
 **Escape** or **Ctrl+C**.
 
@@ -11,7 +11,7 @@ When to Use
 Use ``CancellableLoaderWidget`` for long-running operations that the
 user should be able to abort: network requests, file indexing, AI
 inference, etc. If the operation cannot be cancelled, use
-:doc:`loader` instead.
+:doc:`/tui/widgets/loader` instead.
 
 Basic Usage
 -----------
@@ -55,7 +55,7 @@ Inherited Features
 ------------------
 
 ``CancellableLoaderWidget`` inherits all features from
-:doc:`loader`: spinner styles, animation speed, message updates and
+:doc:`/tui/widgets/loader`: spinner styles, animation speed, message updates and
 the finished indicator.
 
 Default Keybindings

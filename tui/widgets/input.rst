@@ -9,7 +9,7 @@ When to Use
 
 Use ``InputWidget`` when you need a short, single-line text field:
 a search box, a filename prompt, a command palette filter, etc.
-For multi-line editing, use :doc:`editor` instead.
+For multi-line editing, use :doc:`/tui/widgets/editor` instead.
 
 Basic Usage
 -----------

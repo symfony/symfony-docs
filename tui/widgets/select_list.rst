@@ -10,7 +10,7 @@ When to Use
 Use ``SelectListWidget`` when the user must pick one item from a list:
 a file picker, a command palette result list, a model selector, etc.
 For settings that cycle through predefined values, consider
-:doc:`settings_list` instead.
+:doc:`/tui/widgets/settings_list` instead.
 
 Basic Usage
 -----------
@@ -49,7 +49,7 @@ Filtering
 
 Call ``setFilter()`` to narrow the list to items whose value starts
 with the given string. This is useful when combining a
-``SelectListWidget`` with an :doc:`input` for fuzzy search::
+``SelectListWidget`` with an :doc:`/tui/widgets/input` for fuzzy search::
 
     $list->setFilter('ban'); // shows only "Banana"
 
