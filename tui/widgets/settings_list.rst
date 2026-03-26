@@ -10,8 +10,8 @@ When to Use
 
 Use ``SettingsListWidget`` for preference panels, configuration screens
 or any UI where the user picks values for a set of named options. For
-free-form text input, use :doc:`input` or :doc:`editor`. For picking a
-single item from a plain list, use :doc:`select_list`.
+free-form text input, use :doc:`/tui/widgets/input` or :doc:`/tui/widgets/editor`. For picking a
+single item from a plain list, use :doc:`/tui/widgets/select_list`.
 
 Basic Usage
 -----------

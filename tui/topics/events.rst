@@ -9,9 +9,7 @@ Per-Widget Listeners
 --------------------
 
 The most common way to handle events is to register a callback on
-the widget that emits them:
-
-.. code-block:: php
+the widget that emits them::
 
     use Symfony\Component\Tui\Event\SubmitEvent;
 
@@ -29,9 +27,7 @@ They are also cleaned up when the widget is detached from the tree.
 Global Listeners
 ----------------
 
-Register a listener on the Tui to catch events from any widget:
-
-.. code-block:: php
+Register a listener on the Tui to catch events from any widget::
 
     use Symfony\Component\Tui\Event\CancelEvent;
 
@@ -44,9 +40,7 @@ This is useful when multiple widgets should trigger the same
 behavior (e.g. stopping the Tui on cancel).
 
 When you need to distinguish which widget fired the event, use
-``getTarget()``:
-
-.. code-block:: php
+``getTarget()``::
 
     use Symfony\Component\Tui\Event\SubmitEvent;
 
@@ -60,9 +54,7 @@ Quitting the Application
 ------------------------
 
 ``Tui::quitOn()`` registers key patterns that stop the Tui
-automatically:
-
-.. code-block:: php
+automatically::
 
     $tui->quitOn('ctrl+c');
     $tui->quitOn('ctrl+c', 'ctrl+q'); // multiple keys
@@ -74,9 +66,7 @@ Global Input Interceptor
 
 ``Tui::onInput()`` registers a callback that runs before any widget
 receives keyboard input. Return ``true`` to consume the input and
-prevent further processing:
-
-.. code-block:: php
+prevent further processing::
 
     $tui->onInput(function (string $data) use ($tui): bool {
         if ('?' === $data) {

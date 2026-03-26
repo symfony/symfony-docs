@@ -8,9 +8,7 @@ Creating a Tui
 --------------
 
 The ``Tui`` class is the entry point for every application. Create
-one, add widgets and run the event loop:
-
-.. code-block:: php
+one, add widgets and run the event loop::
 
     use Symfony\Component\Tui\Tui;
     use Symfony\Component\Tui\Widget\TextWidget;
@@ -31,9 +29,7 @@ Building the Widget Tree
 ------------------------
 
 The Tui manages a root ``ContainerWidget`` internally. Use ``add()``,
-``remove()`` and ``clear()`` to build the widget tree:
-
-.. code-block:: php
+``remove()`` and ``clear()`` to build the widget tree::
 
     use Symfony\Component\Tui\Widget\ContainerWidget;
     use Symfony\Component\Tui\Widget\InputWidget;
@@ -50,9 +46,7 @@ The Tui manages a root ``ContainerWidget`` internally. Use ``add()``,
     // Remove all widgets
     $tui->clear();
 
-You can retrieve any widget by its id:
-
-.. code-block:: php
+You can retrieve any widget by its id::
 
     $input->setId('name-input');
     $tui->add($input);
@@ -65,22 +59,18 @@ Setting Focus
 Widgets that accept keyboard input (``InputWidget``,
 ``EditorWidget``, ``SelectListWidget``, etc.) implement
 ``FocusableInterface``. Only the focused widget receives keyboard
-events. Set focus with ``setFocus()``:
-
-.. code-block:: php
+events. Set focus with ``setFocus()``::
 
     $tui->setFocus($input);
 
 When your application has multiple focusable widgets, see
-:doc:`topics/focus` for how to manage focus cycling.
+:doc:`/tui/topics/focus` for how to manage focus cycling.
 
 Reacting to Events
 ------------------
 
 Widgets dispatch events when the user interacts with them. The most
-common pattern is to register a callback on the widget directly:
-
-.. code-block:: php
+common pattern is to register a callback on the widget directly::
 
     use Symfony\Component\Tui\Event\SubmitEvent;
 
@@ -94,16 +84,14 @@ common pattern is to register a callback on the widget directly:
     });
 
 For more advanced event handling (global listeners, filtering by
-source widget), see :doc:`topics/events`.
+source widget), see :doc:`/tui/topics/events`.
 
 Styling the Root Container
 --------------------------
 
 The root container is matched by the ``:root`` pseudo-class
 selector, like in CSS. Style it through a stylesheet to control
-the global layout:
-
-.. code-block:: php
+the global layout::
 
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Style\StyleSheet;
@@ -118,31 +106,25 @@ the global layout:
     $tui = new Tui($stylesheet);
 
 Pass the stylesheet to the constructor, or add it later with
-``addStyleSheet()``. See :doc:`style/index` for the full styling
-documentation.
+``addStyleSheet()``. See :doc:`/tui/style/index` for the full
+styling documentation.
 
 Stopping the Tui
 ----------------
 
 Call ``stop()`` to exit the event loop, restore the terminal and
-return control to the caller:
-
-.. code-block:: php
+return control to the caller::
 
     $tui->stop();
 
-This is typically done inside an event callback:
-
-.. code-block:: php
+This is typically done inside an event callback::
 
     $input->onSubmit(function () use ($tui) {
         $tui->stop();
     });
 
 After ``stop()`` returns, the terminal is back to its normal state.
-You can query widget values and write to the terminal:
-
-.. code-block:: php
+You can query widget values and write to the terminal::
 
     $tui->run();
 
@@ -154,9 +136,7 @@ You can query widget values and write to the terminal:
 A Complete Example
 ------------------
 
-Putting it all together:
-
-.. code-block:: php
+Putting it all together::
 
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Style\StyleSheet;
@@ -186,10 +166,10 @@ Putting it all together:
 Next Steps
 ----------
 
-* :doc:`widgets/index` for all available widgets.
-* :doc:`style/index` for colors, borders, padding and stylesheets.
-* :doc:`topics/focus` for focus cycling between multiple widgets.
-* :doc:`topics/events` for advanced event handling.
-* :doc:`topics/keybindings` for customizing keyboard shortcuts.
-* :doc:`topics/tick_loop` for async work and the tick callback.
-* :doc:`topics/templates` for declarative widget trees with Twig.
+* :doc:`/tui/widgets/index` for all available widgets.
+* :doc:`/tui/style/index` for colors, borders, padding and stylesheets.
+* :doc:`/tui/topics/focus` for focus cycling between multiple widgets.
+* :doc:`/tui/topics/events` for advanced event handling.
+* :doc:`/tui/topics/keybindings` for customizing keyboard shortcuts.
+* :doc:`/tui/topics/tick_loop` for async work and the tick callback.
+* :doc:`/tui/topics/templates` for declarative widget trees with Twig.
