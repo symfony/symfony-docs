@@ -143,7 +143,7 @@ Three shortcuts simplify common operations:
 * ``scale($percentage)``: Positive values darken, negative values
   lighten.
 
-.. code-block:: php
+::
 
     $lighter = Color::named('blue')->tint(40);
     $darker = Color::named('blue')->shade(40);
@@ -263,23 +263,19 @@ Layout Properties
 These properties control how containers arrange their children. See
 :doc:`/widgets/container` for usage examples.
 
-=====================  ==========================================
+=====================  ===================================================
 Property               Description
-=====================  ==========================================
+=====================  ===================================================
 ``direction``          ``Vertical`` or ``Horizontal`` layout
 ``gap``                Spacing between children (rows or columns)
 ``hidden``             Hide the widget (like CSS ``display: none``)
 ``maxColumns``         Cap the widget's available width
-``align``              Horizontal alignment (``Left``, ``Center``,
-                       ``Right``)
-``verticalAlign``      Vertical alignment (``Top``, ``Center``,
-                       ``Bottom``)
-``flex``               Flex grow weight for horizontal layouts
-                       (``0`` = intrinsic width, ``1+`` =
-                       proportional)
-=====================  ==========================================
+``align``              Horizontal: ``Left``, ``Center``, ``Right``
+``verticalAlign``      Vertical: ``Top``, ``Center``, ``Bottom``
+``flex``               Flex grow (``0`` = intrinsic, ``1+`` = proportional)
+=====================  ===================================================
 
-.. code-block:: php
+::
 
     use Symfony\Component\Tui\Style\Direction;
 
@@ -292,15 +288,13 @@ Property               Description
 Content Properties
 ------------------
 
-=====================  ==========================================
+=====================  ===================================================
 Property               Description
-=====================  ==========================================
-``font``               FIGlet font name (``big``, ``small``,
-                       ``slant``, ``standard``, ``mini``)
-``textAlign``          Text alignment within the content area
-                       (``Left``, ``Center``, ``Right``)
+=====================  ===================================================
+``font``               FIGlet font name (e.g. ``big``, ``slant``)
+``textAlign``          Text alignment (``Left``, ``Center``, ``Right``)
 ``cursorShape``        Cursor shape for input widgets
-=====================  ==========================================
+=====================  ===================================================
 
 Merging Styles
 --------------

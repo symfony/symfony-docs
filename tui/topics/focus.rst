@@ -16,9 +16,7 @@ Registering Focusable Widgets
 -----------------------------
 
 Add widgets to the focus manager so they participate in the focus
-cycle:
-
-.. code-block:: php
+cycle::
 
     $focus = $tui->getFocusManager();
     $focus->add($editor1);
@@ -31,33 +29,25 @@ The order you add widgets determines the cycling order. Pressing
 **F6** moves focus through the list, wrapping from the last widget
 back to the first.
 
-Remove a widget from the cycle with ``remove()``:
-
-.. code-block:: php
+Remove a widget from the cycle with ``remove()``::
 
     $focus->remove($editor2);
 
 Setting Focus Programmatically
 ------------------------------
 
-Move focus to any widget at any time:
-
-.. code-block:: php
+Move focus to any widget at any time::
 
     $tui->setFocus($editor3);
 
-Query the currently focused widget:
-
-.. code-block:: php
+Query the currently focused widget::
 
     $focused = $tui->getFocus();
 
 Reacting to Focus Changes
 -------------------------
 
-Register a callback that fires whenever focus changes:
-
-.. code-block:: php
+Register a callback that fires whenever focus changes::
 
     use Symfony\Component\Tui\Event\FocusEvent;
 
@@ -74,9 +64,7 @@ Focusable widgets automatically report a ``:focused`` state flag
 when they have focus. Use this in stylesheet rules to change
 appearance based on focus.
 
-**Highlight the focused widget** with a colored border:
-
-.. code-block:: php
+**Highlight the focused widget** with a colored border::
 
     use Symfony\Component\Tui\Style\Border;
     use Symfony\Component\Tui\Style\Style;
@@ -89,12 +77,10 @@ appearance based on focus.
     ));
 
 **Style a sub-element differently when focused**, for example
-changing the cursor shape:
+changing the cursor shape::
 
-.. code-block:: php
-
-    use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Style\CursorShape;
+    use Symfony\Component\Tui\Style\Style;
 
     $stylesheet->addRule(
         '.editor::cursor',
@@ -102,9 +88,7 @@ changing the cursor shape:
     );
 
 **Combine FQCN and state selectors** when you want to target all
-instances of a widget type:
-
-.. code-block:: php
+instances of a widget type::
 
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Widget\InputWidget;
