@@ -54,13 +54,13 @@ Padding
 ======================  ==========================================
 Class                   Effect
 ======================  ==========================================
-``p-{n}``              All sides
-``px-{n}``             Left and right
-``py-{n}``             Top and bottom
-``pt-{n}``             Top only
-``pr-{n}``             Right only
-``pb-{n}``             Bottom only
-``pl-{n}``             Left only
+``p-{n}``               All sides
+``px-{n}``              Left and right
+``py-{n}``              Top and bottom
+``pt-{n}``              Top only
+``pr-{n}``              Right only
+``pb-{n}``              Bottom only
+``pl-{n}``              Left only
 ======================  ==========================================
 
 .. code-block:: php
