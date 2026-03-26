@@ -9,9 +9,7 @@ Widget ID
 ---------
 
 Assign an id to any widget so you can retrieve it later from
-anywhere in the tree:
-
-.. code-block:: php
+anywhere in the tree::
 
     $input->setId('search');
     $tui->add($input);
@@ -19,9 +17,7 @@ anywhere in the tree:
     // Later, from anywhere
     $widget = $tui->getById('search');
 
-IDs can also be used to find widgets within a subtree:
-
-.. code-block:: php
+IDs can also be used to find widgets within a subtree::
 
     $found = $container->findById('search');
 
@@ -29,9 +25,7 @@ Style Classes
 -------------
 
 Style classes connect widgets to stylesheet rules. Add and remove
-them at any time:
-
-.. code-block:: php
+them at any time::
 
     $widget->addStyleClass('sidebar');
     $widget->addStyleClass('highlighted');
@@ -40,9 +34,7 @@ them at any time:
 A widget can have multiple style classes. The stylesheet resolves
 all matching rules and merges them (see :doc:`/tui/style/stylesheets`).
 
-Tailwind-style utility classes work the same way:
-
-.. code-block:: php
+Tailwind-style utility classes work the same way::
 
     $widget->addStyleClass('p-2');
     $widget->addStyleClass('bold');
@@ -54,18 +46,14 @@ Inline Styles
 -------------
 
 Set a style directly on a widget. This has the highest priority in
-the cascade and overrides all stylesheet rules:
-
-.. code-block:: php
+the cascade and overrides all stylesheet rules::
 
     use Symfony\Component\Tui\Style\Style;
 
     $widget->setStyle(new Style(bold: true, color: 'cyan'));
 
 Pass ``null`` to remove the inline style and fall back to the
-stylesheet:
-
-.. code-block:: php
+stylesheet::
 
     $widget->setStyle(null);
 
@@ -76,9 +64,7 @@ Per-Widget Event Listeners
 
 Register event listeners on a specific widget using the typed
 shortcut methods (``onSubmit()``, ``onCancel()``, etc.) or the
-generic ``on()`` method:
-
-.. code-block:: php
+generic ``on()`` method::
 
     use Symfony\Component\Tui\Event\SubmitEvent;
 
@@ -102,9 +88,7 @@ Vertical Expansion
 
 By default, widgets only occupy the rows they need. Some widgets
 can fill all remaining vertical space by enabling vertical
-expansion:
-
-.. code-block:: php
+expansion::
 
     $container->expandVertically(true);
     $editor->expandVertically(true);
@@ -125,9 +109,7 @@ Labels
 ------
 
 Widgets have an optional label, used by container widgets like
-``TabsWidget`` to display a title:
-
-.. code-block:: php
+``TabsWidget`` to display a title::
 
     $widget->setLabel('Overview');
 
@@ -136,8 +118,6 @@ Widget Tree
 
 Widgets form a tree. Container widgets (``ContainerWidget``,
 ``TabsWidget``, etc.) hold child widgets. You can walk up the tree
-with ``getParent()``:
-
-.. code-block:: php
+with ``getParent()``::
 
     $parent = $widget->getParent();
