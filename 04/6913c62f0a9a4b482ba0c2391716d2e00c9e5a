@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by sebheitzmann at 2022-06-03T12:02:14Z
+
+I don't think the Lint error is linked to my modifications
+
+---------------------------------------------------------------------------
+
+by sebheitzmann at 2022-06-10T20:40:23Z
+
+> Why documenting parameters for only one method and not the others?
+>
+> (This should target 4.4 as is)
+
+you're right. I Will complete.
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-07-13T17:08:09Z
+
+> Why documenting parameters for only one method and not the others?
+
+For me it is the documentation itself that is not necessary for parameters
+why not directly add a link to the code like it is done for the `Returns TransitionBlockerList for the given transition`
+after `workflow_transition_blockers` ?
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-10-17T17:35:38Z
+
+> > Why documenting parameters for only one method and not the others?
+>
+> For me it is the documentation itself that is not necessary for parameters why not directly add a link to the code like it is done for the `Returns TransitionBlockerList for the given transition` after `workflow_transition_blockers` ?
+
+I agree with your suggestion, @sebheitzmann do you want give it a try ? (on 6.3 branch). If not I can
+
+---------------------------------------------------------------------------
+
+by sebheitzmann at 2023-10-18T10:07:41Z
+
+I will do this this week-end. Thanks
