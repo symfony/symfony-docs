@@ -13,14 +13,24 @@ one, add widgets and run the event loop::
     use Symfony\Component\Tui\Tui;
     use Symfony\Component\Tui\Widget\TextWidget;
 
+    use Symfony\Component\Tui\Event\InputEvent;
+    use Symfony\Component\Tui\Input\Keybindings;
+
     $tui = new Tui();
     $tui->add(new TextWidget('Hello, terminal!'));
-    $tui->quitOn('ctrl+c');
+
+    $keys = new Keybindings(['quit' => ['ctrl+c']]);
+    $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
+        if ($keys->matches($event->getData(), 'quit')) {
+            $tui->stop();
+        }
+    });
+
     $tui->run();
 
 ``run()`` blocks until you call ``stop()``. The Tui does not
-impose any default quit shortcut; ``quitOn()`` registers key
-patterns that call ``stop()`` automatically.
+impose any default quit shortcut; listen for ``InputEvent`` to
+intercept keys and call ``stop()`` when appropriate.
 
 The Tui takes ownership of the terminal: it hides the cursor,
 enables raw mode and restores everything when it stops.
@@ -138,6 +148,8 @@ A Complete Example
 
 Putting it all together::
 
+    use Symfony\Component\Tui\Event\InputEvent;
+    use Symfony\Component\Tui\Input\Keybindings;
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Style\StyleSheet;
     use Symfony\Component\Tui\Tui;
@@ -147,7 +159,13 @@ Putting it all together::
     $tui = new Tui(new StyleSheet([
         ':root' => new Style(gap: 1),
     ]));
-    $tui->quitOn('ctrl+c');
+
+    $keys = new Keybindings(['quit' => ['ctrl+c']]);
+    $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
+        if ($keys->matches($event->getData(), 'quit')) {
+            $tui->stop();
+        }
+    });
 
     $input = new InputWidget();
     $input->setPrompt('Name: ');

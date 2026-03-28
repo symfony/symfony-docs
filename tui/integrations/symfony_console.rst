@@ -15,6 +15,8 @@ Basic Command
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
+    use Symfony\Component\Tui\Event\InputEvent;
+    use Symfony\Component\Tui\Input\Keybindings;
     use Symfony\Component\Tui\Tui;
     use Symfony\Component\Tui\Widget\EditorWidget;
     use Symfony\Component\Tui\Widget\TextWidget;
@@ -27,7 +29,13 @@ Basic Command
             OutputInterface $output,
         ): int {
             $tui = new Tui();
-            $tui->quitOn('ctrl+c');
+
+            $keys = new Keybindings(['quit' => ['ctrl+c']]);
+            $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
+                if ($keys->matches($event->getData(), 'quit')) {
+                    $tui->stop();
+                }
+            });
 
             $editor = new EditorWidget();
             $editor->onSubmit(fn () => $tui->stop());
@@ -79,7 +87,13 @@ configure widgets::
         $name = $input->getArgument('name');
 
         $tui = new Tui();
-        $tui->quitOn('ctrl+c');
+
+        $keys = new Keybindings(['quit' => ['ctrl+c']]);
+        $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
+            if ($keys->matches($event->getData(), 'quit')) {
+                $tui->stop();
+            }
+        });
 
         $editor = new EditorWidget();
         $editor->setText($name);
@@ -112,5 +126,6 @@ Handling Signals
 
 Symfony Console registers signal handlers for ``SIGINT`` and
 ``SIGTERM``. The Tui uses its own terminal handling, so signal
-delivery works as expected. ``quitOn('ctrl+c')`` intercepts the
-Ctrl+C key press at the input level, before it becomes a signal.
+delivery works as expected. Intercepting Ctrl+C via an ``InputEvent``
+listener catches the key press at the input level, before it becomes
+a signal.
