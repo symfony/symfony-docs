@@ -30,8 +30,8 @@ Key identifiers can be:
 Always use these key identifiers instead of raw escape sequences
 (``"\x03"``, ``"\x1b[A"``, etc.). The key abstraction handles
 differences between terminal encodings (legacy and Kitty protocol)
-transparently. The same identifiers work everywhere: keybindings,
-``quitOn()`` and ``onInput()`` matching.
+transparently. The same identifiers work everywhere: keybindings
+and ``InputEvent`` listeners.
 
 Widget Default Keybindings
 --------------------------

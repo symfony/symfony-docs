@@ -50,39 +50,40 @@ When you need to distinguish which widget fired the event, use
         }
     });
 
-Quitting the Application
-------------------------
-
-``Tui::quitOn()`` registers key patterns that stop the Tui
-automatically::
-
-    $tui->quitOn('ctrl+c');
-    $tui->quitOn('ctrl+c', 'ctrl+q'); // multiple keys
-
-Quit keys are checked first, before any other input handling.
-
 Global Input Interceptor
 ------------------------
 
-``Tui::onInput()`` registers a callback that runs before any widget
-receives keyboard input. Return ``true`` to consume the input and
-prevent further processing::
+``InputEvent`` is dispatched before focus navigation and before the
+focused widget receives input. Register a listener with
+``Tui::on()`` to intercept raw input. Call ``stopPropagation()`` to
+consume the input and prevent further processing::
 
-    $tui->onInput(function (string $data) use ($tui): bool {
-        if ('?' === $data) {
-            // show a help overlay
-            return true;
+    use Symfony\Component\Tui\Event\InputEvent;
+    use Symfony\Component\Tui\Input\Keybindings;
+
+    $keys = new Keybindings(['quit' => ['ctrl+c', 'ctrl+q']]);
+    $tui->on(InputEvent::class, function (InputEvent $event) use ($tui, $keys): void {
+        if ($keys->matches($event->getData(), 'quit')) {
+            $tui->stop();
         }
-
-        return false;
     });
 
-The input flow is: quit keys, then global interceptor, then focus
-manager (F6 cycling), then the focused widget.
+    $tui->on(InputEvent::class, function (InputEvent $event): void {
+        if ('?' === $event->getData()) {
+            // show a help overlay
+            $event->stopPropagation();
+        }
+    });
+
+Multiple listeners can be registered; they run in priority order.
+The input flow is: ``InputEvent`` listeners, then focus manager
+(F6 cycling), then the focused widget.
 
 Event Types
 -----------
 
+* ``InputEvent``: raw terminal input received. Dispatched before
+  focus handling; call ``stopPropagation()`` to consume the input.
 * ``SubmitEvent``: the user confirmed input (Enter). Carries
   a text value.
 * ``CancelEvent``: the user cancelled (Escape, Ctrl+C).
