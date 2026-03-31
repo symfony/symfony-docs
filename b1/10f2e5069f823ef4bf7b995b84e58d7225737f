@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-03-31T14:52:28Z
+
+Failures are related to "code chcker" tool, which does not use a PHP version that supports this feature. Hopefully it will be fixed by https://github.com/symfony-tools/code-block-checker/pull/53
