@@ -187,12 +187,12 @@ is_granted
 
 .. code-block:: twig
 
-    {{ is_granted(role, object = null, field = null) }}
+    {{ is_granted(attribute, subject = null, field = null) }}
 
-``role``
+``attribute``
     **type**: ``string``
-``object`` *(optional)*
-    **type**: ``object``
+``subject`` *(optional)*
+    **type**: ``mixed``
 ``field`` *(optional)*
     **type**: ``string``
 
