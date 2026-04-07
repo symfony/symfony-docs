@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-04-07T11:49:53Z
+
+IIUC this may apply to 6.4 ?
+
+---------------------------------------------------------------------------
+
+by stof at 2026-04-07T12:02:23Z
+
+if the 6.4 documentation has the same content, it indeed also applies.
+
+---------------------------------------------------------------------------
+
+by HypeMC at 2026-04-07T12:30:03Z
+
+Oh, OK, I thought this was introduced with the new PHP config, but it was already there. I've retargeted it to 6.4, thanks @MrYamous  and @stof.
