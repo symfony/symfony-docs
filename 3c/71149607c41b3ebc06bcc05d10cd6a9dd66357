@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by wkania at 2025-08-01T15:14:22Z
+
+Nice. Looking at my pull request, I think it would also be helpful to mention which version of Symfony introduced this feature.
+```
+.. versionadded:: 7.1
+    Any class instance (like DTO) field (or fields) validation against entities persisted in the database was introduced in Symfony 7.1.
+
+.. versionadded:: 7.1
+
+    The option was introduced in Symfony 7.1.
+```
+
+---------------------------------------------------------------------------
+
+by ker0x at 2025-09-23T13:57:59Z
+
+@xabbuh @javiereguiluz could it be possible to review this PR please?
+
+---------------------------------------------------------------------------
+
+by toby-griffiths at 2025-10-02T14:01:51Z
+
+I've just found this hidden option and wanted to share, but then realised that this PR already existed to add this.
+
+Can I help get this over the line?  It looks like the checks are failing because a code block mentions the Doctrine classes that aren't found in this project, perhaps?
