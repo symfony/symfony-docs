@@ -93,6 +93,53 @@ of the bundle. Now that you've created the bundle, enable it::
 
 And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
+.. _bundles-required-bundles:
+
+Declaring Bundle Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``#[RequiredBundle]`` attribute was introduced in Symfony 8.1.
+
+If your bundle depends on services provided by another bundle, you can use the
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\RequiredBundle` attribute
+to declare this dependency. Required bundles are automatically registered and
+loaded before the bundle that requires them::
+
+    // src/AcmeBlogBundle.php
+    namespace Acme\BlogBundle;
+
+    use Acme\CoreBundle\AcmeCoreBundle;
+    use Symfony\Component\DependencyInjection\Kernel\RequiredBundle; // new in 8.1
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    #[RequiredBundle(AcmeCoreBundle::class)]
+    class AcmeBlogBundle extends AbstractBundle
+    {
+    }
+
+The attribute is repeatable, so you can declare multiple dependencies::
+
+    use Acme\CoreBundle\AcmeCoreBundle;
+    use Acme\UtilBundle\AcmeUtilBundle;
+    use Symfony\Component\DependencyInjection\Kernel\RequiredBundle; // new in 8.1
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    #[RequiredBundle(AcmeCoreBundle::class)]
+    #[RequiredBundle(AcmeUtilBundle::class)]
+    class AcmeBlogBundle extends AbstractBundle
+    {
+    }
+
+Set ``ignoreOnInvalid: true`` to make the dependency optional, so the
+required bundle is skipped if its class does not exist::
+
+    #[RequiredBundle(SomeOptionalBundle::class, ignoreOnInvalid: true)]
+    class AcmeBlogBundle extends AbstractBundle
+    {
+    }
+
 .. _bundles-legacy-directory-structure:
 .. _bundles-directory-structure:
 
