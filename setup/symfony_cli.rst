@@ -352,9 +352,6 @@ to make custom domains work:
     # example with Blackfire and cURL
     $ https_proxy=$(symfony proxy:url) blackfire curl https://my-domain.wip
 
-    # example with Cypress
-    $ https_proxy=$(symfony proxy:url) ./node_modules/bin/cypress open
-
 .. warning::
 
     Although environment variable names are typically uppercase, the ``https_proxy``
