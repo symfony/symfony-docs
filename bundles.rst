@@ -62,6 +62,13 @@ Start by creating a new class called ``AcmeBlogBundle``::
     {
     }
 
+.. tip::
+
+    If your bundle is designed for an application that does not use the
+    HttpKernel component (e.g. a console tool or worker), you can extend
+    :class:`Symfony\\Component\\DependencyInjection\\Kernel\\AbstractBundle`
+    instead. See :ref:`building-http-less-applications` for more details.
+
 .. warning::
 
     If your bundle must be compatible with previous Symfony versions you have to
