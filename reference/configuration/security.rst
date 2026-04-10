@@ -1080,14 +1080,6 @@ check_post_only
 
 If ``true``, the login link is only accepted via ``POST`` requests.
 
-signature_properties
-....................
-
-**type**: ``array``
-
-An array of user properties used to create the login link signature. This option
-is required and must contain at least one property (e.g. ``['email']``).
-
 lifetime
 ........
 
