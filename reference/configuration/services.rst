@@ -20,7 +20,8 @@ available to define and configure services in YAML, XML and PHP.
 
 A typical ``services`` section is made of four kinds of entries:
 
-* `_defaults`_: values applied by default to every service defined in the file;
+* `_defaults`_: values applied by default to every service defined in the
+  same ``services`` block;
 * `_instanceof`_: values applied to every service whose class matches a given
   type (class or interface);
 * :ref:`Service definitions <reference-dic-service-definitions>`: each entry
@@ -42,8 +43,8 @@ explanations and examples, follow the links to the related articles.
 -------------
 
 The ``_defaults`` key stores the values that are applied by default to every
-service defined in the same file. Defaults are merged into each service unless
-the service explicitly overrides them.
+service defined in the same ``services`` block. Defaults are merged into each
+service unless the service explicitly overrides them.
 
 .. configuration-block::
 
