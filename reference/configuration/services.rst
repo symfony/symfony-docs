@@ -78,8 +78,8 @@ the service explicitly overrides them.
         return function (ContainerConfigurator $container): void {
             $services = $container->services()
                 ->defaults()
-                    ->autowire()
-                    ->autoconfigure()
+                    ->autowire(true)
+                    ->autoconfigure(true)
                     ->public(false)
             ;
         };
