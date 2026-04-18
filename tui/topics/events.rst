@@ -27,11 +27,12 @@ They are also cleaned up when the widget is detached from the tree.
 Global Listeners
 ----------------
 
-Register a listener on the Tui to catch events from any widget::
+Register a listener on the Tui to catch events from any widget.
+The event class is inferred from the listener's type hint::
 
     use Symfony\Component\Tui\Event\CancelEvent;
 
-    $tui->on(CancelEvent::class, function (CancelEvent $event) {
+    $tui->addListener(function (CancelEvent $event) {
         // Fires when ANY widget dispatches CancelEvent
         $tui->stop();
     });
@@ -44,7 +45,7 @@ When you need to distinguish which widget fired the event, use
 
     use Symfony\Component\Tui\Event\SubmitEvent;
 
-    $tui->on(SubmitEvent::class, function (SubmitEvent $event) use ($editor) {
+    $tui->addListener(function (SubmitEvent $event) use ($editor) {
         if ($event->getTarget() === $editor) {
             // handle editor submit
         }
@@ -55,20 +56,21 @@ Global Input Interceptor
 
 ``InputEvent`` is dispatched before focus navigation and before the
 focused widget receives input. Register a listener with
-``Tui::on()`` to intercept raw input. Call ``stopPropagation()`` to
-consume the input and prevent further processing::
+``Tui::addListener()`` to intercept raw input. Call
+``stopPropagation()`` to consume the input and prevent further
+processing::
 
     use Symfony\Component\Tui\Event\InputEvent;
     use Symfony\Component\Tui\Input\Keybindings;
 
     $keys = new Keybindings(['quit' => ['ctrl+c', 'ctrl+q']]);
-    $tui->on(InputEvent::class, function (InputEvent $event) use ($tui, $keys): void {
+    $tui->addListener(function (InputEvent $event) use ($tui, $keys): void {
         if ($keys->matches($event->getData(), 'quit')) {
             $tui->stop();
         }
     });
 
-    $tui->on(InputEvent::class, function (InputEvent $event): void {
+    $tui->addListener(function (InputEvent $event): void {
         if ('?' === $event->getData()) {
             // show a help overlay
             $event->stopPropagation();

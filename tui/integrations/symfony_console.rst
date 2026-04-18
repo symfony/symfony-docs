@@ -31,11 +31,13 @@ Basic Command
             $tui = new Tui();
 
             $keys = new Keybindings(['quit' => ['ctrl+c']]);
-            $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
-                if ($keys->matches($event->getData(), 'quit')) {
-                    $tui->stop();
+            $tui->addListener(
+                static function (InputEvent $event) use ($tui, $keys): void {
+                    if ($keys->matches($event->getData(), 'quit')) {
+                        $tui->stop();
+                    }
                 }
-            });
+            );
 
             $editor = new EditorWidget();
             $editor->onSubmit(fn () => $tui->stop());
@@ -89,11 +91,13 @@ configure widgets::
         $tui = new Tui();
 
         $keys = new Keybindings(['quit' => ['ctrl+c']]);
-        $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
-            if ($keys->matches($event->getData(), 'quit')) {
-                $tui->stop();
+        $tui->addListener(
+            static function (InputEvent $event) use ($tui, $keys): void {
+                if ($keys->matches($event->getData(), 'quit')) {
+                    $tui->stop();
+                }
             }
-        });
+        );
 
         $editor = new EditorWidget();
         $editor->setText($name);

@@ -20,7 +20,7 @@ one, add widgets and run the event loop::
     $tui->add(new TextWidget('Hello, terminal!'));
 
     $keys = new Keybindings(['quit' => ['ctrl+c']]);
-    $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
+    $tui->addListener(static function (InputEvent $event) use ($tui, $keys): void {
         if ($keys->matches($event->getData(), 'quit')) {
             $tui->stop();
         }
@@ -161,7 +161,7 @@ Putting it all together::
     ]));
 
     $keys = new Keybindings(['quit' => ['ctrl+c']]);
-    $tui->on(InputEvent::class, static function (InputEvent $event) use ($tui, $keys): void {
+    $tui->addListener(static function (InputEvent $event) use ($tui, $keys): void {
         if ($keys->matches($event->getData(), 'quit')) {
             $tui->stop();
         }
