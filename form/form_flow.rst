@@ -175,6 +175,16 @@ finish buttons::
 
 Buttons are automatically shown or hidden depending on the current step.
 
+To also include a reset button, use the ``with_reset`` option::
+
+    $builder->add('navigator', NavigatorFlowType::class, [
+        'with_reset' => true,
+    ]);
+
+.. versionadded:: 8.1
+
+    The ``with_reset`` option was introduced in Symfony 8.1.
+
 Custom Navigation Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
