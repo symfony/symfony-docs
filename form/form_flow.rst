@@ -174,11 +174,6 @@ finish buttons::
     $builder->add('navigator', NavigatorFlowType::class);
 
 Buttons are automatically shown or hidden depending on the current step.
-To also include a reset button, use the ``with_reset`` option::
-
-    $builder->add('navigator', NavigatorFlowType::class, [
-        'with_reset' => true,
-    ]);
 
 Custom Navigation Buttons
 ~~~~~~~~~~~~~~~~~~~~~~~~~
