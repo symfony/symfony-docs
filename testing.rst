@@ -1013,14 +1013,14 @@ you can use a real browser instead of the test client. This is called an
 **end-to-end test**, and it is an effective way to test the application.
 
 You can achieve this using the Panther component. Learn more about
-:doc:`E2E testing in Symfony </testing/end_to_end>`.
+:doc:`End-to-End testing in Symfony </testing/end_to_end>`.
 
 .. _testing-application-assertions:
 
 Test Assertions Defined by Symfony
 ----------------------------------
 
-If your tests are based on PHPUnit, you can use any `PHPUnit assertion`_ in
+If your tests are based on PHPUnit, you can use any `PHPUnit Assertion`_ in
 your tests. Symfony also provides many additional assertions.
 
 Response Assertions
