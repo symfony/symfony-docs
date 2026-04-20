@@ -1122,12 +1122,12 @@ not find the SUT:
     </listeners>
 
 .. _`PHPUnit`: https://phpunit.de
-.. _`PHPUnit event listener`: https://docs.phpunit.de/en/10.0/extending-phpunit.html#phpunit-s-event-system
+.. _`PHPUnit event listener`: https://docs.phpunit.de/en/10.5/extending-phpunit.html#phpunit-s-event-system
 .. _`ErrorHandler component`: https://github.com/symfony/error-handler
-.. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/9.6/assertions.html#assertstringmatchesformat
+.. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/10.5/assertions.html#assertstringmatchesformat
 .. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
-.. _`environment variable`: https://docs.phpunit.de/en/9.6/configuration.html#the-env-element
+.. _`environment variable`: https://docs.phpunit.de/en/10.5/configuration.html#the-env-element
 .. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
-.. _`@covers`: https://docs.phpunit.de/en/9.6/annotations.html#covers
+.. _`@covers`: https://docs.phpunit.de/en/10.5/annotations.html#covers
 .. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php
