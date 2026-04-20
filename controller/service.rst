@@ -14,13 +14,26 @@ your controllers as services in several ways:
 #. Using the ``#[AsController]`` attribute;
 #. Using the ``controller.service_arguments`` service tag.
 
+All three approaches rely on the same underlying mechanism: they apply the
+``controller.service_arguments`` tag to the controller service. Symfony then
+marks any service carrying that tag as public and non-lazy, and enables
+:ref:`service argument injection <controller-accessing-services>` on its
+action methods. The three options only differ in how you opt in to that tag.
+
+The services are public because Symfony's controller resolver fetches them
+from the container by their service id at runtime (for example, when a route
+points to ``App\Controller\HelloController::index``), and private services
+cannot be retrieved that way. They are also marked non-lazy because the resolver
+invokes the controller immediately after fetching it, so proxy indirection
+would be unnecessary.
+
 Using the ``#[Route]`` Attribute
 --------------------------------
 
 When using :ref:`the #[Route] attribute <routing-route-attributes>` to define
-routes on any PHP class, Symfony treats that class as a controller. It registers
-it as a public, non-lazy service and enables service argument injection in all
-its methods.
+routes on any PHP class, Symfony automatically applies the
+``controller.service_arguments`` tag to it. As explained above, this registers
+the class as a public, non-lazy service and enables service argument injection.
 
 This is the simplest and recommended way to register controllers as services
 when not extending the base controller class.
@@ -29,7 +42,9 @@ Using the ``#[AsController]`` Attribute
 ---------------------------------------
 
 If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
-apply the ``controller.service_arguments`` tag to your controller services::
+apply the ``controller.service_arguments`` tag to your controller services.
+The end result is the same as with ``#[Route]``: the class becomes a public,
+non-lazy service with service argument injection enabled on its action methods::
 
     // src/Controller/HelloController.php
     namespace App\Controller;
@@ -163,9 +178,12 @@ a service like: ``App\Controller\HelloController::index``:
 Invokable Controllers
 ---------------------
 
-Controllers can also define a single action using the ``__invoke()`` method,
-which is a common practice when following the `ADR pattern`_
-(Action-Domain-Responder):
+Any controller (whether or not it is registered as a service) can also define a
+single action using the ``__invoke()`` method, which is a common practice when
+following the `ADR pattern`_ (Action-Domain-Responder). When the class is
+registered as a service (for example via ``#[Route]`` on the class, as shown
+below), the ``__invoke()`` method benefits from service argument injection just
+like any other action method:
 
 .. configuration-block::
 
