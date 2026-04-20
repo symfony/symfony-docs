@@ -1242,12 +1242,12 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`official PHPUnit documentation`: https://docs.phpunit.de/
-.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/10.5/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://docs.phpunit.de/en/10.5/configuration.html
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/11.5/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/11.5/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/10.5/assertions.html
+.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/11.5/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

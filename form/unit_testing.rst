@@ -249,9 +249,4 @@ All you need to do is to implement the
 :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTwigExtensions` and
 the :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getThemes` methods.
 
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class was
-    introduced in Symfony 6.4.
-
-.. _`PHPUnit data providers`: https://docs.phpunit.de/en/10.5/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://docs.phpunit.de/en/11.5/writing-tests-for-phpunit.html#data-providers
