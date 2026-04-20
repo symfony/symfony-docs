@@ -2001,14 +2001,14 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
         {
             $client = static::createClient();
             $client->request('GET', '/mail/send');
-            $this->assertResponseIsSuccessful();
+            self::assertResponseIsSuccessful();
 
-            $this->assertEmailCount(1); // use assertQueuedEmailCount() when using Messenger
+            self::assertEmailCount(1); // use assertQueuedEmailCount() when using Messenger
 
-            $email = $this->getMailerMessage();
+            $email = self::getMailerMessage();
 
-            $this->assertEmailHtmlBodyContains($email, 'Welcome');
-            $this->assertEmailTextBodyContains($email, 'Welcome');
+            self::assertEmailHtmlBodyContains($email, 'Welcome');
+            self::assertEmailTextBodyContains($email, 'Welcome');
         }
     }
 
