@@ -122,6 +122,10 @@ it's recommended to change these settings as follows:
     ; maximum number of files that can be stored in the cache
     opcache.max_accelerated_files=32531
 
+    ; memory (in MB) for interned strings; the default value (8 MB) is too low
+    ; for Symfony applications, which use many fully-qualified class names
+    opcache.interned_strings_buffer=32
+
 .. _performance-dont-check-timestamps:
 
 Don't Check PHP Files Timestamps
