@@ -97,9 +97,8 @@ to create a page?
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses;
 
-#. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
-   page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
-   in its own section, including how to make *variable* URLs.
+#. *Create a route*: The route defines the URL path to your page and what controller method to call.
+    You'll learn more about :doc:`routing </routing>` in its own section, including how to make *variable* URLs.
 
 The bin/console Command
 -----------------------
