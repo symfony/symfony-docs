@@ -1168,6 +1168,41 @@ command without having to worry about the number of arguments or options::
         // ...
     }
 
+Accessing Raw Arguments and Options
+-----------------------------------
+
+.. versionadded:: 8.1
+
+    The ``RawInputInterface`` was introduced in Symfony 8.1.
+
+While ``getRawTokens()`` returns the unparsed CLI tokens as strings,
+:class:`Symfony\\Component\\Console\\Input\\RawInputInterface` exposes the
+parsed arguments and options as they were explicitly passed by the user,
+without default values merged in. Type-hint this interface in invokable
+commands to forward the original input to a child process::
+
+    use Symfony\Component\Console\Input\RawInputInterface;
+    use Symfony\Component\Process\Process;
+    // ...
+
+    public function __invoke(RawInputInterface $input): int
+    {
+        $rawArguments = $input->getRawArguments();
+        $rawOptions = $input->getRawOptions();
+
+        $process = new Process([
+            'app:child-command',
+            ...$input->getRawArguments(),
+            ...$input->unparse(),
+        ]);
+        $process->mustRun();
+
+        // limit unparse() to specific options
+        $unparsed = $input->unparse(['format', 'verbose']);
+
+        // ...
+    }
+
 .. _console-input-completion:
 
 Adding Argument/Option Value Completion
