@@ -2212,6 +2212,14 @@ The transport has a number of options:
     FIFO queues don't support setting a delay per message, a value of ``delay: 0``
     is required in the retry strategy settings.
 
+.. warning::
+
+    AWS SQS message deduplication is time-based, not queue-based. Once a
+    ``Message deduplication ID`` is used, SQS will reject any message sent with
+    the same ID for the next 5 minutes, regardless of whether the original
+    message has already been consumed or deleted from the queue. See the
+    `SQS message deduplication`_ documentation for details.
+
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -3808,6 +3816,7 @@ Learn more
 .. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
+.. _`SQS message deduplication`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html#SQS-SendMessage-request-MessageDeduplicationId
 .. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
 .. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
 .. _`high connection churn`: https://www.rabbitmq.com/connections.html#high-connection-churn
