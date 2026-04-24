@@ -368,18 +368,7 @@ Then, override one or both of the following methods::
 
     class PostVoter extends Voter
     {
-        const VIEW = 'view';
-        const EDIT = 'edit';
-
-        protected function supports(string $attribute, mixed $subject): bool
-        {
-            // ...
-        }
-
-        protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
-        {
-            // ...
-        }
+        // ...
 
         // this method returns true if the voter applies to the given attribute;
         // if it returns false, Symfony won't call it again for this attribute
