@@ -232,9 +232,13 @@ following these rules:
 * **Bug**: Only for bug fixes; We are very conservative when it comes to
   merging older, but still maintained, branches. Read the :doc:`/contributing/code/maintenance`
   document for more information.
-* **Minor**: For everything that does not change the code or when they don't
-  need to be listed in the CHANGELOG files: typos, Markdown files, test files,
-  new or missing translations, etc.
+* **Data**: For updates of data files such as translations, ICU/intl data and
+  mime types.
+* **Minor**: For everything that does not change the behavior or when they don't
+  need to be listed in the CHANGELOG files: typos in variable names or comments,
+  Markdown files, test files, code style fixes, etc. A component with only
+  **minor** changes since its last release will not be tagged in the next patch
+  release.
 * **Security**: It's the category used for security fixes and should never be
   used except by the security team.
 
@@ -329,6 +333,11 @@ Release Policy
 ~~~~~~~~~~~~~~
 
 The **Project Leader** is also the release manager for every Symfony version.
+
+Bugfix releases are published every month for each actively maintained version.
+However, a package is not released if there are no new commits since its last
+release, or if all new commits belong to the **minor** category (which doesn't
+warrant a new release).
 
 Symfony Core Rules and Protocol Amendments
 ------------------------------------------
