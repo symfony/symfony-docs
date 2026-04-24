@@ -1204,7 +1204,7 @@ functionality).
 
 Using Enums
 -----------
-.. _`enumerations`: https://php.net/enumerations
+
 PHP provides native `enumerations`_, which allow you to define a closed set of
 possible values for a given type. This makes them a good fit for modeling entity
 properties that should only accept a predefined set of values.
@@ -1293,3 +1293,4 @@ Learn more
 .. _`available Doctrine extensions`: https://github.com/doctrine-extensions/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`enumerations`: https://php.net/enumerations
