@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by gmsantos at 2026-04-21T16:41:21Z
+
+Let me know if this is the better branch to target this fix. I targeted the older maintained doc branch.
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-04-22T06:34:41Z
+
+> Let me know if this is the better branch to target this fix. I targeted the older maintained doc branch.
+
+AFAIK it is possible to use the latest cli version to create a project in 6.4 then I think this is the good choice
