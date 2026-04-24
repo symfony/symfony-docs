@@ -130,13 +130,12 @@ decides this using whatever logic you want.
 
 .. _creating-the-custom-voter:
 
-Creating the custom Voter
+Creating the Custom Voter
 -------------------------
 
-Suppose the logic to decide if a user can "view" or "edit" a ``Post`` object is
-pretty complex. For example, a ``User`` can always edit or view a ``Post`` they created.
-And if a ``Post`` is marked as "public", anyone can view it. A voter for this situation
-would look like this::
+Consider the following blog feature in a Symfony application: any authenticated
+user can read a ``Post`` marked as "public", but a ``Post`` can only be edited
+by its author. A voter that implements this logic could look like this::
 
     // src/Security/PostVoter.php
     namespace App\Security;
@@ -149,13 +148,13 @@ would look like this::
 
     class PostVoter extends Voter
     {
-        // these strings are just invented: you can use anything
+        // these values are arbitrary strings; you can use anything
         const VIEW = 'view';
         const EDIT = 'edit';
 
         protected function supports(string $attribute, mixed $subject): bool
         {
-            // if the attribute isn't one we support, return false
+            // if the voter doesn't support this attribute, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
                 return false;
             }
