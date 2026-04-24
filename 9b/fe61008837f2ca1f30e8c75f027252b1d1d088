@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2024-01-08T10:32:51Z
+
+> I like this. Thanks Matthieu for contributing this.
+>
+> However, we try to avoid creating vey small doc pages (because the require navigating from one small page to another and that frustrates most users). So, if it's possible, we should merge this as a new section in another article ... maybe inside the main `doctrine.rst` article? Thanks.
+
+LGTM I will update this
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2025-07-01T20:01:53Z
+
+@MrYamous open to finish this PR?
