@@ -112,7 +112,7 @@ but only under specific constraints:
 #. Entries must be derivable from source code and regeneratable during cache
    warmup via a ``CacheWarmer``.
 #. Cached content must only change when the source code changes (i.e. on deployment,
-  not at runtime); treat it as read-only after deployment.
+   not at runtime); treat it as read-only after deployment.
 
 By default, ``cache.system`` uses ``cache.adapter.system``, which writes to the
 filesystem and chains APCu when available. In most cases, the default is the
