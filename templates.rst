@@ -460,8 +460,187 @@ Now you can use the ``uuid`` variable in any Twig template to access to the
 
     UUID: {{ uuid.generate }}
 
+.. _templates-reuse-contents:
+
+Reusing Template Contents
+-------------------------
+
+.. _templates-include:
+
+Including Templates
+~~~~~~~~~~~~~~~~~~~
+
+If certain Twig code is repeated in several templates, you can extract it into a
+single "template fragment" and include it in other templates. Imagine that the
+following code to display the user information is repeated in several places:
+
+.. code-block:: html+twig
+
+    {# templates/blog/index.html.twig #}
+
+    {# ... #}
+    <div class="user-profile">
+        <img src="{{ user.profileImageUrl }}" alt="{{ user.fullName }}">
+        <p>{{ user.fullName }} - {{ user.email }}</p>
+    </div>
+
+First, create a new Twig template called ``blog/_user_profile.html.twig`` (the
+``_`` prefix is optional, but it's a convention used to better differentiate
+between full templates and template fragments).
+
+Then, remove that content from the original ``blog/index.html.twig`` template
+and add the following to include the template fragment:
+
+.. code-block:: twig
+
+    {# templates/blog/index.html.twig #}
+
+    {# ... #}
+    {{ include('blog/_user_profile.html.twig') }}
+
+The ``include()`` Twig function takes as argument the path of the template to
+include. The included template has access to all the variables of the template
+that includes it (use the `with_context`_ option to control this).
+
+You can also pass variables to the included template. This is useful for example
+to rename variables. Imagine that your template stores the user information in a
+variable called ``blog_post.author`` instead of the ``user`` variable that the
+template fragment expects. Use the following to *rename* the variable:
+
+.. code-block:: twig
+
+    {# templates/blog/index.html.twig #}
+
+    {# ... #}
+    {{ include('blog/_user_profile.html.twig', {user: blog_post.author}) }}
+
+.. _template_inheritance-layouts:
+
+Template Inheritance and Layouts
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As your application grows you'll find more and more repeated elements between
+pages, such as headers, footers, sidebars, etc. :ref:`Including templates <templates-include>`
+and :ref:`embedding controllers <templates-embed-controllers>` can help, but
+when pages share a common structure, it's better to use **inheritance**.
+
+The concept of `Twig template inheritance`_ is similar to PHP class inheritance.
+You define a parent template that other templates can extend from and child
+templates can override parts of the parent template.
+
+Symfony recommends the following three-level template inheritance for medium and
+complex applications:
+
+* ``templates/base.html.twig``, defines the common elements of all application
+  templates, such as ``<head>``, ``<header>``, ``<footer>``, etc.;
+* ``templates/layout.html.twig``, extends from ``base.html.twig`` and defines
+  the content structure used in all or most of the pages, such as a two-column
+  content + sidebar layout. Some sections of the application can define their
+  own layouts (e.g. ``templates/blog/layout.html.twig``);
+* ``templates/*.html.twig``, the application pages which extend from the main
+  ``layout.html.twig`` template or any other section layout.
+
+In practice, the ``base.html.twig`` template would look like this:
+
+.. code-block:: html+twig
+
+    {# templates/base.html.twig #}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>{% block title %}My Application{% endblock %}</title>
+            {% block stylesheets %}
+                <link rel="stylesheet" type="text/css" href="/css/base.css">
+            {% endblock %}
+        </head>
+        <body>
+            {% block body %}
+                <div id="sidebar">
+                    {% block sidebar %}
+                        <ul>
+                            <li><a href="{{ path('homepage') }}">Home</a></li>
+                            <li><a href="{{ path('blog_index') }}">Blog</a></li>
+                        </ul>
+                    {% endblock %}
+                </div>
+
+                <div id="content">
+                    {% block content %}{% endblock %}
+                </div>
+            {% endblock %}
+        </body>
+    </html>
+
+The `Twig block tag`_ defines the page sections that can be overridden in the
+child templates. They can be empty, like the ``content`` block or define a default
+content, like the ``title`` block, which is displayed when child templates don't
+override them.
+
+The ``blog/layout.html.twig`` template could be like this:
+
+.. code-block:: html+twig
+
+    {# templates/blog/layout.html.twig #}
+    {% extends 'base.html.twig' %}
+
+    {% block content %}
+        <h1>Blog</h1>
+
+        {% block page_contents %}{% endblock %}
+    {% endblock %}
+
+The template extends from ``base.html.twig`` and only defines the contents of
+the ``content`` block. The rest of the parent template blocks will display their
+default contents. However, they can be overridden by the third-level inheritance
+template, such as ``blog/index.html.twig``, which displays the blog index:
+
+.. code-block:: html+twig
+
+    {# templates/blog/index.html.twig #}
+    {% extends 'blog/layout.html.twig' %}
+
+    {% block title %}Blog Index{% endblock %}
+
+    {% block page_contents %}
+        {% for article in articles %}
+            <h2>{{ article.title }}</h2>
+            <p>{{ article.body }}</p>
+        {% endfor %}
+    {% endblock %}
+
+This template extends from the second-level template (``blog/layout.html.twig``)
+but overrides blocks of different parent templates: ``page_contents`` from
+``blog/layout.html.twig`` and ``title`` from ``base.html.twig``.
+
+When you render the ``blog/index.html.twig`` template, Symfony uses three
+different templates to create the final contents. This inheritance mechanism
+boosts your productivity because each template includes only its unique contents
+and leaves the repeated contents and HTML structure to some parent templates.
+
+.. warning::
+
+    When using ``extends``, a child template is forbidden to define template
+    parts outside of a block. The following code throws a ``SyntaxError``:
+
+    .. code-block:: html+twig
+
+        {# templates/blog/index.html.twig #}
+        {% extends 'base.html.twig' %}
+
+        {# the line below is not captured by a "block" tag #}
+        <div class="alert">Some Alert</div>
+
+        {# the following is valid #}
+        {% block content %}My cool blog posts{% endblock %}
+
+Read the `Twig template inheritance`_ docs to learn more about how to reuse
+parent block contents when overriding templates and other advanced features.
+
+.. _templates-twig-components:
+
 Twig Components
----------------
+~~~~~~~~~~~~~~~
 
 Twig components are an alternative way to render templates, where each template
 is bound to a "component class". This makes it easier to render and re-use
@@ -475,6 +654,203 @@ when your user types into a box, your Twig component will re-render via Ajax to
 show a list of results!
 
 To learn more, see `UX Live Component`_.
+
+.. _templates-embed-controllers:
+
+Embedding Controllers
+~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    Instead of embedding controllers, consider using :ref:`Twig Components <templates-twig-components>`,
+    which is a more modern Symfony feature.
+
+:ref:`Including template fragments <templates-include>` is useful to reuse the
+same content on several pages. However, this technique is not the best solution
+in some cases.
+
+Imagine that the template fragment displays the three most recent blog articles.
+To do that, it needs to make a database query to get those articles. When using
+the ``include()`` function, you'd need to do the same database query in every
+page that includes the fragment. This is not very convenient.
+
+A better alternative is to **embed the result of executing some controller**
+with the ``render()`` and ``controller()`` Twig functions.
+
+First, create the controller that renders a certain number of recent articles::
+
+    // src/Controller/BlogController.php
+    namespace App\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    class BlogController extends AbstractController
+    {
+        public function recentArticles(int $max = 3): Response
+        {
+            // get the recent articles somehow (e.g. making a database query)
+            $articles = ['...', '...', '...'];
+
+            return $this->render('blog/_recent_articles.html.twig', [
+                'articles' => $articles
+            ]);
+        }
+    }
+
+Then, create the ``blog/_recent_articles.html.twig`` template fragment (the
+``_`` prefix in the template name is optional, but it's a convention used to
+better differentiate between full templates and template fragments):
+
+.. code-block:: html+twig
+
+    {# templates/blog/_recent_articles.html.twig #}
+    {% for article in articles %}
+        <a href="{{ path('blog_show', {slug: article.slug}) }}">
+            {{ article.title }}
+        </a>
+    {% endfor %}
+
+Now you can call to this controller from any template to embed its result:
+
+.. code-block:: html+twig
+
+    {# templates/base.html.twig #}
+
+    {# ... #}
+    <div id="sidebar">
+        {# if the controller is associated with a route, use the path() or url() functions #}
+        {{ render(path('latest_articles', {max: 3})) }}
+        {{ render(url('latest_articles', {max: 3})) }}
+
+        {# if you don't want to expose the controller with a public URL,
+           use the controller() function to define the controller to execute #}
+        {{ render(controller(
+            'App\\Controller\\BlogController::recentArticles', {max: 3}
+        )) }}
+    </div>
+
+.. _fragments-path-config:
+
+When using the ``controller()`` function, controllers are not accessed using a
+regular Symfony route but through a special URL used exclusively to serve those
+template fragments. Configure that special URL in the ``fragments`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            fragments: { path: /_fragment }
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                // ...
+                'fragments' => [
+                    'path' => '/_fragment',
+                ],
+            ],
+        ]);
+
+.. warning::
+
+    Embedding controllers requires making requests to those controllers and
+    rendering some templates as result. This can have a significant impact on
+    the application performance if you embed lots of controllers. If possible,
+    :doc:`cache the template fragment </http_cache/esi>`.
+
+.. _templates-hinclude:
+
+How to Embed Asynchronous Content with hinclude.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. note::
+
+    Instead of embedding asunchronous content with ``hinclude.js``, consider using
+    :ref:`Twig Live Components <templates-twig-components>`, which is a more modern
+    Symfony feature.
+
+Templates can also embed contents asynchronously with the ``hinclude.js``
+JavaScript library.
+
+First, include the `hinclude.js`_ library in your page
+:ref:`linking to it <templates-link-to-assets>` from the template or adding it
+to your application JavaScript :doc:`using AssetMapper </frontend>`.
+
+As the embedded content comes from another page (or controller for that matter),
+Symfony uses a version of the standard ``render()`` function to configure
+``hinclude`` tags in templates:
+
+.. code-block:: twig
+
+    {{ render_hinclude(controller('...')) }}
+    {{ render_hinclude(url('...')) }}
+
+.. note::
+
+    When using the ``controller()`` function, you must also configure the
+    :ref:`fragments path option <fragments-path-config>`.
+
+When JavaScript is disabled or it takes a long time to load you can display a
+default content rendering some template:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            fragments:
+                hinclude_default_template: hinclude.html.twig
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                // ...
+                'fragments' => [
+                    'hinclude_default_template' => 'hinclude.html.twig',
+                ],
+            ],
+        ]);
+
+You can define default templates per ``render()`` function (which will override
+any global default template that is defined):
+
+.. code-block:: twig
+
+    {{ render_hinclude(controller('...'),  {
+        default: 'default/content.html.twig'
+    }) }}
+
+Or you can also specify a string to display as the default content:
+
+.. code-block:: twig
+
+    {{ render_hinclude(controller('...'), {default: 'Loading...'}) }}
+
+Use the ``attributes`` option to define the value of hinclude.js options:
+
+.. code-block:: twig
+
+    {# by default, cross-site requests don't use credentials such as cookies, authorization
+       headers or TLS client certificates; set this option to 'true' to use them #}
+    {{ render_hinclude(controller('...'), {attributes: {'data-with-credentials': 'true'}}) }}
+
+    {# by default, the JavaScript code included in the loaded contents is not run;
+       set this option to 'true' to run that JavaScript code #}
+    {{ render_hinclude(controller('...'), {attributes: {evaljs: 'true'}}) }}
 
 .. _templates-rendering:
 
@@ -847,369 +1223,6 @@ depending on your needs:
 To avoid leaking sensitive information, the ``dump()`` function/tag is only
 available in the ``dev`` and ``test`` :ref:`configuration environments <configuration-environments>`.
 If you try to use it in the ``prod`` environment, you will see a PHP error.
-
-.. _templates-reuse-contents:
-
-Reusing Template Contents
--------------------------
-
-.. _templates-include:
-
-Including Templates
-~~~~~~~~~~~~~~~~~~~
-
-If certain Twig code is repeated in several templates, you can extract it into a
-single "template fragment" and include it in other templates. Imagine that the
-following code to display the user information is repeated in several places:
-
-.. code-block:: html+twig
-
-    {# templates/blog/index.html.twig #}
-
-    {# ... #}
-    <div class="user-profile">
-        <img src="{{ user.profileImageUrl }}" alt="{{ user.fullName }}">
-        <p>{{ user.fullName }} - {{ user.email }}</p>
-    </div>
-
-First, create a new Twig template called ``blog/_user_profile.html.twig`` (the
-``_`` prefix is optional, but it's a convention used to better differentiate
-between full templates and template fragments).
-
-Then, remove that content from the original ``blog/index.html.twig`` template
-and add the following to include the template fragment:
-
-.. code-block:: twig
-
-    {# templates/blog/index.html.twig #}
-
-    {# ... #}
-    {{ include('blog/_user_profile.html.twig') }}
-
-The ``include()`` Twig function takes as argument the path of the template to
-include. The included template has access to all the variables of the template
-that includes it (use the `with_context`_ option to control this).
-
-You can also pass variables to the included template. This is useful for example
-to rename variables. Imagine that your template stores the user information in a
-variable called ``blog_post.author`` instead of the ``user`` variable that the
-template fragment expects. Use the following to *rename* the variable:
-
-.. code-block:: twig
-
-    {# templates/blog/index.html.twig #}
-
-    {# ... #}
-    {{ include('blog/_user_profile.html.twig', {user: blog_post.author}) }}
-
-.. _templates-embed-controllers:
-
-Embedding Controllers
-~~~~~~~~~~~~~~~~~~~~~
-
-:ref:`Including template fragments <templates-include>` is useful to reuse the
-same content on several pages. However, this technique is not the best solution
-in some cases.
-
-Imagine that the template fragment displays the three most recent blog articles.
-To do that, it needs to make a database query to get those articles. When using
-the ``include()`` function, you'd need to do the same database query in every
-page that includes the fragment. This is not very convenient.
-
-A better alternative is to **embed the result of executing some controller**
-with the ``render()`` and ``controller()`` Twig functions.
-
-First, create the controller that renders a certain number of recent articles::
-
-    // src/Controller/BlogController.php
-    namespace App\Controller;
-
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
-
-    class BlogController extends AbstractController
-    {
-        public function recentArticles(int $max = 3): Response
-        {
-            // get the recent articles somehow (e.g. making a database query)
-            $articles = ['...', '...', '...'];
-
-            return $this->render('blog/_recent_articles.html.twig', [
-                'articles' => $articles
-            ]);
-        }
-    }
-
-Then, create the ``blog/_recent_articles.html.twig`` template fragment (the
-``_`` prefix in the template name is optional, but it's a convention used to
-better differentiate between full templates and template fragments):
-
-.. code-block:: html+twig
-
-    {# templates/blog/_recent_articles.html.twig #}
-    {% for article in articles %}
-        <a href="{{ path('blog_show', {slug: article.slug}) }}">
-            {{ article.title }}
-        </a>
-    {% endfor %}
-
-Now you can call to this controller from any template to embed its result:
-
-.. code-block:: html+twig
-
-    {# templates/base.html.twig #}
-
-    {# ... #}
-    <div id="sidebar">
-        {# if the controller is associated with a route, use the path() or url() functions #}
-        {{ render(path('latest_articles', {max: 3})) }}
-        {{ render(url('latest_articles', {max: 3})) }}
-
-        {# if you don't want to expose the controller with a public URL,
-           use the controller() function to define the controller to execute #}
-        {{ render(controller(
-            'App\\Controller\\BlogController::recentArticles', {max: 3}
-        )) }}
-    </div>
-
-.. _fragments-path-config:
-
-When using the ``controller()`` function, controllers are not accessed using a
-regular Symfony route but through a special URL used exclusively to serve those
-template fragments. Configure that special URL in the ``fragments`` option:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            fragments: { path: /_fragment }
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        return App::config([
-            'framework' => [
-                // ...
-                'fragments' => [
-                    'path' => '/_fragment',
-                ],
-            ],
-        ]);
-
-.. warning::
-
-    Embedding controllers requires making requests to those controllers and
-    rendering some templates as result. This can have a significant impact on
-    the application performance if you embed lots of controllers. If possible,
-    :doc:`cache the template fragment </http_cache/esi>`.
-
-.. _templates-hinclude:
-
-How to Embed Asynchronous Content with hinclude.js
---------------------------------------------------
-
-Templates can also embed contents asynchronously with the ``hinclude.js``
-JavaScript library.
-
-First, include the `hinclude.js`_ library in your page
-:ref:`linking to it <templates-link-to-assets>` from the template or adding it
-to your application JavaScript :doc:`using AssetMapper </frontend>`.
-
-As the embedded content comes from another page (or controller for that matter),
-Symfony uses a version of the standard ``render()`` function to configure
-``hinclude`` tags in templates:
-
-.. code-block:: twig
-
-    {{ render_hinclude(controller('...')) }}
-    {{ render_hinclude(url('...')) }}
-
-.. note::
-
-    When using the ``controller()`` function, you must also configure the
-    :ref:`fragments path option <fragments-path-config>`.
-
-When JavaScript is disabled or it takes a long time to load you can display a
-default content rendering some template:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            fragments:
-                hinclude_default_template: hinclude.html.twig
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        return App::config([
-            'framework' => [
-                // ...
-                'fragments' => [
-                    'hinclude_default_template' => 'hinclude.html.twig',
-                ],
-            ],
-        ]);
-
-You can define default templates per ``render()`` function (which will override
-any global default template that is defined):
-
-.. code-block:: twig
-
-    {{ render_hinclude(controller('...'),  {
-        default: 'default/content.html.twig'
-    }) }}
-
-Or you can also specify a string to display as the default content:
-
-.. code-block:: twig
-
-    {{ render_hinclude(controller('...'), {default: 'Loading...'}) }}
-
-Use the ``attributes`` option to define the value of hinclude.js options:
-
-.. code-block:: twig
-
-    {# by default, cross-site requests don't use credentials such as cookies, authorization
-       headers or TLS client certificates; set this option to 'true' to use them #}
-    {{ render_hinclude(controller('...'), {attributes: {'data-with-credentials': 'true'}}) }}
-
-    {# by default, the JavaScript code included in the loaded contents is not run;
-       set this option to 'true' to run that JavaScript code #}
-    {{ render_hinclude(controller('...'), {attributes: {evaljs: 'true'}}) }}
-
-.. _template_inheritance-layouts:
-
-Template Inheritance and Layouts
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-As your application grows you'll find more and more repeated elements between
-pages, such as headers, footers, sidebars, etc. :ref:`Including templates <templates-include>`
-and :ref:`embedding controllers <templates-embed-controllers>` can help, but
-when pages share a common structure, it's better to use **inheritance**.
-
-The concept of `Twig template inheritance`_ is similar to PHP class inheritance.
-You define a parent template that other templates can extend from and child
-templates can override parts of the parent template.
-
-Symfony recommends the following three-level template inheritance for medium and
-complex applications:
-
-* ``templates/base.html.twig``, defines the common elements of all application
-  templates, such as ``<head>``, ``<header>``, ``<footer>``, etc.;
-* ``templates/layout.html.twig``, extends from ``base.html.twig`` and defines
-  the content structure used in all or most of the pages, such as a two-column
-  content + sidebar layout. Some sections of the application can define their
-  own layouts (e.g. ``templates/blog/layout.html.twig``);
-* ``templates/*.html.twig``, the application pages which extend from the main
-  ``layout.html.twig`` template or any other section layout.
-
-In practice, the ``base.html.twig`` template would look like this:
-
-.. code-block:: html+twig
-
-    {# templates/base.html.twig #}
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>{% block title %}My Application{% endblock %}</title>
-            {% block stylesheets %}
-                <link rel="stylesheet" type="text/css" href="/css/base.css">
-            {% endblock %}
-        </head>
-        <body>
-            {% block body %}
-                <div id="sidebar">
-                    {% block sidebar %}
-                        <ul>
-                            <li><a href="{{ path('homepage') }}">Home</a></li>
-                            <li><a href="{{ path('blog_index') }}">Blog</a></li>
-                        </ul>
-                    {% endblock %}
-                </div>
-
-                <div id="content">
-                    {% block content %}{% endblock %}
-                </div>
-            {% endblock %}
-        </body>
-    </html>
-
-The `Twig block tag`_ defines the page sections that can be overridden in the
-child templates. They can be empty, like the ``content`` block or define a default
-content, like the ``title`` block, which is displayed when child templates don't
-override them.
-
-The ``blog/layout.html.twig`` template could be like this:
-
-.. code-block:: html+twig
-
-    {# templates/blog/layout.html.twig #}
-    {% extends 'base.html.twig' %}
-
-    {% block content %}
-        <h1>Blog</h1>
-
-        {% block page_contents %}{% endblock %}
-    {% endblock %}
-
-The template extends from ``base.html.twig`` and only defines the contents of
-the ``content`` block. The rest of the parent template blocks will display their
-default contents. However, they can be overridden by the third-level inheritance
-template, such as ``blog/index.html.twig``, which displays the blog index:
-
-.. code-block:: html+twig
-
-    {# templates/blog/index.html.twig #}
-    {% extends 'blog/layout.html.twig' %}
-
-    {% block title %}Blog Index{% endblock %}
-
-    {% block page_contents %}
-        {% for article in articles %}
-            <h2>{{ article.title }}</h2>
-            <p>{{ article.body }}</p>
-        {% endfor %}
-    {% endblock %}
-
-This template extends from the second-level template (``blog/layout.html.twig``)
-but overrides blocks of different parent templates: ``page_contents`` from
-``blog/layout.html.twig`` and ``title`` from ``base.html.twig``.
-
-When you render the ``blog/index.html.twig`` template, Symfony uses three
-different templates to create the final contents. This inheritance mechanism
-boosts your productivity because each template includes only its unique contents
-and leaves the repeated contents and HTML structure to some parent templates.
-
-.. warning::
-
-    When using ``extends``, a child template is forbidden to define template
-    parts outside of a block. The following code throws a ``SyntaxError``:
-
-    .. code-block:: html+twig
-
-        {# templates/blog/index.html.twig #}
-        {% extends 'base.html.twig' %}
-
-        {# the line below is not captured by a "block" tag #}
-        <div class="alert">Some Alert</div>
-
-        {# the following is valid #}
-        {% block content %}My cool blog posts{% endblock %}
-
-Read the `Twig template inheritance`_ docs to learn more about how to reuse
-parent block contents when overriding templates and other advanced features.
 
 .. _output-escaping:
 .. _xss-attacks:
