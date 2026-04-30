@@ -76,6 +76,31 @@ The DOT image will look like this :
 
     The ``--with-metadata`` option only works for the DOT dumper for now.
 
+You can also pass ``--with-listeners`` to ``workflow:dump`` to annotate each
+place and transition with the workflow listeners subscribed to its events:
+
+* places get listeners on ``leave``, ``enter`` and ``entered``;
+* transitions get listeners on ``guard``, ``transition``, ``completed`` and
+  ``announce``.
+
+For each event, the three usual variants are inspected and merged: the generic
+``workflow.<event>``, the workflow-scoped ``workflow.<name>.<event>`` and the
+item-scoped ``workflow.<name>.<event>.<placeOrTransition>``.
+
+.. code-block:: terminal
+
+    $ php bin/console workflow:dump workflow-name --with-listeners | dot -Tsvg -o graph.svg
+
+.. versionadded:: 8.1
+
+    The ``--with-listeners`` option of ``workflow:dump`` was introduced in
+    Symfony 8.1. The listeners are only rendered by the DOT dumper; with
+    ``--dump-format=puml`` or ``--dump-format=mermaid`` the option is
+    silently ignored. The option also requires the EventDispatcher to be
+    available, otherwise a
+    :class:`Symfony\\Component\\Console\\Exception\\InvalidArgumentException`
+    is thrown.
+
 .. note::
 
     The ``label`` metadata is not included in the dumped metadata, because it is used as a place's title.
