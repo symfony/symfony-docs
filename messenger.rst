@@ -3561,13 +3561,23 @@ identify when two messages should be considered duplicates (for example, using a
 project ID, an order ID, or a combination of relevant fields).
 
 By default, deduplication applies while the message is in the queue and while
-it is being processed. The lock is released when processing finishes. If you want
+it is being processed. The lock is released when processing succeeds. If you want
 deduplication only while the message is queued, set the third argument to ``true``::
 
     new DeduplicateStamp($deduplicationKey, 300, true)
 
 In this mode, the lock is released as soon as the worker receives the message,
 so another message with the same key can be processed concurrently.
+
+When a handler throws and the message is going to be retried, the lock is kept
+so that retries are deduplicated against new dispatches sharing the same key.
+Once the retry flow gives up, the lock is released, including when the
+message is moved to a :ref:`failure transport <messenger-failure-transport>`.
+
+.. versionadded:: 8.1
+
+    Releasing the deduplication lock on definitive failure was introduced in
+    Symfony 8.1.
 
 .. note::
 
