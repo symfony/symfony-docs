@@ -226,7 +226,7 @@ Uploading Multiple Files
 
 If you want to allow multiple files to be uploaded at once, set the ``multiple``
 option of ``FileType`` to ``true``. The form field's data is then an array of
-:class:`Symfony\Component\HttpFoundation\File\UploadedFile` instances instead of
+:class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` instances instead of
 a single one, so you must wrap the ``File`` constraint inside the
 :doc:`All </reference/constraints/All>` constraint to validate each uploaded file::
 

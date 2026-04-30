@@ -698,6 +698,80 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
         }
     }
 
+Refreshable Environment Variables as Closures or Stringables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Autowiring environment variables as ``Closure`` or ``Stringable`` was
+    introduced in Symfony 8.1.
+
+When ``#[Autowire(env: ...)]`` (or any ``#[Autowire('…%env(…)%…')]`` string
+value) targets a parameter typed ``Closure`` or ``Stringable``, the injected
+value resolves the env reference each time it is evaluated. Unlike injecting
+an env var as a ``string`` (which is baked at compile time), the value stays
+refreshable across calls to
+:method:`Symfony\\Component\\DependencyInjection\\Container::resetEnvCache`::
+
+    // src/Service/Foo.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+    class Foo
+    {
+        public function __construct(
+            #[Autowire(env: 'DB_URL')]
+            private \Closure $dbUrl,
+
+            // the parameter default is returned when APP_NAME is not defined
+            #[Autowire(env: 'APP_NAME')]
+            private string|\Stringable $appName = 'default',
+
+            // embedded %env(...)% references inside a string also work
+            #[Autowire('redis://%env(HOST)%:%env(PORT)%')]
+            private \Stringable $redisDsn,
+
+            // %param% references are resolved through the parameter bag
+            #[Autowire('%dsn_template%')]
+            private \Stringable $dsn,
+        ) {
+        }
+    }
+
+The parameter default (``'default'`` above) is returned when the env variable
+is not defined.
+
+The same feature is available in YAML through the ``!env_closure`` tag and in
+PHP through ``EnvClosureArgument``:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        App\Service\Foo:
+            arguments:
+                - !env_closure '%env(DB_URL)%'
+                # with a default value
+                - !env_closure ['%env(APP_NAME)%', 'default']
+                # Stringable instead of Closure (third argument: true)
+                - !env_closure ['%env(APP_NAME)%', 'default', true]
+
+.. code-block:: php
+
+    // config/services.php
+    use App\Service\Foo;
+    use Symfony\Component\DependencyInjection\Argument\EnvClosureArgument;
+
+    return function (ContainerConfigurator $container): void {
+        $container->services()
+            ->set(Foo::class)
+                ->args([
+                    new EnvClosureArgument('%env(DB_URL)%'),
+                    new EnvClosureArgument('%env(APP_NAME)%', 'default', true),
+                ]);
+    };
+
 .. _autowiring_closures:
 
 Generate Closures With Autowiring
