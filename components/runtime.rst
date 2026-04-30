@@ -231,6 +231,26 @@ The ``SymfonyRuntime`` can handle these applications:
             return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
         };
 
+    .. _runtime-frankenphp-reset-kernel:
+
+    .. versionadded:: 8.1
+
+        The ``FRANKENPHP_RESET_KERNEL`` environment variable was introduced
+        in Symfony 8.1.
+
+    By default, ``FrankenPhpWorkerRunner`` reuses the same kernel instance
+    across every request handled by a worker process. This is what makes
+    worker mode fast, but it also means that any state captured by the kernel
+    or its services may leak across requests unless the relevant services
+    implement :class:`Symfony\\Contracts\\Service\\ResetInterface`.
+
+    Set the ``FRANKENPHP_RESET_KERNEL`` environment variable to ``1`` to make
+    the runner clone the application after each request, so the next request
+    starts from a fresh kernel state booted from the cached container file.
+    This is an opt-in escape hatch when auditing every service for proper
+    reset is not realistic; the trade-off is a noticeable throughput cost
+    compared to the default reuse mode, since each request boots a kernel.
+
 :class:`Symfony\\Component\\Console\\Command\\Command`
     To write single command applications. This will use the
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
