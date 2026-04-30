@@ -1080,6 +1080,12 @@ Request Assertions
     is set to the expected value.
 ``assertRouteSame($expectedRoute, array $parameters = [], string $message = '')``
     Asserts the request matches the given route and optionally route parameters.
+``assertSessionHasFlashMessage(string $messageType, string|array $messages = '')``
+    Asserts the session's flash bag contains one or more specified messages with the specified message type.
+
+.. versionadded:: 8.1
+
+    Method ``assertSessionHasFlashMessage`` was introduced in Symfony 8.1.
 
 Browser Assertions
 ~~~~~~~~~~~~~~~~~~
