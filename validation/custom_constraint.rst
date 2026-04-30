@@ -151,6 +151,30 @@ The ``addViolation()`` method call finally adds the violation to the context.
     by calling the ``disableTranslation()`` method of ``ConstraintViolationBuilderInterface``.
     See also the :ref:`framework.validation.disable_translation option <reference-validation-disable_translation>`.
 
+.. versionadded:: 8.1
+
+    Constraint validators are reentrant since Symfony 8.1: the execution
+    context is now passed explicitly to each validation call. Validators
+    extending the abstract
+    :class:`Symfony\\Component\\Validator\\ConstraintValidator` class keep
+    working without changes; validators implementing
+    :class:`Symfony\\Component\\Validator\\ConstraintValidatorInterface`
+    directly must implement ``validateInContext()``::
+
+        public function validateInContext(
+            mixed $value,
+            Constraint $constraint,
+            ExecutionContextInterface $context,
+        ): void {
+            // build violations through $context, not $this->context
+        }
+
+.. deprecated:: 8.1
+
+    The ``ConstraintValidator::initialize()`` method is deprecated since
+    Symfony 8.1. Put any initialization logic at the top of ``validate()``
+    instead.
+
 Using the new Validator
 -----------------------
 
@@ -528,7 +552,7 @@ class to simplify writing unit tests for your custom constraints::
 
         public function testNullIsValid(): void
         {
-            $this->validator->validate(null, new ContainsAlphanumeric());
+            $this->validate(null, new ContainsAlphanumeric());
 
             $this->assertNoViolation();
         }
@@ -536,7 +560,7 @@ class to simplify writing unit tests for your custom constraints::
         #[DataProvider('provideInvalidConstraints')]
         public function testTrueIsInvalid(ContainsAlphanumeric $constraint): void
         {
-            $this->validator->validate('...', $constraint);
+            $this->validate('...', $constraint);
 
             $this->buildViolation('myMessage')
                 ->setParameter('{{ string }}', '...')
@@ -549,6 +573,11 @@ class to simplify writing unit tests for your custom constraints::
             // ...
         }
     }
+
+.. versionadded:: 8.1
+
+    The ``ConstraintValidatorTestCase::validate()`` helper was introduced
+    in Symfony 8.1.
 
 Compound Constraints
 ~~~~~~~~~~~~~~~~~~~~
