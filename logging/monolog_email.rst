@@ -206,4 +206,89 @@ This uses the ``grouped`` handler to send the messages to the two
 group members, the ``deduplicated`` and the ``stream`` handlers. The messages will
 now be both written to the log file and emailed.
 
+Truncating Long Subjects in MailerHandler
+-----------------------------------------
+
+When the configured ``subject`` embeds the formatted log message (for example
+through the ``%%message%%`` placeholder), a long log line can produce a subject
+that exceeds mail server limits. The
+:class:`Symfony\\Bridge\\Monolog\\Handler\\MailerHandler` constructor accepts
+a ``$subjectMaxLength`` argument (default: ``200``) that caps the final subject
+length: when the formatted subject is longer than ``$subjectMaxLength`` bytes,
+everything past that offset is replaced with the literal ``[...]`` ellipsis,
+so the resulting subject is exactly ``$subjectMaxLength + 5`` bytes. Set the
+argument to ``0`` to disable truncation entirely. Comparison and slicing are
+byte-based (``strlen`` / ``substr_replace``), so a value that lands inside a
+multi-byte UTF-8 sequence can yield a malformed subject. If your subjects may
+contain multi-byte characters, prefer ``0`` to disable truncation, or pick a
+length large enough that you do not risk landing inside a multi-byte sequence
+in practice.
+
+.. versionadded:: 8.1
+
+    The ``$subjectMaxLength`` argument of ``MailerHandler`` was introduced in
+    Symfony 8.1. Because its default is ``200``, applications whose final
+    subjects exceed 200 bytes will start seeing the ``[...]`` ellipsis after
+    byte 200 once they upgrade. Pass ``0`` (or a higher value) to keep the
+    previous behavior.
+
+If the MonologBundle ``symfony_mailer`` handler type does not expose this
+option in your version, register ``MailerHandler`` as a regular service and
+plug it into ``monolog.handlers`` with the ``service`` type. The
+``$messageTemplate`` constructor argument can be either an
+:class:`Symfony\\Component\\Mime\\Email` instance (or service id) used as a
+template, or a callable returning one; in the example below,
+``app.monolog.error_email`` is your own service returning the prepared
+``Email``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            app.monolog.mailer_handler:
+                class: Symfony\Bridge\Monolog\Handler\MailerHandler
+                arguments:
+                    $mailer: '@mailer'
+                    $messageTemplate: '@app.monolog.error_email'
+                    $subjectMaxLength: 120
+
+        # config/packages/prod/monolog.yaml
+        monolog:
+            handlers:
+                mailer:
+                    type: service
+                    id:   app.monolog.mailer_handler
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Bridge\Monolog\Handler\MailerHandler;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set('app.monolog.mailer_handler', MailerHandler::class)
+                    ->arg('$mailer', service('mailer'))
+                    ->arg('$messageTemplate', service('app.monolog.error_email'))
+                    ->arg('$subjectMaxLength', 120);
+        };
+
+        // config/packages/prod/monolog.php
+        return App::config([
+            'monolog' => [
+                'handlers' => [
+                    'mailer' => [
+                        'type' => 'service',
+                        'id'   => 'app.monolog.mailer_handler',
+                    ],
+                ],
+            ],
+        ]);
+
+See :doc:`/logging/handlers` for the general ``service`` handler type
+reference.
+
 .. _Monolog: https://github.com/Seldaek/monolog
