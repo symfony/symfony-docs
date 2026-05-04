@@ -130,6 +130,10 @@ corresponding ``supports*()`` call can be cached. The array format is as follows
    ``supports*()`` call for that type is cacheable. Use ``true`` if the result
    can be cached, ``false`` if it cannot.
 #. A ``null`` value means the normalizer or denormalizer does not support that type.
+#. The ``native-<type>`` strings (e.g. ``native-string``, ``native-integer``,
+   ``native-boolean``) declare support for scalar values, using the names returned
+   by :phpfunction:`gettype`;
+
 
 Here is an example of how to use the ``getSupportedTypes()`` method::
 
