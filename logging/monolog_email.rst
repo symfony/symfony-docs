@@ -130,16 +130,22 @@ actually deals with emailing you the error. The settings for this are
 straightforward, the to and from addresses, the formatter, the content type
 and the subject.
 
-.. versionadded:: 8.1
+.. note::
 
-    Starting from Symfony 8.1, the ``MailerHandler`` automatically truncates
-    the formatted email subject when it exceeds 200 characters, replacing the
-    extra characters with ``[...]``. This prevents errors with mail servers
-    that limit the subject length when ``%%message%%`` produces a very long
-    subject. You are free to adjust this limit to whatever value your mail
-    server accepts via the ``$subjectMaxLength`` constructor argument of
-    :class:`Symfony\\Bridge\\Monolog\\Handler\\MailerHandler`; setting it to
-    ``0`` makes the limit inoperative.
+    The ``MailerHandler`` automatically truncates the formatted email subject
+    when it exceeds 200 characters, replacing the extra characters with ``[...]``.
+    This prevents errors with mail servers that limit subject length when
+    ``%%message%%`` produces a very long subject.
+
+    You can adjust this limit to match what your mail server accepts via the
+    ``$subjectMaxLength`` constructor argument of
+    :class:`Symfony\\Bridge\\Monolog\\Handler\\MailerHandler`. Setting it to
+    ``0`` disables the limit.
+
+    .. versionadded:: 8.1
+
+        Automatic truncation of long email subjects in ``MailerHandler`` was
+        introduced in Symfony 8.1.
 
 You can combine these handlers with other handlers so that the errors still
 get logged on the server as well as the emails being sent:
