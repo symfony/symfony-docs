@@ -402,12 +402,12 @@ Announcing Future Methods with ``@method``
 .. versionadded:: 8.1
 
     Support for ``@method`` annotations on abstract classes was introduced in
-    Symfony 8.1. Previously, only interfaces were considered.
+    Symfony 8.1. Previously, only interfaces were supported.
 
 ``DebugClassLoader`` reads ``@method`` annotations declared on interfaces and
-abstract classes to trigger a deprecation notice when a subclass does not yet
+abstract classes to trigger a deprecation notice when a subclass does not
 implement a method that the parent plans to require in a future major version.
-This lets a library announce upcoming abstract methods without immediately
+This allows a library to announce upcoming abstract methods without immediately
 breaking existing subclasses::
 
     /**
@@ -418,10 +418,9 @@ breaking existing subclasses::
     }
 
 Subclasses of ``AbstractEncoder`` that do not declare a public ``serialize()``
-method then trigger a deprecation notice at autoloading time. If the abstract
-class itself already declares the method (abstract or with a default
-implementation), the annotation is treated as plain documentation and no
-deprecation is triggered.
+method trigger a deprecation notice at autoload time. If the abstract class
+already declares the method (either abstract or with a default implementation),
+the annotation is treated as plain documentation and no deprecation is triggered.
 
 Compile-time Deprecations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
