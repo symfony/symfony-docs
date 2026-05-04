@@ -1252,6 +1252,53 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
             ],
         ]);
 
+.. _dic_tags-twig-safe-class:
+
+twig.safe_class
+---------------
+
+**Purpose**: Mark a class as safe for Twig's escaper
+
+.. versionadded:: 8.1
+
+    The ``twig.safe_class`` resource tag was introduced in Symfony 8.1.
+
+Tagging a class with ``twig.safe_class`` tells Twig's `escaper extension`_
+to treat instances of that class as already safe and skip escaping when
+they are converted to strings. This is useful for value objects that wrap
+pre-escaped output (e.g. an ``HtmlString`` wrapper) without calling the
+``raw`` filter at every call site.
+
+``twig.safe_class`` is a :ref:`resource tag <service-tags-resource-tags>`:
+it is attached to the class, not to a service.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Twig\HtmlString:
+                resource_tags:
+                    - { name: twig.safe_class, strategy: html }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Twig\HtmlString;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set(HtmlString::class)
+                    ->resourceTag('twig.safe_class', ['strategy' => 'html']);
+        };
+
+The ``strategy`` attribute accepts a single escaping strategy or a list of
+them. The same class can be tagged several times to mark it safe for
+several strategies.
+
 validator.constraint_validator
 ------------------------------
 
@@ -1282,4 +1329,5 @@ Bridge.
 .. _`FilesystemLoader`: https://github.com/twigphp/Twig/blob/3.x/src/Loader/FilesystemLoader.php
 .. _`Twig's documentation`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
 .. _`Twig Loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
+.. _`escaper extension`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
 .. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload

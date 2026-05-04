@@ -247,6 +247,8 @@ call to support ``ReflectionMethod``::
     :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
     callable.
 
+.. _service-tags-resource-tags:
+
 Tagging Non-Service Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
