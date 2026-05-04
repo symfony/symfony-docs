@@ -396,6 +396,33 @@ namespace mapping to ``DebugClassLoader::enable()``::
 Each key is a class name or namespace prefix. Its value is the vendor string
 used for comparison instead of the default first segment.
 
+Announcing Future Methods with ``@method``
+..........................................
+
+.. versionadded:: 8.1
+
+    Support for ``@method`` annotations on abstract classes was introduced in
+    Symfony 8.1. Previously, only interfaces were considered.
+
+``DebugClassLoader`` reads ``@method`` annotations declared on interfaces and
+abstract classes to trigger a deprecation notice when a subclass does not yet
+implement a method that the parent plans to require in a future major version.
+This lets a library announce upcoming abstract methods without immediately
+breaking existing subclasses::
+
+    /**
+     * @method string serialize()
+     */
+    abstract class AbstractEncoder
+    {
+    }
+
+Subclasses of ``AbstractEncoder`` that do not declare a public ``serialize()``
+method then trigger a deprecation notice at autoloading time. If the abstract
+class itself already declares the method (abstract or with a default
+implementation), the annotation is treated as plain documentation and no
+deprecation is triggered.
+
 Compile-time Deprecations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
