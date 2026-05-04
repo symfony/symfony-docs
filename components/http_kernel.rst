@@ -632,9 +632,9 @@ state in the ``reset()`` method. The kernel calls this method automatically afte
 each request/response cycle in long-running processes.
 
 If implementing ``ResetInterface`` everywhere is not realistic, FrankenPHP worker
-mode also offers an opt-in escape hatch through the ``FRANKENPHP_RESET_KERNEL``
-environment variable: see :ref:`the Runtime component documentation
-<runtime-frankenphp-reset-kernel>` for details and the throughput trade-off.
+mode also provides an opt-in alternative through the ``FRANKENPHP_RESET_KERNEL``
+environment variable: see :ref:`the Runtime component documentation <runtime-frankenphp-reset-kernel>`
+for details and the impact on performance.
 
 Creating an Event Listener
 --------------------------

@@ -247,9 +247,10 @@ The ``SymfonyRuntime`` can handle these applications:
     Set the ``FRANKENPHP_RESET_KERNEL`` environment variable to ``1`` to make
     the runner clone the application after each request, so the next request
     starts from a fresh kernel state booted from the cached container file.
-    This is an opt-in escape hatch when auditing every service for proper
-    reset is not realistic; the trade-off is a noticeable throughput cost
-    compared to the default reuse mode, since each request boots a kernel.
+
+    This is an opt-in alternative when auditing every service for proper
+    reset is not realistic. The trade-off is a noticeable performance cost
+    compared to the default reuse mode, since each request boots a new kernel.
 
 :class:`Symfony\\Component\\Console\\Command\\Command`
     To write single command applications. This will use the
