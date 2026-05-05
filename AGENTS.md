@@ -69,6 +69,15 @@ The only exception is @reference/configuration/ files that use `~~~~~` (level 2)
 
 Always use absolute paths (starting with `/`), never relative.
 
+### External Links
+
+```rst
+`External link`_                          (link title)
+.. _`External link`: https://example.com/ (link target)
+```
+
+Do not use inline syntax for external link. Add target at the end of the file.
+
 ### API Links
 
 ```rst
