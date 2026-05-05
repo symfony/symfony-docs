@@ -445,10 +445,7 @@ evaluates them:
     $ php bin/console debug:router --method=GET
     $ php bin/console debug:router --method=ANY
 
-    # pass this option to sort the route list by a given column (case-insensitive
-    # alphabetical order); supported values are: name, path, method, scheme, host
-    # (the column name itself is also case-insensitive: --sort=PATH works); shell
-    # tab completion suggests the supported values
+    # pass this option to sort the route list by a given column
     $ php bin/console debug:router --sort=path
     $ php bin/console debug:router --sort=name
 
