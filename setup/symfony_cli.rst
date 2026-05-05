@@ -115,6 +115,15 @@ Now browse the given URL or run the following command to open it in the browser:
 
 .. tip::
 
+    You can also start the local server and open the given URL in your browser
+    in a single command:
+
+    .. code-block:: terminal
+
+        $ symfony server:start --open
+
+.. tip::
+
     If you work on more than one project, you can run multiple instances of the
     Symfony server on your development machine. Each instance will find a different
     available port.
