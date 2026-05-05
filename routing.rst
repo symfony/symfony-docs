@@ -445,6 +445,17 @@ evaluates them:
     $ php bin/console debug:router --method=GET
     $ php bin/console debug:router --method=ANY
 
+    # pass this option to sort the route list by a given column (case-insensitive
+    # alphabetical order); supported values are: name, path, method, scheme, host
+    # (the column name itself is also case-insensitive: --sort=PATH works); shell
+    # tab completion suggests the supported values
+    $ php bin/console debug:router --sort=path
+    $ php bin/console debug:router --sort=name
+
+.. versionadded:: 8.1
+
+    The ``--sort`` option of ``debug:router`` was introduced in Symfony 8.1.
+
 Pass the name (or part of the name) of some route to this argument to print the
 route details:
 
