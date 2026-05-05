@@ -656,6 +656,34 @@ method to use a light theme::
     // ...
     $htmlDumper->setTheme('light');
 
+If your application enforces a strict `Content Security Policy`_ that
+requires nonces for inline ``<script>`` and ``<style>`` tags, configure the
+dumper with the current request's nonce so the markup it produces is allowed
+by the policy. The value is HTML-escaped before being injected. The example
+below assumes an upstream listener (for instance the one provided by
+`NelmioSecurityBundle`_) has populated the ``_csp_nonce`` request attribute;
+without such a listener the lookup returns ``null`` and the dumper emits no
+nonce, which the browser will then block under a strict CSP::
+
+    // ...
+    $htmlDumper->setNonce($request->attributes->get('_csp_nonce'));
+
+    // pass a closure to resolve the nonce lazily, useful for long-running
+    // workers where each request has its own nonce; replace the FQCN below
+    // with your own application's nonce provider
+    $htmlDumper->setNonce(static fn () => \MyApp\Csp\NonceProvider::current());
+
+    // pass null to clear a previously set nonce; the next dump will then
+    // emit no nonce attribute on its <script> / <style> tags
+    $htmlDumper->setNonce(null);
+
+.. versionadded:: 8.1
+
+    The :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setNonce`
+    method was introduced in Symfony 8.1. A closure that returns anything
+    other than a string or ``null`` raises a ``\LogicException`` when the
+    nonce is resolved.
+
 The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
 length and nesting depth of the output to make it more readable. These options
 can be overridden by the third optional parameter of the
@@ -878,3 +906,6 @@ that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
 
         return $array;
     }
+
+.. _`Content Security Policy`: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+.. _`NelmioSecurityBundle`: https://github.com/nelmio/NelmioSecurityBundle
