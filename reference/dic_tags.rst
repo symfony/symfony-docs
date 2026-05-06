@@ -626,6 +626,11 @@ reuse the Symfony application between requests to improve performance. This tag
 is applied for example to the built-in :ref:`data collectors <profiler-data-collector>`
 of the profiler to delete all their information.
 
+.. versionadded:: 8.1
+
+    Support for resetting non-shared services tagged with ``kernel.reset``
+    was introduced in Symfony 8.1.
+
 .. _dic_tags-mime:
 
 mime.mime_type_guesser
