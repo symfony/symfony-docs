@@ -2,6 +2,14 @@
 
 Official Symfony documentation repository. All content is reStructuredText (`.rst`).
 
+## General Guidelines
+
+- Explain things clearly but as concisely as possible
+- Low-level explanations are fine; only skip the very deep internals that readers can see in the code
+- Don't detail method signatures unless the method is critical
+- Don't list every command argument/option — focus on the critical ones
+- Don't document errors/exceptions whose in-code message already makes the cause obvious
+
 ## Branch Rules
 
 Maintained branches change over time. Fetch the current list from the
@@ -12,9 +20,12 @@ choosing a target branch.
 - **New features**: target the branch that introduced the feature — or the next still-maintained branch if the original is no longer maintained
 - **Other non-feature changes** (typos, rewording, restructuring): target the oldest maintained branch
 
-**Exception:** @frontend.rst and @frontend/ docs cover tools that are
-versioned independently from Symfony (AssetMapper, Webpack Encore, etc.),
-so all changes — including new features — target the oldest maintained branch.
+**Exceptions:** the following docs cover projects versioned independently
+from Symfony (AssetMapper, Webpack Encore, etc.). All changes to these docs
+— including new features — target the oldest maintained branch:
+
+- @frontend.rst and @frontend/
+- @setup/symfony_cli.rst
 
 ## RST Formatting
 
