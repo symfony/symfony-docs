@@ -310,7 +310,7 @@ instances::
 .. _`"as" attribute`: https://w3c.github.io/preload/#as-attribute
 .. _`the Priority Hints specification`: https://wicg.github.io/priority-hints/
 .. _`103 Early Hints`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103
-.. _`SAPI`: https://www.php.net/manual/en/function.header.php
+.. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
 .. _`FrankenPHP`: https://frankenphp.dev
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
 .. _`PSR-13`: https://www.php-fig.org/psr/psr-13/
