@@ -1081,7 +1081,8 @@ Request Assertions
 ``assertRouteSame($expectedRoute, array $parameters = [], string $message = '')``
     Asserts the request matches the given route and optionally route parameters.
 ``assertSessionHasFlashMessage(string $messageType, string|array $messages = '')``
-    Asserts the session's flash bag contains one or more specified messages with the specified message type.
+    Asserts that the session's flash bag contains at least one of the given
+    messages for the specified message type.
 
 .. versionadded:: 8.1
 
