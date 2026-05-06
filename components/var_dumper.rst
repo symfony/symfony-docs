@@ -900,4 +900,3 @@ that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
     }
 
 .. _`Content Security Policy`: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-.. _`NelmioSecurityBundle`: https://github.com/nelmio/NelmioSecurityBundle
