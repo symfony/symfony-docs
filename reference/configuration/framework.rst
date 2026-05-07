@@ -3307,6 +3307,20 @@ cache_pool
 
 The cache pool to use for storing the current limiter state.
 
+anchor_at
+"""""""""
+
+**type**: ``string`` **default**: ``null``
+
+A reference datetime (any string accepted by ``DateTimeImmutable``) used by the
+``fixed_window`` policy to align windows on a calendar. When set, windows reset
+at ``anchor_at + n*interval`` instead of starting on the first hit. This is
+useful for billing cycles, fiscal years or fixed-day weekly resets.
+
+.. versionadded:: 8.1
+
+    The ``anchor_at`` option was introduced in Symfony 8.1.
+
 interval
 """"""""
 
