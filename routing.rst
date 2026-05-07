@@ -1591,22 +1591,22 @@ defined in the class attribute.
                 ],
             ]);
 
-The same behavior is available on ``CollectionConfigurator::prefix()``
-when grouping routes with the PHP DSL::
+            // this option is also available when prefixing route collections:
 
-    // config/routes.php
-    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+            // config/routes.php
+            use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-    return function (RoutingConfigurator $routes) {
-        $routes->collection('cat.')
-            ->prefix('/categories', trailingSlashOnRoot: false)
-            ->add('index', '/');
-    };
+            return function (RoutingConfigurator $routes) {
+                $routes->collection('...')
+                    ->prefix('/categories', trailingSlashOnRoot: false)
+                    // ...
+                ;
+            };
 
-.. versionadded:: 8.1
+    .. versionadded:: 8.1
 
-    The ``trailingSlashOnRoot`` argument of ``CollectionConfigurator::prefix()``
-    was introduced in Symfony 8.1.
+        The ``trailingSlashOnRoot`` argument of ``CollectionConfigurator::prefix()``
+        was introduced in Symfony 8.1.
 
 .. seealso::
 
