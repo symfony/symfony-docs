@@ -3314,7 +3314,7 @@ anchor_at
 
 A reference datetime (any string accepted by ``DateTimeImmutable``) used by the
 ``fixed_window`` policy to align windows on a calendar. When set, windows reset
-at ``anchor_at + n*interval`` instead of starting on the first hit. This is
+at ``anchor_at + (n × interval)`` instead of starting on the first hit. This is
 useful for billing cycles, fiscal years or fixed-day weekly resets.
 
 .. versionadded:: 8.1
