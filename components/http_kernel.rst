@@ -503,6 +503,26 @@ as possible to the client (e.g. sending emails).
     are still executed, but the response is not sent to the client until they
     are all completed.
 
+.. warning::
+
+    By the time ``kernel.terminate`` is dispatched the response has, in
+    most setups, already been sent to the client (for example via
+    :phpfunction:`fastcgi_finish_request` when running on PHP-FPM or
+    `FrankenPHP`_). As a result, modifications to the ``Response`` content,
+    status code or headers performed from a terminate listener will
+    typically be discarded and never reach the client.
+
+    The behavior differs in the ``dev`` environment
+    (``kernel.debug = true``). In debug mode the response is *not*
+    finalized before ``kernel.terminate`` is dispatched, so writes to the
+    ``Response`` body or headers from a terminate listener — including
+    writes triggered by exception handling inside such a listener — will
+    be appended to the output that is sent to the client. This can
+    produce bugs that only manifest in development, such as corrupted
+    response payloads or HTTP status codes that differ between the
+    actual response received by the browser and what tools like the
+    Symfony Profiler report.
+
 .. note::
 
     Using the ``kernel.terminate`` event is optional, and should only be
