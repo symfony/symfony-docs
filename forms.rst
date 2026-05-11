@@ -1223,6 +1223,17 @@ browser from, for example, submitting blank fields.
         {{ form_widget(form) }}
     {{ form_end(form) }}
 
+HTML Validation for date/time inputs
+....................................
+
+When using ``DateType`` or ``DateTimeType``, you can rely on ``attr`` option to
+enable client-side validation::
+
+    $builder->add('dueDate', DateTimeType::class, [
+        'years' => range(2020, 2030),
+        'attr' => ['min' => '2020-01-01T00:00', 'max' => '2030-12-31T23:59']
+    ]);
+
 .. _form-type-guessing:
 
 Form Type Guessing
