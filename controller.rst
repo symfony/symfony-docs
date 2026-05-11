@@ -133,6 +133,8 @@ and ``redirect()`` methods::
 
         // redirect to a route with parameters
         return $this->redirectToRoute('app_lucky_number', ['max' => 10]);
+        // _fragment is a special parameter to point directly to a defined anchor
+        return $this->redirectToRoute('app_lucky_number', ['_fragment' => 'result']);
 
         // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());

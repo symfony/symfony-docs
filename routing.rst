@@ -1026,8 +1026,9 @@ special parameters created by Symfony:
     (e.g. a ``json`` format translates into a ``Content-Type`` of ``application/json``).
 
 ``_fragment``
-    Used to set the fragment identifier, which is the optional last part of a URL that
-    starts with a ``#`` character and is used to identify a portion of a document.
+    Used to set the URL fragment identifier (also called "hash" or "anchor"),
+    which is the optional last part of a URL that starts with a ``#`` character
+    and is used to identify a portion of a document.
 
 ``_locale``
     Used to set the :ref:`locale <translation-locale-url>` on the request.
