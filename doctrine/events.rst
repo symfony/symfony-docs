@@ -166,9 +166,6 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
 
                         # these are other options that you may define if needed
 
-                        # set the 'lazy' option to TRUE to only instantiate listeners when they are used
-                        # lazy: true
-
                         # set the 'entity_manager' option if the listener is not associated to the default manager
                         # entity_manager: 'custom'
 
@@ -196,8 +193,6 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
                                 'entity' => User::class,
 
                                 // these are other options that you may define if needed
-                                // set the 'lazy' option to TRUE to only instantiate listeners when they are used
-                                // 'lazy' => true
 
                                 // set the 'entity_manager' option if the listener is not associated to the default manager
                                 // 'entity_manager' => 'custom'
