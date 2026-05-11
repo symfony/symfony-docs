@@ -185,6 +185,12 @@ This also works with class constants::
 
 This will print out ``/api``.
 
+.. warning::
+
+    By default, expressions can access all PHP constants via the ``constant()``
+    function. Be careful when exposing expressions to end users if your
+    application defines sensitive constants.
+
 ``enum()`` function
 ~~~~~~~~~~~~~~~~~~~
 
