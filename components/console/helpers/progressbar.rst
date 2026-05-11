@@ -452,3 +452,45 @@ After a couple of iterations, the output in the terminal will look like this:
 
     34/100 [=========>------------------]  34%
     68/100 [===================>--------]  68%
+
+Reporting Progress to the Terminal Taskbar
+------------------------------------------
+
+.. versionadded:: 8.1
+
+    Support for the OSC 9;4 progress reporting sequence was introduced in
+    Symfony 8.1.
+
+On terminals that support the
+`OSC 9;4 escape sequence`_
+(such as Windows Terminal), the progress bar also reports its state to the
+host so that the terminal window or taskbar reflects the current progress.
+No opt-in is required: as soon as ``start()`` is called on a progress bar that
+writes to a decorated output, the sequence is emitted; ``finish()`` and
+``clear()`` reset it. Terminals that don't recognize the sequence ignore it,
+so this is safe across environments.
+
+Both determinate progress bars (with a known maximum) and indeterminate ones
+(no maximum set) are supported.
+
+When several progress bars are active at the same time (see
+:ref:`Displaying Multiple Progress Bars <console-multiple-progress-bars>`),
+the taskbar indicator automatically falls back to the indeterminate state to
+avoid flickering between unrelated percentages.
+
+If your command prompts the user while a progress bar is running, you can pause
+the taskbar indicator with the static
+:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::pauseAll` and
+:method:`Symfony\\Component\\Console\\Helper\\ProgressBar::resumeAll` methods::
+
+    ProgressBar::pauseAll();
+    // ... ask the user something ...
+    ProgressBar::resumeAll();
+
+Calls are reentrant: each ``pauseAll()`` must be paired with a matching
+``resumeAll()``. The built-in
+:class:`Symfony\\Component\\Console\\Helper\\QuestionHelper` already wraps its
+prompts with this pair, so questions asked through it pause the indicator
+automatically.
+
+.. _`OSC 9;4 escape sequence`: https://learn.microsoft.com/en-us/windows/terminal/tutorials/progress-bar-sequences
