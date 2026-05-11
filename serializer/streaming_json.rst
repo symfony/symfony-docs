@@ -730,10 +730,10 @@ traversing the object's properties::
 
 .. note::
 
-    ``DateTimeInterface`` and ``DateInterval`` objects are handled as value objects
-    internally. The previous ``DateTimeToStringValueTransformer`` and
-    ``StringToDateTimeValueTransformer`` are deprecated in favor of
-    ``DateTimeValueObjectTransformer``.
+    ``DateTimeInterface``, ``DateInterval`` and ``DateTimeZone`` objects are
+    handled as value objects internally. The previous
+    ``DateTimeToStringValueTransformer`` and ``StringToDateTimeValueTransformer``
+    are deprecated in favor of ``DateTimeValueObjectTransformer``.
 
     ``DateInterval`` objects are serialized to ISO 8601 duration strings
     (e.g. ``P2Y6M1DT12H30M5S``) and deserialized back using the
@@ -749,9 +749,15 @@ traversing the object's properties::
             'date_interval_format' => 'P%yY%mM%dDT%hH%iM%sS',
         ]);
 
+    ``DateTimeZone`` objects are serialized to their identifier string
+    (``DateTimeZone::getName()``, e.g. ``"Europe/Paris"`` or ``"+02:00"``)
+    and rebuilt with ``new \DateTimeZone($value)`` on read by the
+    ``DateTimeZoneValueObjectTransformer``.
+
     .. versionadded:: 8.1
 
-        ``DateInterval`` value object support was introduced in Symfony 8.1.
+        Support for ``DateInterval`` and ``DateTimeZone`` value objects was
+        introduced in Symfony 8.1.
 
 Configuring Keys and Values Dynamically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
