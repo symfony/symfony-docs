@@ -254,15 +254,8 @@ Each entry under ``services:`` whose key is not ``_defaults`` or
 which is the identifier used to reference the service from other definitions
 or to retrieve it from the container.
 
-The keys allowed in a service definition are listed below. Some of them are
-mutually exclusive:
-
-* `alias`_ can only be combined with `public`_ and `deprecated`_;
-* `factory`_ and `constructor`_ cannot both be set;
-* `from_callable`_ cannot be combined with `alias`_, `parent`_, `synthetic`_,
-  `factory`_, `file`_, `arguments`_, `properties`_, `configurator`_ or
-  `calls`_;
-* `stack`_ can only be combined with `public`_ and `deprecated`_.
+The keys allowed in a service definition are listed below. Combinability
+constraints are noted on each individual key.
 
 .. _reference-dic-abstract:
 
@@ -391,8 +384,7 @@ and Symfony will use the ID as the class.
 
     Since Symfony 7.4, using a service ID that *looks like* a fully-qualified
     class name but for which no matching class or interface exists triggers a
-    deprecation. Either rename the service to a non-FQCN identifier (for
-    example, by using dots) or create the missing class.
+    deprecation.
 
 .. _reference-dic-configurator:
 
@@ -472,20 +464,14 @@ decoration_on_invalid
 Controls what happens when the service to decorate does not exist. Allowed
 values are:
 
-* ``'exception'``: an exception is thrown when the decorated service is
-  missing (default behavior, equivalent to
-  ``ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE``);
+* ``'exception'`` (default): an exception is thrown when the decorated
+  service is missing;
 * ``'ignore'``: the decoration is ignored and the decorating service is
-  registered as a regular service
-  (``ContainerInterface::IGNORE_ON_INVALID_REFERENCE``);
-* ``null`` (without quotes in YAML): the decorated service is replaced by
-  ``null`` when injected into the decorator
-  (``ContainerInterface::NULL_ON_INVALID_REFERENCE``). In XML, use the string
-  ``"null"``.
+  registered as a regular service;
+* ``null`` (without quotes in YAML, ``"null"`` in XML): the decorated
+  service is replaced by ``null`` when injected into the decorator.
 
-The corresponding integer constants of
-:class:`Symfony\\Component\\DependencyInjection\\ContainerInterface` are also
-accepted. Only useful when combined with `decorates`_.
+Only useful when combined with `decorates`_.
 
 .. _reference-dic-decoration-priority:
 
@@ -537,9 +523,6 @@ the ``message`` key is optional and defaults to an empty string:
             ->deprecate('acme/legacy-bundle', '1.2', 'The "%service_id%" service is deprecated, use AcmeNewService instead.')
         ;
 
-The placeholder ``%service_id%`` is automatically replaced by the service ID
-in the deprecation message.
-
 .. _reference-dic-factory:
 
 factory
@@ -574,9 +557,8 @@ from_callable
 **type**: ``string`` | ``array`` **default**: ``null``
 
 Builds the service as a ``Closure`` created from the given callable. Useful
-to register first-class callables as services. When ``from_callable`` is
-set, the keys `alias`_, `parent`_, `synthetic`_, `factory`_, `file`_,
-`arguments`_, `properties`_, `configurator`_ and `calls`_ are not allowed.
+to register first-class callables as services. Cannot be combined with
+service-construction keys such as `factory`_, `arguments`_ or `calls`_.
 Read more in :doc:`/service_container/service_closures`.
 
 .. _reference-dic-lazy:
@@ -689,9 +671,7 @@ allowed in the definition are `public`_ and `deprecated`_:
             inline_service(\App\Cache\RedisCache::class),
         ]);
 
-In XML, ``<stack>`` is an element sibling to ``<service>`` inside
-``<services>`` (it is not nested inside a ``<service>`` element). Read more
-in :doc:`/service_container/service_decoration`.
+Read more in :doc:`/service_container/service_decoration`.
 
 .. _reference-dic-synthetic:
 
