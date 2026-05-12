@@ -40,7 +40,7 @@ explanations and examples, follow the links to the related articles.
 .. _reference-dic-defaults:
 
 ``_defaults``
--------------
+~~~~~~~~~~~~~
 
 The ``_defaults`` key stores the values that are applied by default to every
 service defined in the same ``services`` block. Defaults are merged into each
@@ -96,7 +96,7 @@ The keys allowed inside ``_defaults`` are:
 .. _defaults-autoconfigure:
 
 autoconfigure
-~~~~~~~~~~~~~
+.............
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -108,7 +108,7 @@ in :doc:`/service_container/autowiring` and :doc:`/service_container/tags`.
 .. _defaults-autowire:
 
 autowire
-~~~~~~~~
+........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -119,7 +119,7 @@ arguments based on their type-hints. Read more in
 .. _defaults-bind:
 
 bind
-~~~~
+....
 
 **type**: ``array`` **default**: ``[]``
 
@@ -132,7 +132,7 @@ the per-service :ref:`bind <reference-dic-bind>` option. Read more in
 .. _defaults-public:
 
 public
-~~~~~~
+......
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -144,7 +144,7 @@ they can only be injected as dependencies. Read more in
 .. _defaults-tags:
 
 tags
-~~~~
+....
 
 **type**: ``array`` **default**: ``[]``
 
@@ -184,7 +184,7 @@ containing the tag name and additional attributes:
 .. _defaults-resource-tags:
 
 resource_tags
-~~~~~~~~~~~~~
+.............
 
 **type**: ``array`` **default**: ``[]``
 
@@ -196,7 +196,7 @@ explicitly in the file.
 .. _reference-dic-instanceof:
 
 ``_instanceof``
----------------
+~~~~~~~~~~~~~~~
 
 The ``_instanceof`` key applies a configuration to every service whose class
 extends or implements a given type:
@@ -247,7 +247,7 @@ Read more in :doc:`/service_container/tags`.
 .. _reference-dic-service-definitions:
 
 Service Definitions
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 Each entry under ``services:`` whose key is not ``_defaults`` or
 ``_instanceof`` defines (or overrides) a service. Its key is the *service ID*,
@@ -260,7 +260,7 @@ constraints are noted on each individual key.
 .. _reference-dic-abstract:
 
 abstract
-~~~~~~~~
+........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -271,7 +271,7 @@ serves as a template for child services (see `parent`_). Read more in
 .. _reference-dic-alias:
 
 alias
-~~~~~
+.....
 
 **type**: ``string`` **default**: ``null``
 
@@ -283,7 +283,7 @@ only other keys allowed are `public`_ and `deprecated`_. Read more in
 .. _reference-dic-arguments:
 
 arguments
-~~~~~~~~~
+.........
 
 **type**: ``array`` **default**: ``[]``
 
@@ -296,7 +296,7 @@ Lists the arguments passed to the constructor (or to the method defined by
 .. _reference-dic-autoconfigure:
 
 autoconfigure
-~~~~~~~~~~~~~
+.............
 
 **type**: ``boolean`` **default**: value set in :ref:`_defaults <defaults-autoconfigure>`, or ``false`` when unset
 
@@ -306,7 +306,7 @@ Overrides the default ``autoconfigure`` value for this service. See
 .. _reference-dic-autowire:
 
 autowire
-~~~~~~~~
+........
 
 **type**: ``boolean`` **default**: value set in :ref:`_defaults <defaults-autowire>`, or ``false`` when unset
 
@@ -316,7 +316,7 @@ Overrides the default ``autowire`` value for this service. See
 .. _reference-dic-bind:
 
 bind
-~~~~
+....
 
 **type**: ``array`` **default**: ``[]`` (merged with :ref:`_defaults bind <defaults-bind>`)
 
@@ -327,7 +327,7 @@ the syntax. Per-service bindings with the same key override those declared in
 .. _reference-dic-calls:
 
 calls
-~~~~~
+.....
 
 **type**: ``array`` **default**: ``[]``
 
@@ -372,7 +372,7 @@ Read more in :doc:`/service_container/calls`.
 .. _reference-dic-class:
 
 class
-~~~~~
+.....
 
 **type**: ``string`` **default**: ``null``
 
@@ -389,7 +389,7 @@ and Symfony will use the ID as the class.
 .. _reference-dic-configurator:
 
 configurator
-~~~~~~~~~~~~
+............
 
 **type**: ``string`` | ``array`` **default**: ``null``
 
@@ -425,7 +425,7 @@ Read more in :doc:`/service_container/configurators`.
 .. _reference-dic-constructor:
 
 constructor
-~~~~~~~~~~~
+...........
 
 **type**: ``string`` **default**: ``null``
 
@@ -435,7 +435,7 @@ method to create the service. Cannot be combined with `factory`_.
 .. _reference-dic-decorates:
 
 decorates
-~~~~~~~~~
+.........
 
 **type**: ``string`` **default**: ``null``
 
@@ -447,7 +447,7 @@ becomes available under a new ID (see `decoration_inner_name`_). Read more in
 .. _reference-dic-decoration-inner-name:
 
 decoration_inner_name
-~~~~~~~~~~~~~~~~~~~~~
+.....................
 
 **type**: ``string`` **default**: ``<decorating_service_id>.inner``
 
@@ -457,7 +457,7 @@ combined with `decorates`_.
 .. _reference-dic-decoration-on-invalid:
 
 decoration_on_invalid
-~~~~~~~~~~~~~~~~~~~~~
+.....................
 
 **type**: ``string`` **default**: ``'exception'``
 
@@ -476,7 +476,7 @@ Only useful when combined with `decorates`_.
 .. _reference-dic-decoration-priority:
 
 decoration_priority
-~~~~~~~~~~~~~~~~~~~
+...................
 
 **type**: ``integer`` **default**: ``0``
 
@@ -487,7 +487,7 @@ others. Only useful when combined with `decorates`_.
 .. _reference-dic-deprecated:
 
 deprecated
-~~~~~~~~~~
+..........
 
 **type**: ``array`` **default**: ``[]`` (no deprecation)
 
@@ -526,7 +526,7 @@ the ``message`` key is optional and defaults to an empty string:
 .. _reference-dic-factory:
 
 factory
-~~~~~~~
+.......
 
 **type**: ``string`` | ``array`` **default**: ``null``
 
@@ -542,7 +542,7 @@ service is called. Cannot be combined with `constructor`_. Read more in
 .. _reference-dic-file:
 
 file
-~~~~
+....
 
 **type**: ``string`` **default**: ``null``
 
@@ -552,7 +552,7 @@ Useful for classes that are not registered with Composer autoloading.
 .. _reference-dic-from-callable:
 
 from_callable
-~~~~~~~~~~~~~
+.............
 
 **type**: ``string`` | ``array`` **default**: ``null``
 
@@ -564,7 +564,7 @@ Read more in :doc:`/service_container/service_closures`.
 .. _reference-dic-lazy:
 
 lazy
-~~~~
+....
 
 **type**: ``boolean`` | ``string`` **default**: ``false``
 
@@ -576,7 +576,7 @@ used as the interface to proxy. Read more in
 .. _reference-dic-parent:
 
 parent
-~~~~~~
+......
 
 **type**: ``string`` **default**: ``null``
 
@@ -588,7 +588,7 @@ keys that differ from the parent. Read more in
 .. _reference-dic-properties:
 
 properties
-~~~~~~~~~~
+..........
 
 **type**: ``array`` **default**: ``[]``
 
@@ -598,7 +598,7 @@ keys are property names and the values follow the same syntax as `arguments`_.
 .. _reference-dic-public:
 
 public
-~~~~~~
+......
 
 **type**: ``boolean`` **default**: value set in :ref:`_defaults <defaults-public>`, or ``false`` when unset (`synthetic`_ services default to ``true`` unless overridden)
 
@@ -608,7 +608,7 @@ Overrides the default ``public`` value for this service. See
 .. _reference-dic-resource-tags:
 
 resource_tags
-~~~~~~~~~~~~~
+.............
 
 **type**: ``array`` **default**: ``[]``
 
@@ -619,7 +619,7 @@ applied to the auto-discovered services, not to the prototype entry itself.
 .. _reference-dic-shared:
 
 shared
-~~~~~~
+......
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -630,7 +630,7 @@ each request. Read more in :doc:`/service_container/shared`.
 .. _reference-dic-stack:
 
 stack
-~~~~~
+.....
 
 **type**: ``array`` **default**: ``null``
 
@@ -676,7 +676,7 @@ Read more in :doc:`/service_container/service_decoration`.
 .. _reference-dic-synthetic:
 
 synthetic
-~~~~~~~~~
+.........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -687,7 +687,7 @@ by default. Read more in :doc:`/service_container/synthetic_services`.
 .. _reference-dic-tags:
 
 tags
-~~~~
+....
 
 **type**: ``array`` **default**: ``[]``
 
@@ -725,7 +725,7 @@ key and any number of additional attributes:
 .. _reference-dic-prototype:
 
 Prototype Loaders (auto-discovery)
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A *prototype* is a special entry that registers as services every class found
 in a directory. It is identified by the presence of the ``resource`` key:
@@ -771,7 +771,7 @@ those keys apply to every service discovered by the prototype.
 .. _reference-dic-prototype-resource:
 
 resource
-~~~~~~~~
+........
 
 **type**: ``string`` **(required)**
 
@@ -781,7 +781,7 @@ in :doc:`/service_container/import`.
 .. _reference-dic-prototype-namespace:
 
 namespace
-~~~~~~~~~
+.........
 
 **type**: ``string`` **default**: the entry key
 
@@ -792,7 +792,7 @@ PHP it must be set explicitly.
 .. _reference-dic-prototype-exclude:
 
 exclude
-~~~~~~~
+.......
 
 **type**: ``string`` | ``array`` **default**: ``[]``
 
@@ -802,7 +802,7 @@ supported.
 .. _reference-dic-when-env:
 
 Environment-specific Configuration
-----------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``when@<env>`` key (``<when env="<env>">`` in XML) loads the nested
 configuration only when the application runs in the given environment:
@@ -838,7 +838,7 @@ Read more in :ref:`configuration-environments`.
 .. _reference-dic-imports:
 
 Importing other Configuration Files
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The top-level ``imports`` key loads additional configuration files. Each
 entry accepts the following keys:
