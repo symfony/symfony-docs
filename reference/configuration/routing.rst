@@ -15,26 +15,10 @@ configuration formats (``config/routes.yaml``, ``config/routes.xml``,
     the ``framework.router`` key) is documented under the ``router`` section
     of the :doc:`Framework Configuration Reference </reference/configuration/framework>`.
 
-.. note::
-
-    When using XML, you must use the ``http://symfony.com/schema/routing``
-    namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/routing/routing-1.0.xsd``.
-
 .. deprecated:: 7.4
 
     The XML format to configure routes is deprecated in Symfony 7.4 and will
     be removed in Symfony 8.0.
-
-The following sections describe:
-
-* :ref:`Route Definition Keys <reference-routing-route-definition>`: the keys
-  available to define a single route;
-* :ref:`Route Imports <reference-routing-imports>`: the keys available to
-  import routes from another file or resource and share configuration
-  between them;
-* :ref:`PHP Route Attribute <reference-routing-php-attributes>`: the
-  arguments available on the ``#[Route]`` PHP attribute.
 
 .. _reference-routing-route-definition:
 
@@ -303,8 +287,7 @@ stateless
 **type**: ``boolean`` **default**: ``false``
 
 When set to ``true``, Symfony reports the use of the HTTP session during
-the request. This is useful for responses that must remain cacheable.
-Read more about :ref:`stateless routes <stateless-routing>`.
+the request. Read more about :ref:`stateless routes <stateless-routing>`.
 
 utf8
 ~~~~
@@ -313,8 +296,7 @@ utf8
 ``framework.router.utf8`` when set)
 
 Top-level shortcut for the ``utf8`` route option. When set to ``true``, route
-parameters match Unicode characters instead of just ASCII. This is equivalent
-to setting ``utf8: true`` under the ``options`` key.
+parameters match Unicode characters instead of just ASCII.
 
 .. configuration-block::
 
@@ -360,20 +342,16 @@ priority
 **type**: ``integer`` **default**: ``0``
 
 Routes with a higher ``priority`` value are evaluated before routes with
-a lower value. In YAML and XML, the order of definition is usually enough
-to control evaluation; ``priority`` is mostly useful when using PHP
-attributes, where the declaration order is harder to control.
+a lower value.
 
 options
 ~~~~~~~
 
 **type**: ``array``
 
-Low-level options passed to the compiled route. The most common option is
-``compiler_class`` (to use a custom
-:class:`Symfony\\Component\\Routing\\RouteCompilerInterface` implementation).
-The ``utf8`` option can also be set here to override the global
-``framework.router.utf8`` setting for a specific route. See the
+Low-level options passed to the compiled route, such as ``utf8`` (which
+overrides the global ``framework.router.utf8`` setting for a specific
+route). See the
 :doc:`Framework Configuration Reference </reference/configuration/framework>`
 for details.
 
@@ -579,8 +557,7 @@ corresponding values are merged into every imported route (for example,
                     false,
                     '../src/Controller/{Debug*Controller.php}'
                 )
-                // the second argument disables the trailing slash on root,
-                // equivalent to "trailing_slash_on_root: false" in YAML
+                // false disables the trailing slash on root
                 ->prefix('/blog', false)
                 ->namePrefix('blog_')
                 ->requirements(['_locale' => 'en|es|fr']);
@@ -593,62 +570,12 @@ PHP Route Attribute
 
 When using PHP attributes, routes are declared with
 :class:`Symfony\\Component\\Routing\\Attribute\\Route` on top of controller
-classes and/or methods. The arguments of the attribute mirror the options
-documented above:
-
-``path``
-    ``string`` | ``array``: see :ref:`path <reference-routing-path>`. It is
-    the first positional argument.
+classes and/or methods. The attribute accepts the same options as the
+keys documented above, plus:
 
 ``name``
     ``string``: the name of the generated route. When omitted, Symfony
     generates a default name based on the controller FQCN and action.
-
-``requirements``
-    ``array``: see :ref:`requirements <reference-routing-requirements>`.
-
-``options``
-    ``array``: low-level options passed to the compiled route.
-
-``defaults``
-    ``array``: see :ref:`defaults <reference-routing-defaults>`.
-
-``host``
-    ``string``: restricts the route to a specific HTTP host. See the
-    ``host`` key documented above.
-
-``methods``
-    ``string`` | ``array``: the HTTP methods the route responds to. See
-    the ``methods`` key documented above.
-
-``schemes``
-    ``string`` | ``array``: the URL schemes the route responds to. See
-    the ``schemes`` key documented above.
-
-``condition``
-    ``string``: an expression evaluated at match time. See the
-    ``condition`` key documented above.
-
-``locale``
-    ``string``: shortcut for the ``_locale`` default.
-
-``format``
-    ``string``: shortcut for the ``_format`` default.
-
-``utf8``
-    ``bool``: shortcut for the ``utf8`` entry of the ``options`` array.
-
-``stateless``
-    ``bool``: declares that the HTTP session should not be used. See the
-    ``stateless`` key documented above.
-
-``env``
-    ``string`` | ``array``: restricts the route to the given configuration
-    environment(s). See the ``env`` key documented above.
-
-``priority``
-    ``int``: the route evaluation priority. See the ``priority`` key
-    documented above.
 
 ``alias``
     ``array`` | ``Symfony\Component\Routing\Attribute\DeprecatedAlias``:
