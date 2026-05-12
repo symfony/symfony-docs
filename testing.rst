@@ -1020,7 +1020,7 @@ You can achieve this using the Panther component. Learn more about
 Test Assertions Defined by Symfony
 ----------------------------------
 
-If your tests are based on PHPUnit, you can use any `PHPUnit Assertion`_ in
+If your tests are based on PHPUnit, you can use any `PHPUnit assertion`_ in
 your tests. Symfony also provides many additional assertions.
 
 Response Assertions
@@ -1246,5 +1246,5 @@ Learn more
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/11.5/assertions.html
+.. _`PHPUnit assertion`: https://docs.phpunit.de/en/11.5/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18
