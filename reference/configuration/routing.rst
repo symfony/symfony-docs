@@ -23,7 +23,7 @@ configuration formats (``config/routes.yaml``, ``config/routes.xml``,
 .. _reference-routing-route-definition:
 
 Route Definition Keys
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 A route is defined by a unique name (the key in YAML, the ``id`` attribute
 in XML, or the first argument of the ``add()`` method in PHP) and the
@@ -32,7 +32,7 @@ following options.
 .. _reference-routing-path:
 
 path
-~~~~
+....
 
 **type**: ``string`` | ``array``
 
@@ -78,7 +78,7 @@ Read more about :ref:`route parameters <routing-route-parameters>` and
 :ref:`inline requirements/defaults <routing-requirements>`.
 
 controller
-~~~~~~~~~~
+..........
 
 **type**: ``string`` | ``array``
 
@@ -91,7 +91,7 @@ In the PHP format, an array such as ``[BlogController::class, 'show']``
 is also accepted.
 
 methods
-~~~~~~~
+.......
 
 **type**: ``string`` | ``array``
 
@@ -123,7 +123,7 @@ any HTTP method. Read more about :ref:`matching HTTP methods <routing-matching-h
             ->methods(['GET', 'HEAD']);
 
 schemes
-~~~~~~~
+.......
 
 **type**: ``string`` | ``array``
 
@@ -133,7 +133,7 @@ than the current request, the route generator produces an absolute URL
 instead of a relative one. Read more about :ref:`forcing HTTPS <routing-force-https>`.
 
 host
-~~~~
+....
 
 **type**: ``string`` | ``array``
 
@@ -168,7 +168,7 @@ locale. Read more about :doc:`sub-domain routing </routing>`.
 .. _reference-routing-requirements:
 
 requirements
-~~~~~~~~~~~~
+............
 
 **type**: ``array`` **default**: ``[]``
 
@@ -212,7 +212,7 @@ path and the host) must match. Requirements can also be inlined with the
 .. _reference-routing-defaults:
 
 defaults
-~~~~~~~~
+........
 
 **type**: ``array`` **default**: ``[]``
 
@@ -254,7 +254,7 @@ are stored when not set with the dedicated options described below.
             ]);
 
 condition
-~~~~~~~~~
+.........
 
 **type**: ``string`` **default**: ``null``
 
@@ -266,14 +266,14 @@ as well as the ``env()`` and ``service()`` functions. Read more about
 :ref:`matching expressions <routing-matching-expressions>`.
 
 locale
-~~~~~~
+......
 
 **type**: ``string``
 
 Shortcut for setting the ``_locale`` :ref:`default <reference-routing-defaults>`.
 
 format
-~~~~~~
+......
 
 **type**: ``string``
 
@@ -282,7 +282,7 @@ Controls the request format (and usually the ``Content-Type`` of the
 response).
 
 stateless
-~~~~~~~~~
+.........
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -290,7 +290,7 @@ When set to ``true``, Symfony reports the use of the HTTP session during
 the request. Read more about :ref:`stateless routes <stateless-routing>`.
 
 utf8
-~~~~
+....
 
 **type**: ``boolean`` **default**: ``false`` (or the value of
 ``framework.router.utf8`` when set)
@@ -322,7 +322,7 @@ parameters match Unicode characters instead of just ASCII.
             ->utf8(true);
 
 env
-~~~
+...
 
 **type**: ``string`` | ``array``
 
@@ -337,7 +337,7 @@ the given values. In YAML, this option is typically expressed using the
     was introduced in Symfony 7.4.
 
 priority
-~~~~~~~~
+........
 
 **type**: ``integer`` **default**: ``0``
 
@@ -345,7 +345,7 @@ Routes with a higher ``priority`` value are evaluated before routes with
 a lower value.
 
 options
-~~~~~~~
+.......
 
 **type**: ``array``
 
@@ -382,7 +382,7 @@ for details.
             ->options(['utf8' => true]);
 
 alias
-~~~~~
+.....
 
 **type**: ``string`` (standalone route) | ``array`` (``#[Route]`` attribute)
 
@@ -410,7 +410,7 @@ alias names. Read more about :ref:`route aliasing <routing-alias>`.
         $routes->alias('product_details', 'product_show');
 
 deprecated
-~~~~~~~~~~
+..........
 
 **type**: ``array``
 
@@ -438,7 +438,7 @@ Read more about :ref:`deprecating route aliases <routing-alias-deprecation>`.
 .. _reference-routing-imports:
 
 Route Imports
--------------
+~~~~~~~~~~~~~
 
 Instead of defining every route individually, you can import routes from
 another resource (a file, a directory containing PHP attributes, etc.).
@@ -446,7 +446,7 @@ Imports also share configuration between routes: all options defined on
 the import are applied to every imported route.
 
 resource
-~~~~~~~~
+........
 
 **type**: ``string`` **required**
 
@@ -454,7 +454,7 @@ The resource to import (the path to a file, a directory, or any string
 the matching loader can resolve).
 
 type
-~~~~
+....
 
 **type**: ``string``
 
@@ -464,7 +464,7 @@ cannot be inferred from the file extension. Common values are ``attribute``
 ``php``.
 
 prefix
-~~~~~~
+......
 
 **type**: ``string`` | ``array``
 
@@ -473,7 +473,7 @@ given, the prefix is applied per locale to create
 :ref:`localized routes <i18n-routing>`.
 
 name_prefix
-~~~~~~~~~~~
+...........
 
 **type**: ``string``
 
@@ -482,7 +482,7 @@ the attribute is spelled ``name-prefix``. In PHP, use the ``namePrefix()``
 method.
 
 trailing_slash_on_root
-~~~~~~~~~~~~~~~~~~~~~~
+......................
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -492,7 +492,7 @@ adds a trailing slash (for example ``/blog/``). Set this option to
 attribute is spelled ``trailing-slash-on-root``.
 
 exclude
-~~~~~~~
+.......
 
 **type**: ``string`` | ``array``
 
@@ -501,7 +501,7 @@ exclude from the import. This option only works when the ``resource``
 value is itself a glob string.
 
 Shared route options on imports
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+...............................
 
 All the options documented in the
 :ref:`Route Definition Keys <reference-routing-route-definition>` section
@@ -566,7 +566,7 @@ corresponding values are merged into every imported route (for example,
 .. _reference-routing-php-attributes:
 
 PHP Route Attribute
--------------------
+~~~~~~~~~~~~~~~~~~~
 
 When using PHP attributes, routes are declared with
 :class:`Symfony\\Component\\Routing\\Attribute\\Route` on top of controller
