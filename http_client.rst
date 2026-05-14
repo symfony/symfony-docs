@@ -1615,6 +1615,72 @@ installed in your application::
         $client = HttpClient::createForBaseUri('https://example.com');
         $throttlingClient = new ThrottlingHttpClient($client, $limiter);
 
+Using a custom DNS resolver
+---------------------------
+
+.. versionadded:: 8.1
+
+This component provides a :class:`Symfony\\Component\\HttpClient\\DnsResolvingHttpClient`
+decorator that allows you implement your own DNS resolver that will be used to resolve
+the requested host and the host of every followed redirect.
+
+This can be useful if you want to implement specific resolution rules, debugging, monitoring,
+custom caching, etc.
+
+To use this, implement an invokable service::
+
+    namespace App\Service;
+
+    class MyCustomDnsResolver
+    {
+        public function __invoke(string $hostname): ?string
+        {
+            // implement your resolution logic (with caching, logging, etc.)
+
+            return $ip; // or null if resolution failed
+        }
+    }
+
+And use configure HttpClient like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # 1st example: CurlHttpClient with custom DNS resolver:
+            Symfony\Component\HttpClient\DnsResolvingHttpClient:
+                decorates: Symfony\Component\HttpClient\CurlHttpClient
+                arguments:
+                    $resolver: !closure '@App\Service\MyCustomDnsResolver'
+            Symfony\Contracts\HttpClient\HttpClientInterface: '@Symfony\Component\HttpClient\DnsResolvingHttpClient'
+
+            # 2nd example: NoPrivateNetworkHttpClient with custom DNS resolver:
+            Symfony\Component\HttpClient\CurlHttpClient: ~
+            Symfony\Component\HttpClient\NoPrivateNetworkHttpClient:
+                decorates: Symfony\Component\HttpClient\CurlHttpClient
+            Symfony\Component\HttpClient\DnsResolvingHttpClient:
+                decorates: Symfony\Component\HttpClient\NoPrivateNetworkHttpClient
+                arguments:
+                    $resolver: !closure '@App\Service\MyCustomDnsResolver'
+            Symfony\Contracts\HttpClient\HttpClientInterface: '@Symfony\Component\HttpClient\DnsResolvingHttpClient'
+
+    .. code-block:: php-standalone
+
+        use App\Service\MyCustomDnsResolver;
+        use Symfony\Component\HttpClient\DnsResolvingHttpClient;
+        use Symfony\Component\HttpClient\HttpClient;
+        use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
+
+        $client = HttpClient::create();
+        $dnsResolvingClient = new DnsResolvingHttpClient($client, new MyCustomDnsResolver());
+
+        // or with NoPrivateNetworkHttpClient
+        $client = HttpClient::create();
+        $secureClient = new NoPrivateNetworkHttpClient($client);
+        $dnsResolvingClient = new DnsResolvingHttpClient($secureClient, new MyCustomDnsResolver());
+
 Consuming Server-Sent Events
 ----------------------------
 
