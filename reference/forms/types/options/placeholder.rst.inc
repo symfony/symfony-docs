@@ -42,11 +42,11 @@ is false::
 
 .. versionadded:: 8.1
 
-    Translating an expanded ``ChoiceType`` placeholder via ``translation_domain``
+    Translating an expanded ``ChoiceType`` placeholder using ``translation_domain``
     (instead of ``choice_translation_domain``) was introduced in Symfony 8.1.
 
 The placeholder label is translated using the ``translation_domain`` option,
 just like a non-expanded ``<select>`` placeholder, even when ``expanded`` is
-set to ``true``. This makes a ``TranslatableMessage`` placeholder work
-correctly on subtypes like :doc:`EntityType </reference/forms/types/entity>`,
+set to ``true``. This makes ``TranslatableMessage`` placeholders work
+correctly for subtypes like :doc:`EntityType </reference/forms/types/entity>`,
 which default ``choice_translation_domain`` to ``false``.
