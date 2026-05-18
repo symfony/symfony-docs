@@ -1056,6 +1056,7 @@ These are all the available constants:
     * ``Workflow::DISABLE_ENTER_EVENT``
     * ``Workflow::DISABLE_ENTERED_EVENT``
     * ``Workflow::DISABLE_COMPLETED_EVENT``
+    * ``Workflow::DISABLE_ANNOUNCE_EVENT``
 
 Event Methods
 ~~~~~~~~~~~~~
