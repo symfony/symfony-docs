@@ -800,9 +800,9 @@ ensure local networks are made inaccessible to the HTTP client::
     // but all the other requests, including other internal networks, will be allowed
     $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
 
-    // the third optional argument is an allow-list of IPs or CIDR subnets that
-    // can be reached even when they belong to one of the blocked networks. It
-    // is useful when you want to reach a specific private host (e.g. a proxy)
+    // the third optional argument is an allow list of IPs or CIDR subnets
+    // that can still be reached even when they belong to one of the blocked
+    // networks. This is useful to allow specific private hosts (e.g. a proxy)
     // while keeping the rest of the private network blocked
     $client = new NoPrivateNetworkHttpClient(
         HttpClient::create(),
