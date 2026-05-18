@@ -212,6 +212,10 @@ Service
                     **Webhook support**: No
 ==================  ====================================================================================================================================
 
+.. versionadded:: 8.1
+
+    The ``Prelude`` integration was introduced in Symfony 8.1.
+
 .. tip::
 
     Use :doc:`Symfony configuration secrets </configuration/secrets>` to securely
