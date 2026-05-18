@@ -191,6 +191,74 @@ prevents that number from being higher than 5,000).
 Rate Limiting in Action
 -----------------------
 
+Rate Limiting a Controller With the RateLimit Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``#[RateLimit]`` attribute was introduced in Symfony 8.1.
+
+The simplest way to apply rate limiting to a controller is to add the
+:class:`Symfony\\Component\\HttpKernel\\Attribute\\RateLimit` attribute. The
+attribute references a limiter declared under ``framework.rate_limiter``;
+when the limit is exceeded, the kernel returns a ``429 Too Many Requests``
+response with a ``Retry-After`` header. Without a custom ``key``, the bucket
+is keyed by client IP, HTTP method and path::
+
+    // src/Controller/ApiController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\ExpressionLanguage\Expression;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\RateLimit;
+
+    class ApiController extends AbstractController
+    {
+        #[RateLimit('api')]
+        public function index(): JsonResponse
+        {
+            // ...
+        }
+
+        // restrict the limit to specific HTTP methods
+        #[RateLimit('api', methods: ['POST', 'PUT', 'PATCH', 'DELETE'])]
+        public function edit(): JsonResponse
+        {
+            // ...
+        }
+
+        // build the bucket key from a submitted form field
+        #[RateLimit('per_account', key: new Expression('request.request.get("email")'))]
+        public function resetPassword(): Response
+        {
+            // ...
+        }
+
+        // consume more than one token per request
+        #[RateLimit('api', tokens: 5)]
+        public function export(): JsonResponse
+        {
+            // ...
+        }
+    }
+
+The ``key`` argument also accepts a ``Closure`` receiving the ``Request`` and
+returning a string. Stacking multiple ``#[RateLimit]`` attributes combines
+the limits: each one is evaluated independently and **all** of them must
+pass::
+
+    #[RateLimit('global')]
+    #[RateLimit('login', methods: ['POST'])]
+    public function login(): Response
+    {
+        // ...
+    }
+
+The attribute can also be placed on the controller class to apply the limit
+to every action.
+
 Injecting the Rate Limiter Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
