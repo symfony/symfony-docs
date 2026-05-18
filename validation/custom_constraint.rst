@@ -151,29 +151,22 @@ The ``addViolation()`` method call finally adds the violation to the context.
     by calling the ``disableTranslation()`` method of ``ConstraintViolationBuilderInterface``.
     See also the :ref:`framework.validation.disable_translation option <reference-validation-disable_translation>`.
 
+Constraint validators are **reentrant**: the execution context is passed
+explicitly to each validation call instead of being stored on the validator
+instance. This is the contract of the ``validateInContext()`` method on
+:class:`Symfony\Component\Validator\ConstraintValidatorInterface`. When
+extending the abstract :class:`Symfony\Component\Validator\ConstraintValidator`
+class, the context is managed for you automatically.
+
 .. versionadded:: 8.1
 
-    Constraint validators are reentrant since Symfony 8.1: the execution
-    context is now passed explicitly to each validation call. Validators
-    extending the abstract
-    :class:`Symfony\\Component\\Validator\\ConstraintValidator` class keep
-    working without changes; validators implementing
-    :class:`Symfony\\Component\\Validator\\ConstraintValidatorInterface`
-    directly must implement ``validateInContext()``::
-
-        public function validateInContext(
-            mixed $value,
-            Constraint $constraint,
-            ExecutionContextInterface $context,
-        ): void {
-            // build violations through $context, not $this->context
-        }
+    Reentrant constraint validators were introduced in Symfony 8.1.
 
 .. deprecated:: 8.1
 
-    The ``ConstraintValidator::initialize()`` method is deprecated since
-    Symfony 8.1. Put any initialization logic at the top of ``validate()``
-    instead.
+    The ``ConstraintValidatorInterface::initialize()`` and
+    ``ConstraintValidatorInterface::validate()`` methods were deprecated in
+    favor of ``validateInContext()``.
 
 Using the new Validator
 -----------------------
