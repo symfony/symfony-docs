@@ -1168,8 +1168,8 @@ command without having to worry about the number of arguments or options::
         // ...
     }
 
-Accessing Raw Arguments and Options
------------------------------------
+Fetching the Raw Arguments and Options
+--------------------------------------
 
 .. versionadded:: 8.1
 
@@ -1177,9 +1177,17 @@ Accessing Raw Arguments and Options
 
 While ``getRawTokens()`` returns the unparsed CLI tokens as strings,
 :class:`Symfony\\Component\\Console\\Input\\RawInputInterface` exposes the
-parsed arguments and options as they were explicitly passed by the user,
-without default values merged in. Type-hint this interface in invokable
-commands to forward the original input to a child process::
+parsed arguments and options as they were explicitly passed by the user, without
+default values merged in. This is useful to forward the current command's input
+to a child process:
+
+* ``getRawArguments()`` and ``getRawOptions()`` return only the arguments
+  and options explicitly passed by the user (default values excluded);
+* ``unparse()`` converts the parsed options back to their CLI string form
+  (e.g. ``['--format=json', '--verbose']``), ready to spread into a
+  ``Process`` call. Pass an array of option names to restrict the output.
+
+Type-hint ``RawInputInterface`` in an invokable command to use these methods::
 
     use Symfony\Component\Console\Input\RawInputInterface;
     use Symfony\Component\Process\Process;
