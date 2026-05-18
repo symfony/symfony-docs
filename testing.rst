@@ -1013,6 +1013,11 @@ your tests. Symfony also provides many additional assertions.
 Response Assertions
 ~~~~~~~~~~~~~~~~~~~
 
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`, use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\BrowserKitAssertionsTrait` or
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestAssertionsTrait`.
+
 ``assertResponseIsSuccessful(string $message = '', ?bool $verbose = null)``
     Asserts that the response was successful (HTTP status is 2xx).
 ``assertResponseStatusCodeSame(int $expectedCode, string $message = '', ?bool $verbose = null)``
@@ -1049,6 +1054,11 @@ each assert method. To set this verbosity level globally, use the
 Request Assertions
 ~~~~~~~~~~~~~~~~~~
 
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`, use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\BrowserKitAssertionsTrait` or
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestAssertionsTrait`.
+
 ``assertRequestAttributeValueSame(string $name, string $expectedValue, string $message = '')``
     Asserts the given :ref:`request attribute <component-foundation-attributes>`
     is set to the expected value.
@@ -1057,6 +1067,11 @@ Request Assertions
 
 Browser Assertions
 ~~~~~~~~~~~~~~~~~~
+
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`, use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\BrowserKitAssertionsTrait` or
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestAssertionsTrait`.
 
 ``assertBrowserHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``/``assertBrowserNotHasCookie(string $name, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts that the test Client does (not) have the given cookie set
@@ -1080,6 +1095,11 @@ Browser Assertions
 
 Crawler Assertions
 ~~~~~~~~~~~~~~~~~~
+
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`, use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\DomCrawlerAssertionsTrait` or
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestAssertionsTrait`.
 
 ``assertSelectorExists(string $selector, string $message = '')``/``assertSelectorNotExists(string $selector, string $message = '')``
     Asserts that the given selector does (not) match at least one element
@@ -1116,6 +1136,10 @@ Crawler Assertions
 Mailer Assertions
 ~~~~~~~~~~~~~~~~~
 
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`, or use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`.
+
 ``assertEmailCount(int $count, ?string $transport = null, string $message = '')``
     Asserts that the expected number of emails was sent.
 ``assertQueuedEmailCount(int $count, ?string $transport = null, string $message = '')``
@@ -1151,6 +1175,10 @@ Mailer Assertions
 Notifier Assertions
 ~~~~~~~~~~~~~~~~~~~
 
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`, or use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\NotificationAssertionsTrait`.
+
 ``assertNotificationCount(int $count, ?string $transportName = null, string $message = '')``
     Asserts that the given number of notifications has been created
     (in total or for the given transport).
@@ -1176,6 +1204,11 @@ Notifier Assertions
 
 HttpClient Assertions
 ~~~~~~~~~~~~~~~~~~~~~
+
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`, use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\HttpClientAssertionsTrait` or
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestAssertionsTrait`.
 
 .. tip::
 
