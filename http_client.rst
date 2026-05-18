@@ -800,6 +800,21 @@ ensure local networks are made inaccessible to the HTTP client::
     // but all the other requests, including other internal networks, will be allowed
     $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
 
+    // the third optional argument is an allow-list of IPs or CIDR subnets that
+    // can be reached even when they belong to one of the blocked networks. It
+    // is useful when you want to reach a specific private host (e.g. a proxy)
+    // while keeping the rest of the private network blocked
+    $client = new NoPrivateNetworkHttpClient(
+        HttpClient::create(),
+        null,           // null = use the default private subnets
+        '10.0.0.42',    // also accepts an array of IPs/CIDR subnets
+    );
+
+.. versionadded:: 8.1
+
+    The ``$allowList`` argument of ``NoPrivateNetworkHttpClient`` was
+    introduced in Symfony 8.1.
+
 Profiling
 ~~~~~~~~~
 
