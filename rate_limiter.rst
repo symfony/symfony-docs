@@ -191,19 +191,20 @@ prevents that number from being higher than 5,000).
 Rate Limiting in Action
 -----------------------
 
-Rate Limiting a Controller With the RateLimit Attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Rate Limiting a Controller
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.1
 
     The ``#[RateLimit]`` attribute was introduced in Symfony 8.1.
 
 The simplest way to apply rate limiting to a controller is to add the
-:class:`Symfony\\Component\\HttpKernel\\Attribute\\RateLimit` attribute. The
-attribute references a limiter declared under ``framework.rate_limiter``;
-when the limit is exceeded, the kernel returns a ``429 Too Many Requests``
-response with a ``Retry-After`` header. Without a custom ``key``, the bucket
-is keyed by client IP, HTTP method and path::
+:class:`Symfony\\Component\\HttpKernel\\Attribute\\RateLimit` attribute. It
+references a limiter defined in the :ref:`framework.rate_limiter <rate-limiter-policies>`
+configuration and, when the limit is exceeded, throws a
+:class:`Symfony\\Component\\HttpKernel\\Exception\\TooManyRequestsHttpException`,
+which Symfony turns into a ``429 Too Many Requests`` response with a
+``Retry-After`` header::
 
     // src/Controller/ApiController.php
     namespace App\Controller;
@@ -211,11 +212,14 @@ is keyed by client IP, HTTP method and path::
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\ExpressionLanguage\Expression;
     use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\RateLimit;
 
     class ApiController extends AbstractController
     {
+        // if you don't define a 'key' argument, the key of the rate limiter
+        // bucket uses the client IP, HTTP method and path
         #[RateLimit('api')]
         public function index(): JsonResponse
         {
@@ -223,6 +227,7 @@ is keyed by client IP, HTTP method and path::
         }
 
         // restrict the limit to specific HTTP methods
+        // (e.g. only rate-limit write operations; reads are unrestricted)
         #[RateLimit('api', methods: ['POST', 'PUT', 'PATCH', 'DELETE'])]
         public function edit(): JsonResponse
         {
@@ -230,13 +235,24 @@ is keyed by client IP, HTTP method and path::
         }
 
         // build the bucket key from a submitted form field
+        // (e.g. group requests by the submitted email so password-reset attempts
+        // can't be spread across multiple IPs to bypass the limit)
         #[RateLimit('per_account', key: new Expression('request.request.get("email")'))]
         public function resetPassword(): Response
         {
             // ...
         }
 
-        // consume more than one token per request
+        // the 'key' argument also accepts a Closure; it receives the controller
+        // arguments, the current Request, and the controller instance (in that order)
+        #[RateLimit('per_account', key: fn (array $args, Request $request): string => $request->query->get('email'))]
+        public function resetPasswordViaLink(): Response
+        {
+            // ...
+        }
+
+        // specify the number of tokens consumed per request (defaults to 1)
+        // (e.g. to take into account more expensive operations)
         #[RateLimit('api', tokens: 5)]
         public function export(): JsonResponse
         {
@@ -244,20 +260,25 @@ is keyed by client IP, HTTP method and path::
         }
     }
 
-The ``key`` argument also accepts a ``Closure`` receiving the ``Request`` and
-returning a string. Stacking multiple ``#[RateLimit]`` attributes combines
-the limits: each one is evaluated independently and **all** of them must
-pass::
+.. tip::
 
-    #[RateLimit('global')]
-    #[RateLimit('login', methods: ['POST'])]
+    The ``#[RateLimit]`` attribute can also be placed on the controller class
+    to apply the same limit to every action.
+
+You can stack several ``#[RateLimit]`` attributes on the same controller. Each
+limit is evaluated independently and **all** of them must pass for the request
+to be accepted. This is convenient to combine a broad per-IP quota with a
+stricter per-action limit::
+
+    #[RateLimit('global')]                    // applies to all methods
+    #[RateLimit('login', methods: ['POST'])]  // additional limit on POST /login
     public function login(): Response
     {
         // ...
     }
 
-The attribute can also be placed on the controller class to apply the limit
-to every action.
+For full control over the limiter logic, inject the limiter service manually as
+shown in the next section.
 
 Injecting the Rate Limiter Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
