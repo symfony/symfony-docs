@@ -1230,6 +1230,36 @@ HttpClient Assertions
     By default it will check on the HttpClient, but you can also pass a specific
     HttpClient ID.
 
+Console Assertions
+~~~~~~~~~~~~~~~~~~
+
+Check out :ref:`Console documentation <console-testing-commands>` for more
+information about how to run commands in tests.
+
+``assertCommandIsSuccessful(ExecutionResult $result, string $message = '')``
+    Asserts that the command finished successfully.
+``assertCommandFailed(ExecutionResult $result, string $message = '')``
+    Asserts that the command failed.
+``assertCommandIsInvalid(ExecutionResult $result, string $message = '')``
+    Asserts that the command finished with an invalid code.
+``assertCommandResultEquals(ExecutionResult $result, ?int $expectedStatusCode = null, ?string $expectedOutput = null, ?string $expectedErrorOutput = null, ?string $expectedDisplay = null, string $message = '')``
+    Asserts that the command finished with the expected status code, output,
+    error output and display, depending on your needs.
+
+.. versionadded:: 8.1
+
+    The Console assertions were introduced in Symfony 8.1.
+
+End to End Tests (E2E)
+----------------------
+
+If you need to test the application as a whole, including the JavaScript
+code, you can use a real browser instead of the test client. This is
+called an end-to-end test and it's a great way to test the application.
+
+This can be achieved thanks to the Panther component. You can learn more
+about it in :doc:`the dedicated page </testing/end_to_end>`.
+
 Learn more
 ----------
 
