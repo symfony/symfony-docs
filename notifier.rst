@@ -138,6 +138,9 @@ Service
 `Plivo`_            **Install**: ``composer require symfony/plivo-notifier`` \
                     **DSN**: ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM`` \
                     **Webhook support**: No
+`Prelude`_          **Install**: ``composer require symfony/prelude-notifier`` \
+                    **DSN**: ``prelude://API_KEY@default?sender=FROM`` \
+                    **Webhook support**: No
 `Primotexto`_       **Install**: ``composer require symfony/primotexto-notifier`` \
                     **DSN**: ``primotexto://API_KEY@default?from=FROM`` \
                     **Webhook support**: No
@@ -1144,6 +1147,7 @@ is dispatched. Listeners receive a
 .. _`OvhCloud`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OvhCloud/README.md
 .. _`PagerDuty`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/PagerDuty/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
+.. _`Prelude`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Prelude/README.md
 .. _`Primotexto`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Primotexto/README.md
 .. _`Pushover`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushover/README.md
 .. _`Pushy`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushy/README.md
