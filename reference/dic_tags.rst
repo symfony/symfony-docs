@@ -1257,20 +1257,23 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
 twig.safe_class
 ---------------
 
-**Purpose**: Mark a class as safe for Twig's escaper
+**Purpose**: Mark a class as already escaped so Twig's output escaper renders
+its contents unmodified
 
 .. versionadded:: 8.1
 
-    The ``twig.safe_class`` resource tag was introduced in Symfony 8.1.
+    The ``twig.safe_class`` resource tag was introduced in Symfony 8.1 and
+    requires Twig 3.25 or higher.
 
-Tagging a class with ``twig.safe_class`` tells Twig's `escaper extension`_
-to treat instances of that class as already safe and skip escaping when
-they are converted to strings. This is useful for value objects that wrap
-pre-escaped output (e.g. an ``HtmlString`` wrapper) without calling the
-``raw`` filter at every call site.
+Tagging a class with ``twig.safe_class`` tells Twig's `escaper extension`_ to
+treat instances of that class as already-escaped output, so the auto-escaper
+renders them as-is. This is useful for value objects that wrap trusted or
+pre-escaped content (for example, an ``HtmlString`` wrapper): mark the class
+once and template authors no longer need to apply the ``raw`` filter at every
+use site.
 
-``twig.safe_class`` is a :ref:`resource tag <service-tags-resource-tags>`:
-it is attached to the class, not to a service.
+Unlike most container tags, ``twig.safe_class`` is a :ref:`resource tag <service-tags-resource-tags>`
+attached to the class itself, not to a service definition.
 
 .. configuration-block::
 
@@ -1295,9 +1298,8 @@ it is attached to the class, not to a service.
                     ->resourceTag('twig.safe_class', ['strategy' => 'html']);
         };
 
-The ``strategy`` attribute accepts a single escaping strategy or a list of
-them. The same class can be tagged several times to mark it safe for
-several strategies.
+The ``strategy`` attribute accepts a single escaping strategy (such as
+``html``, ``js``, ``css``, ``url`` or ``html_attr``) or a list of them.
 
 validator.constraint_validator
 ------------------------------
