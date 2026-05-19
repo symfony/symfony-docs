@@ -1332,6 +1332,20 @@ You can define a custom retry delay in milliseconds (e.g., to use the value from
 the ``Retry-After`` header in an HTTP response) by setting the ``retryDelay``
 argument in the constructor of the ``RecoverableMessageHandlingException``.
 
+Pass ``forceRetry: false`` to the constructor to respect the configured retry
+strategy (``max_retries`` is honored) while still overriding the delay::
+
+    throw new RecoverableMessageHandlingException(
+        'Rate limited by the remote API',
+        retryDelay: 5000,
+        forceRetry: false,
+    );
+
+.. versionadded:: 8.1
+
+    The ``forceRetry`` argument of ``RecoverableMessageHandlingException`` was
+    introduced in Symfony 8.1.
+
 .. _messenger-failure-transport:
 
 Saving & Retrying Failed Messages
