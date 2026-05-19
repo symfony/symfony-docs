@@ -1267,6 +1267,13 @@ use the `Twig raw filter`_ to disable the output escaping for that variable:
 Read the `Twig output escaping docs`_ to learn more about how to disable output
 escaping for a block or even an entire template.
 
+.. tip::
+
+    Value objects that hold pre-escaped or trusted content (typically shipped
+    by bundles, but applications can do the same) can be marked as safe so
+    Twig won't re-escape them, using the
+    :ref:`twig.safe_class <dic_tags-twig-safe-class>` resource tag.
+
 .. _templates-namespaces:
 
 Template Namespaces
