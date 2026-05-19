@@ -1635,14 +1635,17 @@ Using a custom DNS resolver
 
 .. versionadded:: 8.1
 
-This component provides a :class:`Symfony\\Component\\HttpClient\\DnsResolvingHttpClient`
-decorator that allows you implement your own DNS resolver that will be used to resolve
-the requested host and the host of every followed redirect.
+    Support for custom DNS resolvers in the HTTP client was introduced in Symfony 8.1.
 
-This can be useful if you want to implement specific resolution rules, debugging, monitoring,
-custom caching, etc.
+The :class:`Symfony\\Component\\HttpClient\\DnsResolvingHttpClient` decorator
+lets you replace the default DNS lookup with a callable of your own. It applies
+to the initial request and to every redirect that follows.
 
-To use this, implement an invokable service::
+This is useful for enforcing custom routing rules, debugging, caching lookups,
+or adding logging and metrics around name resolution.
+
+Start by writing an invokable service that maps a hostname to an IP
+address (return ``null`` to signal a lookup failure)::
 
     namespace App\Service;
 
@@ -1656,7 +1659,7 @@ To use this, implement an invokable service::
         }
     }
 
-And use configure HttpClient like this:
+Then register the decorator in the service container:
 
 .. configuration-block::
 
@@ -1664,21 +1667,25 @@ And use configure HttpClient like this:
 
         # config/services.yaml
         services:
-            # 1st example: CurlHttpClient with custom DNS resolver:
+            # Example 1: decorate CurlHttpClient directly
             Symfony\Component\HttpClient\DnsResolvingHttpClient:
                 decorates: Symfony\Component\HttpClient\CurlHttpClient
                 arguments:
                     $resolver: !closure '@App\Service\MyCustomDnsResolver'
+
             Symfony\Contracts\HttpClient\HttpClientInterface: '@Symfony\Component\HttpClient\DnsResolvingHttpClient'
 
-            # 2nd example: NoPrivateNetworkHttpClient with custom DNS resolver:
+            # Example 2: combine with NoPrivateNetworkHttpClient
             Symfony\Component\HttpClient\CurlHttpClient: ~
+
             Symfony\Component\HttpClient\NoPrivateNetworkHttpClient:
                 decorates: Symfony\Component\HttpClient\CurlHttpClient
+
             Symfony\Component\HttpClient\DnsResolvingHttpClient:
                 decorates: Symfony\Component\HttpClient\NoPrivateNetworkHttpClient
                 arguments:
                     $resolver: !closure '@App\Service\MyCustomDnsResolver'
+
             Symfony\Contracts\HttpClient\HttpClientInterface: '@Symfony\Component\HttpClient\DnsResolvingHttpClient'
 
     .. code-block:: php-standalone
@@ -1688,10 +1695,11 @@ And use configure HttpClient like this:
         use Symfony\Component\HttpClient\HttpClient;
         use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
 
+        // Example 1: wrap the default client
         $client = HttpClient::create();
         $dnsResolvingClient = new DnsResolvingHttpClient($client, new MyCustomDnsResolver());
 
-        // or with NoPrivateNetworkHttpClient
+        // Example 2: combine with NoPrivateNetworkHttpClient
         $client = HttpClient::create();
         $secureClient = new NoPrivateNetworkHttpClient($client);
         $dnsResolvingClient = new DnsResolvingHttpClient($secureClient, new MyCustomDnsResolver());
