@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by GromNaN at 2026-05-07T07:14:11Z
+
+Thanks for this contribution! 🙏
+
+Unfortunately, this feature isn't available yet: it depends on twigphp/Twig#4795, which is still pending. This PR should be put on hold until the Twig PR is merged. Once it is, the documentation will also need to specify the minimum required Twig version.
+
+---------------------------------------------------------------------------
+
+by GromNaN at 2026-05-17T08:56:04Z
+
+This PR is unlocked. The required twig version is 3.25.0
