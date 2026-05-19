@@ -1332,8 +1332,9 @@ You can define a custom retry delay in milliseconds (e.g., to use the value from
 the ``Retry-After`` header in an HTTP response) by setting the ``retryDelay``
 argument in the constructor of the ``RecoverableMessageHandlingException``.
 
-Pass ``forceRetry: false`` to the constructor to respect the configured retry
-strategy (``max_retries`` is honored) while still overriding the delay::
+If you want to override the delay but still give up after ``max_retries`` (for
+example, when a rate-limited API responds with a ``Retry-After`` header but you
+don't want to retry indefinitely), pass ``forceRetry: false`` to the constructor::
 
     throw new RecoverableMessageHandlingException(
         'Rate limited by the remote API',
