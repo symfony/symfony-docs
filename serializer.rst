@@ -2377,6 +2377,8 @@ define default values for the missing parameters::
     ]);
     // $person is Person(name: 'Jane Doe', age: 39, sportsperson: true);
 
+.. _serializer-recursive-denormalization-type-safety:
+
 Recursive Denormalization and Type Safety
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2397,12 +2399,15 @@ Converting Scalar Types During Denormalization
     The ``AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION`` context option
     was introduced in Symfony 8.1.
 
-Some formats represent every value as a string (XML, CSV, HTTP query strings,
-etc.). When deserializing such payloads, the normalizer can cast string values
-to the type expected by the target property (``int``, ``float``, ``bool``).
-This conversion is automatically enabled for the ``xml`` and ``csv`` formats.
-For other formats that carry untyped data, opt in via the
-``AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION`` context option::
+Some formats encode every value as a string (XML, CSV, HTTP query strings,
+etc.). When deserializing payloads coming from these formats, the normalizer can
+cast string values to the scalar type expected by the target property (``int``,
+``float`` or ``bool``) instead of failing with an ``UnexpectedValueException``
+(see :ref:`the previous section <serializer-recursive-denormalization-type-safety>`).
+
+This conversion is enabled by default for the ``xml`` and ``csv`` formats. For
+any other format whose decoded data contains string-encoded scalars, enable it
+through the ``AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION`` context option::
 
     use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
     // ...
@@ -2411,9 +2416,10 @@ For other formats that carry untyped data, opt in via the
     $person = $serializer->denormalize($data, Person::class, context: [
         AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION => true,
     ]);
+    // $person->age is 39 (int), $person->sportsperson is true (bool)
 
 Set the option to ``false`` to disable the conversion, even for the ``xml``
-and ``csv`` formats. The same option is also available on the
+and ``csv`` formats. This option is also available through the
 :ref:`context builders <serializer-using-context-builders>`.
 
 Handling Boolean Values
