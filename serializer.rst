@@ -2389,6 +2389,33 @@ will be thrown. The type enforcement of the properties can be disabled by
 setting the serializer context option
 ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT`` to ``true``.
 
+Converting Scalar Types During Denormalization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION`` context option
+    was introduced in Symfony 8.1.
+
+Some formats represent every value as a string (XML, CSV, HTTP query strings,
+etc.). When deserializing such payloads, the normalizer can cast string values
+to the type expected by the target property (``int``, ``float``, ``bool``).
+This conversion is automatically enabled for the ``xml`` and ``csv`` formats.
+For other formats that carry untyped data, opt in via the
+``AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION`` context option::
+
+    use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+    // ...
+
+    $data = ['age' => '39', 'sportsperson' => '1'];
+    $person = $serializer->denormalize($data, Person::class, context: [
+        AbstractObjectNormalizer::ENABLE_TYPE_CONVERSION => true,
+    ]);
+
+Set the option to ``false`` to disable the conversion, even for the ``xml``
+and ``csv`` formats. The same option is also available on the
+:ref:`context builders <serializer-using-context-builders>`.
+
 Handling Boolean Values
 ~~~~~~~~~~~~~~~~~~~~~~~
 
