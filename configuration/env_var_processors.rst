@@ -213,7 +213,8 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(csv:FOO)``
-    Decodes the content of ``FOO``, which is a CSV-encoded string:
+    Decodes the content of ``FOO``, which is a CSV-encoded string and returns
+    an array. An empty string will result in an empty array.
 
     .. configuration-block::
 
