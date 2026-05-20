@@ -2933,6 +2933,17 @@ Authentication Events
         alt="A flow diagram showing the authentication events that are described in this section in a request-response cycle."
     ></object>
 
+:class:`Symfony\\Component\\Security\\Http\\Event\\BeforeAuthenticateEvent`
+    Dispatched right before an authenticator's ``authenticate()`` method is
+    called. Listeners can audit or log authentication attempts (including those
+    targeting unknown users, which ``CheckPassportEvent`` cannot observe).
+    Throwing an ``AuthenticationException`` from a listener triggers the regular
+    failure flow (``LoginFailureEvent`` with a null passport).
+
+    .. versionadded:: 8.2
+
+        The ``BeforeAuthenticateEvent`` class was introduced in Symfony 8.2.
+
 :class:`Symfony\\Component\\Security\\Http\\Event\\CheckPassportEvent`
     Dispatched after the authenticator created the :ref:`security passport <security-passport>`.
     Listeners of this event do the actual authentication checks (like
