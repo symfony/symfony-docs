@@ -131,6 +131,7 @@ whitelist:
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
         - '.. versionadded:: 0.2' # MercureBundle
         - '.. versionadded:: 3.5' # Monolog
+        - '.. versionadded:: 3.11.0' # Monolog
         - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
         - 'End to End Tests (E2E)'
         - '.. versionadded:: 2.2.0' # Panther
