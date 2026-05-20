@@ -444,6 +444,18 @@ You can also manually hash a password by running:
 
     $ php bin/console security:hash-password
 
+To avoid passing the plaintext password as a command argument, pass ``-`` to read
+it from the standard input instead:
+
+.. code-block:: terminal
+
+    $ echo \$PASSWORD | php bin/console security:hash-password --no-interaction -
+
+.. versionadded:: 8.1
+
+    The support for reading the password from the standard input was introduced
+    in Symfony 8.1.
+
 Read more about all available hashers (including specific hashers) and password
 migration in :doc:`/security/passwords`.
 
