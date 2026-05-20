@@ -138,3 +138,4 @@ whitelist:
         - '* Inline code blocks use double-ticks (````like this````).'
         - 'the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn''t match it,'
         - '.. deprecated:: 2.29' # UX TogglePassword
+        - '.. versionadded:: 3.7' # Symfony contracts

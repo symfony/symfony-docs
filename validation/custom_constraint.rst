@@ -154,7 +154,7 @@ The ``addViolation()`` method call finally adds the violation to the context.
 Constraint validators are **reentrant**: the execution context is passed
 explicitly to each validation call instead of being stored on the validator
 instance. This is the contract of the ``validateInContext()`` method on
-:class:`Symfony\Component\Validator\ConstraintValidatorInterface`. When
+:class:`Symfony\\Component\\Validator\\ConstraintValidatorInterface`. When
 extending the abstract :class:`Symfony\Component\Validator\ConstraintValidator`
 class, the context is managed for you automatically.
 
