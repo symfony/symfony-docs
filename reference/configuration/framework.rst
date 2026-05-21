@@ -4688,6 +4688,21 @@ allows you to define a different, but compatible, API endpoint to make the passw
 checks. It's useful for example when the Symfony application is run in an
 intranet without public access to the internet.
 
+.. _reference-validation-property_metadata_existence_check:
+
+property_metadata_existence_check
+.................................
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.1
+
+    The ``property_metadata_existence_check`` option was introduced in Symfony 8.1.
+
+When set to ``true``, the ``validateProperty()`` and ``validatePropertyValue()``
+methods throw a ``ValidatorException`` when no validation metadata is found for
+the given property.
+
 static_method
 .............
 
