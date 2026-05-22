@@ -1762,7 +1762,6 @@ The transport has a number of options:
 ``delay[exchange_name]`` (default: ``delays``)
     Name of the exchange to be used for the delayed/retried messages
 
-<<<<<<< HEAD
 ``delay[arguments]`` (default: ``[]``)
     Extra arguments for the delays queues
 
@@ -1775,11 +1774,6 @@ The transport has a number of options:
         The ability to set ``queues`` to ``false`` to skip binding the default
         ``messages`` queue was introduced in Symfony 8.1.
 
-=======
-``queues[daily_delay_queues]`` (default: ``false``)
-    Create a delayed queue for each day ``%queue_name_pattern%_%current_day%``.
-    Expires after a day + ttl. Useful for quorum queues, because quorum queues don't support update expire after queue is created.
->>>>>>> c4f6902b4 (issues/57867 remove space extra)
 ``queues[name][arguments]``
     Extra arguments
 
