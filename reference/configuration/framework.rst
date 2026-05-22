@@ -4688,8 +4688,6 @@ allows you to define a different, but compatible, API endpoint to make the passw
 checks. It's useful for example when the Symfony application is run in an
 intranet without public access to the internet.
 
-.. _reference-validation-property_metadata_existence_check:
-
 property_metadata_existence_check
 .................................
 
