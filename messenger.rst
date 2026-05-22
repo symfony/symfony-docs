@@ -1765,6 +1765,17 @@ The transport has a number of options:
 ``delay[arguments]`` (default: ``[]``)
     Extra arguments for the delays queues
 
+``delay[daily_delay_queues]`` (default: ``false``)
+    When ``true``, a separate delay queue is created each day (the current date
+    is appended to the queue name) with a TTL of one day plus the message delay.
+    Enable this when using RabbitMQ quorum queues for delayed messages: unlike
+    classic queues, quorum queues don't refresh the queue expiration on redeclaration,
+    so messages with long delays can be lost when the queue expires.
+
+    .. versionadded:: 8.1
+
+        The ``delay[daily_delay_queues]`` option was introduced in Symfony 8.1.
+
 ``queues``
     Configuration for the queues. May be set to ``false`` or ``[]`` if neither
     custom queues nor the default ``messages`` queue should be created.
