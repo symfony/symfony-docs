@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by Neirda24 at 2024-07-03T10:04:14Z
+
+Hi @Seldaek . Yes I am. did not had the time to finish things yet.
+
+---------------------------------------------------------------------------
+
+by Neirda24 at 2024-07-04T11:06:15Z
+
+@Seldaek : here you go : https://github.com/symfony/symfony/pull/57653 was pretty straightforward. I'll take time to add some tests on DI as well because there are none at the moment. Should it be in the same PR or another one to keep things separated ?
+
+---------------------------------------------------------------------------
+
+by Seldaek at 2024-07-04T11:10:15Z
+
+Looks good to me, thanks. I'd say feel free to add tests in the same PR..
