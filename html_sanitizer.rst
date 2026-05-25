@@ -408,7 +408,10 @@ This can also be used to remove elements from the allow list.
 Default Action
 ~~~~~~~~~~~~~~
 
-By default, unconfigured tags are dropped along with their children. If you would rather not lose all children elements by default, you can configure the default action to be ``Block``. Specific elements can still be dropped if needed.
+By default, elements that are not explicitly configured are dropped along with
+their children. If you don't want to lose those child elements, set the default
+action to ``block`` instead: unconfigured elements are then removed but their
+children are kept and processed. You can still drop specific elements when needed:
 
     .. code-block:: yaml
 
@@ -419,32 +422,10 @@ By default, unconfigured tags are dropped along with their children. If you woul
                     app.post_sanitizer:
                         # ...
 
-                        # remove all tags by default, but process their children
+                        # remove unconfigured elements, but process their children
                         default_action: 'block'
                         # remove <figure> and its children
                         drop_elements: ['figure']
-
-    .. code-block:: xml
-
-        <!-- config/packages/html_sanitizer.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:html-sanitizer>
-                    <!-- remove all tags by default, but process their children -->
-                    <framework:default-action>block</framework:default-action>
-
-                    <!-- remove <figure> and its children -->
-                    <framework:drop-element>figure</framework:drop-element>
-                </framework:html-sanitizer>
-            </framework:config>
-        </container>
 
     .. code-block:: php
 
@@ -454,7 +435,7 @@ By default, unconfigured tags are dropped along with their children. If you woul
         return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    // remove all tags by default, but process their children
+                    // remove unconfigured elements, but process their children
                     ->defaultAction('block')
                     // remove <figure> and its children
                     ->dropElement('figure')
@@ -469,15 +450,18 @@ By default, unconfigured tags are dropped along with their children. If you woul
 
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
-                // remove all tags by default, but process their children
+                // remove unconfigured elements, but process their children
                 ->defaultAction(HtmlSanitizerAction::Block)
                 // remove <figure> and its children
                 ->dropElement('figure')
         );
 
-.. note::
+.. warning::
 
-    Configuring a default action of ``Allow`` will allow all tags but they will not have any attributes. You probably should still disallow at least ``script`` tags if you want to do this, but generally speaking using an explicit allowlist is going to be much safer.
+    Setting the default action to ``allow`` keeps every element (though still
+    without any attributes, unless you allow them explicitly). This is rarely
+    a good idea: prefer an explicit allowlist, and at the very least keep
+    dangerous elements such as ``<script>`` dropped.
 
 Allow Attributes
 ~~~~~~~~~~~~~~~~
