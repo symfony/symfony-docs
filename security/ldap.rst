@@ -230,7 +230,8 @@ is set, the ``default_roles`` option is ignored.
 
 Symfony provides ``Symfony\Component\Ldap\Security\MemberOfRoles``, a concrete
 implementation of the interface that fetches roles from the ``ismemberof``
-attribute.
+attribute (configurable via its ``$attributeName`` constructor argument).
+See `Using MemberOfRoles`_ below for an example.
 
 uid_key
 .......
@@ -274,6 +275,75 @@ If you pass ``null`` as the value of this option, the default filter is used
 To prevent `LDAP injection`_, the username will be escaped.
 
 The syntax for the ``filter`` key is defined by `RFC4515`_.
+
+Using MemberOfRoles
+~~~~~~~~~~~~~~~~~~~
+
+Register ``MemberOfRoles`` as a service with your role mapping, then point
+``role_fetcher`` at it and add the LDAP attribute to ``extra_fields``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Ldap\Security\MemberOfRoles:
+                arguments:
+                    $mapping:
+                        admins: 'ROLE_ADMIN'
+                        users: 'ROLE_USER'
+
+        # config/packages/security.yaml
+        security:
+            providers:
+                my_ldap:
+                    ldap:
+                        service: Symfony\Component\Ldap\Ldap
+                        base_dn: dc=example,dc=com
+                        uid_key: uid
+                        extra_fields: ['ismemberof']
+                        role_fetcher: Symfony\Component\Ldap\Security\MemberOfRoles
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <service id="Symfony\Component\Ldap\Security\MemberOfRoles">
+            <argument key="$mapping" type="collection">
+                <argument key="admins">ROLE_ADMIN</argument>
+                <argument key="users">ROLE_USER</argument>
+            </argument>
+        </service>
+
+        <!-- config/packages/security.xml -->
+        <provider name="my_ldap">
+            <ldap service="Symfony\Component\Ldap\Ldap"
+                base-dn="dc=example,dc=com"
+                uid-key="uid"
+                role-fetcher="Symfony\Component\Ldap\Security\MemberOfRoles">
+                <extra-field>ismemberof</extra-field>
+            </ldap>
+        </provider>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Component\Ldap\Security\MemberOfRoles;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set(MemberOfRoles::class)
+                    ->args([
+                        '$mapping' => [
+                            'admins' => 'ROLE_ADMIN',
+                            'users' => 'ROLE_USER',
+                        ],
+                    ]);
+        };
+
+``MemberOfRoles`` extracts group names from LDAP attribute values matching a
+default pattern (``CN=<group_name>,ou=...``); pass a custom ``$groupNameRegex``
+constructor argument to override it.
 
 Authenticating against an LDAP server
 -------------------------------------
