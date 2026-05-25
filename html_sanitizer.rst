@@ -408,6 +408,10 @@ This can also be used to remove elements from the allow list.
 Default Action
 ~~~~~~~~~~~~~~
 
+.. versionadded:: 8.1
+
+    The feature to configure the default action was introduced in Symfony 8.1.
+
 By default, elements that are not explicitly configured are dropped along with
 their children. If you don't want to lose those child elements, set the default
 action to ``block`` instead: unconfigured elements are then removed but their
