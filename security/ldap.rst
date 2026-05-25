@@ -305,26 +305,6 @@ Register ``MemberOfRoles`` as a service with your role mapping, then point
                         extra_fields: ['ismemberof']
                         role_fetcher: Symfony\Component\Ldap\Security\MemberOfRoles
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="Symfony\Component\Ldap\Security\MemberOfRoles">
-            <argument key="$mapping" type="collection">
-                <argument key="admins">ROLE_ADMIN</argument>
-                <argument key="users">ROLE_USER</argument>
-            </argument>
-        </service>
-
-        <!-- config/packages/security.xml -->
-        <provider name="my_ldap">
-            <ldap service="Symfony\Component\Ldap\Ldap"
-                base-dn="dc=example,dc=com"
-                uid-key="uid"
-                role-fetcher="Symfony\Component\Ldap\Security\MemberOfRoles">
-                <extra-field>ismemberof</extra-field>
-            </ldap>
-        </provider>
-
     .. code-block:: php
 
         // config/services.php
