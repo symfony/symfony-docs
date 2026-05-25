@@ -241,7 +241,7 @@ The same arguments are available on the
 :class:`Symfony\\Component\\Yaml\\Parser` constructor when you instantiate
 the parser yourself.
 
-.. caution::
+.. danger::
 
     These limits make malicious documents harder to weaponize, but they
     are not a substitute for validating and constraining input received
