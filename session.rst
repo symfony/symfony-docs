@@ -500,14 +500,19 @@ installed and configured the `phpredis extension`_.
 
 You have two different options to use Redis to store sessions:
 
-The first PHP-based option is to configure Redis session handler directly
-in the server ``php.ini`` file:
+The first option is to configure the Redis session handler directly in the
+server ``php.ini`` file. This approach uses PHP's native session locking,
+which prevents race conditions when multiple requests access the same session:
 
 .. code-block:: ini
 
     ; php.ini
     session.save_handler = redis
     session.save_path = "tcp://192.168.0.178:6379?auth=REDIS_PASSWORD"
+
+    ; session locking is disabled by default in the phpredis extension
+    ; see https://github.com/phpredis/phpredis#php-session-handler for all options
+    redis.session.locking_enabled = 1
 
 The second option is to configure Redis sessions in Symfony. First, define
 a Symfony service for the connection to the Redis server:
@@ -605,17 +610,27 @@ configuration option to tell Symfony to use this service as the session handler:
             ],
         ]);
 
-Symfony will now use your Redis server to read and write the session data. The
-main drawback of this solution is that Redis does not perform session locking,
-so you can face *race conditions* when accessing sessions. For example, you may
-see an *"Invalid CSRF token"* error because two requests were made in parallel
-and only the first one stored the CSRF token in the session.
+Symfony will now use your Redis server to read and write the session data.
+
+.. warning::
+
+    ``RedisSessionHandler`` does not perform session locking. If your
+    application makes concurrent requests that write to the session (e.g.
+    JavaScript requests), this can cause *race conditions* and data loss. A
+    typical symptom is an *"Invalid CSRF token"* error when two requests run
+    in parallel and only one stores the CSRF token.
+
+    To get session locking, use the ``php.ini``-based option described above,
+    which relies on PHP's native Redis session handler.
 
 .. seealso::
 
     If you use Memcached instead of Redis, follow a similar approach but
     replace ``RedisSessionHandler`` by
     :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`.
+    The same session locking limitation applies; to enable locking, configure
+    Memcached as the session handler via ``php.ini`` instead (the Memcached
+    PECL extension enables session locking by default).
 
 .. tip::
 
