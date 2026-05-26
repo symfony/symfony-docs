@@ -248,9 +248,10 @@ call to support ``ReflectionMethod``::
     callable.
 
 .. _service-tags-resource-tags:
+.. _di-resource-tags:
 
 Tagging Non-Service Classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 Not all classes need to be registered as services. Entities, value objects, and
 DTOs, for example, should be discoverable at compile time but must not be instantiated
@@ -308,6 +309,77 @@ using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTa
             $container->setParameter('app.model_classes', $classes);
         }
     }
+
+Declaring Resource Tags from Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When the :ref:`resource tag setup <di-resource-tags>` doesn't require any custom
+logic, two more direct options are available. The first is the
+``#[AutoconfigureResourceTag]`` attribute, which is repeatable and accepts an
+optional second argument with the tag attributes::
+
+    // src/Model/Invoice.php
+    namespace App\Model;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.report_item', ['type' => 'invoice'])]
+    #[AutoconfigureResourceTag('app.exportable')]
+    class Invoice
+    {
+        // ...
+    }
+
+The attribute also works on interfaces and base classes. In that case, every
+class that implements the interface or extends the base class receives the
+resource tag through autoconfiguration, the same way ``#[AutoconfigureTag]``
+applies service tags::
+
+    // src/Model/ReportItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.report_item')]
+    interface ReportItemInterface
+    {
+        // ...
+    }
+
+The same definitions can be declared per service in configuration files:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Model\Invoice:
+                resource_tags:
+                    - { name: 'app.report_item', type: 'invoice' }
+                    - 'app.exportable'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Model\Invoice;
+
+        return function (ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(Invoice::class)
+                ->resourceTag('app.report_item', ['type' => 'invoice'])
+                ->resourceTag('app.exportable')
+            ;
+        };
+
+.. tip::
+
+    Resource tags can also be declared in the ``_defaults`` section to apply
+    them to every service defined in the same file, using the same option names
+    (``resource_tags:`` in YAML, ``->defaults()->resourceTag(...)`` in PHP).
 
 Creating custom Tags
 --------------------
