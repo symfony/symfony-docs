@@ -326,7 +326,7 @@ to multiple transports:
     runtime by using the
     :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp` on
     the envelope of the message. This stamp takes an array of transport
-    name as its only argument. For more information about stamps, see
+    names as its only argument. For more information about stamps, see
     :ref:`Envelopes & Stamps <messenger-envelopes-stamps>`.
 
 Doctrine Entities in Messages
