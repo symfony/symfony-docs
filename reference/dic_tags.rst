@@ -802,10 +802,6 @@ You can also add a processor for a specific logging channel by using the
 routing.controller
 ------------------
 
-.. versionadded:: 7.4
-
-    The ``routing.controller`` tag was introduced in Symfony 7.4.
-
 **Purpose**: Make a controller class discoverable by the ``routing.controllers`` resource
 
 Any class that defines at least one ``#[Route]`` attribute is automatically tagged
