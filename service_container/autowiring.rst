@@ -698,20 +698,26 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
         }
     }
 
-Refreshable Environment Variables as Closures or Stringables
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Autowiring Refreshable Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.1
 
     Autowiring environment variables as ``Closure`` or ``Stringable`` was
     introduced in Symfony 8.1.
 
-When ``#[Autowire(env: ...)]`` (or any ``#[Autowire('…%env(…)%…')]`` string
-value) targets a parameter typed ``Closure`` or ``Stringable``, the injected
-value resolves the env reference each time it is evaluated. Unlike injecting
-an env var as a ``string`` (which is baked at compile time), the value stays
-refreshable across calls to
-:method:`Symfony\\Component\\DependencyInjection\\Container::resetEnvCache`::
+When you inject an environment variable as a plain string, its value is resolved
+once and baked into the compiled container, so it never changes at runtime.
+That is fine for traditional request/response applications, but it is a
+limitation in long-running workers (Messenger, FrankenPHP, RoadRunner), where
+you may want the value to refresh between requests after a call to
+:method:`Symfony\\Component\\DependencyInjection\\Container::resetEnvCache`.
+
+To support this, ``#[Autowire(env: ...)]`` (or any ``#[Autowire('...%env(...)%...')]``
+string value) can target a parameter typed ``Closure`` or ``Stringable``. Instead
+of a fixed string, you receive a wrapper that resolves the environment reference
+every time the closure is invoked or the value is cast to a string, returning
+the current value on each call::
 
     // src/Service/Foo.php
     namespace App\Service;
@@ -721,14 +727,17 @@ refreshable across calls to
     class Foo
     {
         public function __construct(
+            // invoke the closure to read the current value: ($this->dbUrl)()
             #[Autowire(env: 'DB_URL')]
             private \Closure $dbUrl,
 
-            // the parameter default is returned when APP_NAME is not defined
+            // the union type is required so the string default type-checks;
+            // 'default' is returned when APP_NAME is not defined
             #[Autowire(env: 'APP_NAME')]
             private string|\Stringable $appName = 'default',
 
-            // embedded %env(...)% references inside a string also work
+            // embedded %env(...)% references inside a string also work;
+            // cast to string to read the current value: (string) $this->redisDsn
             #[Autowire('redis://%env(HOST)%:%env(PORT)%')]
             private \Stringable $redisDsn,
 
@@ -739,11 +748,14 @@ refreshable across calls to
         }
     }
 
-The parameter default (``'default'`` above) is returned when the env variable
-is not defined.
+When a default value is declared, it is returned while the environment variable
+is not defined. The default can be of any type for a ``Closure``, but it must be
+a string (or ``null``) for a ``Stringable``.
 
-The same feature is available in YAML through the ``!env_closure`` tag and in
-PHP through ``EnvClosureArgument``:
+The same wiring is available in configuration files through the ``!env_closure``
+YAML tag and the :class:`Symfony\\Component\\DependencyInjection\\Argument\\EnvClosureArgument`
+PHP class. Passing ``true`` as the third argument switches the wrapper from a
+``Closure`` to a ``Stringable``:
 
 .. code-block:: yaml
 
@@ -752,9 +764,9 @@ PHP through ``EnvClosureArgument``:
         App\Service\Foo:
             arguments:
                 - !env_closure '%env(DB_URL)%'
-                # with a default value
+                # with a default value (returns a Closure)
                 - !env_closure ['%env(APP_NAME)%', 'default']
-                # Stringable instead of Closure (third argument: true)
+                # Stringable wrapper instead of a Closure (third argument: true)
                 - !env_closure ['%env(APP_NAME)%', 'default', true]
 
 .. code-block:: php
@@ -771,6 +783,12 @@ PHP through ``EnvClosureArgument``:
                     new EnvClosureArgument('%env(APP_NAME)%', 'default', true),
                 ]);
     };
+
+.. note::
+
+    Wrapping a plain ``%parameter%`` value works too, but only the
+    ``%env(...)%`` portions of the resolved value stay refreshable; literal
+    parameter values are fixed at compile time.
 
 .. _autowiring_closures:
 
