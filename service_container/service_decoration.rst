@@ -346,6 +346,55 @@ The generated code will be the following::
 
     $this->services[Foo::class] = new Baz(new Bar(new Foo()));
 
+Decorating All Services with a Tag
+----------------------------------
+
+.. versionadded:: 8.1
+
+    The ``#[AsTagDecorator]`` attribute and the ``decorates_tag`` option were
+    introduced in Symfony 8.1.
+
+Instead of decorating a single service, you can decorate every service that
+has a given tag. Symfony creates one decorator per tagged service, each
+wrapping the original service as ``.inner``:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/LoggingDecorator.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\AsTagDecorator;
+
+        #[AsTagDecorator(tag: 'app.processor')]
+        class LoggingDecorator
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\LoggingDecorator:
+                decorates_tag: app.processor
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\LoggingDecorator;
+
+        return App::config([
+            'services' => [
+                LoggingDecorator::class => [
+                    'decorates_tag' => 'app.processor',
+                ],
+            ],
+        ]);
+
 Stacking Decorators
 -------------------
 
