@@ -174,6 +174,16 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\ConsoleCommandProcessor`
     Adds information about the current console command.
 
+.. note::
+
+    When a processor implements :class:`Monolog\\Processor\\ProcessorInterface`,
+    Symfony automatically injects the ``security.untracked_token_storage``
+    service for any
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface`
+    argument. Unlike the regular ``security.token_storage``, reading from it
+    does not mark the session as used, which is the right behavior for log
+    processors and similar debug data collectors.
+
 .. seealso::
 
     Check out the `built-in Monolog processors`_ to learn more about how to
