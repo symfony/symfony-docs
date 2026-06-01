@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2026-06-01T08:43:46Z
+
+Can the changes also be applied on 6.4?
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-06-01T08:48:00Z
+
+> Can the changes also be applied on 6.4?
+
+At a glance, some do, but others don't, like the Tree helper
