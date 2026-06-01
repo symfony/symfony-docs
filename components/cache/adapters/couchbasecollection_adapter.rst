@@ -46,7 +46,7 @@ helper method allows creating and configuring a `Couchbase Collection`_ class in
         'couchbase://localhost'
         // the DSN can include config options (pass them as a query string):
         // 'couchbase://localhost:11210?operationTimeout=10'
-        // 'couchbase://localhost:11210?operationTimeout=10&configTimout=20'
+        // 'couchbase://localhost:11210?operationTimeout=10&configTimeout=20'
     );
 
     // pass an array of DSN strings to register multiple servers with the client

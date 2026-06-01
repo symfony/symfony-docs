@@ -90,7 +90,7 @@ completion (by default, by pressing the Tab key).
 .. tip::
 
     Many PHP tools are built using the Symfony Console component (e.g.
-    Composer, PHPstan and Behat). If they are using version 5.4 or higher,
+    Composer, PHPStan and Behat). If they are using version 5.4 or higher,
     you can also install their completion script to enable console completion:
 
     .. code-block:: terminal

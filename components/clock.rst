@@ -223,7 +223,7 @@ instance when using it as a default value::
 The constructor also allows setting a timezone or custom referenced date::
 
     // you can specify a timezone
-    $withTimezone = new DatePoint(timezone: new \DateTimezone('UTC'));
+    $withTimezone = new DatePoint(timezone: new \DateTimeZone('UTC'));
 
     // you can also create a DatePoint from a reference date
     $referenceDate = new \DateTimeImmutable();
