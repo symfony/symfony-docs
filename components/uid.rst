@@ -182,7 +182,7 @@ your services and use it as follows::
         }
     }
 
-By default, this factory generates the folllowing UUIDs:
+By default, this factory generates the following UUIDs:
 
 * Default and time-based UUIDs: UUIDv7
 * Name-based UUIDs: UUIDv5

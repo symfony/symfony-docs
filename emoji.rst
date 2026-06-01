@@ -113,7 +113,7 @@ the ``text-emoji`` locale, which combines all codes from all services::
 
     $transliterator = EmojiTransliterator::create('text-emoji');
 
-    // Github short codes
+    // GitHub short codes
     $transliterator->transliterate('Breakfast with :kiwi-fruit: or :milk-glass:');
     // Gitlab short codes
     $transliterator->transliterate('Breakfast with :kiwi: or :milk:');

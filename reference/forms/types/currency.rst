@@ -43,7 +43,7 @@ at that date::
         'active_at' => new \DateTimeImmutable('2007-01-15', new \DateTimeZone('Etc/UTC')),
     ]);
 
-In the previous example, the list of currences won't include items like the
+In the previous example, the list of currencies won't include items like the
 Slovenian Tolar, which stopped being used on January 14, 2007.
 
 ``choices``
@@ -69,7 +69,7 @@ the moment of creating the form type.
 **type**: ``boolean`` or ``null`` **default**: ``true``
 
 Set this option to ``false`` to only display the currencies that are no longer
-`legal tender`_ in their countries. Set it to ``null`` to include all curencies,
+`legal tender`_ in their countries. Set it to ``null`` to include all currencies,
 regardless of their legal tender status.
 
 ``not_active_at``

@@ -147,7 +147,7 @@ If you can't use PHP attributes, register the command as a service and
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-You can also use ``#[AsCommand]`` to add a description, usage exampless, and
+You can also use ``#[AsCommand]`` to add a description, usage examples, and
 longer help text for the command::
 
     #[AsCommand(
