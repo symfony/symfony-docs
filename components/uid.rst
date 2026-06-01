@@ -58,7 +58,7 @@ This UUID variant is **not implemented** by the Uid component.
 Generates UUIDs from names that belong, and are unique within, some given namespace
 (`read the UUIDv3 spec <https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-3>`__).
 This variant is useful to generate deterministic UUIDs from arbitrary strings.
-It works by populating the UUID contents with the``md5`` hash of concatenating
+It works by populating the UUID contents with the ``md5`` hash of concatenating
 the namespace and the name::
 
     use Symfony\Component\Uid\Uuid;

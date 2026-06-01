@@ -548,7 +548,7 @@ to the exception.
 .. raw:: html
 
     <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"
-        alt="The HTTP KErnel flow diagram showing how exceptions bypass all further steps and are directly transformed to responses."
+        alt="The HTTP Kernel flow diagram showing how exceptions bypass all further steps and are directly transformed to responses."
     ></object>
 
 Each listener to this event is passed a :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`

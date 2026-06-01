@@ -75,7 +75,7 @@ that all have constraints on their properties.
             }
 
             // neither the method above nor any other specific getter
-            // could be used to validated all nested books;
+            // could be used to validate all nested books;
             // this object needs to be traversed to call the iterator
             public function getIterator(): \Iterator
             {
