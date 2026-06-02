@@ -513,7 +513,7 @@ Testing Commands
 
 In test classes extending :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`,
 Symfony provides the ``runCommand()`` method to run console commands and inspect
-their results. Some assertions are also provided by the :class:`Symfony\\Bundle\\FrameworkBundle\\TestConsoleCommandAssertionsTrait`
+their results. Some assertions are also provided by the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\ConsoleCommandAssertionsTrait`
 to check the command executions status::
 
     // tests/Command/CreateUserCommandTest.php
