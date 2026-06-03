@@ -364,6 +364,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
     use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
     class ApiController extends AbstractController
@@ -374,12 +375,14 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             $limit = $limiter->consume();
             $headers = [
                 'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp() - time(),
                 'X-RateLimit-Limit' => $limit->getLimit(),
             ];
 
             if (false === $limit->isAccepted()) {
-                return new Response(null, Response::HTTP_TOO_MANY_REQUESTS, $headers);
+                throw new TooManyRequestsHttpException(
+                    $limit->getRetryAfter()->getTimestamp() - time(),
+                    headers: $headers,
+                );
             }
 
             // ...
@@ -390,6 +393,12 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             return $response;
         }
     }
+
+.. note::
+
+    The ``TooManyRequestsHttpException`` sets the standard ``Retry-After``
+    header automatically using the value passed as its first argument, so
+    you don't need to include that header yourself.
 
 .. _rate-limiter-storage:
 
