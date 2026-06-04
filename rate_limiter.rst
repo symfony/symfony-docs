@@ -84,6 +84,17 @@ The math shows that the closer the last window is, the more the hit count
 of the last window will affect the current limit. This will make sure that a user can
 do 5,000 requests per hour but only if they are evenly spread out.
 
+.. versionadded:: 8.1
+
+    The ``anchor_at`` option was introduced in Symfony 8.1.
+
+.. note::
+
+    When :ref:`configuring your limiter <reference-rate-limiter-name>`, you can
+    use the ``anchor_at`` option to define a reference datetime used by the
+    policy to align windows on a calendar. When set, windows reset at
+    ``anchor_at + n*interval`` instead of starting on the first hit.
+
 Token Bucket Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
