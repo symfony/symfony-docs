@@ -202,6 +202,8 @@ prevents that number from being higher than 5,000).
 Rate Limiting in Action
 -----------------------
 
+.. _rate-limiter-controller:
+
 Rate Limiting a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

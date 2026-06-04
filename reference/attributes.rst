@@ -33,6 +33,7 @@ Dependency Injection
 
 * :ref:`AsAlias <services-alias>`
 * :doc:`AsDecorator </service_container/service_decoration>`
+* ``AsTagDecorator``
 * :ref:`AsTaggedItem <tags_as-tagged-item>`
 * :ref:`Autoconfigure <lazy-services_configuration>`
 * :ref:`AutoconfigureTag <di-instanceof>`
@@ -74,10 +75,16 @@ HttpKernel
 * :ref:`MapRequestHeader <controller_map-request-header>`
 * :ref:`MapRequestPayload <controller_map-request>`
 * :ref:`MapUploadedFile <controller_map-uploaded-file>`
+* :ref:`RateLimit <rate-limiter-controller>`
 * :ref:`Serialize <controller_serialize>`
 * :ref:`ValueResolver <managing-value-resolvers>`
 * :ref:`WithHttpStatus <framework_exceptions>`
 * :ref:`WithLogLevel <framework_exceptions>`
+
+JsonPath
+~~~~~~~~
+
+* :ref:`AsJsonPathFunction <json-path-custom-functions>`
 
 JsonStreamer
 ~~~~~~~~~~~~
