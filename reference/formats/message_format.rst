@@ -251,12 +251,12 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
         ];
 
 Pluralization rules are actually quite complex and differ for each language.
-For instance, Russian uses different plural forms for numbers ending with 1;
+For instance, Ukrainian uses different plural forms for numbers ending with 1;
 numbers ending with 2, 3 or 4; numbers ending with 5, 6, 7, 8 or 9; and even
 some exceptions to this!
 
 In order to properly translate this, the possible cases in the ``plural``
-function are also different for each language. For instance, Russian has
+function are also different for each language. For instance, Ukrainian has
 ``one``, ``few``, ``many`` and ``other``, while English has only ``one`` and
 ``other``. The full list of possible cases can be found in Unicode's
 `Language Plural Rules`_ document. By prefixing with ``=``, you can match exact
