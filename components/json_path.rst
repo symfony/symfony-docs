@@ -209,6 +209,8 @@ filters, refer to the `Querying with Expressions`_ section above. All these
 features are supported and can be combined with the programmatic builder when
 appropriate (e.g., inside a ``filter()`` expression).
 
+.. _json-path-custom-functions:
+
 Custom Functions
 ----------------
 
