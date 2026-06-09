@@ -3810,5 +3810,3 @@ Learn more
 .. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html
 .. _`SSL context options`: https://php.net/context.ssl
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
-.. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
-.. _`PostgreSqlConnection`: https://github.com/symfony/symfony/blob/8.0/src/Symfony/Component/Messenger/Bridge/Doctrine/Transport/PostgreSqlConnection.php
