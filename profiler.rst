@@ -172,9 +172,11 @@ create an alias pointing to the existing ``profiler`` service:
         use Symfony\Component\HttpKernel\Profiler\Profiler;
 
         return App::config([
-            'when@dev' => 'services' => [
-                Profiler::class => [
-                    'alias' => 'profiler',
+            'when@dev' => [
+                'services' => [
+                    Profiler::class => [
+                        'alias' => 'profiler',
+                    ],
                 ],
             ],
         ]);
