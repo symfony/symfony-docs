@@ -1722,12 +1722,6 @@ than the default polling behavior of the Doctrine transport because
 PostgreSQL will directly notify the workers when a new message is inserted
 in the table.
 
-.. warning::
-
-    When using Doctrine DBAL 4, Symfony Messenger does not automatically create
-    the PostgreSQL functions and triggers. You can create them manually using
-    the SQL script defined in the `PostgreSqlConnection`_ class.
-
 ``use_notify`` (default: ``true``)
     Whether to use LISTEN/NOTIFY.
 
@@ -3816,4 +3810,5 @@ Learn more
 .. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html
 .. _`SSL context options`: https://php.net/context.ssl
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
+.. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
 .. _`PostgreSqlConnection`: https://github.com/symfony/symfony/blob/8.0/src/Symfony/Component/Messenger/Bridge/Doctrine/Transport/PostgreSqlConnection.php
