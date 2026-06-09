@@ -1333,8 +1333,7 @@ normalizers (in order of priority):
     :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) and strings,
     integers or floats.
 
-    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings,
-    integers or floats. By default, it converts them to strings using the
+    By default, it converts them to strings using the
     `RFC 3339`_ format. Use ``DateTimeNormalizer::FORMAT_KEY`` and
     ``DateTimeNormalizer::TIMEZONE_KEY`` to change the format.
 
