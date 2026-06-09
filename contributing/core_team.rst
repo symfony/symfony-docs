@@ -248,7 +248,7 @@ generate the CHANGELOG files when releasing new versions.
 .. tip::
 
     Core team members are part of the ``mergers`` group on the ``symfony``
-    Github organization. This gives them write-access to many repositories,
+    GitHub organization. This gives them write-access to many repositories,
     including the main ``symfony/symfony`` mono-repository.
 
     To avoid unintentional pushes to the main project (which in turn creates

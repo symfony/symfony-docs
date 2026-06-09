@@ -84,6 +84,17 @@ The math shows that the closer the last window is, the more the hit count
 of the last window will affect the current limit. This will make sure that a user can
 do 5,000 requests per hour but only if they are evenly spread out.
 
+.. note::
+
+    When :ref:`configuring your limiter <reference-rate-limiter-name>`, you can
+    use the ``anchor_at`` option to define a reference datetime used by the
+    policy to align windows on a calendar. When set, windows reset at
+    ``anchor_at + (n * interval)`` instead of starting on the first hit.
+
+    .. versionadded:: 8.1
+
+        The ``anchor_at`` option was introduced in Symfony 8.1.
+
 Token Bucket Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -436,6 +447,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
     use Symfony\Component\RateLimiter\RateLimiterFactoryInterface;
 
     class ApiController extends AbstractController
@@ -446,12 +458,14 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             $limit = $limiter->consume();
             $headers = [
                 'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp() - time(),
                 'X-RateLimit-Limit' => $limit->getLimit(),
             ];
 
             if (false === $limit->isAccepted()) {
-                return new Response(null, Response::HTTP_TOO_MANY_REQUESTS, $headers);
+                throw new TooManyRequestsHttpException(
+                    $limit->getRetryAfter()->getTimestamp() - time(),
+                    headers: $headers,
+                );
             }
 
             // ...
@@ -462,6 +476,12 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             return $response;
         }
     }
+
+.. note::
+
+    The ``TooManyRequestsHttpException`` sets the standard ``Retry-After``
+    header automatically using the value passed as its first argument, so
+    you don't need to include that header yourself.
 
 .. _rate-limiter-storage:
 

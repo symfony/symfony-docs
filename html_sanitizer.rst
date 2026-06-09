@@ -405,6 +405,68 @@ This can also be used to remove elements from the allow list.
                 ->dropElement('figure')
         );
 
+Default Action
+~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The feature to configure the default action was introduced in Symfony 8.1.
+
+By default, elements that are not explicitly configured are dropped along with
+their children. If you don't want to lose those child elements, set the default
+action to ``block`` instead: unconfigured elements are then removed but their
+children are kept and processed. You can still drop specific elements when needed:
+
+    .. code-block:: yaml
+
+        # config/packages/html_sanitizer.yaml
+        framework:
+            html_sanitizer:
+                sanitizers:
+                    app.post_sanitizer:
+                        # ...
+
+                        # remove unconfigured elements, but process their children
+                        default_action: 'block'
+                        # remove <figure> and its children
+                        drop_elements: ['figure']
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->htmlSanitizer()
+                ->sanitizer('app.post_sanitizer')
+                    // remove unconfigured elements, but process their children
+                    ->defaultAction('block')
+                    // remove <figure> and its children
+                    ->dropElement('figure')
+            ;
+        };
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizerAction;
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+
+        $postSanitizer = new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                // remove unconfigured elements, but process their children
+                ->defaultAction(HtmlSanitizerAction::Block)
+                // remove <figure> and its children
+                ->dropElement('figure')
+        );
+
+.. warning::
+
+    Setting the default action to ``allow`` keeps every element (though still
+    without any attributes, unless you allow them explicitly). This is rarely
+    a good idea: prefer an explicit allowlist, and at the very least keep
+    dangerous elements such as ``<script>`` dropped.
+
 Allow Attributes
 ~~~~~~~~~~~~~~~~
 
@@ -423,7 +485,7 @@ on all elements allowed *before this setting*.
                     app.post_sanitizer:
                         # ...
                         allow_attributes:
-                            # allow "src' on <iframe> elements
+                            # allow "src" on <iframe> elements
                             src: ['iframe']
 
                             # allow "data-attr" on all elements currently allowed
@@ -440,7 +502,7 @@ on all elements allowed *before this setting*.
                     'sanitizers' => [
                         'app.post_sanitizer' => [
                             'allow_attributes' => [
-                                // allow "src' on <iframe> elements
+                                // allow "src" on <iframe> elements
                                 'src' => ['iframe'],
                                 // allow "data-attr" on all elements currently allowed
                                 'data-attr' => '*',
@@ -458,7 +520,7 @@ on all elements allowed *before this setting*.
 
         $postSanitizer = new HtmlSanitizer(
             new HtmlSanitizerConfig()
-                // allow "src' on <iframe> elements
+                // allow "src" on <iframe> elements
                 ->allowAttribute('src', ['iframe'])
 
                 // allow "data-attr" on all elements currently allowed
@@ -487,7 +549,7 @@ This option allows you to disallow attributes that were allowed before.
                         drop_attributes:
                             # ...except for the <section> element
                             data-attr: ['section']
-                            # disallows "style' on any allowed element
+                            # disallows "style" on any allowed element
                             style: '*'
 
     .. code-block:: php
@@ -529,7 +591,7 @@ This option allows you to disallow attributes that were allowed before.
                 // ...except for the <section> element
                 ->dropAttribute('data-attr', ['section'])
 
-                // disallows "style' on any allowed element
+                // disallows "style" on any allowed element
                 ->dropAttribute('style', '*')
         );
 

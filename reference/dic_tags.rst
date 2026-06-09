@@ -799,6 +799,23 @@ You can also add a processor for a specific logging channel by using the
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
 
+routing.controller
+------------------
+
+**Purpose**: Make a controller class discoverable by the ``routing.controllers`` resource
+
+Any class that defines at least one ``#[Route]`` attribute is automatically tagged
+with ``routing.controller``. When you import the ``routing.controllers`` resource
+in a routing configuration file, Symfony discovers all services tagged with
+``routing.controller`` and loads the routes defined by their ``#[Route]`` attributes.
+
+.. note::
+
+    Despite their similar names, ``routing.controller`` (singular) is a service
+    tag, whereas ``routing.controllers`` (plural) is a routing resource.
+
+For details, read :ref:`Creating Routes as Attributes <routing-route-attributes>`.
+
 routing.loader
 --------------
 

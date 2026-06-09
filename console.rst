@@ -90,7 +90,7 @@ completion (by default, by pressing the Tab key).
 .. tip::
 
     Many PHP tools are built using the Symfony Console component (e.g.
-    Composer, PHPstan and Behat). If they are using version 5.4 or higher,
+    Composer, PHPStan and Behat). If they are using version 5.4 or higher,
     you can also install their completion script to enable console completion:
 
     .. code-block:: terminal
@@ -513,7 +513,7 @@ Testing Commands
 
 In test classes extending :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`,
 Symfony provides the ``runCommand()`` method to run console commands and inspect
-their results. Some assertions are also provided by the :class:`Symfony\\Bundle\\FrameworkBundle\\TestConsoleCommandAssertionsTrait`
+their results. Some assertions are also provided by the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\ConsoleCommandAssertionsTrait`
 to check the command executions status::
 
     // tests/Command/CreateUserCommandTest.php
