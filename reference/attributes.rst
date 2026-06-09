@@ -35,6 +35,7 @@ Dependency Injection
 * :doc:`AsDecorator </service_container/service_decoration>`
 * :ref:`AsTaggedItem <tags_as-tagged-item>`
 * :ref:`Autoconfigure <lazy-services_configuration>`
+* :ref:`AutoconfigureResourceTag <di-resource-tags>`
 * :ref:`AutoconfigureTag <di-instanceof>`
 * :ref:`Autowire <autowire-attribute>`
 * :ref:`AutowireCallable <autowiring_closures>`
