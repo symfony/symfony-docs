@@ -2550,9 +2550,7 @@ exception from a callback. For exceptions of this kind,
 ``getStatusCode()`` may indicate a success (200), but accessing
 ``getContent()`` fails.
 
-The following example code illustrates all three options.
-
-body::
+The following example code illustrates all three options::
 
     // ExternalArticleServiceTest.php
     use PHPUnit\Framework\TestCase;
