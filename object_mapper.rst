@@ -465,6 +465,32 @@ when any of its rules matches::
 provided, the condition matches only if the source **and** the target both match.
 ``ClassRuleList`` matches when **any** of its rules matches.
 
+Skipping ``null`` Values
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``IsNotNull`` condition was introduced in Symfony 8.1.
+
+Use the built-in :class:`Symfony\\Component\\ObjectMapper\\Condition\\IsNotNull`
+condition to skip a property when its source value is ``null``. This is useful for
+partial updates, where only the provided values should overwrite the target::
+
+    // src/Dto/UserInput.php
+    namespace App\Dto;
+
+    use App\Entity\User;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Condition\IsNotNull;
+
+    #[Map(target: User::class)]
+    class UserInput
+    {
+        // only map 'name' when its value is not null
+        #[Map(if: new IsNotNull())]
+        public ?string $name = null;
+    }
+
 .. _object_mapper-transforming-values:
 
 Transforming Values
