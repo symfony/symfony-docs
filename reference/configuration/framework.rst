@@ -2499,7 +2499,7 @@ the name as key and DSN or service id as value:
         return App::config([
             'framework' => [
                 'lock' => [
-                    'resource' => [
+                    'resources' => [
                         'default' => [env('LOCK_DSN')],
                     ],
                 ],
