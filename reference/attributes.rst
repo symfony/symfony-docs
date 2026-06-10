@@ -67,6 +67,7 @@ HttpKernel
 ~~~~~~~~~~
 
 * :doc:`AsController </controller/service>`
+* :ref:`AsControllerAttributeListener <http-kernel-controller-attribute-events>`
 * :ref:`AsTargetedValueResolver <controller-targeted-value-resolver>`
 * :ref:`Cache <http-cache-expiration-intro>`
 * :ref:`IsSignatureValid <routing-signing-uris>`

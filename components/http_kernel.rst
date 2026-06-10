@@ -748,16 +748,18 @@ Then, apply it to a controller::
         }
     }
 
-Finally, create a listener that targets this specific attribute::
+Finally, create a listener that targets this specific attribute with the
+:class:`Symfony\\Component\\HttpKernel\\Attribute\\AsControllerAttributeListener`
+attribute, passing the kernel event to listen to and the attribute class::
 
     // src/EventListener/MyRateLimitListener.php
     namespace App\EventListener;
 
     use App\Attribute\MyRateLimit;
-    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-    use Symfony\Component\HttpKernel\KernelEvents;
+    use Symfony\Component\HttpKernel\Attribute\AsControllerAttributeListener;
+    use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 
-    #[AsEventListener(event: KernelEvents::CONTROLLER_ARGUMENTS.'.'.MyRateLimit::class)]
+    #[AsControllerAttributeListener(ControllerArgumentsEvent::class, MyRateLimit::class)]
     class MyRateLimitListener
     {
         public function __invoke(object $event): void
@@ -774,6 +776,11 @@ Finally, create a listener that targets this specific attribute::
 This listener is only invoked when the resolved controller has the
 ``#[MyRateLimit]`` attribute. There is no need to manually inspect the
 controller for attributes.
+
+.. versionadded:: 8.2
+
+    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\AsControllerAttributeListener`
+    attribute was introduced in Symfony 8.2.
 
 Performance
 ~~~~~~~~~~~
