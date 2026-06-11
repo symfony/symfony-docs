@@ -597,7 +597,7 @@ translation messages (e.g. a company name, or a version number), you can define
 it as a global translation parameter. This helps you avoid repeating the same
 values manually in each message.
 
-You can configure these global parameters in the ``translations.globals`` option
+You can configure these global parameters in the ``translator.globals`` option
 of your main configuration file using either ``%...%`` or ``{...}`` syntax:
 
 .. configuration-block::
