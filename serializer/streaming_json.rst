@@ -45,16 +45,21 @@ following ``Cat`` class::
         public string $age;
     }
 
+.. _json-streamer-streamable-attribute:
+
 To encode ``Cat`` objects into a JSON stream (e.g., to send them in an API
 response), first apply the ``#[JsonStreamable]`` attribute to the class. This
-attribute is optional, but it :ref:`improves performance <json-streamer-streamable-attribute>`
-by pre-generating encoding and decoding files during cache warm-up::
+attribute is optional, but it's highly recommended as it improves performance
+by pre-generating encoding and decoding files during cache warm-up.
+
+It includes two optional properties: ``asObject`` and ``asList``, which define
+how the class should be prepared during cache warm-up::
 
     namespace App\Dto;
 
     use Symfony\Component\JsonStreamer\Attribute\JsonStreamable;
 
-    #[JsonStreamable]
+    #[JsonStreamable(asObject: true, asList: true)]
     class Cat
     {
         // ...
@@ -690,26 +695,6 @@ metadata loaders requires a deep understanding of the internals.
 
 For most use cases, attribute-based configuration is sufficient. Reserve
 dynamic loaders for advanced scenarios.
-
-.. _json-streamer-streamable-attribute:
-
-Marking Objects as Streamable
------------------------------
-
-The ``JsonStreamable`` attribute marks a class as streamable. While not strictly
-required, it's highly recommended because it enables cache warm-up to pre-generate
-encoding/decoding files, improving performance.
-
-It includes two optional properties: ``asObject`` and ``asList``, which define
-how the class should be prepared during cache warm-up::
-
-    use Symfony\Component\JsonStreamer\Attribute\JsonStreamable;
-
-    #[JsonStreamable(asObject: true, asList: true)]
-    class StreamableData
-    {
-        // ...
-    }
 
 .. _`DTO classes`: https://en.wikipedia.org/wiki/Data_transfer_object
 .. _ghost objects: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
