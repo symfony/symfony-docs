@@ -1545,12 +1545,12 @@ but here's a short example::
     {
         $builder
             ->add('firstName', TextType::class, [
-                'constraints' => new Assert\Length(['min' => 3]),
+                'constraints' => new Assert\Length(min: 3),
             ])
             ->add('lastName', TextType::class, [
                 'constraints' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3]),
+                    new Assert\Length(min: 3),
                 ],
             ])
         ;
@@ -1562,7 +1562,7 @@ but here's a short example::
     ``Default`` group when creating the form, or set the correct group on
     the constraint you are adding::
 
-        new NotBlank(['groups' => ['create', 'update']]);
+        new NotBlank(groups: ['create', 'update']);
 
 .. tip::
 
@@ -1598,13 +1598,13 @@ the ``constraints`` option in the ``configureOptions()`` method::
     {
         $resolver->setDefaults([
             'data_class' => null,
-            'constraints' => new Assert\Collection([
-                'firstName' => new Assert\Length(['min' => 3]),
-                'lastName' => [
+            'constraints' => new Assert\Collection(
+                firstName: new Assert\Length(min: 3),
+                lastName: [
                     new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3]),
+                    new Assert\Length(min: 3),
                 ],
-            ]),
+            ),
         ]);
     }
 
@@ -1615,10 +1615,10 @@ in your controller::
 
     $form = $this->createFormBuilder($defaultData, [
             'constraints' => [
-                'firstName' => new Assert\Length(['min' => 3]),
+                'firstName' => new Assert\Length(min: 3),
                 'lastName' => [
                     new Assert\NotBlank(),
-                    new Assert\Length(['min' => 3]),
+                    new Assert\Length(min: 3),
                 ],
             ],
         ])
