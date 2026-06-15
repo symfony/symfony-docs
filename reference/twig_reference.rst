@@ -524,6 +524,109 @@ importmap
 Outputs the ``importmap`` & a few other items when using
 :doc:`the Asset component </frontend/asset_mapper>`.
 
+link
+~~~~
+
+.. code-block:: twig
+
+    {{ link(uri, rel, attributes = []) }}
+
+``uri``
+    **type**: ``string``
+``rel``
+    **type**: ``string``
+``attributes`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Adds a ``Link`` HTTP header to the current response for the given link relation
+type (``rel``). It can be used for any link implementing the PSR-13 standard.
+Read more about :doc:`/web_link`.
+
+preload
+~~~~~~~
+
+.. code-block:: twig
+
+    {{ preload(uri, attributes = []) }}
+
+``uri``
+    **type**: ``string``
+``attributes`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Preloads a resource by adding a ``Link`` HTTP header with the ``preload`` link
+relation, telling the browser to download it as soon as possible. Read more
+about :doc:`/web_link`.
+
+dns_prefetch
+~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ dns_prefetch(uri, attributes = []) }}
+
+``uri``
+    **type**: ``string``
+``attributes`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Resource hint that indicates an origin (e.g. ``https://foo.cloudfront.net``)
+that will be used to fetch required resources, and that the user agent should
+resolve as early as possible. Read more about :doc:`/web_link`.
+
+preconnect
+~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ preconnect(uri, attributes = []) }}
+
+``uri``
+    **type**: ``string``
+``attributes`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Resource hint that indicates an origin (e.g.
+``https://www.google-analytics.com``) that will be used to fetch required
+resources, initiating an early connection (DNS lookup, TCP handshake and
+optional TLS negotiation) to mask the high latency costs of establishing a
+connection. Read more about :doc:`/web_link`.
+
+prefetch
+~~~~~~~~
+
+.. code-block:: twig
+
+    {{ prefetch(uri, attributes = []) }}
+
+``uri``
+    **type**: ``string``
+``attributes`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Resource hint that identifies a resource that might be required by the next
+navigation, and that the user agent should fetch so it can deliver a faster
+response once the resource is requested in the future. Read more about
+:doc:`/web_link`.
+
+prerender
+~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ prerender(uri, attributes = []) }}
+
+``uri``
+    **type**: ``string``
+``attributes`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Resource hint that identifies a resource that might be required by the next
+navigation, and that the user agent should fetch and execute so it can deliver
+a faster response once the resource is requested later. This hint is
+**deprecated** and superseded by the Speculation Rules API. Read more about
+:doc:`/web_link`.
+
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
 
