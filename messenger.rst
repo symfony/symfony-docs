@@ -2531,6 +2531,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
 
     use App\Message\ListItemsQuery;
     use App\MessageHandler\ListItemsQueryResult;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
     use Symfony\Component\Messenger\HandleTrait;
     use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -2538,11 +2539,10 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
     {
         use HandleTrait;
 
-        // the parameter must be named $queryBus to trigger autowiring of the 'query.bus' service
-        public function __construct(MessageBusInterface $queryBus)
-        {
-            // HandleTrait requires a property named $messageBus
-            $this->messageBus = $queryBus;
+        // HandleTrait requires a property named $messageBus
+        public function __construct(
+            #[Target('query.bus')] private MessageBusInterface $messageBus,
+        ) {
         }
 
         public function __invoke(): void
