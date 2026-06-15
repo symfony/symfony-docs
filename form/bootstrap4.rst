@@ -104,7 +104,7 @@ for **all** users.
 Custom Forms
 ------------
 
-Bootstrap 4 has a feature called "`custom forms`_". You can enable that on your
+Bootstrap 4 has a feature called `custom forms`_. You can enable that on your
 Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the label:
 
 * For a `custom radio`_, use ``radio-custom``;
