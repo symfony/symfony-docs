@@ -146,7 +146,7 @@ First, clone and install the tool:
    $ composer install
 
 Simplified Recipe Structure
-···························
+...........................
 
 Instead of creating the final recipe JSON files manually, organize your recipes
 using this directory structure:
@@ -193,7 +193,7 @@ The simplified ``manifest.json`` looks like this:
     `full list of available configurators`_.
 
 Generating the Recipe Files
-···························
+...........................
 
 Run the following command from your recipes root directory to generate the
 final recipe files:
@@ -400,7 +400,7 @@ install the new private recipes, run the following command:
 
     $ composer recipes
 
-.. _`release of version 1.16`: https://github.com/symfony/cli
+.. _`release of version 1.16`: https://github.com/symfony/flex/releases/tag/v1.16.0
 .. _`Symfony recipe files`: https://github.com/symfony/recipes/tree/flex/main
 .. _`how to create recipes`: https://github.com/symfony/recipes?tab=readme-ov-file#creating-recipes
 .. _`recipes checker`: https://github.com/symfony-tools/recipes-checker
