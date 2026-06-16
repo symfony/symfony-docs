@@ -2088,14 +2088,14 @@ to retrieve all reachable roles (child roles) or parent roles for a given set of
         public function getAccessibleRoles(array $roles): array
         {
             // get all child roles (roles that are inherited by the given roles)
-            // e.g., ['ROLE_ADMIN'] returns ['ROLE_ADMIN' => 'ROLE_ADMIN', 'ROLE_USER' => 'ROLE_USER']
+            // e.g., ['ROLE_ADMIN'] returns ['ROLE_ADMIN', 'ROLE_USER']
             return $this->roleHierarchy->getReachableRoleNames($roles);
         }
 
         public function getParentRoles(array $roles): array
         {
             // get all parent roles (roles that inherit the given roles)
-            // e.g., ['ROLE_USER'] returns ['ROLE_USER' => 'ROLE_USER', 'ROLE_ADMIN' => 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN']
+            // e.g., ['ROLE_USER'] returns ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN']
             return $this->roleHierarchy->getParentRoleNames($roles);
         }
     }
