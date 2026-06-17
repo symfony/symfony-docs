@@ -143,7 +143,7 @@ Apply ``#[Map]`` to the source class to define its default mapping target::
 Defining the Default Source Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Apply ``#[Map]`` to the target class toe defined its default mapping source::
+Apply ``#[Map]`` to the target class to define its default mapping source::
 
     // src/Dto/ProductOutput.php
     namespace App\Dto;
