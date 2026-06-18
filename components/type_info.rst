@@ -117,7 +117,7 @@ PHP package required for string resolving. Then, follow these steps::
     $typeResolver->resolve(new \ReflectionProperty(Dummy::class, 'tags')); // returns a collection with "int" as key and "string" as values Type
 
 Generic Templates
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.2
 
