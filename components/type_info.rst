@@ -116,6 +116,35 @@ PHP package required for string resolving. Then, follow these steps::
     $typeResolver->resolve(new \ReflectionProperty(Dummy::class, 'id')); // returns an "int" Type
     $typeResolver->resolve(new \ReflectionProperty(Dummy::class, 'tags')); // returns a collection with "int" as key and "string" as values Type
 
+Generic Templates
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for covariant templates was introduced in Symfony 8.2.
+
+TypeInfo collects the generic templates declared through ``@template`` annotations,
+including their covariant variant ``@template-covariant`` (the ``@psalm-`` and
+``@phpstan-`` prefixed synonyms are also supported)::
+
+    use Symfony\Component\TypeInfo\TypeResolver\TypeResolver;
+
+    /**
+     * @template-covariant T of int|string
+     */
+    class Collection
+    {
+        /** @return T */
+        public function getFirst(): mixed
+        {
+            // ...
+        }
+    }
+
+    $typeResolver = TypeResolver::create();
+    // resolves the "getFirst()" return type using the covariant "T" template
+    $typeResolver->resolve(new \ReflectionMethod(Collection::class, 'getFirst'));
+
 Type Aliases
 ~~~~~~~~~~~~
 
