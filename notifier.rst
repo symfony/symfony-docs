@@ -134,7 +134,7 @@ Service
 `OvhCloud`_         **Install**: ``composer require symfony/ovh-cloud-notifier`` \
                     **DSN**: ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME`` \
                     **Webhook support**: No
-                    **Extra properties in SentMessage**:: ``totalCreditsRemoved``
+                    **Extra properties in SentMessage**: ``totalCreditsRemoved``
 `Plivo`_            **Install**: ``composer require symfony/plivo-notifier`` \
                     **DSN**: ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM`` \
                     **Webhook support**: No
@@ -772,7 +772,7 @@ Symfony provides the following recipients:
 :class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient`
     This is the default and is useful when there is no need to have
     information about the receiver. For example, the browser channel uses
-    the current requests' :ref:`session flashbag <flash-messages>`;
+    the current request's :ref:`session flashbag <flash-messages>`;
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\Recipient`
     This can contain both the email address and the phone number of the user. This
@@ -1035,7 +1035,7 @@ allows you to optionally hook into the lifecycle via events.
 The ``MessageEvent`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Typical Purposes**: Doing something before the message is sent (like logging
+**Typical Purposes**: Doing something before the message is sent, like logging
 which message is going to be sent, or displaying something about the event
 to be executed.
 
