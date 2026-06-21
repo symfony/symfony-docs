@@ -61,7 +61,7 @@ you can reuse the Symfony web server SSL certificate:
 
       // webpack.config.js
       // ...
-    + const path = require('path');
+    + import path from 'path';
 
       Encore
           // ...

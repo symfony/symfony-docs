@@ -29,15 +29,26 @@ Next, create a ``postcss.config.js`` file at the root of your project:
 
 .. code-block:: javascript
 
-    module.exports = {
-        plugins: {
+    // postcss.config.js
+    import autoprefixer from 'autoprefixer';
+
+    export default {
+        plugins: [
             // include whatever plugins you want
             // but make sure you install these via npm!
 
             // add browserslist config to package.json (see below)
-            autoprefixer: {}
-        }
-    }
+            autoprefixer(),
+        ],
+    };
+
+.. versionadded:: 7.0
+
+    Because projects using Webpack Encore 7.0 set ``"type": "module"`` in their
+    ``package.json``, configuration files like ``postcss.config.js`` must use ESM
+    syntax (``import`` / ``export default``). Before Encore 7.0, this file used
+    CommonJS (``module.exports = { ... }``). If you prefer to keep CommonJS syntax,
+    rename the file to ``postcss.config.cjs``.
 
 That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
 You can also pass options to the `postcss-loader`_ by passing a callback:
@@ -45,14 +56,14 @@ You can also pass options to the `postcss-loader`_ by passing a callback:
 .. code-block:: diff
 
       // webpack.config.js
-    + const path = require('path');
+    + import path from 'path';
 
       Encore
           // ...
     +     .enablePostCssLoader((options) => {
     +         options.postcssOptions = {
     +             // the directory where the postcss.config.js file is stored
-    +             config: path.resolve(__dirname, 'sub-dir', 'custom.config.js'),
+    +             config: path.resolve(import.meta.dirname, 'sub-dir', 'custom.config.js'),
     +         };
     +     })
       ;
