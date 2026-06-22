@@ -677,7 +677,7 @@ the ``{page}`` parameter using the ``requirements`` option:
 
         class BlogController extends AbstractController
         {
-            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '[0-9]+'])]
             public function list(int $page): Response
             {
                 // ...
@@ -697,7 +697,7 @@ the ``{page}`` parameter using the ``requirements`` option:
             path:       /blog/{page}
             controller: App\Controller\BlogController::list
             requirements:
-                page: '\d+'
+                page: '[0-9]+'
 
         blog_show:
             path:       /blog/{slug}
@@ -729,7 +729,7 @@ the ``{page}`` parameter using the ``requirements`` option:
         return static function (RoutingConfigurator $routes): void {
             $routes->add('blog_list', '/blog/{page}')
                 ->controller([BlogController::class, 'list'])
-                ->requirements(['page' => '\d+'])
+                ->requirements(['page' => '[0-9]+'])
             ;
 
             $routes->add('blog_show', '/blog/{slug}')
@@ -739,7 +739,7 @@ the ``{page}`` parameter using the ``requirements`` option:
         };
 
 The ``requirements`` option defines the `PHP regular expressions`_ that route
-parameters must match for the entire route to match. In this example, ``\d+`` is
+parameters must match for the entire route to match. In this example, ``[0-9]+`` is
 a regular expression that matches a *digit* of any length. Now:
 
 ========================  =============  ===============================
@@ -830,7 +830,7 @@ concise, but it can decrease route readability when requirements are complex:
 
         class BlogController extends AbstractController
         {
-            #[Route('/blog/{page<\d+>}', name: 'blog_list')]
+            #[Route('/blog/{page<[0-9]+>}', name: 'blog_list')]
             public function list(int $page): Response
             {
                 // ...
@@ -841,7 +841,7 @@ concise, but it can decrease route readability when requirements are complex:
 
         # config/routes.yaml
         blog_list:
-            path:       /blog/{page<\d+>}
+            path:       /blog/{page<[0-9]+>}
             controller: App\Controller\BlogController::list
 
     .. code-block:: xml
@@ -866,7 +866,7 @@ concise, but it can decrease route readability when requirements are complex:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
-            $routes->add('blog_list', '/blog/{page<\d+>}')
+            $routes->add('blog_list', '/blog/{page<[0-9]+>}')
                 ->controller([BlogController::class, 'list'])
             ;
             // ...
@@ -897,7 +897,7 @@ other configuration formats they are defined with the ``defaults`` option:
 
         class BlogController extends AbstractController
         {
-            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '[0-9]+'])]
             public function list(int $page = 1): Response
             {
                 // ...
@@ -913,7 +913,7 @@ other configuration formats they are defined with the ``defaults`` option:
             defaults:
                 page: 1
             requirements:
-                page: '\d+'
+                page: '[0-9]+'
 
         blog_show:
             # ...
@@ -946,7 +946,7 @@ other configuration formats they are defined with the ``defaults`` option:
             $routes->add('blog_list', '/blog/{page}')
                 ->controller([BlogController::class, 'list'])
                 ->defaults(['page' => 1])
-                ->requirements(['page' => '\d+'])
+                ->requirements(['page' => '[0-9]+'])
             ;
         };
 
@@ -986,7 +986,7 @@ parameter:
 
         class BlogController extends AbstractController
         {
-            #[Route('/blog/{page<\d+>?1}', name: 'blog_list')]
+            #[Route('/blog/{page<[0-9]+>?1}', name: 'blog_list')]
             public function list(int $page): Response
             {
                 // ...
@@ -997,7 +997,7 @@ parameter:
 
         # config/routes.yaml
         blog_list:
-            path:       /blog/{page<\d+>?1}
+            path:       /blog/{page<[0-9]+>?1}
             controller: App\Controller\BlogController::list
 
     .. code-block:: xml
@@ -1022,7 +1022,7 @@ parameter:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
-            $routes->add('blog_list', '/blog/{page<\d+>?1}')
+            $routes->add('blog_list', '/blog/{page<[0-9]+>?1}')
                 ->controller([BlogController::class, 'list'])
             ;
         };
