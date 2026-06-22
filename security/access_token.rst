@@ -515,8 +515,10 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                 audience: 'api-example'
                                 # Issuers (`iss` claim): required for validation purpose
                                 issuers: ['https://oidc.example.com']
-                                # Allowed time drift in seconds (`iat`, `nbf`, `exp` claims)
-                                allowed_time_drift: 0
+                                # Tolerance in seconds for clock differences between the token
+                                # issuer and this application, applied when validating the
+                                # time-based claims (`iat`, `nbf`, `exp`)
+                                allowed_time_drift: 5 # Default to 0 (no tolerance)
                                 encryption:
                                     enabled: true # Default to false
                                     enforce: false # Default to false, requires an encrypted token when true
@@ -543,8 +545,10 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                     'audience' => 'api-example',
                                     // Issuers (`iss` claim): required for validation purpose
                                     'issuers' => ['https://oidc.example.com'],
-                                    // Allowed time drift in seconds (`iat`, `nbf`, `exp` claims)
-                                    'allowed_time_drift' => 0,
+                                    // Tolerance in seconds for clock differences between the tokens
+                                    // issuer and this application, applied when validating the
+                                    // time-based claims (`iat`, `nbf`, `exp`)
+                                    'allowed_time_drift' => 5, // Default to 0 (no tolerance)
                                     // Encryption:
                                     'encryption' => [
                                         'enabled' => true, // Default to false
