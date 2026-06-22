@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-06-18T13:27:52Z
+
+Thanks Sergey.
+
+Your proposal is technically correct and I'm not against it ... but I'm a bit concerned because `\d` might be easier to recognize by readers, which are more used to that instead of using the explicit `[0-9]`.
+
+So, let's ask other folks here about their opinion: @xabbuh @OskarStark Thanks!
+
+---------------------------------------------------------------------------
+
+by NikitchenkoSergey at 2026-06-18T13:32:21Z
+
+Hello!
+
+I understand what you mean. However, I encountered this issue in production, so we'll need to move away from using \d and use 0-9 instead. We need to help developers get used to this practice 🙂
+Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2026-06-18T14:35:26Z
+
+What about switching to `Requirements::Digits` (see https://github.com/symfony/symfony/blob/1d21790c13f908804c12be2da7ca0669d5545ee0/src/Symfony/Component/Routing/Requirement/Requirement.php#L22) instead?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-06-18T14:46:02Z
+
+`Requirements::Digits` could work ... but the examples then look a bit verbose and ugly because it's so long compared to `\d` or `[0-9]` 😐
