@@ -515,6 +515,8 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                 audience: 'api-example'
                                 # Issuers (`iss` claim): required for validation purpose
                                 issuers: ['https://oidc.example.com']
+                                # Allowed time drift in seconds (`iat`, `nbf`, `exp` claims)
+                                allowed_time_drift: 0
                                 encryption:
                                     enabled: true # Default to false
                                     enforce: false # Default to false, requires an encrypted token when true
@@ -541,6 +543,8 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                     'audience' => 'api-example',
                                     // Issuers (`iss` claim): required for validation purpose
                                     'issuers' => ['https://oidc.example.com'],
+                                    // Allowed time drift in seconds (`iat`, `nbf`, `exp` claims)
+                                    'allowed_time_drift' => 0,
                                     // Encryption:
                                     'encryption' => [
                                         'enabled' => true, // Default to false
@@ -555,6 +559,10 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                 ],
             ],
         ]);
+
+.. versionadded:: 8.2
+
+    The ``allowed_time_drift`` option was introduced in Symfony 8.2.
 
 To enable `OpenID Connect Discovery`_, the ``OidcTokenHandler`` requires the
 ``symfony/cache`` package to store the OIDC configuration in the cache. If you
