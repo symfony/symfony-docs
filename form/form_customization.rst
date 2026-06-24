@@ -1,218 +1,169 @@
 How to Customize Form Rendering
 ===============================
 
-Symfony gives you several ways to customize how a form is rendered. In this
-article you'll learn how to make single customizations to one or more fields of
-your forms. If you need to customize all your forms in the same way, create
-instead a :doc:`form theme </form/form_themes>` or use any of the built-in
-themes, such as the :doc:`Bootstrap theme for Symfony forms </form/bootstrap4>`.
+This article explains how to customize individual form fields directly in your
+templates. For reusable customizations across your entire application, see
+:doc:`/form/form_themes`.
 
 .. _form-rendering-basics:
 
-Form Rendering Functions
-------------------------
+Rendering Forms
+---------------
 
-A single call to the :ref:`form() Twig function <reference-forms-twig-form>` is
-enough to render an entire form, including all its fields and error messages:
+The simplest way to render a form is with a single function call:
 
 .. code-block:: twig
 
-    {# form is a variable passed from the controller via
-      $this->render('...', ['form' => $form])
-      or $this->render('...', ['form' => $form->createView()]) #}
     {{ form(form) }}
 
-The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
-:ref:`form_end() <reference-forms-twig-end>`,
-:ref:`form_errors() <reference-forms-twig-errors>` and
-:ref:`form_row() <reference-forms-twig-row>` Twig functions to render the
-different form parts so you can customize them adding HTML elements and attributes:
+This renders everything: the ``<form>`` tag, all fields, labels, errors, and
+the closing tag. For more control, render each part separately:
 
 .. code-block:: html+twig
 
     {{ form_start(form) }}
-        <div class="my-custom-class-for-errors">
-            {{ form_errors(form) }}
-        </div>
+        {{ form_errors(form) }}
 
         <div class="row">
-            <div class="col">
-                {{ form_row(form.task) }}
-            </div>
-            <div class="col" id="some-custom-id">
-                {{ form_row(form.dueDate) }}
-            </div>
+            <div class="col">{{ form_row(form.firstName) }}</div>
+            <div class="col">{{ form_row(form.lastName) }}</div>
         </div>
+
+        {{ form_row(form.email) }}
+        {{ form_rest(form) }}
     {{ form_end(form) }}
 
-The ``form_row()`` function outputs the entire field contents, including the
-label, help message, HTML elements and error messages. All this can be further
-customized using other Twig functions, as illustrated in the following diagram:
+.. warning::
+
+    It is considered a best practice to include ``{{ form_rest(form) }}`` before
+    ``form_end()``. This ensures that hidden fields (such as :ref:`CSRF tokens <csrf-protection-forms>`)
+    and any fields you may have forgotten are properly rendered.
+
+Rendering Individual Field Parts
+--------------------------------
+
+The ``form_row()`` function renders a complete field (label, widget, help,
+errors). For finer control, render each part separately:
 
 .. raw:: html
 
     <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"
-        alt="Wireframe showing all functions in a form row, which are mentioned directly below."
+        alt="Wireframe showing all form field parts: form_row contains form_label, form_widget, form_help and form_errors."
     ></object>
 
-The :ref:`form_label() <reference-forms-twig-label>`,
-:ref:`form_widget() <reference-forms-twig-widget>` (the HTML input),
-:ref:`form_help() <reference-forms-twig-help>` and
-:ref:`form_errors() <reference-forms-twig-errors>` Twig functions give you total
-control over how each form field is rendered, so you can fully customize them:
-
 .. code-block:: html+twig
 
-    <div class="form-control">
+    <div class="custom-field">
         <i class="fa fa-calendar"></i> {{ form_label(form.dueDate) }}
         {{ form_widget(form.dueDate) }}
-
         <small>{{ form_help(form.dueDate) }}</small>
-
-        <div class="form-error">
-            {{ form_errors(form.dueDate) }}
-        </div>
+        <div class="error">{{ form_errors(form.dueDate) }}</div>
     </div>
-
-.. warning::
-
-   If you're rendering each field manually, make sure you don't forget the
-   ``_token`` field that is automatically added for CSRF protection.
-
-   You can also use ``{{ form_rest(form) }}`` (recommended) to render any
-   fields that aren't rendered manually. See
-   :ref:`the form_rest() documentation <reference-forms-twig-rest>` below for
-   more information.
-
-.. note::
-
-    Later in this article you can find the full reference of these Twig
-    functions with more usage examples.
-
-.. _reference-forms-twig-field-helpers:
-
-Form Field Helpers
-------------------
-
-The ``form_*()`` helpers shown in the previous section render different parts of
-the form field, including all its HTML elements. Some developers and designers
-struggle with this behavior, because it hides all the HTML elements in form
-themes which are not trivial to customize.
-
-That's why Symfony provides other Twig form helpers that render the value of
-each form field part without adding any HTML around it:
-
-* ``field_name()``
-* ``field_id()``
-* ``field_value()``
-* ``field_label()``
-* ``field_help()``
-* ``field_errors()``
-* ``field_choices()`` (an iterator for choice fields; e.g. for ``<select>``)
-
-When using these helpers, you must write all the HTML contents for all form
-fields, so you no longer have to deal with form themes:
-
-.. code-block:: html+twig
-
-    <input
-        name="{{ field_name(form.username) }}"
-        id="{{ field_id(form.username) }}"
-        value="{{ field_value(form.username) }}"
-        placeholder="{{ field_label(form.username) }}"
-        class="form-control"
-    >
-
-    <select name="{{ field_name(form.country) }}" class="form-control">
-        <option value="">{{ field_label(form.country) }}</option>
-
-        {% for label, value in field_choices(form.country) %}
-            <option value="{{ value }}">{{ label }}</option>
-        {% endfor %}
-    </select>
-
-Form Rendering Variables
-------------------------
-
-Some of the Twig functions mentioned in the previous section allow you to pass
-variables to configure their behavior. For example, the ``form_label()``
-function lets you define a custom label to override the one defined in the form:
-
-.. code-block:: twig
-
-    {{ form_label(form.task, 'My Custom Task Label') }}
-
-Some :doc:`form field types </reference/forms/types>` have additional rendering
-options that can be passed to the widget. These options are documented with each
-type, but one common option is ``attr``, which allows you to modify HTML
-attributes on the form element. The following would add the ``task_field`` CSS
-class to the rendered input text field:
-
-.. code-block:: twig
-
-    {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
-
-.. note::
-
-    If you're rendering an entire form at once (or an entire embedded form),
-    the ``variables`` argument will only be applied to the form itself and
-    not its children. In other words, the following will **not** pass a
-    "foo" class attribute to all of the child fields in the form:
-
-    .. code-block:: twig
-
-        {# does **not** work - the variables are not recursive #}
-        {{ form_widget(form, { 'attr': {'class': 'foo'} }) }}
-
-If you need to render form fields "by hand" then you can access individual
-values for fields (such as the ``id``, ``name`` and ``label``) using its
-``vars``  property. For example to get the ``id``:
-
-.. code-block:: twig
-
-    {{ form.task.vars.id }}
-
-.. note::
-
-    Later in this article you can find the full reference of these Twig
-    variables and their description.
 
 Form Themes
 -----------
 
-The Twig functions and variables shown in the previous sections can help you
-customize one or more fields of your forms. However, this customization can't
-be applied to the rest of the forms of your app.
+The Twig functions and variables above help you customize individual fields.
+To customize all forms consistently (e.g., to match your CSS framework), use a
+built-in :doc:`form theme </form/form_themes>` or create your own.
 
-If you want to customize all forms in the same way (for example to adapt the
-generated HTML code to the CSS framework used in your app) you must create a
-:doc:`form theme </form/form_themes>`.
+.. _twig-reference-form-variables:
+.. _reference-form-twig-variables:
+.. _twig-form-variables:
 
-.. _reference-form-twig-functions-variables:
+Form Variables
+--------------
 
-Form Functions and Variables Reference
---------------------------------------
+Each form field exposes variables through its ``vars`` property. You can read
+these variables directly or override them when calling rendering functions:
 
-.. _reference-form-twig-functions:
+.. code-block:: html+twig
 
-Functions
-~~~~~~~~~
+    {# reading field variables #}
+    <label for="{{ form.email.vars.id }}"
+           class="{{ form.email.vars.required ? 'required' }}">
+        {{ form.email.vars.label }}
+    </label>
+
+    {% if form.email.vars.errors|length > 0 %}
+        <span class="has-errors">!</span>
+    {% endif %}
+
+    {# overriding variables when rendering #}
+    {{ form_label(form.email, 'Your Email Address') }}
+    {{ form_widget(form.email, {attr: {class: 'email-input', autofocus: true}}) }}
+    {{ form_row(form.email, {
+        label: 'Contact Email',
+        label_attr: {class: 'required'},
+        attr: {placeholder: 'user@example.com'}
+    }) }}
+
+.. note::
+
+    Variables passed to ``form_widget(form)`` or ``form_row(form)`` are not
+    applied recursively to child fields. Render children individually to
+    customize them.
+
+These variables are useful when building completely custom HTML without using
+:doc:`form themes </form/form_themes>`. This is the full list of variables
+available in form theme blocks and via ``form.field.vars``:
+
+======================  ==============================================================================
+Variable                Description
+======================  ==============================================================================
+``action``              The form's action URL
+``attr``                HTML attributes for the input element (a key-value array)
+``block_prefixes``      Array of block prefixes for this field's :ref:`type hierarchy <form-type-hierarchy>`
+``cache_key``           A unique key which is used for caching
+``compound``            ``true`` if this field has a group of children (e.g. a ``choice`` field is a group of checkboxes)
+``data``                The :ref:`normalized data <form-data-lifecycle>` value
+``disabled``            Whether the field is disabled
+``errors``              Validation errors for this field. Note: ``form.errors`` only contains
+                        global errors, not all field errors. Use ``valid`` to check form validity
+``form``                The ``FormView`` instance itself
+``full_name``           The ``name`` HTML attribute value (e.g., ``user[email]``)
+``help``                Help text displayed with the field
+``id``                  The ``id`` HTML attribute value (e.g., ``user_email``)
+``label_attr``          HTML attributes for the ``<label>`` element (a key-value array)
+``label``               The label text
+``method``              The form's HTTP method
+``multipart``           Whether the form needs ``multipart/form-data`` encoding (file uploads)
+``name``                The field name (e.g., ``email``), not the full HTML name attribute
+``required``            Whether the field is required (adds HTML5 validation to it)
+``submitted``           Whether the form has been submitted
+``translation_domain``  The :ref:`translation domain <translation-domain>` for this form's labels and messages
+``valid``               Whether the form/field passed validation
+``value``               The field's current value for rendering. Only applies to the root form element
+======================  ==============================================================================
+
+.. tip::
+
+    Use ``{{ dump(form.field.vars) }}`` in your template to see all available
+    variables for a specific field.
+
+.. tip::
+
+    Variables are set in the ``buildView()`` and ``finishView()`` methods of
+    each form type. Check those methods in the source code to see all available
+    variables for a specific field type.
+
+.. _reference-forms-twig-functions:
+
+Twig Form Functions
+-------------------
 
 .. _reference-forms-twig-form:
 
 form(form_view, variables)
-..........................
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Renders the HTML of a complete form.
+Renders a complete form including the opening and closing tags.
 
 .. code-block:: twig
 
-    {# render the form and change the submission method #}
-    {{ form(form, {'method': 'GET'}) }}
+    {{ form(form, {method: 'GET'}) }}
 
-You will mostly use this helper for prototyping or if you use custom form
-themes. If you need more flexibility in rendering the form, you should use
-the other helpers to render individual parts of the form instead:
+This is convenient for prototyping, but use the other helpers for more control:
 
 .. code-block:: twig
 
@@ -222,139 +173,79 @@ the other helpers to render individual parts of the form instead:
         {{ form_row(form.name) }}
         {{ form_row(form.dueDate) }}
 
-        {{ form_row(form.submit, { 'label': 'Submit me' }) }}
+        {{ form_row(form.submit, {label: 'Submit me'}) }}
     {{ form_end(form) }}
-
-.. _reference-forms-twig-start:
-
-form_start(form_view, variables)
-................................
-
-Renders the start tag of a form. This helper takes care of printing the
-configured method and target action of the form. It will also include the
-correct ``enctype`` property if the form contains upload fields.
-
-.. code-block:: twig
-
-    {# render the start tag and change the submission method #}
-    {{ form_start(form, {'method': 'GET'}) }}
 
 .. _reference-forms-twig-end:
 
 form_end(form_view, variables)
-..............................
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Renders the end tag of a form.
+Renders the ``</form>`` closing tag. By default, it also calls ``form_rest()``
+to render any remaining fields, but you can disable that:
 
 .. code-block:: twig
 
     {{ form_end(form) }}
 
-This helper also outputs ``form_rest()`` (which is explained later in this
-article) unless you set ``render_rest`` to false:
-
-.. code-block:: twig
-
-    {# don't render unrendered fields #}
+    {# disable automatic form_rest() call #}
     {{ form_end(form, {render_rest: false}) }}
 
-.. _reference-forms-twig-label:
+.. _reference-forms-twig-errors:
 
-form_label(form_view, label, variables)
-.......................................
+form_errors(form_view, variables)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Renders the label for the given field. You can optionally pass the specific
-label you want to display as the second argument.
+Renders validation errors. When called on the form itself, renders global errors:
 
 .. code-block:: twig
 
-    {{ form_label(form.name) }}
+    {{ form_errors(form.name) }}  {# field errors #}
+    {{ form_errors(form) }}       {# global errors #}
 
-    {# The two following syntaxes are equivalent #}
-    {{ form_label(form.name, 'Your Name', {'label_attr': {'class': 'foo'}}) }}
+.. note::
 
-    {{ form_label(form.name, null, {
-        'label': 'Your name',
-        'label_attr': {'class': 'foo'}
-    }) }}
-
-See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
-argument.
+    In the Bootstrap 4 and 5 themes, ``form_errors()`` is already included in
+    ``form_label()``. See :doc:`Bootstrap 5 theme documentation </form/bootstrap5>`
+    for details.
 
 .. _reference-forms-twig-help:
 
-form_help(form_view)
-....................
+form_help(form_view, variables)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Renders the help text for the given field.
+Renders the help text configured via the ``help`` option.
 
 .. code-block:: twig
 
     {{ form_help(form.name) }}
 
-.. _reference-forms-twig-errors:
+.. _reference-forms-twig-label:
 
-form_errors(form_view)
-......................
+form_label(form_view, label, variables)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Renders any errors for the given field.
-
-.. code-block:: twig
-
-    {# render only the error messages related to this field #}
-    {{ form_errors(form.name) }}
-
-    {# render any "global" errors not associated to any form field #}
-    {{ form_errors(form) }}
-
-.. warning::
-
-    In the Bootstrap 4 form theme, ``form_errors()`` is already included in
-    ``form_label()``. Read more about this in the
-    :ref:`Bootstrap 4 theme documentation <reference-forms-bootstrap4-error-messages>`.
-
-.. _reference-forms-twig-widget:
-
-form_widget(form_view, variables)
-.................................
-
-Renders the HTML widget of a given field. If you apply this to an entire
-form or collection of fields, each underlying form row will be rendered.
+Renders the ``<label>`` element. The second argument overrides the default label:
 
 .. code-block:: twig
 
-    {# render a widget, but add a "foo" class to it #}
-    {{ form_widget(form.name, {'attr': {'class': 'foo'}}) }}
+    {{ form_label(form.name) }}
 
-The second argument to ``form_widget()`` is an array of variables. The most
-common variable is ``attr``, which is an array of HTML attributes to apply
-to the HTML widget. In some cases, certain types also have other template-related
-options that can be passed. These are discussed on a type-by-type basis.
-The ``attributes`` are not applied recursively to child fields if you're
-rendering many fields at once (e.g. ``form_widget(form)``).
+    {{ form_label(form.name, 'Your Name', {label_attr: {'class': 'foo'}}) }}
 
-See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
-argument.
+    {# this is equivalent #}
+    {{ form_label(form.name, null, {
+        label: 'Your name',
+        label_attr: {'class': 'foo'}
+    }) }}
 
-.. _reference-forms-twig-row:
+.. _reference-forms-twig-parent:
 
-form_row(form_view, variables)
-..............................
+form_parent(form_view)
+~~~~~~~~~~~~~~~~~~~~~~
 
-Renders the "row" of a given field, which is the combination of the field's
-label, errors, help and widget.
-
-.. code-block:: twig
-
-    {# render a field row, but display a label with text "foo" #}
-    {{ form_row(form.name, {'label': 'foo'}) }}
-
-The second argument to ``form_row()`` is an array of variables. The templates
-provided in Symfony only allow you to override the label as shown in the example
-above.
-
-See ":ref:`twig-reference-form-variables`" to learn about the ``variables``
-argument.
+Returns the parent form view, or ``null`` for the root form. Prefer this over
+``form.parent``, which fails if the form has a field named ``parent``.
 
 When a form field has validation errors, all built-in form themes automatically
 add the ``aria-invalid="true"`` attribute to the ``<input>`` element and link
@@ -366,39 +257,63 @@ configuration.
 .. _reference-forms-twig-rest:
 
 form_rest(form_view, variables)
-...............................
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This renders all fields that have not yet been rendered for the given form.
-It's a good idea to always have this somewhere inside your form as it'll
-render hidden fields for you and make any fields you forgot to render easier to
-spot (since it'll render the field for you).
+Renders all fields not yet rendered, including hidden fields like CSRF tokens.
+Always include this to avoid missing fields:
 
 .. code-block:: twig
 
     {{ form_rest(form) }}
 
-form_parent(form_view)
-......................
+.. _reference-forms-twig-row:
 
-Returns the parent form view or ``null`` if the form view already is the
-root form. Using this function should be preferred over accessing the parent
-form using ``form.parent``. The latter way will produce different results
-when a child form is named ``parent``.
+form_row(form_view, variables)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Tests
-~~~~~
+Renders a complete field row (label, widget, help, errors):
 
-Tests can be executed by using the ``is`` operator in Twig to create a
-condition. Read `the Twig documentation`_ for more information.
+.. code-block:: twig
+
+    {{ form_row(form.name, {'label': 'Custom Label'}) }}
+
+.. _reference-forms-twig-start:
+
+form_start(form_view, variables)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Renders the ``<form>`` opening tag with the configured method, action, and
+``enctype`` (when the form has file uploads).
+
+.. code-block:: twig
+
+    {{ form_start(form, {method: 'GET'}) }}
+
+.. _reference-forms-twig-widget:
+
+form_widget(form_view, variables)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Renders the input element(s). Pass ``attr`` to add HTML attributes:
+
+.. code-block:: twig
+
+    {{ form_widget(form.name, {attr: {'class': 'foo'}}) }}
+
+HTML attributes are not applied recursively to child fields if you're rendering
+many fields at once (e.g. ``form_widget(form)``).
+
+Twig Form Tests
+---------------
+
+Twig tests are used with the `is Twig operator`_ to create conditions.
 
 .. _form-twig-selectedchoice:
 
 selectedchoice(selected_value)
-..............................
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This test will check if the current choice is equal to the ``selected_value``
-or if the current choice is in the array (when ``selected_value`` is an
-array).
+Checks if a choice equals the given value, useful for marking options as selected:
 
 .. code-block:: html+twig
 
@@ -407,88 +322,130 @@ array).
 .. _form-twig-rootform:
 
 rootform
-........
+~~~~~~~~
 
-This test will check if the current ``form`` does not have a parent form view.
+Checks if a form view is the root form (has no parent). Prefer this over
+checking ``form.parent is null``, which fails if the form has a field named
+``parent``:
 
 .. code-block:: twig
-
-    {# DON'T DO THIS: this simple check can't differentiate between a form having
-       a parent form view and a form defining a nested form field called 'parent' #}
-
-    {% if form.parent is null %}
-        {{ form_errors(form) }}
-    {% endif %}
-
-   {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
 
     {% if form is rootform %}
         {{ form_errors(form) }}
     {% endif %}
 
-.. _twig-reference-form-variables:
-.. _reference-form-twig-variables:
+.. _reference-forms-twig-field-helpers:
 
-Form Variables Reference
-~~~~~~~~~~~~~~~~~~~~~~~~
+Form Field Helpers
+------------------
 
-The following variables are common to every field type. Certain field types
-may define even more variables and some variables here only really apply to
-certain types. To know the exact variables available for each type, check out
-the code of the templates used by your :doc:`form theme </form/form_themes>`.
-
-Assuming you have a ``form`` variable in your template and you want to
-reference the variables on the ``name`` field, accessing the variables is
-done by using a public ``vars`` property on the
-:class:`Symfony\\Component\\Form\\FormView` object:
+The :ref:`Twig form functions <reference-forms-twig-functions>` generate complete
+HTML elements based on the active :doc:`form theme </form/form_themes>`. When you
+need full control over the HTML (bypassing themes), use the ``field_*()`` helpers
+that return raw values:
 
 .. code-block:: html+twig
 
-    <label for="{{ form.name.vars.id }}"
-        class="{{ form.name.vars.required ? 'required' }}">
-        {{ form.name.vars.label }}
-    </label>
+    <input
+        type="text"
+        name="{{ field_name(form.username) }}"
+        id="{{ form.username.vars.id }}"
+        value="{{ field_value(form.username) }}"
+        placeholder="{{ field_label(form.username) }}"
+    >
 
-======================  ======================================================================================
-Variable                Usage
-======================  ======================================================================================
-``action``              The action of the current form.
-``attr``                A key-value array that will be rendered as HTML attributes on the field.
-``block_prefixes``      An array of all the names of the parent types.
-``cache_key``           A unique key which is used for caching.
-``compound``            Whether or not a field is actually a holder for a group of children fields
-                        (for example, a ``choice`` field, which is actually a group of checkboxes).
-``data``                The normalized data of the type.
-``disabled``            If ``true``, ``disabled="disabled"`` is added to the field.
-``errors``              An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).
-                        Note that you can't use ``form.errors`` to determine if a form is valid,
-                        since this only returns "global" errors: some individual fields may have errors.
-                        Instead, use the ``valid`` option.
-``form``                The current ``FormView`` instance.
-``full_name``           The ``name`` HTML attribute to be rendered.
-``help``                The help message that will be rendered.
-``id``                  The ``id`` HTML attribute to be rendered.
-``label``               The string label that will be rendered.
-``label_attr``          A key-value array that will be rendered as HTML attributes on the label.
-``method``              The method of the current form (POST, GET, etc.).
-``multipart``           If ``true``, ``form_enctype`` will render ``enctype="multipart/form-data"``.
-``name``                The name of the field (e.g. ``title``) - but not the ``name``
-                        HTML attribute, which is ``full_name``.
-``required``            If ``true``, a ``required`` attribute is added to the field to activate HTML5
-                        validation. Additionally, a ``required`` class is added to the label.
-``submitted``           Returns ``true`` or ``false`` depending on whether the whole form is submitted
-``translation_domain``  The domain of the translations for this form.
-``valid``               Returns ``true`` or ``false`` depending on whether the whole form is valid.
-``value``               The value that will be used when rendering (commonly the ``value`` HTML attribute).
-                        This only applies to the root form element.
-======================  ======================================================================================
+    <select name="{{ field_name(form.country) }}">
+        <option value="">Choose...</option>
+        {% for label, value in field_choices(form.country) %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
 
-.. tip::
+.. _reference-forms-twig-field-choices:
 
-    Internally, these variables are made available to the ``FormView``
-    object of your form when the Form component calls ``buildView()`` and
-    ``finishView()`` on each "node" of your form tree. To see what "view"
-    variables a particular field has, find the source code for the form
-    field (and its parent fields) and look at the above two functions.
+field_choices(form_view)
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _`the Twig documentation`: https://twig.symfony.com/doc/3.x/templates.html#test-operator
+Returns an iterable of label/value pairs for choice fields.
+
+.. code-block:: html+twig
+
+    {# render a custom dropdown for a choice field #}
+    <ul class="dropdown" role="listbox">
+        {% for label, value in field_choices(form.country) %}
+            <li role="option" data-value="{{ value }}">{{ label }}</li>
+        {% endfor %}
+    </ul>
+
+.. _reference-forms-twig-field-errors:
+
+field_errors(form_view)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Returns an iterable of error messages for the field.
+
+.. code-block:: html+twig
+
+    {% for error in field_errors(form.email) %}
+        <span class="error">{{ error }}</span>
+    {% endfor %}
+
+.. _reference-forms-twig-field-help:
+
+field_help(form_view)
+~~~~~~~~~~~~~~~~~~~~~
+
+Returns the help text for the field.
+
+.. code-block:: html+twig
+
+    <input type="text" name="{{ field_name(form.slug) }}" aria-describedby="slug-help">
+    <small id="slug-help">{{ field_help(form.slug) }}</small>
+
+.. _reference-forms-twig-field-id:
+
+field_id(form_view)
+~~~~~~~~~~~~~~~~~~~
+
+Returns the ``id`` HTML attribute value for the field (e.g., ``user_email``).
+
+.. code-block:: html+twig
+
+    <label for="{{ field_id(form.email) }}">Your Email</label>
+    <input type="email" id="{{ field_id(form.email) }}" name="{{ field_name(form.email) }}">
+
+.. _reference-forms-twig-field-label:
+
+field_label(form_view)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Returns the label text for the field.
+
+.. code-block:: html+twig
+
+    <span class="floating-label">{{ field_label(form.username) }}</span>
+
+.. _reference-forms-twig-field-name:
+
+field_name(form_view)
+~~~~~~~~~~~~~~~~~~~~~
+
+Returns the ``name`` HTML attribute value for the field (e.g., ``user[email]``).
+
+.. code-block:: html+twig
+
+    <input type="hidden" name="{{ field_name(form.token) }}" value="...">
+
+.. _reference-forms-twig-field-value:
+
+field_value(form_view)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Returns the current value of the field.
+
+.. code-block:: html+twig
+
+    {# pre-fill a custom input with the form field's value #}
+    <input type="range" name="{{ field_name(form.rating) }}" value="{{ field_value(form.rating) }}">
+
+.. _`is Twig operator`: https://twig.symfony.com/doc/3.x/templates.html#test-operator

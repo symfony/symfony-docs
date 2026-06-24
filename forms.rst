@@ -165,6 +165,8 @@ This unified concept makes the Form component more **flexible**. You can compose
 complex forms from simpler types, embed forms within forms, and reuse the same
 type definition across your application.
 
+.. _form-type-hierarchy:
+
 **The Form Type Hierarchy**
 
 Every form type has a parent type. The parent determines the base behavior,
@@ -468,7 +470,7 @@ Now that the form has been created, the next step is to render it::
 Internally, the ``render()`` method calls ``$form->createView()`` to
 transform the form into a *form view* instance.
 
-Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
+Then, use some :ref:`form helper functions <reference-forms-twig-functions>` to
 render the form contents:
 
 .. code-block:: twig
