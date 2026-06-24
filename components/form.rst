@@ -173,7 +173,7 @@ between Twig and several Symfony components:
     $ composer require symfony/twig-bridge
 
 The TwigBridge integration provides you with several
-:ref:`Twig Functions <reference-form-twig-functions-variables>`
+:ref:`Twig Functions <reference-forms-twig-functions>`
 that help you render the HTML widget, label, help and errors for each field
 (as well as a few other things). To configure the integration, you'll need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
@@ -502,7 +502,7 @@ Rendering the Form
 Now that the form has been created, the next step is to render it. This is
 done by passing a special form "view" object to your template (notice the
 ``$form->createView()`` in the controller above) and using a set of
-:ref:`form helper functions <reference-form-twig-functions>`:
+:ref:`form helper functions <reference-forms-twig-functions>`:
 
 .. code-block:: html+twig
 
