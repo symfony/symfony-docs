@@ -130,7 +130,7 @@ The validator class only has one required method ``validate()``::
                 return;
             }
 
-            // the argument must be a string or an object implementing __toString()
+            // the argument can be a string, int, float, Stringable or DateTimeInterface
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
@@ -143,6 +143,21 @@ if it causes no violations. The ``buildViolation()`` method takes the error
 message as its argument and returns an instance of
 :class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
 The ``addViolation()`` method call finally adds the violation to the context.
+
+The ``setParameter()`` method accepts ``string``, ``int``, ``float``,
+:phpclass:`Stringable` and :phpclass:`DateTimeInterface` values. Non-string
+values are formatted by the translator using the ICU message format::
+
+    $this->context->buildViolation($constraint->message)
+        ->setParameter('{{ limit }}', 10)
+        ->setParameter('{{ deadline }}', new \DateTimeImmutable('+1 day'))
+        ->addViolation();
+
+.. versionadded:: 8.2
+
+    Support for ``int``, ``float``, :phpclass:`Stringable` and
+    :phpclass:`DateTimeInterface` values in ``setParameter()`` was introduced
+    in Symfony 8.2. Previously, only ``string`` values were accepted.
 
 .. tip::
 
