@@ -9,7 +9,7 @@ which depend on whether you are installing Encore in a Symfony application or no
     Webpack Encore 7.0 made the package **ESM-only**. Before Encore 7.0,
     ``webpack.config.js`` used CommonJS (``const Encore = require('@symfony/webpack-encore')``
     and ``module.exports = Encore.getWebpackConfig()``) and ``getWebpackConfig()``
-    was synchronous. Starting with Encore 7.0 you must use ESM syntax (``import`` /
+    was synchronous. Starting with Encore 7.0, you must use ESM syntax (``import`` /
     ``export``), add ``"type": "module"`` to your ``package.json`` (or rename the
     file to ``webpack.config.mjs``), and ``getWebpackConfig()`` returns a ``Promise``
     that must be awaited.
@@ -144,8 +144,8 @@ must declare the project as an ESM package by adding a ``"type": "module"`` entr
         "type": "module"
     }
 
-Creating Other Supporting File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating Other Supporting Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, open the new ``assets/app.js`` file which contains some JavaScript code
 *and* imports some CSS:

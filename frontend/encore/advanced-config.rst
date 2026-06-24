@@ -27,7 +27,7 @@ To do that, modify the config after fetching it from Encore:
 
 .. versionadded:: 7.0
 
-    Since Webpack Encore 7.0 the configuration is **ESM-only** and
+    Since Webpack Encore 7.0, the configuration is **ESM-only** and
     ``Encore.getWebpackConfig()`` is asynchronous. Before Encore 7.0, you would
     write ``const Encore = require('@symfony/webpack-encore')``,
     ``const config = Encore.getWebpackConfig()`` (no ``await``) and
@@ -336,8 +336,8 @@ folders). In Webpack Encore you can use this option via the ``addAliases()`` met
 
 .. versionadded:: 7.0
 
-    Because Encore is now ESM-only, the CommonJS ``__dirname`` and ``__filename``
-    globals are no longer available in ``webpack.config.js``. Use
+    Because Encore is now ESM-only, the CommonJS globals ``__dirname`` and
+    ``__filename`` are no longer available in ``webpack.config.js``. Use
     ``import.meta.dirname`` and ``import.meta.filename`` instead (and remember to
     ``import`` Node.js modules such as ``path`` rather than using ``require()``).
 

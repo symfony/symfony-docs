@@ -19,7 +19,7 @@ application: it will *require* all of the dependencies it needs (e.g. jQuery or 
 
     import './styles/app.css';
 
-Encore's job (via Webpack) is simple: to read and follow *all* of the ``import``
+Encore's job (via Webpack) is simple: to read and follow *all* the ``import``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
 your app needs. Encore can do a lot more: minify files, pre-process Sass/LESS,
 support React, Vue.js, etc.
@@ -60,7 +60,7 @@ of your project. It already holds the basic config you need:
     ``module.exports = Encore.getWebpackConfig()``).
 
 The *key* part is ``addEntry()``: this tells Encore to load the ``assets/app.js``
-file and follow *all* of the ``import`` statements. It will then package everything
+file and follow *all* the ``import`` statements. It will then package everything
 together and - thanks to the first ``app`` argument - output final ``app.js`` and
 ``app.css`` files into the ``public/build`` directory.
 

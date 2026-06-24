@@ -10,8 +10,9 @@ underlying minifier through the ``minify`` option.
 
     Before Encore 7.0, JavaScript minification was handled by
     ``terser-webpack-plugin`` (configured via ``configureTerserPlugin()``) and CSS
-    minification by ``css-minimizer-webpack-plugin``. Both archived plugins were
-    replaced by the unified `minimizer-webpack-plugin`_ in Encore 7.0:
+    minification by ``css-minimizer-webpack-plugin``. Both plugins, which have
+    since been archived, were replaced by the unified `minimizer-webpack-plugin`_
+    in Encore 7.0:
 
     * ``configureTerserPlugin()`` was **removed**; use the new
       :ref:`configureJsMinimizerPlugin() <encore-configure-js-minimizer>` instead

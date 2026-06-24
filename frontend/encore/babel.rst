@@ -44,11 +44,11 @@ to support, see :ref:`browserslist_package_config`.
 .. warning::
 
     Webpack Encore 7.0 requires `Babel 8`_. Without a ``browserslist``
-    configuration, Babel 8's ``@babel/preset-env`` targets **modern browsers** by
-    default instead of compiling down to ES5. Before Encore 7.0 (Babel 7), the
-    absence of a ``browserslist`` configuration meant transpiling to ES5. If you
-    need to support older browsers, add a ``browserslist`` configuration to your
-    project (see :ref:`browserslist_package_config`).
+    configuration, ``@babel/preset-env`` in Babel 8 targets **modern browsers**
+    by default instead of compiling down to ES5. Before Encore 7.0 (Babel 7),
+    the absence of a ``browserslist`` configuration meant transpiling to ES5.
+    If you need to support older browsers, add a ``browserslist`` configuration
+    to your project (see :ref:`browserslist_package_config`).
 
 After changing your "browserslist" config, you will need to manually remove the babel
 cache directory:
@@ -81,8 +81,7 @@ method to add any of the `@babel/preset-env configuration options`_:
     Encore throws an explicit error if you set them. Before Encore 7.0, you could
     enable polyfills with ``config.useBuiltIns = 'usage'`` and ``config.corejs = 3``.
 
-    To polyfill with Babel 8, use `babel-plugin-polyfill-corejs3`_ instead, for
-    example:
+    To add polyfills with Babel 8, use `babel-plugin-polyfill-corejs3`_ instead:
 
     .. code-block:: javascript
 

@@ -20,7 +20,7 @@ your loader config
     ;
 
 Since the loader config accepts any valid Webpack rules object, you can pass any
-additional information your need for the loader
+additional information that you need for the loader:
 
 .. code-block:: javascript
 
