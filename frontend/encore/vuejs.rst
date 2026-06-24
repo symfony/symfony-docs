@@ -174,20 +174,29 @@ Using images
 ~~~~~~~~~~~~
 
 You can't use ``<img src="./image.png">`` in ``.jsx`` files. As a workaround,
-you can import them with ``require()`` function:
+you can ``import`` them:
 
 .. code-block:: jsx
+
+    import imageUrl from './image.png';
 
     export default {
         name: 'Component',
         render() {
             return (
                 <div>
-                    <img src={require("./image.png")}/>
+                    <img src={imageUrl}/>
                 </div>
             )
         }
     }
+
+.. versionadded:: 7.0
+
+    Since Webpack Encore 7.0 is ESM-only, the CommonJS ``require()`` function is no
+    longer available in your application code. Before Encore 7.0, you could inline
+    the image with ``<img src={require("./image.png")}/>``; use a top-level
+    ``import`` instead.
 
 Using Vue inside Twig templates
 -------------------------------

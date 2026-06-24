@@ -20,7 +20,7 @@ your loader config
     ;
 
 Since the loader config accepts any valid Webpack rules object, you can pass any
-additional information your need for the loader
+additional information that you need for the loader:
 
 .. code-block:: javascript
 
@@ -31,15 +31,21 @@ additional information your need for the loader
             loader: 'handlebars-loader',
             options: {
                 helperDirs: [
-                    __dirname + '/helpers1',
-                    __dirname + '/helpers2',
+                    import.meta.dirname + '/helpers1',
+                    import.meta.dirname + '/helpers2',
                 ],
                 partialDirs: [
-                    path.join(__dirname, 'templates', 'partials')
+                    path.join(import.meta.dirname, 'templates', 'partials')
                 ]
             }
         })
     ;
+
+.. versionadded:: 7.0
+
+    Since Webpack Encore 7.0 is ESM-only, the CommonJS ``__dirname`` global is no
+    longer available in ``webpack.config.js``. Use ``import.meta.dirname`` instead
+    (and ``import path from 'path';`` rather than ``require('path')``).
 
 Adding Custom Plugins
 ---------------------
@@ -51,7 +57,7 @@ to use the `IgnorePlugin`_ (see `moment/moment#2373`_):
 .. code-block:: diff
 
       // webpack.config.js
-    + var webpack = require('webpack');
+    + import webpack from 'webpack';
 
       Encore
           // ...

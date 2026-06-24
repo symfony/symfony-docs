@@ -4,6 +4,16 @@ Installing Encore
 First, make sure you `install Node.js`_. Then, follow the instructions below,
 which depend on whether you are installing Encore in a Symfony application or not.
 
+.. versionadded:: 7.0
+
+    Webpack Encore 7.0 made the package **ESM-only**. Before Encore 7.0,
+    ``webpack.config.js`` used CommonJS (``const Encore = require('@symfony/webpack-encore')``
+    and ``module.exports = Encore.getWebpackConfig()``) and ``getWebpackConfig()``
+    was synchronous. Starting with Encore 7.0, you must use ESM syntax (``import`` /
+    ``export``), add ``"type": "module"`` to your ``package.json`` (or rename the
+    file to ``webpack.config.mjs``), and ``getWebpackConfig()`` returns a ``Promise``
+    that must be awaited.
+
 Installing Encore in Symfony Applications
 -----------------------------------------
 
@@ -49,7 +59,7 @@ is the main config file for both Webpack and Webpack Encore:
 
 .. code-block:: javascript
 
-    const Encore = require('@symfony/webpack-encore');
+    import Encore from '@symfony/webpack-encore';
 
     // Manually configure the runtime environment if not already configured yet by the "encore" command.
     // It's useful when you use tools that rely on webpack.config.js file.
@@ -100,10 +110,9 @@ is the main config file for both Webpack and Webpack Encore:
             config.plugins.push('@babel/plugin-transform-class-properties');
         })
 
-        // enables @babel/preset-env polyfills
+        // configures @babel/preset-env
         .configureBabelPresetEnv((config) => {
-            config.useBuiltIns = 'usage';
-            config.corejs = 3;
+            // ...
         })
 
         // enables Sass/SCSS support
@@ -123,10 +132,20 @@ is the main config file for both Webpack and Webpack Encore:
         //.autoProvidejQuery()
     ;
 
-    module.exports = Encore.getWebpackConfig();
+    export default await Encore.getWebpackConfig();
 
-Creating Other Supporting File
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Since this config uses ESM syntax (``import`` / ``export``), your ``package.json``
+must declare the project as an ESM package by adding a ``"type": "module"`` entry
+(alternatively, rename the config file to ``webpack.config.mjs``):
+
+.. code-block:: json
+
+    {
+        "type": "module"
+    }
+
+Creating Other Supporting Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, open the new ``assets/app.js`` file which contains some JavaScript code
 *and* imports some CSS:
