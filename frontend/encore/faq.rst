@@ -88,7 +88,7 @@ now contain the subdirectory.
 ---------------------------------------------
 
 This error happens when your code (or some library that you are using) expects ``$``
-or ``jQuery`` to be a global variable. But, when you use Webpack and ``require('jquery')``,
+or ``jQuery`` to be a global variable. But, when you use Webpack and ``import $ from 'jquery'``,
 no global variables are set.
 
 The fix depends on if the error is happening in your code or inside some third-party
@@ -111,7 +111,7 @@ you try to require that module:
 
 .. code-block:: javascript
 
-    require('respond.js');
+    import 'respond.js';
 
 But, instead of working, you see an error:
 
@@ -121,14 +121,14 @@ But, instead of working, you see an error:
 
 Typically, a package will "advertise" its "main" file by adding a ``main`` key to
 its ``package.json``. But sometimes, old libraries won't have this. Instead, you'll
-need to specifically require the file you need. In this case, the file you should
-use is located at ``node_modules/respond.js/dest/respond.src.js``. You can require
+need to specifically import the file you need. In this case, the file you should
+use is located at ``node_modules/respond.js/dest/respond.src.js``. You can import
 this via:
 
 .. code-block:: javascript
 
-    // require a non-minified file whenever possible
-    require('respond.js/dest/respond.src.js');
+    // import a non-minified file whenever possible
+    import 'respond.js/dest/respond.src.js';
 
 I need to execute Babel on a third-party Module
 -----------------------------------------------
@@ -158,7 +158,7 @@ running it (e.g. when executing ``npx encore dev``). Fix this issue calling to
 .. code-block:: javascript
 
     // webpack.config.js
-    const Encore = require('@symfony/webpack-encore')
+    import Encore from '@symfony/webpack-encore';
 
     if (!Encore.isRuntimeEnvironmentConfigured()) {
         Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
