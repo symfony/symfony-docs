@@ -81,8 +81,6 @@ Form view data        ``null``
     See all form events at a glance in the
     :ref:`Form Events Information Table <component-form-event-table>`.
 
-    instead.
-
 .. sidebar:: ``FormEvents::PRE_SET_DATA`` in the Form component
 
     The ``Symfony\Component\Form\Extension\Core\Type\CollectionType`` form type relies
