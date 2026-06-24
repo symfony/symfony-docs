@@ -167,4 +167,7 @@ location form that you can reuse wherever you need it.
 
 .. warning::
 
-    Forms with the ``inherit_data`` option set cannot have ``*_SET_DATA`` event listeners.
+    Forms with the ``inherit_data`` option set do not dispatch the
+    ``PRE_SET_DATA`` and ``POST_SET_DATA`` :doc:`form events </form/events>`, because they don't have
+    their own data lifecycle. To modify fields dynamically based on the
+    underlying data, add the event listeners to the parent form instead.
