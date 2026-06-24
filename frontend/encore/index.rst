@@ -25,6 +25,7 @@ Optimizing
 ..........
 
 * :doc:`Versioning (and the entrypoints.json/manifest.json files) </frontend/encore/versioning>`
+* :doc:`Minifying JavaScript and CSS </frontend/encore/minification>`
 * :doc:`Using a CDN </frontend/encore/cdn>`
 * :doc:`/frontend/encore/code-splitting`
 * :doc:`/frontend/encore/split-chunks`
