@@ -12,18 +12,26 @@ To do that, modify the config after fetching it from Encore:
 
     // webpack.config.js
 
-    const Encore = require('@symfony/webpack-encore');
+    import Encore from '@symfony/webpack-encore';
 
     // ... all Encore config here
 
     // fetch the config, then modify it!
-    const config = Encore.getWebpackConfig();
+    const config = await Encore.getWebpackConfig();
 
     // add an extension
     config.resolve.extensions.push('json');
 
     // export the final config
-    module.exports = config;
+    export default config;
+
+.. versionadded:: 7.0
+
+    Since Webpack Encore 7.0 the configuration is **ESM-only** and
+    ``Encore.getWebpackConfig()`` is asynchronous. Before Encore 7.0, you would
+    write ``const Encore = require('@symfony/webpack-encore')``,
+    ``const config = Encore.getWebpackConfig()`` (no ``await``) and
+    ``module.exports = config``.
 
 But be careful not to accidentally override any config from Encore:
 
@@ -73,7 +81,7 @@ state of the current configuration to build a new one:
     ;
 
     // build the first configuration
-    const firstConfig = Encore.getWebpackConfig();
+    const firstConfig = await Encore.getWebpackConfig();
 
     // Set a unique name for the config (needed later!)
     firstConfig.name = 'firstConfig';
@@ -92,13 +100,13 @@ state of the current configuration to build a new one:
     ;
 
     // build the second configuration
-    const secondConfig = Encore.getWebpackConfig();
+    const secondConfig = await Encore.getWebpackConfig();
 
     // Set a unique name for the config (needed later!)
     secondConfig.name = 'secondConfig';
 
     // export the final configuration as an array of multiple configurations
-    module.exports = [firstConfig, secondConfig];
+    export default [firstConfig, secondConfig];
 
 When running Encore, both configurations will be built in parallel. If you
 prefer to build configs separately, pass the ``--config-name`` option:
@@ -246,19 +254,19 @@ being able to create a configuration object, the most important one being what
 the target environment is.
 
 To solve this issue you can use ``configureRuntimeEnvironment``. This method
-must be called from a JavaScript file **before** requiring ``webpack.config.js``.
+must be called from a JavaScript file **before** importing ``webpack.config.js``.
 
 For instance:
 
 .. code-block:: javascript
 
-    const Encore = require('@symfony/webpack-encore');
+    import Encore from '@symfony/webpack-encore';
 
     // Set the runtime environment
     Encore.configureRuntimeEnvironment('dev');
 
-    // Retrieve the Webpack configuration object
-    const webpackConfig = require('./webpack.config');
+    // Retrieve the Webpack configuration object (it is exported asynchronously)
+    const { default: webpackConfig } = await import('./webpack.config.js');
 
 If needed, you can also pass to that method all the options that you would
 normally use from the command-line interface:
@@ -285,9 +293,9 @@ For example, you could use it to configure the ``vue`` loader to enable a specif
 .. code-block:: javascript
 
     // Manually
-    const webpackConfig = Encore.getWebpackConfig();
+    const webpackConfig = await Encore.getWebpackConfig();
 
-    const vueLoader = webpackConfig.module.rules.find(rule => /vue-loader/.test(rule.loader);
+    const vueLoader = webpackConfig.module.rules.find(rule => /vue-loader/.test(rule.loader));
     vueLoader.options.experimentalInlineMatchResource = true;
 
     // Using Encore.configureLoaderRule()
@@ -295,7 +303,7 @@ For example, you could use it to configure the ``vue`` loader to enable a specif
         loaderRule.options.experimentalInlineMatchResource = true;
     });
 
-    return Encore.getWebpackConfig();
+    export default await Encore.getWebpackConfig();
 
 The following loaders are configurable with ``configureLoaderRule()``:
   - ``javascript`` (alias ``js``)
@@ -319,10 +327,19 @@ folders). In Webpack Encore you can use this option via the ``addAliases()`` met
 
 .. code-block:: javascript
 
+    import path from 'path';
+
     Encore.addAliases({
-        Utilities: path.resolve(__dirname, 'src/utilities/'),
-        Templates: path.resolve(__dirname, 'src/templates/')
+        Utilities: path.resolve(import.meta.dirname, 'src/utilities/'),
+        Templates: path.resolve(import.meta.dirname, 'src/templates/')
     })
+
+.. versionadded:: 7.0
+
+    Because Encore is now ESM-only, the CommonJS ``__dirname`` and ``__filename``
+    globals are no longer available in ``webpack.config.js``. Use
+    ``import.meta.dirname`` and ``import.meta.filename`` instead (and remember to
+    ``import`` Node.js modules such as ``path`` rather than using ``require()``).
 
 With the above config, you could now import certain modules more concisely:
 
@@ -349,6 +366,13 @@ In Webpack Encore you can use this option via the ``addExternals()`` method:
         jquery: 'jQuery',
         react: 'react'
     })
+
+Configuring JavaScript and CSS Minification
+-------------------------------------------
+
+Encore lets you customize how your JavaScript and CSS assets are minified for
+production, and even switch the underlying minifier. This is covered in its own
+article: :doc:`/frontend/encore/minification`.
 
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`array of configurations`: https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations

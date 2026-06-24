@@ -33,7 +33,7 @@ of your project. It already holds the basic config you need:
 .. code-block:: javascript
 
     // webpack.config.js
-    const Encore = require('@symfony/webpack-encore');
+    import Encore from '@symfony/webpack-encore';
 
     Encore
         // directory where compiled assets will be stored
@@ -49,8 +49,18 @@ of your project. It already holds the basic config you need:
 
     // ...
 
+    export default await Encore.getWebpackConfig();
+
+.. versionadded:: 7.0
+
+    Since Webpack Encore 7.0 the configuration must use ESM syntax (``import`` /
+    ``export``) and ``Encore.getWebpackConfig()`` is asynchronous, so it must be
+    awaited. Before Encore 7.0, the file used CommonJS
+    (``const Encore = require('@symfony/webpack-encore')`` and
+    ``module.exports = Encore.getWebpackConfig()``).
+
 The *key* part is ``addEntry()``: this tells Encore to load the ``assets/app.js``
-file and follow *all* of the ``require()`` statements. It will then package everything
+file and follow *all* of the ``import`` statements. It will then package everything
 together and - thanks to the first ``app`` argument - output final ``app.js`` and
 ``app.css`` files into the ``public/build`` directory.
 
@@ -190,9 +200,9 @@ Great! Use ``import`` to import ``jquery`` and ``greet.js``:
     + // loads the jquery package from node_modules
     + import $ from 'jquery';
 
-    + // import the function from greet.js (the .js extension is optional)
+    + // import the function from greet.js
     + // ./ (or ../) means to look for a local file
-    + import greet from './greet';
+    + import greet from './greet.js';
 
     + $(document).ready(function() {
     +     $('body').prepend('<h1>'+greet('jill')+'</h1>');
@@ -201,6 +211,15 @@ Great! Use ``import`` to import ``jquery`` and ``greet.js``:
 That's it! If you previously ran ``encore dev --watch``, your final, built files
 have already been updated: jQuery and ``greet.js`` have been automatically
 added to the output file (``app.js``). Refresh to see the message!
+
+.. versionadded:: 7.0
+
+    Because Encore 7.0 projects use ``"type": "module"``, Webpack enables
+    `resolve.fullySpecified`_ by default. This means **the file extension is now
+    required** for relative imports (``import greet from './greet.js'``) and for
+    deep imports from packages without an ``"exports"`` field (e.g.
+    ``import 'jquery-ui/ui/widgets/progressbar.js'``). Before Encore 7.0, the
+    extension was optional.
 
 Stimulus & Symfony UX
 ---------------------
@@ -459,6 +478,7 @@ Keep Going!
 Encore supports many more features! For a full list of what you can do, see
 `Encore's index.js file`_. Or, go back to :ref:`list of Frontend articles <encore-toc>`.
 
+.. _`resolve.fullySpecified`: https://webpack.js.org/configuration/module/#resolvefullyspecified
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
 .. _`Stimulus`: https://stimulus.hotwired.dev/

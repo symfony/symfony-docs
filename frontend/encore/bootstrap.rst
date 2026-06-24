@@ -51,14 +51,14 @@ Now, require bootstrap from any of your JavaScript files:
 
     // app.js
 
-    const $ = require('jquery');
+    import $ from 'jquery';
     // this "modifies" the jquery module: adding behavior to it
     // the bootstrap module doesn't export/return anything
-    require('bootstrap');
+    import 'bootstrap';
 
     // or you can include specific pieces
-    // require('bootstrap/js/dist/tooltip');
-    // require('bootstrap/js/dist/popover');
+    // import 'bootstrap/js/dist/tooltip.js';
+    // import 'bootstrap/js/dist/popover.js';
 
     $(document).ready(function() {
         $('[data-toggle="popover"]').popover();
@@ -95,10 +95,10 @@ and CSS like normal:
 
     // ...
 
-    // require the JavaScript
-    require('bootstrap-star-rating');
-    // require 2 CSS files needed
-    require('bootstrap-star-rating/css/star-rating.css');
-    require('bootstrap-star-rating/themes/krajee-svg/theme.css');
+    // import the JavaScript
+    import 'bootstrap-star-rating';
+    // import 2 CSS files needed
+    import 'bootstrap-star-rating/css/star-rating.css';
+    import 'bootstrap-star-rating/themes/krajee-svg/theme.css';
 
 .. _`Bootstrap CSS framework`: https://getbootstrap.com/

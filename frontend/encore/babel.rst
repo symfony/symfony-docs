@@ -41,6 +41,15 @@ The ``@babel/preset-env`` preset rewrites your JavaScript so that the final synt
 will work in whatever browsers you want. To configure the browsers that you need
 to support, see :ref:`browserslist_package_config`.
 
+.. warning::
+
+    Webpack Encore 7.0 requires `Babel 8`_. Without a ``browserslist``
+    configuration, Babel 8's ``@babel/preset-env`` targets **modern browsers** by
+    default instead of compiling down to ES5. Before Encore 7.0 (Babel 7), the
+    absence of a ``browserslist`` configuration meant transpiling to ES5. If you
+    need to support older browsers, add a ``browserslist`` configuration to your
+    project (see :ref:`browserslist_package_config`).
+
 After changing your "browserslist" config, you will need to manually remove the babel
 cache directory:
 
@@ -61,10 +70,28 @@ method to add any of the `@babel/preset-env configuration options`_:
         // ...
 
         .configureBabelPresetEnv((config) => {
-            config.useBuiltIns = 'usage';
-            config.corejs = 3;
+            // ...
         })
     ;
+
+.. warning::
+
+    The ``useBuiltIns`` and ``corejs`` options are **no longer supported** since
+    Webpack Encore 7.0, because Babel 8 removed them from ``@babel/preset-env``.
+    Encore throws an explicit error if you set them. Before Encore 7.0, you could
+    enable polyfills with ``config.useBuiltIns = 'usage'`` and ``config.corejs = 3``.
+
+    To polyfill with Babel 8, use `babel-plugin-polyfill-corejs3`_ instead, for
+    example:
+
+    .. code-block:: javascript
+
+        Encore.configureBabel((babelConfig) => {
+            babelConfig.plugins.push([
+                'polyfill-corejs3',
+                { method: 'usage-global' },
+            ]);
+        });
 
 Creating a ``.babelrc`` File
 ----------------------------
@@ -80,4 +107,6 @@ As soon as a ``.babelrc`` file is present, it will take priority over the Babel
 configuration added by Encore.
 
 .. _`Babel`: https://babeljs.io/
+.. _`Babel 8`: https://babeljs.io/docs/v8-migration/
+.. _`babel-plugin-polyfill-corejs3`: https://github.com/babel/babel-polyfills
 .. _`@babel/preset-env configuration options`: https://babeljs.io/docs/babel-preset-env

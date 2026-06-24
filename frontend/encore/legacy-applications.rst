@@ -7,7 +7,7 @@ Instead, it just returns a value:
 .. code-block:: javascript
 
     // this loads jquery, but does *not* set a global $ or jQuery variable
-    const $ = require('jquery');
+    import $ from 'jquery';
 
 In practice, this will cause problems with some outside libraries that *rely* on
 jQuery to be global *or* if *your* JavaScript isn't being processed through Webpack
@@ -63,7 +63,7 @@ Accessing jQuery from outside of Webpack JavaScript Files
 
 If *your* code needs access to ``$`` or ``jQuery`` and you are inside of a file
 that's processed by Webpack/Encore, you should remove any "$ is not defined" errors
-by requiring jQuery: ``var $ = require('jquery')``.
+by importing jQuery: ``import $ from 'jquery'``.
 
 But if you also need to provide access to ``$`` and ``jQuery`` variables outside of
 JavaScript files processed by Webpack (e.g. JavaScript that still lives in your
@@ -77,8 +77,8 @@ page, add:
 
       // app.js
 
-      // require jQuery normally
-      const $ = require('jquery');
+      // import jQuery normally
+      import $ from 'jquery';
 
     + // create global $ and jQuery variables
     + global.$ = global.jQuery = $;
