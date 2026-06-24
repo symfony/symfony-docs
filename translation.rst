@@ -23,6 +23,8 @@ into the language of the user::
     *language* code, an underscore (``_``), then the `ISO 3166-1 alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
+.. _translation-domain:
+
 Translations can be organized into groups, called **domains**. By default, all
 messages use the default ``messages`` domain::
 
