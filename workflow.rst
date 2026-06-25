@@ -1028,6 +1028,53 @@ to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
             ],
         ]);
 
+Instead of listing the events you want to keep, you can prefix one or more event
+names with ``!`` to dispatch every event *except* the listed ones. This is
+convenient when you only want to silence a couple of events permanently, without
+having to enumerate (and maintain) the full allow-list:
+
+.. versionadded:: 8.2
+
+    The ``!`` prefix syntax for ``events_to_dispatch`` was introduced in Symfony 8.2.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # dispatch all events except 'workflow.announce'
+                    events_to_dispatch: ['!workflow.announce']
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'workflows' => [
+                    'blog_publishing' => [
+                        // dispatch all events except 'workflow.announce'
+                        'events_to_dispatch' => ['!workflow.announce'],
+                    ],
+                ],
+            ],
+        ]);
+
+Because the block-list is turned into an allow-list when the workflow is built,
+any event added by Symfony in a later version keeps being dispatched by default.
+
+.. warning::
+
+    You cannot mix allow-list and block-list entries in the same ``events_to_dispatch``
+    option (e.g. ``['workflow.leave', '!workflow.announce']``); doing so throws an
+    exception. Just like the allow-list, the block-list does not apply to
+    :ref:`Guard events <workflow-usage-guard-events>`, so ``'!workflow.guard'`` is
+    rejected as well.
+
 You can also disable a specific event from being fired when applying a transition::
 
     use App\Entity\BlogPost;
