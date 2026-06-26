@@ -16,7 +16,7 @@ logging these HTTP codes based on the MonologBundle configuration:
                     # ...
                     type: fingers_crossed
                     handler: ...
-                    excluded_http_codes: [403, 404, { 400: ['^/foo', '^/bar'] }]
+                    excluded_http_codes: [403, 404, { code: 400, urls: ['^/foo', '^/bar'] }]
 
     .. code-block:: php
 
@@ -30,7 +30,7 @@ logging these HTTP codes based on the MonologBundle configuration:
                         // ...
                         'type' => 'fingers_crossed',
                         'handler' => ...,
-                        'excluded_http_codes' => [403, 404, ['400' => ['^/foo', '^/bar']]],
+                        'excluded_http_codes' => [403, 404, ['code' => '400', 'urls' => ['^/foo', '^/bar']]],
                     ],
                 ],
             ],
