@@ -80,7 +80,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
-The default value is ``''`` (the empty string).
+The default value is ``''`` (the empty string), but submitted empty values
+return ``null`` (the field's data transformer reshapes the value).
 
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
