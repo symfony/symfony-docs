@@ -24,8 +24,8 @@ value will be set. Use the ``data`` option or the ``placeholder`` key of the
 
 .. warning::
 
-    :doc:`Form data transformers </form/data_transformers>` are applied to
-    the ``empty_data`` value before it is returned. For example, numeric
-    field types (``IntegerType``, ``NumberType``, ``MoneyType``,
-    ``PercentType``, ``RangeType``) cast the empty string to ``null``. Use
-    a custom data transformer if a different return value is required.
+    :doc:`Form data transformers </form/data_transformers>` are applied to the
+    ``empty_data`` value before it is returned. For example, numeric field types
+    (``IntegerType``, ``NumberType``, ``MoneyType``, ``PercentType``) cast the
+    empty string to ``null``. Use a custom data transformer if a different
+    return value is required.
