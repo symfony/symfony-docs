@@ -437,6 +437,29 @@ You can also customize the datetime format using the ``date_time_format`` option
 
     The ``date_time_timezone`` option was introduced in Symfony 8.1.
 
+Encoding BcMath and GMP Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for :phpclass:`BcMath\\Number` and :phpclass:`GMP` value objects was
+    introduced in Symfony 8.2.
+
+JsonStreamer natively encodes and decodes :phpclass:`BcMath\\Number` and
+:phpclass:`GMP` value objects (similar to the Serializer's
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NumberNormalizer`). They are
+written as JSON strings and read back into the matching value object::
+
+    use Symfony\Component\TypeInfo\Type;
+
+    // ...
+
+    $json = $jsonStreamWriter->write(new \BcMath\Number('1.23'), Type::object(\BcMath\Number::class));
+    // $json = '"1.23"'
+
+    $number = $jsonStreamReader->read('"1.23"', Type::object(\BcMath\Number::class));
+    // $number = new \BcMath\Number('1.23')
+
 .. _json-streamer-configure-encoded-name:
 
 Configuring the Encoded Name
