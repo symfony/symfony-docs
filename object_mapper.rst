@@ -706,6 +706,31 @@ target resolution strategy for each collection item.
 
     The ``targetClass`` option of ``MapCollection`` was introduced in Symfony 8.1.
 
+Mapping Collections to a Doctrine Collection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``MapCollection`` transform always returns a plain array. When the target
+property is a Doctrine ``Collection`` (e.g. a ``OneToMany`` or ``ManyToMany``
+association), wrap it in the
+:class:`Symfony\\Bridge\\Doctrine\\ObjectMapper\\Transform\\IterableToArrayCollection`
+transformer provided by the Doctrine bridge. It maps each item and returns a
+Doctrine ``ArrayCollection`` instead of an array::
+
+    use Symfony\Bridge\Doctrine\ObjectMapper\Transform\IterableToArrayCollection;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Transform\MapCollection;
+
+    #[Map(target: Order::class)]
+    class OrderInput
+    {
+        #[Map(transform: new IterableToArrayCollection(new MapCollection(targetClass: LineItem::class)))]
+        public iterable $items = [];
+    }
+
+.. versionadded:: 8.2
+
+    The ``IterableToArrayCollection`` transformer was introduced in Symfony 8.2.
+
 Mapping Multiple Targets
 ------------------------
 
