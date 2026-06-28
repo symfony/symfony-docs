@@ -2636,16 +2636,15 @@ instead::
 Expiring Signed URIs
 ....................
 
-For security reasons, it's common to make signed URIs expire after some time
-(e.g. when using them to reset user credentials). By default, signed URIs don't
-expire, but you can define an expiration date/time using the ``$expiration``
-argument of :method:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`::
+For security reasons, signed URIs often expire after a certain amount of time
+(for example, when used to reset user credentials)::
 
     // sign the URL with an explicit expiration date
     $signedUrl = $this->uriSigner->sign($url, new \DateTimeImmutable('2050-01-01'));
     // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=2524608000&_hash=e4a21b9'
 
-You can also pass a ``DateInterval`` or a Unix timestamp::
+You can also pass a ``DateInterval`` (which is added to the current date and
+time) or a Unix timestamp::
 
     $signedUrl = $this->uriSigner->sign($url, new \DateInterval('PT10S'));  // valid for 10 seconds from now
     // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=1712414278&_hash=e4a21b9'
@@ -2655,8 +2654,24 @@ You can also pass a ``DateInterval`` or a Unix timestamp::
 
 .. note::
 
-    The expiration date/time is included in the signed URIs as a timestamp via
-    the ``_expiration`` query parameter.
+    The expiration date and time is included in signed URIs as the
+    ``_expiration`` query parameter, using a Unix timestamp.
+
+Instead of passing an expiration when signing each URI, you can configure a
+default expiration time applied to all signed URIs:
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            uri_signer:
+                expiration: 600 # default expiration in seconds (10 minutes)
+
+.. deprecated:: 8.2
+
+    Not passing an expiration to ``UriSigner::sign()`` is deprecated since
+    Symfony 8.2 and will be required in Symfony 9.0.
 
 Creating Single-Use Signed URIs
 ...............................
