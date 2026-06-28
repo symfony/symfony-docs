@@ -418,11 +418,20 @@ or can get everything which partial matches the event name:
 
 The :doc:`security </security>` system uses an event dispatcher per
 firewall. Use the ``--dispatcher`` option to get the registered listeners
-for a particular event dispatcher:
+for a particular event dispatcher, or ``--dispatchers`` to list all the
+available event dispatchers:
 
 .. code-block:: terminal
 
+    # get the registered listeners of a specific event dispatcher
     $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
+
+    # list all the available event dispatchers
+    $ php bin/console debug:event-dispatcher --dispatchers
+
+.. versionadded:: 8.2
+
+    The ``--dispatchers`` option was introduced in Symfony 8.2.
 
 .. _event-dispatcher-before-after-filters:
 
