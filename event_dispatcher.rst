@@ -417,9 +417,7 @@ or can get everything which partial matches the event name:
     $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
 
 The :doc:`security </security>` system uses an event dispatcher per
-firewall. Use the ``--dispatcher`` option to get the registered listeners
-for a particular event dispatcher, or ``--dispatchers`` to list all the
-available event dispatchers:
+firewall. Use the ``--dispatcher`` option to get the registered listeners:
 
 .. code-block:: terminal
 
