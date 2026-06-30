@@ -75,16 +75,13 @@ If you want to apply tags automatically for your own services, use the
 
         return App::config([
             'services' => [
-                CustomInterface::class => [
-                    'tags' => ['app.custom_tag'],
+                '_instanceof' => [
+                    CustomInterface::class => [
+                        'tags' => ['app.custom_tag'],
+                    ],
                 ],
             ],
         ]);
-
-.. warning::
-
-    If you're using PHP configuration, you need to call ``instanceof`` before
-    any service registration to make sure tags are correctly applied.
 
 It is also possible to use the ``#[AutoconfigureTag]`` attribute directly on the
 base class or interface::
