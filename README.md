@@ -36,6 +36,10 @@ Build Documentation Locally
 This is not needed for contributing, but it's useful if you would like to debug some
 issue in the docs or if you want to read Symfony Documentation offline.
 
+> [!NOTE]
+> The application that builds the Symfony Docs does not support Windows. Windows
+> users should build the docs using a Linux distribution via [WSL](https://learn.microsoft.com/windows/wsl/).
+
 ```bash
 $ git clone git@github.com:symfony/symfony-docs.git
 
