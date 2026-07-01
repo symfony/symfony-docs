@@ -1,7 +1,7 @@
 Bootstrap 4 Form Theme
 ======================
 
-Symfony provides several ways of integrating Bootstrap into your application. The
+Symfony provides several ways of integrating `Bootstrap 4`_ into your application. The
 most straightforward way is to add the required ``<link>`` and ``<script>``
 elements in your templates (usually you only include them in the main layout
 template which other templates extend from):
@@ -135,6 +135,7 @@ Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the la
     {{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }}
     {{ form_row(form.myCheckbox, {label_attr: {class: 'switch-custom'} }) }}
 
+.. _`Bootstrap 4`: https://getbootstrap.com/docs/4.6/
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`bs-custom-file-input`: https://www.npmjs.com/package/bs-custom-file-input
 .. _`Bootstrap Forms documentation`: https://getbootstrap.com/docs/4.4/components/forms/#file-browser
