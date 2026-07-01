@@ -46,7 +46,7 @@ characters long::
         }
     }
 
-The  ``validate()`` method returns the list of violations as an object that
+The ``validate()`` method returns the list of violations as an object that
 implements :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`.
 If you have lots of validation errors, you can filter them by error code::
 

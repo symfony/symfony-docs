@@ -151,7 +151,7 @@ environment variables using the second argument of the ``run()``,
 If you prefer to create portable commands that are independent from the
 operating system, you can write the above command as follows::
 
-    // works the same on Windows , Linux and macOS
+    // works the same on Windows, Linux and macOS
     $process = Process::fromShellCommandline('echo "${:MESSAGE}"');
 
 Portable commands require using a syntax that is specific to the component: when

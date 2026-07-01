@@ -360,7 +360,7 @@ filename (e.g. ``messages+intl-icu.en.yaml``). Read more about this in
 Translatable Objects
 --------------------
 
-In many applications, translatable text does not only live in Twig templates
+In many applications, translatable text does not live only in Twig templates
 and controllers. Enums, services, value objects and form types often need to
 produce messages that will be translated later. Translating those messages at
 creation time forces you to inject the ``translator`` service everywhere and to
