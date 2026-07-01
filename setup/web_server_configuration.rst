@@ -224,7 +224,7 @@ directive to pass requests for PHP files to PHP FPM:
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeeScript assets
+        # or run into problems when compiling assets (e.g. Sass or PostCSS)
         # <Directory /var/www/project>
         #     Options FollowSymlinks
         # </Directory>
