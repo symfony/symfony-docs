@@ -648,6 +648,83 @@ And the related target object must define the ``createFromLegacy()`` method::
         }
     }
 
+Automatic Enum Conversion
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The automatic conversion between backed enums and scalar values was
+    introduced in Symfony 8.2.
+
+When a property is a :phpclass:`BackedEnum` on one side of the mapping and a
+scalar (``int`` or ``string``) on the other side, ObjectMapper converts the
+value automatically, in both directions, without requiring a custom transformer.
+
+The following conversions are supported:
+
+* ``int`` to an ``int``-backed enum (and the other way around);
+* ``string`` to a ``string``-backed enum (and the other way around).
+
+Any other combination (for example, a value that does not match any case of the
+target enum) throws an exception::
+
+    // src/Enum/Status.php
+    namespace App\Enum;
+
+    enum Status: string
+    {
+        case Draft = 'draft';
+        case Published = 'published';
+    }
+
+    // src/Dto/PostInput.php
+    namespace App\Dto;
+
+    use App\Entity\Post;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(target: Post::class)]
+    class PostInput
+    {
+        // a plain string coming, for example, from a JSON payload
+        public string $status = 'draft';
+    }
+
+    // src/Entity/Post.php
+    namespace App\Entity;
+
+    use App\Enum\Status;
+
+    class Post
+    {
+        // the string is automatically converted to the matching Status case
+        public Status $status;
+    }
+
+When using ObjectMapper through the Symfony framework (by type-hinting
+:class:`Symfony\\Component\\ObjectMapper\\ObjectMapperInterface`), this
+conversion is enabled automatically. When using the component standalone, wrap
+your metadata factory with
+:class:`Symfony\\Component\\ObjectMapper\\Metadata\\EnumMappingMetadataFactory`::
+
+    use App\Dto\PostInput;
+    use App\Entity\Post;
+    use Symfony\Component\ObjectMapper\Metadata\EnumMappingMetadataFactory;
+    use Symfony\Component\ObjectMapper\Metadata\ReflectionObjectMapperMetadataFactory;
+    use Symfony\Component\ObjectMapper\ObjectMapper;
+
+    $mapper = new ObjectMapper(
+        new EnumMappingMetadataFactory(new ReflectionObjectMapperMetadataFactory())
+    );
+
+    // scalar to enum
+    $post = $mapper->map(new PostInput(), Post::class);
+    // $post->status === Status::Draft
+
+    // enum to scalar
+    $input = $mapper->map($post, PostInput::class);
+    // $input->status === 'draft'
+
 Mapping Collections
 -------------------
 
