@@ -115,8 +115,8 @@ front-end compilation routine.
 
     Symfony's :ref:`Webpack Encore <frontend-webpack-encore>` supports
     :ref:`outputting hashed assets <encore-long-term-caching>`. Moreover, this
-    can be incorporated into many other workflows, including Webpack and
-    Gulp using `webpack-manifest-plugin`_ and `gulp-rev`_, respectively.
+    can be incorporated into many other workflows, including Webpack using
+    `webpack-manifest-plugin`_.
 
 This option can be set globally for all assets and individually for each asset
 package:
@@ -5165,7 +5165,6 @@ to know their differences.
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
-.. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
 .. _`json_encode flags bitmask`: https://www.php.net/json_encode
 .. _`error_reporting PHP option`: https://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
