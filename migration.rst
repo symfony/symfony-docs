@@ -482,7 +482,7 @@ our current application scope, instead of the global scope.
 
 There are some risks to this approach, as it is no longer run in the global
 scope. However, since the legacy code now runs inside a controller action, you gain
-access to many functionalities from the new Symfony application, including the
+access to many features from the new Symfony application, including the
 chance to use Symfony's event lifecycle. For instance, this allows you to
 transition the authentication and authorization of the legacy application over
 to the Symfony application using the Security component and its firewalls.

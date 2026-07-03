@@ -430,7 +430,7 @@ to iterating over the Finder results with ``foreach``, you can also convert it
 to an array with the :phpfunction:`iterator_to_array` function, or get the
 number of items with :phpfunction:`iterator_count`.
 
-If you call to the :method:`Symfony\\Component\\Finder\\Finder::in` method more
+If you call the :method:`Symfony\\Component\\Finder\\Finder::in` method more
 than once to search through multiple locations, pass ``false`` as a second
 parameter to :phpfunction:`iterator_to_array` to avoid issues (a separate
 iterator is created for each location and, if you don't pass ``false`` to

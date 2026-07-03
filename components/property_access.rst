@@ -179,7 +179,9 @@ getters, this means that you can do something like this::
 
 This will produce: ``This person is an author``
 
-Accessing a non Existing Property Path
+.. _accessing-a-non-existing-property-path:
+
+Accessing a Non-Existent Property Path
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default a :class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchPropertyException`

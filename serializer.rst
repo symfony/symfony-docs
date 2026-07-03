@@ -961,7 +961,7 @@ You can now choose which groups to use when serializing::
         'json',
         ['groups' => '*']
     );
-    // $json contains {"name":"Jane Doe","age":32,"sportsperson":false,"email":"jane.doe@exemple.com"}
+    // $json contains {"name":"Jane Doe","age":32,"sportsperson":false,"email":"jane.doe@example.com"}
 
 Using the Serialization Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
