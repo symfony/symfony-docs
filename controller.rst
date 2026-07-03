@@ -173,7 +173,7 @@ Templating and Twig are explained more in the
 Fetching Services
 ~~~~~~~~~~~~~~~~~
 
-Symfony comes *packed* with a lot of useful classes and functionalities, called :doc:`services </service_container>`.
+Symfony comes *packed* with a lot of useful classes and features, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
 any other "work" you can think of.
 
@@ -522,7 +522,7 @@ attribute::
     }
 
 This attribute allows you to customize the serialization context as well
-as the class responsible of doing the mapping between the request and
+as the class responsible for doing the mapping between the request and
 your DTO::
 
     public function dashboard(

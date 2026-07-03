@@ -68,28 +68,9 @@ provides a dedicated Symfony integration and helps fund the Symfony development.
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are also tools to help ease the pain of deployment. Some of them have been
-specifically tailored to the requirements of Symfony.
-
-`Deployer`_
-    This is another native PHP rewrite of Capistrano, with some ready recipes for
-    Symfony.
-
-`Ansistrano`_
-    An Ansible role that allows you to configure a powerful deploy via YAML files.
-
-`Magallanes`_
-    This Capistrano-like deployment tool is built in PHP, and may be easier
-    for PHP developers to extend for their needs.
-
-`Fabric`_
-    This Python-based library provides a basic suite of operations for executing
-    local or remote shell commands and uploading/downloading files.
-
-`Capistrano`_ with `Symfony plugin`_
-    `Capistrano`_ is a remote server automation and deployment tool written in Ruby.
-    `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
-    (which works only with Capistrano 2).
+There are also tools to help ease the pain of deployment. `Deployer`_ is a
+deployment tool written in PHP that provides ready-to-use recipes for common
+Symfony deployment tasks.
 
 .. _common-post-deployment-tasks:
 
@@ -260,14 +241,8 @@ Learn More
 
     deployment/proxies
 
-.. _`Capifony`: https://github.com/everzet/capifony
-.. _`Capistrano`: https://capistranorb.com/
-.. _`Fabric`: https://www.fabfile.org/
-.. _`Ansistrano`: https://ansistrano.com/
-.. _`Magallanes`: https://github.com/andres-montanez/Magallanes
 .. _`Memcached`: https://memcached.org/
 .. _`Redis`: https://redis.io/
-.. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: https://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Upsun`: https://symfony.com/cloud

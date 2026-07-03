@@ -99,7 +99,7 @@ console terminal as your own application. Sometimes mixing the real output
 with the debug output can be confusing. That's why this component provides a
 server to collect all the dumped data.
 
-Start the server with the ``server:dump`` command and whenever you call to
+Start the server with the ``server:dump`` command and whenever you call
 ``dump()``, the dumped data won't be displayed in the output but sent to that
 server, which outputs it to its own console or to an HTML file:
 
@@ -162,7 +162,7 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
 
     The second argument of :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper`
     is a :class:`Symfony\\Component\\VarDumper\\Dumper\\DataDumperInterface` instance
-    used as a fallback when the server is unreachable. The third argument are the
+    used as a fallback when the server is unreachable. The third argument is the
     context providers, which allow you to gather some info about the context in which the
     data was dumped. The built-in context providers are: ``cli``, ``request`` and ``source``.
 

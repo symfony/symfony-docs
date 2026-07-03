@@ -103,7 +103,7 @@ The error controller reads as follows::
         }
     }
 
-*Voilà!* Clean and customizable error management without efforts. And if your
+*Voilà!* Clean and customizable error management without effort. And if your
 ``ErrorController`` throws an exception, HttpKernel will handle it nicely.
 
 In chapter two, we talked about the ``Response::prepare()`` method, which

@@ -593,7 +593,7 @@ locks::
     $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=app';
     $store = new PostgreSqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
-In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
+Unlike the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
 store locks and it does not expire.
 
 .. _lock-store-dbal-pgsql:
@@ -611,7 +611,7 @@ a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
     $databaseConnectionOrDSN = 'postgresql+advisory://myuser:mypassword@127.0.0.1:5634/lock';
     $store = new DoctrineDbalPostgreSqlStore($databaseConnectionOrDSN);
 
-In opposite to the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
+Unlike the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
 store locks and does not expire.
 
 .. _lock-store-redis:
@@ -826,9 +826,9 @@ Be careful when updating a Kubernetes or Swarm service because, for a short
 period of time, there can be two containers running in parallel.
 
 The absolute path to the directory must remain the same. Be careful of symlinks
-that could change at anytime: Capistrano and blue/green deployment often use
-that trick. Be careful when the path to that directory changes between two
-deployments.
+that could change at anytime: symlink-based release strategies and blue/green
+deployment often use that trick. Be careful when the path to that directory
+changes between two deployments.
 
 Some file systems (such as some types of NFS) do not support locking.
 
@@ -1047,7 +1047,7 @@ be lost without notifying the running processes.
 .. tip::
 
     To use ZooKeeper's high-availability feature, you can set up a cluster of
-    multiple servers so that in case one of the server goes down, the majority
+    multiple servers so that in case one of the servers goes down, the majority
     will still be up and serving the requests. All the available servers in the
     cluster will see the same state.
 

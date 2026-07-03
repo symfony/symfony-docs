@@ -1423,8 +1423,8 @@ library, but you can adapt it to any other library that you may be using::
         }
     }
 
-Another possibility to encrypt session data is to decorate the
-``session.marshaller`` service, which points out to
+Another way to encrypt session data is to decorate the
+``session.marshaller`` service, which points to
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MarshallingSessionHandler`.
 You can decorate this handler with a marshaller that uses encryption,
 like the :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.

@@ -76,27 +76,30 @@ are rendered. Symfony provides several built-in themes and you can create your o
 Built-In Form Themes
 ~~~~~~~~~~~~~~~~~~~~
 
-Symfony includes form themes for the most popular CSS frameworks:
+Symfony ships with the following built-in form themes:
 
-* ``form_div_layout.html.twig``: **Default theme**. Wraps each field in a ``<div>``.
-  No CSS framework required.
-* ``form_table_layout.html.twig``: Renders the form as an HTML ``<table>`` with
-  fields in ``<tr>`` elements.
-* ``bootstrap_5_layout.html.twig`` / ``bootstrap_5_horizontal_layout.html.twig``:
-  Styled for `Bootstrap 5`_. See :doc:`/form/bootstrap5` for details.
-* ``bootstrap_4_layout.html.twig`` / ``bootstrap_4_horizontal_layout.html.twig``:
-  Styled for `Bootstrap 4`_. See :doc:`/form/bootstrap4` for details.
-* ``bootstrap_3_layout.html.twig`` / ``bootstrap_3_horizontal_layout.html.twig``:
-  Styled for `Bootstrap 3`_.
-* ``foundation_5_layout.html.twig`` / ``foundation_6_layout.html.twig``: Styled
-  for `Foundation CSS framework`_ versions 5 and 6.
-* ``tailwind_2_layout.html.twig``: Minimal styles for `Tailwind CSS`_. See
-  :doc:`/form/tailwindcss` for details.
+No CSS framework
+    ``form_div_layout.html.twig`` (the **default theme** used by Symfony, wraps
+    each field in a ``<div>``) and ``form_table_layout.html.twig`` (renders the
+    form as an HTML ``<table>``).
 
-.. tip::
+`Bootstrap`_
+    ``bootstrap_5_layout.html.twig`` / ``bootstrap_5_horizontal_layout.html.twig``
+    for the most recent Bootstrap 5 version. Read more about
+    :doc:`how to use the Bootstrap form theme </form/bootstrap5>`.
 
-    The Bootstrap and Tailwind themes have dedicated documentation pages with
-    framework-specific features like switches, floating labels, and input groups.
+    There are also form themes for legacy Bootstrap versions: ``bootstrap_4_layout.html.twig``
+    / ``bootstrap_4_horizontal_layout.html.twig`` for :doc:`Bootstrap 4 integration </form/bootstrap4>`
+    and ``bootstrap_3_layout.html.twig`` / ``bootstrap_3_horizontal_layout.html.twig``
+    for Bootstrap 3.
+
+`Foundation CSS framework`_
+    ``foundation_5_layout.html.twig`` and ``foundation_6_layout.html.twig``
+    (for versions 5 and 6 respectively).
+
+`Tailwind CSS`_
+    ``tailwind_2_layout.html.twig`` (minimal styles). Read more about
+    :doc:`how to use the TailwindCSS form theme </form/tailwindcss>`.
 
 .. _forms-theming-global:
 .. _forms-theming-twig:
@@ -654,13 +657,10 @@ Learn More
 ----------
 
 * :doc:`Bootstrap 5 theme with switches, floating labels, input groups </form/bootstrap5>`
-* :doc:`Bootstrap 4 theme features </form/bootstrap4>`
 * :doc:`Tailwind CSS theme customization </form/tailwindcss>`
 * :doc:`Creating reusable custom form types </form/create_custom_field_type>`
 * :doc:`Complete reference of all built-in form types </reference/forms/types>`
 
-.. _`Bootstrap 5`: https://getbootstrap.com/docs/5.3/
-.. _`Bootstrap 4`: https://getbootstrap.com/docs/4.6/
-.. _`Bootstrap 3`: https://getbootstrap.com/docs/3.4/
+.. _`Bootstrap`: https://getbootstrap.com
 .. _`Foundation CSS framework`: https://get.foundation/
 .. _`Tailwind CSS`: https://tailwindcss.com/

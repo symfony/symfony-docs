@@ -122,9 +122,9 @@ development.
 
 However for local development, the most convenient way of running Symfony is by
 using the :ref:`local web server <symfony-cli-server>` provided by the
-Symfony CLI tool. This local server provides among other things support for
-HTTP/2, concurrent requests, TLS/SSL and automatic generation of security
-certificates.
+Symfony CLI tool. This local server provides support for HTTP/2, concurrent
+requests, TLS/SSL and automatic generation of security certificates, among
+other things.
 
 Open your console terminal, move into your new project directory and start the
 local web server as follows:
