@@ -1058,7 +1058,7 @@ Safe Content Preference
 -----------------------
 
 Some web sites have a "safe" mode to assist those who don't want to be exposed
-to content to which they might object. The  `RFC 8674`_ specification defines a
+to content to which they might object. The `RFC 8674`_ specification defines a
 way for user agents to ask for safe content to a server.
 
 The specification does not define what content might be considered objectionable,

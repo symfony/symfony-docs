@@ -22,7 +22,7 @@ constructive, respectful and helpful reviews and replies.
 
 .. tip::
 
-    This guide is not about lecturing you to "conform" or give-up
+    This guide is not about lecturing you to "conform" or give up
     your ideas and opinions but helping you to better communicate,
     prevent possible confusion, and keeping the Symfony community a
     welcoming place for everyone. **You are free to disagree with

@@ -92,7 +92,7 @@ And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 Bundle Directory Structure
 --------------------------
 
-The directory structure of a bundle is meant to help to keep code consistent
+The directory structure of a bundle is meant to help keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 

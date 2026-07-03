@@ -1,7 +1,7 @@
 The Separation of Concerns
 ==========================
 
-One down-side of our framework right now is that we need to copy and paste the
+One downside of our framework right now is that we need to copy and paste the
 code in ``front.php`` each time we create a new website. 60 lines of code is
 not that much, but it would be nice if we could wrap this code into a proper
 class. It would bring us better *reusability* and easier testing to name just

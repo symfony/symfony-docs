@@ -914,7 +914,7 @@ look like this::
 Locating Resources
 ------------------
 
-The HttpKernel component is responsible of the bundle mechanism used in Symfony
+The HttpKernel component is responsible for the bundle mechanism used in Symfony
 applications. One of the key features of the bundles is that you can use logic
 paths instead of physical paths to refer to any of their resources (config files,
 templates, controllers, translation files, etc.)
