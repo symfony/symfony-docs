@@ -843,9 +843,9 @@ Be careful when updating a Kubernetes or Swarm service because, for a short
 period of time, there can be two containers running in parallel.
 
 The absolute path to the directory must remain the same. Be careful of symlinks
-that could change at anytime: Capistrano and blue/green deployment often use
-that trick. Be careful when the path to that directory changes between two
-deployments.
+that could change at anytime: symlink-based release strategies and blue/green
+deployment often use that trick. Be careful when the path to that directory
+changes between two deployments.
 
 Some file systems (such as some types of NFS) do not support locking.
 
