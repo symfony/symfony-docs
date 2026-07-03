@@ -693,9 +693,25 @@ parent block contents when overriding templates and other advanced features.
 Twig Components
 ~~~~~~~~~~~~~~~
 
-Twig components are an alternative way to render templates, where each template
-is bound to a "component class". This makes it easier to render and re-use
-small template "units" - like an alert, markup for a modal, or a category sidebar.
+Twig components are the **recommended way to render and reuse small template
+fragments**, like an alert, a modal, a category sidebar or a set of recent
+articles. Each component pairs a template with an optional "component class", so
+the logic a fragment needs (e.g. a database query) lives with the markup instead
+of being repeated in every page.
+
+For example, a component that renders the most recent articles can be used
+anywhere in your templates like this:
+
+.. code-block:: html+twig
+
+    {# templates/home.html.twig #}
+    <div id="sidebar">
+        <twig:RecentArticles max="3"/>
+    </div>
+
+Components accept props, render Twig templates and can be composed together,
+which makes them a better fit than the :ref:`controller-embedding techniques <templates-embed-controllers>`
+described below for most "reusable UI unit" needs.
 
 For more information, see `UX Twig Component`_.
 
@@ -713,8 +729,11 @@ Embedding Controllers
 
 .. note::
 
-    Instead of embedding controllers, consider using :ref:`Twig Components <templates-twig-components>`,
-    which is a more modern Symfony feature.
+    For most "reusable UI unit" needs (like the recent-articles example below),
+    prefer :ref:`Twig Components <templates-twig-components>`. Embedding
+    controllers still makes sense when you specifically need to run a controller
+    as a sub-request; for example to cache that fragment separately with
+    :doc:`ESI </http_cache/esi>`.
 
 :ref:`Including template fragments <templates-include>` is useful to reuse the
 same content on several pages. However, this technique is not the best solution
@@ -837,9 +856,9 @@ How to Embed Asynchronous Content with hinclude.js
 
 .. note::
 
-    Instead of embedding asunchronous content with ``hinclude.js``, consider using
-    :ref:`Twig Live Components <templates-twig-components>`, which is a more modern
-    Symfony feature.
+    ``hinclude.js`` is a legacy technique. For asynchronous, self-updating
+    content prefer :ref:`Twig Live Components <templates-twig-components>`, which
+    require no third-party JavaScript library.
 
 Templates can also embed contents asynchronously with the ``hinclude.js``
 JavaScript library.
