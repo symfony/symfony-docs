@@ -3051,6 +3051,9 @@ A signed URI is a URI that includes a hash value that depends on the contents of
 the URI. This way, you can later check the integrity of the signed URI by
 recomputing its hash value and comparing it with the hash included in the URI.
 
+Creating and Checking Signed URIs
+.................................
+
 Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpFoundation\\UriSigner`
 service, which you can inject in your services or controllers::
 
@@ -3076,54 +3079,42 @@ service, which you can inject in your services or controllers::
             // sign the URL (it adds a query parameter called '_hash')
             $signedUrl = $this->uriSigner->sign($url);
             // $url = 'https://example.com/foo/bar?sort=desc&_hash=e4a21b9'
-
-            // check the URL signature
-            $uriSignatureIsValid = $this->uriSigner->check($signedUrl);
-            // $uriSignatureIsValid = true
-
-            // if you have access to the current Request object, you can use this
-            // other method to pass the entire Request object instead of the URI:
-            $uriSignatureIsValid = $this->uriSigner->checkRequest($request);
         }
     }
+
+To verify a signed URI, use ``check()``::
+
+    $this->uriSigner->check($signedUrl);
+
+If you already have the current ``Request`` object, you can use ``checkRequest()``
+instead::
+
+    $this->uriSigner->checkRequest($request);
+
+.. tip::
+
+    Use the ``verify()`` method instead of ``check()`` if you also want to know
+    the reason(s) :ref:`why a signature is not valid <routing-verifying-signed-uris>`.
+
+Expiring Signed URIs
+....................
 
 For security reasons, it's common to make signed URIs expire after some time
 (e.g. when using them to reset user credentials). By default, signed URIs don't
 expire, but you can define an expiration date/time using the ``$expiration``
 argument of :method:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`::
 
-    // src/Service/SomeService.php
-    namespace App\Service;
+    // sign the URL with an explicit expiration date
+    $signedUrl = $this->uriSigner->sign($url, new \DateTimeImmutable('2050-01-01'));
+    // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=2524608000&_hash=e4a21b9'
 
-    use Symfony\Component\HttpFoundation\UriSigner;
+You can also pass a ``DateInterval`` or a Unix timestamp::
 
-    class SomeService
-    {
-        public function __construct(
-            private UriSigner $uriSigner,
-        ) {
-        }
+    $signedUrl = $this->uriSigner->sign($url, new \DateInterval('PT10S'));  // valid for 10 seconds from now
+    // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=1712414278&_hash=e4a21b9'
 
-        public function someMethod(): void
-        {
-            // ...
-
-            // generate a URL yourself or get it somehow...
-            $url = 'https://example.com/foo/bar?sort=desc';
-
-            // sign the URL with an explicit expiration date
-            $signedUrl = $this->uriSigner->sign($url, new \DateTimeImmutable('2050-01-01'));
-            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=2524608000&_hash=e4a21b9'
-
-            // if you pass a \DateInterval, it will be added from now to get the expiration date
-            $signedUrl = $this->uriSigner->sign($url, new \DateInterval('PT10S'));  // valid for 10 seconds from now
-            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=1712414278&_hash=e4a21b9'
-
-            // you can also use a timestamp in seconds
-            $signedUrl = $this->uriSigner->sign($url, 4070908800); // timestamp for the date 2099-01-01
-            // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=4070908800&_hash=e4a21b9'
-        }
-    }
+    $signedUrl = $this->uriSigner->sign($url, 4070908800); // timestamp for the date 2099-01-01
+    // $signedUrl = 'https://example.com/foo/bar?sort=desc&_expiration=4070908800&_hash=e4a21b9'
 
 .. note::
 
@@ -3134,19 +3125,21 @@ argument of :method:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`::
 
     The feature to add an expiration date for a signed URI was introduced in Symfony 7.1.
 
-If you need to know the reason why a signed URI is invalid, you can use the
-``verify()`` method which throws exceptions on failure::
+.. _routing-verifying-signed-uris:
+
+Verifying Signed URIs
+.....................
+
+If you need to know the reason why a signed URI is invalid, not only whether it's
+valid or not, you can use the ``verify()`` method which throws exceptions on failure::
 
     use Symfony\Component\HttpFoundation\Exception\ExpiredSignedUriException;
     use Symfony\Component\HttpFoundation\Exception\UnsignedUriException;
     use Symfony\Component\HttpFoundation\Exception\UnverifiedSignedUriException;
 
-    // ...
-
     try {
         $uriSigner->verify($uri); // $uri can be a string or Request object
-
-        // the URI is valid
+        // ...
     } catch (UnsignedUriException) {
         // the URI isn't signed
     } catch (UnverifiedSignedUriException) {
@@ -3161,20 +3154,19 @@ If you need to know the reason why a signed URI is invalid, you can use the
 
 .. tip::
 
-    If ``symfony/clock`` is installed, it will be used to create and verify
-    expirations. This allows you to :ref:`mock the current time in your tests
-    <clock_writing-tests>`.
+    If ``symfony/clock`` is installed, it is used when generating and verifying
+    expiration dates. This allows you to :ref:`mock the current time in your tests <clock_writing-tests>`.
 
 .. versionadded:: 7.3
 
     Support for :doc:`Symfony Clock </components/clock>` in ``UriSigner`` was
     introduced in Symfony 7.3.
 
-Another way to validate incoming requests is to use the ``#[IsSignatureValid]`` attribute.
+Controller Attributes to Verify Signed URIs
+...........................................
 
-In the following example, all incoming requests to this controller action will be verified for
-a valid signature. If the signature is missing or invalid,
-a ``SignedUriException`` will be thrown::
+Instead of calling ``check()`` or ``verify()`` manually on the URI signer, you
+can validate incoming requests declaratively with the ``#[IsSignatureValid]`` attribute::
 
     // src/Controller/SomeController.php
     // ...
@@ -3184,52 +3176,33 @@ a ``SignedUriException`` will be thrown::
     #[IsSignatureValid]
     public function someAction(): Response
     {
+        // if the request is unsigned, has an invalid signature or
+        // has expired, a SignedUriException is thrown
         // ...
     }
 
-To restrict signature validation to specific HTTP methods,
-use the ``methods`` argument. This can be a string or an array of methods::
+By default, every request is validated. Use the ``methods`` option to validate
+only specific HTTP methods::
 
-    // Only validate POST requests
+    // only validate POST requests
     #[IsSignatureValid(methods: 'POST')]
     public function createItem(): Response
-    {
-        // ...
-    }
 
-    // Validate both POST and PUT requests
+    // validate both POST and PUT requests
     #[IsSignatureValid(methods: ['POST', 'PUT'])]
     public function updateItem(): Response
-    {
-        // ...
-    }
 
-You can also apply ``#[IsSignatureValid]`` at the controller class level.
-This way, all actions within the controller will automatically
-be protected by signature validation::
+You can also apply ``#[IsSignatureValid]`` at the controller class level to
+validate the URI signatures of all its actions::
 
     // src/Controller/SecureController.php
     // ...
 
-    use Symfony\Component\HttpKernel\Attribute\IsSignatureValid;
-
     #[IsSignatureValid]
     class SecureController extends AbstractController
     {
-        public function index(): Response
-        {
-            // ...
-        }
-
-        public function submit(): Response
-        {
-            // ...
-        }
+        // ...
     }
-
-
-This attribute provides a declarative way to enforce request signature validation directly
-at the controller level, helping to keep your security logic consistent and maintainable.
 
 .. versionadded:: 7.4
 
