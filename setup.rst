@@ -307,7 +307,6 @@ Learn More
     :glob:
 
     setup/docker
-    setup/homestead
     setup/web_server_configuration
     setup/*
 
