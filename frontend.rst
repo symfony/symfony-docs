@@ -86,6 +86,12 @@ Webpack Encore
 
     Do you prefer video tutorials? Check out the `Webpack Encore screencast series`_.
 
+.. note::
+
+    Webpack Encore is fully supported, but **for new projects AssetMapper is
+    recommended**. Choose Encore when you already use it, or when you need a full
+    JavaScript bundler.
+
 `Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
 It wraps Webpack, giving you a clean & powerful API for bundling JavaScript modules,
 pre-processing CSS & JS and compiling and minifying assets.

@@ -2246,7 +2246,7 @@ use the ``generateUrl()`` helper::
 .. warning::
 
     While objects are converted to string when used as placeholders, they are not
-    converted when used as extra parameters. So, if you're passing an object (e.g. an Uuid)
+    converted when used as extra parameters. So, if you're passing an object (e.g. a Uuid)
     as value of an extra parameter, you need to explicitly convert it to a string::
 
         $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid()]);
@@ -2584,7 +2584,7 @@ defined as attributes:
 Signing URIs
 ~~~~~~~~~~~~
 
-A signed URI is an URI that includes a hash value that depends on the contents of
+A signed URI is a URI that includes a hash value that depends on the contents of
 the URI. This way, you can later check the integrity of the signed URI by
 recomputing its hash value and comparing it with the hash included in the URI.
 

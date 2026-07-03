@@ -47,7 +47,7 @@ one of the config files added by the recipe.
 Services & Autowiring
 ---------------------
 
-But wait! Something *very* cool just happened. Symfony read the ``LoggerInterface``
+But wait! Something *very* cool just happened. Symfony reads the ``LoggerInterface``
 type-hint and automatically figured out that it should pass us the Logger object!
 This is called *autowiring*.
 

@@ -1,7 +1,7 @@
 Bootstrap 5 Form Theme
 ======================
 
-Symfony provides several ways of integrating Bootstrap into your application.
+Symfony provides several ways of integrating `Bootstrap 5`_ into your application.
 The most straightforward way is to add the required ``<link>`` and ``<script>``
 elements in your templates (usually you only include them in the main layout
 template which other templates extend from):
@@ -238,6 +238,7 @@ This does not mean that your entire website automatically complies with the full
 standard, but it does mean that you have come far in your work to create a
 design for **all** users.
 
+.. _`Bootstrap 5`: https://getbootstrap.com/docs/5.3/
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`inline`: https://getbootstrap.com/docs/5.0/forms/checks-radios/#inline
 .. _`switches`: https://getbootstrap.com/docs/5.0/forms/checks-radios/#switches

@@ -51,7 +51,7 @@ textual representation in all languages based on the `Unicode CLDR dataset`_::
 Transliterating Emoji Text Short Codes
 --------------------------------------
 
-Services like GitHub and Slack allows to include emojis in your messages using
+Services like GitHub and Slack let you include emojis in your messages using
 text short codes (e.g. you can add the ``:+1:`` code to render the 👍 emoji).
 
 Symfony also provides a feature to transliterate emojis into short codes and vice
