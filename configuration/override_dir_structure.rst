@@ -321,6 +321,6 @@ option in your ``composer.json`` file like this:
 
 .. tip::
 
-    This modification can be of interest if you are working in a virtual
-    environment and cannot use NFS - for example, if you're running a Symfony
-    application using Vagrant/VirtualBox in a guest operating system.
+    This is useful when you develop inside a virtual machine (such as VirtualBox
+    or VMware) that cannot use NFS. Moving the ``vendor/`` directory out of the
+    slow shared folder and into the guest machine greatly improves performance.

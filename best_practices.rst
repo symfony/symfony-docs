@@ -165,14 +165,13 @@ Business Logic
 Don't Create any Bundle to Organize your Application Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When Symfony 2.0 was released, applications used :doc:`bundles </bundles>` to
-divide their code into logical features: UserBundle, ProductBundle,
-InvoiceBundle, etc. However, a bundle is meant to be something that can be
-reused as a stand-alone piece of software.
+A :doc:`bundle </bundles>` is meant to be a piece of software that can be reused
+as a stand-alone component. Don't create bundles to organize your own internal
+application logic: use PHP namespaces (under the ``App\`` namespace) to
+structure your code instead.
 
-If you need to reuse some feature in your projects, create a bundle for it (in a
-private repository, do not make it publicly available). For the rest of your
-application code, use PHP namespaces to organize code instead of bundles.
+If you need to reuse a feature across several of your projects, then create a
+bundle for it (in a private repository; you don't need to make it public).
 
 Use Autowiring to Automate the Configuration of Application Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -193,15 +192,20 @@ Services Should be Private Whenever Possible
 those services via ``$container->get()``. Instead, you will need to use proper
 dependency injection.
 
-Use the YAML Format to Configure your own Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _use-the-yaml-format-to-configure-your-own-services:
+
+Configure your own Services with Minimal Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you use the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-most services will be configured automatically. However, in some edge cases
-you'll need to configure services (or parts of them) manually.
+most services are configured automatically thanks to :ref:`autowiring <services-autowire>`
+and :ref:`autoconfiguration <services-autoconfigure>`, so you rarely
+need to configure them by hand. When some service configuration belongs next to
+your code, use attributes such as :ref:`#[Autowire] <autowire-attribute>`.
 
-YAML is the format recommended for configuring services because it's friendly to
-newcomers and concise, but Symfony also supports PHP configuration.
+For the remaining manual service configuration, both YAML and PHP work well:
+YAML is concise and friendly to newcomers, while PHP config adds type-safety and
+IDE autocompletion. Pick one format and use it consistently across your project.
 
 Use Attributes to Define the Doctrine Entity Mapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
