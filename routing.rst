@@ -2658,6 +2658,37 @@ You can also pass a ``DateInterval`` or a Unix timestamp::
     The expiration date/time is included in the signed URIs as a timestamp via
     the ``_expiration`` query parameter.
 
+Creating Single-Use Signed URIs
+...............................
+
+.. versionadded:: 8.2
+
+    The ``$version`` argument of ``UriSigner::sign()`` was introduced in Symfony 8.2.
+
+By default, a signed URI can be used as many times as you want until it expires.
+If you want a URI to become invalid as soon as the action it grants has been
+performed (e.g. a password reset link), pass a ``$version`` argument to
+:method:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`. The version is a
+token bound to some state that changes once the URI is used, so the signature no
+longer matches after that state changes::
+
+    // sign a password reset link using the user's current password hash as the version
+    $signedUrl = $this->uriSigner->sign(
+        'https://example.com/reset-password?user=123',
+        new \DateTimeImmutable('+30 minutes'),
+        $user->getPassword(),
+    );
+
+    // before the user resets their password, the signature is valid
+    $this->uriSigner->verify($request, $user->getPassword());
+
+    // after the user changes their password, the same URI no longer verifies
+    // because the version (the password hash) has changed
+    $this->uriSigner->verify($request, $user->getPassword()); // throws UnverifiedSignedUriException
+
+The same ``$version`` argument is also available on the ``check()`` and
+``checkRequest()`` methods.
+
 .. _routing-verifying-signed-uris:
 
 Verifying Signed URIs
