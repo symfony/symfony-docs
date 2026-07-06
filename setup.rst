@@ -140,6 +140,22 @@ the server by pressing ``Ctrl+C`` from your terminal.
 
 .. tip::
 
+    You can open your project with a dedicated command:
+
+    .. code-block:: terminal
+
+        $ symfony open:local
+
+    Or automatically open it when starting the server:
+
+    .. code-block:: terminal
+
+        $ symfony server:start --open
+
+    Learn more about all available commands in :ref:`Symfony CLI documentation <symfony-cli-server>`.
+
+.. tip::
+
     The web server works with any PHP application, not only Symfony projects,
     so it's a very useful generic development tool.
 
