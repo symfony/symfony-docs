@@ -667,10 +667,10 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     work to ensure that the relationship between the ``Task`` and the removed
     ``Tag`` is properly removed.
 
-    In Doctrine, you have two sides of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a many-to-one relationship
-    and the deleted tags will disappear and persist correctly (adding new
-    tags also works effortlessly).
+    In Doctrine, you have two sides of the relationship: the owning side and
+    the inverse side. If ``Task`` is the owning side of the relationship (for
+    example, a many-to-many association without ``mappedBy`` on ``Task``),
+    adding and removing tags from the collection is persisted correctly.
 
     But if you have a one-to-many relationship or a many-to-many relationship with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
@@ -714,6 +714,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
                             $entityManager->persist($tag);
 
                             // if you wanted to delete the Tag entirely, you can also do that
+                            // (or use Doctrine's orphanRemoval option to do it automatically)
                             // $entityManager->remove($tag);
                         }
                     }
