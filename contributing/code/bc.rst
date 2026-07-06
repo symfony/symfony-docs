@@ -12,6 +12,20 @@ that release branch (5.x in the previous example).
 We also provide deprecation message triggered in the code base to help you with
 the migration process across major releases.
 
+.. tip::
+
+    **Quick reference**
+
+    When working on a bug fix or feature, don't break existing code. In practice:
+
+    * Don't remove or rename public/protected methods, properties or constants;
+    * Don't add arguments to existing methods (make them optional if you must);
+    * Don't change the signature of public/protected methods;
+    * To replace something, keep the old API working and :ref:`deprecate it
+      <contributing-code-conventions-deprecations>` instead of removing it.
+
+    The tables below list every allowed and disallowed change in detail.
+
 However, backward compatibility comes in many different flavors. In fact, almost
 every change that we make to the framework can potentially break an application.
 For example, if we add a new method to a class, this will break an application
@@ -32,9 +46,8 @@ follow to ensure smooth upgrades for our users.
 
 .. warning::
 
-    :doc:`Experimental Features </contributing/code/experimental>` and code
-    marked with the ``@internal`` tags are excluded from our Backward
-    Compatibility promise.
+    :ref:`Experimental Features <experimental-features>` and code marked with
+    the ``@internal`` tags are excluded from our Backward Compatibility promise.
 
     Also note that backward compatibility breaks are tolerated if they are
     required to fix a security issue.
@@ -567,5 +580,21 @@ If that's the case, here is how to do it properly in a minor version:
 #. In the next major version (``X.0``), uncomment the argument, remove the
    PHPDoc if there is no need for a description, and remove the
    ``func_get_arg`` code and the warning if any.
+
+.. _experimental-features:
+
+Experimental Features
+---------------------
+
+Sometimes a new feature is controversial or its API isn't settled yet. In those
+cases we prefer to gather feedback from real-world usage before committing to the
+backward compatibility promise. Such features can be marked as **experimental**
+by tagging their classes and methods with ``@experimental``.
+
+A feature can stay experimental for only one minor version and can never be
+introduced in an :ref:`LTS version <releases-lts>` (the core team may extend the
+experimental period by one more minor version on a case-by-case basis). While a
+feature is experimental, the ``CHANGELOG`` must explain any backward incompatible
+change and how to upgrade.
 
 .. _`Semantic Versioning`: https://semver.org/
