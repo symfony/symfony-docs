@@ -374,5 +374,5 @@ resetting your local branch and restarting the merge:
 
 .. _`symfony/symfony-docs`: https://github.com/symfony/symfony-docs
 .. _`Symfony Docs team`: https://github.com/orgs/symfony/teams/team-symfony-docs
-.. _`Symfony's respectful review comments`: https://symfony.com/doc/current/contributing/community/review-comments.html
+.. _`Symfony's respectful review comments`: https://symfony.com/doc/current/contributing/reviews.html#writing-respectful-comments
 .. _`Git`: https://git-scm.com/
