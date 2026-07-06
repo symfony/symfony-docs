@@ -256,7 +256,7 @@ workflows to make them fail when there are vulnerabilities.
 Symfony LTS Versions
 --------------------
 
-According to the :doc:`Symfony release process </contributing/community/releases>`,
+According to the :doc:`Symfony release process </contributing/code/releases>`,
 "long-term support" (or LTS for short) versions are published every two years.
 Check out the `Symfony releases`_ to know which is the latest LTS version.
 

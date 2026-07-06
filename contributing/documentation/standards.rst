@@ -195,14 +195,8 @@ In addition, documentation follows these rules:
 * **Pronouns**: avoid the use of `nosism`_ and always use *you* instead of *we*.
   (i.e. avoid the first person point of view: use the second instead);
 * **Gender-neutral language**: when referencing a hypothetical person, such as
-  *"a user with a session cookie"*, use gender-neutral pronouns (they/their/them).
-  For example, instead of:
-
-  * he or she, use they
-  * him or her, use them
-  * his or her, use their
-  * his or hers, use theirs
-  * himself or herself, use themselves
+  *"a user with a session cookie"*, use gender-neutral pronouns
+  (they/them/their/theirs/themselves) instead of he/she, him/her, and so on;
 
 * **Avoid belittling words**: Things that seem "obvious" or "simple" for the
   person documenting it, can be the exact opposite for the reader. To make sure
@@ -227,7 +221,7 @@ In addition, documentation follows these rules:
 .. _`Twig Coding Standards`: https://twig.symfony.com/doc/3.x/coding_standards.html
 .. _`reserved by the IANA`: https://tools.ietf.org/html/rfc2606#section-3
 .. _`American English`: https://en.wikipedia.org/wiki/American_English
-.. _`American English Oxford Dictionary`: https://www.lexico.com/definition/american_english
+.. _`American English Oxford Dictionary`: https://www.merriam-webster.com/
 .. _`headings and titles`: https://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: https://en.wikipedia.org/wiki/Serial_comma
 .. _`Dia`: http://dia-installer.de/
