@@ -524,6 +524,21 @@ as possible to the client (e.g. sending emails).
     are still executed, but the response is not sent to the client until they
     are all completed.
 
+.. warning::
+
+    When running on servers that support early response flushing (such as
+    PHP-FPM via :phpfunction:`fastcgi_finish_request` or `FrankenPHP`_), the
+    response has already been sent to the client by the time
+    ``kernel.terminate`` is dispatched. In those environments, modifications to
+    the ``Response`` made from a terminate listener are discarded.
+
+    The behavior differs in the ``dev`` environment (``kernel.debug = true``).
+    In debug mode, the response is *not* finalized before ``kernel.terminate``
+    is dispatched, so modifications to the ``Response`` made from a terminate
+    listener may still affect the response sent to the client. This can lead to
+    inconsistent behavior between development and production, such as corrupted
+    response bodies or different HTTP status codes.
+
 .. note::
 
     Using the ``kernel.terminate`` event is optional, and should only be
