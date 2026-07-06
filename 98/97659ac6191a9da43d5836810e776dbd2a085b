@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-06-29T08:27:52Z
+
+Good point, thanks! 🙏 I reworded the sentence to spell out the accepted types: `\DateTimeInterface` (exact date and time), `\DateInterval` (added to now), or an `int` (Unix timestamp). Dropped the confusing "date/time" wording.
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-06-29T10:35:57Z
+
+Good point, thanks! 🙏 You're right that the constructor isn't the typical entry point in a Symfony app. I replaced the constructor mention with the `framework.uri_signer.expiration` config option (added in the same PR) and a small YAML example showing how to set the default expiration.
