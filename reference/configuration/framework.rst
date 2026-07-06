@@ -1979,6 +1979,19 @@ local_pk
 The path of a file that contains the `PEM formatted`_ private key of the
 certificate defined in the ``local_cert`` option.
 
+max_connect_duration
+....................
+
+**type**: ``float`` **default**: ``0``
+
+The maximum time, in seconds, allowed to establish the connection (DNS
+resolution, TCP connection and TLS handshake). A value lower than or equal
+to 0 means it is unlimited.
+
+.. versionadded:: 8.2
+
+    The ``max_connect_duration`` option was introduced in Symfony 8.2.
+
 max_duration
 ............
 
