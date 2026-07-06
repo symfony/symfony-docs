@@ -166,7 +166,7 @@ supposed to be comprehensive and instead aims to be a starting point.
 .. tip::
 
     If you get stuck or need additional help you can reach out to the
-    :doc:`Symfony community </contributing/community/index>` whenever you need
+    :doc:`Symfony community </contributing/index>` whenever you need
     concrete feedback on an issue you are facing.
 
 Booting Symfony in a Front Controller
