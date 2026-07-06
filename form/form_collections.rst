@@ -670,7 +670,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     In Doctrine, you have two sides of the relationship: the owning side and
     the inverse side. If ``Task`` is the owning side of the relationship (for
     example, a many-to-many association without ``mappedBy`` on ``Task``),
-    adding and removing tags from the collection will be persisted correctly.
+    adding and removing tags from the collection is persisted correctly.
 
     But if you have a one-to-many relationship or a many-to-many relationship with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
