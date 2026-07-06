@@ -126,33 +126,35 @@ Symfony CLI tool. This local server provides support for HTTP/2, concurrent
 requests, TLS/SSL and automatic generation of security certificates, among
 other things.
 
-Open your console terminal, move into your new project directory and start the
-local web server as follows:
+Open your terminal, move into your new project directory and start the local web
+server as follows:
 
 .. code-block:: terminal
 
     $ cd my-project/
+
+    # this blocks your terminal with the server logs; press Ctrl+C to stop it
     $ symfony server:start
 
-Open your browser and navigate to ``http://localhost:8000/``. If everything is
-working, you'll see a welcome page. Later, when you are finished working, stop
-the server by pressing ``Ctrl+C`` from your terminal.
+    # this starts the server in the background so you can keep using the terminal
+    $ symfony serve -d
+
+Browse your application by visiting the URL displayed by Symfony Server
+(for example, ``http://localhost:8000/``). You can also open the application
+automatically:
+
+.. code-block:: terminal
+
+    # opens the application URL in your default browser
+    $ symfony open:local
+
+    # starts the server and opens the application in a single command
+    $ symfony server:start --open
 
 .. tip::
 
-    You can open your project with a dedicated command:
-
-    .. code-block:: terminal
-
-        $ symfony open:local
-
-    Or automatically open it when starting the server:
-
-    .. code-block:: terminal
-
-        $ symfony server:start --open
-
-    Learn more about all available commands in :ref:`Symfony CLI documentation <symfony-cli-server>`.
+    Learn more about all available commands in the
+    :ref:`Symfony CLI documentation <symfony-cli-server>`.
 
 .. tip::
 
