@@ -505,23 +505,18 @@ as possible to the client (e.g. sending emails).
 
 .. warning::
 
-    By the time ``kernel.terminate`` is dispatched the response has, in
-    most setups, already been sent to the client (for example via
-    :phpfunction:`fastcgi_finish_request` when running on PHP-FPM or
-    `FrankenPHP`_). As a result, modifications to the ``Response`` content,
-    status code or headers performed from a terminate listener will
-    typically be discarded and never reach the client.
+    When running on servers that support early response flushing (such as
+    PHP-FPM via :phpfunction:`fastcgi_finish_request` or `FrankenPHP`_), the
+    response has already been sent to the client by the time
+    ``kernel.terminate`` is dispatched. In those environments, modifications to
+    the ``Response`` made from a terminate listener are discarded.
 
-    The behavior differs in the ``dev`` environment
-    (``kernel.debug = true``). In debug mode the response is *not*
-    finalized before ``kernel.terminate`` is dispatched, so writes to the
-    ``Response`` body or headers from a terminate listener — including
-    writes triggered by exception handling inside such a listener — will
-    be appended to the output that is sent to the client. This can
-    produce bugs that only manifest in development, such as corrupted
-    response payloads or HTTP status codes that differ between the
-    actual response received by the browser and what tools like the
-    Symfony Profiler report.
+    The behavior differs in the ``dev`` environment (``kernel.debug = true``).
+    In debug mode, the response is *not* finalized before ``kernel.terminate``
+    is dispatched, so modifications to the ``Response`` made from a terminate
+    listener may still affect the response sent to the client. This can lead to
+    inconsistent behavior between development and production, such as corrupted
+    response bodies or different HTTP status codes.
 
 .. note::
 
