@@ -726,7 +726,7 @@ When the webhook is sent, it generates an HTTP POST request with the following f
 
 .. code-block:: text
 
-    POST /webhook/symfony HTTP/1.1
+    POST /webhook/stock HTTP/1.1
     Host: example.com
     Content-Type: application/json
     Webhook-Event: resource.created
