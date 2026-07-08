@@ -1183,13 +1183,10 @@ Custom Message Execution Strategy
 
 By default, the worker processes messages synchronously using
 :class:`Symfony\\Component\\Messenger\\Execution\\SyncMessageExecutionStrategy`.
-To customize how messages are executed (for example to run them in parallel),
-implement
+
+To customize how messages are processed, for example to run them in parallel, implement
 :class:`Symfony\\Component\\Messenger\\Execution\\MessageExecutionStrategyInterface`
-and pass it to the ``Worker`` constructor. The interface ``execute()`` method
-contains the actual execution logic, while the other methods (``wait()``,
-``flush()``, ``shutdown()``, ``shouldPauseConsumption()``) coordinate with the
-worker loop::
+and pass an instance to the ``Worker`` constructor::
 
     use Symfony\Component\Messenger\Envelope;
     use Symfony\Component\Messenger\Execution\MessageExecutionStrategyInterface;
