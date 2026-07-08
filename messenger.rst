@@ -1174,6 +1174,33 @@ resetting leads to memory leaks or stale state:
 
     The ability to pass a number to the ``--no-reset`` option was introduced in Symfony 8.1.
 
+Custom Message Execution Strategy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``MessageExecutionStrategyInterface`` was introduced in Symfony 8.1.
+
+By default, the worker processes messages synchronously using
+:class:`Symfony\\Component\\Messenger\\Execution\\SyncMessageExecutionStrategy`.
+
+To customize how messages are processed, for example to run them in parallel, implement
+:class:`Symfony\\Component\\Messenger\\Execution\\MessageExecutionStrategyInterface`
+and pass an instance to the ``Worker`` constructor::
+
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Execution\MessageExecutionStrategyInterface;
+
+    class MyCustomExecutionStrategy implements MessageExecutionStrategyInterface
+    {
+        public function execute(Envelope $envelope, string $transportName, callable $onHandled): void
+        {
+            // custom execution logic
+        }
+
+        // ... implement the remaining interface methods
+    }
+
 .. _messenger-retries-failures:
 
 Rate Limited Transport
