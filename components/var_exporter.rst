@@ -99,8 +99,8 @@ Instantiating & Hydrating PHP Classes
 
     The :class:`Symfony\\Component\\VarExporter\\Instantiator` and
     :class:`Symfony\\Component\\VarExporter\\Hydrator` classes are deprecated
-    since Symfony 8.1, use the ``deepclone_hydrate()`` function instead (see
-    :ref:`the dedicated section <deepclone_hydrate>` below).
+    since Symfony 8.1. Use the :phpfunction:`deepclone_hydrate` function
+    instead (see :ref:`the dedicated section <deepclone_hydrate>` below).
 
 Instantiator
 ~~~~~~~~~~~~
@@ -193,25 +193,34 @@ deepclone_hydrate
 
     The ``deepclone_hydrate()`` function was introduced in Symfony 8.1.
 
-The ``deepclone_hydrate()`` function replaces both ``Instantiator`` and
-``Hydrator``. It is provided by `symfony/polyfill-deepclone`_ or by the
-`ext-deepclone`_ PHP extension. Pass a class name to create a new instance,
-or an existing object to populate its properties::
+Use the :phpfunction:`deepclone_hydrate` function instead of
+``Instantiator`` and ``Hydrator``. It is provided by
+`symfony/polyfill-deepclone`_ or by the `ext-deepclone`_ PHP extension.
+
+Pass a class name to **create a new instance**::
 
     // creates an empty instance of Foo
-    $fooObject = deepclone_hydrate(Foo::class);
+    $foo = deepclone_hydrate(Foo::class);
 
     // creates a Foo instance and sets its properties
-    $fooObject = deepclone_hydrate(Foo::class, ['propertyName' => $propertyValue]);
+    $foo = deepclone_hydrate(Foo::class, [
+        'propertyName' => $propertyValue,
+    ]);
 
-    // populates an existing instance
-    $object = new Foo();
-    deepclone_hydrate($object, ['propertyName' => $propertyValue]);
+Pass an existing object to **populate it** in place::
 
-Properties declared on a parent class are set with the special
+    $foo = new Foo();
+
+    deepclone_hydrate($foo, [
+        'propertyName' => $propertyValue,
+    ]);
+
+To set a property declared in a parent class, use the special
 ``"\0ParentClass\0propertyName"`` syntax::
 
-    deepclone_hydrate($object, ["\0Bar\0privateBarProperty" => $propertyValue]);
+    deepclone_hydrate($foo, [
+        "\0Bar\0privateBarProperty" => $propertyValue,
+    ]);
 
 Deep Cloning
 ------------
