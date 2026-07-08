@@ -611,7 +611,7 @@ logic about those arguments::
         }
     }
 
-The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`,
+The ``#[Autowire]`` attribute can also be used for :ref:`container parameters <service-container-parameters>`,
 :doc:`complex expressions </service_container/expression_language>` and even
 :ref:`environment variables <config-env-vars>` ,
 :doc:`including env variable processors </configuration/env_var_processors>`::
@@ -625,7 +625,7 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
     class MessageGenerator
     {
         public function __construct(
-            // use the %...% syntax for parameters
+            // use the %...% syntax for container parameters
             #[Autowire('%kernel.project_dir%/data')]
             private string $dataDir,
 
