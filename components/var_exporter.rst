@@ -95,6 +95,13 @@ file looks like this::
 Instantiating & Hydrating PHP Classes
 -------------------------------------
 
+.. deprecated:: 8.1
+
+    The :class:`Symfony\\Component\\VarExporter\\Instantiator` and
+    :class:`Symfony\\Component\\VarExporter\\Hydrator` classes are deprecated
+    since Symfony 8.1, use the ``deepclone_hydrate()`` function instead (see
+    :ref:`the dedicated section <deepclone_hydrate>` below).
+
 Instantiator
 ~~~~~~~~~~~~
 
@@ -176,6 +183,35 @@ populated by using the special ``"\0"`` property name to define their internal v
     Hydrator::hydrate($arrayObject, [
         "\0" => [$inputArray],
     ]);
+
+.. _deepclone_hydrate:
+
+deepclone_hydrate
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``deepclone_hydrate()`` function was introduced in Symfony 8.1.
+
+The ``deepclone_hydrate()`` function replaces both ``Instantiator`` and
+``Hydrator``. It is provided by `symfony/polyfill-deepclone`_ or by the
+`ext-deepclone`_ PHP extension. Pass a class name to create a new instance,
+or an existing object to populate its properties::
+
+    // creates an empty instance of Foo
+    $fooObject = deepclone_hydrate(Foo::class);
+
+    // creates a Foo instance and sets its properties
+    $fooObject = deepclone_hydrate(Foo::class, ['propertyName' => $propertyValue]);
+
+    // populates an existing instance
+    $object = new Foo();
+    deepclone_hydrate($object, ['propertyName' => $propertyValue]);
+
+Properties declared on a parent class are set with the special
+``"\0ParentClass\0propertyName"`` syntax::
+
+    deepclone_hydrate($object, ["\0Bar\0privateBarProperty" => $propertyValue]);
 
 Deep Cloning
 ------------
@@ -288,3 +324,5 @@ Use this mechanism only when native lazy objects cannot be leveraged
 
 .. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
+.. _`symfony/polyfill-deepclone`: https://github.com/symfony/polyfill/tree/main/src/DeepClone
+.. _`ext-deepclone`: https://github.com/symfony/php-ext-deepclone
