@@ -653,20 +653,14 @@ Automatic Enum Conversion
 
 .. versionadded:: 8.2
 
-    The automatic conversion between backed enums and scalar values was
+    Automatic conversion between backed enums and their scalar values was
     introduced in Symfony 8.2.
 
-When a property is a :phpclass:`BackedEnum` on one side of the mapping and a
-scalar (``int`` or ``string``) on the other side, ObjectMapper converts the
-value automatically, in both directions, without requiring a custom transformer.
+When mapping between a :phpclass:`BackedEnum` property and its backing scalar
+type (``int`` or ``string``), ObjectMapper converts values automatically in
+both directions.
 
-The following conversions are supported:
-
-* ``int`` to an ``int``-backed enum (and the other way around);
-* ``string`` to a ``string``-backed enum (and the other way around).
-
-Any other combination (for example, a value that does not match any case of the
-target enum) throws an exception::
+For example::
 
     // src/Enum/Status.php
     namespace App\Enum;
@@ -701,10 +695,11 @@ target enum) throws an exception::
         public Status $status;
     }
 
-When using ObjectMapper through the Symfony framework (by type-hinting
-:class:`Symfony\\Component\\ObjectMapper\\ObjectMapperInterface`), this
-conversion is enabled automatically. When using the component standalone, wrap
-your metadata factory with
+ObjectMapper converts ``'draft'`` to ``Status::Draft`` when mapping to ``Post``,
+and converts the enum back to ``'draft'`` when mapping to ``PostInput``. If the
+input scalar value does not match any enum case, mapping fails with an exception.
+
+When using the ObjectMapper component standalone, wrap your metadata factory with
 :class:`Symfony\\Component\\ObjectMapper\\Metadata\\EnumMappingMetadataFactory`::
 
     use App\Dto\PostInput;
