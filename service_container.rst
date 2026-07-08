@@ -772,18 +772,19 @@ reload the next page (even if that page doesn't use this service).
     directly into the services that need them.
 
 .. _service-container-parameters:
+.. _service-parameters:
 
 Container Parameters and Service References
 -------------------------------------------
 
 In addition to holding service objects, the container also holds configuration,
-called **parameters**. The main article about Symfony configuration explains the
+called **parameters**. The main article about Symfony configuration explains
 :ref:`configuration parameters <configuration-parameters>` in detail and shows
 all their types (string, boolean, array, binary and PHP constant parameters).
 
-When defining services, you may also need to reference other services. In YAML config,
-any string which starts with ``@`` is considered as the ID of a service, instead
-of a regular string. In PHP config use the ``service()`` function:
+When defining services, you can also reference other services. In YAML, any
+string starting with ``@`` is interpreted as a service ID rather than a regular
+string. In PHP config, use the ``service()`` function:
 
 .. configuration-block::
 

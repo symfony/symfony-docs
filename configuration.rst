@@ -174,15 +174,14 @@ configuration files, even if they use a different format:
 Configuration Parameters
 ------------------------
 
-Parameters are key-value pairs stored in the
-:doc:`service container </service_container>`. They allow you to centralize
-configuration values that can be reused across your application's configuration
-files and injected into services.
+Parameters are key-value pairs stored in the :doc:`service container </service_container>`.
+They let you centralize configuration values, reuse them across your application's
+configuration, and inject them into services.
 
 When the same configuration value is used in several places, define it as a
-parameter to avoid repetition. Like other configuration values, parameters can
-also be :ref:`overridden per environment <configuration-environments>`. By
-convention, parameters are defined under the ``parameters`` key in the
+parameter to avoid repetition. Parameters can also be
+:ref:`overridden per environment <configuration-environments>`. By convention,
+parameters are defined under the ``parameters`` key in the
 ``config/services.yaml`` file:
 
 .. configuration-block::
