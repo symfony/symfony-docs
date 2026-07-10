@@ -1690,6 +1690,85 @@ you have imported the logout route loader in your routes:
             ],
         ]);
 
+.. _security-logout-without-redirect:
+
+Building the Logout Response Yourself
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Set the ``target`` option to ``null`` to disable the redirection. Symfony still
+un-authenticates the user, but it lets the request continue, so you can return
+any response you want.
+
+In this case, the ``path`` option must reference one of your own routes, because
+Symfony needs a controller to build the response. This is convenient when logging
+out from an API, where the logout response is defined next to the login one:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    json_login:
+                        check_path: app_login
+                    logout:
+                        path: app_logout
+                        target: null
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'json_login' => [
+                            'check_path' => 'app_login',
+                        ],
+                        'logout' => [
+                            'path' => 'app_logout',
+                            'target' => null,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Then, return the response from the controller of the logout route::
+
+    // src/Controller/AuthController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class AuthController extends AbstractController
+    {
+        #[Route('/logout', name: 'app_logout')]
+        public function logout(): JsonResponse
+        {
+            return $this->json(null);
+        }
+    }
+
+.. warning::
+
+    When ``target`` is ``null``, no response is set on the
+    :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`, so the other
+    logout listeners cannot modify it.
+
+.. versionadded:: 8.2
+
+    The support for the ``null`` value of the ``target`` option was introduced
+    in Symfony 8.2.
+
 Logout programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~
 

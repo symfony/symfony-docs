@@ -551,6 +551,15 @@ The relative path (if the value starts with ``/``), or absolute URL (if it
 starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
 
+Set this option to ``null`` to not redirect after logout. The request then
+continues to the controller of the route referenced by the logout ``path``,
+which allows you to return your own response. See
+:ref:`Building the Logout Response Yourself <security-logout-without-redirect>`.
+
+.. versionadded:: 8.2
+
+    The support for the ``null`` value was introduced in Symfony 8.2.
+
 .. _reference-security-logout-csrf:
 
 enable_csrf
