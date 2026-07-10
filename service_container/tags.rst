@@ -244,6 +244,103 @@ call to support ``ReflectionMethod``::
     :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
     callable.
 
+.. _di-tag-attributes-per-tagged-service:
+
+Computing Tag Attributes per Tagged Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Autoconfigured tags attach the same attributes to every tagged service. To
+compute the attributes of each service instead, pass a ``[class-string, method]``
+callable as the tag attributes. Symfony calls that static method on every
+concrete class implementing the interface, when compiling the container::
+
+    // src/Handler/BatchHandlerInterface.php
+    namespace App\Handler;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('app.handler', attributes: [self::class, 'getTagAttributes'])]
+    interface BatchHandlerInterface
+    {
+        /**
+         * @return array<string, mixed>
+         */
+        public static function getTagAttributes(): array;
+    }
+
+Because the method is declared by the interface, static analysis tools catch a
+typo or a missing implementation in any class implementing it. The method is
+called on the concrete class, so it can return attributes that depend on it::
+
+    // src/Handler/RefundHandler.php
+    namespace App\Handler;
+
+    class RefundHandler implements BatchHandlerInterface
+    {
+        public static function getTagAttributes(): array
+        {
+            return ['key' => 'refund'];
+        }
+    }
+
+The same callable can be used with the ``#[Autoconfigure]`` attribute and with
+the ``_instanceof`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _instanceof:
+                App\Handler\BatchHandlerInterface:
+                    tags:
+                        - app.handler: [App\Handler\BatchHandlerInterface, getTagAttributes]
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Handler\BatchHandlerInterface;
+
+        return App::config([
+            'services' => [
+                '_instanceof' => [
+                    BatchHandlerInterface::class => [
+                        'tags' => [
+                            ['app.handler' => [BatchHandlerInterface::class, 'getTagAttributes']],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+On PHP 8.5 and later, where closures are allowed in attributes, you can pass a
+closure receiving the concrete class-string instead of a static method::
+
+    #[AutoconfigureTag('app.handler', attributes: static function (string $class): array {
+        return ['key' => $class::getSupportedBatchAction()];
+    })]
+    interface BatchHandlerInterface
+    {
+        public static function getSupportedBatchAction(): string;
+    }
+
+A closure cannot be expressed in YAML, so the ``[class-string, method]`` callable
+is the only form available there.
+
+.. note::
+
+    Tag attributes are computed at compile time, for each concrete and
+    instantiable class. Abstract classes and interfaces are skipped, and the
+    callable must return an array.
+
+.. versionadded:: 8.2
+
+    The support for computing tag attributes per tagged service was introduced
+    in Symfony 8.2.
+
 .. _service-tags-resource-tags:
 .. _di-resource-tags:
 
