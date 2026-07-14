@@ -568,7 +568,8 @@ the message from being redelivered until the worker completes processing it:
 
 .. note::
 
-    This option is only available for the following transports: Beanstalkd, AmazonSQS, Doctrine and Redis.
+    This option is only available for the following transports: AMPHP SQL,
+    Beanstalkd, AmazonSQS, Doctrine and Redis.
 
 By default, the worker fetches a single message per iteration from the
 transport. Use the ``--fetch-size`` option to fetch multiple messages per
@@ -578,8 +579,9 @@ iteration, reducing the number of round trips to the transport:
 
     $ php bin/console messenger:consume async --fetch-size=8
 
-This is especially useful with transports that support fetching multiple messages
-in a single call, such as Amazon SQS, Redis, AMQP and Doctrine.
+This is especially useful with transports that support fetching multiple
+messages in a single call, such as AMPHP SQL, Amazon SQS, Redis, AMQP and
+Doctrine.
 
 .. versionadded:: 8.1
 
@@ -1657,6 +1659,13 @@ options. Options can be passed to the transport via a DSN string or configuratio
         ]);
 
 Options defined under ``options`` take precedence over ones defined in the DSN.
+
+.. versionadded:: 8.2
+
+    The :doc:`AMPHP SQL transport </messenger/amphp-sql-transport>` was
+    introduced in Symfony 8.2. It provides durable SQLite, MySQL and PostgreSQL
+    queues whose database operations suspend the calling Amp fiber instead of
+    blocking the event loop.
 
 .. _messenger-amqp-transport:
 
