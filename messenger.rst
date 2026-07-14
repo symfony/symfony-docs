@@ -905,8 +905,9 @@ number of round trips to the transport):
 
     $ php bin/console messenger:consume async --fetch-size=8
 
-This is especially useful with transports that support fetching multiple messages
-in a single call, such as Amazon SQS, Redis, AMQP and Doctrine.
+This is especially useful with transports that support fetching multiple
+messages in a single call, such as AMPHP SQL, Amazon SQS, Redis, AMQP and
+Doctrine.
 
 .. versionadded:: 8.1
 
@@ -4111,6 +4112,18 @@ than once (``ApproximateReceiveCount``). Read them in a listener of the
     The transport always requests these attributes and there's no option to
     disable it. SQS-compatible servers that don't support them ignore the
     request, so ``getSystemAttributes()`` returns an empty array.
+
+AMPHP SQL Transport
+~~~~~~~~~~~~~~~~~~~
+
+The AMPHP SQL transport stores messages in SQLite, MySQL or PostgreSQL
+databases. Its database operations suspend the calling Amp fiber instead of
+blocking the event loop. Read :doc:`/messenger/amphp-sql-transport` to learn how
+to install and configure it.
+
+.. versionadded:: 8.2
+
+    The AMPHP SQL transport was introduced in Symfony 8.2.
 
 .. _messenger-serializer:
 
