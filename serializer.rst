@@ -86,6 +86,7 @@ the :class:`Symfony\\Component\\Serializer\\SerializerInterface` parameter type:
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\JsonResponse;
         use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Serializer\Encoder\JsonEncoder;
         use Symfony\Component\Serializer\SerializerInterface;
 
         class PersonController extends AbstractController
@@ -94,7 +95,7 @@ the :class:`Symfony\\Component\\Serializer\\SerializerInterface` parameter type:
             {
                 $person = new Person('Jane Doe', 39, false);
 
-                $jsonContent = $serializer->serialize($person, 'json');
+                $jsonContent = $serializer->serialize($person, JsonEncoder::FORMAT);
                 // $jsonContent contains {"name":"Jane Doe","age":39,"sportsperson":false}
 
                 return JsonResponse::fromJsonString($jsonContent);
@@ -114,7 +115,7 @@ the :class:`Symfony\\Component\\Serializer\\SerializerInterface` parameter type:
 
         $person = new Person('Jane Done', 39, false);
 
-        $jsonContent = $serializer->serialize($person, 'json');
+        $jsonContent = $serializer->serialize($person, JsonEncoder::FORMAT);
         // $jsonContent contains {"name":"Jane Doe","age":39,"sportsperson":false}
 
 The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
