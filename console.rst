@@ -607,8 +607,8 @@ registers an :doc:`event subscriber </event_dispatcher>` to listen to the
 :ref:`ConsoleEvents::TERMINATE event <console-events-terminate>` and adds a log
 message whenever a command doesn't finish with the ``0`` `exit status`_.
 
-Using Events
-------------
+Using Console Events
+--------------------
 
 When a command is running, many events are dispatched, one of them allows you to
 react to signals, read more in :doc:`this section </components/console/events>`.
