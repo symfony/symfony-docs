@@ -86,6 +86,57 @@ of the bundle. Now that you've created the bundle, enable it::
 
 And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
+.. _bundles-required-bundles:
+
+Requiring Other Bundles
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``#[RequiredBundle]`` attribute was introduced in Symfony 8.1.
+
+If your bundle needs one or more other bundles to work (e.g. to reuse their
+services or compiler passes), add the
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\RequiredBundle`
+attribute to your bundle class to declare each dependency::
+
+    // src/AcmeBlogBundle.php
+    namespace Acme\BlogBundle;
+
+    use Acme\CoreBundle\AcmeCoreBundle;
+    use Acme\MarkdownBundle\AcmeMarkdownBundle;
+    use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    #[RequiredBundle(AcmeCoreBundle::class)]
+    #[RequiredBundle(AcmeMarkdownBundle::class, ignoreOnInvalid: true)]
+    class AcmeBlogBundle extends AbstractBundle
+    {
+    }
+
+When the kernel initializes the bundles, the required bundles are registered
+automatically, right before the bundle that requires them. This way, users of
+your bundle only need to enable your bundle in their ``config/bundles.php``
+file. Required bundles are resolved recursively (a required bundle can itself
+require other bundles) and each bundle is only registered once.
+
+The attribute accepts two arguments:
+
+* ``class``: the bundle class to require;
+* ``ignoreOnInvalid``: if set to ``true``, the dependency is silently skipped
+  when its class does not exist. Use this for optional dependencies that are
+  only loaded when the related package is installed.
+
+Bundles registered this way are enabled in the same environments as the
+bundle that requires them. If the application also registers a required
+bundle explicitly in ``config/bundles.php``, the explicit configuration (and
+its environments) takes precedence.
+
+Symfony itself uses this feature: ``FrameworkBundle`` declares
+``#[RequiredBundle(ServicesBundle::class)]`` and
+``#[RequiredBundle(ConsoleBundle::class, ignoreOnInvalid: true)]``, so its
+console integration is only loaded when the Console component is installed.
+
 .. _bundles-legacy-directory-structure:
 .. _bundles-directory-structure:
 

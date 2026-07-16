@@ -105,6 +105,78 @@ all existing behavior::
     $application = new Application('my-cli', '1.0', $container);
     $application->run();
 
+Bootstrapping an Application with the ConsoleBundle
+---------------------------------------------------
+
+.. versionadded:: 8.1
+
+    The ``ConsoleBundle`` was introduced in Symfony 8.1.
+
+Registering services and commands by hand works, but the Console component
+also ships a ``ConsoleBundle`` that brings service autodiscovery,
+autoconfiguration and autowiring to console applications, still without
+requiring HttpKernel or FrameworkBundle.
+
+Combined with the kernel infrastructure provided by the DependencyInjection
+component, a DI-enabled console application boils down to a
+``config/bundles.php`` file::
+
+    // config/bundles.php
+    return [
+        Symfony\Component\Console\ConsoleBundle::class => ['all' => true],
+    ];
+
+and a small executable script (this example also uses the
+:doc:`Runtime component </components/runtime>`)::
+
+    #!/usr/bin/env php
+    <?php
+
+    require __DIR__.'/vendor/autoload_runtime.php';
+
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\DependencyInjection\Kernel\AbstractKernel;
+    use Symfony\Component\DependencyInjection\Kernel\KernelTrait;
+
+    return static function (array $context) {
+        $env = $context['APP_ENV'] ?? 'dev';
+        $debug = (bool) ($context['APP_DEBUG'] ?? true);
+
+        $kernel = new class($env, $debug) extends AbstractKernel {
+            use KernelTrait;
+        };
+
+        $kernel->boot();
+
+        return new Application('demo', '1.0', $kernel->getContainer());
+    };
+
+The kernel follows the same conventions as full Symfony applications:
+``config/bundles.php`` to register bundles, ``config/packages/`` for package
+configuration and ``config/services.yaml`` (or ``.php``) to register your own
+services and commands.
+
+The ConsoleBundle provides:
+
+* autoconfiguration for commands: any service extending ``Command`` or using
+  the ``#[AsCommand]`` attribute is registered in the application and loaded
+  lazily through the command loader;
+* the built-in :doc:`argument value resolvers </console/value_resolver>`;
+* an ``event_dispatcher`` service wired to the console events (if the
+  EventDispatcher component is installed);
+* the ``dotenv:debug`` command (if the Dotenv component is installed).
+
+The ConsoleBundle itself declares the ``ServicesBundle`` of the
+DependencyInjection component as a :ref:`required bundle
+<bundles-required-bundles>`. That bundle supplies the core infrastructure
+services (``parameter_bag``, ``event_dispatcher``, ``filesystem``, ``clock``,
+the config cache, etc.), so you don't need to register it explicitly.
+
+.. tip::
+
+    Anything HTTP-related in your app? Use FrameworkBundle. An app that is
+    unrelated to server-side HTTP? The ConsoleBundle might be a fit.
+
 Learn more
 ----------
 
