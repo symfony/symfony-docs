@@ -14,31 +14,36 @@ Both work great - and are discussed below.
 Using PHP & Twig
 ----------------
 
-Symfony comes with two powerful options to help you build a modern and fast frontend:
+Symfony comes with several powerful options to help you build a modern and fast frontend:
 
 * :ref:`AssetMapper <frontend-asset-mapper>` (recommended for new projects) runs
   entirely in PHP, doesn't require any build step and leverages modern web standards.
 
-* :ref:`Webpack Encore <frontend-webpack-encore>` is built with `Node.js`_
-  on top of `Webpack`_.
+* :ref:`Symfony Reprise <frontend-reprise>` brings first-class Symfony integration
+  to modern JavaScript bundlers (`Vite`_ and `Rsbuild`_), the way Webpack Encore did
+  for Webpack.
 
-================================  ==================================  ==========
-                                  AssetMapper                         Encore
-================================  ==================================  ==========
-Production Ready?                 yes                                 yes
-Stable?                           yes                                 yes
-Requirements                      none                                Node.js
-Requires a build step?            no                                  yes
-Works in all browsers?            yes                                 yes
-Supports `Stimulus/UX`_           yes                                 yes
-Supports Sass/Tailwind            :ref:`yes <asset-mapper-tailwind>`  yes
-Supports React, Vue, Svelte?      yes :ref:`[1] <ux-note-1>`          yes
-Supports TypeScript               :ref:`yes <asset-mapper-ts>`        yes
-Removes comments from JavaScript  no :ref:`[2] <ux-note-2>`           yes
-Removes comments from CSS         no :ref:`[2] <ux-note-2>`           yes :ref:`[4] <ux-note-4>`
-Versioned assets                  always                              optional
-Can update 3rd party packages     yes                                 no :ref:`[3] <ux-note-3>`
-================================  ==================================  ==========
+* :ref:`Webpack Encore <frontend-webpack-encore>` is built with `Node.js`_ on top of
+  `Webpack`_. It's the original bundler integration; for new bundler-based projects,
+  Symfony Reprise is the more modern and faster alternative.
+
+================================  ==================================  ===========================  ==========
+                                  AssetMapper                         Reprise                      Encore
+================================  ==================================  ===========================  ==========
+Production Ready?                 yes                                 no                           yes
+Stable?                           yes                                 no                           yes
+Requirements                      none                                Node.js                      Node.js
+Requires a build step?            no                                  yes                          yes
+Works in all browsers?            yes                                 yes                          yes
+Supports `Stimulus/UX`_           yes                                 yes                          yes
+Supports Sass/Tailwind            :ref:`yes <asset-mapper-tailwind>`  yes                          yes
+Supports React, Vue, Svelte?      yes :ref:`[1] <ux-note-1>`          yes                          yes
+Supports TypeScript               :ref:`yes <asset-mapper-ts>`        yes                          yes
+Removes comments from JavaScript  no :ref:`[2] <ux-note-2>`           yes                          yes
+Removes comments from CSS         no :ref:`[2] <ux-note-2>`           yes                          yes :ref:`[4] <ux-note-4>`
+Versioned assets                  always                              always                       optional
+Can update 3rd party packages     yes                                 no :ref:`[3] <ux-note-3>`    no :ref:`[3] <ux-note-3>`
+================================  ==================================  ===========================  ==========
 
 .. _ux-note-1:
 
@@ -77,6 +82,40 @@ to a polyfill.
 
 :doc:`Read the AssetMapper Documentation </frontend/asset_mapper>`
 
+.. _frontend-reprise:
+
+Symfony Reprise
+~~~~~~~~~~~~~~~
+
+.. warning::
+
+    Symfony Reprise is **experimental**: its API and behavior may still change,
+    sometimes drastically.
+
+`Symfony Reprise`_ is the modern, faster alternative to Webpack Encore. Instead of
+wrapping Webpack, it brings first-class Symfony integration to today's JavaScript
+bundlers, `Vite`_ and `Rsbuild`_, which build on much faster tooling (esbuild,
+Rolldown and Rspack).
+
+Vite and Rsbuild already handle Sass/PostCSS, TypeScript, JSX/Vue/Svelte, code
+splitting, minification and Hot Module Replacement on their own. Reprise adds the
+Symfony-side glue those bundlers leave out: ``entrypoints.json`` and ``manifest.json``
+generation, asset versioning, the dev server wiring, Twig functions to render the
+``<script>`` and ``<link>`` tags, and Symfony UX / Stimulus integration.
+
+Because it generates the same ``entrypoints.json`` and ``manifest.json`` as Webpack
+Encore, moving from Encore is mostly a tag-for-tag swap in your templates
+(``encore_entry_*`` becomes ``reprise_entry_*``).
+
+Install it with Composer and npm, then pick your bundler (Vite or Rsbuild):
+
+.. code-block:: terminal
+
+    $ composer require symfony/reprise
+    $ npm install @symfony/reprise --save-dev
+
+For the full configuration and usage, read the `Symfony Reprise documentation`_.
+
 .. _frontend-webpack-encore:
 
 Webpack Encore
@@ -95,6 +134,13 @@ Webpack Encore
 `Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
 It wraps Webpack, giving you a clean & powerful API for bundling JavaScript modules,
 pre-processing CSS & JS and compiling and minifying assets.
+
+.. note::
+
+    Webpack Encore is now Symfony's legacy bundler-based option. It's still
+    supported, but if you're starting a new project that needs a bundler, consider
+    :ref:`Symfony Reprise <frontend-reprise>`, a more modern and faster alternative
+    built on Vite and Rsbuild.
 
 :doc:`Read the Encore Documentation </frontend/encore/index>`
 
@@ -165,3 +211,7 @@ Other Front-End Articles
 .. _`AssetMapper screencast series`: https://symfonycasts.com/screencast/asset-mapper
 .. _`API Platform screencast series`: https://symfonycasts.com/screencast/api-platform
 .. _`CssMinimizerPlugin`: https://webpack.js.org/plugins/css-minimizer-webpack-plugin
+.. _`Symfony Reprise`: https://github.com/symfony/reprise
+.. _`Symfony Reprise documentation`: https://github.com/symfony/reprise/blob/main/doc/index.rst
+.. _`Vite`: https://vite.dev/
+.. _`Rsbuild`: https://rsbuild.dev/
