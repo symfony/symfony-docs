@@ -163,10 +163,6 @@ The ``ConsoleEvents::SIGNAL`` Event
 
 **Typical Purposes**: To perform some actions after the command execution was interrupted.
 
-`Signals`_ are asynchronous notifications sent to a process in order to notify
-it of an event that occurred. For example, when you press ``Ctrl + C`` in a
-command, the operating system sends the ``SIGINT`` signal to it.
-
 When a command is interrupted, Symfony dispatches the ``ConsoleEvents::SIGNAL``
 event. Listen to this event so you can perform some actions (e.g. logging some
 results, cleaning some temporary files, etc.) before finishing the command execution.
@@ -201,53 +197,6 @@ method::
     $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
         $event->abortExit();
     });
-
-.. tip::
-
-    All the available signals (``SIGINT``, ``SIGQUIT``, etc.) are defined as
-    `constants of the PCNTL PHP extension`_. The extension has to be installed
-    for these constants to be available.
-
-If you use the Console component inside a Symfony application, commands can
-handle signals themselves by subscribing to the :class:`Symfony\\Component\\Console\\Event\\ConsoleSignalEvent` event::
-
-    // src/Command/MyCommand.php
-    namespace App\Command;
-
-    use Symfony\Component\Console\Attribute\AsCommand;
-    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
-
-    #[AsCommand(name: 'app:my-command')]
-    class MyCommand
-    {
-        // ...
-
-        #[AsEventListener(ConsoleSignalEvent::class)]
-        public function handleSignal(ConsoleSignalEvent $event): void
-        {
-            // set here any of the constants defined by PCNTL extension
-            if (in_array($event->getHandlingSignal(), [\SIGINT, \SIGTERM], true)) {
-                // ...
-            }
-
-            // ...
-
-            // set an integer exit code, or
-            // false to continue normal execution
-            $event->setExitCode(0);
-        }
-    }
-
-Symfony doesn't handle any signal received by the command (not even ``SIGKILL``,
-``SIGTERM``, etc). This behavior is intended, as it gives you the flexibility to
-handle all signals e.g. to do some tasks before terminating the command.
-
-.. tip::
-
-    If you need to fetch the signal name from its integer value (e.g. for logging),
-    you can use the
-    :method:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap::getSignalName`
-    method.
 
 .. _the-consoleevents-alarm-event:
 
@@ -317,5 +266,3 @@ actions on each alarm::
     Symfony 7.2.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
-.. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
-.. _`constants of the PCNTL PHP extension`: https://www.php.net/manual/en/pcntl.constants.php
