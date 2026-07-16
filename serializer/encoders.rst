@@ -71,6 +71,8 @@ are available to customize the behavior of the encoder:
     E.g. if you set it to ``['a', 'b', 'c']`` and serialize
     ``['c' => 3, 'a' => 1, 'b' => 2]``, the order will be ``a,b,c`` instead
     of the input order (``c,a,b``).
+    When encoding, this option also accepts an associative array to
+    :ref:`select and rename the columns <serializer-csv-headers-mapping>`.
 ``csv_escape_formulas`` (default: ``false``)
     Escapes fields containing formulas by prepending them with a ``\t`` character.
 ``as_collection`` (default: ``true``)
@@ -80,6 +82,47 @@ are available to customize the behavior of the encoder:
     ``true`` generates numeric headers.
 ``output_utf8_bom`` (default: ``false``)
     Outputs special `UTF-8 BOM`_ along with encoded data.
+
+.. _serializer-csv-headers-mapping:
+
+Selecting and Renaming CSV Columns
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for associative arrays in ``csv_headers`` was introduced in Symfony 8.2.
+
+When encoding, ``csv_headers`` also accepts an associative array whose keys are
+the labels of the CSV columns and whose values are the paths read from each
+row::
+
+    use Symfony\Component\Serializer\Encoder\CsvEncoder;
+
+    $data = [
+        ['firstName' => 'Kévin', 'lastName' => 'Dunglas', 'company' => ['name' => 'Les-Tilleuls.coop']],
+        ['firstName' => 'Nicolas', 'lastName' => 'Grekas', 'company' => ['name' => 'Symfony']],
+    ];
+
+    $encoder->encode($data, 'csv', [
+        CsvEncoder::HEADERS_KEY => [
+            'Name' => 'firstName',
+            'Company' => 'company.name',
+        ],
+    ]);
+
+    // Name,Company
+    // Kévin,Les-Tilleuls.coop
+    // Nicolas,Symfony
+
+Contrary to the list syntax, only the listed columns are encoded, in the given
+order, and no other column is appended (this is why ``lastName`` is missing from
+the output above). Rows are flattened before the paths are resolved, so nested
+values are read using the ``csv_key_separator`` option (``company.name`` in the
+example). A path that doesn't exist in a given row produces an empty cell.
+
+This syntax only applies to encoding. When decoding, ``csv_headers`` still
+expects a list of column names, and it's only used when the ``no_headers``
+option is set to ``true``.
 
 The ``XmlEncoder``
 ------------------
