@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by Kocal at 2026-07-14T12:57:59Z
+
+Thanks for the review!
+
+> Also, is the 6.4 target correct?
+
+I took the lowest maintained version of https://symfony.com/doc/6.4/frontend.html. But even if Reprise supports Symfony 7.4+, I think it's fine no?
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-07-15T14:05:02Z
+
+> Thanks for the review!
+>
+> > Also, is the 6.4 target correct?
+>
+> I took the lowest maintained version of https://symfony.com/doc/6.4/frontend.html. But even if Reprise supports Symfony 7.4+, I think it's fine no?
+
+It looks confusing to me add documentation for Reprise in 6.4 if this version is not supported
+
+---------------------------------------------------------------------------
+
+by Kocal at 2026-07-16T10:30:36Z
+
+All review comments were addressed
