@@ -355,6 +355,81 @@ The input of a process can also be defined using `PHP streams`_::
     // will echo: 'foobar'
     echo $process->getOutput();
 
+What Are TTY and PTY?
+---------------------
+
+You can skip this section if you already know the difference between a *TTY* and
+a *PTY*. Otherwise, read on to understand why the same command can behave
+differently depending on how you run it.
+
+A `TTY`_ (short for *"teletype"*) is a real terminal. When the output of a program
+is connected to a TTY, the program prints colors, progress bars and interactive
+prompts. Programs detect this using a check such as :phpfunction:`stream_isatty`.
+When the output is connected to a *pipe* instead (that is, another program is
+capturing it), the program switches to plain, machine-friendly output: no
+colors, no animations. This is why ``composer install`` is colorful in your
+terminal but plain in your CI logs.
+
+A `PTY`_ (short for *"pseudo-terminal"*) is a software emulation of a terminal.
+It works as a pair of connected endpoints: your program acts as the controlling
+terminal, while the child process is attached to a virtual terminal. The child
+believes it is talking to a real terminal, so it produces rich output, but your
+program still receives everything it prints and can capture it. It's the best of
+both worlds: colored output **and** capturable output.
+
+.. note::
+
+    PTY mode is not available on Windows.
+
+Consider a tiny console command that prints two colored lines::
+
+    // demo.php
+    $output->writeln('<info>Hello from Symfony</info>');     // green
+    $output->writeln('<comment>Have a nice day!</comment>'); // yellow
+
+And a script that runs it as a process and dumps the captured output::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process([__DIR__.'/demo.php']);
+    $process->mustRun();
+
+    dump($process->getOutput());
+
+By default, the process output is connected to a pipe. The command detects this,
+disables colors and produces plain text, which your program captures:
+
+.. code-block:: text
+
+    "Hello from Symfony
+    Have a nice day!
+    "
+
+Enable TTY mode by adding ``$process->setTty(true);`` before running the process.
+The two lines now appear **in color** directly on your terminal, but ``getOutput()``
+returns an empty string, because the process wrote straight to the terminal
+instead of to your program:
+
+.. code-block:: text
+
+    ""
+
+Enable PTY mode by adding ``$process->setPty(true);`` instead. The command still
+sees a terminal, so it produces the same **colored** output, but this time your
+program captures all of it, including the raw ANSI escape codes:
+
+.. code-block:: text
+
+    "\033[32mHello from Symfony\033[39m
+    \033[33mHave a nice day!\033[39m
+    "
+
+In short:
+
+* **default (pipe):** plain output, captured;
+* **TTY:** colored output, *not* captured;
+* **PTY:** colored output, captured.
+
 Using TTY and PTY Modes
 -----------------------
 
@@ -362,7 +437,7 @@ All examples above show that your program has control over the input of a
 process (using ``setInput()``) and the output from that process (using
 ``getOutput()``). The Process component has two special modes that tweak
 the relationship between your program and the process: teletype (tty) and
-pseudo-teletype (pty).
+pseudo-teletype (pty). See `What Are TTY and PTY?`_ above to learn about them.
 
 In TTY mode, you connect the input and output of the process to the input
 and output of your program. This allows for instance to open an editor like
@@ -380,9 +455,15 @@ Vim or Nano as a process. You enable TTY mode by calling
 In PTY mode, your program behaves as a terminal for the process instead of
 a plain input and output. Some programs behave differently when
 interacting with a real terminal instead of another program. For instance,
-some programs prompt for a password when talking with a terminal. Use
-:method:`Symfony\\Component\\Process\\Process::setPty` to enable this
-mode.
+some programs prompt for a password when talking with a terminal. Enable PTY
+mode by calling :method:`Symfony\\Component\\Process\\Process::setPty`::
+
+    $process = new Process(['ssh', 'user@host']);
+    $process->setPty(true);
+    $process->run();
+
+    // unlike TTY mode, the process output is still readable here
+    dump($process->getOutput());
 
 Stopping a Process
 ------------------
@@ -602,4 +683,5 @@ whether `TTY`_ is supported on the current operating system::
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php
 .. _`output_buffering`: https://www.php.net/manual/en/outcontrol.configuration.php
 .. _`TTY`: https://en.wikipedia.org/wiki/Tty_(unix)
+.. _`PTY`: https://en.wikipedia.org/wiki/Pseudoterminal
 .. _`PHP documentation for proc_open()`: https://www.php.net/manual/en/function.proc-open.php
