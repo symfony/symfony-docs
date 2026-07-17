@@ -613,6 +613,8 @@ Using Console Events
 When a command is running, many events are dispatched, one of them allows you to
 react to signals, read more in :doc:`this section </components/console/events>`.
 
+.. _console-signal-handling:
+
 Handling Signals
 ----------------
 
@@ -663,6 +665,45 @@ subscribing to one or more signals::
 
 This registers a signal handler for that command only. To run the same handler
 for all commands, use :ref:`events <console-events_signal>` instead.
+
+You can also use :method:`Symfony\\Component\\Console\\Application::setAlarmInterval`
+to trigger a recurring alarm interval, causing the OS to deliver a ``SIGALRM`` signal
+at the given interval (in seconds). Use these signals to perform periodic tasks during
+long-running commands::
+
+    // src/Command/LongRunningCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Command\SignalableCommandInterface;
+
+    #[AsCommand(name: 'app:long-running')]
+    class LongRunningCommand implements SignalableCommandInterface
+    {
+        public function __invoke(Application $application): int
+        {
+            // trigger an alarm every 10 seconds
+            $application->setAlarmInterval(10);
+
+            // long-running processing...
+
+            return Command::SUCCESS;
+        }
+
+        public function getSubscribedSignals(): array
+        {
+            return [\SIGALRM];
+        }
+
+        public function handleSignal(int $signal, int|false $previousExitCode = 0): int|false
+        {
+            // e.g. ping the database to keep the connection alive
+
+            return false;
+        }
+    }
 
 Symfony doesn't handle any signal received by the command (not even ``SIGKILL``,
 ``SIGTERM``, etc). This behavior is intended, as it gives you the flexibility to

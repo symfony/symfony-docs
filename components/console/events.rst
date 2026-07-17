@@ -154,7 +154,7 @@ Listeners receive a
 
     Additionally, the event is dispatched when the command is being exited on
     a signal. You can learn more about signals in the
-    :ref:`the dedicated section <console-events_signal>`.
+    :ref:`the dedicated section <console-signal-handling>`.
 
 .. _console-events_signal:
 
@@ -207,8 +207,7 @@ The ``ConsoleAlarmEvent``
 (e.g. database connection keepalive, extending lock TTLs, heartbeat checks).
 
 When a command calls :method:`Symfony\\Component\\Console\\Application::setAlarmInterval`,
-the application sets a recurring alarm interval, causing the OS to deliver a
-``SIGALRM`` signal at the given interval (in seconds). Each time the signal fires,
+the application sets a recurring alarm interval. Each time the ``SIGALRM`` signal fires,
 a ``ConsoleAlarmEvent`` is dispatched, allowing listeners to run periodic logic::
 
     // src/Command/LongRunningCommand.php
@@ -252,6 +251,9 @@ actions on each alarm::
         public function __invoke(ConsoleAlarmEvent $event): void
         {
             // e.g. ping the database to keep the connection alive
+
+            // keep the command running after handling the alarm
+            $event->abortExit();
         }
     }
 
