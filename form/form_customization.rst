@@ -448,4 +448,26 @@ Returns the current value of the field.
     {# pre-fill a custom input with the form field's value #}
     <input type="range" name="{{ field_name(form.rating) }}" value="{{ field_value(form.rating) }}">
 
+Form Flow Functions
+-------------------
+
+When using :doc:`multi-step forms </form/form_flow>`, the following functions
+give access to the state of the form flow (current step, total steps, etc.):
+
+* ``form_flow_current_step()``
+* ``form_flow_steps()``
+* ``form_flow_step_index()``
+* ``form_flow_total_steps()``
+* ``form_flow_first_step()``
+* ``form_flow_last_step()``
+* ``form_flow_next_step()``
+* ``form_flow_previous_step()``
+* ``form_flow_is_first_step()``
+* ``form_flow_is_last_step()``
+* ``form_flow_can_move_back()``
+* ``form_flow_can_move_next()``
+
+They are explained in detail in the article about
+:ref:`multi-step forms <reference-forms-twig-form-flow>`.
+
 .. _`is Twig operator`: https://twig.symfony.com/doc/3.x/templates.html#test-operator
