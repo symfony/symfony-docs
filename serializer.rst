@@ -2130,22 +2130,22 @@ objects, the extra attributes of those nested objects are never reported.
 Use the ``COLLECT_EXTRA_ATTRIBUTES_ERRORS`` option to collect all the extra
 attributes at once, and to get the object partially denormalized::
 
-  try {
-      $person = $serializer->deserialize($jsonString, Person::class, 'json', [
-          AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
-          DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
-      ]);
-  } catch (PartialDenormalizationException $e) {
-      $violations = new ConstraintViolationList();
+    try {
+        $person = $serializer->deserialize($jsonString, Person::class, 'json', [
+            AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
+            DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
+        ]);
+    } catch (PartialDenormalizationException $e) {
+        $violations = new ConstraintViolationList();
 
-      if (null !== $extraAttributesError = $e->getExtraAttributesError()) {
-          foreach ($extraAttributesError->getExtraAttributes() as $extraAttribute) {
-              $violations->add(new ConstraintViolation('This attribute is not allowed.', '', [], null, $extraAttribute, null));
-          }
-      }
+        if (null !== $extraAttributesError = $e->getExtraAttributesError()) {
+            foreach ($extraAttributesError->getExtraAttributes() as $extraAttribute) {
+                $violations->add(new ConstraintViolation('This attribute is not allowed.', '', [], null, $extraAttribute, null));
+            }
+        }
 
-      // ... return violation list to the user
-  }
+        // ... return violation list to the user
+    }
 
 The ``getExtraAttributesError()`` method returns a single ``ExtraAttributesException``
 containing all the unexpected attributes found in the payload, or ``null`` if there
@@ -2156,11 +2156,11 @@ You can combine this option with ``COLLECT_DENORMALIZATION_ERRORS`` to report bo
 type errors and extra attributes. Both are available in the same
 ``PartialDenormalizationException``::
 
-  $person = $serializer->deserialize($jsonString, Person::class, 'json', [
-      AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
-      DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
-      DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
-  ]);
+    $person = $serializer->deserialize($jsonString, Person::class, 'json', [
+        AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
+        DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
+        DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
+    ]);
 
 .. _serializer-populate-existing-object:
 
