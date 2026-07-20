@@ -210,11 +210,66 @@ When the ``finish`` button is clicked, the flow is marked as finished, the data
 storage is cleared (if ``auto_reset`` is enabled), and the cursor is reset to
 the first step. Use ``$form->isFinished()`` to check whether the flow has completed.
 
+.. _reference-forms-twig-form-flow:
+
 Rendering Navigation Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The form view exposes step metadata that can be used to build progress
-indicators or navigation menus:
+Symfony provides a set of ``form_flow_*()`` Twig functions to read the state of
+the flow inside templates. They are useful to build progress indicators, step
+lists and navigation menus. All of them take a ``FormView`` as their only argument:
+
+* ``form_flow_current_step()``, ``form_flow_first_step()``,
+  ``form_flow_last_step()``, ``form_flow_next_step()`` and
+  ``form_flow_previous_step()`` return a step name as a string;
+* ``form_flow_steps()`` returns the list of all step names;
+* ``form_flow_total_steps()`` returns the number of steps and
+  ``form_flow_step_index()`` the zero-based index of the current step;
+* ``form_flow_is_first_step()``, ``form_flow_is_last_step()``,
+  ``form_flow_can_move_back()`` and ``form_flow_can_move_next()`` return a boolean.
+
+The ``form_flow_next_step()`` and ``form_flow_previous_step()`` methods return
+``null`` on the last and first steps respectively. When the given form is not
+part of a flow, all functions return ``null``, except the ``is_*()`` and
+``can_*()`` ones, which return ``false``.
+
+The following example displays the current progress and the list of steps:
+
+.. code-block:: html+twig
+
+    <p>
+        Step {{ form_flow_step_index(form) + 1 }}
+        of {{ form_flow_total_steps(form) }}:
+        {{ form_flow_current_step(form) }}
+    </p>
+
+    <ol>
+        {% for step in form_flow_steps(form) %}
+            <li class="{{ step == form_flow_current_step(form) ? 'active' : '' }}">
+                {{ step }}
+            </li>
+        {% endfor %}
+    </ol>
+
+    {{ form_start(form) }}
+        {# this also renders the navigator buttons (previous, next, finish) #}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+.. versionadded:: 8.1
+
+    The ``form_flow_*()`` Twig functions were introduced in Symfony 8.1.
+
+.. warning::
+
+    Don't use ``form_flow_can_move_back()`` and ``form_flow_can_move_next()`` to
+    render your own ``<button>`` elements. Symfony only detects clicks on the
+    buttons created by the flow button types (e.g. the ones added by the
+    navigator), so plain HTML buttons won't move the flow.
+
+Instead of ``form_flow_steps()``, which returns all the steps defined in the
+flow, use the ``visible_steps`` variable to exclude the steps skipped for the
+current data:
 
 .. code-block:: html+twig
 
@@ -225,9 +280,6 @@ indicators or navigation menus:
             </li>
         {% endfor %}
     </ol>
-
-    {# current step index, zero-based #}
-    {{ form.vars.cursor }}
 
 Each step object exposes the following properties:
 
