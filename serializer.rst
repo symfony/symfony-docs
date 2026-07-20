@@ -345,6 +345,12 @@ instance to disallow extra fields while deserializing:
         ];
         $serializer = new Serializer($normalizers, $encoders);
 
+.. tip::
+
+    When extra attributes are disallowed and the payload contains nested objects,
+    only the first object with extra attributes is reported. See
+    :ref:`serializer-collecting-extra-attributes-errors` to collect all of them at once.
+
 .. _serializer-context-while-serializing-deserializing:
 
 Pass Context while Serializing/Deserializing
@@ -2088,7 +2094,7 @@ at once, and to get the object partially denormalized::
         $violations = new ConstraintViolationList();
 
         /** @var NotNormalizableValueException $exception */
-        foreach ($e->getErrors() as $exception) {
+        foreach ($e->getNotNormalizableValueErrors() as $exception) {
             $message = sprintf('The type must be one of "%s" ("%s" given).', implode(', ', $exception->getExpectedTypes()), $exception->getCurrentType());
             $parameters = [];
             if ($exception->canUseMessageForUser()) {
@@ -2099,6 +2105,62 @@ at once, and to get the object partially denormalized::
 
         // ... return violation list to the user
     }
+
+.. deprecated:: 8.1
+
+    The ``PartialDenormalizationException::getErrors()`` method is deprecated since
+    Symfony 8.1. Use ``getNotNormalizableValueErrors()`` instead.
+
+.. _serializer-collecting-extra-attributes-errors:
+
+Collecting Extra Attributes Errors While Denormalizing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS`` context option
+    was introduced in Symfony 8.1.
+
+When ``allow_extra_attributes`` is set to ``false``, denormalizing a payload that
+contains unknown attributes throws an
+:class:`Symfony\Component\Serializer\Exception\ExtraAttributesException` as soon as
+the first object with extra attributes is found. If the payload contains nested
+objects, the extra attributes of those nested objects are never reported.
+
+Use the ``COLLECT_EXTRA_ATTRIBUTES_ERRORS`` option to collect all the extra
+attributes at once, and to get the object partially denormalized::
+
+    try {
+        $person = $serializer->deserialize($jsonString, Person::class, 'json', [
+            AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
+            DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
+        ]);
+    } catch (PartialDenormalizationException $e) {
+        $violations = new ConstraintViolationList();
+
+        if (null !== $extraAttributesError = $e->getExtraAttributesError()) {
+            foreach ($extraAttributesError->getExtraAttributes() as $extraAttribute) {
+                $violations->add(new ConstraintViolation('This attribute is not allowed.', '', [], null, $extraAttribute, null));
+            }
+        }
+
+        // ... return violation list to the user
+    }
+
+The ``getExtraAttributesError()`` method returns a single ``ExtraAttributesException``
+containing all the unexpected attributes found in the payload, or ``null`` if there
+were none. Each attribute is reported using its full path in the payload (e.g.
+``address.unknownField`` or ``phones[0].unknownField``).
+
+You can combine this option with ``COLLECT_DENORMALIZATION_ERRORS`` to report both
+type errors and extra attributes. Both are available in the same
+``PartialDenormalizationException``::
+
+    $person = $serializer->deserialize($jsonString, Person::class, 'json', [
+        AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
+        DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
+        DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
+    ]);
 
 .. _serializer-populate-existing-object:
 
