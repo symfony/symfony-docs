@@ -173,7 +173,7 @@ trigger as well as the decorators by calling the
 and :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::decorators`
 methods::
 
-    $trigger = new ExcludeTimeTrigger(new JitterTrigger(CronExpressionTrigger::fromSpec('#midnight', new MyMessage()));
+    $trigger = new ExcludeTimeTrigger(new JitterTrigger(CronExpressionTrigger::fromSpec('#midnight', new MyMessage())));
 
     $trigger->inner(); // CronExpressionTrigger
     $trigger->decorators(); // [ExcludeTimeTrigger, JitterTrigger]
