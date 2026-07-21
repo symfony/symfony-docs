@@ -441,6 +441,38 @@ The ``importmap()`` function also outputs a set of "preloads":
 This is a performance optimization and you can learn more about below
 in :ref:`Performance: Add Preloading <performance-preloading>`.
 
+.. _importmap-glob:
+
+Registering Multiple Files with a Glob
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``glob`` option was introduced in Symfony 8.2.
+
+Use the ``glob`` option to register many local files at once instead of adding
+one entry per file (for example, a package shipping a set of Stimulus
+controllers)::
+
+    // importmap.php
+    return [
+        // ...
+        '@acme/ui/' => [
+            'glob' => './vendor/acme/ui/*/assets/controllers/*_controller.js',
+        ],
+    ];
+
+Each matched file becomes its own entry, named after the entry key (used as a
+prefix) plus the file path relative to the part of the pattern before the first
+wildcard. Here, ``vendor/acme/ui/modal/assets/controllers/toggle_controller.js``
+is registered as ``@acme/ui/modal/assets/controllers/toggle_controller.js``.
+
+Patterns are matched relative to ``importmap.php`` using the
+:doc:`Finder component </components/finder>` glob syntax, so ``*``, ``?``,
+``[...]``, ``{...}`` (alternatives) and ``**`` (recursive) are all supported. Each
+entry's ``type`` is inferred from the file extension, and ``glob`` can't be
+combined with the other options such as ``path`` or ``version``.
+
 Importing Specific Files From a 3rd Party Package
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
