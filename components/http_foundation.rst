@@ -1101,6 +1101,7 @@ The following example shows how to detect if the user agent prefers "safe" conte
         $response->setContentSafe();
 
         return $response;
+    }
 
 Generating Relative and Absolute URLs
 -------------------------------------
