@@ -178,7 +178,8 @@ longer help text for the command::
     introduced in Symfony 7.4.
 
 Additionally, you can extend the :class:`Symfony\\Component\\Console\\Command\\Command` class to
-leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize` and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
+leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
+and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
 
     use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
