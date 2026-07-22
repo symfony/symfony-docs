@@ -65,11 +65,11 @@ And now from a :class:`Symfony\\Component\\HttpFoundation\\Response` to a
 Converting Objects implementing PSR-7 Interfaces to HttpFoundation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On the other hand, the bridge provide a factory interface called
+On the other hand, the bridge provides a factory interface called
 `HttpFoundationFactoryInterface`_ that builds HttpFoundation objects from
 objects implementing PSR-7 interfaces.
 
-The next snippet explain how to convert an object implementing the
+The next snippet explains how to convert an object implementing the
 ``Psr\Http\Message\ServerRequestInterface`` interface to a
 :class:`Symfony\\Component\\HttpFoundation\\Request` instance::
 

@@ -3,7 +3,7 @@ How to Create Multiple Symfony Applications with a Single Kernel
 
 In Symfony applications, incoming requests are usually processed by the front
 controller at ``public/index.php``, which instantiates the ``src/Kernel.php``
-class to create the application kernel. This kernel loads the bundles, the
+class to create the application kernel. This kernel loads the bundles and the
 configuration, and handles the request to generate the response.
 
 The current implementation of the Kernel class serves as a convenient default
@@ -249,7 +249,7 @@ third argument of the Kernel constructor is now also necessary to set the
 application ID, which is derived from an external configuration.
 
 For the second front controller, define a new console option to allow passing
-the application ID to run under CLI context::
+the application ID to run in the CLI context::
 
     // bin/console
     use Shared\Kernel;
@@ -362,7 +362,7 @@ include the new application ID argument, so you need to update it::
 
 .. note::
 
-    This examples uses a hardcoded application ID value because the tests
+    This example uses a hardcoded application ID value because the tests
     extending this ``ApiTestCase`` class will focus solely on the ``api`` tests.
 
 Now, create a ``tests/`` directory inside the ``apps/api/`` application. Then,

@@ -480,8 +480,8 @@ been streamed to the user
 
 The final event of the HttpKernel process is ``kernel.terminate`` and is unique
 because it occurs *after* the ``HttpKernel::handle()`` method, and after the
-response is sent to the user. Recall from above, then the code that uses
-the kernel, ends like this::
+response is sent to the user. Recall from above that the code that uses the
+kernel ends like this::
 
     // sends the headers and echoes the content
     $response->send();

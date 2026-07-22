@@ -152,7 +152,7 @@ warmup don't need the **decryption key**.
 List Existing Secrets
 ---------------------
 
-Everybody is allowed to list the secrets names with the command
+Everybody is allowed to list the secret names with the command
 ``secrets:list``. If you have the **decryption key** you can also reveal the
 secrets' values by passing the ``--reveal`` option:
 

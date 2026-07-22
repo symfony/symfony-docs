@@ -89,7 +89,7 @@ Setting up an Existing Symfony Project
 In addition to creating new Symfony projects, you will also work on projects
 already created by other developers. In that case, you only need to get the
 project code and install the dependencies with Composer. Assuming your team uses
-Git, setup your project with the following commands:
+Git, set up your project with the following commands:
 
 .. code-block:: terminal
 

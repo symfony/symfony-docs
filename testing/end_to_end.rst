@@ -70,7 +70,7 @@ Registering The PHPUnit Extension
 If you intend to use Panther to test your application, it is strongly recommended
 to register the Panther PHPUnit extension. While not strictly mandatory, this
 extension dramatically improves the testing experience by boosting the performance
-and allowing to use the :ref:`interactive debugging mode <panther_interactive-mode>`.
+and allowing you to use the :ref:`interactive debugging mode <panther_interactive-mode>`.
 
 When using the extension in conjunction with the ``PANTHER_ERROR_SCREENSHOT_DIR``
 environment variable, tests using the Panther client that fail or error (after the
