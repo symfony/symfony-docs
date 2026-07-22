@@ -174,7 +174,7 @@ longer help text for the command::
     }
 
 Additionally, you can extend the :class:`Symfony\\Component\\Console\\Command\\Command` class to
-leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize` and
+leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
 and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
 
     use Symfony\Component\Console\Attribute\AsCommand;
