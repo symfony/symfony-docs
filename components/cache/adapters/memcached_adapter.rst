@@ -183,7 +183,7 @@ Available Options
 
     Valid option values include *any positive integer*.
 
-``randomize_replica_read`` (type: ``bool``, type: ``false``)
+``randomize_replica_read`` (type: ``bool``, default: ``false``)
     Enables or disables randomization of the replica reads starting point.
     Normally the read is done from primary server and in case of a miss the read
     is done from "primary+1", then "primary+2", all the way to "n" replicas.

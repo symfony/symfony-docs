@@ -198,8 +198,8 @@ parameter value::
     }
 
 The virtual `proxy`_ injected into other services will only implement the
-specified interfaces and will not extend the original service class, allowing to
-lazy load services using `final`_ classes. You can configure the proxy to
+specified interfaces and will not extend the original service class, allowing you
+to lazy load services using `final`_ classes. You can configure the proxy to
 implement multiple interfaces by adding new "proxy" tags.
 
 .. tip::

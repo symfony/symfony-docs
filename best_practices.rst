@@ -24,7 +24,7 @@ Creating the Project
 Use the Symfony Binary to Create Symfony Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Symfony binary is an executable command created in your machine when you
+The Symfony binary is an executable command created on your machine when you
 `download Symfony`_. It provides multiple utilities, including the simplest way
 to create new Symfony applications:
 
@@ -242,14 +242,14 @@ Use Attributes to Configure Routing, Caching, and Security
 
 Using attributes for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
-formats (YAML, PHP): all the configuration is just where you  require it,
+formats (YAML, PHP): all the configuration is just where you require it,
 and it only uses one format.
 
 Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you extend the base ``AbstractController``, you can only get access to the most
-common services (e.g ``twig``, ``router``, ``doctrine``, etc.), directly from the
+common services (e.g. ``twig``, ``router``, ``doctrine``, etc.), directly from the
 container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
@@ -265,7 +265,7 @@ controller. It will also show a 404 page if no entity can be found.
 
 If the logic to get an entity from a route variable is more complex, instead of
 configuring the EntityValueResolver, it's better to make the Doctrine query
-inside the controller (e.g. by calling to a :doc:`Doctrine repository method </doctrine>`).
+inside the controller (e.g. by calling a :doc:`Doctrine repository method </doctrine>`).
 
 Templates
 ---------
@@ -342,7 +342,7 @@ by professional translators. And since it's based on XML, you can validate ``XLI
 file contents as you write them.
 
 Symfony also supports notes in XLIFF files, making them more user-friendly for
-translators. At the end, good translations are all about context, and these
+translators. In the end, good translations are all about context, and these
 XLIFF notes allow you to define that context.
 
 Use Keys for Translations Instead of Content Strings

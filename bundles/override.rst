@@ -65,7 +65,7 @@ Controllers
 -----------
 
 If the controller is a service, see the next section on how to override it.
-Otherwise, define a new route + controller with the same path associated to the
+Otherwise, define a new route + controller with the same path associated with the
 controller you want to override (and make sure that the new route is loaded
 before the bundle one).
 

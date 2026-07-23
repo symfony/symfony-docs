@@ -1651,7 +1651,7 @@ like ``[!!! !!!]`` to test the application when using languages more verbose
 than the original one. This solves the first problem.
 
 In addition, the original characters are replaced by similar but accented
-characters. This makes the text highly readable, while allowing to test the
+characters. This makes the text highly readable, while allowing you to test the
 application with all kinds of accented and special characters. This solves the
 second problem.
 
