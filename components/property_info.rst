@@ -224,7 +224,7 @@ provide whether properties are readable or writable as booleans::
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
 for getter/isser/setter/hasser method in addition to whether or not a property is public
-to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
+to determine if it's accessible. This is based on how the :doc:`PropertyAccess </components/property_access>`
 component works. It assumes camel case style method names following `PSR-1`_. For example,
 both ``myProperty`` and ``my_property`` properties are readable if there's a
 ``getMyProperty()`` method and writable if there's a ``setMyProperty()`` method.
