@@ -758,7 +758,7 @@ To improve performance, you can optionally run the ``dump-env`` Composer command
     If you don't have Composer installed in production, you can use the
     ``dotenv:dump`` command instead (available in :ref:`Symfony Flex <symfony-flex>`
     1.2 or later). The command is not registered by default, so you must register
-    first in your services:
+    it first in your services:
 
     .. code-block:: yaml
 

@@ -278,7 +278,7 @@ via its ``ExceptionEvent`` class::
         }
     }
 
-That's it! Your ``services.yaml`` file should already be setup to load services from
+That's it! Your ``services.yaml`` file should already be set up to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest.
 
 .. _ref-event-subscriber-configuration:
@@ -324,7 +324,7 @@ be done on the sub-request listeners.
 Listeners or Subscribers
 ------------------------
 
-Listeners and subscribers can be used in the same application indistinctly. The
+Listeners and subscribers can be used in the same application interchangeably. The
 decision to use either of them is usually a matter of personal taste. However,
 there are some minor advantages for each of them:
 
@@ -569,7 +569,7 @@ event subscribers, you can learn more about :ref:`how to use them <events-subscr
         }
     }
 
-That's it! Your ``services.yaml`` file should already be setup to load services from
+That's it! Your ``services.yaml`` file should already be set up to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest. Your
 ``TokenSubscriber`` ``onKernelController()`` method will be executed on each request.
 If the controller that is about to be executed implements ``TokenAuthenticatedController``,

@@ -96,7 +96,7 @@ To override the 404 error template for HTML pages, create a new
         <h1>Page not found</h1>
 
         <p>
-            The requested page couldn't be located. Checkout for any URL
+            The requested page couldn't be located. Check for any URL
             misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
         </p>
     {% endblock %}

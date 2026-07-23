@@ -58,7 +58,7 @@ Concepts
 
 **Envelope**:
    Messenger specific concept, it gives full flexibility inside the message bus,
-   by wrapping the messages into it, allowing to add useful information inside
+   by wrapping the messages into it, allowing you to add useful information inside
    through *envelope stamps*.
 
 **Envelope Stamps**:

@@ -970,7 +970,7 @@ The way Redis works is to store items in memory. That means that by using
 the :ref:`RedisStore <lock-store-redis>` the locks are not persisted
 and may disappear by mistake at any time.
 
-If the Redis service or the machine hosting it restarts, every locks would
+If the Redis service or the machine hosting it restarts, every lock would
 be lost without notifying the running processes.
 
 .. warning::
