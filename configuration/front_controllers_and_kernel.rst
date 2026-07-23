@@ -253,30 +253,30 @@ Building HTTP-less Applications
 
 If your application does not handle HTTP requests (e.g. a console tool, a
 message consumer or a background worker), the DependencyInjection component
-ships its own kernel infrastructure under
-``Symfony\Component\DependencyInjection\Kernel``. It mirrors the HttpKernel
-classes (``AbstractKernel``, ``KernelTrait``, ``AbstractBundle``,
+ships its own kernel infrastructure under the
+``Symfony\Component\DependencyInjection\Kernel`` namespace. It mirrors the
+HttpKernel classes (``AbstractKernel``, ``KernelTrait``, ``AbstractBundle`` and
 ``KernelInterface``) and provides the same container lifecycle without any
 HTTP-related logic.
 
 To create an HTTP-less kernel, extend
-:class:`Symfony\\Component\\DependencyInjection\\Kernel\\AbstractKernel` and use the
-:class:`Symfony\\Component\\DependencyInjection\\Kernel\\KernelTrait`::
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\AbstractKernel` and use
+the :class:`Symfony\\Component\\DependencyInjection\\Kernel\\KernelTrait`::
 
     // src/Kernel.php
     namespace App;
 
-    use Symfony\Component\DependencyInjection\Kernel\AbstractKernel; // new in 8.1
-    use Symfony\Component\DependencyInjection\Kernel\KernelTrait; // new in 8.1
+    use Symfony\Component\DependencyInjection\Kernel\AbstractKernel;
+    use Symfony\Component\DependencyInjection\Kernel\KernelTrait;
 
     class Kernel extends AbstractKernel
     {
         use KernelTrait;
     }
 
-It follows the same conventions as ``MicroKernelTrait``: ``config/bundles.php``
-for bundle registration, ``config/packages/`` for configuration and
-``config/services.yaml`` (or ``.php``) for service definitions.
+The trait follows the same configuration conventions as ``MicroKernelTrait``:
+``config/bundles.php`` for bundle registration, ``config/packages/`` for
+configuration and ``config/services.yaml`` (or ``.php``) for service definitions.
 
 .. _`front controller`: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _`decorate`: https://en.wikipedia.org/wiki/Decorator_pattern
