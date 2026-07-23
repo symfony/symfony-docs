@@ -64,7 +64,7 @@ Defining Multiple Webpack Configurations
 ----------------------------------------
 
 Webpack supports passing an `array of configurations`_, which are processed in
-parallel. Webpack Encore includes a ``reset()`` object allowing to reset the
+parallel. Webpack Encore includes a ``reset()`` object allowing you to reset the
 state of the current configuration to build a new one:
 
 .. code-block:: javascript

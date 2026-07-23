@@ -130,7 +130,7 @@ Numeric Node Constraints
 Numeric nodes (float and integer) provide two extra constraints -
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\IntegerNodeDefinition::min`
 and :method:`Symfony\\Component\\Config\\Definition\\Builder\\IntegerNodeDefinition::max`
-- allowing to validate the value::
+- allowing you to validate the value::
 
     $rootNode
         ->children()
@@ -161,7 +161,7 @@ values::
     ;
 
 This will restrict the ``delivery`` options to be either ``standard``,
-``expedited``  or ``priority``.
+``expedited`` or ``priority``.
 
 You can also provide enum values to ``enumNode()``. Let's define an enumeration
 describing the possible states of the example above::

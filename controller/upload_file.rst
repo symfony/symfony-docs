@@ -65,7 +65,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                 ->add('brochure', FileType::class, [
                     'label' => 'Brochure (PDF file)',
 
-                    // unmapped means that this field is not associated to any entity property
+                    // unmapped means that this field is not associated with any entity property
                     'mapped' => false,
 
                     // make it optional so you don't have to re-upload the PDF file

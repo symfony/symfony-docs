@@ -48,7 +48,7 @@ Using the cursor
 Moving the cursor
 .................
 
-There are few methods to control moving the command cursor::
+There are a few methods to control moving the command cursor::
 
     // moves the cursor 1 line up from its current position
     $cursor->moveUp();
@@ -89,7 +89,7 @@ The cursor can also clear some output on the screen::
     // clears all the output from the current line after the current position
     $cursor->clearLineAfter();
 
-    // clears all the output from the cursors' current position to the end of the screen
+    // clears all the output from the cursor's current position to the end of the screen
     $cursor->clearOutput();
 
     // clears the entire screen

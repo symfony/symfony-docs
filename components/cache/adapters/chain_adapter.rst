@@ -27,7 +27,7 @@ lifetime as its constructor arguments::
 
 The following example shows how to create a chain adapter instance using the fastest and
 slowest storage engines, :class:`Symfony\\Component\\Cache\\Adapter\\ApcuAdapter` and
-:class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`, respectfully::
+:class:`Symfony\\Component\\Cache\\Adapter\\FilesystemAdapter`, respectively::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
     use Symfony\Component\Cache\Adapter\ChainAdapter;

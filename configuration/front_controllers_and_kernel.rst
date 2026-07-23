@@ -59,8 +59,8 @@ that is located in the ``public/`` directory.
     :doc:`/setup/web_server_configuration`.
 
 Technically, the ``bin/console`` script used when running Symfony on the command
-line is also a front controller, only that is not used for web, but for command
-line requests.
+line is also a front controller, except that it is used for command-line requests
+instead of the web.
 
 The Kernel Class
 ----------------

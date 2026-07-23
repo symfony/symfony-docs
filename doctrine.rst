@@ -11,7 +11,7 @@ thanks to `Doctrine`_, the best set of PHP libraries to work with databases.
 These tools support relational databases like MySQL and PostgreSQL and also
 NoSQL databases like MongoDB.
 
-Databases are a broad topic, so the documentation is divided in three articles:
+Databases are a broad topic, so the documentation is divided into three articles:
 
 * This article explains the recommended way to work with **relational databases**
   in Symfony applications;
@@ -95,7 +95,7 @@ The database connection information is stored as an environment variable called
                 dbname:   '%env(DATABASE_NAME)%'
                 driver:   pdo_mysql
 
-Now that your connection parameters are setup, Doctrine can create the ``db_name``
+Now that your connection parameters are set up, Doctrine can create the ``db_name``
 database for you:
 
 .. code-block:: terminal
