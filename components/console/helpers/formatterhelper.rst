@@ -106,8 +106,8 @@ Custom Suffix
 
 By default, the ``...`` suffix is used. If you wish to use a different suffix,
 pass it as the third argument to the method.
-The suffix is always appended, unless truncated length is longer than a message
-and a suffix length.
+The suffix is always appended, unless the truncated length is longer than the
+message plus the suffix length.
 If you don't want to use suffix at all, pass an empty string::
 
     $truncatedMessage = $formatter->truncate($message, 7, '!!'); // result: This is!!

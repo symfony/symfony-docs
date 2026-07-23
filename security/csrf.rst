@@ -26,7 +26,7 @@ actor could create the following website:
 
 If you visit this website (e.g. by clicking on some email link or some social
 network post) and you were already logged in on the ``https://example.com`` site,
-the malicious actor could change the email address associated to your account
+the malicious actor could change the email address associated with your account
 (effectively taking over your account) without you even being aware of it.
 
 An effective way of preventing CSRF attacks is to use anti-CSRF tokens. These are
@@ -203,7 +203,7 @@ Although Symfony Forms provide automatic CSRF protection by default, you may
 need to generate and check CSRF tokens manually for example when using regular
 HTML forms not managed by the Symfony Form component.
 
-Consider a HTML form created to allow deleting items. First, use the
+Consider an HTML form created to allow deleting items. First, use the
 :ref:`csrf_token() Twig function <reference-twig-function-csrf-token>` to
 generate a CSRF token in the template and store it as a hidden form field:
 

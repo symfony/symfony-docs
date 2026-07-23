@@ -293,7 +293,7 @@ The available options are:
 ~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::tempnam` creates a
-temporary file with a unique filename, and returns its path, or throw an
+temporary file with a unique filename, and returns its path, or throws an
 exception on failure::
 
     // returns a path like : /tmp/prefix_wyjgtF

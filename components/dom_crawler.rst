@@ -126,13 +126,11 @@ Consider the XML below:
         </media:group>
     </entry>
 
-This can be filtered with the  ``Crawler`` without needing to register namespace
-aliases both with :method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath`::
+This can be filtered without registering namespace aliases, using either
+:method:`Symfony\\Component\\DomCrawler\\Crawler::filterXPath` or
+:method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
 
     $crawler = $crawler->filterXPath('//default:entry/media:group//yt:aspectRatio');
-
-and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
-
     $crawler = $crawler->filter('default|entry media|group yt|aspectRatio');
 
 .. note::

@@ -15,7 +15,7 @@ a detailed specification.
 Using the Access Token Authenticator
 ------------------------------------
 
-This guide assumes you have setup security and have created a user object
+This guide assumes you have set up security and have created a user object
 in your application. Follow :doc:`the main security guide </security>` if
 this is not yet the case.
 

@@ -166,7 +166,7 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
 
                         # these are other options that you may define if needed
 
-                        # set the 'entity_manager' option if the listener is not associated to the default manager
+                        # set the 'entity_manager' option if the listener is not associated with the default manager
                         # entity_manager: 'custom'
 
                         # by default, Symfony looks for a method called after the event (e.g. postUpdate())
@@ -194,7 +194,7 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
 
                                 // these are other options that you may define if needed
 
-                                // set the 'entity_manager' option if the listener is not associated to the default manager
+                                // set the 'entity_manager' option if the listener is not associated with the default manager
                                 // 'entity_manager' => 'custom'
 
                                 // by default, Symfony looks for a method called after the event (e.g. postUpdate())

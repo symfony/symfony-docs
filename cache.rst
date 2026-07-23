@@ -41,7 +41,7 @@ When configuring the cache component there are a few concepts you should know:
     An adapter is a *template* that you use to create pools.
 **Provider**
     A provider is a service that some adapters use to connect to the storage.
-    Redis and Memcached are examples of such adapters. If a DSN is used as the
+    Redis and Memcached are examples of such providers. If a DSN is used as the
     provider then a service is automatically created.
 
 The Cache component comes with a series of adapters pre-configured:
@@ -906,7 +906,7 @@ You can now start the consumer:
 
 That's it! Now, whenever an item is queried from this cache pool, its cached
 value will be returned immediately. If it is elected for early-expiration, a
-message will be sent through to bus to schedule a background computation to refresh
+message will be sent through the bus to schedule a background computation to refresh
 the value.
 
 .. _`probabilistic early expiration`: https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration

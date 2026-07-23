@@ -83,7 +83,7 @@ the goal is to create them based on a predefined frequency. This is possible
 thanks to :class:`Symfony\\Component\\Scheduler\\Messenger\\SchedulerTransport`,
 a special transport for Scheduler messages.
 
-The transport generates, autonomously, various messages according to the assigned
+The transport generates various messages autonomously according to the assigned
 frequencies. The following images illustrate the differences between the
 processing of messages in Messenger and Scheduler components:
 
