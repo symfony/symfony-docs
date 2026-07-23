@@ -556,7 +556,7 @@ on the load of the server or the processes running on your local machine, the
 ``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
 This kind of tests are called transient tests: they are failing randomly
-depending on spurious and external circumstances. They are often cause trouble
+depending on spurious and external circumstances. They often cause trouble
 when using public continuous integration services like `Travis CI`_.
 
 Clock Mocking
@@ -696,7 +696,7 @@ Use Case
 
 Consider the following example that tests a custom class called ``DomainValidator``
 which defines a ``checkDnsRecord`` option to also validate that a domain is
-associated to a valid host::
+associated with a valid host::
 
     use App\Validator\DomainValidator;
     use PHPUnit\Framework\TestCase;

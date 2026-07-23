@@ -166,7 +166,7 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
 
                         # these are other options that you may define if needed
 
-                        # set the 'entity_manager' option if the listener is not associated to the default manager
+                        # set the 'entity_manager' option if the listener is not associated with the default manager
                         # entity_manager: 'custom'
 
                         # by default, Symfony looks for a method called after the event (e.g. postUpdate())
@@ -191,7 +191,7 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
                         *   * entity
                         *
                         * These are other options that you may define if needed:
-                        *   * entity_manager: define it if the listener is not associated to the default manager
+                        *   * entity_manager: define it if the listener is not associated with the default manager
                         *   * method: by default, Symfony looks for a method called after the event (e.g. postUpdate())
                         *           if it doesn't exist, it tries to execute the '__invoke()' method, but
                         *           you can configure a custom method name with the 'method' option
@@ -224,7 +224,7 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
 
                     // These are other options that you may define if needed:
 
-                    // set the 'entity_manager' option if the listener is not associated to the default manager
+                    // set the 'entity_manager' option if the listener is not associated with the default manager
                     // 'entity_manager' => 'custom',
 
                     // by default, Symfony looks for a method called after the event (e.g. postUpdate())
@@ -327,7 +327,7 @@ listener in the Symfony application by creating a new service for it and
 
                 <!--
                     * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple subscribers or listeners are associated to the same event
+                    * 'priority': used when multiple subscribers or listeners are associated with the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
                 -->

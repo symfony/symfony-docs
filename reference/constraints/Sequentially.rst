@@ -2,7 +2,7 @@ Sequentially
 ============
 
 This constraint allows you to apply a set of rules that should be validated
-step-by-step, allowing to interrupt the validation once the first violation is raised.
+step-by-step, allowing you to interrupt the validation once the first violation is raised.
 
 As an alternative in situations ``Sequentially`` cannot solve, you may consider
 using :doc:`GroupSequence </validation/sequence_provider>` which allows more control.
