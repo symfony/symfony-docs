@@ -9,7 +9,7 @@ from the framework crowd, let's dive into the architecture now.
 Add Logging
 -----------
 
-A new Symfony app is micro: it's basically just a routing & controller system. But
+A new Symfony app is micro: it's a routing & controller system. But
 thanks to Flex, installing more features is simple.
 
 Want a logging system? No problem:
@@ -228,7 +228,7 @@ great tools for this: the web debug toolbar displays at the bottom of the page, 
 are big, beautiful & explicit, and any configuration cache is automatically rebuilt
 whenever needed.
 
-But what about when you deploy to production? We will need to hide those tools and
+But what about when you deploy to production? You will need to hide those tools and
 optimize for speed!
 
 This is solved by Symfony's *environment* system. Symfony applications begin with

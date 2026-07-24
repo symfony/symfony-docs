@@ -245,7 +245,7 @@ in your expression:
   the constraint is applied directly to a property);
 
 You also have access to the ``is_valid()`` function in your expression. This function
-checks that the data passed to function doesn't raise any validation violation.
+checks that the data passed to the function doesn't raise any validation violations.
 
 .. versionadded:: 6.4
 

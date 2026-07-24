@@ -20,7 +20,7 @@ a few good reasons to start creating your own framework:
 * To learn more about the low level architecture of modern web frameworks in
   general and about the Symfony full-stack framework internals in particular;
 
-* To create a framework tailored to your very specific needs (just be sure
+* To create a framework tailored to your very specific needs (be sure
   first that your needs are really specific);
 
 * To experiment creating a framework for fun (in a learn-and-throw-away
@@ -54,7 +54,7 @@ When creating a framework, following the MVC pattern is not the right goal. The
 main goal should be the **Separation of Concerns**; this is probably the only
 design pattern that you should really care about. The fundamental principles of
 the Symfony Components are focused on the HTTP specification. As such, the
-framework that you are going to create should be more accurately labelled as a
+framework that you are going to create should be more accurately labelled as an
 HTTP framework or Request/Response framework.
 
 Before You Start

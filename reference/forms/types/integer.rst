@@ -1,7 +1,7 @@
 IntegerType Field
 =================
 
-Renders an input "number" field. Basically, this is a text field that's
+Renders an input "number" field. This is a text field that's
 good at handling data that's in an integer form. The input ``number`` field
 looks like a text box, except that - if the user's browser supports HTML5
 - it will have some extra front-end functionality.

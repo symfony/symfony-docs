@@ -227,7 +227,7 @@ Constraints
 -----------
 
 The ``validator`` is designed to validate objects against *constraints* (i.e.
-rules). In order to validate an object, simply map one or more constraints
+rules). In order to validate an object, map one or more constraints
 to its class and then pass it to the ``validator`` service.
 
 Internally, a constraint is a PHP object that makes an assertive

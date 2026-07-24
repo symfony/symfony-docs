@@ -3,7 +3,7 @@ How to Create a custom Route Loader
 
 Basic applications can define all their routes in a single configuration file -
 usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
-However, in most applications it's common to import routes definitions from
+However, in most applications it's common to import route definitions from
 different resources: PHP attributes in controller files, YAML, XML
 or PHP files stored in some directory, etc.
 
@@ -120,7 +120,7 @@ Symfony provides several route loaders for the most common needs:
 .. note::
 
     When importing resources, the key (e.g. ``app_file``) is the name of the collection.
-    Just be sure that it's unique per file so no other lines override it.
+    Be sure that it's unique per file so no other lines override it.
 
 If your application needs are different, you can create your own custom route
 loader as explained in the next section.
@@ -182,7 +182,7 @@ Take these lines from the ``routes.yaml``:
 When the main loader parses this, it tries all registered delegate loaders and calls
 their :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
 method with the given resource (``../src/Controller/``)
-and type (``attribute``) as arguments. When one of the loader returns ``true``,
+and type (``attribute``) as arguments. When one of the loaders returns ``true``,
 its :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::load` method
 will be called, which should return a :class:`Symfony\\Component\\Routing\\RouteCollection`
 containing :class:`Symfony\\Component\\Routing\\Route` objects.

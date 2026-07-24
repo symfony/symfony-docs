@@ -23,8 +23,8 @@ they can also be unquoted:
 
     "A double-quoted string in YAML"
 
-Quoted styles are useful when a string starts or end with one or more relevant
-spaces, because unquoted strings are trimmed on both end when parsing their
+Quoted styles are useful when a string starts or ends with one or more relevant
+spaces, because unquoted strings are trimmed on both ends when parsing their
 contents. Quotes are required when the string contains special or reserved characters.
 
 When using single-quoted strings, any single quote ``'`` inside its contents

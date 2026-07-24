@@ -176,7 +176,7 @@ Let's add a few cases to our ``TextAlign`` enumeration::
         case LowerRight = 'Lower Right aligned';
     }
 
-We can now group choices by the enum case value::
+You can now group choices by the enum case value::
 
     use App\Config\TextAlign;
     use Symfony\Component\Form\Extension\Core\Type\EnumType;

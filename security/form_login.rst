@@ -18,7 +18,7 @@ in the session (perhaps the user went directly to the login page), then the user
 is redirected to ``/`` (i.e. the homepage). You can change this behavior in
 several ways.
 
-Changing the default Page
+Changing the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Define the ``default_target_path`` option to change the page where the user
@@ -76,7 +76,7 @@ a relative/absolute URL or a Symfony route name:
             ;
         };
 
-Always Redirect to the default Page
+Always Redirect to the Default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Define the ``always_use_default_target_path`` boolean option to ignore the

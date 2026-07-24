@@ -10,7 +10,7 @@ structure.
 Creating a New Normalizer
 -------------------------
 
-Imagine you want add, modify, or remove some properties during the serialization
+Imagine you want to add, modify, or remove some properties during the serialization
 process. For that you'll have to create your own normalizer. But it's usually
 preferable to let Symfony normalize the object, then hook into the normalization
 to customize the normalized data. To do that, leverage the ``ObjectNormalizer``::

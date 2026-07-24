@@ -281,7 +281,7 @@ class that will hold these objects:
             </entity>
         </doctrine-mapping>
 
-The ``ManyToOne`` mapping shown earlier is *required*, But, this ``OneToMany``
+The ``ManyToOne`` mapping shown earlier is *required*. But this ``OneToMany``
 is optional: only add it *if* you want to be able to access the products that are
 related to a category (this is one of the questions ``make:entity`` asks you). In
 this example, it *will* be useful to be able to call ``$category->getProducts()``.
@@ -304,7 +304,7 @@ Your database is set up! Now, run the migrations like normal:
     $ php bin/console doctrine:migrations:migrate
 
 Thanks to the relationship, this creates a ``category_id`` foreign key column on
-the ``product`` table. Doctrine is ready to persist our relationship!
+the ``product`` table. Doctrine is ready to persist your relationship!
 
 Saving Related Entities
 -----------------------
@@ -367,7 +367,7 @@ Doctrine takes care of the rest when saving.
 .. sidebar:: Updating the Relationship from the Inverse Side
 
     Could you also call ``$category->addProduct()`` to change the relationship? Yes,
-    but, only because the ``make:entity`` command helped us. For more details,
+    but only because the ``make:entity`` command helped you. For more details,
     see: `associations-inverse-side`_.
 
 Fetching Related Objects
@@ -557,7 +557,7 @@ thanks to some clever code that the ``make:entity`` command generated::
         }
     }
 
-The *key* is ``$product->setCategory($this)``, which sets the *owning* side. Thanks,
+The *key* is ``$product->setCategory($this)``, which sets the *owning* side. Thanks
 to this, when you save, the relationship *will* update in the database.
 
 What about *removing* a ``Product`` from a ``Category``? The ``make:entity`` command
@@ -590,12 +590,12 @@ on that ``Product`` will be set to ``null`` in the database.
 
 .. warning::
 
-    Please be aware that the inverse side could be associated with a large amount of records.
-    I.e. there could be a large amount of products with the same category.
+    Please be aware that the inverse side could be associated with a large number of records.
+    I.e. there could be a large number of products with the same category.
     In this case ``$this->products->contains($product)`` could lead to unwanted database
     requests and very high memory consumption with the risk of hard to debug "Out of memory" errors.
 
-    So make sure if you need an inverse side and check if the generated code could lead to such issues.
+    So make sure you actually need an inverse side, and check whether the generated code could cause such issues.
 
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``
 to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose

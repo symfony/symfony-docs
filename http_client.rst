@@ -75,7 +75,7 @@ automatically when type-hinting for :class:`Symfony\\Contracts\\HttpClient\\Http
 .. tip::
 
     The HTTP client is interoperable with many common HTTP client abstractions in
-    PHP. You can also use any of these abstractions to profit from autowirings.
+    PHP. You can also use any of these abstractions to benefit from autowiring.
     See `Interoperability`_ for more information.
 
 Configuration
@@ -84,7 +84,7 @@ Configuration
 The HTTP client contains many options you might need to take full control of
 the way the request is performed, including DNS pre-resolution, SSL parameters,
 public key pinning, etc. They can be defined globally in the configuration (to
-apply it to all requests) and to each request (which overrides any global
+apply them to all requests) and to each request (which overrides any global
 configuration).
 
 You can configure the global options using the ``default_options`` option:
@@ -396,7 +396,7 @@ Authentication
 ~~~~~~~~~~~~~~
 
 The HTTP client supports different authentication mechanisms. They can be
-defined globally in the configuration (to apply it to all requests) and to
+defined globally in the configuration (to apply them to all requests) and to
 each request (which overrides any global authentication):
 
 .. configuration-block::
@@ -708,7 +708,7 @@ be used for subsequent requests). That's why this component doesn't handle
 cookies automatically.
 
 You can either :ref:`send cookies with the BrowserKit component <component-browserkit-sending-cookies>`,
-which integrates seamlessly with the HttpClient component, or manually setting
+which integrates seamlessly with the HttpClient component, or manually set
 `the Cookie HTTP request header`_ as follows::
 
     use Symfony\Component\HttpClient\HttpClient;
@@ -1308,7 +1308,7 @@ is returned, an exception will be thrown::
     // status code is in the 300-599 range
     $client->request('POST', 'https://...');
 
-This in turn means that unassigned responses will fallback to synchronous requests.
+This in turn means that unassigned responses will fall back to synchronous requests.
 If you want to make these requests concurrent, you can store their corresponding
 responses in an array::
 
@@ -1617,7 +1617,7 @@ interface you need to code against when a client is needed::
     }
 
 All request options mentioned above (e.g. timeout management) are also defined
-in the wordings of the interface, so that any compliant implementations (like
+in the wordings of the interface, so that any compliant implementation (like
 this component) is guaranteed to provide them. That's a major difference with
 the other abstractions, which provide none related to the transport itself.
 
@@ -1743,7 +1743,7 @@ that requires HTTPlug dependencies::
     }
 
 Because :class:`Symfony\\Component\\HttpClient\\HttplugClient` implements these
-interfaces,you can use it this way::
+interfaces, you can use it this way::
 
     use Symfony\Component\HttpClient\HttplugClient;
 

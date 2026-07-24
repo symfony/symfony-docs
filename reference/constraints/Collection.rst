@@ -168,7 +168,7 @@ if you would like "extra" keys to be allowed in the collection, you can
 modify the `allowMissingFields`_ and `allowExtraFields`_ options respectively.
 In the above example, the ``allowMissingFields`` option was set to true,
 meaning that if either of the ``personal_email`` or ``short_bio`` elements
-were missing from the ``$personalData`` property, no validation error would
+were missing from the ``$profileData`` property, no validation error would
 occur.
 
 Required and Optional Field Constraints

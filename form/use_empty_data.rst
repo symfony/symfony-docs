@@ -29,7 +29,7 @@ If you want to override this default behavior, there are two ways to do this:
 * `Option 1: Instantiate a new Class`_
 * `Option 2: Provide a Closure`_
 
-If you didn't set the ``data_class`` option, you can pass the initial data as
+If you didn't set the ``data_class`` option, you can pass the initial data as a
 string or pass an array of strings (where the key matches the field name) when
 the form type is compound.
 

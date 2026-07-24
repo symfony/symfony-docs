@@ -13,7 +13,7 @@ global and native PHP functions related to manipulating the session like
 
 .. note::
 
-    Sessions are only started if you read or write from it.
+    Sessions are only started if you read from or write to them.
 
 Installation
 ------------
@@ -443,9 +443,10 @@ like Roadrunner or Swoole.
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are often circumstances where you may want to protect, or minimize
-unauthorized use of a session when a user steps away from their terminal while
-logged in by destroying the session after a certain period of idle time. For
+There are often circumstances where you may want to protect or minimize
+unauthorized use of a session. You can do this by destroying the session after a
+certain period of idle time, such as when a user steps away from their terminal
+while logged in. For
 example, it is common for banking applications to log the user out after just
 5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
 appropriate because that can be manipulated by the client, so we must do the expiry
@@ -454,8 +455,8 @@ which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
 
-The other option is specifically check if a session has expired after the
-session is started. The session can be destroyed as required. This method of
+The other option is to specifically check whether a session has expired after it
+is started. The session can be destroyed as required. This method of
 processing can allow the expiry of sessions to be integrated into the user
 experience, for example, by displaying a message.
 
@@ -476,7 +477,7 @@ This metadata can be used to explicitly expire a session on access::
     }
 
 It is also possible to tell what the ``cookie_lifetime`` was set to for a
-particular cookie by reading the ``getLifetime()`` method::
+particular cookie by calling the ``getLifetime()`` method::
 
     $session->getMetadataBag()->getLifetime();
 
@@ -529,7 +530,7 @@ multiple servers, you'll need to use a database instead to make sessions work
 across different servers.
 
 Symfony can store sessions in all kinds of databases (relational, NoSQL and
-key-value) but recommends key-value databases like Redis to get best
+key-value) but recommends key-value databases like Redis to get the best
 performance.
 
 Store Sessions in a key-value Database (Redis)
@@ -1512,7 +1513,7 @@ You might want to improve this technique even further and define the locale
 based on the user entity of the logged in user. However, since the
 ``LocaleSubscriber`` is called before the ``FirewallListener``, which is
 responsible for handling authentication and setting the user token on the
-``TokenStorage``, you have no access to the user which is logged in.
+``TokenStorage``, you have no access to the user who is logged in.
 
 Suppose you have a ``locale`` property on your ``User`` entity and want to use
 this as the locale for the given user. To accomplish this, you can hook into

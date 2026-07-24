@@ -84,8 +84,8 @@ template because it reuses the templating logic defined by its parent type
 ``ChoiceType``. If you prefer, you can also define a template for your custom
 types, as explained later in this article.
 
-Creating Form Types Created From Scratch
-----------------------------------------
+Creating Form Types from Scratch
+--------------------------------
 
 Some form types are so specific to your projects that they cannot be based on
 any :doc:`existing form types </reference/forms/types>` because they are too
@@ -126,7 +126,7 @@ These are the most important methods that a form type class can define:
     ``buildView()``, etc.) and type extensions of the parent before
     calling the ones defined in your custom type.
 
-    Otherwise, if your custom type is build from scratch, you can omit ``getParent()``.
+    Otherwise, if your custom type is built from scratch, you can omit ``getParent()``.
 
     By default, the ``AbstractType`` class returns the generic
     :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`
@@ -149,7 +149,7 @@ These are the most important methods that a form type class can define:
 
 ``finishView()``
     Same as ``buildView()``. This is useful only if your form type consists of
-    many fields (i.e. A ``ChoiceType`` composed of many radio or checkboxes),
+    many fields (i.e. A ``ChoiceType`` composed of many radio buttons or checkboxes),
     as this method will allow accessing child views with
     ``$view['child_name']``. For any other use case, it's recommended to use
     ``buildView()`` instead.
@@ -200,7 +200,7 @@ in the postal address. For the moment, all fields are of type ``TextType``::
 
         $ php bin/console debug:form
 
-This form type is ready to use it inside other forms and all its fields will be
+This form type is ready to use inside other forms and all its fields will be
 correctly rendered in any template::
 
     // src/Form/Type/OrderType.php

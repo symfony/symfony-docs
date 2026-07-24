@@ -107,7 +107,7 @@ in the ``__sleep()`` method to ensure they are serialized correctly::
         }
     }
 
-Creating the Validator itself
+Creating the Validator Itself
 -----------------------------
 
 As you can see, a constraint class is fairly minimal. The actual validation is
@@ -190,7 +190,7 @@ The ``addViolation()`` method call finally adds the violation to the context.
 
         The ``disableTranslation()`` method was introduced in Symfony 6.4.
 
-Using the new Validator
+Using the New Validator
 -----------------------
 
 You can use custom validators like the ones provided by Symfony itself:

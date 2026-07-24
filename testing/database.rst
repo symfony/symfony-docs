@@ -4,7 +4,7 @@ How to Test a Doctrine Repository
 .. seealso::
 
     The :ref:`main Testing guide <testing-databases>` describes how to use
-    and set-up a database for your automated tests. The contents of this
+    and set up a database for your automated tests. The contents of this
     article show ways to test your Doctrine repositories.
 
 Mocking a Doctrine Repository in Unit Tests

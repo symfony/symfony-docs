@@ -68,7 +68,7 @@ The actual default value of this option depends on other field options:
 
 **type**: ``callable`` **default**: ``null``
 
-This callable takes form data and returns whether value is considered empty.
+This callable takes form data and returns whether the value is considered empty.
 
 .. _reference-form-option-error-bubbling:
 

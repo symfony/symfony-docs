@@ -1,4 +1,4 @@
-How to Force HTTPS or HTTP for different URLs
+How to Force HTTPS or HTTP for Different URLs
 =============================================
 
 .. tip::

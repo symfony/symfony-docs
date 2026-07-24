@@ -2,8 +2,8 @@ UniqueEntity
 ============
 
 Validates that a particular field (or fields) in a Doctrine entity is (are)
-unique. This is commonly used, for example, to prevent a new user to register
-using an email address that already exists in the system.
+unique. This is commonly used, for example, to prevent a new user from registering
+with an email address that already exists in the system.
 
 .. seealso::
 

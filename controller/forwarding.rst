@@ -38,11 +38,11 @@ target method (``fancy()`` in the above example) doesn't matter: the matching is
 
     Twig's ``app.current_route``, ``app.current_route_parameters``, and
     ``_route_params`` will be empty after such a ``->forward()`` call. However,
-    you can set them manually by adding a ``_route`` and ``_route_params`` keys
+    you can set them manually by adding ``_route`` and ``_route_params`` keys
     to the array passed as the second argument of ``forward()``::
 
         $response = $this->forward('App\Controller\OtherController::fancy', [
             // ...
             '_route' => '...',
-            '_route_params' => ['...' => '...'];
+            '_route_params' => ['...' => '...'],
         ]);

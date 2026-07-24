@@ -41,7 +41,7 @@ new version and change your ``minimum-stability`` to ``beta``:
     +     "minimum-stability": "beta"
       }
 
-You can also use set ``minimum-stability`` to ``dev``, or omit this line
+You can also set ``minimum-stability`` to ``dev``, or omit this line
 entirely, and opt into your stability on each package by using constraints
 like ``6.0.*@beta``.
 

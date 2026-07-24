@@ -381,7 +381,7 @@ with regard to the ``$deadline`` property of the same object, use
     When using this option, its value is available in error messages as the
     ``{{ max_limit_path }}`` placeholder. Although it's not intended to
     include it in the error messages displayed to end users, it's useful when
-    using APIs for doing any mapping logic on client-side.
+    using APIs for doing any mapping logic on the client side.
 
 ``min``
 ~~~~~~~
@@ -425,7 +425,7 @@ with regard to the ``$startDate`` property of the same object, use
     When using this option, its value is available in error messages as the
     ``{{ min_limit_path }}`` placeholder. Although it's not intended to
     include it in the error messages displayed to end users, it's useful when
-    using APIs for doing any mapping logic on client-side.
+    using APIs for doing any mapping logic on the client side.
 
 ``notInRangeMessage``
 ~~~~~~~~~~~~~~~~~~~~~

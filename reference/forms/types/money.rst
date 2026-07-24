@@ -45,7 +45,7 @@ divisor
 
 If you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
-For example if you store prices as integer in order to avoid `rounding errors`_,
+For example if you store prices as integers in order to avoid `rounding errors`_,
 you can transform values in cents automatically::
 
     use Symfony\Component\Form\Extension\Core\Type\MoneyType;
