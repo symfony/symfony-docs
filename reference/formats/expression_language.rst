@@ -156,6 +156,7 @@ following functions by default:
 * ``enum()``
 * ``min()``
 * ``max()``
+* ``count()``
 
 ``constant()`` function
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -236,6 +237,23 @@ PHP function to find the highest value::
     ));
 
 This will print out ``3``.
+
+``count()`` function
+~~~~~~~~~~~~~~~~~~~~
+
+This function will return the number of elements of the given array or
+``Countable`` object. Internally it uses the :phpfunction:`count` PHP
+function::
+
+    var_dump($expressionLanguage->evaluate(
+        'count([1, 2, 3])'
+    ));
+
+This will print out ``3``.
+
+.. versionadded:: 8.2
+
+    The ``count()`` function was introduced in Symfony 8.2.
 
 .. tip::
 
