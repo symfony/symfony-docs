@@ -2123,7 +2123,7 @@ Collecting Extra Attributes Errors While Denormalizing
 
 When ``allow_extra_attributes`` is set to ``false``, denormalizing a payload that
 contains unknown attributes throws an
-:class:`Symfony\Component\Serializer\Exception\ExtraAttributesException` as soon as
+:class:`Symfony\\Component\\Serializer\\Exception\\ExtraAttributesException` as soon as
 the first object with extra attributes is found. If the payload contains nested
 objects, the extra attributes of those nested objects are never reported.
 
