@@ -168,7 +168,7 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``azure+api://ACS_RESOURCE_NAME:KEY@default``                                       |
 +------------------------+-------------------------------------------------------------------------------------------+
-| `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default``                                         |
+| `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default:PORT``                                         |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``brevo+api://KEY@default``                                                         |
 +------------------------+-------------------------------------------------------------------------------------------+
