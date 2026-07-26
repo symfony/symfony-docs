@@ -100,6 +100,11 @@ for most use cases.
     :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractLoginFormAuthenticator`
     to simplify your implementation.
 
+    When extending this class and relying on its default ``supports()`` method,
+    your ``getLoginUrl()`` method must return the login path (e.g. ``/login``),
+    not an absolute URL. If your authenticator needs to return an absolute URL,
+    override ``supports()`` to match the request yourself.
+
 Custom authenticators must be explicitly enabled in the security configuration
 using the ``custom_authenticators`` setting of your firewall(s). If you used the
 ``make:security:custom`` command, this configuration is already updated, but you
