@@ -168,7 +168,7 @@ link is created using
     It is important to send this link to the user and **not show it directly**,
     as that would allow anyone to log in. For instance, use the
     :doc:`mailer </mailer>` component to mail the login link to the user.
-    Or use the Notifier component to send an SMS to the
+    Or use the :doc:`notifier </notifier>` component to send an SMS to the
     user's device.
 
 3) Send the Login Link to the User
