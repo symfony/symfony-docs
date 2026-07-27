@@ -1,7 +1,7 @@
 Using Docker with Symfony
 =========================
 
-Can you use Docker with Symfony? Of course! And several tools exist to help,
+Can you use Docker with Symfony? Yes, and several tools exist to help,
 depending on your needs.
 
 Complete Docker Environment

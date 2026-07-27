@@ -84,9 +84,9 @@ A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
 There are some :ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
-In your development machine, the recommended way to check these requirements is
-to use `Symfony CLI`_. However, in your production server you might prefer to
-not install the Symfony CLI tool. In those cases, install this other package in
+On your development machine, the recommended way to check these requirements is
+to use `Symfony CLI`_. However, on your production server you might prefer not to
+install the Symfony CLI tool. In those cases, install this other package in
 your application:
 
 .. code-block:: terminal
@@ -119,7 +119,7 @@ Most Symfony applications read their configuration from environment variables.
 While developing locally, you'll usually store these in :ref:`.env files <configuration-env-var-in-dev>`.
 On production, you have two options:
 
-1. Create "real" environment variables. How you set environment variables, depends
+1. Create "real" environment variables. How you set environment variables depends
    on your setup: they can be set at the command line, in your Nginx configuration,
    or via other methods provided by your hosting service;
 

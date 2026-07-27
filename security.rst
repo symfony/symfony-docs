@@ -429,7 +429,7 @@ the database::
 
 .. tip::
 
-    The ``make:registration-form`` maker command can help you set-up the
+    The ``make:registration-form`` maker command can help you set up the
     registration controller and add features like email address
     verification using the `SymfonyCastsVerifyEmailBundle`_.
 
@@ -654,7 +654,7 @@ Authenticating Users
 
 During authentication, the system tries to find a matching user for the
 visitor of the webpage. Traditionally, this was done using a login form or
-a HTTP basic dialog in the browser. However, the SecurityBundle comes with
+an HTTP basic dialog in the browser. However, the SecurityBundle comes with
 many other authenticators:
 
 * `Form Login`_
@@ -1559,7 +1559,7 @@ Customize Successful and Failed Authentication Behavior
 
 If you want to customize how the successful or failed authentication process is
 handled, you don't have to overwrite the respective listeners globally. Instead,
-you can set custom success failure handlers by implementing the
+you can set custom success and failure handlers by implementing the
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`
 or the
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
@@ -1716,7 +1716,7 @@ You can logout the user programmatically using the ``logout()`` method of the
     }
 
 The user will be logged out from the firewall of the request. If the request is
-not behind a firewall a ``\LogicException`` will be thrown.
+not behind a firewall, a ``\LogicException`` will be thrown.
 
 Customizing Logout
 ~~~~~~~~~~~~~~~~~~
@@ -2280,7 +2280,7 @@ the ``ROLE_SUPER_ADMIN`` permission:
     }
 
 You can pass any controller argument as the voter subject by referencing its name.
-Symfony resolves it automatically from the controller method signature::
+Symfony resolves it automatically from the controller method signature:
 
 .. code-block:: php-attributes
 

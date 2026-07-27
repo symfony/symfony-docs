@@ -13,7 +13,7 @@ The "value" for each country is the two-letter country code.
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses all of the countries of the world. You *can* specify
-the option manually, but then you should just use the ``ChoiceType`` directly.
+the option manually, but then you should use the ``ChoiceType`` directly.
 
 +---------------------------+-----------------------------------------------------------------------+
 | Rendered as               | can be various tags (see :ref:`forms-reference-choice-tags`)          |

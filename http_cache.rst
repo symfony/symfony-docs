@@ -166,8 +166,8 @@ These four headers are used to help cache your responses via *two* different mod
     `RFC 7232 - Conditional Requests`_.
 
     As a web developer, you are strongly urged to read the specification. Its
-    clarity and power - even more than fifteen years after its creation - is
-    invaluable. Don't be put-off by the appearance of the spec - its contents
+    clarity and power - even more than fifteen years after its creation - are
+    invaluable. Don't be put off by the appearance of the spec - its contents
     are much more beautiful than its cover!
 
 .. _http-cache-expiration-intro:
@@ -215,7 +215,7 @@ Thanks to this new code, your HTTP response will have the following header:
 
 .. code-block:: text
 
-    Cache-Control: public, maxage=3600, must-revalidate
+    Cache-Control: public, max-age=3600, must-revalidate
 
 .. tip::
 
@@ -232,7 +232,7 @@ for debugging information about cache hits and misses.
     The URI of the request is used as the cache key (unless you :doc:`vary </http_cache/cache_vary>`).
 
 This provides great performance and is simple to use. But, cache *invalidation*
-is not supported. If your content change, you'll need to wait until your cache
+is not supported. If your content changes, you'll need to wait until your cache
 expires for the page to update.
 
 .. tip::
@@ -337,7 +337,7 @@ HTTP Caching and User Sessions
 
 Whenever the session is started during a request, Symfony turns the response
 into a private non-cacheable response. This is the best default behavior to not
-cache private user information (e.g. a shopping cart, a user profile details,
+cache private user information (e.g. a shopping cart, a user's profile details,
 etc.) and expose it to other visitors.
 
 However, even requests making use of the session can be cached under some

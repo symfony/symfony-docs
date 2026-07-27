@@ -118,7 +118,7 @@ Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products.
 
 You can use the ``make:entity`` command to create this class and any fields you
-need. The command will ask you some questions - answer them like done below:
+need. The command will ask you some questions - answer them as shown below:
 
 .. code-block:: bash
 
@@ -1254,7 +1254,7 @@ Read the article about :doc:`testing code that interacts with the database </tes
 Doctrine Extensions (Timestampable, Translatable, etc.)
 -------------------------------------------------------
 
-Doctrine community has created some extensions to implement common needs such as
+The Doctrine community has created some extensions to implement common needs such as
 *"set the value of the createdAt property automatically when creating an entity"*.
 Read more about the `available Doctrine extensions`_ and use the
 `StofDoctrineExtensionsBundle`_ to integrate them in your application.

@@ -50,7 +50,7 @@ Now you can cast zero-ish dates to ``null`` during denormalization::
     $legacyData = '{"updatedAt": "0000-00-00"}';
     $serializer->deserialize($legacyData, MyModel::class, 'json', ['zero_datetime_to_null' => true]);
 
-Now, to avoid having to remember this specific ``zero_date_to_null``
+Now, to avoid having to remember this specific ``zero_datetime_to_null``
 context key, you can create a dedicated context builder::
 
     // src/Serializer/LegacyContextBuilder

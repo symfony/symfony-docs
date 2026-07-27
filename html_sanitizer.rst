@@ -1,7 +1,7 @@
 HTML Sanitizer
 ==============
 
-The HTML Sanitizer component aims at sanitizing/cleaning untrusted HTML
+The HTML Sanitizer component aims to sanitize/clean untrusted HTML
 code (e.g. created by a WYSIWYG editor in the browser) into HTML that can
 be trusted. It is based on the `HTML Sanitizer W3C Standard Proposal`_.
 
@@ -12,7 +12,7 @@ elements), but it does not work well with badly formatted input (e.g.
 invalid HTML). The sanitizer is targeted for two use cases:
 
 * Preventing security attacks based on :ref:`XSS <xss-attacks>` or other technologies
-  relying on the execution of malicious code on the visitors browsers;
+  relying on the execution of malicious code on the visitor's browser;
 * Generating HTML that always respects a certain format (only certain
   tags, attributes, hosts, etc.) to be able to consistently style the
   resulting output with CSS. This also protects your application against
@@ -599,7 +599,7 @@ Force Attribute Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Using this option, you can force an attribute with a given value on an
-element. For instance, use the follow config to always set ``rel="noopener noreferrer"`` on each ``<a>``
+element. For instance, use the following config to always set ``rel="noopener noreferrer"`` on each ``<a>``
 element (even if the original one didn't contain a ``rel`` attribute):
 
 .. configuration-block::

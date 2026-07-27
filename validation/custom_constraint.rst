@@ -71,7 +71,7 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
     including private ones defined in child classes. This means you can use private
     properties in your custom constraints without any extra configuration.
 
-Creating the Validator itself
+Creating the Validator Itself
 -----------------------------
 
 As you can see, a constraint class is fairly minimal. The actual validation is
@@ -168,7 +168,7 @@ class, the context is managed for you automatically.
     ``ConstraintValidatorInterface::validate()`` methods were deprecated in
     favor of ``validateInContext()``.
 
-Using the new Validator
+Using the New Validator
 -----------------------
 
 You can use custom validators like the ones provided by Symfony itself:

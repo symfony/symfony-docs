@@ -1,7 +1,7 @@
 Compound
 ========
 
-To the contrary to the other constraints, this constraint cannot be used on its own.
+Unlike the other constraints, this constraint cannot be used on its own.
 Instead, it allows you to create your own set of reusable constraints, representing
 rules to use consistently across your application, by extending the constraint.
 
@@ -15,7 +15,7 @@ Basic Usage
 -----------
 
 Suppose that you have different places where a user password must be validated,
-you can create your own named set or requirements to be reused consistently everywhere:
+you can create your own named set of requirements to be reused consistently everywhere:
 
 .. configuration-block::
 

@@ -128,7 +128,7 @@ containing the new requirement.
     ``vendor/autoload.php`` file that allows any class to be `autoloaded`_.
     Without autoloading, you would need to require the file where a class
     is defined before being able to use it. But thanks to `PSR-4`_,
-    we can just let Composer and PHP do the hard work for us.
+    we can let Composer and PHP do the hard work for us.
 
 Now, let's rewrite our application by using the ``Request`` and the
 ``Response`` classes::

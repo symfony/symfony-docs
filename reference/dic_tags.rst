@@ -114,7 +114,7 @@ Instead of dealing with these three services, your application needs a generic
 some configuration. Thanks to the ``auto_alias`` option, you can automatically create
 that alias based on the value of a configuration parameter.
 
-Considering that a configuration parameter called ``database_type`` exists. Then,
+Considering that a configuration parameter called ``database_type`` exists,
 the generic ``app.lock`` service can be defined as follows:
 
 .. configuration-block::
@@ -1338,7 +1338,7 @@ data on an object before it's validated. Without this, some data on a Doctrine
 entity would appear to be "missing" when validated, even though this is
 not really the case.
 
-If you do need to use this tag, just make a new class that implements the
+If you do need to use this tag, make a new class that implements the
 :class:`Symfony\\Component\\Validator\\ObjectInitializerInterface` interface.
 Then, tag it with the ``validator.initializer`` tag (it has no options).
 

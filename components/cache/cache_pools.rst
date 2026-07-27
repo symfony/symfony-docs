@@ -58,7 +58,7 @@ See the :doc:`/components/cache` article for more information.
 
 Early expiration can be detected inside the callback by calling the
 :method:`Symfony\\Contracts\\Cache\\ItemInterface::isHit` method: if this
-returns ``true``, it means we are currently recomputing a value ahead of its
+returns ``true``, it means the value is being recomputed ahead of its
 expiration date.
 
 For advanced use cases, the callback can accept a second ``bool &$save``

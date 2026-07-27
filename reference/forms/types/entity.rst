@@ -80,7 +80,7 @@ Using Choices
 ~~~~~~~~~~~~~
 
 If you already have the exact collection of entities that you want to include
-in the choice element, just pass them via the ``choices`` key.
+in the choice element, pass them via the ``choices`` key.
 
 For example, if you have a ``$group`` variable (passed into your form perhaps
 as a form option) and ``getUsers()`` returns a collection of ``User`` entities,
@@ -274,7 +274,7 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 If ``true``, the user will be able to select multiple options (as opposed
 to choosing just one option). Depending on the value of the ``expanded``
 option, this will render either a select tag or checkboxes if ``true`` and
-a select tag or radio buttons if ``false``. The returned value will be a
+a select tag or radio buttons if ``false``. The returned value will be
 Doctrine's Array Collection.
 
 .. note::

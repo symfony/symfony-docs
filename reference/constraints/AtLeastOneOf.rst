@@ -165,7 +165,7 @@ message
 
 This is the intro of the message that will be shown if the validation fails. By default,
 it will be followed by the list of messages for the internal constraints
-(configurable by `includeInternalMessages`_ option) . For example,
+(configurable by `includeInternalMessages`_ option). For example,
 if the above ``grades`` property fails to validate, the message will be
 ``This value should satisfy at least one of the following constraints:
 [1] This collection should contain 3 elements or more.

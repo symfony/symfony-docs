@@ -55,7 +55,7 @@ The ``{ default: VideoPlayer }`` part may look strange. When using the async
 import, your ``.then()`` callback is passed an object, where the *actual* module
 is on a ``.default`` key. There are reasons why this is done, but it does look
 quirky. The ``{ default: VideoPlayer }`` code makes sure that the ``VideoPlayer``
-module we want is read from this ``.default`` property.
+module you want is read from this ``.default`` property.
 
 For more details and configuration options, see `dynamic imports`_ on Webpack's
 documentation.

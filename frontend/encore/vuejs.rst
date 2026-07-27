@@ -67,7 +67,7 @@ You can also silence the recommendation by passing ``runtimeCompilerBuild: true`
 Hot Module Replacement (HMR)
 ----------------------------
 
-The ``vue-loader`` supports hot module replacement: just update your code and watch
+The ``vue-loader`` supports hot module replacement: update your code and watch
 your Vue.js app update *without* a browser refresh! To activate it, use the
 ``dev-server``:
 

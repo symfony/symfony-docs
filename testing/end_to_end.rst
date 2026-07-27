@@ -277,7 +277,7 @@ connection status.
 Advanced Usage
 --------------
 
-Changing The Hostname and the Port Of The Web Server
+Changing the Hostname and the Port of the Web Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to change the host and/or the port used by the built-in web server,
@@ -310,7 +310,7 @@ faster. Two alternative clients are available:
   application.
 
 Because all clients implement the same API, you can switch from one to
-another just by calling the appropriate factory method, resulting in a good
+another by calling the appropriate factory method, resulting in a good
 trade-off for every single test case: if JavaScript is needed or not, if an
 authentication against an external SSO has to be done, etc.
 
@@ -510,7 +510,7 @@ instead of starting the built-in PHP one. To do so, set the
 Having a Multi-domain Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It happens that your PHP/Symfony application might serve several different
+Your PHP/Symfony application might serve several different
 domain names. As Panther saves the client in memory between tests to improve
 performance, you will have to run your tests in separate
 processes if you write several tests using Panther for different domain names.
@@ -592,9 +592,9 @@ behavior:
 ``PANTHER_NO_HEADLESS``
     Disable the browser's headless mode (will display the testing window, useful to debug)
 ``PANTHER_WEB_SERVER_DIR``
-    Change the project's document root (default to ``./public/``, relative paths **must start** by ``./``)
+    Change the project's document root (defaults to ``./public/``, relative paths **must start** by ``./``)
 ``PANTHER_WEB_SERVER_PORT``
-    Change the web server's port (default to ``9080``)
+    Change the web server's port (defaults to ``9080``)
 ``PANTHER_WEB_SERVER_ROUTER``
     Use a web server router script which is run at the start of each HTTP request
 ``PANTHER_EXTERNAL_BASE_URI``
@@ -711,7 +711,7 @@ You can then build and run your image:
 Integrating Panther In Your CI
 ------------------------------
 
-Github Actions
+GitHub Actions
 ~~~~~~~~~~~~~~
 
 Panther also works with `GitHub Actions`_.

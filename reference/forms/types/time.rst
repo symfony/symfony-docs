@@ -159,7 +159,7 @@ following:
   second), depending on the `with_minutes`_ and `with_seconds`_ options.
 
 * ``single_text``: renders a single input of type ``time``. User's input
-  will be validated against the form ``hh:mm`` (or ``hh:mm:ss`` if using
+  will be validated against the format ``hh:mm`` (or ``hh:mm:ss`` if using
   seconds).
 
 .. warning::
