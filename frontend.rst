@@ -212,6 +212,6 @@ Other Front-End Articles
 .. _`API Platform screencast series`: https://symfonycasts.com/screencast/api-platform
 .. _`CssMinimizerPlugin`: https://webpack.js.org/plugins/css-minimizer-webpack-plugin
 .. _`Symfony Reprise`: https://github.com/symfony/reprise
-.. _`Symfony Reprise documentation`: https://github.com/symfony/reprise/blob/main/doc/index.rst
+.. _`Symfony Reprise documentation`: https://symfony.com/bundles/reprise/current/index.html
 .. _`Vite`: https://vite.dev/
 .. _`Rsbuild`: https://rsbuild.dev/
