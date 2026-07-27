@@ -19,7 +19,7 @@ chat for instance), create several clients::
     $sally->request('GET', '/messages');
 
     $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
-    $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
+    $this->assertMatchesRegularExpression('/Hello/', $sally->getResponse()->getContent());
 
 Each call to ``createClient()`` boots a kernel and stores it as the current
 kernel for the test case. Creating another client while a kernel is still
@@ -48,7 +48,7 @@ can insulate your clients::
     $sally->request('GET', '/messages');
 
     $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
-    $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
+    $this->assertMatchesRegularExpression('/Hello/', $sally->getResponse()->getContent());
 
 Insulated clients transparently run their requests in a dedicated and
 clean PHP process, thus avoiding any side effects.
