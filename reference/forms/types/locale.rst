@@ -16,7 +16,7 @@ for French/France).
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses a large list of locales. You *can* specify these options
-manually, but then you should just use the ``ChoiceType`` directly.
+manually, but then you should use the ``ChoiceType`` directly.
 
 +---------------------------+----------------------------------------------------------------------+
 | Rendered as               | can be various tags (see :ref:`forms-reference-choice-tags`)         |

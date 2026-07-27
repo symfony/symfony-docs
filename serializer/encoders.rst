@@ -326,7 +326,7 @@ The ``YamlEncoder``
 This encoder requires the :doc:`Yaml Component </components/yaml>` and
 transforms from and to Yaml.
 
-Like other encoder, several :ref:`context options <serializer-context>` are
+Like other encoders, several :ref:`context options <serializer-context>` are
 available:
 
 ``yaml_inline`` (default: ``0``)

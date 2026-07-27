@@ -49,7 +49,7 @@ programmatically thanks to the methods provided by the ``profiler`` service.
 
 When the response object is available, use the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::loadProfileFromResponse`
-method to access to its associated profile::
+method to access its associated profile::
 
     // ... $profiler is the 'profiler' service
     $profile = $profiler->loadProfileFromResponse($response);
@@ -326,7 +326,7 @@ request::
         }
     }
 
-These are the method that you can define in the data collector class:
+These are the methods that you can define in the data collector class:
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::collect` method:
     Stores the collected data in local properties (``$this->data`` if you extend
@@ -467,7 +467,7 @@ template access to the collected information::
 
 In the simplest case, you want to display the information in the toolbar
 without providing a profiler panel. This requires defining the ``toolbar``
-block and set the value of two variables called ``icon`` and ``text``:
+block and setting the value of two variables called ``icon`` and ``text``:
 
 .. code-block:: html+twig
 

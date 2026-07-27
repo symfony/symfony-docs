@@ -80,7 +80,7 @@ Titling Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::title`
     It displays the given string as the command title. This method is meant to
-    be used only once in a given command, but nothing prevents you to use it
+    be used only once in a given command, but nothing prevents you from using it
     repeatedly::
 
         $io->title('Lorem ipsum dolor sit amet');

@@ -17,7 +17,7 @@ Basic Usage
 -----------
 
 If, for some reason, you wanted to ensure that the ``firstName`` property
-of an ``Author`` class exactly equal to ``null``, you could do the following:
+of an ``Author`` class is exactly equal to ``null``, you could do the following:
 
 .. configuration-block::
 
@@ -71,7 +71,7 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
-                $metadata->addPropertyConstraint('firstName', Assert\IsNull());
+                $metadata->addPropertyConstraint('firstName', new Assert\IsNull());
             }
         }
 

@@ -156,7 +156,7 @@ possible::
     return $response;
 
 Using HTTP caching is great, but what if you cannot cache the whole page? What
-if you can cache everything but some sidebar that is more dynamic that the
+if you can cache everything but some sidebar that is more dynamic than the
 rest of the content? Edge Side Includes (`ESI`_) to the rescue! Instead of
 generating the whole content in one go, ESI allows you to mark a region of a
 page as being the content of a sub-request call:

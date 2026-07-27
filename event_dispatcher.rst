@@ -108,7 +108,7 @@ listener class:
 .. note::
 
     There is an optional attribute for the ``kernel.event_listener`` tag called
-    ``event`` which is useful when listener ``$event`` argument is not typed.
+    ``event`` which is useful when the listener's ``$event`` argument is not typed.
     If you configure it, it will change type of ``$event`` object.
     For the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`.
     Check out the :doc:`Symfony events reference </reference/events>` to see
@@ -409,7 +409,7 @@ its name:
 
     $ php bin/console debug:event-dispatcher kernel.exception
 
-or can get everything which partial matches the event name:
+or you can get everything that partially matches the event name:
 
 .. code-block:: terminal
 
@@ -750,7 +750,7 @@ this::
         }
     }
 
-And the ``AfterSendMailEvent`` even like this::
+And the ``AfterSendMailEvent`` event like this::
 
     // src/Event/AfterSendMailEvent.php
     namespace App\Event;

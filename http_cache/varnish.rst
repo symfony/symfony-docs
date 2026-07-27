@@ -216,7 +216,7 @@ Symfony adds automatically:
 
     If you followed the advice about ensuring a consistent caching
     behavior, those VCL functions already exist. Append the code
-    to the end of the function, they won't interfere with each other.
+    to the end of the function; they won't interfere with each other.
 
 Cache Invalidation
 ------------------

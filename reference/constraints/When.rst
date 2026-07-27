@@ -47,7 +47,7 @@ properties::
 
 To validate the object, you have some requirements:
 
-A) If ``type`` is ``percent``, then ``value`` must be less than or equal 100;
+A) If ``type`` is ``percent``, then ``value`` must be less than or equal to 100;
 B) If ``type`` is not ``percent``, then ``value`` must be less than 9999;
 C) No matter the value of ``type``, the ``value`` must be greater than 0.
 

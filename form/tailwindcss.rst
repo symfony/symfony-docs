@@ -4,7 +4,7 @@ Tailwind CSS Form Theme
 Symfony provides a minimal form theme for `Tailwind CSS`_. Tailwind is a *utility first*
 CSS framework and provides *unlimited ways* to customize your forms. Tailwind has
 an official `form plugin`_ that provides a basic form reset that standardizes their look
-on all browsers. This form theme requires this plugin and adds a few basic tailwind
+on all browsers. This form theme requires this plugin and adds a few basic Tailwind
 classes so your forms will look decent by default. Customization is almost always
 going to be required so this theme makes that easy.
 
@@ -14,7 +14,7 @@ going to be required so this theme makes that easy.
 To use, first be sure you have installed and integrated `Tailwind CSS`_ and the
 `form plugin`_. Follow their respective documentation to install both packages.
 
-If you prefer to use the Tailwind theme on a form by form basis, include the
+If you prefer to use the Tailwind theme on a form-by-form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
 
 .. code-block:: html+twig
@@ -50,7 +50,7 @@ You can customize classes of individual fields by setting some class options.
     }) }}
 
 When customizing the classes this way the defaults provided by the theme
-are *overridden* opposed to merged as is the case with other themes. This
+are *overridden*, as opposed to merged, as is the case with other themes. This
 enables you to take full control of the classes without worrying about
 *undoing* the generic defaults the theme provides.
 

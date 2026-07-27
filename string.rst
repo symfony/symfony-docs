@@ -15,7 +15,7 @@ What is a String?
 -----------------
 
 You can skip this section if you already know what a *"code point"* or a
-*"grapheme cluster"* are in the context of handling strings. Otherwise, read
+*"grapheme cluster"* is in the context of handling strings. Otherwise, read
 this section to learn about the terminology used by this component.
 
 Languages like English require a very limited set of characters and symbols to
@@ -470,7 +470,7 @@ Lazy-loaded Strings
 
 Sometimes, creating a string with the methods presented in the previous sections
 is not optimal. For example, consider a hash value that requires certain
-computation to obtain and which you might end up not using it.
+computation to obtain and which you might end up not using.
 
 In those cases, it's better to use the :class:`Symfony\\Component\\String\\LazyString`
 class that allows storing a string whose value is only generated when you need it::

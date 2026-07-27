@@ -481,7 +481,7 @@ made. To do that, you create a new class::
     }
 
 This needs the ``MessageGenerator`` *and* the ``Mailer`` service. That's no
-problem, we ask them by type hinting their class and interface names!
+problem: you request both services by type-hinting their class and interface names.
 Now, this new service is ready to be used. In a controller, for example,
 you can type-hint the new ``SiteUpdateManager`` class and use it::
 
@@ -650,14 +650,14 @@ accessor methods for parameters::
 
 .. warning::
 
-    The used ``.`` notation is a
+    Using the ``.`` notation is a
     :ref:`Symfony convention <service-naming-conventions>` to make parameters
-    easier to read. Parameters are flat key-value elements, they can't
-    be organized into a nested array
+    easier to read. Parameters are flat key-value elements; they can't
+    be organized into a nested array.
 
 .. note::
 
-    You can only set a parameter before the container is compiled, not at run-time.
+    You can only set a parameter before the container is compiled, not at runtime.
     To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
 
@@ -725,7 +725,7 @@ But, you can control this and pass in a different logger:
         ]);
 
 This tells the container that the ``$logger`` argument to ``__construct`` should use
-service whose id is ``monolog.logger.request``.
+the service whose id is ``monolog.logger.request``.
 
 .. tip::
 

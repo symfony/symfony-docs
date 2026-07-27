@@ -16,7 +16,7 @@ The Form component consists of 3 core objects: a form type (implementing
 The only class that is usually manipulated by programmers is the form type class
 which serves as a form blueprint. It is used to generate the ``Form`` and the
 ``FormView``. You could test it directly by mocking its interactions with the
-factory but it would be complex. It is better to pass it to FormFactory like it
+factory but it would be complex. It is better to pass it to the FormFactory as it
 is done in a real application. It is easier to bootstrap and you can trust
 the Symfony components enough to use them as a testing base.
 
@@ -127,7 +127,7 @@ variable exists and will be available in your form themes::
     :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmExtension`, which will
     need to mock the ``ManagerRegistry``.
 
-    However, If you cannot use a mock to write your test, you should extend
+    However, if you cannot use a mock to write your test, you should extend
     the ``KernelTestCase`` instead and use the ``form.factory`` service to
     create the form.
 

@@ -117,7 +117,7 @@ matter), Symfony uses the standard ``render`` helper to configure ESI tags:
 
 By using the ``esi`` renderer (via the ``render_esi()`` Twig function), you
 tell Symfony that the action should be rendered as an ESI tag. You might be
-wondering why you would want to use a helper instead of just writing the ESI
+wondering why you would want to use a helper instead of writing the ESI
 tag yourself. That's because using a helper makes your application work even
 if there is no gateway cache installed.
 

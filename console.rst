@@ -54,7 +54,7 @@ variable of the ``.env`` file, which is ``dev`` by default. It also reads the ``
 value to turn "debug" mode on or off (it defaults to ``1``, which is on).
 
 To run the command in another environment or debug mode, edit the value of ``APP_ENV``
-and ``APP_DEBUG``. You can also define this env vars when running the
+and ``APP_DEBUG``. You can also define these env vars when running the
 command, for instance:
 
 .. code-block:: terminal

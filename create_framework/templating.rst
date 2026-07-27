@@ -172,7 +172,7 @@ framework does not need to be modified in any way, create a new
 The ``is_leap_year()`` function returns ``true`` when the given year is a leap
 year, ``false`` otherwise. If the year is ``null``, the current year is
 tested. The controller does little: it gets the year from the request
-attributes, pass it to the ``is_leap_year()`` function, and according to the
+attributes, passes it to the ``is_leap_year()`` function, and according to the
 return value it creates a new Response object.
 
 As always, you can decide to stop here and use the framework as is; it's

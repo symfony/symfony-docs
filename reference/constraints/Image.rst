@@ -3,7 +3,7 @@ Image
 
 The Image constraint works exactly like the :doc:`File </reference/constraints/File>`
 constraint, except that its `mimeTypes`_ and `mimeTypesMessage`_ options
-are automatically setup to work for image files specifically.
+are automatically set up to work for image files specifically.
 
 Additionally it has options so you can validate against the width and height
 of the image.
@@ -47,7 +47,7 @@ would be a ``file`` type. The ``Author`` class might look as follows::
     }
 
 To guarantee that the ``headshot`` ``File`` object is a valid image and
-that it is between a certain size, add the following:
+that it is within a certain size, add the following:
 
 .. configuration-block::
 
@@ -206,7 +206,7 @@ add several other options.
 ``allowLandscape``
 ~~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If this option is false, the image cannot be landscape oriented.
 
@@ -230,7 +230,7 @@ Parameter         Description
 ``allowPortrait``
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If this option is false, the image cannot be portrait oriented.
 
@@ -254,7 +254,7 @@ Parameter         Description
 ``allowSquare``
 ~~~~~~~~~~~~~~~
 
-**type**: ``Boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true``
 
 If this option is false, the image cannot be a square. If you want to force
 a square image, then leave this option as its default ``true`` value

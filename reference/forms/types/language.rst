@@ -15,7 +15,7 @@ in the `International Components for Unicode`_ (e.g. ``fr`` or ``zh_Hant``).
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses a large list of languages. You *can* specify the option
-manually, but then you should just use the ``ChoiceType`` directly.
+manually, but then you should use the ``ChoiceType`` directly.
 
 +---------------------------+------------------------------------------------------------------------+
 | Rendered as               | can be various tags (see :ref:`forms-reference-choice-tags`)           |

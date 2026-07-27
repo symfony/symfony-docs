@@ -251,7 +251,7 @@ it is targeted. The ``DefaultValueResolver`` will be called next if no value has
 been provided; that's why you can assign ``null`` as ``$session``'s default value.
 
 You can target a resolver by passing its name as ``ValueResolver``'s first argument.
-For convenience, built-in resolvers' name are their FQCN.
+For convenience, built-in resolvers' names are their FQCN.
 
 A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
 argument to ``true``; this is how :ref:`MapEntity allows you to disable the
