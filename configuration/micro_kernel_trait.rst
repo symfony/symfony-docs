@@ -42,7 +42,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
             {
                 // PHP equivalent of config/packages/framework.yaml
                 $container->extension('framework', [
-                    'secret' => 'S0ME_SECRET'
+                    'secret' => 'SOME_SECRET'
                 ]);
             }
 
@@ -79,7 +79,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
             {
                 // PHP equivalent of config/packages/framework.yaml
                 $container->extension('framework', [
-                    'secret' => 'S0ME_SECRET'
+                    'secret' => 'SOME_SECRET'
                 ]);
             }
 
@@ -360,7 +360,7 @@ because the configuration started to get bigger:
 
         # config/framework.yaml
         framework:
-            secret: S0ME_SECRET
+            secret: SOME_SECRET
             profiler: { only_exceptions: false }
 
     .. code-block:: xml
@@ -373,7 +373,7 @@ because the configuration started to get bigger:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <framework:config secret="S0ME_SECRET">
+            <framework:config secret="SOME_SECRET">
                 <framework:profiler only-exceptions="false"/>
             </framework:config>
         </container>

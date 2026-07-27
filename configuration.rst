@@ -116,9 +116,9 @@ configuration files, even if they use a different format:
             - { resource: '/etc/myapp/*.yaml' }
 
             # ignore_errors: not_found silently discards errors if the loaded file doesn't exist
-            - { resource: 'my_config_file.php', ignore_errors: not_found }
+            - { resource: 'my_config_file.yaml', ignore_errors: not_found }
             # ignore_errors: true silently discards all errors (including invalid code and not found)
-            - { resource: 'my_other_config_file.php', ignore_errors: true }
+            - { resource: 'my_other_config_file.yaml', ignore_errors: true }
 
         # ...
 
