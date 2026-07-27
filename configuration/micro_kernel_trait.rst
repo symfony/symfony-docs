@@ -42,7 +42,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
             {
                 // PHP equivalent of config/packages/framework.yaml
                 $container->extension('framework', [
-                    'secret' => 'S0ME_SECRET'
+                    'secret' => 'SOME_SECRET'
                 ]);
             }
 
@@ -79,7 +79,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
             {
                 // PHP equivalent of config/packages/framework.yaml
                 $container->extension('framework', [
-                    'secret' => 'S0ME_SECRET'
+                    'secret' => 'SOME_SECRET'
                 ]);
             }
 
@@ -391,7 +391,7 @@ because the configuration started to get bigger:
 
         # config/framework.yaml
         framework:
-            secret: S0ME_SECRET
+            secret: SOME_SECRET
             profiler: { only_exceptions: false }
 
     .. code-block:: php
