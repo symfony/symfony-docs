@@ -206,8 +206,8 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
 This class is called an "entity". And soon, you'll be able to save and query Product
 objects to a ``product`` table in your database. Each property in the ``Product``
-entity can be mapped to a column in that table. This is usually done with attributes:
-the ``#[ORM\Column(...)]`` comments that you see above each property:
+entity can be mapped to a column in that table. This is usually done with the
+``#[ORM\Column(...)]`` attributes that you see above each property:
 
 .. raw:: html
 
