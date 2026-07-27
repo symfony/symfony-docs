@@ -753,9 +753,10 @@ To set a specific firewall (``main`` is set by default)::
     Instead, add the appropriate token/header in each ``request()`` call.
 
 .. _testing_setup_the_session:
+.. _setup-the-session:
 
-Setup the session
-.................
+Set Up the Session
+..................
 
 The client provides a ``getSession()`` method, which allows you to set up the
 session before performing the request::

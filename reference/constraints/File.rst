@@ -331,7 +331,7 @@ PHP functions.
 
 **type**: ``string`` **default**: ``This filename does not match the expected charset.``
 
-The message that will be shown if the value is not using the given `filenameCharsetMessage`_.
+The message that will be shown if the value is not using the given `filenameCharset`_.
 
 You can use the following parameters in this message:
 

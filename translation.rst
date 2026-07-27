@@ -663,7 +663,7 @@ your application:
 
     {# parameters passed to the message override global parameters #}
     {{ 'Package version: {app_version}'|trans({'{app_version}': '2.3.4'}) }}
-    # Displays "Package version: 2.3.4"
+    {# Displays "Package version: 2.3.4" #}
 
 Forcing the Translator Locale
 -----------------------------
@@ -1678,10 +1678,10 @@ to check that the translation contents are also correct:
 
     .. code-block:: terminal
 
-        # checks the contents of all the translation catalogues in all locales
+        # checks the contents of all the translation catalogs in all locales
         $ php bin/console lint:translations
 
-        # checks the contents of the translation catalogues for Italian (it) and Japanese (ja) locales
+        # checks the contents of the translation catalogs for Italian (it) and Japanese (ja) locales
         $ php bin/console lint:translations --locale=it --locale=ja
 
 .. versionadded:: 7.2

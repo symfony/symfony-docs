@@ -185,7 +185,7 @@ If the result is a falsey value (``false``, ``null``, ``0``, an empty string or
 an empty array) the constraints defined in the ``constraints`` option won't be
 applied but the constraints defined in ``otherwise`` option (if provided) will be applied.
 
-**When using an expression**, you access to the following variables:
+**When using an expression**, you have access to the following variables:
 
 ``this``
     The object being validated (e.g. an instance of Discount).

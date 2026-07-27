@@ -69,7 +69,7 @@ correctly and comply with the content security policy:
     <head>
         <!-- ... -->
         <link rel="preload" href="{{ preload('/fonts/myfont.woff2', {as: 'font'}) }}">
-        <!-- you can add optionally add more attributes to the preload link -->
+        <!-- you can optionally add more attributes to the preload link -->
         <!-- <link rel="preload" href="{{ preload('/fonts/myfont.woff2', {as: 'font', type: 'font/woff2', crossorigin: 'anonymous'}) }}"> -->
 
         <link rel="stylesheet" href="/app.css">

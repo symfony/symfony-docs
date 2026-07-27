@@ -503,8 +503,10 @@ own services), and it sets ``submit`` as their default token identifier:
 Forms configured with a token identifier listed in the above ``stateless_token_ids``
 option will use the stateless CSRF protection.
 
-Generating CSRF Token Using Javascript
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _generating-a-csrf-token-using-javascript:
+
+Generating a CSRF Token Using JavaScript
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the ``Origin`` and ``Referer`` HTTP headers, stateless CSRF protection
 can also validate tokens using a cookie and a header (named ``csrf-token`` by
