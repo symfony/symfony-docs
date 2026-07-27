@@ -6,6 +6,47 @@ format and are supported by Symfony by default. Besides supporting
 :doc:`all Symfony translation features </translation>`, the XLIFF format also
 has some specific features.
 
+Keeping the Original Source Text
+--------------------------------
+
+.. versionadded:: 8.2
+
+    Preserving the ``<source>`` element when loading and dumping XLIFF files
+    was introduced in Symfony 8.2. Previously, the dumpers replaced its
+    contents with the translation key.
+
+When using :ref:`keyword messages <translation-real-vs-keyword-messages>`, the
+translation key is commonly stored in the ``resname`` attribute (XLIFF 1.2) or
+the ``name`` attribute (XLIFF 2.0), while the ``<source>`` element contains the
+actual contents in the original language:
+
+.. code-block:: xml
+
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+        <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+            <body>
+                <trans-unit id="navbar.home" resname="navbar.home">
+                    <source>Home</source>
+                    <target>Accueil</target>
+                </trans-unit>
+            </body>
+        </file>
+    </xliff>
+
+When loading such a file, Symfony stores the source text in the catalogue
+metadata under the ``source`` key. When dumping the catalogue back to XLIFF
+(e.g. when running the ``translation:extract --force`` or ``translation:pull``
+commands), the ``<source>`` element keeps that text instead of being
+overwritten with the translation key.
+
+.. note::
+
+    XLIFF 2.0 files can't store keys longer than 80 characters in the ``name``
+    attribute. In that case, the dumped ``<source>`` element contains the
+    translation key itself (which is used as the fallback key when loading the
+    file) and the original source text is not preserved.
+
 Adding Notes to Translation Contents
 ------------------------------------
 
