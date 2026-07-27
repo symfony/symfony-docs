@@ -97,8 +97,8 @@ and can use any of these variables created by Symfony:
 ``token``
     The token object.
 ``trust_resolver``
-    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
-    object: you'll probably use the ``is_*()`` functions below instead.
+    The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`
+    object; you'll probably use the ``is_*()`` functions below instead.
 
 Additionally, you have access to a number of functions inside the expression:
 
@@ -115,7 +115,7 @@ Additionally, you have access to a number of functions inside the expression:
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
 
-.. sidebar:: ``is_remember_me()`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
+.. sidebar:: ``is_remember_me()`` is different from checking ``IS_AUTHENTICATED_REMEMBERED``
 
     The ``is_remember_me()`` and ``is_fully_authenticated()`` functions are *similar*
     to using ``IS_AUTHENTICATED_REMEMBERED`` and ``IS_AUTHENTICATED_FULLY``

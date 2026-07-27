@@ -561,7 +561,7 @@ Then, configure the service ID of your custom token provider as ``service``:
 
 .. _security-remember-me-authorization:
 
-Forcing the User to Re-Authenticate before Accessing certain Resources
+Forcing the User to Re-Authenticate before Accessing Certain Resources
 ----------------------------------------------------------------------
 
 When the user returns to your site, they are authenticated automatically based
@@ -571,7 +571,7 @@ visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
 before accessing certain resources. For example, you might not allow "remember me"
-users to change their password. You can do this by leveraging a few special
+users to change their password. You can do this by using a few special
 "attributes"::
 
     // src/Controller/AccountController.php

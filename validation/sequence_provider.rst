@@ -259,7 +259,7 @@ entity and a new constraint group called ``Premium``:
 Now, change the ``User`` class to implement
 :class:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface` and
 add the
-:method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`,
+:method:`Symfony\\Component\\Validator\\GroupSequenceProviderInterface::getGroupSequence`
 method, which should return an array of groups to use::
 
     // src/Entity/User.php
@@ -366,7 +366,7 @@ Here's how you can achieve this:
 #. **Configure the User with the Provider:** use the ``provider`` option within
    the :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequenceProvider`
    attribute to link the entity with the provider class;
-#. **Autowiring or Manual Tagging:** if :doc:` autowiring </service_container/autowiring>`
+#. **Autowiring or Manual Tagging:** if :doc:`autowiring </service_container/autowiring>`
    is enabled, your custom provider will be automatically linked. Otherwise, you must
    :doc:`tag your service </service_container/tags>` manually with the ``validator.group_provider`` tag.
 

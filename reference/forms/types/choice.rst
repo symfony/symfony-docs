@@ -80,8 +80,8 @@ method::
         'choice_attr' => function (?Category $category): array {
             return $category ? ['class' => 'category_'.strtolower($category->getName())] : [];
         },
-        // every option can use a string property path or any callable that get
-        // passed each choice as argument, but it may not be needed
+        // every option can use a string property path or any callable that gets
+        // passed each choice as an argument, but it may not be needed
         'group_by' => function (): string {
             // randomly assign things into 2 groups
             return rand(0, 1) === 1 ? 'Group A' : 'Group B';
@@ -314,7 +314,7 @@ Field Variables
 
 .. tip::
 
-    In Twig template, instead of using ``is_selected()``, it's significantly
+    In a Twig template, instead of using ``is_selected()``, it's significantly
     faster to use the :ref:`selectedchoice <form-twig-selectedchoice>` test.
 
 Accessing Form Choice Data

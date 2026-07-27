@@ -30,7 +30,7 @@ the malicious actor could change the email address associated with your account
 (effectively taking over your account) without you even being aware of it.
 
 An effective way of preventing CSRF attacks is to use anti-CSRF tokens. These are
-unique tokens added to forms as hidden fields. The legit server validates them to
+unique tokens added to forms as hidden fields. The legitimate server validates them to
 ensure that the request originated from the expected source and not some other
 malicious website.
 

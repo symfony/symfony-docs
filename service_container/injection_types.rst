@@ -88,8 +88,8 @@ service container configuration:
 There are several advantages to using constructor injection:
 
 * If the dependency is a requirement and the class cannot work without it
-  then injecting it via the constructor ensures it is present especially when the class
-  is used as the class cannot be constructed without it.
+  then injecting it via the constructor ensures it is present, since the class
+  cannot be constructed without it.
 
 * The constructor is only called once when the object is created, so
   you can be sure that the dependency will not change during the object's

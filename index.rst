@@ -80,7 +80,7 @@ Contribute to Symfony:
 
 .. include:: /contributing/map.rst.inc
 
-Create your Own Framework
+Create Your Own Framework
 -------------------------
 
 Want to create your own framework based on Symfony?

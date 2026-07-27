@@ -189,7 +189,7 @@ this can be done by importing its full URL, like from a CDN:
 
     import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
 
-But yikes! Needing to include that URL is a pain! Instead, we can add this package
+But yikes! Needing to include that URL is a pain! Instead, you can add this package
 to our "importmap" via the ``importmap:require`` command. This command can be used
 to add any `npm package`_:
 
@@ -750,7 +750,7 @@ which will automatically do most of these things for you:
   ``Cache-Control`` HTTP header on your assets. Because the AssetMapper component includes a version
   hash in the filename of each asset, you can safely set ``max-age``
   to a very long time (e.g. 1 year). This isn't automatic in
-  any web server, but can be easily enabled.
+  any web server, but can be enabled.
 
 Once you've done these things, you can use a tool like `Lighthouse`_ to
 check the performance of your site.
@@ -910,7 +910,7 @@ component.
 
 Vue files *can* be written in native JavaScript, and those *will* work with
 the AssetMapper component. But you cannot write single-file components (i.e. ``.vue``
-files) with component, as those must be used in a build system. See the
+files), as those must be used in a build system. See the
 `UX Vue.js Documentation`_ for more details about using with the AssetMapper
 component.
 

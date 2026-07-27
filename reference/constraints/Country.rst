@@ -62,7 +62,7 @@ Basic Usage
         {
             // ...
 
-            public static function loadValidationMetadata(ClassMetadata $metadata): void
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('country', new Assert\Country());
             }

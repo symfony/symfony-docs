@@ -293,7 +293,7 @@ translator will try to look up the message including the variable portions
 (e.g. *"Hello Ryan"* or *"Hello Fabien"*).
 
 Instead, you can replace the variable parts with **placeholders** wrapped in
-``%`` characters::
+``%`` characters:
 
 .. configuration-block::
 
@@ -889,7 +889,7 @@ configure the ``providers`` option:
     If you use Phrase as a provider you must configure a user agent in your dsn. See
     `Identification via User-Agent`_ for reasoning and some examples.
 
-    Also make the locale _names_ in Phrase should be as defined in RFC4646 (e.g. pt-BR rather than pt_BR).
+    Also, the locale *names* in Phrase must follow RFC 4646 (e.g. pt-BR rather than pt_BR).
     Not doing so will result in Phrase creating a new locale for the imported keys.
 
 .. tip::
@@ -911,7 +911,7 @@ configure the ``providers`` option:
 .. tip::
 
     The Phrase provider uses Phrase's tag feature to map translations to Symfony's translation
-    domains. If you need some assistance with organising your tags in Phrase, you might want
+    domains. If you need some assistance with organizing your tags in Phrase, you might want
     to consider the `Phrase Tag Bundle`_ which provides some commands helping you with that.
 
 Pushing and Pulling Translations
@@ -1476,7 +1476,7 @@ for the ``fr`` locale and run the command, you will get:
 
 The state indicates the message is missing because it is not translated in
 the ``fr`` locale but it is still used in the template. Moreover, the message
-in the ``fr`` locale equals to the message in the ``en`` locale. This is a
+in the ``fr`` locale equals the message in the ``en`` locale. This is a
 special case because the untranslated message id equals its translation in
 the ``en`` locale.
 
@@ -1629,7 +1629,7 @@ The locale defaults to ``\Locale::getDefault()`` (or ``en`` when the ``intl``
 extension is not available) and can be changed using ``setLocale()``. The
 locale only affects message selection; no translation catalog is ever used.
 
-Pseudo-localization translator
+Pseudo-Localization Translator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note::
@@ -1639,7 +1639,7 @@ Pseudo-localization translator
 The following image shows a typical menu on a webpage:
 
 .. image:: /_images/translation/pseudolocalization-interface-original.png
-    :alt: A menu showing multiple items nicely aligned next to eachother.
+    :alt: A menu showing multiple items nicely aligned next to each other.
 
 This other image shows the same menu when the user switches the language to
 Spanish. Unexpectedly, some text is cut and other contents are so long that
@@ -1648,7 +1648,7 @@ they overflow and you can't see them:
 .. image:: /_images/translation/pseudolocalization-interface-translated.png
     :alt: In Spanish, some menu items contain more letters which result in them being cut.
 
-These kind of errors are very common, because different languages can be longer
+These kinds of errors are very common, because different languages can be longer
 or shorter than the original application language. Another common issue is to
 only check if the application works when using basic accented letters, instead
 of checking for more complex characters such as the ones found in Polish,

@@ -10,7 +10,7 @@ template which other templates extend from):
 
     {# templates/base.html.twig #}
 
-    {# beware that the blocks in your template may be named different #}
+    {# beware that the blocks in your template may be named differently #}
     {% block head_css %}
         <!-- Copy CSS from https://getbootstrap.com/docs/4.4/getting-started/introduction/#css -->
     {% endblock %}
@@ -63,7 +63,7 @@ configuration:
             // ...
         };
 
-If you prefer to apply the Bootstrap styles on a form to form basis, include the
+If you prefer to apply the Bootstrap styles on a form-to-form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
 
 .. code-block:: html+twig
@@ -85,7 +85,7 @@ Error Messages
 Form errors are rendered **inside** the ``<label>`` element to make sure there
 is a strong connection between the error and its ``<input>``, as required by the
 `WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
-``form_label()`` internally. If you call to ``form_errors()`` in your template,
+``form_label()`` internally. If you call ``form_errors()`` in your template,
 you'll get the error messages displayed *twice*.
 
 .. tip::

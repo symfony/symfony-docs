@@ -128,8 +128,8 @@ Symfony recommends the following for template names:
 * Use `snake case`_ for filenames and directories (e.g. ``blog_posts.html.twig``,
   ``admin/default_theme/blog/index.html.twig``, etc.);
 * Define two extensions for filenames (e.g. ``index.html.twig`` or
-  ``blog_posts.xml.twig``) being the first extension (``html``, ``xml``, etc.)
-  the final format that the template will generate.
+  ``blog_posts.xml.twig``) where the first extension (``html``, ``xml``, etc.)
+  is the final format the template generates.
 
 Although templates usually generate HTML contents, they can generate any
 text-based format. That's why the two-extension convention simplifies the way
@@ -517,7 +517,7 @@ in container parameters <service-container-parameters>`:
             $twig->global('uuid')->value('@App\Generator\UuidGenerator');
         };
 
-Now you can use the ``uuid`` variable in any Twig template to access to the
+Now you can use the ``uuid`` variable in any Twig template to access the
 ``UuidGenerator`` service:
 
 .. code-block:: twig
@@ -653,7 +653,7 @@ methods::
         }
     }
 
-This might come handy when dealing with blocks in
+This might come in handy when dealing with blocks in
 :ref:`templates inheritance <template_inheritance-layouts>` or when using
 `Turbo Streams`_.
 
@@ -962,8 +962,8 @@ and add the following to include the template fragment:
     {# ... #}
     {{ include('blog/_user_profile.html.twig') }}
 
-The ``include()`` Twig function takes as argument the path of the template to
-include. The included template has access to all the variables of the template
+The ``include()`` Twig function takes the path of the template to include as its
+argument. The included template has access to all the variables of the template
 that includes it (use the `with_context`_ option to control this).
 
 You can also pass variables to the included template. This is useful for example
@@ -1029,7 +1029,7 @@ better differentiate between full templates and template fragments):
         </a>
     {% endfor %}
 
-Now you can call to this controller from any template to embed its result:
+Now you can call this controller from any template to embed its result:
 
 .. code-block:: html+twig
 

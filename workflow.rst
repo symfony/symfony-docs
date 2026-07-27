@@ -18,8 +18,8 @@ install the workflow feature before using it:
 Configuration
 -------------
 
-To see all configuration options, if you are using the component inside a
-Symfony project run this command:
+To see all configuration options, run this command if you are using the
+component inside a Symfony project:
 
 .. code-block:: terminal
 
@@ -289,7 +289,7 @@ what actions are allowed on a blog post::
     // See a specific available transition for the post in the current state
     $transition = $workflow->getEnabledTransition($post, 'publish');
 
-Using a multiple state marking store
+Using a Multiple State Marking Store
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you are creating a :doc:`workflow </workflow/workflow-and-state-machine>`,
@@ -328,7 +328,7 @@ Accessing the Workflow in a Class
 ---------------------------------
 
 Symfony creates a service for each workflow you define. You have two ways of
-injecting each workflow in any service or controller:
+injecting each workflow into any service or controller:
 
 **(1) Use a specific argument name**
 
@@ -397,7 +397,7 @@ For example, to select the ``blog_publishing`` workflow defined earlier::
     you can :doc:`inject all services </service_container/service_subscribers_locators>`
     with the following tag:
 
-    * ``workflow``: all workflows and all state machine;
+    * ``workflow``: all workflows and all state machines;
     * ``workflow.workflow``: all workflows;
     * ``workflow.state_machine``: all state machines.
 
@@ -455,8 +455,8 @@ Using Events
 
 To make your workflows more flexible, you can construct the ``Workflow``
 object with an ``EventDispatcher``. You can now create event listeners to
-block transitions (i.e. depending on the data in the blog post) and do
-additional actions when a workflow operation happened (e.g. sending
+block transitions (i.e. depending on the data in the blog post) and perform
+additional actions when a workflow operation happens (e.g. sending
 announcements).
 
 Each step has three events that are fired in order:
@@ -509,7 +509,7 @@ order:
     * ``workflow.[workflow name].enter.[place name]``
 
 ``workflow.entered``
-    The subject has entered in the places and the marking is updated.
+    The subject has entered the places and the marking is updated.
 
     The three events being dispatched are:
 
@@ -527,7 +527,7 @@ order:
     * ``workflow.[workflow name].completed.[transition name]``
 
 ``workflow.announce``
-    Triggered for each transition that now is accessible for the subject.
+    Triggered for each transition that is now accessible for the subject.
 
     The three events being dispatched are:
 
@@ -817,13 +817,13 @@ This means that each event has access to the following information:
     Returns a string with the name of the workflow that triggered the event.
 
 :method:`Symfony\\Component\\Workflow\\Event\\Event::getMetadata`
-    Returns a metadata.
+    Returns metadata.
 
 For Guard Events, there is an extended :class:`Symfony\\Component\\Workflow\\Event\\GuardEvent` class.
 This class has these additional methods:
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::isBlocked`
-    Returns if transition is blocked.
+    Returns whether the transition is blocked.
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::setBlocked`
     Sets the blocked value.
@@ -833,7 +833,7 @@ This class has these additional methods:
     See :ref:`blocking transitions <workflow-blocking-transitions>`.
 
 :method:`Symfony\\Component\\Workflow\\Event\\GuardEvent::addTransitionBlocker`
-    Add a :class:`Symfony\\Component\\Workflow\\TransitionBlocker` instance.
+    Adds a :class:`Symfony\\Component\\Workflow\\TransitionBlocker` instance.
 
 .. _workflow-blocking-transitions:
 
@@ -1078,7 +1078,7 @@ Usage in Twig
 -------------
 
 Symfony defines several Twig functions to manage workflows and reduce the need
-of domain logic in your templates:
+for domain logic in your templates:
 
 ``workflow_can(object $subject, string $transitionName, ?string $name = null)``
     Returns ``true`` if the given object can make the given transition.

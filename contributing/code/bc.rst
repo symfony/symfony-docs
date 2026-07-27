@@ -9,7 +9,7 @@ allowed to break backward compatibility. Minor releases (such as 5.1, 5.2 etc.)
 may introduce new features, but must do so without breaking the existing API of
 that release branch (5.x in the previous example).
 
-We also provide deprecation message triggered in the code base to help you with
+We also provide deprecation messages triggered in the code base to help you with
 the migration process across major releases.
 
 However, backward compatibility comes in many different flavors. In fact, almost

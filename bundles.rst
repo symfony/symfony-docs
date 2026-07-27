@@ -72,7 +72,7 @@ Start by creating a new class called ``AcmeBlogBundle``::
 
     The name AcmeBlogBundle follows the standard
     :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
-    also choose to shorten the name of the bundle to simply BlogBundle by naming
+    also choose to shorten the name of the bundle to BlogBundle by naming
     this class BlogBundle (and naming the file ``BlogBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though

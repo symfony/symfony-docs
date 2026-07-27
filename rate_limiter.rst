@@ -519,7 +519,7 @@ You can use the ``cache_pool`` option to override the cache used by a specific l
     Instead of using the Cache component, you can also implement a custom
     storage. Create a PHP class that implements the
     :class:`Symfony\\Component\\RateLimiter\\Storage\\StorageInterface` and
-    use the ``storage_service`` setting of each limiter to the service ID
+    set the ``storage_service`` setting of each limiter to the service ID
     of this class.
 
 Using Locks to Prevent Race Conditions

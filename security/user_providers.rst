@@ -11,7 +11,7 @@ Symfony provides several user providers:
 :ref:`Entity User Provider <security-entity-user-provider>`
     Loads users from a database using :doc:`Doctrine </doctrine>`;
 :ref:`LDAP User Provider <security-ldap-user-provider>`
-    Loads users from a LDAP server;
+    Loads users from an LDAP server;
 :ref:`Memory User Provider <security-memory-user-provider>`
     Loads users from a configuration file;
 :ref:`Chain User Provider <security-chain-user-provider>`
@@ -270,7 +270,7 @@ Chain User Provider
 This user provider combines two or more of the other providers
 to create a new user provider. The order in which
 providers are configured is important because Symfony will look for users
-starting from the first provider and will keep looking for in the other
+starting from the first provider and will keep searching the other
 providers until the user is found:
 
 .. configuration-block::
@@ -373,7 +373,7 @@ Creating a Custom User Provider
 -------------------------------
 
 Most applications don't need to create a custom provider. If you store users in
-a database, a LDAP server or a configuration file, Symfony supports that.
+a database, an LDAP server or a configuration file, Symfony supports that.
 However, if you're loading users from a custom location (e.g. via an API or
 legacy database connection), you'll need to create a custom user provider.
 

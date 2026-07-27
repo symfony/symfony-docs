@@ -20,8 +20,9 @@ when rendering the form, and then back to a ``DateTime`` object on submit.
     :doc:`/form/data_mappers`.
 
 .. _simple-example-sanitizing-html-on-user-input:
+.. _example-1-transforming-strings-form-data-tags-from-user-input-to-an-array:
 
-Example #1: Transforming Strings Form Data Tags from User Input to an Array
+Example #1: Transforming Comma-Separated Tags from User Input into an Array
 ---------------------------------------------------------------------------
 
 Suppose you have a Task form with a tags ``text`` type::

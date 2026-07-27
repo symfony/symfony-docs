@@ -55,7 +55,7 @@ helper method allows creating and configuring a `Memcached`_ class instance usin
         'memcached://10.0.0.100',
         'memcached://10.0.0.101',
         'memcached://10.0.0.102',
-        // etc...
+        // etc.
     ]);
 
     // a single DSN can define multiple servers using the following syntax:

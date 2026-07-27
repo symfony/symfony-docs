@@ -191,7 +191,7 @@ order in which user checkers are called::
                 ->tag('security.user_checker.api', ['priority' => 5]);
         };
 
-Once your checker services are tagged, next you will need configure your firewalls to use the
+Once your checker services are tagged, next you will need to configure your firewalls to use the
 ``security.user_checker.chain.<firewall>`` service::
 
 .. configuration-block::

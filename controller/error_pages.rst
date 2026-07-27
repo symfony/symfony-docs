@@ -193,7 +193,7 @@ need to replace ``http://localhost/`` by the host used in your local setup):
 
 .. _overriding-non-html-error-output:
 
-Overriding Error output for non-HTML formats
+Overriding Error Output for non-HTML Formats
 --------------------------------------------
 
 To override non-HTML error output, the Serializer component needs to be installed.

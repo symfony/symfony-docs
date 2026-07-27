@@ -5,7 +5,7 @@ Working with Server Side Includes
 
 In a similar way as :doc:`ESI (Edge Side Includes) </http_cache/esi>`,
 SSI can be used to control HTTP caching on fragments of a response.
-The most important difference that is SSI is known directly by most
+The most important difference is that SSI is known directly by most
 web servers like `Apache`_, `Nginx`_ etc.
 
 The SSI instructions are done via HTML comments:
@@ -134,7 +134,7 @@ on this block and keep the page private::
             }
         }
 
-The profile index page has not public caching, but the GDPR block has
+The profile index page does not have public caching, but the GDPR block has
 10 minutes of expiration. Let's include this block into the main one:
 
 .. code-block:: twig

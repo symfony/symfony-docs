@@ -17,7 +17,7 @@ the current place to a property on the object.
 .. note::
 
     The terminology above is commonly used when discussing workflows and
-    `Petri nets`_
+    `Petri nets`_.
 
 Examples
 ~~~~~~~~
@@ -39,8 +39,7 @@ tests, logic tests and/or formal requirements to be answered by the user. Some
 jobs don't. The ``GuardEvent`` is used to decide what next steps are allowed for
 a specific application.
 
-By defining a workflow like this, there is an overview how the process looks
-like. The process logic is not mixed with the controllers, models or view. The
+By defining a workflow like this, there is an overview of how the process looks. The process logic is not mixed with the controllers, models or view. The
 order of the steps can be changed by changing the configuration only.
 
 State Machines
@@ -58,7 +57,7 @@ your model. The most important differences between them are:
 Example
 ~~~~~~~
 
-A pull request starts in an initial "start" state, then a state "test" for e.g. running
+A pull request starts in an initial "start" state, then a state "test", e.g. for running
 tests on continuous integration stack. When this is finished, the pull request is in the "review"
 state, where contributors can require changes, reject or accept the
 pull request. At any time, you can also "update" the pull request, which
