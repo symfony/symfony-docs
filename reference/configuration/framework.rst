@@ -402,7 +402,7 @@ strict_mode
 **type**: ``boolean`` **default**: ``false``
 
 When enabled, the strict mode asserts that all requested assets are in the
-manifest file. This option is useful to detect typos or missing assets, the
+manifest file. This option is useful to detect typos or missing assets. The
 recommended value is ``%kernel.debug%``.
 
 .. _reference-framework-assets-version:
@@ -464,7 +464,7 @@ Now, activate the ``version`` option:
                 ->version('v2');
         };
 
-Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
+Now, the same asset will be rendered as ``/images/logo.png?v2``. If you use
 this feature, you **must** manually increment the ``version`` value
 before each deployment so that the query parameters change.
 
@@ -517,7 +517,7 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 
     URL rewrite rules could then be used to disregard the version prefix
     before serving the asset. Alternatively, you could copy assets to the
-    appropriate version path as part of your deployment process and forgot
+    appropriate version path as part of your deployment process and skip
     any URL rewriting. The latter option is useful if you would like older
     asset versions to remain accessible at their original URL.
 
@@ -794,9 +794,9 @@ the ``dev`` environment).
 .. tip::
 
     It might be tough to understand at the beginning, so to avoid confusion
-    remember that all pools perform the same actions but on different medium
-    given the adapter they are based on. Internally, a pool wraps the definition
-    of an adapter.
+    remember that all pools perform the same actions but on different media,
+    depending on the adapter they are based on. Internally, a pool wraps the
+    definition of an adapter.
 
 default_doctrine_dbal_provider
 ..............................
@@ -820,7 +820,7 @@ default_memcached_provider
 
 **type**: ``string`` **default**: ``memcached://localhost``
 
-The DSN to use by the Memcached provider. The provider is available as the ``cache.default_memcached_provider``
+The DSN used by the Memcached provider. The provider is available as the ``cache.default_memcached_provider``
 service.
 
 default_pdo_provider
@@ -955,10 +955,10 @@ default_lifetime
 **type**: ``integer`` | ``string``
 
 Default lifetime of your cache items. Give an integer value to set the default
-lifetime in seconds. A string value could be ISO 8601 time interval, like ``"PT5M"``
+lifetime in seconds. A string value could be an ISO 8601 time interval, like ``"PT5M"``
 or a PHP date expression that is accepted by ``strtotime()``, like ``"5 minutes"``.
 
-If no value is provided, the cache adapter will fallback to the default value on
+If no value is provided, the cache adapter will fall back to the default value on
 the actual cache storage.
 
 .. _reference-cache-pools-name:
@@ -1430,7 +1430,7 @@ enabled
 
 Whether to enable the form services or not in the service container. If
 you don't use forms, setting this to ``false`` may increase your application's
-performance because less services will be loaded into the container.
+performance because fewer services will be loaded into the container.
 
 This option will automatically be set to ``true`` when one of the child
 settings is configured.
@@ -2236,7 +2236,7 @@ max_host_connections
 
 **type**: ``integer`` **default**: ``6``
 
-Defines the maximum amount of simultaneously open connections to a single host
+Defines the maximum number of simultaneously open connections to a single host
 (considering a "host" the same as a "host name + port number" pair). This limit
 also applies for proxy connections, where the proxy is considered to be the host
 for which this limit is applied.
@@ -2285,7 +2285,7 @@ it does not exactly match any of the public keys provided in this option, the
 connection is aborted before sending or receiving any data.
 
 The value of this option is an associative array of ``algorithm => hash``
-(e.g ``['pin-sha256' => '...']``).
+(e.g. ``['pin-sha256' => '...']``).
 
 proxy
 .....
@@ -2327,7 +2327,7 @@ useful to improve security when IPs are checked before the URL is passed to the
 client and to make your tests easier.
 
 The value of this option is an associative array of ``domain => IP address``
-(e.g ``['symfony.com' => '46.137.106.254', ...]``).
+(e.g. ``['symfony.com' => '46.137.106.254', ...]``).
 
 .. _reference-http-client-retry-failed:
 
@@ -2391,7 +2391,7 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
-Whether to enable the support for retry failed HTTP request or not.
+Whether to enable support for retrying failed HTTP requests.
 This setting is automatically set to true when one of the child settings is configured.
 
 .. _reference-http-client-retry-http-codes:
@@ -2422,7 +2422,7 @@ max_delay
 
 **type**: ``integer`` **default**: ``0``
 
-The maximum amount of milliseconds initial to wait between retries.
+The maximum initial number of milliseconds to wait between retries.
 Use ``0`` to not limit the duration.
 
 .. _reference-http-client-retry-max-retries:
@@ -2442,7 +2442,7 @@ multiplier
 
 **type**: ``float`` **default**: ``2``
 
-This value is multiplied to the delay each time a retry occurs, to distribute
+This value is multiplied by the delay each time a retry occurs, to distribute
 retries in time instead of making all of them sequentially.
 
 .. _reference-http-client-retry-retry-strategy:
@@ -2746,7 +2746,7 @@ lock
 **type**: ``string`` | ``array``
 
 The default lock adapter. If not defined, the value is set to ``semaphore`` when
-available, or to ``flock`` otherwise. Store's DSN are also allowed.
+available, or to ``flock`` otherwise. Store DSNs are also allowed.
 
 .. _reference-lock-enabled:
 
@@ -2844,7 +2844,7 @@ recipients
 **type**: ``array``
 
 The "envelope recipient" which is used as the value of ``RCPT TO`` during the
-the `SMTP session`_. This value overrides any other recipient set in the code.
+`SMTP session`_. This value overrides any other recipient set in the code.
 
 .. configuration-block::
 
@@ -3485,7 +3485,7 @@ collect_parameter
 
 **type**: ``string`` **default**: ``null``
 
-This specifies name of a query parameter, a body parameter or a request attribute
+This specifies the name of a query parameter, a body parameter or a request attribute
 used to enable or disable collection of data by the profiler for each request.
 Combine it with the ``collect`` option to enable/disable the profiler on demand:
 
@@ -3846,7 +3846,7 @@ resource
 
 **type**: ``string`` **required**
 
-The path the main routing resource (e.g. a YAML file) that contains the
+The path to the main routing resource (e.g. a YAML file) that contains the
 routes and imports the router should load.
 
 strict_requirements
@@ -3895,7 +3895,7 @@ when using ``.``, instead of matching only a single byte.
 
 If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
-recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
+recommended setting it to ``true``. This will make non-UTF8 URLs generate 404
 errors.
 
 .. _configuration-framework-secret:
@@ -3976,7 +3976,7 @@ semaphore
 
 **type**: ``string`` | ``array``
 
-The default semaphore adapter. Store's DSN are also allowed.
+The default semaphore adapter. Store DSNs are also allowed.
 
 .. _reference-semaphore-enabled:
 
@@ -4873,7 +4873,7 @@ trusted_hosts
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
-proxies, web frameworks, etc.). Basically, every time the framework is
+proxies, web frameworks, etc.). In short, every time the framework is
 generating an absolute URL (when sending an email to reset a password for
 instance), the host might have been manipulated by an attacker.
 

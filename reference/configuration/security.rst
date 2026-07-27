@@ -108,7 +108,7 @@ The possible values of this option are:
 * ``NONE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
   Don't change the session after authentication. This is **not recommended**.
 * ``MIGRATE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
-  The session ID is updated, but the rest of session attributes are kept.
+  The session ID is updated, but the rest of the session attributes are kept.
 * ``INVALIDATE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
   The entire session is regenerated, so the session ID is updated but all the
   other session attributes are lost.
@@ -202,8 +202,8 @@ access_control
 --------------
 
 Defines the security protection of the URLs of your application. It's used for
-example to trigger the user authentication when trying to access to the backend
-and to allow unauthenticated users to the login form page.
+example to trigger the user authentication when trying to access the backend
+and to allow unauthenticated users to reach the login form page.
 
 This option is explained in detail in :doc:`/security/access_control`.
 
@@ -361,7 +361,7 @@ will intercept any requests (``POST`` requests only, by default) to this
 URL and process the submitted login credentials.
 
 Be sure that this URL is covered by your main firewall (i.e. don't create
-a separate firewall just for ``check_path`` URL).
+a separate firewall just for the ``check_path`` URL).
 
 failure_path
 ............
@@ -1456,7 +1456,7 @@ lazy
 ~~~~
 
 Firewalls can configure a ``lazy`` boolean option to load the user and start the
-session only if the application actually accesses the User object, (e.g. calling
+session only if the application actually accesses the User object (e.g. calling
 ``is_granted()`` in a template or ``isGranted()`` in a controller or service):
 
 .. configuration-block::

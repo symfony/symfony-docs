@@ -41,7 +41,7 @@ the named CSS colors:
 
             #[Assert\CssColor(
                 formats: [Assert\CssColor::BASIC_NAMED_COLORS, Assert\CssColor::EXTENDED_NAMED_COLORS],
-                message: 'The color '{{ value }}' is not a valid CSS color name.',
+                message: 'The color "{{ value }}" is not a valid CSS color name.',
             )]
             protected string $currentColor;
         }

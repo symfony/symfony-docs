@@ -58,7 +58,7 @@ until no deprecations remain.
 Fixing Deprecations
 ~~~~~~~~~~~~~~~~~~~
 
-Sometimes fixing a deprecation simply means using the new API instead of the
+Sometimes fixing a deprecation means using the new API instead of the
 deprecated one. However, in some cases, major Symfony versions introduce larger
 API changes that require conditional logic.
 

@@ -18,7 +18,7 @@ Mercure is an open protocol designed from the ground up to publish updates from
 server to clients. It is a modern and efficient alternative to timer-based
 polling and to WebSocket.
 
-Because it is built on top `Server-Sent Events (SSE)`_, Mercure is supported
+Because it is built on top of `Server-Sent Events (SSE)`_, Mercure is supported
 natively in modern browsers (old versions of Edge and IE require
 `a polyfill`_) and has `high-level implementations`_ in many programming
 languages.
@@ -44,7 +44,7 @@ All these features are supported in the Symfony integration.
     or high-traffic scalability.
 
 `In this recording`_ you can see how a Symfony web API leverages Mercure
-and API Platform to update in live a React app and a mobile app (React Native)
+and API Platform to update a React app and a mobile app (React Native) in real time
 generated using the API Platform client generator.
 
 Installation
@@ -64,7 +64,7 @@ Running a Mercure Hub
 
 To manage persistent connections, Mercure relies on a Hub: a dedicated server
 that handles persistent SSE connections with the clients.
-The Symfony app publishes the updates to the hub, that will broadcast them to
+The Symfony app publishes the updates to the hub, which will broadcast them to
 clients.
 
 .. raw:: html
@@ -212,7 +212,7 @@ MercureBundle provides a more advanced configuration:
             }
         }
 
-    The jwt.io website is a convenient way to create and sign JWTs, checkout this `example JWT`_.
+    The jwt.io website is a convenient way to create and sign JWTs, check out this `example JWT`_.
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
 
 Basic Usage
@@ -285,7 +285,7 @@ The ``mercure()`` Twig function generates the URL of the Mercure hub
 according to the configuration. The URL includes the ``topic`` query
 parameters corresponding to the topics passed as first argument.
 
-If you want to access to this URL from an external JavaScript file, generate the
+If you want to access this URL from an external JavaScript file, generate the
 URL in a dedicated HTML element:
 
 .. code-block:: html+twig
@@ -439,7 +439,7 @@ of the ``Update`` constructor to ``true``::
     }
 
 To subscribe to private updates, subscribers must provide to the Hub
-a JWT containing a topic selector matching by the topic of the update.
+a JWT containing a topic selector matching the topic of the update.
 
 To provide this JWT, the subscriber can use a cookie,
 or an ``Authorization`` HTTP header.
@@ -448,7 +448,7 @@ Cookies can be set automatically by Symfony by passing the appropriate options
 to the ``mercure()`` Twig function. Cookies set by Symfony are automatically
 passed by the browsers to the Mercure hub if the ``withCredentials`` attribute
 of the ``EventSource`` class is set to ``true``. Then, the Hub verifies the
-validity of the provided JWT, and extract the topic selectors from it.
+validity of the provided JWT, and extracts the topic selectors from it.
 
 .. code-block:: html+twig
 
@@ -636,7 +636,7 @@ As showcased `in this recording`_, the API Platform Client Generator also
 allows you to scaffold complete React and React Native applications from this API.
 These applications will render the content of Mercure updates in real-time.
 
-Checkout `the dedicated API Platform documentation`_ to learn more about
+Check out `the dedicated API Platform documentation`_ to learn more about
 its Mercure support.
 
 Testing
@@ -727,7 +727,7 @@ enable it:
 The Mercure hub itself provides a debug tool that can be enabled and it's
 available on ``/.well-known/mercure/ui/``
 
-Async dispatching
+Async Dispatching
 -----------------
 
 .. tip::
@@ -771,7 +771,7 @@ it will be handled automatically::
         }
     }
 
-Going further
+Going Further
 -------------
 
 * The Mercure protocol is also supported by :doc:`the Notifier component </notifier>`.

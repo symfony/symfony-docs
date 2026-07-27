@@ -136,7 +136,7 @@ You can suppress any interactive questions from the command you are running with
 Shortcut Syntax
 ~~~~~~~~~~~~~~~
 
-You do not have to type out the full command names. You can just type the
+You do not have to type out the full command names. You can type the
 shortest unambiguous name to run a command. So if there are non-clashing
 commands, then you can run ``help`` like this:
 

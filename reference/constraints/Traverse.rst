@@ -15,7 +15,7 @@ Basic Usage
 -----------
 
 In the following example, create two classes ``BookCollection`` and ``Book``
-that all have constraints on their properties.
+that both have constraints on their properties.
 
 .. configuration-block::
 

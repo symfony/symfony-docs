@@ -658,7 +658,7 @@ Parameters Validation
 
 Imagine that your application has a ``blog_show`` route (URL: ``/blog/{slug}``)
 and a ``blog_list`` route (URL: ``/blog/{page}``). Given that route parameters
-accept any value, there's no way to differentiate both routes.
+accept any value, there's no way to tell the two routes apart.
 
 If the user requests ``/blog/my-first-post``, both routes will match and Symfony
 will use the route which was defined first. To fix this, add some validation to
@@ -1601,7 +1601,7 @@ In the previous example, the alias ``product_details`` was pointing to
 ``product_show`` route.
 
 To mark the ``product_show`` route as deprecated, you need to "switch" the alias.
-The ``product_show`` become the alias, and will now point to the ``product_details`` route.
+The ``product_show`` becomes the alias, and will now point to the ``product_details`` route.
 This way, the ``product_show`` alias could be deprecated.
 
 .. configuration-block::
@@ -1722,7 +1722,7 @@ In this example, every time the ``product_show`` alias is used, a deprecation
 warning is triggered, advising you to stop using this route and prefer using ``product_details``.
 
 The message is actually a message template, which replaces occurrences of the
-``%alias_id%`` placeholder by the route alias name. You **must** have
+``%alias_id%`` placeholder with the route alias name. You **must** have
 at least one occurrence of the ``%alias_id%`` placeholder in your template.
 
 .. _routing-route-groups:
@@ -1731,7 +1731,7 @@ Route Groups and Prefixes
 -------------------------
 
 It's common for a group of routes to share some options (e.g. all routes related
-to the blog start with ``/blog``) That's why Symfony includes a feature to share
+to the blog start with ``/blog``). That's why Symfony includes a feature to share
 route configuration.
 
 When defining routes as attributes, put the common configuration
@@ -2501,7 +2501,7 @@ Stateless Routes
 ----------------
 
 Sometimes, when an HTTP response should be cached, it is important to ensure
-that can happen. However, whenever a session is started during a request,
+that this can happen. However, whenever a session is started during a request,
 Symfony turns the response into a private non-cacheable response.
 
 For details, see :doc:`/http_cache`.
@@ -2566,7 +2566,7 @@ Now, if the session is used, the application will report it based on your
 * ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
 * ``disabled``: will log a warning
 
-It will help you understand and hopefully fixing unexpected behavior in your application.
+It will help you understand and hopefully fix unexpected behavior in your application.
 
 .. _routing-generating-urls:
 

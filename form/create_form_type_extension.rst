@@ -12,7 +12,7 @@ They have 2 main use-cases:
    adding a "help" text to every "input text"-like type).
 
 Imagine that you have a ``Media`` entity, and that each media is associated
-to a file. Your ``Media`` form uses a file type, but when editing the entity,
+with a file. Your ``Media`` form uses a file type, but when editing the entity,
 you would like to see its image automatically rendered next to the file
 input.
 

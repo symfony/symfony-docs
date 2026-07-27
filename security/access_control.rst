@@ -192,7 +192,7 @@ Example #4:
   * **URI** ``/admin/user``
   * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``GET``
   * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
-  * **Why?** The ``ip`` doesn't match neither the first rule nor the second rule.
+  * **Why?** The ``ip`` matches neither the first rule nor the second rule.
   * So the third rule (which matches) is used.
 Example #5:
   * **URI** ``/admin/user``

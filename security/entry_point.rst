@@ -6,7 +6,7 @@ gives them a suitable response to let them start authentication (e.g.
 redirect to a login form or show a 401 Unauthorized HTTP response for
 APIs).
 
-However sometimes, one firewall has multiple ways to authenticate (e.g.
+However, sometimes one firewall has multiple ways to authenticate (e.g.
 both a form login and a social login). In these cases, it is required to
 configure the *authentication entry point*.
 

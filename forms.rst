@@ -490,7 +490,7 @@ suitable for being rendered in an HTML form.
     ``getPublished()`` or ``getReminder()``).
 
 As short as this rendering is, it's not very flexible. Usually, you'll need more
-control about how the entire form or some of its fields look. For example, thanks
+control over how the entire form or some of its fields look. For example, thanks
 to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap5>` you
 can set this option to generate forms compatible with the Bootstrap 5 CSS framework:
 
@@ -1048,7 +1048,7 @@ Symfony's ``NotBlank`` or ``NotNull`` validation constraints.
 The ``label`` Option
 ....................
 
-By default, the label of form fields are the *humanized* version of the
+By default, the labels of form fields are the *humanized* versions of the
 property name (``user`` -> ``User``; ``postalAddress`` -> ``Postal Address``).
 Set the ``label`` option on fields to define their labels explicitly::
 

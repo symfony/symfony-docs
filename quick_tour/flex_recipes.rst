@@ -42,8 +42,8 @@ So how can we install and configure Twig? By running one single command:
 
     $ composer require twig
 
-Two *very* interesting things happen internally thanks to Symfony Flex: a
-Composer plugin that is already installed in our project.
+Two *very* interesting things happen internally thanks to Symfony Flex, a
+Composer plugin already installed in our project.
 
 First, ``twig`` is not the name of a Composer package: it's a Flex *alias* that
 points to ``symfony/twig-bundle``. Flex resolves that alias for Composer.
@@ -183,7 +183,7 @@ This is an alias to ``api-platform/api-pack`` :ref:`Symfony pack <symfony-packs>
 which has dependencies on several other packages, like Symfony's Validator and
 Security components, as well as the Doctrine ORM. In fact, Flex installed *5* recipes!
 
-But like usual, we can immediately start using the new library. Want to create a
+But like usual, you can immediately start using the new library. Want to create a
 rich API for a ``product`` table? Create a ``Product`` entity and give it the
 ``#[ApiResource]`` attribute::
 

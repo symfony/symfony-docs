@@ -50,7 +50,7 @@ SMS Channel
 The SMS channel uses :class:`Symfony\\Component\\Notifier\\Texter` classes
 to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
-with a couple popular SMS services:
+with a couple of popular SMS services:
 
 .. warning::
 
@@ -915,7 +915,7 @@ To send a notification, autowire the
 The ``Notification`` is created by using two arguments: the subject and
 channels. The channels specify which channel (or transport) should be used
 to send the notification. For instance, ``['email', 'sms']`` will send
-both an email and sms notification to the user.
+both an email and SMS notification to the user.
 
 The default notification also has a ``content()`` and ``emoji()`` method to
 set the notification content and icon.
@@ -1108,9 +1108,8 @@ The
 :class:`Symfony\\Component\\Notifier\\Notification\\SmsNotificationInterface`,
 :class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`,
 :class:`Symfony\\Component\\Notifier\\Notification\\PushNotificationInterface`
-and
-:class:`Symfony\\Component\\Notifier\\Notification\\DesktopNotificationInterface`
-also exists to modify messages sent to those channels.
+and :class:`Symfony\\Component\\Notifier\\Notification\\DesktopNotificationInterface`
+also exist to modify messages sent to those channels.
 
 Customize Browser Notifications (Flash Messages)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1168,7 +1167,7 @@ Testing Notifier
 ----------------
 
 Symfony provides a :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\NotificationAssertionsTrait`
-which provide useful methods for testing your Notifier implementation.
+which provides useful methods for testing your Notifier implementation.
 You can benefit from this class by using it directly or extending the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`.
 
@@ -1218,7 +1217,7 @@ dispatched. Listeners receive a
         $message = $event->getMessage();
 
         // log something
-        $this->logger(sprintf('Message with subject: %s will be send to %s', $message->getSubject(), $message->getRecipientId()));
+        $this->logger(sprintf('Message with subject: %s will be sent to %s', $message->getSubject(), $message->getRecipientId()));
     });
 
 The ``FailedMessageEvent`` Event

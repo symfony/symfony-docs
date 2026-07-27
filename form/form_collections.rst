@@ -92,8 +92,8 @@ Then, create a form class so that a ``Tag`` object can be modified by the user::
 
 Next, let's create a form for the ``Task`` entity, using a
 :doc:`CollectionType </reference/forms/types/collection>` field of ``TagType``
-forms. This will allow us to modify all the ``Tag`` elements of a ``Task`` right
-inside the task form itself::
+forms. This lets you modify all the ``Tag`` elements of a ``Task`` right
+inside the task form::
 
     // src/Form/TaskType.php
     namespace App\Form;
@@ -230,10 +230,10 @@ to render them:
 
 When the user submits the form, the submitted data for the ``tags`` field is
 used to construct an ``ArrayCollection`` of ``Tag`` objects. The collection is
-then set on the ``tag`` field of the ``Task`` and can be accessed via ``$task->getTags()``.
+then set on the ``tags`` field of the ``Task`` and can be accessed via ``$task->getTags()``.
 
-So far, this works great, but only to edit *existing* tags. It doesn't allow us
-yet to add new tags or delete existing ones.
+So far, this works great, but only to edit *existing* tags. It doesn't yet let you
+add new tags or delete existing ones.
 
 .. warning::
 
@@ -241,7 +241,7 @@ yet to add new tags or delete existing ones.
     if you use Xdebug, you may receive a ``Maximum function nesting level of '100'
     reached, aborting!`` error. To fix this, increase the ``xdebug.max_nesting_level``
     PHP setting, or render each form field by hand using ``form_row()`` instead of
-    rendering the whole form at once (e.g ``form_widget(form)``).
+    rendering the whole form at once (e.g. ``form_widget(form)``).
 
 .. _form-collections-new-prototype:
 

@@ -10,7 +10,7 @@ template which other templates extend from):
 
     {# templates/base.html.twig #}
 
-    {# beware that the blocks in your template may be named different #}
+    {# beware that the blocks in your template may be named differently #}
     {% block stylesheets %}
         <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
     {% endblock %}
@@ -162,7 +162,7 @@ class to the label:
 
 .. tip::
 
-    You can also render your switches inline by simply adding the
+    You can also render your switches inline by adding the
     ``checkbox-inline`` class on the ``label_attr`` option::
 
         // ...
@@ -178,7 +178,7 @@ class to the label:
 Input group
 -----------
 
-To create `input group`_ in your Symfony Form, simply add the ``input-group``
+To create an `input group`_ in your Symfony Form, add the ``input-group``
 class to the ``row_attr`` option.
 
 .. configuration-block::

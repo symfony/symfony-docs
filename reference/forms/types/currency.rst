@@ -6,7 +6,7 @@ that allows the user to select from a large list of `3-letter ISO 4217`_ currenc
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses a large list of currencies. You *can* specify the option
-manually, but then you should just use the ``ChoiceType`` directly.
+manually, but then you should use the ``ChoiceType`` directly.
 
 +---------------------------+------------------------------------------------------------------------+
 | Rendered as               | can be various tags (see :ref:`forms-reference-choice-tags`)           |

@@ -37,7 +37,7 @@ Choosing the Target Symfony Version
 
 Most importantly, this means that you will have to decide which version you
 are aiming to migrate to, either a current stable release or the long
-term support version (LTS). The main difference is, how frequently you
+term support version (LTS). The main difference is how frequently you
 will need to upgrade in order to use a supported version. In the context
 of a migration, other factors, such as the supported PHP-version or
 support for libraries/bundles you use, may have a strong impact as well.
@@ -64,7 +64,7 @@ server meets the :ref:`technical requirements for running Symfony applications <
 and compare them with your current application's environment to make sure you
 are able to run both applications on the same system. Having a test
 system, that is as close to the production environment as possible,
-where you can just install a new Symfony project next to the existing one
+where you can install a new Symfony project next to the existing one
 and check if it is working will give you an even more reliable result.
 
 .. tip::
@@ -81,9 +81,9 @@ dependencies in both applications. This is especially important if your
 existing application already uses Symfony components or libraries commonly
 used in Symfony applications such as Doctrine ORM or Twig.
 A good way for ensuring compatibility is to use the same ``composer.json``
-for both project's dependencies.
+for both projects' dependencies.
 
-Once you have introduced composer for managing your project's dependencies
+Once you have introduced Composer for managing your project's dependencies
 you can use its autoloader to ensure you do not run into any conflicts due
 to custom autoloading from your existing framework. This usually entails
 adding an `autoload`_-section to your ``composer.json`` and configuring it
@@ -111,7 +111,7 @@ you use, the original framework your project is based on and most importantly
 the age of the project as PHP itself underwent many improvements throughout
 the years that your code might not have caught on to, yet. As long as both
 your existing code and a new Symfony project can run in parallel on the
-same system you are on a good way. All these steps do not require you to
+same system you are on the right track. All these steps do not require you to
 introduce Symfony just yet and will already open up some opportunities for
 modernizing your existing code.
 
@@ -355,7 +355,7 @@ somewhat like this::
         }
     }
 
-This is the most generic approach you can take, that is likely to work
+This is the most generic approach you can take that is likely to work
 no matter what your previous system was. You might have to account for
 certain "quirks", but since your original application is only started
 after Symfony finished handling the request you reduced the chances
@@ -373,7 +373,7 @@ or instead of using your old database logic, you could use Doctrine to refactor
 old queries. This will also allow you to incrementally improve the legacy code
 making it easier to transition it over to the new Symfony application.
 
-The major downside is, that both systems are not well integrated
+The major downside is that both systems are not well integrated
 into each other leading to some redundancies and possibly duplicated code.
 For example, since the Symfony application is already done handling the
 request you can not take advantage of kernel events or utilize Symfony's
@@ -384,7 +384,7 @@ Legacy Route Loader
 
 The major difference to the LegacyBridge-approach from before is, that the
 logic is moved inside the Symfony application. It removes some of the
-redundancies and allows us to also interact with parts of the legacy
+redundancies and allows you to also interact with parts of the legacy
 application from inside Symfony, instead of just the other way around.
 
 .. tip::

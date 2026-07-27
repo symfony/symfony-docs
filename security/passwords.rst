@@ -248,7 +248,7 @@ you'll see a success message and a list of any other steps you need to do.
 .. tip::
 
     Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
-    ``--with-ulid`` to ``make:reset-password``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    ``--with-ulid`` to ``make:reset-password``. Using Symfony's :doc:`Uid Component </components/uid>`,
     the entities will be generated with the ``id`` type as :ref:`Uuid <uuid>`
     or :ref:`Ulid <ulid>` instead of ``int``.
 
@@ -826,7 +826,7 @@ The PBKDF2 Hasher
 ~~~~~~~~~~~~~~~~~
 
 Using the `PBKDF2`_ hasher is no longer recommended since PHP added support for
-Sodium and BCrypt. Legacy application still using it are encouraged to upgrade
+Sodium and BCrypt. Legacy applications still using it are encouraged to upgrade
 to those newer hashing algorithms.
 
 .. _custom-password-hasher:

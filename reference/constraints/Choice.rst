@@ -316,8 +316,8 @@ Parameter          Description
 ``{{ limit }}``    The maximum number of selectable choices
 =================  ============================================================
 
-match
-~~~~~
+``match``
+~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
 

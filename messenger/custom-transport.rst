@@ -217,7 +217,7 @@ named transport using your own DSN:
             ;
         };
 
-In addition of being able to route your messages to the ``yours`` sender, this
+In addition to being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:
 
 #. ``messenger.sender.yours``: the sender;

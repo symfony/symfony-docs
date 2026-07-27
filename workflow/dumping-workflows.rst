@@ -68,7 +68,7 @@ Styling
 You can use ``--with-metadata`` option in the ``workflow:dump`` command to include places, transitions and
 workflow's metadata.
 
-The DOT image will look like this :
+The DOT image will look like this:
 
 .. image:: /_images/components/workflow/blogpost_metadata.png
 

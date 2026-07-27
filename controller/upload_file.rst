@@ -186,7 +186,7 @@ There are some important things to consider in the code of the above controller:
    the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`)
    and the original file path (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalPath`).
    However, they are considered *not safe* because a malicious user could tamper
-   that information. That's why it's always better to generate a unique name and
+   with that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
 

@@ -313,7 +313,7 @@ To customize the error page that's shown to the user, see the
 
 .. _controller-request-argument:
 
-The Request object as a Controller Argument
+The Request Object as a Controller Argument
 -------------------------------------------
 
 What if you need to read query parameters, grab a request header or get access
@@ -500,7 +500,7 @@ default value for your controller arguments::
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-When creating an API and dealing with other HTTP methods than ``GET`` (like
+When creating an API and dealing with HTTP methods other than ``GET`` (like
 ``POST`` or ``PUT``), user's data are not stored in the query string
 but directly in the request payload, like this:
 

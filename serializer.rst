@@ -112,7 +112,7 @@ the :class:`Symfony\\Component\\Serializer\\SerializerInterface` parameter type:
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
 
-        $person = new Person('Jane Done', 39, false);
+        $person = new Person('Jane Doe', 39, false);
 
         $jsonContent = $serializer->serialize($person, 'json');
         // $jsonContent contains {"name":"Jane Doe","age":39,"sportsperson":false}
@@ -207,7 +207,7 @@ needs three parameters:
 
 When sending a request to this controller (e.g.
 ``{"first_name":"John Doe","age":54,"sportsperson":true}``), the serializer
-will create a new instance of ``Person`` and sets the properties to the
+will create a new instance of ``Person`` and set the properties to the
 values from the given JSON.
 
 .. note::
@@ -238,7 +238,7 @@ The serializer uses a two-step process when (de)serializing objects:
     ></object>
 
 In both directions, data is always first converted to an array. This splits
-the process in two separate responsibilities:
+the process into two separate responsibilities:
 
 Normalizers
     These classes convert **objects** into **arrays** and vice versa. They
@@ -426,7 +426,7 @@ complex (de)serialization context, you can chain them using the
 Configure Context on a Specific Property
 ........................................
 
-At last, you can also configure context values on a specific object
+Finally, you can also configure context values on a specific object
 property. For instance, to configure the datetime format:
 
 .. configuration-block::
@@ -625,7 +625,7 @@ You can also restrict the usage of a context to some
         </serializer>
 
 The attribute can be repeated as much as needed on a single property.
-Context without group is always applied first. Then context for the
+Context without group is always applied first. Then contexts for the
 matching groups are merged in the provided order.
 
 If you repeat the same context in multiple properties, consider using the
@@ -966,7 +966,7 @@ You can now choose which groups to use when serializing::
 Using the Serialization Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At last, you can also use the ``attributes`` context option to select
+Finally, you can also use the ``attributes`` context option to select
 properties at runtime::
 
     use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -1233,12 +1233,12 @@ CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In many formats, it's common to use underscores to separate words (also known
-as snake_case). However, in Symfony applications is common to use camelCase to
+as snake_case). However, in Symfony applications it is common to use camelCase to
 name properties.
 
 Symfony provides a built-in name converter designed to transform between
 snake_case and CamelCased styles during serialization and deserialization
-processes. You can use it instead of the metadata aware name converter by
+processes. You can use it instead of the metadata-aware name converter by
 setting the ``name_converter`` setting to
 ``serializer.name_converter.camel_case_to_snake_case``:
 
@@ -2314,7 +2314,7 @@ this by configuring the ``object_to_populate`` serializer context option::
 Deserializing Interfaces and Abstract Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When working with associated objects, a property sometimes reference an
+When working with associated objects, a property sometimes references an
 interface or abstract class. When deserializing these properties, the
 Serializer has to know which concrete class to initialize. This is done
 using a *discriminator class mapping*.
@@ -2517,7 +2517,7 @@ Deserializing Input Partially (Unwrapping)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The serializer will always deserialize the complete input string into PHP
-values. When connecting with third party APIs, you often only need a
+values. When connecting with third-party APIs, you often only need a
 specific part of the returned response.
 
 To avoid deserializing the whole response, you can use the
@@ -2525,7 +2525,7 @@ To avoid deserializing the whole response, you can use the
 and "unwrap" the input data::
 
     $jsonData = '{"result":"success","data":{"person":{"name": "Jane Doe","age":57}}}';
-    $data = $serialiser->deserialize($jsonData, Object::class, 'json', [
+    $data = $serializer->deserialize($jsonData, Object::class, 'json', [
         UnwrappingDenormalizer::UNWRAP_PATH => '[data][person]',
     ]);
     // $data is Person(name: 'Jane Doe', age: 57)

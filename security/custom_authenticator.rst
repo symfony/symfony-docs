@@ -168,7 +168,7 @@ into a security
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
 (security passports are explained later in this article).
 
-After the authentication process finished, the user is either authenticated
+After the authentication process has finished, the user is either authenticated
 or there was something wrong (e.g. incorrect password). The authenticator
 can define what happens in these cases:
 
@@ -183,7 +183,7 @@ can define what happens in these cases:
     route is protected by an API key header.
 
 ``onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response``
-    If authentication failed (e. g. wrong username password), this method
+    If authentication failed (e. g. wrong username or password), this method
     is called with the ``AuthenticationException`` thrown.
 
     This method can return a response (e.g. send a 401 Unauthorized in API

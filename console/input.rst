@@ -1058,7 +1058,7 @@ The Console component adds some predefined options to all commands:
 * ``--no-interaction|-n``: disables interaction
 * ``--version|-V``: outputs the version number of the console application
 * ``--help|-h``: displays the command help
-* ``--ansi|--no-ansi``: whether to force of disable coloring the output
+* ``--ansi|--no-ansi``: whether to force or disable coloring the output
 * ``--profile``: enables the Symfony profiler
 
 .. versionadded:: 7.2

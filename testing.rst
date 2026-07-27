@@ -150,7 +150,7 @@ usually defined in the ``KERNEL_CLASS`` environment variable
     ``getKernelClass()`` or ``createKernel()`` methods of your functional
     test, which takes precedence over the ``KERNEL_CLASS`` env var.
 
-Set-up your Test Environment
+Set Up Your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The tests create a kernel that runs in the ``test``
@@ -279,8 +279,8 @@ It gives you access to both the public services and the non-removed
 
 .. note::
 
-    If you need to test private services that have been removed (those who
-    are not used by any other services), you need to declare those private
+    If you need to test private services that have been removed (those that
+    are not used by any other service), you need to declare those private
     services as public in the ``config/services_test.yaml`` file.
 
 Mocking Dependencies
@@ -288,7 +288,7 @@ Mocking Dependencies
 
 Sometimes it can be useful to mock a dependency of a tested service.
 From the example in the previous section, let's assume the
-``NewsletterGenerator`` has a dependency to a private alias
+``NewsletterGenerator`` has a dependency on a private alias
 ``NewsRepositoryInterface`` pointing to a private ``NewsRepository`` service
 and you'd like to use a mocked ``NewsRepositoryInterface`` instead of the
 concrete one::
@@ -529,7 +529,7 @@ This creates the following test class::
     }
 
 In the above example, the test validates that the HTTP response was successful
-and the request body contains a ``<h1>`` tag with ``"Hello world"``.
+and the request body contains a ``<h1>`` tag with ``"Hello World"``.
 
 The ``request()`` method also returns a crawler, which you can use to
 create more complex assertions in your tests (e.g. to count the number of page
@@ -586,7 +586,7 @@ Multiple Requests in One Test
 .............................
 
 After making a request, subsequent requests will make the client reboot the kernel.
-This recreates the container from scratch to ensures that requests are isolated
+This recreates the container from scratch to ensure that requests are isolated
 and use new service objects each time. This behavior can have some unexpected
 consequences: for example, the security token will be cleared, Doctrine entities
 will be detached, etc.
@@ -1037,7 +1037,7 @@ To use these assertions, your test class must extend
     Asserts a specific HTTP status code.
 ``assertResponseRedirects(?string $expectedLocation = null, ?int $expectedCode = null, string $message = '', ?bool $verbose = null)``
     Asserts the response is a redirect response (optionally, you can check
-    the target location and status code). The excepted location can be either
+    the target location and status code). The expected location can be either
     an absolute or a relative path.
 ``assertResponseHasHeader(string $headerName, string $message = '')``/``assertResponseNotHasHeader(string $headerName, string $message = '')``
     Asserts the given header is (not) available on the response, e.g. ``assertResponseHasHeader('content-type');``.
@@ -1190,9 +1190,9 @@ To use these assertions, your test class must extend
     Asserts that the given email does (not) have the expected header set to
     the expected value.
 ``assertEmailAddressContains(RawMessage $email, string $headerName, string $expectedValue, string $message = '')``/``assertEmailAddressNotContains(RawMessage $email, string $headerName, string $expectedValue, string $message = '')``
-    Asserts that the given address header does (not) equal the expected e-mail
-    address. This assertion normalizes addresses like ``Jane Smith
-    <jane@example.com>`` into ``jane@example.com``.
+    Asserts that the given email address (e.g. ``To``, ``Reply-To``) contains
+    (or not) the given value. This assertion normalizes addresses like
+    ``Jane Smith <jane@example.com>`` into ``jane@example.com``.
 ``assertEmailSubjectContains(RawMessage $email, string $expectedValue, string $message = '')``/``assertEmailSubjectNotContains(RawMessage $email, string $expectedValue, string $message = '')``
     Asserts that the subject of the given email does (not) contain the
     expected subject.

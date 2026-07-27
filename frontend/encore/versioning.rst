@@ -51,7 +51,7 @@ the CSS and JavaScript files):
     }
 
 In your app, you need to read this file if you want to be able to link (e.g. via
-an ``img`` tag) to certain assets. If you're using Symfony, just activate the
+an ``img`` tag) to certain assets. If you're using Symfony, activate the
 ``json_manifest_file`` versioning strategy:
 
 .. code-block:: yaml

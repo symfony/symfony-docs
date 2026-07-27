@@ -688,8 +688,8 @@ manager then restarts them against the new codebase:
 
 .. code-block:: terminal
 
-    # in your deployment script, after code deploy and cache warmup: $ php
-    php bin/console messenger:stop-workers
+    # in your deployment script, after code deploy and cache warmup:
+    $ php bin/console messenger:stop-workers
 
 The command uses the :ref:`app cache <cache-configuration-with-frameworkbundle>`
 internally. If your application runs on multiple hosts, configure the app cache
@@ -1080,7 +1080,7 @@ To restart all your consumers:
     $ systemctl --user restart messenger-consume@*.service
 
 The systemd user instance is only started after the first login of the
-particular user. Consumer often need to start on system boot instead.
+particular user. Consumers often need to start on system boot instead.
 Enable lingering on the user to activate that behavior:
 
 .. code-block:: terminal
@@ -1115,13 +1115,13 @@ See the `systemd docs`_ for more details.
 Stateless Worker
 ~~~~~~~~~~~~~~~~
 
-PHP is designed to be stateless, there are no shared resources across different
-requests. In HTTP context PHP cleans everything after sending the response, so
+PHP is designed to be stateless; there are no shared resources across different
+requests. In an HTTP context, PHP cleans everything after sending the response, so
 you can decide to not take care of services that may leak memory.
 
 On the other hand, it's common for workers to process messages sequentially in
 long-running CLI processes which don't finish after processing a single message.
-Beware about service states to prevent information and/or memory leakage as
+Beware of service states to prevent information and/or memory leakage as
 Symfony will inject the same instance of a service in all messages, preserving
 the internal state of the services.
 
@@ -1196,7 +1196,7 @@ by setting its ``rate_limiter`` option:
 
     When a rate limiter is configured on a transport, it will block the whole
     worker when the limit is hit. You should make sure you configure a dedicated
-    worker for a rate limited transport to avoid other transports to be blocked.
+    worker for a rate limited transport to avoid blocking other transports.
 
 Retries & Failures
 ------------------
@@ -1752,7 +1752,7 @@ The transport has a number of options:
 ``frame_max``
     The largest frame size that the server proposes for the connection,
     including frame header and end-byte. 0 means standard extension limit
-    (depends on librabbimq default frame size limit)
+    (depends on librabbitmq default frame size limit)
 
 ``heartbeat``
     The delay, in seconds, of the connection heartbeat that the server wants. 0
@@ -1779,7 +1779,7 @@ The transport has a number of options:
     Port of the AMQP service
 
 ``read_timeout``
-    Timeout in for income activity. Note: 0 or greater seconds. May be
+    Timeout for incoming activity. Note: 0 or greater seconds. May be
     fractional.
 
 ``retry``
@@ -1801,7 +1801,7 @@ The transport has a number of options:
     Virtual Host to use with the AMQP service
 
 ``write_timeout``
-    Timeout in for outcome activity. Note: 0 or greater seconds. May be
+    Timeout for outgoing activity. Note: 0 or greater seconds. May be
     fractional.
 
 ``delay[queue_name_pattern]`` (default: ``delay_%exchange_name%_%routing_key%_%delay%``)
@@ -1962,7 +1962,7 @@ The transport has a number of options:
     Whether the table should be created automatically during send / get.
 
 When using PostgreSQL, you have access to the following options to leverage
-the `LISTEN/NOTIFY`_ feature. This allow for a more performant approach
+the `LISTEN/NOTIFY`_ feature. This allows a more performant approach
 than the default polling behavior of the Doctrine transport because
 PostgreSQL will directly notify the workers when a new message is inserted
 in the table.
@@ -1995,7 +1995,7 @@ it by running:
 
     $ composer require symfony/beanstalkd-messenger
 
-The Beanstalkd transport DSN may looks like this:
+The Beanstalkd transport DSN may look like this:
 
 .. code-block:: env
 
@@ -2016,8 +2016,8 @@ The transport has a number of options:
         The ``bury_on_reject`` option was introduced in Symfony 7.3.
 
 ``timeout`` (default: ``0``)
-    Message reservation timeout - in seconds. 0 will cause the server to
-    immediately return either a response or a TransportException will be thrown.
+    Message reservation timeout - in seconds. 0 will cause the server to return
+    immediately, either with a response or by throwing a TransportException.
 
 ``ttr`` (default: ``90``)
     The message time to run before it is put back in the ready queue - in
@@ -2063,7 +2063,7 @@ running:
 
     $ composer require symfony/redis-messenger
 
-The Redis transport DSN may looks like this:
+The Redis transport DSN may look like this:
 
 .. code-block:: env
 
@@ -2350,7 +2350,7 @@ running:
 
     $ composer require symfony/amazon-sqs-messenger
 
-The SQS transport DSN may looks like this:
+The SQS transport DSN may look like this:
 
 .. code-block:: env
 
@@ -2419,7 +2419,7 @@ The transport has a number of options:
     AWS session token
 
 ``visibility_timeout`` (default: Queue's configuration)
-    Amount of seconds the message will not be visible (`Visibility Timeout`_)
+    Number of seconds the message will not be visible (`Visibility Timeout`_)
 
 ``wait_time`` (default: ``20``)
     `Long polling`_ duration in seconds
@@ -2436,7 +2436,7 @@ The transport has a number of options:
 
     The ``wait_time`` parameter defines the maximum duration Amazon SQS should
     wait until a message is available in a queue before sending a response.
-    It helps reducing the cost of using Amazon SQS by eliminating the number
+    It helps reduce the cost of using Amazon SQS by reducing the number
     of empty responses.
 
     The ``poll_timeout`` parameter defines the duration the receiver should wait
@@ -2618,7 +2618,7 @@ parameters when creating your instance of
 
 Once handled, the handler will return a
 :class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext` which
-contains many useful information such as the exit code or the output of the
+contains much useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
 :ref:`handler results <messenger-getting-handler-results>` for more information.
 
@@ -2679,7 +2679,7 @@ For more information, read the documentation about
 
 Once handled, the handler will return a
 :class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext` which
-contains many useful information such as the exit code or the output of the
+contains much useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
 :ref:`handler results <messenger-getting-handler-results>` for more information.
 
@@ -2821,7 +2821,7 @@ You can use this to get the value returned by the handler(s)::
     $handledStamp = $envelope->last(HandledStamp::class);
     $handledStamp->getResult();
 
-    // or get info about all of handlers
+    // or get info about all of the handlers
     $handledStamps = $envelope->all(HandledStamp::class);
 
 .. _messenger-getting-handler-results:
@@ -3079,7 +3079,7 @@ handled by the ``RegisterUserHandler`` which creates a ``User`` object, stores
 that object to a database and dispatches a ``UserRegistered`` message to the event bus.
 
 There are many handlers to the ``UserRegistered`` message, one handler may send
-a welcome email to the new user. We are using the ``DoctrineTransactionMiddleware``
+a welcome email to the new user. This example uses the ``DoctrineTransactionMiddleware``
 to wrap all database queries in one database transaction.
 
 **Problem 1:** If an exception is thrown when sending the welcome email, then

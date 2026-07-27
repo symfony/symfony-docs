@@ -95,7 +95,7 @@ Options
 
 **type**: ``array`` | ``string``
 
-This is defines the key or keys in a collection that should be checked for
+This defines the key or keys in a collection that should be checked for
 uniqueness. By default, all collection keys are checked for uniqueness.
 
 For instance, assume you have a collection of items that contain a
@@ -207,7 +207,7 @@ Parameter                      Description
 
 **type**: a `PHP callable`_ **default**: ``null``
 
-This option defined the PHP callable applied to each element of the given
+This option defines the PHP callable applied to each element of the given
 collection before checking if the collection is valid.
 
 For example, you can pass the ``'trim'`` string to apply the :phpfunction:`trim`
