@@ -210,7 +210,7 @@ following:
   Default: Three fields for years, months and days.
 
 * ``single_text``: renders a single input of type ``text``. User's input
-  will be validated against the form ``PnYnMnDTnHnMnS`` (or ``PnW`` if using
+  will be validated against the format ``PnYnMnDTnHnMnS`` (or ``PnW`` if using
   only weeks).
 
 ``with_days``

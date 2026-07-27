@@ -128,8 +128,8 @@ it's recommended to change these settings as follows:
 
 .. _performance-dont-check-timestamps:
 
-Don't Check PHP Files Timestamps
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Don't Check PHP File Timestamps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In production servers, PHP files should never change, unless a new application
 version is deployed. However, by default OPcache checks if cached files have

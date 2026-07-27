@@ -7,8 +7,8 @@ Voters are Symfony's most powerful way of managing permissions. They allow you
 to centralize all permission logic, then reuse them in many places.
 
 However, if you don't reuse permissions or your rules are basic, you can always
-put that logic directly into your controller instead. Here's an example how
-this could look like, if you want to make a route accessible to the "owner" only::
+put that logic directly into your controller instead. Here's an example of how
+this could look if you want to make a route accessible to the "owner" only::
 
     // src/Controller/PostController.php
     // ...
@@ -358,12 +358,12 @@ Then, override one or both of the following methods::
 
 .. _security-voters-change-message-and-status-code:
 
-Changing the message and status code returned
+Changing the Message and Status Code Returned
 ---------------------------------------------
 
 By default, the ``#[IsGranted]`` attribute will throw a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-and return an http **403** status code with **Access Denied** as message.
+and return an HTTP **403** status code with **Access Denied** as message.
 
 However, you can change this behavior by specifying the message and status code returned::
 
@@ -384,7 +384,7 @@ However, you can change this behavior by specifying the message and status code 
 
 .. tip::
 
-    If the status code is different than 403, an
+    If the status code is different from 403, an
     :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
     will be thrown instead.
 
@@ -417,7 +417,7 @@ There are four strategies available:
     This grants or denies access by the first voter that does not abstain,
     based on their service priority;
 
-Regardless the chosen strategy, if all voters abstained from voting, the
+Regardless of the chosen strategy, if all voters abstained from voting, the
 decision is based on the ``allow_if_all_abstain`` config option (which
 defaults to ``false``).
 

@@ -71,7 +71,7 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
     including private ones defined in child classes. This means you can use private
     properties in your custom constraints without any extra configuration.
 
-Creating the Validator itself
+Creating the Validator Itself
 -----------------------------
 
 As you can see, a constraint class is fairly minimal. The actual validation is
@@ -151,7 +151,7 @@ The ``addViolation()`` method call finally adds the violation to the context.
     by calling the ``disableTranslation()`` method of ``ConstraintViolationBuilderInterface``.
     See also the :ref:`framework.validation.disable_translation option <reference-validation-disable_translation>`.
 
-Using the new Validator
+Using the New Validator
 -----------------------
 
 You can use custom validators like the ones provided by Symfony itself:

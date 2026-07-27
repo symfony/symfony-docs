@@ -4,7 +4,7 @@ How to Customize Access Denied Responses
 In Symfony, you can throw an
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 to disallow access to the user. Symfony will handle this exception and
-generates a response based on the authentication state:
+generate a response based on the authentication state:
 
 * **If the user is not authenticated** (or authenticated anonymously), an
   authentication entry point is used to generate a response (typically
@@ -87,7 +87,7 @@ Customize the Forbidden Response
 Create a class that implements
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` where you can
-implement whatever logic that should execute when access is denied for the
+implement whatever logic should execute when access is denied for the
 current user (e.g. send a mail, log a message, or generally return a custom
 response)::
 

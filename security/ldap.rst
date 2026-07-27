@@ -51,7 +51,7 @@ Some of the more interesting options are explained below.
 Configuring the LDAP client
 ---------------------------
 
-All mechanisms actually need an LDAP client previously configured.
+All mechanisms need a previously configured LDAP client.
 The providers are configured to use a default service named ``ldap``,
 but you can override this setting in the security component's
 configuration.
@@ -245,8 +245,8 @@ implementation. Commonly used values are:
 * ``userPrincipalName``
 * ``uid``
 
-If you pass ``null`` as the value of this option, the default UID key is used
-``sAMAccountName``.
+If you pass ``null`` as the value of this option, the default UID key
+``sAMAccountName`` is used.
 
 extra_fields
 ............
@@ -264,7 +264,7 @@ filter
 This key lets you configure which LDAP query will be used. The ``{uid_key}``
 string will be replaced by the value of the ``uid_key`` configuration value
 (by default, ``sAMAccountName``), and the ``{user_identifier}`` string will be
-replaced by the user identified you are trying to load.
+replaced by the user identifier you are trying to load.
 
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.

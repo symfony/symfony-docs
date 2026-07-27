@@ -44,7 +44,7 @@ listener:
         ]);
 
 To switch to another user, add a query string with the ``_switch_user``
-parameter and the username (or whatever field our user provider uses to load users)
+parameter and the username (or whatever field your user provider uses to load users)
 as the value to the current URL:
 
 .. code-block:: text
@@ -53,7 +53,7 @@ as the value to the current URL:
 
 .. tip::
 
-    You can leverage the Twig function ``impersonation_path('thomas')``
+    You can use the Twig function ``impersonation_path('thomas')``
 
 .. tip::
 

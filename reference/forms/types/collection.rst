@@ -3,9 +3,9 @@ CollectionType Field
 
 This field type is used to render a "collection" of some field or form.
 In the easiest sense, it could be an array of ``TextType`` fields that populate
-an array ``emails`` values. In more complex examples, you can embed entire
+an ``emails`` array. In more complex examples, you can embed entire
 forms, which is useful when creating forms that expose one-to-many
-relationships (e.g. a product from where you can manage many related product
+relationships (e.g. a product from which you can manage many related product
 photos).
 
 When rendered, existing collection entries are indexed by the keys of the array
@@ -253,9 +253,9 @@ This option is useful when using the `allow_add`_ option. If ``true`` (and
 if `allow_add`_ is also ``true``), a special "prototype" attribute will
 be available so that you can render a "template" example on your page of
 what a new element should look like. The ``name`` attribute given to this
-element is ``__name__``. This allows you to add a "add another" button via
+element is ``__name__``. This allows you to add an "add another" button via
 JavaScript which reads the prototype, replaces ``__name__`` with some unique
-name or number and render it inside your form. When submitted, it will
+name or number and renders it inside your form. When submitted, it will
 be added to your underlying array due to the `allow_add`_ option.
 
 The prototype field can be rendered via the ``prototype`` variable in the

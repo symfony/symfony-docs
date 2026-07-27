@@ -70,7 +70,7 @@ Symfony application using Composer:
     # run this if you are building a microservice, console application or API
     $ composer create-project symfony/skeleton:"8.0.*" my_project_directory
 
-No matter which command you run to create the Symfony application. All of them
+No matter which command you run to create the Symfony application, all of them
 will create a new ``my_project_directory/`` directory, download some dependencies
 into it and even generate the basic directories and files you'll need to get
 started. In other words, your new application is ready!
@@ -211,10 +211,10 @@ Symfony applications. Flex keeps track of the recipes it installed in a
 Symfony Flex recipes are contributed by the community and they are stored in
 two public repositories:
 
-* `Main recipe repository`_, is a curated list of recipes for high quality and
+* `Main recipe repository`_ is a curated list of recipes for high quality and
   maintained packages. Symfony Flex only looks in this repository by default.
 
-* `Contrib recipe repository`_, contains all the recipes created by the
+* `Contrib recipe repository`_ contains all the recipes created by the
   community. All of them are guaranteed to work, but their associated packages
   could be unmaintained. Symfony Flex will ask your permission before installing
   any of these recipes.

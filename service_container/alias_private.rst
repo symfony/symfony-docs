@@ -20,7 +20,7 @@ And in this case, those services do *not* need to be public.
 
 So unless you *specifically* need to access a service directly from the container
 via ``$container->get()``, the best-practice is to make your services *private*.
-In fact, All services  are :ref:`private <container-public>` by default.
+In fact, all services are :ref:`private <container-public>` by default.
 
 You can also control the ``public`` option on a service-by-service basis:
 

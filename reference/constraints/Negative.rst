@@ -14,7 +14,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanValidato
 Basic Usage
 -----------
 
-The following constraint ensures that the ``withdraw`` of a  bank account
+The following constraint ensures that the ``withdraw`` (withdrawal) property of a bank account
 ``TransferItem`` is a negative number (lesser than zero):
 
 .. configuration-block::

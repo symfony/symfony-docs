@@ -268,7 +268,7 @@ For example::
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
 
-These triggers allows you to configure the frequency using different data types
+These triggers allow you to configure the frequency using different data types
 (``string``, ``integer``, ``DateInterval``). They also support the `relative formats`_
 defined by PHP datetime functions::
 
@@ -364,7 +364,7 @@ Then, define your recurring message::
         new SendDailySalesReports('...'),
     );
 
-Finally, the recurring messages has to be attached to a schedule::
+Finally, the recurring message has to be attached to a schedule::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -403,7 +403,7 @@ databases or third-party services.
 Following the previous example of reports generation: they depend on customer requests.
 Depending on the specific demands, any number of reports may need to be generated
 at a defined frequency. For these dynamic scenarios, it gives you the capability
-to dynamically define our message(s) instead of statically. This is achieved by
+to dynamically define your message(s) instead of statically. This is achieved by
 defining a :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
 
 Essentially, this means you can dynamically, at runtime, define your message(s)
@@ -439,7 +439,7 @@ checks for messages to be generated::
         }
     }
 
-Exploring Alternatives for Crafting your Recurring Messages
+Exploring Alternatives for Crafting Your Recurring Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There is also another way to build a ``RecurringMessage``, and this can be done
@@ -645,7 +645,7 @@ A Strategic Event Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The goal is to provide flexibility in deciding when to take action while
-preserving decoupling. Three primary event types have been introduced types
+preserving decoupling. Three primary event types have been introduced:
 
 * ``PRE_RUN_EVENT``
 * ``POST_RUN_EVENT``
@@ -941,7 +941,7 @@ recurring messages. You can narrow down the list to a specific schedule:
     # use the --all option to also display the terminated recurring messages
     $ php bin/console debug:scheduler --all
 
-Efficient management with Symfony Scheduler
+Efficient Management With Symfony Scheduler
 -------------------------------------------
 
 When a worker is restarted or undergoes shutdown for a period, the Scheduler transport won't be able to generate the messages (because they are created on-the-fly by the scheduler transport).

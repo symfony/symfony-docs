@@ -654,7 +654,7 @@ Generate Closures With Autowiring
 ---------------------------------
 
 A **service closure** is an anonymous function that returns a service. This type
-of instantiation is handy when you are dealing with lazy-loading.  It is also
+of instantiation is handy when you are dealing with lazy-loading. It is also
 useful for non-shared service dependencies.
 
 Automatically creating a closure encapsulating the service instantiation can be
@@ -709,7 +709,7 @@ In this case, you can use the
 to generate a closure with the same signature as a specific method of a service. When
 this closure is called, it will pass all its arguments to the underlying service
 function.  If the closure needs to be called more than once, the service instance
-is reused for repeated calls.  Unlike a service closure, this will not
+is reused for repeated calls. Unlike a service closure, this will not
 create extra instances of a non-shared service::
 
     // src/Service/MessageGenerator.php

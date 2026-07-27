@@ -96,11 +96,11 @@ If you prefer to store production logs in a file, set the ``path`` option of you
 log handler(s) to the desired file path (e.g. ``var/log/prod.log``). Monolog
 creates the log directory automatically if it doesn't exist.
 
-Handlers: Writing Logs to different Locations
+Handlers: Writing Logs to Different Locations
 ---------------------------------------------
 
 The logger has a stack of *handlers*, and each can be used to write the log entries
-to different locations (e.g. files, database, Slack, etc).
+to different locations (e.g. files, database, Slack, etc.).
 
 .. tip::
 
@@ -289,7 +289,7 @@ one of the messages reaches an ``action_level``. Take this example:
             ],
         ]);
 
-Now, if even one log entry has an ``LogLevel::ERROR`` level or higher, then *all* log entries
+Now, if even one log entry has a ``LogLevel::ERROR`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that
 your log file will contain *all* the details about the problematic request - making
 debugging much easier!
@@ -366,7 +366,7 @@ specific channel (``app`` by default), you can either :ref:`autowire monolog cha
 or use the ``monolog.logger`` tag  with the ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
 
-Adding extra Data to each Log (e.g. a unique request token)
+Adding Extra Data to Each Log (e.g. a unique request token)
 -----------------------------------------------------------
 
 Monolog also supports *processors*: functions that can dynamically add extra
@@ -374,13 +374,13 @@ information to your log entries.
 
 See :doc:`/logging/processors` for details.
 
-Handling Logs in Long Running Processes
+Handling Logs in Long-Running Processes
 ---------------------------------------
 
-During long running processes, logs can be accumulated into Monolog and cause some
-buffer overflow, memory increase or even non logical logs. Monolog in-memory data
+During long-running processes, logs can be accumulated into Monolog and cause some
+buffer overflows, memory increases or even illogical logs. Monolog in-memory data
 can be cleared using the ``reset()`` method on a ``Monolog\Logger`` instance.
-This should typically be called between every job or task that a long running process
+This should typically be called between every job or task that a long-running process
 is working through.
 
 Learn more

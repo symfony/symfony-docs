@@ -1,8 +1,8 @@
-How to use Passwordless Login Link Authentication
+How to Use Passwordless Login Link Authentication
 =================================================
 
 Login links, also called "magic links", are a passwordless authentication
-mechanism. Whenever a user wants to login, a new link is generated and sent to
+mechanism. Whenever a user wants to log in, a new link is generated and sent to
 them (e.g. using an email). The link fully authenticates the user in the
 application when clicking on it.
 
@@ -166,9 +166,9 @@ link is created using
 .. warning::
 
     It is important to send this link to the user and **not show it directly**,
-    as that would allow anyone to login. For instance, use the
+    as that would allow anyone to log in. For instance, use the
     :doc:`mailer </mailer>` component to mail the login link to the user.
-    Or use the  component to send an SMS to the
+    Or use the Notifier component to send an SMS to the
     user's device.
 
 3) Send the Login Link to the User
@@ -272,11 +272,11 @@ This will send an email like this to the user:
 Important Considerations
 ------------------------
 
-Login links are a convenient way of authenticating users, but it is also
+Login links are a convenient way of authenticating users, but they are also
 considered less secure than a traditional username and password form. It is
 not recommended to use login links in security critical applications.
 
-However, the implementation in Symfony does have a couple extension points
+However, the implementation in Symfony does have a couple of extension points
 to make the login links more secure. In this section, the most important
 configuration decisions are discussed:
 
