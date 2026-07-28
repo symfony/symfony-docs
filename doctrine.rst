@@ -36,7 +36,7 @@ Configuring the Database
 The database connection information is stored as an environment variable called
 ``DATABASE_URL``. For development, you can find and customize this inside ``.env``:
 
-.. code-block:: text
+.. code-block:: bash
 
     # .env (or override DATABASE_URL in .env.local to avoid committing your changes)
 
@@ -95,7 +95,7 @@ you need a ``Product`` object to represent those products.
 You can use the ``make:entity`` command to create this class and any fields you
 need. The command will ask you some questions - answer them as shown below:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console make:entity
 
@@ -266,7 +266,7 @@ But what if you need to add a new field property to ``Product``, like a
 ``description``? You can edit the class to add the new property. But, you can
 also use ``make:entity`` again:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console make:entity
 
@@ -293,7 +293,7 @@ methods:
 
       // src/Entity/Product.php
       // ...
-    +  use Doctrine\DBAL\Types\Types;
+    + use Doctrine\DBAL\Types\Types;
 
       class Product
       {
