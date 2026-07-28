@@ -927,8 +927,8 @@ specify the service name via the ``http_client`` option:
             ],
         ]);
 
-By default the token handler will read the validation URL XML response with
- ``cas`` prefix but you can configure another prefix:
+By default the token handler will read the validation URL XML response with a
+``cas`` prefix but you can configure another prefix:
 
 .. configuration-block::
 
