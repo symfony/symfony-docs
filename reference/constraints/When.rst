@@ -9,7 +9,7 @@ Applies to  :ref:`class <validation-class-target>`
             or :ref:`property/method <validation-property-target>`
 Options     - `expression`_
             - `constraints`_
-            _ `otherwise`_
+            - `otherwise`_
             - `groups`_
             - `payload`_
             - `values`_

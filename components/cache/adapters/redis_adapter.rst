@@ -262,7 +262,7 @@ Available Options
 
 ``relay_cluster_context`` (type: ``array``, default: ``[]``)
     Defines configuration options specific to ``\Relay\Cluster``. For example, to
-    user a self-signed certificate for testing in local environment::
+    use a self-signed certificate for testing in local environment::
 
         $options = [
             // ...
