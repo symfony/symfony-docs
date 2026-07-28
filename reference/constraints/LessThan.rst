@@ -137,7 +137,7 @@ that a date must be in the past like this:
 
             <class name="App\Entity\Person">
                 <property name="dateOfBirth">
-                    <constraint name="LessThanOrEqual">
+                    <constraint name="LessThan">
                         <option name="value">today</option>
                     </constraint>
                 </property>
@@ -199,7 +199,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
             <class name="App\Entity\Person">
                 <property name="dateOfBirth">
-                    <constraint name="LessThanOrEqual">
+                    <constraint name="LessThan">
                         <option name="value">today UTC</option>
                     </constraint>
                 </property>
@@ -261,7 +261,7 @@ can check that a person must be at least 18 years old like this:
 
             <class name="App\Entity\Person">
                 <property name="dateOfBirth">
-                    <constraint name="LessThanOrEqual">
+                    <constraint name="LessThan">
                         <option name="value">-18 years</option>
                     </constraint>
                 </property>

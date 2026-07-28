@@ -1371,7 +1371,7 @@ password_hashers
 Defines the :doc:`password hasher </security/passwords>` for each user class.
 The key of each item is the fully qualified class name of the user class, and
 the value defines the hasher configuration. Use ``auto`` as the algorithm to let
-Symfony choose the best available algorithm.:
+Symfony choose the best available algorithm:
 
 .. configuration-block::
 
