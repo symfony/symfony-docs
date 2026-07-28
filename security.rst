@@ -2356,7 +2356,7 @@ permission in :ref:`your custom security voters <creating-the-custom-voter>`:
         <p>{{ voter_decision.message }}</p>
     {% endif %}
 
-    {% set voter_decision = access_decision('post_edit', post, anotherUser) %}
+    {% set voter_decision = access_decision_for_user(anotherUser, 'post_edit', post) %}
     {% if voter_decision.isGranted %}
         {# ... #}
     {% else %}
