@@ -168,7 +168,7 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``azure+api://ACS_RESOURCE_NAME:KEY@default``                                       |
 +------------------------+-------------------------------------------------------------------------------------------+
-| `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default:PORT``                                         |
+| `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default:PORT``                                    |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``brevo+api://KEY@default``                                                         |
 +------------------------+-------------------------------------------------------------------------------------------+
@@ -237,6 +237,11 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``sweego+api://API_KEY@default``                                                    |
 +------------------------+-------------------------------------------------------------------------------------------+
+
+.. versionadded:: 8.2
+
+    The option to define the port in the Brevo Mailer SMTP DSN was introduced
+    in Symfony 8.2.
 
 .. warning::
 
