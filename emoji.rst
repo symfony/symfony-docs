@@ -12,7 +12,7 @@ which you must first install in your application:
 .. include:: /components/require_autoload.rst.inc
 
 The data needed to store the transliteration of all emojis (~5,000) into all
-languages take a considerable disk space.
+languages takes up considerable disk space.
 
 If you need to save disk space (e.g. because you deploy to some service with tight
 size constraints), run this command (e.g. as an automated script after ``composer install``)
