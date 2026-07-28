@@ -2817,7 +2817,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
         method was introduced in Symfony 7.3.
 
 You can also use the ``getAccessDecision()`` and ``getAccessDecisionForUser()``
-methods to check authorization and get to retrieve the reasons for denying
+methods to check authorization and retrieve the reasons for denying
 permission in :ref:`your custom security voters <creating-the-custom-voter>`::
 
     // src/SalesReport/SalesReportManager.php

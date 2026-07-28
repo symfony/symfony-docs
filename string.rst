@@ -234,7 +234,7 @@ Methods to Change Case
     u('Foo: Bar-baz.')->kebab(); // 'foo-bar-baz'
     // changes all graphemes/code points to PascalCase
     u('Foo: Bar-baz.')->pascal(); // 'FooBarBaz'
-    // other cases can be achieved by chaining methods, e.g. :
+    // other cases can be achieved by chaining methods, e.g.:
     u('Foo: Bar-baz.')->camel()->upper(); // 'FOOBARBAZ'
 
 .. versionadded:: 7.1

@@ -3086,7 +3086,7 @@ sign_options
 
 **type**: ``integer`` **default**: ``null``
 
-A bitwise operator options for :phpfunction:`openssl_pkcs7_sign`.
+Bitwise operator options for :phpfunction:`openssl_pkcs7_sign`.
 
 smime_encrypter
 ...............

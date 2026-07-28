@@ -86,7 +86,7 @@ level. For example::
 
     The ``isSilent()`` method was introduced in Symfony 7.2.
 
-When the silent or quiet level are used, all output is suppressed as the default
+When the silent or quiet level is used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns
 without actually printing.
 
