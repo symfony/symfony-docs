@@ -218,6 +218,48 @@ Returns ``true`` if the user is authorized for the specified attribute.
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
 
+access_decision
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.4
+
+    The ``access_decision()`` function was introduced in Symfony 7.4.
+
+.. code-block:: twig
+
+    {{ access_decision(role, object = null) }}
+
+``role``
+    **type**: ``string``
+``object`` *(optional)*
+    **type**: ``object``
+
+Returns an :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecision`
+object, which tells whether the current user has the given role (``isGranted``) and
+gives the reason of a denial (``message``). More information can be found in
+:ref:`security-template`.
+
+access_decision_for_user
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.4
+
+    The ``access_decision_for_user()`` function was introduced in Symfony 7.4.
+
+.. code-block:: twig
+
+    {{ access_decision_for_user(user, attribute, subject = null) }}
+
+``user``
+    **type**: ``object``
+``attribute``
+    **type**: ``string``
+``subject`` *(optional)*
+    **type**: ``object``
+
+Same as ``access_decision()``, but it checks the authorization of the given user
+instead of the current one.
+
 logout_path
 ~~~~~~~~~~~
 
