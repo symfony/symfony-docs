@@ -254,8 +254,6 @@ Array shapes are **sealed** by default, meaning they reject extra entries
 beyond those explicitly defined. Use ``...`` to create an **unsealed** shape
 that accepts additional entries::
 
-Array shapes can be sealed or unsealed:
-
     // sealed: only accepts "id" key
     // @var array{id: int}
 

@@ -127,7 +127,7 @@ You can convert emojis to short codes with the ``emoji-text`` locale::
 
     $transliterator = EmojiTransliterator::create('emoji-text');
     $transliterator->transliterate('Breakfast with 🥝 or 🥛');
-    // => 'Breakfast with :kiwifruit: or :milk-glass:
+    // => 'Breakfast with :kiwifruit: or :milk-glass:'
 
 Inverse Emoji Transliteration
 -----------------------------

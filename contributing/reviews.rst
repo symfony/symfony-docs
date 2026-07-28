@@ -198,8 +198,8 @@ using what works.
 Tone of Voice
 ~~~~~~~~~~~~~
 
-We don't expect you to be formal or to write error-free English. Just don't
-swear and be respectful to others. Don't reply in anger or with an aggressive
+We don't expect you to be formal or to write error-free English. Don't swear
+and be respectful to others. Don't reply in anger or with an aggressive
 tone: take a deep breath, count to 10, and try to *clearly* explain the problem
 you found.
 
