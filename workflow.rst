@@ -256,7 +256,7 @@ what actions are allowed on a blog post::
 Using Enums in Workflows
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using Enums is Workflow Definitions
+Using Enums in Workflow Definitions
 ...................................
 
 When using a state machine, you can use PHP backend enums as places in your
@@ -403,7 +403,7 @@ when needed and vice-versa when working with your objects::
                 ],
             ]);
 
-Using Enums is Marking Stores
+Using Enums in Marking Stores
 .............................
 
 When using a single state marking store, you can type-hint the property with a
@@ -701,7 +701,7 @@ For example, to select the ``blog_publishing`` workflow defined earlier::
         // ...
     }
 
-To get the enabled transition of a Workflow, you can use
+To get the enabled transition of a Workflow, you can use the
 :method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
 method.
 
@@ -716,7 +716,7 @@ method.
     * ``workflow.state_machine``: all state machines.
 
     Note that workflow metadata are attached to tags under the ``metadata`` key,
-    giving you more context and information about the workflow at disposal.
+    giving you more context and information about the workflow at your disposal.
     Learn more about :ref:`tag attributes <tags_additional-attributes>` and
     :ref:`storing workflow metadata <workflow_storing-metadata>`.
 

@@ -1035,8 +1035,8 @@ Decoupling Controllers from Symfony
 
 Extending the :ref:`AbstractController base class <the-base-controller-class-services>`
 simplifies controller development and is **recommended for most applications**.
-However, some advanced users prefer to fully decouple your controllers from Symfony
-(for example, to improve testability or to follow a more framework-agnostic design)
+However, some advanced users prefer to fully decouple their controllers from Symfony
+(for example, to improve testability or to follow a more framework-agnostic design).
 Symfony provides tools to help you do that.
 
 To decouple controllers, Symfony exposes all the helpers from ``AbstractController``

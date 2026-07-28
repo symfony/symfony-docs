@@ -741,8 +741,10 @@ The token handler fetches the JWK sets from all configured discovery endpoints
 and builds a combined JWK set for token validation. This lets your application
 accept and validate tokens from multiple identity providers within a single firewall.
 
-Creating a OIDC token from the command line
--------------------------------------------
+.. _creating-a-oidc-token-from-the-command-line:
+
+Creating an OIDC token from the command line
+--------------------------------------------
 
 The ``security:oidc:generate-token`` command helps you generate JWTs. It's mostly
 useful when developing or testing applications that use OIDC authentication:

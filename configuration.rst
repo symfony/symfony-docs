@@ -75,7 +75,7 @@ readable. These are the main advantages and disadvantages of each format:
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
   and validation for it. :doc:`Learn the YAML syntax </reference/formats/yaml>`;
 * **PHP**: very powerful and it allows you to create dynamic configuration with
-  arrays, and benefits from auto completion and static analysis using
+  arrays, and benefits from autocompletion and static analysis using
   array shapes.
 
 Importing Configuration Files
