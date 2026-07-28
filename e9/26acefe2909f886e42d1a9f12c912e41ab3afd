@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-07-11T13:05:47Z
+
+Nevermind for reviews about types : they are correct according to how `isGranted` is documented
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-07-11T16:49:36Z
+
+Small heads-up about the red `Code Blocks` check: it's a false positive, not something wrong with this PR. 🙂
+
+The checker doesn't render Twig against a real Symfony app — it compiles it against a hardcoded whitelist in `symfony-tools/code-block-checker` (`src/Twig/DummyExtension.php`), and `access_decision()` / `access_decision_for_user()` are missing from it, hence `[Twig] Unknown "access_decision" function.`
+
+It turns out 5 of the 8 functions registered by `SecurityExtension` are absent from that list, including `is_granted_for_user`, `impersonation_path` and `impersonation_url` — those are already documented here and only slip through because their code blocks predate the baseline. So any *new* Twig block documenting a security function hits this.
+
+I opened symfony-tools/code-block-checker#57 to add the missing ones (green there). Once it's merged, re-running the CI here should turn this check green.
+
+Also, thanks @MrYamous for the review — and for double-checking the types yourself before I even got to it. Reviewing your own review is next-level efficiency. 😄
