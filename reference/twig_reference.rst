@@ -195,6 +195,40 @@ Resource hint that indicates an origin (e.g. ``https://foo.cloudfront.net``)
 that will be used to fetch required resources, and that the user agent should
 resolve as early as possible. Read more about :doc:`/web_link`.
 
+.. _reference-twig-function-dump:
+
+dump
+~~~~
+
+.. code-block:: twig
+
+    {{ dump(variable1, variable2, ...) }}
+
+Dumps the contents of the given variables using the
+:doc:`VarDumper component </components/var_dumper>` and displays them inside the
+web page contents. If you call it without arguments, it dumps all the variables
+available in the template:
+
+.. code-block:: twig
+
+    {# dump a single variable #}
+    {{ dump(user) }}
+
+    {# use named arguments to display labels next to the dumped contents #}
+    {{ dump(blog_posts: articles, user: app.user) }}
+
+    {# dump all the variables available in the template #}
+    {{ dump() }}
+
+To avoid leaking sensitive information, this function is only available in the
+``dev`` and ``test`` :ref:`configuration environments <configuration-environments>`.
+Use the :ref:`dump tag <reference-twig-tag-dump>` instead to send the contents to
+the web debug toolbar rather than displaying them inside the web page.
+
+.. seealso::
+
+    Read more about the :ref:`dump Twig utilities <twig-dump-utilities>`.
+
 expression
 ~~~~~~~~~~
 
@@ -609,6 +643,24 @@ falls back to the behavior of `render`_ otherwise.
     in the function name, e.g. ``render_hinclude()`` will use the hinclude.js
     strategy. This works for all ``render_*()`` functions.
 
+.. _reference-twig-function-render-ssi:
+
+render_ssi
+~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ render_ssi(uri, options = []) }}
+
+``uri``
+    **type**: ``string`` | ``ControllerReference``
+``options`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+It's similar to the `render`_ function and defines the same arguments. However,
+it generates an SSI tag when :doc:`SSI support </http_cache/ssi>` is enabled or
+falls back to the behavior of `render`_ otherwise.
+
 .. _reference-twig-function-t:
 
 t
@@ -695,6 +747,217 @@ Returns the absolute URL (with scheme and host) for the given route. If
 
     Read more about :doc:`Symfony routing </routing>` and about
     :ref:`creating links in Twig templates <templates-link-to-pages>`.
+
+workflow_can
+~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_can(subject, transitionName, name = null) }}
+
+``subject``
+    **type**: ``object``
+``transitionName``
+    **type**: ``string``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns ``true`` if the given object can apply the given transition in its
+current state. Use it to only display the actions that are actually available
+to the user:
+
+.. code-block:: html+twig
+
+    {% if workflow_can(post, 'publish') %}
+        <a href="...">Publish</a>
+    {% endif %}
+
+The ``subject`` argument is the object managed by the workflow (e.g. the blog
+post) and ``transitionName`` is the name of one of the transitions defined in
+the workflow configuration.
+
+The ``name`` argument is the name of the workflow to use. It's only needed when
+the object is associated with more than one workflow. All the ``workflow_*()``
+functions accept this same optional argument as their last parameter:
+
+.. code-block:: twig
+
+    {# the object is associated with a single workflow, so the name is optional #}
+    {{ workflow_can(post, 'publish') }}
+
+    {# the object is associated with multiple workflows, so the name is required #}
+    {{ workflow_can(post, 'publish', 'blog_publishing') }}
+
+.. seealso::
+
+    Read more about :doc:`Symfony Workflows </workflow>`.
+
+workflow_has_marked_place
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_has_marked_place(subject, placeName, name = null) }}
+
+``subject``
+    **type**: ``object``
+``placeName``
+    **type**: ``string``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns ``true`` if the given object is currently in the given place. When using
+workflows (instead of state machines) an object can be in several places at the
+same time, so this only checks if the given place is one of them:
+
+.. code-block:: html+twig
+
+    {% if workflow_has_marked_place(post, 'reviewed') %}
+        <p>This post is ready to be published.</p>
+    {% endif %}
+
+See `workflow_can`_ for the details of the optional ``name`` argument.
+
+workflow_marked_places
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_marked_places(subject, placesNameOnly = true, name = null) }}
+
+``subject``
+    **type**: ``object``
+``placesNameOnly`` *(optional)*
+    **type**: ``boolean`` **default**: ``true``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns all the places where the given object currently is (its *marking*). By
+default it returns an array of place names; set ``placesNameOnly`` to ``false``
+to get the entire marking, which is an array indexed by place name:
+
+.. code-block:: html+twig
+
+    {% for place in workflow_marked_places(post) %}
+        <span class="label">{{ place }}</span>
+    {% endfor %}
+
+See `workflow_can`_ for the details of the optional ``name`` argument.
+
+workflow_metadata
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_metadata(subject, key, metadataSubject = null, name = null) }}
+
+``subject``
+    **type**: ``object``
+``key``
+    **type**: ``string``
+``metadataSubject`` *(optional)*
+    **type**: ``string`` | :class:`Symfony\\Component\\Workflow\\Transition` | ``null`` **default**: ``null``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns the value of the ``key`` metadata defined in the workflow configuration.
+Workflows, places and transitions can all define their own metadata, so use the
+``metadataSubject`` argument to select which one to read: pass a place name to
+read place metadata, a :class:`Symfony\\Component\\Workflow\\Transition` object
+to read transition metadata and omit it to read the metadata of the workflow
+itself:
+
+.. code-block:: twig
+
+    {# metadata of the workflow #}
+    {{ workflow_metadata(post, 'title') }}
+
+    {# metadata of the 'draft' place #}
+    {{ workflow_metadata(post, 'max_num_of_words', 'draft') }}
+
+    {# metadata of the 'to_review' transition #}
+    {{ workflow_metadata(post, 'priority', workflow_transition(post, 'to_review')) }}
+
+See `workflow_can`_ for the details of the optional ``name`` argument.
+
+.. seealso::
+
+    Read more about :ref:`storing metadata in workflows <workflow_storing-metadata>`.
+
+workflow_transition
+~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_transition(subject, transitionName, name = null) }}
+
+``subject``
+    **type**: ``object``
+``transitionName``
+    **type**: ``string``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns the :class:`Symfony\\Component\\Workflow\\Transition` object matching the
+given name, or ``null`` if that transition is not enabled for the object in its
+current state. It's mostly used to pass a transition to the `workflow_metadata`_
+function.
+
+See `workflow_can`_ for the details of the optional ``name`` argument.
+
+workflow_transition_blockers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_transition_blockers(subject, transitionName, name = null) }}
+
+``subject``
+    **type**: ``object``
+``transitionName``
+    **type**: ``string``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns a :class:`Symfony\\Component\\Workflow\\TransitionBlockerList` object with
+the reasons why the given object can't apply the given transition. These reasons
+are added by the :ref:`guard event listeners <workflow-usage-guard-events>` of the
+workflow, so use them to explain to the user why some action is not available:
+
+.. code-block:: html+twig
+
+    {% for blocker in workflow_transition_blockers(post, 'publish') %}
+        <span class="error">{{ blocker.message }}</span>
+    {% endfor %}
+
+See `workflow_can`_ for the details of the optional ``name`` argument.
+
+workflow_transitions
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ workflow_transitions(subject, name = null) }}
+
+``subject``
+    **type**: ``object``
+``name`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+Returns an array of :class:`Symfony\\Component\\Workflow\\Transition` objects with
+all the transitions that the given object can apply in its current state. Use it
+to render all the available actions at once instead of checking them one by one
+with `workflow_can`_:
+
+.. code-block:: html+twig
+
+    {% for transition in workflow_transitions(post) %}
+        <a href="...">{{ transition.name }}</a>
+    {% else %}
+        No actions available.
+    {% endfor %}
+
+See `workflow_can`_ for the details of the optional ``name`` argument.
 
 .. _reference-twig-filters:
 
@@ -1185,6 +1448,28 @@ See :ref:`components-yaml-dump` for more information.
 
 Tags
 ----
+
+.. _reference-twig-tag-dump:
+
+dump
+~~~~
+
+.. code-block:: twig
+
+    {% dump variable1, variable2, ... %}
+
+Dumps the contents of the given variables using the
+:doc:`VarDumper component </components/var_dumper>`. Unlike the
+:ref:`dump() function <reference-twig-function-dump>`, which displays the
+contents inside the web page, this tag sends them to the
+:doc:`web debug toolbar </profiler>`, so the web page contents are not modified.
+
+To avoid leaking sensitive information, this tag is only available in the
+``dev`` and ``test`` :ref:`configuration environments <configuration-environments>`.
+
+.. seealso::
+
+    Read more about the :ref:`dump Twig utilities <twig-dump-utilities>`.
 
 .. _reference-twig-tag-form-theme:
 
