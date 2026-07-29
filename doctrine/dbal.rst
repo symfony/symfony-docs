@@ -149,27 +149,22 @@ class from Doctrine DBAL, which decides where to route each database operation:
 
 .. note::
 
-    In long-running processes (e.g. messenger workers, FrankenPHP server
-    worker mode), the connection instance persists across multiple messages,
+    In long-running processes (e.g. Messenger workers or FrankenPHP worker
+    mode), the connection instance is reused across messages and requests,
     so the "switch to primary" behavior applies for the lifetime of that
-    connection instance, not just a single HTTP request.
+    connection instance, not just a single HTTP request. Switching back to
+    a replica must be done explicitly (see below).
 
 .. tip::
 
-    Set the ``keep_replica`` option to ``true`` to preserve the replica
-    connection in memory after the primary has been used. This does **not**
-    change the automatic routing of read queries: once the primary has been
-    picked, ``executeQuery()`` and other read methods keep going to the
-    primary for the rest of the connection's lifetime.
-
-    What ``keep_replica: true`` enables is an **explicit** switch back to
-    the replica via ``$connection->ensureConnectedToReplica()``.
-
-    Note that in Symfony Messenger workers or FrankenPHP worker mode,
-    switching back to the replica between requests/messages is not handled
-    automatically — you need to wire it manually (e.g. via a ``ResetInterface``
-    service for Messenger or a ``kernel.terminate`` listener for FrankenPHP)
-    that calls ``$connection->ensureConnectedToReplica()`` at the boundary.
+    Set the ``keep_replica`` option to ``true`` to keep the replica connection
+    open after the primary has been used. This doesn't change the automatic
+    routing; once the primary has been picked, read methods like
+    ``executeQuery()`` keep using it. What this option allows is switching back
+    to the replica explicitly by calling ``$connection->ensureConnectedToReplica()``,
+    which is useful in long-running processes. Without ``keep_replica``, that
+    method has no effect, because the replica connection is replaced by the
+    primary one after the first write:
 
     .. code-block:: yaml
 
