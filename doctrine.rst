@@ -58,6 +58,14 @@ The database connection information is stored as an environment variable called
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
 
+.. tip::
+
+    These examples use ``127.0.0.1`` as the host because it behaves consistently
+    across environments (Docker, CI, Windows, etc.). On Unix systems, if the
+    database server runs on the same machine, you can use ``localhost`` instead:
+    most drivers then connect through a local Unix domain socket, which can be
+    slightly faster than a TCP/IP connection.
+
 .. warning::
 
     If the username, password, host or database name contain any character considered
