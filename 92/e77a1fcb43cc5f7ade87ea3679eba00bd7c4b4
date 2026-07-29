@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by GromNaN at 2026-04-08T09:59:33Z
+
+When using the `ConsoleBundle` alone, we should document the expected entrypoint:
+```php
+use App\Kernel;
+use Symfony\Component\Console\Application;
+
+if (!is_dir(dirname(__DIR__).'/vendor')) {
+    throw new LogicException('Dependencies are missing. Try running "composer install".');
+}
+
+if (!is_file(dirname(__DIR__).'/vendor/autoload_runtime.php')) {
+    throw new LogicException('Symfony Runtime is missing. Try running "composer require symfony/runtime".');
+}
+
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+return function (array $context) {
+    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+    $kernel->boot();
+
+    return new Application('Application Name', 'Version', $kernel->getContainer());
+};
+
+```
