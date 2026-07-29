@@ -187,6 +187,20 @@ email multiparts::
 
     $email = new Message($headers, $messageParts);
 
+You can choose the content transfer encoding used by ``TextPart`` and
+``DataPart``. Use ``binary`` when the message part must be sent with its bytes
+unchanged::
+
+    use Symfony\Component\Mime\Part\DataPart;
+    use Symfony\Component\Mime\Part\TextPart;
+
+    $textContent = new TextPart($rawText, null, 'plain', 'binary');
+    $attachedFile = new DataPart($rawBytes, 'report.bin', 'application/octet-stream', 'binary');
+
+.. versionadded:: 8.2
+
+    The ``binary`` content transfer encoding was introduced in Symfony 8.2.
+
 Serializing Email Messages
 --------------------------
 
