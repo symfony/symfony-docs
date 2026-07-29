@@ -46,6 +46,10 @@ The database connection information is stored as an environment variable called
     # to use mariadb:
     # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=10.5.8-MariaDB"
 
+    # to use a local Unix socket instead of TCP (it can improve performance slightly)
+    # (only works on MySQL/MariaDB databases running on Unix-like systems):
+    # DATABASE_URL="mysql://db_user:db_password@localhost/db_name?serverVersion=8.0.37&unix_socket=/var/run/mysqld/mysqld.sock"
+
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
 
@@ -54,6 +58,13 @@ The database connection information is stored as an environment variable called
 
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
+
+.. tip::
+
+    These examples use ``127.0.0.1`` instead of ``localhost`` because
+    ``localhost`` may resolve to an IPv6 address (``::1``) and fail to connect
+    if the database server only listens on IPv4. Using ``127.0.0.1`` also
+    behaves consistently on Windows and in CI environments.
 
 .. warning::
 
