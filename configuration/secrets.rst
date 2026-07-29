@@ -227,25 +227,11 @@ values via the ``.env.test`` file:
     # .env.test
     DATABASE_PASSWORD="testing"
 
-.. _using-secrets-in-service:
-
 .. seealso::
 
-    Since secrets are available as environment variables,
-    if you need to access a secret's value inside a service, you can use
-    :ref:`autowiring <autowire-attribute>`.
-
-    ::
-
-        // src/Service/MySecretService.php
-        use Symfony\Component\DependencyInjection\Attribute\Autowire;
-
-        public function __construct(
-            #[Autowire(env: 'MY_SECRET')]
-            private string $secret
-        ) {
-            // ...
-        }
+    Since secrets are exposed as environment variables, you can inject them
+    into your services with the ``#[Autowire]`` attribute. See
+    :ref:`Fixing Non-Autowireable Arguments <autowire-attribute>` for more details.
 
 Deploy Secrets to Production
 ----------------------------
