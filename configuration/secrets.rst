@@ -218,6 +218,12 @@ values via the ``.env.test`` file:
     # .env.test
     DATABASE_PASSWORD="testing"
 
+.. seealso::
+
+    Since secrets are exposed as environment variables, you can inject them
+    into your services with the ``#[Autowire]`` attribute. See
+    :ref:`Fixing Non-Autowireable Arguments <autowire-attribute>` for more details.
+
 Deploy Secrets to Production
 ----------------------------
 
