@@ -864,21 +864,20 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
     $ php bin/console debug:dotenv foo
 
 Additionally, and regardless of how you set environment variables, you can see all
-environment variables, with their values, referenced in Symfony's container configuration,
-you can also see the number of occurrences of each environment variable in the container:
+environment variables, with their values, referenced in Symfony's container configuration:
 
 .. code-block:: terminal
 
     $ php bin/console debug:container --env-vars
 
-    ------------ ----------------- ------------------------------------ -------------
-     Name         Default value     Real value                           Usage count
-    ------------ ----------------- ------------------------------------ -------------
-     APP_SECRET   n/a               "471a62e2d601a8952deb186e44186cb3"   2
-     BAR          n/a               n/a                                  1
-     BAZ          n/a               "value"                              0
-     FOO          "[1, "2.5", 3]"   n/a                                  1
-    ------------ ----------------- ------------------------------------ -------------
+    ------------  ----------------  -----------------------------------
+    Name          Default value     Real value
+    ------------  ----------------  -----------------------------------
+    APP_SECRET    n/a               "471a62e2d601a8952deb186e44186cb3"
+    BAR           n/a               n/a
+    BAZ           n/a               "value"
+    FOO           "[1, "2.5", 3]"   n/a
+    ------------  ----------------  -----------------------------------
 
     # you can also filter the list of env vars by name:
     $ php bin/console debug:container --env-vars foo
