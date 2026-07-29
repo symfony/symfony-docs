@@ -278,6 +278,13 @@ The trait follows the same configuration conventions as ``MicroKernelTrait``:
 ``config/bundles.php`` for bundle registration, ``config/packages/`` for
 configuration and ``config/services.yaml`` (or ``.php``) for service definitions.
 
+The services needed by any container (parameter bag, event dispatcher, filesystem,
+clock, environment variable processors, etc.) are provided by
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\ServicesBundle`. You
+rarely enable this bundle yourself, because other bundles declare it as a
+:ref:`required bundle <bundles-required-bundles>`. Both FrameworkBundle and
+:ref:`ConsoleBundle <console-bundle>` do this.
+
 .. _`front controller`: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _`decorate`: https://en.wikipedia.org/wiki/Decorator_pattern
 .. _Debug component: https://github.com/symfony/debug

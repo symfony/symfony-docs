@@ -93,6 +93,58 @@ of the bundle. Now that you've created the bundle, enable it::
 
 And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
+.. _bundles-required-bundles:
+
+Requiring Other Bundles
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``#[RequiredBundle]`` attribute was introduced in Symfony 8.1.
+
+Some bundles only work when other bundles are enabled too, because they use
+their services or their compiler passes. Instead of asking users to enable all
+of them, add the
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\RequiredBundle`
+attribute to your bundle class to declare each dependency::
+
+  // src/AcmeBlogBundle.php
+  namespace Acme\BlogBundle;
+
+  use Acme\CoreBundle\AcmeCoreBundle;
+  use Acme\MarkdownBundle\AcmeMarkdownBundle;
+  use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
+  use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+  // this bundle is mandatory: an error is thrown when its class is not found
+  #[RequiredBundle(AcmeCoreBundle::class)]
+  // this bundle is optional: it's skipped when its class is not found
+  #[RequiredBundle(AcmeMarkdownBundle::class, ignoreOnInvalid: true)]
+  class AcmeBlogBundle extends AbstractBundle
+  {
+  }
+
+When an application enables AcmeBlogBundle in its ``config/bundles.php`` file,
+the kernel registers AcmeCoreBundle and AcmeMarkdownBundle automatically, right
+before AcmeBlogBundle. Dependencies are resolved recursively, so a required
+bundle can require other bundles, and each bundle is registered only once.
+
+Required bundles are enabled in the same
+:ref:`environments <configuration-environments>` as the bundle that requires
+them. If the application also lists a required bundle in its ``config/bundles.php``
+file, that explicit entry takes precedence and its environments are used instead.
+
+Symfony uses this feature in its own bundles. FrameworkBundle for example
+declares the following dependencies, so its console integration is only added
+when the Console component is installed::
+
+  #[RequiredBundle(ServicesBundle::class)]
+  #[RequiredBundle(ConsoleBundle::class, ignoreOnInvalid: true)]
+  class FrameworkBundle extends Bundle
+  {
+      // ...
+  }
+
 .. _bundles-legacy-directory-structure:
 .. _bundles-directory-structure:
 
