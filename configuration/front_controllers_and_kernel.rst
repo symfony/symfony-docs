@@ -278,6 +278,59 @@ The trait follows the same configuration conventions as ``MicroKernelTrait``:
 ``config/bundles.php`` for bundle registration, ``config/packages/`` for
 configuration and ``config/services.yaml`` (or ``.php``) for service definitions.
 
+.. _services-bundle-and-console-bundle:
+
+ServicesBundle and ConsoleBundle
+--------------------------------
+
+.. versionadded:: 8.1
+
+    ``ServicesBundle`` and ``ConsoleBundle`` were introduced in Symfony 8.1.
+
+To provide core Symfony services without requiring ``FrameworkBundle``, the
+DependencyInjection and Console components ship their own standalone bundles:
+
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\ServicesBundle`
+    Provides foundational services (event dispatcher, filesystem, clock,
+    environment variable processors, etc.) and autoconfiguration for the
+    common service interfaces.
+
+:class:`Symfony\\Component\\Console\\ConsoleBundle`
+    Provides console-specific services (error listener, command registration,
+    argument resolver). It uses :ref:`#[RequiredBundle] <bundles-required-bundles>`
+    to automatically load ``ServicesBundle`` as a dependency.
+
+For a minimal console application, register ``ConsoleBundle`` in your
+``config/bundles.php`` (``ServicesBundle`` is loaded automatically)::
+
+    // config/bundles.php
+    return [
+        Symfony\Component\Console\ConsoleBundle::class => ['all' => true], // new in 8.1
+    ];
+
+Then, create the ``bin/console`` entrypoint::
+
+    #!/usr/bin/env php
+    <?php
+
+    use App\Kernel;
+    use Symfony\Component\Console\Application;
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+    return function (array $context) {
+        $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+        $kernel->boot();
+
+        return new Application('My App', '1.0', $kernel->getContainer());
+    };
+
+.. note::
+
+    ``FrameworkBundle`` also uses ``#[RequiredBundle]`` to declare its
+    dependency on ``ServicesBundle`` and ``ConsoleBundle``. If your application
+    uses ``FrameworkBundle``, you don't need to register these bundles manually.
+
 .. _`front controller`: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _`decorate`: https://en.wikipedia.org/wiki/Decorator_pattern
 .. _Debug component: https://github.com/symfony/debug
