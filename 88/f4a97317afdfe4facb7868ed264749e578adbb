@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by lacatoire at 2026-04-01T15:41:45Z
+
+Hi @tcoch, thanks for your PR.
+Since secrets are just regular environment variables, this is already covered by the autowiring docs. A full section would be redundant, but a seealso would help discoverability. Could you replace your changes with this instead?
+
+```
+  .. seealso::
+
+      Since secrets are exposed as environment variables, you can inject them
+      into services using the ``#[Autowire]`` attribute
+      (e.g. ``#[Autowire(env: 'MY_SECRET')]``). See :doc:`/service_container/autowiring`
+      for details.
+```
+
+  Right after the .env.test code block (line 220), before the "Deploy Secrets to Production" section.
+
+---------------------------------------------------------------------------
+
+by tcoch at 2026-04-14T11:33:23Z
+
+> Hi @tcoch, thanks for your PR. Since secrets are just regular environment variables, this is already covered by the autowiring docs. A full section would be redundant, but a seealso would help discoverability.
+
+Hi @lacatoire , it's done ;)
+_PS Github was relunctant to accept the first commit with the actual modifications, so I had to push a second empty commit_
