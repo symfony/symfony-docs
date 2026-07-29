@@ -95,50 +95,55 @@ And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
 .. _bundles-required-bundles:
 
-Declaring Bundle Dependencies
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Requiring Other Bundles
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.1
 
     The ``#[RequiredBundle]`` attribute was introduced in Symfony 8.1.
 
-If your bundle depends on services provided by another bundle, you can use the
-:class:`Symfony\\Component\\DependencyInjection\\Kernel\\RequiredBundle` attribute
-to declare this dependency. Required bundles are automatically registered and
-loaded before the bundle that requires them::
+Some bundles only work when other bundles are enabled too, because they use
+their services or their compiler passes. Instead of asking users to enable all
+of them, add the
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\RequiredBundle`
+attribute to your bundle class to declare each dependency::
 
-    // src/AcmeBlogBundle.php
-    namespace Acme\BlogBundle;
+  // src/AcmeBlogBundle.php
+  namespace Acme\BlogBundle;
 
-    use Acme\CoreBundle\AcmeCoreBundle;
-    use Symfony\Component\DependencyInjection\Kernel\RequiredBundle; // new in 8.1
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+  use Acme\CoreBundle\AcmeCoreBundle;
+  use Acme\MarkdownBundle\AcmeMarkdownBundle;
+  use Symfony\Component\DependencyInjection\Kernel\RequiredBundle;
+  use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-    #[RequiredBundle(AcmeCoreBundle::class)]
-    class AcmeBlogBundle extends AbstractBundle
-    {
-    }
+  // this bundle is mandatory: an error is thrown when its class is not found
+  #[RequiredBundle(AcmeCoreBundle::class)]
+  // this bundle is optional: it's skipped when its class is not found
+  #[RequiredBundle(AcmeMarkdownBundle::class, ignoreOnInvalid: true)]
+  class AcmeBlogBundle extends AbstractBundle
+  {
+  }
 
-The attribute is repeatable, so you can declare multiple dependencies::
+When an application enables AcmeBlogBundle in its ``config/bundles.php`` file,
+the kernel registers AcmeCoreBundle and AcmeMarkdownBundle automatically, right
+before AcmeBlogBundle. Dependencies are resolved recursively, so a required
+bundle can require other bundles, and each bundle is registered only once.
 
-    use Acme\CoreBundle\AcmeCoreBundle;
-    use Acme\UtilBundle\AcmeUtilBundle;
-    use Symfony\Component\DependencyInjection\Kernel\RequiredBundle; // new in 8.1
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+Required bundles are enabled in the same
+:ref:`environments <configuration-environments>` as the bundle that requires
+them. If the application also lists a required bundle in its ``config/bundles.php``
+file, that explicit entry takes precedence and its environments are used instead.
 
-    #[RequiredBundle(AcmeCoreBundle::class)]
-    #[RequiredBundle(AcmeUtilBundle::class)]
-    class AcmeBlogBundle extends AbstractBundle
-    {
-    }
+Symfony uses this feature in its own bundles. FrameworkBundle for example
+declares the following dependencies, so its console integration is only added
+when the Console component is installed::
 
-Set ``ignoreOnInvalid: true`` to make the dependency optional, so the
-required bundle is skipped if its class does not exist::
-
-    #[RequiredBundle(SomeOptionalBundle::class, ignoreOnInvalid: true)]
-    class AcmeBlogBundle extends AbstractBundle
-    {
-    }
+  #[RequiredBundle(ServicesBundle::class)]
+  #[RequiredBundle(ConsoleBundle::class, ignoreOnInvalid: true)]
+  class FrameworkBundle extends Bundle
+  {
+      // ...
+  }
 
 .. _bundles-legacy-directory-structure:
 .. _bundles-directory-structure:
