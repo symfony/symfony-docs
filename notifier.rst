@@ -372,6 +372,11 @@ Service
     The ``sslmode`` DSN option for the Telegram bridge was introduced in
     Symfony 8.1.
 
+.. versionadded:: 8.2
+
+    The Telegram ``InlineKeyboardMarkup::inlineKeyboard()`` method can receive
+    multiple rows of inline keyboard buttons.
+
 .. warning::
 
     By default, if you have the :doc:`Messenger component </messenger>` installed,
