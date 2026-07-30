@@ -36,10 +36,6 @@ for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Asset
 access_decision
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 7.4
-
-    The ``access_decision()`` function was introduced in Symfony 7.4.
-
 .. code-block:: twig
 
     {{ access_decision(role, object = null) }}
@@ -56,10 +52,6 @@ gives the reason of a denial (``message``). More information can be found in
 
 access_decision_for_user
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.4
-
-    The ``access_decision_for_user()`` function was introduced in Symfony 7.4.
 
 .. code-block:: twig
 

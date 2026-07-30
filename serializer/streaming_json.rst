@@ -373,6 +373,15 @@ The ``include_null_properties`` option controls whether properties with ``null``
 values are included in the encoded JSON output. When set to ``true``, properties
 with ``null`` values are included; when ``false`` (the default), they are omitted.
 
+.. versionadded:: 8.2
+
+    JsonStreamer uses ``JSON_UNESCAPED_SLASHES`` and
+    ``JSON_UNESCAPED_UNICODE`` by default when encoding JSON streams.
+
+By default, JsonStreamer keeps slashes and Unicode characters readable in the
+encoded JSON output. For example, ``https://symfony.com/école`` is encoded with
+its original slashes and Unicode characters instead of escaped sequences.
+
 You can also pass custom options that will be available in your value transformers
 via the ``$options`` argument.
 
