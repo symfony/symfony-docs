@@ -402,6 +402,7 @@ Store                                                       Scope   Blocking  Ex
 :ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
 :ref:`MemcachedStore <lock-store-memcached>`                remote  retry     yes      no      yes
 :ref:`MongoDbStore <lock-store-mongodb>`                    remote  retry     yes      no      yes
+:ref:`MysqlStore <lock-store-mysql>`                        remote  retry     no       no      no
 :ref:`PdoStore <lock-store-pdo>`                            remote  retry     yes      no      yes
 :ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
 :ref:`RedisStore <lock-store-redis>`                        remote  retry     yes      yes     yes
@@ -528,6 +529,27 @@ MongoDB Connection String:
 
     The ``collection`` querystring parameter is not part of the `MongoDB Connection String`_ definition.
     It is used to allow constructing a ``MongoDbStore`` using a `Data Source Name (DSN)`_ without ``$options``.
+
+.. _lock-store-mysql:
+
+MysqlStore
+~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    ``MysqlStore`` was introduced in Symfony 8.2.
+
+The MysqlStore uses `MySQL Advisory Locks`_. It requires a `PDO`_ connection or
+a `Data Source Name (DSN)`_. It does not support blocking or sharing locks.::
+
+    use Symfony\Component\Lock\Store\MysqlStore;
+
+    // a PDO instance or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'mysql:host=localhost;port=5634;dbname=app';
+    $store = new MysqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
+
+By using advisory locking, MysqlStore does not need a table to store locks and
+it does not expire. Locks are bound to a specific connection.
 
 .. _lock-store-pdo:
 
@@ -762,6 +784,7 @@ Remote Stores
 
 Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
 :ref:`MongoDbStore <lock-store-mongodb>`,
+:ref:`MysqlStore <lock-store-mysql>`,
 :ref:`PdoStore <lock-store-pdo>`,
 :ref:`PostgreSqlStore <lock-store-pgsql>`,
 :ref:`RedisStore <lock-store-redis>` and
@@ -944,6 +967,21 @@ the collection's settings will take effect.
 ``readPreference`` is ``primary`` for all queries.
 Read more about `Replica Set Read and Write Semantics`_ in MongoDB.
 
+MysqlStore
+~~~~~~~~~~
+
+MysqlStore uses `MySQL Advisory Locks`_ to implement connection bound advisory locking.
+This means that by using :ref:`MysqlStore <lock-store-mysql>` the locks will be automatically
+released at the end of the session in case the client cannot unlock for any reason.
+
+`MySQL Advisory Locks`_ should also be compatible with MariaDB, which will also use the PDO driver.
+
+If the MySQL service or the machine hosting it restarts, every lock will be
+lost without notifying the running processes.
+
+If the TCP connection is lost, the MySQL may release locks without notifying
+the application.
+
 PdoStore
 ~~~~~~~~
 
@@ -1095,6 +1133,7 @@ are still running.
 .. _`MongoDB Connection String`: https://docs.mongodb.com/manual/reference/connection-string/
 .. _`mongodb/mongodb`: https://packagist.org/packages/mongodb/mongodb
 .. _`MongoDBClient::__construct`: https://docs.mongodb.com/php-library/current/reference/method/MongoDBClient__construct/
+.. _`MySQL Advisory Locks`: https://dev.mysql.com/doc/refman/en/locking-functions.html
 .. _`PDO`: https://www.php.net/pdo
 .. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
 .. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/

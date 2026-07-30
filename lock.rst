@@ -67,6 +67,7 @@ this behavior by using the ``lock`` key as follows:
             lock: 'zookeeper://localhost01,localhost02:2181'
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
+            lock: 'mysql+advisory:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
             lock: 'pgsql+advisory:host=127.0.0.1;dbname=app'
             lock: 'sqlsrv:server=127.0.0.1;Database=app'
@@ -103,6 +104,7 @@ this behavior by using the ``lock`` key as follows:
                 'lock' => 'zookeeper://localhost01,localhost02:2181',
                 'lock' => 'sqlite:///%kernel.project_dir%/var/lock.db',
                 'lock' => 'mysql:host=127.0.0.1;dbname=app',
+                'lock' => 'mysql+advisory:host=127.0.0.1;dbname=app',
                 'lock' => 'pgsql:host=127.0.0.1;dbname=app',
                 'lock' => 'pgsql+advisory:host=127.0.0.1;dbname=app',
                 'lock' => 'sqlsrv:server=127.0.0.1;Database=app',
