@@ -451,6 +451,15 @@ For instance, in the previous example, the component looks for the ``addChild()`
 and ``removeChild()`` methods to access the ``children`` property.
 `The String component`_ inflector is used to find the singular of a property name.
 
+.. versionadded:: 8.2
+
+    The ``Collection`` suffix convention was introduced in Symfony 8.2.
+
+When a property name ends with ``Collection``, the component also tries the
+property name without this suffix before using the inflector. For example, the
+``commentCollection`` property can be written through ``addComment()`` and
+``removeComment()`` methods.
+
 If available, *adder* and *remover* methods have priority over a *setter* method.
 
 Using non-standard adder/remover methods
