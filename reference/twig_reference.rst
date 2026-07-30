@@ -36,10 +36,6 @@ for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Asset
 access_decision
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 7.4
-
-    The ``access_decision()`` function was introduced in Symfony 7.4.
-
 .. code-block:: twig
 
     {{ access_decision(role, object = null) }}
@@ -56,10 +52,6 @@ gives the reason of a denial (``message``). More information can be found in
 
 access_decision_for_user
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.4
-
-    The ``access_decision_for_user()`` function was introduced in Symfony 7.4.
 
 .. code-block:: twig
 
@@ -1291,6 +1283,47 @@ sanitize_html
 Sanitizes the text using the HTML Sanitizer component. More information in
 :ref:`HTML Sanitizer <html-sanitizer-twig>`.
 
+.. _reference-twig-filter-normalize:
+
+normalize
+~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``normalize`` filter was introduced in Symfony 8.2.
+
+.. code-block:: text
+
+    {{ object|normalize(format = null, context = []) }}
+
+``object``
+    **type**: ``mixed``
+
+``format`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+``context`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Accepts any data that can be normalized by the
+:doc:`Serializer component </serializer>` and returns the normalized value.
+Unlike the ``serialize`` filter, this filter does not encode the result into a
+string.
+
+Use this filter when another Twig function, component or helper encodes the
+value itself. For example, ``vue_component()`` encodes its props as JSON, so
+passing a serialized string would encode the data twice:
+
+.. code-block:: text
+
+    <div {{ vue_component('ProductCard', {
+        product: product|normalize(context = { groups: 'card' }),
+    }) }}></div>
+
+If the ``serializer`` service is replaced by an implementation that does not
+implement :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`,
+using this filter throws a ``LogicException``.
+
 .. _reference-twig-filter-serialize:
 
 serialize
@@ -1311,6 +1344,9 @@ serialize
 
 Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
 and returns a serialized string in the specified ``format``.
+
+Use the :ref:`normalize filter <reference-twig-filter-normalize>` instead when
+the consumer expects arrays or scalar values and encodes the value itself.
 
 For example::
 

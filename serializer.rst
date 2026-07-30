@@ -143,14 +143,17 @@ Using the Serializer in Twig Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also serialize objects in any Twig template using the ``serialize``
-filter:
+filter, or normalize them with the ``normalize`` filter when another helper
+encodes the value itself:
 
-.. code-block:: twig
+.. code-block:: text
 
     {{ person|serialize(format = 'json') }}
+    {{ person|normalize(context = { groups: 'profile' }) }}
 
 See the :ref:`twig reference <reference-twig-filter-serialize>` for more
-information.
+information about the ``serialize`` filter and the
+:ref:`normalize filter <reference-twig-filter-normalize>`.
 
 Deserializing an Object
 -----------------------
