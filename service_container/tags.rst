@@ -249,10 +249,16 @@ call to support ``ReflectionMethod``::
 Computing Tag Attributes per Tagged Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 8.2
+
+    Support for computing tag attributes per tagged service was introduced in
+    Symfony 8.2.
+
 Autoconfigured tags attach the same attributes to every tagged service. To
-compute the attributes of each service instead, pass a ``[class-string, method]``
-callable as the tag attributes. Symfony calls that static method on every
-concrete class implementing the interface, when compiling the container::
+compute the attributes of each service instead, pass a callable in the form
+``[SomeClass::class, 'someMethod']`` as the tag attributes. When compiling
+the container, Symfony calls that static method on each concrete class
+implementing the interface::
 
     // src/Handler/BatchHandlerInterface.php
     namespace App\Handler;
@@ -268,9 +274,10 @@ concrete class implementing the interface, when compiling the container::
         public static function getTagAttributes(): array;
     }
 
-Because the method is declared by the interface, static analysis tools catch a
-typo or a missing implementation in any class implementing it. The method is
-called on the concrete class, so it can return attributes that depend on it::
+Because the method is declared by the interface, PHP requires every class
+implementing it to define the method, and static analysis tools can detect
+mistakes in the callable. The method is called on the concrete class, so it
+can return attributes that depend on each class::
 
     // src/Handler/RefundHandler.php
     namespace App\Handler;
@@ -319,6 +326,11 @@ the ``_instanceof`` option:
 On PHP 8.5 and later, where closures are allowed in attributes, you can pass a
 closure receiving the concrete class-string instead of a static method::
 
+    // src/Handler/BatchHandlerInterface.php
+
+    // ...
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
     #[AutoconfigureTag('app.handler', attributes: static function (string $class): array {
         return ['key' => $class::getSupportedBatchAction()];
     })]
@@ -327,19 +339,14 @@ closure receiving the concrete class-string instead of a static method::
         public static function getSupportedBatchAction(): string;
     }
 
-A closure cannot be expressed in YAML, so the ``[class-string, method]`` callable
-is the only form available there.
+Closures cannot be used in YAML files, so the static method callable is the
+only form available in that format.
 
 .. note::
 
-    Tag attributes are computed at compile time, for each concrete and
-    instantiable class. Abstract classes and interfaces are skipped, and the
-    callable must return an array.
-
-.. versionadded:: 8.2
-
-    The support for computing tag attributes per tagged service was introduced
-    in Symfony 8.2.
+    Tag attributes are computed when the container is compiled, once per
+    concrete and instantiable class; abstract classes and interfaces are skipped.
+    The callable must return an array; otherwise an exception is thrown.
 
 .. _service-tags-resource-tags:
 .. _di-resource-tags:
