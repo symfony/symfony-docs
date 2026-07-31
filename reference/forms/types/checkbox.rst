@@ -66,12 +66,7 @@ must leave omitted fields unchanged.
 Field Options
 -------------
 
-false_values
-~~~~~~~~~~~~
-
-**type**: ``array`` **default**: ``[null]``
-
-An array of values to be interpreted as ``false``.
+.. include:: /reference/forms/types/options/false_values.rst.inc
 
 .. include:: /reference/forms/types/options/value.rst.inc
 
