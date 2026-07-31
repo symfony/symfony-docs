@@ -211,14 +211,15 @@ You can use the following code to link to the PDF brochure of a product:
     When creating a form to edit an already persisted item, the file form type
     still expects a :class:`Symfony\\Component\\HttpFoundation\\File\\File`
     instance. As the persisted entity now contains only the relative file path,
-    you first have to concatenate the configured upload path with the stored
+    you first have to concatenate the upload path (e.g. the ``$brochuresDirectory``
+    argument injected in the previous controller example) with the stored
     filename and create a new ``File`` class::
 
         use Symfony\Component\HttpFoundation\File\File;
         // ...
 
         if (!$form->isSubmitted() && $product->getBrochureFilename()) {
-            $form->setData(['brochure' => new File($this->getParameter('brochures_directory').DIRECTORY_SEPARATOR.$product->getBrochureFilename())]);
+            $form->setData(['brochure' => new File($brochuresDirectory.DIRECTORY_SEPARATOR.$product->getBrochureFilename())]);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -289,6 +290,7 @@ logic to a separate service::
     // src/Service/FileUploader.php
     namespace App\Service;
 
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\String\Slugger\SluggerInterface;
@@ -296,7 +298,7 @@ logic to a separate service::
     class FileUploader
     {
         public function __construct(
-            #[Autowire('%brochures_directory%')]
+            #[Autowire('%kernel.project_dir%/public/uploads/brochures')]
             private string $targetDirectory,
             private SluggerInterface $slugger,
         ) {
@@ -335,51 +337,8 @@ logic to a separate service::
     :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\NoTmpDirFileException`,
     and :class:`Symfony\\Component\\HttpFoundation\\File\\Exception\\PartialFileException`.
 
-Then, define a service for this class:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\Service\FileUploader:
-                arguments:
-                    $targetDirectory: '%brochures_directory%'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-            <!-- ... -->
-
-            <service id="App\Service\FileUploader">
-                <argument>%brochures_directory%</argument>
-            </service>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Service\FileUploader;
-
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(FileUploader::class)
-                ->arg('$targetDirectory', '%brochures_directory%')
-            ;
-        };
-
-Now you're ready to use this service in the controller::
+Thanks to the ``#[Autowire]`` attribute, the service is ready to be used in
+the controller without defining any configuration for it::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
