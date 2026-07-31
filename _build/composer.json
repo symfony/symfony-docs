@@ -3,7 +3,7 @@
     "prefer-stable": true,
     "config": {
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "preferred-install": {
             "*": "dist"
@@ -14,9 +14,9 @@
         }
     },
     "require": {
-        "php": ">=8.3",
-        "symfony/console": "^6.2",
-        "symfony/process": "^6.2",
-        "symfony-tools/docs-builder": "^0.27"
+        "php": ">=8.4",
+        "symfony/console": "^7.4",
+        "symfony/process": "^7.4",
+        "symfony-tools/docs-builder": "^1.0"
     }
 }
