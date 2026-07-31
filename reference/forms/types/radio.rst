@@ -32,7 +32,7 @@ Inherited Options
 
 These options inherit from the :doc:`CheckboxType </reference/forms/types/checkbox>`:
 
-.. include:: /reference/forms/types/options/checkbox_false_values.rst.inc
+.. include:: /reference/forms/types/options/false_values.rst.inc
 
 .. include:: /reference/forms/types/options/value.rst.inc
 
