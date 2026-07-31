@@ -4087,7 +4087,7 @@ you can determine the message bus based on an implemented interface:
 
         return App::config([
             'services' => [
-                'instanceof' => [
+                '_instanceof' => [
                     // all services implementing the CommandHandlerInterface
                     // will be registered on the command.bus bus
                     CommandHandlerInterface::class => [
