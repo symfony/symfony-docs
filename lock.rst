@@ -577,9 +577,25 @@ set to ``true``:
             ],
         ]);
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Lock\Store\StoreFactory;
+
+        // when using the component in standalone PHP applications, pass the
+        // existing connection to the store factory and set its second argument to
+        // true (otherwise, it returns a table-based PdoStore or DoctrineDbalStore)
+
+        // returns a PostgreSqlStore or a MysqlStore depending on the PDO driver
+        $store = StoreFactory::createStore($pdoConnection, true);
+
+        // returns a DoctrineDbalPostgreSqlStore or a DoctrineDbalMysqlStore
+        // depending on the database platform
+        $store = StoreFactory::createStore($dbalConnection, true);
+
 .. versionadded:: 8.2
 
-    The ``service_id`` and ``advisory`` options were introduced in Symfony 8.2.
+    The ``service_id`` and ``advisory`` options and the ``$advisory`` argument
+    of ``StoreFactory::createStore()`` were introduced in Symfony 8.2.
 
 The service must be a ``PDO`` instance or a Doctrine DBAL ``Connection``.
 Symfony creates the store based on the database of that connection:
@@ -587,11 +603,14 @@ Symfony creates the store based on the database of that connection:
 * PostgreSQL: :ref:`PostgreSqlStore <lock-store-pgsql>` for ``PDO`` and
   :ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>` for Doctrine DBAL;
 * MySQL and MariaDB: :ref:`MysqlStore <lock-store-mysql>` for ``PDO`` and
-  ``DoctrineDbalMysqlStore`` for Doctrine DBAL.
+  :ref:`DoctrineDbalMysqlStore <lock-store-dbal-mysql>` for Doctrine DBAL.
 
 Other databases don't support advisory locks, so Symfony throws an exception
 when creating the store. This happens at runtime, not when compiling the
 container.
+
+When using a Doctrine DBAL connection without the ``serverVersion`` option,
+Symfony connects to the database to detect its platform.
 
 The ``advisory`` option is ``false`` by default. In that case, Symfony creates
 a :ref:`PdoStore <lock-store-pdo>` or a
@@ -634,13 +653,13 @@ You can also use this array in the list of stores of a
 
 .. warning::
 
-    Advisory locks belong to the database session. If the connection is closed
-    or lost (e.g. because of the server idle timeout), the database releases
-    all the locks of that session without notifying the application. Other
-    parts of the application can close the default Doctrine connection (e.g.
-    the ``doctrine_close_connection`` Messenger middleware), so consider using
-    a separate Doctrine connection only for locks (e.g. a ``lock`` connection,
-    whose service id is ``doctrine.dbal.lock_connection``).
+    Advisory locks belong to the database session. If the connection is closed,
+    reconnected or lost (e.g. because of the server idle timeout), the database
+    releases all the locks of that session without notifying the application.
+    Other parts of the application can close the default Doctrine connection
+    (e.g. the ``doctrine_close_connection`` Messenger middleware), so consider
+    using a separate Doctrine connection only for locks (e.g. a ``lock``
+    connection, whose service id is ``doctrine.dbal.lock_connection``).
 
 .. _lock-blocking-locks:
 
@@ -981,13 +1000,14 @@ The component includes the following built-in store types:
 ==========================================================  ======  ========  ======== ======= =============
 Store                                                       Scope   Blocking  Expiring Sharing Serialization
 ==========================================================  ======  ========  ======== ======= =============
+:ref:`DoctrineDbalMysqlStore <lock-store-dbal-mysql>`       remote  yes       no       no      no
 :ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes     no
 :ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  retry     yes      no      yes
 :ref:`DynamoDbStore <lock-store-dynamodb>`                  remote  retry     yes      no      yes
 :ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
 :ref:`MemcachedStore <lock-store-memcached>`                remote  retry     yes      no      yes
 :ref:`MongoDbStore <lock-store-mongodb>`                    remote  retry     yes      no      yes
-:ref:`MysqlStore <lock-store-mysql>`                        remote  retry     no       no      no
+:ref:`MysqlStore <lock-store-mysql>`                        remote  yes       no       no      no
 :ref:`PdoStore <lock-store-pdo>`                            remote  retry     yes      no      yes
 :ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
 :ref:`RedisStore <lock-store-redis>`                        remote  retry     yes      yes     yes
@@ -1231,8 +1251,8 @@ MysqlStore
     ``MysqlStore`` was introduced in Symfony 8.2.
 
 The MysqlStore uses `MySQL user-level locks`_ (also known as advisory locks). It
-requires a `PDO`_ connection or a `Data Source Name (DSN)`_. It supports neither
-blocking nor sharing locks::
+requires a `PDO`_ connection or a `Data Source Name (DSN)`_. It supports native
+blocking, but not sharing locks::
 
     use Symfony\Component\Lock\Store\MysqlStore;
 
@@ -1259,8 +1279,9 @@ MySQL may release locks without notifying the application.
 .. note::
 
     This store only supports the PDO DSN syntax
-    (``mysql+advisory:host=127.0.0.1;dbname=app``). Unlike ``pgsql+advisory``,
-    the URL syntax (``mysql+advisory://user:password@host/db``) is not supported.
+    (``mysql+advisory:host=127.0.0.1;dbname=app``). The URL syntax
+    (``mysql+advisory://user:password@host/db``) creates a
+    :ref:`DoctrineDbalMysqlStore <lock-store-dbal-mysql>` instead.
 
 .. _lock-store-pdo:
 
@@ -1374,6 +1395,36 @@ a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
 
 The same behavior and reliability considerations as for the
 :ref:`PostgreSqlStore <lock-store-pgsql>` apply to this store.
+
+.. _lock-store-dbal-mysql:
+
+DoctrineDbalMysqlStore
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    ``DoctrineDbalMysqlStore`` was introduced in Symfony 8.2.
+
+The DoctrineDbalMysqlStore uses `MySQL user-level locks`_ (also known as
+advisory locks). It's identical to MysqlStore but requires a
+`Doctrine DBAL Connection`_ or a `Doctrine DBAL URL`_. It supports native
+blocking, but not sharing locks::
+
+    use Symfony\Component\Lock\Store\DoctrineDbalMysqlStore;
+
+    // a Doctrine DBAL connection or DSN
+    $connectionOrURL = 'mysql+advisory://myuser:mypassword@127.0.0.1:3306/app';
+    $store = new DoctrineDbalMysqlStore($connectionOrURL);
+
+Unlike the ``DoctrineDbalStore``, the ``DoctrineDbalMysqlStore`` does not need a
+table to store locks and it does not expire. Locks are bound to the database
+connection that acquired them.
+
+.. note::
+
+    This store requires MySQL 5.7.5 or MariaDB 10.0.2 or newer. Older versions
+    only allow one user-level lock per session, so acquiring a lock releases the
+    previously held one.
 
 .. _lock-store-redis:
 
