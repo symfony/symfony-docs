@@ -2038,12 +2038,14 @@ in the table.
 ``get_notify_timeout`` (default: ``60000``)
     The maximum time to wait for a NOTIFY, in milliseconds.
 
-When a Messenger worker consumes from multiple PostgreSQL-backed queues, the
-default LISTEN/NOTIFY blocking inside ``PostgreSqlConnection::get()`` blocks on
-one transport, preventing the other transports from being polled. This breaks
-priority-based multi-queue consumption.
+``PostgreSqlConnection::get()`` never blocks waiting for a notification: it
+issues the ``LISTEN`` command and collects any notifications that already
+arrived, then returns immediately. This way, a worker that consumes from
+multiple PostgreSQL-backed queues (or from a mix of PostgreSQL and other
+transports) keeps polling every transport in priority order on each loop
+iteration instead of being parked on a single one.
 
-To fix this, the blocking is moved to a
+Waiting while the worker is idle is the job of a
 :class:`Symfony\\Component\\Messenger\\Bridge\\Doctrine\\EventListener\\PostgreSqlNotifyOnIdleListener`
 event subscriber that is registered automatically when using the Doctrine
 transport with PostgreSQL. The listener hooks into the worker lifecycle:
