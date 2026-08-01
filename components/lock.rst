@@ -661,6 +661,44 @@ a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
 Unlike the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
 store locks and does not expire.
 
+.. _lock-store-reuse-connection-advisory:
+
+Advisory Locks When Reusing an Existing Connection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``advisory`` option of ``StoreFactory::createStore()`` was introduced
+    in Symfony 8.2.
+
+When you reuse an existing ``\PDO`` or `Doctrine DBAL Connection`_ instance,
+:method:`Symfony\\Component\\Lock\\Store\\StoreFactory::createStore` returns a
+table-based store (:ref:`PdoStore <lock-store-pdo>` or
+:ref:`DoctrineDbalStore <lock-store-dbal>`) by default. Pass the ``advisory``
+option to get an advisory-lock store instead, without needing a dedicated
+``pgsql+advisory:`` or ``mysql+advisory:`` DSN::
+
+    use Symfony\Component\Lock\Store\StoreFactory;
+
+    // reuse a PDO connection from your application
+    $store = StoreFactory::createStore($pdoConnection, ['advisory' => true]);
+    // returns a PostgreSqlStore or MysqlStore depending on the PDO driver
+
+    // reuse a Doctrine DBAL connection from your application
+    $store = StoreFactory::createStore($dbalConnection, ['advisory' => true]);
+    // returns a DoctrineDbalPostgreSqlStore
+
+For a ``\PDO`` connection, the store is selected from the PDO driver:
+``pgsql`` routes to :ref:`PostgreSqlStore <lock-store-pgsql>` and ``mysql`` to
+:ref:`MysqlStore <lock-store-mysql>`. Any other driver throws an
+:class:`Symfony\\Component\\Lock\\Exception\\InvalidArgumentException` because it
+does not support advisory locks.
+
+For a Doctrine DBAL connection, only PostgreSQL advisory locks are available,
+so the connection is routed to
+:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`. That store validates
+the database platform and throws a clear exception if it is not PostgreSQL.
+
 .. _lock-store-redis:
 
 RedisStore
