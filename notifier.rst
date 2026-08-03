@@ -361,6 +361,8 @@ Service
                                          **DSN**: ``telegram://TOKEN@default?channel=CHAT_ID&sslmode=SSLMODE``
 `Twitter`_                               **Install**: ``composer require symfony/twitter-notifier`` \
                                          **DSN**: ``twitter://API_KEY:API_SECRET:ACCESS_TOKEN:ACCESS_SECRET@default``
+`WhatsApp`_                              **Install**: ``composer require symfony/whats-app-notifier`` \
+                                         **DSN**: ``whatsapp://TOKEN@default?phone_number_id=PHONE_NUMBER_ID``
 `Zendesk`_                               **Install**: ``composer require symfony/zendesk-notifier`` \
                                          **DSN**: ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 `Zulip`_                                 **Install**: ``composer require symfony/zulip-notifier`` \
@@ -371,6 +373,10 @@ Service
 
     The ``sslmode`` DSN option for the Telegram bridge was introduced in
     Symfony 8.1.
+
+.. versionadded:: 8.2
+
+    The ``WhatsApp`` integration was introduced in Symfony 8.2.
 
 .. warning::
 
@@ -1180,6 +1186,7 @@ is dispatched. Listeners receive a
 .. _`Twitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twitter/README.md
 .. _`Unifonic`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Unifonic/README.md
 .. _`Vonage`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Vonage/README.md
+.. _`WhatsApp`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/WhatsApp/README.md
 .. _`Yunpian`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Yunpian/README.md
 .. _`Zendesk`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Zendesk/README.md
 .. _`Zulip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Zulip/README.md
