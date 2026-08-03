@@ -1434,6 +1434,10 @@ to retry them:
     # see only App\Message\MyMessage messages
     $ php bin/console messenger:failed:show --class-filter='App\Message\MyMessage'
 
+    # see only messages that failed within a given time window
+    $ php bin/console messenger:failed:show --failed-after='-1 hour'
+    $ php bin/console messenger:failed:show --failed-after='2024-05-01 08:00' --failed-before='2024-05-01 09:30'
+
     # see the number of messages by message class
     $ php bin/console messenger:failed:show --stats
 
@@ -1446,6 +1450,10 @@ to retry them:
     # retry specific messages
     $ php bin/console messenger:failed:retry 20 30 --force
 
+    # retry only App\Message\MyMessage messages that failed within a given time window
+    $ php bin/console messenger:failed:retry --class-filter='App\Message\MyMessage' --force
+    $ php bin/console messenger:failed:retry --failed-before='yesterday 18:00' --force
+
     # remove a message without retrying it
     $ php bin/console messenger:failed:remove 20
 
@@ -1457,6 +1465,26 @@ to retry them:
 
     # remove only App\Message\MyMessage messages
     $ php bin/console messenger:failed:remove --class-filter='App\Message\MyMessage'
+
+    # remove only messages that failed within a given time window
+    $ php bin/console messenger:failed:remove --failed-after='2024-05-01 08:00' --failed-before='2024-05-01 09:30'
+
+The ``--failed-after`` and ``--failed-before`` options are available on the
+``messenger:failed:show``, ``messenger:failed:retry`` and
+``messenger:failed:remove`` commands. Both bounds are inclusive and their value
+accepts any expression supported by ``new \DateTimeImmutable()``, so absolute
+timestamps (``'2024-05-01 08:00'``) and relative expressions (``'-1 hour'``,
+``'yesterday 18:00'``) both work. The failure time is read from the
+``RedeliveryStamp`` added by the retry mechanism, so messages that were never
+redelivered have no known failure time and are **never selected while a time
+filter is active**. Time and class filters cannot be combined with explicit
+message ids or with the ``--all`` option.
+
+.. versionadded:: 8.2
+
+    The ``--failed-after`` and ``--failed-before`` options, and the
+    ``--class-filter`` option of ``messenger:failed:retry``, were introduced in
+    Symfony 8.2.
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
