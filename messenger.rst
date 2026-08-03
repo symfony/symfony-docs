@@ -1874,8 +1874,7 @@ message timeout. It tells the broker that the connection is still active.
 
 .. versionadded:: 8.2
 
-    The AMQP transport support for ``--keepalive`` was introduced in Symfony
-    8.2.
+    Support for ``--keepalive`` in the AMQP transport was introduced in Symfony 8.2.
 
 .. warning::
 
