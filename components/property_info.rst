@@ -161,29 +161,30 @@ Type Information
 ~~~~~~~~~~~~~~~~
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`
-provide :doc:`extensive data type information <components/type_info>` for a
-property::
+provide extensive data type information for a property thanks to the
+:doc:`TypeInfo component </components/type_info>`::
 
+    // e.g. given this property: private ?string $username;
     $types = $propertyInfo->getType($class, $property);
-    /*
-        Example Result
-        --------------
-            NullableType {
-                - type: BuiltinType(string)
-                - types: [
-                    BuiltinType(null),
-                    BuiltinType(string),
-                ]
-            }
-    */
 
-See :doc:`TypeInfo component <components/type_info>` for info about the ``Type`` class.
+    // $type is an instance of Symfony\Component\TypeInfo\Type\NullableType;
+    // casting it to a string shows the PHP type it represents
+    (string) $type; // 'null|string'
+
+See the :doc:`TypeInfo component documentation </components/type_info>` to learn
+everything you can do with the returned ``Type`` object.
+
+.. versionadded:: 7.3
+
+    The ``getType()`` method was introduced in Symfony 7.3.
 
 .. deprecated:: 7.3
 
-    The :method:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor::getTypes` method is
-    deprecated since Symfony 7.3. Use the :method:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor::getType` method
-    instead.
+    The :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getTypes`
+    method and the :class:`Symfony\\Component\\PropertyInfo\\Type` class are
+    deprecated since Symfony 7.3. Use the
+    :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getType`
+    method and the :class:`Symfony\\Component\\TypeInfo\\Type` class instead.
 
 Documentation Block
 ~~~~~~~~~~~~~~~~~~~
@@ -472,9 +473,10 @@ information from annotations of properties and methods, such as ``@var``,
 
 .. deprecated:: 7.3
 
-    The :method:`Symfony\\Component\\PropertyInfo\\ConstructorArgumentTypeExtractorInterface::getTypesFromConstructor` is
-    deprecated since Symfony 7.3. Use the method :method:`Symfony\\Component\\PropertyInfo\\ConstructorArgumentTypeExtractorInterface::getTypeFromConstructor`
-    instead.
+    The :method:`Symfony\\Component\\PropertyInfo\\ConstructorArgumentTypeExtractorInterface::getTypesFromConstructor`
+    method is deprecated since Symfony 7.3. Use the
+    :method:`Symfony\\Component\\PropertyInfo\\ConstructorArgumentTypeExtractorInterface::getTypeFromConstructor`
+    method instead.
 
 SerializerExtractor
 ~~~~~~~~~~~~~~~~~~~
@@ -557,7 +559,8 @@ on the constructor arguments::
     use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
 
     $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
-    $constructorExtractor->getType(Foo::class, 'bar')[0]; // returns a Type object
+    $type = $constructorExtractor->getType(Foo::class, 'bar');
+    // (string) $type returns 'string'
 
 .. _`components-property-information-extractors-creation`:
 
