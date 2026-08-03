@@ -106,6 +106,7 @@ Service               Install with                                        Webhoo
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``        yes
 `Sweego`_             ``composer require symfony/sweego-mailer``          yes
+`TurboSMTP`_          ``composer require symfony/turbo-smtp-mailer``      yes
 ===================== =================================================== ===============
 
 .. note::
@@ -237,6 +238,10 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``sweego+api://API_KEY@default``                                                    |
 +------------------------+-------------------------------------------------------------------------------------------+
+| `TurboSMTP`_           | - SMTP ``turbosmtp+smtp://KEY:SECRET@default``                                            |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``turbosmtp+api://KEY:SECRET@default``                                              |
++------------------------+-------------------------------------------------------------------------------------------+
 
 .. versionadded:: 8.2
 
@@ -285,6 +290,17 @@ party provider:
 
         Support for configuring the port in the ``ses+smtp`` DSN was introduced
         in Symfony 8.1.
+
+.. note::
+
+    ``turbosmtp`` is an alias for ``turbosmtp+smtp``. The DSN user and password
+    are the Consumer Key and Consumer Secret from the TurboSMTP dashboard, not
+    your account email and password.
+
+    TurboSMTP provides separate regional endpoints. The ``default`` host uses
+    the non-EU endpoints (``pro.turbo-smtp.com`` for SMTP and
+    ``api.turbo-smtp.com`` for the API). To use the EU endpoints, set the host
+    explicitly, such as ``turbosmtp+api://KEY:SECRET@api.eu.turbo-smtp.com``.
 
 .. tip::
 
@@ -2068,3 +2084,4 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
 .. _`MJML`: https://github.com/mjmlio/mjml
 .. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sweego/README.md
+.. _`TurboSMTP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/TurboSmtp/README.md
