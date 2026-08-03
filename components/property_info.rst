@@ -161,17 +161,23 @@ Type Information
 ~~~~~~~~~~~~~~~~
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface`
-provide :ref:`extensive data type information <components-property-info-type>`
-for a property::
+provide extensive data type information for a property thanks to the
+:doc:`TypeInfo component </components/type_info>`::
 
+    // e.g. given this property: private ?string $username;
     $type = $propertyInfo->getType($class, $property);
+
+    // $type is an instance of Symfony\Component\TypeInfo\Type\NullableType;
+    // casting it to a string shows the PHP type it represents
+    (string) $type; // 'null|string'
 
     if (null !== $type) {
         $builtinType = $type->getBuiltinType();
         $isNullable = $type->isNullable();
     }
 
-See :ref:`components-property-info-type` for info about the ``Type`` class.
+See the :doc:`TypeInfo component documentation </components/type_info>` to learn
+everything you can do with the returned ``Type`` object.
 
 Documentation Block
 ~~~~~~~~~~~~~~~~~~~
@@ -258,78 +264,6 @@ given property name.
     This means that any method available on each of the extractors is also
     available on the main :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
     class.
-
-.. _`components-property-info-type`:
-
-Type Objects
-------------
-
-Compared to the other extractors, type information extractors provide much
-more information than can be represented as simple scalar values. Because
-of this, information extractors rely on the :class:`Symfony\\Component\\PropertyInfo\\Type`
-object to describe the resolved property type.
-
-For example, when resolving a property type, the PropertyInfo component
-exposes a single resolved ``Type`` instance via ``getType()``.
-
-Each object will provide 6 attributes, available in the 6 methods:
-
-.. _`components-property-info-type-builtin`:
-
-``Type::getBuiltInType()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The :method:`Type::getBuiltinType() <Symfony\\Component\\PropertyInfo\\Type::getBuiltinType>`
-method returns the built-in PHP data type, which can be one of these
-string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
-``iterable``, ``null``, ``object``, ``resource`` or ``string``.
-
-Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
-class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
-
-``Type::isNullable()``
-~~~~~~~~~~~~~~~~~~~~~~
-
-The :method:`Type::isNullable() <Symfony\\Component\\PropertyInfo\\Type::isNullable>`
-method will return a boolean value indicating whether the property parameter
-can be set to ``null``.
-
-``Type::getClassName()``
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-If the :ref:`built-in PHP data type <components-property-info-type-builtin>`
-is ``object``, the :method:`Type::getClassName() <Symfony\\Component\\PropertyInfo\\Type::getClassName>`
-method will return the fully-qualified class or interface name accepted.
-
-``Type::isCollection()``
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-The :method:`Type::isCollection() <Symfony\\Component\\PropertyInfo\\Type::isCollection>`
-method will return a boolean value indicating if the property parameter is
-a collection - a non-scalar value capable of containing other values. Currently
-this returns ``true`` if:
-
-* The :ref:`built-in PHP data type <components-property-info-type-builtin>`
-  is ``array``;
-* The mutator method the property is derived from has a prefix of ``add``
-  or ``remove`` (which are defined as the list of array mutator prefixes);
-* The `phpDocumentor`_ annotation is of type "collection" (e.g.
-  ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
-  ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
-
-``Type::getCollectionKeyTypes()`` & ``Type::getCollectionValueTypes()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If the property is a collection, additional type objects may be returned
-for both the key and value types of the collection (if the information is
-available), via the :method:`Type::getCollectionKeyTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionKeyTypes>`
-and :method:`Type::getCollectionValueTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueTypes>`
-methods.
-
-.. note::
-
-    The ``list`` pseudo type is returned by the PropertyInfo component as an
-    array with integer as the key type.
 
 .. _`components-property-info-extractors`:
 
@@ -528,7 +462,8 @@ on the constructor arguments::
     use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
 
     $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
-    $constructorExtractor->getType(Foo::class, 'bar')->getBuiltinType(); // returns 'string'
+    $type = $constructorExtractor->getType(Foo::class, 'bar');
+    $type->getBuiltinType(); // returns 'string'
 
 .. _`components-property-information-extractors-creation`:
 
