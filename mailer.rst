@@ -109,6 +109,10 @@ Service               Install with                                        Webhoo
 `TurboSMTP`_          ``composer require symfony/turbo-smtp-mailer``      yes
 ===================== =================================================== ===============
 
+.. versionadded:: 8.2
+
+    The ``TurboSMTP`` integration was introduced in Symfony 8.2.
+
 .. note::
 
     As a convenience, Symfony also provides support for Gmail (``composer
