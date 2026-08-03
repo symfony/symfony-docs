@@ -2332,6 +2332,58 @@ correct class for properties typed as ``InvoiceItemInterface``::
         $invoiceLine = $serializer->deserialize($jsonString, InvoiceLine::class, 'json');
         // $invoiceLine contains new InvoiceLine(new Product(...))
 
+Preserving Discriminator Aliases When Serializing
+.................................................
+
+.. versionadded:: 8.2
+
+    Symfony 8.2 introduced support for reading the discriminator property
+    value when several discriminator map entries point to the same class.
+
+Several discriminator map entries can point to the same class. This is useful
+when your API accepts legacy type names or aliases for the same model::
+
+    // src/Model/InvoiceItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Attribute\DiscriminatorMap;
+
+    #[DiscriminatorMap(
+        typeProperty: 'type',
+        mapping: [
+            'product' => Product::class,
+            'legacy_product' => Product::class,
+            'shipping' => Shipping::class,
+        ],
+    )]
+    interface InvoiceItemInterface
+    {
+        // ...
+    }
+
+When serializing an object whose class appears more than once in the mapping,
+the Serializer reads the ``type`` property on the object and uses that value
+when it matches one of the entries mapped to the object's class::
+
+    // src/Model/Product.php
+    namespace App\Model;
+
+    class Product implements InvoiceItemInterface
+    {
+        public string $type = 'legacy_product';
+
+        // ...
+    }
+
+.. code-block:: php
+
+    $jsonString = $serializer->serialize(new Product(), 'json');
+    // $jsonString contains {"type":"legacy_product",...}
+
+If the discriminator property is unset, uninitialized or contains an unknown
+value, the Serializer uses the first declared discriminator entry for the
+object's class.
+
 You can add a default type to avoid the need to add the type property
 when deserializing:
 
