@@ -334,7 +334,7 @@ them using a ``Closure`` that acts as a factory, rather than a concrete instance
     $newsletterGenerator = $container->get(NewsletterGenerator::class);
 
 In this example, each time the container resolves ``Mailer``, the closure is
-called and a new mock instance is returned
+called and a new mock instance is returned.
 
 .. versionadded:: 8.1
 
