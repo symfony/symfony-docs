@@ -976,7 +976,7 @@ Add an ``extra.curl`` option in your configuration to pass those extra options::
     Some cURL options are impossible to override (e.g. because of thread safety)
     and you'll get an exception when trying to override them.
 
-Persistent cURL connections
+Persistent cURL Connections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.1
@@ -1630,7 +1630,7 @@ installed in your application::
         $client = HttpClient::createForBaseUri('https://example.com');
         $throttlingClient = new ThrottlingHttpClient($client, $limiter);
 
-Using a custom DNS resolver
+Using a Custom DNS Resolver
 ---------------------------
 
 .. versionadded:: 8.1

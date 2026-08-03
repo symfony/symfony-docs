@@ -116,7 +116,7 @@ Configuring Mapping with Attributes
 
 ObjectMapper uses PHP attributes to configure how properties are mapped.
 The primary attribute is :class:`Symfony\\Component\\ObjectMapper\\Attribute\\Map`.
-You can use this attribute in source class (that should be mapped to a target) or in the target class (that should be mapped from a source).
+You can use this attribute in the source class (that should be mapped to a target) or in the target class (that should be mapped from a source).
 
 Defining the Default Target Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
