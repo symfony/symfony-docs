@@ -568,7 +568,8 @@ the message from being redelivered until the worker completes processing it:
 
 .. note::
 
-    This option is only available for the following transports: Beanstalkd, AmazonSQS, Doctrine and Redis.
+    This option is only available for the following transports: AMQP,
+    Beanstalkd, AmazonSQS, Doctrine and Redis.
 
 By default, the worker fetches a single message per iteration from the
 transport. Use the ``--fetch-size`` option to fetch multiple messages per
@@ -1865,6 +1866,16 @@ The AMQP transport automatically adds a
 :class:`Symfony\\Component\\Messenger\\Stamp\\TransportMessageIdStamp` to
 messages when they are sent and received. This stamp tracks the AMQP message
 ID, which improves logging context when messages fail and are retried.
+
+The AMQP transport supports the ``--keepalive`` option by sending periodic
+traffic on the AMQP channel while a message is being handled. AMQP has no
+per-message deadline to extend, so the keepalive interval does not change a
+message timeout. It tells the broker that the connection is still active.
+
+.. versionadded:: 8.2
+
+    The AMQP transport support for ``--keepalive`` was introduced in Symfony
+    8.2.
 
 .. warning::
 
