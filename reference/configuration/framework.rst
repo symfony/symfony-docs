@@ -2300,7 +2300,7 @@ request parameter or the ``X-HTTP-METHOD-OVERRIDE`` header when
 
 When set to ``null`` (the default), all HTTP methods can be overridden (except
 ``GET``, ``HEAD``, ``TRACE``, and ``CONNECT`` methods). When set to an empty
-array(``[]``), HTTP method overriding is completely disabled. When set to a
+array (``[]``), HTTP method overriding is completely disabled. When set to a
 specific list of methods, only those methods will be allowed as overrides:
 
 .. configuration-block::
