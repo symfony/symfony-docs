@@ -42,11 +42,6 @@ this behavior by using the ``lock`` key as follows:
     scoped by ``kernel.project_id``, preventing lock collisions between multiple
     applications running on the same server.
 
-.. versionadded:: 8.1
-
-    Automatic scoping of ``flock`` and ``semaphore`` stores by
-    ``kernel.project_id`` was introduced in Symfony 8.1.
-
 .. configuration-block::
 
     .. code-block:: yaml
