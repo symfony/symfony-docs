@@ -270,8 +270,8 @@ The SchemaTool is used to inspect the database to compare the schema. To
 achieve this task, it needs to know which mapping type needs to be used
 for each database type. Registering new ones can be done through the configuration.
 
-Now, map the ENUM type (not supported by DBAL by default) to the ``string``
-mapping type:
+Now, map the ENUM type (not supported by Doctrine DBAL by default) to the
+``text`` mapping type:
 
 .. configuration-block::
 
@@ -281,7 +281,7 @@ mapping type:
         doctrine:
             dbal:
                 mapping_types:
-                    enum: string
+                    enum: text
 
     .. code-block:: xml
 
@@ -296,7 +296,7 @@ mapping type:
 
             <doctrine:config>
                 <doctrine:dbal>
-                    <doctrine:mapping-type name="enum">string</doctrine:mapping-type>
+                    <doctrine:mapping-type name="enum">text</doctrine:mapping-type>
                 </doctrine:dbal>
             </doctrine:config>
         </container>
@@ -309,8 +309,21 @@ mapping type:
         return static function (DoctrineConfig $doctrine): void {
             $dbalDefault = $doctrine->dbal()
                 ->connection('default');
-            $dbalDefault->mappingType('enum', 'string');
+            $dbalDefault->mappingType('enum', 'text');
         };
+
+.. note::
+
+    On Doctrine DBAL 3 you can also map ``enum`` to ``string``, but that no
+    longer works on DBAL 4, where ``string`` columns require an explicit
+    length. Mapping to ``text`` works on both versions.
+
+.. tip::
+
+    Doctrine DBAL 4.2 added native support for the ``ENUM`` type of MySQL
+    and MariaDB. When using DBAL 4.2 or newer, ``ENUM`` columns are
+    introspected natively, so you don't need to register any custom mapping
+    type for them.
 
 .. _`PDO`: https://www.php.net/pdo
 .. _`Doctrine`: https://www.doctrine-project.org/
