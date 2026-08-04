@@ -516,4 +516,3 @@ service by defining it as a service with one or more of the following
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
 .. _`doctrine/orm`: https://packagist.org/packages/doctrine/orm
 .. _`PHP property hooks`: https://www.php.net/manual/en/language.oop5.property-hooks.php
-.. _`phpDocumentor`: https://www.phpdoc.org/
