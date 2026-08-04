@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-07-21T07:47:40Z
+
+I'm wondering if it's too specific to document these three cases, which come from Doctrine, in the Symfony documentation.
+What do you think about simplifying things by keeping only `text` and `enumType` starting in version 4.2 ? If `string` is working only in 3.9 we may can drop it.
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-07-21T08:15:46Z
+
+Good point, documenting all three cases did add noise for something that ultimately comes from Doctrine. I've simplified it: `text` is now the main example since it works across DBAL 3 and 4, with a short note that `string` still works on DBAL 3 (so users on that version aren't left wondering), and I kept the tip about the native ENUM support in DBAL 4.2+. Thanks for the review! 🙏
