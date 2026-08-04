@@ -500,4 +500,3 @@ service by defining it as a service with one or more of the following
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
 .. _`doctrine/orm`: https://packagist.org/packages/doctrine/orm
-.. _`phpDocumentor`: https://www.phpdoc.org/
