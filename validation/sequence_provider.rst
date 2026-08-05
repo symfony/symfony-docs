@@ -174,6 +174,132 @@ You can also define a group sequence in the ``validation_groups`` form option::
         }
     }
 
+.. _validation-group-sequence-cascade-current-group:
+
+Cascading the Current Group to Referenced Objects
+-------------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``cascadeCurrentGroup`` option was introduced in Symfony 8.2.
+
+When a class declares a group sequence, that sequence replaces its ``Default``
+group, and the objects it references through the
+:doc:`Valid </reference/constraints/Valid>` constraint are validated only in
+the ``Default`` group. This means that constraints defined on those objects in
+any of the sequence groups are never validated.
+
+Enable the ``cascadeCurrentGroup`` option to also validate referenced objects in
+the group of the current step of the sequence:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[Assert\GroupSequence(['basic', 'Order'], cascadeCurrentGroup: true)]
+        class Order
+        {
+            #[Assert\Valid]
+            public Address $address;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Order:
+            group_sequence:
+                groups: [basic, Order]
+                cascade_current_group: true
+            properties:
+                address:
+                    - Valid: ~
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Order">
+                <property name="address">
+                    <constraint name="Valid"/>
+                </property>
+
+                <group-sequence cascade-current-group="true">
+                    <value>basic</value>
+                    <value>Order</value>
+                </group-sequence>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints\GroupSequence;
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Order
+        {
+            public Address $address;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('address', new Assert\Valid());
+
+                // the second argument enables the "cascadeCurrentGroup" option
+                $metadata->setGroupSequence(
+                    new GroupSequence(['basic', 'Order'], true)
+                );
+            }
+        }
+
+When validating an ``Order`` object, the ``$address`` property is now validated
+in the ``Default`` group and also in the group of each step (e.g. ``basic``
+while validating the first step). This option is disabled by default.
+
+When using a
+:ref:`group sequence provider <validation-group-sequence-provider>`, enable
+this option in the ``GroupSequenceProvider`` attribute (or call
+``$metadata->setCascadeCurrentGroup(true)`` in the ``loadValidatorMetadata()``
+method)::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints\GroupSequence;
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\GroupSequenceProviderInterface;
+
+    #[Assert\GroupSequenceProvider(cascadeCurrentGroup: true)]
+    class Order implements GroupSequenceProviderInterface
+    {
+        public function getGroupSequence(): array|GroupSequence
+        {
+            // the attribute option only applies when returning an array;
+            // a returned GroupSequence object uses its own option instead
+            return ['basic', 'Order'];
+        }
+    }
+
+.. note::
+
+    This option only applies to group sequences declared by a class. Group
+    sequences passed explicitly to the validator (e.g. in the
+    ``validation_groups`` form option) always validate referenced objects in
+    the group of the current step.
+
+.. _validation-group-sequence-provider:
+
 Group Sequence Providers
 ------------------------
 
