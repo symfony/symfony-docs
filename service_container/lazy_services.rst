@@ -130,6 +130,98 @@ It defines an optional parameter used to define interfaces for proxy and interse
     ) {
     }
 
+.. _lazy-services-per-argument:
+
+Injecting a Service as a Lazy Proxy
+-----------------------------------
+
+Marking a service ``lazy`` defers its instantiation for every consumer. When
+only one injection point needs that, inject a lazy proxy on that argument
+instead. The target service is left alone, so its other consumers still
+receive the real instance:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Consumer:
+                arguments:
+                    # '@~' wraps the reference in a lazy proxy
+                    - '@~App\HeavyService'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Consumer;
+        use App\HeavyService;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set(Consumer::class)
+                    ->args([lazy_proxy(HeavyService::class)]);
+        };
+
+The ``@~`` prefix composes with the ones controlling the behavior of invalid
+references, so ``'@~?App\Maybe'`` injects a proxy of an optional service, and
+resolves to ``null`` when that service does not exist. In PHP, ``lazy_proxy()``
+returns a reference configurator, so ``ignoreOnInvalid()``, ``nullOnInvalid()``
+and ``ignoreOnUninitialized()`` apply, as they do for ``service_closure()``.
+
+To proxy specific interfaces rather than the target's own class, use the
+``!lazy_proxy`` tag, which accepts a reference or a mapping:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Consumer:
+                arguments:
+                    - !lazy_proxy '@App\HeavyService'
+                    - !lazy_proxy
+                        service: '@App\HeavyService'
+                        interface: 'App\HeavyInterface'
+                    - !lazy_proxy
+                        service: '@App\HeavyService'
+                        interface: ['App\HeavyInterface', 'App\OtherInterface']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Consumer;
+        use App\HeavyInterface;
+        use App\HeavyService;
+        use App\OtherInterface;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set(Consumer::class)
+                    ->args([
+                        lazy_proxy(HeavyService::class),
+                        lazy_proxy(HeavyService::class, HeavyInterface::class),
+                        lazy_proxy(HeavyService::class, [
+                            HeavyInterface::class,
+                            OtherInterface::class,
+                        ]),
+                    ]);
+        };
+
+Naming one or more interfaces produces a proxy implementing only those, which is
+what a consumer type-hinting the interface needs. Read more about this in
+:ref:`Interface Proxifying <lazy-services-interface-proxifying>`.
+
+.. versionadded:: 8.2
+
+    The ``@~`` prefix, the ``!lazy_proxy`` tag and the ``lazy_proxy()`` function
+    were introduced in Symfony 8.2.
+
 .. _lazy-services-interface-proxifying:
 
 Interface Proxifying
