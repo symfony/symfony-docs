@@ -179,7 +179,7 @@ party provider:
 +------------------------+-------------------------------------------------------------------------------------------+
 | `Google Gmail`_        | - SMTP ``gmail+smtp://USERNAME:APP-PASSWORD@default``                                     |
 |                        | - HTTP n/a                                                                                |
-|                        | - API n/a                                                                                 |
+|                        | - API ``gmail+api://SERVICE-ACCOUNT:PRIVATE-KEY@default?user=USER-EMAIL``                 |
 +------------------------+-------------------------------------------------------------------------------------------+
 | `Infobip`_             | - SMTP ``infobip+smtp://KEY@default``                                                     |
 |                        | - HTTP n/a                                                                                |
@@ -278,12 +278,27 @@ party provider:
 
 .. note::
 
-    To use Google Gmail, you must have a Google Account with 2-Step-Verification (2FA)
-    enabled and you must use `App Password`_ to authenticate. Also note that Google
-    revokes your App Passwords when you change your Google Account password and then
-    you need to generate a new one.
-    Using other methods (like ``XOAUTH2`` or the ``Gmail API``) is not currently supported.
-    You should use Gmail for testing purposes only and use a real provider in production.
+    To use the ``gmail+smtp`` transport, you must have a Google Account with
+    2-Step-Verification (2FA) enabled and you must use `App Password`_ to
+    authenticate. Also note that Google revokes your App Passwords when you
+    change your Google Account password and then you need to generate a new one.
+    Using ``XOAUTH2`` is not currently supported. You should use this transport
+    for testing purposes only and use a real provider in production.
+
+.. note::
+
+    The ``gmail+api`` transport authenticates with a Google service account
+    using domain-wide delegation, so it needs a Google Workspace and the
+    ``openssl`` PHP extension. In its DSN, ``SERVICE-ACCOUNT`` is the email
+    address of the service account and ``PRIVATE-KEY`` is its RSA private key in
+    PEM format, base64-encoded so that it fits in the DSN. ``USER-EMAIL`` is the
+    address of the user to impersonate, which is also the address the messages
+    are sent from: the Gmail API always sends as the authenticated user, so a
+    custom envelope sender is not supported.
+
+.. versionadded:: 8.2
+
+    The ``gmail+api`` transport was introduced in Symfony 8.2.
 
 .. note::
 
