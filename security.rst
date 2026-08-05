@@ -1690,6 +1690,106 @@ you have imported the logout route loader in your routes:
             ],
         ]);
 
+.. _security-logout-form:
+
+Logging Out with a Form
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A logout link is a ``GET`` request, which browsers, crawlers, corporate proxies
+and link-preview bots follow on their own, logging users out without them asking
+for it. Restricting the logout route to ``POST`` prevents this.
+
+Declare the route yourself, with the methods you want to allow, and point the
+``path`` option at it by name. Otherwise the route generated from the ``path``
+option accepts every method, and the ``GET`` remains available:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_logout:
+            path: /logout
+            methods: [POST]
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return Routes::config([
+            'app_logout' => [
+                'path' => '/logout',
+                'methods' => ['POST'],
+            ],
+        ]);
+
+Then point the ``path`` option at that route:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'logout' => [
+                            'path' => 'app_logout',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The ``logout_form()`` Twig function returns the ``action`` and the ``fields`` to
+render, so the form carries what the logout listener expects:
+
+.. code-block:: html+twig
+
+    {% set logout = logout_form() %}
+
+    <form method="post" action="{{ logout.action }}">
+        {% for name, value in logout.fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+
+        <button>Log out</button>
+    </form>
+
+The parameter name comes from the ``csrf_parameter`` option and the token from
+the firewall's ``csrf_token_manager``, so neither has to be hardcoded in the
+template. When the firewall does not set
+:ref:`enable_csrf <reference-security-logout-csrf>`, ``fields`` is empty and the
+form still submits the configured path over ``POST``.
+
+The function takes the same optional firewall key as ``logout_path()``.
+
+.. note::
+
+    ``logout_path()`` and ``logout_url()`` are unchanged and still suit a link
+    on a route that accepts ``GET``. When CSRF protection is enabled they carry
+    the token in the query string, which a form sends as a hidden field instead.
+
+.. versionadded:: 8.2
+
+    The ``logout_form()`` function was introduced in Symfony 8.2.
+
 .. _security-logout-without-redirect:
 
 Building the Logout Response Yourself
