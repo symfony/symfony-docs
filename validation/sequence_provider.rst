@@ -159,6 +159,113 @@ You can also define a group sequence in the ``validation_groups`` form option::
         }
     }
 
+.. _validation-group-sequence-cascade-current-group:
+
+Cascading the Current Group to Referenced Objects
+-------------------------------------------------
+
+When a class declares a group sequence, that sequence replaces its ``Default``
+group, and objects it references through the
+:doc:`Valid </reference/constraints/Valid>` constraint are validated against
+``Default`` only. A constraint placed on a referenced object in one of the
+sequence's own groups therefore never runs.
+
+Set ``cascadeCurrentGroup`` to cascade the group being stepped through as well:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[Assert\GroupSequence(['basic', 'Order'], cascadeCurrentGroup: true)]
+        class Order
+        {
+            #[Assert\Valid]
+            public Address $address;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Order:
+            group_sequence:
+                groups: [basic, Order]
+                cascade_current_group: true
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Order">
+                <group-sequence cascade-current-group="true">
+                    <value>basic</value>
+                    <value>Order</value>
+                </group-sequence>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Order.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints\GroupSequence;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Order
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->setGroupSequence(
+                    new GroupSequence(['basic', 'Order'], true)
+                );
+            }
+        }
+
+Validating an ``Order`` now validates ``$address`` against ``Default`` and
+against ``basic`` while that step runs, instead of ``Default`` alone. The option
+defaults to ``false``, so existing sequences are unaffected.
+
+A :ref:`group sequence provider <validation-group-sequence-provider>` opts in by
+declaring the flag on the class, whatever the sequence it returns::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Constraints\GroupSequence;
+    use Symfony\Component\Validator\GroupSequenceProviderInterface;
+
+    #[Assert\GroupSequenceProvider(cascadeCurrentGroup: true)]
+    class Order implements GroupSequenceProviderInterface
+    {
+        public function getGroupSequence(): array|GroupSequence
+        {
+            return ['basic', 'Order'];
+        }
+    }
+
+.. note::
+
+    The option only applies to sequences declared by a class. A sequence passed
+    to the validator explicitly, through the ``validation_groups`` form option
+    for instance, already validates referenced objects against the group being
+    stepped through.
+
+.. versionadded:: 8.2
+
+    The ``cascadeCurrentGroup`` option was introduced in Symfony 8.2.
+
+.. _validation-group-sequence-provider:
+
 Group Sequence Providers
 ------------------------
 
