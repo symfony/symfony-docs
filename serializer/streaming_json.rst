@@ -862,5 +862,39 @@ metadata loaders requires a deep understanding of the internals.
 For most use cases, attribute-based configuration is sufficient. Reserve
 dynamic loaders for advanced scenarios.
 
+Separating the Generated Code of Several Shapes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``cache_variant`` option was introduced in Symfony 8.2.
+
+JsonStreamer compiles the code it generates for a class into a cache file whose
+name derives from that class. Property metadata loaders run while this code is
+generated, so a loader that returns a different shape depending on an option
+produces several payloads for the same class, and each generated file
+overwrites the previous one.
+
+Pass the ``cache_variant`` option to give each shape its own cache file::
+
+    use App\Dto\Cat;
+    use Symfony\Component\TypeInfo\Type;
+
+    // ...
+
+    $json = $jsonStreamWriter->write($cat, Type::object(Cat::class), [
+        // read by your own property metadata loader
+        'representation' => 'jsonld',
+        // keeps the code generated for that representation in its own file
+        'cache_variant' => 'jsonld',
+    ]);
+
+The value is appended to the name of the generated file, so ``<hash>.json.php``
+becomes ``<hash>.jsonld.php``. It must match ``[a-zA-Z0-9_-]+``.
+
+This option doesn't change the output on its own. Two variants of the same
+class generate identical code unless something running at generation time, such
+as your metadata loader, makes them differ.
+
 .. _`DTO classes`: https://en.wikipedia.org/wiki/Data_transfer_object
 .. _ghost objects: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
