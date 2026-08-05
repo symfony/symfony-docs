@@ -889,8 +889,9 @@ Pass the ``cache_variant`` option to give each shape its own cache file::
         'cache_variant' => 'jsonld',
     ]);
 
-The value is appended to the name of the generated file, so ``<hash>.json.php``
-becomes ``<hash>.jsonld.php``. It must match ``[a-zA-Z0-9_-]+``.
+JsonStreamer appends the value to the name of the generated file, so
+``<hash>.json.php`` becomes ``<hash>.jsonld.php``. The value must match
+``[a-zA-Z0-9_-]+``.
 
 This option doesn't change the output on its own. Two variants of the same
 class generate identical code unless something running at generation time, such
