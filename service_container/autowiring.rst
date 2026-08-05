@@ -1477,6 +1477,50 @@ attribute, autowiring each argument. If you need to manually wire some of the
 arguments to a method, you can always explicitly
 :ref:`configure the method call <injection-types-setter>`.
 
+If a class declares several ``#[Required]`` methods, the container calls them
+in the order in which they are declared. Use the ``priority`` argument to change
+that order: methods with a higher priority are called first and methods with
+the same priority keep their declaration order::
+
+    // src/Formatter/TextFormatter.php
+    namespace App\Formatter;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Contracts\Service\Attribute\Required;
+    use Symfony\Contracts\Translation\TranslatorInterface;
+
+    class TextFormatter
+    {
+        private LoggerInterface $logger;
+        private TranslatorInterface $translator;
+
+        // the default priority is 0, so this method is called after setLogger()
+        #[Required]
+        public function setTranslator(TranslatorInterface $translator): void
+        {
+            $this->translator = $translator;
+        }
+
+        // this method is called first because it has a higher priority
+        #[Required(priority: 10)]
+        public function setLogger(LoggerInterface $logger): void
+        {
+            $this->logger = $logger;
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``priority`` argument of ``#[Required]`` was introduced in Symfony 8.2.
+    It requires ``symfony/service-contracts`` 3.7 or later.
+
+.. note::
+
+    :ref:`Immutable setters <injection-types-immutable-setter>` (``#[Required]``
+    methods that return ``static``) are always called before the other required
+    methods, regardless of their priority. The ``priority`` argument only sorts
+    them relative to each other.
+
 Despite :ref:`property injection <property-injection>` having some drawbacks,
 autowiring with ``#[Required]`` can also be applied to public typed properties.
 The service to inject is resolved in the same way as a constructor argument:
@@ -1505,6 +1549,9 @@ service directly to the property::
             // ...
         }
     }
+
+The ``priority`` argument has no effect on properties: the container always
+sets them in the order in which they are declared.
 
 Performance Consequences
 ------------------------

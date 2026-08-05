@@ -161,6 +161,8 @@ The **disadvantages** of setter injection are:
 * You cannot be sure the setter will be called and so you need to add checks
   that any required dependencies are injected.
 
+.. _injection-types-immutable-setter:
+
 Immutable Setter Injection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
