@@ -1571,6 +1571,65 @@ the component standalone, call the ``setLogger()`` method to define it.
     Logging of ``stale-if-error`` fallbacks in ``CachingHttpClient`` was
     introduced in Symfony 8.1.
 
+.. _http-client-cache-policy:
+
+Deciding How a Response Is Stored
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, whether and how long a response is stored follows its cache
+directives. The ``extra.cache_policy`` option overrides that decision per
+request. It takes a callable, called once the response headers are known, which
+receives a :class:`Symfony\\Component\\HttpClient\\CachePolicy` object, the
+status code and the headers::
+
+    use Symfony\Component\HttpClient\CachePolicy;
+
+    $policy = function (CachePolicy $cache, int $statusCode, array $headers) {
+        $cache->tag('product-42')->expiresAfter(3600);
+    };
+
+    $response = $cachingClient->request('GET', 'https://example.com/products/42', [
+        'extra' => ['cache_policy' => $policy],
+    ]);
+
+:method:`Symfony\\Component\\HttpClient\\CachePolicy::tag` attaches cache tags
+to the stored response, so it can be dropped later with ``invalidateTags()``
+on the cache pool::
+
+    $cache->invalidateTags(['product-42']);
+
+:method:`Symfony\\Component\\HttpClient\\CachePolicy::expiresAfter` stores the
+response for that many seconds whatever its cache directives say. This makes a
+response cacheable that would not be, and replaces the freshness lifetime
+computed from its headers; pass ``null`` to fall back to them.
+
+Tags that depend on the response body are declared from the same place with
+:method:`Symfony\\Component\\HttpClient\\CachePolicy::tagFromBody`::
+
+    $response = $cachingClient->request('GET', 'https://example.com/products/42', [
+        'extra' => [
+            'cache_policy' => fn (CachePolicy $cache) => $cache->tagFromBody(
+                fn (string $body) => ['item-'.json_decode($body, true)['id']]
+            ),
+        ],
+    ]);
+
+The resolver runs once the body has been received, so it needs the response to
+be buffered. Buffering is enabled by default, but setting the ``buffer`` option
+to ``false``, or to a closure, is incompatible with it: the tags are dropped and
+a warning is logged, since an entry stored without the tags meant to invalidate
+it is worth hearing about.
+
+.. note::
+
+    The callable also runs on revalidation, with the merged headers, and can add
+    tags there. Tags already carried by an entry are kept, as the entry is
+    shared between requests.
+
+.. versionadded:: 8.2
+
+    The ``extra.cache_policy`` option was introduced in Symfony 8.2.
+
 Limit the Number of Requests
 ----------------------------
 
