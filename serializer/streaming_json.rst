@@ -863,7 +863,7 @@ For most use cases, attribute-based configuration is sufficient. Reserve
 dynamic loaders for advanced scenarios.
 
 Separating the Generated Code of Several Shapes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.2
 
