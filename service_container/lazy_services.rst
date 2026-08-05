@@ -161,6 +161,89 @@ proxy must implement as the value of the attribute::
         }
     }
 
+When configuring arguments in YAML or PHP files, reference the service with the
+``@~`` prefix instead of ``@`` or use the ``lazy_proxy()`` function:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    # this is equivalent to: !lazy_proxy '@App\Twig\AppExtension'
+                    - '@~App\Twig\AppExtension'
+
+                    # combine it with the '?' prefix to inject null when the
+                    # service doesn't exist:
+                    # - '@~?App\Twig\AppExtension'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageGenerator;
+        use App\Twig\AppExtension;
+
+        return App::config([
+            'services' => [
+                MessageGenerator::class => [
+                    'arguments' => [
+                        lazy_proxy(AppExtension::class),
+
+                        // call ignoreOnInvalid() to inject null when the
+                        // service doesn't exist:
+                        // lazy_proxy(AppExtension::class)->ignoreOnInvalid(),
+                    ],
+                ],
+            ],
+        ]);
+
+By default, the proxy has the same type as the service class. To make it
+implement only some interfaces instead (read
+:ref:`lazy-services-interface-proxifying` to learn when this is useful), use
+the ``!lazy_proxy`` YAML tag or the second argument of ``lazy_proxy()``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    - !lazy_proxy
+                        service: '@App\Twig\AppExtension'
+                        # use an array to implement more than one interface
+                        interface: 'Twig\Extension\ExtensionInterface'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageGenerator;
+        use App\Twig\AppExtension;
+        use Twig\Extension\ExtensionInterface;
+
+        return App::config([
+            'services' => [
+                MessageGenerator::class => [
+                    'arguments' => [
+                        // use an array to implement more than one interface
+                        lazy_proxy(AppExtension::class, ExtensionInterface::class),
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``@~`` prefix, the ``!lazy_proxy`` YAML tag and the ``lazy_proxy()``
+    function were introduced in Symfony 8.2.
+
 .. _lazy-services-interface-proxifying:
 
 Restricting the Proxy to an Interface
