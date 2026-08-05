@@ -152,6 +152,10 @@ has some methods to filter the input values:
     is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
     values.
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filterCallback`
+    Filters the parameter through a callback, without having to wrap it in the
+    options array that ``FILTER_CALLBACK`` requires.
+
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
@@ -186,6 +190,60 @@ doesn't support returning arrays, so you need to use the following code::
 
     $request->query->all()['foo']['bar'];
     // returns 'baz'
+
+Filtering a parameter through a callback means passing ``FILTER_CALLBACK`` to
+``filter()`` and nesting the callback inside an ``options`` key.
+``filterCallback()`` takes the callback as its second argument instead::
+
+    // the query string is '?name=jane'
+
+    $request->query->filter('name', null, \FILTER_CALLBACK, [
+        'options' => strtoupper(...),
+    ]);
+    $request->query->filterCallback('name', strtoupper(...));
+    // both return 'JANE'
+
+The default value and the flags follow, both optional, so the common call stays
+two arguments long. The callback must be a ``Closure``, which the first-class
+callable syntax above produces; a callable string such as ``'strtoupper'``
+throws a ``TypeError``.
+
+Filtering is still performed by :phpfunction:`filter_var`, so its semantics
+apply. The callback receives the value cast to a string, and a callback
+returning ``null`` counts as a failure::
+
+    // the query string is '?age=42'
+
+    $request->query->filterCallback('age', fn ($value) => $value);
+    // the callback receives the string '42', not the integer 42
+
+    $request->query->filterCallback('missing', strtoupper(...), 'anonymous');
+    // returns 'ANONYMOUS': the default value goes through the callback too
+
+    $request->query->filterCallback('age', fn () => null);
+    // throws a BadRequestException, like any other failed filtering
+
+    $request->query->filterCallback(
+        'age', fn () => null, null, \FILTER_NULL_ON_FAILURE
+    );
+    // returns null instead of throwing
+
+Array values are mapped entry by entry, but the request bags require the
+``FILTER_REQUIRE_ARRAY`` flag to accept them, as they do for any other filter::
+
+    // the query string is '?tags[]=a&tags[]=b'
+
+    $request->query->filterCallback('tags', strtoupper(...));
+    // throws a BadRequestException: the flag is missing
+
+    $request->query->filterCallback(
+        'tags', strtoupper(...), null, \FILTER_REQUIRE_ARRAY
+    );
+    // returns ['A', 'B']
+
+.. versionadded:: 8.2
+
+    The ``filterCallback()`` method was introduced in Symfony 8.2.
 
 .. _component-foundation-attributes:
 
