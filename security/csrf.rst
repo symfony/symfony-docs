@@ -419,7 +419,7 @@ own services), and it sets ``submit`` as their default token identifier:
 Forms configured with a token identifier listed in the above ``stateless_token_ids``
 option will use the stateless CSRF protection.
 
-.. _generating-a-csrf-token-using-javascript:
+.. _generating-csrf-token-using-javascript:
 
 Generating a CSRF Token Using JavaScript
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
