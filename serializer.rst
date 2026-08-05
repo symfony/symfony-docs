@@ -146,7 +146,7 @@ You can also serialize objects in any Twig template using the ``serialize``
 filter, or normalize them with the ``normalize`` filter when another helper
 encodes the value itself:
 
-.. code-block:: text
+.. code-block:: twig
 
     {{ person|serialize(format = 'json') }}
     {{ person|normalize(context = { groups: 'profile' }) }}
