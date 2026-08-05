@@ -58,7 +58,7 @@ The only exception is @reference/configuration/ files that use `~~~~~` (level 2)
 - Leave a **blank line** after the `::` marker before the content
 - Leave a **blank line** before and after every directive
 - Continuation lines of multi-line list items align with the text start (not the bullet)
-- Use these admonitions: `note`, `tip`, `warning`, `caution`, `seealso`
+- Use these admonitions: `note`, `tip`, `warning`, `danger`, `seealso` (`caution` is forbidden)
 - Use `versionadded` and `deprecated` directives:
   ```rst
   .. versionadded:: 7.2
