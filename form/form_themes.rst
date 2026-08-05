@@ -101,6 +101,13 @@ No CSS framework
     ``tailwind_2_layout.html.twig`` (minimal styles). Read more about
     :doc:`how to use the TailwindCSS form theme </form/tailwindcss>`.
 
+    ``daisyui_5_layout.html.twig`` for `daisyUI`_ 5, a component library based
+    on Tailwind CSS.
+
+    .. versionadded:: 8.1
+
+        The daisyUI form theme was introduced in Symfony 8.1.
+
 .. _forms-theming-global:
 .. _forms-theming-twig:
 
@@ -662,5 +669,6 @@ Learn More
 * :doc:`Complete reference of all built-in form types </reference/forms/types>`
 
 .. _`Bootstrap`: https://getbootstrap.com
+.. _`daisyUI`: https://daisyui.com/
 .. _`Foundation CSS framework`: https://get.foundation/
 .. _`Tailwind CSS`: https://tailwindcss.com/
