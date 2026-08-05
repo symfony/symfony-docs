@@ -161,6 +161,96 @@ You can configure the adapter used by each predefined pool via the ``app`` and
             ],
         ]);
 
+.. _cache-app-dsn:
+
+Configuring the App Cache with a DSN
+------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``default_provider`` option was introduced in Symfony 8.2.
+
+Instead of naming an adapter, give the ``default_provider`` option the DSN of
+the backend and Symfony deduces the adapter from it. The infrastructure can
+then declare the backend through an environment variable:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                default_provider: '%env(APP_CACHE_DSN)%'
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'default_provider' => env('APP_CACHE_DSN'),
+                ],
+            ],
+        ]);
+
+.. code-block:: env
+
+    APP_CACHE_DSN=redis://localhost
+
+The same configuration works whether the platform provides Redis, Valkey,
+Memcached, a Couchbase collection or a PDO connection, so it needs no change
+when the platform changes. The supported schemes are ``redis``, ``rediss``,
+``valkey``, ``valkeys``, ``memcached``, ``couchbase``, ``mysql``, ``oci``,
+``pgsql``, ``sqlsrv`` and ``sqlite``. Any other DSN throws an
+:class:`Symfony\\Component\\Cache\\Exception\\InvalidArgumentException`.
+
+.. warning::
+
+    The ``default_provider`` and ``app`` options cannot be used together,
+    because the DSN already decides the adapter. Setting both throws an
+    ``InvalidConfigurationException``.
+
+A custom pool follows the same rule: give it a ``provider`` and no
+``adapter``, and its adapter comes from the DSN:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                pools:
+                    my_cache_pool:
+                        provider: '%env(APP_CACHE_DSN)%'
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'pools' => [
+                        'my_cache_pool' => [
+                            'provider' => env('APP_CACHE_DSN'),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Such a pool uses the generic ``TagAwareAdapter`` when ``tags`` is enabled, as
+any pool that does not name ``cache.adapter.redis_tag_aware``.
+
+``cache.system`` is left out of this on purpose. As described above, it
+stores compiled metadata in PHP files that opcache can load, chained with
+APCu when available, and pointing it at a remote backend would lose that.
+
 .. _cache-create-pools:
 
 Creating Custom (Namespaced) Pools
