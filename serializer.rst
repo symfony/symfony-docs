@@ -1067,6 +1067,73 @@ For nested classes, you have to add a PHPDoc type to the property, constructor o
     ``phpstan/phpdoc-parser`` and ``phpdocumentor/reflection-docblock``
     packages are installed (these are part of the ``symfony/serializer-pack``).
 
+Arrays of Union Types
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for denormalizing arrays of union types was introduced in
+    Symfony 8.2.
+
+When a collection mixes different types (e.g. a list of contacts where each
+entry is either a person or a company), declare its element type as a union.
+The Serializer denormalizes each element into one of the union members::
+
+    // src/Model/Contacts.php
+    namespace App\Model;
+
+    class Contacts
+    {
+        /**
+         * @param array<Person|Company|null> $entries
+         */
+        public function __construct(
+            public array $entries = [],
+        ) {
+        }
+    }
+
+The Serializer tries the union members one by one and keeps the first one that
+denormalizes the element without errors (e.g. without missing constructor
+arguments). ``null`` elements are kept as ``null`` when the union is nullable,
+as in the example above.
+
+The members are not tried in the order declared in the PHPDoc. If the same
+data is valid for more than one member, the resulting type is unpredictable.
+In that case, use a
+:ref:`discriminator map <serializer_interfaces-and-abstract-classes>` instead
+of a union.
+
+If no member accepts an element, or if a key doesn't match the declared key
+type, the Serializer throws a
+:class:`Symfony\\Component\\Serializer\\Exception\\NotNormalizableValueException`::
+
+    // src/Model/Prices.php
+    namespace App\Model;
+
+    class Prices
+    {
+        /**
+         * @param array<string, int|string> $values
+         */
+        public function __construct(
+            public array $values = [],
+        ) {
+        }
+    }
+
+    // throws an exception because 1.5 is neither an int nor a string
+    $serializer->denormalize(['values' => ['regular' => 1.5]], Prices::class);
+
+    // throws an exception because 0 is not a string key
+    $serializer->denormalize(['values' => [0 => 10]], Prices::class);
+
+.. note::
+
+    Unions are only resolved for the direct elements of an array. Nested
+    collections such as ``array<array<Person|Company>>`` and ``iterable``
+    types such as ``iterable<Person|Company>`` keep their raw data.
+
 .. _serializer-nested-structures:
 
 Deserializing Nested Structures
