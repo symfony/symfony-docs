@@ -1027,6 +1027,73 @@ For nested classes, you have to add a PHPDoc type to the property, constructor o
     ``phpstan/phpdoc-parser`` and ``phpdocumentor/reflection-docblock``
     packages are installed (these are part of the ``symfony/serializer-pack``).
 
+Arrays of Union Types
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for denormalizing arrays of union types was introduced in
+    Symfony 8.2.
+
+When the PHPDoc type of a collection is a union, such as
+``array<Person|Company>``, the Serializer denormalizes each element into one
+of the members of the union instead of returning the raw data::
+
+    // src/Model/Contacts.php
+    namespace App\Model;
+
+    class Contacts
+    {
+        /**
+         * @param array<Person|Company> $entries
+         */
+        public function __construct(
+            public array $entries = [],
+        ) {
+        }
+    }
+
+The Serializer tries the members of the union until one of them accepts the
+element. When several members accept the same element, the resulting type is
+not necessarily the one declared first in the PHPDoc.
+
+Nullable unions like ``array<Person|Company|null>`` work too: the Serializer
+keeps ``null`` elements as ``null`` instead of denormalizing them.
+
+The Serializer also checks the keys against the declared key type.
+Denormalizing an ``int`` key into an ``array<string, Person|Company>``
+throws a
+:class:`Symfony\\Component\\Serializer\\Exception\\NotNormalizableValueException`.
+It throws the same exception when no member of the union accepts an
+element::
+
+    // src/Model/Prices.php
+    namespace App\Model;
+
+    class Prices
+    {
+        /**
+         * @param array<int|string> $values
+         */
+        public function __construct(
+            public array $values = [],
+        ) {
+        }
+    }
+
+    // throws NotNormalizableValueException because 1.5 is neither
+    // an int nor a string
+    $serializer->denormalize(['values' => [1, 'two', 1.5]], Prices::class);
+
+.. warning::
+
+    In Symfony 8.1 and earlier, the Serializer returned such elements
+    unchanged instead of throwing an exception.
+
+The Serializer resolves unions for the direct elements of a collection only.
+It does not resolve them inside nested collections such as
+``array<array<Person|Company>>``.
+
 .. _serializer-nested-structures:
 
 Deserializing Nested Structures
