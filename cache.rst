@@ -388,6 +388,101 @@ You can configure the adapter used by each predefined pool via the ``app`` and
             ],
         ]);
 
+.. _cache-app-dsn:
+
+Configuring the App Cache with a DSN
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``default_provider`` option was introduced in Symfony 8.2.
+
+Instead of choosing an adapter for ``cache.app``, you can set the DSN of the
+cache backend in the ``default_provider`` option. Symfony deduces the adapter
+from the DSN, so the hosting platform can define the backend with an
+environment variable and your configuration doesn't change when the backend
+changes:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                default_provider: '%env(APP_CACHE_DSN)%'
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'default_provider' => env('APP_CACHE_DSN'),
+                ],
+            ],
+        ]);
+
+.. code-block:: env
+
+    # .env
+    APP_CACHE_DSN=redis://localhost
+
+    # other supported schemes: rediss, valkey, valkeys, memcached, couchbase,
+    # mysql, oci, pgsql, sqlsrv and sqlite
+    # APP_CACHE_DSN=memcached://localhost
+    # APP_CACHE_DSN=pgsql:host=localhost;dbname=app
+
+The ``default_provider`` option replaces the ``app`` option, so you can't use
+both at the same time.
+
+A custom pool works the same way when it defines a ``provider`` but no
+``adapter``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                pools:
+                    # the adapter is deduced from the DSN
+                    product_catalog.cache:
+                        provider: '%env(PRODUCT_CATALOG_CACHE_DSN)%'
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'pools' => [
+                        // the adapter is deduced from the DSN
+                        'product_catalog.cache' => [
+                            'provider' => env('PRODUCT_CATALOG_CACHE_DSN'),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+If you enable ``tags`` in such a pool, it uses the generic
+:class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, even when the
+DSN points to Redis or Valkey. To get their optimized tag handling, use the
+``cache.adapter.redis_tag_aware`` or ``cache.adapter.valkey_tag_aware``
+adapter instead.
+
+.. note::
+
+    ``cache.system`` has no DSN option on purpose. Its adapter stores data in
+    PHP files that OPcache keeps in memory, and a remote backend would lose
+    that benefit.
+
 .. _cache-create-pools:
 
 Creating Custom (Namespaced) Pools
