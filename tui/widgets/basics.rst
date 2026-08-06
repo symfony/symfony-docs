@@ -99,8 +99,6 @@ The following widgets support vertical expansion:
   automatically; if any child is vertically expanded, the container
   reports itself as expanded too.
 * ``EditorWidget``: grows the editing area to fill available space.
-* ``AnimatedImageWidget``: grows the animation area to fill
-  available space (except in ``ImageScaling::None`` mode).
 
 This is useful for layouts where one section should grow to fill
 the terminal height while others stay at their natural size.
@@ -108,16 +106,15 @@ the terminal height while others stay at their natural size.
 Labels
 ------
 
-Widgets have an optional label, used by container widgets like
-``TabsWidget`` to display a title::
+Widgets have an optional label, used by container widgets to display
+a title::
 
     $widget->setLabel('Overview');
 
 Widget Tree
 -----------
 
-Widgets form a tree. Container widgets (``ContainerWidget``,
-``TabsWidget``, etc.) hold child widgets. You can walk up the tree
-with ``getParent()``::
+Widgets form a tree. Container widgets such as ``ContainerWidget``
+hold child widgets. You can walk up the tree with ``getParent()``::
 
     $parent = $widget->getParent();

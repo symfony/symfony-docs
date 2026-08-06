@@ -111,10 +111,14 @@ Styling
 Like all widgets, ``ContainerWidget`` supports padding, borders and
 background colors through the Style system::
 
+    use Symfony\Component\Tui\Style\Border;
+    use Symfony\Component\Tui\Style\Color;
+    use Symfony\Component\Tui\Style\Padding;
+
     $container->setStyle(new Style(
-        padding: 1,
-        border: Border::Rounded,
-        bg: Color::Gray,
+        padding: Padding::all(1),
+        border: Border::all(1, 'rounded'),
+        background: Color::named('gray'),
     ));
 
 Events
