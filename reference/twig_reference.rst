@@ -389,6 +389,40 @@ Adds a ``Link`` HTTP header to the current response for the given link relation
 type (``rel``). It can be used for any link implementing the PSR-13 standard.
 Read more about :doc:`/web_link`.
 
+logout_form
+~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ logout_form(key = null) }}
+
+``key`` *(optional)*
+    **type**: ``string``
+
+Returns the ``action`` and the ``fields`` needed to log out with a form, so the
+logout route can be restricted to ``POST``. If no key is provided, they are
+generated for the current firewall the user is logged into.
+
+.. code-block:: html+twig
+
+    {% set logout = logout_form() %}
+
+    <form method="post" action="{{ logout.action }}">
+        {% for name, value in logout.fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+
+        <button>Log out</button>
+    </form>
+
+``fields`` contains the CSRF token under its configured parameter name, and is
+empty when the firewall does not enable CSRF protection. Read more about
+:ref:`logging out with a form <security-logout-form>`.
+
+.. versionadded:: 8.2
+
+    The ``logout_form()`` function was introduced in Symfony 8.2.
+
 logout_path
 ~~~~~~~~~~~
 
