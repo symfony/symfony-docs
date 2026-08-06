@@ -34,7 +34,7 @@ Listen for the ``CancelEvent`` to react when the user cancels::
 
     use Symfony\Component\Tui\Event\CancelEvent;
 
-    $loader->onCancel(function (CancelEvent $event) {
+    $loader->onCancel(function (CancelEvent $event) use ($loader) {
         // abort the background operation
         $loader->stop();
     });
