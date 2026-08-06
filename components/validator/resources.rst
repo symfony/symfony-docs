@@ -11,7 +11,10 @@ The Validator component collects that metadata using a set of loaders.
 
 .. seealso::
 
-    You'll learn how to define the metadata in :doc:`/components/validator/metadata`.
+    This article explains how to configure the metadata loaders when using the
+    Validator as an independent component. Read the :doc:`/validation` article
+    to learn how to define the metadata itself and how to validate data and
+    objects in Symfony applications.
 
 The StaticMethodLoader
 ----------------------
