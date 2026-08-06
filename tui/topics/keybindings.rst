@@ -25,6 +25,11 @@ Key identifiers can be:
   ``Key::UP``, ``Key::DOWN``, ``Key::TAB``, ``Key::F6``, etc.
 * Modifier combinations: ``'ctrl+c'``, ``'alt+d'``,
   ``'shift+enter'``, ``'ctrl+shift+k'``.
+* Helpers that build those combinations: ``Key::ctrl('c')``,
+  ``Key::shift('tab')``, ``Key::alt(Key::BACKSPACE)``, plus
+  ``Key::ctrlShift()``, ``Key::ctrlAlt()``, ``Key::shiftAlt()`` and
+  ``Key::ctrlShiftAlt()``. They return the same strings as the
+  literal forms above, so both styles are interchangeable.
 * Single characters: ``'+'``, ``'-'``, ``'q'``, ``'r'``.
 
 Always use these key identifiers instead of raw escape sequences

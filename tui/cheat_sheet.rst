@@ -62,8 +62,8 @@ Ctrl+K                        Delete to end of line
 EditorWidget
 ------------
 
-Multi-line text editor with word wrap, scrolling, undo/redo, kill
-ring and autocomplete.
+Multi-line text editor with word wrap, scrolling, undo/redo and a
+kill ring.
 
 **Keyboard:**
 
@@ -72,8 +72,7 @@ Key                           Action
 ============================  ==============================
 Enter                         Submit
 Shift+Enter                   Insert newline
-Escape, Ctrl+C                Cancel (or close autocomplete)
-Tab                           Trigger autocomplete
+Escape                        Cancel
 Shift+Space                   Insert a space
 Up                            Move up (start of first line)
 Down                          Move down (end of last line)
@@ -99,19 +98,6 @@ Ctrl+Shift+Z                  Redo
 Ctrl+Y                        Yank (paste from kill ring)
 Alt+Y                         Yank pop (cycle kill ring)
 ============================  ==============================
-
-**Autocomplete (when the dropdown is open):**
-
-====================  ==============================
-Key                   Action
-====================  ==============================
-Up                    Previous suggestion
-Down                  Next suggestion
-Page Up               Page up through suggestions
-Page Down             Page down through suggestions
-Enter                 Accept suggestion
-Escape                Close dropdown
-====================  ==============================
 
 **Paste:**
 
