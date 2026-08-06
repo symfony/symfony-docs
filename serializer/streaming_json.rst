@@ -469,10 +469,9 @@ Encoding UUID and ULID Objects
     :class:`Symfony\\Component\\Uid\\Ulid` value objects was introduced in
     Symfony 8.2.
 
-JsonStreamer natively encodes and decodes :class:`Symfony\\Component\\Uid\\Uuid`
-and :class:`Symfony\\Component\\Uid\\Ulid` value objects, including their
-subclasses such as ``UuidV7``, ``NilUuid`` or ``MaxUlid``, and writes them as
-JSON strings::
+JsonStreamer encodes and decodes :class:`Symfony\\Component\\Uid\\Uuid`
+and :class:`Symfony\\Component\\Uid\\Ulid` objects (including their subclasses
+such as ``UuidV7``, ``NilUuid`` or ``MaxUlid``) as JSON strings::
 
     use Symfony\Component\TypeInfo\Type;
     use Symfony\Component\Uid\Uuid;
@@ -484,33 +483,28 @@ JSON strings::
     $json = $jsonStreamWriter->write($uuid, Type::object(Uuid::class));
     // $json = '"019fa28e-bfce-708e-a3d5-825064aec727"'
 
-Use the ``uid_format`` option to choose the written representation::
+By default, UIDs use their canonical representation. Use the ``uid_format``
+option to select a different format::
 
     $json = $jsonStreamWriter->write($uuid, Type::object(Uuid::class), [
+        // you can also use 'base32', 'rfc4122' and 'canonical'
         'uid_format' => 'base58',
     ]);
     // $json = '"1CdSCTDeHjTdd2uB6mig9L"'
 
-The option accepts ``canonical`` (the default), ``base58``, ``base32`` and
-``rfc4122``. Two of them overlap, depending on the value object: a UUID gives
-the same dashed string for ``canonical`` and ``rfc4122``, while a ULID gives
-the same 26-character string for ``canonical`` and ``base32``. Any other value
-throws an
-:class:`Symfony\\Component\\JsonStreamer\\Exception\\InvalidArgumentException`.
-
-Reading ignores this option, because the Uid component recognizes every
-representation. It returns the version-specific class (e.g. ``UuidV7``), so a
-property typed with a custom subclass of ``Uuid`` or ``Ulid`` cannot be read
-back.
+The ``uid_format`` option only affects encoding. When decoding, JsonStreamer
+accepts every representation recognized by the Uid component. UUIDs are
+restored as their version-specific class (such as ``UuidV7``), so custom
+``Uuid`` or ``Ulid`` subclasses cannot be restored as their original type.
 
 .. warning::
 
-    Type the properties as ``Uuid`` or ``Ulid`` (or one of their subclasses),
-    never as ``AbstractUid``. The latter matches no transformer, so JsonStreamer
-    writes it as an empty JSON object. The Serializer's
-    :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer` does
-    accept ``AbstractUid``, which makes this a common mistake when moving from
-    one to the other.
+    Declare UID properties as ``Uuid``, ``Ulid`` or an appropriate subclass,
+    but never as ``AbstractUid``. JsonStreamer has no transformer for
+    ``AbstractUid`` and encodes it as an empty JSON object. This differs from
+    the Serializer's
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`, which
+    supports ``AbstractUid``.
 
 .. _json-streamer-configure-encoded-name:
 
