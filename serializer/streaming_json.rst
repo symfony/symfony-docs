@@ -460,6 +460,58 @@ written as JSON strings and read back into the matching value object::
     $number = $jsonStreamReader->read('"1.23"', Type::object(\BcMath\Number::class));
     // $number = new \BcMath\Number('1.23')
 
+Encoding UUID and ULID Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for :class:`Symfony\\Component\\Uid\\Uuid` and
+    :class:`Symfony\\Component\\Uid\\Ulid` value objects was introduced in
+    Symfony 8.2.
+
+JsonStreamer natively encodes and decodes :class:`Symfony\\Component\\Uid\\Uuid`
+and :class:`Symfony\\Component\\Uid\\Ulid` value objects, including their
+subclasses such as ``UuidV7``, ``NilUuid`` or ``MaxUlid``, and writes them as
+JSON strings::
+
+    use Symfony\Component\TypeInfo\Type;
+    use Symfony\Component\Uid\Uuid;
+
+    // ...
+
+    $uuid = Uuid::fromString('019fa28e-bfce-708e-a3d5-825064aec727');
+
+    $json = $jsonStreamWriter->write($uuid, Type::object(Uuid::class));
+    // $json = '"019fa28e-bfce-708e-a3d5-825064aec727"'
+
+Use the ``uid_format`` option to choose the written representation::
+
+    $json = $jsonStreamWriter->write($uuid, Type::object(Uuid::class), [
+        'uid_format' => 'base58',
+    ]);
+    // $json = '"1CdSCTDeHjTdd2uB6mig9L"'
+
+The option accepts ``canonical`` (the default), ``base58``, ``base32`` and
+``rfc4122``. Two of them overlap, depending on the value object: a UUID gives
+the same dashed string for ``canonical`` and ``rfc4122``, while a ULID gives
+the same 26-character string for ``canonical`` and ``base32``. Any other value
+throws an
+:class:`Symfony\\Component\\JsonStreamer\\Exception\\InvalidArgumentException`.
+
+Reading ignores this option, because the Uid component recognizes every
+representation. It returns the version-specific class (e.g. ``UuidV7``), so a
+property typed with a custom subclass of ``Uuid`` or ``Ulid`` cannot be read
+back.
+
+.. warning::
+
+    Type the properties as ``Uuid`` or ``Ulid`` (or one of their subclasses),
+    never as ``AbstractUid``. The latter matches no transformer, so JsonStreamer
+    writes it as an empty JSON object. The Serializer's
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer` does
+    accept ``AbstractUid``, which makes this a common mistake when moving from
+    one to the other.
+
 .. _json-streamer-configure-encoded-name:
 
 Configuring the Encoded Name
