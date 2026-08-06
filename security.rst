@@ -2494,6 +2494,24 @@ is 403), this can be done by setting with the ``statusCode`` argument::
         // ...
     }
 
+The exception thrown is the
+:class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` subclass that
+matches the given status code. The example above throws a
+:class:`Symfony\\Component\\HttpKernel\\Exception\\LockedHttpException` and
+``statusCode: 404`` throws a
+:class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`. Only
+the 400, 403, 404, 406, 409, 410, 411, 412, 415, 422, 423, 428, 429 and 503
+status codes have a matching subclass. Any other status code throws the generic
+``HttpException``.
+
+.. versionadded:: 8.2
+
+    Throwing the ``HttpException`` subclass that matches the status code was
+    introduced in Symfony 8.2. Previously, the generic ``HttpException`` was
+    always thrown. Existing ``catch (HttpException $e)`` blocks and
+    ``instanceof`` checks keep working, because the thrown exception is a
+    subclass of it.
+
 You can also set the internal exception code of the
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 that is thrown with the ``exceptionCode`` argument::
