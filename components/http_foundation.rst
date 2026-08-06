@@ -121,41 +121,6 @@ methods to retrieve and update their data:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`
     Removes a parameter.
 
-The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
-has some methods to filter the input values:
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`
-    Returns the alphabetic characters of the parameter value;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
-    Returns the alphabetic characters and digits of the parameter value;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
-    Returns the parameter value converted to boolean;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
-    Returns the digits of the parameter value;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
-    Returns the parameter value converted to integer;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
-    Returns the parameter value converted to a PHP enum;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
-    Returns the parameter value as a string;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
-    Filters the parameter by using the PHP :phpfunction:`filter_var` function.
-    If invalid values are found, a
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
-    is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
-    values.
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filterCallback`
-    Filters the parameter through a callback, without having to wrap it in the
-    options array that ``FILTER_CALLBACK`` requires.
-
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
@@ -191,60 +156,6 @@ doesn't support returning arrays, so you need to use the following code::
     $request->query->all()['foo']['bar'];
     // returns 'baz'
 
-Filtering a parameter through a callback means passing ``FILTER_CALLBACK`` to
-``filter()`` and nesting the callback inside an ``options`` key.
-``filterCallback()`` takes the callback as its second argument instead::
-
-    // the query string is '?name=jane'
-
-    $request->query->filter('name', null, \FILTER_CALLBACK, [
-        'options' => strtoupper(...),
-    ]);
-    $request->query->filterCallback('name', strtoupper(...));
-    // both return 'JANE'
-
-The default value and the flags follow, both optional, so the common call stays
-two arguments long. The callback must be a ``Closure``, which the first-class
-callable syntax above produces; a callable string such as ``'strtoupper'``
-throws a ``TypeError``.
-
-Filtering is still performed by :phpfunction:`filter_var`, so its semantics
-apply. The callback receives the value cast to a string, and a callback
-returning ``null`` counts as a failure::
-
-    // the query string is '?age=42'
-
-    $request->query->filterCallback('age', fn ($value) => $value);
-    // the callback receives the string '42', not the integer 42
-
-    $request->query->filterCallback('missing', strtoupper(...), 'anonymous');
-    // returns 'ANONYMOUS': the default value goes through the callback too
-
-    $request->query->filterCallback('age', fn () => null);
-    // throws a BadRequestException, like any other failed filtering
-
-    $request->query->filterCallback(
-        'age', fn () => null, null, \FILTER_NULL_ON_FAILURE
-    );
-    // returns null instead of throwing
-
-Array values are mapped entry by entry, but the request bags require the
-``FILTER_REQUIRE_ARRAY`` flag to accept them, as they do for any other filter::
-
-    // the query string is '?tags[]=a&tags[]=b'
-
-    $request->query->filterCallback('tags', strtoupper(...));
-    // throws a BadRequestException: the flag is missing
-
-    $request->query->filterCallback(
-        'tags', strtoupper(...), null, \FILTER_REQUIRE_ARRAY
-    );
-    // returns ['A', 'B']
-
-.. versionadded:: 8.2
-
-    The ``filterCallback()`` method was introduced in Symfony 8.2.
-
 .. _component-foundation-attributes:
 
 Thanks to the public ``attributes`` property, you can store additional data
@@ -272,6 +183,77 @@ which returns an instance of :class:`Symfony\\Component\\HttpFoundation\\InputBa
 wrapping this data::
 
     $data = $request->getPayload();
+
+Filtering Request Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
+has some methods to filter the input values:
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`
+    Returns the alphabetic characters of the parameter value;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
+    Returns the alphabetic characters and digits of the parameter value;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
+    Returns the parameter value converted to boolean;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
+    Returns the digits of the parameter value;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
+    Returns the parameter value converted to integer;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
+    Returns the parameter value converted to a PHP enum;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
+    Returns the parameter value as a string;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
+    Filters the parameter by using the PHP :phpfunction:`filter_var` function.
+    If invalid values are found, a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
+    is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
+    values.
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filterCallback`
+    Filters the parameter through a callback.
+
+Use the ``filterCallback()`` method to filter a parameter value with your own
+callback, which must be a ``Closure`` (e.g. created with PHP's first-class
+callable syntax)::
+
+    // the query string is '?name=jane'
+
+    $request->query->filterCallback('name', strtoupper(...));
+    // returns 'JANE'
+
+    // the optional third argument is the default value (also passed through the callback)
+    $request->query->filterCallback('this-key-does-not-exist', strtoupper(...), 'anonymous');
+    // returns 'ANONYMOUS'
+
+Filtering uses the PHP :phpfunction:`filter_var` function, so returning ``null``
+from the callback counts as a failure::
+
+    $request->query->filterCallback('name', fn () => null);
+    // throws a BadRequestException
+
+    $request->query->filterCallback('name', fn () => null, null, \FILTER_NULL_ON_FAILURE);
+    // returns null instead of throwing an exception
+
+Pass the ``FILTER_REQUIRE_ARRAY`` flag to filter array values; each entry goes
+through the callback::
+
+    // the query string is '?tags[]=a&tags[]=b'
+
+    $request->query->filterCallback('tags', strtoupper(...), null, \FILTER_REQUIRE_ARRAY);
+    // returns ['A', 'B']
+
+.. versionadded:: 8.2
+
+    The ``filterCallback()`` method was introduced in Symfony 8.2.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
