@@ -415,9 +415,11 @@ However, you can change this behavior by specifying the message and status code 
 
 .. tip::
 
-    If the status code is different from 403, an
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
-    will be thrown instead.
+    When you set a status code, the
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` subclass
+    matching it is thrown instead of ``AccessDeniedException``. The example
+    above throws a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`.
 
 .. _security-voters-change-strategy:
 
