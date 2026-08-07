@@ -611,3 +611,4 @@
 /console/coloring /console/style#output-coloring
 /components/validator /validation
 /components/validator/metadata /validation#validator-constraint-targets
+/components/workflow /workflow
