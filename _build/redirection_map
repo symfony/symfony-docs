@@ -613,3 +613,4 @@
 /components/validator /validation
 /components/validator/metadata /validation#validator-constraint-targets
 /components/workflow /workflow
+/components/messenger /messenger

@@ -875,7 +875,7 @@ still fresh.
 
 By default, expired cache items are computed synchronously. However, you can
 compute them asynchronously by delegating the value computation to a background
-worker using the :doc:`Messenger component </components/messenger>`. In this case,
+worker using the :doc:`Messenger component </messenger>`. In this case,
 when an item is queried, its cached value is immediately returned and a
 :class:`Symfony\\Component\\Cache\\Messenger\\EarlyExpirationMessage` is
 dispatched through a Messenger bus.
