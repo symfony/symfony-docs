@@ -661,8 +661,6 @@ a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
 Unlike the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
 store locks and does not expire.
 
-.. _lock-store-reuse-connection-advisory:
-
 Advisory Locks When Reusing an Existing Connection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
