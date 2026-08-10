@@ -273,6 +273,42 @@ fragment_uri
 
 Generates the URI of :ref:`a fragment <fragments-path-config>`.
 
+impersonation_exit_form
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_form(targetUri = null) }}
+
+``targetUri`` *(optional)*
+    **type**: ``string``
+
+Returns the ``action`` and the ``fields`` needed to exit
+:doc:`user impersonation </security/impersonating_user>` with a form, so the
+switching route can be restricted to ``POST``.
+
+.. code-block:: html+twig
+
+    {% set exit = impersonation_exit_form() %}
+
+    {% if exit.action %}
+        <form method="post" action="{{ exit.action }}">
+            {% for name, value in exit.fields %}
+                <input type="hidden" name="{{ name }}" value="{{ value }}">
+            {% endfor %}
+
+            <button>Exit impersonation</button>
+        </form>
+    {% endif %}
+
+If no user is being impersonated, ``action`` is an empty string and ``fields``
+is empty. Read more about
+:ref:`impersonating with a form <security-impersonation-form>`.
+
+.. versionadded:: 8.2
+
+    The ``impersonation_exit_form()`` function was introduced in Symfony 8.2.
+
 impersonation_exit_path
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -302,32 +338,85 @@ impersonation_exit_url
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
 
+impersonation_form
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_form(identifier, targetUri = null) }}
+
+``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
+    **type**: ``string``
+
+Returns the ``action`` and the ``fields`` needed to
+:doc:`impersonate a user </security/impersonating_user>` with a form, so the
+switching route can be restricted to ``POST``. The impersonated user is
+identified by the ``identifier`` argument.
+
+.. code-block:: html+twig
+
+    {% set impersonate = impersonation_form(user.userIdentifier) %}
+
+    <form method="post" action="{{ impersonate.action }}">
+        {% for name, value in impersonate.fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+
+        <button>Impersonate {{ user.userIdentifier }}</button>
+    </form>
+
+``fields`` contains the target identity and, when the firewall enables CSRF
+protection, the CSRF token, each under its configured parameter name. After the
+switch, the user is redirected to the current URI, or to ``targetUri`` when
+given. Read more about
+:ref:`impersonating with a form <security-impersonation-form>`.
+
+.. versionadded:: 8.2
+
+    The ``impersonation_form()`` function was introduced in Symfony 8.2.
+
 impersonation_path
 ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ impersonation_path(identifier) }}
+    {{ impersonation_path(identifier, targetUri = null) }}
 
 ``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
     **type**: ``string``
 
 Generates a URL that you can visit to
 :doc:`impersonate a user </security/impersonating_user>`, identified by the
-``identifier`` argument.
+``identifier`` argument. After the switch, the user is redirected to the current
+URI. If you prefer to redirect to a different URI, define its value in the
+``targetUri`` argument.
+
+.. versionadded:: 8.2
+
+    The ``targetUri`` argument was introduced in Symfony 8.2.
 
 impersonation_url
 ~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ impersonation_url(identifier) }}
+    {{ impersonation_url(identifier, targetUri = null) }}
 
 ``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
     **type**: ``string``
 
 It's similar to the `impersonation_path`_ function, but it generates
 absolute URLs instead of relative URLs.
+
+.. versionadded:: 8.2
+
+    The ``targetUri`` argument was introduced in Symfony 8.2.
 
 importmap
 ~~~~~~~~~
