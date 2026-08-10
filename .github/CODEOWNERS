@@ -24,7 +24,6 @@
 
 # Workflow
 /workflow* @lyrixx
-/components/workflow* @lyrixx
 
 # Yaml
 /components/yaml* @xabbuh
