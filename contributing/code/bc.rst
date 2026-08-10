@@ -598,4 +598,12 @@ annotation with the native ``final`` keyword, or remove the
     results in ``The "..." class is considered final since Symfony 8.1``,
     so keep that text short and accurate.
 
+The ``#[\NoDiscard]`` Attribute
+...............................
+
+Adding the ``#[\NoDiscard]`` attribute to a function or method is not a
+backward compatibility break: it only makes PHP emit a warning when the
+return value is ignored, which is not considered a BC break. That's why it may
+be added in a minor version.
+
 .. _`Semantic Versioning`: https://semver.org/
