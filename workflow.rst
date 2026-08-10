@@ -1,15 +1,15 @@
 Workflow
 ========
 
-Using the Workflow component inside a Symfony application requires first knowing
-some basic theory and concepts about workflows and state machines.
+The Workflow component provides tools for managing a workflow or a finite
+state machine. Using this component requires first knowing some basic theory
+and concepts about workflows and state machines.
 :doc:`Read this article </workflow/workflow-and-state-machine>` for a quick overview.
 
 Installation
 ------------
 
-In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
-install the workflow feature before using it:
+Run this command to install the component before using it:
 
 .. code-block:: terminal
 
@@ -122,6 +122,31 @@ follows:
             ],
         ]);
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Workflow\DefinitionBuilder;
+        use Symfony\Component\Workflow\MarkingStore\MethodMarkingStore;
+        use Symfony\Component\Workflow\Transition;
+        use Symfony\Component\Workflow\Workflow;
+
+        $definitionBuilder = new DefinitionBuilder();
+        $definition = $definitionBuilder
+            ->addPlaces(['draft', 'reviewed', 'rejected', 'published'])
+            // transitions are defined with a unique name, an origin place
+            // and a destination place
+            ->addTransition(new Transition('to_review', 'draft', 'reviewed'))
+            ->addTransition(new Transition('publish', 'reviewed', 'published'))
+            ->addTransition(new Transition('reject', 'reviewed', 'rejected'))
+            ->build()
+        ;
+
+        // true if the subject can be in only one state at a given time
+        $singleState = true;
+        // the subject property name where the state is stored
+        $property = 'currentPlace';
+        $marking = new MethodMarkingStore($singleState, $property);
+        $workflow = new Workflow($definition, $marking);
+
 .. tip::
 
     If you are creating your first workflows, consider using the ``workflow:dump``
@@ -226,30 +251,65 @@ you must declare a setter to write your property::
     generate detailed log messages for the workflow activity.
 
 With this workflow named ``blog_publishing``, you can get help to decide
-what actions are allowed on a blog post::
+what actions are allowed on a blog post:
 
-    use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\Exception\LogicException;
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        use App\Entity\BlogPost;
+        use Symfony\Component\Workflow\Exception\LogicException;
+
+        $post = new BlogPost();
+        // you don't need to set the initial marking with code; this is configured
+        // in the workflow with the 'initial_marking' option
+
+        $workflow = $this->container->get('workflow.blog_publishing');
+        $workflow->can($post, 'publish'); // False
+        $workflow->can($post, 'to_review'); // True
+
+        // Update the currentPlace on the post
+        try {
+            $workflow->apply($post, 'to_review');
+        } catch (LogicException $exception) {
+            // ...
+        }
+
+        // See all the available transitions for the post in the current state
+        $transitions = $workflow->getEnabledTransitions($post);
+        // See a specific available transition for the post in the current state
+        $transition = $workflow->getEnabledTransition($post, 'publish');
+
+    .. code-block:: php-standalone
+
+        use App\Entity\BlogPost;
+        use Symfony\Component\Workflow\Exception\LogicException;
+
+        $post = new BlogPost();
+        // ($workflow is the Workflow object created in the previous section)
+        $workflow->can($post, 'publish'); // False
+        $workflow->can($post, 'to_review'); // True
+
+        // Update the currentPlace on the post
+        try {
+            $workflow->apply($post, 'to_review');
+        } catch (LogicException $exception) {
+            // ...
+        }
+
+        // See all the available transitions for the post in the current state
+        $transitions = $workflow->getEnabledTransitions($post);
+        // See a specific available transition for the post in the current state
+        $transition = $workflow->getEnabledTransition($post, 'publish');
+
+If the marking property of your object is ``null`` and you want to initialize
+it with the ``initial_marking`` from the configuration, call the ``getMarking()``
+method::
 
     $post = new BlogPost();
-    // you don't need to set the initial marking with code; this is configured
-    // in the workflow with the 'initial_marking' option
 
-    $workflow = $this->container->get('workflow.blog_publishing');
-    $workflow->can($post, 'publish'); // False
-    $workflow->can($post, 'to_review'); // True
-
-    // Update the currentState on the post
-    try {
-        $workflow->apply($post, 'to_review');
-    } catch (LogicException $exception) {
-        // ...
-    }
-
-    // See all the available transitions for the post in the current state
-    $transitions = $workflow->getEnabledTransitions($post);
-    // See a specific available transition for the post in the current state
-    $transition = $workflow->getEnabledTransition($post, 'publish');
+    // initiate workflow
+    $workflow->getMarking($post);
 
 .. _using-enums-as-workflow-places:
 
