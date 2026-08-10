@@ -342,7 +342,7 @@ Service
 `LINE Notify`_                           **Install**: ``composer require symfony/line-notify-notifier`` \
                                          **DSN**: ``linenotify://TOKEN@default``
 `LinkedIn`_                              **Install**: ``composer require symfony/linked-in-notifier`` \
-                                         **DSN**: ``linkedin://TOKEN:USER_ID@default``
+                                         **DSN**: ``linkedin://TOKEN:USER_ID@default?author=AUTHOR``
 `Mastodon`_                              **Install**: ``composer require symfony/mastodon-notifier`` \
                                          **DSN**: ``mastodon://ACCESS_TOKEN@HOST``
 `Matrix`_                                **Install**: ``composer require symfony/matrix-notifier`` \
@@ -377,6 +377,8 @@ Service
 .. versionadded:: 8.2
 
     The ``WhatsApp`` integration was introduced in Symfony 8.2.
+    The ``author`` DSN option for the LinkedIn bridge was introduced in
+    Symfony 8.2.
 
 .. warning::
 
