@@ -3,8 +3,8 @@ Messenger: Sync & Queued Message Handling
 
 Messenger provides a message bus with the ability to send messages and then
 handle them immediately in your application or send them through transports
-(e.g. queues) to be handled later. To learn more about it, read the
-:doc:`Messenger component docs </components/messenger>`.
+(e.g. queues) to be handled later. It's greatly inspired by Matthias Noback's
+series of `blog posts about command buses`_ and the `SimpleBus project`_.
 
 Installation
 ------------
@@ -15,6 +15,53 @@ install messenger:
 .. code-block:: terminal
 
     $ composer require symfony/messenger
+
+Concepts
+--------
+
+Before using Messenger, it's useful to learn about its main concepts and how
+they relate to each other:
+
+.. raw:: html
+
+    <object data="_images/components/messenger/overview.svg" type="image/svg+xml"
+        alt="A flow diagram visualizing how each concept relates to each other. Each concept is described in the subsequent text."
+    ></object>
+
+**Sender**:
+   Responsible for serializing and sending messages to *something*. This
+   something can be a message broker or a third party API for example.
+
+**Receiver**:
+   Responsible for retrieving, deserializing and forwarding messages to handler(s).
+   This can be a message queue puller or an API endpoint for example.
+
+**Handler**:
+   Responsible for handling messages using the business logic applicable to the messages.
+   Handlers are called by the ``HandleMessageMiddleware`` middleware.
+
+**Middleware**:
+   Middleware can access the message and its wrapper (the envelope) while it is
+   dispatched through the bus.
+   Literally *"the software in the middle"*, those are not about core concerns
+   (business logic) of an application. Instead, they are cross cutting concerns
+   applicable throughout the application and affecting the entire message bus.
+   For instance: logging, validating a message, starting a transaction, ...
+   They are also responsible for calling the next middleware in the chain,
+   which means they can tweak the envelope, by adding stamps to it or even
+   replacing it, as well as interrupt the middleware chain. Middleware are called
+   both when a message is originally dispatched and again later when a message
+   is received from a transport.
+
+**Envelope**:
+   Messenger specific concept, it gives full flexibility inside the message bus,
+   by wrapping the messages into it, allowing you to add useful information inside
+   through *envelope stamps*.
+
+**Envelope Stamps**:
+   Piece of information you need to attach to your message: serializer context
+   to use for transport, markers identifying a received message or any sort of
+   metadata your middleware or transport layer may use.
 
 Creating a Message & Handler
 ----------------------------
@@ -85,26 +132,50 @@ Dispatching the Message
 -----------------------
 
 You're ready! To dispatch the message (and call the handler), inject the
-``messenger.default_bus`` service (via the ``MessageBusInterface``), like in a controller::
+``messenger.default_bus`` service (via the ``MessageBusInterface``), like in a
+controller. When using Messenger in any PHP application, create the message
+bus yourself and register the handler(s) in it (in that case, the
+``#[AsMessageHandler]`` attribute is not needed):
 
-    // src/Controller/DefaultController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use App\Message\SmsNotification;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Messenger\MessageBusInterface;
+    .. code-block:: php-symfony
 
-    class DefaultController extends AbstractController
-    {
-        public function index(MessageBusInterface $bus): Response
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
+
+        use App\Message\SmsNotification;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Messenger\MessageBusInterface;
+
+        class DefaultController extends AbstractController
         {
-            // will cause the SmsNotificationHandler to be called
-            $bus->dispatch(new SmsNotification('Look! I created a message!'));
+            public function index(MessageBusInterface $bus): Response
+            {
+                // will cause the SmsNotificationHandler to be called
+                $bus->dispatch(new SmsNotification('Look! I created a message!'));
 
-            // ...
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php-standalone
+
+        use App\Message\SmsNotification;
+        use App\MessageHandler\SmsNotificationHandler;
+        use Symfony\Component\Messenger\Handler\HandlersLocator;
+        use Symfony\Component\Messenger\MessageBus;
+        use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
+
+        $bus = new MessageBus([
+            new HandleMessageMiddleware(new HandlersLocator([
+                SmsNotification::class => [new SmsNotificationHandler()],
+            ])),
+        ]);
+
+        // will cause the SmsNotificationHandler to be called
+        $bus->dispatch(new SmsNotification('Look! I created a message!'));
 
 Transports: Async/Queued Messages
 ---------------------------------
@@ -3012,6 +3083,8 @@ By default, batches are processed in groups of ``10`` messages. Override the
 Extending Messenger
 -------------------
 
+.. _messenger-envelopes:
+
 Envelopes & Stamps
 ~~~~~~~~~~~~~~~~~~
 
@@ -3062,6 +3135,71 @@ or if it's being retried after failure.
                 );
             }
         }
+
+If you need to add metadata or some configuration to a message, wrap it with the
+:class:`Symfony\\Component\\Messenger\\Envelope` class and add stamps. For
+example, to set the serialization groups used when the message goes through the
+transport layer, use the ``SerializerStamp`` stamp::
+
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Stamp\SerializerStamp;
+
+    $bus->dispatch(
+        new Envelope($message)->with(new SerializerStamp([
+            // groups are applied to the whole message, so make sure
+            // to define the group for every embedded object
+            'groups' => ['my_serialization_groups'],
+        ]))
+    );
+
+Here are some important envelope stamps that are shipped with the Symfony Messenger:
+
+* :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`,
+  to delay handling of an asynchronous message.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
+  to make the message be handled after the current bus has executed. Read more
+  at :ref:`messenger-transactional-messages`.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
+  a stamp that marks the message as handled by a specific handler.
+  Allows accessing the handler returned value and the handler name.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
+  an internal stamp that marks the message as received from a transport.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\SentStamp`,
+  a stamp that marks the message as sent by a specific sender.
+  Allows accessing the sender FQCN and the alias if available from the
+  :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
+  to configure the serialization groups used by the transport.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
+  to configure the validation groups used when the validation middleware is enabled.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
+  an internal stamp when a message fails due to an exception in the handler.
+* :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp`,
+  a stamp that marks the message as produced by a scheduler. This helps
+  differentiate it from messages created "manually". You can learn more about it
+  in the :doc:`Scheduler documentation </scheduler>`.
+
+.. note::
+
+    The :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp` stamp
+    contains a :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException`,
+    which is a representation of the exception that made the message fail. You can
+    get this exception with the
+    :method:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp::getFlattenException`
+    method. This exception is normalized thanks to the
+    :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Normalizer\\FlattenExceptionNormalizer`
+    which helps error reporting in the Messenger context.
+
+If you want to examine all stamps on an envelope, use the ``$envelope->all()``
+method, which returns all stamps grouped by type (FQCN). Alternatively, you can
+iterate through all stamps of a specific type by using the FQCN as first
+parameter of this method (e.g. ``$envelope->all(ReceivedStamp::class)``).
+
+.. note::
+
+    Any stamp must be serializable using the Symfony Serializer component
+    if going through transport using the :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Serializer`
+    base serializer.
 
 Default Stamps on Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3186,6 +3324,39 @@ and a different instance will be created per bus.
 
     If you have installed the MakerBundle, you can use the ``make:messenger-middleware``
     command to bootstrap the creation of your own messenger middleware.
+
+Middleware must implement the
+:class:`Symfony\\Component\\Messenger\\Middleware\\MiddlewareInterface`. Instead
+of dealing directly with the messages, middleware receive the envelope.
+Therefore, they can inspect the envelope content and its stamps, or add any::
+
+    use App\Message\Stamp\AnotherStamp;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+    use Symfony\Component\Messenger\Middleware\StackInterface;
+    use Symfony\Component\Messenger\Stamp\ReceivedStamp;
+
+    class MyOwnMiddleware implements MiddlewareInterface
+    {
+        public function handle(Envelope $envelope, StackInterface $stack): Envelope
+        {
+            if (null !== $envelope->last(ReceivedStamp::class)) {
+                // Message just has been received...
+
+                // You could for example add another stamp.
+                $envelope = $envelope->with(new AnotherStamp(/* ... */));
+            } else {
+                // Message was just originally dispatched
+            }
+
+            return $stack->next()->handle($envelope, $stack);
+        }
+    }
+
+The above example will forward the message to the next middleware with an
+additional stamp *if* the message has just been received (i.e. has at least one
+``ReceivedStamp`` stamp). You can create your own stamps by implementing
+:class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
 
 Message Deduplication
 ~~~~~~~~~~~~~~~~~~~~~
@@ -3794,6 +3965,8 @@ Learn more
 
     /messenger/*
 
+.. _`blog posts about command buses`: https://matthiasnoback.nl/tags/command-bus/
+.. _`SimpleBus project`: https://docs.simplebus.io/en/latest/
 .. _`Enqueue's transport`: https://github.com/sroze/messenger-enqueue-transport
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/

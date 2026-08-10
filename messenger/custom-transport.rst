@@ -1,11 +1,143 @@
 How to Create Your own Messenger Transport
 ==========================================
 
-Once you have written your transport's sender and receiver, you can register your
-transport factory to be able to use it via a DSN in the Symfony application.
+If none of the :ref:`built-in Messenger transports <messenger-transports-config>`
+fits your needs, you can create your own. A transport is responsible for
+communicating with your message broker or third parties: it combines a *sender*
+(to send messages) and a *receiver* (to retrieve them). This article explains
+how to implement each of them and how to register your own transport.
+
+Your own Sender
+---------------
+
+Imagine that you already have an ``ImportantAction`` message going through the
+message bus and being handled by a handler. Now, you also want to send this
+message as an email (using the :doc:`Mime </components/mime>` and
+:doc:`Mailer </mailer>` components).
+
+Using the :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SenderInterface`,
+you can create your own message sender::
+
+    namespace App\MessageSender;
+
+    use App\Message\ImportantAction;
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+    use Symfony\Component\Mime\Email;
+
+    class ImportantActionToEmailSender implements SenderInterface
+    {
+        public function __construct(
+            private MailerInterface $mailer,
+            private string $toEmail,
+        ) {
+        }
+
+        public function send(Envelope $envelope): Envelope
+        {
+            $message = $envelope->getMessage();
+
+            if (!$message instanceof ImportantAction) {
+                throw new \InvalidArgumentException(sprintf('This transport only supports "%s" messages.', ImportantAction::class));
+            }
+
+            $this->mailer->send(
+                (new Email())
+                    ->to($this->toEmail)
+                    ->subject('Important action made')
+                    ->html('<h1>Important action</h1><p>Made by '.$message->getUsername().'</p>')
+            );
+
+            return $envelope;
+        }
+    }
+
+Your own Receiver
+-----------------
+
+A receiver is responsible for getting messages from a source and dispatching
+them to the application.
+
+Imagine you already processed some "orders" in your application using a
+``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
+application but you can't use an API and need to use a shared CSV file with new
+orders.
+
+You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
+do is to write your own CSV receiver::
+
+    namespace App\MessageReceiver;
+
+    use App\Message\NewOrder;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
+    use Symfony\Component\Messenger\Transport\Receiver\ReceiverInterface;
+    use Symfony\Component\Serializer\SerializerInterface;
+
+    class NewOrdersFromCsvFileReceiver implements ReceiverInterface
+    {
+        private $connection;
+
+        public function __construct(
+            private SerializerInterface $serializer,
+            private string $filePath,
+        ) {
+            // Available connection bundled with the Messenger component
+            // can be found in "Symfony\Component\Messenger\Bridge\*\Transport\Connection".
+            $this->connection = /* create your connection */;
+        }
+
+        public function get(): iterable
+        {
+            // Receive the envelope according to your transport ($yourEnvelope here),
+            // in most cases, using a connection is the easiest solution.
+            $yourEnvelope = $this->connection->get();
+            if (null === $yourEnvelope) {
+                return [];
+            }
+
+            try {
+                $envelope = $this->serializer->decode([
+                    'body' => $yourEnvelope['body'],
+                    'headers' => $yourEnvelope['headers'],
+                ]);
+            } catch (MessageDecodingFailedException $exception) {
+                $this->connection->reject($yourEnvelope['id']);
+                throw $exception;
+            }
+
+            return [$envelope->with(new CustomStamp($yourEnvelope['id']))];
+        }
+
+        public function ack(Envelope $envelope): void
+        {
+            // Add information about the handled message
+        }
+
+        public function reject(Envelope $envelope): void
+        {
+            // In the case of a custom connection
+            $id = /* get the message id thanks to information or stamps present in the envelope */;
+
+            $this->connection->reject($id);
+        }
+    }
+
+Receiver and Sender on the same Bus
+-----------------------------------
+
+To allow sending and receiving messages on the same bus and prevent an infinite
+loop, the message bus will add a :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`
+stamp to the message envelopes and the :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware`
+middleware will know it should not route these messages again to a transport.
 
 Create your Transport Factory
 -----------------------------
+
+Once you have written your transport's sender and receiver, you can register
+your transport factory to be able to use it via a DSN in the Symfony
+application.
 
 You need to give FrameworkBundle the opportunity to create your transport from a
 DSN. You will need a transport factory::
