@@ -5,8 +5,11 @@ Validation is a very common task in web applications. Data entered in forms
 needs to be validated. Data also needs to be validated before it is written
 into a database or passed to a web service.
 
-Symfony provides a `Validator`_ component to handle this for you. This
-component is based on the `JSR303 Bean Validation specification`_.
+Symfony provides a Validator component to handle this for you. The component
+is based on two concepts:
+
+* Constraints, which define the rules to be validated;
+* Validators, which are the classes that contain the actual validation logic.
 
 Installation
 ------------
@@ -28,8 +31,7 @@ The Basics of Validation
 ------------------------
 
 The best way to understand validation is to see it in action. To start, suppose
-you've created a plain-old-PHP object that you need to use somewhere in
-your application::
+you've created a class that you need to use somewhere in your application::
 
     // src/Entity/Author.php
     namespace App\Entity;
@@ -111,7 +113,14 @@ following:
 Adding this configuration by itself does not yet guarantee that the value will
 not be blank; you can still set it to a blank value if you want.
 To actually guarantee that the value adheres to the constraint, the object must
-be passed to the validator service to be checked.
+be passed to the validator to be checked.
+
+.. note::
+
+    When using the Validator component outside a Symfony application, you must
+    tell the validator explicitly where to look for the constraint metadata
+    (PHP attributes, YAML or XML files, etc.). Read the
+    :doc:`/components/validator/resources` article for more details.
 
 .. tip::
 
@@ -133,25 +142,59 @@ be passed to the validator service to be checked.
             properties:
                 # your IDE will now provide autocompletion here...
 
-Using the Validator Service
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the Validator
+~~~~~~~~~~~~~~~~~~~
 
 Next, to actually validate an ``Author`` object, use the ``validate()`` method
-on the ``validator`` service (which implements :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`).
-The job of the ``validator`` is to read the constraints (i.e. rules)
-of a class and verify if the data on the object satisfies those
-constraints. If validation fails, a non-empty list of errors
+of the validator (which implements :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`).
+The job of the validator is to read the constraints (i.e. rules) of a class and
+verify if the data on the object satisfies those constraints. If validation
+fails, a non-empty list of errors
 (:class:`Symfony\\Component\\Validator\\ConstraintViolationList` class) is
-returned. Take this simple example from inside a controller::
+returned. In Symfony applications, this validator is available as the
+``validator`` service, which you can inject anywhere thanks to
+:doc:`autowiring </service_container/autowiring>`:
 
-    // ...
-    use App\Entity\Author;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Validator\Validator\ValidatorInterface;
+.. configuration-block::
 
-    // ...
-    public function author(ValidatorInterface $validator): Response
-    {
+    .. code-block:: php-symfony
+
+        // src/Controller/AuthorController.php
+        namespace App\Controller;
+
+        use App\Entity\Author;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+        // ...
+        public function author(ValidatorInterface $validator): Response
+        {
+            $author = new Author();
+
+            // ... do something to the $author object
+
+            $errors = $validator->validate($author);
+
+            if (count($errors) > 0) {
+                // the __toString() method of the error list returns a
+                // string representation useful for debugging
+                $errorsString = (string) $errors;
+
+                return new Response($errorsString);
+            }
+
+            return new Response('The author is valid! Yes!');
+        }
+
+    .. code-block:: php-standalone
+
+        use App\Entity\Author;
+        use Symfony\Component\Validator\Validation;
+
+        $validator = Validation::createValidatorBuilder()
+            ->enableAttributeMapping()
+            ->getValidator();
+
         $author = new Author();
 
         // ... do something to the $author object
@@ -159,18 +202,10 @@ returned. Take this simple example from inside a controller::
         $errors = $validator->validate($author);
 
         if (count($errors) > 0) {
-            /*
-             * Uses a __toString method on the $errors variable which is a
-             * ConstraintViolationList object. This gives us a nice string
-             * for debugging.
-             */
+            // the __toString() method of the error list returns a
+            // string representation useful for debugging
             $errorsString = (string) $errors;
-
-            return new Response($errorsString);
         }
-
-        return new Response('The author is valid! Yes!');
-    }
 
 If the ``$name`` property is empty, you will see the following error
 message:
@@ -180,15 +215,12 @@ message:
     Object(App\Entity\Author).name:
         This value should not be blank.
 
-If you insert a value into the ``name`` property, the happy success message
-will appear.
-
 .. tip::
 
-    Most of the time, you won't interact directly with the ``validator``
-    service or need to worry about printing out the errors. Most of the time,
-    you'll use validation indirectly when handling submitted form data. For
-    more information, see :ref:`how to validate Symfony forms <validating-forms>`.
+    Most of the time you won't interact directly with the validator or need
+    to worry about printing out the errors, because you'll use validation
+    indirectly when handling submitted form data. For more information, see
+    :ref:`how to validate Symfony forms <validating-forms>`.
 
 You could also pass the collection of errors into a template::
 
@@ -216,6 +248,15 @@ Inside the template, you can output the list of errors exactly as needed:
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object. This
     object allows you, among other things, to get the constraint that caused this
     violation thanks to the ``ConstraintViolation::getConstraint()`` method.
+
+If you have lots of validation errors, you can filter them by error code::
+
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+    $violations = $validator->validate(/* ... */);
+    if (0 !== count($violations->findByCodes(UniqueEntity::NOT_UNIQUE_ERROR))) {
+        // handle this specific error (display some message, send an email, etc.)
+    }
 
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
@@ -609,10 +650,10 @@ Now, create the ``isPasswordSafe()`` method and include the logic you need::
 
 .. note::
 
-    The keen-eyed among you will have noticed that the prefix of the getter
-    ("get", "is" or "has") is omitted in the mappings for the YAML, XML and PHP
-    formats. This allows you to move the constraint to a property with the same
-    name later (or vice versa) without changing your validation logic.
+    The prefix of the getter ("get", "is" or "has") is omitted in the mappings
+    for the YAML, XML and PHP formats. This allows you to move the constraint
+    to a property with the same name later (or vice versa) without changing
+    your validation logic.
 
 .. _validation-class-target:
 
@@ -710,16 +751,6 @@ You can also validate all the classes stored in a given directory:
 
     $ php bin/console debug:validator src/Entity
 
-Final Thoughts
---------------
-
-The Symfony ``validator`` is a powerful tool that can be leveraged to
-guarantee that the data of any object is "valid". The power behind validation
-lies in "constraints", which are rules that you can apply to properties or
-getter methods of your object. And while you'll most commonly use the validation
-framework indirectly when using forms, remember that it can be used anywhere
-to validate any object.
-
 Learn more
 ----------
 
@@ -727,7 +758,5 @@ Learn more
     :maxdepth: 1
     :glob:
 
+    /components/validator/*
     /validation/*
-
-.. _Validator: https://github.com/symfony/validator
-.. _JSR303 Bean Validation specification: https://jcp.org/en/jsr/detail?id=303
