@@ -290,6 +290,55 @@ stricter per-action limit::
         // ...
     }
 
+.. versionadded:: 8.2
+
+    The ``RateLimitExceededEvent`` was introduced in Symfony 8.2.
+
+Whenever the ``#[RateLimit]`` attribute rejects a request, it dispatches a
+:class:`Symfony\\Component\\RateLimiter\\Event\\RateLimitExceededEvent` object
+right before throwing the ``TooManyRequestsHttpException``. Listen to it to log
+the rejection, report a metric or send an alert::
+
+    // src/EventListener/RateLimitExceededListener.php
+    namespace App\EventListener;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\RateLimiter\Event\RateLimitExceededEvent;
+
+    #[AsEventListener]
+    class RateLimitExceededListener
+    {
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
+        }
+
+        public function __invoke(RateLimitExceededEvent $event): void
+        {
+            $this->logger->warning('Rate limit "{limiter}" exceeded for key "{key}".', [
+                'limiter' => $event->getLimiterName(),
+                'key' => $event->getKey(),
+            ]);
+        }
+    }
+
+The event gives access to the :class:`Symfony\\Component\\RateLimiter\\RateLimit`
+object (via ``getRateLimit()``), the name of the limiter defined in the
+``#[RateLimit]`` attribute (via ``getLimiterName()``) and the consumed key (via
+``getKey()``).
+
+.. note::
+
+    This event is dispatched for observation only: it doesn't allow overriding
+    the decision made by the rate limiter or the exception that will be thrown.
+
+.. note::
+
+    This event is only dispatched for rejections caused by the
+    ``#[RateLimit]`` attribute. Rejections coming from a rate limiter you
+    inject and consume manually don't dispatch it.
+
 For full control over the limiter logic, inject the limiter service manually as
 shown in the next section.
 
