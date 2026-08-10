@@ -951,6 +951,42 @@ variable. Let's say you want the first or the last comment of a product dependin
     ): Response {
     }
 
+Fetch via a Closure
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for using closures with the ``#[MapEntity]`` attribute was
+    introduced in Symfony 8.2.
+
+If you prefer to keep the fetching logic in plain PHP code, you can pass a
+closure to the ``expr`` option instead of an expression. The closure receives
+the current :class:`Symfony\\Component\\HttpFoundation\\Request` and the
+entity's repository as arguments::
+
+    use App\Entity\Post;
+    use App\Repository\PostRepository;
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
+
+    #[Route('/posts_by/{author_id}')]
+    public function authorPosts(
+        #[MapEntity(
+            class: Post::class,
+            expr: static function (Request $request, PostRepository $repository): iterable {
+                return $repository->findBy(
+                    ['author' => $request->attributes->get('author_id')],
+                    [],
+                    10
+                );
+            },
+        )]
+        iterable $posts
+    ): Response {
+    }
+
+Like expressions, the closure can return a single entity or a list of entities.
+
 .. _doctrine-entity-value-resolver-resolve-target-entities:
 
 Fetch via Interfaces
