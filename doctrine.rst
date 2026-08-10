@@ -898,71 +898,19 @@ using the ``MapEntity`` attribute. You can even control the behavior of the
         }
     }
 
-Fetch via an Expression
-~~~~~~~~~~~~~~~~~~~~~~~
+.. _fetch-via-an-expression:
 
-If automatic fetching doesn't work for your use case, you can write an expression
-using the :doc:`ExpressionLanguage component </components/expression_language>`::
+Fetch via Custom Logic
+~~~~~~~~~~~~~~~~~~~~~~
 
-    #[Route('/product/{product_id}')]
-    public function show(
-        #[MapEntity(expr: 'repository.find(product_id)')]
-        Product $product
-    ): Response {
-    }
+If automatic fetching doesn't work for your use case, use the ``expr`` option
+to define your own fetching logic. This option accepts a PHP closure or a
+string expression.
 
-In the expression, the ``repository`` variable will be your entity's
-Repository class and any route wildcards - like ``{product_id}`` are
-available as variables.
-
-The repository method called in the expression can also return a list of entities.
-In that case, update the type of your controller argument::
-
-    #[Route('/posts_by/{author_id}')]
-    public function authorPosts(
-        #[MapEntity(class: Post::class, expr: 'repository.findBy({"author": author_id}, {}, 10)')]
-        iterable $posts
-    ): Response {
-    }
-
-This can also be used to help resolve multiple arguments::
-
-    #[Route('/product/{id}/comments/{comment_id}')]
-    public function show(
-        Product $product,
-        #[MapEntity(expr: 'repository.find(comment_id)')]
-        Comment $comment
-    ): Response {
-    }
-
-In the example above, the ``$product`` argument is handled automatically,
-but ``$comment`` is configured with the attribute since they cannot both follow
-the default convention.
-
-If you need to get other information from the request to query the database, you
-can also access the request in your expression thanks to the ``request``
-variable. Let's say you want the first or the last comment of a product depending on a query parameter named ``sort``::
-
-    #[Route('/product/{id}/comments')]
-    public function show(
-        Product $product,
-        #[MapEntity(expr: 'repository.findOneBy({"product": id}, {"createdAt": request.query.get("sort", "DESC")})')]
-        Comment $comment
-    ): Response {
-    }
-
-Fetch via a Closure
-~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 8.2
-
-    Support for using closures with the ``#[MapEntity]`` attribute was
-    introduced in Symfony 8.2.
-
-If you prefer to keep the fetching logic in plain PHP code, you can pass a
-closure to the ``expr`` option instead of an expression. The closure receives
-the current :class:`Symfony\\Component\\HttpFoundation\\Request` and the
-entity's repository as arguments::
+The **closure** receives the current
+:class:`Symfony\\Component\\HttpFoundation\\Request` object and the entity's
+repository as arguments. It can return a single entity or a list of entities
+(in that case, change the type of the controller argument to ``iterable``)::
 
     use App\Entity\Post;
     use App\Repository\PostRepository;
@@ -985,7 +933,40 @@ entity's repository as arguments::
     ): Response {
     }
 
-Like expressions, the closure can return a single entity or a list of entities.
+.. versionadded:: 8.2
+
+    Support for using closures in the ``expr`` option was introduced in Symfony 8.2.
+
+If you prefer a more compact alternative, write an **expression** using the
+:doc:`ExpressionLanguage component </components/expression_language>` syntax.
+The downside is that expressions are defined as strings, so IDEs and static
+analysis tools can't check them for errors.
+
+Inside the expression, the ``repository`` variable is the entity's repository,
+the current request is available as ``request`` and all route wildcards (like
+``product_id``) are available as variables::
+
+    #[Route('/product/{product_id}')]
+    public function show(
+        #[MapEntity(expr: 'repository.find(product_id)')]
+        Product $product
+    ): Response {
+    }
+
+Custom fetching logic is also useful when resolving multiple entity arguments,
+because they can't all follow the default convention. In the following example,
+the ``$product`` argument is fetched automatically, while ``$comment`` uses an
+expression that sorts comments based on a query parameter called ``sort``::
+
+    #[Route('/product/{id}/comments')]
+    public function show(
+        Product $product,
+        #[MapEntity(expr: 'repository.findOneBy({"product": id}, {"createdAt": request.query.get("sort", "DESC")})')]
+        Comment $comment
+    ): Response {
+    }
+
+Like closures, expressions can return a single entity or a list of entities.
 
 .. _doctrine-entity-value-resolver-resolve-target-entities:
 
