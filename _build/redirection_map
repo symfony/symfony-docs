@@ -609,3 +609,5 @@
 /form/form_dependencies /form#form-injecting-services
 /form/without_class /form#forms-without-class
 /console/coloring /console/style#output-coloring
+/components/validator /validation
+/components/validator/metadata /validation#validator-constraint-targets
