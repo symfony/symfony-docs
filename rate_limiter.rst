@@ -290,6 +290,13 @@ stricter per-action limit::
         // ...
     }
 
+For full control over the limiter logic,
+:ref:`inject the rate limiter as a service <rate-limiter-service>` in your
+controllers and services.
+
+Reacting to Exceeded Rate Limits
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. versionadded:: 8.2
 
     The ``RateLimitExceededEvent`` was introduced in Symfony 8.2.
@@ -323,11 +330,6 @@ the rejection, report a metric or send an alert::
         }
     }
 
-The event gives access to the :class:`Symfony\\Component\\RateLimiter\\RateLimit`
-object (via ``getRateLimit()``), the name of the limiter defined in the
-``#[RateLimit]`` attribute (via ``getLimiterName()``) and the consumed key (via
-``getKey()``).
-
 .. note::
 
     This event is dispatched for observation only: it doesn't allow overriding
@@ -339,8 +341,7 @@ object (via ``getRateLimit()``), the name of the limiter defined in the
     ``#[RateLimit]`` attribute. Rejections coming from a rate limiter you
     inject and consume manually don't dispatch it.
 
-For full control over the limiter logic, inject the limiter service manually as
-shown in the next section.
+.. _rate-limiter-service:
 
 Injecting the Rate Limiter Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
