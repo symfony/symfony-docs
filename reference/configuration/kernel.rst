@@ -25,6 +25,23 @@ method of the kernel class, which you can override to return a different value.
 You can also change the build directory by defining an environment variable
 named ``APP_BUILD_DIR`` whose value is the absolute path of the build folder.
 
+Since the build directory (like the cache directory) contains only generated
+and reproducible files, there is no need to back it up. When the container is
+built, Symfony writes a `CACHEDIR.TAG`_ file into both directories to mark
+them accordingly. This standard convention is honored by backup tools like
+GNU tar (via the ``--exclude-caches`` option), rsync, Borg and Restic, which
+then skip those directories:
+
+.. code-block:: text
+
+    Signature: 8a477f597d28d172789f06886806bc55
+    # This file is a cache directory tag created by Symfony.
+    # For information about cache directory tags, see https://bford.info/cachedir/
+
+.. versionadded:: 8.2
+
+    The ``CACHEDIR.TAG`` files were introduced in Symfony 8.2.
+
 ``kernel.bundles``
 ------------------
 
@@ -77,6 +94,10 @@ can write data to this path at runtime.
 
 This value is also exposed via the :method:`Symfony\\Component\\HttpKernel\\Kernel::getCacheDir`
 method of the kernel class, which you can override to return a different value.
+
+As explained for :ref:`kernel.build_dir <configuration-kernel-build-directory>`,
+Symfony writes a ``CACHEDIR.TAG`` file into the cache directory so that
+backup tools can skip it.
 
 .. _configuration-kernel-charset:
 
@@ -410,6 +431,7 @@ This parameter stores the value of
 This parameter stores the value of
 :ref:`the framework.trusted_proxies parameter <reference-framework-trusted-proxies>`.
 
+.. _`CACHEDIR.TAG`: https://bford.info/cachedir/
 .. _`character encoding`: https://en.wikipedia.org/wiki/Character_encoding
 .. _`reproducible builds`: https://en.wikipedia.org/wiki/Reproducible_builds
 .. _`FrankenPHP`: https://frankenphp.dev
