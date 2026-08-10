@@ -258,6 +258,47 @@ method to check its validity::
         }
     }
 
+Generating and Checking CSRF Tokens in Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``csrf_token()`` Twig function and the ``isCsrfTokenValid()`` controller
+shortcut shown in the previous examples use the ``security.csrf.token_manager``
+service internally. If you need to generate or check CSRF tokens in your own
+services, use :doc:`autowiring </service_container/autowiring>` to inject that
+service by type-hinting the
+:class:`Symfony\\Component\\Security\\Csrf\\CsrfTokenManagerInterface`::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
+
+    use Symfony\Component\Security\Csrf\CsrfToken;
+    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+
+    class SomeService
+    {
+        public function __construct(
+            private CsrfTokenManagerInterface $csrfTokenManager,
+        ) {
+        }
+
+        public function someMethod(string $submittedToken): void
+        {
+            // gets the token value for the given ID; if that ID doesn't have
+            // a token yet, a new token is generated for it
+            $csrfToken = $this->csrfTokenManager->getToken('delete-item');
+            $tokenValue = $csrfToken->getValue();
+
+            // checks if the given token value is valid for the given token ID
+            $csrfToken = new CsrfToken('delete-item', $submittedToken);
+            $isValid = $this->csrfTokenManager->isTokenValid($csrfToken);
+
+            // ...
+        }
+    }
+
+The token manager also provides the ``refreshToken()`` and ``removeToken()``
+methods to regenerate or invalidate the token of the given ID.
+
 CSRF Tokens and Compression Side-Channel Attacks
 ------------------------------------------------
 
