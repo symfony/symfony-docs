@@ -21,7 +21,7 @@ These are the permissions required to run Symfony applications:
 * The ``var/cache/`` directory must be writable by the terminal user (the
   user running ``cache:warmup`` or ``cache:clear`` commands);
 * The ``var/cache/`` directory must be writable by the web server user if you use
-  a :doc:`filesystem-based cache </components/cache/adapters/filesystem_adapter>`.
+  a :doc:`filesystem-based cache </cache/adapters/filesystem_adapter>`.
 
 .. _setup-file-permissions:
 

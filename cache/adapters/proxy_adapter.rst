@@ -2,8 +2,10 @@ Proxy Cache Adapter
 ===================
 
 This adapter wraps a `PSR-6`_ compliant `cache item pool interface`_. It is used to integrate
-your application's cache item pool implementation with the Symfony :ref:`Cache Component <cache-component>`
-by consuming any implementation of ``Psr\Cache\CacheItemPoolInterface``.
+your application's cache item pool implementation with the Symfony Cache component
+by consuming any implementation of ``Psr\Cache\CacheItemPoolInterface``. Read the
+:ref:`section about PSR-6 cache pools <cache-component-psr6-caching>` to learn more
+about this caching API.
 
 It can also be used to prefix all keys automatically before storing items in the decorated pool,
 effectively allowing the creation of several namespaced pools out of a single one.

@@ -3,16 +3,16 @@ Redis Cache Adapter
 
 .. seealso::
 
-    This article explains how to configure the Redis adapter when using the
-    Cache as an independent component in any PHP application. Read the
-    :ref:`Symfony Cache configuration <cache-configuration-with-frameworkbundle>`
-    article if you are using it in a Symfony application.
+    This article explains how to create and configure the Redis adapter itself.
+    In Symfony applications, you can use the ``cache.adapter.redis`` and
+    ``cache.adapter.valkey`` services by
+    :ref:`configuring the cache <cache-configuration-with-frameworkbundle>`.
 
 This adapter stores the values in-memory using one (or more) `Redis server`_
 or `Valkey`_ server instances.
 
-Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
-:doc:`Memcached adapter </components/cache/adapters/memcached_adapter>`, it is not limited to the current server's
+Unlike the :doc:`APCu adapter </cache/adapters/apcu_adapter>`, and similarly to the
+:doc:`Memcached adapter </cache/adapters/memcached_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment. The ability
 to utilize a cluster of servers to provide redundancy and/or fail-over is also available.
 
