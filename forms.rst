@@ -21,6 +21,12 @@ install the form feature before using it:
 
     $ composer require symfony/form
 
+.. include:: /components/require_autoload.rst.inc
+
+In Symfony applications, the framework creates and configures the form factory
+for you. If you use the Form component in any other PHP application, you must
+create that factory yourself, as explained in :ref:`forms-standalone-setup`.
+
 Understanding How Forms Work
 ----------------------------
 
@@ -218,47 +224,75 @@ Symfony provides a "form builder" object which allows you to describe the form
 fields using a fluent interface. Later, this builder creates the actual form
 object used to render and process contents.
 
+.. _component-form-intro-create-simple-form:
 .. _creating-forms-in-controllers:
 
 Creating Forms in Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your controller extends from the :ref:`AbstractController <the-base-controller-class-services>`,
-use the ``createFormBuilder()`` helper::
+use the ``createFormBuilder()`` helper:
 
-    // src/Controller/TaskController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use App\Entity\Task;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Form\Extension\Core\Type\DateType;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
+    .. code-block:: php-symfony
 
-    class TaskController extends AbstractController
-    {
-        public function new(Request $request): Response
+        // src/Controller/TaskController.php
+        namespace App\Controller;
+
+        use App\Entity\Task;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class TaskController extends AbstractController
         {
-            // creates a task object and initializes some data for this example
-            $task = new Task();
-            $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
+            public function new(Request $request): Response
+            {
+                // creates a task object and initializes some data for this example
+                $task = new Task();
+                $task->setTask('Write a blog post');
+                $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
-            $form = $this->createFormBuilder($task)
-                ->add('task', TextType::class)
-                ->add('dueDate', DateType::class)
-                ->add('save', SubmitType::class, ['label' => 'Create Task'])
-                ->getForm();
+                $form = $this->createFormBuilder($task)
+                    ->add('task', TextType::class)
+                    ->add('dueDate', DateType::class)
+                    ->add('save', SubmitType::class, ['label' => 'Create Task'])
+                    ->getForm();
 
-            // ...
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php-standalone
+
+        use App\Entity\Task;
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+        // creates a task object and initializes some data for this example
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTimeImmutable('tomorrow'));
+
+        // $formFactory is created as explained in the section about using
+        // the Form component in standalone applications
+        $form = $formFactory->createBuilder(FormType::class, $task)
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create Task'])
+            ->getForm();
 
 If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
-use the ``createBuilder()`` method of the ``form.factory`` service.
+use the ``createBuilder()`` method of the ``form.factory`` service. You can
+also inject that service by type-hinting a constructor or method argument with
+:class:`Symfony\\Component\\Form\\FormFactoryInterface`.
 
 In this example, you've added two fields to your form - ``task`` and ``dueDate``
 - corresponding to the ``task`` and ``dueDate`` properties of the ``Task``
@@ -310,28 +344,44 @@ implements the interface and provides some utilities::
 The form class contains all the directions needed to create the task form. In
 controllers extending from the :ref:`AbstractController <the-base-controller-class-services>`,
 use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
-``form.factory`` service)::
+``form.factory`` service):
 
-    // src/Controller/TaskController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use App\Form\Type\TaskType;
-    // ...
+    .. code-block:: php-symfony
 
-    class TaskController extends AbstractController
-    {
-        public function new(): Response
+        // src/Controller/TaskController.php
+        namespace App\Controller;
+
+        use App\Form\Type\TaskType;
+        // ...
+
+        class TaskController extends AbstractController
         {
-            // creates a task object and initializes some data for this example
-            $task = new Task();
-            $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
+            public function new(): Response
+            {
+                // creates a task object and initializes some data for this example
+                $task = new Task();
+                $task->setTask('Write a blog post');
+                $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
-            $form = $this->createForm(TaskType::class, $task);
+                $form = $this->createForm(TaskType::class, $task);
 
-            // ...
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php-standalone
+
+        use App\Entity\Task;
+        use App\Form\Type\TaskType;
+
+        // creates a task object and initializes some data for this example
+        $task = new Task();
+        $task->setTask('Write a blog post');
+        $task->setDueDate(new \DateTimeImmutable('tomorrow'));
+
+        $form = $formFactory->create(TaskType::class, $task);
 
 .. _form-data-class:
 
@@ -427,36 +477,51 @@ If you're using the :ref:`default services.yaml configuration <service-container
 this works automatically. See :doc:`/form/create_custom_field_type` for more
 information about injecting services in custom form types.
 
+.. _component-form-intro-rendering-form:
 .. _rendering-forms:
 
 Rendering Forms
 ---------------
 
-Now that the form has been created, the next step is to render it::
+Now that the form has been created, the next step is to render it:
 
-    // src/Controller/TaskController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use App\Entity\Task;
-    use App\Form\Type\TaskType;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
+    .. code-block:: php-symfony
 
-    class TaskController extends AbstractController
-    {
-        public function new(Request $request): Response
+        // src/Controller/TaskController.php
+        namespace App\Controller;
+
+        use App\Entity\Task;
+        use App\Form\Type\TaskType;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class TaskController extends AbstractController
         {
-            $task = new Task();
-            // ...
+            public function new(Request $request): Response
+            {
+                $task = new Task();
+                // ...
 
-            $form = $this->createForm(TaskType::class, $task);
+                $form = $this->createForm(TaskType::class, $task);
 
-            return $this->render('task/new.html.twig', [
-                'form' => $form,
-            ]);
+                return $this->render('task/new.html.twig', [
+                    'form' => $form,
+                ]);
+            }
         }
-    }
+
+    .. code-block:: php-standalone
+
+        // ...
+
+        // the Twig environment is configured as explained in the section
+        // about using the Form component in standalone applications
+        echo $twig->render('task/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
 
 Internally, the ``render()`` method calls ``$form->createView()`` to
 transform the form into a *form view* instance.
@@ -468,6 +533,9 @@ render the form contents:
 
     {# templates/task/new.html.twig #}
     {{ form(form) }}
+
+.. image:: /_images/form/simple-form.png
+    :alt: An HTML form showing a text box labelled "Task", three select boxes for a year, month and day labelled "Due date" and a button labelled "Create Task".
 
 That's it! The :ref:`form() function <reference-forms-twig-form>` renders all
 fields *and* the ``<form>`` start and end tags. By default, the form method is
@@ -540,6 +608,7 @@ In addition to form themes, Symfony allows you to
 multiple functions to render each field part separately (widgets, labels,
 errors, help messages, etc.)
 
+.. _component-form-intro-handling-submission:
 .. _processing-forms:
 
 Processing Forms
@@ -552,38 +621,84 @@ keeping the code concise and maintainable.
 
 Processing a form means to translate user-submitted data back to the properties
 of an object. To make this happen, the submitted data from the user must be
-written into the form object::
+written into the form object:
 
-    // src/Controller/TaskController.php
+.. configuration-block::
 
-    // ...
-    use Symfony\Component\HttpFoundation\Request;
+    .. code-block:: php-symfony
 
-    class TaskController extends AbstractController
-    {
-        public function new(Request $request): Response
+        // src/Controller/TaskController.php
+
+        // ...
+        use Symfony\Component\HttpFoundation\Request;
+
+        class TaskController extends AbstractController
         {
-            // set up a fresh $task object (remove the example data)
-            $task = new Task();
+            public function new(Request $request): Response
+            {
+                // set up a fresh $task object (remove the example data)
+                $task = new Task();
 
-            $form = $this->createForm(TaskType::class, $task);
+                $form = $this->createForm(TaskType::class, $task);
 
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()) {
-                // $form->getData() holds the submitted values
-                // but, the original `$task` variable has also been updated
-                $task = $form->getData();
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()) {
+                    // $form->getData() holds the submitted values
+                    // but, the original `$task` variable has also been updated
+                    $task = $form->getData();
 
-                // ... perform some action, such as saving the task to the database
+                    // ... perform some action, such as saving the task to the database
 
-                return $this->redirectToRoute('task_success');
+                    return $this->redirectToRoute('task_success');
+                }
+
+                return $this->render('task/new.html.twig', [
+                    'form' => $form,
+                ]);
             }
+        }
 
-            return $this->render('task/new.html.twig', [
-                'form' => $form,
+    .. code-block:: php-standalone
+
+        use App\Entity\Task;
+        use App\Form\Type\TaskType;
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+        use Symfony\Component\HttpFoundation\Request;
+
+        // ...
+
+        $task = new Task();
+        $form = $formFactory->create(TaskType::class, $task);
+
+        $request = Request::createFromGlobals();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $task = $form->getData();
+
+            // ... perform some action, such as saving the task to the database
+
+            $response = new RedirectResponse('/task/success');
+            $response->prepare($request);
+
+            $response->send();
+        } else {
+            echo $twig->render('task/new.html.twig', [
+                'form' => $form->createView(),
             ]);
         }
-    }
+
+In standalone applications, passing the ``Request`` object to the
+``handleRequest()`` method requires registering the ``HttpFoundationExtension``
+in your form factory, as explained in :ref:`forms-standalone-setup`.
+
+.. warning::
+
+    The form's ``createView()`` method must be called *after* ``handleRequest()``.
+    Otherwise, when using :doc:`form events </form/events>`, changes done
+    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
 
 This controller follows a common pattern for handling forms and has three
 possible paths:
@@ -785,6 +900,7 @@ method to get the clicked button's name::
         // ...
     }
 
+.. _component-form-intro-validation:
 .. _validating-forms:
 
 Validating Forms
@@ -893,6 +1009,50 @@ corresponding errors printed out with the form.
 
 To see the second approach - adding constraints to the form - refer to
 :ref:`this section <form-option-constraints>`. Both approaches can be used together.
+
+.. seealso::
+
+    See :doc:`/reference/constraints` for the list of all built-in validation
+    constraints.
+
+Accessing Form Errors
+~~~~~~~~~~~~~~~~~~~~~
+
+You can use the :method:`Symfony\\Component\\Form\\FormInterface::getErrors`
+method to access the list of errors. It returns a
+:class:`Symfony\\Component\\Form\\FormErrorIterator` instance::
+
+    $form = ...;
+
+    // ...
+
+    // a FormErrorIterator instance, but only errors attached to this
+    // form level (e.g. global errors)
+    $errors = $form->getErrors();
+
+    // a FormErrorIterator instance, but only errors attached to the
+    // "firstName" field
+    $errors = $form['firstName']->getErrors();
+
+    // a FormErrorIterator instance including child forms in a flattened structure
+    // use getOrigin() to determine the form causing the error
+    $errors = $form->getErrors(true);
+
+    // a FormErrorIterator instance including child forms without flattening the output structure
+    $errors = $form->getErrors(true, false);
+
+Clearing Form Errors
+~~~~~~~~~~~~~~~~~~~~
+
+Any errors can be manually cleared using the
+:method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors`
+method. This is useful when you'd like to validate the form without showing
+validation errors to the user (i.e. during a partial AJAX submission or
+:doc:`dynamic form modification </form/dynamic_form_modification>`).
+
+Because clearing the errors makes the form valid,
+:method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors`
+should only be called after testing whether the form is valid.
 
 .. _form-disabling-validation:
 
@@ -1103,29 +1263,46 @@ use the ``setAction()`` and ``setMethod()`` methods to change this::
         }
     }
 
-When building the form in a class, pass the action and method as form options::
+When building the form in a class, pass the action and method as form options:
 
-    // src/Controller/TaskController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use App\Form\TaskType;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    // ...
+    .. code-block:: php-symfony
 
-    class TaskController extends AbstractController
-    {
-        public function new(): Response
+        // src/Controller/TaskController.php
+        namespace App\Controller;
+
+        use App\Form\TaskType;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        // ...
+
+        class TaskController extends AbstractController
         {
-            // ...
+            public function new(): Response
+            {
+                // ...
 
-            $form = $this->createForm(TaskType::class, $task, [
-                'action' => $this->generateUrl('target_route'),
-                'method' => 'GET',
-            ]);
+                $form = $this->createForm(TaskType::class, $task, [
+                    'action' => $this->generateUrl('target_route'),
+                    'method' => 'GET',
+                ]);
 
-            // ...
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php-standalone
+
+        use App\Form\TaskType;
+
+        // ...
+
+        // pass the URL directly because the generateUrl() method is
+        // provided by the Symfony framework
+        $form = $formFactory->create(TaskType::class, $task, [
+            'action' => '/search',
+            'method' => 'GET',
+        ]);
 
 Finally, you can override the action and method in the template by passing them
 to the ``form()`` or the ``form_start()`` helper functions:
@@ -1446,38 +1623,70 @@ this behavior and tie the form to an object instead:
 
 If you *don't* do either of these, then the form will return the data as an array.
 In this example, since ``$defaultData`` is not an object (and no ``data_class``
-option is set), ``$form->getData()`` ultimately returns an array::
+option is set), ``$form->getData()`` ultimately returns an array:
 
-    // src/Controller/ContactController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
+    .. code-block:: php-symfony
 
-    class ContactController extends AbstractController
-    {
-        public function contact(Request $request): Response
+        // src/Controller/ContactController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Response;
+        // ...
+
+        class ContactController extends AbstractController
         {
-            $defaultData = ['message' => 'Type your message here'];
-            $form = $this->createFormBuilder($defaultData)
-                ->add('name', TextType::class)
-                ->add('email', EmailType::class)
-                ->add('message', TextareaType::class)
-                ->add('send', SubmitType::class)
-                ->getForm();
+            public function contact(Request $request): Response
+            {
+                $defaultData = ['message' => 'Type your message here'];
+                $form = $this->createFormBuilder($defaultData)
+                    ->add('name', TextType::class)
+                    ->add('email', EmailType::class)
+                    ->add('message', TextareaType::class)
+                    ->add('send', SubmitType::class)
+                    ->getForm();
 
-            $form->handleRequest($request);
+                $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                // data is an array with "name", "email", and "message" keys
-                $data = $form->getData();
+                if ($form->isSubmitted() && $form->isValid()) {
+                    // data is an array with "name", "email", and "message" keys
+                    $data = $form->getData();
+                }
+
+                // ... render the form
             }
-
-            // ... render the form
         }
-    }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Extension\Core\Type\EmailType;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+        use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\Request;
+
+        // ...
+
+        $defaultData = ['message' => 'Type your message here'];
+        $form = $formFactory->createBuilder(FormType::class, $defaultData)
+            ->add('name', TextType::class)
+            ->add('email', EmailType::class)
+            ->add('message', TextareaType::class)
+            ->add('send', SubmitType::class)
+            ->getForm();
+
+        $form->handleRequest(Request::createFromGlobals());
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // data is an array with "name", "email", and "message" keys
+            $data = $form->getData();
+        }
+
+        // ... render the form
 
 .. tip::
 
@@ -1647,6 +1856,345 @@ To achieve this, use the ``expression`` option of the
     ``validation_groups`` form option with a callable. See
     :doc:`/form/validation_groups`.
 
+.. _forms-standalone-setup:
+
+Using the Form Component in Standalone Applications
+---------------------------------------------------
+
+In Symfony applications, a fully configured form factory is available as the
+``form.factory`` service, so you don't need to set up anything to start using
+forms. In any other PHP application, you must create that form factory
+yourself, using the factory method ``Forms::createFormFactory``::
+
+    use Symfony\Component\Form\Forms;
+
+    $formFactory = Forms::createFormFactory();
+
+This factory can already be used to create basic forms, but it is lacking
+support for very important features:
+
+* **Request Handling:** Support for request handling and file uploads;
+* **CSRF Protection:** Support for protection against Cross-Site-Request-Forgery
+  (CSRF) attacks;
+* **Templating:** Integration with a templating layer that allows you to reuse
+  HTML fragments when rendering a form;
+* **Translation:** Support for translating error messages, field labels and
+  other strings;
+* **Validation:** Integration with a validation library to generate error
+  messages for submitted data.
+
+The Symfony Form component relies on other libraries to solve these problems.
+Most of the time you will use Twig and the Symfony
+:doc:`HttpFoundation </components/http_foundation>`,
+:doc:`Translation </translation>` and :doc:`Validator </validation>` components,
+but you can replace any of these with a different library of your choice.
+
+The following sections explain how to plug these libraries into the form
+factory.
+
+.. tip::
+
+    For a working example, see https://github.com/webmozart/standalone-forms
+
+Request Handling
+~~~~~~~~~~~~~~~~
+
+The code examples of this article pass the current
+:class:`Symfony\\Component\\HttpFoundation\\Request` object to the
+:method:`Symfony\\Component\\Form\\Form::handleRequest` method when processing
+forms. Doing that in standalone applications requires adding the
+:class:`Symfony\\Component\\Form\\Extension\\HttpFoundation\\HttpFoundationExtension`
+to your form factory::
+
+    use Symfony\Component\Form\Extension\HttpFoundation\HttpFoundationExtension;
+    use Symfony\Component\Form\Forms;
+
+    $formFactory = Forms::createFormFactoryBuilder()
+        ->addExtension(new HttpFoundationExtension())
+        ->getFormFactory();
+
+.. note::
+
+    For more information about the HttpFoundation component or how to
+    install it, see :doc:`/components/http_foundation`.
+
+If your application does not use the HttpFoundation component, call the
+:method:`Symfony\\Component\\Form\\Form::handleRequest` method with no
+arguments::
+
+    $form->handleRequest();
+
+Internally, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
+object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
+``$_GET``) based on the HTTP method configured on the form (POST is default).
+
+.. seealso::
+
+    If you need more control over exactly when your form is submitted or which
+    data is passed to it,
+    :ref:`use the submit() method to handle form submissions <processing-forms-submit-method>`.
+
+CSRF Protection
+~~~~~~~~~~~~~~~
+
+Protection against CSRF attacks is built into the Form component, but you need
+to explicitly enable it or replace it with a custom solution. If you want to
+use the built-in support, first install the Security CSRF component:
+
+.. code-block:: terminal
+
+    $ composer require symfony/security-csrf
+
+The following snippet adds CSRF protection to the form factory::
+
+    use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\HttpFoundation\RequestStack;
+    use Symfony\Component\Security\Csrf\CsrfTokenManager;
+    use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+    use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
+
+    // creates a RequestStack object using the current request
+    $requestStack = new RequestStack([$request]);
+
+    $csrfGenerator = new UriSafeTokenGenerator();
+    $csrfStorage = new SessionTokenStorage($requestStack);
+    $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
+
+    $formFactory = Forms::createFormFactoryBuilder()
+        // ...
+        ->addExtension(new CsrfExtension($csrfManager))
+        ->getFormFactory();
+
+.. versionadded:: 7.2
+
+    Support for passing requests to the constructor of the ``RequestStack``
+    class was introduced in Symfony 7.2.
+
+Internally, this extension will automatically add a hidden field to every
+form (called ``_token`` by default) whose value is automatically generated by
+the CSRF generator and validated when binding the form.
+
+.. tip::
+
+    If you're not using the HttpFoundation component, you can use
+    :class:`Symfony\\Component\\Security\\Csrf\\TokenStorage\\NativeSessionTokenStorage`
+    instead, which relies on PHP's native session handling::
+
+        use Symfony\Component\Security\Csrf\TokenStorage\NativeSessionTokenStorage;
+
+        $csrfStorage = new NativeSessionTokenStorage();
+        // ...
+
+You can disable CSRF protection per form using the ``csrf_protection`` option::
+
+    use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+    $form = $formFactory->createBuilder(FormType::class, null, ['csrf_protection' => false])
+        ->getForm();
+
+Twig Templating
+~~~~~~~~~~~~~~~
+
+If you're using the Form component to process HTML forms, you'll need a way to
+render your form as HTML form fields (complete with field values, errors, and
+labels). If you use `Twig`_ as your template engine, the Form component offers a
+rich integration.
+
+To use the integration, you'll need the twig bridge, which provides integration
+between Twig and several Symfony components:
+
+.. code-block:: terminal
+
+    $ composer require symfony/twig-bridge
+
+The TwigBridge integration provides you with several
+:ref:`Twig Functions <reference-forms-twig-functions>`
+that help you render the HTML widget, label, help and errors for each field
+(as well as a few other things). To configure the integration, you'll need
+to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
+
+    use Symfony\Bridge\Twig\Extension\FormExtension;
+    use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+    use Symfony\Component\Form\FormRenderer;
+    use Symfony\Component\Form\Forms;
+    use Twig\Environment;
+    use Twig\Loader\FilesystemLoader;
+    use Twig\RuntimeLoader\FactoryRuntimeLoader;
+
+    // the Twig file that holds all the default markup for rendering forms
+    // this file comes with TwigBridge
+    $defaultFormTheme = 'form_div_layout.html.twig';
+
+    // the path to TwigBridge library so Twig can locate the
+    // form_div_layout.html.twig file
+    $appVariableReflection = new \ReflectionClass('\Symfony\Bridge\Twig\AppVariable');
+    $vendorTwigBridgeDirectory = dirname($appVariableReflection->getFileName());
+    // the path to your other templates
+    $viewsDirectory = realpath(__DIR__.'/../views');
+
+    $twig = new Environment(new FilesystemLoader([
+        $viewsDirectory,
+        $vendorTwigBridgeDirectory.'/Resources/views/Form',
+    ]));
+    $formEngine = new TwigRendererEngine([$defaultFormTheme], $twig);
+    $twig->addRuntimeLoader(new FactoryRuntimeLoader([
+        FormRenderer::class => function () use ($formEngine, $csrfManager): FormRenderer {
+            return new FormRenderer($formEngine, $csrfManager);
+        },
+    ]));
+
+    // ... (see the previous CSRF Protection section for more information)
+
+    // adds the FormExtension to Twig
+    $twig->addExtension(new FormExtension());
+
+    // creates a form factory
+    $formFactory = Forms::createFormFactoryBuilder()
+        // ...
+        ->getFormFactory();
+
+The exact details of your `Twig Configuration`_ will vary, but the goal is
+always to add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`
+to Twig, which gives you access to the Twig functions for rendering forms.
+To do this, you first need to create a :class:`Symfony\\Bridge\\Twig\\Form\\TwigRendererEngine`,
+where you define your :doc:`form themes </form/form_themes>`
+(i.e. resources/files that define form HTML markup).
+
+For general details on rendering forms, see :doc:`/form/form_customization`.
+
+.. note::
+
+    If you use the Twig integration, read the
+    :ref:`Translation <component-form-intro-install-translation>` section below
+    for details on the needed translation filters.
+
+.. _component-form-intro-install-translation:
+
+Translation
+~~~~~~~~~~~
+
+If you're using the Twig integration with one of the default form theme files
+(e.g. ``form_div_layout.html.twig``), there is a Twig filter (``trans``)
+that is used for translating form labels, errors, option
+text and other strings.
+
+To add the ``trans`` Twig filter, you can either use the built-in
+:class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension` that integrates
+with Symfony's Translation component, or add the Twig filter yourself,
+via your own Twig extension.
+
+To use the built-in integration, be sure that your project has Symfony's
+Translation and :doc:`Config </components/config>` components
+installed:
+
+.. code-block:: terminal
+
+    $ composer require symfony/translation symfony/config
+
+Next, add the :class:`Symfony\\Bridge\\Twig\\Extension\\TranslationExtension`
+to your ``Twig\Environment`` instance::
+
+    use Symfony\Bridge\Twig\Extension\TranslationExtension;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Translation\Loader\XliffFileLoader;
+    use Symfony\Component\Translation\Translator;
+
+    // creates the Translator
+    $translator = new Translator('en');
+    // somehow load some translations into it
+    $translator->addLoader('xlf', new XliffFileLoader());
+    $translator->addResource(
+        'xlf',
+        __DIR__.'/path/to/translations/messages.en.xlf',
+        'en'
+    );
+
+    // adds the TranslationExtension (it gives us trans filter)
+    $twig->addExtension(new TranslationExtension($translator));
+
+    $formFactory = Forms::createFormFactoryBuilder()
+        // ...
+        ->getFormFactory();
+
+Depending on how your translations are being loaded, you can now add string
+keys, such as field labels, and their translations to your translation files.
+
+For more details on translations, see :doc:`/translation`.
+
+Validation
+~~~~~~~~~~
+
+The Form component comes with tight (but optional) integration with Symfony's
+Validator component. If you're using a different solution for validation,
+no problem! Take the submitted/bound data of your form (which is an
+array or object) and pass it through your own validation system.
+
+To use the integration with Symfony's Validator component, first make sure
+it's installed in your application:
+
+.. code-block:: terminal
+
+    $ composer require symfony/validator
+
+If you're not familiar with Symfony's Validator component, read more about
+it: :doc:`/validation`. The Form component comes with a
+:class:`Symfony\\Component\\Form\\Extension\\Validator\\ValidatorExtension`
+class, which automatically applies validation to your data on bind. These
+errors are then mapped to the correct field and rendered.
+
+Your integration with the Validation component will look something like this::
+
+    use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Validator\Validation;
+
+    $vendorDirectory = realpath(__DIR__.'/../vendor');
+    $vendorFormDirectory = $vendorDirectory.'/symfony/form';
+    $vendorValidatorDirectory = $vendorDirectory.'/symfony/validator';
+
+    // creates the validator - details will vary
+    $validator = Validation::createValidator();
+
+    // there are built-in translations for the core error messages
+    $translator->addResource(
+        'xlf',
+        $vendorFormDirectory.'/Resources/translations/validators.en.xlf',
+        'en',
+        'validators'
+    );
+    $translator->addResource(
+        'xlf',
+        $vendorValidatorDirectory.'/Resources/translations/validators.en.xlf',
+        'en',
+        'validators'
+    );
+
+    $formFactory = Forms::createFormFactoryBuilder()
+        // ...
+        ->addExtension(new ValidatorExtension($validator))
+        ->getFormFactory();
+
+For more information about form validation, see :ref:`validating-forms`.
+
+Accessing the Form Factory
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Your application only needs one form factory, and that one factory object
+should be used to create any and all form objects in your application. This
+means that you should create it in some central, bootstrap part of your
+application and then access it whenever you need to build a form. If you're
+using a service container (like provided by the
+:doc:`DependencyInjection component </components/dependency_injection>`), add
+the form factory to your container and fetch it from there.
+
+.. note::
+
+    The ``php-standalone`` code examples of this article store the form
+    factory in a local variable called ``$formFactory``. You will probably
+    need to create this object in some more "global" way so you can access
+    it from anywhere.
+
 Troubleshooting
 ---------------
 
@@ -1775,5 +2323,7 @@ Misc.:
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`Twig`: https://twig.symfony.com
+.. _`Twig Configuration`: https://twig.symfony.com/doc/3.x/intro.html
 .. _`HTTP 422 Unprocessable Content`: https://www.rfc-editor.org/rfc/rfc9110.html#name-422-unprocessable-content
 .. _`Symfony UX Turbo`: https://ux.symfony.com/turbo

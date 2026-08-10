@@ -676,7 +676,7 @@ migrating the blog from flat PHP to Symfony has improved your life:
   :doc:`routing </routing>`, or rendering :doc:`controllers </controller>`;
 
 * Symfony gives you **access to open source tools** such as `Doctrine`_ and the
-  `Twig`_, :doc:`Security </security>`, :doc:`Form </components/form>`,
+  `Twig`_, :doc:`Security </security>`, :doc:`Form </forms>`,
   `Validator`_ and `Translation`_ components (to name a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the Routing
