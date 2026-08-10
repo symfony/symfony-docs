@@ -201,7 +201,7 @@ serialized because they are simple data objects::
     $serializedEmail = serialize($email);
 
 A common use case is to store serialized email messages, include them in a
-message sent with the :doc:`Messenger component </components/messenger>` and
+message sent with the :doc:`Messenger component </messenger>` and
 recreate them later when sending them. Use the
 :class:`Symfony\\Component\\Mime\\RawMessage` class to recreate email messages
 from their serialized contents::

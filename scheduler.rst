@@ -40,7 +40,7 @@ jobs (e.g. dynamic schedules based on certain conditions).
 
 At its core, the Scheduler component allows you to create a task (called a message)
 that is executed by a service and repeated on some schedule. It has some similarities
-with the :doc:`Symfony Messenger </components/messenger>` component (such as message,
+with the :doc:`Symfony Messenger </messenger>` component (such as message,
 handler, bus, transport, etc.), but the main difference is that Messenger can't
 deal with repetitive tasks at regular intervals.
 
