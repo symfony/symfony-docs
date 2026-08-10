@@ -376,9 +376,8 @@ Service
 
 .. versionadded:: 8.2
 
-    The ``WhatsApp`` integration was introduced in Symfony 8.2.
-    The ``author`` DSN option for the LinkedIn bridge was introduced in
-    Symfony 8.2.
+    The ``WhatsApp`` integration and the ``author`` DSN option for the LinkedIn
+    bridge were introduced in Symfony 8.2.
 
 .. warning::
 
