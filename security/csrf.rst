@@ -268,9 +268,11 @@ method to check its validity, passing the same token ID used in the template::
 
 .. _csrf-controller-attributes:
 
-Alternatively you can use the
-:class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
-attribute on the controller action::
+Checking CSRF Tokens with Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of checking the token in the controller code, you can use the
+:class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid` attribute::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -282,17 +284,6 @@ attribute on the controller action::
     {
         // ... do something, like deleting an object
     }
-
-Suppose you want a CSRF token per item, so in the template you have something like the following:
-
-.. code-block:: html+twig
-
-    <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
-        {# the argument of csrf_token() is the token ID, an arbitrary string used to generate the token #}
-        <input type="hidden" name="token" value="{{ csrf_token('delete-item-' ~ post.id) }}">
-
-        <button type="submit">Delete item</button>
-    </form>
 
 This attribute can also be applied to a controller class. When used this way,
 the CSRF token validation will be applied to **all actions** defined in that
@@ -308,10 +299,24 @@ controller::
         // ...
     }
 
-The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
-attribute also accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression`
-object evaluated to the id::
+In all previous examples, the token ID passed to the attribute is a static
+string. However, sometimes the token ID is dynamic. For example, to generate
+a different CSRF token per item, you can include the item ID in it:
 
+.. code-block:: html+twig
+
+    <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
+        {# the argument of csrf_token() is the token ID, an arbitrary string used to generate the token #}
+        <input type="hidden" name="token" value="{{ csrf_token('delete-item-' ~ post.id) }}">
+
+        <button type="submit">Delete item</button>
+    </form>
+
+A static string can't match these dynamic token IDs. In these cases, define
+the token ID using an :class:`Symfony\\Component\\ExpressionLanguage\\Expression`
+object, which is evaluated at runtime against the controller arguments::
+
+    use Symfony\Component\ExpressionLanguage\Expression;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
