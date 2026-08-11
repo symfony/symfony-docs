@@ -780,7 +780,7 @@ This section shows the LDAP authentication options when using a login form, but
 the same options work when using HTTP basic (``http_basic_ldap``) or JSON login
 (``json_login_ldap``) with LDAP.
 
-For even more details, see :doc:`/security/ldap`.
+For even more details, see the :doc:`LDAP documentation </security/ldap>`.
 
 **Authentication**
 
@@ -824,7 +824,7 @@ statically using the ``dn_string`` config option.
 
 Users will still be fetched from the configured user provider. If you wish to
 fetch your users from an LDAP server, you will need to use the
-:doc:`LDAP User Provider </security/ldap>` and any of these authentication
+:ref:`LDAP user provider <security-ldap-user-provider>` and any of these authentication
 providers: ``form_login_ldap`` or ``http_basic_ldap`` or ``json_login_ldap``.
 
 .. _reference-security-firewall-x509:
