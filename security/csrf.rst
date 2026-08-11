@@ -324,7 +324,7 @@ Example::
 The token is checked against each selected source, and validation fails if none match.
 
 Generating and Checking CSRF Tokens in Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------------------
 
 The ``csrf_token()`` Twig function and the ``isCsrfTokenValid()`` controller
 shortcut shown in the previous examples use the ``security.csrf.token_manager``
