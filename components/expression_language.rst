@@ -206,7 +206,7 @@ ones and injecting this using the constructor::
 
 .. seealso::
 
-    See the :doc:`/components/cache` documentation for more information about
+    See the :doc:`/cache` documentation for more information about
     available cache adapters.
 
 Using Parsed and Serialized Expressions

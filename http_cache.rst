@@ -6,6 +6,12 @@ how efficient your application, each request will always contain more overhead
 than serving a static file. Usually, that's fine. But when you need your requests
 to be lightning fast, you need HTTP caching.
 
+.. seealso::
+
+    This article explains how to cache entire HTTP responses. If you want to
+    cache arbitrary data in your application code (e.g. the result of database
+    queries or heavy computations), read the :doc:`Cache </cache>` article.
+
 Caching on the Shoulders of Giants
 ----------------------------------
 

@@ -1501,7 +1501,7 @@ decorator that enables caching of HTTP responses and serving them from cache
 storage on subsequent requests, as described in `RFC 9111`_.
 
 Internally, it relies on a :class:`tag aware cache <Symfony\\Contracts\\Cache\\TagAwareCacheInterface>`,
-so the :doc:`Cache component </components/cache>` must be installed in your application.
+so the :doc:`Cache component </cache>` must be installed in your application.
 
 .. tip::
 
@@ -1597,7 +1597,7 @@ so the :doc:`Cache component </components/cache>` must be installed in your appl
 .. versionadded:: 7.4
 
     In Symfony 7.4, caching was refactored to comply with `RFC 9111`_ and to
-    leverage the :doc:`Cache component </components/cache>`. In previous versions,
+    leverage the :doc:`Cache component </cache>`. In previous versions,
     it relied on ``HttpCache`` from the HttpKernel component.
 
 Limit the Number of Requests

@@ -963,7 +963,7 @@ If a worker is restarted on day 2, the message will be sent 3 days from the rest
 While this behavior may not necessarily pose a problem, there is a possibility that it may not align with what you are seeking.
 
 That's why the scheduler allows you to remember the last execution date of a message
-via the ``stateful`` option (and the :doc:`Cache component </components/cache>`).
+via the ``stateful`` option (and the :doc:`Cache component </cache>`).
 This allows the system to retain the state of the schedule, ensuring that when a
 worker is restarted, it resumes from the point it left off::
 

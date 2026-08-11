@@ -2,8 +2,8 @@ Memcached Cache Adapter
 =======================
 
 This adapter stores the values in-memory using one (or more) `Memcached server`_
-instances. Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
-:doc:`Redis adapter </components/cache/adapters/redis_adapter>`, it is not limited to the current server's
+instances. Unlike the :doc:`APCu adapter </cache/adapters/apcu_adapter>`, and similarly to the
+:doc:`Redis adapter </cache/adapters/redis_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment.
 The ability to utilize a cluster of servers to provide redundancy and/or fail-over
 is also available.
@@ -83,19 +83,19 @@ Below are common examples of valid DSNs showing a combination of available value
 
     $client = MemcachedAdapter::createConnection([
         // hostname + port
-        'memcached://my.server.com:11211'
+        'memcached://my.server.com:11211',
 
         // hostname without port + SASL username and password
-        'memcached://rmf:abcdef@localhost'
+        'memcached://rmf:abcdef@localhost',
 
         // IP address instead of hostname + weight
-        'memcached://127.0.0.1?weight=50'
+        'memcached://127.0.0.1?weight=50',
 
         // socket instead of hostname/IP + SASL username and password
-        'memcached://janesmith:mypassword@/var/run/memcached.sock'
+        'memcached://janesmith:mypassword@/var/run/memcached.sock',
 
         // socket instead of hostname/IP + weight
-        'memcached:///var/run/memcached.sock?weight=20'
+        'memcached:///var/run/memcached.sock?weight=20',
     ]);
 
 Configure the Options
