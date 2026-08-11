@@ -1435,7 +1435,7 @@ decorator that enables caching of HTTP responses and serving them from cache
 storage on subsequent requests, as described in `RFC 9111`_.
 
 Internally, it relies on a :class:`tag aware cache <Symfony\\Contracts\\Cache\\TagAwareCacheInterface>`,
-so the :doc:`Cache component </components/cache>` must be installed in your application.
+so the :doc:`Cache component </cache>` must be installed in your application.
 
 .. tip::
 
