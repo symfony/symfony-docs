@@ -191,8 +191,9 @@ CSRF Protection in Login Form and Logout Action
 
 Read the following:
 
-* :ref:`CSRF Protection in Login Forms <form_login-csrf>`;
-* :ref:`CSRF protection for the logout action <reference-security-logout-csrf>`.
+* :ref:`CSRF Protection in Login Forms <form_login-csrf>`
+* :ref:`CSRF protection for the logout action <reference-security-logout-csrf>`
+* :ref:`CSRF protection in user impersonation forms <security-impersonation-form>`
 
 .. _csrf-protection-in-html-forms:
 
@@ -327,6 +328,8 @@ Example::
     }
 
 The token is checked against each selected source, and validation fails if none match.
+
+.. _csrf-token-manager:
 
 Generating and Checking CSRF Tokens in Services
 -----------------------------------------------
