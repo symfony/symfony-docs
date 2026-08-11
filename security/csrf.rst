@@ -234,7 +234,7 @@ generate a CSRF token in the template and store it as a hidden form field:
 .. code-block:: html+twig
 
     <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
-        {# the argument of csrf_token() is an arbitrary string used to generate the token #}
+        {# the argument of csrf_token() is the token ID, an arbitrary string used to generate the token #}
         <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}">
 
         <button type="submit">Delete item</button>
@@ -252,7 +252,7 @@ method to check its validity::
     {
         $submittedToken = $request->getPayload()->get('token');
 
-        // 'delete-item' is the same value used in the template to generate the token
+        // 'delete-item' is the same token ID used in the template to generate the token
         if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
             // ... do something, like deleting an object
         }
@@ -283,7 +283,7 @@ service by type-hinting the
 
         public function someMethod(string $submittedToken): void
         {
-            // gets the token value for the given ID; if that ID doesn't have
+            // gets the token value for the given token ID; if that ID doesn't have
             // a token yet, a new token is generated for it
             $csrfToken = $this->csrfTokenManager->getToken('delete-item');
             $tokenValue = $csrfToken->getValue();
