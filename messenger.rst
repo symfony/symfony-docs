@@ -3498,11 +3498,8 @@ disable the idle timeout entirely::
 Extending Messenger
 -------------------
 
-<<<<<<< HEAD
 .. _messenger-envelopes-stamps:
-=======
 .. _messenger-envelopes:
->>>>>>> 8.0
 
 Envelopes & Stamps
 ~~~~~~~~~~~~~~~~~~
