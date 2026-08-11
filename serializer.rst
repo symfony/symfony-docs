@@ -1450,6 +1450,44 @@ normalizers (in order of priority):
     transforming the first letter to lowercase (e.g. ``getFirstName()`` ->
     ``firstName``).
 
+    If the methods of a property don't follow these naming conventions, you
+    can define them explicitly using the
+    :ref:`#[WithAccessors] attribute <property-info-with-accessors>` from the
+    PropertyInfo component::
+
+        use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
+
+        class Person
+        {
+            #[WithAccessors(getter: 'retrieveName', setter: 'renameTo')]
+            private string $name = '';
+
+            public function retrieveName(): string
+            {
+                return $this->name;
+            }
+
+            public function renameTo(string $name): void
+            {
+                $this->name = $name;
+            }
+        }
+
+        $person = new Person();
+        $person->renameTo('Jane');
+
+        // the retrieveName() method is used to get the value of the property
+        $serializer->serialize($person, 'json'); // {"name":"Jane"}
+
+        // the renameTo() method is used to set the value of the property
+        $person = $serializer->deserialize('{"name":"John"}', Person::class, 'json');
+        $person->retrieveName(); // 'John'
+
+    .. versionadded:: 8.2
+
+        Support for the ``#[WithAccessors]`` attribute was introduced in
+        Symfony 8.2.
+
     During denormalization, it supports using the constructor as well as
     the discovered methods.
 
