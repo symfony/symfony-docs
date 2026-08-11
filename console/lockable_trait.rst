@@ -2,7 +2,7 @@ Prevent Running the Same Console Command Multiple Times
 =======================================================
 
 You can use `locks`_ to prevent the same command from running multiple times on
-the same server. The :doc:`Lock component </components/lock>` provides multiple
+the same server. The :doc:`Lock component </lock>` provides multiple
 classes to create locks based on the filesystem (:ref:`FlockStore <lock-store-flock>`),
 shared memory (:ref:`SemaphoreStore <lock-store-semaphore>`) and even databases
 and Redis servers.

@@ -1012,7 +1012,7 @@ handle a message only once, you can use the ``processOnlyLastMissedRun`` option:
     The ``processOnlyLastMissedRun`` option was introduced in Symfony 7.2.
 
 To scale your schedules more effectively, you can use multiple workers. In such
-cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
+cases, a good practice is to add a :doc:`lock </lock>` to prevent the
 same task running more than once::
 
     // src/Scheduler/SaleTaskProvider.php
