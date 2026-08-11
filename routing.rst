@@ -1036,6 +1036,24 @@ special parameters created by Symfony:
 ``_query``
     An array of query parameters to add to the generated URL.
 
+    .. versionadded:: 8.2
+
+        Support for defining default query parameters as a route default (via
+        the ``query`` option or the ``_query`` route default) was introduced in
+        Symfony 8.2.
+
+    When you define ``_query`` as a route default (using the ``query`` option
+    shown below), those parameters behave as *default query parameters* for the
+    route:
+
+    * They are added to every URL generated for that route, unless you override
+      them when generating the URL (an explicit value always wins over the
+      default). Set a parameter to ``null`` to remove it from the generated URL.
+    * When the route is matched, they are used to seed the request query bag, so
+      ``$request->query->get('page')`` returns the default value even when the
+      parameter is not present in the incoming URL. Values coming from the actual
+      request always take precedence over the defaults.
+
 You can include these attributes (except ``_fragment``) both in individual routes
 and in route imports. Symfony defines some special attributes with the same name
 (except for the leading underscore) so you can define them easier:
