@@ -402,6 +402,73 @@ The ``importmap()`` function also outputs an `ES module shim`_ so that
 `older browsers <https://caniuse.com/import-maps>`_ understand importmaps
 (see the :ref:`polyfill config <config-importmap-polyfill>`).
 
+.. _importmap-integrity:
+
+Adding Integrity Metadata to Importmaps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``importmap_integrity_algorithms`` option was introduced in Symfony 8.2.
+
+To let browsers verify that the JavaScript and CSS files they fetch have not
+been tampered with, the ``importmap()`` function can add `Subresource Integrity`_
+(SRI) metadata to the rendered importmap. Enable it by defining one or more hash
+algorithms in the ``importmap_integrity_algorithms`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/asset_mapper.yaml
+        framework:
+            asset_mapper:
+                importmap_integrity_algorithms: ['sha384']
+
+    .. code-block:: xml
+
+        <!-- config/packages/asset_mapper.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:asset-mapper>
+                    <framework:importmap-integrity-algorithm>sha384</framework:importmap-integrity-algorithm>
+                </framework:asset-mapper>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/asset_mapper.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->assetMapper()
+                ->importmapIntegrityAlgorithms(['sha384'])
+            ;
+        };
+
+The supported algorithms are ``sha256``, ``sha384`` and ``sha512``. When enabled,
+the ``importmap()`` function adds an ``integrity`` entry for each asset to the
+importmap and an ``integrity`` attribute to the preloaded module and stylesheet
+tags:
+
+.. code-block:: html
+
+    <script type="importmap">{
+        "imports": {
+            "app": "/assets/app-4e986c1a.js"
+        },
+        "integrity": {
+            "/assets/app-4e986c1a.js": "sha384-n1V95umnU..."
+        }
+    }</script>
+
 .. _app-entrypoint:
 
 The "app" Entrypoint & Preloading
@@ -1444,3 +1511,4 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 .. _`brotli PHP extension`: https://pecl.php.net/package/brotli
 .. _`zstd PHP extension`: https://pecl.php.net/package/zstd
 .. _`zlib PHP extension`: https://www.php.net/manual/en/book.zlib.php
+.. _`Subresource Integrity`: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity

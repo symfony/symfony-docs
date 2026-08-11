@@ -586,6 +586,20 @@ importmap_script_attributes
 Key-value pair of attributes to add to script tags output for the importmap
 (e.g. ``['data-turbo-track': 'reload']``).
 
+importmap_integrity_algorithms
+..............................
+
+**type**: ``array`` **default**: ``[]``
+
+A list of hash algorithms used to compute the `integrity`_ (Subresource
+Integrity) metadata added to the importmap and to the preloaded module and
+stylesheet tags. Supported values are ``sha256``, ``sha384`` and ``sha512``.
+The default empty array disables this feature.
+
+.. versionadded:: 8.2
+
+    The ``importmap_integrity_algorithms`` option was introduced in Symfony 8.2.
+
 vendor_dir
 ..........
 
@@ -5208,3 +5222,4 @@ to know their differences.
 .. _`shared cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#shared_cache
 .. _`private cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#private_caches
 .. _`W3C Sanitizer API standard`: https://wicg.github.io/sanitizer-api/#default-configuration
+.. _`integrity`: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
