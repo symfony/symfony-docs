@@ -1,32 +1,26 @@
-The ExpressionLanguage Component
-================================
-
-    The ExpressionLanguage component provides an engine that can compile and
-    evaluate expressions. An expression is a one-liner that returns a value
-    (mostly, but not limited to, Booleans).
-
-Installation
-------------
-
-.. code-block:: terminal
-
-    $ composer require symfony/expression-language
-
-.. include:: /components/require_autoload.rst.inc
+Expression Language
+===================
 
 .. _how-can-the-expression-engine-help-me:
 
-How can the Expression Language Help Me?
-----------------------------------------
+Applications often need to define some logic in places where PHP code can't be
+used or is not safe to use: an access rule in the security configuration, the
+condition of a validation constraint, a discount rule stored in the database
+and editable by non-developers. The ExpressionLanguage component was created
+for these use cases. It provides an engine that can compile and evaluate
+**expressions**: one-liners that return a value (mostly, but not limited to,
+Booleans) using a syntax similar to PHP and Twig.
 
-The purpose of the component is to allow users to use expressions inside
-configuration for more complex logic. For example, the Symfony Framework uses
-expressions in security, for validation rules and in route matching.
+Symfony itself uses expressions in many features, such as :doc:`security rules
+</security/expressions>`, :ref:`route matching conditions
+<routing-matching-expressions>`, the :doc:`Expression validation constraint
+</reference/constraints/Expression>` and :doc:`service container configuration
+</service_container/expression_language>`.
 
-Besides using the component in the framework itself, the ExpressionLanguage
-component is a perfect candidate for the foundation of a *business rule engine*.
-The idea is to let the webmaster of a website configure things in a dynamic
-way without using PHP and without introducing security problems:
+In your own applications, the ExpressionLanguage component is a perfect
+candidate for the foundation of a *business rule engine*. The idea is to let
+non-developers of a website configure things in a dynamic way without using
+PHP and without introducing security problems:
 
 .. _component-expression-language-examples:
 
@@ -45,6 +39,15 @@ Expressions can be seen as a very restricted PHP sandbox and are less vulnerable
 to external injections because you must explicitly declare which variables are
 available in an expression (but you should still sanitize any data given by end
 users and passed to expressions).
+
+Installation
+------------
+
+.. code-block:: terminal
+
+    $ composer require symfony/expression-language
+
+.. include:: /components/require_autoload.rst.inc
 
 Usage
 -----
@@ -76,14 +79,6 @@ The main class of the component is
 
     See :doc:`/reference/formats/expression_language` to learn the syntax of
     the ExpressionLanguage component.
-
-Null Coalescing Operator
-........................
-
-.. note::
-
-    This content has been moved to the :ref:`null coalescing operator <component-expression-null-coalescing-operator>`
-    section of ExpressionLanguage syntax reference page.
 
 Parsing and Linting Expressions
 ...............................
