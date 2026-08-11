@@ -97,6 +97,8 @@ this behavior by using the ``lock`` key as follows:
                     <framework:resource>redis://r1.docker</framework:resource>
                     <framework:resource>redis://r2.docker</framework:resource>
 
+                    <framework:resource>rediss://r1.docker?ssl[verify_peer]=1&amp;ssl[cafile]=...</framework:resource>
+
                     <framework:resource>zookeeper://z1.docker</framework:resource>
 
                     <framework:resource>zookeeper://z1.docker,z2.docker</framework:resource>
@@ -141,6 +143,7 @@ this behavior by using the ``lock`` key as follows:
                 ->resource('default', ['memcached://m1.docker', 'memcached://m2.docker'])
                 ->resource('default', ['redis://r1.docker'])
                 ->resource('default', ['redis://r1.docker', 'redis://r2.docker'])
+                ->resource('default', ['rediss://r1.docker?ssl[verify_peer]=1&ssl[cafile]=...'])
                 ->resource('default', ['zookeeper://z1.docker'])
                 ->resource('default', ['zookeeper://z1.docker,z2.docker'])
                 ->resource('default', ['zookeeper://localhost01,localhost02:2181'])
