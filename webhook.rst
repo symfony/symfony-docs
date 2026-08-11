@@ -568,6 +568,33 @@ Configure similarly to mailers, then consume
         }
     }
 
+The :class:`Symfony\\Component\\RemoteEvent\\Event\\Sms\\SmsEvent` object exposes
+the type of the event through its ``getName()`` method, which returns one of the
+following constants:
+
+* ``SmsEvent::DELIVERED``: the SMS was delivered to the recipient;
+* ``SmsEvent::FAILED``: the SMS could not be delivered;
+* ``SmsEvent::CLICKED``: the recipient clicked a link contained in the SMS;
+* ``SmsEvent::UNSUBSCRIBED``: the recipient opted out of receiving further SMS
+  (e.g. by replying ``STOP``).
+
+.. versionadded:: 8.2
+
+    The ``SmsEvent::CLICKED`` and ``SmsEvent::UNSUBSCRIBED`` events were
+    introduced in Symfony 8.2. They are currently supported by the Sweego
+    bridge (mapped from the ``sms_clicked`` and ``sms_stop`` webhook events).
+
+For example, you can react to these engagement events as follows::
+
+    private function handleSms(SmsEvent $event): void
+    {
+        match ($event->getName()) {
+            SmsEvent::CLICKED => $this->onLinkClicked($event),
+            SmsEvent::UNSUBSCRIBED => $this->onUnsubscribe($event),
+            default => null,
+        };
+    }
+
 Sending Webhooks
 ----------------
 
