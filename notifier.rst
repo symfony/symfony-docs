@@ -331,12 +331,16 @@ Service
                                          **DSN**: ``chatwork://API_TOKEN@default?room_id=ID``
 `Discord`_                               **Install**: ``composer require symfony/discord-notifier`` \
                                          **DSN**: ``discord://TOKEN@default?webhook_id=ID``
+`Facebook Page`_                         **Install**: ``composer require symfony/facebook-page-notifier`` \
+                                         **DSN**: ``facebook-page://PAGE_ACCESS_TOKEN@default?page_id=PAGE_ID&api_version=API_VERSION``
 `FakeChat`_                              **Install**: ``composer require symfony/fake-chat-notifier`` \
                                          **DSN**: ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 `Firebase`_                              **Install**: ``composer require symfony/firebase-notifier`` \
                                          **DSN**: ``firebase://USERNAME:PASSWORD@default``
 `GoogleChat`_                            **Install**: ``composer require symfony/google-chat-notifier`` \
                                          **DSN**: ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
+`Instagram`_                             **Install**: ``composer require symfony/instagram-notifier`` \
+                                         **DSN**: ``instagram://ACCESS_TOKEN@default?user_id=USER_ID&api_version=API_VERSION``
 `LINE Bot`_                              **Install**: ``composer require symfony/line-bot-notifier`` \
                                          **DSN**: ``linebot://TOKEN@default?receiver=RECEIVER``
 `LINE Notify`_                           **Install**: ``composer require symfony/line-notify-notifier`` \
@@ -359,6 +363,8 @@ Service
                                          **DSN**: ``slack://TOKEN@default?channel=CHANNEL``
 `Telegram`_                              **Install**: ``composer require symfony/telegram-notifier`` \
                                          **DSN**: ``telegram://TOKEN@default?channel=CHAT_ID&sslmode=SSLMODE``
+`Threads`_                               **Install**: ``composer require symfony/threads-notifier`` \
+                                         **DSN**: ``threads://ACCESS_TOKEN@default?user_id=USER_ID&api_version=API_VERSION``
 `Twitter`_                               **Install**: ``composer require symfony/twitter-notifier`` \
                                          **DSN**: ``twitter://API_KEY:API_SECRET:ACCESS_TOKEN:ACCESS_SECRET@default``
 `WhatsApp`_                              **Install**: ``composer require symfony/whats-app-notifier`` \
@@ -376,8 +382,9 @@ Service
 
 .. versionadded:: 8.2
 
-    The ``WhatsApp`` integration and the ``author`` DSN option for the LinkedIn
-    bridge were introduced in Symfony 8.2.
+    The ``WhatsApp``, ``Facebook Page``, ``Instagram``, and ``Threads``
+    integrations and the ``author`` DSN option for the LinkedIn bridge were
+    introduced in Symfony 8.2.
 
 .. warning::
 
@@ -1123,6 +1130,7 @@ is dispatched. Listeners receive a
 .. _`Engagespot`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Engagespot/README.md
 .. _`Esendex`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Esendex/README.md
 .. _`Expo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Expo/README.md
+.. _`Facebook Page`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FacebookPage/README.md
 .. _`FakeChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeChat/README.md
 .. _`FakeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeSms/README.md
 .. _`Firebase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Firebase/README.md
@@ -1131,6 +1139,7 @@ is dispatched. Listeners receive a
 .. _`GoIP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoIP/README.md
 .. _`GoogleChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoogleChat/README.md
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Infobip/README.md
+.. _`Instagram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Instagram/README.md
 .. _`Iqsms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Iqsms/README.md
 .. _`iSendPro`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Isendpro/README.md
 .. _`JoliNotif`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/JoliNotif/README.md
@@ -1182,6 +1191,7 @@ is dispatched. Listeners receive a
 .. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sweego/README.md
 .. _`Telegram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telegram/README.md
 .. _`Telnyx`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telnyx/README.md
+.. _`Threads`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Threads/README.md
 .. _`TurboSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/TurboSms/README.md
 .. _`Twilio`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twilio/README.md
 .. _`Twitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twitter/README.md
