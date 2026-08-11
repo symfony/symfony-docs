@@ -345,18 +345,17 @@ Requiring Non-ESM Packages
 
     The ``--no-esm`` option was introduced in Symfony 8.2.
 
-Remote packages are downloaded as the ESM build that the ``jsDelivr`` CDN
-generates for them (by appending ``/+esm`` to the package URL). That build is
-broken for some packages, and you may prefer to download the files the package
-actually publishes instead. Pass the ``--no-esm`` option to do so, together with
-the exact path of the file to download:
+By default, remote packages are downloaded as the ESM build that the ``jsDelivr``
+CDN generates for them. If that build is broken for some package, use the ``--no-esm``
+option to download the original file published by the package instead. When using
+this option, you must pass the exact path of the file to download:
 
 .. code-block:: terminal
 
     $ php bin/console importmap:require "fullcalendar/index.global.js=fullcalendar" --no-esm
 
-This downloads ``index.global.js`` as published (instead of its ``/+esm`` build)
-and writes the following into ``importmap.php``::
+This downloads the original ``index.global.js`` file and adds the following to
+``importmap.php``::
 
     // importmap.php
     return [
@@ -368,26 +367,12 @@ and writes the following into ``importmap.php``::
         ],
     ];
 
-The file is stored untouched. Any *relative* imports it declares are downloaded
-next to it and added to the import map too, so imports like
-``import "./chunk/calendar.js"`` inside the package keep working.
-
-Keep the following limitations in mind when using ``--no-esm``:
-
-* You must pass the path to the file (as in ``fullcalendar/index.global.js``).
-  A bare package name like ``fullcalendar`` is refused, because the relative
-  imports inside the file are resolved against its directory, which is unknown
-  when the CDN is the one choosing the file from the package's ``main`` entry;
-* ``--no-esm`` cannot be combined with the ``--path`` option, which declares a
-  local file that is never downloaded;
-* *Bare* imports inside a raw file (such as ``import { h } from "preact"``) are
-  not resolved. The ESM build rewrites those into further CDN URLs that
-  AssetMapper follows, but a raw file is taken as-is, so you must require those
-  packages yourself.
-
-The ``esm`` key is only written when it is ``false``, so existing
-``importmap.php`` files are left untouched, and running ``importmap:update``
-preserves the flag.
+The downloaded file is not modified in any way, and the ``esm`` flag is
+preserved when running ``importmap:update``. Relative imports inside the
+file (e.g. ``import "./chunk/calendar.js"``) are downloaded next to it and
+added to the import map, so they keep working. However, bare imports (e.g.
+``import { h } from "preact"``) are not resolved; you must require those
+packages yourself.
 
 Removing JavaScript Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
