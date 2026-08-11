@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2026-08-11T08:13:38Z
+
+symfony-tools/code-block-checker@efce88128ed76b2d5d177bae7f9b7069ae96bf33 conflicts with the PHP version we use to run the checker
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2026-08-11T08:14:26Z
+
+we need to bump the PHP version here: https://github.com/javiereguiluz/symfony-docs/blob/bd9161e0ca3e66c40dc8a9d3c52b488220541075/.github/workflows/ci.yaml#L29
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-08-11T08:26:56Z
+
+OK, it seems to be working because it now displays the file path + line number of the errors:
+
+```
+Error: [PHP syntax] Syntax error, unexpected T_VARIABLE (in components/clock.rst on line 59)
+```
