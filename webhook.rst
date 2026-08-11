@@ -592,6 +592,38 @@ Configure similarly to mailers, then consume
         }
     }
 
+The ``getName()`` method of ``SmsEvent`` returns the type of the event as one
+of these constants:
+
+* ``SmsEvent::DELIVERED``: the SMS was delivered to the recipient;
+* ``SmsEvent::FAILED``: the SMS couldn't be delivered;
+* ``SmsEvent::CLICKED``: the recipient clicked a link included in the SMS;
+* ``SmsEvent::UNSUBSCRIBED``: the recipient asked to stop receiving SMS
+  messages (e.g. by replying ``STOP``).
+
+Not all providers report all these events. For example, only the Sweego
+provider reports the ``CLICKED`` and ``UNSUBSCRIBED`` events.
+
+.. versionadded:: 8.2
+
+    The ``SmsEvent::CLICKED`` and ``SmsEvent::UNSUBSCRIBED`` constants were
+    introduced in Symfony 8.2.
+
+Use these constants to handle each type of event in your consumer::
+
+    // src/RemoteEvent/SmsWebhookConsumer.php
+
+    // ...
+    private function handleSms(SmsEvent $event): void
+    {
+        match ($event->getName()) {
+            SmsEvent::DELIVERED, SmsEvent::FAILED => $this->updateStatus($event),
+            SmsEvent::CLICKED => $this->trackClick($event),
+            SmsEvent::UNSUBSCRIBED => $this->optOut($event->getRecipientPhone()),
+            default => null,
+        };
+    }
+
 .. tip::
 
     To inject one of these parsers in your own services, type the argument
