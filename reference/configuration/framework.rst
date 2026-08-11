@@ -4045,7 +4045,7 @@ and also to configure the session handler with a DSN:
     * ``file``
     * ``redis``
     * ``rediss`` (Redis over TLS)
-    * ``memcached`` (requires :doc:`symfony/cache </components/cache>`)
+    * ``memcached`` (requires :doc:`symfony/cache </cache>`)
     * ``pdo_oci`` (requires :doc:`doctrine/dbal </doctrine/dbal>`)
     * ``mssql``
     * ``mysql``
