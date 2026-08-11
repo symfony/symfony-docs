@@ -242,7 +242,7 @@ generate a CSRF token in the template and store it as a hidden form field:
 .. code-block:: html+twig
 
     <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
-        {# the argument of csrf_token() is the ID of this token #}
+        {# the argument of csrf_token() is the token ID, an arbitrary string used to generate the token #}
         <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}">
 
         <button type="submit">Delete item</button>
@@ -260,7 +260,7 @@ method to check its validity, passing the same token ID used in the template::
     {
         $submittedToken = $request->getPayload()->get('token');
 
-        // 'delete-item' is the same value used in the template to generate the token
+        // 'delete-item' is the same token ID used in the template to generate the token
         if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
             // ... do something, like deleting an object
         }
@@ -288,7 +288,7 @@ Suppose you want a CSRF token per item, so in the template you have something li
 .. code-block:: html+twig
 
     <form action="{{ url('admin_post_delete', { id: post.id }) }}" method="post">
-        {# the argument of csrf_token() is a dynamic id string used to generate the token #}
+        {# the argument of csrf_token() is the token ID, an arbitrary string used to generate the token #}
         <input type="hidden" name="token" value="{{ csrf_token('delete-item-' ~ post.id) }}">
 
         <button type="submit">Delete item</button>
@@ -367,6 +367,47 @@ The token is checked against each selected source, and validation fails if none 
 .. versionadded:: 7.4
 
     The ``tokenSource`` parameter was introduced in Symfony 7.4.
+
+Generating and Checking CSRF Tokens in Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``csrf_token()`` Twig function and the ``isCsrfTokenValid()`` controller
+shortcut shown in the previous examples use the ``security.csrf.token_manager``
+service internally. If you need to generate or check CSRF tokens in your own
+services, use :doc:`autowiring </service_container/autowiring>` to inject that
+service by type-hinting the
+:class:`Symfony\\Component\\Security\\Csrf\\CsrfTokenManagerInterface`::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
+
+    use Symfony\Component\Security\Csrf\CsrfToken;
+    use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+
+    class SomeService
+    {
+        public function __construct(
+            private CsrfTokenManagerInterface $csrfTokenManager,
+        ) {
+        }
+
+        public function someMethod(string $submittedToken): void
+        {
+            // gets the token value for the given token ID; if that ID doesn't have
+            // a token yet, a new token is generated for it
+            $csrfToken = $this->csrfTokenManager->getToken('delete-item');
+            $tokenValue = $csrfToken->getValue();
+
+            // checks if the given token value is valid for the given token ID
+            $csrfToken = new CsrfToken('delete-item', $submittedToken);
+            $isValid = $this->csrfTokenManager->isTokenValid($csrfToken);
+
+            // ...
+        }
+    }
+
+The token manager also provides the ``refreshToken()`` and ``removeToken()``
+methods to regenerate or invalidate the token of the given ID.
 
 CSRF Tokens and Compression Side-Channel Attacks
 ------------------------------------------------
