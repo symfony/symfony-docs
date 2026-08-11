@@ -327,8 +327,8 @@
 /components/dependency_injection/synthetic_services /service_container/synthetic_services
 /components/dependency_injection/tags /service_container/tags
 /components/dependency_injection/types /service_container/injection_types
-/components/event_dispatcher/index /components/event_dispatcher
-/components/event_dispatcher/introduction /components/event_dispatcher
+/components/event_dispatcher/index /event_dispatcher
+/components/event_dispatcher/introduction /event_dispatcher
 /components/expression_language/introduction /components/expression_language
 /components/expression_language/index /components/expression_language
 /components/filesystem/introduction /components/filesystem
@@ -633,3 +633,7 @@
 /components/cache/adapters/php_files_adapter /cache/adapters/php_files_adapter
 /components/cache/adapters/proxy_adapter /cache/adapters/proxy_adapter
 /components/cache/adapters/redis_adapter /cache/adapters/redis_adapter
+/components/event_dispatcher /event_dispatcher
+/components/event_dispatcher/generic_event /event_dispatcher#event-dispatcher-generic-event
+/components/event_dispatcher/immutable_dispatcher /event_dispatcher#event-dispatcher-immutable-dispatcher
+/components/event_dispatcher/traceable_dispatcher /event_dispatcher#event-dispatcher-traceable-dispatcher
