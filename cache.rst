@@ -983,7 +983,7 @@ a message bus to compute values in a worker:
 
     .. code-block:: php
 
-        // config/framework/framework.php
+        // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use Symfony\Component\Cache\Messenger\EarlyExpirationMessage;
