@@ -169,7 +169,7 @@ The page name should not include the file extension (``.rst``). For example:
 
     :doc:`/controller`
 
-    :doc:`/components/event_dispatcher`
+    :doc:`/components/console`
 
     :doc:`/configuration/environments`
 
