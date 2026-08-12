@@ -253,9 +253,9 @@ anyone:
     headers. A firewall relying on the ``X-Switch-User`` header shown above must
     leave ``path`` unset.
 
-CSRF protection uses the application's default CSRF token manager and the
-``switch_user`` token id. Use ``csrf_token_manager`` to point the firewall at
-another manager (which implies ``enable_csrf: true``), ``csrf_token_id`` to
+CSRF protection uses the application's :ref:`default CSRF token manager <csrf-token-manager>`
+and the ``switch_user`` token id. Use ``csrf_token_manager`` to point the firewall
+at another manager (which implies ``enable_csrf: true``), ``csrf_token_id`` to
 change the token id and ``csrf_parameter`` to change the name of the field
 carrying the token:
 
