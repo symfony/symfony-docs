@@ -4,13 +4,16 @@ Sending Emails with Mailer
 Installation
 ------------
 
-Symfony's Mailer & :doc:`Mime </components/mime>` components form a *powerful* system
-for creating and sending emails - complete with support for multipart messages, Twig
-integration, CSS inlining, file attachments and a lot more. Get them installed with:
+Symfony's Mailer component provides a *powerful* system for creating and sending
+emails - complete with support for multipart messages, Twig integration, CSS
+inlining, file attachments and a lot more. Install it with:
 
 .. code-block:: terminal
 
     $ composer require symfony/mailer
+
+This command also installs the Mime component, which creates the email messages
+and provides :doc:`utilities to work with MIME types </mime_types>`.
 
 .. _mailer-transport-setup:
 
@@ -763,6 +766,89 @@ method to define a custom Content-ID for the image and use it as its ``cid`` ref
         ->html('... <img src="cid:footer-signature@my-app"> ...')
     ;
 
+.. _mailer-raw-messages:
+
+Creating Raw Email Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Email`` class is a high-level API that covers the needs of most
+applications. If your application needs absolute control over every email
+part, use the low-level :class:`Symfony\\Component\\Mime\\Message` class
+instead. This is not recommended for applications with regular email
+requirements because it adds complexity for no real gain.
+
+Before continuing, it's important to have a look at the low level structure of
+an email message. Consider a message which includes some content as both text
+and HTML, a single PNG image embedded in those contents and a PDF file attached
+to it. The MIME standard allows structuring this message in different ways, but
+the following tree is the one that works on most email clients:
+
+.. code-block:: text
+
+    multipart/mixed
+    ├── multipart/related
+    │   ├── multipart/alternative
+    │   │   ├── text/plain
+    │   │   └── text/html
+    │   └── image/png
+    └── application/pdf
+
+This is the purpose of each MIME message part:
+
+* ``multipart/alternative``: used when two or more parts are alternatives of the
+  same (or very similar) content. The preferred format must be added last.
+* ``multipart/mixed``: used to send different content types in the same message,
+  such as when attaching files.
+* ``multipart/related``: used to indicate that each message part is a component
+  of an aggregate whole. The most common usage is to display images embedded
+  in the message contents.
+
+When using the low-level :class:`Symfony\\Component\\Mime\\Message` class to
+create the email message, you must keep all the above in mind to define the
+different parts of the email by hand::
+
+    use Symfony\Component\Mime\Header\Headers;
+    use Symfony\Component\Mime\Message;
+    use Symfony\Component\Mime\Part\Multipart\AlternativePart;
+    use Symfony\Component\Mime\Part\TextPart;
+
+    $headers = new Headers()
+        ->addMailboxListHeader('From', ['fabien@symfony.com'])
+        ->addMailboxListHeader('To', ['foo@example.com'])
+        ->addTextHeader('Subject', 'Important Notification')
+    ;
+
+    $textContent = new TextPart('Lorem ipsum...');
+    $htmlContent = new TextPart('<h1>Lorem ipsum</h1> <p>...</p>', null, 'html');
+    $body = new AlternativePart($textContent, $htmlContent);
+
+    $email = new Message($headers, $body);
+
+Embedding images and attaching files is possible by creating the appropriate
+email multiparts::
+
+    // ...
+    use Symfony\Component\Mime\Part\DataPart;
+    use Symfony\Component\Mime\Part\Multipart\MixedPart;
+    use Symfony\Component\Mime\Part\Multipart\RelatedPart;
+
+    // ...
+    $embeddedImage = new DataPart(fopen('/path/to/images/logo.png', 'r'), null, 'image/png');
+    $imageCid = $embeddedImage->getContentId();
+
+    $attachedFile = new DataPart(fopen('/path/to/documents/terms-of-use.pdf', 'r'), null, 'application/pdf');
+
+    $textContent = new TextPart('Lorem ipsum...');
+    $htmlContent = new TextPart(sprintf(
+        '<img src="cid:%s"/> <h1>Lorem ipsum</h1> <p>...</p>', $imageCid
+    ), null, 'html');
+    $bodyContent = new AlternativePart($textContent, $htmlContent);
+    $body = new RelatedPart($bodyContent, $embeddedImage);
+
+    $messageParts = new MixedPart($body, $attachedFile);
+
+    $email = new Message($headers, $messageParts);
+
 .. _mailer-configure-email-globally:
 
 Configuring Emails Globally
@@ -961,6 +1047,31 @@ method of the ``TemplatedEmail`` class and also to a special variable called
 ``email``, which is an instance of
 :class:`Symfony\\Bridge\\Twig\\Mime\\WrappedTemplatedEmail`.
 
+In Symfony applications, the email contents are rendered automatically when
+the message is sent. In any other application, use the
+:class:`Symfony\\Bridge\\Twig\\Mime\\BodyRenderer` class to render the
+template and update the email contents with the result:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // the email contents are rendered automatically when sending the message
+        $mailer->send($email);
+
+    .. code-block:: php-standalone
+
+        use Symfony\Bridge\Twig\Mime\BodyRenderer;
+        use Twig\Environment;
+        use Twig\Loader\FilesystemLoader;
+
+        $twig = new Environment(new FilesystemLoader(__DIR__.'/templates'));
+
+        $renderer = new BodyRenderer($twig);
+        // this updates the $email object contents with the result of rendering
+        // the template with the given context
+        $renderer->render($email);
+
 Text Content
 ~~~~~~~~~~~~
 
@@ -1073,8 +1184,17 @@ it with:
 
     $ composer require twig/extra-bundle twig/cssinliner-extra
 
-The extension is enabled automatically. To use it, wrap the entire template
-with the ``inline_css`` filter:
+The extension is enabled automatically in Symfony applications. In any other
+application, install only the ``twig/cssinliner-extra`` package and enable
+the extension yourself (the same applies to the Markdown and Inky extensions
+explained below)::
+
+    use Twig\Extra\CssInliner\CssInlinerExtension;
+
+    // ...
+    $twig->addExtension(new CssInlinerExtension());
+
+To use this extension, wrap the entire template with the ``inline_css`` filter:
 
 .. code-block:: html+twig
 
@@ -1648,6 +1768,36 @@ will be removed automatically from the final message)::
     // Use the bus transport "app.another_bus":
     $email->getHeaders()->addTextHeader('X-Bus-Transport', 'app.another_bus');
     $mailer->send($email);
+
+.. _mailer-serializing-messages:
+
+Serializing Email Messages
+--------------------------
+
+Email messages created with either the ``Email`` or the low-level
+:ref:`Message <mailer-raw-messages>` classes can be serialized because they
+are simple data objects::
+
+    $email = new Email()
+        ->from('fabien@symfony.com')
+        // ...
+    ;
+
+    $serializedEmail = serialize($email);
+
+A common use case is to store serialized email messages, include them in a
+message sent with the :doc:`Messenger component </messenger>` and recreate
+them later when sending them. Use the
+:class:`Symfony\\Component\\Mime\\RawMessage` class to recreate email messages
+from their serialized contents::
+
+    use Symfony\Component\Mime\RawMessage;
+
+    // ...
+    $serializedEmail = serialize($email);
+
+    // later, recreate the original message to actually send it
+    $message = new RawMessage(unserialize($serializedEmail));
 
 Adding Tags and Metadata to Emails
 ----------------------------------
