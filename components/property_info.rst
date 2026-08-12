@@ -57,12 +57,16 @@ provide it with a set of information extractors::
     // list of PropertyInitializableExtractorInterface (any iterable)
     $propertyInitializableExtractors = [$reflectionExtractor];
 
+    // list of PropertyNameExtractorInterface (any iterable)
+    $propertyNameExtractors = [$reflectionExtractor];
+
     $propertyInfo = new PropertyInfoExtractor(
         $listExtractors,
         $typeExtractors,
         $descriptionExtractors,
         $accessExtractors,
-        $propertyInitializableExtractors
+        $propertyInitializableExtractors,
+        $propertyNameExtractors
     );
 
     // see below for more examples
@@ -121,6 +125,7 @@ class exposes public methods to extract several types of information:
   (including typed properties)
 * :ref:`Property description <property-info-description>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getShortDescription` and :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getLongDescription`
 * :ref:`Property access details <property-info-access>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isReadable` and  :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isWritable`
+* :ref:`Property name <property-info-name>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyNameExtractorInterface::getPropertyName`
 * :ref:`Property initializable through the constructor <property-info-initializable>`:  :method:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface::isInitializable`
 
 .. note::
@@ -240,6 +245,34 @@ component works. It assumes camel case style method names following `PSR-1`_. Fo
 both ``myProperty`` and ``my_property`` properties are readable if there's a
 ``getMyProperty()`` method and writable if there's a ``setMyProperty()`` method.
 
+.. _property-info-name:
+
+Property Name Information
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``PropertyNameExtractorInterface`` was introduced in Symfony 8.2.
+
+Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyNameExtractorInterface`
+provide the name of the property exposed by a given accessor or mutator
+method as a string::
+
+    $propertyInfo->getPropertyName($class, 'getFirstName');
+    // Example Result: string(9) "firstName"
+
+    $propertyInfo->getPropertyName($class, 'addTag');
+    // Example Result: string(4) "tags"
+
+The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
+first checks the methods defined via the
+:ref:`#[WithAccessors] attribute <property-info-with-accessors>` and then
+falls back to the naming conventions (e.g. removing the ``get``, ``set``,
+``add``, etc. prefix from the method name and, for adders and removers,
+singularizing the property name). It returns ``null`` when the method is not
+related to any property (e.g. static methods or methods not following the
+conventions).
+
 .. _property-info-initializable:
 
 Property Initializable Information
@@ -306,6 +339,9 @@ return and scalar types::
     $reflectionExtractor->isReadable($class, $property);
     $reflectionExtractor->isWritable($class, $property);
 
+    // Property name information.
+    $reflectionExtractor->getPropertyName($class, $method);
+
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
 
@@ -335,6 +371,95 @@ the property type (``string``).
         framework:
             property_info:
                 enabled: true
+
+.. _property-info-with-accessors:
+
+Defining Accessors and Mutators Explicitly
+..........................................
+
+.. versionadded:: 8.2
+
+    The ``#[WithAccessors]`` attribute was introduced in Symfony 8.2.
+
+The ``ReflectionExtractor`` discovers accessor and mutator methods based on
+naming conventions (e.g. ``getFoo()``, ``setFoo()``, ``addFoo()`` and
+``removeFoo()`` methods for a ``foo`` property). If some methods of your class
+don't follow these conventions, use the
+:class:`Symfony\\Component\\PropertyInfo\\Attribute\\WithAccessors` attribute
+to define the accessors and mutators of that property explicitly::
+
+    use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
+
+    class Article
+    {
+        #[WithAccessors(getter: 'retrieveName', setter: 'renameTo')]
+        private string $name;
+
+        #[WithAccessors(
+            getter: 'allTags',
+            setter: 'replaceTags',
+            adder: 'attachTag',
+            remover: 'detachTag',
+        )]
+        private array $tags;
+
+        public function retrieveName(): string
+        {
+            return $this->name;
+        }
+
+        public function renameTo(string $name): void
+        {
+            $this->name = $name;
+        }
+
+        public function allTags(): array
+        {
+            return $this->tags;
+        }
+
+        // ...
+    }
+
+All four options (``getter``, ``setter``, ``adder`` and ``remover``) are
+optional, but at least one of them must be defined, and ``adder`` and
+``remover`` must always be defined together. The referenced methods must exist
+in the class, otherwise a
+:class:`Symfony\\Component\\PropertyInfo\\Exception\\MappingException` is
+thrown.
+
+The methods defined in the attribute always take precedence over the
+convention-based discovery, no matter which accessor or mutator prefixes are
+configured in the extractor. They are also used to resolve the property type:
+the type is extracted from the parameter of the adder (wrapped in a list),
+the parameter of the setter or the return type of the getter, in that order
+of priority. The declared type of the property is only used as a fallback::
+
+    use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
+
+    class Task
+    {
+        // getType() returns 'bool' (the getter return type)
+        // instead of 'string|null' (the property type)
+        #[WithAccessors(getter: 'isEnabled')]
+        private ?string $enabled = null;
+
+        public function isEnabled(): bool
+        {
+            return null !== $this->enabled;
+        }
+    }
+
+Defining only some of the accessors lets you expose a property partially.
+For example, a property with only a ``getter`` is considered readable but
+not writable, and a property with only an ``adder`` and a ``remover`` is
+considered writable but not readable.
+
+.. tip::
+
+    The :doc:`Serializer component </serializer>` also takes this attribute
+    into account: the ``ObjectNormalizer`` uses the methods defined in the
+    attribute when normalizing and denormalizing objects.
 
 PhpDocExtractor
 ~~~~~~~~~~~~~~~
@@ -491,6 +616,7 @@ class that implements one or more of the following interfaces:
 :class:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface`,
 :class:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface`,
 :class:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface`,
+:class:`Symfony\\Component\\PropertyInfo\\PropertyNameExtractorInterface`,
 :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface` and
 :class:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface`.
 
@@ -503,6 +629,8 @@ service by defining it as a service with one or more of the following
 * ``property_info.type_extractor`` if it provides type information.
 * ``property_info.description_extractor`` if it provides description information.
 * ``property_info.access_extractor`` if it provides access information.
+* ``property_info.name_extractor`` if it provides the name of the property
+  exposed by an accessor or mutator method.
 * ``property_info.initializable_extractor`` if it provides initializable information
   (it checks if a property can be initialized through the constructor).
 * ``property_info.constructor_extractor`` if it provides type information from the constructor argument.
