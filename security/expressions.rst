@@ -236,5 +236,5 @@ returns an array of values that will be injected into the closure::
 Learn more
 ----------
 
-* :doc:`/service_container/expression_language`
+* :ref:`Expressions in service arguments <services-expressions>`
 * :doc:`/reference/constraints/Expression`

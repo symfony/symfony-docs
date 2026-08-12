@@ -1,9 +1,19 @@
-How to Work with Service Tags
-=============================
+Service Tags
+============
 
-**Service tags** are a way to tell Symfony or other third-party bundles that
-your service should be registered in some special way. Take the following
-example:
+In Symfony applications, it's common that some services must be processed in
+a special way by the framework or by third-party bundles. For example, you may
+create a class that adds some custom filters to `Twig`_ templates. Not every
+class can act as a :ref:`Twig extension <templates-twig-extension>`, so how
+can Twig know that, among all the classes of your application, this specific
+one is a Twig extension and must be registered as such?
+
+**Service tags** solve this problem. Tags are labels that you add to service
+definitions to mark the purpose of each service. For example, thanks to service
+tags, Twig can collect all the services tagged with a tag called ``twig.extension``
+to register them as Twig extensions.
+
+This is how you would apply that tag to your service:
 
 .. configuration-block::
 
@@ -44,16 +54,14 @@ example:
                 ->tag('twig.extension');
         };
 
-Services tagged with the ``twig.extension`` tag are collected during the
-initialization of TwigBundle and added to Twig as extensions.
-
 Other tags are used to integrate your services into other systems. For a list of
 all the tags available in the core Symfony Framework, check out
 :doc:`/reference/dic_tags`. Each of these has a different effect on your service
 and many tags require additional arguments (beyond the ``name`` parameter).
 
-**For most users, this is all you need to know**. If you want to go further and
-learn how to create your own custom tags, keep reading.
+**For most Symfony developers, this is all you need to know**. If you want to go
+further and learn how to consume tagged services or create your own custom
+tags, keep reading.
 
 .. _di-instanceof:
 
@@ -66,7 +74,44 @@ container sees that your class extends ``AbstractExtension`` (or more accurately
 that it implements ``ExtensionInterface``) and adds the tag for you.
 
 If you want to apply tags automatically for your own services, use the
-``_instanceof`` option:
+``#[AutoconfigureTag]`` attribute directly on the base class or interface::
+
+    // src/Security/CustomInterface.php
+    namespace App\Security;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('app.custom_tag')]
+    interface CustomInterface
+    {
+        // ...
+    }
+
+When no tag name is specified, the fully qualified class name (FQCN) of the target is used::
+
+    // src/Security/CustomInterface.php
+
+    #[AutoconfigureTag] // equivalent to #[AutoconfigureTag(self::class)]
+    interface CustomInterface
+    {
+        // ...
+    }
+
+.. tip::
+
+    If you need more capabilities to autoconfigure instances of your base class
+    like their laziness, their bindings or their calls for example, you may rely
+    on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
+
+.. versionadded:: 7.4
+
+    In Symfony 7.4, autoconfiguration attributes (such as ``#[AutoconfigureTag]``)
+    placed on abstract classes are also parsed when using
+    :ref:`resource-based service loading <service-container-services-load-example>`.
+    Previously, abstract classes were skipped during this process, meaning their
+    attributes were not fully processed.
+
+You can achieve the same in configuration files with the ``_instanceof`` option:
 
 .. configuration-block::
 
@@ -117,565 +162,21 @@ If you want to apply tags automatically for your own services, use the
     If you're using PHP configuration, you need to call ``instanceof`` before
     any service registration to make sure tags are correctly applied.
 
-It is also possible to use the ``#[AutoconfigureTag]`` attribute directly on the
-base class or interface::
-
-    // src/Security/CustomInterface.php
-    namespace App\Security;
-
-    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-
-    #[AutoconfigureTag('app.custom_tag')]
-    interface CustomInterface
-    {
-        // ...
-    }
-
-When no tag name is specified, the fully qualified class name (FQCN) of the target is used::
-
-    // src/Security/CustomInterface.php
-
-    #[AutoconfigureTag] // equivalent to #[AutoconfigureTag(self::class)]
-    interface CustomInterface
-    {
-        // ...
-    }
-
-.. tip::
-
-    If you need more capabilities to autoconfigure instances of your base class
-    like their laziness, their bindings or their calls for example, you may rely
-    on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
-
-.. versionadded:: 7.4
-
-    In Symfony 7.4, autoconfiguration attributes (such as ``#[AutoconfigureTag]``)
-    placed on abstract classes are also parsed when using
-    :ref:`resource-based service loading <service-container-services-load-example>`.
-    Previously, abstract classes were skipped during this process, meaning their
-    attributes were not fully processed.
-
-For more advanced needs, you can define the automatic tags using the
-:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration` method.
-
-In a Symfony application, call this method in your kernel class::
-
-    // src/Kernel.php
-    class Kernel extends BaseKernel
-    {
-        // ...
-
-        protected function build(ContainerBuilder $container): void
-        {
-            $container->registerForAutoconfiguration(CustomInterface::class)
-                ->addTag('app.custom_tag')
-            ;
-        }
-    }
-
-In bundles extending the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
-class, call this method in the ``loadExtension()`` method of the main bundle class::
-
-    // ...
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-
-    class MyBundle extends AbstractBundle
-    {
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
-        {
-            $builder
-                ->registerForAutoconfiguration(CustomInterface::class)
-                ->addTag('app.custom_tag')
-            ;
-        }
-    }
-
 .. note::
 
-    For bundles not extending the ``AbstractBundle`` class, call this method in
-    the ``load()`` method of the :doc:`bundle extension class </bundles/extension>`.
-
-Autoconfiguration registering is not limited to interfaces. It is possible
-to use PHP attributes to autoconfigure services by using the
-:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
-method::
-
-    // src/Attribute/SensitiveElement.php
-    namespace App\Attribute;
-
-    #[\Attribute(\Attribute::TARGET_CLASS)]
-    class SensitiveElement
-    {
-        public function __construct(
-            private string $token,
-        ) {
-        }
-
-        public function getToken(): string
-        {
-            return $this->token;
-        }
-    }
-
-    // src/Kernel.php
-    use App\Attribute\SensitiveElement;
-
-    class Kernel extends BaseKernel
-    {
-        // ...
-
-        protected function build(ContainerBuilder $container): void
-        {
-            // ...
-
-            $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (ChildDefinition $definition, SensitiveElement $attribute, \ReflectionClass $reflector): void {
-                // Apply the 'app.sensitive_element' tag to all classes with SensitiveElement
-                // attribute, and attach the token value to the tag
-                $definition->addTag('app.sensitive_element', ['token' => $attribute->getToken()]);
-            });
-        }
-    }
-
-You can also make attributes usable on methods. To do so, update the previous
-example and add ``Attribute::TARGET_METHOD``::
-
-    // src/Attribute/SensitiveElement.php
-    namespace App\Attribute;
-
-    #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-    class SensitiveElement
-    {
-        // ...
-    }
-
-Then, update the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
-call to support ``ReflectionMethod``::
-
-    // src/Kernel.php
-    use App\Attribute\SensitiveElement;
-
-    class Kernel extends BaseKernel
-    {
-        // ...
-
-        protected function build(ContainerBuilder $container): void
-        {
-            // ...
-
-            $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (
-                ChildDefinition $definition,
-                SensitiveElement $attribute,
-                // update the union type to support multiple types of reflection
-                // you can also use the "\Reflector" interface
-                \ReflectionClass|\ReflectionMethod $reflector): void {
-                    if ($reflector instanceof \ReflectionMethod) {
-                        // ...
-                    }
-                }
-            );
-        }
-    }
-
-.. tip::
-
-    You can also define an attribute to be usable on properties and parameters with
-    ``Attribute::TARGET_PROPERTY`` and ``Attribute::TARGET_PARAMETER``; then support
-    ``ReflectionProperty`` and ``ReflectionParameter`` in your
-    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
-    callable.
-
-.. _di-resource-tags:
-
-Tagging Non-Service Classes
----------------------------
-
-Not all classes need to be registered as services. Entities, value objects, and
-DTOs, for example, should be discoverable at compile time but must not be instantiated
-by the container. Use :method:`Symfony\\Component\\DependencyInjection\\Definition::addResourceTag`
-to tag such classes while keeping them excluded from the service container::
-
-    // src/Attribute/AppModel.php
-    namespace App\Attribute;
-
-    #[\Attribute(\Attribute::TARGET_CLASS)]
-    class AppModel
-    {
-    }
-
-    // src/Kernel.php
-    use App\Attribute\AppModel;
-    use Symfony\Component\DependencyInjection\ChildDefinition;
-
-    class Kernel extends BaseKernel
-    {
-        // ...
-
-        protected function build(ContainerBuilder $container): void
-        {
-            // classes annotated with ``#[AppModel]`` will be tagged with ``app.model`` and
-            // automatically excluded from the container (they won't be instantiated as services)
-            $container->registerAttributeForAutoconfiguration(
-                AppModel::class,
-                static function (ChildDefinition $definition): void {
-                    $definition->addResourceTag('app.model');
-                }
-            );
-        }
-    }
-
-You can then retrieve these classes in a :ref:`compiler pass <components-di-separate-compiler-passes>`
-using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTaggedResourceIds`::
-
-    // src/DependencyInjection/Compiler/ModelDiscoveryPass.php
-    namespace App\DependencyInjection\Compiler;
-
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-
-    class ModelDiscoveryPass implements CompilerPassInterface
-    {
-        public function process(ContainerBuilder $container): void
-        {
-            $classes = [];
-
-            foreach ($container->findTaggedResourceIds('app.model') as $id => $tags) {
-                $classes[] = $container->getDefinition($id)->getClass();
-            }
-
-            $container->setParameter('app.model_classes', $classes);
-        }
-    }
-
-.. versionadded:: 7.3
-
-    The ``addResourceTag()`` and ``findTaggedResourceIds()`` methods were
-    introduced in Symfony 7.3.
-
-Declaring Resource Tags from Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.4
-
-    Declaring resource tags through configuration files, and the
-    ``#[AutoconfigureResourceTag]`` attribute, was introduced in Symfony 7.4.
-
-When the :ref:`resource tag setup <di-resource-tags>` doesn't require any custom
-logic, two more direct options are available. The first is the
-``#[AutoconfigureResourceTag]`` attribute, which is repeatable and accepts an
-optional second argument with the tag attributes::
-
-    // src/Model/Invoice.php
-    namespace App\Model;
-
-    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
-
-    #[AutoconfigureResourceTag('app.report_item', ['type' => 'invoice'])]
-    #[AutoconfigureResourceTag('app.exportable')]
-    class Invoice
-    {
-        // ...
-    }
-
-The attribute also works on interfaces and base classes. In that case, every
-class that implements the interface or extends the base class receives the
-resource tag through autoconfiguration, the same way ``#[AutoconfigureTag]``
-applies service tags::
-
-    // src/Model/ReportItemInterface.php
-    namespace App\Model;
-
-    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
-
-    #[AutoconfigureResourceTag('app.report_item')]
-    interface ReportItemInterface
-    {
-        // ...
-    }
-
-The same definitions can be declared per service in configuration files:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            App\Model\Invoice:
-                resource_tags:
-                    - { name: 'app.report_item', type: 'invoice' }
-                    - 'app.exportable'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Model\Invoice">
-                    <resource-tag name="app.report_item" type="invoice"/>
-                    <resource-tag>app.exportable</resource-tag>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Model\Invoice;
-
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Invoice::class)
-                ->resourceTag('app.report_item', ['type' => 'invoice'])
-                ->resourceTag('app.exportable')
-            ;
-        };
-
-.. tip::
-
-    Resource tags can also be declared in the ``_defaults`` section to apply
-    them to every service defined in the same file, using the same option names
-    (``resource_tags:`` in YAML, ``<resource-tag>`` inside ``<defaults>`` in
-    XML, ``->defaults()->resourceTag(...)`` in PHP).
-
-Creating custom Tags
---------------------
-
-Tags on their own don't actually alter the functionality of your services in
-any way. But if you choose to, you can ask a container builder for a list of
-all services that were tagged with some specific tag. This is useful in
-compiler passes where you can find these services and use or modify them in
-some specific way.
-
-For example, if you are using the Symfony Mailer component you might want
-to implement a "transport chain", which is a collection of classes implementing
-``\MailerTransport``. Using the chain, you'll want Mailer to try several
-ways of transporting the message until one succeeds.
-
-To begin with, define the ``TransportChain`` class::
-
-    // src/Mail/TransportChain.php
-    namespace App\Mail;
-
-    class TransportChain
-    {
-        private array $transports = [];
-
-        public function addTransport(\MailerTransport $transport): void
-        {
-            $this->transports[] = $transport;
-        }
-    }
-
-Then, define the chain as a service:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            App\Mail\TransportChain: ~
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mail\TransportChain"/>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Mail\TransportChain;
-
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(TransportChain::class);
-        };
-
-Define Services with a Custom Tag
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Now you might want several of the ``\MailerTransport`` classes to be instantiated
-and added to the chain automatically using the ``addTransport()`` method.
-For example, you may add the following transports as services:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            MailerSmtpTransport:
-                arguments: ['%mailer_host%']
-                tags: ['app.mail_transport']
-
-            MailerSendmailTransport:
-                tags: ['app.mail_transport']
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="MailerSmtpTransport">
-                    <argument>%mailer_host%</argument>
-
-                    <tag name="app.mail_transport"/>
-                </service>
-
-                <service id="MailerSendmailTransport">
-                    <tag name="app.mail_transport"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(\MailerSmtpTransport::class)
-                ->args([param('mailer_host')])
-                ->tag('app.mail_transport')
-            ;
-
-            $services->set(\MailerSendmailTransport::class)
-                ->tag('app.mail_transport')
-            ;
-        };
-
-Notice that each service was given a tag named ``app.mail_transport``. This is
-the custom tag that you'll use in your compiler pass. The compiler pass is what
-makes this tag "mean" something.
-
-.. _service-container-compiler-pass-tags:
-
-Create a Compiler Pass
-~~~~~~~~~~~~~~~~~~~~~~
-
-You can now use a :ref:`compiler pass <components-di-separate-compiler-passes>` to ask the
-container for any services with the ``app.mail_transport`` tag::
-
-    // src/DependencyInjection/Compiler/MailTransportPass.php
-    namespace App\DependencyInjection\Compiler;
-
-    use App\Mail\TransportChain;
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Reference;
-
-    class MailTransportPass implements CompilerPassInterface
-    {
-        public function process(ContainerBuilder $container): void
-        {
-            // always first check if the primary service is defined
-            if (!$container->has(TransportChain::class)) {
-                return;
-            }
-
-            $definition = $container->findDefinition(TransportChain::class);
-
-            // find all service IDs with the app.mail_transport tag
-            $taggedServices = $container->findTaggedServiceIds('app.mail_transport');
-
-            foreach ($taggedServices as $id => $tags) {
-                // add the transport service to the TransportChain service
-                $definition->addMethodCall('addTransport', [new Reference($id)]);
-            }
-        }
-    }
-
-Register the Pass with the Container
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In order to run the compiler pass when the container is compiled, you have to
-add the compiler pass to the container in a :doc:`bundle extension </bundles/extension>`
-or from your kernel::
-
-    // src/Kernel.php
-    namespace App;
-
-    use App\DependencyInjection\Compiler\MailTransportPass;
-    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-    // ...
-
-    class Kernel extends BaseKernel
-    {
-        // ...
-
-        protected function build(ContainerBuilder $container): void
-        {
-            $container->addCompilerPass(new MailTransportPass());
-        }
-    }
-
-.. tip::
-
-    When implementing the ``CompilerPassInterface`` in a service extension, you
-    do not need to register it. See the
-    :ref:`components documentation <components-di-compiler-pass>` for more
-    information.
+    For more advanced needs, you can define the automatic tags from PHP code
+    with the ``registerForAutoconfiguration()`` and
+    ``registerAttributeForAutoconfiguration()`` methods. See
+    :ref:`how to autoconfigure tags from a compiler pass or kernel <compiler-pass-autoconfiguration>`.
 
 .. _tags_additional-attributes:
 
-Adding Additional Attributes on Tags
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding Attributes to Tags
+-------------------------
 
-Sometimes you need additional information about each service that's tagged
-with your tag. For example, you might want to add an alias to each member
-of the transport chain.
-
-To begin with, change the ``TransportChain`` class::
-
-    class TransportChain
-    {
-        private array $transports = [];
-
-        public function addTransport(\MailerTransport $transport, $alias): void
-        {
-            $this->transports[$alias] = $transport;
-        }
-
-        public function getTransport($alias): ?\MailerTransport
-        {
-            return $this->transports[$alias] ?? null;
-        }
-    }
-
-As you can see, when ``addTransport()`` is called, it takes not only a ``MailerTransport``
-object, but also a string alias for that transport. So, how can you allow
-each tagged transport service to also supply an alias?
-
-To answer this, change the service declaration:
+Tags can define additional attributes besides the tag name. These attributes
+store extra information about each tagged service. For example, the services
+tagged in the following example define a ``key`` attribute:
 
 .. configuration-block::
 
@@ -683,14 +184,13 @@ To answer this, change the service declaration:
 
         # config/services.yaml
         services:
-            MailerSmtpTransport:
-                arguments: ['%mailer_host%']
+            App\Handler\One:
                 tags:
-                    - { name: 'app.mail_transport', alias: 'smtp' }
+                    - { name: 'app.handler', key: 'handler_one' }
 
-            MailerSendmailTransport:
+            App\Handler\Two:
                 tags:
-                    - { name: 'app.mail_transport', alias: ['sendmail', 'anotherAlias']}
+                    - { name: 'app.handler', key: 'handler_two' }
 
     .. code-block:: xml
 
@@ -702,19 +202,12 @@ To answer this, change the service declaration:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="MailerSmtpTransport">
-                    <argument>%mailer_host%</argument>
-
-                    <tag name="app.mail_transport" alias="smtp"/>
+                <service id="App\Handler\One">
+                    <tag name="app.handler" key="handler_one"/>
                 </service>
 
-                <service id="MailerSendmailTransport">
-                    <tag name="app.mail_transport">
-                        <attribute name="alias">
-                            <attribute name="0">sendmail</attribute>
-                            <attribute name="1">anotherAlias</attribute>
-                        </attribute>
-                    </tag>
+                <service id="App\Handler\Two">
+                    <tag name="app.handler" key="handler_two"/>
                 </service>
             </services>
         </container>
@@ -724,18 +217,24 @@ To answer this, change the service declaration:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Handler\One;
+        use App\Handler\Two;
+
         return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
-            $services->set(\MailerSmtpTransport::class)
-                ->args([param('mailer_host')])
-                ->tag('app.mail_transport', ['alias' => 'smtp'])
+            $services->set(One::class)
+                ->tag('app.handler', ['key' => 'handler_one'])
             ;
 
-            $services->set(\MailerSendmailTransport::class)
-                ->tag('app.mail_transport', ['alias' => ['sendmail', 'anotherAlias']])
+            $services->set(Two::class)
+                ->tag('app.handler', ['key' => 'handler_two'])
             ;
         };
+
+Tag attributes are used, for example, to :ref:`index tagged services <tags_index-by>`
+or to pass extra information to the :ref:`compiler pass that processes the tag
+<service-container-compiler-pass-tags>`.
 
 .. tip::
 
@@ -749,13 +248,12 @@ To answer this, change the service declaration:
 
             # config/services.yaml
             services:
-                MailerSmtpTransport:
-                    arguments: ['%mailer_host%']
+                App\Handler\One:
                     tags:
-                        # this is a tag called 'app.mail_transport'
-                        - { name: 'app.mail_transport', alias: 'smtp' }
-                        # this is a tag called 'app.mail_transport' with two attributes ('name' and 'alias')
-                        - app.mail_transport: { name: 'arbitrary-value', alias: 'smtp' }
+                        # this is a tag called 'app.handler'
+                        - { name: 'app.handler', key: 'handler_one' }
+                        # this is a tag called 'app.handler' with two attributes ('name' and 'key')
+                        - app.handler: { name: 'arbitrary-value', key: 'handler_one' }
 
         .. code-block:: xml
 
@@ -767,12 +265,11 @@ To answer this, change the service declaration:
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <service id="MailerSmtpTransport">
-                        <argument>%mailer_host%</argument>
-                        <!-- this is a tag called 'app.mail_transport' -->
-                        <tag name="app.mail_transport" alias="sendmail"/>
-                        <!-- this is a tag called 'app.mail_transport' with two attributes ('name' and 'alias') -->
-                        <tag name="arbitrary-value" alias="smtp">app.mail_transport</tag>
+                    <service id="App\Handler\One">
+                        <!-- this is a tag called 'app.handler' -->
+                        <tag name="app.handler" key="handler_one"/>
+                        <!-- this is a tag called 'app.handler' with two attributes ('name' and 'key') -->
+                        <tag name="arbitrary-value" key="handler_one">app.handler</tag>
                     </service>
                 </services>
             </container>
@@ -788,71 +285,27 @@ To answer this, change the service declaration:
         # config/services.yaml
         services:
             # Compact syntax
-            MailerSendmailTransport:
-                class: \MailerSendmailTransport
-                tags: ['app.mail_transport']
+            App\Handler\One:
+                tags: ['app.handler']
 
             # Verbose syntax
-            MailerSendmailTransport:
-                class: \MailerSendmailTransport
+            App\Handler\One:
                 tags:
-                    - { name: 'app.mail_transport' }
-
-Notice that you've added a generic ``alias`` key to the tag. To actually
-use this, update the compiler::
-
-    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Reference;
-
-    class TransportCompilerPass implements CompilerPassInterface
-    {
-        public function process(ContainerBuilder $container): void
-        {
-            // ...
-
-            foreach ($taggedServices as $id => $tags) {
-
-                // a service could have the same tag twice
-                foreach ($tags as $attributes) {
-                    $definition->addMethodCall('addTransport', [
-                        new Reference($id),
-                        $attributes['alias'],
-                    ]);
-                }
-            }
-        }
-    }
-
-The double loop may be confusing. This is because a service can have more
-than one tag. You tag a service twice or more with the ``app.mail_transport``
-tag. The second ``foreach`` loop iterates over the ``app.mail_transport``
-tags set for the current service and gives you the attributes.
+                    - { name: 'app.handler' }
 
 .. _tags_reference-tagged-services:
 
-Reference Tagged Services
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Referencing Tagged Services
+---------------------------
 
-Symfony provides a shortcut to inject all services tagged with a specific tag,
-which is a common need in some applications, so you don't have to write a
-compiler pass just for that.
+A common need is to inject *all* the services tagged with a specific tag into
+another service (e.g. to implement a chain, a registry or a collection of
+handlers). Symfony provides the *tagged iterator* shortcut for this, so you
+don't have to write a :ref:`compiler pass <service-container-compiler-pass-tags>`
+for this common use case.
 
 Consider the following ``HandlerCollection`` class where you want to inject
-all services tagged with ``app.handler`` into its constructor argument::
-
-    // src/HandlerCollection.php
-    namespace App;
-
-    class HandlerCollection
-    {
-        public function __construct(iterable $handlers)
-        {
-        }
-    }
-
-Symfony allows you to inject the services using YAML/XML/PHP configuration or
-directly via PHP attributes:
+all services tagged with ``app.handler`` into its constructor argument:
 
 .. configuration-block::
 
@@ -942,6 +395,16 @@ directly via PHP attributes:
     *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
     The reason is that those constructor arguments are both parameters and class
     properties. You can safely ignore this error message.
+
+.. seealso::
+
+    If you need to fetch the tagged services lazily by their id instead of
+    iterating over all of them, use a *service locator* with the
+    ``#[AutowireLocator]`` attribute. See
+    :ref:`service locators <service-locator_autowire-locator>`.
+
+Excluding Services from the Iterator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If for some reason you need to exclude one or more services when using a tagged
 iterator, add the ``exclude`` option:
@@ -1108,10 +571,6 @@ disabled by setting the ``exclude_self`` option to ``false``:
             ;
         };
 
-.. seealso::
-
-    See also :doc:`tagged locator services </service_container/service_subscribers_locators>`
-
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1120,6 +579,19 @@ priority is a positive or negative integer that defaults to ``0``. The higher
 the number, the earlier the tagged service will be located in the collection:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Handler/One.php
+        namespace App\Handler;
+
+        use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+
+        #[AsTaggedItem(priority: 20)]
+        class One
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -1226,8 +698,6 @@ you can define it in the configuration of the collecting service:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
-
         return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
@@ -1239,6 +709,8 @@ you can define it in the configuration of the collecting service:
                 ])
             ;
         };
+
+.. _tags_index-by:
 
 Tagged Services with Index
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1317,7 +789,6 @@ to index the services:
 
         use App\Handler\One;
         use App\Handler\Two;
-        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
         return function (ContainerConfigurator $container): void {
             $services = $container->services();
@@ -1421,7 +892,6 @@ get the value used to index the services:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\HandlerCollection;
-        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
         return function (ContainerConfigurator $container) {
             $services = $container->services();
@@ -1450,7 +920,7 @@ will process them in the following order:
 
 .. _tags_as-tagged-item:
 
-The ``#[AsTaggedItem]`` attribute
+The ``#[AsTaggedItem]`` Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is possible to define both the priority and the index of a tagged
@@ -1483,4 +953,184 @@ same service under different indexes::
     The feature to apply the ``#[AsTaggedItem]`` attribute multiple times was
     introduced in Symfony 7.3.
 
+.. _di-resource-tags:
+
+Tagging Non-Service Classes
+---------------------------
+
+Not all classes need to be registered as services. Entities, value objects, and
+DTOs, for example, should be discoverable at compile time but must not be instantiated
+by the container. Use **resource tags** to tag such classes while keeping them
+excluded from the service container.
+
+The most direct option is the ``#[AutoconfigureResourceTag]`` attribute, which
+is repeatable and accepts an optional second argument with the tag attributes::
+
+    // src/Model/Invoice.php
+    namespace App\Model;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.report_item', ['type' => 'invoice'])]
+    #[AutoconfigureResourceTag('app.exportable')]
+    class Invoice
+    {
+        // ...
+    }
+
+The attribute also works on interfaces and base classes. In that case, every
+class that implements the interface or extends the base class receives the
+resource tag through autoconfiguration, the same way ``#[AutoconfigureTag]``
+applies service tags::
+
+    // src/Model/ReportItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.report_item')]
+    interface ReportItemInterface
+    {
+        // ...
+    }
+
+The same definitions can be declared per service in configuration files:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Model\Invoice:
+                resource_tags:
+                    - { name: 'app.report_item', type: 'invoice' }
+                    - 'app.exportable'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Model\Invoice">
+                    <resource-tag name="app.report_item" type="invoice"/>
+                    <resource-tag>app.exportable</resource-tag>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Model\Invoice;
+
+        return function (ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(Invoice::class)
+                ->resourceTag('app.report_item', ['type' => 'invoice'])
+                ->resourceTag('app.exportable')
+            ;
+        };
+
+.. tip::
+
+    Resource tags can also be declared in the ``_defaults`` section to apply
+    them to every service defined in the same file, using the same option names
+    (``resource_tags:`` in YAML, ``<resource-tag>`` inside ``<defaults>`` in
+    XML, ``->defaults()->resourceTag(...)`` in PHP).
+
+.. versionadded:: 7.4
+
+    Declaring resource tags through configuration files, and the
+    ``#[AutoconfigureResourceTag]`` attribute, was introduced in Symfony 7.4.
+
+When the resource tag setup requires custom logic, use the
+:method:`Symfony\\Component\\DependencyInjection\\Definition::addResourceTag`
+method from PHP code::
+
+    // src/Attribute/AppModel.php
+    namespace App\Attribute;
+
+    #[\Attribute(\Attribute::TARGET_CLASS)]
+    class AppModel
+    {
+    }
+
+    // src/Kernel.php
+    use App\Attribute\AppModel;
+    use Symfony\Component\DependencyInjection\ChildDefinition;
+
+    class Kernel extends BaseKernel
+    {
+        // ...
+
+        protected function build(ContainerBuilder $container): void
+        {
+            // classes annotated with ``#[AppModel]`` will be tagged with ``app.model`` and
+            // automatically excluded from the container (they won't be instantiated as services)
+            $container->registerAttributeForAutoconfiguration(
+                AppModel::class,
+                static function (ChildDefinition $definition): void {
+                    $definition->addResourceTag('app.model');
+                }
+            );
+        }
+    }
+
+You can then retrieve these classes in a :ref:`compiler pass <service-container-compiler-pass-tags>`
+using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTaggedResourceIds`::
+
+    // src/DependencyInjection/Compiler/ModelDiscoveryPass.php
+    namespace App\DependencyInjection\Compiler;
+
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+    class ModelDiscoveryPass implements CompilerPassInterface
+    {
+        public function process(ContainerBuilder $container): void
+        {
+            $classes = [];
+
+            foreach ($container->findTaggedResourceIds('app.model') as $id => $tags) {
+                $classes[] = $container->getDefinition($id)->getClass();
+            }
+
+            $container->setParameter('app.model_classes', $classes);
+        }
+    }
+
+.. versionadded:: 7.3
+
+    The ``addResourceTag()`` and ``findTaggedResourceIds()`` methods were
+    introduced in Symfony 7.3.
+
+Creating Custom Tags and Processing Them with Compiler Passes
+-------------------------------------------------------------
+
+Tags on their own don't actually alter the functionality of your services in
+any way. You can create and apply any custom tag (e.g. ``app.report_generator``)
+to your services and nothing will happen. Tags "mean" something when some code
+asks the container for the list of services tagged with them.
+
+For the most common use case (injecting all the tagged services into another
+service) use the :ref:`tagged iterators <tags_reference-tagged-services>`
+explained earlier in this article. When you need full control (e.g. calling a
+specific method on a collecting service for each tagged service, or using tag
+attributes with custom logic), write a **compiler pass**. Compiler passes ask
+the container for the tagged services with the ``findTaggedServiceIds()``
+method and modify the service definitions before the container is compiled.
+
+Read :ref:`how to process tagged services in a compiler pass <service-container-compiler-pass-tags>`
+for the full explanation and examples.
+
 .. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
+.. _`Twig`: https://twig.symfony.com/
