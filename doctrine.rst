@@ -938,7 +938,7 @@ repository as arguments. It can return a single entity or a list of entities
     Support for using closures in the ``expr`` option was introduced in Symfony 8.2.
 
 If you prefer a more compact alternative, write an **expression** using the
-:doc:`ExpressionLanguage component </components/expression_language>` syntax.
+:doc:`ExpressionLanguage component </expression_language>` syntax.
 The downside is that expressions are defined as strings, so IDEs and static
 analysis tools can't check them for errors.
 

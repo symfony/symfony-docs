@@ -1211,7 +1211,7 @@ feature is provided by "guards", which can be used in two ways.
 First, you can listen to :ref:`the guard events <workflow-usage-guard-events>`.
 Alternatively, you can define a ``guard`` configuration option for the
 transition. The value of this option is any valid expression created with the
-:doc:`ExpressionLanguage component </components/expression_language>`:
+:doc:`ExpressionLanguage component </expression_language>`:
 
 .. configuration-block::
 
