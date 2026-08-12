@@ -385,8 +385,8 @@ The ``ReflectionExtractor`` discovers accessor and mutator methods based on
 naming conventions (e.g. ``getFoo()``, ``setFoo()``, ``addFoo()`` and
 ``removeFoo()`` methods for a ``foo`` property). If some methods of your class
 don't follow these conventions, use the
-:class:`Symfony\\Component\\PropertyInfo\\Attribute\\WithAccessors` attribute
-to define the accessors and mutators of that property explicitly::
+:class:`Symfony\\Component\\PropertyInfo\\Attribute\\WithAccessors` attribute to
+ define the accessors and mutators of that property explicitly::
 
     use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
 
@@ -422,18 +422,12 @@ to define the accessors and mutators of that property explicitly::
     }
 
 All four options (``getter``, ``setter``, ``adder`` and ``remover``) are
-optional, but at least one of them must be defined, and ``adder`` and
-``remover`` must always be defined together. The referenced methods must exist
-in the class, otherwise a
-:class:`Symfony\\Component\\PropertyInfo\\Exception\\MappingException` is
-thrown.
-
-The methods defined in the attribute always take precedence over the
-convention-based discovery, no matter which accessor or mutator prefixes are
-configured in the extractor. They are also used to resolve the property type:
-the type is extracted from the parameter of the adder (wrapped in a list),
-the parameter of the setter or the return type of the getter, in that order
-of priority. The declared type of the property is only used as a fallback::
+optional, but at least one of them must be defined. The methods defined in the
+attribute take precedence over the convention-based discovery. They are also
+used to resolve the property type: the type is extracted from the parameter of
+the adder (wrapped in a list), the parameter of the setter or the return type
+of the getter, in that order of priority. The declared type of the property is
+only used as a fallback::
 
     use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
 
@@ -450,16 +444,16 @@ of priority. The declared type of the property is only used as a fallback::
         }
     }
 
-Defining only some of the accessors lets you expose a property partially.
-For example, a property with only a ``getter`` is considered readable but
-not writable, and a property with only an ``adder`` and a ``remover`` is
-considered writable but not readable.
+Defining only some of the accessors lets you expose a property partially. For
+example, a property with only a ``getter`` is considered readable but not
+writable, and a property with only an ``adder`` and a ``remover`` is considered
+writable but not readable.
 
 .. tip::
 
-    The :doc:`Serializer component </serializer>` also takes this attribute
-    into account: the ``ObjectNormalizer`` uses the methods defined in the
-    attribute when normalizing and denormalizing objects.
+    The :doc:`Serializer component </serializer>` also takes this attribute into
+    account: the ``ObjectNormalizer`` uses the methods defined in the attribute
+    when normalizing and denormalizing objects.
 
 PhpDocExtractor
 ~~~~~~~~~~~~~~~
