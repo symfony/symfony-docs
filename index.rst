@@ -44,6 +44,7 @@ Topics
     mercure
     messenger
     migration
+    mime_types
     notifier
     performance
     profiler

@@ -188,7 +188,8 @@ There are some important things to consider in the code of the above controller:
    However, they are considered *not safe* because a malicious user could tamper
    with that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
-   method to let Symfony guess the right extension according to the file MIME type;
+   method to let Symfony guess the right extension according to the file
+   :doc:`MIME type </mime_types>`;
 
 .. note::
 

@@ -639,7 +639,7 @@ mime.mime_type_guesser
 **Purpose**: Add your own logic for guessing MIME types
 
 This tag is used to register your own :ref:`MIME type guessers <components-mime-type-guess>`
-in case the guessers provided by the :doc:`Mime component </components/mime>`
+in case the guessers provided by the :doc:`Mime component </mime_types>`
 don't fit your needs.
 
 .. _dic_tags-monolog:
