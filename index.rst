@@ -33,6 +33,7 @@ Topics
     doctrine
     deployment
     event_dispatcher
+    expression_language
     forms
     frontend
     html_sanitizer
