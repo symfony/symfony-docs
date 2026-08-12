@@ -696,7 +696,7 @@ You can authenticate to an LDAP server using the LDAP variants of the
 attempt to ``bind`` against an LDAP server instead of using password comparison.
 
 Both authentication providers have the same arguments as their normal
-counterparts, with the addition of two configuration keys:
+counterparts, with the addition of the following configuration keys:
 
 service
 .......
@@ -725,6 +725,21 @@ placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you will need to override
 this value. This setting is only necessary if the user's DN cannot be derived
 statically using the ``dn_string`` config option.
+
+ldap_users_only
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.2
+
+    The ``ldap_users_only`` option was introduced in Symfony 8.2.
+
+Set this option to ``true`` to bind only the LDAP users against the LDAP
+server and to check every other user against the password stored in your
+application. This allows an LDAP firewall to use a
+:ref:`chain user provider <security-chain-user-provider>`. See
+:ref:`ldap_users_only <security-ldap-users-only>` for more details.
 
 **User provider**
 

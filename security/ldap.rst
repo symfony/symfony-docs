@@ -545,7 +545,7 @@ HTTP Basic or the JSON login authentication providers, via the
 ``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap`` options.
 
 They are configured exactly as their non-LDAP counterparts, with the
-addition of two configuration keys and one optional key:
+addition of the following configuration keys:
 
 service
 .......
@@ -590,6 +590,36 @@ your users have the following two DN: ``dc=companyA,dc=example,dc=com`` and
 Note that usernames must be unique across both DN, as the authentication
 provider won't be able to select the correct user for the bind process if more
 than one is found.
+
+.. _security-ldap-users-only:
+
+ldap_users_only
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.2
+
+    The ``ldap_users_only`` option was introduced in Symfony 8.2.
+
+By default, the firewall binds every user against the LDAP server, including
+the users that don't come from the directory. Set this key to ``true`` to bind
+only the users the user provider returns as
+:class:`Symfony\\Component\\Ldap\\Security\\LdapUser` instances, and to check
+the other users against the password stored in your application.
+
+This is what makes a :ref:`chain user provider <security-chain-user-provider>`
+work on an LDAP firewall. Without it, Symfony sends the password of a local
+user to the LDAP server, which rejects it.
+
+To set this up, chain the
+:ref:`LDAP user provider <security-ldap-user-provider>` with the provider that
+loads your local users, point the firewall at that chain and turn this key on.
+
+The firewall must use a user provider that returns ``LdapUser`` instances.
+Otherwise, Symfony throws an exception when compiling the container, rather
+than letting the application start with a firewall that trusts a locally
+stored password.
 
 Examples are provided below, for both ``form_login_ldap`` and
 ``http_basic_ldap``. The ``json_login_ldap`` provider is configured in the
