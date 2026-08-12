@@ -95,7 +95,7 @@ Framework - works.
 
 Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel` does
 not take many steps. You create an
-:doc:`event dispatcher </components/event_dispatcher>` and a
+:doc:`event dispatcher </event_dispatcher>` and a
 :ref:`controller and argument resolver <component-http-kernel-resolve-controller>`
 (explained below). To complete your working kernel, you'll add more event
 listeners to the events discussed below::
@@ -657,7 +657,7 @@ Creating an Event Listener
 As you've seen, you can create and attach event listeners to any of the events
 dispatched during the ``HttpKernel::handle()`` cycle. Typically a listener is a PHP
 class with a method that's executed, but it can be anything. For more information
-on creating and attaching event listeners, see :doc:`/components/event_dispatcher`.
+on creating and attaching event listeners, see :doc:`/event_dispatcher`.
 
 The name of each of the "kernel" events is defined as a constant on the
 :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Additionally, each
