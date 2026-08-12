@@ -638,3 +638,4 @@
 /components/event_dispatcher/immutable_dispatcher /event_dispatcher#event-dispatcher-immutable-dispatcher
 /components/event_dispatcher/traceable_dispatcher /event_dispatcher#event-dispatcher-traceable-dispatcher
 /components/ldap /security/ldap
+/components/mime /mailer
