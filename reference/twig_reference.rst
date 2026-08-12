@@ -225,7 +225,7 @@ expression
 ~~~~~~~~~~
 
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
-to the :doc:`ExpressionLanguage component </components/expression_language>`.
+to the :doc:`ExpressionLanguage component </expression_language>`.
 
 .. code-block:: twig
 

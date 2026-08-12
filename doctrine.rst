@@ -902,7 +902,7 @@ Fetch via an Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 If automatic fetching doesn't work for your use case, you can write an expression
-using the :doc:`ExpressionLanguage component </components/expression_language>`::
+using the :doc:`ExpressionLanguage component </expression_language>`::
 
     #[Route('/product/{product_id}')]
     public function show(

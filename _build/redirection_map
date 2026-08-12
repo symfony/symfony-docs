@@ -329,8 +329,8 @@
 /components/dependency_injection/types /service_container/injection_types
 /components/event_dispatcher/index /event_dispatcher
 /components/event_dispatcher/introduction /event_dispatcher
-/components/expression_language/introduction /components/expression_language
-/components/expression_language/index /components/expression_language
+/components/expression_language/introduction /expression_language
+/components/expression_language/index /expression_language
 /components/filesystem/introduction /components/filesystem
 /components/filesystem/index /components/filesystem
 /components/form/form_events /form/events
@@ -578,9 +578,9 @@
 /components/var_dumper/advanced /components/var_dumper#advanced-usage
 /components/yaml/yaml_format /reference/formats/yaml
 /components/expression_language/syntax /reference/formats/expression_language
-/components/expression_language/ast /components/expression_language#expression-language-ast
-/components/expression_language/caching /components/expression_language#expression-language-caching
-/components/expression_language/extending /components/expression_language#expression-language-extending
+/components/expression_language/ast /expression_language#expression-language-ast
+/components/expression_language/caching /expression_language#expression-language-caching
+/components/expression_language/extending /expression_language#expression-language-extending
 /notifier/chatters /notifier#sending-chat-messages
 /notifier/texters /notifier#sending-sms
 /notifier/events /notifier#notifier-events
@@ -638,3 +638,4 @@
 /components/event_dispatcher/traceable_dispatcher /event_dispatcher#event-dispatcher-traceable-dispatcher
 /components/ldap /security/ldap
 /components/mime /mailer
+/components/expression_language /expression_language

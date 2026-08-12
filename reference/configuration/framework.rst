@@ -5139,7 +5139,7 @@ Each marking store can define any of these options:
 
 * ``from`` (**type**: ``string`` or ``array``) value from the ``places``,
   multiple values are allowed for both ``workflow`` and ``state_machine``;
-* ``guard`` (**type**: ``string``) an :doc:`ExpressionLanguage </components/expression_language>`
+* ``guard`` (**type**: ``string``) an :doc:`ExpressionLanguage </expression_language>`
   compatible expression to block the transition;
 * ``name`` (**type**: ``string``) the name of the transition;
 * ``to`` (**type**: ``string`` or ``array``) value from the ``places``,
