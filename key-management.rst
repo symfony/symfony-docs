@@ -513,13 +513,88 @@ provider, without touching a single row.
 
 This bridge requires Doctrine DBAL >= 4.5.
 
-.. note::
+.. _key-management-blind-index-doctrine:
 
-    Envelope-encrypted columns are **not searchable**: the nonce is drawn
-    afresh every time, so the same plaintext encrypts to a different
-    ciphertext on every write. If you need exact-match lookups on an
-    encrypted column, store a blind index (an HMAC of the plaintext keyed by
-    an application secret) on a sibling column.
+Searching an Encrypted Column
+-----------------------------
+
+Envelope-encrypted columns are **not searchable**: the nonce is drawn afresh
+every time, so the same plaintext encrypts to a different ciphertext on every
+write and ``WHERE email = ?`` never matches. The answer is a
+:ref:`blind index <key-management-blind-index>` in a sibling column, a keyed
+digest of the value that is equal for equal values.
+
+Register one service per question the application asks, all sharing a key of
+their own, minted once with ``key-management:generate-data-key`` and kept
+wrapped in the configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\KeyManagement\BlindIndex\Email:
+                arguments:
+                    $kms: '@key_management.app'
+                    $wrappedKey: !service
+                        class: Symfony\Component\KeyManagement\Ciphertext
+                        arguments: ['%env(base64:KMS_INDEX_KEY)%', 'alias/app-key']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\KeyManagement\BlindIndex\Email;
+        use Symfony\Component\KeyManagement\Ciphertext;
+
+        return static function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set(Email::class)
+                    ->arg('$kms', service('key_management.app'))
+                    ->arg('$wrappedKey', inline_service(Ciphertext::class)
+                        ->args([env('base64:KMS_INDEX_KEY'), 'alias/app-key']))
+            ;
+        };
+
+Then say, on the column that holds the tag, where its value comes from. A
+listener shipped by ``symfony/doctrine-bridge`` then fills it on every flush,
+so no write path has to remember it::
+
+    // src/Entity/User.php
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Attribute\BlindIndexed;
+    use Symfony\Component\KeyManagement\BlindIndex\Email;
+
+    #[ORM\Entity]
+    #[ORM\Index(columns: ['email_index'])]
+    class User
+    {
+        #[ORM\Column(type: 'app_user_email')]
+        public string $email = '';
+
+        #[ORM\Column(length: 64)]
+        #[BlindIndexed('email', Email::class)]
+        public string $emailIndex = '';
+    }
+
+The attribute names the class of the index, and any ``BlindIndex`` service
+the application registers is found by it, so nothing has to be tagged by
+hand. A property can be indexed by several columns, each naming its own
+projection.
+
+Queries are unchanged: they have no entity to read the attribute on, and go
+on computing the tag themselves::
+
+    $repository->findOneBy(['emailIndex' => $index->of($email)]);
+
+.. warning::
+
+    The attribute covers the write path of the ORM alone. A row inserted
+    through DBAL, or a bulk ``UPDATE ... SET email = ...``, never reaches the
+    listener and leaves the tag as it was. That is worse than an empty tag:
+    the search then returns the row that used to hold the value.
 
 Going Further
 -------------
