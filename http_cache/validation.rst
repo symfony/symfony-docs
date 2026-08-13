@@ -227,7 +227,7 @@ Using Expressions in the Cache Attribute
 
 The ``#[Cache]`` attribute supports using expressions for the ``etag`` and
 ``lastModified`` options. These expressions are evaluated using the
-:doc:`ExpressionLanguage component </components/expression_language>` and
+:doc:`ExpressionLanguage component </expression_language>` and
 have access to the following variables:
 
 ``request``

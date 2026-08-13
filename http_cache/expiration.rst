@@ -117,7 +117,7 @@ Applying Cache Conditionally
 
 Use the ``if`` option to apply the ``#[Cache]`` attribute only when a given
 condition is met. This option accepts a closure or an
-:doc:`ExpressionLanguage </components/expression_language>` expression that
+:doc:`ExpressionLanguage </expression_language>` expression that
 receives the ``Request`` object and the controller arguments and must return
 a boolean value:
 
