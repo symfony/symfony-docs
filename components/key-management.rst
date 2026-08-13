@@ -182,8 +182,76 @@ Envelopes are always randomized: there is no deterministic counterpart to
 the ``$deterministic`` flag of the direct path. A stable output would require
 a stable data key, which ``generateDataKey()`` refuses to return by contract.
 When equal plaintexts must yield equal ciphertexts, encrypt through the
-direct path on a backend that offers the flag, or keep a blind index (an
-HMAC of the plaintext) in a sibling column.
+direct path on a backend that offers the flag, or keep a
+:ref:`blind index <key-management-blind-index>` in a sibling column.
+
+.. _key-management-blind-index:
+
+Blind Indexes
+-------------
+
+An encrypted column cannot be searched: encryption is randomized, so two
+encryptions of the same value differ and ``WHERE email = ?`` never matches.
+A blind index keeps a searchable trace of the value in a sibling column, a
+keyed digest that is equal for equal values and matched exactly::
+
+    use Symfony\Component\KeyManagement\BlindIndex\Email;
+
+    // minted once with "key-management:generate-data-key" and kept wrapped
+    // in the configuration
+    $index = new Email($kms, $wrappedIndexKey);
+
+    $user->setEmail($email);
+    $user->setEmailIndex($index->of($email));               // on the way in
+
+    $repository->findOneBy([                                // and on the way out
+        'emailIndex' => $index->of($email),
+    ]);
+
+The tags are derived under a data key of its own, wrapped by the KMS and
+unwrapped once per process, so every backend can drive an index and the KMS
+is not reached per value. That key must be used by nothing else and, above
+all, must **never rotate**: every tag already written was derived under it,
+and a new key matches none of them.
+
+:class:`Symfony\\Component\\KeyManagement\\BlindIndex` indexes the value it
+is given, byte for byte. Anything the value has to go through first belongs
+in a subclass overriding ``project()``, and it belongs there rather than at
+the call sites: a tag computed on a trimmed value and searched on an
+untrimmed one silently matches nothing, which is the failure the whole
+arrangement exists to avoid. Two projections ship:
+
+* :class:`Symfony\\Component\\KeyManagement\\BlindIndex\\Email` folds the
+  domain and leaves the local part alone, which is what RFC 5321 says about
+  each;
+* :class:`Symfony\\Component\\KeyManagement\\BlindIndex\\EmailDomain` keeps
+  the domain only, which answers "every account of that company" without the
+  database holding a single address.
+
+That is also how far a partial search goes here: rather than making one
+index searchable by pieces, name the question and index the answer in a
+column of its own.
+
+The keyed function is
+:class:`Symfony\\Component\\KeyManagement\\BlindIndex\\HmacSha256` by
+default, which needs nothing beyond what PHP always has.
+:class:`Symfony\\Component\\KeyManagement\\BlindIndex\\Blake2b` is around
+three times faster for the same 32 bytes of tag and requires the sodium
+extension, which a row carrying several tags notices and a row carrying one
+does not. Which one is in use is part of the stored format: the same value
+gives a different tag under each, so changing it means reindexing.
+
+.. warning::
+
+    Equal values give equal tags, so anyone reading the column learns which
+    rows share a value, and how often each occurs. On a column with few
+    distinct values, or one whose distribution is known, that is enough to
+    recover the values themselves by frequency analysis. Index what is
+    high-entropy and looked up by equality, and leave the rest to a
+    decrypted scan.
+
+On a Doctrine entity, Symfony fills these columns for you; see
+:ref:`key-management-blind-index-doctrine`.
 
 .. _key-management-data-key-store:
 
