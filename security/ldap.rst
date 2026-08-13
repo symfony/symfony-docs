@@ -209,10 +209,6 @@ for binding to an LDAP server using `SASL`_::
 After binding to the LDAP server, you can use the :method:`Symfony\\Component\\Ldap\\Ldap::whoami`
 method to get the distinguished name (DN) of the authenticated and authorized user.
 
-.. versionadded:: 7.2
-
-    The ``saslBind()`` and ``whoami()`` methods were introduced in Symfony 7.2.
-
 Once bound (or if you enabled anonymous authentication on your
 LDAP server), you may query the LDAP server using the
 :method:`Symfony\\Component\\Ldap\\Ldap::query` method::
