@@ -499,15 +499,15 @@ Mailer Webhooks
 
 Receive delivery and engagement notifications from third-party mailers:
 
-==============  ==========================================  ==========================
+==============  ==========================================  ============================================================================================
 Mailer Service  Parser service name                         Supported events
-==============  ==========================================  ==========================
-Brevo           ``mailer.webhook.request_parser.brevo``     `BrevoPayloadConverter`_
-Mailgun         ``mailer.webhook.request_parser.mailgun``   `MailgunPayloadConverter`_
-Mailjet         ``mailer.webhook.request_parser.mailjet``   `MailjetPayloadConverter`_
-Postmark        ``mailer.webhook.request_parser.postmark``  `PostmarkPayloadConverter`_
-Sendgrid        ``mailer.webhook.request_parser.sendgrid``  `SendgridPayloadConverter`_
-==============  ==========================================  ==========================
+==============  ==========================================  ============================================================================================
+Brevo           ``mailer.webhook.request_parser.brevo``     :class:`Symfony\\Component\\Mailer\\Bridge\\Brevo\\RemoteEvent\\BrevoPayloadConverter`
+Mailgun         ``mailer.webhook.request_parser.mailgun``   :class:`Symfony\\Component\\Mailer\\Bridge\\Mailgun\\RemoteEvent\\MailgunPayloadConverter`
+Mailjet         ``mailer.webhook.request_parser.mailjet``   :class:`Symfony\\Component\\Mailer\\Bridge\\Mailjet\\RemoteEvent\\MailjetPayloadConverter`
+Postmark        ``mailer.webhook.request_parser.postmark``  :class:`Symfony\\Component\\Mailer\\Bridge\\Postmark\\RemoteEvent\\PostmarkPayloadConverter`
+Sendgrid        ``mailer.webhook.request_parser.sendgrid``  :class:`Symfony\\Component\\Mailer\\Bridge\\Sendgrid\\RemoteEvent\\SendgridPayloadConverter`
+==============  ==========================================  ============================================================================================
 
 .. versionadded:: 6.4
 
@@ -740,10 +740,5 @@ For advanced use cases, you can implement custom sending logic using
 :class:`Symfony\\Component\\Webhook\\Server\\TransportInterface` to control
 header generation, signing, and HTTP transport.
 
-.. _`BrevoPayloadConverter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/RemoteEvent/BrevoPayloadConverter.php
-.. _`MailgunPayloadConverter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/RemoteEvent/MailgunPayloadConverter.php
-.. _`MailjetPayloadConverter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/RemoteEvent/MailjetPayloadConverter.php
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PostmarkPayloadConverter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/RemoteEvent/PostmarkPayloadConverter.php
-.. _`SendgridPayloadConverter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/RemoteEvent/SendgridPayloadConverter.php
 .. _`Webhook Component for Email Events screencast`: https://symfonycasts.com/screencast/mailtrap/email-event-webhook
