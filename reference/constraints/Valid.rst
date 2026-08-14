@@ -258,6 +258,45 @@ Options
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+``restrictGroups``
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+The ``groups`` option of this constraint means two things at once: which groups
+trigger the cascade, and which groups the nested object is validated against.
+Set this option to ``false`` to keep only the first meaning, so the nested
+object is validated against the groups being validated::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Order
+    {
+        #[Assert\Valid(groups: ['alternateInvoiceAddress'], restrictGroups: false)]
+        public Address $invoiceAddress;
+    }
+
+Validating an ``Order`` against ``['Default', 'alternateInvoiceAddress']``
+cascades to ``$invoiceAddress``, because ``alternateInvoiceAddress`` is one of
+the groups being validated, and the ``Address`` is then validated against both
+of them. Validating without ``alternateInvoiceAddress`` skips the nested object
+entirely.
+
+With the default value, the ``Address`` would instead be validated against
+``alternateInvoiceAddress`` alone, so its constraints in other groups would
+never run. Turning the option off keeps a nested class reusable, as its parent
+no longer decides which of its constraints apply.
+
+The `traverse`_ option applies with either value. Read more about groups in
+:doc:`/validation/groups`.
+
+.. versionadded:: 8.2
+
+    The ``restrictGroups`` option was introduced in Symfony 8.2.
+
 ``traverse``
 ~~~~~~~~~~~~
 
