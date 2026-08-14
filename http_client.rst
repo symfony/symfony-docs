@@ -1555,6 +1555,19 @@ You can customize this value using the ``max_ttl`` option:
     :ref:`retry strategy <http-client-retry-failed-requests>` to gracefully
     handle temporary cache inconsistencies or validation failures.
 
+.. versionadded:: 8.1
+
+    Logging of ``stale-if-error`` fallbacks in ``CachingHttpClient`` was
+    introduced in Symfony 8.1.
+
+``CachingHttpClient`` implements ``Psr\Log\LoggerAwareInterface``. When a logger
+is set (it is injected automatically when using the full-stack framework, or you
+can call ``setLogger()`` on a standalone instance), the client logs an ``info``
+message each time it serves a cached response because the upstream call failed:
+either the call errored or timed out, or it returned a 5xx response (the
+``stale-if-error`` fallback). This lets you tell that the upstream is unhealthy
+before the stale grace window expires.
+
 Limit the Number of Requests
 ----------------------------
 
