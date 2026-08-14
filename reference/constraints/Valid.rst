@@ -263,10 +263,29 @@ Options
 
 **type**: ``boolean`` **default**: ``true``
 
-The ``groups`` option of this constraint means two things at once: which groups
-trigger the cascade, and which groups the nested object is validated against.
-Set this option to ``false`` to keep only the first meaning, so the nested
-object is validated against the groups being validated::
+Consider the following class::
+
+    // src/Entity/Address.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Address
+    {
+        #[Assert\NotBlank]
+        public string $street;
+
+        #[Assert\NotBlank(groups: ['shipping'])]
+        public string $phoneNumber;
+
+        #[Assert\NotBlank(groups: ['billing'])]
+        public string $email;
+    }
+
+The same class is used for the two addresses of an order. The street is always
+required. The phone number is only required for the shipping address, to
+coordinate the delivery. The email is only required for the billing address,
+because the invoice is sent by email::
 
     // src/Entity/Order.php
     namespace App\Entity;
@@ -275,23 +294,34 @@ object is validated against the groups being validated::
 
     class Order
     {
-        #[Assert\Valid(groups: ['alternateInvoiceAddress'], restrictGroups: false)]
-        public Address $invoiceAddress;
+        #[Assert\Valid(groups: ['billing'])]
+        public Address $billingAddress;
+
+        #[Assert\Valid(groups: ['shipping'])]
+        public Address $shippingAddress;
     }
 
-Validating an ``Order`` against ``['Default', 'alternateInvoiceAddress']``
-cascades to ``$invoiceAddress``, because ``alternateInvoiceAddress`` is one of
-the groups being validated, and the ``Address`` is then validated against both
-of them. Validating without ``alternateInvoiceAddress`` skips the nested object
-entirely.
+During the checkout, the application validates the ``Default`` group and the
+group named after each step (``billing`` or ``shipping``). When validating the
+billing step (the ``Default`` and ``billing`` groups), the ``$billingAddress``
+is validated only against ``billing``: the email is checked, but the ``NotBlank``
+constraint of ``$street`` is **silently skipped**, even though you asked for the
+``Default`` group too.
 
-With the default value, the ``Address`` would instead be validated against
-``alternateInvoiceAddress`` alone, so its constraints in other groups would
-never run. Turning the option off keeps a nested class reusable, as its parent
-no longer decides which of its constraints apply.
+This happens because the ``groups`` option defines the full list of groups used
+to validate the nested object, and the ``Default`` group is not added in this
+example. Set ``restrictGroups`` to ``false`` to disable that behavior and
+validate each nested object against the same groups as its parent object::
 
-The `traverse`_ option applies with either value. Read more about groups in
-:doc:`/validation/groups`.
+    #[Assert\Valid(groups: ['billing'], restrictGroups: false)]
+    public Address $billingAddress;
+
+    #[Assert\Valid(groups: ['shipping'], restrictGroups: false)]
+    public Address $shippingAddress;
+
+Even when setting the ``restrictGroups`` option to ``false``, the ``groups``
+option still decides when the cascade validation happens: when validating the
+billing step, the ``$shippingAddress`` is never validated, and vice versa.
 
 .. versionadded:: 8.2
 
