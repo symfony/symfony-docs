@@ -329,6 +329,22 @@ Example::
 
 The token is checked against each selected source, and validation fails if none match.
 
+When the token is invalid, the attribute throws
+:class:`Symfony\\Component\\Security\\Http\\Exception\\InvalidCsrfTokenException`,
+which extends :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
+and carries a ``403`` status.
+
+.. versionadded:: 8.2
+
+    Throwing an exception with a ``403`` status was introduced in Symfony 8.2.
+    Before, the attribute threw the ``Security\Core`` exception of the same
+    name, which extends ``AuthenticationException``. The firewall treated it
+    as an authentication failure and redirected to the login page, or returned
+    a ``401`` response when the firewall had no entry point. Applications
+    catching the ``Security\Core`` exception for this case have to catch the
+    ``Security\Http`` one instead, as the two share no common ancestor below
+    ``RuntimeException``.
+
 .. _csrf-token-manager:
 
 Generating and Checking CSRF Tokens in Services
