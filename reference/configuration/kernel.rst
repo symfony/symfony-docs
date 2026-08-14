@@ -25,18 +25,19 @@ method of the kernel class, which you can override to return a different value.
 You can also change the build directory by defining an environment variable
 named ``APP_BUILD_DIR`` whose value is the absolute path of the build folder.
 
-Since the build directory (like the cache directory) contains only generated
-and reproducible files, there is no need to back it up. When the container is
-built, Symfony writes a `CACHEDIR.TAG`_ file into both directories to mark
-them accordingly. This standard convention is honored by backup tools like
-GNU tar (via the ``--exclude-caches`` option), rsync, Borg and Restic, which
-then skip those directories:
+The contents of the build directory (and the cache directory) are generated
+by Symfony and can be recreated at any time, so there's no need to include
+them in backups. That's why, when building the container, Symfony writes a
+`CACHEDIR.TAG`_ file into the cache and build directories:
 
 .. code-block:: text
 
     Signature: 8a477f597d28d172789f06886806bc55
     # This file is a cache directory tag created by Symfony.
     # For information about cache directory tags, see https://bford.info/cachedir/
+
+Backup tools that follow this convention, such as GNU tar, Borg and Restic
+(via their ``--exclude-caches`` option), skip these directories automatically.
 
 .. versionadded:: 8.2
 
