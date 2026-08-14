@@ -252,8 +252,14 @@ These are the options available on the :ref:`serializer context <serializer-cont
     instead of collapsing them into ``<item>`` nodes.
 ``xml_boolean_repr`` (default: ``null``)
     A list of the two non-empty strings that represent ``true`` and ``false``,
-    in that order (e.g. ``['true', 'false']``). If set to ``null``, booleans
-    are written as ``1`` and ``0``.
+    in that order (e.g. ``['true', 'false']`` or ``['approved', 'rejected']``).
+    By default, booleans are encoded as ``1`` and ``0``. This option applies to
+    both element contents and attributes, and only when encoding; decoding is
+    not changed.
+
+    .. versionadded:: 8.2
+
+        The ``xml_boolean_repr`` option was introduced in Symfony 8.2.
 
 Example with a custom ``context``::
 
@@ -324,48 +330,21 @@ Example with ``preserve_numeric_keys``::
     //  </person>
     //</response>
 
-.. _serializer-xml-boolean-repr:
+Example with ``xml_boolean_repr``::
 
-Encoding Booleans as Custom Strings
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 8.2
-
-    The ``xml_boolean_repr`` option was introduced in Symfony 8.2.
-
-The ``XmlEncoder`` writes booleans as ``1`` and ``0``. The
-``xml_boolean_repr`` option replaces them with the pair of strings of your
-choice, which applies to element contents and to attributes alike::
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
 
     $data = ['@active' => true, 'enabled' => false];
 
     $xmlEncoder->encode($data, 'xml', [
         'xml_format_output' => true,
-        'xml_boolean_repr' => ['true', 'false'],
+        'xml_boolean_repr' => ['yes', 'no'],
     ]);
     // outputs:
     // <?xml version="1.0"?>
-    // <response active="true">
-    //   <enabled>false</enabled>
+    // <response active="yes">
+    //   <enabled>no</enabled>
     // </response>
-
-Any pair works, such as ``['yes', 'no']`` or ``['Y', 'N']``. Set the option
-in the constructor to apply it to every call of that encoder::
-
-    use Symfony\Component\Serializer\Encoder\XmlEncoder;
-
-    $xmlEncoder = new XmlEncoder(['xml_boolean_repr' => ['true', 'false']]);
-
-Passing ``null`` in the context of a single call restores the ``1`` and ``0``
-output for that call. Any value other than a list of two non-empty strings
-throws an
-:class:`Symfony\\Component\\Serializer\\Exception\\InvalidArgumentException`.
-
-The option only affects encoding. Decoding is unchanged, so
-``<enabled>true</enabled>`` decodes to the string ``'true'``, in the same way
-as ``<enabled>1</enabled>`` decodes to ``'1'``. Attributes keep following the
-``xml_type_cast_attributes`` option, which casts ``active="1"`` to the
-integer ``1`` but leaves ``active="true"`` as a string.
 
 The ``YamlEncoder``
 -------------------
