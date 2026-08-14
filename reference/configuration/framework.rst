@@ -591,10 +591,10 @@ importmap_integrity_algorithms
 
 **type**: ``array`` **default**: ``[]``
 
-A list of hash algorithms used to compute the `integrity`_ (Subresource
-Integrity) metadata added to the importmap and to the preloaded module and
-stylesheet tags. Supported values are ``sha256``, ``sha384`` and ``sha512``.
-The default empty array disables this feature.
+A list of hash algorithms used to :ref:`add integrity metadata <importmap-integrity>`
+to the importmap and to its preloaded module and stylesheet tags. Allowed values
+are ``sha256``, ``sha384`` and ``sha512``; the default empty array disables
+this feature.
 
 .. versionadded:: 8.2
 
@@ -5222,4 +5222,3 @@ to know their differences.
 .. _`shared cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#shared_cache
 .. _`private cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#private_caches
 .. _`W3C Sanitizer API standard`: https://wicg.github.io/sanitizer-api/#default-configuration
-.. _`integrity`: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
