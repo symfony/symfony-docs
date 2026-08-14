@@ -134,7 +134,7 @@ to start downloading assets while the server is still preparing the page.
 .. note::
 
     In order to work, the `SAPI`_ you're using must support this feature, like
-    `FrankenPHP`_.
+    `FrankenPHP`_ or `RoadRunner`_.
 
 The simplest way to send early hints is by using the ``preload()`` Twig function.
 When early hints are supported by your web server, the ``Link`` headers added via
@@ -315,3 +315,4 @@ instances::
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
 .. _`PSR-13`: https://www.php-fig.org/psr/psr-13/
 .. _`Speculation Rules API`: https://developer.mozilla.org/docs/Web/API/Speculation_Rules_API
+.. _`RoadRunner`: https://github.com/roadrunner-php/http#early-hints
