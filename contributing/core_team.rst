@@ -129,6 +129,13 @@ Active Core Members
   * **Javier Eguiluz** (`javiereguiluz`_);
   * **Oskar Stark** (`OskarStark`_).
 
+* **Symfony AI Team** (``@symfony/ai`` on GitHub):
+
+  * **Christopher Hertel** (`chr-hertel`_);
+  * **Oskar Stark** (`OskarStark`_);
+  * **Johannes Wachter** (`wachterjohannes`_);
+  * **Fabien Potencier** (`fabpot`_).
+
 Former Core Members
 ~~~~~~~~~~~~~~~~~~~
 
@@ -388,4 +395,5 @@ discretion of the **Project Leader**.
 .. _`alexandre-daubois`: https://github.com/alexandre-daubois/
 .. _`tucksaun`: https://github.com/tucksaun/
 .. _`chr-hertel`: https://github.com/chr-hertel/
+.. _`wachterjohannes`: https://github.com/wachterjohannes/
 .. _`the releases page`: https://symfony.com/releases
