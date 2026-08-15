@@ -130,6 +130,105 @@ this behavior by using the ``lock`` key as follows:
         Automatic scoping of ``flock`` and ``semaphore`` stores was introduced
         in Symfony 8.1.
 
+.. _lock-advisory-service-id:
+
+Using Advisory Locks on an Existing Connection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``mysql+advisory:`` and ``pgsql+advisory:`` DSNs shown above make the lock
+open its own database connection. To use `Advisory Locks`_ on a connection the
+application already has, configure the store as an array instead of a string
+and set ``advisory`` to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                invoice:
+                    service_id: 'doctrine.dbal.default_connection'
+                    advisory: true
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'invoice' => [
+                        'service_id' => 'doctrine.dbal.default_connection',
+                        'advisory' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+``service_id`` is the id of a service holding a ``\PDO`` instance or a
+`Doctrine DBAL Connection`_. Reusing a connection this way avoids the extra
+connection that the ``+advisory`` DSNs open.
+
+The same array works inside the list of stores of a named lock, so it can be
+combined with the other shapes:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                invoice:
+                    - 'flock'
+                    - service_id: 'doctrine.dbal.default_connection'
+                      advisory: true
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'invoice' => [
+                        'flock',
+                        [
+                            'service_id' => 'doctrine.dbal.default_connection',
+                            'advisory' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The store is selected from the connection itself:
+
+=========================  ==========================  ===============================
+Connection                 Driver or platform          Store
+=========================  ==========================  ===============================
+``\PDO``                   ``pgsql``                   ``PostgreSqlStore``
+``\PDO``                   ``mysql``                   ``MysqlStore``
+DBAL ``Connection``        ``PostgreSQLPlatform``      ``DoctrineDbalPostgreSqlStore``
+DBAL ``Connection``        ``AbstractMySQLPlatform``   ``DoctrineDbalMysqlStore``
+=========================  ==========================  ===============================
+
+Any other driver or platform throws an exception when the store is created,
+because advisory locks are specific to MySQL and PostgreSQL. This is checked at
+runtime rather than while compiling the container: the container only holds a
+service id, and resolving the platform of a DBAL connection that has no
+``serverVersion`` parameter would require connecting to the database.
+
+``advisory`` defaults to ``false``, which keeps the table-based ``PdoStore`` or
+``DoctrineDbalStore``.
+
+.. versionadded:: 8.2
+
+    The ``service_id`` and ``advisory`` options were introduced in Symfony 8.2.
+
 In addition to the default lock, Symfony applications can define several
 :ref:`named locks <lock-named-locks>` to use different stores for different
 parts of the application.

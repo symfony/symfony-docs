@@ -2551,6 +2551,35 @@ name
 
 Name of the lock you want to create.
 
+.. _reference-lock-resources-service-id:
+
+service_id
+""""""""""
+
+**type**: ``string``
+
+The id of a service holding a ``\PDO`` instance or a Doctrine DBAL
+``Connection``, used instead of a DSN. Combine it with
+:ref:`advisory <reference-lock-resources-advisory>` to acquire advisory locks
+on a connection the application already has.
+
+.. _reference-lock-resources-advisory:
+
+advisory
+""""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to use the advisory locks of the database server instead of a lock
+table. Only MySQL and PostgreSQL connections support this; any other driver or
+platform throws an exception when the store is created.
+
+See :ref:`Using Advisory Locks on an Existing Connection <lock-advisory-service-id>`.
+
+.. versionadded:: 8.2
+
+    The ``service_id`` and ``advisory`` options were introduced in Symfony 8.2.
+
 mailer
 ~~~~~~
 
