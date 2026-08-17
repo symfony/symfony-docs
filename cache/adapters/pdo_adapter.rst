@@ -46,6 +46,10 @@ your code.
 Tag-Aware PDO Adapter
 ---------------------
 
+.. versionadded:: 8.2
+
+    The ``PdoTagAwareAdapter`` was introduced in Symfony 8.2.
+
 :class:`Symfony\\Component\\Cache\\Adapter\\PdoTagAwareAdapter` takes the same
 arguments as ``PdoAdapter`` and adds native support for
 :ref:`cache tags <cache-component-tags>`. Tags live in a second table, with one
@@ -57,9 +61,11 @@ single ``DELETE`` statement::
     $cache = new PdoTagAwareAdapter($databaseConnectionOrDSN);
 
     $item = $cache->getItem('cache_key');
+    $item->set('cache_value');
     $item->tag(['tag_1', 'tag_2']);
-    // ...
+    $cache->save($item);
 
+    // removes every item tagged with "tag_1"
     $cache->invalidateTags(['tag_1']);
 
 Prefer this adapter over wrapping ``PdoAdapter`` in a
@@ -67,8 +73,12 @@ Prefer this adapter over wrapping ``PdoAdapter`` in a
 tags as cache items and needs extra round trips to the database on every save
 and invalidation.
 
-Both tables are created on the first call to the
-:method:`Symfony\\Component\\Cache\\Adapter\\PdoTagAwareAdapter::save` method.
+The items table is created on the first call to the ``save()`` method and the
+tags table the first time a tagged item is saved. Unlike ``PdoAdapter``, this
+adapter doesn't expose a method to create them explicitly. Invalidating a tag
+only deletes the cache items, so call ``prune()`` to also delete the tag rows
+left behind.
+
 On top of the options of ``PdoAdapter``, three options configure the tags table:
 
 ==========================  =============================
@@ -78,10 +88,6 @@ Option                      Default
 ``db_tags_col``             ``item_tag``
 ``db_tags_tag_index_name``  ``idx_cache_tags_item_tag``
 ==========================  =============================
-
-.. versionadded:: 8.2
-
-    The ``PdoTagAwareAdapter`` was introduced in Symfony 8.2.
 
 .. _`DSN`: https://php.net/manual/pdo.drivers.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
