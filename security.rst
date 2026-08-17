@@ -2236,6 +2236,30 @@ Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
     :doc:`security voter </security/voters>` that looks for the user roles
     in the database.
 
+To inspect the resulting hierarchy, run the ``debug:roles`` command:
+
+.. code-block:: terminal
+
+    # displays the whole role hierarchy
+    $ php bin/console debug:roles
+
+    # displays the roles that the given roles reach
+    $ php bin/console debug:roles ROLE_USER
+
+    # displays the reachable roles as an inheritance tree instead of a flat list
+    $ php bin/console debug:roles ROLE_USER --tree
+
+.. versionadded:: 8.2
+
+    The ``debug:roles`` command was introduced in Symfony 8.2.
+
+.. note::
+
+    When the ``security.role_hierarchy`` service is replaced by a custom
+    :class:`Symfony\\Component\\Security\\Core\\Role\\RoleHierarchyInterface`
+    implementation, the command can only report reachable role names: the
+    ``--tree`` option is ignored and the ``roles`` argument becomes required.
+
 .. tip::
 
     To help debug your roles hierarchy, you can generate a visual representation
