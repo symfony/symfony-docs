@@ -114,6 +114,7 @@ background colors through the Style system::
     use Symfony\Component\Tui\Style\Border;
     use Symfony\Component\Tui\Style\Color;
     use Symfony\Component\Tui\Style\Padding;
+    use Symfony\Component\Tui\Style\Style;
 
     $container->setStyle(new Style(
         padding: Padding::all(1),
