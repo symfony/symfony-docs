@@ -576,6 +576,133 @@ A few placeholders are available to customize the URL:
 The placeholders will be replaced when printing the configuration tree with the
 ``config:dump-reference`` command.
 
+Dumping a Configuration Reference
+---------------------------------
+
+Besides the human-readable formats produced by ``config:dump-reference``, the
+Config component can export a configuration tree into machine-readable formats
+that power IDE autocompletion and static analysis.
+
+.. caution::
+
+    Both exports are built from the static configuration tree, so avoid
+    transforming data in ``beforeNormalization()`` closures. Those closures run
+    at runtime and can accept several alternative input shapes that the
+    configuration nodes do not describe, so the generated array-shapes and JSON
+    Schema cannot represent them. As a result, tooling loses autocompletion and
+    validation for the affected options. Prefer explicit nodes so that the
+    accepted structure stays visible in both exports.
+
+The examples below reuse the same configuration tree, built from this
+``Configuration`` class::
+
+    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+
+    $treeBuilder = new TreeBuilder('acme_social');
+
+    $treeBuilder->getRootNode()
+        ->children()
+            ->stringNode('client_id')
+                ->isRequired()
+            ->end()
+            ->booleanNode('enabled')
+                ->defaultTrue()
+            ->end()
+        ->end()
+    ;
+
+    $tree = $treeBuilder->buildTree();
+
+Dumping PHP Array-Shapes
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.4
+
+    The array-shape generator was introduced in Symfony 7.4.
+
+The :class:`Symfony\\Component\\Config\\Definition\\ArrayShapeGenerator`
+class turns the configuration tree into a PHPDoc ``array{...}`` shape. IDEs and
+static analysers such as PhpStan or Psalm use it to autocomplete and validate
+configuration written in PHP::
+
+    use Symfony\Component\Config\Definition\ArrayShapeGenerator;
+
+    $arrayShape = ArrayShapeGenerator::generate($tree);
+
+    echo $arrayShape."\n";
+
+    // array{
+    //     client_id: string,
+    //     enabled?: bool,
+    // }
+
+FrameworkBundle uses this generator to build the ``config/reference.php`` file
+that ships with Symfony applications (see :doc:`/bundles/configuration`).
+
+Dumping a JSON Schema
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The JSON Schema dumper was introduced in Symfony 8.2.
+
+The :class:`Symfony\\Component\\Config\\Definition\\Dumper\\JsonSchemaDumper`
+class generates a `JSON Schema <https://json-schema.org/>`_ (draft 2020-12) from
+any configuration tree. You can use it to offer autocompletion in IDEs or to
+validate configuration outside Symfony::
+
+    use Symfony\Component\Config\Definition\Dumper\JsonSchemaDumper;
+
+    $dumper = new JsonSchemaDumper();
+    $schema = $dumper->dump($tree, ['title' => 'Acme Social Configuration']);
+
+    echo json_encode(
+        $schema,
+        \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES | \JSON_THROW_ON_ERROR
+    )."\n";
+
+The code above outputs the following JSON Schema (the shared ``$defs/types``
+section is abbreviated here for readability):
+
+.. code-block:: json
+
+    {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Acme Social Configuration",
+        "$defs": {
+            "types": {
+                "object_null": {
+                    "type": ["object", "null"]
+                },
+                "string_null": {
+                    "type": ["string", "null"]
+                },
+                "boolean": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "$ref": "#/$defs/types/object_null",
+        "properties": {
+            "client_id": {
+                "$ref": "#/$defs/types/string_null"
+            },
+            "enabled": {
+                "$ref": "#/$defs/types/boolean",
+                "default": true
+            }
+        },
+        "required": ["client_id"],
+        "additionalProperties": false
+    }
+
+The dumper returns an array representation of the schema, so you can merge it
+with other metadata before serializing it to JSON. 
+
+FrameworkBundle uses ``JsonSchemaDumper`` to build the ``config/schema.json``
+file that ships with Symfony applications (see :doc:`/bundles/configuration`).
+
+
 Optional Sections
 -----------------
 

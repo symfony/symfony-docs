@@ -400,6 +400,82 @@ have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getConfiguration>`
 method and return an instance of your ``Configuration``.
 
+.. _bundle-friendly-config-reference:
+
+Generate a Configuration Reference
+----------------------------------
+
+During debug compilations, FrameworkBundle exports the configuration trees of
+every registered bundle into two files so that IDEs and static analysers can
+validate and autocomplete your application configuration.
+
+Both files are regenerated whenever the service container is compiled. They are
+meant for applications only: bundles must not read them at runtime. You can use
+them for integration tests in the bundle's own test suite.
+
+.. caution::
+
+    Both exports are built from the static configuration tree, so avoid
+    transforming data in ``beforeNormalization()`` closures. Those closures run
+    at runtime and can accept several alternative input shapes, but the
+    generated ``config/reference.php`` and ``config/schema.json`` cannot know
+    which schema is accepted. As a result, tooling loses autocompletion and
+    validation for the affected options. Prefer explicit nodes so that the
+    accepted structure stays visible in both exports.
+
+Generate a PHP Reference
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.4
+
+    Symfony 7.4 generates a PHP reference for application configuration during
+    debug compilations.
+
+When your application runs in debug mode, FrameworkBundle writes a
+``config/reference.php`` file that describes the configuration trees of every
+registered bundle as PHP array-shapes. IDEs and static analysers such as
+PHPStan or Psalm load this reference to validate and autocomplete configuration
+written in PHP with the ``App::config()`` helper::
+
+    // config/packages/framework.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+    return App::config([
+        'framework' => [
+            'secret' => '%env(APP_SECRET)%',
+        ],
+    ]);
+
+.. _bundle-friendly-config-json-schema:
+
+Generate a JSON Schema
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Symfony 8.2 generates a JSON Schema for application configuration during
+    debug compilations.
+
+When your application runs in debug mode and the ``symfony/yaml`` package is
+installed, FrameworkBundle writes a ``config/schema.json`` file that merges the
+configuration trees of every registered bundle. IDEs can load this schema to
+validate and autocomplete configuration files.
+
+Editors relying on `yaml-language-server`_ (such as Visual Studio Code with the
+Red Hat *YAML* extension, Neovim or Emacs) pick up the schema when you add a
+modeline comment at the top of the YAML file:
+
+.. code-block:: yaml
+
+    # yaml-language-server: $schema=../schema.json
+    framework:
+        secret: '%env(APP_SECRET)%'
+
+The ``$schema`` path is relative to the edited file, so use ``../schema.json``
+from ``config/packages/`` or ``../../schema.json`` from
+``config/packages/<env>/``.
+
+.. _`yaml-language-server`: https://github.com/redhat-developer/yaml-language-server
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
