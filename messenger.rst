@@ -3965,7 +3965,7 @@ work on DBAL connections instead, so they also run in applications that don't
 use the ORM:
 
 * :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalPingConnectionMiddleware`
-  pings the connections and reconnects the closed ones;
+  pings the open connections and reestablishes the broken ones;
 * :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalTransactionMiddleware`
   wraps all handlers in a single DBAL transaction.
 
@@ -3991,6 +3991,21 @@ their class name to the middleware list of the bus:
                 # ping every DBAL connection; pass a name or a list of names
                 # to restrict it to some of them
                 #- ['default', 'legacy']
+
+        Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware:
+            arguments:
+                - '@doctrine'
+
+.. code-block:: yaml
+
+    # config/packages/messenger.yaml
+    framework:
+        messenger:
+            buses:
+                command_bus:
+                    middleware:
+                        - 'Symfony\Bridge\Doctrine\Messenger\DoctrineDbalPingConnectionMiddleware'
+                        - 'Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware'
 
 .. versionadded:: 8.2
 
