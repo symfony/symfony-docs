@@ -78,16 +78,17 @@ Key                           Action
 Enter                         Submit
 Shift+Enter                   Insert newline
 Escape                        Cancel
+Shift+Space                   Insert a space
 Up / Down                     Move cursor
 Left, Ctrl+B                  Move cursor left
 Right, Ctrl+F                 Move cursor right
-Alt+Left, Ctrl+Left           Move word left
-Alt+Right, Ctrl+Right         Move word right
+Alt+Left, Ctrl+Left, Alt+B    Move word left
+Alt+Right, Ctrl+Right, Alt+F  Move word right
 Home, Ctrl+A                  Move to line start
 End, Ctrl+E                   Move to line end
 Page Up / Page Down           Scroll by page
-Backspace                     Delete character backward
-Delete, Ctrl+D                Delete character forward
+Backspace, Shift+Backspace    Delete character backward
+Delete, Ctrl+D, Shift+Delete  Delete character forward
 Ctrl+W, Alt+Backspace         Delete word backward
 Alt+D, Alt+Delete             Delete word forward
 Ctrl+Shift+K                  Delete entire line
@@ -99,4 +100,11 @@ Ctrl+Y                        Yank (paste from kill ring)
 Alt+Y                         Yank pop (cycle kill ring)
 Ctrl+]                        Jump forward to character
 Ctrl+Alt+]                    Jump backward to character
+Ctrl+C                        Copy (not handled, see below)
 ============================  ==============================
+
+``Ctrl+C`` is bound to the ``copy`` action, but the editor has no
+selection model and does not implement it: the key event is ignored
+by the widget and left for the parent application to handle (the
+conventional copy or abort signal). Rebind ``copy`` if that key is
+needed for something else.
