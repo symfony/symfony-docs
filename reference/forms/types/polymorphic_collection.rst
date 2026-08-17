@@ -30,6 +30,7 @@ the collection cannot use a single ``entry_type``. Declare one type per kind in
 the `entry_types`_ option and tell the collection which one to use for a given
 entry with the `entry_type_provider`_ option::
 
+    use App\Form\Block\BlockEntryTypeProvider;
     use App\Form\Block\FooterType;
     use App\Form\Block\HeadingType;
     use App\Form\Block\ParagraphType;
@@ -50,10 +51,11 @@ The provider is a class implementing
 data of a single entry and returns the key of the `entry_types`_ option to build
 it with. The same entry reaches the provider in two different shapes, hence the
 two methods: ``forModelData()`` gets the object or value stored in your model,
-while ``forSubmittedData()`` gets the raw data submitted by the client::
+while ``forSubmittedData()`` gets the raw data of an entry added by the client,
+which only happens when `allow_add`_ is enabled::
 
-    // src/Form/BlockEntryTypeProvider.php
-    namespace App\Form;
+    // src/Form/Block/BlockEntryTypeProvider.php
+    namespace App\Form\Block;
 
     use App\Entity\Footer;
     use App\Entity\Heading;
@@ -77,6 +79,8 @@ while ``forSubmittedData()`` gets the raw data submitted by the client::
     }
 
 Returning a key that is not declared in `entry_types`_ throws an exception.
+Nothing tells the submitted data apart on its own, so the entry types must
+submit whatever ``forSubmittedData()`` reads, here a ``type`` field.
 
 The options that configure the entries (`entry_options`_,
 `prototype_options`_ and `prototype_data`_) keep the names they have on
@@ -297,5 +301,6 @@ Variable      Type         Usage
 ============  ===========  ==========================================================
 allow_add     ``boolean``  The value of the `allow_add`_ option.
 allow_delete  ``boolean``  The value of the `allow_delete`_ option.
-prototypes    ``array``    One prototype view per entry name (see `prototype`_).
+prototypes    ``array``    One prototype view per entry name, when `allow_add`_
+                           and `prototype`_ are both enabled.
 ============  ===========  ==========================================================
