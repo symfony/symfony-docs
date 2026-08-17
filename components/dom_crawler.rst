@@ -673,9 +673,7 @@ the same way the
 :method:`Crawler::text() <Symfony\\Component\\DomCrawler\\Crawler::text>` method
 does, so pass the text as the user reads it. When several options share the same
 text, the first one is selected. Disabled options can be selected, as with
-``select()``. Calling this method on a radio or checkbox field throws a
-``LogicException`` and passing a text that matches no option throws an
-``InvalidArgumentException``.
+``select()``.
 
 .. versionadded:: 8.2
 
