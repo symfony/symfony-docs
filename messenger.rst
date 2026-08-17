@@ -3978,8 +3978,9 @@ wouldn't be one.
 Unlike ``doctrine_transaction``, ``DoctrineDbalTransactionMiddleware`` doesn't
 flush any entity manager before committing: the handlers do it.
 
-They have no configuration shortcut yet, so register them as services and add
-their class name to the middleware list of the bus:
+They have no configuration shortcut yet, so register them as services first,
+then add their class name to the ``middleware`` list of the bus shown above,
+where the ``doctrine_*`` shortcuts are:
 
 .. code-block:: yaml
 
@@ -3995,17 +3996,6 @@ their class name to the middleware list of the bus:
         Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware:
             arguments:
                 - '@doctrine'
-
-.. code-block:: yaml
-
-    # config/packages/messenger.yaml
-    framework:
-        messenger:
-            buses:
-                command_bus:
-                    middleware:
-                        - 'Symfony\Bridge\Doctrine\Messenger\DoctrineDbalPingConnectionMiddleware'
-                        - 'Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware'
 
 .. versionadded:: 8.2
 
