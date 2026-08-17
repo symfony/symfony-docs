@@ -540,6 +540,13 @@ You can use that method to format a property when mapping it::
 
 .. note::
 
+    A ``#[Map]`` attribute that omits ``source`` describes the mapping to apply
+    when its own class is used as the source. To transform a value while mapping
+    *into* a class, declare the mapping on the target property and name the source
+    property explicitly, as shown in `Transforming Values on the Target Class`_.
+
+.. note::
+
     ObjectMapper throws a ``NoSuchCallableException`` if the configured ``transform``
     (or ``if``) callable cannot be resolved (for example, due to a typo in a method name).
 
@@ -872,8 +879,9 @@ its values from a source, especially when working with external data formats.
 This is done using the ``source`` parameter in the ``#[Map]`` attribute on the
 target class's properties.
 
-Note that if both the ``source`` and the ``target`` classes define the ``#[Map]``
-attribute, the ``source`` takes precedence.
+Note that when both the ``source`` and the ``target`` classes define a ``#[Map]``
+attribute for the same property, the one declared on the ``source`` takes
+precedence.
 
 Consider the following class that stores the data obtained from an external API
 that uses snake_case property names::
@@ -923,8 +931,8 @@ Using it in practice::
     // $product->price = 123.45
 
 When using source-based mapping, the ``ObjectMapper`` will automatically use the
-target's ``#[Map(source: ...)]`` attributes if no mapping is defined on the
-source class.
+target's ``#[Map(source: ...)]`` attributes for the properties that the source
+class does not map itself.
 
 Transforming Values on the Target Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
