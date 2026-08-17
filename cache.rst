@@ -1216,7 +1216,8 @@ shown in the previous section wraps the pool adapter automatically.
 
     When using a Redis backend, consider using :ref:`RedisTagAwareAdapter <redis-tag-aware-adapter>`
     which is optimized for this purpose. When using the filesystem, consider
-    using :ref:`FilesystemTagAwareAdapter <filesystem-tag-aware-adapter>`.
+    using :ref:`FilesystemTagAwareAdapter <filesystem-tag-aware-adapter>`. When
+    using a PDO database, consider using :ref:`PdoTagAwareAdapter <pdo-tag-aware-adapter>`.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter` class implements
 instantaneous invalidation (time complexity is ``O(N)`` where ``N`` is the number
