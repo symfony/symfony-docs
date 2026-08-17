@@ -97,6 +97,7 @@ Ctrl+- (minus)                Undo
 Ctrl+Shift+Z                  Redo
 Ctrl+Y                        Yank (paste from kill ring)
 Alt+Y                         Yank pop (cycle kill ring)
+Ctrl+C                        Copy (left to the parent)
 ============================  ==============================
 
 **Paste:**

@@ -74,23 +74,23 @@ cancelled with ``wasSubmitted()``.
 Default Keybindings
 -------------------
 
-========================  ==================================
-Key                       Action
-========================  ==================================
-Enter                     Submit
-Escape, Ctrl+C            Cancel
-Left, Ctrl+B              Move cursor left
-Right, Ctrl+F             Move cursor right
-Alt+Left, Ctrl+Left       Move word left
-Alt+Right, Ctrl+Right     Move word right
-Home, Ctrl+A              Move to line start
-End, Ctrl+E               Move to line end
-Backspace                 Delete character backward
-Delete, Ctrl+D            Delete character forward
-Ctrl+W, Alt+Backspace     Delete word backward
-Ctrl+U                    Delete to line start
-Ctrl+K                    Delete to line end
-========================  ==================================
+============================  ==================================
+Key                           Action
+============================  ==================================
+Enter                         Submit
+Escape, Ctrl+C                Cancel
+Left, Ctrl+B                  Move cursor left
+Right, Ctrl+F                 Move cursor right
+Alt+Left, Ctrl+Left, Alt+B    Move word left
+Alt+Right, Ctrl+Right, Alt+F  Move word right
+Home, Ctrl+A                  Move to line start
+End, Ctrl+E                   Move to line end
+Backspace, Shift+Backspace    Delete character backward
+Delete, Ctrl+D, Shift+Delete  Delete character forward
+Ctrl+W, Alt+Backspace         Delete word backward
+Ctrl+U                        Delete to line start
+Ctrl+K                        Delete to line end
+============================  ==================================
 
 Custom Keybindings
 ------------------

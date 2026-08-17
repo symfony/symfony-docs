@@ -47,9 +47,11 @@ than the visible window.
 Filtering
 ---------
 
-Call ``setFilter()`` to narrow the list to items whose value starts
-with the given string. This is useful when combining a
-``SelectListWidget`` with an :doc:`/tui/widgets/input` for fuzzy search::
+Call ``setFilter()`` to narrow the list to the items whose ``value``
+starts with the given string. The comparison is case-insensitive and
+applies to the ``value`` key only, not to ``label`` or ``description``.
+This is useful when combining a ``SelectListWidget`` with an
+:doc:`/tui/widgets/input` used as a search box::
 
     $list->setFilter('ban'); // shows only "Banana"
 
