@@ -573,6 +573,9 @@ and uploading files::
     // selects many options from a "multiple" select
     $form['registration[interests]']->select(['symfony', 'cookies']);
 
+    // selects an option by its text content instead of its value
+    $form['registration[country]']->selectByText('France');
+
     // fakes a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');
 
@@ -651,6 +654,32 @@ options to a choice field::
 .. versionadded:: 8.1
 
     The ``addChoice()`` method was introduced in Symfony 8.1.
+
+Selecting Options by Their Text
+...............................
+
+The ``select()`` method matches options by their ``value`` attribute, which is
+not always the text displayed to the user. Use the ``selectByText()`` method to
+select an option by its text content instead::
+
+    // <option value="ok">Payment accepted</option>
+    $form['order[status]']->selectByText('Payment accepted');
+
+    // selects several options at once on a "multiple" select
+    $form['order[tags]']->selectByText(['Priority', 'Fragile']);
+
+Sequences of whitespace are collapsed into a single space before the comparison,
+the same way the
+:method:`Crawler::text() <Symfony\\Component\\DomCrawler\\Crawler::text>` method
+does, so pass the text as the user reads it. When several options share the same
+text, the first one is selected. Disabled options can be selected, as with
+``select()``. Calling this method on a radio or checkbox field throws a
+``LogicException`` and passing a text that matches no option throws an
+``InvalidArgumentException``.
+
+.. versionadded:: 8.2
+
+    The ``selectByText()`` method was introduced in Symfony 8.2.
 
 Resolving a URI
 ~~~~~~~~~~~~~~~
