@@ -296,11 +296,10 @@ error_bubbling
 Field Variables
 ---------------
 
-============  ===========  ==========================================================
+============  ===========  =======================================================================================
 Variable      Type         Usage
-============  ===========  ==========================================================
+============  ===========  =======================================================================================
 allow_add     ``boolean``  The value of the `allow_add`_ option.
 allow_delete  ``boolean``  The value of the `allow_delete`_ option.
-prototypes    ``array``    One prototype view per entry name, when `allow_add`_
-                           and `prototype`_ are both enabled.
-============  ===========  ==========================================================
+prototypes    ``array``    One prototype view per entry name, when `allow_add`_ and `prototype`_ are both enabled.
+============  ===========  =======================================================================================
