@@ -3960,25 +3960,20 @@ may want to use:
 Middleware for DBAL Connections
 ...............................
 
-The middlewares above are built on the entity managers of the ORM. Their DBAL
-counterparts work on connections instead, so they also run in applications that
-don't use the ORM:
+The middlewares above are built on the entity managers of the ORM. These two
+work on DBAL connections instead, so they also run in applications that don't
+use the ORM:
 
 * :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalPingConnectionMiddleware`
   pings the connections and reconnects the closed ones;
-* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalCloseConnectionMiddleware`
-  closes the connections after handling;
-* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalOpenTransactionLoggerMiddleware`
-  logs an error when a handler leaves a transaction open;
 * :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalTransactionMiddleware`
   wraps all handlers in a single DBAL transaction.
 
-They all take the connection registry as their first argument. The ping, close
-and logger middlewares then take connection names, either a single name or a
-list of them; passing none targets every DBAL connection. The logger middleware
-takes its logger second and its connection names third. The transaction
-middleware takes a single optional connection name, as a transaction spanning
-several connections wouldn't be one.
+Both take the connection registry as their first argument. The ping middleware
+then takes connection names, either a single name or a list of them; passing
+none pings every DBAL connection. The transaction middleware takes a single
+optional connection name, as a transaction spanning several connections
+wouldn't be one.
 
 Unlike ``doctrine_transaction``, ``DoctrineDbalTransactionMiddleware`` doesn't
 flush any entity manager before committing: the handlers do it.
@@ -3999,15 +3994,14 @@ their class name to the middleware list of the bus:
 
 .. versionadded:: 8.2
 
-    The DBAL middlewares were introduced in Symfony 8.2.
+    ``DoctrineDbalPingConnectionMiddleware`` and
+    ``DoctrineDbalTransactionMiddleware`` were introduced in Symfony 8.2.
 
 .. deprecated:: 8.2
 
-    ``DoctrinePingConnectionMiddleware``, ``DoctrineCloseConnectionMiddleware``
-    and ``DoctrineOpenTransactionLoggerMiddleware`` are deprecated since Symfony
-    8.2 in favor of their DBAL counterparts. Beware that the DBAL ping
-    middleware doesn't reset closed entity managers, as workers already reset
-    them between messages.
+    ``DoctrinePingConnectionMiddleware`` is deprecated since Symfony 8.2 in
+    favor of ``DoctrineDbalPingConnectionMiddleware``, which doesn't reset
+    closed entity managers, as workers already reset them between messages.
 
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
