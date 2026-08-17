@@ -2748,6 +2748,39 @@ instead of ``App\Message\OrderPlaced``.
 
     The ``serializedTypeName`` option was introduced in Symfony 8.1.
 
+Reading Messages Sent under a Previous Type Name
+................................................
+
+.. versionadded:: 8.2
+
+    The ``serializedTypeNameAliases`` option was introduced in Symfony 8.2.
+
+Changing the type name of a message breaks the messages that are already
+waiting in a transport, because they still carry the previous name. List that
+name in the ``serializedTypeNameAliases`` option to keep decoding them::
+
+    // src/Message/OrderPlaced.php
+    namespace App\Message;
+
+    use Symfony\Component\Messenger\Attribute\AsMessage;
+
+    #[AsMessage(
+        serializedTypeName: 'order.placed',
+        serializedTypeNameAliases: ['App\Message\OrderPlaced'],
+    )]
+    class OrderPlaced
+    {
+        // ...
+    }
+
+Messages arriving with the ``App\Message\OrderPlaced`` type header are now
+decoded into this class, while new messages are still sent as ``order.placed``.
+
+Aliases apply to decoding only, so when you introduce a new type name, deploy
+the consumers before the producers. Also, a name you list as an alias cannot be
+the serialized type of another message class, since Symfony would not know
+which class to decode it into.
+
 Closing Connections
 ~~~~~~~~~~~~~~~~~~~
 
