@@ -46,6 +46,47 @@ to view the command's documentation:
     To learn more about them, you can read
     :ref:`this section <console-global-options>`.
 
+.. _console-terminal-width-wrapping:
+
+Terminal-Width-Aware Descriptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using the default text format (``--format=txt``), the descriptions of
+commands, options and arguments are automatically wrapped to fit the terminal
+width. This applies to ``php bin/console list``, to running a command with the
+``--help`` option, to the ``help`` command and to any use of
+:class:`Symfony\\Component\\Console\\Helper\\DescriptorHelper` in your own
+commands. This prevents long descriptions from being hard-cut mid-word by the
+terminal emulator.
+
+Two layouts are used depending on the available space:
+
+* **Inline**: when at least 20 columns are available after the name column,
+  the description wraps beside the name and continuation lines align to the
+  same column;
+* **Fallback**: when the terminal is too narrow for that, the description
+  moves to a line below the name with a fixed 6-space indent.
+
+This wrapping only applies when the output stream is connected to an
+interactive terminal. Piped or redirected output (e.g.
+``bin/console list > commands.txt``) stays unbounded, so scripts and tools
+that parse command output keep working without changes.
+
+When calling a descriptor programmatically, you can pass the
+``terminal_width`` option to override the detected terminal width::
+
+    use Symfony\Component\Console\Helper\DescriptorHelper;
+
+    $helper = new DescriptorHelper();
+    $helper->describe($output, $command, [
+        'terminal_width' => 60,
+    ]);
+
+.. versionadded:: 8.2
+
+    The automatic terminal-width wrapping of command and option descriptions
+    was introduced in Symfony 8.2.
+
 APP_ENV & APP_DEBUG
 ~~~~~~~~~~~~~~~~~~~
 
