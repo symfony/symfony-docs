@@ -542,6 +542,19 @@ If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``#[Ignore]`` attribute is taken into account).
 
+Set the ``enable_default_groups`` option to make properties without any
+``#[Groups]`` attribute belong to the implicit ``Default`` and class short
+name groups, like the :ref:`Serializer component does <serializer-groups-attribute>`::
+
+    $serializerExtractor->getProperties($class, [
+        'serializer_groups' => ['Default'],
+        'enable_default_groups' => true,
+    ]);
+
+.. versionadded:: 8.2
+
+    The ``enable_default_groups`` option was introduced in Symfony 8.2.
+
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~
 
