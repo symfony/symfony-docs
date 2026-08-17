@@ -1571,8 +1571,6 @@ the component standalone, call the ``setLogger()`` method to define it.
     Logging of ``stale-if-error`` fallbacks in ``CachingHttpClient`` was
     introduced in Symfony 8.1.
 
-.. _http-client-cache-policy:
-
 Deciding How a Response Is Stored
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
