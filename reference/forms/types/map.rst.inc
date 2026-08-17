@@ -62,6 +62,7 @@ Field Groups
 ~~~~~~~~~~~~
 
 * :doc:`CollectionType </reference/forms/types/collection>`
+* :doc:`PolymorphicCollectionType </reference/forms/types/polymorphic_collection>`
 * :doc:`RepeatedType </reference/forms/types/repeated>`
 
 Hidden Fields
