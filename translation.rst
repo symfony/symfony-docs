@@ -1552,6 +1552,13 @@ adapted to the format required by GitHub, but you can force that format too:
     $ php bin/console lint:yaml translations/ --format=github
     $ php bin/console lint:xliff translations/ --format=github
 
+    # the YAML linter also supports formatting the output for GitLab
+    $ php bin/console lint:yaml translations/ --format=gitlab
+
+.. versionadded:: 8.3
+
+    The ``gitlab`` output format of ``lint:yaml`` was introduced in Symfony 8.2.
+
 .. tip::
 
     The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
