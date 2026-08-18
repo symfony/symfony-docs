@@ -289,6 +289,24 @@ Renders the ``<form>`` opening tag with the configured method, action, and
 
     {{ form_start(form, {method: 'GET'}) }}
 
+By default, the ``name`` attribute of the ``<form>`` element is rendered with
+the form name. It goes through the ``attr`` variable, so you can override it
+or remove it like any other attribute:
+
+.. code-block:: twig
+
+    {# override the name attribute #}
+    {{ form_start(form, {attr: {name: 'other-name'}}) }}
+
+    {# remove the name attribute entirely #}
+    {{ form_start(form, {attr: {name: false}}) }}
+
+.. versionadded:: 8.2
+
+    Rendering the ``name`` attribute through ``attr`` was introduced in
+    Symfony 8.2. Previously, the attribute was always rendered with the form
+    name and could not be overridden or removed.
+
 .. _reference-forms-twig-widget:
 
 form_widget(form_view, variables)
