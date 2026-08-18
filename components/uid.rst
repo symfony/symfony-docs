@@ -368,6 +368,34 @@ By default, only the RFC 4122 format is accepted.
         The ``$invalidValue`` property on ``InvalidArgumentException``
         was introduced in Symfony 8.1.
 
+UUIDs of versions 6 and 7 are *time-ordered*: comparing two of them as bytes,
+as strings or as a database column gives the same order as comparing the dates
+they carry. These classes implement
+:class:`Symfony\\Component\\Uid\\TimeOrderedUidInterface`, which provides a
+``createBoundaries()`` method that returns the lowest and highest UUIDs
+sharing a given timestamp. Use them to make range queries that select every
+UUID created at that moment::
+
+    use Symfony\Component\Uid\UuidV7;
+
+    [$min, $max] = UuidV7::createBoundaries(new \DateTimeImmutable('2022-02-22 19:22:22 UTC'));
+    // $min = '017f22e2-79b0-7000-8000-000000000000'
+    // $max = '017f22e2-79b0-7fff-bfff-ffffffffffff'
+
+    // every UUIDv7 created during that millisecond sorts between the
+    // two bounds, e.g. in SQL: WHERE uuid BETWEEN :min AND :max
+
+    // when no timestamp is passed, the bounds are for the current time
+    [$min, $max] = UuidV7::createBoundaries();
+
+The bounds cover the resolution stored by the UUID: one millisecond for
+UUIDv7 and one clock tick of 100 nanoseconds for UUIDv6.
+
+.. versionadded:: 8.2
+
+    The ``createBoundaries()`` method and the ``TimeOrderedUidInterface``
+    were introduced in Symfony 8.2.
+
 .. _uid-uuid-doctrine:
 
 Storing UUIDs in Databases
@@ -639,6 +667,26 @@ ULID objects created with the ``Ulid`` class can use the following methods::
 .. versionadded:: 8.1
 
     Support for validating ULIDs in different formats was introduced in Symfony 8.1.
+
+ULIDs are *time-ordered*, so the ``Ulid`` class also implements
+:class:`Symfony\\Component\\Uid\\TimeOrderedUidInterface` and provides a
+``createBoundaries()`` method that returns the lowest and highest ULIDs
+sharing a given timestamp (or the current time when no timestamp is
+passed)::
+
+    use Symfony\Component\Uid\Ulid;
+
+    [$min, $max] = Ulid::createBoundaries(new \DateTimeImmutable('2026-04-13 09:30:00.123 UTC'));
+    // $min = '01KP32TAHV0000000000000000'
+    // $max = '01KP32TAHVZZZZZZZZZZZZZZZZ'
+
+    // every ULID created during that millisecond sorts between the
+    // two bounds, e.g. in SQL: WHERE ulid BETWEEN :min AND :max
+
+.. versionadded:: 8.2
+
+    The ``createBoundaries()`` method and the ``TimeOrderedUidInterface``
+    were introduced in Symfony 8.2.
 
 .. _uid-ulid-doctrine:
 
