@@ -1324,6 +1324,12 @@ hinclude_default_template
 
 **type**: ``string`` **default**: ``null``
 
+.. deprecated:: 8.2
+
+    The ``hinclude_default_template`` option is deprecated since Symfony 8.2.
+    Use the ``esi`` or ``inline`` fragment renderers, or `Symfony UX Turbo`_,
+    instead.
+
 Sets the content shown during the loading of the fragment or when JavaScript
 is disabled. This can be either a template name or the content itself.
 
@@ -5217,6 +5223,7 @@ to know their differences.
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
 .. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988
 .. _`SMTP session`: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol#SMTP_transport_example
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo
 .. _`OpenSSL cipher`: https://www.php.net/manual/en/openssl.ciphers.php
 .. _`PHP attributes`: https://www.php.net/manual/en/language.attributes.overview.php
 .. _`shared cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#shared_cache

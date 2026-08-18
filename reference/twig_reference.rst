@@ -751,8 +751,8 @@ falls back to the behavior of `render`_ otherwise.
 
     The ``render_esi()`` function is an example of the shortcut functions
     of ``render``. It automatically sets the strategy based on what's given
-    in the function name, e.g. ``render_hinclude()`` will use the hinclude.js
-    strategy. This works for all ``render_*()`` functions.
+    in the function name, e.g. ``render_ssi()`` will use the SSI strategy.
+    This works for all ``render_*()`` functions.
 
 .. _reference-twig-function-render-ssi:
 

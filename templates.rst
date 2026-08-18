@@ -790,6 +790,14 @@ template fragments. Configure that special URL in the ``fragments`` option:
 How to Embed Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. deprecated:: 8.2
+
+    The hinclude.js integration (the ``render_hinclude()`` Twig function, the
+    ``HIncludeFragmentRenderer`` class and the
+    ``framework.fragments.hinclude_default_template`` option) is deprecated
+    since Symfony 8.2. Use the ``render_esi()`` or ``render()`` functions, or
+    `Symfony UX Turbo`_, instead.
+
 .. note::
 
     ``hinclude.js`` is a legacy technique. For asynchronous, self-updating
@@ -1579,6 +1587,7 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 .. _`Turbo Streams`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo
 .. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
 .. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
 .. _`Twig Environment`: https://github.com/twigphp/Twig/blob/3.x/src/Environment.php
