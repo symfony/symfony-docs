@@ -94,6 +94,17 @@ under test is started on demand and stopped when ``tearDownAfterClass()`` is cal
 On the other hand, when the extension is registered, the web server will be stopped
 only after the very last test.
 
+.. tip::
+
+    If a test must temporarily ensure that the Panther web server is not
+    running (for example, before an operation that needs exclusive access to a
+    shared resource), call ``static::stopWebServer()``. This also closes the
+    current browser clients.
+
+    A later call to ``static::createPantherClient()`` starts a new web server
+    and browser client. Don't reuse a client created before
+    ``stopWebServer()``.
+
 Usage
 -----
 
