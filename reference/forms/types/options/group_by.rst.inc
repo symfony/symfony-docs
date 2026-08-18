@@ -41,6 +41,29 @@ If you return ``null``, the option won't be grouped. You can also pass a string
 "property path" that will be called to get the group. See the `choice_label`_ for
 details about using a property path.
 
+The group labels are translated using the ``choice_translation_domain`` option,
+so you can return a translation key. The callback can also return any
+:class:`Symfony\\Contracts\\Translation\\TranslatableInterface` instance, like
+it's possible with the `choice_label`_ option::
+
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use Symfony\Component\Translation\TranslatableMessage;
+    // ...
+
+    $builder->add('country', ChoiceType::class, [
+        'choices' => $countries,
+        'group_by' => fn (Country $country) => new TranslatableMessage(
+            'continent.'.$country->getContinent(),
+            [],
+            'countries',
+        ),
+    ]);
+
+.. versionadded:: 8.2
+
+    Support for returning ``TranslatableInterface`` instances from ``group_by``
+    was introduced in Symfony 8.2.
+
 .. tip::
 
     When defining a custom type, you should use the
