@@ -2253,13 +2253,6 @@ To inspect the resulting hierarchy, run the ``debug:roles`` command:
 
     The ``debug:roles`` command was introduced in Symfony 8.2.
 
-.. note::
-
-    When the ``security.role_hierarchy`` service is replaced by a custom
-    :class:`Symfony\\Component\\Security\\Core\\Role\\RoleHierarchyInterface`
-    implementation, the command can only report reachable role names: the
-    ``--tree`` option is ignored and the ``roles`` argument becomes required.
-
 .. tip::
 
     To help debug your roles hierarchy, you can generate a visual representation
