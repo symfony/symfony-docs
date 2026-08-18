@@ -413,7 +413,7 @@ Both files are regenerated whenever the service container is compiled. They are
 meant for applications only: bundles must not read them at runtime. You can use
 them for integration tests in the bundle's own test suite.
 
-.. caution::
+.. warning::
 
     Both exports are built from the static configuration tree, so avoid
     transforming data in ``beforeNormalization()`` closures. Those closures run
@@ -425,11 +425,6 @@ them for integration tests in the bundle's own test suite.
 
 Generate a PHP Reference
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.4
-
-    Symfony 7.4 generates a PHP reference for application configuration during
-    debug compilations.
 
 When your application runs in debug mode, FrameworkBundle writes a
 ``config/reference.php`` file that describes the configuration trees of every

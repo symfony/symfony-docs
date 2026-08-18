@@ -583,7 +583,7 @@ Besides the human-readable formats produced by ``config:dump-reference``, the
 Config component can export a configuration tree into machine-readable formats
 that power IDE autocompletion and static analysis.
 
-.. caution::
+.. warning::
 
     Both exports are built from the static configuration tree, so avoid
     transforming data in ``beforeNormalization()`` closures. Those closures run
@@ -614,11 +614,7 @@ The examples below reuse the same configuration tree, built from this
     $tree = $treeBuilder->buildTree();
 
 Dumping PHP Array-Shapes
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.4
-
-    The array-shape generator was introduced in Symfony 7.4.
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Config\\Definition\\ArrayShapeGenerator`
 class turns the configuration tree into a PHPDoc ``array{...}`` shape. IDEs and
@@ -640,7 +636,7 @@ FrameworkBundle uses this generator to build the ``config/reference.php`` file
 that ships with Symfony applications (see :doc:`/bundles/configuration`).
 
 Dumping a JSON Schema
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.2
 
@@ -697,7 +693,7 @@ section is abbreviated here for readability):
     }
 
 The dumper returns an array representation of the schema, so you can merge it
-with other metadata before serializing it to JSON. 
+with other metadata before serializing it to JSON.
 
 FrameworkBundle uses ``JsonSchemaDumper`` to build the ``config/schema.json``
 file that ships with Symfony applications (see :doc:`/bundles/configuration`).
