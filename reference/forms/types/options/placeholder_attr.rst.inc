@@ -11,9 +11,7 @@ Use this to add additional HTML attributes to the placeholder choice::
     $builder->add('fruits', ChoiceType::class, [
         // ...
         'placeholder' => '...',
-        'placeholder_attr' => [
-            ['title' => 'Choose an option'],
-        ],
+        'placeholder_attr' => ['title' => 'Choose an option'],
     ]);
 
 .. versionadded:: 6.3
