@@ -930,12 +930,12 @@ recurring messages. You can narrow down the list to a specific schedule:
       default
       -------
 
-        ------------------- ------------------------- ----------------------
-        Trigger             Provider                  Next Run
-        ------------------- ------------------------- ----------------------
-        every 2 days        App\Messenger\Foo(0:17..)  Sun, 03 Dec 2023 ...
-        15 4 */3 * *        App\Messenger\Foo(0:17..)  Mon, 18 Dec 2023 ...
-       -------------------- -------------------------- ---------------------
+        ------------------- ------------------------- ---------------------- -------------------
+        Trigger             Provider                  Next Run On            Next Run In
+        ------------------- ------------------------- ---------------------- -------------------
+        every 2 days        App\Messenger\Foo(0:17..)  Sun, 03 Dec 2023 ...   1 day, 6 hours
+        15 4 */3 * *        App\Messenger\Foo(0:17..)  Mon, 18 Dec 2023 ...   16 days, 4 hours
+       -------------------- -------------------------- --------------------- -------------------
 
     # you can also specify a date to use for the next run date:
     $ php bin/console debug:scheduler --date=2025-10-18
@@ -945,6 +945,11 @@ recurring messages. You can narrow down the list to a specific schedule:
 
     # use the --all option to also display the terminated recurring messages
     $ php bin/console debug:scheduler --all
+
+.. versionadded:: 8.2
+
+    The ``Next Run In`` column showing the time remaining until the next run
+    was introduced in Symfony 8.2.
 
 Efficient Management With Symfony Scheduler
 -------------------------------------------
