@@ -94,6 +94,7 @@ Service               Install with                                        Webhoo
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
 `Azure`_              ``composer require symfony/azure-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``           yes
+`Cloudflare`_         ``composer require symfony/cloudflare-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``         yes
 `Mailjet`_            ``composer require symfony/mailjet-mailer``         yes
@@ -114,7 +115,7 @@ Service               Install with                                        Webhoo
 
 .. versionadded:: 8.2
 
-    The ``TurboSMTP`` integration was introduced in Symfony 8.2.
+    The ``TurboSMTP`` and ``Cloudflare`` integrations were introduced in Symfony 8.2.
     Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
 
 .. note::
@@ -181,6 +182,10 @@ party provider:
 | `Brevo`_               | - SMTP ``brevo+smtp://USERNAME:PASSWORD@default:PORT``                                    |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``brevo+api://KEY@default``                                                         |
++------------------------+-------------------------------------------------------------------------------------------+
+| `Cloudflare`_          | - SMTP n/a                                                                                |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``cloudflare+api://ACCOUNT_ID:API_TOKEN@default``                                   |
 +------------------------+-------------------------------------------------------------------------------------------+
 | `Google Gmail`_        | - SMTP ``gmail+smtp://USERNAME:APP-PASSWORD@default``                                     |
 |                        | - HTTP n/a                                                                                |
@@ -2319,6 +2324,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Azure`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Azure/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
 .. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
+.. _`Cloudflare`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Cloudflare/README.md
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
