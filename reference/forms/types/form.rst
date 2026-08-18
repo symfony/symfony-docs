@@ -76,6 +76,8 @@ This callable takes form data and returns whether the value is considered empty.
 
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
 
+.. _reference-form-option-form-attr:
+
 .. include:: /reference/forms/types/options/form_attr.rst.inc
 
 ``getter``
