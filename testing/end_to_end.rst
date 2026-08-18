@@ -94,17 +94,6 @@ under test is started on demand and stopped when ``tearDownAfterClass()`` is cal
 On the other hand, when the extension is registered, the web server will be stopped
 only after the very last test.
 
-.. tip::
-
-    If a test must temporarily ensure that the Panther web server is not
-    running (for example, before an operation that needs exclusive access to a
-    shared resource), call ``static::stopWebServer()``. This also closes the
-    current browser clients.
-
-    A later call to ``static::createPantherClient()`` starts a new web server
-    and browser client. Don't reuse a client created before
-    ``stopWebServer()``.
-
 Usage
 -----
 
@@ -128,6 +117,15 @@ Here is an example of a snippet that uses Panther to test an application::
     echo $crawler->filter('div:has(> #bootstrapping-the-core-library)')->text();
     // take a screenshot of the current page
     $client->takeScreenshot('screen.png');
+
+.. tip::
+
+    To temporarily stop Panther's web server (for example, to access a shared
+    resource exclusively) call ``static::stopWebServer()``. This also closes the
+    current browser clients.
+
+    Calling ``static::createPantherClient()`` later starts a new server and
+    browser client. Do not reuse clients created before ``stopWebServer()``.
 
 .. note::
 
