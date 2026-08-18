@@ -118,6 +118,15 @@ Here is an example of a snippet that uses Panther to test an application::
     // take a screenshot of the current page
     $client->takeScreenshot('screen.png');
 
+.. tip::
+
+    To temporarily stop Panther's web server (for example, to access a shared
+    resource exclusively) call ``static::stopWebServer()``. This also closes the
+    current browser clients.
+
+    Calling ``static::createPantherClient()`` later starts a new server and
+    browser client. Do not reuse clients created before ``stopWebServer()``.
+
 .. note::
 
     According to the specification, WebDriver implementations return only the
