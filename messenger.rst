@@ -4002,6 +4002,75 @@ to configure the validation groups.
             ],
         ]);
 
+Logging Middleware
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``logging`` middleware was introduced in Symfony 8.2.
+
+Add the ``logging`` middleware to log how long each message took to process and
+how much memory it used. It's not part of the default middleware, so only the
+buses that list it explicitly are affected:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    messenger.bus.default:
+                        middleware:
+                            - logging
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'buses' => [
+                        'messenger.bus.default' => [
+                            'middleware' => [
+                                'logging',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Its position in the stack defines what is measured: everything below it. It logs
+the following messages on the ``messenger`` channel:
+
+=========  ===========================================  ========================================
+Level      Message                                      Logged when
+=========  ===========================================  ========================================
+``info``   ``"{class}" message successfully handled.``  The message was handled
+``info``   ``"{class}" message sent to transport.``     The message was only sent to a transport
+``error``  ``Unable to handle "{class}" message.``      The middleware stack threw an exception
+=========  ===========================================  ========================================
+
+All of them include the ``class``, ``duration_ms`` and ``memory_usage`` context
+keys, plus an ``exception`` key for the failing case.
+
+Messages handled asynchronously are logged twice in their life: once when they
+are dispatched, where the duration is the time needed to hand them to the
+transport, and once in the worker, where the duration is the time needed to
+handle them. Keep this distinction in mind when building dashboards from these
+logs, otherwise every message is counted twice and the time to send a message
+is read as the time to handle it.
+
+.. note::
+
+    ``memory_usage`` is a delta of :phpfunction:`memory_get_usage` expressed in
+    bytes, so it can be negative when a handler frees more memory than it
+    allocates.
+
 Messenger Events
 ~~~~~~~~~~~~~~~~
 
