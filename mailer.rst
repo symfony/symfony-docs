@@ -1429,6 +1429,20 @@ Before signing/encrypting messages, make sure to have:
     a :ref:`MessageEvent <messageevent>` listener run after it (you need to set
     a negative priority to your listener).
 
+.. note::
+
+    When configured globally, S/MIME signing runs before S/MIME encryption, so
+    that the signature is protected by the encryption, and DKIM signing runs
+    last, on the message that is actually transmitted. Their listeners expose
+    their priorities as ``SmimeSignedMessageListener::PRIORITY`` (``-128``),
+    ``SmimeEncryptedMessageListener::PRIORITY`` (``-200``) and
+    ``DkimSignedMessageListener::PRIORITY`` (``-228``).
+
+    .. versionadded:: 8.2
+
+        These ``PRIORITY`` constants and the resulting deterministic ordering
+        were introduced in Symfony 8.2.
+
 Signing Messages
 ~~~~~~~~~~~~~~~~
 
@@ -1603,8 +1617,14 @@ and it will select the appropriate certificate depending on the ``To`` option::
 Encrypting Messages Globally
 ............................
 
-Instead of creating a new encrypter for each email, you can configure a global S/MIME
-encrypter that automatically applies to all outgoing messages:
+Instead of creating a new encrypter for each email, you can configure a global
+S/MIME encrypter that applies to the messages having the ``X-SMime-Encrypt``
+header::
+
+    $email->getHeaders()->addTextHeader('X-SMime-Encrypt', 'true');
+
+Configure the certificates of the recipients either explicitly or through a
+repository service:
 
 .. configuration-block::
 
@@ -1614,24 +1634,80 @@ encrypter that automatically applies to all outgoing messages:
         framework:
             mailer:
                 smime_encrypter:
-                    repository: App\Security\LocalFileCertificateRepository
+                    enabled: true
+                    # define the recipient certificates explicitly...
+                    certificates:
+                        'jane@example.com': '%kernel.project_dir%/var/certificates/jane.crt'
+                    # ...or get them from a service (you can't use both options at the same time)
+                    # repository: App\Security\LocalFileCertificateRepository
+                    on_missing_certificate: 'fail'
+                    encrypt_for_sender: false
 
     .. code-block:: php
 
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Security\LocalFileCertificateRepository;
+        // use App\Security\LocalFileCertificateRepository;
 
         return App::config([
             'framework' => [
                 'mailer' => [
                     'smime_encrypter' => [
-                        'repository' => LocalFileCertificateRepository::class,
+                        'enabled' => true,
+                        // define the recipient certificates explicitly...
+                        'certificates' => [
+                            'jane@example.com' => '%kernel.project_dir%/var/certificates/jane.crt',
+                        ],
+                        // ...or get them from a service (you can't use both options at the same time)
+                        // 'repository' => LocalFileCertificateRepository::class,
+                        'on_missing_certificate' => 'fail',
+                        'encrypt_for_sender' => false,
                     ],
                 ],
             ],
         ]);
+
+.. versionadded:: 8.2
+
+    The ``certificates``, ``on_missing_certificate`` and ``encrypt_for_sender``
+    options were introduced in Symfony 8.2.
+
+The ``on_missing_certificate`` option defines what to do when some recipient has
+no certificate:
+
+``send_unencrypted`` (default)
+    Send the message unencrypted to everyone;
+``fail``
+    Throw a ``RuntimeException`` naming every recipient without a certificate;
+``encrypt``
+    Encrypt for the recipients that have a certificate; the others still receive
+    the message, but they can't read it;
+``skip``
+    Encrypt for the recipients that have a certificate and remove the others
+    from the envelope.
+
+.. deprecated:: 8.2
+
+    The ``send_unencrypted`` behavior is deprecated since Symfony 8.2 and will
+    throw an exception in Symfony 9.0. Set ``on_missing_certificate`` to
+    ``fail``, ``encrypt`` or ``skip`` instead.
+
+Set the value of the ``X-SMime-Encrypt`` header to ``fail``, ``encrypt`` or
+``skip`` to override the configured behavior for a single message. The header
+can't select ``send_unencrypted``, so it can never turn an encrypted message
+into a plaintext one.
+
+.. note::
+
+    The recipients dropped by the ``skip`` behavior are removed from the
+    envelope, but the ``framework.mailer.envelope.recipients`` option is applied
+    afterwards and overrides that list.
+
+Enable the ``encrypt_for_sender`` option to also encrypt the message for the
+sender, when a certificate is available for its address, so that the sender can
+read the messages it sent. It's disabled by default because it widens the number
+of people able to decrypt the message.
 
 The ``repository`` option is the ID of a service that implements
 :class:`Symfony\\Component\\Mailer\\EventListener\\SmimeCertificateRepositoryInterface`.
