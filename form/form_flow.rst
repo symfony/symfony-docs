@@ -134,6 +134,87 @@ Steps can be conditionally skipped using a callable::
 
 Skipped steps are not rendered and are ignored during navigation.
 
+.. _form-flow-nested-steps:
+
+Nested Steps
+~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for nested steps was introduced in Symfony 8.2.
+
+Steps can define child steps, to build a hierarchy matching the composition of
+your model. Use the ``createStep()`` method of the builder to create a step, add
+its children to it and pass the result to ``addStep()``::
+
+    public function buildFormFlow(FormFlowBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->addStep(
+                $builder->createStep('flight', FlightType::class)
+                    ->addStep('outbound', OutboundFlightType::class)
+                    ->addStep('return', ReturnFlightType::class)
+            )
+            ->addStep('passengers', PassengersType::class)
+        ;
+
+        $builder->add('navigator', NavigatorFlowType::class);
+    }
+
+In this example, the ``flight`` step contains form fields of its own. When the
+user clicks the "Next" button, the flow goes through the ``outbound`` and
+``return`` steps before reaching the ``passengers`` step.
+
+Child steps are configured like the other ones. Navigation skips the whole
+branch of a skipped step, which is convenient to make a part of the flow depend
+on the data submitted in a previous step::
+
+    $builder->addStep(
+        $builder->createStep('flight', FlightType::class)
+            ->addStep(
+                $builder->createStep('return', ReturnFlightType::class)
+                    ->setSkip(fn (Booking $data) => !$data->isRoundTrip())
+                    ->addStep('return_seat', SeatType::class)
+            )
+    );
+
+.. warning::
+
+    Nesting steps only changes the structure and the navigation of the flow, not
+    the mapping of the data: the data of every step, whatever its depth, still
+    targets the object handled by the form flow type.
+
+.. _form-flow-grouping-steps:
+
+Grouping Steps
+~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``createStepGroup()`` method was introduced in Symfony 8.2.
+
+When a parent step only exists to give a structural meaning to its children and
+has no form of its own, create it with the ``createStepGroup()`` method::
+
+    public function buildFormFlow(FormFlowBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->addStep(
+                $builder->createStepGroup('flight')
+                    ->addStep('outbound', OutboundFlightType::class)
+                    ->addStep('return', ReturnFlightType::class)
+            )
+            ->addStep('passengers', PassengersType::class)
+        ;
+
+        // ...
+    }
+
+Group steps must define child steps, otherwise a ``LogicException`` is thrown.
+As they aren't actual form steps, they are never displayed as the current step:
+navigation traverses them to the closest child in the direction it moves (the
+first one when moving forward, the last one when moving backward).
+
 Persisting Data Between Requests
 --------------------------------
 
@@ -256,6 +337,14 @@ The following example displays the current progress and the list of steps:
         {{ form_widget(form) }}
     {{ form_end(form) }}
 
+.. warning::
+
+    ``form_flow_steps()``, ``form_flow_total_steps()`` and
+    ``form_flow_step_index()`` work on the flattened list of all the steps of
+    the flow, which includes the :ref:`group steps <form-flow-grouping-steps>`
+    and the skipped ones. Use the ``visible_steps`` variable described below to
+    render the steps the user actually goes through.
+
 .. versionadded:: 8.1
 
     The ``form_flow_*()`` Twig functions were introduced in Symfony 8.1.
@@ -283,12 +372,46 @@ current data:
 
 Each step object exposes the following properties:
 
-* ``name``
-* ``index``
-* ``position``
-* ``is_current_step``
-* ``is_skipped``
-* ``can_be_skipped``
+* ``name``, the name of the step and ``level``, its depth in the flow (``0`` for
+  the steps defined at the root of the flow);
+* ``index``, the zero-based position of the step among its siblings and
+  ``position``, its one-based position among the non-skipped ones (``-1`` when
+  the step is skipped);
+* ``is_current_step``, ``is_before_current_step``, ``is_after_current_step`` and
+  ``has_current_step_descendant``, telling where the step stands relative to the
+  current one;
+* ``is_skipped`` and ``can_be_skipped``;
+* ``is_group``, whether the step is a :ref:`group step <form-flow-grouping-steps>`;
+* ``children`` and ``visible_children``, the child steps of the step, the latter
+  excluding the skipped ones.
+
+As ``visible_steps`` only contains the steps defined at the root of the flow,
+use ``visible_children`` to render the :ref:`nested steps <form-flow-nested-steps>`
+too. A group step is never the current step, so rely on
+``has_current_step_descendant`` to highlight the branch the user is in:
+
+.. code-block:: html+twig
+
+    {% macro steps(steps) %}
+        <ol>
+            {% for step in steps %}
+                <li class="{{ step.is_current_step or step.has_current_step_descendant ? 'active' : '' }}">
+                    {{ step.name }}
+                    {% if step.visible_children is not empty %}
+                        {{ _self.steps(step.visible_children) }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ol>
+    {% endmacro %}
+
+    {{ _self.steps(form.vars.visible_steps) }}
+
+.. versionadded:: 8.2
+
+    The ``level``, ``is_before_current_step``, ``is_after_current_step``,
+    ``has_current_step_descendant``, ``is_group``, ``children`` and
+    ``visible_children`` properties were introduced in Symfony 8.2.
 
 Using Multi-Step Forms with Turbo
 ---------------------------------
