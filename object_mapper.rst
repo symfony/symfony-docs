@@ -629,8 +629,8 @@ instead of ``TransformCallableInterface``::
     use Symfony\Component\ObjectMapper\MappingAwareTransformCallableInterface;
 
     /**
-    * @implements MappingAwareTransformCallableInterface<ProductInput, Product>
-    */
+     * @implements MappingAwareTransformCallableInterface<ProductInput, Product>
+     */
     final class RoundingTransformer implements MappingAwareTransformCallableInterface
     {
         public function __invoke(mixed $value, object $source, ?object $target, ?Map $mapping = null): mixed
