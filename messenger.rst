@@ -2901,6 +2901,8 @@ layer of protection by supporting message signing.
 This is particularly important for handlers that execute commands or processes,
 which is why the ``RunProcessHandler`` has message signing **enabled by default**.
 
+.. _messenger-message-signing:
+
 Enabling Message Signing
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -4115,35 +4117,6 @@ Let's say you want to create a message decoder::
         }
     }
 
-Besides the ``body`` and the ``headers`` produced by ``encode()``, the array
-given to ``decode()`` can hold an ``extra`` key with the metadata observed by
-the transport that received the message. The AMQP transport uses it to pass the
-routing key of the message, which often tells which class the body should be
-decoded into::
-
-    public function decode(array $encodedEnvelope): Envelope
-    {
-        $routingKey = $encodedEnvelope['extra']['routing_key'] ?? null;
-
-        // ...
-    }
-
-.. versionadded:: 8.2
-
-    The ``extra`` key and the ``routing_key`` metadata of the AMQP transport
-    were introduced in Symfony 8.2.
-
-.. warning::
-
-    Unlike ``body`` and ``headers``, the contents of ``extra`` are not produced
-    by ``encode()`` and don't survive a round trip, so your serializer must
-    treat them as optional and must not require them to decode a message. For
-    the same reason, serializers implementing
-    :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\MessageTypeAwareSerializerInterface`
-    shouldn't determine the type of the message from ``extra``: a signature
-    covers the encoded envelope, so a type taken from the metadata of a
-    transport is not covered by one.
-
 The next step is to tell Symfony to use this serializer in one or more of your
 transports:
 
@@ -4178,6 +4151,40 @@ transports:
                 ],
             ],
         ]);
+
+Besides the ``body`` and the ``headers`` produced by ``encode()``, the array
+given to ``decode()`` can hold an ``extra`` key with the metadata observed by
+the transport that received the message. The AMQP transport uses it to pass the
+routing key of the message, which often tells which class the body should be
+decoded into::
+
+    class MessageWithTokenDecoder implements SerializerInterface
+    {
+        public function decode(array $encodedEnvelope): Envelope
+        {
+            $routingKey = $encodedEnvelope['extra']['routing_key'] ?? null;
+
+            // ...
+        }
+
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``extra`` key and the ``routing_key`` metadata of the AMQP transport
+    were introduced in Symfony 8.2.
+
+.. warning::
+
+    Unlike ``body`` and ``headers``, the contents of ``extra`` are not produced
+    by ``encode()`` and don't survive a round trip, so your serializer must
+    treat them as optional and must not require them to decode a message. For
+    the same reason, serializers implementing
+    :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\MessageTypeAwareSerializerInterface`
+    shouldn't determine the type of the message from ``extra``:
+    :ref:`message signing <messenger-message-signing>` covers the message body,
+    so a type taken from the metadata of a transport is not covered by it.
 
 .. _messenger-multiple-buses:
 
