@@ -301,6 +301,20 @@ They convert to/from ``DatePoint`` objects automatically::
         // ...
     }
 
+.. versionadded:: 8.2
+
+    The autodetection of the ``date_point`` type by the Doctrine schema tools
+    (e.g. when running ``doctrine:migrations:diff`` or ``doctrine:schema:update``)
+    was introduced in Symfony 8.2. In previous versions, columns typed with
+    ``DatePoint`` fell back to ``string`` unless the Doctrine type was set
+    explicitly.
+
+.. note::
+
+    A typed field mapper configured in your application (through the
+    ``typed_field_mapper`` option of DoctrineBundle) keeps precedence over this
+    autodetection.
+
 .. _clock_writing-tests:
 
 Writing Time-Sensitive Tests
