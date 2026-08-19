@@ -253,6 +253,39 @@ been provided; that's why you can assign ``null`` as ``$session``'s default valu
 You can target a resolver by passing its name as ``ValueResolver``'s first argument.
 For convenience, built-in resolvers' names are their FQCN.
 
+.. versionadded:: 8.2
+
+    ``SourceValueResolverInterface`` and the ability to target several resolvers
+    for the same argument were introduced in Symfony 8.2.
+
+Some resolvers, such as the ones behind the
+:ref:`MapQueryParameter <controller_map-request>` and
+:ref:`MapRequestHeader <controller_map-request-header>` attributes, only select
+where the value comes from and leave the creation of the argument to other
+resolvers. These resolvers implement
+:class:`Symfony\\Component\\HttpKernel\\Controller\\SourceValueResolverInterface`.
+When you target one of them, it runs first and then Symfony calls all the other
+resolvers too, so that the resolver that can build the argument type still runs.
+
+That's why you can target several resolvers for the same argument, as long as
+exactly one of them is a source resolver. In the following example, both
+attributes extend ``ValueResolver``: ``MapQueryParameter`` targets the source
+resolver and ``MapDateTime`` targets the resolver that creates the date::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapDateTime;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+    // ...
+
+    // https://example.com/dashboard?to=31/01/2026
+    public function dashboard(
+        #[MapQueryParameter] #[MapDateTime('d/m/Y')] \DateTimeImmutable $to,
+    ): Response
+    {
+        // ...
+    }
+
 A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
 argument to ``true``; this is how :ref:`MapEntity allows you to disable the
 EntityValueResolver for a specific controller <doctrine-entity-value-resolver>`.
