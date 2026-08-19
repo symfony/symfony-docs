@@ -607,6 +607,22 @@ vendor_dir
 
 The directory to store JavaScript vendors.
 
+minimum_release_age
+...................
+
+**type**: ``integer`` **default**: ``0``
+
+The minimum age, in seconds, a package version must have to be considered when
+checking for updates (``0`` disables this check). It protects you from supply
+chain attacks landing in freshly published versions, as explained in
+:ref:`Delaying Updates to Freshly Published Versions <asset-mapper-minimum-release-age>`.
+Enabling it makes update checks download the full npm metadata document, which is
+larger than the abbreviated one.
+
+.. versionadded:: 8.2
+
+    The ``minimum_release_age`` option was introduced in Symfony 8.2.
+
 precompress
 ...........
 
