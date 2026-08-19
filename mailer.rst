@@ -166,7 +166,8 @@ party provider:
 +========================+===========================================================================================+
 | `AhaSend`_             | - SMTP ``ahasend+smtp://USERNAME:PASSWORD@default``                                       |
 |                        | - HTTP n/a                                                                                |
-|                        | - API ``ahasend+api://KEY@default``                                                       |
+|                        | - API ``ahasend+api://KEY:ACCOUNT_ID@default``                                            |
+|                        | - API (legacy v1, deprecated) ``ahasend+api://KEY@default``                               |
 +------------------------+-------------------------------------------------------------------------------------------+
 | `Amazon SES`_          | - SMTP ``ses+smtp://USERNAME:PASSWORD@default:PORT``                                      |
 |                        | - HTTP ``ses+https://ACCESS_KEY:SECRET_KEY@default``                                      |
@@ -254,6 +255,28 @@ party provider:
 
     The option to define the port in the Brevo Mailer SMTP DSN was introduced
     in Symfony 8.2.
+
+.. versionadded:: 8.2
+
+    Support for the AhaSend v2 API was introduced in Symfony 8.2. Add your
+    account ID to the DSN to use it.
+
+.. deprecated:: 8.2
+
+    Sending emails through the AhaSend v1 API is deprecated since Symfony 8.2.
+    An ``ahasend+api://`` DSN without an account ID still selects that legacy
+    API, but only for the API keys created before v2: a v2 API key (prefixed
+    with ``aha-sk-``) without an account ID is rejected. Use a v2 API key and
+    add your account ID to the DSN instead.
+
+.. note::
+
+    Since Symfony 8.2, the ID of the :doc:`remote events </webhook>` received
+    from AhaSend is the ``Message-ID`` of the message, which the v2 API returns
+    when sending it, so those events can be matched with the messages you sent.
+    This applies to all AhaSend webhooks, whatever the transport used to send
+    the messages; it used to be the internal ID of the event, which is still
+    available in the payload under ``data.id``.
 
 .. warning::
 
