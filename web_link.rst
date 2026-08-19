@@ -5,6 +5,10 @@ Symfony provides native support (via the `WebLink`_ component)
 for managing ``Link`` HTTP headers, which are the key to improve the application
 performance when using preloading capabilities of modern web browsers.
 
+The component implements `Web Linking`_ (RFC 8288), the two link set document
+formats defined by `RFC 9264`_ and the ``Link-Template`` header field defined by
+`RFC 9652`_.
+
 ``Link`` headers are used to hint resources (e.g. CSS and JavaScript files) to
 clients before they even know that they need them. WebLink enables several
 optimizations:
@@ -301,6 +305,164 @@ instances::
     $links[1]->getAttributes(); // ['pr' => '0.7']
     $links[2]->getHref();       // '/baz.js'
 
+Sending Templated Links
+-----------------------
+
+.. versionadded:: 8.2
+
+    Support for the ``Link-Template`` HTTP header was introduced in Symfony 8.2.
+
+The ``Link`` header can only carry concrete URLs. When the target of a link is
+not known in advance (e.g. the URL of any item of a collection), describe it
+with a `URI template`_ and send it in the ``Link-Template`` header defined by
+`RFC 9652`_::
+
+    use Symfony\Component\WebLink\Link;
+    use Symfony\Component\WebLink\LinkTemplateHeaderSerializer;
+
+    $links = [
+        new Link('item', '/users/{id}'),
+        new Link('author', '/books/{book_id}/author')->withAttribute('anchor', '#{book_id}'),
+    ];
+
+    $serializer = new LinkTemplateHeaderSerializer();
+    $serializer->serialize($links);
+    // "/users/{id}"; rel="item", "/books/{book_id}/author"; rel="author"; anchor="#{book_id}"
+
+A link whose target is not a URI template is skipped, as it belongs to the
+``Link`` header. The serializer throws an
+:class:`Symfony\\Component\\WebLink\\Exception\\InvalidArgumentException` when a
+target attribute cannot be expressed as a structured field, either because its
+name is not a valid parameter key or because a non-ASCII value is not encoded in
+UTF-8.
+
+Links added to the response are dispatched between both headers automatically:
+those pointing at a concrete URL go to ``Link`` and those using a URI template
+go to ``Link-Template``::
+
+    // src/Controller/UserController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\WebLink\Link;
+
+    class UserController extends AbstractController
+    {
+        public function index(Request $request): Response
+        {
+            $this->addLink($request, new Link('preload', '/app.css')->withAttribute('as', 'style'));
+            $this->addLink($request, new Link('item', '/users/{id}'));
+
+            // Link: </app.css>; rel="preload"; as="style"
+            // Link-Template: "/users/{id}"; rel="item"
+
+            return $this->render('...');
+        }
+    }
+
+Reading those headers from a third-party response works the same way as for
+``Link`` headers, with the
+:class:`Symfony\\Component\\WebLink\\LinkTemplateHeaderParser` class::
+
+    use Symfony\Component\WebLink\LinkTemplateHeaderParser;
+
+    $parser = new LinkTemplateHeaderParser();
+    $links = $parser->parse('"/users/{id}"; rel="item"')->getLinks();
+
+    $links[0]->getHref();      // '/users/{id}'
+    $links[0]->isTemplated();  // true
+    $links[0]->getRels();      // ['item']
+
+.. note::
+
+    Unlike ``Link``, the ``Link-Template`` header is an `HTTP structured field`_.
+    As required by that specification, a header value which doesn't follow the
+    syntax is ignored as a whole, so the parser returns an empty link provider
+    instead of throwing an exception.
+
+Publishing a Set of Links
+-------------------------
+
+.. versionadded:: 8.2
+
+    Support for link sets was introduced in Symfony 8.2.
+
+A *link set* is a collection of links published as a standalone document instead
+of being attached to a given HTTP interaction. `RFC 9264`_ defines two formats
+for those documents and WebLink supports both.
+
+The ``application/linkset`` format uses the very same syntax as the ``Link``
+header, so the ``HttpHeaderSerializer`` and ``HttpHeaderParser`` classes
+described above already produce and read it. The only difference is that
+newline characters are allowed as separators, to make documents easier to read.
+
+The ``application/linkset+json`` format is handled by the
+:class:`Symfony\\Component\\WebLink\\JsonLinksetSerializer` class::
+
+    use Symfony\Component\WebLink\JsonLinksetSerializer;
+    use Symfony\Component\WebLink\Link;
+
+    $links = [
+        new Link('next', 'https://example.com/foo')
+            ->withAttribute('anchor', 'https://example.net/bar')
+            ->withAttribute('type', 'text/html')
+            ->withAttribute('hreflang', ['en', 'de']),
+    ];
+
+    $serializer = new JsonLinksetSerializer();
+    // the second argument is an optional bitmask of json_encode() options
+    $document = $serializer->serialize($links, \JSON_UNESCAPED_SLASHES);
+
+The above example returns the following document, where links are grouped by
+link context (their ``anchor`` attribute) and then by relation type:
+
+.. code-block:: json
+
+    {
+        "linkset": [
+            {
+                "anchor": "https://example.net/bar",
+                "next": [
+                    {
+                        "href": "https://example.com/foo",
+                        "type": "text/html",
+                        "hreflang": ["en", "de"]
+                    }
+                ]
+            }
+        ]
+    }
+
+Links that the format cannot convey are skipped: those without a relation type,
+which is the name of the member that holds them, and those whose target is a URI
+template. The serializer throws an
+:class:`Symfony\\Component\\WebLink\\Exception\\InvalidArgumentException` when a
+link cannot be represented at all, for instance when it uses ``anchor`` as its
+relation type, which would collide with the link context member.
+
+Use the :class:`Symfony\\Component\\WebLink\\JsonLinksetParser` class to read
+such a document. It throws a
+:class:`Symfony\\Component\\WebLink\\Exception\\InvalidArgumentException` when
+the given document doesn't follow the format::
+
+    use Symfony\Component\WebLink\JsonLinksetParser;
+
+    $parser = new JsonLinksetParser();
+    $links = $parser->parse($document)->getLinks();
+
+    $links[0]->getHref(); // 'https://example.com/foo'
+    $links[0]->getRels(); // ['next']
+    // ['anchor' => 'https://example.net/bar', 'type' => 'text/html', 'hreflang' => ['en', 'de']]
+    $links[0]->getAttributes();
+
+Serve the document with the matching ``Content-Type`` and advertise it from the
+resources it describes with a link using the ``linkset`` relation type::
+
+    $this->addLink($request, new Link(Link::REL_LINKSET, '/my-linkset')
+        ->withAttribute('type', 'application/linkset+json'));
+
 .. _`WebLink`: https://github.com/symfony/web-link
 .. _`Docker installer and runtime for Symfony`: https://github.com/dunglas/symfony-docker
 .. _`Resource Hints`: https://www.w3.org/TR/resource-hints/
@@ -315,3 +477,8 @@ instances::
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
 .. _`PSR-13`: https://www.php-fig.org/psr/psr-13/
 .. _`Speculation Rules API`: https://developer.mozilla.org/docs/Web/API/Speculation_Rules_API
+.. _`Web Linking`: https://www.rfc-editor.org/rfc/rfc8288.html
+.. _`RFC 9264`: https://www.rfc-editor.org/rfc/rfc9264.html
+.. _`RFC 9652`: https://www.rfc-editor.org/rfc/rfc9652.html
+.. _`URI template`: https://www.rfc-editor.org/rfc/rfc6570.html
+.. _`HTTP structured field`: https://www.rfc-editor.org/rfc/rfc9651.html
