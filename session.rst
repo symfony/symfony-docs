@@ -1193,6 +1193,56 @@ has to return an integer which will be used as TTL.
             ],
         ]);
 
+Clearing All Sessions
+---------------------
+
+.. versionadded:: 8.2
+
+    The ``session:clear`` command was introduced in Symfony 8.2.
+
+Run the ``session:clear`` command to remove all the sessions stored by the
+configured session handler. This is useful to reset the state of a development
+machine and to invalidate every session at once, for example after a
+credential leak:
+
+.. code-block:: terminal
+
+    $ php bin/console session:clear
+
+    # don't ask for confirmation before removing the sessions
+    $ php bin/console session:clear --force
+
+The command asks for confirmation because clearing the sessions logs out every
+user and also removes the data of anonymous users (e.g. their shopping carts).
+
+.. warning::
+
+    The command only asks for confirmation when it runs in an interactive
+    terminal. In a deployment script, or when you add the ``--no-interaction``
+    option, it removes the sessions right away, with or without ``--force``.
+
+The handlers that store sessions in files (``session.handler.native_file``),
+Redis, PDO and MongoDB support this command. The files handler removes the
+``sess_*`` files stored in the directory defined in the ``save_path`` option.
+Other handlers, such as the Memcached one, make the command fail.
+
+The command also fails when you use :ref:`the native PHP session handlers
+<session-native-handlers>` (``handler_id: null`` and no ``save_path``) because
+PHP's session handlers can't remove all the sessions at once. Change the
+``handler_id`` option to one of the handlers above to use this command.
+
+.. note::
+
+    The
+    :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler`
+    clears its current handler and also its write-only handler, but only when
+    that one supports clearing. Otherwise, it keeps those sessions and shows
+    no error.
+
+Custom session handlers must implement
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\ClearableSessionHandlerInterface`
+to support this command.
+
 .. _locale-sticky-session:
 
 Making the Locale "Sticky" during a User's Session
