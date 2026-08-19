@@ -458,6 +458,20 @@ be used. Also, by default, the ``__invoke`` method of your service will be calle
 but, it's also possible to specify the method to call via the ``method`` option
 and you can define arguments via ``arguments`` option if necessary.
 
+Both attributes also accept an ``env`` option to only schedule the task in some
+:ref:`environments <configuration-environments>`. When it's not set, the task is
+scheduled in all of them::
+
+    // only scheduled in the "prod" environment
+    #[AsCronTask('0 0 * * *', env: 'prod')]
+
+    // scheduled in both the "prod" and "staging" environments
+    #[AsPeriodicTask(frequency: '1 hour', env: ['prod', 'staging'])]
+
+.. versionadded:: 8.2
+
+    The ``env`` option was introduced in Symfony 8.2.
+
 .. _scheduler-attributes-cron-task:
 
 ``AsCronTask`` Example
@@ -489,6 +503,9 @@ The attribute takes more parameters to customize the trigger::
 
     // defines the timezone to use
     #[AsCronTask('0 0 * * *', timezone: 'Africa/Malabo')]
+
+    // restricts the task to the given environment(s)
+    #[AsCronTask('0 0 * * *', env: 'prod')]
 
     // when applying this attribute to a Symfony console command, you can pass
     // arguments and options to the command using the 'arguments' option:
@@ -529,6 +546,9 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
 
     // adds randomly up to 6 seconds to the trigger time to avoid load spikes
     #[AsPeriodicTask(frequency: '1 day', jitter: 6)]
+
+    // restricts the task to the given environment(s)
+    #[AsPeriodicTask(frequency: '1 day', env: ['prod', 'staging'])]
 
     // defines the method name to call instead as well as the arguments to pass to it
     #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
