@@ -1912,6 +1912,183 @@ return the file path to the certificate associated with the given email address:
         }
     }
 
+PGP/MIME Signing and Encryption
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    PGP/MIME signing and encryption were introduced in Symfony 8.2.
+
+.. warning::
+
+    The PGP/MIME classes are marked as ``@experimental``, so they might change
+    without prior notice in future Symfony versions.
+
+Use `PGP/MIME`_ instead of S/MIME when your recipients use OpenPGP keys rather
+than X.509 certificates. It doesn't need the OpenSSL PHP extension: it
+runs the ``gpg`` binary through the :doc:`Process component </components/process>`,
+so both must be available on the machine that sends the emails. All keys are
+passed as paths to ASCII armored key files.
+
+.. warning::
+
+    Only the body of the message is protected. Headers such as ``Subject``,
+    ``From`` and ``To`` are still sent in cleartext, as defined by PGP/MIME.
+    Don't put private information in the subject of encrypted emails.
+
+Use the :class:`Symfony\\Component\\Mime\\Crypto\\PgpSigner` and
+:class:`Symfony\\Component\\Mime\\Crypto\\PgpEncrypter` classes to sign and
+encrypt a message by yourself::
+
+    use Symfony\Component\Mime\Crypto\PgpEncrypter;
+    use Symfony\Component\Mime\Crypto\PgpSigner;
+    use Symfony\Component\Mime\Email;
+
+    $email = new Email()
+        ->from('hello@example.com')
+        ->to('alice@example.com')
+        // ...
+        ->html('...');
+
+    // the public key is optional; when given, it's attached to the message and
+    // included in the signed content (the secret key is always used to sign)
+    $secretKeyPath = '/path/to/secret-key.asc';
+    $publicKeyPath = '/path/to/public-key.asc';
+    $signer = new PgpSigner($secretKeyPath, $publicKeyPath, 'the-passphrase');
+    $signedEmail = $signer->sign($email);
+
+    // recipient keys are passed to encrypt() instead of the constructor, so you
+    // can reuse the same encrypter for messages sent to different recipients
+    $encrypter = new PgpEncrypter();
+    $encryptedEmail = $encrypter->encrypt($signedEmail, [
+        // key = recipient email address; value = path to their public key file
+        'alice@example.com' => '/path/to/alice.asc',
+    ]);
+
+    // now use the Mailer component to send this $encryptedEmail
+    // instead of the original email
+
+Both classes accept an array of options as their last argument. Use it to
+change the ``binary`` path of ``gpg`` and the ``timeout`` of the process (in
+seconds), the ``digest_algorithm`` used by the signer and the
+``cipher_algorithm`` used by the encrypter. The encrypter also accepts the
+``hide_recipients`` option explained below.
+
+Signing and Encrypting Messages Globally with PGP/MIME
+......................................................
+
+Instead of signing and encrypting each message by yourself, you can configure a
+global PGP/MIME signer and encrypter. Unlike the S/MIME signer, they don't apply
+to every message: add the ``X-Pgp-Sign`` and/or ``X-Pgp-Encrypt`` headers to
+the messages that you want to protect::
+
+    $email->getHeaders()->addTextHeader('X-Pgp-Sign', 'true');
+    $email->getHeaders()->addTextHeader('X-Pgp-Encrypt', 'true');
+
+Then, enable the ``pgp_signer`` and ``pgp_encrypter`` options and define where
+the public keys of the recipients come from:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                pgp_signer:
+                    enabled: true
+                    secret_key: '%kernel.project_dir%/config/pgp/private.asc'
+                    passphrase: '%env(PGP_PASSPHRASE)%'
+                    # SHA224, SHA256, SHA384 or SHA512 (default)
+                    digest_algorithm: 'SHA512'
+                pgp_encrypter:
+                    enabled: true
+                    # define the public keys of the recipients explicitly...
+                    keys:
+                        'alice@example.com': '%kernel.project_dir%/config/pgp/alice.asc'
+                    # ...or get them from a service (you can't use both options)
+                    # repository: App\Pgp\PublicKeyRepository
+                    on_missing_key: 'fail'
+                    cipher_algorithm: 'AES256'
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        // use App\Pgp\PublicKeyRepository;
+
+        return App::config([
+            'framework' => [
+                'mailer' => [
+                    'pgp_signer' => [
+                        'enabled' => true,
+                        'secret_key' => '%kernel.project_dir%/config/pgp/private.asc',
+                        'passphrase' => env('PGP_PASSPHRASE'),
+                        // SHA224, SHA256, SHA384 or SHA512 (default)
+                        'digest_algorithm' => 'SHA512',
+                    ],
+                    'pgp_encrypter' => [
+                        'enabled' => true,
+                        // define the public keys of the recipients explicitly...
+                        'keys' => [
+                            'alice@example.com' => '%kernel.project_dir%/config/pgp/alice.asc',
+                        ],
+                        // ...or get them from a service (you can't use both options)
+                        // 'repository' => PublicKeyRepository::class,
+                        'on_missing_key' => 'fail',
+                        'cipher_algorithm' => 'AES256',
+                    ],
+                ],
+            ],
+        ]);
+
+The ``repository`` option is the ID of a service that implements
+:class:`Symfony\\Component\\Mailer\\EventListener\\PgpPublicKeyRepositoryInterface`.
+Its only method, ``findPublicKeyPathFor()``, returns the path to the public key
+of the given email address, or ``null`` when there's no key for it (it works like
+the S/MIME certificate repository shown in the previous section).
+
+Symfony removes both headers from the message before sending it. When you use
+both, the message is signed first and encrypted afterwards. This happens after
+rendering the contents of :ref:`templated emails <mailer-twig>` and before the
+message logger collects the message, so the profiler and the mailer test
+assertions only see the protected message.
+
+The ``on_missing_key`` option defines what to do when some recipient has no
+public key:
+
+``fail`` (default)
+    Throw an exception that lists all the recipients without a key.
+``encrypt``
+    Encrypt for the recipients that have a key. The others still receive the
+    message, but they can't read it.
+``skip``
+    Encrypt for the recipients that have a key and remove the others from the
+    envelope.
+
+The message is never sent unencrypted: if no recipient has a key, an exception
+is thrown in all modes. To override the configured mode for a single message,
+set the value of the ``X-Pgp-Encrypt`` header to ``fail``, ``encrypt`` or
+``skip``.
+
+.. note::
+
+    The ``skip`` mode removes recipients from the envelope, but the
+    ``framework.mailer.envelope.recipients`` option is applied afterwards and
+    overrides that list.
+
+By default, the message is only encrypted for its recipients. Enable the
+``encrypt_for_sender`` option to also encrypt it with the public key of the
+sender address (if any), so the sender can read the messages they sent. This
+option is disabled by default because it increases the number of people who can
+decrypt the message.
+
+The encrypted message also includes the key IDs of the recipients, except for
+the recipients listed in the ``Bcc`` header, which are always hidden so the
+message doesn't reveal the blind copy list. Enable the ``hide_recipients``
+option to hide the key IDs of all the recipients.
+
 .. _multiple-email-transports:
 
 Multiple Email Transports
@@ -2650,6 +2827,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Resend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Resend/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`PGP/MIME`: https://datatracker.ietf.org/doc/html/rfc3156
 .. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
 .. _`MJML`: https://github.com/mjmlio/mjml
