@@ -2831,8 +2831,9 @@ The behavior when a recipient has no certificate: ``send_unencrypted`` sends the
 message unencrypted to everyone, ``fail`` throws an exception, ``encrypt``
 encrypts for the recipients that have a certificate (the others receive an
 unreadable message) and ``skip`` also drops the certificate-less recipients from
-the envelope. It can be overridden per message by setting the
-``X-SMime-Encrypt`` header to ``fail``, ``encrypt`` or ``skip``.
+the envelope. Except for ``send_unencrypted``, all of them throw an exception
+when not a single recipient has a certificate. It can be overridden per message
+by setting the ``X-SMime-Encrypt`` header to ``fail``, ``encrypt`` or ``skip``.
 
 .. versionadded:: 8.2
 

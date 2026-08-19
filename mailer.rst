@@ -1623,8 +1623,7 @@ header::
 
     $email->getHeaders()->addTextHeader('X-SMime-Encrypt', 'true');
 
-Configure the certificates of the recipients either explicitly or through a
-repository service:
+Enable it and define where the certificates of the recipients come from:
 
 .. configuration-block::
 
@@ -1679,13 +1678,18 @@ no certificate:
 ``send_unencrypted`` (default)
     Send the message unencrypted to everyone;
 ``fail``
-    Throw a ``RuntimeException`` naming every recipient without a certificate;
+    Throw a :class:`Symfony\\Component\\Mailer\\Exception\\RuntimeException`
+    naming every recipient without a certificate;
 ``encrypt``
     Encrypt for the recipients that have a certificate; the others still receive
     the message, but they can't read it;
 ``skip``
     Encrypt for the recipients that have a certificate and remove the others
     from the envelope.
+
+Except for ``send_unencrypted``, all of them throw an exception when not a
+single recipient has a certificate, so a message is never sent unencrypted
+because of a missing certificate.
 
 .. deprecated:: 8.2
 
