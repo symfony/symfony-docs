@@ -168,6 +168,38 @@ collection::
             }
         }
 
+The elements of the collection can also be objects. Their properties are read
+with the :doc:`PropertyAccess component </components/property_access>`, so the
+``fields`` option accepts property paths such as ``coordinates[latitude]``::
+
+    // src/Entity/Itinerary.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Itinerary
+    {
+        /**
+         * @var PointOfInterest[]
+         */
+        #[Assert\Unique(fields: ['coordinates[latitude]', 'coordinates[longitude]'])]
+        protected array $stops;
+    }
+
+Properties that can't be read from an element are ignored, as it's already the
+case for array keys that don't exist. Reading anything other than a public
+property requires the PropertyAccess component to be installed in your
+application:
+
+.. code-block:: terminal
+
+    $ composer require symfony/property-access
+
+.. versionadded:: 8.2
+
+    Support for reading object properties in the ``fields`` option was
+    introduced in Symfony 8.2.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``errorPath``
