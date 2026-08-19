@@ -375,6 +375,46 @@ The ``MapQueryParameter`` attribute supports the following argument types:
 * ``string``
 * Objects that extend :class:`Symfony\\Component\\Uid\\AbstractUid`
 
+.. versionadded:: 8.2
+
+    The support for any other type built by another value resolver was
+    introduced in Symfony 8.2.
+
+Arguments of any other class type are not rejected: their raw value is stored in
+the request attributes under the argument name, so that the value resolver able
+to build that type picks it up from there, exactly as if the value came from the
+route. This is how a date, a UID or a Doctrine entity can be read from the query
+string::
+
+    use App\Entity\Post;
+    use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapDateTime;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+    use Symfony\Component\Uid\Ulid;
+
+    // ...
+
+    // https://example.com/dashboard?from=2026-01-15&to=31/01/2026&traceId=...&post=...
+    public function dashboard(
+        #[MapQueryParameter] \DateTimeImmutable $from,
+        // combine both attributes to restrict the accepted date format
+        #[MapQueryParameter] #[MapDateTime(format: 'd/m/Y')] \DateTimeImmutable $to,
+        #[MapQueryParameter] Ulid $traceId,
+        #[MapQueryParameter] #[MapEntity] Post $post,
+    ): Response
+    {
+        // ...
+    }
+
+.. note::
+
+    Only single scalar values are stored this way. Array values (e.g.
+    ``?from[]=2026-01-15``) are rejected with the ``validationFailedStatusCode``
+    of the attribute and variadic arguments of a class type are not supported.
+    When no resolver converts the stored value, the argument can't be resolved,
+    unless it's nullable, in which case it resolves to ``null``.
+
 ``#[MapQueryParameter]`` can take an optional argument called ``filter``. You can use the
 `Validate Filters`_ constants defined in PHP::
 
@@ -874,6 +914,26 @@ The attribute supports the following argument types:
   returns ``['en_US', 'en']``);
 * :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader`: returns a parsed
   ``AcceptHeader`` object for advanced quality-value handling.
+
+Like ``#[MapQueryParameter]``, any other class type is stored in the request
+attributes so that another value resolver builds it::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestHeader;
+    use Symfony\Component\Uid\Ulid;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestHeader(name: 'x-trace')] Ulid $traceId,
+    ): Response {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The support for any other type built by another value resolver was
+    introduced in Symfony 8.2.
 
 If the header is missing and the argument has no default value and is not
 nullable, a ``400 Bad Request`` response is returned. You can customize this
