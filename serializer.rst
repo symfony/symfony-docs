@@ -1106,8 +1106,9 @@ using :doc:`valid PropertyAccess syntax </components/property_access>`:
 
 .. warning::
 
-    The ``SerializedPath`` cannot be used in combination with a
-    ``SerializedName`` for the same property.
+    A ``SerializedPath`` and a ``SerializedName`` cannot apply to the same
+    property at the same time. They can still coexist on that property when
+    each of them applies to :ref:`different groups <serializer-name-per-group>`.
 
 The ``#[SerializedPath]`` attribute also applies to the serialization of a
 PHP object::
@@ -1208,6 +1209,79 @@ deserializing objects:
         $person = new Person('Jane Doe', 32, false);
         $json = $serializer->serialize($person, 'json');
         // $json contains {"customer_name":"Jane Doe", ...}
+
+.. _serializer-name-per-group:
+
+Using a Different Name per Group
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``groups`` option of ``#[SerializedName]`` and ``#[SerializedPath]``
+    was introduced in Symfony 8.2.
+
+Both ``#[SerializedName]`` and ``#[SerializedPath]`` are repeatable, so an
+attribute can use a different name or path depending on the
+:ref:`serialization groups <serializer-groups-attribute>` being used:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Model/Person.php
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Attribute\SerializedName;
+
+        class Person
+        {
+            #[SerializedName('customer_name')]
+            #[SerializedName('name', groups: ['public-view'])]
+            private string $name;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/serializer/person.yaml
+        App\Entity\Person:
+            attributes:
+                name:
+                    serialized:
+                        - name: customer_name
+                        - name: name
+                          groups: [public-view]
+
+    .. code-block:: xml
+
+        <!-- config/serializer/person.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Entity\Person">
+                <attribute name="name">
+                    <serialized name="customer_name"/>
+                    <serialized name="name">
+                        <group>public-view</group>
+                    </serialized>
+                </attribute>
+            </class>
+        </serializer>
+
+With this mapping, the ``name`` property is serialized as ``name`` when the
+``public-view`` group is used and as ``customer_name`` otherwise.
+
+The first declaration matching one of the groups of the current serialization
+wins, whatever the order of the groups in the context. A declaration without
+groups applies to every group, so it acts as the default when no other
+declaration matches.
+
+``#[SerializedPath]`` works the same way. In YAML and XML, use the ``path``
+key instead of the ``name`` key inside the ``serialized`` entries.
 
 .. seealso::
 
