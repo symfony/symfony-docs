@@ -1527,6 +1527,10 @@ to retry them:
     $ php bin/console messenger:failed:retry --class-filter='App\Message\MyMessage' --force
     $ php bin/console messenger:failed:retry --failed-before='yesterday 18:00' --force
 
+    # send the messages through the bus again instead of handling them in this
+    # command, so that the workers consuming their transport process them
+    $ php bin/console messenger:failed:retry 20 30 --force --redispatch
+
     # remove a message without retrying it
     $ php bin/console messenger:failed:remove 20
 
@@ -1553,6 +1557,19 @@ to retry them:
 
     The ``--failed-after`` and ``--failed-before`` options and the ``--class-filter``
     option of ``messenger:failed:retry`` were introduced in Symfony 8.2.
+
+By default, ``messenger:failed:retry`` handles the messages in its own process.
+Add the ``--redispatch`` option to dispatch them through the bus again instead:
+they are routed to their configured transport and handled by the workers
+consuming it, which is faster when the failure transport holds many messages.
+
+A message is removed from the failure transport only once its redispatch
+succeeded. If the dispatch fails, the command reports the error, leaves that
+message in the failure transport and continues with the remaining ones.
+
+.. versionadded:: 8.2
+
+    The ``--redispatch`` option was introduced in Symfony 8.2.
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
