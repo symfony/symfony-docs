@@ -720,6 +720,45 @@ The example results in the following:
             </connection>
         </database>
 
+The ``append()`` method takes a single node definition. To append a flat block
+of several sibling nodes without breaking the fluent chain, use
+``appendFromCallback()`` instead. The callback receives the current
+:class:`Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder` and
+declares the nodes on it; they are appended in the order the callback defines
+them::
+
+    use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder('database');
+
+        $treeBuilder->getRootNode()
+            ->children()
+                ->arrayNode('connection')
+                    ->children()
+                        ->scalarNode('driver')->end()
+                        ->appendFromCallback($this->addCommonOptions(...))
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $treeBuilder;
+    }
+
+    public function addCommonOptions(NodeBuilder $builder): void
+    {
+        $builder
+            ->integerNode('max_redirects')->end()
+            ->scalarNode('http_version')->end()
+        ;
+    }
+
+.. versionadded:: 8.2
+
+    The ``appendFromCallback()`` method was introduced in Symfony 8.2.
+
 .. _component-config-normalization:
 
 Normalization
