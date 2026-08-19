@@ -1889,6 +1889,23 @@ The transport has a number of options:
 ``delay[arguments]`` (default: ``[]``)
     Extra arguments for the delays queues
 
+``delay[granularity]`` (default: rounds up to two significant digits)
+    Every delayed message, whether delayed with a ``DelayStamp`` or by the
+    retry mechanism, goes to a delay queue whose name and ``x-message-ttl``
+    argument contain the delay, so each distinct delay creates its own queue.
+    Delays are rounded up to a multiple of this many milliseconds to bound the
+    number of queues that randomized delays create, at the cost of releasing
+    messages slightly later than asked. By default, delays are rounded up to
+    two significant digits (e.g. ``5234`` becomes ``5300`` and ``52345``
+    becomes ``53000``), so a message is never released more than 10% later
+    than asked, whatever the magnitude of the delay. Set this option to ``1``
+    to publish delays as they are.
+
+    .. versionadded:: 8.2
+
+        The rounding of delays and the ``delay[granularity]`` option were
+        introduced in Symfony 8.2.
+
 ``delay[daily_delay_queues]`` (default: ``false``)
     When ``true``, a separate delay queue is created each day (the current date
     is appended to the queue name) with a TTL of one day plus the message delay.
