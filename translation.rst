@@ -739,6 +739,21 @@ The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use YAML for simple projects and use XLIFF
 if you're generating translations with specialized programs or teams.
 
+.. note::
+
+    In `Portable object format`_ files, the entries marked with the ``fuzzy``
+    flag are skipped when loading the catalog, as gettext does. The ``msgctxt``
+    of an entry is stored in the metadata of its message, under the ``context``
+    key, and written back when dumping the catalog. It isn't part of the message
+    key though, so defining the same ``msgid`` twice with different contexts, or
+    both with and without a context, throws an
+    :class:`Symfony\\Component\\Translation\\Exception\\InvalidResourceException`.
+
+    .. versionadded:: 8.2
+
+        Storing the ``msgctxt`` in the message metadata was introduced in
+        Symfony 8.2.
+
 .. warning::
 
     Each time you create a *new* message catalog (or install a bundle
