@@ -2876,8 +2876,8 @@ Bitwise operator options for :phpfunction:`openssl_pkcs7_sign`.
 smime_encrypter
 ...............
 
-Configures a global S/MIME encrypter that automatically encrypts all outgoing
-messages.
+Configures a global S/MIME encrypter that encrypts the outgoing messages which
+carry the ``X-SMime-Encrypt`` header.
 
 repository
 """"""""""
@@ -2886,7 +2886,52 @@ repository
 
 The service ID of a class implementing
 :class:`Symfony\\Component\\Mailer\\EventListener\\SmimeCertificateRepositoryInterface`.
-This service is used to find the certificate path for each email recipient.
+This service is used to find the certificate path for each email recipient. It
+can't be combined with the ``certificates`` option.
+
+certificates
+""""""""""""
+
+**type**: ``array`` **default**: ``[]``
+
+The certificate of each recipient, as a map of email address to the file path of
+the certificate. It can't be combined with the ``repository`` option.
+
+.. versionadded:: 8.2
+
+    The ``certificates`` option was introduced in Symfony 8.2.
+
+on_missing_certificate
+""""""""""""""""""""""
+
+**type**: ``string`` **default**: ``'send_unencrypted'``
+
+The behavior to apply when a recipient has no certificate. The allowed values are
+``send_unencrypted`` (send the message unencrypted), ``fail`` (throw an
+exception), ``encrypt`` (encrypt for the recipients that have a certificate, the
+others receive an unreadable message) and ``skip`` (encrypt for the recipients
+that have a certificate and remove the others from the envelope).
+
+.. deprecated:: 8.2
+
+    The ``send_unencrypted`` value is deprecated since Symfony 8.2 and it will
+    throw an exception in Symfony 9.0.
+
+.. versionadded:: 8.2
+
+    The ``on_missing_certificate`` option was introduced in Symfony 8.2.
+
+encrypt_for_sender
+""""""""""""""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to also encrypt for the sender address of the envelope, when a
+certificate is available for it, so senders can read the messages they sent.
+
+.. versionadded:: 8.2
+
+    The ``encrypt_for_sender`` option was introduced in Symfony 8.2.
 
 cipher
 """"""
