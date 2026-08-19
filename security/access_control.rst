@@ -182,6 +182,13 @@ options:
     access if there's at least one valid condition. If this behavior doesn't fit
     your needs, :ref:`change the Access Decision Strategy <security-voters-change-strategy>`.
 
+.. deprecated:: 8.2
+
+    Defining both ``roles`` and ``allow_if`` in the same rule is deprecated
+    since Symfony 8.2, as is listing several ``roles`` in the same rule. Move
+    the roles into the ``allow_if`` expression with ``is_granted()``, or rely on
+    the :ref:`role hierarchy <security-role-hierarchy>` to grant a single role.
+
 .. tip::
 
     If access is denied, the system will try to authenticate the user if not
@@ -264,7 +271,8 @@ Securing by an Expression
 
 Once an ``access_control`` entry is matched, you can deny access via the
 ``roles`` key or use more complex logic with an expression in the ``allow_if``
-key:
+key. Expressions can also check roles with ``is_granted()``, which is how a
+single rule combines both:
 
 .. configuration-block::
 
@@ -276,10 +284,7 @@ key:
             access_control:
                 -
                     path: ^/_internal/secure
-                    # the 'roles' and 'allow_if' options work like an OR expression, so
-                    # access is granted if the expression is TRUE or the user has ROLE_ADMIN
-                    roles: 'ROLE_ADMIN'
-                    allow_if: "'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
+                    allow_if: "is_granted('ROLE_ADMIN') or '127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
 
     .. code-block:: php
 
@@ -291,18 +296,16 @@ key:
                 'access_control' => [
                     [
                         'path' => '^/_internal/secure',
-                        // the 'roles' and 'allow_if' options work like an OR expression, so
-                        // access is granted if the expression is TRUE or the user has ROLE_ADMIN
-                        'roles' => 'ROLE_ADMIN',
-                        'allow_if' => '"127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")',
+                        'allow_if' => 'is_granted("ROLE_ADMIN") or "127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")',
                     ],
                 ],
             ],
         ]);
 
 In this case, when the user tries to access any URL starting with
-``/_internal/secure``, they will only be granted access if the IP address is
-``127.0.0.1`` or a secure header, or if the user has the ``ROLE_ADMIN`` role.
+``/_internal/secure``, they will only be granted access if the user has the
+``ROLE_ADMIN`` role, or if the IP address is ``127.0.0.1``, or if the request
+carries the ``X-Secure-Access`` header.
 
 .. note::
 
