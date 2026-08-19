@@ -647,7 +647,8 @@ The message is processed by
 
 #. Constructs the HTTP request body (JSON-encoded payload)
 #. Adds standard headers: ``Webhook-Event`` (event name), ``Webhook-Id``
-   (event ID), ``Webhook-Signature`` (HMAC-SHA256 signature of the concatenated
+   (event ID), ``Webhook-Timestamp`` (Unix timestamp of when the request is
+   sent), ``Webhook-Signature`` (HMAC-SHA256 signature of the concatenated
    event name, ID, and body), and ``Content-Type: application/json``
 #. Signs the request using the subscriber's secret
 #. Sends the HTTP request using the Symfony HttpClient component
@@ -664,6 +665,7 @@ When the webhook is sent, it generates an HTTP POST request with the following f
     Content-Type: application/json
     Webhook-Event: resource.created
     Webhook-Id: 550e8400-e29b-41d4-a716-446655440000
+    Webhook-Timestamp: 1234567890
     Webhook-Signature: sha256=9f86d081884c7d6d9ffd60bb51d3263112c4b2486f80fa12ab5807265dc789d6
 
     {
@@ -675,6 +677,10 @@ When the webhook is sent, it generates an HTTP POST request with the following f
 By default, the signature uses HMAC-SHA256 of the concatenated event name,
 event ID, and JSON body. Receiving endpoints should verify this signature
 using the shared secret to ensure webhook authenticity.
+
+.. versionadded:: 8.2
+
+    The ``Webhook-Timestamp`` header was introduced in Symfony 8.2.
 
 Customizing Header Names and Signing Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -690,11 +696,84 @@ available:
 
 * ``event_header_name`` (default: ``Webhook-Event``): the HTTP header for the event name
 * ``id_header_name`` (default: ``Webhook-Id``): the HTTP header for the event ID
+* ``timestamp_header_name`` (default: ``Webhook-Timestamp``): the HTTP header for the timestamp
 * ``signature_header_name`` (default: ``Webhook-Signature``): the HTTP header for the HMAC signature
 * ``signing_algorithm`` (default: ``sha256``): the hash algorithm (e.g. ``sha512``)
 
 See the :doc:`framework configuration reference </reference/configuration/framework>`
 for details.
+
+.. _webhook-standard-webhooks:
+
+Using Standard Webhooks Signatures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``signature_format`` and ``timestamp_tolerance`` options were introduced
+    in Symfony 8.2.
+
+Symfony can also sign webhooks with the scheme defined by the
+`Standard Webhooks`_ specification. Use it when your subscribers verify webhooks
+with a Standard Webhooks library instead of a Symfony application, or to protect
+your endpoints against replay attacks. The ``signature_format`` option selects
+the scheme that the sender emits and the built-in parser requires:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            webhook:
+                # 'legacy' (default), 'standard' or 'transitional'
+                signature_format: 'standard'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'webhook' => [
+                    // 'legacy' (default), 'standard' or 'transitional'
+                    'signature_format' => 'standard',
+                ],
+            ],
+        ]);
+
+``legacy``
+    The ``<algo>=<hex>`` signature explained above, computed over the event
+    name, the event ID and the body. The event name is sent in the
+    ``Webhook-Event`` header.
+
+``standard``
+    The ``v1,<base64>`` signature, computed over the event ID, the timestamp
+    and the body. This signature doesn't cover any header, so the
+    ``Webhook-Event`` header isn't sent and the event name is stored in the
+    ``type`` key of the payload instead (if your payload already defines a
+    ``type`` key, its value is kept and used as the event name). Secrets that
+    start with ``whsec_`` are base64-decoded, as the specification requires.
+
+``transitional``
+    Both signatures at once, separated by a space, with the event name in both
+    the header and the payload. The built-in parser accepts either signature.
+
+The built-in parser accepts a request when any of the space-separated entries of
+the signature header matches. This also allows senders that rotate their secret
+to send one signature per secret.
+
+The built-in parser rejects Standard Webhooks requests whose timestamp differs
+from the current time by more than ``timestamp_tolerance`` seconds (``300`` by
+default; ``0`` disables this check). Legacy signatures don't include the
+timestamp, so this check doesn't apply to them.
+
+Receivers that don't support the ``signature_format`` option only understand
+the ``legacy`` format. To migrate without downtime, switch all receivers to
+``transitional``, then the sender to ``standard`` and finally the receivers to
+``standard``. Don't keep receivers on ``transitional`` longer than needed,
+because they still accept legacy requests, which have no replay protection.
 
 Custom Sending Logic
 ~~~~~~~~~~~~~~~~~~~~
@@ -703,4 +782,5 @@ For advanced use cases, you can implement custom sending logic using
 :class:`Symfony\\Component\\Webhook\\Server\\TransportInterface` to control
 header generation, signing, and HTTP transport.
 
+.. _`Standard Webhooks`: https://www.standardwebhooks.com/
 .. _`Webhook Component for Email Events screencast`: https://symfonycasts.com/screencast/mailtrap/email-event-webhook
