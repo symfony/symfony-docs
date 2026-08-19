@@ -272,6 +272,7 @@ party provider:
 
     When using SMTP, the default timeout for sending a message before throwing an
     exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
+    Use the ``timeout`` DSN option described below to override it.
 
 .. note::
 
@@ -541,10 +542,11 @@ Other Options
 
 ``timeout``
     The maximum number of seconds to wait when connecting to the SMTP server and
-    when reading from or writing to it. Fractional values are allowed and the
-    value must be a positive number; otherwise an ``InvalidArgumentException``
-    is thrown. When this option is not set, the ``default_socket_timeout`` PHP
-    ini setting is used (60 seconds by default)::
+    when reading from or writing to it. It only applies to the ``smtp://`` and
+    ``smtps://`` transports. Fractional values are allowed and the value must be
+    a positive number; otherwise an ``InvalidArgumentException`` is thrown. When
+    this option is not set, the `default_socket_timeout`_ PHP.ini option is used
+    (60 seconds by default)::
 
         $dsn = 'smtps://smtp.example.com?timeout=10'
 
