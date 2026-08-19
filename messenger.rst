@@ -2556,7 +2556,18 @@ The transport has a number of options:
     AWS access key (must be urlencoded)
 
 ``account`` (default: The owner of the credentials)
-    Identifier of the AWS account
+    Identifier of the AWS account. When the queue doesn't exist yet, Symfony
+    creates it, either automatically if ``auto_setup`` is enabled or when
+    running the ``messenger:setup-transports`` command, but only if this account
+    is the one the credentials belong to. It calls the STS
+    ``GetCallerIdentity`` API to compare both and throws an exception when they
+    differ.
+
+    .. versionadded:: 8.2
+
+        Creating the queue when the DSN names the account of the credentials
+        was introduced in Symfony 8.2. Before, providing an ``account`` always
+        prevented the queue from being created.
 
 ``auto_setup`` (default: ``true``)
     Whether the queue should be created automatically during send / get.
