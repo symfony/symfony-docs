@@ -2963,6 +2963,19 @@ rate_limiter
 
 Rate limiter name to use when processing messages.
 
+priority
+""""""""
+
+**type**: ``integer`` **default**: ``0``
+
+Order in which ``messenger:consume --all`` consumes this transport: the
+transports with the highest priority are consumed first. Transports named on
+the command line are consumed in the given order, whatever their priority.
+
+.. versionadded:: 8.2
+
+    The ``priority`` option was introduced in Symfony 8.2.
+
 retry_strategy
 """"""""""""""
 
