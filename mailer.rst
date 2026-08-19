@@ -321,6 +321,19 @@ party provider:
 
 .. note::
 
+    When using the ``mandrill+api`` transport, you can set a custom domain for
+    the return path of the message (which Mandrill uses to handle bounces) by
+    adding the ``X-MC-ReturnPathDomain`` header to the email::
+
+        $email->getHeaders()->addTextHeader('X-MC-ReturnPathDomain', 'example.com');
+
+    .. versionadded:: 8.2
+
+        Support for the ``X-MC-ReturnPathDomain`` header was introduced in
+        Symfony 8.2.
+
+.. note::
+
     ``turbosmtp`` is an alias for ``turbosmtp+smtp``. The DSN user and password
     are the Consumer Key and Consumer Secret from the TurboSMTP dashboard, not
     your account email and password.
