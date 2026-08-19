@@ -186,6 +186,9 @@ Service
 `SMSFactor`_        **Install**: ``composer require symfony/sms-factor-notifier`` \
                     **DSN**: ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE`` \
                     **Webhook support**: No
+`SMS Proxima`_      **Install**: ``composer require symfony/sms-proxima-notifier`` \
+                    **DSN**: ``sms-proxima://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
 `SpotHit`_          **Install**: ``composer require symfony/spot-hit-notifier`` \
                     **DSN**: ``spothit://TOKEN@default?from=FROM`` \
                     **Webhook support**: No
@@ -215,6 +218,10 @@ Service
 .. versionadded:: 8.1
 
     The ``Prelude`` integration was introduced in Symfony 8.1.
+
+.. versionadded:: 8.2
+
+    The ``SMS Proxima`` integration was introduced in Symfony 8.2.
 
 .. tip::
 
@@ -1175,6 +1182,7 @@ is dispatched. Listeners receive a
 .. _`RingCentral`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RingCentral/README.md
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
+.. _`SMS Proxima`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsProxima/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
 .. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
