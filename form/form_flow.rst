@@ -210,10 +210,9 @@ has no form of its own, create it with the ``createStepGroup()`` method::
         // ...
     }
 
-Group steps must define child steps, otherwise a ``LogicException`` is thrown.
-As they aren't actual form steps, they are never displayed as the current step:
-navigation traverses them to the closest child in the direction it moves (the
-first one when moving forward, the last one when moving backward).
+As group steps aren't actual form steps, they are never displayed as the current
+step: navigation traverses them to the closest child in the direction it
+moves (the first one when moving forward, the last one when moving backward).
 
 Persisting Data Between Requests
 --------------------------------
