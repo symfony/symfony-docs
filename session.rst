@@ -1065,6 +1065,41 @@ This is the recommended migration workflow:
 #. After verifying that the sessions in your application are working, switch
    from the migrating handler to the new handler.
 
+Clearing All Sessions
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``session:clear`` command was introduced in Symfony 8.2.
+
+Run the ``session:clear`` command to remove all the sessions from the configured
+handler. This is useful to reset the state of a development machine and to
+invalidate every session at once, for example after a credential leak:
+
+.. code-block:: terminal
+
+    $ php bin/console session:clear
+
+The command asks for confirmation, because this also destroys the data of the
+anonymous sessions (e.g. the carts of the visitors who are not logged in). Use
+the ``--force`` option to skip that confirmation:
+
+.. code-block:: terminal
+
+    $ php bin/console session:clear --force
+
+All the session handlers provided by Symfony support this command. The native
+file handler removes the ``sess_*`` files stored in the ``session.save_path``
+directory and the
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MigratingSessionHandler`
+clears both of its handlers, so a storage migration can't bring the cleared
+sessions back.
+
+Custom handlers must implement
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\ClearableSessionHandlerInterface`
+and its only ``clear()`` method. Otherwise, the command stops with an error
+explaining that the configured handler doesn't support clearing sessions.
+
 .. _session-configure-ttl:
 
 Configuring the Session TTL
