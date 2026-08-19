@@ -45,7 +45,14 @@ The ``Argument`` attribute accepts the following parameters:
 
 ``description``
     A description of the argument shown when displaying the command help.
-    For example: ``#[Argument(description: 'Your username')]``.
+    For example: ``#[Argument(description: 'Your username')]``. It also accepts
+    a callable returning the string, such as
+    ``#[Argument(description: [self::class, 'describeUsername'])]``.
+
+    .. versionadded:: 8.2
+
+        Support for callables in the ``description`` parameter was introduced
+        in Symfony 8.2.
 
 ``name``
     The name displayed for the argument in the command help and used to retrieve
@@ -262,7 +269,14 @@ The ``Option`` attribute accepts the following parameters:
 
 ``description``
     A description of the option shown when displaying the command help.
-    For example: ``#[Option(description: 'Number of iterations')]``.
+    For example: ``#[Option(description: 'Number of iterations')]``. It also
+    accepts a callable returning the string, such as
+    ``#[Option(description: [self::class, 'describeIterations'])]``.
+
+    .. versionadded:: 8.2
+
+        Support for callables in the ``description`` parameter was introduced
+        in Symfony 8.2.
 
 ``name``
     The name used when passing the option to the command (e.g. ``--max-retries=5``)
