@@ -1567,6 +1567,64 @@ or the
 Read :ref:`how to customize your success handler <login-link_customize-success-handler>`
 for more information about this.
 
+The services configured in the ``success_handler`` and ``failure_handler``
+options can be :doc:`decorated </service_container/decoration>` (e.g. to add
+some logic to a handler provided by a bundle). Right before calling a handler,
+Symfony passes it the authenticator options with its ``setOptions()`` method
+and, for success handlers, the firewall name with its ``setFirewallName()``
+method. These methods aren't part of the handler interfaces, so Symfony only
+calls them when they exist. That's why your decorator must define them and
+forward the calls to the decorated handler::
+
+    // src/Security/Authentication/AuditAuthenticationSuccessHandler.php
+    namespace App\Security\Authentication;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+
+    #[AsDecorator('acme_security.authentication_success_handler')]
+    class AuditAuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterface
+    {
+        public function __construct(
+            private AuthenticationSuccessHandlerInterface $handler,
+        ) {
+        }
+
+        // without these methods, the decorated handler doesn't receive the options
+        // and firewall name; e.g. if it extends DefaultAuthenticationSuccessHandler,
+        // it ignores the target path stored in the session and redirects to "/"
+        public function setOptions(array $options): void
+        {
+            if (method_exists($this->handler, 'setOptions')) {
+                $this->handler->setOptions($options);
+            }
+        }
+
+        public function setFirewallName(string $firewallName): void
+        {
+            if (method_exists($this->handler, 'setFirewallName')) {
+                $this->handler->setFirewallName($firewallName);
+            }
+        }
+
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
+        {
+            // ... e.g. log the successful login
+
+            return $this->handler->onAuthenticationSuccess($request, $token);
+        }
+    }
+
+Decorators of failure handlers only need to forward the ``setOptions()`` call.
+
+.. versionadded:: 8.2
+
+    Support for decorating custom authentication success and failure handlers
+    was introduced in Symfony 8.2.
+
 Login Programmatically
 ----------------------
 
