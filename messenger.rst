@@ -602,6 +602,7 @@ transports at once. This is useful when you have multiple transports with simila
 names, such as transports grouped by purpose or priority.
 
 When a regular expression matches multiple transports, they are consumed in the
+order of their :ref:`priority <messenger-prioritized-transports>` and then in the
 order they are defined in your configuration. If you specify multiple receiver names
 or regular expressions, they are processed in the order you provide them to the
 command.
@@ -834,6 +835,63 @@ to handle messages in a priority order:
 
 The worker will always first look for messages waiting on ``async_priority_high``. If
 there are none, *then* it will consume messages from ``async_priority_low``.
+
+The order of the transports passed to the command only applies to that command.
+To define the order in the application configuration, use the ``priority``
+option of each transport. When using the ``--all`` option or a regular
+expression as the receiver's name, the worker consumes the transports with the
+highest priority first:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async_priority_high:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        # ...
+                        priority: 10
+                    async_priority_low:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        # ...
+                        # the default priority is 0
+                        priority: 0
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'async_priority_high' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            // ...
+                            'priority' => 10,
+                        ],
+                        'async_priority_low' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            // ...
+                            // the default priority is 0
+                            'priority' => 0,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Transports with the same priority are consumed in the order they are defined in
+the configuration. The ``priority`` option doesn't apply to the transport names
+passed to the command, which are always consumed in the order you provide them.
+
+.. versionadded:: 8.2
+
+    The ``priority`` transport option was introduced in Symfony 8.2.
 
 Prioritized Messages
 ~~~~~~~~~~~~~~~~~~~~
