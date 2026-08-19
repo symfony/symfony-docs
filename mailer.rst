@@ -272,6 +272,8 @@ party provider:
 
     When using SMTP, the default timeout for sending a message before throwing an
     exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
+    This value can be overridden with the ``timeout`` DSN parameter (e.g.
+    ``smtp://smtp.example.com?timeout=10``).
 
 .. note::
 
@@ -538,6 +540,17 @@ Other Options
     The number of messages to send per second (0 to disable this limitation)::
 
         $dsn = 'smtps://smtp.example.com?max_per_second=2'
+
+``timeout``
+    The number of seconds to wait before timing out when connecting to the SMTP
+    server and when reading or writing data (it defaults to the value of the
+    ``default_socket_timeout`` PHP.ini option)::
+
+        $dsn = 'smtps://smtp.example.com?timeout=10'
+
+    .. versionadded:: 8.2
+
+        The ``timeout`` option was introduced in Symfony 8.2.
 
 Custom Transport Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
