@@ -4058,18 +4058,20 @@ Level      Message                                      Logged when
 All of them include the ``class``, ``duration_ms`` and ``memory_usage`` context
 keys, plus an ``exception`` key for the failing case.
 
-Messages handled asynchronously are logged twice in their life: once when they
-are dispatched, where the duration is the time needed to hand them to the
-transport, and once in the worker, where the duration is the time needed to
-handle them. Keep this distinction in mind when building dashboards from these
-logs, otherwise every message is counted twice and the time to send a message
-is read as the time to handle it.
+Messages handled asynchronously are logged at least twice in their life: once
+when they are dispatched, where the duration is the time needed to hand them to
+the transport, and once in the worker, where the duration is the time needed to
+handle them (each :ref:`retry <messenger-retries-failures>` adds another entry).
+Keep this distinction in mind when building dashboards from these logs,
+otherwise every message is counted twice and the time to send a message is read
+as the time to handle it.
 
 .. note::
 
-    ``memory_usage`` is a delta of :phpfunction:`memory_get_usage` expressed in
-    bytes, so it can be negative when a handler frees more memory than it
-    allocates.
+    ``duration_ms`` is rounded to whole milliseconds, so fast handlers report
+    ``0``. ``memory_usage`` is a delta of :phpfunction:`memory_get_usage`
+    expressed in bytes, so it can be negative when a handler frees more memory
+    than it allocates.
 
 Messenger Events
 ~~~~~~~~~~~~~~~~
