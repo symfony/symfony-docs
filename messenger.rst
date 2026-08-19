@@ -3955,6 +3955,40 @@ may want to use:
             ],
         ]);
 
+.. deprecated:: 8.2
+
+    ``DoctrineOpenTransactionLoggerMiddleware``, behind the
+    ``doctrine_open_transaction_logger`` shortcut, is deprecated since
+    Symfony 8.2 in favor of
+    :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalOpenTransactionLoggerMiddleware`.
+
+The new middleware watches DBAL connections instead of entity managers, so it
+also runs in applications that don't use the ORM. It takes the connection
+registry as its first argument, the logger as its second one and connection
+names, either a single name or a list of them, as its third one. Passing no
+name watches every DBAL connection, where the deprecated middleware only
+watched the connection of the default entity manager.
+
+It has no configuration shortcut yet, so register it as a service first, then
+add its class name to the ``middleware`` list of the bus shown above:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Symfony\Bridge\Doctrine\Messenger\DoctrineDbalOpenTransactionLoggerMiddleware:
+            arguments:
+                - '@doctrine'
+                - '@logger'
+                # watch every DBAL connection; pass a name or a list of names
+                # to restrict it to some of them
+                #- ['default', 'legacy']
+
+.. versionadded:: 8.2
+
+    ``DoctrineDbalOpenTransactionLoggerMiddleware`` was introduced in
+    Symfony 8.2.
+
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
 
