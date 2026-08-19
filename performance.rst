@@ -105,6 +105,26 @@ Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
 which classes should or should not be preloaded by PHP.
 
+The preloader also follows the types found in the public properties, the
+arguments and the return types of the preloaded classes, so referencing a class
+of a large third-party SDK can pull thousands of classes into the preloading.
+Call the ``ignore()`` method before requiring the generated file to exclude
+some of them::
+
+    // config/preload.php
+    use Symfony\Component\DependencyInjection\Dumper\Preloader;
+
+    // excludes a single class...
+    Preloader::ignore(Microsoft\Graph\GraphServiceClient::class);
+    // ...or a whole namespace, using a trailing backslash
+    Preloader::ignore('Microsoft\\Graph\\');
+
+    require dirname(__DIR__).'/var/cache/prod/App_KernelProdContainer.preload.php';
+
+.. versionadded:: 8.2
+
+    The ``Preloader::ignore()`` method was introduced in Symfony 8.2.
+
 .. _performance-configure-opcache:
 
 Configure OPcache for Maximum Performance
