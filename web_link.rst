@@ -330,15 +330,9 @@ with a `URI template`_ and send it in the ``Link-Template`` header defined by
     // "/users/{id}"; rel="item", "/books/{book_id}/author"; rel="author"; anchor="#{book_id}"
 
 A link whose target is not a URI template is skipped, as it belongs to the
-``Link`` header. The serializer throws an
-:class:`Symfony\\Component\\WebLink\\Exception\\InvalidArgumentException` when a
-target attribute cannot be expressed as a structured field, either because its
-name is not a valid parameter key or because a non-ASCII value is not encoded in
-UTF-8.
-
-Links added to the response are dispatched between both headers automatically:
-those pointing at a concrete URL go to ``Link`` and those using a URI template
-go to ``Link-Template``::
+``Link`` header. Links added to the response are dispatched between both
+headers automatically: those pointing at a concrete URL go to ``Link`` and
+those using a URI template go to ``Link-Template``::
 
     // src/Controller/UserController.php
     namespace App\Controller;
@@ -362,9 +356,8 @@ go to ``Link-Template``::
         }
     }
 
-Reading those headers from a third-party response works the same way as for
-``Link`` headers, with the
-:class:`Symfony\\Component\\WebLink\\LinkTemplateHeaderParser` class::
+Reading those headers from a third-party response works the same way as for ``Link``
+headers, with the :class:`Symfony\\Component\\WebLink\\LinkTemplateHeaderParser` class::
 
     use Symfony\Component\WebLink\LinkTemplateHeaderParser;
 
@@ -389,7 +382,7 @@ Publishing a Set of Links
 
     Support for link sets was introduced in Symfony 8.2.
 
-A *link set* is a collection of links published as a standalone document instead
+A **link set** is a collection of links published as a standalone document instead
 of being attached to a given HTTP interaction. `RFC 9264`_ defines two formats
 for those documents and WebLink supports both.
 
@@ -435,17 +428,8 @@ link context (their ``anchor`` attribute) and then by relation type:
         ]
     }
 
-Links that the format cannot convey are skipped: those without a relation type,
-which is the name of the member that holds them, and those whose target is a URI
-template. The serializer throws an
-:class:`Symfony\\Component\\WebLink\\Exception\\InvalidArgumentException` when a
-link cannot be represented at all, for instance when it uses ``anchor`` as its
-relation type, which would collide with the link context member.
-
 Use the :class:`Symfony\\Component\\WebLink\\JsonLinksetParser` class to read
-such a document. It throws a
-:class:`Symfony\\Component\\WebLink\\Exception\\InvalidArgumentException` when
-the given document doesn't follow the format::
+such a document::
 
     use Symfony\Component\WebLink\JsonLinksetParser;
 
