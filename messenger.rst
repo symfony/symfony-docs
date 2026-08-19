@@ -4138,6 +4138,59 @@ may want to use:
             ],
         ]);
 
+.. deprecated:: 8.2
+
+    The ``doctrine_open_transaction_logger`` middleware was deprecated in
+    Symfony 8.2 in favor of ``DoctrineDbalOpenTransactionLoggerMiddleware``.
+
+The :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalOpenTransactionLoggerMiddleware`
+checks DBAL connections instead of entity managers, so it also works in
+applications that don't use Doctrine ORM. By default, it checks all DBAL
+connections, while ``doctrine_open_transaction_logger`` only checks the
+connection of one entity manager.
+
+This middleware doesn't have a shortcut name, so register it as a service and
+then add its service ID (the class name) to the ``middleware`` option of the bus
+shown above:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Bridge\Doctrine\Messenger\DoctrineDbalOpenTransactionLoggerMiddleware:
+                arguments:
+                    - '@doctrine'
+                    - '@logger'
+                    # optional: connection name(s) to check (all by default)
+                    # - ['default', 'legacy']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Bridge\Doctrine\Messenger\DoctrineDbalOpenTransactionLoggerMiddleware;
+
+        return App::config([
+            'services' => [
+                DoctrineDbalOpenTransactionLoggerMiddleware::class => [
+                    'arguments' => [
+                        service('doctrine'),
+                        service('logger'),
+                        // optional: connection name(s) to check (all by default)
+                        // ['default', 'legacy'],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``DoctrineDbalOpenTransactionLoggerMiddleware`` was introduced in
+    Symfony 8.2.
+
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
 
