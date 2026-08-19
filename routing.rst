@@ -2413,6 +2413,58 @@ Now you'll get the expected results when generating URLs in your commands::
     ``_locale`` parameter. You can override this by providing a different value
     for the ``_locale`` parameter when generating each route.
 
+.. _routing-request-context-run-with:
+
+Generating URLs for Another Host or Scheme
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``RequestContext::runWith()`` method was introduced in Symfony 8.2.
+
+Multi-tenant applications sometimes generate URLs for a host other than the one
+of the current request, for example to build the links of an email sent to the
+customer of a given tenant. Instead of changing the shared request context and
+restoring it by hand, pass a callback to the
+:method:`Symfony\\Component\\Routing\\RequestContext::runWith` method. The given
+values apply while the callback runs and the context is restored afterwards,
+even when the callback throws an exception::
+
+    // src/Service/InvoiceLinkGenerator.php
+    namespace App\Service;
+
+    use App\Entity\Invoice;
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+    class InvoiceLinkGenerator
+    {
+        public function __construct(
+            private UrlGeneratorInterface $urlGenerator,
+        ) {
+        }
+
+        public function invoiceUrl(Invoice $invoice): string
+        {
+            $generateUrl = fn () => $this->urlGenerator->generate(
+                'invoice_show',
+                ['id' => $invoice->getId()],
+                UrlGeneratorInterface::ABSOLUTE_URL,
+            );
+
+            return $this->urlGenerator->getContext()->runWith(
+                $generateUrl,
+                host: $invoice->getTenant()->getDomain(),
+                scheme: 'https',
+            );
+        }
+    }
+
+The method returns whatever the callback returns. Besides ``host`` and
+``scheme``, it accepts the ``baseUrl``, ``method``, ``httpPort``, ``httpsPort``,
+``pathInfo``, ``queryString`` and ``parameters`` values, and leaves the ones you
+don't pass unchanged. Route matching relies on the same request context, so it
+follows those values too.
+
 Checking if a Route Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
