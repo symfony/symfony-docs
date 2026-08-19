@@ -309,11 +309,16 @@ They convert to/from ``DatePoint`` objects automatically::
     ``DatePoint`` fell back to ``string`` unless the Doctrine type was set
     explicitly.
 
+Only ``date_point`` is autodetected, because it's the Doctrine type matching the
+``DatePoint`` property type. Set the ``type`` option explicitly to store a
+``DatePoint`` as a ``day_point`` or a ``time_point``, as shown above.
+
 .. note::
 
-    A typed field mapper configured in your application (through the
-    ``typed_field_mapper`` option of DoctrineBundle) keeps precedence over this
-    autodetection.
+    The typed field mapper configured in your application (through the
+    ``typed_field_mapper`` option of DoctrineBundle) is asked first for each
+    property, so this autodetection only applies to the properties it leaves
+    without a Doctrine type.
 
 .. _clock_writing-tests:
 
