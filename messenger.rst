@@ -4011,11 +4011,11 @@ In addition to middleware, Messenger also dispatches several events. You can
 :doc:`create an event listener </event_dispatcher>` to hook into various parts
 of the process. For each, the event class is the event name:
 
+* :class:`Symfony\\Component\\Messenger\\Event\\SendMessageToTransportsEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\MessageSentToTransportsEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\HandlerFailureEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\HandlerStartingEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\HandlerSuccessEvent`
-* :class:`Symfony\\Component\\Messenger\\Event\\SendMessageToTransportsEvent`
-* :class:`Symfony\\Component\\Messenger\\Event\\MessageSentToTransportsEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageFailedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageHandledEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageReceivedEvent`
@@ -4039,10 +4039,11 @@ Per-Handler Events
     The ``HandlerStartingEvent``, ``HandlerSuccessEvent`` and
     ``HandlerFailureEvent`` events were introduced in Symfony 8.2.
 
-The ``Worker*`` events are dispatched once per message, only for messages
-consumed by a worker, and they report the outcome of all the handlers of that
-message as a single aggregated result. The ``Handler*`` events are dispatched
-once per handler call, both when messages are consumed asynchronously and when
+The ``WorkerMessage*`` events are dispatched once per message, only for
+messages consumed by a worker, and they report the outcome of all the handlers
+of that message as a single aggregated result. The ``Handler*`` events are
+dispatched once per handler call, both when messages are consumed
+asynchronously and when
 they are handled synchronously (e.g. when calling ``$bus->dispatch()`` with no
 transport configured):
 
@@ -4094,14 +4095,16 @@ stamps or unwrapping ``HandlerFailedException``::
         }
     }
 
-Each handler run dispatches exactly one outcome event: either
+A handler run dispatches at most one outcome event: either
 ``HandlerSuccessEvent`` or ``HandlerFailureEvent``. For
 :ref:`batch handlers <messenger-handler-batch>`, that outcome is not known when
 the message is added to the batch: it is resolved through the
 :class:`Symfony\\Component\\Messenger\\Handler\\Acknowledger`, at flush time at
 the earliest. In that case, ``HandlerStartingEvent`` is still dispatched when
 the handler is called, but the outcome event is dispatched later, when the
-acknowledger is called with the result or the error.
+acknowledger is called with the result or the error. If the batch is never
+flushed (e.g. the worker stops before the batch is full), no outcome event is
+dispatched at all for the messages still pending in that batch.
 
 .. note::
 
