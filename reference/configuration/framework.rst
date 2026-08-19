@@ -2127,6 +2127,7 @@ This option configures the behavior of the HTTP client when some request fails,
 including which types of requests to retry and how many times. The behavior is
 defined with the following options:
 
+* :ref:`base_uris <reference-http-client-retry-base-uris>`
 * :ref:`delay <reference-http-client-retry-delay>`
 * :ref:`enabled <reference-http-client-retry-enabled>`
 * :ref:`http_codes <reference-http-client-retry-http-codes>`
@@ -2161,6 +2162,36 @@ defined with the following options:
                     # ...
                     retry_failed:
                         max_retries: 4
+
+.. _reference-http-client-retry-base-uris:
+
+base_uris
+"""""""""
+
+**type**: ``array`` **default**: ``[]``
+
+The list of URIs to fall back to when a request fails. On a
+:ref:`scoped client <reference-http-client-scoped-clients>`, the first attempt
+uses its ``base_uri`` option (which is required when using ``base_uris``) and
+each retry uses the next URI of this list. When there are more retries than
+URIs, the last URI is used for the remaining retries:
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        http_client:
+            scoped_clients:
+                my_api.client:
+                    base_uri: 'https://a.example.com'
+                    retry_failed:
+                        base_uris:
+                            - 'https://b.example.com'
+                            - 'https://c.example.com'
+
+.. versionadded:: 8.2
+
+    The ``base_uris`` option was introduced in Symfony 8.2.
 
 .. _reference-http-client-retry-delay:
 
