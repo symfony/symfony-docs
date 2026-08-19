@@ -2819,6 +2819,147 @@ cipher
 
 The `OpenSSL cipher`_ algorithm constant used for encryption.
 
+pgp_signer
+..........
+
+.. versionadded:: 8.2
+
+    The ``pgp_signer`` option was introduced in Symfony 8.2.
+
+Configures a global PGP/MIME signer that signs the outgoing messages having the
+``X-Pgp-Sign`` header.
+
+enabled
+"""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the PGP/MIME signer.
+
+secret_key
+""""""""""
+
+**type**: ``string`` **default**: ``''``
+
+The path to the secret key of the sender, in ASCII armored format (without the
+``file://`` prefix). It is required when the signer is enabled.
+
+public_key
+""""""""""
+
+**type**: ``string`` **default**: ``null``
+
+The path to the public key of the sender, in ASCII armored format. When set,
+that key is attached to the message and signed with it.
+
+passphrase
+""""""""""
+
+**type**: ``string`` **default**: ``null``
+
+The passphrase of the secret key.
+
+binary
+""""""
+
+**type**: ``string`` **default**: ``'gpg'``
+
+The path to the GnuPG binary.
+
+digest_algorithm
+""""""""""""""""
+
+**type**: ``string`` **default**: ``'SHA512'``
+
+The digest algorithm used to sign the message. Allowed values are ``SHA224``,
+``SHA256``, ``SHA384`` and ``SHA512``.
+
+pgp_encrypter
+.............
+
+.. versionadded:: 8.2
+
+    The ``pgp_encrypter`` option was introduced in Symfony 8.2.
+
+Configures a global PGP/MIME encrypter that encrypts the outgoing messages having
+the ``X-Pgp-Encrypt`` header.
+
+enabled
+"""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the PGP/MIME encrypter.
+
+repository
+""""""""""
+
+**type**: ``string`` **default**: ``''``
+
+The service ID of a class implementing
+:class:`Symfony\\Component\\Mailer\\EventListener\\PgpPublicKeyRepositoryInterface`.
+This service is used to find the public key path for each email recipient. It
+can't be used together with the ``keys`` option, and one of them is required
+when the encrypter is enabled.
+
+keys
+""""
+
+**type**: ``array`` **default**: ``[]``
+
+The public keys of the recipients, as a map of email address to public key file
+path. It can't be used together with the ``repository`` option.
+
+binary
+""""""
+
+**type**: ``string`` **default**: ``'gpg'``
+
+The path to the GnuPG binary.
+
+cipher_algorithm
+""""""""""""""""
+
+**type**: ``string`` **default**: ``'AES256'``
+
+The cipher algorithm used to encrypt the message. Allowed values are ``AES``,
+``AES192``, ``AES256``, ``TWOFISH``, ``CAMELLIA128``, ``CAMELLIA192`` and
+``CAMELLIA256``.
+
+timeout
+"""""""
+
+**type**: ``float`` **default**: ``60.0``
+
+The timeout in seconds of the ``gpg`` process (``null`` to disable it).
+
+hide_recipients
+"""""""""""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to hide the key IDs of all the recipients in the encrypted message. The
+recipients listed in the ``Bcc`` header are always hidden, whatever the value of
+this option.
+
+on_missing_key
+""""""""""""""
+
+**type**: ``string`` **default**: ``'fail'``
+
+The behavior when a recipient has no public key: ``fail`` throws an exception,
+``encrypt`` encrypts for the recipients that have a key (the others receive an
+unreadable message) and ``skip`` also drops the keyless recipients from the
+envelope. The message is never sent unencrypted.
+
+encrypt_for_sender
+""""""""""""""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to also encrypt the message for the sender, when a public key is
+available for its address, so that the sender can read the messages it sent.
+
 messenger
 ~~~~~~~~~
 
