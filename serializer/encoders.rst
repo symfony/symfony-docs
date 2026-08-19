@@ -224,6 +224,14 @@ These are the options available on the :ref:`serializer context <serializer-cont
     Sets the root node name.
 ``as_collection`` (default: ``false``)
     Always returns results as a collection, even if only one line is decoded.
+``force_collection`` (default: ``[]``)
+    A list of tag names that are always decoded as a collection, even when they
+    hold a single child. Without this option, the shape of the decoded data
+    depends on the number of children found in the document.
+
+    .. versionadded:: 8.2
+
+        The ``force_collection`` option was introduced in Symfony 8.2.
 ``decoder_ignored_node_types`` (default: ``[\XML_PI_NODE, \XML_COMMENT_NODE]``)
     Array of node types (`DOM XML_* constants`_) to be ignored while decoding.
 ``encoder_ignored_node_types`` (default: ``[]``)
@@ -290,6 +298,25 @@ Example with a custom ``context``::
     //   <id>IDHNQIItNyQ</id>
     //   <date>2019-10-24</date>
     // </track>
+
+Example with ``force_collection``::
+
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+
+    $xml = <<<XML
+        <?xml version="1.0"?>
+        <response>
+          <people>
+            <person><name>Jane</name></person>
+          </people>
+        </response>
+        XML;
+
+    $xmlEncoder->decode($xml, 'xml');
+    // returns ['people' => ['person' => ['name' => 'Jane']]]
+
+    $xmlEncoder->decode($xml, 'xml', ['force_collection' => ['people']]);
+    // returns ['people' => ['person' => [['name' => 'Jane']]]]
 
 Example with ``preserve_numeric_keys``::
 
