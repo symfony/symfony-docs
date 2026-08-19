@@ -1697,7 +1697,8 @@ encrypt a message by yourself::
         ->html('...');
 
     // the second argument is optional; when given, that public key is attached to
-    // the message and signed with it. The third one is the secret key passphrase
+    // the message and included in the signed content (signing always uses the
+    // secret key). The third argument is the passphrase of the secret key
     $signer = new PgpSigner('/path/to/secret-key.asc', '/path/to/public-key.asc', 'the-passphrase');
     $signedEmail = $signer->sign($email);
 
@@ -1719,7 +1720,8 @@ Signing and Encrypting Messages Globally with PGP/MIME
 ......................................................
 
 Instead of signing and encrypting each message by yourself, configure the
-``pgp_signer`` and ``pgp_encrypter`` options to do it for all outgoing messages:
+``pgp_signer`` and ``pgp_encrypter`` options to do it for the messages that you
+flag with the ``X-Pgp-Sign`` and ``X-Pgp-Encrypt`` headers (as explained below):
 
 .. configuration-block::
 
@@ -1748,6 +1750,8 @@ Instead of signing and encrypting each message by yourself, configure the
 
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        // use App\Pgp\PublicKeyRepository;
 
         return App::config([
             'framework' => [

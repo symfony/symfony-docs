@@ -2850,7 +2850,7 @@ public_key
 **type**: ``string`` **default**: ``null``
 
 The path to the public key of the sender, in ASCII armored format. When set,
-that key is attached to the message and signed with it.
+that key is attached to the message and included in the signed content.
 
 passphrase
 """"""""""
@@ -2931,7 +2931,7 @@ timeout
 
 **type**: ``float`` **default**: ``60.0``
 
-The timeout in seconds of the ``gpg`` process (``null`` to disable it).
+The timeout in seconds of the ``gpg`` process.
 
 hide_recipients
 """""""""""""""
