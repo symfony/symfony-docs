@@ -648,9 +648,36 @@ the message from being redelivered until the worker completes processing it:
     This option is only available for the following transports: AMQP,
     Beanstalkd, AmazonSQS, Doctrine and Redis.
 
-By default, the worker fetches a single message per iteration from the
-transport. Use the ``--fetch-size`` option to fetch multiple messages per
-iteration, reducing the number of round trips to the transport:
+.. _messenger-concurrency:
+
+By default, the worker handles one message at a time. Use the ``--concurrency``
+option to handle several messages in parallel. This option requires the
+`amphp/parallel`_ package:
+
+.. code-block:: terminal
+
+    $ composer require amphp/parallel
+
+    # handle up to 4 messages at the same time
+    $ php bin/console messenger:consume async --concurrency=4
+
+The worker starts a pool of child processes (or threads, when the ``parallel``
+PHP extension is installed) that boot your application and handle one message
+at a time. The worker still fetches messages from the transport itself, so it
+uses a single connection to the transport.
+
+Messages handled by a :ref:`batch handler <messenger-handler-batch>` are always
+sent to the same child for a given bus, transport and message class, so they are
+handled one after the other. To handle them in parallel, run several workers.
+
+.. versionadded:: 8.2
+
+    The ``--concurrency`` option was introduced in Symfony 8.2.
+
+In each call to the transport, the worker fetches as many messages as the value
+of ``--concurrency`` (one message by default). Use the ``--fetch-size`` option
+to change this number (e.g. to fetch more messages per call and reduce the
+number of round trips to the transport):
 
 .. code-block:: terminal
 
@@ -1274,7 +1301,10 @@ Custom Message Execution Strategy
 By default, the worker processes messages synchronously using
 :class:`Symfony\\Component\\Messenger\\Execution\\SyncMessageExecutionStrategy`.
 
-To customize how messages are processed, for example to run them in parallel, implement
+When using the :ref:`--concurrency option <messenger-concurrency>`, the worker
+uses :class:`Symfony\\Component\\Messenger\\Execution\\ParallelExecutionStrategy`
+instead to process messages in parallel. To process messages in some other way,
+implement
 :class:`Symfony\\Component\\Messenger\\Execution\\MessageExecutionStrategyInterface`
 and pass an instance to the ``Worker`` constructor::
 
@@ -3623,6 +3653,8 @@ That's it! You can now consume each transport:
     If a handler does *not* have ``from_transport`` config, it will be executed
     on *every* transport that the message is received from.
 
+.. _messenger-handler-batch:
+
 Process Messages by Batches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -4699,3 +4731,4 @@ Learn more
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
 .. _`system attributes`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html#API_ReceiveMessage_RequestSyntax
 .. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
+.. _`amphp/parallel`: https://github.com/amphp/parallel
