@@ -539,6 +539,19 @@ Other Options
 
         $dsn = 'smtps://smtp.example.com?max_per_second=2'
 
+``timeout``
+    The maximum number of seconds to wait when connecting to the SMTP server and
+    when reading from or writing to it. Fractional values are allowed and the
+    value must be a positive number; otherwise an ``InvalidArgumentException``
+    is thrown. When this option is not set, the ``default_socket_timeout`` PHP
+    ini setting is used (60 seconds by default)::
+
+        $dsn = 'smtps://smtp.example.com?timeout=10'
+
+    .. versionadded:: 8.2
+
+        The ``timeout`` option was introduced in Symfony 8.2.
+
 Custom Transport Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
