@@ -360,6 +360,29 @@ hook that accepts ``string|null`` while the property itself is ``string``,
 calling ``getType()`` returns the settable type (``string|null``) instead of
 the property type (``string``).
 
+.. versionadded:: 8.2
+
+    The ``hasHook()`` and ``isVirtual()`` methods were introduced in
+    Symfony 8.2.
+
+The read and write information of a property also tells whether that property
+is backed by a hook, thanks to the ``hasHook()`` method of the
+:class:`Symfony\\Component\\PropertyInfo\\PropertyReadInfo` and
+:class:`Symfony\\Component\\PropertyInfo\\PropertyWriteInfo` objects.
+``PropertyReadInfo`` also provides an ``isVirtual()`` method telling whether
+the property is virtual (a virtual property has no backing store)::
+
+    $readInfo = $reflectionExtractor->getReadInfo(Product::class, 'slug');
+    $readInfo->hasHook();   // true if the property defines a "get" hook
+    $readInfo->isVirtual(); // true if the property is virtual
+
+    $writeInfo = $reflectionExtractor->getWriteInfo(Product::class, 'slug');
+    $writeInfo->hasHook();  // true if the property defines a "set" hook
+
+Both methods return ``null`` when the value is accessed through a method
+instead of the property itself, such as an accessor, a mutator or the
+constructor.
+
 .. note::
 
     When using the Symfony framework, this service is automatically registered
