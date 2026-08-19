@@ -909,6 +909,21 @@ unchanged::
 
     The ``binary`` content transfer encoding was introduced in Symfony 8.2.
 
+Some media types define additional ``Content-Type`` parameters, such as the
+``method`` of a ``text/calendar`` part. Use ``setContentTypeParameter()`` to
+define them on any part::
+
+    use Symfony\Component\Mime\Part\TextPart;
+
+    $invitation = new TextPart($icalContent, 'utf-8', 'calendar', '8bit')
+        ->setContentTypeParameter('method', 'REQUEST');
+    // the part is now sent with the following header:
+    // Content-Type: text/calendar; method=REQUEST; charset=utf-8
+
+.. versionadded:: 8.2
+
+    The ``setContentTypeParameter()`` method was introduced in Symfony 8.2.
+
 .. _mailer-configure-email-globally:
 
 Configuring Emails Globally
