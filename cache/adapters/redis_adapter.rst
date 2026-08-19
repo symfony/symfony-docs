@@ -326,6 +326,16 @@ performance when using tag-based invalidation::
 
 Read more about this topic in the official `Redis LRU Cache Documentation`_.
 
+The Sets that relate tags and cache items keep referencing the items that Redis
+expired or evicted. Call
+:method:`Symfony\\Component\\Cache\\PruneableInterface::prune` to
+:ref:`remove those stale references <component-cache-cache-pool-prune>` and the
+Sets that don't reference any existing item anymore.
+
+.. versionadded:: 8.2
+
+    Support for pruning ``RedisTagAwareAdapter`` was introduced in Symfony 8.2.
+
 Working with Marshaller
 -----------------------
 
