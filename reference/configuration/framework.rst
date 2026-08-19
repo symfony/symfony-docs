@@ -2977,8 +2977,16 @@ Bitwise operator options for :phpfunction:`openssl_pkcs7_sign`.
 smime_encrypter
 ...............
 
-Configures a global S/MIME encrypter that automatically encrypts all outgoing
-messages.
+Configures a global S/MIME encrypter that encrypts the outgoing messages having
+the ``X-SMime-Encrypt`` header (see :ref:`signing-and-encrypting-messages`).
+
+enabled
+"""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable the S/MIME encrypter. When enabled, you must also configure
+either the ``repository`` or the ``certificates`` option.
 
 repository
 """"""""""
@@ -2987,7 +2995,61 @@ repository
 
 The service ID of a class implementing
 :class:`Symfony\\Component\\Mailer\\EventListener\\SmimeCertificateRepositoryInterface`.
-This service is used to find the certificate path for each email recipient.
+This service is used to find the certificate path for each email recipient. It
+can't be used together with the ``certificates`` option.
+
+certificates
+""""""""""""
+
+**type**: ``array`` **default**: ``[]``
+
+The certificates of the recipients, as an array where keys are email addresses
+and values are paths to certificate files. It can't be used together with the
+``repository`` option.
+
+.. versionadded:: 8.2
+
+    The ``certificates`` option was introduced in Symfony 8.2.
+
+on_missing_certificate
+""""""""""""""""""""""
+
+**type**: ``string`` **default**: ``send_unencrypted``
+
+What to do when some recipients have no certificate:
+
+* ``send_unencrypted``: send the message unencrypted to all recipients;
+* ``fail``: throw an exception;
+* ``encrypt``: encrypt the message for the recipients that have a certificate
+  (the others receive a message they can't read);
+* ``skip``: encrypt the message for the recipients that have a certificate and
+  remove the others from the envelope.
+
+When no recipient has a certificate, ``encrypt`` and ``skip`` also throw an
+exception. Set the ``X-SMime-Encrypt`` header of a message to ``fail``,
+``encrypt`` or ``skip`` to override this option for that message.
+
+.. versionadded:: 8.2
+
+    The ``on_missing_certificate`` option was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    The ``send_unencrypted`` value of the ``on_missing_certificate`` option was
+    deprecated in Symfony 8.2.
+
+encrypt_for_sender
+""""""""""""""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to also encrypt the message with the certificate of the envelope sender
+(when there's a certificate for that address), so the sender can read the
+message too.
+
+.. versionadded:: 8.2
+
+    The ``encrypt_for_sender`` option was introduced in Symfony 8.2.
 
 cipher
 """"""
