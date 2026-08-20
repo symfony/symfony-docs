@@ -1950,7 +1950,7 @@ information in a controller via the ``Request`` object::
     }
 
 In services, you can get this information by
-:doc:`injecting the RequestStack service </service_container/request>`.
+:ref:`injecting the RequestStack service <service-container-request>`.
 In templates, use the :ref:`Twig global app variable <twig-app-variable>`
 to get the current route name (``app.current_route``) and its parameters
 (``app.current_route_parameters``).

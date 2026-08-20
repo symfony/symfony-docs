@@ -2,7 +2,7 @@ Built-in Symfony Service Tags
 =============================
 
 :doc:`Service tags </service_container/tags>` are the mechanism used by the
-:doc:`DependencyInjection component </components/dependency_injection>` to flag
+:doc:`service container </service_container>` to flag
 services that require special processing, like console commands or Twig extensions.
 
 This article shows the most common tags provided by Symfony components, but in

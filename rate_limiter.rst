@@ -220,7 +220,7 @@ prevents that number from being higher than 5,000).
 
     All rate-limiters are tagged with the ``rate_limiter`` tag, so you can
     find them with a :doc:`tagged iterator </service_container/tags>` or
-    :doc:`locator </service_container/service_subscribers_locators>`.
+    :doc:`locator </service_container/subscribers_locators>`.
 
     .. versionadded:: 7.1
 

@@ -369,7 +369,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
                     ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
             };
 
-.. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
+.. include:: /service_container/_imports-parameters-note.rst.inc
 
 Configuration parameters are very common in Symfony applications. Symfony itself
 defines several parameters, including those related to the
@@ -535,6 +535,25 @@ files directly in the ``config/packages/`` directory.
                     $webpackEncore->strictMode(false);
                 }
             };
+
+When using PHP closures to configure your services, besides calling the
+``$container->env()`` method shown above, you can automatically inject the
+current environment value by adding a string argument named ``$env`` to
+the closure::
+
+    // config/packages/my_config.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+    return function(ContainerConfigurator $containerConfigurator, string $env): void {
+        // `$env` is automatically filled in, so you can configure your
+        // services depending on which environment you're on
+    };
+
+.. deprecated:: 7.4
+
+    Using ``$this`` or the loader's internal scope in PHP configuration
+    files was deprecated in Symfony 7.4. Use the variables passed to the closure
+    (e.g. ``$containerConfigurator``) or the ``$loader`` variable instead.
 
 .. seealso::
 

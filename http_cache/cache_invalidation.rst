@@ -82,7 +82,7 @@ to support the ``PURGE`` HTTP method. First create a caching kernel that overrid
         }
     }
 
-Then, register the class as a service that :doc:`decorates </service_container/service_decoration>`
+Then, register the class as a service that :doc:`decorates </service_container/decoration>`
 ``http_cache``::
 
 .. configuration-block::

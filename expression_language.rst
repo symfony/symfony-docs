@@ -14,8 +14,8 @@ Booleans) using a syntax similar to PHP and Twig.
 Symfony itself uses expressions in many features, such as :doc:`security rules
 </security/expressions>`, :ref:`route matching conditions
 <routing-matching-expressions>`, the :doc:`Expression validation constraint
-</reference/constraints/Expression>` and :doc:`service container configuration
-</service_container/expression_language>`.
+</reference/constraints/Expression>` and :ref:`service container configuration
+<services-expressions>`.
 
 In your own applications, the ExpressionLanguage component is a perfect
 candidate for the foundation of a *business rule engine*. The idea is to let
@@ -158,7 +158,7 @@ variables are automatically injected by Symfony so you can use them in your
 expressions (e.g. the request, the current user, etc.):
 
 * :doc:`Variables available in security expressions </security/expressions>`;
-* :doc:`Variables available in service container expressions </service_container/expression_language>`;
+* :ref:`Variables available in service container expressions <services-expressions>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
 
 .. _expression-language-caching:

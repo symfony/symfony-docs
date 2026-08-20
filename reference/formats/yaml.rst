@@ -370,7 +370,8 @@ official YAML specification but are useful in Symfony applications:
                   - '@=service("App\\Mail\\MailerConfiguration").getMailerMethod()'
 
   Expressions have access to the ``service()``, ``parameter()`` and ``env()``
-  functions among others. See :doc:`/service_container/expression_language` for
+  functions among others. See
+  :ref:`expressions in service arguments <services-expressions>` for
   full details.
 
 Unsupported YAML Features
