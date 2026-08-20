@@ -812,14 +812,19 @@ Installing and Configuring a Third Party Provider
 Before pushing/pulling translations to a third-party provider, you must install
 the package that provides integration with that provider:
 
-======================  ===========================================================
+======================  ============================================================
 Provider                Install with
-======================  ===========================================================
+======================  ============================================================
 `Crowdin`_              ``composer require symfony/crowdin-translation-provider``
 `Loco (localise.biz)`_  ``composer require symfony/loco-translation-provider``
 `Lokalise`_             ``composer require symfony/lokalise-translation-provider``
 `Phrase`_                ``composer require symfony/phrase-translation-provider``
-======================  ===========================================================
+`POEditor`_             ``composer require symfony/po-editor-translation-provider``
+======================  ============================================================
+
+.. versionadded:: 8.2
+
+    The POEditor provider was reintroduced in Symfony 8.2.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -844,14 +849,15 @@ pull translations via Loco. The *only* part you need to change is the
 
 This table shows the full list of available DSN formats for each provider:
 
-======================  ==============================================================
+======================  ===============================================================
 Provider                DSN
-======================  ==============================================================
+======================  ===============================================================
 `Crowdin`_              ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
 `Loco (localise.biz)`_  ``loco://API_KEY@default``
 `Lokalise`_             ``lokalise://PROJECT_ID:API_KEY@default``
 `Phrase`_               ``phrase://PROJECT_ID:API_TOKEN@default?userAgent=myProject``
-======================  ==============================================================
+`POEditor`_             ``poeditor://PROJECT_ID:API_KEY@default``
+======================  ===============================================================
 
 To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
@@ -1769,5 +1775,6 @@ Learn more
 .. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
 .. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
 .. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
+.. _`POEditor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/PoEditor/README.md
 .. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
 .. _`locale subtag`: https://datatracker.ietf.org/doc/html/rfc4646
