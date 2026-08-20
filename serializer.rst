@@ -2142,6 +2142,8 @@ property. This can be used instead of
 Advanced Deserialization
 ------------------------
 
+.. _serializer-require-all-properties:
+
 Require all Properties
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2251,6 +2253,55 @@ type errors and extra attributes. Both are available in the same
         DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
         DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
     ]);
+
+.. _serializer-skip-invalid-attributes:
+
+Skipping Invalid Attributes While Denormalizing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``AbstractNormalizer::SKIP_INVALID_ATTRIBUTES`` context option was
+    introduced in Symfony 8.2.
+
+By default, a single value that can't be denormalized (e.g. a string that isn't
+a number for an ``int`` property) makes the whole denormalization fail, even
+when the class defines a default value for that attribute. Set the
+``AbstractNormalizer::SKIP_INVALID_ATTRIBUTES`` context option to ``true`` to
+handle those attributes as if they were missing from the input::
+
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+
+    class SearchQuery
+    {
+        public function __construct(
+            public int $page = 1,
+            public string $sort = 'date',
+        ) {
+        }
+    }
+
+    // ...
+    $data = ['page' => 'last', 'sort' => 'price'];
+    $query = $serializer->denormalize($data, SearchQuery::class, null, [
+        AbstractNormalizer::SKIP_INVALID_ATTRIBUTES => true,
+    ]);
+    // $query->page is 1 (its default value) and $query->sort is 'price'
+
+A skipped constructor argument gets the same value as a missing one: the value
+defined in the ``default_constructor_arguments``
+:ref:`context option <serializer-default-constructor-arguments>`, then its
+default value and then ``null`` if it's nullable (unless
+:ref:`all properties are required <serializer-require-all-properties>`). If none
+of them applies, the denormalization fails as if the argument were missing.
+
+Other skipped attributes aren't set, so they keep the value assigned by the
+constructor (or stay uninitialized). Invalid items of a variadic constructor
+argument are removed from the list.
+
+When combined with ``COLLECT_DENORMALIZATION_ERRORS``, skipped attributes aren't
+reported as errors, but all other errors (e.g. missing constructor arguments)
+are still collected.
 
 .. _serializer-populate-existing-object:
 
@@ -2587,6 +2638,8 @@ and "unwrap" the input data::
 
 The ``unwrap_path`` is a :ref:`property path <property-access-reading-arrays>`
 of the PropertyAccess component, applied on the denormalized array.
+
+.. _serializer-default-constructor-arguments:
 
 Handling Constructor Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
