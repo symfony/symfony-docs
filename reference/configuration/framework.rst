@@ -2849,6 +2849,28 @@ failure_transport
 
 The transport name to send failed messages to (after all retries have failed).
 
+.. _reference-messenger-reject-redelivered-messages:
+
+reject_redelivered_messages
+...........................
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to add the ``reject_redelivered_message_middleware`` to the default
+middleware of every bus. AMQP redelivers a message that was neither acknowledged
+nor rejected (e.g. after a connection timeout); this middleware rejects such a
+message so the retry mechanism republishes it, which bounds it by the retry
+limit instead of letting it be redelivered forever.
+
+Set this option to ``false`` to handle redeliveries directly instead. This
+avoids losing a message when the retry or the failure transport is unreachable,
+at the risk of the redelivery loop the middleware prevents. You can still list
+the middleware in the ``middleware`` option of a specific bus.
+
+.. versionadded:: 8.2
+
+    The ``reject_redelivered_messages`` option was introduced in Symfony 8.2.
+
 routing
 .......
 
