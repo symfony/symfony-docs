@@ -2708,7 +2708,14 @@ transports
 **type**: ``array``
 
 A :ref:`list of DSN <multiple-email-transports>` that can be used by the
-mailer. A transport name is the key and the dsn is the value.
+mailer. A transport name is the key and the DSN is the value. The value can
+also be an array with a ``dsn`` key and an optional ``rate_limiter`` key
+naming the :ref:`rate limiter <mailer-rate-limiting>` that throttles this
+transport.
+
+.. versionadded:: 8.2
+
+    The ``rate_limiter`` option was introduced in Symfony 8.2.
 
 dkim_signer
 ...........

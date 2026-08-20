@@ -1727,6 +1727,64 @@ the final email)::
     $email->getHeaders()->addTextHeader('X-Transport', 'alternative');
     $mailer->send($email);
 
+.. _mailer-rate-limiting:
+
+Rate Limiting Email Transports
+------------------------------
+
+.. versionadded:: 8.2
+
+    The ``rate_limiter`` option of mailer transports was introduced in
+    Symfony 8.2.
+
+Email providers often cap how many messages you may send in a given timeframe.
+You can configure a rate limiter on a transport (requires the
+:doc:`RateLimiter component </rate_limiter>`) by setting its ``rate_limiter``
+option, so each transport is throttled on its own instead of rate limiting all
+your emails at once:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                transports:
+                    main:
+                        dsn: '%env(MAILER_DSN)%'
+                        rate_limiter: your_rate_limiter_name
+                    alternative: '%env(MAILER_DSN_IMPORTANT)%'
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'mailer' => [
+                    'transports' => [
+                        'main' => [
+                            'dsn' => env('MAILER_DSN'),
+                            'rate_limiter' => 'your_rate_limiter_name',
+                        ],
+                        'alternative' => env('MAILER_DSN_IMPORTANT'),
+                    ],
+                ],
+            ],
+        ]);
+
+As shown above, a transport still accepts a plain DSN as its value, and any
+transport without a ``rate_limiter`` option is left unthrottled.
+
+Once the limit is reached, sending throws a
+:class:`Symfony\\Component\\RateLimiter\\Exception\\RateLimitExceededException`
+that your application must handle. If you send emails
+:ref:`asynchronously <mailer-sending-messages-async>`, Messenger catches that
+exception and puts the email back on the queue, to be retried once the limit
+resets.
+
 .. _mailer-sending-messages-async:
 
 Sending Messages Async
