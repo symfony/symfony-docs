@@ -2203,6 +2203,63 @@ type errors and extra attributes. Both are available in the same
         DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
     ]);
 
+.. _serializer-skip-invalid-attributes:
+
+Skipping Invalid Attributes While Denormalizing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``AbstractNormalizer::SKIP_INVALID_ATTRIBUTES`` context option was
+    introduced in Symfony 8.2.
+
+By default, a single value of the wrong type aborts the denormalization of the
+whole object, even when the class declares a perfectly good default for it. Set
+the ``AbstractNormalizer::SKIP_INVALID_ATTRIBUTES`` context option to ``true``
+to handle an attribute whose value can't be used as if its key were absent from
+the input::
+
+    class SearchQuery
+    {
+        public function __construct(
+            public int $page = 1,
+            public string $sort = 'date',
+        ) {
+        }
+    }
+
+    // ...
+    $data = ['page' => 'foo'];
+    $query = $serializer->denormalize($data, SearchQuery::class, null, [
+        AbstractNormalizer::SKIP_INVALID_ATTRIBUTES => true,
+    ]);
+    // $query->page is 1 and $query->sort is 'date'
+
+That single rule covers every case:
+
+* a constructor argument goes through the regular fallback chain, in order: the
+  ``default_constructor_arguments`` context option, then the argument's default
+  value, then ``null`` when the argument is nullable and
+  ``AbstractNormalizer::REQUIRE_ALL_PROPERTIES`` is off;
+* any other attribute is left untouched, so it keeps whatever the constructor
+  gave it;
+* an invalid entry of a variadic argument is dropped from the list;
+* nothing is reported for the skipped attribute.
+
+Two consequences follow from that rule and are deliberate:
+
+* a required non-nullable constructor argument with no default still fails, with
+  the same ``MissingConstructorArgumentsException`` an absent key produces;
+* a typed property with no default and no constructor argument stays
+  uninitialized, exactly as if the input had not mentioned it.
+
+The option composes with ``COLLECT_DENORMALIZATION_ERRORS``: skipped attributes
+are never collected, so they never reach
+``PartialDenormalizationException::getNotNormalizableValueErrors()``, while
+everything else is still reported. Used together, they accept the values a
+client got right, apply the declared defaults for the ones it got wrong and
+still report what could not be recovered.
+
 .. _serializer-populate-existing-object:
 
 Deserializing in an Existing Object

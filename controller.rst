@@ -487,6 +487,33 @@ default value for your controller arguments::
         // ...
     }
 
+By default, a single query parameter with an invalid value makes the whole
+mapping fail (and returns a 404 response). Enable the
+:ref:`skip_invalid_attributes <serializer-skip-invalid-attributes>` serializer
+option to keep the parameters the client got right and fall back to the defaults
+declared by your DTO for the others::
+
+    use App\Model\SearchDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+
+    // ...
+
+    public function search(
+        #[MapQueryString(
+            serializationContext: ['skip_invalid_attributes' => true]
+        )]
+        SearchDto $searchDto
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``skip_invalid_attributes`` serializer option was introduced in
+    Symfony 8.2.
+
 .. _controller-mapping-request-payload:
 
 Mapping Request Payload
