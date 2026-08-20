@@ -279,6 +279,11 @@ The ``Option`` attribute accepts the following parameters:
     An array or a callable that provides :ref:`suggested values for the option <console-input-completion>`.
     For example: ``#[Option(suggestedValues: ['low', 'medium', 'high'])]``.
 
+``deprecated`` and ``hidden``
+    Whether the option is :ref:`deprecated or hidden
+    <console-hidden-deprecated-options>` (e.g. ``#[Option(deprecated: true)]``
+    or ``#[Option(hidden: true)]``).
+
 The option mode is inferred from the parameter type and default value:
 
 * **Boolean flag** (``VALUE_NONE``): ``bool`` type with default ``false``.
@@ -498,6 +503,85 @@ You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 
     Using any combination of ``InputOption::VALUE_NONE``, ``InputOption::VALUE_REQUIRED`` and
     ``InputOption::VALUE_OPTIONAL`` was deprecated in Symfony 8.1.
+
+.. _console-hidden-deprecated-options:
+
+Hiding and Deprecating Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``InputOption::HIDDEN`` and ``InputOption::DEPRECATED`` modes were
+    introduced in Symfony 8.2.
+
+Two other modes don't change the values an option accepts, but how it's
+advertised to users. Combine them with the value modes like any other mode
+(used alone, they imply ``InputOption::VALUE_NONE``)::
+
+    $this
+        // ...
+        ->addOption(
+            'old',
+            'o',
+            InputOption::VALUE_REQUIRED | InputOption::DEPRECATED,
+            'Use --new instead'
+        )
+        ->addOption(
+            'internal',
+            null,
+            InputOption::VALUE_NONE | InputOption::HIDDEN,
+            'Internal switch'
+        )
+    ;
+
+In invokable commands, use the ``deprecated`` and ``hidden`` parameters of the
+:class:`Symfony\\Component\\Console\\Attribute\\Option` attribute instead::
+
+    public function __invoke(
+        #[Option(deprecated: true)]
+        ?string $old = null,
+
+        #[Option(hidden: true)]
+        bool $internal = false,
+    ): int {
+        // ...
+    }
+
+A **hidden** option keeps working, but it's left out of the command synopsis, of
+the ``help`` and ``list`` commands (in all their formats) and of shell
+completion. Use it for switches your application passes to itself, or for
+options kept for backward compatibility that you no longer want to advertise.
+This only affects visibility: it's not a security measure and it never prevents
+the option from being used. Pass ``--show-hidden-options`` to the ``help``
+command to display those options again:
+
+.. code-block:: terminal
+
+    $ php bin/console help app:demo --show-hidden-options
+
+    Options:
+      -o, --old=OLD    [deprecated] Use --new instead
+          --internal   [hidden] Internal switch
+
+A **deprecated** option keeps working and stays visible, but its description is
+prefixed with ``[deprecated]`` in the help output and a warning is displayed
+when the option is actually passed:
+
+.. code-block:: terminal
+
+    $ php bin/console app:demo --old=1
+
+      The option "--old|-o" is deprecated.
+
+That warning is written to the error output, so it never pollutes the command
+output, and it's only displayed when the option is really passed (not when it
+falls back to its default value). It's not a PHP deprecation either, so no error
+handler catches it and the deprecation collector doesn't report it.
+
+Use :method:`Symfony\\Component\\Console\\Input\\InputOption::isHidden` and
+:method:`Symfony\\Component\\Console\\Input\\InputOption::isDeprecated` to check
+both modes. Every descriptor reports them for each option too (e.g. as the
+``is_hidden`` and ``is_deprecated`` keys of the ``json`` format).
 
 .. _console-input-map-input:
 
