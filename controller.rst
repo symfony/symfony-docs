@@ -895,7 +895,7 @@ Managing the Session
 
 Symfony provides a session service to store information about the user between
 requests. You can access the session through the ``Request`` object (in services,
-:doc:`inject the RequestStack service </service_container/request>`)::
+:ref:`inject the RequestStack service <service-container-request>`)::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;

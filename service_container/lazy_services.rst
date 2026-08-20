@@ -1,25 +1,28 @@
 Lazy Services
 =============
 
-.. seealso::
+In some cases, you may need to inject a service that is heavy to instantiate
+but is not always used. For example, imagine a ``NewsletterSender`` service
+that injects a ``mailer`` service. Only a few methods of the
+``NewsletterSender`` actually use the ``mailer``, but the ``mailer`` service is
+always instantiated in order to construct the ``NewsletterSender``.
 
-    Other ways to inject services lazily are via a :doc:`service closure </service_container/service_closures>` or
-    :doc:`service subscriber </service_container/service_subscribers_locators>`.
+**Lazy services** solve this problem. When a service is marked as lazy, the
+container injects a *proxy* of the service instead of the real service. The
+proxy looks and acts like the real service, except that the service is not
+instantiated until you interact with the proxy in some way.
 
-Why Lazy Services?
-------------------
+The service container provides other features to delay the instantiation of
+services. Depending on your needs, one of them can be a better fit than lazy
+services:
 
-In some cases, you may want to inject a service that is a bit heavy to instantiate,
-but is not always used inside your object. For example, imagine you have
-a ``NewsletterManager`` and you inject a ``mailer`` service into it. Only
-a few methods on your ``NewsletterManager`` actually use the ``mailer``,
-but even when you don't need it, a ``mailer`` service is always instantiated
-in order to construct your ``NewsletterManager``.
-
-Configuring lazy services is one answer to this. With a lazy service, a
-"proxy" of the ``mailer`` service is actually injected. It looks and acts
-like the ``mailer``, except that the ``mailer`` isn't actually instantiated
-until you interact with the proxy in some way.
+* :ref:`Service closures <autowiring_closures>` inject a closure that creates
+  and returns the service when calling it. Prefer them when your own code must
+  control explicitly when (and whether) the service is created;
+* :doc:`Service locators </service_container/subscribers_locators>`
+  inject a set of services, and each of them is only created when you fetch it
+  from the locator. Prefer them when your class needs occasional access to
+  several services instead of one.
 
 .. note::
 
@@ -27,17 +30,31 @@ until you interact with the proxy in some way.
     so ``final`` and ``readonly`` classes are fully supported.
 
     On older PHP versions, lazy services do not support ``final`` or ``readonly``
-    classes, but you can use :ref:`interface proxifying <lazy-services-interface-proxifying>`
+    classes, but you can :ref:`restrict the proxy to an interface <lazy-services-interface-proxifying>`
     to work around this limitation.
 
 .. _lazy-services_configuration:
 
-Configuration
--------------
+Making a Service Lazy
+---------------------
 
-You can mark the service as ``lazy`` by manipulating its definition:
+Use the ``lazy`` option to mark a service as lazy:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Twig/AppExtension.php
+        namespace App\Twig;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+        use Twig\Extension\ExtensionInterface;
+
+        #[Autoconfigure(lazy: true)]
+        class AppExtension implements ExtensionInterface
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -61,55 +78,10 @@ You can mark the service as ``lazy`` by manipulating its definition:
             ],
         ]);
 
-Once you inject the service into another service, a lazy ghost object with the
-same signature of the class representing the service should be injected. A lazy
-`ghost object`_ is an object that is created empty and that is able to initialize
-itself when being accessed for the first time). The same happens when calling
-``Container::get()`` directly.
+In PHP classes, you can also use the ``#[Lazy]`` attribute, which is a shorter
+equivalent of ``#[Autoconfigure(lazy: true)]``::
 
-You can also configure your service's laziness thanks to the
-:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
-For example, to define your service as lazy use the following::
-
-    namespace App\Twig;
-
-    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
-    use Twig\Extension\ExtensionInterface;
-
-    #[Autoconfigure(lazy: true)]
-    class AppExtension implements ExtensionInterface
-    {
-        // ...
-    }
-
-You can also configure laziness when your service is injected with the
-:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autowire` attribute::
-
-    namespace App\Service;
-
-    use App\Twig\AppExtension;
-    use Symfony\Component\DependencyInjection\Attribute\Autowire;
-
-    class MessageGenerator
-    {
-        public function __construct(
-            #[Autowire(service: 'app.twig.app_extension', lazy: true)] ExtensionInterface $extension
-        ) {
-            // ...
-        }
-    }
-
-This attribute also allows you to define the interfaces to proxy when using
-laziness, and supports lazy-autowiring of union types::
-
-    public function __construct(
-        #[Autowire(service: 'foo', lazy: FooInterface::class)]
-        FooInterface|BarInterface $foo,
-    ) {
-    }
-
-Another possibility is to use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Lazy` attribute::
-
+    // src/Twig/AppExtension.php
     namespace App\Twig;
 
     use Symfony\Component\DependencyInjection\Attribute\Lazy;
@@ -121,35 +93,111 @@ Another possibility is to use the :class:`Symfony\\Component\\DependencyInjectio
         // ...
     }
 
-This attribute can be applied to both class and parameters that should be lazy-loaded.
-It defines an optional parameter used to define interfaces for proxy and intersection types::
+From now on, when injecting this service into other services or when getting it
+directly from the container, a lazy `ghost object`_ with the same signature as
+the service class is injected instead. A lazy ghost object is an object created
+empty which initializes itself (i.e. instantiates the real service) when you
+access it for the first time.
 
-    public function __construct(
-        #[Lazy(FooInterface::class)]
-        FooInterface|BarInterface $foo,
-    ) {
+Making Only Specific Injections Lazy
+------------------------------------
+
+Marking a service as lazy makes it lazy everywhere it's injected. If you prefer
+to keep it as a regular service, you can make it lazy only for some specific
+injections. To do so, add the ``#[Lazy]`` attribute to the argument where the
+service is injected::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Lazy;
+    use Twig\Extension\ExtensionInterface;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Lazy]
+            ExtensionInterface $extension,
+        ) {
+            // ...
+        }
+    }
+
+The ``lazy`` argument of the ``#[Autowire]`` attribute produces the same
+result. Use that attribute instead when you also need some of its other
+features, such as selecting the service to inject::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use App\Twig\AppExtension;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Twig\Extension\ExtensionInterface;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Autowire(service: AppExtension::class, lazy: true)]
+            ExtensionInterface $extension,
+        ) {
+            // ...
+        }
+    }
+
+If the argument uses a union or intersection type, pass the interface that the
+proxy must implement as the value of the attribute::
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Lazy(FooInterface::class)]
+            FooInterface|BarInterface $foo,
+
+            // when using the #[Autowire] attribute, pass the interface in the lazy argument:
+            // #[Autowire(service: 'foo', lazy: FooInterface::class)]
+            // FooInterface|BarInterface $foo,
+        ) {
+            // ...
+        }
     }
 
 .. _lazy-services-interface-proxifying:
 
-Interface Proxifying
---------------------
+Restricting the Proxy to an Interface
+-------------------------------------
 
 .. note::
 
-    If you are using PHP 8.4 or later, ``final`` and ``readonly`` classes
-    are supported natively and the technique explained in this section is not
-    required. It remains useful as a safe guard to restrict callable methods to
-    those defined by the interface.
+    This technique is rarely needed nowadays. If you are using PHP 8.4 or later,
+    ``final`` and ``readonly`` classes are supported natively, so the only
+    remaining use case is to restrict the methods that can be called on the
+    proxy.
 
-Internally, proxies generated to lazily load services inherit from the class
+Internally, the proxies generated to lazily load services inherit from the class
 used by the service. However, sometimes this is not possible at all (e.g. because
 the class is `final`_ and can not be extended) or not convenient.
 
-To workaround this limitation, you can configure a proxy to only implement
-specific interfaces.
+To work around this limitation, you can configure the proxy to only implement
+specific interfaces. In the following example, the ``AppExtension`` class
+implements two interfaces, but the proxy generated for it only implements
+``ExtensionInterface``:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Twig/AppExtension.php
+        namespace App\Twig;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+        use Twig\Extension\ExtensionInterface;
+        use Twig\Extension\GlobalsInterface;
+
+        #[Autoconfigure(lazy: ExtensionInterface::class)]
+        class AppExtension implements ExtensionInterface, GlobalsInterface
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -157,10 +205,11 @@ specific interfaces.
         services:
             App\Twig\AppExtension:
                 lazy: 'Twig\Extension\ExtensionInterface'
-                # or a complete definition:
-                lazy: true
-                tags:
-                    - { name: 'proxy', interface: 'Twig\Extension\ExtensionInterface' }
+
+                # alternatively, use the complete definition:
+                # lazy: true
+                # tags:
+                #     - { name: 'proxy', interface: 'Twig\Extension\ExtensionInterface' }
 
     .. code-block:: php
 
@@ -174,39 +223,29 @@ specific interfaces.
             'services' => [
                 AppExtension::class => [
                     'lazy' => ExtensionInterface::class,
-                    'tags' => [
-                        ['proxy' => ['interface' => ExtensionInterface::class]],
-                    ],
+
+                    // alternatively, use the complete definition:
+                    // 'lazy' => true,
+                    // 'tags' => [
+                    //     ['proxy' => ['interface' => ExtensionInterface::class]],
+                    // ],
                 ],
             ],
         ]);
 
-Just like in the :ref:`Configuration <lazy-services_configuration>` section, you can
-use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure`
-attribute to configure the interface to proxify by passing its FQCN as the ``lazy``
-parameter value::
-
-    namespace App\Twig;
-
-    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
-    use Twig\Extension\ExtensionInterface;
-
-    #[Autoconfigure(lazy: ExtensionInterface::class)]
-    class AppExtension implements ExtensionInterface
-    {
-        // ...
-    }
-
 The virtual `proxy`_ injected into other services will only implement the
 specified interfaces and will not extend the original service class, allowing you
-to lazy load services using `final`_ classes. You can configure the proxy to
-implement multiple interfaces by adding new "proxy" tags.
+to lazy load services using `final`_ classes. In the previous example, other
+services can call the ``ExtensionInterface`` methods on the proxy, but not the
+``GlobalsInterface`` methods or any other public method of the ``AppExtension``
+class. You can configure the proxy to implement multiple interfaces by adding
+new "proxy" tags.
 
 .. tip::
 
     This feature can also act as a safe guard: given that the proxy does not
     extend the original class, only the methods defined by the interface can
-    be called, preventing to call implementation specific methods. It also
+    be called, which prevents calling implementation-specific methods. It also
     prevents injecting the dependency at all if you type-hinted a concrete
     implementation instead of the interface.
 

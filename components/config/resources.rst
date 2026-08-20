@@ -3,7 +3,7 @@ Loading Resources
 
 Loaders populate the application's configuration from different sources
 like YAML files. The Config component defines the interface for such
-loaders. The :doc:`Dependency Injection </components/dependency_injection>`
+loaders. The :doc:`Dependency Injection </service_container>`
 and `Routing`_ components come with specialized loaders for different file
 formats.
 

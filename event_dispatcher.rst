@@ -811,7 +811,7 @@ Registering Listeners in Standalone Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your application doesn't use the Symfony framework but uses the
-:doc:`DependencyInjection component </components/dependency_injection>`, you
+:doc:`service container </service_container>`, you
 can still use the ``kernel.event_listener`` and ``kernel.event_subscriber``
 tags shown in the previous sections. To enable them, register a compiler pass
 called ``RegisterListenersPass`` in the container builder::

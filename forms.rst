@@ -1119,7 +1119,7 @@ and register it as a service::
     }
 
 The custom violation mapper is used automatically because ``ViolationMapperInterface``
-is registered as a service alias. To :doc:`decorate </service_container/service_decoration>`
+is registered as a service alias. To :doc:`decorate </service_container/decoration>`
 the default violation mapper instead, decorate the ``form.violation_mapper`` service.
 
 Other Common Form Features
@@ -2206,8 +2206,8 @@ Your application only needs one form factory, and that one factory object
 should be used to create any and all form objects in your application. This
 means that you should create it in some central, bootstrap part of your
 application and then access it whenever you need to build a form. If you're
-using a service container (like provided by the
-:doc:`DependencyInjection component </components/dependency_injection>`), add
+using a service container (like the one provided by the
+:doc:`DependencyInjection component </service_container>`), add
 the form factory to your container and fetch it from there.
 
 .. note::

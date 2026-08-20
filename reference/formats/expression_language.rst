@@ -525,5 +525,5 @@ variables are automatically injected by Symfony so you can use them in your
 expressions (e.g. the request, the current user, etc.):
 
 * :doc:`Variables available in security expressions </security/expressions>`;
-* :doc:`Variables available in service container expressions </service_container/expression_language>`;
+* :ref:`Variables available in service container expressions <services-expressions>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.

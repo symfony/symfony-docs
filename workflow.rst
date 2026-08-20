@@ -748,7 +748,7 @@ method.
 .. tip::
 
     If you want to retrieve all workflows, for documentation purposes for example,
-    you can :doc:`inject all services </service_container/service_subscribers_locators>`
+    you can :doc:`inject all services </service_container/subscribers_locators>`
     with the following tag:
 
     * ``workflow``: all workflows and all state machines;

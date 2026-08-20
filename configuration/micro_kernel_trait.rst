@@ -215,7 +215,7 @@ compiler pass as explained in the dedicated
 is implemented when using the ``MicroKernelTrait``, then the kernel will
 be automatically registered as an extension. You can learn more about it in
 the dedicated section about
-:ref:`managing configuration with extensions <components-dependency-injection-extension>`.
+:doc:`managing configuration with extensions </service_container/extensions>`.
 
 It is also possible to implement the ``EventSubscriberInterface`` to handle
 events directly from the kernel, again it will be registered automatically::
