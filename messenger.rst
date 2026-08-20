@@ -4445,7 +4445,20 @@ it through your bus. Reusing the same ``SmsNotification`` example shown earlier:
 The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
 will take care of this message to redispatch it through the same bus it was
 dispatched at first. You can also use the second argument of the ``RedispatchMessage``
-constructor to provide transports to use when redispatching the message.
+constructor to force the transports to use when redispatching the message::
+
+    $this->bus->dispatch(new RedispatchMessage($message, 'async'));
+
+When you don't pass any transport name, the message is sent to the senders
+:ref:`configured for its class <messenger-routing>`, whether they come from the
+``framework.messenger.routing`` option or from the ``#[AsMessage]`` attribute.
+If the message class has no configured sender, it is handled in process.
+
+.. versionadded:: 8.2
+
+    Falling back to the senders configured for the message was introduced in
+    Symfony 8.2. In previous versions, omitting the transport names sent the
+    message to no sender at all.
 
 Learn more
 ----------
