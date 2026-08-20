@@ -905,6 +905,17 @@ configure the ``providers`` option:
 
 .. tip::
 
+    If you use Crowdin as a provider and you don't define the ``domains``
+    option, translations of every domain found in the project are pulled (each
+    domain matches a ``.xlf`` source file).
+
+.. versionadded:: 8.2
+
+    The support for pulling every domain of a Crowdin project when the
+    ``domains`` option is not defined was introduced in Symfony 8.2.
+
+.. tip::
+
     If you use Lokalise as a provider and a locale format following the `ISO
     639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
     in Lokalise for each of your locales, in order to override the
