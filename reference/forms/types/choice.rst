@@ -170,6 +170,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_filter.rst.inc
 
+.. include:: /reference/forms/types/options/choice_help.rst.inc
+
 .. _reference-form-choice-label:
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
