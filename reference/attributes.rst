@@ -40,6 +40,7 @@ Dependency Injection
 * :ref:`AutoconfigureTag <di-instanceof>`
 * :ref:`Autowire <autowire-attribute>`
 * :ref:`AutowireCallable <autowiring_closures>`
+* :ref:`AutowireClassMap <service-tags-resource-tags-class-map>`
 * :doc:`AutowireDecorated </service_container/decoration>`
 * :ref:`AutowireInline <autowiring-anonymous-services-inline>`
 * :ref:`AutowireIterator <service-locator_autowire-iterator>`

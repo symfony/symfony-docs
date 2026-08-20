@@ -979,6 +979,43 @@ using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTa
         }
     }
 
+.. _service-tags-resource-tags-class-map:
+
+Injecting a Class Map of Tagged Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For the most common use case (injecting the map of tagged classes into a
+service) you don't need a compiler pass: use the ``#[AutowireClassMap]``
+attribute to inject an array that maps an index to each tagged class name::
+
+    // src/Report/ReportGenerator.php
+    namespace App\Report;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutowireClassMap;
+
+    class ReportGenerator
+    {
+        public function __construct(
+            // e.g. ['invoice' => Invoice::class, 'order' => Order::class]
+            #[AutowireClassMap('app.report_item', indexAttribute: 'type')]
+            private array $reportItemClasses,
+        ) {
+        }
+    }
+
+The ``indexAttribute`` argument defines which tag attribute provides the key
+of each class in the map. When not passed, it defaults to the last dot-segment
+of the tag name (``report_item`` for the ``app.report_item`` tag). Classes
+whose tag doesn't define the index attribute are keyed by the index of their
+``#[AsTaggedItem]`` attribute if they have one, or by their own fully-qualified
+class name; a ``priority`` tag attribute (or the priority of ``#[AsTaggedItem]``)
+decides which class wins when several of them share the same index. Use the
+``exclude`` argument to leave some class names out of the map.
+
+.. versionadded:: 8.2
+
+    The ``#[AutowireClassMap]`` attribute was introduced in Symfony 8.2.
+
 Creating Custom Tags and Processing Them with Compiler Passes
 -------------------------------------------------------------
 
