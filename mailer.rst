@@ -1959,6 +1959,80 @@ the final email)::
     $email->getHeaders()->addTextHeader('X-Transport', 'alternative');
     $mailer->send($email);
 
+.. _mailer-rate-limiting:
+
+Rate Limiting Email Transports
+------------------------------
+
+.. versionadded:: 8.2
+
+    The ``rate_limiter`` option of mailer transports was introduced in
+    Symfony 8.2.
+
+Email providers often limit how many messages you can send in a given period
+(e.g. 500 emails per hour on some shared hosting services). Instead of rate
+limiting all your emails at once, you can throttle each transport on its own
+by setting its ``rate_limiter`` option to the name of a
+:doc:`rate limiter </rate_limiter>`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                transports:
+                    main:
+                        dsn: '%env(MAILER_DSN)%'
+                        rate_limiter: main_mailer
+                    # transports without a rate_limiter are not throttled
+                    alternative: '%env(MAILER_DSN_IMPORTANT)%'
+
+            rate_limiter:
+                main_mailer:
+                    policy: 'fixed_window'
+                    limit: 500
+                    interval: '60 minutes'
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'mailer' => [
+                    'transports' => [
+                        'main' => [
+                            'dsn' => env('MAILER_DSN'),
+                            'rate_limiter' => 'main_mailer',
+                        ],
+                        // transports without a rate_limiter are not throttled
+                        'alternative' => env('MAILER_DSN_IMPORTANT'),
+                    ],
+                ],
+                'rate_limiter' => [
+                    'main_mailer' => [
+                        'policy' => 'fixed_window',
+                        'limit' => 500,
+                        'interval' => '60 minutes',
+                    ],
+                ],
+            ],
+        ]);
+
+This option is only available in the ``transports`` option (use it even if
+your application has a single transport) and it's ignored by the
+:ref:`failover and round-robin transports <mailer-high-availability>`.
+
+When the limit is reached, the transport throws a
+:class:`Symfony\\Component\\RateLimiter\\Exception\\RateLimitExceededException`
+instead of sending the email, so your application must handle it. If you send
+emails :ref:`asynchronously <mailer-sending-messages-async>`, Messenger catches
+that exception and retries the message when the rate limiter accepts new emails
+again.
+
 .. _mailer-sending-messages-async:
 
 Sending Messages Async
