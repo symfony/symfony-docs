@@ -228,8 +228,8 @@ Computing Tag Attributes per Tagged Service
 Autoconfigured tags attach the same attributes to every tagged service. To
 compute the attributes of each service instead, pass a callable in the form
 ``[SomeClass::class, 'someMethod']`` as the tag attributes. When compiling
-the container, Symfony calls that static method on each concrete class
-implementing the interface::
+the container, Symfony calls that static method on each class implementing
+the interface::
 
     // src/Handler/BatchHandlerInterface.php
     namespace App\Handler;
@@ -315,9 +315,11 @@ only form available in that format.
 
 .. note::
 
-    Tag attributes are computed when the container is compiled, once per
-    concrete and instantiable class; abstract classes and interfaces are skipped.
-    The callable must return an array; otherwise an exception is thrown.
+    Tag attributes are computed once per tagged class when the container is
+    compiled. Classes don't need to be instantiable (enums and classes with a
+    private constructor are included), but interfaces are always skipped.
+    Abstract classes are skipped too when using a closure; the static method
+    callable runs on them if they implement the method.
 
 .. _tags_reference-tagged-services:
 
@@ -922,6 +924,101 @@ The same definitions can be declared per service in configuration files:
     Resource tags can also be declared in the ``_defaults`` section to apply
     them to every service defined in the same file, using the same
     ``resource_tags`` option name in YAML and PHP.
+
+.. _di-resource-tag-attributes-per-tagged-class:
+
+Computing Resource Tag Attributes per Tagged Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for computing resource tag attributes per tagged class was
+    introduced in Symfony 8.2.
+
+Resource tags added through autoconfiguration attach the same attributes to
+every tagged class. As with :ref:`service tags <di-tag-attributes-per-tagged-service>`,
+you can compute the attributes of each class instead. When compiling the
+container, Symfony calls the given closure or static method once per class
+implementing the interface:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Model/ReportItemInterface.php
+        namespace App\Model;
+
+        use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+        // the closure receives the class-string of each tagged class
+        #[AutoconfigureResourceTag('app.report_item', static function (string $class): array {
+            return ['type' => $class::getType()];
+        })]
+        interface ReportItemInterface
+        {
+            public static function getType(): string;
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _instanceof:
+                App\Model\ReportItemInterface:
+                    resource_tags:
+                        # calls the static getTagAttributes() method on each tagged class
+                        - app.report_item: [App\Model\ReportItemInterface, getTagAttributes]
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Model\ReportItemInterface;
+
+        return App::config([
+            'services' => [
+                '_instanceof' => [
+                    ReportItemInterface::class => [
+                        'resource_tags' => [
+                            // calls the static getTagAttributes() method on each tagged class
+                            ['app.report_item' => [ReportItemInterface::class, 'getTagAttributes']],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    Closures are allowed in attributes only since PHP 8.5. On older PHP
+    versions, pass a static method callable in the form
+    ``[SomeClass::class, 'someMethod']`` instead::
+
+        // src/Model/ReportItemInterface.php
+        namespace App\Model;
+
+        use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+        #[AutoconfigureResourceTag('app.report_item', [self::class, 'getTagAttributes'])]
+        interface ReportItemInterface
+        {
+            /**
+             * @return array<string, mixed>
+             */
+            public static function getTagAttributes(): array;
+        }
+
+        // src/Model/Invoice.php
+        namespace App\Model;
+
+        class Invoice implements ReportItemInterface
+        {
+            public static function getTagAttributes(): array
+            {
+                return ['type' => 'invoice'];
+            }
+        }
 
 .. _service-tags-resource-tags-class-map:
 
