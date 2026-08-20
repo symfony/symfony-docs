@@ -1674,11 +1674,29 @@ trans_default_domain
 .. code-block:: twig
 
     {% trans_default_domain domain %}
+    {% trans_default_domain domain for _self %}
 
 ``domain``
     **type**: ``string``
 
-This will set the default domain in the current template.
+This will set the default domain for translations made after this tag, within
+the current Twig scope (e.g. it does not apply to the body of an ``embed``
+tag).
+
+.. versionadded:: 8.2
+
+    The ``for _self`` modifier was introduced in Symfony 8.2. When added,
+    ``domain`` must be a constant value and the tag must be used only once
+    per template, before any ``embed`` tag. The domain then applies to the
+    whole template instead: It also reaches macros, blocks inherited by
+    child templates, ``embed`` bodies, and ``trans`` calls written above the
+    declaration. A scoped ``trans_default_domain`` (without ``for _self``)
+    still takes precedence where it applies.
+
+    This is especially useful for :ref:`Twig Components <templates-twig-components>`,
+    which are built on top of ``embed`` under the hood: without ``for _self``,
+    the domain would have to be redeclared within each and every Twig
+    Component used in the same file, instead of being set once at the top.
 
 .. _reference-twig-tests:
 
