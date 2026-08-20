@@ -143,7 +143,7 @@ static function::
 
 If you need to override the default password strength estimation algorithm, you
 can pass a ``Closure`` to the :class:`Symfony\\Component\\Validator\\Constraints\\PasswordStrengthValidator`
-constructor (e.g. using the :doc:`service closures </service_container/service_closures>`).
+constructor (e.g. using the :ref:`service closures <autowiring_closures>`).
 
 First, create a custom password strength estimation algorithm within a dedicated
 callable class::

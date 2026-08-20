@@ -2127,7 +2127,7 @@ Extensibility
 -------------
 
 If you want to extend the behavior of a base HTTP client, you can use
-:doc:`service decoration </service_container/service_decoration>`::
+:doc:`service decoration </service_container/decoration>`::
 
     class MyExtendedHttpClient implements HttpClientInterface
     {

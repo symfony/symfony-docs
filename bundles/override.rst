@@ -73,10 +73,10 @@ Services & Configuration
 ------------------------
 
 If you want to modify the services created by a bundle, you can use
-:doc:`service decoration </service_container/service_decoration>`.
+:doc:`service decoration </service_container/decoration>`.
 
 If you want to do more advanced manipulations, like removing services created by
-other bundles, you must work with :doc:`service definitions </service_container/definitions>`
+other bundles, you must work with :ref:`service definitions <service-definitions>`
 inside a :doc:`compiler pass </service_container/compiler_passes>`.
 
 Entities & Entity Mapping

@@ -317,7 +317,7 @@ that allows you to interact with private services and aliases.
 Mocking Non-Shared Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`Non-shared services </service_container/shared>` are instantiated every time
+:ref:`Non-shared services <services-shared>` are instantiated every time
 they are retrieved from the container. For this reason, in tests you must mock
 them using a ``Closure`` that acts as a factory, rather than a concrete instance::
 
