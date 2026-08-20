@@ -343,7 +343,7 @@ Service
 `FakeChat`_                              **Install**: ``composer require symfony/fake-chat-notifier`` \
                                          **DSN**: ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 `Firebase`_                              **Install**: ``composer require symfony/firebase-notifier`` \
-                                         **DSN**: ``firebase://USERNAME:PASSWORD@default``
+                                         **DSN**: ``firebase://CLIENT_EMAIL@default?project_id=PROJECT_ID&private_key_id=PRIVATE_KEY_ID&private_key=PRIVATE_KEY``
 `GoogleChat`_                            **Install**: ``composer require symfony/google-chat-notifier`` \
                                          **DSN**: ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
 `Instagram`_                             **Install**: ``composer require symfony/instagram-notifier`` \
@@ -392,6 +392,15 @@ Service
     The ``WhatsApp``, ``Facebook Page``, ``Instagram``, and ``Threads``
     integrations and the ``author`` DSN option for the LinkedIn bridge were
     introduced in Symfony 8.2.
+
+    The Firebase bridge now sends messages through the Firebase Cloud Messaging
+    v1 API, which requires a DSN built from the credentials of a service
+    account.
+
+.. deprecated:: 8.2
+
+    The ``firebase://USERNAME:PASSWORD@default`` DSN was deprecated in Symfony
+    8.2, as the legacy Firebase API it relies on has been shut down.
 
 .. warning::
 
