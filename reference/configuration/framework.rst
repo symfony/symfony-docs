@@ -3329,6 +3329,45 @@ enabled
 
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
+.. _reference-rate-limiter-builder:
+
+builder
+.......
+
+**type**: ``array``
+
+Configures the :class:`Symfony\\Component\\RateLimiter\\RateLimiterBuilder`
+service, which creates rate limiters at runtime. Read more about
+:ref:`creating rate limiters at runtime <rate-limiter-builder>`.
+
+.. versionadded:: 8.2
+
+    The ``builder`` option was introduced in Symfony 8.2.
+
+cache_pool
+""""""""""
+
+**type**: ``string`` **default**: ``cache.rate_limiter``
+
+The cache pool used to store the state of the limiters created by the builder.
+
+lock_factory
+""""""""""""
+
+**type**: ``string`` **default**: ``auto``
+
+The service ID of the lock factory used by the limiters created by the builder.
+The special ``auto`` value uses the ``lock.factory`` service when
+``framework.lock`` is enabled; use ``null`` to disable locking.
+
+storage_service
+"""""""""""""""
+
+**type**: ``string`` **default**: ``null``
+
+The service ID of a custom storage implementation. This takes precedence over
+any configured ``cache_pool``.
+
 .. _reference-rate-limiter-name:
 
 limiters
