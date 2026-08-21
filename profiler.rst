@@ -223,6 +223,74 @@ In addition to the query parameter, this feature also works when submitting a
 form field with that name (useful to enable the profiler in ``POST`` requests)
 or when including it as a request attribute.
 
+.. _profiler-excluded-requests:
+
+Excluding Requests from the Profiler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``excluded_paths`` and ``excluded_http_codes`` options were introduced
+    in Symfony 8.2.
+
+Some requests only add noise to the profiler: health checks, monitoring probes,
+``favicon.ico`` requests or the ``/.well-known/`` URLs polled by browser
+developer tools. Use the ``excluded_paths`` and ``excluded_http_codes`` options
+to skip them (nothing is excluded by default):
+
+.. code-block:: yaml
+
+    # config/packages/web_profiler.yaml
+    when@dev:
+        framework:
+            profiler:
+                # regular expressions matched against the path of the request
+                excluded_paths:
+                    - '^/\.well-known/'
+                    - '^/favicon\.ico$'
+                # HTTP status codes of the responses to skip, optionally
+                # restricted to some paths
+                excluded_http_codes:
+                    404: ~                     # every 404 response
+                    400: ['^/foo', '^/bar']    # only under these paths
+                    405: '^/api'               # a single path, as a string
+
+.. code-block:: php
+
+    // config/packages/web_profiler.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+    return App::config([
+        'when@dev' => [
+            'framework' => [
+                'profiler' => [
+                    // regular expressions matched against the request path
+                    'excluded_paths' => [
+                        '^/\.well-known/',
+                        '^/favicon\.ico$',
+                    ],
+                    // HTTP status codes of the responses to skip, optionally
+                    // restricted to some paths
+                    'excluded_http_codes' => [
+                        404 => null,                 // every 404 response
+                        400 => ['^/foo', '^/bar'],   // only under these paths
+                        405 => '^/api',              // a single path string
+                    ],
+                ],
+            ],
+        ],
+    ]);
+
+The regular expressions are matched against the URL-decoded path info of the
+request (e.g. ``/blog/my-post``, without the query string). They are
+case-sensitive and must not include delimiters. Invalid expressions are
+rejected when the container is compiled.
+
+An excluded request is skipped entirely by the profiler, so it can't be
+profiled on demand with the ``collect_parameter`` option either. Excluding a
+main request doesn't exclude its :ref:`sub-requests <http-kernel-sub-requests>`:
+each one is matched against its own path info.
+
 Updating the Web Debug Toolbar After AJAX Requests
 --------------------------------------------------
 
