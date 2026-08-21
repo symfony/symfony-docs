@@ -1577,6 +1577,42 @@ retry has been hit, the message will be discarded permanently.
 
 .. _messenger-handler-idempotency:
 
+
+Inspecting Pending Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+    The ``messenger:show`` command was introduced in Symfony 8.2.
+
+To inspect pending messages in a transport, use the ``messenger:show`` command:
+
+.. code-block:: terminal
+
+    # List all pending messages in the async transport
+    $ php bin/console messenger:show --transport=async
+
+    # Show details of a specific message
+    $ php bin/console messenger:show --transport=async 20
+
+    # Display statistics (count by class)
+    $ php bin/console messenger:show --transport=async --stats
+
+    # Filter by class name
+    $ php bin/console messenger:show --transport=async --class-filter='App\Message\MyMessage'
+
+    # Limit the number of messages displayed
+    $ php bin/console messenger:show --transport=async --max=10
+
+The command requires the transport to support browsing. If it does not, the
+command will exit with an error message. This works with Doctrine and Redis
+transports.
+
+.. note::
+
+    The ``messenger:show`` command displays pending messages in regular transports,
+    while ``messenger:failed:show`` displays messages that have failed.
+
+
 Writing Idempotent Handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
