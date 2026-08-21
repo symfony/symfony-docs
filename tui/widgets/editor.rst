@@ -103,8 +103,6 @@ Ctrl+]                        Jump forward to character
 Ctrl+Alt+]                    Jump backward to character
 ============================  ==============================
 
-``Ctrl+C`` is bound to the ``copy`` action, but the editor has no
-selection model and does not implement it: the key event is ignored
-by the widget and left for the parent application to handle (the
-conventional copy or abort signal). Rebind ``copy`` if that key is
-needed for something else.
+``Ctrl+C`` is bound to the ``copy`` action, but the editor doesn't
+support text selection, so it ignores this key and lets your application
+handle it (e.g. to stop the Tui).
