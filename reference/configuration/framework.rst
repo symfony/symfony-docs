@@ -2702,6 +2702,51 @@ message_bus
 Service identifier of the message bus to use when using the
 :doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
 
+tracking
+........
+
+**type**: ``array``
+
+The default open (``opens`` key) and click (``clicks`` key) tracking settings
+for every email that doesn't define its own ``X-Track`` header. Each key accepts
+``true``, ``false`` or ``null`` (the default, which keeps the provider's own
+setting):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mailer.yaml
+        framework:
+            mailer:
+                tracking:
+                    opens: false
+                    clicks: false
+
+    .. code-block:: php
+
+        // config/packages/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'mailer' => [
+                    'tracking' => [
+                        'opens' => false,
+                        'clicks' => false,
+                    ],
+                ],
+            ],
+        ]);
+
+An ``X-Track`` entry in the ``headers`` option takes precedence over this
+option. See :ref:`Controlling Open and Click Tracking <mailer-tracking>` for
+more details and the list of supported transports.
+
+.. versionadded:: 8.2
+
+    The ``tracking`` option was introduced in Symfony 8.2.
+
 transports
 ..........
 
