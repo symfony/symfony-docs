@@ -109,6 +109,7 @@ Doctrine Constraints
 
 * :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`
 * :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
+* :doc:`EntityExists </reference/constraints/EntityExists>`
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
 
 Other Constraints
