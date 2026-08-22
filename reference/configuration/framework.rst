@@ -4856,13 +4856,16 @@ and the value is an array of channel names:
             ;
         };
 
+.. _reference-notifier-admin-recipients:
+
 admin_recipients
 ................
 
 **type**: ``array`` **default**: ``[]``
 
-Configures the recipients of notifications sent to administrators. Each recipient
-can have an ``email`` and/or a ``phone`` number:
+Configures the recipients of notifications sent to administrators (see
+:ref:`Sending Notifications to Administrators <notifier-admin-recipients>`).
+Each recipient can have an ``email`` and/or a ``phone`` number:
 
 .. configuration-block::
 
