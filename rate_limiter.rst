@@ -722,11 +722,11 @@ Creating Rate Limiters at Runtime
 
     The ``RateLimiterBuilder`` was introduced in Symfony 8.2.
 
-Configuring limiters under ``framework.rate_limiter`` requires knowing all of
-them upfront and injecting each one individually. When a service needs many
-one-off limiters, or when the limits are only known at runtime, inject the
-:class:`Symfony\\Component\\RateLimiter\\RateLimiterBuilder` service instead and
-build rate limiters on the fly::
+Limiters configured under ``framework.rate_limiter`` must be defined in advance
+and injected one by one. When a service needs many different limiters, or when
+the limits are only known at runtime, inject the
+:class:`Symfony\\Component\\RateLimiter\\RateLimiterBuilder` service instead
+and create the limiters in your code::
 
     // src/Controller/ApiController.php
     namespace App\Controller;
@@ -744,7 +744,8 @@ build rate limiters on the fly::
         ): Response
         {
             $limiter = $limiterBuilder
-                ->slidingWindow(id: 'register', limit: 10, interval: '10 minutes')
+                // arguments are: id, limit and interval
+                ->slidingWindow('register', 10, '10 minutes')
                 ->create($request->getClientIp());
 
             if (false === $limiter->consume()->isAccepted()) {
@@ -757,15 +758,15 @@ build rate limiters on the fly::
 
 Each builder method returns a
 :class:`Symfony\\Component\\RateLimiter\\RateLimiterFactoryInterface`, so the
-limiters it creates are used exactly like the configured ones. There's one
+limiters it creates are used in the same way as the configured ones. There's one
 method per :ref:`rate limiting policy <rate-limiter-policies>`:
 
 ``slidingWindow(string $id, int $limit, \DateInterval|string $interval)``
     Creates a sliding window limiter.
 
 ``fixedWindow(string $id, int $limit, \DateInterval|string $interval, \DateTimeInterface|string|null $anchorAt = null)``
-    Creates a fixed window limiter. Pass ``$anchorAt`` to align the windows on a
-    calendar instead of starting them on the first hit.
+    Creates a fixed window limiter. ``$anchorAt`` works like the
+    :ref:`anchor_at option <rate-limiter-policies>`.
 
 ``tokenBucket(string $id, int $limit, \DateInterval|string $interval, int $amount = 1)``
     Creates a token bucket limiter which adds ``$amount`` tokens back every
@@ -786,9 +787,9 @@ Intervals accept the same string values as the ``interval`` configuration option
     $factory = $limiterBuilder->slidingWindow('api', 100, new \DateInterval('PT1H'));
 
 The ``$id`` argument is the namespace under which the limiter state is stored.
-Two limiters built with the same ID (and the same storage) share their state,
-which is also how you deliberately share state with a limiter configured under
-``framework.rate_limiter``.
+Two limiters built with the same ID (and the same storage) share their state.
+This also lets a limiter created by the builder share its state with a limiter
+configured under ``framework.rate_limiter``: give both the same ID.
 
 Combine several factories to enforce multiple limits at once::
 
@@ -797,13 +798,13 @@ Combine several factories to enforce multiple limits at once::
         $limiterBuilder->fixedWindow('contact_form_per_hour', 5, '1 hour'),
     )->create($request->getClientIp());
 
-Or swap in a no-op limiter to skip rate limiting for some users::
+Or use a no-op limiter to skip rate limiting for some users::
 
     $factory = $this->isGranted('ROLE_ADMIN')
         ? $limiterBuilder->noop()
         : $limiterBuilder->slidingWindow('api', 100, '1 hour');
 
-    $limiter = $factory->create($user->getId());
+    $limiter = $factory->create($this->getUser()->getId());
 
 Like configured limiters, the builder stores its state in the
 ``cache.rate_limiter`` pool and uses the global lock configured by
