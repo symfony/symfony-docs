@@ -173,6 +173,36 @@ longer help text for the command::
         }
     }
 
+The ``description`` and ``help`` options also accept a callable returning the
+string. Attribute arguments must be constant expressions, so this is the way to
+build a text that can't be written as a literal::
+
+    #[AsCommand(
+        name: 'app:create-user',
+        description: [CreateUserCommand::class, 'describeCommand'],
+    )]
+    class CreateUserCommand
+    {
+        public static function describeCommand(): string
+        {
+            return 'Creates a new user with one of these roles: '
+                .implode(', ', Role::names());
+        }
+
+        public function __invoke(): int
+        {
+            // ...
+        }
+    }
+
+The callable runs when the attribute is instantiated, so the returned string is
+computed once and then used as any other description.
+
+.. versionadded:: 8.2
+
+    Support for callables in the ``description`` and ``help`` options was
+    introduced in Symfony 8.2.
+
 Additionally, you can extend the :class:`Symfony\\Component\\Console\\Command\\Command` class to
 leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
 and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
