@@ -124,6 +124,8 @@ You can add keys to the ``choices`` array, which will then be used as labels::
 
 .. include:: /reference/forms/types/options/choice_filter.rst.inc
 
+.. include:: /reference/forms/types/options/choice_help.rst.inc
+
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
 .. include:: /reference/forms/types/options/choice_loader.rst.inc

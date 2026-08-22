@@ -256,6 +256,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
+.. include:: /reference/forms/types/options/choice_help.rst.inc
+
 .. include:: /reference/forms/types/options/choice_lazy.rst.inc
 
 .. include:: /reference/forms/types/options/choice_loader.rst.inc
