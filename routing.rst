@@ -2422,13 +2422,14 @@ Generating URLs for Another Host or Scheme
 
     The ``RequestContext::runWith()`` method was introduced in Symfony 8.2.
 
-Multi-tenant applications sometimes generate URLs for a host other than the one
-of the current request, for example to build the links of an email sent to the
-customer of a given tenant. Instead of changing the shared request context and
-restoring it by hand, pass a callback to the
-:method:`Symfony\\Component\\Routing\\RequestContext::runWith` method. The given
-values apply while the callback runs and the context is restored afterwards,
-even when the callback throws an exception::
+Some applications need to generate URLs for a host different from the one of the
+current request. For example, a multi-tenant application sends emails to the
+customers of each tenant with links that use the domain of that tenant.
+
+Instead of changing the shared request context and restoring it manually, pass a
+callback to the :method:`Symfony\\Component\\Routing\\RequestContext::runWith`
+method. The given values are applied while the callback runs and the original
+values are restored afterwards, even if the callback throws an exception::
 
     // src/Service/InvoiceLinkGenerator.php
     namespace App\Service;
@@ -2459,11 +2460,13 @@ even when the callback throws an exception::
         }
     }
 
-The method returns whatever the callback returns. Besides ``host`` and
-``scheme``, it accepts the ``baseUrl``, ``method``, ``httpPort``, ``httpsPort``,
-``pathInfo``, ``queryString`` and ``parameters`` values, and leaves the ones you
-don't pass unchanged. Route matching relies on the same request context, so it
-follows those values too.
+The method returns the value returned by the callback. In addition to ``host``
+and ``scheme``, you can pass the ``baseUrl``, ``method``, ``httpPort``,
+``httpsPort``, ``pathInfo``, ``queryString`` and ``parameters`` values. The
+values you don't pass keep their current value.
+
+The request context is shared by the URL generator and the URL matcher, so the
+given values also apply when matching URLs inside the callback.
 
 Checking if a Route Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
