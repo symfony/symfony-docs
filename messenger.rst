@@ -3720,6 +3720,17 @@ for each bus looks like this:
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
    message was dispatched into;
 
+#. ``reject_redelivered_message_middleware`` - throws a
+   ``RejectRedeliveredMessageException`` when AMQP redelivers a message, so the
+   worker republishes it through the retry logic instead of handling it
+   directly. Remove it with the
+   :ref:`reject_redelivered_messages <reference-messenger-reject-redelivered-messages>`
+   option;
+
+   .. versionadded:: 8.2
+
+       The ``reject_redelivered_messages`` option was introduced in Symfony 8.2.
+
 #. ``dispatch_after_current_bus``- see :ref:`messenger-transactional-messages`;
 
 #. ``failed_message_processing_middleware`` - processes messages that are being
