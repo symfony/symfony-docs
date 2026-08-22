@@ -713,6 +713,162 @@ Then, inject and use as normal::
         // ...
     }
 
+.. _rate-limiter-builder:
+
+Creating Rate Limiters at Runtime
+---------------------------------
+
+.. versionadded:: 8.2
+
+    The ``RateLimiterBuilder`` was introduced in Symfony 8.2.
+
+Configuring limiters under ``framework.rate_limiter`` requires knowing all of
+them upfront and injecting each one individually. When a service needs many
+one-off limiters, or when the limits are only known at runtime, inject the
+:class:`Symfony\\Component\\RateLimiter\\RateLimiterBuilder` service instead and
+build rate limiters on the fly::
+
+    // src/Controller/ApiController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\RateLimiter\RateLimiterBuilder;
+
+    class ApiController extends AbstractController
+    {
+        public function registerUser(
+            Request $request,
+            RateLimiterBuilder $limiterBuilder,
+        ): Response
+        {
+            $limiter = $limiterBuilder
+                ->slidingWindow(id: 'register', limit: 10, interval: '10 minutes')
+                ->create($request->getClientIp());
+
+            if (false === $limiter->consume()->isAccepted()) {
+                // ...
+            }
+
+            // ...
+        }
+    }
+
+Each builder method returns a
+:class:`Symfony\\Component\\RateLimiter\\RateLimiterFactoryInterface`, so the
+limiters it creates are used exactly like the configured ones. There's one
+method per :ref:`rate limiting policy <rate-limiter-policies>`:
+
+``slidingWindow(string $id, int $limit, \DateInterval|string $interval)``
+    Creates a sliding window limiter.
+
+``fixedWindow(string $id, int $limit, \DateInterval|string $interval, \DateTimeInterface|string|null $anchorAt = null)``
+    Creates a fixed window limiter. Pass ``$anchorAt`` to align the windows on a
+    calendar instead of starting them on the first hit.
+
+``tokenBucket(string $id, int $limit, \DateInterval|string $interval, int $amount = 1)``
+    Creates a token bucket limiter which adds ``$amount`` tokens back every
+    ``$interval``.
+
+``compound(RateLimiterFactoryInterface ...$factories)``
+    Combines the given factories into a single compound limiter that enforces
+    all of them at once.
+
+``noop()``
+    Creates a factory of :class:`Symfony\\Component\\RateLimiter\\NoLimiter`
+    objects, which accept everything. Use it to disable rate limiting
+    conditionally without changing the calling code.
+
+Intervals accept the same string values as the ``interval`` configuration option
+(e.g. ``'10 minutes'``), and also ``\DateInterval`` objects::
+
+    $factory = $limiterBuilder->slidingWindow('api', 100, new \DateInterval('PT1H'));
+
+The ``$id`` argument is the namespace under which the limiter state is stored.
+Two limiters built with the same ID (and the same storage) share their state,
+which is also how you deliberately share state with a limiter configured under
+``framework.rate_limiter``.
+
+Combine several factories to enforce multiple limits at once::
+
+    $limiter = $limiterBuilder->compound(
+        $limiterBuilder->fixedWindow('contact_form_per_minute', 2, '1 minute'),
+        $limiterBuilder->fixedWindow('contact_form_per_hour', 5, '1 hour'),
+    )->create($request->getClientIp());
+
+Or swap in a no-op limiter to skip rate limiting for some users::
+
+    $factory = $this->isGranted('ROLE_ADMIN')
+        ? $limiterBuilder->noop()
+        : $limiterBuilder->slidingWindow('api', 100, '1 hour');
+
+    $limiter = $factory->create($user->getId());
+
+Like configured limiters, the builder stores its state in the
+``cache.rate_limiter`` pool and uses the global lock configured by
+``framework.lock`` (when the :doc:`Lock component </lock>` is installed).
+Use the ``builder`` option to change this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/rate_limiter.yaml
+        framework:
+            rate_limiter:
+                builder:
+                    # use the "lock.rate_limiter.factory" lock factory
+                    # (or "null" to not use any lock mechanism)
+                    lock_factory: 'lock.rate_limiter.factory'
+
+                    # use the "cache.builder_rate_limiter" cache pool
+                    cache_pool: 'cache.builder_rate_limiter'
+
+                    # or use a custom storage service (this takes
+                    # precedence over the "cache_pool" option)
+                    storage_service: 'App\RateLimiter\CustomStorage'
+
+                limiters:
+                    anonymous_api:
+                        # ...
+
+    .. code-block:: php
+
+        // config/packages/rate_limiter.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'rate_limiter' => [
+                    'builder' => [
+                        // use the "lock.rate_limiter.factory" lock factory
+                        // (or "null" to not use any lock mechanism)
+                        'lock_factory' => 'lock.rate_limiter.factory',
+
+                        // use the "cache.builder_rate_limiter" cache pool
+                        'cache_pool' => 'cache.builder_rate_limiter',
+
+                        // or use a custom storage service (this takes
+                        // precedence over the "cache_pool" option)
+                        'storage_service' => 'App\RateLimiter\CustomStorage',
+                    ],
+
+                    'limiters' => [
+                        'anonymous_api' => [
+                            // ...
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    ``builder`` is a reserved key in the shorthand configuration syntax, where
+    limiters are defined directly under ``rate_limiter``. If you need a limiter
+    called ``builder``, define it under the explicit ``limiters`` key.
+
 .. _`DoS attacks`: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html
 .. _`NGINX rate limiting`: https://www.nginx.com/blog/rate-limiting-nginx/
