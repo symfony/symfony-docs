@@ -502,20 +502,6 @@ The routing name becomes part of your webhook URL (e.g.,
 mailer provider and store the webhook secret in your environment (via the
 :doc:`secrets management system </configuration/secrets>` or in a ``.env`` file).
 
-.. note::
-
-    Scaleway delivers its email events through `Scaleway Topics and Events`_,
-    which signs each message instead of sharing a secret, so the ``secret``
-    option can be omitted for this provider. Messages are verified with the
-    certificate referenced by their ``SigningCertURL`` field, after checking
-    that this certificate was issued by the Scaleway certificate authority
-    bundled with the bridge. Fetching that certificate requires the
-    :doc:`HttpClient component </http_client>` to be installed. The parser also
-    confirms the subscription automatically the first time Scaleway calls the
-    endpoint; that confirmation message carries no email event, so the endpoint
-    answers it with an HTTP 406 response. This is expected and doesn't mean the
-    subscription failed.
-
 Then create a consumer to handle delivery and engagement events::
 
     // src/RemoteEvent/MailerWebhookConsumer.php
@@ -708,5 +694,4 @@ For advanced use cases, you can implement custom sending logic using
 :class:`Symfony\\Component\\Webhook\\Server\\TransportInterface` to control
 header generation, signing, and HTTP transport.
 
-.. _`Scaleway Topics and Events`: https://www.scaleway.com/en/docs/topics-and-events/reference-content/verifying-webhooks/
 .. _`Webhook Component for Email Events screencast`: https://symfonycasts.com/screencast/mailtrap/email-event-webhook
