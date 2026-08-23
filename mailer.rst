@@ -106,7 +106,7 @@ Service               Install with                                        Webhoo
 `Postal`_             ``composer require symfony/postal-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``        yes
 `Resend`_             ``composer require symfony/resend-mailer``          yes
-`Scaleway`_           ``composer require symfony/scaleway-mailer``
+`Scaleway`_           ``composer require symfony/scaleway-mailer``        yes
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``        yes
 `Sweego`_             ``composer require symfony/sweego-mailer``          yes
 `TurboSMTP`_          ``composer require symfony/turbo-smtp-mailer``      yes
@@ -115,6 +115,7 @@ Service               Install with                                        Webhoo
 .. versionadded:: 8.2
 
     The ``TurboSMTP`` integration was introduced in Symfony 8.2.
+    Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
 
 .. note::
 
