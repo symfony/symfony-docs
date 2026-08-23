@@ -586,28 +586,26 @@ csrf_token_manager
 The ``id`` of the service used to generate the CSRF tokens. Symfony provides a
 default service whose ID is ``security.csrf.token_manager``.
 
-The manager configured here also serves the `csrf_token_id`_ of this firewall
-everywhere else, so a token asked for under that id is minted by this manager
-and accepted by this firewall. This applies to ``csrf_token()`` when a template
-asks for that id directly. Every other token id keeps using the default manager.
-
-This also wins over :ref:`stateless token ids <csrf-stateless-tokens>`: listing
-the same token id there while a firewall configures a manager for it would
-answer the id statelessly, while the firewall keeps validating it with the
-manager it was given.
-
-.. note::
-
-    Two firewalls cannot map the same ``csrf_token_id`` to two different
-    managers, since the token id is all ``csrf_token()`` has to tell them apart.
-    Doing so fails at compile time, and giving the firewalls distinct
-    ``csrf_token_id`` values solves it.
+When you set this option, the configured manager is also used when generating
+a token for this firewall's `csrf_token_id`_ anywhere in the application (e.g.
+when calling ``csrf_token('logout')`` in a template). This way, the token
+generated in the template is the one that the firewall expects. Tokens with
+any other ID keep using the default manager.
 
 .. versionadded:: 8.2
 
-    Serving the firewall's token id through the manager it configures was
-    introduced in Symfony 8.2. Before, a template could only reach the default
-    manager, so the token it minted was rejected by the firewall.
+    Using the firewall's CSRF token manager to generate tokens outside of the
+    firewall was introduced in Symfony 8.2.
+
+This option takes precedence over the
+:ref:`stateless token IDs <csrf-stateless-tokens>`: if the same token ID is
+also listed there, it's still handled by the manager configured in the firewall.
+
+.. note::
+
+    Two firewalls can't use different managers for the same ``csrf_token_id``.
+    If they do, the container fails to compile. Give each firewall a different
+    ``csrf_token_id`` to fix it.
 
 csrf_token_id
 .............
