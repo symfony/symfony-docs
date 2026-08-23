@@ -607,6 +607,58 @@ Then, use this service to format the mapped property::
 
         The ``NoSuchCallableException`` was introduced in Symfony 8.1.
 
+Knowing Which Mapping a Transformer Runs For
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``MappingAwareTransformCallableInterface`` was introduced in Symfony 8.2.
+
+A transformer shared by several properties can't tell which one it's
+transforming, because it only receives the value, the source and the target.
+Implement :class:`Symfony\\Component\\ObjectMapper\\MappingAwareTransformCallableInterface`
+to also receive the ``#[Map]`` attribute the transformation runs for::
+
+    // src/ObjectMapper/PrefixWithTargetName.php
+    namespace App\ObjectMapper;
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\MappingAwareTransformCallableInterface;
+
+    final class PrefixWithTargetName implements MappingAwareTransformCallableInterface
+    {
+        public function __invoke(mixed $value, object $source, ?object $target, ?Map $mapping = null): mixed
+        {
+            return $mapping?->target.': '.$value;
+        }
+    }
+
+The interface extends ``TransformCallableInterface``, so such a transformer is
+declared exactly like any other one and can be shared between mappings::
+
+    // src/Dto/ProductInput.php
+    namespace App\Dto;
+
+    use App\ObjectMapper\PrefixWithTargetName;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    class ProductInput
+    {
+        #[Map(target: 'label', transform: PrefixWithTargetName::class)]
+        public string $name = 'Alice';
+    }
+
+The ``$mapping`` argument is optional in the signature only because PHP forbids
+an interface from adding a required parameter to an inherited one. ObjectMapper
+always passes it, so it's never ``null`` in practice.
+
+``Map::$target`` however *is* ``null`` when the mapping is declared on the target
+side with ``#[Map(source: ...)]``; for a class-level transformation, it holds the
+target class name.
+
+Transformers that don't implement this interface keep being called with three
+arguments.
+
 Class-Level Transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
