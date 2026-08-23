@@ -43,7 +43,7 @@ identifier exists in the database:
         {
             #[Assert\NotBlank]
             #[EntityExists(entityClass: User::class)]
-            public string $userId;
+            public int $userId;
         }
 
     .. code-block:: yaml
@@ -86,7 +86,7 @@ identifier exists in the database:
 
         final class AssignUserCommand
         {
-            public string $userId;
+            public int $userId;
 
             public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
@@ -107,21 +107,6 @@ later with ``find()`` doesn't trigger a second query.
     As with most constraints, ``null`` and empty strings are considered valid
     values. Combine it with :doc:`NotBlank </reference/constraints/NotBlank>`,
     as in the example above, when the value is required.
-
-Two different violations can be reported:
-
-* ``ENTITY_NOT_FOUND_ERROR`` (using the `message`_ option) when no entity
-  matches the value;
-* ``INVALID_VALUE_ERROR`` (using the `invalidMessage`_ option) when the value
-  can't be converted to the type of the looked up field (e.g. a malformed UUID
-  for a ``uuid`` column). The conversion is performed by the entity manager
-  itself, so it follows the type mapping of its own database connection.
-
-Configuration mistakes (unknown entity, field or repository method, ambiguous
-entity manager, composite identifier without the `identifierField`_ option)
-throw a
-:class:`Symfony\\Component\\Validator\\Exception\\ConstraintDefinitionException`
-instead of reporting a violation.
 
 Options
 -------
@@ -163,7 +148,7 @@ This option can't be combined with the `repositoryMethod`_ option.
 **type**: ``string`` **default**: ``This value is not valid.``
 
 The message shown when the value can't be converted to the type of the field
-used for the lookup.
+used for the lookup (e.g. a malformed UUID for a ``uuid`` field).
 
 You can use the following parameters in this message:
 
@@ -198,9 +183,9 @@ Parameter        Description
 The name of a method of the entity repository to call instead of
 ``findOneBy()``. The method receives the validated value as its only argument
 and the entity is considered to exist when the method returns a truthy value.
-The return value is not used otherwise, so the method can return an entity, a
-count or a boolean. This is useful, for example, to run a lightweight
-``COUNT()`` query and avoid hydrating the entity::
+The return value is not used otherwise, so the method can return anything: an
+entity, a count, a boolean, etc. This is useful, for example, to run a
+lightweight ``COUNT()`` query and avoid hydrating the entity::
 
     // src/Repository/UserRepository.php
     namespace App\Repository;
@@ -211,7 +196,7 @@ count or a boolean. This is useful, for example, to run a lightweight
     {
         // ...
 
-        public function existsWithActiveSubscription(string $id): bool
+        public function existsWithActiveSubscription(int $id): bool
         {
             return 0 < $this->createQueryBuilder('u')
                 ->select('COUNT(u.id)')
@@ -223,18 +208,70 @@ count or a boolean. This is useful, for example, to run a lightweight
         }
     }
 
-.. code-block:: php-attributes
+.. configuration-block::
 
-    // src/Command/AssignUserCommand.php
-    namespace App\Command;
+    .. code-block:: php-attributes
 
-    use App\Entity\User;
-    use Symfony\Bridge\Doctrine\Validator\Constraints\EntityExists;
+        // src/Command/AssignUserCommand.php
+        namespace App\Command;
 
-    final class AssignUserCommand
-    {
-        #[EntityExists(entityClass: User::class, repositoryMethod: 'existsWithActiveSubscription')]
-        public string $userId;
-    }
+        use App\Entity\User;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\EntityExists;
+
+        final class AssignUserCommand
+        {
+            #[EntityExists(entityClass: User::class, repositoryMethod: 'existsWithActiveSubscription')]
+            public int $userId;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Command\AssignUserCommand:
+            properties:
+                userId:
+                    - Symfony\Bridge\Doctrine\Validator\Constraints\EntityExists:
+                        entityClass: App\Entity\User
+                        repositoryMethod: existsWithActiveSubscription
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Command\AssignUserCommand">
+                <property name="userId">
+                    <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\EntityExists">
+                        <option name="entityClass">App\Entity\User</option>
+                        <option name="repositoryMethod">existsWithActiveSubscription</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Command/AssignUserCommand.php
+        namespace App\Command;
+
+        use App\Entity\User;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\EntityExists;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        final class AssignUserCommand
+        {
+            public int $userId;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('userId', new EntityExists(
+                    entityClass: User::class,
+                    repositoryMethod: 'existsWithActiveSubscription',
+                ));
+            }
+        }
 
 This option can't be combined with the `identifierField`_ option.
