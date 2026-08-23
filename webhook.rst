@@ -456,28 +456,6 @@ Sweego          ``mailer.webhook.request_parser.sweego``
     the documentation of the :ref:`Mailer component <mailer_3rd_party_transport>`.
     Mailgun is used as the provider in this document as an example.
 
-.. note::
-
-    Azure Event Grid does not sign its payloads. It authenticates itself either
-    with a Microsoft Entra bearer token, or by repeating the query parameters of
-    the subscription URL on every delivery. The Azure parser uses the second
-    mechanism, so the subscription URL must carry a ``secret`` query parameter
-    holding the configured webhook secret:
-
-    .. code-block:: text
-
-        https://example.com/webhook/mailer_azure?secret=THE_WEBHOOK_SECRET
-
-    Requests are rejected when that parameter is missing or does not match. If
-    you protect the endpoint with Microsoft Entra ID instead, the parser still
-    performs this check, so the URL and the configuration must agree on some
-    value even though the bearer token is what secures the endpoint.
-
-    Register the endpoint with Event Grid's manual validation flow: its
-    automatic subscription handshake echoes a validation code in the response
-    body, which the webhook controller does not do. The parser reads the Event
-    Grid schema, not the CloudEvents one.
-
 .. versionadded:: 8.2
 
     The Azure mailer webhook parser was introduced in Symfony 8.2.
