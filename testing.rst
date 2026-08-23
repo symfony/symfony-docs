@@ -1070,13 +1070,24 @@ To use these assertions, your test class must extend
 ``assertResponseIsUnprocessable(string $message = '', bool ?$verbose = null)``
     Asserts the response is unprocessable (HTTP status is 422)
 
-By default, these assert methods provide detailed error messages when they fail.
-You can control the verbosity level using the optional ``verbose`` argument in
-each assert method. To set this verbosity level globally, use the
-``setBrowserKitAssertionsAsVerbose()`` method from the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\BrowserKitAssertionsTrait`::
+When they fail, these assert methods report what was expected and what happened,
+without including the response body. Pass the optional ``verbose`` argument to
+get that body too, which is often what you need to understand a failure::
 
-    BrowserKitAssertionsTrait::setBrowserKitAssertionsAsVerbose(false);
+    $this->assertResponseIsSuccessful(verbose: true);
+
+To get verbose output for an entire test suite instead, call the
+``setBrowserKitAssertionsAsVerbose()`` method from the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\BrowserKitAssertionsTrait`
+(e.g. in your PHPUnit bootstrap file)::
+
+    BrowserKitAssertionsTrait::setBrowserKitAssertionsAsVerbose(true);
+
+.. versionadded:: 8.2
+
+    Response assertions became non-verbose by default in Symfony 8.2. In earlier
+    versions they included the response body and you had to pass ``false`` to
+    ``setBrowserKitAssertionsAsVerbose()`` to leave it out.
 
 Request Assertions
 ~~~~~~~~~~~~~~~~~~
