@@ -13,7 +13,7 @@ can be cast to strings. Otherwise an incrementing integer is used (starting at `
 
 If you pass a callable, it will receive one argument: the choice itself. When using
 the :doc:`/reference/forms/types/entity`, the argument will be the entity object
-for each choice or ``null`` in a placeholder is used, which you need to handle::
+for each choice or ``null`` if a placeholder is used, which you need to handle::
 
     'choice_value' => function (?MyOptionEntity $entity): string {
         return $entity ? $entity->getId() : '';
