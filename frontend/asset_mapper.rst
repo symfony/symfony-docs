@@ -293,6 +293,68 @@ You can update your third-party packages to their current versions by running:
     $ php bin/console importmap:update bootstrap lodash
     $ php bin/console importmap:outdated bootstrap lodash
 
+.. _importmap-minimum-release-age:
+
+Delaying Updates to Freshly Published Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``minimum_release_age`` option was introduced in Symfony 8.2.
+
+A compromised npm release is usually spotted and unpublished within hours. The
+``minimum_release_age`` option makes ``importmap:update`` ignore versions that
+are more recent than the given age, so your project never picks up a release
+during that window:
+
+.. code-block:: yaml
+
+    # config/packages/asset_mapper.yaml
+    framework:
+        asset_mapper:
+            # in seconds; 0 (the default) disables the check
+            minimum_release_age: 604800
+
+The value is expressed in seconds, like every other duration option of
+FrameworkBundle, so six hours is ``21600``.
+
+When the option is enabled, the newest version that is old enough is pinned,
+provided it is also stable (no prerelease suffix) and not above the version
+published as ``latest`` by the package maintainers. Updates only ever move
+forward: if no eligible version is newer than the installed one, the installed
+version is kept.
+
+``importmap:outdated`` reports the versions being held back in a ``Withheld``
+column, so you can see what the check is keeping out of reach:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:outdated
+
+     ----------- --------- -------- ----------
+      Package     Current   Latest   Withheld
+     ----------- --------- -------- ----------
+      bootstrap   5.3.1     5.3.2    5.3.3
+     ----------- --------- -------- ----------
+
+A package whose only newer version is withheld is listed too, with ``Latest``
+equal to ``Current``. Such rows don't make the command fail, as there's nothing
+to act upon. The column, and the matching ``withheld`` key of ``--format=json``,
+only appear when the option is enabled.
+
+The check applies to ``importmap:update`` only, so an urgent upgrade never
+requires turning the option off:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:require bootstrap@latest
+
+.. note::
+
+    Publication dates are only available in the full npm metadata document, so
+    enabling this option makes each update check download it instead of the
+    abbreviated one. For popular packages, that response is significantly larger.
+
 Using Local npm Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

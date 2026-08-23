@@ -600,6 +600,19 @@ this feature.
 
     The ``importmap_integrity_algorithms`` option was introduced in Symfony 8.2.
 
+minimum_release_age
+...................
+
+**type**: ``integer`` **default**: ``0``
+
+The minimum age, in seconds, that a package version must have before
+``importmap:update`` is allowed to pin it. The default ``0`` disables the check.
+See :ref:`delaying updates to freshly published versions <importmap-minimum-release-age>`.
+
+.. versionadded:: 8.2
+
+    The ``minimum_release_age`` option was introduced in Symfony 8.2.
+
 vendor_dir
 ..........
 
