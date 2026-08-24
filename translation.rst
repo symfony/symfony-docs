@@ -917,7 +917,7 @@ configure the ``providers`` option:
 
 .. versionadded:: 8.2
 
-    The support for pulling every domain of a Crowdin project when the
+    Support for pulling every domain of a Crowdin project when the
     ``domains`` option is not defined was introduced in Symfony 8.2.
 
 .. tip::
