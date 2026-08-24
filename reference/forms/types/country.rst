@@ -29,6 +29,25 @@ the option manually, but then you should use the ``ChoiceType`` directly.
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
+Basic Usage
+-----------
+
+If your application has an optional country hint, it can put that country at
+the top of the list without selecting it. Validate the hint as an ISO 3166-1
+alpha-2 code before passing it to the form::
+
+    use Symfony\Component\Form\Extension\Core\Type\CountryType;
+    // ...
+
+    $builder->add('country', CountryType::class, [
+        'preferred_choices' => $countryHint ? [$countryHint] : [],
+        'duplicate_preferred_choices' => false,
+        'placeholder' => 'Select a country',
+    ]);
+
+The placeholder remains selected when the field has no existing data. If there
+is no hint, the list keeps its normal order.
+
 Field Options
 -------------
 
