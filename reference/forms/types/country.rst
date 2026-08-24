@@ -27,6 +27,23 @@ the option manually, but then you should use the ``ChoiceType`` directly.
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
+Basic Usage
+-----------
+
+Use the ``preferred_choices`` option to display one or more countries at the
+top of the list (e.g. the most likely countries based on the user's IP address)::
+
+    use Symfony\Component\Form\Extension\Core\Type\CountryType;
+    // ...
+
+    $builder->add('country', CountryType::class, [
+        'placeholder' => 'Select a country',
+        // display these countries first in the list, but don't select them
+        'preferred_choices' => ['FR', 'BE'],
+        // don't display these countries again in the full list of countries
+        'duplicate_preferred_choices' => false,
+    ]);
+
 Field Options
 -------------
 
