@@ -20,8 +20,8 @@ The component has two main features:
 
 * :ref:`Importmaps <importmaps-javascript>`: A native browser feature that makes it easier
   to use the JavaScript ``import`` statement (e.g. ``import { Modal } from 'bootstrap'``)
-  without a build system. It's supported in all browsers (thanks to a shim)
-  and is part of the `HTML standard <https://html.spec.whatwg.org/multipage/webappapis.html#import-maps>`_.
+  without a build system. It's widely supported in all browsers (a polyfill covers the rare
+  exceptions) as it's part of the `HTML standard <https://html.spec.whatwg.org/multipage/webappapis.html#import-maps>`_.
 
 Installation
 ------------
