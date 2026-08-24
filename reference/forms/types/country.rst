@@ -32,21 +32,19 @@ the option manually, but then you should use the ``ChoiceType`` directly.
 Basic Usage
 -----------
 
-If your application has an optional country hint, it can put that country at
-the top of the list without selecting it. Validate the hint as an ISO 3166-1
-alpha-2 code before passing it to the form::
+Use the ``preferred_choices`` option to display one or more countries at the
+top of the list (e.g. the most likely countries based on the user's IP address)::
 
     use Symfony\Component\Form\Extension\Core\Type\CountryType;
     // ...
 
     $builder->add('country', CountryType::class, [
-        'preferred_choices' => $countryHint ? [$countryHint] : [],
-        'duplicate_preferred_choices' => false,
         'placeholder' => 'Select a country',
+        // display these countries first in the list, but don't select them
+        'preferred_choices' => ['FR', 'BE'],
+        // don't display these countries again in the full list of countries
+        'duplicate_preferred_choices' => false,
     ]);
-
-The placeholder remains selected when the field has no existing data. If there
-is no hint, the list keeps its normal order.
 
 Field Options
 -------------
