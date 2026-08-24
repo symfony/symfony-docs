@@ -645,6 +645,55 @@ the ``DataPart``::
     used to add attachments. This method has been deprecated and replaced
     with ``addPart()``.
 
+Calendar Invitations
+~~~~~~~~~~~~~~~~~~~~
+
+Emails can carry iCalendar (``.ics``) data so that mail clients offer actions
+such as adding an event to the recipient's calendar. To attach such a file,
+pass its contents to a ``DataPart`` with a content type that includes the iTIP
+``method`` parameter::
+
+    use Symfony\Component\Mime\Part\DataPart;
+    // ...
+
+    $ics = file_get_contents('/path/to/invite.ics');
+
+    $email = (new Email())
+        // ...
+        ->addPart(new DataPart(
+            $ics,
+            'invite.ics',
+            'text/calendar; charset=utf-8; method=REQUEST; component=VEVENT'
+        ))
+    ;
+
+The ``method`` value tells email clients which action the invitation performs
+(e.g. ``PUBLISH``, ``REQUEST`` or ``REPLY``). Per RFC 5546, this value must
+be uppercase.
+
+For broader client support, RFC 6047 recommends sending the calendar data as
+the last part of a ``multipart/alternative`` message, next to the text and
+HTML contents::
+
+    use Symfony\Component\Mime\Part\AlternativePart;
+    use Symfony\Component\Mime\Part\TextPart;
+    // ...
+
+    $email = (new Email())
+        // ...
+        ->setBody(new AlternativePart(
+            new TextPart($text),
+            new TextPart($html, 'utf-8', 'html'),
+            new TextPart($ics, 'utf-8', 'calendar; method=REQUEST', '8bit'),
+        ))
+    ;
+
+.. note::
+
+    Always define the charset and prefer the ``8bit`` encoding for calendar
+    parts, as some calendar clients fail to process base64-encoded or
+    charset-less ones.
+
 Embedding Images
 ~~~~~~~~~~~~~~~~
 
