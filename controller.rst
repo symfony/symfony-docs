@@ -471,6 +471,17 @@ set the ``key`` option in the ``#[MapQueryString]`` attribute::
         // ...
     }
 
+That query parameter can also hold a JSON document instead of a nested array,
+which allows passing the whole object in a single parameter:
+``?search={"query":"symfony","page":2}`` (URL-encoded in the actual request).
+Symfony returns a ``400 Bad Request`` response when that string isn't valid
+JSON or when it holds a property the object doesn't define.
+
+.. versionadded:: 8.2
+
+    Deserializing the named query parameter as JSON was introduced in
+    Symfony 8.2.
+
 If you need a valid DTO even when the request query string is empty, set a
 default value for your controller arguments::
 
