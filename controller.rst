@@ -192,6 +192,19 @@ your :doc:`controller to be registered as a service </controller/service>`::
         // ...
     }
 
+Union and intersection types are supported too, and behave like they do for
+:doc:`constructor arguments </service_container/autowiring>`::
+
+    public function number(DecoderInterface&DenormalizerInterface $serializer): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    Support for union and intersection types in controller arguments was
+    introduced in Symfony 8.2.
+
 Awesome!
 
 What other services can you type-hint? To see them, use the ``debug:autowiring`` console

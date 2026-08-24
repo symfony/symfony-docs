@@ -184,8 +184,9 @@ section :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>`.
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 :class:`Symfony\\Component\\Console\\ArgumentResolver\\ValueResolver\\ServiceValueResolver`
-injects a service if type-hinted with a valid service class or interface. This
-works like :doc:`autowiring </service_container/autowiring>`::
+injects a service if type-hinted with a valid service class or interface, as
+well as with a union or intersection of them. This works like
+:doc:`autowiring </service_container/autowiring>`::
 
     use App\Service\UserManager;
     use Psr\Log\LoggerInterface;
@@ -206,6 +207,11 @@ works like :doc:`autowiring </service_container/autowiring>`::
             return Command::SUCCESS;
         }
     }
+
+.. versionadded:: 8.2
+
+    Support for union and intersection types in command arguments was
+    introduced in Symfony 8.2.
 
 ``UidValueResolver``
 ~~~~~~~~~~~~~~~~~~~~
