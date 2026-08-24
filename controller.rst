@@ -567,15 +567,20 @@ the validation fails as well as supported payload formats::
 The default status code returned if the validation fails is 422.
 
 The payload format is determined by the ``Content-Type`` header of the request.
-Media types that use a structured syntax suffix (`RFC 6839`_) are deserialized
-with the encoder of that suffix, even if no encoder is registered for the
-exact format name: ``application/vnd.api+json``, ``application/ld+json`` or
-``application/problem+json`` payloads are decoded as ``json``, and
-``application/hal+xml`` or ``application/atom+xml`` payloads as ``xml``. This
-fallback only applies when the serializer can't decode the original format, so
-custom encoders registered for those formats (e.g. ``jsonld``) keep receiving
-their own format. The ``acceptFormat`` option keeps matching the format name
-derived from the media type (e.g. ``jsonapi`` for ``application/vnd.api+json``).
+If the media type uses a structured syntax suffix (`RFC 6839`_) and no encoder
+is registered for its exact format name, the payload is deserialized with the
+encoder of the suffix instead:
+
+* ``application/vnd.api+json``, ``application/ld+json`` and
+  ``application/problem+json`` payloads are decoded as ``json``;
+* ``application/hal+xml`` and ``application/atom+xml`` payloads are decoded
+  as ``xml``.
+
+This fallback doesn't change the behavior of existing applications. If the
+serializer can already decode the original format (e.g. thanks to a custom
+``jsonld`` encoder), that format keeps being used. Also, the ``acceptFormat``
+option keeps matching the format name derived from the media type (e.g.
+``jsonapi`` for ``application/vnd.api+json``).
 
 .. versionadded:: 8.2
 
