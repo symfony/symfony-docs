@@ -310,6 +310,22 @@ doctrine.event_subscriber
 For details on creating Doctrine event subscribers, read the
 :doc:`Doctrine events </doctrine/events>` article.
 
+doctrine.orm.entity
+-------------------
+
+**Purpose**: Make a Doctrine entity class discoverable at compile time
+
+Any class that defines a ``#[Entity]`` or ``#[MappedSuperclass]`` Doctrine
+attribute is automatically tagged with ``doctrine.orm.entity``. This makes
+the list of entity classes available at container compile time (e.g. to
+build the entity mappings from the tagged classes with the
+:class:`Symfony\\Bridge\\Doctrine\\Mapping\\Driver\\AttributeClassesDriver`
+instead of scanning directories).
+
+.. versionadded:: 8.2
+
+    The ``doctrine.orm.entity`` tag was introduced in Symfony 8.2.
+
 .. _dic-tags-form-type:
 
 form.type
