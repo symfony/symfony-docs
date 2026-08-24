@@ -2683,8 +2683,16 @@ The transport has a number of options:
 
     When you don't set these IDs, the transport sends its own defaults: the same
     ``Message group ID`` for every message, so the queue processes them one at a
-    time, and a ``Message deduplication ID`` built from a hash of the message
-    headers and body, so the queue treats two identical messages as duplicates.
+    time, and a unique ``Message deduplication ID`` for every message, so the
+    queue delivers every message you send. Set the ``Message deduplication ID``
+    yourself when you want the queue to discard duplicates.
+
+    .. versionadded:: 8.2
+
+        Sending a unique ``Message deduplication ID`` by default was introduced
+        in Symfony 8.2. In previous versions, the transport sent a hash of the
+        message headers and body, so the queue discarded the same message when
+        you sent it twice within the deduplication window.
 
     You can learn more about middlewares in
     :ref:`the dedicated section <messenger_middleware>`.
