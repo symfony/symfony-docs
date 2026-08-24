@@ -365,12 +365,14 @@ the property type (``string``).
     The ``hasHook()`` and ``isVirtual()`` methods were introduced in
     Symfony 8.2.
 
-The read and write information of a property also tells whether that property
-is backed by a hook, thanks to the ``hasHook()`` method of the
+The read and write information of a property (returned by the ``getReadInfo()``
+and ``getWriteInfo()`` methods) also tells whether that property defines a
+hook, thanks to the ``hasHook()`` method of the
 :class:`Symfony\\Component\\PropertyInfo\\PropertyReadInfo` and
 :class:`Symfony\\Component\\PropertyInfo\\PropertyWriteInfo` objects.
 ``PropertyReadInfo`` also provides an ``isVirtual()`` method telling whether
-the property is virtual (a virtual property has no backing store)::
+the property is virtual (a virtual property defines hooks but doesn't store
+any value)::
 
     $readInfo = $reflectionExtractor->getReadInfo(Product::class, 'slug');
     $readInfo->hasHook();   // true if the property defines a "get" hook
@@ -379,9 +381,8 @@ the property is virtual (a virtual property has no backing store)::
     $writeInfo = $reflectionExtractor->getWriteInfo(Product::class, 'slug');
     $writeInfo->hasHook();  // true if the property defines a "set" hook
 
-Both methods return ``null`` when the value is accessed through a method
-instead of the property itself, such as an accessor, a mutator or the
-constructor.
+These methods return ``null`` when the value is accessed through a method
+instead of the property itself, such as an accessor, a mutator or the constructor.
 
 .. note::
 
