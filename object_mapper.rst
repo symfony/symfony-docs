@@ -607,6 +607,43 @@ Then, use this service to format the mapped property::
 
         The ``NoSuchCallableException`` was introduced in Symfony 8.1.
 
+When the transformer needs to know which mapping it is applied to, implement
+:class:`Symfony\\Component\\ObjectMapper\\MappingAwareTransformCallableInterface`
+instead. Its ``__invoke()`` method receives the ``#[Map]`` attribute being
+applied as a fourth argument, so a single stateless service can behave
+differently depending on the mapping::
+
+    // src/ObjectMapper/PrefixTransformer.php
+    namespace App\ObjectMapper;
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\MappingAwareTransformCallableInterface;
+
+    /**
+     * @implements MappingAwareTransformCallableInterface<object, object>
+     */
+    final class PrefixTransformer implements MappingAwareTransformCallableInterface
+    {
+        public function __invoke(
+            mixed $value,
+            object $source,
+            ?object $target,
+            ?Map $mapping = null,
+        ): mixed {
+            return $mapping?->target.': '.$value;
+        }
+    }
+
+The ``$mapping`` argument is nullable only because an interface can't add a
+required parameter to an inherited signature; the mapper always passes it. Its
+``target`` property is ``null`` when the mapping is declared on the target side
+with ``#[Map(source: ...)]``.
+
+.. versionadded:: 8.2
+
+    The ``MappingAwareTransformCallableInterface`` was introduced in
+    Symfony 8.2.
+
 Class-Level Transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
