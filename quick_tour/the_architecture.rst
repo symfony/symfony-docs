@@ -248,19 +248,18 @@ using the special ``when@`` keyword:
         // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework, ContainerConfigurator $container): void {
-            $framework->router()
-                ->utf8(true)
-            ;
-
-            if ('prod' === $container->env()) {
-                $framework->router()
-                    ->strictRequirements(null)
-                ;
-            }
-        };
+        return App::config([
+            'framework' => [
+                'router' => [
+                    'utf8' => true,
+                ],
+            ],
+            'when@prod' => 'framework' => [
+                'router' => [
+                    'strict_requirements' => null,
+                ],
+            ],
+        ]);
 
 This is a *powerful* idea: by changing one piece of configuration (the environment),
 your app is transformed from a debugging-friendly experience to one that's optimized

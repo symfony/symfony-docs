@@ -63,20 +63,6 @@ Use the ``lazy`` option to mark a service as lazy:
             App\Twig\AppExtension:
                 lazy: true
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Twig\AppExtension" lazy="true"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -84,11 +70,13 @@ Use the ``lazy`` option to mark a service as lazy:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(AppExtension::class)->lazy();
-        };
+        return App::config([
+            'services' => [
+                AppExtension::class => [
+                    'lazy' => true,
+                ],
+            ],
+        ]);
 
 In PHP classes, you can also use the ``#[Lazy]`` attribute, which is a shorter
 equivalent of ``#[Autoconfigure(lazy: true)]``::
@@ -104,10 +92,6 @@ equivalent of ``#[Autoconfigure(lazy: true)]``::
     {
         // ...
     }
-
-.. versionadded:: 7.1
-
-    The ``#[Lazy]`` attribute was introduced in Symfony 7.1.
 
 From now on, when injecting this service into other services or when getting it
 directly from the container, a lazy `ghost object`_ with the same signature as
@@ -227,26 +211,6 @@ implements two interfaces, but the proxy generated for it only implements
                 # tags:
                 #     - { name: 'proxy', interface: 'Twig\Extension\ExtensionInterface' }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Twig\AppExtension" lazy="Twig\Extension\ExtensionInterface"/>
-
-                <!-- alternatively, use the complete definition:
-                <service id="App\Twig\AppExtension" lazy="true">
-                    <tag name="proxy" interface="Twig\Extension\ExtensionInterface"/>
-                </service>
-                -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -255,19 +219,19 @@ implements two interfaces, but the proxy generated for it only implements
         use App\Twig\AppExtension;
         use Twig\Extension\ExtensionInterface;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                AppExtension::class => [
+                    'lazy' => ExtensionInterface::class,
 
-            $services->set(AppExtension::class)
-                ->lazy(ExtensionInterface::class)
-            ;
-
-            // alternatively, use the complete definition:
-            // $services->set(AppExtension::class)
-            //     ->lazy()
-            //     ->tag('proxy', ['interface' => ExtensionInterface::class])
-            // ;
-        };
+                    // alternatively, use the complete definition:
+                    // 'lazy' => true,
+                    // 'tags' => [
+                    //     ['proxy' => ['interface' => ExtensionInterface::class]],
+                    // ],
+                ],
+            ],
+        ]);
 
 The virtual `proxy`_ injected into other services will only implement the
 specified interfaces and will not extend the original service class, allowing you

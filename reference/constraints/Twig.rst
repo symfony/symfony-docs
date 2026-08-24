@@ -1,10 +1,6 @@
 Twig Constraint
 ===============
 
-.. versionadded:: 7.3
-
-    The ``Twig`` constraint was introduced in Symfony 7.3.
-
 Validates that a given string contains valid :ref:`Twig syntax <twig-language>`.
 This is particularly useful when template content is user-generated or
 configurable, and you want to ensure it can be rendered by the Twig engine.

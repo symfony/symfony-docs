@@ -24,8 +24,8 @@ To give an Extension the power to do this, it needs to implement
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Extension\Extension;
     use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
-    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
     class AcmeHelloExtension extends Extension implements PrependExtensionInterface
     {
@@ -100,56 +100,26 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
 
         # config/packages/acme_something.yaml
         acme_something:
-            # ...
             use_acme_goodbye: false
             entity_manager_name: non_default
 
         acme_other:
-            # ...
             use_acme_goodbye: false
-
-    .. code-block:: xml
-
-        <!-- config/packages/acme_something.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:acme-something="http://example.org/schema/dic/acme_something"
-            xmlns:acme-other="http://example.org/schema/dic/acme_other"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://example.org/schema/dic/acme_something
-                https://example.org/schema/dic/acme_something/acme_something-1.0.xsd
-                http://example.org/schema/dic/acme_other
-                https://example.org/schema/dic/acme_something/acme_other-1.0.xsd"
-        >
-            <acme-something:config use-acme-goodbye="false">
-                <!-- ... -->
-                <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
-            </acme-something:config>
-
-            <acme-other:config use-acme-goodbye="false">
-                <!-- ... -->
-            </acme-other:config>
-
-        </container>
 
     .. code-block:: php
 
         // config/packages/acme_something.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->extension('acme_something', [
-                // ...
+        return App::config([
+            'acme_something' => [
                 'use_acme_goodbye' => false,
                 'entity_manager_name' => 'non_default',
-            ]);
-            $container->extension('acme_other', [
-                // ...
+            ],
+            'acme_other' => [
                 'use_acme_goodbye' => false,
-            ]);
-        };
+            ],
+        ]);
 
 Prepending Extension in the Bundle Class
 ----------------------------------------
@@ -181,12 +151,6 @@ method::
 
     The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
 
-.. versionadded:: 7.1
-
-    Starting from Symfony 7.1, calling the :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::import`
-    method inside ``prependExtension()`` will prepend the given configuration.
-    In previous Symfony versions, this method appended the configuration.
-
 Alternatively, you can use the ``prepend`` parameter of the
 :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
 method::
@@ -208,12 +172,6 @@ method::
             // ...
         }
     }
-
-.. versionadded:: 7.1
-
-    The ``prepend`` parameter of the
-    :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
-    method was added in Symfony 7.1.
 
 More than one Bundle using PrependExtensionInterface
 ----------------------------------------------------

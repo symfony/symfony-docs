@@ -62,46 +62,14 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
         }
     }
 
-Constraint with Private Properties
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _constraint-with-private-properties:
 
-Constraints are cached for performance reasons. To achieve this, the base
-``Constraint`` class uses PHP's :phpfunction:`get_object_vars` function, which
-excludes private properties of child classes.
+.. note::
 
-If your constraint defines private properties, you must explicitly include them
-in the ``__sleep()`` method to ensure they are serialized correctly::
-
-    // src/Validator/ContainsAlphanumeric.php
-    namespace App\Validator;
-
-    use Symfony\Component\Validator\Attribute\HasNamedArguments;
-    use Symfony\Component\Validator\Constraint;
-
-    #[\Attribute]
-    class ContainsAlphanumeric extends Constraint
-    {
-        public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-
-        #[HasNamedArguments]
-        public function __construct(
-            private string $mode,
-            ?array $groups = null,
-            mixed $payload = null,
-        ) {
-            parent::__construct(null, $groups, $payload);
-        }
-
-        public function __sleep(): array
-        {
-            return array_merge(
-                parent::__sleep(),
-                [
-                    'mode'
-                ]
-            );
-        }
-    }
+    Constraints are cached for performance reasons. The base ``Constraint`` class
+    implements `__serialize()`_, which automatically handles all properties,
+    including private ones defined in child classes. This means you can use private
+    properties in your custom constraints without any extra configuration.
 
 Creating the Validator Itself
 -----------------------------
@@ -162,7 +130,7 @@ The validator class only has one required method ``validate()``::
                 return;
             }
 
-            // the argument must be a string or an object implementing __toString()
+            // the argument can be a string, int, float, Stringable or DateTimeInterface
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
@@ -176,12 +144,44 @@ message as its argument and returns an instance of
 :class:`Symfony\\Component\\Validator\\Violation\\ConstraintViolationBuilderInterface`.
 The ``addViolation()`` method call finally adds the violation to the context.
 
+The ``setParameter()`` method accepts ``string``, ``int``, ``float``,
+:phpclass:`Stringable` and :phpclass:`DateTimeInterface` values. Non-string
+values are formatted by the translator using the ICU message format::
+
+    $this->context->buildViolation($constraint->message)
+        ->setParameter('{{ limit }}', 10)
+        ->setParameter('{{ deadline }}', new \DateTimeImmutable('+1 day'))
+        ->addViolation();
+
+.. versionadded:: 8.2
+
+    Support for ``int``, ``float``, :phpclass:`Stringable` and
+    :phpclass:`DateTimeInterface` values in ``setParameter()`` was introduced
+    in Symfony 8.2. Previously, only ``string`` values were accepted.
+
 .. tip::
 
     Validation error messages are automatically translated to the current application
     locale. If your application doesn't use translations, you can disable this behavior
     by calling the ``disableTranslation()`` method of ``ConstraintViolationBuilderInterface``.
     See also the :ref:`framework.validation.disable_translation option <reference-validation-disable_translation>`.
+
+Constraint validators are **reentrant**: the execution context is passed
+explicitly to each validation call instead of being stored on the validator
+instance. This is the contract of the ``validateInContext()`` method on
+:class:`Symfony\\Component\\Validator\\ConstraintValidatorInterface`. When
+extending the abstract :class:`Symfony\\Component\\Validator\\ConstraintValidator`
+class, the context is managed for you automatically.
+
+.. versionadded:: 8.1
+
+    Reentrant constraint validators were introduced in Symfony 8.1.
+
+.. deprecated:: 8.1
+
+    The ``ConstraintValidatorInterface::initialize()`` and
+    ``ConstraintValidatorInterface::validate()`` methods were deprecated in
+    favor of ``validateInContext()``.
 
 Using the New Validator
 -----------------------
@@ -304,12 +304,6 @@ and apply the ``#[HasNamedArguments]`` attribute to the constructor::
             $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
         }
     }
-
-.. deprecated:: 7.4
-
-    In previous Symfony versions, you could define mandatory options by overriding
-    the ``getRequiredOptions()`` and ``getDefaultOption()`` methods. In Symfony 7.4
-    both methods are deprecated in favor of mandatory constructor arguments.
 
 Then, inside the validator class you can access these options directly via the
 constraint class passed to the ``validate()`` method::
@@ -566,7 +560,7 @@ class to simplify writing unit tests for your custom constraints::
 
         public function testNullIsValid(): void
         {
-            $this->validator->validate(null, new ContainsAlphanumeric());
+            $this->validate(null, new ContainsAlphanumeric());
 
             $this->assertNoViolation();
         }
@@ -574,7 +568,7 @@ class to simplify writing unit tests for your custom constraints::
         #[DataProvider('provideInvalidConstraints')]
         public function testTrueIsInvalid(ContainsAlphanumeric $constraint): void
         {
-            $this->validator->validate('...', $constraint);
+            $this->validate('...', $constraint);
 
             $this->buildViolation('myMessage')
                 ->setParameter('{{ string }}', '...')
@@ -587,6 +581,11 @@ class to simplify writing unit tests for your custom constraints::
             // ...
         }
     }
+
+.. versionadded:: 8.1
+
+    The ``ConstraintValidatorTestCase::validate()`` helper was introduced
+    in Symfony 8.1.
 
 Compound Constraints
 ~~~~~~~~~~~~~~~~~~~~
@@ -654,7 +653,4 @@ class to check precisely which of the constraints failed to pass::
         }
     }
 
-.. versionadded:: 7.2
-
-    The :class:`Symfony\\Component\\Validator\\Test\\CompoundConstraintTestCase`
-    class was introduced in Symfony 7.2.
+.. _`__serialize()`: https://www.php.net/manual/en/language.oop5.magic.php#object.serialize

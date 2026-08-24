@@ -103,10 +103,6 @@ on your underlying object. Valid values are:
 * ``array`` (e.g. ``['hour' => 12, 'minute' => 17, 'second' => 26]``)
 * ``timestamp`` (e.g. ``1307232000``)
 
-.. versionadded:: 7.4
-
-    Support for ``date_point`` values was introduced in Symfony 7.4.
-
 The value that comes back from the form will also be normalized back into
 this format.
 

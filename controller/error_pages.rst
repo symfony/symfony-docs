@@ -158,32 +158,20 @@ automatically when installing ``symfony/framework-bundle``):
                 type:     php
                 prefix:   /_error
 
-    .. code-block:: xml
-
-        <!-- config/routes/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <when env="dev">
-                <import resource="@FrameworkBundle/Resources/config/routing/errors.php" type="php" prefix="/_error"/>
-            </when>
-        </routes>
-
     .. code-block:: php
 
         // config/routes/framework.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return function (RoutingConfigurator $routes): void {
-            if ('dev' === $routes->env()) {
-                $routes->import('@FrameworkBundle/Resources/config/routing/errors.php', 'php')
-                    ->prefix('/_error')
-                ;
-            }
-        };
+        return Routes::config([
+            'when@dev' => [
+                '_errors' => [
+                    'resource' => '@FrameworkBundle/Resources/config/routing/errors.php',
+                    'type' => 'php',
+                    'prefix' => '/_error',
+                ],
+            ],
+        ]);
 
 With this route added, you can use URLs like these to preview the *error* page
 for a given status code as HTML or for a given status code and format (you might
@@ -191,11 +179,6 @@ need to replace ``http://localhost/`` by the host used in your local setup):
 
 * ``http://localhost/_error/{statusCode}`` for HTML
 * ``http://localhost/_error/{statusCode}.{format}`` for any other format
-
-.. versionadded:: 7.3
-
-    The ``errors.php`` file was introduced in Symfony 7.3.
-    Previously, you had to import ``errors.xml``
 
 .. _overriding-non-html-error-output:
 
@@ -261,30 +244,18 @@ configuration option to point to it:
         framework:
             error_controller: App\Controller\ErrorController::show
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <framework:config>
-                <framework:error-controller>App\Controller\ErrorController::show</framework:error-controller>
-            </framework:config>
-
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->errorController('App\Controller\ErrorController::show');
-        };
+        use App\Controller\ErrorController;
+
+        return App::config([
+            'framework' => [
+                'error_controller' => [ErrorController::class, 'show'],
+            ],
+        ]);
 
 The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`
 class used by the FrameworkBundle as a listener of the ``kernel.exception`` event creates
@@ -345,10 +316,6 @@ time and again, you can have just one (or several) listeners deal with them.
 
 Dumping Error Pages as Static HTML Files
 ----------------------------------------
-
-.. versionadded:: 7.3
-
-    The feature to dump error pages into static HTML files was introduced in Symfony 7.3.
 
 If an error occurs before reaching your Symfony application, web servers display
 their own default error pages instead of your custom ones. Dumping your application's

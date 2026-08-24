@@ -5,10 +5,6 @@ Validates that a file is a valid video that meets certain constraints (width, he
 aspect ratio, etc.). It extends the :doc:`File </reference/constraints/File>` constraint
 and adds video-specific validation options.
 
-.. versionadded:: 7.4
-
-    The ``Video`` constraint was introduced in Symfony 7.4.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Video`

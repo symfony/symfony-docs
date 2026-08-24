@@ -44,63 +44,23 @@ using the following configuration options:
             # or, if your proxy instead uses the "Forwarded" header
             trusted_headers: ['forwarded']
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- the IP address (or range) of your proxy -->
-                <framework:trusted-proxies>192.0.0.1,10.0.0.0/8</framework:trusted-proxies>
-                <!-- shortcut for private IP address ranges of your proxy -->
-                <framework:trusted-proxies>private_ranges</framework:trusted-proxies>
-
-                <!-- trust *all* "X-Forwarded-*" headers -->
-                <framework:trusted-header>x-forwarded-for</framework:trusted-header>
-                <framework:trusted-header>x-forwarded-host</framework:trusted-header>
-                <framework:trusted-header>x-forwarded-proto</framework:trusted-header>
-                <framework:trusted-header>x-forwarded-port</framework:trusted-header>
-                <framework:trusted-header>x-forwarded-prefix</framework:trusted-header>
-
-                <!-- or, if your proxy instead uses the "Forwarded" header -->
-                <framework:trusted-header>forwarded</framework:trusted-header>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework
+        return App::config([
+            'framework' => [
                 // the IP address (or range) of your proxy
-                ->trustedProxies('192.0.0.1,10.0.0.0/8')
+                'trusted_proxies' => ['192.0.0.1,10.0.0.0/8', 'private_ranges'],
                 // shortcut for private IP address ranges of your proxy
-                ->trustedProxies('private_ranges')
-                // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
-                ->trustedHeaders(['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix'])
+                'trusted_proxies' => 'private_ranges',
+                // trust *all* "X-Forwarded-*" headers
+                'trusted_headers' => ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix'],
                 // or, if your proxy instead uses the "Forwarded" header
-                ->trustedHeaders(['forwarded'])
-            ;
-        };
-
-.. versionadded:: 7.1
-
-    ``private_ranges`` as a shortcut for private IP address ranges for the
-    ``trusted_proxies`` option was introduced in Symfony 7.1.
-
-.. versionadded:: 7.2
-
-    Support for the ``SYMFONY_TRUSTED_PROXIES`` and ``SYMFONY_TRUSTED_HEADERS``
-    environment variables was introduced in Symfony 7.2.
+                'trusted_headers' => ['forwarded'],
+            ],
+        ]);
 
 .. danger::
 
@@ -158,10 +118,6 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
            # you can also use the 'PRIVATE_SUBNETS' string, which is replaced at
            # runtime by the IpUtils::PRIVATE_SUBNETS constant
            # trusted_proxies: '127.0.0.1,PRIVATE_SUBNETS'
-
-.. versionadded:: 7.2
-
-    The support for the ``'PRIVATE_SUBNETS'`` string was introduced in Symfony 7.2.
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and

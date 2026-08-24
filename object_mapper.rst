@@ -1,10 +1,6 @@
 Object Mapper
 =============
 
-.. versionadded:: 7.3
-
-    The ObjectMapper component was introduced in Symfony 7.3.
-
 This component transforms one object into another, simplifying tasks such as
 converting DTOs (Data Transfer Objects) into entities or vice versa. It can also
 be helpful when decoupling API input/output from internal models, particularly
@@ -120,6 +116,7 @@ Configuring Mapping with Attributes
 
 ObjectMapper uses PHP attributes to configure how properties are mapped.
 The primary attribute is :class:`Symfony\\Component\\ObjectMapper\\Attribute\\Map`.
+You can use this attribute in the source class (that should be mapped to a target) or in the target class (that should be mapped from a source).
 
 Defining the Default Target Class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -142,6 +139,49 @@ Apply ``#[Map]`` to the source class to define its default mapping target::
     // now you can call map() without the second argument if ProductInput is the source:
     $mapper = new ObjectMapper();
     $product = $mapper->map($productInput); // Maps to Product automatically
+
+Defining the Default Source Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Apply ``#[Map]`` to the target class to define its default mapping source::
+
+    // src/Dto/ProductOutput.php
+    namespace App\Dto;
+
+    use App\Entity\Product;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(source: Product::class)]
+    class ProductOutput
+    {
+        public string $name = '';
+        public string $sku = '';
+    }
+
+    // provide a reverse class map array
+    $classMap = [
+        Product::class => ProductOutput::class,
+    ];
+
+    // now you can call map() without the second argument if ProductOutput is the target
+    $mapper = new ObjectMapper(
+        new ReverseClassObjectMapperMetadataFactory(
+            new ReflectionObjectMapperMetadataFactory(),
+            $classMap,
+        )
+    );
+    $productOutput = $mapper->map($product); // maps to ProductOutput automatically
+
+.. tip::
+
+    When using ObjectMapper with Symfony framework, you only need to use the
+    :class:`Symfony\\Component\\ObjectMapper\\ObjectMapperInterface`.
+    Symfony will handle everything for you.
+
+    .. versionadded:: 8.1
+
+        The automatic class-map array when using ObjectMapper with Symfony framework
+        was introduced in Symfony 8.1.
 
 Configuring Property Mapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -311,20 +351,6 @@ exception. To avoid this, configure Symfony's PropertyAccess component in
             property_access:
                 throw_exception_on_invalid_property_path: false
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <framework:config>
-                <framework:property-access exception-on-invalid-property-path="false"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -342,6 +368,128 @@ exception. To avoid this, configure Symfony's PropertyAccess component in
 
 This setting ensures that the mapper skips invalid properties gracefully
 instead of throwing an exception.
+
+Conditional Property Mapping based on Source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``SourceClass`` condition was introduced in Symfony 8.1.
+
+Similar to ``TargetClass``, you can use
+:class:`Symfony\\Component\\ObjectMapper\\Condition\\SourceClass` to condition
+a property mapping based on the source object's class. This is useful when a
+target class can be mapped from multiple source classes::
+
+    // src/Entity/Product.php
+    namespace App\Entity;
+
+    use App\Api\ExternalProduct;
+    use App\Dto\InternalProduct;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Condition\SourceClass;
+
+    #[Map(source: ExternalProduct::class)]
+    #[Map(source: InternalProduct::class)]
+    class Product
+    {
+        // map from 'externalName' only when the source is ExternalProduct
+        #[Map(source: 'externalName', if: new SourceClass(ExternalProduct::class))]
+        // map from 'name' only when the source is InternalProduct
+        #[Map(source: 'name', if: new SourceClass(InternalProduct::class))]
+        public string $name = '';
+    }
+
+Matching Multiple Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Array support for ``TargetClass`` and ``SourceClass`` was introduced in Symfony 8.1.
+
+Both ``TargetClass`` and ``SourceClass`` accept an array of class names, matching
+when the object is an instance of any of them. This reduces the number of
+``#[Map]`` attributes needed for multi-class mappings::
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Condition\SourceClass;
+
+    #[Map(source: B::class)]
+    #[Map(source: C::class)]
+    class A
+    {
+        // applies when the source is either B or C
+        #[Map(source: 'foo', if: new SourceClass([B::class, C::class]))]
+        public string $something = '';
+    }
+
+Combining Source and Target Conditions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    ``ClassRule`` and ``ClassRuleList`` were introduced in Symfony 8.1.
+
+For bidirectional mappings involving multiple source and target classes, use
+:class:`Symfony\\Component\\ObjectMapper\\Condition\\ClassRule` to combine both
+checks in a single condition, and
+:class:`Symfony\\Component\\ObjectMapper\\Condition\\ClassRuleList` to match
+when any of its rules matches::
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Condition\ClassRule;
+    use Symfony\Component\ObjectMapper\Condition\ClassRuleList;
+    use Symfony\Component\ObjectMapper\Condition\SourceClass;
+    use Symfony\Component\ObjectMapper\Condition\TargetClass;
+
+    #[Map(source: B::class)]
+    #[Map(source: C::class)]
+    #[Map(target: B::class)]
+    #[Map(target: C::class)]
+    class A
+    {
+        // when reading from a source: apply only when source is B
+        #[Map(source: 'foo', transform: 'strtolower', if: new ClassRuleList([new SourceClass(B::class)]))]
+        // when reading from a source: apply only when source is C
+        #[Map(source: 'bar', if: new ClassRuleList([new ClassRule(sources: [C::class])]))]
+        public string $somethingSourced = '';
+
+        // when writing to a target: apply only when target is B
+        #[Map(target: 'foo', transform: 'strtoupper', if: new ClassRuleList([new TargetClass(B::class)]))]
+        // when writing to a target: apply only when target is C
+        #[Map(target: 'bar', if: new ClassRuleList([new ClassRule(targets: [C::class])]))]
+        public string $somethingTargeted = '';
+    }
+
+``ClassRule`` requires at least one of ``sources`` or ``targets``. When both are
+provided, the condition matches only if the source **and** the target both match.
+``ClassRuleList`` matches when **any** of its rules matches.
+
+Skipping ``null`` Values
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``IsNotNull`` condition was introduced in Symfony 8.1.
+
+Use the built-in :class:`Symfony\\Component\\ObjectMapper\\Condition\\IsNotNull`
+condition to skip a property when its source value is ``null``. This is useful for
+partial updates, where only the provided values should overwrite the target::
+
+    // src/Dto/UserInput.php
+    namespace App\Dto;
+
+    use App\Entity\User;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Condition\IsNotNull;
+
+    #[Map(target: User::class)]
+    class UserInput
+    {
+        // only map 'name' when its value is not null
+        #[Map(if: new IsNotNull())]
+        public ?string $name = null;
+    }
 
 .. _object_mapper-transforming-values:
 
@@ -397,6 +545,15 @@ You can use that method to format a property when mapping it::
     *into* a class, declare the mapping on the target property and name the source
     property explicitly, as shown in `Transforming Values on the Target Class`_.
 
+.. note::
+
+    ObjectMapper throws a ``NoSuchCallableException`` if the configured ``transform``
+    (or ``if``) callable cannot be resolved (for example, due to a typo in a method name).
+
+    .. versionadded:: 8.1
+
+        The ``NoSuchCallableException`` was introduced in Symfony 8.1.
+
 Using Transformer Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -439,6 +596,16 @@ Then, use this service to format the mapped property::
 
         public string $lastName = '';
     }
+
+.. note::
+
+    ObjectMapper throws a ``NoSuchCallableException`` if the referenced service
+    does not implement the expected interface (``TransformCallableInterface`` or
+    ``ConditionCallableInterface``).
+
+    .. versionadded:: 8.1
+
+        The ``NoSuchCallableException`` was introduced in Symfony 8.1.
 
 Class-Level Transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -488,6 +655,78 @@ And the related target object must define the ``createFromLegacy()`` method::
         }
     }
 
+Automatic Enum Conversion
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Automatic conversion between backed enums and their scalar values was
+    introduced in Symfony 8.2.
+
+When mapping between a :phpclass:`BackedEnum` property and its backing scalar
+type (``int`` or ``string``), ObjectMapper converts values automatically in
+both directions.
+
+For example::
+
+    // src/Enum/Status.php
+    namespace App\Enum;
+
+    enum Status: string
+    {
+        case Draft = 'draft';
+        case Published = 'published';
+    }
+
+    // src/Dto/PostInput.php
+    namespace App\Dto;
+
+    use App\Entity\Post;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(target: Post::class)]
+    class PostInput
+    {
+        // a plain string coming, for example, from a JSON payload
+        public string $status = 'draft';
+    }
+
+    // src/Entity/Post.php
+    namespace App\Entity;
+
+    use App\Enum\Status;
+
+    class Post
+    {
+        // the string is automatically converted to the matching Status case
+        public Status $status;
+    }
+
+ObjectMapper converts ``'draft'`` to ``Status::Draft`` when mapping to ``Post``,
+and converts the enum back to ``'draft'`` when mapping to ``PostInput``. If the
+input scalar value does not match any enum case, mapping fails with an exception.
+
+When using the ObjectMapper component standalone, wrap your metadata factory with
+:class:`Symfony\\Component\\ObjectMapper\\Metadata\\EnumMappingMetadataFactory`::
+
+    use App\Dto\PostInput;
+    use App\Entity\Post;
+    use Symfony\Component\ObjectMapper\Metadata\EnumMappingMetadataFactory;
+    use Symfony\Component\ObjectMapper\Metadata\ReflectionObjectMapperMetadataFactory;
+    use Symfony\Component\ObjectMapper\ObjectMapper;
+
+    $mapper = new ObjectMapper(
+        new EnumMappingMetadataFactory(new ReflectionObjectMapperMetadataFactory())
+    );
+
+    // scalar to enum
+    $post = $mapper->map(new PostInput(), Post::class);
+    // $post->status === Status::Draft
+
+    // enum to scalar
+    $input = $mapper->map($post, PostInput::class);
+    // $input->status === 'draft'
+
 Mapping Collections
 -------------------
 
@@ -511,9 +750,65 @@ With this configuration, ObjectMapper maps each item in the ``products`` array
 according to the usual mapping rules. Without ``transform: new MapCollection()``,
 the array is left unchanged.
 
-.. versionadded:: 7.4
+Mapping Collections to a Different Target Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The ``MapCollection`` transformer was introduced in Symfony 7.4.
+By default, each item in a collection is mapped using the ObjectMapper's
+standard target resolution rules. For example, the ``#[Map(target: ...)]``
+attribute defined on the source class.
+
+You can override this behavior by specifying a ``targetClass`` option on the
+``MapCollection`` transform. This maps a collection to a different target class
+without adding a ``#[Map]`` attribute to the source class of the collection items.
+
+Set this option when you want to reuse source objects in different contexts or
+avoid polluting shared DTOs with mapping metadata::
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Transform\MapCollection;
+
+    #[Map(target: OrderTarget::class)]
+    class OrderSource
+    {
+        #[Map(transform: new MapCollection(targetClass: LineItemTarget::class))]
+        public array $items = [];
+    }
+
+In this example, each element of the ``items`` collection is mapped to
+``LineItemTarget``, regardless of any mapping configuration defined on the
+source item class.
+
+Without the ``targetClass`` option, the ObjectMapper relies on its default
+target resolution strategy for each collection item.
+
+.. versionadded:: 8.1
+
+    The ``targetClass`` option of ``MapCollection`` was introduced in Symfony 8.1.
+
+Mapping Collections to a Doctrine Collection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``MapCollection`` transform always returns a plain array. When the target
+property is a Doctrine ``Collection`` (e.g. a ``OneToMany`` or ``ManyToMany``
+association), wrap it in the
+:class:`Symfony\\Bridge\\Doctrine\\ObjectMapper\\Transform\\IterableToArrayCollection`
+transformer provided by the Doctrine bridge. It maps each item and returns a
+Doctrine ``ArrayCollection`` instead of an array::
+
+    use Symfony\Bridge\Doctrine\ObjectMapper\Transform\IterableToArrayCollection;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+    use Symfony\Component\ObjectMapper\Transform\MapCollection;
+
+    #[Map(target: Order::class)]
+    class OrderInput
+    {
+        #[Map(transform: new IterableToArrayCollection(new MapCollection(targetClass: LineItem::class)))]
+        public iterable $items = [];
+    }
+
+.. versionadded:: 8.2
+
+    The ``IterableToArrayCollection`` transformer was introduced in Symfony 8.2.
 
 Mapping Multiple Targets
 ------------------------
@@ -700,6 +995,80 @@ Using it in practice::
     (callables, services implementing ``TransformCallableInterface``, and
     class-level transforms) are equally supported in source-based mapping.
 
+Mapping Nested Objects to the Same Target
+-----------------------------------------
+
+.. versionadded:: 8.1
+
+    The ability to merge nested properties when mapping to the same target class
+    was introduced in Symfony 8.1.
+
+When a property of the source object contains another object that maps to the
+same target class as the parent, the properties of that nested object are
+merged into the current target instance. This is useful for flattening nested
+DTO structures into a single resource.
+
+Consider the following example where ``UserInput`` contains a ``UserAddressInput``,
+and both map to ``User``::
+
+    // src/Dto/UserInput.php
+    namespace App\Dto;
+
+    use App\Entity\User;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(target: User::class)]
+    class UserInput
+    {
+        public string $name = '';
+        public UserAddressInput $address;
+    }
+
+    // src/Dto/UserAddressInput.php
+    namespace App\Dto;
+
+    use App\Entity\User;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(target: User::class)]
+    class UserAddressInput
+    {
+        #[Map(target: 'streetAddress')]
+        public string $street = '';
+
+        #[Map(target: 'city')]
+        public string $city = '';
+    }
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    class User
+    {
+        public string $name = '';
+        public string $streetAddress = '';
+        public string $city = '';
+    }
+
+When mapping ``UserInput``, the mapper will automatically process the ``$address``
+property and map its fields (``street``, ``city``) onto the same ``User`` instance
+created for the parent::
+
+    $addressInput = new UserAddressInput();
+    $addressInput->street = '123 Main St';
+    $addressInput->city = 'Springfield';
+
+    $userInput = new UserInput();
+    $userInput->name = 'John Doe';
+    $userInput->address = $addressInput;
+
+    $mapper = new ObjectMapper();
+    $user = $mapper->map($userInput, User::class);
+
+    // $user->name === 'John Doe'
+    // $user->streetAddress === '123 Main St' (mapped from the nested UserAddressInput)
+    // $user->city === 'Springfield'
+
 Handling Recursion
 ------------------
 
@@ -794,10 +1163,6 @@ decorator of the ``object_mapper`` service::
             return $this->decorated->map($source, $target);
         }
     }
-
-.. versionadded:: 7.4
-
-    The feature to decorate the ObjectMapper was introduced in Symfony 7.4.
 
 .. _objectmapper-custom-mapping-logic:
 

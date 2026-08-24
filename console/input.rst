@@ -57,10 +57,6 @@ The ``Argument`` attribute accepts the following parameters:
     An array or a callable that provides :ref:`suggested values for the argument <console-input-completion>`.
     For example: ``#[Argument(suggestedValues: ['Alice', 'Bob'])]``.
 
-.. versionadded:: 7.3
-
-    The ``#[Argument]`` and ``#[Option]`` attributes were introduced in Symfony 7.3.
-
 The argument mode (required, optional, array) is inferred from the parameter type:
 
 * **Required**: Parameters without a default value and not nullable (e.g. ``string $name``);
@@ -103,11 +99,6 @@ You can type-hint it directly in your command::
 
 If the user provides a value that doesn't match any enum case, an error
 message is displayed along with the list of valid values.
-
-.. versionadded:: 7.4
-
-    Support for ``BackedEnum`` in ``#[Argument]`` and ``#[Option]`` was
-    introduced in Symfony 7.4.
 
 Using the Classic configure() Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -221,6 +212,11 @@ You can combine ``IS_ARRAY`` with ``REQUIRED`` or ``OPTIONAL`` like this::
         )
     ;
 
+.. deprecated:: 8.1
+
+    Combining ``InputArgument::REQUIRED`` and ``InputArgument::OPTIONAL`` was
+    deprecated in Symfony 8.1.
+
 Using Command Options
 ---------------------
 
@@ -323,6 +319,47 @@ The option mode is inferred from the parameter type and default value:
     The ``#[Option]`` attribute enforces validation rules on type and default
     value combinations. See :ref:`Option Attribute Constraints <console-option-constraints>`
     for the complete list of rules and examples.
+
+Using Objects as Default Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Support for objects as default values was introduced in Symfony 8.1.
+
+You can use objects as default values for arguments and options in invokable
+commands. This is useful when you need complex default values that are resolved
+at runtime::
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    #[AsCommand(name: 'app:report')]
+    class ReportCommand
+    {
+        public function __invoke(
+            SymfonyStyle $io,
+            #[Option] \DateTimeImmutable $from = new \DateTimeImmutable('-1 week'),
+            #[Option] \DateTimeImmutable $to = new \DateTimeImmutable(),
+        ): int {
+            $io->info(sprintf(
+                'Generating report from %s to %s',
+                $from->format('Y-m-d'),
+                $to->format('Y-m-d'),
+            ));
+
+            return Command::SUCCESS;
+        }
+    }
+
+.. note::
+
+    In invokable commands, options must always have a default value. Object
+    default values are especially useful in this context because they allow
+    you to define complex, runtime-resolved defaults directly in the method
+    signature.
 
 Using the Classic addOption() Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -430,7 +467,18 @@ There are five option variants you can use:
 
 ``InputOption::VALUE_NEGATABLE``
     Accept either the flag (e.g. ``--yell``) or its negation (e.g.
-    ``--no-yell``).
+    ``--no-yell``). You can set a boolean default value on negatable options::
+
+        $this
+            // ...
+            ->addOption('yell', null, InputOption::VALUE_NEGATABLE, 'Whether to yell', false)
+        ;
+
+    .. versionadded:: 8.1
+
+        The support for setting a boolean default value on
+        ``InputOption::VALUE_NEGATABLE`` options (including when combined with
+        ``InputOption::VALUE_NONE``) was introduced in Symfony 8.1.
 
 You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
@@ -445,6 +493,11 @@ You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
             ['blue', 'red']
         )
     ;
+
+.. deprecated:: 8.1
+
+    Using any combination of ``InputOption::VALUE_NONE``, ``InputOption::VALUE_REQUIRED`` and
+    ``InputOption::VALUE_OPTIONAL`` was deprecated in Symfony 8.1.
 
 .. _console-input-map-input:
 
@@ -498,10 +551,6 @@ Then, use the ``#[MapInput]`` attribute in your command to receive this DTO::
             return 0;
         }
     }
-
-.. versionadded:: 7.4
-
-    The ``#[MapInput]`` attribute was introduced in Symfony 7.4.
 
 The DTO class must have at least one public property with an ``#[Argument]``
 or ``#[Option]`` attribute. Private, protected, and static properties are
@@ -597,14 +646,98 @@ they are assigned to the DTO::
 With this setup, when the command input is resolved, the email is lowercased
 and trimmed, and roles are uppercased.
 
+Validating Input DTOs with Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When the :doc:`Validator component </validation>` is available, you can add
+validation constraints directly to DTO properties. They are automatically
+enforced after the input is resolved::
+
+    // src/Console/Input/CreateUserInput.php
+    namespace App\Console\Input;
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+
+    class CreateUserInput
+    {
+        #[Argument]
+        #[NotBlank]
+        public string $name;
+
+        #[Option]
+        #[Email]
+        public ?string $email = null;
+    }
+
+If any constraint is violated, an
+:class:`Symfony\\Component\\Console\\Exception\\InputValidationFailedException`
+is thrown with a message listing all violations::
+
+    #[AsCommand(name: 'app:create-user')]
+    class CreateUserCommand
+    {
+        public function __invoke(#[MapInput] CreateUserInput $input): int
+        {
+            // $input is already validated at this point
+            // ...
+
+            return 0;
+        }
+    }
+
+You can also specify validation groups via the ``validationGroups`` option of
+the ``#[MapInput]`` attribute::
+
+    public function __invoke(
+        #[MapInput(validationGroups: ['registration'])]
+        CreateUserInput $input,
+    ): int {
+        // ...
+    }
+
+.. note::
+
+    When the Validator component is not installed, constraints on DTO
+    properties are silently ignored.
+
+.. versionadded:: 8.1
+
+    Validation constraints support for ``#[MapInput]`` was introduced in
+    Symfony 8.1.
+
+Validating Input with Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can validate interactive input by passing
+:doc:`Validator constraints </reference/constraints>` to the ``constraints``
+option of the ``#[Ask]`` attribute::
+
+    #[Argument]
+    #[Ask(constraints: [new Assert\NotBlank, new Assert\Email])]
+    string $email,
+
+When the user provides an invalid value, the validation error messages are
+displayed in the console and the user is prompted again until valid input is
+given.
+
+.. versionadded:: 8.1
+
+    The ``constraints`` option of the ``#[Ask]`` attribute was introduced
+    in Symfony 8.1.
+
+.. seealso::
+
+    For more details on validating console questions, see
+    :ref:`Validating the Answer <console-validate-question-answer>` in
+    the QuestionHelper documentation.
+
 .. _console-interactive-input:
 
 Interactive Input
 -----------------
-
-.. versionadded:: 7.4
-
-    The ``#[Ask]`` and ``#[Interact]`` attributes were introduced in Symfony 7.4.
 
 In :ref:`invokable commands <console_creating-command>`, you can use the
 :class:`Symfony\\Component\\Console\\Attribute\\Ask` attribute to prompt
@@ -797,6 +930,144 @@ following order during the interactive phase:
     Interactive prompts only run when the command is executed in interactive
     mode. They are skipped when using the ``--no-interaction`` (``-n``) option.
 
+.. _console-input-ask-choice:
+
+Asking Choice Questions
+-----------------------
+
+.. versionadded:: 8.1
+
+    The ``#[AskChoice]`` attribute was introduced in Symfony 8.1.
+
+The :class:`Symfony\\Component\\Console\\Attribute\\AskChoice` attribute prompts
+the user to select a value from a predefined list of choices. You can use it on
+both ``__invoke()`` arguments and DTO properties (via ``#[MapInput]``)::
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\AskChoice;
+
+    #[AsCommand(name: 'app:create-user')]
+    class CreateUserCommand
+    {
+        public function __invoke(
+            #[Argument]
+            #[AskChoice('Select a role', ['admin', 'editor', 'viewer'])]
+            string $role,
+        ): int {
+            // $role will be one of: 'admin', 'editor', 'viewer'
+
+            return Command::SUCCESS;
+        }
+    }
+
+If the user doesn't provide a value for this, it renders the following interactive prompt:
+
+.. code-block:: terminal
+
+    Select a role:
+     [0] admin
+     [1] editor
+     [2] viewer
+    >
+
+When the parameter type is a ``BackedEnum``, choices are automatically derived
+from the enum cases, so you don't need to pass them explicitly::
+
+    enum Role: string
+    {
+        case Admin = 'admin';
+        case Editor = 'editor';
+        case Viewer = 'viewer';
+    }
+
+    #[AsCommand(name: 'app:create-user')]
+    class CreateUserCommand
+    {
+        public function __invoke(
+            #[Argument]
+            #[AskChoice('Select a role')]
+            Role $role,
+        ): int {
+            // ...
+        }
+    }
+
+When the parameter type is ``array``, multi-select is automatically enabled,
+allowing the user to select multiple values::
+
+    #[AsCommand(name: 'app:setup')]
+    class SetupCommand
+    {
+        public function __invoke(
+            #[Argument]
+            #[AskChoice('Select features', ['auth', 'api', 'cache'])]
+            array $features,
+        ): int {
+            // $features will contain the selected values
+        }
+    }
+
+.. note::
+
+    You can use the ``default`` option of ``#[AskChoice]`` to set the value when
+    the user presses ``Enter`` without selecting any value. However, you can not
+    set an array of values and therefore cannot set a default value for multi-select
+    choices. This is a limitation of the underlying ``ChoiceQuestion`` class.
+
+.. _console-input-file:
+
+File Input
+----------
+
+.. versionadded:: 8.1
+
+    File input support in invokable commands was introduced in Symfony 8.1.
+
+You can ask the user for a file by type-hinting a parameter as
+:class:`Symfony\\Component\\Console\\Input\\File\\InputFile` and combining the
+``#[Argument]`` and ``#[Ask]`` attributes. The console will automatically prompt
+for file input (paste or path)::
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Ask;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    // ...
+
+    #[AsCommand(name: 'app:analyze')]
+    class AnalyzeCommand
+    {
+        public function __invoke(
+            SymfonyStyle $io,
+            #[Argument(description: 'The image to analyze')]
+            #[Ask('Provide an image (paste or enter path):')]
+            InputFile $image,
+        ): int {
+            $io->writeln('MIME type: '.$image->getMimeType());
+            $io->writeln('Size: '.$image->getHumanReadableSize());
+
+            if ($image->isTempFile()) {
+                $image->move('/path/to/storage', 'image.png');
+            }
+
+            return Command::SUCCESS;
+        }
+    }
+
+In terminals that support image protocols (such as Kitty, Ghostty, iTerm2,
+WezTerm, etc.), users can paste images directly from their clipboard. In other
+terminals, the question falls back to asking for a file path. In non-interactive
+mode, file paths are accepted as regular arguments.
+
+.. seealso::
+
+    For more advanced options (e.g. restricting allowed MIME types or file
+    size), see the ``FileQuestion`` class in the
+    :doc:`QuestionHelper documentation </components/console/helpers/questionhelper>`.
+
 Options with optional arguments
 -------------------------------
 
@@ -897,10 +1168,48 @@ command without having to worry about the number of arguments or options::
         // ...
     }
 
-.. versionadded:: 7.1
+Fetching the Raw Arguments and Options
+--------------------------------------
 
-    The :method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens`
-    method was introduced in Symfony 7.1.
+.. versionadded:: 8.1
+
+    The ``RawInputInterface`` was introduced in Symfony 8.1.
+
+While ``getRawTokens()`` returns the unparsed CLI tokens as strings,
+:class:`Symfony\\Component\\Console\\Input\\RawInputInterface` exposes the
+parsed arguments and options as they were explicitly passed by the user, without
+default values merged in. This is useful to forward the current command's input
+to a child process:
+
+* ``getRawArguments()`` and ``getRawOptions()`` return only the arguments
+  and options explicitly passed by the user (default values excluded);
+* ``unparse()`` converts the parsed options back to their CLI string form
+  (e.g. ``['--format=json', '--verbose']``), ready to spread into a
+  ``Process`` call. Pass an array of option names to restrict the output.
+
+Type-hint ``RawInputInterface`` in an invokable command to use these methods::
+
+    use Symfony\Component\Console\Input\RawInputInterface;
+    use Symfony\Component\Process\Process;
+    // ...
+
+    public function __invoke(RawInputInterface $input): int
+    {
+        $rawArguments = $input->getRawArguments();
+        $rawOptions = $input->getRawOptions();
+
+        $process = new Process([
+            'app:child-command',
+            ...$input->getRawArguments(),
+            ...$input->unparse(),
+        ]);
+        $process->mustRun();
+
+        // limit unparse() to specific options
+        $unparsed = $input->unparse(['format', 'verbose']);
+
+        // ...
+    }
 
 .. _console-input-completion:
 
@@ -1060,10 +1369,6 @@ The Console component adds some predefined options to all commands:
 * ``--help|-h``: displays the command help
 * ``--ansi|--no-ansi``: whether to force or disable coloring the output
 * ``--profile``: enables the Symfony profiler
-
-.. versionadded:: 7.2
-
-    The ``--silent`` option was introduced in Symfony 7.2.
 
 When using the ``FrameworkBundle``, two more options are predefined:
 

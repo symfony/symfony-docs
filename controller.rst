@@ -375,10 +375,6 @@ The ``MapQueryParameter`` attribute supports the following argument types:
 * ``string``
 * Objects that extend :class:`Symfony\\Component\\Uid\\AbstractUid`
 
-.. versionadded:: 7.3
-
-    Support for ``AbstractUid`` objects was introduced in Symfony 7.3.
-
 ``#[MapQueryParameter]`` can take an optional argument called ``filter``. You can use the
 `Validate Filters`_ constants defined in PHP::
 
@@ -475,10 +471,6 @@ set the ``key`` option in the ``#[MapQueryString]`` attribute::
         // ...
     }
 
-.. versionadded:: 7.3
-
-    The ``key`` option of ``#[MapQueryString]`` was introduced in Symfony 7.3.
-
 If you need a valid DTO even when the request query string is empty, set a
 default value for your controller arguments::
 
@@ -548,7 +540,6 @@ You can also customize the validation groups used, the status code to return if
 the validation fails as well as supported payload formats::
 
     use Symfony\Component\HttpFoundation\Response;
-
     // ...
 
     public function dashboard(
@@ -563,6 +554,30 @@ the validation fails as well as supported payload formats::
     }
 
 The default status code returned if the validation fails is 422.
+
+You can also use expressions to define validation groups dynamically based on
+controller arguments::
+
+    use Symfony\Component\ExpressionLanguage\Expression;
+    // ...
+
+    #[Route('/user/{id}', methods: ['PUT'])]
+    public function update(
+        User $user,
+        #[MapRequestPayload(
+            validationGroups: [new Expression('args["user"].getType()')]
+        )] UpdateUserDto $dto
+    ): Response
+    {
+        // ...
+    }
+
+In this example, the validation group is resolved from the ``User`` entity.
+The ``args`` variable provides access to all controller arguments by name.
+
+.. versionadded:: 8.1
+
+    Support for expressions in ``validationGroups`` was introduced in Symfony 8.1.
 
 .. tip::
 
@@ -610,37 +625,110 @@ each DTO object into an array and return something like this:
         }
     ]
 
-To do so, map the parameter as an array and configure the type of each element
-using the ``type`` option of the attribute::
+To do so, use a variadic argument and let Symfony map each payload item to a DTO
+instance automatically::
 
     public function dashboard(
-        #[MapRequestPayload(type: UserDto::class)] array $users
+        #[MapRequestPayload] UserDto ...$users
     ): Response
     {
         // ...
     }
 
-.. versionadded:: 7.1
+.. versionadded:: 8.1
 
-    The ``type`` option of ``#[MapRequestPayload]`` was introduced in Symfony 7.1.
+    Support for variadic arguments with ``#[MapRequestPayload]`` was introduced
+    in Symfony 8.1.
 
-.. warning::
+.. note::
 
-    When using custom types (e.g. enums) in your DTO properties, denormalization
-    errors may expose internal class names to the end user. This was fixed in
-    Symfony 8.1. In earlier versions, to avoid leaking implementation details,
-    use built-in PHP types (``string``, ``int``, etc.) and validate the values
-    with constraints::
+    As an alternative, instead of variadic arguments you can map the parameter
+    as an array and configure the type of each element using the ``type`` option
+    of the attribute::
 
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        final class OrderDto
+        public function dashboard(
+            #[MapRequestPayload(type: UserDto::class)] array $users
+        ): Response
         {
-            public function __construct(
-                #[Assert\Choice(callback: [OrderStatus::class, 'values'])]
-                public readonly string $status,
-            ) {}
+            // ...
         }
+
+Symfony provides a ``#[MapUploadedFile]`` attribute to :ref:`map uploaded files <controller_map-uploaded-file>`,
+but you can also use ``#[MapRequestPayload]`` to map files included in the request
+payload.
+
+.. versionadded:: 8.1
+
+    Support for mapping files with ``#[MapRequestPayload]`` was introduced in Symfony 8.1.
+
+When handling ``multipart/form-data`` requests, Symfony automatically merges
+request parameters and uploaded files before deserializing the payload.
+This allows mapping both scalar values and ``UploadedFile`` instances into
+a single data transfer object.
+
+For example, you can define a request object containing both scalar values and
+uploaded files::
+
+    use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+    class ProductRequest
+    {
+       public ?string $name = null;
+       public ?UploadedFile $image = null;
+    }
+
+And map it directly in a controller action::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
+    public function upload(
+         #[MapRequestPayload] ProductRequest $data,
+    ): Response
+    {
+        // $data->name contains request parameters
+        // $data->image contains the uploaded file as an UploadedFile instance
+
+        return new Response('OK');
+    }
+
+.. note::
+
+    Uploaded files are resolved from ``$request->files`` and merged with request
+    parameters before deserialization. This works with standard form submissions
+    and multipart requests.
+
+Mapping Empty Data
+~~~~~~~~~~~~~~~~~~
+
+By default, the resolver returns ``null`` without invoking the serializer when
+the query string or request body is empty and the parameter is nullable or has
+a default value. This means custom denormalizers are not invoked.
+
+If you need denormalization to happen even when no data is present (e.g. to
+let a custom denormalizer populate some fields from the security context or
+session), set the ``mapWhenEmpty`` option to ``true``::
+
+    use App\Model\SearchFilters;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+
+    // ...
+
+    public function search(
+        #[MapQueryString(mapWhenEmpty: true)] SearchFilters $filters
+    ): Response
+    {
+        // ...
+    }
+
+This option also works with ``#[MapRequestPayload]``. When ``mapWhenEmpty`` is
+``true``, the resolver passes an empty array to the serializer's
+``denormalize()`` method, allowing custom denormalizers to populate the object.
+
+.. versionadded:: 8.1
+
+    The ``mapWhenEmpty`` option was introduced in Symfony 8.1.
 
 .. _controller_map-uploaded-file:
 
@@ -738,9 +826,69 @@ there are constraint violations:
     )]
     UploadedFile $document
 
-.. versionadded:: 7.1
+.. _controller_map-request-header:
 
-    The ``#[MapUploadedFile]`` attribute was introduced in Symfony 7.1.
+Mapping Request Headers
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``#[MapRequestHeader]`` attribute was introduced in Symfony 8.1.
+
+The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestHeader`
+attribute maps an HTTP request header to a controller argument::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestHeader;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestHeader] string $acceptLanguage
+    ): Response {
+        // ...
+    }
+
+By default, the header name is converted from kebab-case to camelCase to
+match the argument name (e.g. the ``accept-language`` header maps to the
+``$acceptLanguage`` argument). You can also pass the HTTP header name explicitly
+as the first option of the attribute::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestHeader;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestHeader(name: 'x-custom-token')] string $token,
+    ): Response {
+        // ...
+    }
+
+The attribute supports the following argument types:
+
+* ``string``: returns the header value as a string;
+* ``array``: returns the header values as an array. For the ``accept``,
+  ``accept-charset``, ``accept-language`` and ``accept-encoding`` headers,
+  the values are automatically parsed (e.g. ``accept-language: en-us,en;q=0.5``
+  returns ``['en_US', 'en']``);
+* :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader`: returns a parsed
+  ``AcceptHeader`` object for advanced quality-value handling.
+
+If the header is missing and the argument has no default value and is not
+nullable, a ``400 Bad Request`` response is returned. You can customize this
+status code with the ``validationFailedStatusCode`` option::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestHeader;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestHeader(validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY)] string $accept,
+    ): Response {
+        // ...
+    }
 
 Managing the Session
 --------------------
@@ -893,6 +1041,67 @@ If the :doc:`serializer service </serializer>` is enabled in your
 application, it will be used to serialize the data to JSON. Otherwise,
 the :phpfunction:`json_encode` function is used.
 
+.. _controller_serialize:
+
+Serializing Controller Return Values Automatically
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of manually calling the serializer and building a response, you can add
+the :class:`Symfony\\Component\\HttpKernel\\Attribute\\Serialize` attribute to
+your controller method. The controller can then return any object or array, and
+Symfony will serialize it automatically based on the request format (defaulting
+to JSON)::
+
+    use Symfony\Component\HttpKernel\Attribute\Serialize;
+
+    class ProductController
+    {
+        #[Serialize]
+        public function show(): Product
+        {
+            return new Product(1, 'Asus UX550');
+        }
+    }
+
+You can also customize the HTTP status code, headers, and serialization context::
+
+    use Symfony\Component\HttpKernel\Attribute\Serialize;
+
+    class ProductController
+    {
+        #[Serialize(code: 201, headers: ['X-Custom' => 'value'], context: ['groups' => ['read']])]
+        public function create(): ProductCreated
+        {
+            // ... create the product
+
+            return new ProductCreated(1);
+        }
+    }
+
+The ``#[Serialize]`` attribute accepts the following arguments:
+
+``code``
+    The HTTP status code of the response (default: ``200``).
+``headers``
+    An associative array of extra HTTP headers to add to the response.
+``context``
+    The serialization context passed to the :doc:`Serializer </serializer>`
+    (e.g. ``['groups' => ['read']]``).
+
+The response format is determined by the request format (``$request->getRequestFormat()``),
+which defaults to ``json``. The ``Content-Type`` header is set automatically
+based on the format. If the format is not supported by the serializer, a
+``415 Unsupported Media Type`` response is returned.
+
+.. note::
+
+    The ``#[Serialize]`` attribute requires the
+    :doc:`Serializer component </serializer>` to be installed and enabled.
+
+.. versionadded:: 8.1
+
+    The ``#[Serialize]`` attribute was introduced in Symfony 8.1.
+
 Streaming File Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -944,10 +1153,6 @@ Streaming Server-Sent Events
 to the client over a single HTTP connection. It provides an efficient way to
 send real-time updates from the server to the browser, such as live notifications,
 progress updates, or data feeds.
-
-.. versionadded:: 7.3
-
-    The ``EventStreamResponse`` and ``ServerEvent`` classes were introduced in Symfony 7.3.
 
 The :class:`Symfony\\Component\\HttpFoundation\\EventStreamResponse` class
 allows you to stream events to the client using the SSE protocol. It automatically
@@ -1118,10 +1323,6 @@ Then, update your controller to use the interface instead of a closure::
 
 Using interfaces like in the previous example provides full static analysis and
 autocompletion benefits with no extra boilerplate code.
-
-.. versionadded:: 7.4
-
-    The ``ControllerHelper`` class was introduced in Symfony 7.4.
 
 Final Thoughts
 --------------

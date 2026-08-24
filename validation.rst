@@ -142,10 +142,6 @@ be passed to the validator to be checked.
             properties:
                 # your IDE will now provide autocompletion here...
 
-    .. versionadded:: 7.4
-
-        The JSON schema for validation mapping files was introduced in Symfony 7.4.
-
 Using the Validator
 ~~~~~~~~~~~~~~~~~~~
 
@@ -275,6 +271,67 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
+
+Validating Properties
+~~~~~~~~~~~~~~~~~~~~~
+
+Instead of validating an entire object, you can validate a single property
+using the ``validateProperty()`` method::
+
+    $violations = $validator->validateProperty($author, 'name');
+
+This method reads the current value of the property and validates it against
+the constraints defined for that property.
+
+You can also validate a value against the constraints of a property without
+setting it on the object, using ``validatePropertyValue()`` to check whether a
+value would be valid before assigning it::
+
+    $violations = $validator->validatePropertyValue($author, 'name', 'John');
+
+By default, ``validateProperty()`` and ``validatePropertyValue()`` silently
+return zero violations when the given property has no constraints defined.
+This means that typos or renamed properties won't produce any error.
+
+You can enable a strict check that throws a
+:class:`Symfony\\Component\\Validator\\Exception\\ValidatorException` if no
+metadata is found for the given property:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // register a compiler pass to enable the check
+
+        use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+        class EnablePropertyMetadataExistenceCheckPass implements CompilerPassInterface
+        {
+            public function process(ContainerBuilder $container): void
+            {
+                $container->getDefinition('validator.builder')
+                    ->addMethodCall('enablePropertyMetadataExistenceCheck');
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Validator\Validation;
+
+        $validator = Validation::createValidatorBuilder()
+            ->enablePropertyMetadataExistenceCheck()
+            ->getValidator();
+
+With this configuration, the following code throws a ``ValidatorException``
+because ``'nmae'`` (note the typo) does not exist::
+
+    $violations = $validator->validateProperty($author, 'nmae');
+
+.. versionadded:: 8.1
+
+    The ``enablePropertyMetadataExistenceCheck()`` method was introduced in
+    Symfony 8.1.
 
 .. _validation-constraints:
 
@@ -657,10 +714,6 @@ as if they were defined there.
 
 You can only define constraints for properties that exist on the target class.
 Otherwise, a ``MappingException`` is thrown.
-
-.. versionadded:: 7.4
-
-    The ``#[ExtendsValidationFor]`` attribute was introduced in Symfony 7.4.
 
 Debugging the Constraints
 -------------------------

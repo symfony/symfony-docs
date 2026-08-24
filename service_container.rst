@@ -279,51 +279,29 @@ which is the default config for a new project:
 
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- default configuration for services in *this* file -->
-                <defaults autowire="true" autoconfigure="true"/>
-
-                <!-- makes classes in src/ available to be used as services -->
-                <!-- this creates a service per class whose id is the fully-qualified class name -->
-                <prototype namespace="App\" resource="../src/"/>
-
-                <!-- order is important in this file because service definitions
-                     always *replace* previous ones; add your own service configuration below -->
-
-                <!-- ... -->
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            // default configuration for services in *this* file
-            $services = $container->services()
-                ->defaults()
-                    ->autowire()      // automatically injects dependencies in your services.
-                    ->autoconfigure() // automatically registers your services as commands, event subscribers, etc.
-            ;
+        return App::config([
+            'services' => [
+                // autowiring and autoconfiguration are enabled by default when using App::config()
+                // '_defaults' => [
+                //     'autowire' => true,      // automatically injects dependencies in your services.
+                //     'autoconfigure' => true, // automatically registers your services as commands, event subscribers, etc.
+                // ],
 
-            // makes classes in src/ available to be used as services
-            // this creates a service per class whose id is the fully-qualified class name
-            $services->load('App\\', '../src/');
+                // makes classes in src/ available to be used as services
+                // this creates a service per class whose id is the fully-qualified class name
+                'App\\' => [
+                    'resource' => '../src/',
+                ],
 
-            // order is important in this file because service definitions
-            // always *replace* previous ones; add your own service configuration below
-        };
+                // order is important in this file because service definitions
+                // always *replace* previous ones; add your own service configuration below
+            ],
+        ]);
 
 .. tip::
 
@@ -371,32 +349,24 @@ can exclude them using the ``exclude`` option:
                     - '../src/AnotherDirectory/'
                     - '../src/SomeFile.php'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <prototype namespace="App\" resource="../src/" exclude="../src/{SomeDirectory,AnotherDirectory,Kernel.php}"/>
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
-
-            $services->load('App\\', '../src/')
-                ->exclude('../src/{SomeDirectory,AnotherDirectory,Kernel.php}');
-        };
+        return App::config([
+            'services' => [
+                // ...
+                'App\\' => [
+                    'resource' => '../src/',
+                    'exclude' => [
+                        '../src/SomeDirectory/',
+                        '../src/AnotherDirectory/',
+                        '../src/SomeFile.php',
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -430,32 +400,51 @@ In the examples above, the key of each entry (e.g. ``App\``) is the namespace
 prefix of the classes to load. Sometimes you need to load classes of the *same*
 namespace in several groups, each one with a different configuration (e.g. to
 apply a different tag to each group). You can't do that with the previous
-syntax, because YAML does not allow using the same key more than once.
+syntax, because configuration keys must be unique in both YAML and PHP config
+files.
 
 To solve this, use any unique string as the key of each group and define the
 real namespace prefix in the ``namespace`` option:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/services.yaml
-    services:
-        # 'command_handlers' and 'event_subscribers' are not service ids or
-        # namespaces; they can be any unique string used as the entry key
-        command_handlers:
-            namespace: App\Domain\
-            resource: '../src/Domain/*/CommandHandler'
-            tags: [command_handler]
+    .. code-block:: yaml
 
-        event_subscribers:
-            namespace: App\Domain\
-            resource: '../src/Domain/*/EventSubscriber'
-            tags: [event_subscriber]
+        # config/services.yaml
+        services:
+            # 'command_handlers' and 'event_subscribers' are not service ids or
+            # namespaces; they can be any unique string used as the entry key
+            command_handlers:
+                namespace: App\Domain\
+                resource: '../src/Domain/*/CommandHandler'
+                tags: [command_handler]
 
-.. note::
+            event_subscribers:
+                namespace: App\Domain\
+                resource: '../src/Domain/*/EventSubscriber'
+                tags: [event_subscriber]
 
-    This limitation only exists in the YAML format. In XML and PHP config
-    files, the namespace is a regular attribute or argument, so you can repeat
-    it in as many definitions as needed.
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'services' => [
+                // 'command_handlers' and 'event_subscribers' are not service ids or
+                // namespaces; they can be any unique string used as the entry key
+                'command_handlers' => [
+                    'namespace' => 'App\Domain\\',
+                    'resource' => '../src/Domain/*/CommandHandler',
+                    'tags' => ['command_handler'],
+                ],
+                'event_subscribers' => [
+                    'namespace' => 'App\Domain\\',
+                    'resource' => '../src/Domain/*/EventSubscriber',
+                    'tags' => ['event_subscriber'],
+                ],
+            ],
+        ]);
 
 .. _services-autowire:
 
@@ -514,13 +503,8 @@ Autoconfiguration also works with attributes. Some attributes like
 :class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener` and
 :class:`Symfony\\Component\\Console\\Attribute\\AsCommand` are registered
 for autoconfiguration. Any class using these attributes will have tags applied
-to them.
-
-.. versionadded:: 7.4
-
-    In Symfony 7.4, autoconfiguration attributes on abstract classes are also
-    parsed when using resource-based service loading. Previously, abstract
-    classes were skipped entirely during this process.
+to them. Autoconfiguration attributes are also parsed on abstract classes when
+loading services from a resource.
 
 .. _services-constructor-injection:
 
@@ -603,7 +587,7 @@ site update is made, and that the admin email must be configurable::
         {
             // ...
 
-            $email = (new Email())
+            $email = new Email()
                 ->from('admin@example.com')
                 ->to($this->adminEmail)
                 ->subject('Site update just happened!')
@@ -667,32 +651,6 @@ Alternatively, you can set the argument explicitly in your service configuration
                 arguments:
                     $adminEmail: 'manager@example.com'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ...  same as before -->
-
-                <!-- Same as before -->
-
-                <prototype namespace="App\"
-                    resource="../src/"
-                    exclude="../src/{DependencyInjection,Entity,Kernel.php}"
-                />
-
-                <!-- explicitly configure the service -->
-                <service id="App\Service\SiteUpdater">
-                    <argument key="$adminEmail">manager@example.com</argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -700,17 +658,24 @@ Alternatively, you can set the argument explicitly in your service configuration
 
         use App\Service\SiteUpdater;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+        return App::config([
+            'services' => [
+                // ... same as before
 
-            // same as before
-            $services->load('App\\', '../src/')
-                ->exclude('../src/{DependencyInjection,Entity,Kernel.php}');
+                // same as before
+                'App\\' => [
+                    'resource' => '../src/',
+                    'exclude' => '../src/{DependencyInjection,Entity,Kernel.php}',
+                ],
 
-            $services->set(SiteUpdater::class)
-                ->arg('$adminEmail', 'manager@example.com')
-            ;
-        };
+                // explicitly configure the service
+                SiteUpdater::class => [
+                    'arguments' => [
+                        '$adminEmail' => 'manager@example.com',
+                    ],
+                ],
+            ],
+        ]);
 
 Thanks to this, the container will pass ``manager@example.com`` to the ``$adminEmail``
 argument of ``__construct`` when creating the ``SiteUpdater`` service. The
@@ -763,117 +728,42 @@ argument of a service:
                         first: !php/const true
                         second: 'Foo'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <services>
-                <service id="App\Service\SomeService">
-                    <!-- arguments without a type can be strings or numbers -->
-                    <argument>Foo</argument>
-                    <argument>7</argument>
-                    <argument>3.14</argument>
-                    <!-- explicitly declare a string argument -->
-                    <argument type="string">Foo</argument>
-                    <!-- booleans are passed as constants -->
-                    <argument type="constant">true</argument>
-
-                    <!-- constants can be built-in, user-defined, or Enums -->
-                    <argument type="constant">E_ALL</argument>
-                    <argument type="constant">PDO::FETCH_NUM</argument>
-                    <argument type="constant">Symfony\Component\HttpKernel\Kernel::VERSION</argument>
-                    <argument type="constant">App\Config\SomeEnum::SomeCase</argument>
-
-                    <!-- when not using autowiring, you can pass service arguments explicitly -->
-                    <argument type="service" id="some-service-id"/>
-                    <!-- use on-invalid="null" to pass null if the service doesn't exist -->
-                    <argument type="service" id="some-service-id" on-invalid="null"/>
-
-                    <!-- binary contents are passed encoded as base64 strings -->
-                    <argument type="binary">VGhpcyBpcyBhIEJlbGwgY2hhciAH</argument>
-
-                    <!-- collections (arrays) can include any type of argument -->
-                    <argument type="collection">
-                        <argument key="first" type="constant">true</argument>
-                        <argument key="second" type="string">Foo</argument>
-                    </argument>
-                </service>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\DependencyInjection\Reference;
+        return App::config([
+            'services' => [
+                App\Service\SomeService::class => [
+                    'arguments' => [
+                        // string, numeric and boolean arguments can be passed "as is"
+                        'Foo',
+                        true,
+                        7,
+                        3.14,
 
-        return static function (ContainerConfigurator $container) {
-            $services = $container->services();
+                        // constants can be built-in, user-defined, or Enums
+                        E_ALL,
+                        \PDO::FETCH_NUM,
+                        Symfony\Component\HttpKernel\Kernel::VERSION,
+                        App\Config\SomeEnum::SomeCase,
 
-            $services->set(App\Service\SomeService::class)
-                // string, numeric and boolean arguments can be passed "as is"
-                ->arg(0, 'Foo')
-                ->arg(1, true)
-                ->arg(2, 7)
-                ->arg(3, 3.14)
+                        // when not using autowiring, you can pass service arguments
+                        // explicitly; this fails if the service doesn't exist
+                        service('some-service-id'),
+                        // this passes null if the service doesn't exist
+                        service('some-service-id')->nullOnInvalid(),
 
-                // constants: built-in, user-defined, or Enums
-                ->arg(4, E_ALL)
-                ->arg(5, \PDO::FETCH_NUM)
-                ->arg(6, Symfony\Component\HttpKernel\Kernel::VERSION)
-                ->arg(7, App\Config\SomeEnum::SomeCase)
-
-                // when not using autowiring, you can pass service arguments explicitly;
-                // this fails if the service doesn't exist
-                ->arg(8, service('some-service-id'))
-                // this passes null if the service doesn't exist
-                ->arg(9, new Reference('some-service-id', Reference::NULL_ON_INVALID_REFERENCE))
-
-                // collection with mixed argument types
-                ->arg(10, [
-                    'first' => true,
-                    'second' => 'Foo',
-                ]);
-
-            // ...
-        };
-
-.. note::
-
-    In XML service definitions, collection argument keys can use the ``key-type``
-    attribute to specify how the key value is interpreted. The supported types
-    are ``constant`` (resolves the key as a PHP constant) and ``binary``
-    (decodes the key from a base64-encoded string):
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="App\Service\SomeService">
-            <argument type="collection">
-                <!-- key resolved as the value of the constant (e.g. the 'published' string
-                     if the class defines it as: const STATUS_PUBLISHED = 'published') -->
-                <argument key-type="constant" key="App\Entity\BlogPost::STATUS_PUBLISHED">Value 1</argument>
-                <!-- key used as the literal 'App\Entity\BlogPost::STATUS_PUBLISHED' string -->
-                <argument key="App\Entity\BlogPost::STATUS_PUBLISHED">Value 2</argument>
-                <!-- key decoded from base64 to binary string -->
-                <argument key-type="binary" key="AQID">Value 3</argument>
-            </argument>
-        </service>
-
-    .. versionadded:: 7.2
-
-        The ``key-type`` attribute for XML service argument keys was introduced in Symfony 7.2.
+                        // collections (arrays) can include any type of argument
+                        [
+                            'first' => true,
+                            'second' => 'Foo',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _service-container-parameters:
 
@@ -918,22 +808,6 @@ characters (or the dedicated ``#[Autowire]`` option):
                 arguments:
                     $adminEmail: '%app.admin_email%'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Service\SiteUpdater">
-                    <argument key="$adminEmail">%app.admin_email%</argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -941,13 +815,15 @@ characters (or the dedicated ``#[Autowire]`` option):
 
         use App\Service\SiteUpdater;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(SiteUpdater::class)
-                ->arg('$adminEmail', param('app.admin_email'))
-            ;
-        };
+        return App::config([
+            'services' => [
+                SiteUpdater::class => [
+                    'arguments' => [
+                        '$adminEmail' => param('app.admin_email'),
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -1019,24 +895,6 @@ constructor argument to another service:
                 # when using double-quoted strings, the backslash needs to be escaped twice (see https://yaml.org/spec/1.2/spec.html#id2787109)
                 # arguments: ["@=service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()"]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Mailer">
-                    <argument type="expression">service('App\\Mail\\MailerConfiguration').getMailerMethod()</argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1044,13 +902,16 @@ constructor argument to another service:
 
         use App\Mailer;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                // ...
 
-            $services->set(Mailer::class)
-                // because of the escaping applied by PHP, you must add 4 backslashes for each original backslash
-                ->args([expr("service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()")]);
-        };
+                Mailer::class => [
+                    // because of the escaping applied by PHP, you must add 4 backslashes for each original backslash
+                    'arguments' => [expr("service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()")],
+                ],
+            ],
+        ]);
 
 In this context, you have access to 3 functions:
 
@@ -1132,25 +993,6 @@ But, you can control this and pass in a different logger:
                     # and not just the *string* 'monolog.logger.request'
                     $logger: '@monolog.logger.request'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... same code as before -->
-
-                <!-- Explicitly configure the service -->
-                <service id="App\Service\MessageGenerator">
-                    <argument key="$logger" type="service" id="monolog.logger.request"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1158,14 +1000,18 @@ But, you can control this and pass in a different logger:
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $container): void {
-            // ... same code as before
+        return App::config([
+            'services' => [
+                // ... same code as before
 
-            // explicitly configure the service
-            $services->set(MessageGenerator::class)
-                ->arg('$logger', service('monolog.logger.request'))
-            ;
-        };
+                // explicitly configure the service
+                MessageGenerator::class => [
+                    'arguments' => [
+                        '$logger' => service('monolog.logger.request'),
+                    ],
+                ],
+            ],
+        ]);
 
 This tells the container that the ``$logger`` argument to ``__construct`` should use
 the service whose id is ``monolog.logger.request``.
@@ -1224,34 +1070,6 @@ service id:
             # the site_updater.superadmin will be used
             App\Service\SiteUpdater: '@site_updater.superadmin'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="site_updater.superadmin" class="App\Service\SiteUpdater" autowire="false">
-                    <argument type="service" id="mailer"/>
-                    <argument>superadmin@example.com</argument>
-                </service>
-
-                <service id="site_updater.normal_users" class="App\Service\SiteUpdater" autowire="false">
-                    <argument type="service" id="mailer"/>
-                    <argument>contact@example.com</argument>
-                </service>
-
-                <!-- Create an alias, so that, by default, if you type-hint SiteUpdater,
-                     the site_updater.superadmin will be used -->
-                <service id="App\Service\SiteUpdater" alias="site_updater.superadmin"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1259,30 +1077,35 @@ service id:
 
         use App\Service\SiteUpdater;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+        return App::config([
+            'services' => [
+                // ...
 
-            // site_updater.superadmin is the service's id
-            $services->set('site_updater.superadmin', SiteUpdater::class)
-                // you CAN still use autowiring here, but this example shows what it looks like without
-                ->autowire(false)
-                // manually wire all arguments
-                ->args([
-                   service('mailer'),
-                   'superadmin@example.com',
-                ]);
+                // site_updater.superadmin is the service's id
+                'site_updater.superadmin' => [
+                    'class' => SiteUpdater::class,
+                    // you CAN still use autowiring here, but this example shows what it looks like without
+                    'autowire' => false,
+                    // manually wire all arguments
+                    'arguments' => [
+                        service('mailer'),
+                        'superadmin@example.com',
+                    ],
+                ],
+                'site_updater.normal_users' => [
+                    'class' => SiteUpdater::class,
+                    'autowire' => false,
+                    'arguments' => [
+                        service('mailer'),
+                        'contact@example.com',
+                    ],
+                ],
 
-            $services->set('site_updater.normal_users', SiteUpdater::class)
-                ->autowire(false)
-                ->args([
-                    service('mailer'),
-                    'contact@example.com',
-                ]);
-
-            // Create an alias, so that, by default, if you type-hint SiteUpdater,
-            // the site_updater.superadmin will be used
-            $services->alias(SiteUpdater::class, 'site_updater.superadmin');
-        };
+                // create an alias, so that, by default, if you type-hint SiteUpdater,
+                // the site_updater.superadmin will be used
+                SiteUpdater::class => service('site_updater.superadmin'),
+            ],
+        ]);
 
 In this case, *two* services are registered: ``site_updater.superadmin``
 and ``site_updater.normal_users``. Thanks to the alias, if you type-hint
@@ -1319,30 +1142,19 @@ files. Suppose you decided to move some configuration to a new file:
         services:
             # ... some services
 
-    .. code-block:: xml
-
-        <!-- config/services/mailer.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <!-- ... some parameters -->
-            </parameters>
-
-            <services>
-                <!-- ... some services -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services/mailer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ... some parameters
-        // ... some services
+        return App::config([
+            'parameters' => [
+                // ... some parameters
+            ],
+            'services' => [
+                // ... some services
+            ],
+        ]);
 
 To import this file, use the ``imports`` key from any other file and pass either
 a relative or absolute path to the imported file:
@@ -1366,48 +1178,51 @@ a relative or absolute path to the imported file:
 
             # ...
 
-    .. code-block:: xml
+    .. code-block:: php
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            <imports>
-                <import resource="services/mailer.xml"/>
-                <!-- if you want to import a whole directory: -->
-                <import resource="services/"/>
-            </imports>
+        return App::config([
+            'imports' => [
+                ['resource' => 'services/mailer.php'],
+                // if you want to import a whole directory:
+                ['resource' => 'services/'],
+            ],
+            'services' => [
+                'App\\' => [
+                    'resource' => '../src/',
+                ],
 
-            <services>
-                <defaults autowire="true" autoconfigure="true"/>
+                // ...
+            ],
+        ]);
 
-                <prototype namespace="App\" resource="../src/"/>
+When importing a directory or using glob patterns, you can use the ``exclude``
+option to skip specific files or patterns:
 
-                <!-- ... -->
-            </services>
-        </container>
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        imports:
+            - { resource: services/, exclude: ['services/legacy_*.yaml'] }
 
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $container->import('services/mailer.php');
-            // if you want to import a whole directory:
-            $container->import('services/');
+        return App::config([
+            'imports' => [
+                ['resource' => 'services/', 'exclude' => ['services/legacy_*.php']],
+            ],
+        ]);
 
-            $services = $container->services()
-                ->defaults()
-                    ->autowire()
-                    ->autoconfigure()
-            ;
+.. versionadded:: 8.1
 
-            $services->load('App\\', '../src/');
-        };
+    The ``exclude`` option for ``imports`` was introduced in Symfony 8.1.
 
 When loading a configuration file, Symfony first processes all imported files in
 the order they are listed under the ``imports`` key. After all imports are processed,
@@ -1455,53 +1270,26 @@ This prevents Symfony from auto-registering classes that are defined manually el
                     - '../src/Mailer/'
                     - '../src/SpecificClass.php'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <imports>
-                <import resource="services/mailer.xml"/>
-                <!-- ... other imports -->
-            </imports>
-
-            <services>
-                <defaults autowire="true" autoconfigure="true"/>
-
-                <prototype namespace="App\" resource="../src/">
-                    <exclude>../src/Mailer/</exclude>
-                    <exclude>../src/SpecificClass.php</exclude>
-                </prototype>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $container->import('services/mailer.php');
-            // ... other imports
-
-            $services = $container->services()
-                ->defaults()
-                    ->autowire()
-                    ->autoconfigure()
-            ;
-
-            $services->load('App\\', '../src/')
-                ->exclude([
-                    '../src/Mailer/',
-                    '../src/SpecificClass.php',
-                ]);
-        };
+        return App::config([
+            'imports' => [
+                ['resource' => 'services/mailer.php'],
+                // ... other imports
+            ],
+            'services' => [
+                'App\\' => [
+                    'resource' => '../src/',
+                    'exclude' => [
+                        '../src/Mailer/',
+                        '../src/SpecificClass.php',
+                    ],
+                ],
+            ],
+        ]);
 
 .. _import-override-services-in-the-same-file:
 
@@ -1527,44 +1315,25 @@ same file. These later definitions will override the auto-registered ones:
             App\Mailer\MyMailer:
                 arguments: ['%env(MAILER_DSN)%']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true"/>
-
-                <prototype namespace="App\" resource="../src/"/>
-
-                <service id="App\Mailer\MyMailer">
-                    <argument>%env(MAILER_DSN)%</argument>
-                </service>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services()
-                ->defaults()
-                    ->autowire()
-                    ->autoconfigure();
+        use App\Mailer\MyMailer;
 
-            $services->load('App\\', '../src/');
-
-            $services->set(App\Mailer\MyMailer::class)
-                ->arg(0, '%env(MAILER_DSN)%');
-        };
+        return App::config([
+            'services' => [
+                'App\\' => [
+                    'resource' => '../src/',
+                ],
+                MyMailer::class => [
+                    'arguments' => [
+                        env('MAILER_DSN'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. _import-control-import-order:
 
@@ -1605,95 +1374,47 @@ can override the auto-discovered ones.
             # definitions here override anything from the imports above
             # consider keeping most definitions inside imported files
 
-    .. code-block:: xml
-
-        <!-- config/services/autodiscovery.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services
-                       https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true"/>
-
-                <prototype namespace="App\" resource="../../src/">
-                    <exclude>../../src/Mailer/</exclude>
-                </prototype>
-            </services>
-        </container>
-
-        <!-- config/services/mailer.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services
-                       https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mailer\SpecificMailer">
-                    <!-- ... custom configuration -->
-                </service>
-            </services>
-        </container>
-
-        <!-- config/services.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services
-                       https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <imports>
-                <import resource="services/autodiscovery.xml"/>
-                <import resource="services/mailer.xml"/>
-                <import resource="services/"/>
-            </imports>
-
-            <services>
-                <!-- definitions here override anything from the imports above -->
-                <!-- consider keeping most definitions inside imported files -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services/autodiscovery.php
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services()
-                ->defaults()
-                    ->autowire()
-                    ->autoconfigure();
-
-            $services->load('App\\', '../../src/')
-                ->exclude([
-                    '../../src/Mailer/',
-                ]);
-        };
+        return App::config([
+            'services' => [
+                'App\\' => [
+                    'resource' => '../../src/',
+                    'exclude' => [
+                        '../../src/Mailer/',
+                    ],
+                ],
+            ],
+        ]);
 
         // config/services/mailer.php
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(App\Mailer\SpecificMailer::class);
-            // add any custom configuration here if needed
-        };
+        return App::config([
+            'services' => [
+                App\Mailer\SpecificMailer::class => [
+                    // ... custom configuration
+                ],
+            ],
+        ]);
 
         // config/services.php
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function (ContainerConfigurator $container): void {
-            $container->import('services/autodiscovery.php');
-            $container->import('services/mailer.php');
-            $container->import('services/');
-
-            $services = $container->services();
-
-            // definitions here override anything from the imports above
-            // consider keeping most definitions inside imported files
-        };
+        return App::config([
+            'imports' => [
+                ['resource' => 'services/autodiscovery.php'],
+                ['resource' => 'services/mailer.php'],
+                ['resource' => 'services/'],
+            ],
+            'services' => [
+                // definitions here override anything from the imports above
+                // consider keeping most definitions inside imported files
+            ],
+        ]);
 
 .. include:: /service_container/_imports-parameters-note.rst.inc
 
@@ -1757,19 +1478,6 @@ for example, to register a service only in the ``dev`` environment:
             services:
                 App\Service\AnotherClass: ~
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <services>
-            <service id="App\Service\SomeClass"/>
-
-            <when env="dev">
-                <services>
-                    <service id="App\Service\AnotherClass"/>
-                </services>
-            </when>
-        </services>
-
     .. code-block:: php
 
         // config/services.php
@@ -1829,10 +1537,6 @@ environment, you can use the ``#[WhenNot]`` attribute::
     {
         // ...
     }
-
-.. versionadded:: 7.2
-
-    The ``#[WhenNot]`` attribute was introduced in Symfony 7.2.
 
 .. _container-public:
 .. _container-private-services:
@@ -1910,23 +1614,6 @@ public, override the ``public`` setting:
             App\Service\PublicService:
                 public: true
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... same code as before -->
-
-                <!-- Explicitly configure the service -->
-                <service id="App\Service\PublicService" public="true"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1934,14 +1621,16 @@ public, override the ``public`` setting:
 
         use App\Service\PublicService;
 
-        return function(ContainerConfigurator $container): void {
-            // ... same as code before
+        return App::config([
+            'services' => [
+                // ... same code as before
 
-            // explicitly configure the service
-            $services->set(PublicService::class)
-                ->public()
-            ;
-        };
+                // explicitly configure the service
+                PublicService::class => [
+                    'public' => true,
+                ],
+            ],
+        ]);
 
 .. _service-container-request:
 
@@ -2012,12 +1701,6 @@ which is useful to debug dependency injection issues:
     # pass a search term to filter the results
     $ php bin/console debug:autowiring logger
 
-.. deprecated:: 7.3
-
-    Starting in Symfony 7.3, the ``debug:container`` command displays the
-    service arguments by default. In earlier Symfony versions, you needed to
-    use the ``--show-arguments`` option, which is now deprecated.
-
 Linting Service Definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2033,20 +1716,12 @@ application to production (e.g. in your continuous integration server):
     # the command will fail if any of those environment variables are missing
     $ php bin/console lint:container --resolve-env-vars
 
-.. versionadded:: 7.2
-
-    The ``--resolve-env-vars`` option was introduced in Symfony 7.2.
-
 Performing those checks whenever the container is compiled can hurt performance.
 That's why they are implemented in :doc:`compiler passes </service_container/compiler_passes>`
 called ``CheckTypeDeclarationsPass`` and ``CheckAliasValidityPass``, which are
 disabled by default and enabled only when executing the ``lint:container`` command.
 If you don't mind the performance loss, you can enable these compiler passes in
 your application.
-
-.. versionadded:: 7.1
-
-    The ``CheckAliasValidityPass`` compiler pass was introduced in Symfony 7.1.
 
 .. _service-container-standalone:
 
@@ -2178,14 +1853,9 @@ into the container::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
     $container = new ContainerBuilder();
-
-    // loading an XML config file
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
-    $loader->load('services.xml');
 
     // loading a YAML config file (this requires to also install the Yaml
     // component: composer require symfony/yaml)
@@ -2195,15 +1865,6 @@ into the container::
     // loading a PHP config file
     $loader = new PhpFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.php');
-
-.. tip::
-
-    If your application uses unconventional file extensions (for example, your
-    XML files have a ``.config`` extension) you can pass the file type as the
-    second optional parameter of the ``load()`` method::
-
-        // ...
-        $loader->load('services.config', 'xml');
 
 The contents of these configuration files use the same format shown in the
 rest of this article. For example, this is how the previous service
@@ -2225,28 +1886,6 @@ definitions look in each format:
                 class: App\Service\MessageGenerator
                 arguments: ['@app.text_formatter']
 
-    .. code-block:: xml
-
-        <!-- services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="app.locale">es</parameter>
-            </parameters>
-
-            <services>
-                <service id="app.text_formatter" class="App\Formatter\TextFormatter"/>
-
-                <service id="app.message_generator" class="App\Service\MessageGenerator">
-                    <argument type="service" id="app.text_formatter"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // services.php
@@ -2255,19 +1894,20 @@ definitions look in each format:
         use App\Formatter\TextFormatter;
         use App\Service\MessageGenerator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->parameters()
-                ->set('app.locale', 'es')
-            ;
-
-            $services = $container->services();
-
-            $services->set('app.text_formatter', TextFormatter::class);
-
-            $services->set('app.message_generator', MessageGenerator::class)
-                ->args([service('app.text_formatter')])
-            ;
-        };
+        return App::config([
+            'parameters' => [
+                'app.locale' => 'es',
+            ],
+            'services' => [
+                'app.text_formatter' => [
+                    'class' => TextFormatter::class,
+                ],
+                'app.message_generator' => [
+                    'class' => MessageGenerator::class,
+                    'arguments' => [service('app.text_formatter')],
+                ],
+            ],
+        ]);
 
 Compiling the Container and Best Practices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

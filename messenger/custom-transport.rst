@@ -277,29 +277,20 @@ Otherwise, add the following:
             Your\Transport\YourTransportFactory:
                 tags: [messenger.transport_factory]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="Your\Transport\YourTransportFactory">
-                   <tag name="messenger.transport_factory"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Your\Transport\YourTransportFactory;
 
-        $container->register(YourTransportFactory::class)
-            ->setTags(['messenger.transport_factory']);
+        return App::config([
+            'services' => [
+                YourTransportFactory::class => [
+                    'tags' => ['messenger.transport_factory'],
+                ],
+            ],
+        ]);
 
 Use your Transport
 ------------------
@@ -317,36 +308,20 @@ named transport using your own DSN:
                 transports:
                     yours: 'my-transport://...'
 
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:transport name="yours" dsn="my-transport://..."/>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/messenger.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->messenger()
-                ->transport('yours')
-                    ->dsn('my-transport://...')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'yours' => 'my-transport://...',
+                    ],
+                ],
+            ],
+        ]);
 
 In addition to being able to route your messages to the ``yours`` sender, this
 will give you access to the following services:

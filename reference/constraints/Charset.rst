@@ -1,10 +1,6 @@
 Charset
 =======
 
-.. versionadded:: 7.1
-
-    The ``Charset`` constraint was introduced in Symfony 7.1.
-
 Validates that a string (or an object implementing the ``Stringable`` PHP interface)
 is encoded in a given charset.
 

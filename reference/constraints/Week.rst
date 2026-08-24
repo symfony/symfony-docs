@@ -1,10 +1,6 @@
 Week
 ====
 
-.. versionadded:: 7.2
-
-    The ``Week`` constraint was introduced in Symfony 7.2.
-
 Validates that a given string (or an object implementing the ``Stringable`` PHP
 interface) represents a valid week number according to the `ISO-8601`_ standard
 (e.g. ``2025-W01``).

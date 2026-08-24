@@ -157,10 +157,6 @@ The ``debug:asset-map`` command provides several options to filter results:
     # you can also combine all filters (e.g. find bold web fonts in your own asset dirs)
     $ php bin/console debug:asset-map bold --no-vendor --ext=woff2
 
-.. versionadded:: 7.2
-
-    The options to filter ``debug:asset-map`` results were introduced in Symfony 7.2.
-
 .. _importmaps-javascript:
 
 Importmaps & Writing JavaScript
@@ -219,10 +215,6 @@ to add any `npm package`_:
 
     Add the ``--dry-run`` option to simulate package installation without actually
     making any changes (e.g. ``php bin/console importmap:require bootstrap --dry-run``)
-
-    .. versionadded:: 7.3
-
-        The ``--dry-run`` option was introduced in Symfony 7.3.
 
 This adds the ``bootstrap`` package to your ``importmap.php`` file::
 
@@ -346,6 +338,42 @@ Now you can import the package as usual:
     the registered directory includes every file the package needs for its
     browser imports.
 
+Requiring Non-ESM Packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``--no-esm`` option was introduced in Symfony 8.2.
+
+By default, remote packages are downloaded as the ESM build that the ``jsDelivr``
+CDN generates for them. If that build is broken for some package, use the ``--no-esm``
+option to download the original file published by the package instead. When using
+this option, you must pass the exact path of the file to download:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:require "fullcalendar/index.global.js=fullcalendar" --no-esm
+
+This downloads the original ``index.global.js`` file and adds the following to
+``importmap.php``::
+
+    // importmap.php
+    return [
+        // ...
+        'fullcalendar' => [
+            'version' => '7.0.0',
+            'package_specifier' => 'fullcalendar/index.global.js',
+            'esm' => false,
+        ],
+    ];
+
+The downloaded file is not modified in any way, and the ``esm`` flag is
+preserved when running ``importmap:update``. Relative imports inside the
+file (e.g. ``import "./chunk/calendar.js"``) are downloaded next to it and
+added to the import map, so they keep working. However, bare imports (e.g.
+``import { h } from "preact"``) are not resolved; you must require those
+packages yourself.
+
 Removing JavaScript Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -409,6 +437,42 @@ filename. The result: importing ``./duck.js`` just works!
 The ``importmap()`` function also outputs an `ES module shim`_ so that
 `older browsers <https://caniuse.com/import-maps>`_ understand importmaps
 (see the :ref:`polyfill config <config-importmap-polyfill>`).
+
+.. _importmap-integrity:
+
+Adding Integrity Metadata to Importmaps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``importmap_integrity_algorithms`` option was introduced in Symfony 8.2.
+
+The ``importmap()`` function can add `Subresource Integrity`_ metadata to the
+rendered importmap, so browsers can verify that the JavaScript and CSS files
+they fetch have not been tampered with. Enable it by setting the
+``importmap_integrity_algorithms`` option to one or more of the supported hash
+algorithms (``sha256``, ``sha384`` and ``sha512``):
+
+.. code-block:: yaml
+
+    # config/packages/asset_mapper.yaml
+    framework:
+        asset_mapper:
+            importmap_integrity_algorithms: ['sha384']
+
+When enabled, the importmap includes an ``integrity`` entry for each asset, and
+the preloaded module and stylesheet tags get an ``integrity`` attribute:
+
+.. code-block:: html
+
+    <script type="importmap">{
+        "imports": {
+            "app": "/assets/app-4e986c1a.js"
+        },
+        "integrity": {
+            "/assets/app-4e986c1a.js": "sha384-n1V95umnU..."
+        }
+    }</script>
 
 .. _app-entrypoint:
 
@@ -641,10 +705,6 @@ will also be downloaded asynchronously.
 Importing JSON files
 --------------------
 
-.. versionadded:: 7.4
-
-    Support for importing JSON assets was introduced in Symfony 7.4.
-
 Modern browsers support importing JSON files using the
 ``import data from './foo.json' with { type: 'json' }`` syntax, but browser
 support is still limited. AssetMapper provides a compatible alternative that
@@ -873,10 +933,6 @@ Symfony will add a ``Link`` header in the response to preload the CSS files.
 
 Pre-Compressing Assets
 ----------------------
-
-.. versionadded:: 7.3
-
-    Support for pre-compressing assets was introduced in Symfony 7.3.
 
 Although most web servers (Caddy, Nginx, Apache, FrankenPHP) and services like Cloudflare
 provide asset compression features, AssetMapper also allows you to compress all
@@ -1460,3 +1516,4 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 .. _`brotli PHP extension`: https://pecl.php.net/package/brotli
 .. _`zstd PHP extension`: https://pecl.php.net/package/zstd
 .. _`zlib PHP extension`: https://www.php.net/manual/en/book.zlib.php
+.. _`Subresource Integrity`: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity

@@ -206,6 +206,52 @@ The ``SymfonyRuntime`` can handle these applications:
             return new Response('Hello world');
         };
 
+    .. versionadded:: 8.1
+
+        Support for returning a ``Response`` object when running in FrankenPHP
+        worker mode was introduced in Symfony 8.1.
+
+    When running in `FrankenPHP`_ worker mode, a ``Response`` object is handled
+    by :class:`Symfony\\Component\\Runtime\\Runner\\FrankenPhpWorkerRunner`
+    instead of ``ResponseRunner``. This is useful for scenarios such as
+    maintenance pages, where you want to return a static response while still
+    benefiting from the worker loop::
+
+        // public/index.php
+        use App\Kernel;
+        use Symfony\Component\HttpFoundation\Response;
+
+        require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+        return function (array $context) {
+            if ($context['APP_MAINTENANCE'] ?? false) {
+                return new Response('Service Unavailable', 503);
+            }
+
+            return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+        };
+
+    .. _runtime-frankenphp-reset-kernel:
+
+    .. versionadded:: 8.1
+
+        The ``FRANKENPHP_RESET_KERNEL`` environment variable was introduced
+        in Symfony 8.1.
+
+    By default, ``FrankenPhpWorkerRunner`` reuses the same kernel instance
+    across every request handled by a worker process. This is what makes
+    worker mode fast, but it also means that any state captured by the kernel
+    or its services may leak across requests unless the relevant services
+    implement :class:`Symfony\\Contracts\\Service\\ResetInterface`.
+
+    Set the ``FRANKENPHP_RESET_KERNEL`` environment variable to ``1`` to make
+    the runner clone the application after each request, so the next request
+    starts from a fresh kernel state booted from the cached container file.
+
+    This is an opt-in alternative when auditing every service for proper
+    reset is not realistic. The trade-off is a noticeable performance cost
+    compared to the default reuse mode, since each request boots a new kernel.
+
 :class:`Symfony\\Component\\Console\\Command\\Command`
     To write single command applications. This will use the
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
@@ -315,10 +361,6 @@ or a JSON encoded string::
 
     // ...
 
-.. versionadded:: 7.4
-
-    The support for JSON contents in ``APP_RUNTIME_OPTIONS`` was introduced in Symfony 7.4.
-
 You can also configure ``extra.runtime`` in ``composer.json``:
 
 .. code-block:: json
@@ -355,10 +397,6 @@ The following options are supported by the ``SymfonyRuntime``:
     To define the project directory relative to the parent directory of your ``composer.json`` file.
 ``test_envs`` (default: ``["test"]``)
     To define the names of the test envs.
-
-.. versionadded:: 7.4
-
-    The ``project_dir`` option was introduced in Symfony 7.4.
 
 Besides these, the ``GenericRuntime`` and ``SymfonyRuntime`` also support
 these options:

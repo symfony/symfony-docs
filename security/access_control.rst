@@ -62,108 +62,37 @@ Take the following ``access_control`` entries as an example:
                 - { attributes: {'_route': 'admin'}, roles: ROLE_ADMIN }
                 - { route: 'admin', roles: ROLE_ADMIN }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <srv:parameters>
-                <srv:parameter key="env(TRUSTED_IPS)">10.0.0.1, 10.0.0.2</srv:parameter>
-            </srv:parameters>
-
-            <config>
-                <!-- ... -->
-                <rule path="^/admin" role="ROLE_USER_PORT" ip="127.0.0.1" port="8080"/>
-                <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1"/>
-                <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
-                <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
-
-                <!-- ips can be comma-separated, which is especially useful when using env variables -->
-                <rule path="^/admin" role="ROLE_USER_IP" ip="%env(TRUSTED_IPS)%"/>
-                <rule path="^/admin" role="ROLE_USER_IP">
-                    <ip>127.0.0.1</ip>
-                    <ip>::1</ip>
-                    <ip>%env(TRUSTED_IPS)%</ip>
-                </rule>
-
-                <!-- for custom matching needs, use a request matcher service -->
-                <rule role="ROLE_USER" request-matcher="App\Security\RequestMatcher\MyRequestMatcher"/>
-
-                <!-- require ROLE_ADMIN for 'admin' route. You can use the shortcut route="xxx" -->
-                <rule role="ROLE_ADMIN">
-                    <attribute key="_route">admin</attribute>
-                </rule>
-                <rule route="admin" role="ROLE_ADMIN"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Component\DependencyInjection\ContainerBuilder;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerBuilder $container, SecurityConfig $security): void {
-            $container->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
-            // ...
+        use App\Security\RequestMatcher\MyRequestMatcher;
 
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_USER_PORT'])
-                ->ips(['127.0.0.1'])
-                ->port(8080)
-            ;
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_USER_IP'])
-                ->ips(['127.0.0.1'])
-            ;
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_USER_HOST'])
-                ->host('symfony\.com$')
-            ;
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_USER_METHOD'])
-                ->methods(['POST', 'PUT'])
-            ;
-            // ips can be comma-separated, which is especially useful when using env variables
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_USER_IP'])
-                ->ips([env('TRUSTED_IPS')])
-            ;
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_USER_IP'])
-                ->ips(['127.0.0.1', '::1', env('TRUSTED_IPS')])
-            ;
+        return App::config([
+            'parameters' => [
+                'env(TRUSTED_IPS)' => '10.0.0.1, 10.0.0.2',
+            ],
+            'security' => [
+                'access_control' => [
+                    ['path' => '^/admin', 'roles' => 'ROLE_USER_PORT', 'ips' => ['127.0.0.1'], 'port' => 8080],
+                    ['path' => '^/admin', 'roles' => 'ROLE_USER_IP', 'ips' => ['127.0.0.1']],
+                    ['path' => '^/admin', 'roles' => 'ROLE_USER_HOST', 'host' => 'symfony\.com$'],
+                    ['path' => '^/admin', 'roles' => 'ROLE_USER_METHOD', 'methods' => ['POST', 'PUT']],
 
-            // for custom matching needs, use a request matcher service
-            $security->accessControl()
-                ->roles(['ROLE_USER'])
-                ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
-            ;
+                    // ips can be comma-separated, which is especially useful when using env variables
+                    ['path' => '^/admin', 'roles' => 'ROLE_USER_IP', 'ips' => env('TRUSTED_IPS')],
+                    ['path' => '^/admin', 'roles' => 'ROLE_USER_IP', 'ips' => ['127.0.0.1', '::1', env('TRUSTED_IPS')]],
 
-            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') method,
-            // instead of attributes(['_route' => 'xxx']) method
-            $security->accessControl()
-                ->roles(['ROLE_ADMIN'])
-                ->attributes(['_route' => 'admin'])
-            ;
-            $security->accessControl()
-                ->roles(['ROLE_ADMIN'])
-                ->route('admin')
-            ;
-        };
+                    // for custom matching needs, use a request matcher service
+                    ['roles' => 'ROLE_USER', 'request_matcher' => MyRequestMatcher::class],
+
+                    // require ROLE_ADMIN for 'admin' route. You can use the shortcut "route: "xxx", instead of "attributes": ["_route": "xxx"]
+                    ['attributes' => ['_route' => 'admin'], 'roles' => 'ROLE_ADMIN'],
+                    ['route' => 'admin', 'roles' => 'ROLE_ADMIN'],
+                ],
+            ],
+        ]);
 
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
@@ -292,51 +221,20 @@ pattern so that it is only accessible by requests from the local server itself:
                 - { path: '^/internal', roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
                 - { path: '^/internal', roles: ROLE_NO_ACCESS }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <!-- the 'ips' option supports IP addresses and subnet masks -->
-                <rule path="^/internal" role="PUBLIC_ACCESS">
-                    <ip>127.0.0.1</ip>
-                    <ip>::1</ip>
-                </rule>
-
-                <rule path="^/internal" role="ROLE_NO_ACCESS"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-
-            $security->accessControl()
-                ->path('^/internal')
-                ->roles(['PUBLIC_ACCESS'])
-                // the 'ips' option supports IP addresses and subnet masks
-                ->ips(['127.0.0.1', '::1'])
-            ;
-
-            $security->accessControl()
-                ->path('^/internal')
-                ->roles(['ROLE_NO_ACCESS'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'access_control' => [
+                    // the 'ips' option supports IP addresses and subnet masks
+                    ['path' => '^/internal', 'roles' => 'PUBLIC_ACCESS', 'ips' => ['127.0.0.1', '::1', '192.168.0.1/24']],
+                    ['path' => '^/internal', 'roles' => 'ROLE_NO_ACCESS'],
+                ],
+            ],
+        ]);
 
 Here is how it works when the path is ``/internal/something`` coming from
 the external IP address ``10.0.0.1``:
@@ -383,44 +281,24 @@ key:
                     roles: 'ROLE_ADMIN'
                     allow_if: "'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <!-- the 'role' and 'allow-if' options work like an OR expression, so
-                     access is granted if the expression is TRUE or the user has ROLE_ADMIN -->
-                <rule path="^/_internal/secure"
-                    role="ROLE_ADMIN"
-                    allow-if="'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-
-            $security->accessControl()
-                ->path('^/_internal/secure')
-                // the 'role' and 'allow-if' options work like an OR expression, so
-                // access is granted if the expression is TRUE or the user has ROLE_ADMIN
-                ->roles(['ROLE_ADMIN'])
-                ->allowIf('"127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'access_control' => [
+                    [
+                        'path' => '^/_internal/secure',
+                        // the 'roles' and 'allow_if' options work like an OR expression, so
+                        // access is granted if the expression is TRUE or the user has ROLE_ADMIN
+                        'roles' => 'ROLE_ADMIN',
+                        'allow_if' => '"127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")',
+                    ],
+                ],
+            ],
+        ]);
 
 In this case, when the user tries to access any URL starting with
 ``/_internal/secure``, they will only be granted access if the IP address is
@@ -462,41 +340,18 @@ access those URLs via a specific port. This could be useful for example for
             access_control:
                 - { path: ^/cart/checkout, roles: PUBLIC_ACCESS, port: 8080 }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <rule path="^/cart/checkout"
-                    role="PUBLIC_ACCESS"
-                    port="8080"
-                />
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-
-            $security->accessControl()
-                ->path('^/cart/checkout')
-                ->roles(['PUBLIC_ACCESS'])
-                ->port(8080)
-            ;
-        };
+        return App::config([
+            'security' => [
+                'access_control' => [
+                    ['path' => '^/cart/checkout', 'roles' => 'PUBLIC_ACCESS', 'port' => 8080],
+                ],
+            ],
+        ]);
 
 Forcing a Channel (http, https)
 -------------------------------
@@ -516,38 +371,15 @@ the user will be redirected to ``https``:
             access_control:
                 - { path: ^/cart/checkout, roles: PUBLIC_ACCESS, requires_channel: https }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <rule path="^/cart/checkout"
-                    role="PUBLIC_ACCESS"
-                    requires-channel="https"
-                />
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-
-            $security->accessControl()
-                ->path('^/cart/checkout')
-                ->roles(['PUBLIC_ACCESS'])
-                ->requiresChannel('https')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'access_control' => [
+                    ['path' => '^/cart/checkout', 'roles' => 'PUBLIC_ACCESS', 'requires_channel' => 'https'],
+                ],
+            ],
+        ]);

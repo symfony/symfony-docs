@@ -211,10 +211,6 @@ This option allows you to customize the visual separator shown after the preferr
 choices. You can use HTML elements like ``<hr>`` to display a more modern separator,
 but you'll also need to set the `separator_html`_ option to ``true``.
 
-.. versionadded:: 7.1
-
-    The ``separator`` option was introduced in Symfony 7.1.
-
 ``separator_html``
 ~~~~~~~~~~~~~~~~~~
 
@@ -223,10 +219,6 @@ but you'll also need to set the `separator_html`_ option to ``true``.
 If this option is true, the `separator`_ option will be displayed as HTML instead
 of text. This is useful when using HTML elements (e.g. ``<hr>``) as a more modern
 visual separator.
-
-.. versionadded:: 7.1
-
-    The ``separator_html`` option was introduced in Symfony 7.1.
 
 Overridden Options
 ------------------

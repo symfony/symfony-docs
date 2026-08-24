@@ -15,11 +15,6 @@ This makes it possible to define relationships between entities without
 creating hard dependencies. This feature also works with the ``EntityValueResolver``
 :ref:`as explained in the main Doctrine article <doctrine-entity-value-resolver-resolve-target-entities>`.
 
-.. versionadded:: 7.3
-
-    Support for target entity resolution in the ``EntityValueResolver`` was
-    introduced Symfony 7.3
-
 Background
 ----------
 
@@ -107,38 +102,23 @@ how to replace the interface with the concrete class:
                 resolve_target_entities:
                     App\Model\InvoiceSubjectInterface: App\Entity\Customer
 
-    .. code-block:: xml
-
-        <!-- config/packages/doctrine.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-            <doctrine:config>
-                <doctrine:orm>
-                    <!-- ... -->
-                    <doctrine:resolve-target-entity interface="App\Model\InvoiceSubjectInterface">App\Entity\Customer</doctrine:resolve-target-entity>
-                </doctrine:orm>
-            </doctrine:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/doctrine.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Entity\Customer;
         use App\Model\InvoiceSubjectInterface;
-        use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine): void {
-            $orm = $doctrine->orm();
-            // ...
-            $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);
-        };
+        return App::config([
+            'doctrine' => [
+                'orm' => [
+                    'resolve_target_entities' => [
+                        InvoiceSubjectInterface::class => Customer::class,
+                    ],
+                ],
+            ],
+        ]);
 
 Final Thoughts
 --------------

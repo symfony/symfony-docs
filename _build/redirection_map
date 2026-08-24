@@ -622,7 +622,6 @@
 /components/cache/adapters/apcu_adapter /cache/adapters/apcu_adapter
 /components/cache/adapters/array_cache_adapter /cache/adapters/array_cache_adapter
 /components/cache/adapters/chain_adapter /cache/adapters/chain_adapter
-/components/cache/adapters/couchbasebucket_adapter /cache/adapters/couchbasebucket_adapter
 /components/cache/adapters/couchbasecollection_adapter /cache/adapters/couchbasecollection_adapter
 /components/cache/adapters/doctrine_dbal_adapter /cache/adapters/doctrine_dbal_adapter
 /components/cache/adapters/filesystem_adapter /cache/adapters/filesystem_adapter

@@ -3,10 +3,6 @@ Yaml
 
 Validates that a value has valid `YAML`_ syntax.
 
-.. versionadded:: 7.2
-
-    The ``Yaml`` constraint was introduced in Symfony 7.2.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Yaml`

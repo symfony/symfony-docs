@@ -59,35 +59,18 @@ for more information):
         # config/packages/framework.yaml
         framework:
             # ...
-            csrf_protection: ~
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:csrf-protection enabled="true"/>
-            </framework:config>
-        </container>
+            csrf_protection: true
 
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->csrfProtection()
-                ->enabled(true)
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'csrf_protection' => true,
+            ],
+        ]);
 
 By default, the tokens used for CSRF protection are stored in the session.
 That's why a session is started automatically as soon as you render a form
@@ -146,36 +129,21 @@ Globally, you can configure it under the ``framework.form`` option:
                     enabled: true
                     field_name: 'custom_token_name'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:form>
-                    <framework:csrf-protection enabled="true" field-name="custom_token_name"/>
-                </framework:form>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework) {
-            $framework->form()->csrfProtection()
-                ->enabled(true)
-                ->fieldName('custom_token_name')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'form' => [
+                    'csrf_protection' => [
+                        'enabled' => true,
+                        'field_name' => 'custom_token_name',
+                    ],
+                ],
+            ],
+        ]);
 
 .. _form-csrf-configuration:
 
@@ -223,8 +191,9 @@ CSRF Protection in Login Form and Logout Action
 
 Read the following:
 
-* :ref:`CSRF Protection in Login Forms <form_login-csrf>`;
-* :ref:`CSRF protection for the logout action <reference-security-logout-csrf>`.
+* :ref:`CSRF Protection in Login Forms <form_login-csrf>`
+* :ref:`CSRF protection for the logout action <reference-security-logout-csrf>`
+* :ref:`CSRF protection in user impersonation forms <security-impersonation-form>`
 
 .. _csrf-protection-in-html-forms:
 
@@ -284,6 +253,16 @@ Instead of checking the token in the controller code, you can use the
     {
         // ... do something, like deleting an object
     }
+
+When the token is invalid, the attribute throws
+:class:`Symfony\\Component\\Security\\Http\\Exception\\InvalidCsrfTokenException`,
+which results in a ``403`` response.
+
+.. versionadded:: 8.2
+
+    Throwing this exception was introduced in Symfony 8.2. Prior to this, the
+    attribute threw the ``Security\Core`` exception of the same name, which
+    extends ``AuthenticationException``.
 
 This attribute can also be applied to a controller class. When used this way,
 the CSRF token validation will be applied to **all actions** defined in that
@@ -360,18 +339,7 @@ Example::
 
 The token is checked against each selected source, and validation fails if none match.
 
-.. versionadded:: 7.1
-
-    The :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
-    attribute was introduced in Symfony 7.1.
-
-.. versionadded:: 7.3
-
-    The ``methods`` parameter was introduced in Symfony 7.3.
-
-.. versionadded:: 7.4
-
-    The ``tokenSource`` parameter was introduced in Symfony 7.4.
+.. _csrf-token-manager:
 
 Generating and Checking CSRF Tokens in Services
 -----------------------------------------------
@@ -428,10 +396,6 @@ and used to scramble it.
 Stateless CSRF Tokens
 ---------------------
 
-.. versionadded:: 7.2
-
-    Stateless anti-CSRF protection was introduced in Symfony 7.2.
-
 Traditionally, CSRF tokens are stateful, meaning they're stored in the session.
 However, some token IDs can be declared as stateless using the
 ``stateless_token_ids`` option. Stateless CSRF tokens are enabled by default
@@ -447,37 +411,18 @@ in applications using :ref:`Symfony Flex <symfony-flex>`.
             csrf_protection:
                 stateless_token_ids: ['submit', 'authenticate', 'logout']
 
-    .. code-block:: xml
-
-        <!-- config/packages/csrf.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:csrf-protection>
-                    <framework:stateless-token-id>submit</framework:stateless-token-id>
-                    <framework:stateless-token-id>authenticate</framework:stateless-token-id>
-                    <framework:stateless-token-id>logout</framework:stateless-token-id>
-                </framework:csrf-protection>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/csrf.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->csrfProtection()
-                ->statelessTokenIds(['submit', 'authenticate', 'logout'])
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'csrf_protection' => [
+                    'stateless_token_ids' => ['submit', 'authenticate', 'logout'],
+                ],
+            ],
+        ]);
 
 Stateless CSRF tokens provide protection without relying on the session. This
 allows you to fully cache pages while still protecting against CSRF attacks.
@@ -515,36 +460,20 @@ own services), and it sets ``submit`` as their default token identifier:
                 csrf_protection:
                     token_id: 'submit'
 
-    .. code-block:: xml
-
-        <!-- config/packages/csrf.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:form>
-                    <framework:csrf-protection token-id="submit"/>
-                </framework:form>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/csrf.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->form()
-                ->csrfProtection()
-                    ->tokenId('submit')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'form' => [
+                    'csrf_protection' => [
+                        'token_id' => 'submit',
+                    ],
+                ],
+            ],
+        ]);
 
 Forms configured with a token identifier listed in the above ``stateless_token_ids``
 option will use the stateless CSRF protection.

@@ -207,10 +207,6 @@ Parameter               Description
 ``{{ value_length }}``  The current value's length
 ======================  ============================================================
 
-.. versionadded:: 7.4
-
-    The ``{{ min }}`` and ``{{ max }}`` parameters were introduced in Symfony 7.4.
-
 ``min``
 ~~~~~~~
 
@@ -244,10 +240,6 @@ Parameter               Description
 ``{{ value }}``         The current (invalid) value
 ``{{ value_length }}``  The current value's length
 ======================  ============================================================
-
-.. versionadded:: 7.4
-
-    The ``{{ min }}`` and ``{{ max }}`` parameters were introduced in Symfony 7.4.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 

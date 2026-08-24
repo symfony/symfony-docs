@@ -244,10 +244,6 @@ it to ``true``, the indexes will be reindexed as ``0`` and ``1``. This ensures
 that the indexes remain consecutive and do not have gaps, providing a clearer
 and more predictable structure for your nested forms.
 
-.. versionadded:: 7.1
-
-    The ``keep_as_list`` option was introduced in Symfony 7.1.
-
 prototype
 ~~~~~~~~~
 

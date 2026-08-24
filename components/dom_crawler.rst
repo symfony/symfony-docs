@@ -573,6 +573,9 @@ and uploading files::
     // selects many options from a "multiple" select
     $form['registration[interests]']->select(['symfony', 'cookies']);
 
+    // selects an option by its text content instead of its value
+    $form['registration[country]']->selectByText('France');
+
     // fakes a file upload
     $form['registration[photo]']->upload('/path/to/lucas.jpg');
 
@@ -633,6 +636,48 @@ the whole form or specific field(s)::
     // disables validation for the whole form
     $form->disableValidation();
     $form['country']->select('Invalid value');
+
+Adding Choices to Select Fields
+...............................
+
+When testing JavaScript-powered forms (e.g., autocomplete or dependent dropdowns),
+you may need to add new choices dynamically to a select field because the options
+are not present in the initial HTML. Use the ``addChoice()`` method to add
+options to a choice field::
+
+    // adds a new choice to a select field
+    $form['country']->addChoice('new_country_code');
+
+    // adds a new choice and selects it
+    $form['country']->addChoice('new_country_code', true);
+
+.. versionadded:: 8.1
+
+    The ``addChoice()`` method was introduced in Symfony 8.1.
+
+Selecting Options by Their Text
+...............................
+
+The ``select()`` method matches options by their ``value`` attribute, which is
+not always the text displayed to the user. Use the ``selectByText()`` method to
+select an option by its text content instead::
+
+    // <option value="ok">Payment accepted</option>
+    $form['order[status]']->selectByText('Payment accepted');
+
+    // selects several options at once on a "multiple" select
+    $form['order[tags]']->selectByText(['Priority', 'Fragile']);
+
+Sequences of whitespace are collapsed into a single space before the comparison,
+the same way the
+:method:`Crawler::text() <Symfony\\Component\\DomCrawler\\Crawler::text>` method
+does, so pass the text as the user reads it. When several options share the same
+text, the first one is selected. Disabled options can be selected, as with
+``select()``.
+
+.. versionadded:: 8.2
+
+    The ``selectByText()`` method was introduced in Symfony 8.2.
 
 Resolving a URI
 ~~~~~~~~~~~~~~~

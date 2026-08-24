@@ -23,7 +23,7 @@ Field Options
 ``default_protocol``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``http``
+**type**: ``string`` **default**: ``null``
 
 Set this value to ``null`` to render the field using a ``<input type="url"/>``,
 allowing the browser to perform local validation before submission.
@@ -35,11 +35,6 @@ form field without specifying the protocol.
 If a value is submitted that doesn't begin with some protocol (e.g. ``http://``,
 ``ftp://``, etc), this protocol will be prepended to the string when
 the data is submitted to the form.
-
-.. deprecated:: 7.1
-
-    Not setting the ``default_protocol`` option is deprecated since Symfony 7.1
-    and will default to ``null`` in Symfony 8.0.
 
 Overridden Options
 ------------------

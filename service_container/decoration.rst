@@ -49,25 +49,6 @@ that decorates it:
                 # overrides the App\Mailer service
                 decorates: App\Mailer
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mailer"/>
-
-                <!-- overrides the App\Mailer service -->
-                <service id="App\LoggingMailer"
-                    decorates="App\Mailer"
-                />
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -76,15 +57,16 @@ that decorates it:
         use App\LoggingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                Mailer::class => null,
 
-            $services->set(Mailer::class);
-
-            $services->set(LoggingMailer::class)
-                // overrides the App\Mailer service
-                ->decorate(Mailer::class);
-        };
+                LoggingMailer::class => [
+                    // overrides the App\Mailer service
+                    'decorates' => Mailer::class,
+                ],
+            ],
+        ]);
 
 From now on, any service that asks for ``App\Mailer`` receives an instance of
 ``App\LoggingMailer`` instead. You don't have to change anything in the
@@ -98,11 +80,6 @@ decorating service can inject and call it, as explained in the next section.
 
     You can apply multiple ``#[AsDecorator]`` attributes to the same class to
     decorate multiple services with it.
-
-    .. versionadded:: 7.4
-
-        The possibility to allow multiple ``#[AsDecorator]`` attributes was
-        introduced in Symfony 7.4.
 
 .. note::
 
@@ -169,26 +146,6 @@ whereas in PHP classes you use the ``#[AutowireDecorated]`` attribute:
                 # pass the old service as an argument
                 arguments: ['@.inner']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mailer"/>
-
-                <service id="App\LoggingMailer"
-                    decorates="App\Mailer"
-                >
-                    <!-- pass the old service as an argument -->
-                    <argument type="service" id=".inner"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -197,16 +154,17 @@ whereas in PHP classes you use the ``#[AutowireDecorated]`` attribute:
         use App\LoggingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                Mailer::class => null,
 
-            $services->set(Mailer::class);
-
-            $services->set(LoggingMailer::class)
-                ->decorate(Mailer::class)
-                // pass the old service as an argument
-                ->args([service('.inner')]);
-        };
+                LoggingMailer::class => [
+                    'decorates' => Mailer::class,
+                    // pass the old service as an argument
+                    'arguments' => [service('.inner')],
+                ],
+            ],
+        ]);
 
 Behind the scenes, the original service keeps a real ID built as the decorating
 service ID plus the ``.inner`` suffix (e.g. ``'App\LoggingMailer.inner'``).
@@ -226,30 +184,6 @@ option:
                 decoration_inner_name: 'App\Mailer.original'
                 arguments: ['@App\Mailer.original']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <!-- you can use any name here; if you decorate a lot of services,
-                     consider adding the full original service ID as part of the new ID -->
-                <service
-                    id="App\LoggingMailer"
-                    decorates="App\Mailer"
-                    decoration-inner-name="App\Mailer.original"
-                >
-                    <argument type="service" id="App\Mailer.original"/>
-                </service>
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -258,17 +192,17 @@ option:
         use App\LoggingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Mailer::class);
-
-            // you can use any name here; if you decorate a lot of services,
-            // consider adding the full original service ID as part of the new ID
-            $services->set(LoggingMailer::class)
-                ->decorate(Mailer::class, Mailer::class.'.original')
-                ->args([service(Mailer::class.'.original')]);
-        };
+        return App::config([
+            'services' => [
+                LoggingMailer::class => [
+                    // ...
+                    // you can use any name here; if you decorate a lot of services,
+                    // consider adding the full original service ID as part of the new ID
+                    'decoration_inner_name' => Mailer::class.'.original',
+                    'arguments' => [service(Mailer::class.'.original')],
+                ],
+            ],
+        ]);
 
 When using the ``#[AutowireDecorated]`` attribute you don't need this option,
 because you can name the constructor argument that holds the decorated service
@@ -337,28 +271,6 @@ applied earlier.
                 decoration_priority: 1
                 arguments: ['@.inner']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mailer"/>
-
-                <service id="App\LoggingMailer" decorates="App\Mailer" decoration-priority="5">
-                    <argument type="service" id=".inner"/>
-                </service>
-
-                <service id="App\RateLimitingMailer" decorates="App\Mailer" decoration-priority="1">
-                    <argument type="service" id=".inner"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -368,19 +280,23 @@ applied earlier.
         use App\Mailer;
         use App\RateLimitingMailer;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                Mailer::class => null,
 
-            $services->set(Mailer::class);
+                LoggingMailer::class => [
+                    'decorates' => Mailer::class,
+                    'decoration_priority' => 5,
+                    'arguments' => [service('.inner')],
+                ],
 
-            $services->set(LoggingMailer::class)
-                ->decorate(Mailer::class, null, 5)
-                ->args([service('.inner')]);
-
-            $services->set(RateLimitingMailer::class)
-                ->decorate(Mailer::class, null, 1)
-                ->args([service('.inner')]);
-        };
+                RateLimitingMailer::class => [
+                    'decorates' => Mailer::class,
+                    'decoration_priority' => 1,
+                    'arguments' => [service('.inner')],
+                ],
+            ],
+        ]);
 
 In practice, the container now creates the ``App\Mailer`` service like this
 (shown as simplified PHP code)::
@@ -393,6 +309,62 @@ original service. When using the decorated service, the outermost decorator
 ``RateLimitingMailer`` checks the sending quota before ``LoggingMailer`` logs
 anything, so no email is logged unless it's actually sent.
 
+.. _decoration-tagged-services:
+
+Decorating All Services with a Tag
+----------------------------------
+
+.. versionadded:: 8.1
+
+    The ``#[AsTagDecorator]`` attribute and the ``decorates_tag`` option were
+    introduced in Symfony 8.1.
+
+Instead of decorating a single service, you can decorate every service that has
+a given tag. Symfony creates one decorator per tagged service, and each one
+wraps its original service as ``.inner``.
+
+For example, if your application defines several mailer services and all of them
+are tagged with ``app.mailer``, you can log the emails sent by all of them with
+a single decorator:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/LoggingMailer.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsTagDecorator;
+
+        #[AsTagDecorator(tag: 'app.mailer')]
+        class LoggingMailer
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\LoggingMailer:
+                decorates_tag: app.mailer
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\LoggingMailer;
+
+        return App::config([
+            'services' => [
+                LoggingMailer::class => [
+                    'decorates_tag' => 'app.mailer',
+                ],
+            ],
+        ]);
+
 Stacking Decorators
 -------------------
 
@@ -401,9 +373,10 @@ ordered services where each one decorates the next one. Both approaches create
 the same nested objects, but they work differently:
 
 * When using ``decorates``, the container replaces the original service
-  everywhere it's injected. A ``stack`` doesn't replace any service: it defines
-  a new service (``mailer_stack`` in this example) and only the
-  services injecting it explicitly get the decorated behavior;
+  everywhere it's injected. By default, a ``stack`` doesn't replace any service:
+  it defines a new service (``mailer_stack`` in this example) and only the
+  services injecting it explicitly get the decorated behavior (although stacks
+  can also decorate existing services, as explained later in this section);
 * When using priorities, each decorator is defined independently, maybe even in
   different files or bundles, and the final order depends on all the priority
   values. In a ``stack``, you define the whole chain in a single place, in the
@@ -436,28 +409,6 @@ This is how the example of the previous section looks when defined as a ``stack`
             #         - App\LoggingMailer: ~
             #         - App\Mailer: ~
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <stack id="mailer_stack">
-                    <service class="App\RateLimitingMailer">
-                        <argument type="service" id=".inner"/>
-                    </service>
-                    <service class="App\LoggingMailer">
-                        <argument type="service" id=".inner"/>
-                    </service>
-                    <service class="App\Mailer"/>
-                </stack>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -467,29 +418,38 @@ This is how the example of the previous section looks when defined as a ``stack`
         use App\Mailer;
         use App\RateLimitingMailer;
 
-        return function(ContainerConfigurator $container): void {
-            $container->services()
-                ->stack('mailer_stack', [
-                    inline_service(RateLimitingMailer::class)->args([service('.inner')]),
-                    inline_service(LoggingMailer::class)->args([service('.inner')]),
-                    inline_service(Mailer::class),
-                ])
-            ;
-        };
+        return App::config([
+            'services' => [
+                'mailer_stack' => [
+                    'stack' => [
+                        ['class' => RateLimitingMailer::class, 'arguments' => [service('.inner')]],
+                        ['class' => LoggingMailer::class, 'arguments' => [service('.inner')]],
+                        ['class' => Mailer::class],
+                    ],
+                ],
+
+                // alternatively, use this short syntax, where each frame is a class
+                // name followed by its arguments; thanks to autowiring, you can even
+                // omit the arguments:
+                // 'mailer_stack' => [
+                //     'stack' => [
+                //         [RateLimitingMailer::class => null],
+                //         [LoggingMailer::class => null],
+                //         [Mailer::class => null],
+                //     ],
+                // ],
+            ],
+        ]);
 
 The ``mailer_stack`` service created by the container is the same nested object
 as in the previous section::
 
     $mailer = new RateLimitingMailer(new LoggingMailer(new Mailer()));
 
-Like :ref:`aliases <services-alias>`, a ``stack`` can only use the
-:ref:`public <container-public>` and
-:ref:`deprecated <deprecating-service-definitions>` attributes.
-Each frame of the ``stack`` can be either an
-:ref:`inlined service <anonymous-services>`, a
-:ref:`reference to an existing service <services-constructor-injection>` or a
-:ref:`child definition <parent-services>`. The latter allows embedding
-``stack`` definitions into each others.
+Each frame of the ``stack`` can be either an :ref:`inlined service <anonymous-services>`,
+a :ref:`reference to an existing service <services-constructor-injection>` or a
+:ref:`child definition <parent-services>`. The latter allows embedding ``stack``
+definitions into each others.
 
 For example, imagine that legal regulations require your application to audit
 all sent emails and to add a legal disclaimer to their contents. You can define
@@ -516,32 +476,6 @@ that compliance behavior as its own stack and embed it into the mailer stack:
                     - App\LoggingMailer: ~
                     - App\Mailer: ~
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <service id="audit_mailer" class="App\AuditMailer"/>
-
-                <stack id="mailer_compliance_stack">
-                    <service alias="audit_mailer"/>
-                    <service class="App\DisclaimerMailer"/>
-                </stack>
-
-                <stack id="mailer_stack">
-                    <service parent="mailer_compliance_stack"/>
-                    <service class="App\RateLimitingMailer"/>
-                    <service class="App\LoggingMailer"/>
-                    <service class="App\Mailer"/>
-                </stack>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -553,23 +487,29 @@ that compliance behavior as its own stack and embed it into the mailer stack:
         use App\Mailer;
         use App\RateLimitingMailer;
 
-        return function(ContainerConfigurator $container): void {
-            $container->services()
-                ->set('audit_mailer', AuditMailer::class)
+        return App::config([
+            'services' => [
+                'audit_mailer' => [
+                    'class' => AuditMailer::class,
+                ],
 
-                ->stack('mailer_compliance_stack', [
-                    service('audit_mailer'),
-                    inline_service(DisclaimerMailer::class),
-                ])
+                'mailer_compliance_stack' => [
+                    'stack' => [
+                        ['alias' => 'audit_mailer'],
+                        [DisclaimerMailer::class => null],
+                    ],
+                ],
 
-                ->stack('mailer_stack', [
-                    inline_service()->parent('mailer_compliance_stack'),
-                    inline_service(RateLimitingMailer::class),
-                    inline_service(LoggingMailer::class),
-                    inline_service(Mailer::class),
-                ])
-            ;
-        };
+                'mailer_stack' => [
+                    'stack' => [
+                        ['parent' => 'mailer_compliance_stack'],
+                        [RateLimitingMailer::class => null],
+                        [LoggingMailer::class => null],
+                        [Mailer::class => null],
+                    ],
+                ],
+            ],
+        ]);
 
 The result will be::
 
@@ -599,25 +539,122 @@ The result will be::
                         App\RateLimitingMailer: ~
                     # ...
 
-        .. code-block:: xml
-
-            <!-- ... -->
-            <stack id="mailer_stack">
-                <service id="first" parent="mailer_compliance_stack"/>
-                <service id="second" class="App\RateLimitingMailer"/>
-                <!-- ... -->
-            </stack>
-
         .. code-block:: php
 
-            // ...
-            $services->stack('mailer_stack', [
-                'first' => inline_service()->parent('mailer_compliance_stack'),
-                'second' => inline_service(RateLimitingMailer::class),
-                // ...
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use App\RateLimitingMailer;
+
+            return App::config([
+                'services' => [
+                    'mailer_stack' => [
+                        'stack' => [
+                            'first' => ['parent' => 'mailer_compliance_stack'],
+                            'second' => [RateLimitingMailer::class => null],
+                            // ...
+                        ],
+                    ],
+                ],
             ]);
 
 The ``App\RateLimitingMailer`` frame id will now be ``.mailer_stack.second``.
+
+Using Stacks to Decorate Existing Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``decorates`` and ``decorates_tag`` options on stacks were introduced
+    in Symfony 8.1.
+
+By default, stacks define a self-contained chain of services. But you can also
+use a stack to decorate an existing service by adding the ``decorates`` option.
+The innermost frame of the stack wraps the original service:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            mailer_stack:
+                decorates: App\Mailer
+                stack:
+                    - class: App\RateLimitingMailer
+                      arguments: ['@.inner']
+                    - class: App\LoggingMailer
+                      arguments: ['@.inner']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\LoggingMailer;
+        use App\Mailer;
+        use App\RateLimitingMailer;
+
+        return App::config([
+            'services' => [
+                'mailer_stack' => [
+                    'decorates' => Mailer::class,
+                    'stack' => [
+                        ['class' => RateLimitingMailer::class, 'arguments' => [service('.inner')]],
+                        ['class' => LoggingMailer::class, 'arguments' => [service('.inner')]],
+                    ],
+                ],
+            ],
+        ]);
+
+Unlike the previous examples, the stack doesn't define the ``App\Mailer`` frame
+itself. The container injects the original service instead::
+
+    $mailer = new RateLimitingMailer(new LoggingMailer($originalMailer));
+
+You can also use the ``decorates_tag`` option to decorate all the services
+tagged with a specific tag. The stack is cloned once per tagged service and
+each clone decorates one of the tagged services:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            mailer_stack:
+                decorates_tag: app.mailer
+                stack:
+                    - class: App\RateLimitingMailer
+                      arguments: ['@.inner']
+                    - class: App\LoggingMailer
+                      arguments: ['@.inner']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\LoggingMailer;
+        use App\RateLimitingMailer;
+
+        return App::config([
+            'services' => [
+                'mailer_stack' => [
+                    'decorates_tag' => 'app.mailer',
+                    'stack' => [
+                        ['class' => RateLimitingMailer::class, 'arguments' => [service('.inner')]],
+                        ['class' => LoggingMailer::class, 'arguments' => [service('.inner')]],
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    The ``decoration_inner_name``, ``decoration_priority`` and
+    ``decoration_on_invalid`` options can also be used on stacks, as with
+    regular decorated services.
 
 Control the Behavior When the Decorated Service Does Not Exist
 --------------------------------------------------------------
@@ -669,24 +706,6 @@ Three different behaviors are available:
                 decoration_on_invalid: ignore
                 arguments: ['@.inner']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mailer"/>
-
-                <service id="App\LoggingMailer" decorates="App\Mailer" decoration-on-invalid="ignore">
-                    <argument type="service" id=".inner"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -694,18 +713,18 @@ Three different behaviors are available:
 
         use App\LoggingMailer;
         use App\Mailer;
-        use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                Mailer::class => null,
 
-            $services->set(Mailer::class);
-
-            $services->set(LoggingMailer::class)
-                ->decorate(Mailer::class, null, 0, ContainerInterface::IGNORE_ON_INVALID_REFERENCE)
-                ->args([service('.inner')])
-            ;
-        };
+                LoggingMailer::class => [
+                    'decorates' => Mailer::class,
+                    'decoration_on_invalid' => 'ignore',
+                    'arguments' => [service('.inner')],
+                ],
+            ],
+        ]);
 
 .. note::
 

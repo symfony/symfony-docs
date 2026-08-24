@@ -25,6 +25,24 @@ method of the kernel class, which you can override to return a different value.
 You can also change the build directory by defining an environment variable
 named ``APP_BUILD_DIR`` whose value is the absolute path of the build folder.
 
+The contents of the build directory (and the cache directory) are generated
+by Symfony and can be recreated at any time, so there's no need to include
+them in backups. That's why, when building the container, Symfony writes a
+`CACHEDIR.TAG`_ file into the cache and build directories:
+
+.. code-block:: text
+
+    Signature: 8a477f597d28d172789f06886806bc55
+    # This file is a cache directory tag created by Symfony.
+    # For information about cache directory tags, see https://bford.info/cachedir/
+
+Backup tools that follow this convention, such as GNU tar, Borg and Restic
+(via their ``--exclude-caches`` option), skip these directories automatically.
+
+.. versionadded:: 8.2
+
+    The ``CACHEDIR.TAG`` files were introduced in Symfony 8.2.
+
 ``kernel.bundles``
 ------------------
 
@@ -77,6 +95,10 @@ can write data to this path at runtime.
 
 This value is also exposed via the :method:`Symfony\\Component\\HttpKernel\\Kernel::getCacheDir`
 method of the kernel class, which you can override to return a different value.
+
+As explained for :ref:`kernel.build_dir <configuration-kernel-build-directory>`,
+Symfony writes a ``CACHEDIR.TAG`` file into the cache directory so that
+backup tools can skip it.
 
 .. _configuration-kernel-charset:
 
@@ -138,26 +160,44 @@ achieve a strict reproducible build:
             # ...
             kernel.container_build_time: '1234567890'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <!-- ... -->
-                <parameter key="kernel.container_build_time">1234567890</parameter>
-            </parameters>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->setParameter('kernel.container_build_time', '1234567890');
+        return App::config([
+            'parameters' => [
+                'kernel.container_build_time' => '1234567890',
+            ],
+        ]);
+
+Using the ``SOURCE_DATE_EPOCH`` Environment Variable
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony supports the standardized `SOURCE_DATE_EPOCH`_ environment variable
+as an alternative way to set a reproducible container build time. When this
+environment variable is defined, Symfony uses its value (a Unix timestamp) as
+the container build time:
+
+.. code-block:: terminal
+
+    # set the build time to the timestamp of the last Git commit
+    export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
+    php bin/console cache:clear
+
+This is particularly useful for generating reproducible builds based on
+version control timestamps.
+
+.. note::
+
+    If both ``SOURCE_DATE_EPOCH`` and the ``kernel.container_build_time`` parameter
+    are defined, the parameter takes precedence. If ``SOURCE_DATE_EPOCH`` is not
+    set or contains an invalid value, Symfony falls back to the current system time.
+
+.. versionadded:: 8.1
+
+    Support for the ``SOURCE_DATE_EPOCH`` environment variable was introduced
+    in Symfony 8.1.
 
 ``kernel.container_class``
 --------------------------
@@ -245,10 +285,6 @@ This parameter stores the value of
 This parameter stores the value of
 :ref:`the framework.allowed_http_method_override parameter <configuration-framework-allowed_http_method_override>`.
 
-.. versionadded:: 7.4
-
-    The ``kernel.allowed_http_method_override`` parameter was introduced in Symfony 7.4.
-
 ``kernel.logs_dir``
 -------------------
 
@@ -302,10 +338,6 @@ have deleted it entirely (for example in the production servers), override the
 This project directory is also available through the ``APP_PROJECT_DIR`` environment
 variable. This variable is read-only, so you cannot override it to change the project
 directory. Instead, use the ``Kernel::getProjectDir()`` method shown above.
-
-.. versionadded:: 7.4
-
-    The ``APP_PROJECT_DIR`` environment variable was introduced in Symfony 7.4.
 
 .. _configuration-kernel-runtime-environment:
 
@@ -376,11 +408,6 @@ application. The default value is the current cache directory.
 This value is also exposed via the :method:`Symfony\\Component\\HttpKernel\\Kernel::getShareDir`
 method of the kernel class, which you can override to return a different value.
 
-.. versionadded:: 7.4
-
-    The ``Kernel::getShareDir()`` method and the ``%kernel.share_dir`` parameter
-    were introduced in Symfony 7.4.
-
 ``kernel.trust_x_sendfile_type_header``
 ---------------------------------------
 
@@ -405,6 +432,8 @@ This parameter stores the value of
 This parameter stores the value of
 :ref:`the framework.trusted_proxies parameter <reference-framework-trusted-proxies>`.
 
+.. _`CACHEDIR.TAG`: https://bford.info/cachedir/
 .. _`character encoding`: https://en.wikipedia.org/wiki/Character_encoding
 .. _`reproducible builds`: https://en.wikipedia.org/wiki/Reproducible_builds
 .. _`FrankenPHP`: https://frankenphp.dev
+.. _`SOURCE_DATE_EPOCH`: https://reproducible-builds.org/docs/source-date-epoch/

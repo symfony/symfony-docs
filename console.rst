@@ -142,15 +142,16 @@ attribute. For example, you may want a command to create a user::
         }
     }
 
-.. versionadded:: 7.3
-
-    Support for invokable commands that don't extend the base ``Command`` class
-    was introduced in Symfony 7.3
-
 If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+.. deprecated:: 8.1
+
+    Registering console commands by overriding the ``Bundle::registerCommands()``
+    method is deprecated. Use the ``#[AsCommand]`` attribute or the
+    ``console.command`` service tag instead.
 
 You can also use ``#[AsCommand]`` to add a description, usage examples, and
 longer help text for the command::
@@ -171,11 +172,6 @@ longer help text for the command::
             // ...
         }
     }
-
-.. versionadded:: 7.4
-
-    The feature to define usage examples in the ``#[AsCommand]`` attribute was
-    introduced in Symfony 7.4.
 
 Additionally, you can extend the :class:`Symfony\\Component\\Console\\Command\\Command` class to
 leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
@@ -204,6 +200,58 @@ and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
             // ...
         }
     }
+
+.. _console-method-based-commands:
+
+Method-based Commands
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Support for method-based console commands was introduced in Symfony 8.1.
+
+Instead of creating one class per command, you can define multiple commands
+in the same class by adding the ``#[AsCommand]`` attribute to individual
+public methods. This is useful to group related commands that share the
+same dependencies::
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    class UserCommands
+    {
+        #[AsCommand('app:user:create')]
+        public function create(OutputInterface $output): int
+        {
+            // ...
+
+            return Command::SUCCESS;
+        }
+
+        #[AsCommand('app:user:delete')]
+        public function delete(OutputInterface $output): int
+        {
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
+Each annotated method becomes an independent command that can be run, listed
+and tested separately.
+
+.. note::
+
+    When using the Console component without the service container, you can
+    register method-based commands manually::
+
+        $commands = new UserCommands($userRepository);
+
+        $application = new Application();
+        // the "..." is PHP's first-class callable syntax, which turns each method into a callable
+        $application->addCommand($commands->create(...));
+        $application->addCommand($commands->delete(...));
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
@@ -240,11 +288,6 @@ command name; the others are aliases that can also be used to run the command::
     {
         // ...
     }
-
-.. versionadded:: 7.4
-
-    The ability to define aliases through the command name was introduced in
-    Symfony 7.4.
 
 Console Output
 --------------
@@ -432,6 +475,12 @@ as a service, you can use normal dependency injection. Imagine you have a
         }
     }
 
+.. seealso::
+
+    Read :doc:`/console/value_resolver` for more information about advanced
+    service injection features (such as ``#[Autowire]``, ``#[Target]``, and
+    custom value resolvers).
+
 Command Lifecycle
 -----------------
 
@@ -462,28 +511,21 @@ command:
 Testing Commands
 ----------------
 
-Symfony provides several tools to help you test your commands. The most
-useful one is the :class:`Symfony\\Component\\Console\\Tester\\CommandTester`
-class. It uses special input and output classes to ease testing without a real
-console::
+In test classes extending :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`,
+Symfony provides the ``runCommand()`` method to run console commands and inspect
+their results. Some assertions are also provided by the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\ConsoleCommandAssertionsTrait`
+to check the command execution status::
 
     // tests/Command/CreateUserCommandTest.php
     namespace App\Tests\Command;
 
-    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-    use Symfony\Component\Console\Tester\CommandTester;
 
     class CreateUserCommandTest extends KernelTestCase
     {
         public function testExecute(): void
         {
-            self::bootKernel();
-            $application = new Application(self::$kernel);
-
-            $command = $application->find('app:create-user');
-            $commandTester = new CommandTester($command);
-            $commandTester->execute([
+            $result = static::runCommand('app:create-user', [
                 // pass arguments to the helper
                 'username' => 'Wouter',
 
@@ -491,22 +533,67 @@ console::
                 // e.g: '--some-option' => 'option_value',
                 // use brackets for testing array value,
                 // e.g: '--some-option' => ['option_value'],
+                // use true for options that accept no value (InputOption::VALUE_NONE),
+                // e.g: '--some-option' => true,
             ]);
 
-            $commandTester->assertCommandIsSuccessful();
+            $this->assertCommandIsSuccessful($result);
+
+            // you can also check for a failed or invalid command:
+            // $this->assertCommandFailed($result);
+            // $this->assertCommandIsInvalid($result);
 
             // the output of the command in the console
-            $output = $commandTester->getDisplay();
+            $output = $result->getOutput();
             $this->assertStringContainsString('Username: Wouter', $output);
 
             // ...
         }
     }
 
-.. note::
+.. versionadded:: 8.1
 
-    If you are using a :doc:`single-command application </components/console/single_command_tool>`,
-    call ``setAutoExit(false)`` on the application to get the command result in ``CommandTester``.
+    The ``runCommand()`` method and the ``ExecutionResult`` class were
+    introduced in Symfony 8.1.
+
+The ``ExecutionResult`` object gives access to stdout, stderr and the combined
+display separately::
+
+    // stdout only
+    $result->getOutput();
+
+    // stderr only
+    $result->getErrorOutput();
+
+    // the combined output (stdout + stderr interleaved)
+    $result->getDisplay();
+
+    // the exit code
+    $result->statusCode;
+
+You can also assert multiple expectations at once using ``assertCommandResultEquals()``::
+
+    $this->assertCommandResultEquals(
+        $result,
+        expectedStatusCode: 0,
+        expectedOutput: 'User "Wouter" was created.',
+    );
+
+If your command requires interactive inputs, pass them as the third argument::
+
+    $result = static::runCommand('app:create-user', [], ['Wouter', 'yes']);
+
+.. tip::
+
+    You can also test a whole console application by using
+    :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester`. When
+    using it (or when testing a :doc:`single-command application </components/console/single_command_tool>`),
+    disable the auto exit flag::
+
+        $application = new Application();
+        $application->setAutoExit(false);
+
+        $tester = new ApplicationTester($application);
 
 .. warning::
 
@@ -514,48 +601,13 @@ console::
     not dispatched. If you need to test those events, use the
     :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` instead.
 
-.. warning::
-
-    When testing ``InputOption::VALUE_NONE`` command options, you must pass ``true``
-    to them::
-
-        $commandTester = new CommandTester($command);
-        $commandTester->execute(['--some-option' => true]);
-
 .. note::
 
-    When using the Console component in a standalone project, use
-    :class:`Symfony\\Component\\Console\\Application`
-    and extend the normal ``\PHPUnit\Framework\TestCase``.
-
-.. note::
-
-    The ``CommandTester`` class does not implement ``ConsoleOutputInterface``,
-    so methods like ``section()`` are not directly accessible. To test them,
-    use the ``capture_stderr_separately`` option of the ``execute()`` method::
-
-        $commandTester->execute([], ['capture_stderr_separately' => true]);
-
-When testing your commands, it could be useful to understand how your command
-reacts on different settings like the width and the height of the terminal, or
-even the color mode being used. You have access to such information thanks to the
-:class:`Symfony\\Component\\Console\\Terminal` class::
-
-    use Symfony\Component\Console\Terminal;
-
-    $terminal = new Terminal();
-
-    // gets the number of lines available
-    $height = $terminal->getHeight();
-
-    // gets the number of columns available
-    $width = $terminal->getWidth();
-
-    // gets the color mode
-    $colorMode = $terminal->getColorMode();
-
-    // changes the color mode
-    $colorMode = $terminal->setColorMode(AnsiColorMode::Ansi24);
+    When using the Console component in a standalone project (without the
+    Symfony framework), extend ``\PHPUnit\Framework\TestCase`` instead of
+    ``KernelTestCase`` and use
+    :class:`Symfony\\Component\\Console\\Application` instead of the
+    FrameworkBundle one.
 
 Testing Console Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -597,6 +649,108 @@ with the :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` class::
     Don't forget to call ``setAutoExit(false)`` on the application before passing
     it to ``ApplicationTester``. Without it, the application calls ``exit()``
     after running the command, which would terminate the PHPUnit process.
+
+Legacy Command Tester
+~~~~~~~~~~~~~~~~~~~~~
+
+Using the ``runCommand()`` method from ``KernelTestCase`` is the recommended way
+of testing commands in Symfony applications. However, you can also use the
+:class:`Symfony\\Component\\Console\\Tester\\CommandTester` class directly,
+which is useful when testing commands outside the Symfony framework or when
+you need lower-level control over the testing setup::
+
+    // tests/Command/CreateUserCommandTest.php
+    namespace App\Tests\Command;
+
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+    use Symfony\Component\Console\Tester\CommandTester;
+
+    class CreateUserCommandTest extends KernelTestCase
+    {
+        public function testExecute(): void
+        {
+            self::bootKernel();
+            $application = new Application(self::$kernel);
+
+            $command = $application->find('app:create-user');
+            $commandTester = new CommandTester($command);
+            $commandTester->execute([
+                // pass arguments to the helper
+                'username' => 'Wouter',
+
+                // prefix the key with two dashes when passing options,
+                // e.g: '--some-option' => 'option_value',
+                // use brackets for testing array value,
+                // e.g: '--some-option' => ['option_value'],
+                // use true for options that accept no value (InputOption::VALUE_NONE),
+                // e.g: '--some-option' => true,
+            ]);
+
+            $commandTester->assertCommandIsSuccessful();
+
+            // the output of the command in the console
+            $output = $commandTester->getDisplay();
+            $this->assertStringContainsString('Username: Wouter', $output);
+
+            // ...
+        }
+    }
+
+.. note::
+
+    If you are using a :doc:`single-command application </components/console/single_command_tool>`,
+    call ``setAutoExit(false)`` on the application to get the command result in ``CommandTester``.
+
+.. tip::
+
+    Use PHP's first-class callable syntax to test
+    :ref:`method-based commands <console-method-based-commands>`::
+
+        $commands = new UserCommands($userRepository);
+
+        $tester = new CommandTester($commands->create(...));
+        $tester->execute([]);
+
+.. warning::
+
+    When testing ``InputOption::VALUE_NONE`` command options, you must pass ``true``
+    to them::
+
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['--some-option' => true]);
+
+.. note::
+
+    The ``CommandTester`` class does not implement ``ConsoleOutputInterface``,
+    so methods like ``section()`` are not directly accessible. To test them,
+    use the ``capture_stderr_separately`` option of the ``execute()`` method::
+
+        $commandTester->execute([], ['capture_stderr_separately' => true]);
+
+Getting Terminal Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When testing your commands, it could be useful to understand how your command
+reacts on different settings like the width and the height of the terminal, or
+even the color mode being used. You have access to such information thanks to the
+:class:`Symfony\\Component\\Console\\Terminal` class::
+
+    use Symfony\Component\Console\Terminal;
+
+    $terminal = new Terminal();
+
+    // gets the number of lines available
+    $height = $terminal->getHeight();
+
+    // gets the number of columns available
+    $width = $terminal->getWidth();
+
+    // gets the color mode
+    $colorMode = $terminal->getColorMode();
+
+    // changes the color mode
+    $colorMode = $terminal->setColorMode(AnsiColorMode::Ansi24);
 
 Logging Command Errors
 ----------------------
@@ -731,18 +885,21 @@ Symfony will now collect data about the command execution, which is helpful to
 debug errors or check other issues. When the command execution is over, the
 profile is accessible through the web page of the profiler.
 
+Among the collected data, the performance panel displays the duration of each
+:doc:`argument value resolver </console/value_resolver>` used during the command
+execution, which helps spot slow resolvers.
+
+.. versionadded:: 8.1
+
+    The tracing of console argument value resolvers in the profiler's
+    performance panel was introduced in Symfony 8.1.
+
 .. tip::
 
     If you run the command in verbose mode (adding the ``-v`` option), Symfony
     will display in the output a clickable link to the command profile (if your
     terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
     also see the time and memory consumed by the command.
-
-.. versionadded:: 7.4
-
-    The collection of :doc:`dump() </components/var_dumper>` calls by the
-    profiler when using the ``--profile`` option was introduced in Symfony 7.4.
-    Without this option, dumps are displayed directly in the console output.
 
 .. warning::
 

@@ -489,10 +489,6 @@ is the corresponding entity property name:
 
 **type**: ``array`` **default**: ``[]``
 
-.. versionadded:: 7.1
-
-    The ``identifierFieldNames`` option was introduced in Symfony 7.1.
-
 When :ref:`using a PHP class <reference-constraints-unique-entity-php-class>` to
 update an existing entity, use this option to specify the field (or fields) that
 identify the corresponding Doctrine entity (defined via the ``entityClass`` option).

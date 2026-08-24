@@ -111,11 +111,6 @@ To disable the attribute loader after it was enabled, call
 Compile-Time Attribute Metadata
 ...............................
 
-.. versionadded:: 7.4
-
-    Compile-time discovery of classes using constraint attributes was introduced
-    in Symfony 7.4.
-
 When using the Symfony framework with :ref:`autoconfiguration <services-autoconfigure>`,
 classes that use constraint attributes (such as ``#[Assert\NotBlank]``,
 ``#[Assert\Length]``, etc.) are automatically discovered at compile time. This

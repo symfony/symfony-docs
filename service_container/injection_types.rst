@@ -47,24 +47,6 @@ you can specify which service to inject in the service configuration:
             App\Mail\NewsletterSender:
                 arguments: ['@mailer']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Mail\NewsletterSender">
-                    <argument type="service" id="mailer"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -72,12 +54,15 @@ you can specify which service to inject in the service configuration:
 
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->args([service('mailer')]);
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'arguments' => [
+                        service('mailer'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -142,26 +127,6 @@ You can also configure the method call explicitly using the ``calls`` key:
                 calls:
                     - setMailer: ['@mailer']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Mail\NewsletterSender">
-                    <call method="setMailer">
-                        <argument type="service" id="mailer"/>
-                    </call>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -169,12 +134,15 @@ You can also configure the method call explicitly using the ``calls`` key:
 
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->call('setMailer', [service('mailer')]);
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'calls' => [
+                        'setMailer' => [service('mailer')],
+                    ],
+                ],
+            ],
+        ]);
 
 This time the **advantages** are:
 
@@ -248,26 +216,6 @@ You can also configure this method call explicitly with the special
                 calls:
                     - withMailer: !returns_clone ['@mailer']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Mail\NewsletterSender">
-                    <call method="withMailer" returns-clone="true">
-                        <argument type="service" id="mailer"/>
-                    </call>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -275,12 +223,15 @@ You can also configure this method call explicitly with the special
 
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->call('withMailer', [service('mailer')], true);
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'calls' => [
+                        ['withMailer', [service('mailer')], true],
+                    ],
+                ],
+            ],
+        ]);
 
 The **advantages** of immutable setters are:
 
@@ -331,24 +282,6 @@ Another possibility is **setting public fields** of the class directly::
                 properties:
                     mailer: '@mailer'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Mail\NewsletterSender">
-                    <property name="mailer" type="service" id="mailer"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -356,12 +289,15 @@ Another possibility is **setting public fields** of the class directly::
 
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->property('mailer', service('mailer'));
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'properties' => [
+                        'mailer' => service('mailer'),
+                    ],
+                ],
+            ],
+        ]);
 
 There are mainly only **disadvantages** to using property injection. It is similar
 to setter injection but with this additional important problem:
@@ -418,26 +354,9 @@ if the service does not exist:
             App\Mail\NewsletterSender:
                 # the 'null' strategy is not supported by the YAML format, but this
                 # is not a real limitation: when used in an argument, the '@?' syntax
-                # of the 'ignore' strategy (explained in the next section) also sets the argument to null
+                # of the 'ignore' strategy (explained in the next section) also
+                # sets the argument to null
                 arguments: ['@?logger']
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Mail\NewsletterSender">
-                    <argument type="service" id="logger" on-invalid="null"/>
-                </service>
-            </services>
-        </container>
 
     .. code-block:: php
 
@@ -446,12 +365,15 @@ if the service does not exist:
 
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->args([service('logger')->nullOnInvalid()]);
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'arguments' => [
+                        service('logger')->nullOnInvalid(),
+                    ],
+                ],
+            ],
+        ]);
 
 Ignoring Missing Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -474,24 +396,6 @@ call if the service exists and remove the method call if it does not:
                     # the '@?' syntax tells the container that the dependency is optional
                     - setLogger: ['@?logger']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Mail\NewsletterSender">
-                    <call method="setLogger">
-                        <argument type="service" id="logger" on-invalid="ignore"/>
-                    </call>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -499,13 +403,15 @@ call if the service exists and remove the method call if it does not:
 
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->call('setLogger', [service('logger')->ignoreOnInvalid()])
-            ;
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'calls' => [
+                        'setLogger' => [service('logger')->ignoreOnInvalid()],
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 

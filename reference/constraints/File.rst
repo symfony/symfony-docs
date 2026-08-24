@@ -297,10 +297,6 @@ Can be one of the following constants of the
   length of the string in graphemes, i.e. even emojis and ZWJ sequences of composed
   emojis count as 1 character.
 
-.. versionadded:: 7.3
-
-    The ``filenameCountUnit`` option was introduced in Symfony 7.3.
-
 ``filenameTooLongMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -341,10 +337,6 @@ Parameter          Description
 ``{{ charset }}``  The expected charset
 ``{{ name }}``     The current (invalid) value
 =================  ============================================================
-
-.. versionadded:: 7.3
-
-    The ``filenameCharset`` and ``filenameCharsetMessage`` options were introduced in Symfony 7.3.
 
 ``extensionsMessage``
 ~~~~~~~~~~~~~~~~~~~~~

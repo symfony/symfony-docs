@@ -95,6 +95,13 @@ file looks like this::
 Instantiating & Hydrating PHP Classes
 -------------------------------------
 
+.. deprecated:: 8.1
+
+    The :class:`Symfony\\Component\\VarExporter\\Instantiator` and
+    :class:`Symfony\\Component\\VarExporter\\Hydrator` classes are deprecated
+    since Symfony 8.1. Use the :phpfunction:`deepclone_hydrate` function
+    instead (see :ref:`the dedicated section <deepclone_hydrate>` below).
+
 Instantiator
 ~~~~~~~~~~~~
 
@@ -177,6 +184,123 @@ populated by using the special ``"\0"`` property name to define their internal v
         "\0" => [$inputArray],
     ]);
 
+.. _deepclone_hydrate:
+
+deepclone_hydrate
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``deepclone_hydrate()`` function was introduced in Symfony 8.1.
+
+Use the :phpfunction:`deepclone_hydrate` function instead of
+``Instantiator`` and ``Hydrator``. It is provided by
+`symfony/polyfill-deepclone`_ or by the `ext-deepclone`_ PHP extension.
+
+Pass a class name to **create a new instance**::
+
+    // creates an empty instance of Foo
+    $foo = deepclone_hydrate(Foo::class);
+
+    // creates a Foo instance and sets its properties
+    $foo = deepclone_hydrate(Foo::class, [
+        'propertyName' => $propertyValue,
+    ]);
+
+Pass an existing object to **populate it** in place::
+
+    $foo = new Foo();
+
+    deepclone_hydrate($foo, [
+        'propertyName' => $propertyValue,
+    ]);
+
+To set a property declared in a parent class, use the special
+``"\0ParentClass\0propertyName"`` syntax::
+
+    deepclone_hydrate($foo, [
+        "\0Bar\0privateBarProperty" => $propertyValue,
+    ]);
+
+Deep Cloning
+------------
+
+.. versionadded:: 8.1
+
+    The ``DeepCloner`` class was introduced in Symfony 8.1.
+
+In PHP, the native ``clone`` keyword does a **shallow copy**: it copies the object
+but leaves nested objects as references to the originals. **Deep cloning** means
+recursively cloning all nested objects so the result shares no references with
+the original.
+
+The :class:`Symfony\\Component\\VarExporter\\DeepCloner` class deep-clones PHP
+values while preserving PHP's copy-on-write semantics for strings and arrays.
+Unlike ``unserialize(serialize())``, it does not reallocate strings and
+scalar-only arrays, resulting in lower memory usage and better performance.
+
+For one-off cloning, use the static ``deepClone()`` method::
+
+    use Symfony\Component\VarExporter\DeepCloner;
+
+    $clone = DeepCloner::deepClone($originalObject);
+
+When you need to clone the same structure multiple times, create an instance
+to amortize the cost of object graph analysis::
+
+    use Symfony\Component\VarExporter\DeepCloner;
+
+    $cloner = new DeepCloner($prototype);
+
+    $clone1 = $cloner->clone();
+    $clone2 = $cloner->clone();
+
+The ``isStaticValue()`` method returns ``true`` when the value does not need
+cloning (scalars, ``null``, enums, scalar-only arrays)::
+
+    use Symfony\Component\VarExporter\DeepCloner;
+
+    $cloner = new DeepCloner($value);
+
+    if ($cloner->isStaticValue()) {
+        // $value contains no objects or references, cloning is a no-op
+    }
+
+Use the ``cloneAs()`` method to deep-clone the root object using a different
+class (the target class must be compatible with the original, typically in the
+same hierarchy)::
+
+    $cloner = new DeepCloner($originalDog);
+    $puppy = $cloner->cloneAs(Puppy::class);
+
+``DeepCloner`` instances are serializable. The serialized form deduplicates
+class and property names, typically producing a smaller payload than
+``serialize($value)`` itself.
+
+The ``toArray()`` method exports the cloner state as a pure array (only scalars
+and nested arrays, no objects), making it suitable for any encoder that handles
+plain PHP arrays (``json_encode()``, ``var_export()``, etc.). Use ``fromArray()``
+to restore the cloner from a previously exported array::
+
+    use Symfony\Component\VarExporter\DeepCloner;
+
+    $cloner = new DeepCloner($originalObject);
+
+    // export to a pure array
+    $data = $cloner->toArray();
+
+    // store as JSON, in a cache, or as a PHP array file
+    file_put_contents('cloner.json', json_encode($data));
+
+    // later, restore the cloner and produce clones without re-analyzing the object graph
+    $data = json_decode(file_get_contents('cloner.json'), true);
+    $cloner = DeepCloner::fromArray($data);
+    $clone = $cloner->clone();
+
+.. versionadded:: 8.1
+
+    The ``toArray()`` and ``fromArray()`` methods were introduced in Symfony 8.1.
+
 Creating Lazy Objects
 ---------------------
 
@@ -207,169 +331,7 @@ pattern, which also works with abstract classes, internal classes, and interface
 Use this mechanism only when native lazy objects cannot be leveraged
 (otherwise you'll get a deprecation notice).
 
-Legacy Creation of Lazy Objects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When using a PHP version earlier than 8.4, native lazy objects are not available.
-In these cases, the VarExporter component provides two traits that help you
-implement lazy-loading mechanisms in your classes.
-
-.. _var-exporter_ghost-objects:
-
-LazyGhostTrait
-..............
-
-.. deprecated:: 7.3
-
-    ``LazyGhostTrait`` is deprecated since Symfony 7.3. Use PHP 8.4's native lazy
-    objects instead. Note that using the trait with PHP versions earlier than 8.4
-    does not trigger a deprecation, to ease the transition.
-
-Ghost objects are empty objects, which see their properties populated the first
-time any method is called. Thanks to :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait`,
-the implementation of the lazy mechanism is eased. The ``MyLazyObject::populateHash()``
-method will be called only when the object is actually used and needs to be
-initialized::
-
-    namespace App\Hash;
-
-    use Symfony\Component\VarExporter\LazyGhostTrait;
-
-    class HashProcessor
-    {
-        use LazyGhostTrait;
-
-        // This property may require a heavy computation to have its value
-        public readonly string $hash;
-
-        public function __construct()
-        {
-            self::createLazyGhost(initializer: $this->populateHash(...), instance: $this);
-        }
-
-        private function populateHash(array $data): void
-        {
-            // Compute $this->hash value with the passed data
-        }
-    }
-
-:class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` also allows you to
-convert non-lazy classes to lazy ones::
-
-    namespace App\Hash;
-
-    use Symfony\Component\VarExporter\LazyGhostTrait;
-
-    class HashProcessor
-    {
-        public readonly string $hash;
-
-        public function __construct(array $data)
-        {
-            $this->populateHash($data);
-        }
-
-        private function populateHash(array $data): void
-        {
-            // ...
-        }
-
-        public function validateHash(): bool
-        {
-            // ...
-        }
-    }
-
-    class LazyHashProcessor extends HashProcessor
-    {
-        use LazyGhostTrait;
-    }
-
-    $processor = LazyHashProcessor::createLazyGhost(initializer: function (HashProcessor $instance): void {
-        // Do any operation you need here: call setters, getters, methods to validate the hash, etc.
-        $data = /** Retrieve required data to compute the hash */;
-        $instance->__construct(...$data);
-        $instance->validateHash();
-    });
-
-While you never query ``$processor->hash`` value, heavy methods will never be
-triggered. But still, the ``$processor`` object exists and can be used in your
-code, passed to methods, functions, etc.
-
-Ghost objects unfortunately can't work with abstract classes or internal PHP
-classes. Nevertheless, the VarExporter component covers this need with the help
-of :ref:`Virtual Proxies <var-exporter_virtual-proxies>`.
-
-.. _var-exporter_virtual-proxies:
-
-LazyProxyTrait
-..............
-
-.. deprecated:: 7.3
-
-    ``LazyProxyTrait`` is deprecated since Symfony 7.3. Use PHP 8.4's native lazy
-    objects instead. Note that using the trait with PHP versions earlier than 8.4
-    does not trigger a deprecation, to ease the transition.
-
-The purpose of virtual proxies is the same as
-:ref:`ghost objects <var-exporter_ghost-objects>`, but their internal behavior is
-completely different. Where ghost objects requires extending a base class, virtual
-proxies take advantage of the **Liskov Substitution principle**. This principle
-describes that if two objects are implementing the same interface, you can swap
-between the different implementations without breaking your application. This is
-what virtual proxies take advantage of. To use virtual proxies, you may use
-:class:`Symfony\\Component\\VarExporter\\ProxyHelper` to generate proxy's class
-code::
-
-    namespace App\Hash;
-
-    use Symfony\Component\VarExporter\ProxyHelper;
-
-    interface ProcessorInterface
-    {
-        public function getHash(): bool;
-    }
-
-    abstract class AbstractProcessor implements ProcessorInterface
-    {
-        protected string $hash;
-
-        public function getHash(): bool
-        {
-            return $this->hash;
-        }
-    }
-
-    class HashProcessor extends AbstractProcessor
-    {
-        public function __construct(array $data)
-        {
-            $this->populateHash($data);
-        }
-
-        private function populateHash(array $data): void
-        {
-            // ...
-        }
-    }
-
-    $proxyCode = ProxyHelper::generateLazyProxy(new \ReflectionClass(AbstractProcessor::class));
-    // $proxyCode contains the actual proxy and the reference to LazyProxyTrait.
-    // In production env, this should be dumped into a file to avoid calling eval().
-    eval('class HashProcessorProxy'.$proxyCode);
-
-    $processor = HashProcessorProxy::createLazyProxy(initializer: function (): ProcessorInterface {
-        $data = /** Retrieve required data to compute the hash */;
-        $instance = new HashProcessor(...$data);
-
-        // Do any operation you need here: call setters, getters, methods to validate the hash, etc.
-
-        return $instance;
-    });
-
-Just like ghost objects, while you never query ``$processor->hash``, its value
-will not be computed. The main difference with ghost objects is that this time,
-a proxy of an abstract class was created. This also works with internal PHP class.
-
 .. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
+.. _`symfony/polyfill-deepclone`: https://github.com/symfony/polyfill/tree/main/src/DeepClone
+.. _`ext-deepclone`: https://github.com/symfony/php-ext-deepclone

@@ -107,8 +107,4 @@ Parameter         Description
 ``{{ format }}``  The date format defined in ``format``
 ================  ==============================================================
 
-.. versionadded:: 7.3
-
-    The ``{{ format }}`` parameter was introduced in Symfony 7.3.
-
 .. include:: /reference/constraints/_payload-option.rst.inc

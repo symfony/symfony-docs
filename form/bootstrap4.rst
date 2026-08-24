@@ -34,34 +34,16 @@ configuration:
         twig:
             form_themes: ['bootstrap_4_layout.html.twig']
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
-                <!-- ... -->
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            $twig->formThemes(['bootstrap_4_layout.html.twig']);
-
-            // ...
-        };
+        return App::config([
+            'twig' => [
+                'form_themes' => ['bootstrap_4_layout.html.twig'],
+            ],
+        ]);
 
 If you prefer to apply the Bootstrap styles on a form-to-form basis, include the
 ``form_theme`` tag in the templates where those forms are used:

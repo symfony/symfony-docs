@@ -13,50 +13,6 @@ configured under the ``framework`` key in your application configuration.
     # displays the actual config values used by your application
     $ php bin/console debug:config framework
 
-.. note::
-
-    When using XML, you must use the ``http://symfony.com/schema/dic/symfony``
-    namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/symfony/symfony-1.0.xsd``
-
-annotations
-~~~~~~~~~~~
-
-.. _reference-annotations-cache:
-
-cache
-.....
-
-**type**: ``string`` **default**: ``php_array``
-
-This option can be one of the following values:
-
-php_array
-    Use a PHP array to cache annotations in memory
-file
-    Use the filesystem to cache annotations
-none
-    Disable the caching of annotations
-
-debug
-.....
-
-**type**: ``boolean`` **default**: ``%kernel.debug%``
-
-Whether to enable debug mode for caching. If enabled, the cache will
-automatically update when the original file is changed (both with code and
-annotation changes). For performance reasons, it is recommended to disable
-debug mode in production, which will happen automatically if you use the
-default value.
-
-file_cache_dir
-..............
-
-**type**: ``string`` **default**: ``%kernel.cache_dir%/annotations``
-
-The directory to store cache files for annotations, in case
-``annotations.cache`` is set to ``'file'``.
-
 .. _reference-assets:
 
 assets
@@ -89,32 +45,18 @@ This option allows you to prepend a base path to the URLs generated for assets:
             assets:
                 base_path: '/images'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:assets base-path="/images"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                ->basePath('/images');
-        };
+        return App::config([
+            'framework' => [
+                'assets' => [
+                    'base_path' => '/images',
+                ],
+            ],
+        ]);
 
 With this configuration, a call to ``asset('logo.png')`` will generate
 ``/images/logo.png`` instead of ``/logo.png``.
@@ -140,34 +82,20 @@ collection each time it generates an asset's path:
             # ...
             assets:
                 base_urls:
-                    - 'http://cdn.example.com/'
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:assets base-url="http://cdn.example.com/"/>
-            </framework:config>
-        </container>
+                    - 'https://cdn.example.com/'
 
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                ->baseUrls(['http://cdn.example.com/']);
-        };
+        return App::config([
+            'framework' => [
+                'assets' => [
+                    'base_urls' => ['https://cdn.example.com/'],
+                ],
+            ],
+        ]);
 
 .. _reference-assets-json-manifest-path:
 .. _reference-templating-json-manifest-path:
@@ -214,57 +142,33 @@ package:
                         # this package uses the global manifest (the default file is used)
                         base_path: '/images'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- this manifest is applied to every asset (including packages) -->
-                <framework:assets json-manifest-path="%kernel.project_dir%/public/build/manifest.json">
-                <!-- you can use absolute URLs too and Symfony will download them automatically -->
-                <!-- <framework:assets json-manifest-path="https://cdn.example.com/manifest.json"> -->
-                    <!-- this package uses its own manifest (the default file is ignored) -->
-                    <!-- Throws an exception when an asset is not found in the manifest -->
-                    <framework:package
-                        name="foo_package"
-                        json-manifest-path="%kernel.project_dir%/public/build/a_different_manifest.json" strict-mode="%kernel.debug%"/>
-                    <!-- this package uses the global manifest (the default file is used) -->
-                    <framework:package
-                        name="bar_package"
-                        base-path="/images"/>
-                </framework:assets>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                // this manifest is applied to every asset (including packages)
-                ->jsonManifestPath('%kernel.project_dir%/public/build/manifest.json');
-
-            // you can use absolute URLs too and Symfony will download them automatically
-            // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
-            $framework->assets()->package('foo_package')
-                // this package uses its own manifest (the default file is ignored)
-                ->jsonManifestPath('%kernel.project_dir%/public/build/a_different_manifest.json')
-                // Throws an exception when an asset is not found in the manifest
-                ->setStrictMode('%kernel.debug%');
-
-            $framework->assets()->package('bar_package')
-                // this package uses the global manifest (the default file is used)
-                ->basePath('/images');
-        };
+        return App::config([
+            'framework' => [
+                'assets' => [
+                    // this manifest is applied to every asset (including packages)
+                    'json_manifest_path' => '%kernel.project_dir%/public/build/manifest.json',
+                    // you can use absolute URLs too and Symfony will download them automatically
+                    // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
+                    'packages' => [
+                        'foo_package' => [
+                            // this package uses its own manifest (the default file is ignored)
+                            'json_manifest_path' => '%kernel.project_dir%/public/build/a_different_manifest.json',
+                            // Throws an exception when an asset is not found in the manifest
+                            'strict_mode' => param('kernel.debug'),
+                        ],
+                        'bar_package' => [
+                            // this package uses the global manifest (the default file is used)
+                            'base_path' => '/images',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -322,11 +226,6 @@ For example, to select the ``foo_package`` package defined earlier::
         }
     }
 
-.. versionadded:: 7.4
-
-    Before Symfony 7.4, the target name had to include the ``.package``
-    suffix (e.g. ``#[Target('foo_package.package')]``).
-
 .. _reference-framework-assets-packages:
 
 packages
@@ -344,39 +243,25 @@ You can group assets into packages, to specify different base URLs for them:
             assets:
                 packages:
                     avatars:
-                        base_urls: 'http://static_cdn.example.com/avatars'
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:assets>
-                    <framework:package
-                        name="avatars"
-                        base-url="http://static_cdn.example.com/avatars"/>
-                </framework:assets>
-            </framework:config>
-        </container>
+                        base_urls: 'https://static_cdn.example.com/avatars'
 
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                ->package('avatars')
-                    ->baseUrls(['http://static_cdn.example.com/avatars']);
-        };
+        return App::config([
+            'framework' => [
+                // ...
+                'assets' => [
+                    'packages' => [
+                        'avatars' => [
+                            'base_urls' => ['https://static_cdn.example.com/avatars'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Now you can use the ``avatars`` package in your templates:
 
@@ -437,32 +322,18 @@ Now, activate the ``version`` option:
             assets:
                 version: 'v2'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:assets version="v2"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                ->version('v2');
-        };
+        return App::config([
+            'framework' => [
+                'assets' => [
+                    'version' => 'v2',
+                ],
+            ],
+        ]);
 
 Now, the same asset will be rendered as ``/images/logo.png?v2``. If you use
 this feature, you **must** manually increment the ``version`` value
@@ -553,56 +424,33 @@ individually for each asset package:
                         # this package inherits the default strategy
                         base_path: '/images'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:assets version-strategy="app.asset.my_versioning_strategy">
-                    <!-- this package removes any versioning (its assets won't be versioned) -->
-                    <framework:package
-                        name="foo_package"
-                        version="null"/>
-                    <!-- this package uses its own strategy (the default strategy is ignored) -->
-                    <framework:package
-                        name="bar_package"
-                        version-strategy="app.asset.another_version_strategy"/>
-                    <!-- this package inherits the default strategy -->
-                    <framework:package
-                        name="baz_package"
-                        base_path="/images"/>
-                </framework:assets>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                ->versionStrategy('app.asset.my_versioning_strategy');
-
-            $framework->assets()->package('foo_package')
-                // this package removes any versioning (its assets won't be versioned)
-                ->version(null);
-
-            $framework->assets()->package('bar_package')
-                // this package uses its own strategy (the default strategy is ignored)
-                ->versionStrategy('app.asset.another_version_strategy');
-
-            $framework->assets()->package('baz_package')
-                // this package inherits the default strategy
-                ->basePath('/images');
-        };
+        return App::config([
+            'framework' => [
+                'assets' => [
+                    // this strategy is applied to every asset (including packages)
+                    'version_strategy' => 'app.asset.my_versioning_strategy',
+                    'packages' => [
+                        'foo_package' => [
+                            // this package removes any versioning (its assets won't be versioned)
+                            'version' => null,
+                        ],
+                        'bar_package' => [
+                            // this package uses its own strategy (the default strategy is ignored)
+                            'version_strategy' => 'app.asset.another_version_strategy',
+                        ],
+                        'baz_package' => [
+                            // this package inherits the default strategy
+                            'base_path' => '/images',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -738,6 +586,20 @@ importmap_script_attributes
 Key-value pair of attributes to add to script tags output for the importmap
 (e.g. ``['data-turbo-track': 'reload']``).
 
+importmap_integrity_algorithms
+..............................
+
+**type**: ``array`` **default**: ``[]``
+
+A list of hash algorithms used to :ref:`add integrity metadata <importmap-integrity>`
+to the importmap and to its preloaded module and stylesheet tags. Allowed values
+are ``sha256``, ``sha384`` and ``sha512``; the default empty array disables
+this feature.
+
+.. versionadded:: 8.2
+
+    The ``importmap_integrity_algorithms`` option was introduced in Symfony 8.2.
+
 vendor_dir
 ..........
 
@@ -795,8 +657,8 @@ the ``dev`` environment).
 
     It might be tough to understand at the beginning, so to avoid confusion
     remember that all pools perform the same actions but on different media,
-    depending on the adapter they are based on. Internally, a pool wraps the
-    definition of an adapter.
+    depending on the adapter they are based on. Internally, a pool wraps the definition
+    of an adapter.
 
 default_doctrine_dbal_provider
 ..............................
@@ -889,40 +751,23 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
                         adapter: cache.adapter.redis
                         default_lifetime: 3600
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:cache>
-                    <framework:pool
-                        name="cache.mycache"
-                        adapter="cache.adapter.redis"
-                        default-lifetime="3600"
-                    />
-                </framework:cache>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->cache()
-                ->pool('cache.mycache')
-                    ->adapters(['cache.adapter.redis'])
-                    ->defaultLifetime(3600);
-        };
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'pools' => [
+                        'cache.mycache' => [
+                            'adapter' => 'cache.adapter.redis',
+                            'default_lifetime' => 3600,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 adapter
 """""""
@@ -999,6 +844,23 @@ tags
 Whether your service should be able to handle tags or not.
 Can also be the service id of another cache pool where tags will be stored.
 
+marshaller
+""""""""""
+
+**type**: ``string``
+
+.. versionadded:: 8.1
+
+    The ``marshaller`` option was introduced in Symfony 8.1.
+
+The service ID of a custom marshaller to use for this pool. When not set,
+the pool uses the global ``cache.default_marshaller`` service. Use it when you
+need different serialization strategies per pool (e.g. encrypting or compressing
+data only in specific pools).
+
+See :ref:`configuring a custom marshaller per cache pool <cache-custom-marshaller-per-pool>`
+for a detailed explanation and examples.
+
 .. _reference-cache-prefix-seed:
 
 prefix_seed
@@ -1058,31 +920,16 @@ but you can also disable CSRF protection only on forms. See :ref:`form.csrf_prot
             # ...
             csrf_protection: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <framework:csrf-protection enabled="true"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-        return static function (FrameworkConfig $framework): void {
-            $framework->csrfProtection()
-                ->enabled(true)
-            ;
-        };
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'csrf_protection' => true,
+            ],
+        ]);
 
 If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
@@ -1095,10 +942,6 @@ stateless_token_ids
 
 The list of CSRF token ids that will use :ref:`stateless CSRF protection <csrf-stateless-tokens>`.
 
-.. versionadded:: 7.2
-
-    The ``stateless_token_ids`` option was introduced in Symfony 7.2.
-
 check_header
 ............
 
@@ -1110,10 +953,6 @@ this to ``2`` (the value of the ``CHECK_ONLY_HEADER`` constant on the
 :class:`Symfony\\Component\\Security\\Csrf\\SameOriginCsrfTokenManager` class)
 to check only the header and ignore the cookie.
 
-.. versionadded:: 7.2
-
-    The ``check_header`` option was introduced in Symfony 7.2.
-
 cookie_name
 ...........
 
@@ -1121,10 +960,6 @@ cookie_name
 
 The name of the cookie (and HTTP header) to use for the double-submit when using
 :ref:`stateless CSRF protection <csrf-stateless-tokens>`.
-
-.. versionadded:: 7.2
-
-    The ``cookie_name`` option was introduced in Symfony 7.2.
 
 .. _config-framework-default_locale:
 
@@ -1164,31 +999,51 @@ performance a bit:
         framework:
             enabled_locales: ['en', 'es']
 
-    .. code-block:: xml
+    .. code-block:: php
 
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+        // config/packages/translation.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            <framework:config>
-                <enabled-locale>en</enabled-locale>
-                <enabled-locale>es</enabled-locale>
-            </framework:config>
-        </container>
+        return App::config([
+            'framework' => [
+                'enabled_locales' => ['en', 'es'],
+            ],
+        ]);
+
+You can also use environment variables in the list of enabled locales. Empty
+values are automatically filtered out, so you can define a fixed number of
+slots and leave some of them empty:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            enabled_locales:
+                - '%env(LOCALE_1)%'
+                - '%env(LOCALE_2)%'
+                - '%env(LOCALE_3)%'
 
     .. code-block:: php
 
         // config/packages/translation.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->enabledLocales(['en', 'es']);
-        };
+        return App::config([
+            'framework' => [
+                'enabled_locales' => [
+                    '%env(LOCALE_1)%',
+                    '%env(LOCALE_2)%',
+                    '%env(LOCALE_3)%',
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.1
+
+    Support for environment variables in ``enabled_locales`` was introduced
+    in Symfony 8.1.
 
 An added bonus of defining the enabled locales is that they are automatically
 added as a requirement of the :ref:`special _locale parameter <routing-locale-parameter>`.
@@ -1265,30 +1120,18 @@ You can also set ``esi`` to ``true`` to enable it:
         framework:
             esi: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:esi/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->esi()->enabled(true);
-        };
+        return App::config([
+            'framework' => [
+                'esi' => [
+                    'enabled' => true,
+                ],
+            ],
+        ]);
 
 .. _framework_exceptions:
 
@@ -1312,45 +1155,24 @@ and HTTP status code applied to the exceptions that match the given exception cl
                     status_code: 422
                     log_channel: 'custom_channel'
 
-    .. code-block:: xml
-
-        <!-- config/packages/exceptions.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:exception
-                    class="Symfony\Component\HttpKernel\Exception\BadRequestHttpException"
-                    log-level="debug"
-                    status-code="422"
-                    log-channel="custom_channel"
-                />
-                <!-- ... -->
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/exceptions.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-        use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->exception(BadRequestHttpException::class)
-                ->logLevel('debug')
-                ->statusCode(422)
-                ->logChannel('custom_channel')
-            ;
-        };
-
-.. versionadded:: 7.3
-
-    The ``log_channel`` option was introduced in Symfony 7.3.
+        return App::config([
+            'framework' => [
+                'exceptions' => [
+                    BadRequestHttpException::class => [
+                        'log_level' => 'debug',
+                        'status_code' => 422,
+                        'log_channel' => 'custom_channel',
+                    ],
+                ],
+            ],
+        ]);
 
 The order in which you configure exceptions is important because Symfony will
 use the configuration of the first exception that matches ``instanceof``:
@@ -1410,11 +1232,6 @@ The attributes can also be added to interfaces directly::
     class CustomException extends \Exception implements CustomExceptionInterface
     {
     }
-
-.. versionadded:: 7.1
-
-    Support to use ``#[WithHttpStatus]`` and ``#[WithLogLevel]`` attributes
-    on interfaces was introduced in Symfony 7.1.
 
 .. _reference-framework-form:
 
@@ -1506,6 +1323,12 @@ hinclude_default_template
 .........................
 
 **type**: ``string`` **default**: ``null``
+
+.. deprecated:: 8.2
+
+    The ``hinclude_default_template`` option is deprecated since Symfony 8.2.
+    Use the ``esi`` or ``inline`` fragment renderers, or `Symfony UX Turbo`_,
+    instead.
 
 Sets the content shown during the loading of the fragment or when JavaScript
 is disabled. This can be either a template name or the content itself.
@@ -1814,17 +1637,18 @@ terminate_on_cache_hit
 
 **type**: ``boolean``
 
+.. deprecated:: 8.1
+
+    The ``terminate_on_cache_hit`` option is deprecated since Symfony 8.1
+    because the underlying ``HttpCache`` option it configured was removed in
+    Symfony 7.0. Remove it from your configuration.
+
 If ``true``, the :ref:`kernel.terminate <component-http-kernel-kernel-terminate>`
 event is dispatched even when the cache is hit.
 
 Unless your application needs to process events on cache hits, it's recommended
 to set this to ``false`` to improve performance, because it avoids having to
 bootstrap the Symfony framework on a cache hit.
-
-.. deprecated:: 7.0
-
-    The underlying ``HttpCache`` option was removed in Symfony 7.0. This
-    configuration option has no effect and will be removed in a future version.
 
 trace_header
 ............
@@ -1873,37 +1697,19 @@ This service can be configured using ``framework.http_client.default_options``:
                     headers: { 'X-Powered-By': 'ACME App' }
                     max_redirects: 7
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client max-host-connections="10">
-                    <framework:default-options max-redirects="7">
-                        <framework:header name="X-Powered-By">ACME App</framework:header>
-                    </framework:default-options>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'max_host_connections' => 10,
-                'default_options' => [
-                    'headers' => [
-                        'X-Powered-By' => 'ACME App',
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'max_host_connections' => 10,
+                    'default_options' => [
+                        'headers' => ['X-Powered-By' => 'ACME App'],
+                        'max_redirects' => 7,
                     ],
-                    'max_redirects' => 7,
                 ],
             ],
         ]);
@@ -1911,9 +1717,7 @@ This service can be configured using ``framework.http_client.default_options``:
     .. code-block:: php-standalone
 
         $client = HttpClient::create([
-            'headers' => [
-                'X-Powered-By' => 'ACME App',
-            ],
+            'headers' => ['X-Powered-By' => 'ACME App'],
             'max_redirects' => 7,
         ], 10);
 
@@ -1937,33 +1741,19 @@ these options and can define a few others:
                         auth_bearer: secret_bearer_token
                         # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:scoped-client name="my_api.client" auth-bearer="secret_bearer_token"/>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'scoped_clients' => [
-                    'my_api.client' => [
-                        'auth_bearer' => 'secret_bearer_token',
-                        // ...
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'my_api.client' => [
+                            'auth_bearer' => 'secret_bearer_token',
+                            // ...
+                        ],
                     ],
                 ],
             ],
@@ -2097,10 +1887,6 @@ defined with the following options:
                     caching:
                         cache_pool: my_taggable_pool
 
-.. versionadded:: 7.4
-
-    The ``caching`` option was introduced in Symfony 7.4.
-
 .. _reference-http-client-caching-cache-pool:
 
 cache_pool
@@ -2114,10 +1900,6 @@ must implement the :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface`.
 By default, it uses an instance of :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`
 wrapping the ``cache.app`` pool.
 
-.. versionadded:: 7.4
-
-    The ``cache_pool`` option was introduced in Symfony 7.4.
-
 .. _reference-http-client-caching-shared:
 
 shared
@@ -2128,24 +1910,20 @@ shared
 If ``true``, it uses a `shared cache`_ so cached responses can be reused across
 users. Set it to ``false`` to use a `private cache`_.
 
-.. versionadded:: 7.4
-
-    The ``shared`` option was introduced in Symfony 7.4.
-
 .. _reference-http-client-caching-max-ttl:
 
 max_ttl
 """""""
 
-**type**: ``integer`` **default**: ``null``
+**type**: ``integer`` **default**: ``86400``
 
-The maximum time-to-live (in seconds) for cached responses. By default, responses
-are cached for as long as the TTL specified by the server. When this option is
-set, server-provided TTLs are capped to this value.
+The maximum time-to-live (in seconds) for cached responses. Server-provided
+TTLs are capped at this value to prevent cache items from living forever.
 
-.. versionadded:: 7.4
+.. deprecated:: 8.1
 
-    The ``max_ttl`` option was introduced in Symfony 7.4.
+    Setting ``max_ttl`` to ``null`` is deprecated since Symfony 8.1. Use a
+    positive integer instead.
 
 cafile
 ......
@@ -2220,6 +1998,19 @@ local_pk
 
 The path of a file that contains the `PEM formatted`_ private key of the
 certificate defined in the ``local_cert`` option.
+
+max_connect_duration
+....................
+
+**type**: ``float`` **default**: ``0``
+
+The maximum time, in seconds, allowed to establish the connection (DNS
+resolution, TCP connection and TLS handshake). A value lower than or equal
+to 0 means it is unlimited.
+
+.. versionadded:: 8.2
+
+    The ``max_connect_duration`` option was introduced in Symfony 8.2.
 
 max_duration
 ............
@@ -2311,10 +2102,6 @@ rate_limiter
 The service ID of the rate limiter used to limit the number of HTTP requests
 within a certain period. The service must implement the
 :class:`Symfony\\Component\\RateLimiter\\LimiterInterface`.
-
-.. versionadded:: 7.1
-
-    The ``rate_limiter`` option was introduced in Symfony 7.1.
 
 resolve
 .......
@@ -2544,9 +2331,10 @@ This option controls which HTTP methods can be overridden via the ``_method``
 request parameter or the ``X-HTTP-METHOD-OVERRIDE`` header when
 :ref:`http_method_override <configuration-framework-http_method_override>` is enabled.
 
-When set to ``null`` (the default), all HTTP methods can be overridden. When set
-to an empty array (``[]``), HTTP method overriding is completely disabled. When
-set to a specific list of methods, only those methods will be allowed as overrides:
+When set to ``null`` (the default), all HTTP methods can be overridden (except
+``GET``, ``HEAD``, ``TRACE``, and ``CONNECT`` methods). When set to an empty
+array (``[]``), HTTP method overriding is completely disabled. When set to a
+specific list of methods, only those methods will be allowed as overrides:
 
 .. configuration-block::
 
@@ -2557,25 +2345,6 @@ set to a specific list of methods, only those methods will be allowed as overrid
             http_method_override: true
             # Only allow PUT, PATCH, and DELETE to be overridden
             allowed_http_method_override: ['PUT', 'PATCH', 'DELETE']
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config http-method-override="true">
-                <framework:allowed-http-method-override>PUT</framework:allowed-http-method-override>
-                <framework:allowed-http-method-override>PATCH</framework:allowed-http-method-override>
-                <framework:allowed-http-method-override>DELETE</framework:allowed-http-method-override>
-            </framework:config>
-        </container>
 
     .. code-block:: php
 
@@ -2608,21 +2377,17 @@ method::
     $request = Request::createFromGlobals();
     // ...
 
-.. versionadded:: 7.4
-
-    The ``allowed_http_method_override`` option was introduced in Symfony 7.4.
-
-.. deprecated:: 7.4
-
-    Overriding methods ``GET``, ``HEAD``, ``CONNECT`` and ``TRACE`` is deprecated
-    since Symfony 7.4 and will stop working in Symfony 8.0.
-
 .. _reference-framework-ide:
 
 ide
 ~~~
 
 **type**: ``string`` **default**: ``%env(default::SYMFONY_IDE)%``
+
+.. deprecated:: 8.2
+
+    The ``ide`` option is deprecated since Symfony 8.2, and already stopped
+    working in lower versions. Use the ``SYMFONY_IDE`` environment variable instead.
 
 Symfony turns file paths seen in variable dumps and exception messages into
 links that open those files right inside your browser. If you prefer to open
@@ -2648,28 +2413,16 @@ doubling them to prevent Symfony from interpreting them as container parameters)
         framework:
             ide: 'myide://open?url=file://%%f&line=%%l'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config ide="myide://open?url=file://%%f&line=%%l"/>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->ide('myide://open?url=file://%%f&line=%%l');
-        };
+        return App::config([
+            'framework' => [
+                'ide' => 'myide://open?url=file://%%f&line=%%l',
+            ],
+        ]);
 
 Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. First, you can define this option
@@ -2776,33 +2529,20 @@ the name as key and DSN or service id as value:
         framework:
             lock: '%env(LOCK_DSN)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/lock.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:lock>
-                    <framework:resource name="default">%env(LOCK_DSN)%</framework:resource>
-                </framework:lock>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/lock.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->lock()
-                ->resource('default', [env('LOCK_DSN')]);
-        };
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'resources' => [
+                        'default' => [env('LOCK_DSN')],
+                    ],
+                ],
+            ],
+        ]);
 
 .. seealso::
 
@@ -2857,44 +2597,21 @@ The "envelope recipient" which is used as the value of ``RCPT TO`` during the
                 envelope:
                     recipients: ['admin@symfony.com', 'lead@symfony.com']
 
-    .. code-block:: xml
-
-        <!-- config/packages/mailer.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <framework:mailer dsn="smtp://localhost:25">
-                    <framework:envelope>
-                        <framework:recipient>admin@symfony.com</framework:recipient>
-                        <framework:recipient>lead@symfony.com</framework:recipient>
-                    </framework:envelope>
-                </framework:mailer>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->extension('framework', [
+        return App::config([
+            'framework' => [
                 'mailer' => [
                     'dsn' => 'smtp://localhost:25',
                     'envelope' => [
-                        'recipients' => [
-                            'admin@symfony.com',
-                            'lead@symfony.com',
-                        ],
+                        'recipients' => ['admin@symfony.com', 'lead@symfony.com'],
                     ],
                 ],
-            ]);
-        };
+            ],
+        ]);
 
 sender
 """"""
@@ -2998,10 +2715,6 @@ dkim_signer
 
 Configures a global DKIM signer that automatically signs all outgoing messages.
 
-.. versionadded:: 7.3
-
-    The ``dkim_signer`` option was introduced in Symfony 7.3.
-
 key
 """
 
@@ -3048,10 +2761,6 @@ smime_signer
 
 Configures a global S/MIME signer that automatically signs all outgoing messages.
 
-.. versionadded:: 7.3
-
-    The ``smime_signer`` option was introduced in Symfony 7.3.
-
 key
 """
 
@@ -3093,10 +2802,6 @@ smime_encrypter
 
 Configures a global S/MIME encrypter that automatically encrypts all outgoing
 messages.
-
-.. versionadded:: 7.3
-
-    The ``smime_encrypter`` option was introduced in Symfony 7.3.
 
 repository
 """"""""""
@@ -3167,6 +2872,11 @@ senders
 **type**: ``array``
 
 A list of transport names to route the message to.
+
+.. deprecated:: 8.1
+
+    The ``senders`` nesting level in the routing configuration is deprecated
+    since Symfony 8.1. Use a string or a list of strings directly instead.
 
 serializer
 ..........
@@ -3424,38 +3134,35 @@ This option also accepts a map of PHP errors to log levels:
                     !php/const \E_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
                     !php/const \E_CORE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- in XML configuration you cannot use PHP constants as the value of
-                     the 'type' attribute, which makes this format way less readable.
-                     Consider using YAML or PHP for this configuration -->
-                <framework:log type="8" logLevel="error"/>
-                <framework:log type="2" logLevel="error"/>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Psr\Log\LogLevel;
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->phpErrors()->log(\E_DEPRECATED, LogLevel::ERROR);
-            $framework->phpErrors()->log(\E_USER_DEPRECATED, LogLevel::ERROR);
-            // ...
-        };
+        use Psr\Log\LogLevel;
+
+        return App::config([
+            'framework' => [
+                'php_errors' => [
+                    'log' => [
+                        \E_DEPRECATED => LogLevel::ERROR,
+                        \E_USER_DEPRECATED => LogLevel::ERROR,
+                        \E_NOTICE => LogLevel::ERROR,
+                        \E_USER_NOTICE => LogLevel::ERROR,
+                        \E_STRICT => LogLevel::ERROR,
+                        \E_WARNING => LogLevel::ERROR,
+                        \E_USER_WARNING => LogLevel::ERROR,
+                        \E_COMPILE_WARNING => LogLevel::ERROR,
+                        \E_CORE_WARNING => LogLevel::ERROR,
+                        \E_USER_ERROR => LogLevel::CRITICAL,
+                        \E_COMPILE_ERROR => LogLevel::CRITICAL,
+                        \E_PARSE => LogLevel::CRITICAL,
+                        \E_ERROR => LogLevel::CRITICAL,
+                        \E_CORE_ERROR => LogLevel::CRITICAL,
+                    ],
+                ],
+            ],
+        ]);
 
 throw
 .....
@@ -3495,21 +3202,6 @@ Combine it with the ``collect`` option to enable/disable the profiler on demand:
 * If the ``collect`` option is set to ``false``, but this parameter exists in a
   request and has value of ``true``, ``yes``, ``on`` or ``1``, the request data
   will be collected.
-
-.. _collect_serializer_data:
-
-collect_serializer_data
-.......................
-
-**type**: ``boolean`` **default**: ``false``
-
-When this option is ``true``, all normalizers and encoders are
-decorated by traceable implementations that collect profiling information about them.
-
-.. deprecated:: 7.3
-
-    Setting the ``collect_serializer_data`` option to ``false`` is deprecated
-    since Symfony 7.3.
 
 .. _profiler-dsn:
 
@@ -3619,16 +3311,15 @@ enabled
 with_constructor_extractor
 ..........................
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
 Configures the ``property_info`` service to extract property information from the constructor arguments
 using the :ref:`ConstructorExtractor <components-property-information-constructor-extractor>`.
 
-.. versionadded:: 7.3
+.. versionadded:: 8.0
 
-    The ``with_constructor_extractor`` option was introduced in Symfony 7.3.
-    It's required to set a value for it because its default value will change
-    from ``false`` to ``true`` in Symfony 8.0.
+    The default value of the ``with_constructor_extractor`` option was changed
+    to ``true`` in Symfony 8.0.
 
 rate_limiter
 ~~~~~~~~~~~~
@@ -3653,6 +3344,20 @@ cache_pool
 **type**: ``string`` **default**: ``cache.rate_limiter``
 
 The cache pool to use for storing the current limiter state.
+
+anchor_at
+"""""""""
+
+**type**: ``string`` **default**: ``null``
+
+A reference datetime (any string accepted by ``DateTimeImmutable``) used by the
+``fixed_window`` policy to align windows on a calendar. When set, windows reset
+at ``anchor_at + (n × interval)`` instead of starting on the first hit. This is
+useful for billing cycles, fiscal years or fixed-day weekly resets.
+
+.. versionadded:: 8.1
+
+    The ``anchor_at`` option was introduced in Symfony 8.1.
 
 interval
 """"""""
@@ -3766,58 +3471,25 @@ To configure a ``jsonp`` format:
                 formats:
                     jsonp: 'application/javascript'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:request>
-                    <framework:format name="jsonp">
-                        <framework:mime-type>application/javascript</framework:mime-type>
-                    </framework:format>
-                </framework:request>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->request()
-                ->format('jsonp', 'application/javascript');
-        };
+        return App::config([
+            'framework' => [
+                'request' => [
+                    'formats' => [
+                        'jsonp' => 'application/javascript',
+                    ],
+                ],
+            ],
+        ]);
 
 router
 ~~~~~~
 
-enabled
-.......
-
-**type**: ``boolean`` **default**: ``false``
-
-cache_dir
-.........
-
-**type**: ``string`` **default**: ``%kernel.cache_dir%``
-
-The directory where routing information will be cached. Can be set to
-``~`` (``null``) to disable route caching.
-
-.. deprecated:: 7.1
-
-    Setting the ``cache_dir`` option is deprecated since Symfony 7.1. The routes
-    are now always cached in the ``%kernel.build_dir%`` directory.
+.. _config-framework-router-default-uri:
 
 default_uri
 ...........
@@ -3826,6 +3498,11 @@ default_uri
 
 The default URI used to generate URLs in a non-HTTP context (see
 :ref:`Generating URLs in Commands <router-generate-urls-commands>`).
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
 
 http_port
 .........
@@ -3925,11 +3602,6 @@ variable is available (used by the :doc:`secrets vault </configuration/secrets>`
 the ``kernel.secret`` parameter is automatically derived from it. This means
 applications using the secrets vault don't need a separate ``APP_SECRET`` value.
 
-.. versionadded:: 7.2
-
-    The automatic derivation of ``kernel.secret`` from
-    ``SYMFONY_DECRYPTION_SECRET`` was introduced in Symfony 7.2.
-
 As with any other security-related parameter, it is a good practice to change
 this value from time to time. However, keep in mind that changing this value
 will invalidate all signed URIs and Remember Me cookies. That's why, after
@@ -3976,7 +3648,10 @@ semaphore
 
 **type**: ``string`` | ``array``
 
-The default semaphore adapter. Store DSNs are also allowed.
+The default semaphore adapter. Store DSNs are also allowed. Use ``lock://``
+to use the :doc:`Lock component </lock>` as the semaphore backend (e.g.
+``lock://`` for the default lock, or ``lock://my_locks`` for a named lock
+resource).
 
 .. _reference-semaphore-enabled:
 
@@ -4006,34 +3681,16 @@ the name as key and DSN or service id as value:
         framework:
             semaphore: '%env(SEMAPHORE_DSN)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/semaphore.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:semaphore>
-                    <framework:resource name="default">%env(SEMAPHORE_DSN)%</framework:resource>
-                </framework:semaphore>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/semaphore.php
-        use Symfony\Config\FrameworkConfig;
-        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->semaphore()
-                ->resource('default', [env('SEMAPHORE_DSN')]);
-        };
+        return App::config([
+            'framework' => [
+                'semaphore' => env('SEMAPHORE_DSN'),
+            ],
+        ]);
 
 .. _reference-semaphore-resources-name:
 
@@ -4197,27 +3854,17 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
             session.storage.options:
                 cache_limiter: 0
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="session.storage.options" type="collection">
-                    <parameter key="cache_limiter">0</parameter>
-                </parameter>
-            </parameters>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('session.storage.options', [
-            'cache_limiter' => 0,
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'parameters' => [
+                'session.storage.options' => [
+                    'cache_limiter' => 0,
+                ],
+            ],
         ]);
 
 Be aware that if you configure it, you'll have to set other session-related options
@@ -4320,31 +3967,18 @@ Whether to enable the session support in the framework.
             session:
                 enabled: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:session enabled="true"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->session()
-                ->enabled(true);
-        };
+        return App::config([
+            'framework' => [
+                'session' => [
+                    'enabled' => true,
+                ],
+            ],
+        ]);
 
 gc_divisor
 ..........
@@ -4379,11 +4013,6 @@ chance that the GC process will start on each request.
 If not set, Symfony will use the value of the `session.gc_probability`_ directive
 in the ``php.ini`` configuration file.
 
-.. versionadded:: 7.2
-
-    Relying on ``php.ini``'s directive as default for ``gc_probability`` was
-    introduced in Symfony 7.2.
-
 .. _config-framework-session-handler-id:
 
 handler_id
@@ -4412,42 +4041,22 @@ and also to configure the session handler with a DSN:
                 handler_id: '%env(DATABASE_URL)%'
                 handler_id: 'file://%kernel.project_dir%/var/sessions'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <!-- a few possible examples -->
-                <framework:session enabled="true"
-                    handler-id="redis://localhost"
-                    handler-id="%env(REDIS_URL)%"
-                    handler-id="%env(DATABASE_URL)%"
-                    handler-id="file://%kernel.project_dir%/var/sessions"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-
-            $framework->session()
-                // a few possible examples
-                ->handlerId('redis://localhost')
-                ->handlerId(env('REDIS_URL'))
-                ->handlerId(env('DATABASE_URL'))
-                ->handlerId('file://%kernel.project_dir%/var/sessions');
-        };
+        return App::config([
+            'framework' => [
+                'session' => [
+                    // a few possible examples
+                    'handler_id' => 'redis://localhost',
+                    'handler_id' => env('REDIS_URL'),
+                    'handler_id' => env('DATABASE_URL'),
+                    'handler_id' => 'file://%kernel.project_dir%/var/sessions',
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -4518,64 +4127,18 @@ be used instead:
             session:
                 save_path: ~
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:session save-path="null"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->session()
-                ->savePath(null);
-        };
-
-sid_bits_per_character
-......................
-
-**type**: ``integer``
-
-This determines the number of bits in the encoded session ID character. The possible
-values are ``4`` (0-9, a-f), ``5`` (0-9, a-v), and ``6`` (0-9, a-z, A-Z, "-", ",").
-The more bits results in stronger session ID. ``5`` is recommended value for
-most environments.
-
-If not set, ``php.ini``'s `session.sid_bits_per_character`_ directive will be relied on.
-
-.. deprecated:: 7.2
-
-    The ``sid_bits_per_character`` option was deprecated in Symfony 7.2. No alternative
-    is provided as PHP 8.4 has deprecated the related option.
-
-sid_length
-..........
-
-**type**: ``integer``
-
-This determines the length of session ID string, which can be an integer between
-``22`` and ``256`` (both inclusive), ``32`` being the recommended value. Longer
-session IDs are harder to guess.
-
-If not set, ``php.ini``'s `session.sid_length`_ directive will be relied on.
-
-.. deprecated:: 7.2
-
-    The ``sid_length`` option was deprecated in Symfony 7.2. No alternative is
-    provided as PHP 8.4 has deprecated the related option.
+        return App::config([
+            'framework' => [
+                'session' => [
+                    'save_path' => null,
+                ],
+            ],
+        ]);
 
 .. _storage_id:
 
@@ -4834,11 +4397,6 @@ trust_x_sendfile_type_header
 
 **type**: ``boolean`` **default**: ``%env(bool:default::SYMFONY_TRUST_X_SENDFILE_TYPE_HEADER)%``
 
-.. versionadded:: 7.2
-
-    In Symfony 7.2, the default value of this option was changed from ``false`` to the
-    value stored in the ``SYMFONY_TRUST_X_SENDFILE_TYPE_HEADER`` environment variable.
-
 ``X-Sendfile`` is a special HTTP header that tells web servers to replace the
 response contents by the file that is defined in that header. This improves
 performance because files are no longer served by your application but directly
@@ -4865,11 +4423,6 @@ trusted_hosts
 ~~~~~~~~~~~~~
 
 **type**: ``array`` | ``string`` **default**: ``['%env(default::SYMFONY_TRUSTED_HOSTS)%']``
-
-.. versionadded:: 7.2
-
-    In Symfony 7.2, the default value of this option was changed from ``[]`` to the
-    value stored in the ``SYMFONY_TRUSTED_HOSTS`` environment variable.
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
@@ -4898,32 +4451,16 @@ the application won't respond and the user will receive a 400 response.
         framework:
             trusted_hosts:  ['^example\.com$', '^example\.org$']
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:trusted-host>^example\.com$</framework:trusted-host>
-                <framework:trusted-host>^example\.org$</framework:trusted-host>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->trustedHosts(['^example\.com$', '^example\.org$']);
-        };
+        return App::config([
+            'framework' => [
+                'trusted_hosts' => ['^example\.com$', '^example\.org$'],
+            ],
+        ]);
 
 Hosts can also be configured to respond to any subdomain, via
 ``^(.+\.)?example\.com$`` for instance.
@@ -5054,42 +4591,24 @@ Defines the Doctrine entities that will be introspected to add
                     'App\Entity\': []
                     'Foo\': ['Foo\Some\Entity', 'Foo\Another\Entity']
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:validation>
-                    <framework:auto-mapping>
-                        <framework:service namespace="App\Entity\"/>
-
-                        <framework:service namespace="Foo\">Foo\Some\Entity</framework:service>
-                        <framework:service namespace="Foo\">Foo\Another\Entity</framework:service>
-                    </framework:auto-mapping>
-                </framework:validation>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->validation()
-                ->autoMapping()
-                    ->paths([
-                        'App\\Entity\\' => [],
-                        'Foo\\' => ['Foo\\Some\\Entity', 'Foo\\Another\\Entity'],
-                    ]);
-        };
+        use App\Entity\AnotherEntity;
+        use App\Entity\SomeEntity;
+
+        return App::config([
+            'framework' => [
+                'auto_mapping' => [
+                    // an empty array means that all entities that belong to that
+                    // namespace will add automatic validation
+                    'App\\Entity\\' => [],
+                    'Foo\\' => [SomeEntity::class, AnotherEntity::class],
+                ],
+            ],
+        ]);
 
 .. _reference-validation-disable_translation:
 
@@ -5102,10 +4621,6 @@ Validation error messages are automatically translated to the current applicatio
 locale. Set this option to ``true`` to disable translation of validation messages.
 This is useful to avoid "missing translation" errors in applications that use
 only a single language.
-
-.. versionadded:: 7.3
-
-    The ``disable_translation`` option was introduced in Symfony 7.3.
 
 .. _reference-validation-email_validation_mode:
 
@@ -5164,36 +4679,20 @@ the component will look for additional validation files:
                     paths:
                         - "%kernel.project_dir%/config/validation/"
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:validation>
-                    <framework:mapping>
-                        <framework:path>%kernel.project_dir%/config/validation/</framework:path>
-                    </framework:mapping>
-                </framework:validation>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->validation()
-                ->mapping()
-                    ->paths(['%kernel.project_dir%/config/validation/']);
-        };
+        return App::config([
+            'framework' => [
+                'validation' => [
+                    'mapping' => [
+                        'paths' => ['%kernel.project_dir%/config/validation/'],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _reference-validation-not-compromised-password:
 
@@ -5226,6 +4725,19 @@ constraint uses the public API provided by `haveibeenpwned.com`_. This option
 allows you to define a different, but compatible, API endpoint to make the password
 checks. It's useful for example when the Symfony application is run in an
 intranet without public access to the internet.
+
+property_metadata_existence_check
+.................................
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.1
+
+    The ``property_metadata_existence_check`` option was introduced in Symfony 8.1.
+
+When set to ``true``, the ``validateProperty()`` and ``validatePropertyValue()``
+methods throw a ``ValidatorException`` when no validation metadata is found for
+the given property.
 
 static_method
 .............
@@ -5445,6 +4957,50 @@ message_bus
 
 The service id of the Messenger bus used to dispatch incoming webhook messages.
 
+event_header_name
+.................
+
+**type**: ``string`` **default**: ``'Webhook-Event'``
+
+The name of the HTTP header used to transmit the event name.
+
+.. versionadded:: 8.1
+
+    The ``event_header_name`` option was introduced in Symfony 8.1.
+
+id_header_name
+..............
+
+**type**: ``string`` **default**: ``'Webhook-Id'``
+
+The name of the HTTP header used to transmit the event ID.
+
+.. versionadded:: 8.1
+
+    The ``id_header_name`` option was introduced in Symfony 8.1.
+
+signature_header_name
+.....................
+
+**type**: ``string`` **default**: ``'Webhook-Signature'``
+
+The name of the HTTP header used to transmit the HMAC signature.
+
+.. versionadded:: 8.1
+
+    The ``signature_header_name`` option was introduced in Symfony 8.1.
+
+signing_algorithm
+.................
+
+**type**: ``string`` **default**: ``'sha256'``
+
+The hash algorithm used to sign outgoing webhooks (e.g. ``sha256``, ``sha512``).
+
+.. versionadded:: 8.1
+
+    The ``signing_algorithm`` option was introduced in Symfony 8.1.
+
 routing
 .......
 
@@ -5500,37 +5056,20 @@ A list of workflows to be created by the framework extension:
                 my_workflow:
                     # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/workflow.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:workflows>
-                    <framework:workflow
-                        name="my_workflow"/>
-                </framework:workflows>
-                <!-- ... -->
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/workflow.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->workflows()
-                ->workflows('my_workflow')
-                    // ...
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'workflows' => [
+                    'my_workflow' => [
+                        // ...
+                    ],
+                ],
+            ],
+        ]);
 
 .. seealso::
 
@@ -5678,14 +5217,13 @@ to know their differences.
 .. _`session.gc_divisor`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-divisor
 .. _`session.gc_probability`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-probability
 .. _`session.gc_maxlifetime`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
-.. _`session.sid_length`: https://www.php.net/manual/en/session.configuration.php#ini.session.sid-length
-.. _`session.sid_bits_per_character`: https://www.php.net/manual/en/session.configuration.php#ini.session.sid-bits-per-character
 .. _`session.save_path`: https://www.php.net/manual/en/session.configuration.php#ini.session.save-path
 .. _`session.use_cookies`: https://www.php.net/manual/en/session.configuration.php#ini.session.use-cookies
 .. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
 .. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988
 .. _`SMTP session`: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol#SMTP_transport_example
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo
 .. _`OpenSSL cipher`: https://www.php.net/manual/en/openssl.ciphers.php
 .. _`PHP attributes`: https://www.php.net/manual/en/language.attributes.overview.php
 .. _`shared cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#shared_cache

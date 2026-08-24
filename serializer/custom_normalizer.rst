@@ -86,27 +86,6 @@ If you're not using ``autoconfigure``, you have to tag the service with
                     # register the normalizer with a high priority (called earlier)
                     - { name: 'serializer.normalizer', priority: 500 }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Serializer\TopicNormalizer">
-                    <!-- register the normalizer with a high priority (called earlier) -->
-                    <tag name="serializer.normalizer"
-                        priority="500"
-                    />
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -114,17 +93,16 @@ If you're not using ``autoconfigure``, you have to tag the service with
 
         use App\Serializer\TopicNormalizer;
 
-        return function(ContainerConfigurator $container) {
-            // ...
-
-            // if you're using autoconfigure, the tag will be automatically applied
-            $services->set(TopicNormalizer::class)
-                // register the normalizer with a high priority (called earlier)
-                ->tag('serializer.normalizer', [
-                    'priority' => 500,
-                ])
-            ;
-        };
+        return App::config([
+            'services' => [
+                TopicNormalizer::class => [
+                    'tags' => [
+                        // register the normalizer with a high priority (called earlier)
+                        ['serializer.normalizer' => ['priority' => 500]],
+                    ],
+                ],
+            ],
+        ]);
 
 Improving Performance of Normalizers/Denormalizers
 --------------------------------------------------

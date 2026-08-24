@@ -210,10 +210,6 @@ add several other options.
 
 If this option is false, the image cannot be landscape oriented.
 
-.. versionadded:: 7.3
-
-    The ``allowLandscape`` option support for SVG files was introduced in Symfony 7.3.
-
 ``allowLandscapeMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -237,10 +233,6 @@ Parameter         Description
 **type**: ``boolean`` **default**: ``true``
 
 If this option is false, the image cannot be portrait oriented.
-
-.. versionadded:: 7.3
-
-    The ``allowPortrait`` option support for SVG files was introduced in Symfony 7.3.
 
 ``allowPortraitMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -267,10 +259,6 @@ Parameter         Description
 If this option is false, the image cannot be a square. If you want to force
 a square image, then leave this option as its default ``true`` value
 and set `allowLandscape`_ and `allowPortrait`_ both to ``false``.
-
-.. versionadded:: 7.3
-
-    The ``allowSquare`` option support for SVG files was introduced in Symfony 7.3.
 
 ``allowSquareMessage``
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -369,10 +357,6 @@ Parameter             Description
 
 If set, the aspect ratio (``width / height``) of the image file must be less
 than or equal to this value.
-
-.. versionadded:: 7.3
-
-    The ``maxRatio`` option support for SVG files was introduced in Symfony 7.3.
 
 ``maxRatioMessage``
 ~~~~~~~~~~~~~~~~~~~
@@ -492,10 +476,6 @@ Parameter             Description
 
 If set, the aspect ratio (``width / height``) of the image file must be greater
 than or equal to this value.
-
-.. versionadded:: 7.3
-
-    The ``minRatio`` option support for SVG files was introduced in Symfony 7.3.
 
 ``minRatioMessage``
 ~~~~~~~~~~~~~~~~~~~

@@ -69,6 +69,64 @@ even to change the controller entirely::
         $event->setController($myCustomController);
     }
 
+You can also use ``getAttributes()`` to retrieve PHP attributes declared on the
+controller:
+
+.. code-block:: php-attributes
+
+    use Symfony\Component\HttpKernel\Event\ControllerEvent;
+
+    public function onKernelController(ControllerEvent $event): void
+    {
+        // get all attributes, grouped by class name
+        $allAttributes = $event->getAttributes();
+
+        // get all attributes as a flat list (not grouped)
+        $flatAttributes = $event->getAttributes('*');
+
+        // get attributes of a specific class
+        $cacheAttributes = $event->getAttributes(Cache::class);
+    }
+
+Controller attributes are stored in the ``_controller_attributes`` request
+attribute, which means they can be overridden at runtime to change the behavior
+of attribute-based listeners without modifying the controller source code.
+
+.. versionadded:: 8.1
+
+    Storing controller attributes in the ``_controller_attributes`` request
+    attribute was introduced in Symfony 8.1.
+
+The :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent` class provides
+the :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::evaluate` method,
+which standardizes how ``Expression`` and ``Closure`` values found in controller
+attributes are evaluated. If the given value is a ``Closure``, it is called with
+``($args, $request, $controller)`` as arguments. If it is an
+:class:`Symfony\\Component\\ExpressionLanguage\\Expression`, it is evaluated with
+the variables ``request``, ``args`` and ``this`` (the controller object). Any
+other value is returned unchanged::
+
+    use Symfony\Component\HttpKernel\Event\ControllerEvent;
+
+    public function onKernelController(ControllerEvent $event): void
+    {
+        // evaluate a Closure defined in a controller attribute
+        $result = $event->evaluate(
+            static function (array $args, Request $request, object $controller): bool {
+                return $request->attributes->get('_route') === 'admin';
+            }
+        );
+
+        // evaluate an Expression defined in a controller attribute
+        // available variables: "request", "args", and "this" (the controller)
+        $result = $event->evaluate(new Expression('request.getMethod() == "POST"'));
+    }
+
+.. versionadded:: 8.1
+
+    The :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::evaluate`
+    method was introduced in Symfony 8.1.
+
 .. seealso::
 
     Read more on the :ref:`kernel.controller event <component-http-kernel-kernel-controller>`.
@@ -105,12 +163,55 @@ found::
         $event->setArguments($newArguments);
     }
 
+The :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent` also
+provides the :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::evaluate`
+method (inherited from ``ControllerEvent``) to evaluate ``Expression`` and
+``Closure`` values found in controller attributes.
+
+.. versionadded:: 8.1
+
+    The :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::evaluate`
+    method was introduced in Symfony 8.1.
+
 Execute this command to find out which listeners are registered for this event and
 their priorities:
 
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.controller_arguments
+
+.. _controller-metadata-in-events:
+
+Accessing Controller Metadata in Events
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All kernel events dispatched after controller resolution (``kernel.controller_arguments``,
+``kernel.view``, ``kernel.response``, ``kernel.finish_request`` and
+``kernel.exception``) provide access to the controller metadata through the
+``controllerMetadata`` public property. This allows listeners to inspect the
+controller's attributes and arguments without using reflection on the controller::
+
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
+
+    public function onKernelResponse(ResponseEvent $event): void
+    {
+        $metadata = $event->controllerMetadata;
+
+        if (null === $metadata) {
+            return;
+        }
+
+        // get the PHP attributes declared on the controller
+        $attributes = $metadata->getAttributes();
+
+        // if the event happens after controller_arguments, you also get
+        // access to the resolved controller arguments
+        $namedArguments = $metadata->getNamedArguments();
+    }
+
+.. versionadded:: 8.1
+
+    The ``controllerMetadata`` property was introduced in Symfony 8.1.
 
 ``kernel.view``
 ~~~~~~~~~~~~~~~
@@ -163,6 +264,30 @@ before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
         // ... modify the response object
     }
+
+You can use ``getControllerAttributes()`` to retrieve PHP attributes declared
+on the controller that handled the request:
+
+.. code-block:: php-attributes
+
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
+
+    public function onKernelResponse(ResponseEvent $event): void
+    {
+        // get all controller attributes, grouped by class name
+        $allAttributes = $event->getControllerAttributes();
+
+        // get all controller attributes as a flat list (not grouped)
+        $flatAttributes = $event->getControllerAttributes('*');
+
+        // get attributes of a specific class
+        $cacheAttributes = $event->getControllerAttributes(Cache::class);
+    }
+
+.. versionadded:: 8.1
+
+    The ``ResponseEvent::getControllerAttributes()`` method was introduced in
+    Symfony 8.1.
 
 .. seealso::
 
@@ -296,3 +421,72 @@ their priorities:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.exception
+
+.. _controller-attribute-events:
+
+Controller Attribute Events
+---------------------------
+
+.. versionadded:: 8.1
+
+    Controller attribute events were introduced in Symfony 8.1.
+
+In addition to the kernel events listed above, the HttpKernel component
+automatically dispatches events named after PHP attributes found on the resolved
+controller. This allows you to write listeners that target a specific controller
+attribute instead of listening to a generic kernel event and manually inspecting
+it for the attribute's presence.
+
+Each attribute event name follows the convention ``{kernelEvent}.{AttributeClassName}``.
+For example, when a controller has a ``#[Cache]`` attribute, the following event
+is dispatched:
+
+.. code-block:: text
+
+    kernel.controller_arguments.Symfony\Component\HttpKernel\Attribute\Cache
+
+**Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerAttributeEvent`
+
+The ``ControllerAttributeEvent`` provides two properties:
+
+``$event->attribute``
+    The PHP attribute instance found on the controller.
+
+``$event->kernelEvent``
+    The underlying kernel event (e.g.
+    :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent`),
+    giving access to the request, response and other contextual data.
+
+This mechanism is supported by all kernel events **except** ``kernel.request``
+(the controller is not yet resolved) and ``kernel.terminate``.
+
+The following example shows a listener using this mechanism::
+
+    use App\Attribute\MyRateLimit;
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\HttpKernel\KernelEvents;
+
+    #[AsEventListener(event: KernelEvents::CONTROLLER_ARGUMENTS.'.'.MyRateLimit::class)]
+    class MyRateLimitListener
+    {
+        public function __invoke(object $event): void
+        {
+            // $event is a ControllerAttributeEvent instance
+            $attribute = $event->attribute;
+            $request = $event->kernelEvent->getRequest();
+
+            // implement rate limiting logic...
+        }
+    }
+
+Execute this command to find out which listeners are registered for attribute
+events on a given kernel event:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel.controller_arguments
+
+.. seealso::
+
+    Read more on the :ref:`controller attribute events <http-kernel-controller-attribute-events>`
+    in the HttpKernel component documentation.

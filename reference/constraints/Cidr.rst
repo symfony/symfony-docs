@@ -134,8 +134,4 @@ of :ref:`IP version ranges <reference-constraint-ip-version>`.
     considered ``*_public``, but it also includes the ``10.0.0.0/8`` range, which
     is categorized as ``*_private``.
 
-.. versionadded:: 7.1
-
-    The support of all IP version ranges was introduced in Symfony 7.1.
-
 .. _`CIDR`: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing

@@ -3,10 +3,6 @@
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 7.2
-
-    The ``choice_lazy`` option was introduced in Symfony 7.2.
-
 The ``choice_lazy`` option is particularly useful when dealing with a large set
 of choices, where loading them all at once could cause performance issues or
 delays::

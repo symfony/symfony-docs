@@ -608,11 +608,6 @@ method. The given signals won't be propagated to the child process::
     $process = new Process(['find', '/', '-name', 'rabbit']);
     $process->setIgnoredSignals([SIGKILL, SIGUSR1]);
 
-.. versionadded:: 7.1
-
-    The :method:`Symfony\\Component\\Process\\Process::setIgnoredSignals`
-    method was introduced in Symfony 7.1.
-
 Process Pid
 -----------
 
@@ -694,7 +689,7 @@ whether `TTY`_ is supported on the current operating system::
 
     use Symfony\Component\Process\Process;
 
-    $process = (new Process())->setTty(Process::isTtySupported());
+    $process = new Process()->setTty(Process::isTtySupported());
 
 .. _`pid`: https://en.wikipedia.org/wiki/Process_identifier
 .. _`PHP streams`: https://www.php.net/manual/en/book.stream.php

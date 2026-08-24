@@ -47,19 +47,8 @@ can customize this prefix in your routing configuration:
 
         # config/routes/webhook.yaml
         webhook:
-            resource: '@FrameworkBundle/Resources/config/routing/webhook.xml'
+            resource: '@FrameworkBundle/Resources/config/routing/webhook.php'
             prefix: /webhook  # customize as needed
-
-    .. code-block:: xml
-
-        <!-- config/routes/webhook.xml -->
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-            <import resource="@FrameworkBundle/Resources/config/routing/webhook.xml"
-                prefix="/webhook"/>
-        </routes>
 
     .. code-block:: php
 
@@ -67,7 +56,7 @@ can customize this prefix in your routing configuration:
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
-            $routes->import('@FrameworkBundle/Resources/config/routing/webhook.xml')
+            $routes->import('@FrameworkBundle/Resources/config/routing/webhook.php')
                 ->prefix('/webhook');
         };
 
@@ -85,26 +74,6 @@ controller uses a routing mechanism to map incoming requests to the appropriate 
                     acme_webhook:  # routing name, maps to /webhook/acme_webhook
                         service: App\Webhook\AcmeWebhookRequestParser
                         secret: '%env(WEBHOOK_SECRET)%'  # optional
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <framework:webhook enabled="true">
-                    <framework:routing type="acme_webhook">
-                        <framework:service>App\Webhook\AcmeWebhookRequestParser</framework:service>
-                        <framework:secret>%env(WEBHOOK_SECRET)%</framework:secret>
-                    </framework:routing>
-                </framework:webhook>
-            </framework:config>
-        </container>
 
     .. code-block:: php
 
@@ -160,18 +129,6 @@ request format:
                         service: Symfony\Component\Webhook\Client\RequestParser
                         secret: '%env(WEBHOOK_SECRET)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <framework:config>
-            <framework:webhook enabled="true">
-                <framework:routing type="acme_webhook">
-                    <framework:service>Symfony\Component\Webhook\Client\RequestParser</framework:service>
-                    <framework:secret>%env(WEBHOOK_SECRET)%</framework:secret>
-                </framework:routing>
-            </framework:webhook>
-        </framework:config>
-
     .. code-block:: php
 
         // config/packages/framework.php
@@ -202,8 +159,8 @@ The easiest way is using the maker command:
 
 .. tip::
 
-    Starting in `MakerBundle`_ ``v1.58.0``, the ``make:webhook`` command generates
-    both the parser and consumer classes and updates your configuration automatically.
+    The ``make:webhook`` command generates both the parser and consumer classes
+    and updates your configuration automatically.
 
 When extending :class:`Symfony\\Component\\Webhook\\Client\\AbstractRequestParser`,
 you need to implement two methods:
@@ -447,26 +404,6 @@ for :class:`Symfony\\Component\\RemoteEvent\\Messenger\\ConsumeRemoteEventMessag
                 routing:
                     'Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage': async
 
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-            <framework:config>
-                <framework:messenger>
-                    <framework:routing
-                        message-class="Symfony\Component\RemoteEvent\Messenger\ConsumeRemoteEventMessage">
-                        <framework:sender service="async"/>
-                    </framework:routing>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/messenger.php
@@ -512,19 +449,6 @@ Sendgrid        ``mailer.webhook.request_parser.sendgrid``
 Sweego          ``mailer.webhook.request_parser.sweego``
 ==============  ============================================
 
-.. versionadded:: 7.1
-
-    The support for ``Resend`` and ``MailerSend`` were introduced in Symfony 7.1.
-
-.. versionadded:: 7.2
-
-    The ``Mandrill``, ``Mailomat``, ``Mailtrap``, and ``Sweego`` integrations were introduced in
-    Symfony 7.2.
-
-.. versionadded:: 7.3
-
-    The ``AhaSend`` integration was introduced in Symfony 7.3.
-
 .. note::
 
     Install the third-party mailer provider you want to use as described in
@@ -545,29 +469,23 @@ Configure the routing:
                         service: 'mailer.webhook.request_parser.mailgun'
                         secret: '%env(MAILER_MAILGUN_SECRET)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <framework:config>
-            <framework:webhook enabled="true">
-                <framework:routing type="mailer_mailgun">
-                    <framework:service>mailer.webhook.request_parser.mailgun</framework:service>
-                    <framework:secret>%env(MAILER_MAILGUN_SECRET)%</framework:secret>
-                </framework:routing>
-            </framework:webhook>
-        </framework:config>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $config): void {
-            $config->webhook()
-                ->routing('mailer_mailgun')
-                ->service('mailer.webhook.request_parser.mailgun')
-                ->secret('%env(MAILER_MAILGUN_SECRET)%');
-        };
+        return App::config([
+            'framework' => [
+                'webhook' => [
+                    'routing' => [
+                        'mailer_mailgun' => [
+                            'service' => 'mailer.webhook.request_parser.mailgun',
+                            'secret' => env('MAILER_MAILGUN_SECRET'),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The routing name becomes part of your webhook URL (e.g.,
 ``https://example.com/webhook/mailer_mailgun``). Configure this URL at your
@@ -613,19 +531,15 @@ Notifier Webhooks
 
 Receive SMS status notifications from providers:
 
-============ ==========================================
-SMS service  Parser service name
-============ ==========================================
-LOX24        ``notifier.webhook.request_parser.lox24``
-Smsbox       ``notifier.webhook.request_parser.smsbox``
-Sweego       ``notifier.webhook.request_parser.sweego``
-Twilio       ``notifier.webhook.request_parser.twilio``
-Vonage       ``notifier.webhook.request_parser.vonage``
-============ ==========================================
-
-.. versionadded:: 7.4
-
-    The support for ``LOX24`` was introduced in Symfony 7.4.
+============  ==========================================
+SMS service   Parser service name
+============  ==========================================
+LOX24         ``notifier.webhook.request_parser.lox24``
+Smsbox        ``notifier.webhook.request_parser.smsbox``
+Sweego        ``notifier.webhook.request_parser.sweego``
+Twilio        ``notifier.webhook.request_parser.twilio``
+Vonage        ``notifier.webhook.request_parser.vonage``
+============  ==========================================
 
 Configure similarly to mailers, then consume
 :class:`Symfony\\Component\\RemoteEvent\\Event\\Sms\\SmsEvent`::
@@ -743,6 +657,26 @@ By default, the signature uses HMAC-SHA256 of the concatenated event name,
 event ID, and JSON body. Receiving endpoints should verify this signature
 using the shared secret to ensure webhook authenticity.
 
+Customizing Header Names and Signing Algorithm
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ability to configure header names and signing algorithm was introduced
+    in Symfony 8.1.
+
+You can customize the header names and the signing algorithm used for outgoing
+webhooks via the ``framework.webhook`` configuration. The following options are
+available:
+
+* ``event_header_name`` (default: ``Webhook-Event``): the HTTP header for the event name
+* ``id_header_name`` (default: ``Webhook-Id``): the HTTP header for the event ID
+* ``signature_header_name`` (default: ``Webhook-Signature``): the HTTP header for the HMAC signature
+* ``signing_algorithm`` (default: ``sha256``): the hash algorithm (e.g. ``sha512``)
+
+See the :doc:`framework configuration reference </reference/configuration/framework>`
+for details.
+
 Custom Sending Logic
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -750,5 +684,4 @@ For advanced use cases, you can implement custom sending logic using
 :class:`Symfony\\Component\\Webhook\\Server\\TransportInterface` to control
 header generation, signing, and HTTP transport.
 
-.. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`Webhook Component for Email Events screencast`: https://symfonycasts.com/screencast/mailtrap/email-event-webhook

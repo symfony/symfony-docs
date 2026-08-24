@@ -186,10 +186,24 @@ functions to trigger exceptions when there's no ``entrypoints.json`` file):
 
 .. code-block:: yaml
 
-    # config/packages/test/webpack_encore.yaml
-    webpack_encore:
-        strict_mode: false
-        # ...
+    # config/packages/webpack_encore.yaml
+    when@test:
+        webpack_encore:
+            strict_mode: false
+            # ...
+
+.. code-block:: php
+
+    // config/packages/webpack_encore.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+    return App::config([
+        'when@test' => [
+            'webpack_encore' => [
+                'strict_mode' => false,
+            ],
+        ],
+    ]);
 
 .. _`rsync`: https://rsync.samba.org/
 .. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html

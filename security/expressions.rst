@@ -193,13 +193,34 @@ You can also use the current request as the subject::
         // ...
     }
 
-Inside the subject's expression, you have access to two variables:
+Inside the subject's expression, you have access to these variables:
 
 ``request``
     The :ref:`Symfony Request <component-http-foundation-request>` object that
     represents the current request.
 ``args``
     An array of controller arguments that are passed to the controller.
+``this``
+    The controller instance, allowing access to its properties and methods::
+
+        use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+        class PostController
+        {
+            public string $defaultCategory = 'blog';
+
+            #[IsGranted('CATEGORY_ACCESS', subject: new Expression('this.defaultCategory'))]
+            public function index(): Response
+            {
+                // ...
+            }
+        }
+
+    .. versionadded:: 8.1
+
+        The ``this`` variable was introduced in Symfony 8.1.
 
 Additionally to expressions, the ``#[IsGranted]`` attribute also accepts
 closures that return a boolean value. The subject can also be a closure that
@@ -227,11 +248,6 @@ returns an array of values that will be injected into the closure::
             // ...
         }
     }
-
-.. versionadded:: 7.3
-
-    The support for closures in the ``#[IsGranted]`` attribute was introduced
-    in Symfony 7.3 and requires PHP 8.5.
 
 Learn more
 ----------

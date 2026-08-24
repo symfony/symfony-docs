@@ -46,10 +46,6 @@ at that date::
 In the previous example, the list of currencies won't include items like the
 Slovenian Tolar, which stopped being used on January 14, 2007.
 
-.. versionadded:: 7.4
-
-    The ``active_at`` option was introduced in Symfony 7.4.
-
 ``choices``
 ~~~~~~~~~~~
 
@@ -63,12 +59,6 @@ the moment of creating the form type.
     If you want to override the built-in choices of the currency type, you
     will also have to set the ``choice_loader`` option to ``null``.
 
-.. versionadded:: 7.4
-
-    The default value of ``choices`` changed in Symfony 7.4. In previous versions,
-    this option contained all currencies, including those that were no longer legal
-    tender in their countries.
-
 .. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
@@ -81,10 +71,6 @@ the moment of creating the form type.
 Set this option to ``false`` to only display the currencies that are no longer
 `legal tender`_ in their countries. Set it to ``null`` to include all currencies,
 regardless of their legal tender status.
-
-.. versionadded:: 7.4
-
-    The ``legal_tender`` option was introduced in Symfony 7.4.
 
 ``not_active_at``
 ~~~~~~~~~~~~~~~~~
@@ -102,10 +88,6 @@ This option allows you to show only the currencies that are inactive at that dat
 
 In the previous example, the list of currencies will include items like the
 Slovenian Tolar, which stopped being used on January 14, 2007.
-
-.. versionadded:: 7.4
-
-    The ``not_active_at`` option was introduced in Symfony 7.4.
 
 Inherited Options
 -----------------

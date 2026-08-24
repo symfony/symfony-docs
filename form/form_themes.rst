@@ -101,6 +101,13 @@ No CSS framework
     ``tailwind_2_layout.html.twig`` (minimal styles). Read more about
     :doc:`how to use the TailwindCSS form theme </form/tailwindcss>`.
 
+    ``daisyui_5_layout.html.twig`` for `daisyUI`_ 5, a component library based
+    on Tailwind CSS.
+
+    .. versionadded:: 8.1
+
+        The daisyUI form theme was introduced in Symfony 8.1.
+
 .. _forms-theming-global:
 .. _forms-theming-twig:
 
@@ -118,39 +125,22 @@ To use a theme for all forms in your application, configure it in
         twig:
             form_themes: ['bootstrap_5_layout.html.twig']
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            $twig->formThemes(['bootstrap_5_layout.html.twig']);
-        };
+        return App::config([
+            'twig' => [
+                'form_themes' => ['bootstrap_5_layout.html.twig'],
+            ],
+        ]);
 
 **Using Multiple Themes**
 
 You can specify multiple themes. Symfony searches them in **reverse order**
 (last theme in the list is checked first), falling back through the list until
 it finds a matching block:
-
-.. code-block:: yaml
 
 .. configuration-block::
 
@@ -163,40 +153,20 @@ it finds a matching block:
                 - 'bootstrap_5_layout.html.twig'     # checked second
                 - 'form/my_customizations.html.twig' # checked first
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <!-- last fallback -->
-                <twig:form-theme>form_div_layout.html.twig</twig:form-theme>
-                <!-- checked second -->
-                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
-                <!-- checked first -->
-                <twig:form-theme>form/my_customizations.html.twig</twig:form-theme>
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            $twig->formThemes([
-                'form_div_layout.html.twig',        // last fallback
-                'bootstrap_5_layout.html.twig',     // checked second
-                'form/my_customizations.html.twig', // checked first
-            ]);
-        };
+        return App::config([
+            'twig' => [
+                'form_themes' => [
+                    'form_div_layout.html.twig',        // last fallback
+                    'bootstrap_5_layout.html.twig',     // checked second
+                    'form/my_customizations.html.twig', // checked first
+                ],
+            ],
+        ]);
 
 This layering approach lets you override only the specific blocks you need.
 Your custom theme can define a single block, and Symfony handles the rest using
@@ -699,5 +669,6 @@ Learn More
 * :doc:`Complete reference of all built-in form types </reference/forms/types>`
 
 .. _`Bootstrap`: https://getbootstrap.com
+.. _`daisyUI`: https://daisyui.com/
 .. _`Foundation CSS framework`: https://get.foundation/
 .. _`Tailwind CSS`: https://tailwindcss.com/

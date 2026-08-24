@@ -19,41 +19,26 @@ but **disables data collection** by default in the test environment:
 
     .. code-block:: yaml
 
-        # config/packages/test/web_profiler.yaml
-
-        # ...
-        framework:
-            profiler: { enabled: true, collect: false }
-
-    .. code-block:: xml
-
-        <!-- config/packages/test/web_profiler.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                        http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- ... -->
-
-            <framework:config>
-                <framework:profiler enabled="true" collect="false"/>
-            </framework:config>
-        </container>
+        # config/packages/web_profiler.yaml
+        when@test:
+            framework:
+                profiler: { enabled: true, collect: false }
 
     .. code-block:: php
 
-        // config/packages/test/web_profiler.php
-        use Symfony\Config\FrameworkConfig;
+        // config/packages/web_profiler.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->profiler()
-                ->enabled(true)
-                ->collect(false)
-            ;
-        };
+        return App::config([
+            'when@test' => [
+                'framework' => [
+                    'profiler' => [
+                        'enabled' => true,
+                        'collect' => false,
+                    ],
+                ],
+            ],
+        ]);
 
 Setting ``collect`` to ``true`` enables profiler data collection for all tests.
 However, if you only need profiler data in a few specific tests, you can keep

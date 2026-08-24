@@ -51,7 +51,7 @@ Working with Service Definitions
 A **service definition** is an object that describes how the container must
 create a service: its class, its constructor arguments, its tags, whether it's
 lazy or shared, etc. No matter how you configure your services (automatic
-discovery, PHP attributes or YAML, XML and PHP files), the container turns all
+discovery, PHP attributes or YAML and PHP files), the container turns all
 that configuration into
 :class:`Symfony\\Component\\DependencyInjection\\Definition` objects. The
 actual services are only instantiated later, when the application asks for them.
@@ -399,7 +399,7 @@ the main bundle class::
 
 If your compiler pass is relatively small, you can make the main bundle class
 implement :class:`Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface`
-so that it can add itself::
+and it will be automatically registered as a compiler pass::
 
     // src/MyBundle/MyBundle.php
     namespace App\MyBundle;
@@ -410,11 +410,6 @@ so that it can add itself::
 
     class MyBundle extends AbstractBundle implements CompilerPassInterface
     {
-        public function build(ContainerBuilder $container): void
-        {
-            $container->addCompilerPass($this);
-        }
-
         public function process(ContainerBuilder $container): void
         {
             // in this method you can manipulate the service container:
@@ -427,6 +422,12 @@ so that it can add itself::
             }
         }
     }
+
+.. versionadded:: 8.1
+
+    Support for using bundle classes as compiler passes was introduced in
+    Symfony 8.1. Previously, you had to register the bundle class itself by
+    calling ``$container->addCompilerPass($this);`` in the ``build()`` method.
 
 If you are using custom :doc:`service tags </service_container/tags>` in a
 bundle, the convention is to format tag names by starting with the bundle's name

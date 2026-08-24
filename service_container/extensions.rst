@@ -1,3 +1,5 @@
+.. _components-dependency-injection-extension:
+
 Container Extensions
 ====================
 
@@ -31,17 +33,17 @@ load the service configuration files of its module::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
-    use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+    use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
     class AcmeDemoExtension implements ExtensionInterface
     {
         public function load(array $configs, ContainerBuilder $container): void
         {
-            $loader = new XmlFileLoader(
+            $loader = new PhpFileLoader(
                 $container,
                 new FileLocator(__DIR__.'/../Resources/config')
             );
-            $loader->load('services.xml');
+            $loader->load('services.php');
         }
 
         // ...
@@ -51,7 +53,7 @@ The ``load()`` method receives a fresh container, which is merged into the
 main container after the extension has set it up. This allows each extension
 to manage its service definitions independently.
 
-The interface defines three other methods. ``getAlias()`` returns the
+The interface defines another method called ``getAlias()``, which returns the
 configuration key associated with the extension::
 
     // ...
@@ -66,27 +68,13 @@ configuration key associated with the extension::
         }
     }
 
-``getNamespace()`` returns the XML namespace of the extension configuration
-and ``getXsdValidationBasePath()`` returns the base path of the XSD files that
-validate the XML configuration (return ``false`` to disable XSD validation)::
-
-    public function getXsdValidationBasePath(): string
-    {
-        return __DIR__.'/../Resources/config/';
-    }
-
-    public function getNamespace(): string
-    {
-        return 'http://www.example.com/symfony/schema/';
-    }
-
 .. note::
 
     Symfony provides a base
     :class:`Symfony\\Component\\DependencyInjection\\Extension\\Extension`
-    class which implements these methods, as well as a shortcut method for
-    processing the configuration. See :doc:`/bundles/extension` for more
-    details.
+    class which implements the methods of the interface, as well as a shortcut
+    method for processing the configuration. See :doc:`/bundles/extension` for
+    more details.
 
 Registering and Loading Extensions
 ----------------------------------
@@ -146,26 +134,6 @@ the ``compile()`` method of the container.
         $container->loadFromExtension($extension->getAlias());
         $container->compile();
 
-When using XML configuration files, define the values inside the XML namespace
-of the extension:
-
-.. code-block:: xml
-
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <container xmlns="http://symfony.com/schema/dic/services"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:acme-demo="http://www.example.com/schema/dic/acme_demo"
-        xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd
-            http://www.example.com/schema/dic/acme_demo
-            https://www.example.com/schema/dic/acme_demo/acme_demo-1.0.xsd"
-    >
-        <acme-demo:config>
-            <acme_demo:foo>fooValue</acme_demo:foo>
-            <acme_demo:bar>barValue</acme_demo:bar>
-        </acme-demo:config>
-    </container>
-
 .. note::
 
     If you need to manipulate the configuration loaded by an extension, you
@@ -221,14 +189,14 @@ conditionally::
 
         $container->setParameter('acme_demo.foo', $config['foo']);
 
-        $loader = new XmlFileLoader(
+        $loader = new PhpFileLoader(
             $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
-        $loader->load('services.xml');
+        $loader->load('services.php');
 
         if ($config['advanced']) {
-            $loader->load('advanced.xml');
+            $loader->load('advanced.php');
         }
     }
 
@@ -238,7 +206,7 @@ Deprecating Extension Parameters
 You can deprecate the container parameters defined by your extension to warn
 users about not using them anymore. This helps with the migration across major
 versions of the extension. Deprecation is only possible when using PHP to
-configure the extension, not when using XML or YAML. Use the
+configure the extension, not when using YAML. Use the
 ``ContainerBuilder::deprecateParameter()`` method to provide the deprecation
 details::
 

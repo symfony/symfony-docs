@@ -352,11 +352,6 @@ official YAML specification but are useful in Symfony applications:
       data:
           operator_types: !php/enum App\Operator\Enum\Type
 
-  .. versionadded:: 7.1
-
-    The support for using the enum FQCN without specifying a case
-    was introduced in Symfony 7.1.
-
 * The ``@=`` prefix is used by the :doc:`Dependency Injection </service_container>`
   component to inject values computed by :doc:`expressions </reference/formats/expression_language>`.
   In YAML configuration files, any string starting with ``@=`` is treated as an

@@ -118,24 +118,6 @@ After creating the strategy PHP class, register it as a Symfony service.
                     - "%env(APP_VERSION)%"
                     - "%%s?version=%%s"
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <service id="App\Asset\VersionStrategy\JsonHashVersionStrategy">
-                    <argument>%kernel.project_dir%/hashes.json</argument>
-                    <argument>%env(APP_VERSION)%</argument>
-                    <argument>%%s?version=%%s</argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -143,18 +125,17 @@ After creating the strategy PHP class, register it as a Symfony service.
 
         use App\Asset\VersionStrategy\JsonHashVersionStrategy;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(JsonHashVersionStrategy::class)
-                ->args(
-                    [
+        return App::config([
+            'services' => [
+                JsonHashVersionStrategy::class => [
+                    'arguments' => [
                         '%kernel.project_dir%/hashes.json',
                         '%env(APP_VERSION)%',
                         '%%s?version=%%s',
-                    ]
-                );
-        };
+                    ],
+                ],
+            ],
+        ]);
 
 The ``APP_VERSION`` environment variable holds the current application version
 (e.g. the Git commit hash or the release tag). Define it during your deployment
@@ -174,30 +155,17 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
             assets:
                 version_strategy: 'App\Asset\VersionStrategy\JsonHashVersionStrategy'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:assets version-strategy="App\Asset\VersionStrategy\JsonHashVersionStrategy"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use App\Asset\VersionStrategy\JsonHashVersionStrategy;
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->assets()
-                ->versionStrategy(JsonHashVersionStrategy::class)
-            ;
-        };
+        use App\Asset\VersionStrategy\JsonHashVersionStrategy;
+
+        return App::config([
+            'framework' => [
+                'assets' => [
+                    'version_strategy' => JsonHashVersionStrategy::class,
+                ],
+            ],
+        ]);

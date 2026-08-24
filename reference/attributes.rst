@@ -15,8 +15,9 @@ Command
 ~~~~~~~
 
 * :ref:`Argument <console-input-arguments>`
-* :ref:`Ask <console-interactive-input>`
 * :ref:`AsCommand <console_creating-command>`
+* :ref:`Ask <console-interactive-input>`
+* :ref:`AskChoice <console-input-ask-choice>`
 * :ref:`Interact <console-interact-attribute>`
 * :ref:`MapInput <console-input-map-input>`
 * :ref:`Option <console-input-options>`
@@ -32,6 +33,7 @@ Dependency Injection
 
 * :ref:`AsAlias <services-alias>`
 * :doc:`AsDecorator </service_container/decoration>`
+* :ref:`AsTagDecorator <decoration-tagged-services>`
 * :ref:`AsTaggedItem <tags_as-tagged-item>`
 * :ref:`Autoconfigure <lazy-services_configuration>`
 * :ref:`AutoconfigureResourceTag <di-resource-tags>`
@@ -46,17 +48,10 @@ Dependency Injection
 * :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
 * :ref:`Lazy <lazy-services_configuration>`
-* :ref:`TaggedIterator <tags_reference-tagged-services>`
-* :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
 * :ref:`When <service-container_limiting-to-env>`
 * :ref:`WhenNot <service-container_limiting-to-env>`
 
-.. deprecated:: 7.1
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
-    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
-    attributes were deprecated in Symfony 7.1.
 
 EventDispatcher
 ~~~~~~~~~~~~~~~
@@ -72,17 +67,26 @@ HttpKernel
 ~~~~~~~~~~
 
 * :doc:`AsController </controller/service>`
+* :ref:`AsControllerAttributeListener <http-kernel-controller-attribute-events>`
 * :ref:`AsTargetedValueResolver <controller-targeted-value-resolver>`
 * :ref:`Cache <http-cache-expiration-intro>`
 * :ref:`IsSignatureValid <routing-signing-uris>`
 * :ref:`MapDateTime <functionality-shipped-with-the-httpkernel>`
 * :ref:`MapQueryParameter <controller_map-request>`
 * :ref:`MapQueryString <controller_map-request>`
+* :ref:`MapRequestHeader <controller_map-request-header>`
 * :ref:`MapRequestPayload <controller_map-request>`
 * :ref:`MapUploadedFile <controller_map-uploaded-file>`
+* :ref:`RateLimit <rate-limiter-controller>`
+* :ref:`Serialize <controller_serialize>`
 * :ref:`ValueResolver <managing-value-resolvers>`
 * :ref:`WithHttpStatus <framework_exceptions>`
 * :ref:`WithLogLevel <framework_exceptions>`
+
+JsonPath
+~~~~~~~~
+
+* :ref:`AsJsonPathFunction <json-path-custom-functions>`
 
 JsonStreamer
 ~~~~~~~~~~~~

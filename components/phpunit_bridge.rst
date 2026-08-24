@@ -369,6 +369,59 @@ time. This can be disabled with the ``debug-class-loader`` option.
         </listener>
     </listeners>
 
+Namespace Remapping for DebugClassLoader
+........................................
+
+.. versionadded:: 8.1
+
+    The namespace remapping feature was introduced in Symfony 8.1.
+
+By default, ``DebugClassLoader`` uses the first namespace segment (e.g.
+``Acme\``) to determine vendor boundaries. Deprecation notices between classes
+that share the same vendor prefix are silently suppressed.
+
+This can be a problem when a library (``Acme\Library\*``) and its Symfony
+integration bundle (``Acme\Bundle\*``) share the same top-level namespace but
+are developed independently. To expose deprecations between them, pass a
+namespace mapping to ``DebugClassLoader::enable()``::
+
+    use Symfony\Component\ErrorHandler\DebugClassLoader;
+
+    DebugClassLoader::enable([
+        // treat Acme\Bundle as a different vendor from Acme\Library
+        'Acme\Bundle' => 'Acme\Bundle',
+        'Acme\Library' => 'Acme\Library',
+    ]);
+
+Each key is a class name or namespace prefix. Its value is the vendor string
+used for comparison instead of the default first segment.
+
+Announcing Future Methods with ``@method``
+..........................................
+
+.. versionadded:: 8.1
+
+    Support for ``@method`` annotations on abstract classes was introduced in
+    Symfony 8.1. Previously, only interfaces were supported.
+
+``DebugClassLoader`` reads ``@method`` annotations declared on interfaces and
+abstract classes to trigger a deprecation notice when a subclass does not
+implement a method that the parent plans to require in a future major version.
+This allows a library to announce upcoming abstract methods without immediately
+breaking existing subclasses::
+
+    /**
+     * @method string serialize()
+     */
+    abstract class AbstractEncoder
+    {
+    }
+
+Subclasses of ``AbstractEncoder`` that do not declare a public ``serialize()``
+method trigger a deprecation notice at autoload time. If the abstract class
+already declares the method (either abstract or with a default implementation),
+the annotation is treated as plain documentation and no deprecation is triggered.
+
 Compile-time Deprecations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -558,10 +611,6 @@ allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``
 Additionally the function ``date()`` is mocked so it uses the mocked time if no
 timestamp is specified.
 
-.. versionadded:: 7.4
-
-    Support for mocking the ``strtotime()`` function was introduced in Symfony 7.4.
-
 Other functions with an optional timestamp parameter that defaults to ``time()``
 will still use the system time instead of the mocked time. This means that you
 may need to change some code in your tests. For example, instead of ``new DateTime()``,
@@ -585,10 +634,6 @@ to mock using the ``clock-mock-namespaces`` parameter:
             <parameter name="clock-mock-namespaces" value="App\Util,App\Service"/>
         </bootstrap>
     </extensions>
-
-.. versionadded:: 7.2
-
-    The ``SymfonyExtension`` class for PHPUnit 10+ was introduced in Symfony 7.2.
 
 For older PHPUnit versions, register the listener instead:
 
@@ -627,10 +672,6 @@ mocked, which replaces the need for manual ``ClockMock::register()`` calls:
     }
 
 The attribute can also be applied to individual test methods.
-
-.. versionadded:: 7.3
-
-    The ``#[TimeSensitive]`` attribute was introduced in Symfony 7.3.
 
 .. note::
 
@@ -812,10 +853,6 @@ conditions::
             ],
         ],
     ]);
-
-.. versionadded:: 7.3
-
-    The ``#[DnsSensitive]`` attribute was introduced in Symfony 7.3.
 
 Class Existence Based Tests
 ---------------------------
@@ -1138,12 +1175,12 @@ not find the SUT:
     </listeners>
 
 .. _`PHPUnit`: https://phpunit.de
-.. _`PHPUnit event listener`: https://docs.phpunit.de/en/11.5/extending-phpunit.html#phpunit-s-event-system
+.. _`PHPUnit event listener`: https://docs.phpunit.de/en/13.1/extending-phpunit.html#phpunit-s-event-system
 .. _`ErrorHandler component`: https://github.com/symfony/error-handler
-.. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/11.5/assertions.html#assertstringmatchesformat
+.. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/13.1/assertions.html#assertstringmatchesformat
 .. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
-.. _`environment variable`: https://docs.phpunit.de/en/11.5/configuration.html#the-env-element
+.. _`environment variable`: https://docs.phpunit.de/en/13.1/configuration.html#the-env-element
 .. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
-.. _`@covers`: https://docs.phpunit.de/en/11.5/annotations.html#covers
+.. _`@covers`: https://docs.phpunit.de/en/13.1/annotations.html#covers
 .. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php

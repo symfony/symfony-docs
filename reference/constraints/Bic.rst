@@ -132,8 +132,4 @@ as constants in the :class:`Symfony\\Component\\Validator\\Constraints\\Bic` cla
 * ``Bic::VALIDATION_MODE_STRICT`` validates the given value without any modification;
 * ``Bic::VALIDATION_MODE_CASE_INSENSITIVE`` converts the given value to uppercase before validating it.
 
-.. versionadded:: 7.2
-
-    The ``mode`` option was introduced in Symfony 7.2.
-
 .. _`Business Identifier Code (BIC)`: https://en.wikipedia.org/wiki/Business_Identifier_Code

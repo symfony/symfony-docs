@@ -1,10 +1,6 @@
 WordCount
 =========
 
-.. versionadded:: 7.2
-
-    The ``WordCount`` constraint was introduced in Symfony 7.2.
-
 Validates that a string (or an object implementing the ``Stringable`` PHP interface)
 contains a given number of words. Internally, this constraint uses the
 :phpclass:`IntlBreakIterator` class to count the words depending on your locale.

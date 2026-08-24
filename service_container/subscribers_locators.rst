@@ -75,24 +75,6 @@ a service locator; define it with the ``#[AutowireLocator]`` attribute or the
                       credit_card: '@App\Payment\CreditCardPayment'
                       paypal: '@App\Payment\PaypalPayment'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Checkout">
-                    <argument type="service_locator">
-                        <argument key="credit_card" type="service" id="App\Payment\CreditCardPayment"/>
-                        <argument key="paypal" type="service" id="App\Payment\PaypalPayment"/>
-                    </argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -102,15 +84,16 @@ a service locator; define it with the ``#[AutowireLocator]`` attribute or the
         use App\Payment\CreditCardPayment;
         use App\Payment\PaypalPayment;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Checkout::class)
-                ->args([service_locator([
-                    'credit_card' => service(CreditCardPayment::class),
-                    'paypal' => service(PaypalPayment::class),
-                ])]);
-        };
+        return App::config([
+            'services' => [
+                Checkout::class => [
+                    'arguments' => [service_locator([
+                        'credit_card' => service(CreditCardPayment::class),
+                        'paypal' => service(PaypalPayment::class),
+                    ])],
+                ],
+            ],
+        ]);
 
 Get the services from the locator using the keys defined for them. The
 services are not instantiated until you get them::
@@ -162,11 +145,6 @@ count and iterate over the services of the locator::
         // do something with the service, the service id or both
     }
 
-.. versionadded:: 7.1
-
-    The :class:`Symfony\\Contracts\\Service\\ServiceCollectionInterface` was
-    introduced in Symfony 7.1.
-
 Reusing a Service Locator in Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -191,31 +169,6 @@ other services. To do so, create a new service definition using the
                 # add the following tag to the service definition:
                 # tags: ['container.service_locator']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-
-                <service id="app.payment_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
-                    <argument type="collection">
-                        <argument key="credit_card" type="service" id="App\Payment\CreditCardPayment"/>
-                        <argument key="paypal" type="service" id="App\Payment\PaypalPayment"/>
-                    </argument>
-                    <!--
-                        if you are not using the default service autoconfiguration,
-                        add the following tag to the service definition:
-                        <tag name="container.service_locator"/>
-                    -->
-                </service>
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -225,19 +178,20 @@ other services. To do so, create a new service definition using the
         use App\Payment\PaypalPayment;
         use Symfony\Component\DependencyInjection\ServiceLocator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set('app.payment_locator', ServiceLocator::class)
-                ->args([[
-                    'credit_card' => service(CreditCardPayment::class),
-                    'paypal' => service(PaypalPayment::class),
-                ]])
-                // if you are not using the default service autoconfiguration,
-                // add the following tag to the service definition:
-                // ->tag('container.service_locator')
-            ;
-        };
+        return App::config([
+            'services' => [
+                'app.payment_locator' => [
+                    'class' => ServiceLocator::class,
+                    'arguments' => [[
+                        'credit_card' => service(CreditCardPayment::class),
+                        'paypal' => service(PaypalPayment::class),
+                    ]],
+                    // if you are not using the default service autoconfiguration,
+                    // add the following tag to the service definition:
+                    // 'tags' => ['container.service_locator'],
+                ],
+            ],
+        ]);
 
 Now you can inject the service locator in other services:
 
@@ -267,23 +221,6 @@ Now you can inject the service locator in other services:
             App\Checkout:
                 arguments: ['@app.payment_locator']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-
-                <service id="App\Checkout">
-                    <argument type="service" id="app.payment_locator"/>
-                </service>
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -291,12 +228,13 @@ Now you can inject the service locator in other services:
 
         use App\Checkout;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Checkout::class)
-                ->args([service('app.payment_locator')]);
-        };
+        return App::config([
+            'services' => [
+                Checkout::class => [
+                    'arguments' => [service('app.payment_locator')],
+                ],
+            ],
+        ]);
 
 .. _service-locator_autowire-iterator:
 .. _service-subscribers-locators_defining-service-locator:
@@ -337,21 +275,6 @@ argument type to create a locator with all the services tagged with that tag:
             App\Checkout:
                 arguments: [!tagged_locator 'app.payment_handler']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Checkout">
-                    <argument type="tagged_locator" tag="app.payment_handler"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -359,12 +282,13 @@ argument type to create a locator with all the services tagged with that tag:
 
         use App\Checkout;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Checkout::class)
-                ->args([tagged_locator('app.payment_handler')]);
-        };
+        return App::config([
+            'services' => [
+                Checkout::class => [
+                    'arguments' => [tagged_locator('app.payment_handler')],
+                ],
+            ],
+        ]);
 
 If the service needs to loop over all the tagged services instead of getting
 only some of them, use the ``#[AutowireIterator]`` attribute or the
@@ -409,21 +333,6 @@ the tagged services:
             App\Checkout:
                 arguments: [!tagged_iterator 'app.payment_handler']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Checkout">
-                    <argument type="tagged_iterator" tag="app.payment_handler"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -431,12 +340,13 @@ the tagged services:
 
         use App\Checkout;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Checkout::class)
-                ->args([tagged_iterator('app.payment_handler')]);
-        };
+        return App::config([
+            'services' => [
+                Checkout::class => [
+                    'arguments' => [tagged_iterator('app.payment_handler')],
+                ],
+            ],
+        ]);
 
 All these options provide extra features to sort, filter and index the
 injected services. Read all about them in the
@@ -556,24 +466,6 @@ any tag keep using autowiring:
                     - { name: 'container.service_subscriber', key: 'logger', id: 'monolog.logger.event' }
                     - { name: 'container.service_subscriber', key: 'paypal', id: 'app.payment.paypal_sandbox' }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-
-                <service id="App\Checkout">
-                    <tag name="container.service_subscriber" key="logger" id="monolog.logger.event"/>
-                    <tag name="container.service_subscriber" key="paypal" id="app.payment.paypal_sandbox"/>
-                </service>
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -581,13 +473,16 @@ any tag keep using autowiring:
 
         use App\Checkout;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Checkout::class)
-                ->tag('container.service_subscriber', ['key' => 'logger', 'id' => 'monolog.logger.event'])
-                ->tag('container.service_subscriber', ['key' => 'paypal', 'id' => 'app.payment.paypal_sandbox']);
-        };
+        return App::config([
+            'services' => [
+                Checkout::class => [
+                    'tags' => [
+                        ['container.service_subscriber' => ['key' => 'logger', 'id' => 'monolog.logger.event']],
+                        ['container.service_subscriber' => ['key' => 'paypal', 'id' => 'app.payment.paypal_sandbox']],
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -624,14 +519,6 @@ string entries)::
 
 The supported attributes are ``Autowire``, ``AutowireDecorated``,
 ``AutowireIterator``, ``AutowireLocator`` and ``Target``.
-
-.. deprecated:: 7.1
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
-    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
-    attributes were deprecated in Symfony 7.1 in favor of
-    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
-    and :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`.
 
 .. note::
 
@@ -685,11 +572,6 @@ method per dependency::
             return $this->container->get(__METHOD__);
         }
     }
-
-.. versionadded:: 7.1
-
-    The ``ServiceMethodsSubscriberTrait`` was introduced in Symfony 7.1.
-    In previous Symfony versions it was called ``ServiceSubscriberTrait``.
 
 This allows you to create helper traits like RouterAware, LoggerAware, etc.
 and compose your services with them::
@@ -746,6 +628,48 @@ and compose your services with them::
     When creating these helper traits, the service id cannot be ``__METHOD__``
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
+
+Hooked Properties
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 3.7
+
+    Support for hooked properties in ``ServiceMethodsSubscriberTrait`` was
+    introduced in ``symfony/service-contracts`` 3.7.
+
+Instead of using methods, you can also use PHP `virtual/hooked properties`_
+together with the ``SubscribedService`` attribute. The property must define a
+``get`` hook that retrieves the service from the container::
+
+    // src/Service/MyService.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
+    use Symfony\Contracts\Service\ServiceMethodsSubscriberTrait;
+    use Symfony\Contracts\Service\ServiceSubscriberInterface;
+
+    class MyService implements ServiceSubscriberInterface
+    {
+        use ServiceMethodsSubscriberTrait;
+
+        #[SubscribedService]
+        public RouterInterface $router {
+            get => $this->container->get(__METHOD__);
+        }
+
+        #[SubscribedService]
+        public LoggerInterface $logger {
+            get => $this->container->get(__METHOD__);
+        }
+
+        public function doSomething(): void
+        {
+            // $this->router ...
+            // $this->logger ...
+        }
+    }
 
 ``SubscribedService`` Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -846,3 +770,4 @@ Another alternative is to mock it using ``PHPUnit``::
     // ...
 
 .. _`PSR-11 container`: https://www.php-fig.org/psr/psr-11/
+.. _`virtual/hooked properties`: https://php.net/language.oop5.property-hooks

@@ -49,12 +49,6 @@ which makes creating a voter even easier::
         abstract protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool;
     }
 
-
-.. versionadded:: 7.3
-
-    The ``$vote`` argument of the ``voteOnAttribute()`` method was introduced
-    in Symfony 7.3.
-
 .. note::
 
     The Voter class also implements
@@ -228,10 +222,6 @@ by its author. A voter that implements this logic could look like this::
 
         $vote->extraData['key'] = 'value';  // values can be of any type
 
-    .. versionadded:: 7.4
-
-        The ``$extraData`` property was introduced in Symfony 7.4.
-
 That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a-service>`.
 
 To recap, here's what's expected from the two abstract methods:
@@ -264,6 +254,37 @@ and tag it with ``security.voter``. But if you're using the
 that's done automatically for you! When you
 :ref:`call isGranted() with view/edit and pass a Post object <how-to-use-the-voter-in-a-controller>`,
 your voter will be called and you can control access.
+
+.. _security-voter-priority:
+
+Setting the Voter Priority
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Support for defining the priority of voters with the ``#[AsTaggedItem]``
+    attribute was introduced in Symfony 8.1.
+
+Voters are called according to their service priority, with higher-priority
+voters being called first. By default, this priority is ``0``. When using the
+:ref:`priority strategy <security-voters-change-strategy>`, use the
+``#[AsTaggedItem]`` attribute to define the order in which voters are executed::
+
+    // src/Security/PostVoter.php
+    namespace App\Security;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+    #[AsTaggedItem(priority: 10)]
+    class PostVoter extends Voter
+    {
+        // ...
+    }
+
+This is the recommended way to handle voter priority because it integrates
+with autoconfiguration and sets the priority without re-declaring the
+``security.voter`` tag.
 
 Checking for Roles inside a Voter
 ---------------------------------
@@ -394,9 +415,11 @@ However, you can change this behavior by specifying the message and status code 
 
 .. tip::
 
-    If the status code is different from 403, an
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
-    will be thrown instead.
+    When you set a status code, the
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException` subclass
+    matching it is thrown instead of ``AccessDeniedException``. The example
+    above throws a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`.
 
 .. _security-voters-change-strategy:
 
@@ -425,7 +448,7 @@ There are four strategies available:
 
 ``priority``
     This grants or denies access by the first voter that does not abstain,
-    based on their service priority;
+    based on their service priority (see :ref:`security-voter-priority`);
 
 Regardless of the chosen strategy, if all voters abstained from voting, the
 decision is based on the ``allow_if_all_abstain`` config option (which
@@ -446,35 +469,19 @@ security configuration:
                 strategy: unanimous
                 allow_if_all_abstain: false
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd"
-        >
-
-            <config>
-                <access-decision-manager strategy="unanimous" allow-if-all-abstain="false"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->accessDecisionManager()
-                ->strategy('unanimous')
-                ->allowIfAllAbstain(false)
-            ;
-        };
+        return App::config([
+            'security' => [
+                'access_decision_manager' => [
+                    'strategy' => 'unanimous',
+                    'allow_if_all_abstain' => false,
+                ],
+            ],
+        ]);
 
 .. _security-custom-access-decision-strategy:
 
@@ -495,35 +502,20 @@ option to use a custom service (your service must implement the
                 strategy_service: App\Security\MyCustomAccessDecisionStrategy
                 # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-
-            <config>
-                <access-decision-manager
-                    strategy-service="App\Security\MyCustomAccessDecisionStrategy"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\MyCustomAccessDecisionStrategy;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->accessDecisionManager()
-                ->strategyService(MyCustomAccessDecisionStrategy::class)
-                // ...
-            ;
-        };
+        use App\Security\MyCustomAccessDecisionStrategy;
+
+        return App::config([
+            'security' => [
+                'access_decision_manager' => [
+                    'strategy_service' => MyCustomAccessDecisionStrategy::class,
+                ],
+            ],
+        ]);
 
 When creating custom decision strategies, you can store additional data in votes
 to be used later when making a decision. For example, if not all votes should
@@ -575,10 +567,6 @@ Then, access that value when counting votes to make a decision::
         }
     }
 
-.. versionadded:: 7.4
-
-    The feature to store arbitrary data inside votes was introduced in Symfony 7.4.
-
 .. _security-custom-access-decision-manager:
 
 Custom Access Decision Manager
@@ -598,32 +586,17 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
                 service: App\Security\MyCustomAccessDecisionManager
                 # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-
-            <config>
-                <access-decision-manager
-                    service="App\Security\MyCustomAccessDecisionManager"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\MyCustomAccessDecisionManager;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->accessDecisionManager()
-                ->service(MyCustomAccessDecisionManager::class)
-                // ...
-            ;
-        };
+        use App\Security\MyCustomAccessDecisionManager;
+
+        return App::config([
+            'security' => [
+                'access_decision_manager' => [
+                    'service' => MyCustomAccessDecisionManager::class,
+                ],
+            ],
+        ]);

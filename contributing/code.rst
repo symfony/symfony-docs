@@ -430,10 +430,6 @@ environment variable ``TEST_GENERATE_FIXTURES`` set to ``1``:
 
     $ TEST_GENERATE_FIXTURES=1 php ./phpunit src/Symfony/Component/Config/Tests/Builder/GeneratedConfigTest.php
 
-.. versionadded:: 7.4
-
-    The ``TEST_GENERATE_FIXTURES`` environment variable was introduced in Symfony 7.4.
-
 .. _symfony2-license:
 .. _symfony-license:
 

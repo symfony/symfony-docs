@@ -111,40 +111,19 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
         doctrine:
             dbal:
                 password: '%env(DATABASE_PASSWORD)%'
-                # ...
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/doctrine.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
-            <doctrine:config>
-                <doctrine:dbal
-                    password="%env(DATABASE_PASSWORD)%"
-                />
-            </doctrine:config>
-
-        </container>
 
     .. code-block:: php
 
         // config/packages/doctrine.php
-        use Symfony\Config\DoctrineConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (DoctrineConfig $doctrine): void {
-            $doctrine->dbal()
-                ->connection('default')
-                    ->password(env('DATABASE_PASSWORD'))
-            ;
-        };
+        return App::config([
+            'doctrine' => [
+                'dbal' => [
+                    'password' => env('DATABASE_PASSWORD'),
+                ],
+            ],
+        ]);
 
 The actual value will be resolved at runtime: container compilation and cache
 warmup don't need the **decryption key**.
@@ -177,10 +156,6 @@ you to reveal a single secret's value.
     $ php bin/console secrets:reveal DATABASE_PASSWORD
 
      my secret
-
-.. versionadded:: 7.1
-
-    The ``secrets:reveal`` command was introduced in Symfony 7.1.
 
 Remove Secrets
 --------------
@@ -304,11 +279,6 @@ does *not* need to remain on the server(s).
     secret. This means you don't need to define a separate ``APP_SECRET``
     environment variable if you are already using the secrets vault.
 
-    .. versionadded:: 7.2
-
-        The automatic derivation of ``kernel.secret`` from
-        ``SYMFONY_DECRYPTION_SECRET`` was introduced in Symfony 7.2.
-
 Rotating Secrets
 ----------------
 
@@ -334,34 +304,17 @@ The secrets system is enabled by default and some of its behavior can be configu
                 #local_dotenv_file: '%kernel.project_dir%/.env.%kernel.environment%.local'
                 #decryption_env_var: 'base64:default::SYMFONY_DECRYPTION_SECRET'
 
-    .. code-block:: xml
-
-            <!-- config/packages/framework.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:framework="http://symfony.com/schema/dic/framework"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/framework https://symfony.com/schema/dic/framework/framework-1.0.xsd"
-            >
-                <framework:config>
-                    <framework:secrets
-                        vault_directory="%kernel.project_dir%/config/secrets/%kernel.environment%"
-                        local_dotenv_file="%kernel.project_dir%/.env.%kernel.environment%.local"
-                        decryption_env_var="base64:default::SYMFONY_DECRYPTION_SECRET"
-                    />
-                </framework:config>
-            </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->secrets()
-                // ->vaultDirectory('%kernel.project_dir%/config/secrets/%kernel.environment%')
-                // ->localDotenvFile('%kernel.project_dir%/.env.%kernel.environment%.local')
-                // ->decryptionEnvVar('base64:default::SYMFONY_DECRYPTION_SECRET')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'secrets' => [
+                    // 'vault_directory' => '%kernel.project_dir%/config/secrets/%kernel.environment%',
+                    // 'local_dotenv_file' => '%kernel.project_dir%/.env.%kernel.environment%.local',
+                    // 'decryption_env_var' => 'base64:default::SYMFONY_DECRYPTION_SECRET',
+                ],
+            ],
+        ]);

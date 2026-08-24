@@ -114,24 +114,6 @@ Then, register the class as a service that :doc:`decorates </service_container/d
                     - '@http_cache.store'
                     - '@?esi'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd"
-        >
-            <services>
-                <service id="App\CacheKernel" decorates="http_cache">
-                    <argument type="service" id="kernel"/>
-                    <argument type="service" id="http_cache.store"/>
-                    <argument type="service" id="esi" on-invalid="null"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -139,18 +121,18 @@ Then, register the class as a service that :doc:`decorates </service_container/d
 
         use App\CacheKernel;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(CacheKernel::class)
-                ->decorate('http_cache')
-                ->args([
-                    service('kernel'),
-                    service('http_cache.store'),
-                    service('esi')->nullOnInvalid(),
-                ])
-            ;
-        };
+        return App::config([
+            'services' => [
+                CacheKernel::class => [
+                    'decorates' => 'http_cache',
+                    'arguments' => [
+                        service('kernel'),
+                        service('http_cache.store'),
+                        service('esi')->nullOnInvalid(),
+                    ],
+                ],
+            ],
+        ]);
 
 .. danger::
 

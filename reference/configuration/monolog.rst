@@ -13,12 +13,6 @@ in your application configuration.
     # displays the actual config values used by your application
     $ php bin/console debug:config monolog
 
-.. note::
-
-    When using XML, you must use the ``http://symfony.com/schema/dic/monolog``
-    namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/monolog/monolog-1.0.xsd``
-
 .. tip::
 
     For a full list of handler types and related configuration options, see

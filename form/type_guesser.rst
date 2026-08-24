@@ -191,30 +191,20 @@ and tag it with ``form.type_guesser``:
             App\Form\TypeGuesser\PhpDocTypeGuesser:
                 tags: [form.type_guesser]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Form\TypeGuesser\PhpDocTypeGuesser">
-                    <tag name="form.type_guesser"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Form\TypeGuesser\PhpDocTypeGuesser;
 
-        $container->register(PhpDocTypeGuesser::class)
-            ->addTag('form.type_guesser')
-        ;
+        return App::config([
+            'services' => [
+                PhpDocTypeGuesser::class => [
+                    'tags' => ['form.type_guesser'],
+                ],
+            ],
+        ]);
 
 .. sidebar:: Registering a Type Guesser in the Component
 

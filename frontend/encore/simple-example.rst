@@ -162,14 +162,11 @@ Instead, you can point directly to the final built files or write code to parse
 ``entrypoints.json`` manually. The entrypoints file is needed only if you're using
 certain optional features, like ``splitEntryChunks()``.
 
-.. versionadded:: 1.9.0
-
-    The ``defer`` attribute on the ``script`` tags delays the execution of the
-    JavaScript until the page loads (similar to putting the ``script`` at the
-    bottom of the page). The ability to always add this attribute was introduced
-    in WebpackEncoreBundle 1.9.0 and is automatically enabled in that bundle's
-    recipe in the ``config/packages/webpack_encore.yaml`` file. See
-    `WebpackEncoreBundle Configuration`_ for more details.
+The ``defer`` attribute on the ``script`` tags delays the execution of the
+JavaScript until the page loads (similar to putting the ``script`` at the
+bottom of the page). This is automatically enabled in that bundle's recipe
+in the ``config/packages/webpack_encore.yaml`` file. See
+`WebpackEncoreBundle Configuration`_ for more details.
 
 Requiring JavaScript Modules
 ----------------------------
@@ -480,7 +477,7 @@ Encore supports many more features! For a full list of what you can do, see
 
 .. _`resolve.fullySpecified`: https://webpack.js.org/configuration/module/#resolvefullyspecified
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
-.. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
+.. _`WebpackEncoreBundle Configuration`: https://symfony.com/bundles/WebpackEncoreBundle/current/index.html#configuration
 .. _`Stimulus`: https://stimulus.hotwired.dev/
 .. _`Stimulus Documentation`: https://stimulus.hotwired.dev/handbook/introduction
 .. _StimulusBundle & the UX System: https://symfony.com/bundles/StimulusBundle/current/index.html

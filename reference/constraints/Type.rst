@@ -219,11 +219,6 @@ Also, you can use ``ctype_*()`` functions from corresponding
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
 
-.. versionadded:: 7.1
-
-    The ``list`` and ``associative_array`` types were introduced in Symfony
-    7.1.
-
 Finally, you can use aggregated functions:
 
 * ``number``: ``is_int || is_float && !is_nan``

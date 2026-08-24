@@ -5,10 +5,6 @@ The Tree Helper allows you to build and display tree structures in the console.
 It's commonly used to render directory hierarchies, but you can also use it to render
 any tree-like content, such as organizational charts, product category trees, taxonomies, etc.
 
-.. versionadded:: 7.3
-
-    The ``TreeHelper`` class was introduced in Symfony 7.3.
-
 Rendering a Tree
 ----------------
 

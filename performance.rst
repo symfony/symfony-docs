@@ -51,28 +51,16 @@ PHP `class preloading`_:
             # ...
             .container.dumper.inline_factories: true
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <!-- ... -->
-                <parameter key=".container.dumper.inline_factories">true</parameter>
-            </parameters>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $container->parameters()->set('.container.dumper.inline_factories', true);
-        };
+        return App::config([
+            'parameters' => [
+                '.container.dumper.inline_factories' => true,
+            ],
+        ]);
 
 .. tip::
 
@@ -233,26 +221,16 @@ in performance, you can stop generating the file as follows:
             # ...
             debug.container.dump: false
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <!-- ... -->
-                <parameter key="debug.container.dump">false</parameter>
-            </parameters>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->parameters()->set('debug.container.dump', false);
+        return App::config([
+            'parameters' => [
+                'debug.container.dump' => false,
+            ],
+        ]);
 
 .. _profiling-applications:
 
@@ -356,10 +334,6 @@ method does, which stops an event and then restarts it immediately::
     // Gets the last event period:
     // $event->getLastPeriod();
 
-.. versionadded:: 7.2
-
-    The ``getLastPeriod()`` method was introduced in Symfony 7.2.
-
 Profiling Sections
 ..................
 
@@ -385,10 +359,6 @@ know their names, as follows::
     foreach($this->stopwatch->getSectionEvents(Stopwatch::ROOT) as $event) {
         echo (string) $event;
     }
-
-.. versionadded:: 7.2
-
-    The ``Stopwatch::ROOT`` constant as a shortcut for ``__root__`` was introduced in Symfony 7.2.
 
 Learn more
 ----------

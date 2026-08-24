@@ -141,10 +141,4 @@ templates, set the following options:
 The ``static.watch`` option is required to disable the default reloading of
 files from the static directory, as those files are already handled by HMR.
 
-.. versionadded:: 1.0.0
-
-    Before Encore 1.0, you needed to pass a ``--hot`` flag at the command line
-    to enable HMR. You also needed to disable CSS extraction to enable HMR for
-    CSS. That is no longer needed.
-
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/

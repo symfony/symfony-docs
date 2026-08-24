@@ -242,7 +242,7 @@ Use Attributes to Configure Routing, Caching, and Security
 
 Using attributes for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
-formats (YAML, XML, PHP): all the configuration is just where you require it,
+formats (YAML, PHP): all the configuration is just where you require it,
 and it only uses one format.
 
 Use Dependency Injection to Get Services
@@ -456,4 +456,4 @@ you must set up a redirection.
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
-.. _`PHPUnit data providers`: https://docs.phpunit.de/en/11.5/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://docs.phpunit.de/en/13.1/writing-tests-for-phpunit.html#data-providers

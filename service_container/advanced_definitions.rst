@@ -46,13 +46,6 @@ in your service definition:
                 shared: false
                 # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <services>
-            <service id="App\SomeNonSharedService" shared="false"/>
-        </services>
-
     .. code-block:: php
 
         // config/services.php
@@ -60,12 +53,13 @@ in your service definition:
 
         use App\SomeNonSharedService;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(SomeNonSharedService::class)
-                ->share(false);
-        };
+        return App::config([
+            'services' => [
+                SomeNonSharedService::class => [
+                    'shared' => false,
+                ],
+            ],
+        ]);
 
 Now, whenever you request the ``App\SomeNonSharedService`` from the container,
 you will be passed a new instance.
@@ -98,22 +92,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             deprecated:
                 package: 'vendor-name/package-name'
                 version: '2.8'
-                message: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Service\OldService">
-                    <deprecated package="vendor-name/package-name" version="2.8">The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
-                </service>
-            </services>
-        </container>
+                message: The "%%service_id%%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
 
     .. code-block:: php
 
@@ -122,16 +101,17 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         use App\Service\OldService;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(OldService::class)
-                ->deprecate(
-                    'vendor-name/package-name',
-                    '2.8',
-                    'The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.'
-                );
-        };
+        return App::config([
+            'services' => [
+                OldService::class => [
+                    'deprecated' => [
+                        'package' => 'vendor-name/package-name',
+                        'version' => '2.8',
+                        'message' => 'The "%%service_id%%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.',
+                    ],
+                ],
+            ],
+        ]);
 
 Now, every time this service is used, a deprecation warning is triggered,
 advising you to stop or to change your uses of that service.
@@ -173,40 +153,65 @@ Service :ref:`aliases <services-alias>` can be deprecated in the same way:
                 package: 'acme/package'
                 version: '1.2'
 
-    .. code-block:: xml
+    .. code-block:: php
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            <services>
-                <service id="app.mailer" alias="App\Mail\PhpMailer">
-                    <!-- this outputs the following generic deprecation message:
-                         Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future -->
-                    <deprecated package="acme/package" version="1.2"/>
-                </service>
-            </services>
-        </container>
+        use App\Mail\PhpMailer;
+
+        return App::config([
+            'services' => [
+                'app.mailer' => [
+                    'alias' => PhpMailer::class,
+
+                    // this outputs the following generic deprecation message:
+                    // Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
+                    'deprecated' => [
+                        'package' => 'acme/package',
+                        'version' => '1.2',
+                    ],
+                ],
+            ],
+        ]);
+
+When deprecating aliases, you can also define a custom message and the
+``%alias_id%`` placeholder will be replaced by the alias id. You **must** have
+at least one occurrence of the ``%alias_id%`` placeholder in your template:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        app.mailer:
+            alias: 'App\Mail\PhpMailer'
+
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
+                message: 'The "%%alias_id%%" alias is deprecated. Do not use it anymore.'
 
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        use App\Mail\PhpMailer;
 
-            // this outputs the following generic deprecation message:
-            // Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
-            $services->alias('app.mailer', 'App\Mail\PhpMailer')
-                ->deprecate('acme/package', '1.2', '');
-        };
+        return App::config([
+            'services' => [
+                'app.mailer' => [
+                    'alias' => PhpMailer::class,
 
-When deprecating aliases, you can also define a custom message and the
-``%alias_id%`` placeholder will be replaced by the alias id. You **must** have
-at least one occurrence of the ``%alias_id%`` placeholder in your template.
+                    'deprecated' => [
+                        'package' => 'acme/package',
+                        'version' => '1.2',
+                        'message' => 'The "%%alias_id%%" alias is deprecated. Do not use it anymore.',
+                    ],
+                ],
+            ],
+        ]);
 
 Removing Service Definitions
 ----------------------------
@@ -222,8 +227,8 @@ PHP configuration format::
 
     use App\RemovedService;
 
-    return function(ContainerConfigurator $container) {
-        $services = $container->services();
+    return function(ContainerConfigurator $containerConfigurator) {
+        $services = $containerConfigurator->services();
 
         $services->remove(RemovedService::class);
     };
@@ -256,24 +261,6 @@ the name of the argument and some short description about its purpose:
 
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Service\MyService">
-                    <argument key="$rootNamespace" type="abstract">should be defined by Pass</argument>
-                </service>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -281,15 +268,19 @@ the name of the argument and some short description about its purpose:
 
         use App\Service\MyService;
 
-        return function(ContainerConfigurator $container) {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                MyService::class => [
+                    'arguments' => [
+                        '$rootNamespace' => abstract_arg('should be defined by Pass'),
+                    ],
+                ],
+            ],
+        ]);
 
-            $services->set(MyService::class)
-                ->arg('$rootNamespace', abstract_arg('should be defined by Pass'))
-            ;
-
-            // ...
-        };
+If you don't replace the value of an abstract argument during runtime, a
+``RuntimeException`` will be thrown with a message like
+``Argument "$rootNamespace" of service "App\Service\MyService" is abstract: should be defined by Pass.``
 
 .. _anonymous-services:
 
@@ -314,24 +305,6 @@ The following example shows how to inject an anonymous service into another serv
                     - !service
                         class: App\AnonymousBar
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="foo" class="App\Foo">
-                    <argument type="service">
-                        <service class="App\AnonymousBar"/>
-                    </argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -340,12 +313,15 @@ The following example shows how to inject an anonymous service into another serv
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Foo::class)
-                ->args([inline_service(AnonymousBar::class)]);
-        };
+        return App::config([
+            'services' => [
+                Foo::class => [
+                    'arguments' => [
+                        inline_service(AnonymousBar::class),
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -366,24 +342,6 @@ Anonymous services can also be used as :doc:`factories </service_container/facto
             App\Foo:
                 factory: [ !service { class: App\FooFactory }, 'constructFoo' ]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="foo" class="App\Foo">
-                    <factory method="constructFoo">
-                        <service class="App\FooFactory"/>
-                    </factory>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -392,12 +350,13 @@ Anonymous services can also be used as :doc:`factories </service_container/facto
         use App\Foo;
         use App\FooFactory;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Foo::class)
-                ->factory([inline_service(FooFactory::class), 'constructFoo']);
-        };
+        return App::config([
+            'services' => [
+                Foo::class => [
+                    'factory' => [inline_service(FooFactory::class), 'constructFoo'],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -483,28 +442,6 @@ all these classes are already loaded as services, so you only need to set the
             App\Mail\GreetingCardSender:
                 configurator: ['@App\Mail\EmailConfigurator', 'configure']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <prototype namespace="App\" resource="../src/"/>
-
-                <service id="App\Mail\NewsletterSender">
-                    <configurator service="App\Mail\EmailConfigurator" method="configure"/>
-                </service>
-
-                <service id="App\Mail\GreetingCardSender">
-                    <configurator service="App\Mail\EmailConfigurator" method="configure"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -514,19 +451,21 @@ all these classes are already loaded as services, so you only need to set the
         use App\Mail\GreetingCardSender;
         use App\Mail\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            // registers all classes as services, including App\Mail\EmailConfigurator
-            $services->load('App\\', '../src/');
-
-            // override the services to set the configurator
-            $services->set(NewsletterSender::class)
-                ->configurator([service(EmailConfigurator::class), 'configure']);
-
-            $services->set(GreetingCardSender::class)
-                ->configurator([service(EmailConfigurator::class), 'configure']);
-        };
+        return App::config([
+            'services' => [
+                // registers all classes as services, including App\Mail\EmailConfigurator
+                'App\\' => [
+                    'resource' => '../src/',
+                ],
+                // override the services to set the configurator
+                NewsletterSender::class => [
+                    'configurator' => [service(EmailConfigurator::class), 'configure'],
+                ],
+                GreetingCardSender::class => [
+                    'configurator' => [service(EmailConfigurator::class), 'configure'],
+                ],
+            ],
+        ]);
 
 When requesting the ``App\Mail\NewsletterSender`` or
 ``App\Mail\GreetingCardSender`` service, the created instance is first passed to
@@ -538,9 +477,8 @@ the ``EmailConfigurator::configure()`` method.
 
     If the configurator class defines an ``__invoke()`` method, you can omit
     the method name and pass only the service:
-    ``configurator: '@App\Mail\EmailConfigurator'`` in YAML,
-    ``<configurator service="App\Mail\EmailConfigurator"/>`` in XML and
-    ``->configurator(service(EmailConfigurator::class))`` in PHP.
+    ``configurator: '@App\Mail\EmailConfigurator'`` in YAML and
+    ``'configurator' => service(EmailConfigurator::class)`` in PHP.
 
 .. _services-synthetic:
 
@@ -587,35 +525,19 @@ configuration:
             app.synthetic_service:
                 synthetic: true
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-
-                <!-- synthetic services don't specify a class -->
-                <service id="app.synthetic_service" synthetic="true"/>
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            // synthetic services don't specify a class
-            $services->set('app.synthetic_service')
-                ->synthetic();
-        };
+        return App::config([
+            'services' => [
+                'app.synthetic_service' => [
+                    // synthetic services don't specify a class
+                    'synthetic' => true,
+                ],
+            ],
+        ]);
 
 Now, you can inject the instance in the container using
 :method:`Container::set() <Symfony\\Component\\DependencyInjection\\Container::set>`::
@@ -714,37 +636,6 @@ avoid duplicated service definitions:
 
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Repository\BaseDoctrineRepository" abstract="true">
-                    <argument type="service" id="doctrine.orm.entity_manager"/>
-
-                    <call method="setLogger">
-                        <argument type="service" id="logger"/>
-                    </call>
-                </service>
-
-                <!-- extends the App\Repository\BaseDoctrineRepository service -->
-                <service id="App\Repository\DoctrineUserRepository"
-                    parent="App\Repository\BaseDoctrineRepository"
-                />
-
-                <service id="App\Repository\DoctrinePostRepository"
-                    parent="App\Repository\BaseDoctrineRepository"
-                />
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -754,24 +645,24 @@ avoid duplicated service definitions:
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(BaseDoctrineRepository::class)
-                ->abstract()
-                ->args([service('doctrine.orm.entity_manager')])
-                ->call('setLogger', [service('logger')])
-            ;
-
-            $services->set(DoctrineUserRepository::class)
-                // extend the App\Repository\BaseDoctrineRepository service
-                ->parent(BaseDoctrineRepository::class)
-            ;
-
-            $services->set(DoctrinePostRepository::class)
-                ->parent(BaseDoctrineRepository::class)
-            ;
-        };
+        return App::config([
+            'services' => [
+                BaseDoctrineRepository::class => [
+                    'abstract' => true,
+                    'arguments' => [service('doctrine.orm.entity_manager')],
+                    'calls' => [
+                        'setLogger' => [service('logger')],
+                    ],
+                ],
+                DoctrineUserRepository::class => [
+                    // extend the App\Repository\BaseDoctrineRepository service
+                    'parent' => BaseDoctrineRepository::class,
+                ],
+                DoctrinePostRepository::class => [
+                    'parent' => BaseDoctrineRepository::class,
+                ],
+            ],
+        ]);
 
 In this context, having a ``parent`` service implies that the arguments
 and method calls of the parent service should be used for the child services.
@@ -820,39 +711,6 @@ the child class:
                 arguments:
                     index_0: '@doctrine.custom_entity_manager'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <!-- overrides the private setting of the parent service -->
-                <service id="App\Repository\DoctrineUserRepository"
-                    parent="App\Repository\BaseDoctrineRepository"
-                    public="true"
-                >
-                    <!-- appends the '@app.username_checker' argument to the parent
-                         argument list -->
-                    <argument type="service" id="app.username_checker"/>
-                </service>
-
-                <service id="App\Repository\DoctrinePostRepository"
-                    parent="App\Repository\BaseDoctrineRepository"
-                >
-                    <!-- overrides the first argument (using the index attribute) -->
-                    <argument index="0" type="service" id="doctrine.custom_entity_manager"/>
-                </service>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -861,30 +719,25 @@ the child class:
         use App\Repository\BaseDoctrineRepository;
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
-        // ...
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(BaseDoctrineRepository::class)
+        return App::config([
+            'services' => [
                 // ...
-            ;
 
-            $services->set(DoctrineUserRepository::class)
-                ->parent(BaseDoctrineRepository::class)
-
-                // overrides the private setting of the parent service
-                ->public()
-
-                // appends the '@app.username_checker' argument to the parent
-                // argument list
-                ->args([service('app.username_checker')])
-            ;
-
-            $services->set(DoctrinePostRepository::class)
-                ->parent(BaseDoctrineRepository::class)
-
-                // overrides the first argument
-                ->arg(0, service('doctrine.custom_entity_manager'))
-            ;
-        };
+                DoctrineUserRepository::class => [
+                    'parent' => BaseDoctrineRepository::class,
+                    // overrides the private setting of the parent service
+                    'public' => true,
+                    // appends the 'app.username_checker' service to the parent
+                    // argument list
+                    'arguments' => [service('app.username_checker')],
+                ],
+                DoctrinePostRepository::class => [
+                    'parent' => BaseDoctrineRepository::class,
+                    // overrides the first argument (using the special index_N key)
+                    'arguments' => [
+                        'index_0' => service('doctrine.custom_entity_manager'),
+                    ],
+                ],
+            ],
+        ]);

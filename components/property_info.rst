@@ -57,12 +57,16 @@ provide it with a set of information extractors::
     // list of PropertyInitializableExtractorInterface (any iterable)
     $propertyInitializableExtractors = [$reflectionExtractor];
 
+    // list of PropertyNameExtractorInterface (any iterable)
+    $propertyNameExtractors = [$reflectionExtractor];
+
     $propertyInfo = new PropertyInfoExtractor(
         $listExtractors,
         $typeExtractors,
         $descriptionExtractors,
         $accessExtractors,
-        $propertyInitializableExtractors
+        $propertyInitializableExtractors,
+        $propertyNameExtractors
     );
 
     // see below for more examples
@@ -121,6 +125,7 @@ class exposes public methods to extract several types of information:
   (including typed properties)
 * :ref:`Property description <property-info-description>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getShortDescription` and :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getLongDescription`
 * :ref:`Property access details <property-info-access>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isReadable` and  :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isWritable`
+* :ref:`Property name <property-info-name>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyNameExtractorInterface::getPropertyName`
 * :ref:`Property initializable through the constructor <property-info-initializable>`:  :method:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface::isInitializable`
 
 .. note::
@@ -165,26 +170,19 @@ provide extensive data type information for a property thanks to the
 :doc:`TypeInfo component </components/type_info>`::
 
     // e.g. given this property: private ?string $username;
-    $types = $propertyInfo->getType($class, $property);
+    $type = $propertyInfo->getType($class, $property);
 
     // $type is an instance of Symfony\Component\TypeInfo\Type\NullableType;
     // casting it to a string shows the PHP type it represents
     (string) $type; // 'null|string'
 
+    if (null !== $type) {
+        $builtinType = $type->getBuiltinType();
+        $isNullable = $type->isNullable();
+    }
+
 See the :doc:`TypeInfo component documentation </components/type_info>` to learn
 everything you can do with the returned ``Type`` object.
-
-.. versionadded:: 7.3
-
-    The ``getType()`` method was introduced in Symfony 7.3.
-
-.. deprecated:: 7.3
-
-    The :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getTypes`
-    method and the :class:`Symfony\\Component\\PropertyInfo\\Type` class are
-    deprecated since Symfony 7.3. Use the
-    :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getType`
-    method and the :class:`Symfony\\Component\\TypeInfo\\Type` class instead.
 
 Documentation Block
 ~~~~~~~~~~~~~~~~~~~
@@ -200,11 +198,6 @@ can provide the full documentation block for a property as a string::
             This is the subsequent paragraph in the DocComment.
             It can span multiple lines.
     */
-
-.. versionadded:: 7.1
-
-    The :class:`Symfony\\Component\\PropertyInfo\\PropertyDocBlockExtractorInterface`
-    interface was introduced in Symfony 7.1.
 
 .. _property-info-description:
 
@@ -252,6 +245,34 @@ component works. It assumes camel case style method names following `PSR-1`_. Fo
 both ``myProperty`` and ``my_property`` properties are readable if there's a
 ``getMyProperty()`` method and writable if there's a ``setMyProperty()`` method.
 
+.. _property-info-name:
+
+Property Name Information
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``PropertyNameExtractorInterface`` was introduced in Symfony 8.2.
+
+Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyNameExtractorInterface`
+provide the name of the property exposed by a given accessor or mutator
+method as a string::
+
+    $propertyInfo->getPropertyName($class, 'getFirstName');
+    // Example Result: string(9) "firstName"
+
+    $propertyInfo->getPropertyName($class, 'addTag');
+    // Example Result: string(4) "tags"
+
+The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
+first checks the methods defined via the
+:ref:`#[WithAccessors] attribute <property-info-with-accessors>` and then
+falls back to the naming conventions (e.g. removing the ``get``, ``set``,
+``add``, etc. prefix from the method name and, for adders and removers,
+singularizing the property name). It returns ``null`` when the method is not
+related to any property (e.g. static methods or methods not following the
+conventions).
+
 .. _property-info-initializable:
 
 Property Initializable Information
@@ -276,73 +297,6 @@ given property name.
     This means that any method available on each of the extractors is also
     available on the main :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`
     class.
-
-.. _`components-property-info-type`:
-
-Type Objects
-------------
-
-.. deprecated:: 7.3
-
-    The :class:`Symfony\\Component\\PropertyInfo\\Type` class is
-    deprecated since Symfony 7.3. Use the :class:`Symfony\\Component\\TypeInfo\\Type`
-    class instead.
-
-Each object will provide 6 attributes, available in the 6 methods:
-
-.. _`components-property-info-type-builtin`:
-
-``Type::getBuiltInType()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The :method:`Type::getBuiltinType() <Symfony\\Component\\PropertyInfo\\Type::getBuiltinType>`
-method returns the built-in PHP data type, which can be one of these
-string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
-``iterable``, ``null``, ``object``, ``resource`` or ``string``.
-
-``Type::isNullable()``
-~~~~~~~~~~~~~~~~~~~~~~
-
-The :method:`Type::isNullable() <Symfony\\Component\\PropertyInfo\\Type::isNullable>`
-method will return a boolean value indicating whether the property parameter
-can be set to ``null``.
-
-``Type::getClassName()``
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-If the :ref:`built-in PHP data type <components-property-info-type-builtin>`
-is ``object``, the :method:`Type::getClassName() <Symfony\\Component\\PropertyInfo\\Type::getClassName>`
-method will return the fully-qualified class or interface name accepted.
-
-``Type::isCollection()``
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-The :method:`Type::isCollection() <Symfony\\Component\\PropertyInfo\\Type::isCollection>`
-method will return a boolean value indicating if the property parameter is
-a collection - a non-scalar value capable of containing other values. Currently
-this returns ``true`` if:
-
-* The :ref:`built-in PHP data type <components-property-info-type-builtin>`
-  is ``array``;
-* The mutator method the property is derived from has a prefix of ``add``
-  or ``remove`` (which are defined as the list of array mutator prefixes);
-* The `phpDocumentor`_ annotation is of type "collection" (e.g.
-  ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
-  ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
-
-``Type::getCollectionKeyTypes()`` & ``Type::getCollectionValueTypes()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If the property is a collection, additional type objects may be returned
-for both the key and value types of the collection (if the information is
-available), via the :method:`Type::getCollectionKeyTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionKeyTypes>`
-and :method:`Type::getCollectionValueTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueTypes>`
-methods.
-
-.. note::
-
-    The ``list`` pseudo type is returned by the PropertyInfo component as an
-    array with integer as the key type.
 
 .. _`components-property-info-extractors`:
 
@@ -385,8 +339,26 @@ return and scalar types::
     $reflectionExtractor->isReadable($class, $property);
     $reflectionExtractor->isWritable($class, $property);
 
+    // Property name information.
+    $reflectionExtractor->getPropertyName($class, $method);
+
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
+
+.. versionadded:: 8.1
+
+    Support for PHP 8.4 property hook settable types in ``ReflectionExtractor``
+    was introduced in Symfony 8.1.
+
+The ``ReflectionExtractor`` also supports `PHP property hooks`_. When a
+property defines a ``set`` hook with a parameter type that differs from the
+property type, ``getType()`` returns the type of the ``set`` hook parameter
+instead.
+
+For example, given a ``Product`` class with a ``$slug`` property using a ``set``
+hook that accepts ``string|null`` while the property itself is ``string``,
+calling ``getType()`` returns the settable type (``string|null``) instead of
+the property type (``string``).
 
 .. note::
 
@@ -399,6 +371,89 @@ return and scalar types::
         framework:
             property_info:
                 enabled: true
+
+.. _property-info-with-accessors:
+
+Defining Accessors and Mutators Explicitly
+..........................................
+
+.. versionadded:: 8.2
+
+    The ``#[WithAccessors]`` attribute was introduced in Symfony 8.2.
+
+The ``ReflectionExtractor`` discovers accessor and mutator methods based on
+naming conventions (e.g. ``getFoo()``, ``setFoo()``, ``addFoo()`` and
+``removeFoo()`` methods for a ``foo`` property). If some methods of your class
+don't follow these conventions, use the
+:class:`Symfony\\Component\\PropertyInfo\\Attribute\\WithAccessors` attribute to
+ define the accessors and mutators of that property explicitly::
+
+    use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
+
+    class Article
+    {
+        #[WithAccessors(getter: 'retrieveName', setter: 'renameTo')]
+        private string $name;
+
+        #[WithAccessors(
+            getter: 'allTags',
+            setter: 'replaceTags',
+            adder: 'attachTag',
+            remover: 'detachTag',
+        )]
+        private array $tags;
+
+        public function retrieveName(): string
+        {
+            return $this->name;
+        }
+
+        public function renameTo(string $name): void
+        {
+            $this->name = $name;
+        }
+
+        public function allTags(): array
+        {
+            return $this->tags;
+        }
+
+        // ...
+    }
+
+All four options (``getter``, ``setter``, ``adder`` and ``remover``) are
+optional, but at least one of them must be defined. The methods defined in the
+attribute take precedence over the convention-based discovery. They are also
+used to resolve the property type: the type is extracted from the parameter of
+the adder (wrapped in a list), the parameter of the setter or the return type
+of the getter, in that order of priority. The declared type of the property is
+only used as a fallback::
+
+    use Symfony\Component\PropertyInfo\Attribute\WithAccessors;
+
+    class Task
+    {
+        // getType() returns 'bool' (the getter return type)
+        // instead of 'string|null' (the property type)
+        #[WithAccessors(getter: 'isEnabled')]
+        private ?string $enabled = null;
+
+        public function isEnabled(): bool
+        {
+            return null !== $this->enabled;
+        }
+    }
+
+Defining only some of the accessors lets you expose a property partially. For
+example, a property with only a ``getter`` is considered readable but not
+writable, and a property with only an ``adder`` and a ``remover`` is considered
+writable but not readable.
+
+.. tip::
+
+    The :doc:`Serializer component </serializer>` also takes this attribute into
+    account: the ``ObjectNormalizer`` uses the methods defined in the attribute
+    when normalizing and denormalizing objects.
 
 PhpDocExtractor
 ~~~~~~~~~~~~~~~
@@ -423,11 +478,6 @@ library is present::
     $phpDocExtractor->getShortDescription($class, $property);
     $phpDocExtractor->getLongDescription($class, $property);
     $phpDocExtractor->getDocBlock($class, $property);
-
-.. versionadded:: 7.1
-
-    The :method:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor::getDocBlock`
-    method was introduced in Symfony 7.1.
 
 PhpStanExtractor
 ~~~~~~~~~~~~~~~~
@@ -464,19 +514,6 @@ information from annotations of properties and methods, such as ``@var``,
     // Description information.
     $phpStanExtractor->getShortDescription($class, 'bar');
     $phpStanExtractor->getLongDescription($class, 'bar');
-
-.. versionadded:: 7.3
-
-    The :method:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpStanExtractor::getShortDescription`
-    and :method:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpStanExtractor::getLongDescription`
-    methods were introduced in Symfony 7.3.
-
-.. deprecated:: 7.3
-
-    The :method:`Symfony\\Component\\PropertyInfo\\ConstructorArgumentTypeExtractorInterface::getTypesFromConstructor`
-    method is deprecated since Symfony 7.3. Use the
-    :method:`Symfony\\Component\\PropertyInfo\\ConstructorArgumentTypeExtractorInterface::getTypeFromConstructor`
-    method instead.
 
 SerializerExtractor
 ~~~~~~~~~~~~~~~~~~~
@@ -560,7 +597,7 @@ on the constructor arguments::
 
     $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
     $type = $constructorExtractor->getType(Foo::class, 'bar');
-    // (string) $type returns 'string'
+    $type->getBuiltinType(); // returns 'string'
 
 .. _`components-property-information-extractors-creation`:
 
@@ -573,6 +610,7 @@ class that implements one or more of the following interfaces:
 :class:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface`,
 :class:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface`,
 :class:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface`,
+:class:`Symfony\\Component\\PropertyInfo\\PropertyNameExtractorInterface`,
 :class:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface` and
 :class:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface`.
 
@@ -585,13 +623,11 @@ service by defining it as a service with one or more of the following
 * ``property_info.type_extractor`` if it provides type information.
 * ``property_info.description_extractor`` if it provides description information.
 * ``property_info.access_extractor`` if it provides access information.
+* ``property_info.name_extractor`` if it provides the name of the property
+  exposed by an accessor or mutator method.
 * ``property_info.initializable_extractor`` if it provides initializable information
   (it checks if a property can be initialized through the constructor).
 * ``property_info.constructor_extractor`` if it provides type information from the constructor argument.
-
-  .. versionadded:: 7.3
-
-      The ``property_info.constructor_extractor`` tag was introduced in Symfony 7.3.
 
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
@@ -601,4 +637,4 @@ service by defining it as a service with one or more of the following
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
 .. _`doctrine/orm`: https://packagist.org/packages/doctrine/orm
-.. _`phpDocumentor`: https://www.phpdoc.org/
+.. _`PHP property hooks`: https://www.php.net/manual/en/language.oop5.property-hooks.php

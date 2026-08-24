@@ -110,12 +110,6 @@ If your valid choice list is simple, you can pass them in directly via the
             }
         }
 
-.. deprecated:: 7.4
-
-    Passing an array of choices as the first argument of the ``Choice`` constraint
-    is deprecated and will stop working in Symfony 8.0. Instead, pass the choices
-    using the ``choices:`` named argument.
-
 Supplying the Choices with a Callback Function
 ----------------------------------------------
 

@@ -80,25 +80,6 @@ both services:
             App\Formatter\TextFormatter:
                 autowire: true
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true"/>
-                <!-- ... -->
-
-                <!-- autowire is redundant thanks to defaults, but value is overridable on each service -->
-                <service id="App\Service\MessageGenerator" autowire="true"/>
-
-                <service id="App\Formatter\TextFormatter" autowire="true"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -107,20 +88,24 @@ both services:
         use App\Formatter\TextFormatter;
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services()
-                ->defaults()
-                    ->autowire()
-                    ->autoconfigure()
-            ;
+        return App::config([
+            'services' => [
+                '_defaults' => [
+                    'autowire' => true,
+                    'autoconfigure' => true,
+                ],
+                // ...
 
-            $services->set(MessageGenerator::class)
-                // redundant thanks to defaults, but value is overridable on each service
-                ->autowire();
+                MessageGenerator::class => [
+                    // redundant thanks to _defaults, but value is overridable on each service
+                    'autowire' => true,
+                ],
 
-            $services->set(TextFormatter::class)
-                ->autowire();
-        };
+                TextFormatter::class => [
+                    'autowire' => true,
+                ],
+            ],
+        ]);
 
 Now, you can use the ``MessageGenerator`` service immediately in a controller::
 
@@ -227,22 +212,6 @@ adding a service alias:
             # an App\Formatter\TextFormatter type-hint is detected
             App\Formatter\TextFormatter: '@app.text_formatter'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="app.text_formatter" class="App\Formatter\TextFormatter" autowire="true"/>
-                <service id="App\Formatter\TextFormatter" alias="app.text_formatter"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -250,18 +219,21 @@ adding a service alias:
 
         use App\Formatter\TextFormatter;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+        return App::config([
+            'services' => [
+                // ...
 
-            // the id is not a class, so it won't be used for autowiring
-            $services->set('app.text_formatter', TextFormatter::class)
-                ->autowire();
+                // the id is not a class, so it won't be used for autowiring
+                'app.text_formatter' => [
+                    'class' => TextFormatter::class,
+                ],
 
-            // but this fixes it!
-            // the "app.text_formatter" service will be injected when
-            // an App\Formatter\TextFormatter type-hint is detected
-            $services->alias(TextFormatter::class, 'app.text_formatter');
-        };
+                // but this fixes it!
+                // the "app.text_formatter" service will be injected when
+                // an App\Formatter\TextFormatter type-hint is detected
+                TextFormatter::class => service('app.text_formatter'),
+            ],
+        ]);
 
 This creates a service "alias", whose id is ``App\Formatter\TextFormatter``.
 Thanks to this, autowiring sees this and uses it whenever the ``TextFormatter``
@@ -345,9 +317,62 @@ The ``#[AsAlias]`` attribute can also be limited to one or more specific
         // ...
     }
 
-.. versionadded:: 7.3
+You can also use the ``target`` parameter to wire a specific implementation
+via :ref:`named autowiring <autowiring-multiple-implementations-same-type>`.
+This is useful when you have multiple implementations of the same interface
+and need to inject a specific one based on context::
 
-    The ``when`` argument of the ``#[AsAlias]`` attribute was introduced in Symfony 7.3.
+    // src/Formatter/TextFormatter.php
+    namespace App\Formatter;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+
+    #[AsAlias(FormatterInterface::class, target: 'textFormatter')]
+    class TextFormatter implements FormatterInterface
+    {
+        // ...
+    }
+
+    // src/Formatter/HtmlFormatter.php
+    namespace App\Formatter;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+
+    #[AsAlias(FormatterInterface::class, target: 'htmlFormatter')]
+    class HtmlFormatter implements FormatterInterface
+    {
+        // ...
+    }
+
+Then use the :ref:`#[Target] attribute <autowiring-alias>` to inject the
+desired implementation::
+
+    namespace App\Service;
+
+    use App\Formatter\FormatterInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Target('textFormatter')]
+            private FormatterInterface $formatter,
+        ) {
+        }
+    }
+
+    class NewsletterGenerator
+    {
+        public function __construct(
+            #[Target('htmlFormatter')]
+            private FormatterInterface $formatter,
+        ) {
+        }
+    }
+
+.. versionadded:: 8.1
+
+    The ``target`` parameter for the ``#[AsAlias]`` attribute was introduced in Symfony 8.1.
 
 .. tip::
 
@@ -412,22 +437,6 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
             # an App\Formatter\FormatterInterface type-hint is detected
             App\Formatter\FormatterInterface: '@App\Formatter\TextFormatter'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-                <service id="App\Formatter\TextFormatter"/>
-
-                <service id="App\Formatter\FormatterInterface" alias="App\Formatter\TextFormatter"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -436,15 +445,17 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
         use App\Formatter\FormatterInterface;
         use App\Formatter\TextFormatter;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+        return App::config([
+            'services' => [
+                // ...
 
-            $services->set(TextFormatter::class);
+                TextFormatter::class => null,
 
-            // the App\Formatter\TextFormatter service will be injected when
-            // an App\Formatter\FormatterInterface type-hint is detected
-            $services->alias(FormatterInterface::class, TextFormatter::class);
-        };
+                // the App\Formatter\TextFormatter service will be injected when
+                // an App\Formatter\FormatterInterface type-hint is detected
+                FormatterInterface::class => service(TextFormatter::class),
+            ],
+        ]);
 
 Thanks to the ``App\Formatter\FormatterInterface`` alias, the autowiring subsystem
 knows that the ``App\Formatter\TextFormatter`` service should be injected when
@@ -529,31 +540,6 @@ of your choice, formatted like a PHP variable:
             # injected whenever the FormatterInterface type-hint is detected
             App\Formatter\FormatterInterface: '@App\Formatter\TextFormatter'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-                <service id="App\Formatter\TextFormatter"/>
-                <service id="App\Formatter\HtmlFormatter"/>
-
-                <!-- this creates a named autowiring alias called 'htmlFormatter'
-                     for the HtmlFormatter implementation -->
-                <service
-                    id="App\Formatter\FormatterInterface $htmlFormatter"
-                    alias="App\Formatter\HtmlFormatter"/>
-
-                <!-- this defines TextFormatter as the default implementation,
-                     injected whenever the FormatterInterface type-hint is detected -->
-                <service id="App\Formatter\FormatterInterface" alias="App\Formatter\TextFormatter"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -563,20 +549,22 @@ of your choice, formatted like a PHP variable:
         use App\Formatter\HtmlFormatter;
         use App\Formatter\TextFormatter;
 
-        return function(ContainerConfigurator $container): void {
-            // ...
+        return App::config([
+            'services' => [
+                // ...
 
-            $services->set(TextFormatter::class);
-            $services->set(HtmlFormatter::class);
+                TextFormatter::class => null,
+                HtmlFormatter::class => null,
 
-            // this creates a named autowiring alias called 'htmlFormatter'
-            // for the HtmlFormatter implementation
-            $services->alias(FormatterInterface::class.' $htmlFormatter', HtmlFormatter::class);
+                // this creates a named autowiring alias called 'htmlFormatter'
+                // for the HtmlFormatter implementation
+                FormatterInterface::class.' $htmlFormatter' => service(HtmlFormatter::class),
 
-            // this defines TextFormatter as the default implementation,
-            // injected whenever the FormatterInterface type-hint is detected
-            $services->alias(FormatterInterface::class, TextFormatter::class);
-        };
+                // this defines TextFormatter as the default implementation,
+                // injected whenever the FormatterInterface type-hint is detected
+                FormatterInterface::class => service(TextFormatter::class),
+            ],
+        ]);
 
 Then, add the ``#[Target]`` attribute with the name of the named alias to the
 arguments where you want to inject a non-default implementation::
@@ -668,11 +656,17 @@ a named alias, the aliased service is injected automatically::
         // ...
     }
 
-Although this works, **it's strongly discouraged** because it's fragile: the
-wiring depends on the name of a PHP variable. If you later rename the argument,
-the container won't fail; it will silently inject the default implementation
-instead, which can create bugs that are hard to find. That's why you should
-always prefer the ``#[Target]`` attribute to inject non-default implementations.
+.. deprecated:: 8.1
+
+    Relying solely on the parameter name to match a named autowiring alias
+    (i.e. without using the ``#[Target]`` attribute) is deprecated since
+    Symfony 8.1. Always use ``#[Target]`` to select a named autowiring alias.
+
+This wiring is fragile because it depends on the name of a PHP variable. If you
+later rename the argument, the container won't fail; it will silently inject the
+default implementation instead, which can create bugs that are hard to find.
+That's why the ``#[Target]`` attribute is the recommended way of injecting
+non-default implementations.
 
 Registering Named Autowiring Aliases from PHP Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -707,11 +701,6 @@ You can also pass a fourth argument to define a distinct name for the
 
 This allows the service to be injected using ``#[Target('html')]`` on any
 argument, regardless of its name.
-
-.. versionadded:: 7.4
-
-    The ``$target`` argument of ``registerAliasForArgument()`` was introduced
-    in Symfony 7.4.
 
 .. _autowire-attribute:
 
@@ -782,6 +771,98 @@ The ``#[Autowire]`` attribute can also be used for :ref:`container parameters <s
         }
     }
 
+Autowiring Refreshable Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Autowiring environment variables as ``Closure`` or ``Stringable`` was
+    introduced in Symfony 8.1.
+
+When you inject an environment variable as a plain string, its value is resolved
+once and baked into the compiled container, so it never changes at runtime.
+That is fine for traditional request/response applications, but it is a
+limitation in long-running workers (Messenger, FrankenPHP, RoadRunner), where
+you may want the value to refresh between requests after a call to
+:method:`Symfony\\Component\\DependencyInjection\\Container::resetEnvCache`.
+
+To support this, ``#[Autowire(env: ...)]`` (or any ``#[Autowire('...%env(...)%...')]``
+string value) can target a parameter typed ``Closure`` or ``Stringable``. Instead
+of a fixed string, you receive a wrapper that resolves the environment reference
+every time the closure is invoked or the value is cast to a string, returning
+the current value on each call::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            // invoke the closure to read the current value: ($this->dbUrl)()
+            #[Autowire(env: 'DB_URL')]
+            private \Closure $dbUrl,
+
+            // the union type is required so the string default type-checks;
+            // 'default' is returned when APP_NAME is not defined
+            #[Autowire(env: 'APP_NAME')]
+            private string|\Stringable $appName = 'default',
+
+            // embedded %env(...)% references inside a string also work;
+            // cast to string to read the current value: (string) $this->redisDsn
+            #[Autowire('redis://%env(HOST)%:%env(PORT)%')]
+            private \Stringable $redisDsn,
+
+            // %param% references are resolved through the parameter bag
+            #[Autowire('%dsn_template%')]
+            private \Stringable $dsn,
+        ) {
+        }
+    }
+
+When a default value is declared, it is returned while the environment variable
+is not defined. The default can be of any type for a ``Closure``, but it must be
+a string (or ``null``) for a ``Stringable``.
+
+The same wiring is available in configuration files through the ``!env_closure``
+YAML tag and the :class:`Symfony\\Component\\DependencyInjection\\Argument\\EnvClosureArgument`
+PHP class. Passing ``true`` as the third argument switches the wrapper from a
+``Closure`` to a ``Stringable``:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        App\Service\MessageGenerator:
+            arguments:
+                - !env_closure '%env(DB_URL)%'
+                # with a default value (returns a Closure)
+                - !env_closure ['%env(APP_NAME)%', 'default']
+                # Stringable wrapper instead of a Closure (third argument: true)
+                - !env_closure ['%env(APP_NAME)%', 'default', true]
+
+.. code-block:: php
+
+    // config/services.php
+    use App\Service\MessageGenerator;
+    use Symfony\Component\DependencyInjection\Argument\EnvClosureArgument;
+
+    return function (ContainerConfigurator $container): void {
+        $container->services()
+            ->set(MessageGenerator::class)
+                ->args([
+                    new EnvClosureArgument('%env(DB_URL)%'),
+                    new EnvClosureArgument('%env(APP_NAME)%', 'default', true),
+                ]);
+    };
+
+.. note::
+
+    Wrapping a plain ``%parameter%`` value works too, but only the
+    ``%env(...)%`` portions of the resolved value stay refreshable; literal
+    parameter values are fixed at compile time.
+
 .. _services-binding:
 
 Binding Arguments by Name or Type
@@ -818,43 +899,6 @@ defined in a configuration file:
 
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true">
-                    <bind key="$adminEmail">manager@example.com</bind>
-                    <bind key="$requestLogger"
-                        type="service"
-                        id="monolog.logger.request"
-                    />
-                    <bind key="Psr\Log\LoggerInterface"
-                        type="service"
-                        id="monolog.logger.request"
-                    />
-
-                    <!-- optionally you can define both the name and type of the argument to match -->
-                    <bind key="string $adminEmail">manager@example.com</bind>
-                    <bind key="Psr\Log\LoggerInterface $requestLogger"
-                        type="service"
-                        id="monolog.logger.request"
-                    />
-                    <bind key="iterable $rules"
-                        type="tagged_iterator"
-                        tag="app.foo.rule"
-                    />
-                </defaults>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -862,29 +906,32 @@ defined in a configuration file:
 
         use Psr\Log\LoggerInterface;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services()
-                ->defaults()
-                    // pass this value to any $adminEmail argument for any service
-                    // that's defined in this file (including controller arguments)
-                    ->bind('$adminEmail', 'manager@example.com')
+        return App::config([
+            'services' => [
+                '_defaults' => [
+                    'bind' => [
+                        // pass this value to any $adminEmail argument for any service
+                        // that's defined in this file (including controller arguments)
+                        '$adminEmail' => 'manager@example.com',
 
-                    // pass this service to any $requestLogger argument for any
-                    // service that's defined in this file
-                    ->bind('$requestLogger', service('monolog.logger.request'))
+                        // pass this service to any $requestLogger argument for any
+                        // service that's defined in this file
+                        '$requestLogger' => service('monolog.logger.request'),
 
-                    // pass this service for any LoggerInterface type-hint for any
-                    // service that's defined in this file
-                    ->bind(LoggerInterface::class, service('monolog.logger.request'))
+                        // pass this service for any LoggerInterface type-hint for any
+                        // service that's defined in this file
+                        LoggerInterface::class => service('monolog.logger.request'),
 
-                    // optionally you can define both the name and type of the argument to match
-                    ->bind('string $adminEmail', 'manager@example.com')
-                    ->bind(LoggerInterface::class.' $requestLogger', service('monolog.logger.request'))
-                    ->bind('iterable $rules', tagged_iterator('app.foo.rule'))
-            ;
+                        // optionally you can define both the name and type of the argument to match
+                        'string $adminEmail' => 'manager@example.com',
+                        LoggerInterface::class.' $requestLogger' => service('monolog.logger.request'),
+                        'iterable $rules' => tagged_iterator('app.foo.rule'),
+                    ],
+                ],
 
-            // ...
-        };
+                // ...
+            ],
+        ]);
 
 .. tip::
 
@@ -1168,47 +1215,32 @@ argument of type ``service_closure``:
                 # the shortcut also works for optional dependencies
                 # arguments: ['@>?mailer']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Service\MyService">
-                    <argument type="service_closure" id="mailer"/>
-
-                    <!--
-                    In case the dependency is optional
-                    <argument type="service_closure" id="mailer" on-invalid="ignore"/>
-                    -->
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Service\AnotherService;
         use App\Service\MyService;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                MyService::class => [
+                    'arguments' => [service_closure('mailer')],
 
-            $services->set(MyService::class)
-                ->args([service_closure('mailer')]);
+                    // In case the dependency is optional
+                    // 'arguments' => [service_closure('mailer')->nullOnInvalid()],
+                ],
 
-            // In case the dependency is optional
-            // $services->set(MyService::class)
-            //     ->args([service_closure('mailer')->ignoreOnInvalid()]);
-        };
+                // you can also use the special '@>' syntax as a shortcut of 'service_closure(...)'
+                AnotherService::class => [
+                    'arguments' => ['@>mailer'],
 
-.. versionadded:: 7.3
-
-    The ``@>`` shortcut syntax for YAML was introduced in Symfony 7.3.
+                    // the shortcut also works for optional dependencies
+                    // 'arguments' => [service_closure('mailer')->nullOnInvalid()],
+                ],
+            ],
+        ]);
 
 If the injected closure is not meant to return a service but to be *called* by
 your class, use the ``closure`` argument type instead. It wraps any callable
@@ -1235,22 +1267,6 @@ service into a closure::
                 arguments:
                     $generateMessageHash: !closure '@App\Hash\MessageHashGenerator'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Service\MessageGenerator">
-                    <argument key="$generateMessageHash" type="closure" id="App\Hash\MessageHashGenerator"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1258,13 +1274,15 @@ service into a closure::
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(MessageGenerator::class)
-                ->arg('$generateMessageHash', closure('App\Hash\MessageHashGenerator'))
-            ;
-        };
+        return App::config([
+            'services' => [
+                MessageGenerator::class => [
+                    'arguments' => [
+                        '$generateMessageHash' => closure('App\Hash\MessageHashGenerator'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. seealso::
 
@@ -1365,27 +1383,6 @@ an adapter for a functional interface through configuration:
                 class: App\Service\MessageFormatterInterface
                 from_callable: [!service {class: 'App\Service\MessageUtils'}, 'format']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="app.message_formatter" class="App\Service\MessageFormatterInterface">
-                    <from-callable method="format">
-                        <service class="App\Service\MessageUtils"/>
-                    </from-callable>
-                </service>
-
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1394,15 +1391,16 @@ an adapter for a functional interface through configuration:
         use App\Service\MessageFormatterInterface;
         use App\Service\MessageUtils;
 
-        return function(ContainerConfigurator $container) {
-            // ...
+        return App::config([
+            'services' => [
+                // ...
 
-            $container
-                ->set('app.message_formatter', MessageFormatterInterface::class)
-                ->fromCallable([inline_service(MessageUtils::class), 'format'])
-                ->alias(MessageFormatterInterface::class, 'app.message_formatter')
-            ;
-        };
+                'app.message_formatter' => [
+                    'class' => MessageFormatterInterface::class,
+                    'from_callable' => [inline_service(MessageUtils::class), 'format'],
+                ],
+            ],
+        ]);
 
 By doing so, Symfony will generate a class (also called an *adapter*)
 implementing ``MessageFormatterInterface`` that will forward calls of
@@ -1413,10 +1411,6 @@ implementing ``MessageFormatterInterface`` that will forward calls of
 
 The ``#[AutowireInline]`` Attribute
 -----------------------------------
-
-.. versionadded:: 7.1
-
-   The ``#[AutowireInline]`` attribute was added in Symfony 7.1.
 
 Sometimes a dependency is only used by one service and doesn't need to be
 registered as a full service. In those cases, you can define an
@@ -1486,8 +1480,9 @@ arguments to a method, you can always explicitly
 Despite :ref:`property injection <property-injection>` having some drawbacks,
 autowiring with ``#[Required]`` can also be applied to public typed properties.
 The service to inject is resolved in the same way as a constructor argument:
-the property type defines the service to look for (and the property name is
-used to match :ref:`named autowiring aliases <autowiring-alias>`, if any).
+the property type defines the service to look for (and you can add the
+``#[Target]`` attribute to inject a
+:ref:`named autowiring alias <autowiring-alias>`).
 Then, right after creating your service, the container assigns the resolved
 service directly to the property::
 

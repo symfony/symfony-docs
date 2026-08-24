@@ -45,55 +45,30 @@ from the ``security`` channel. The following example does that only in the
                         # ...
                         # channels: ['!security']
 
-    .. code-block:: xml
-
-        <!-- config/packages/prod/monolog.xml-->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <when env="prod">
-                <monolog:config>
-                    <monolog:handler name="security" type="stream" path="%kernel.logs_dir%/security.log">
-                        <monolog:channels>
-                            <monolog:channel>security</monolog:channel>
-                        </monolog:channels>
-                    </monolog:handler>
-                </monolog:config>
-            </when>
-
-                <monolog:handler name="main" type="stream" path="%kernel.logs_dir%/main.log">
-                    <!-- ... -->
-                    <monolog:channels>
-                        <monolog:channel>!security</monolog:channel>
-                    </monolog:channels>
-                </monolog:handler>
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
-        // config/packages/prod/monolog.php
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-        use Symfony\Config\MonologConfig;
+        // config/packages/monolog.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog, ContainerConfigurator $container) {
-            if ('prod' === $container->env()) {
-                $monolog->handler('security')
-                    ->type('stream')
-                    ->path(param('kernel.logs_dir') . \DIRECTORY_SEPARATOR . 'security.log')
-                    ->channels()->elements(['security']);
-
-                $monolog->handler('main')
-                     // ...
-
-                    ->channels()->elements(['!security']);
-            }
-        };
+        return App::config([
+            'when@prod' => [
+                'monolog' => [
+                    'handlers' => [
+                        'security' => [
+                            // log all messages (since debug is the lowest level)
+                            'level' => 'debug',
+                            'type' => 'stream',
+                            'path' => '%kernel.logs_dir%/security.log',
+                            'channels' => ['security'],
+                        ],
+                        // an example of *not* logging security channel messages for this handler
+                        'main' => [
+                            // 'channels' => ['!security'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. warning::
 
@@ -141,32 +116,16 @@ You can also configure additional channels without the need to tag your services
         monolog:
             channels: ['foo', 'bar', 'foo_bar']
 
-    .. code-block:: xml
-
-        <!-- config/packages/monolog.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <monolog:config>
-                <monolog:channel>foo</monolog:channel>
-                <monolog:channel>bar</monolog:channel>
-                <monolog:channel>foo_bar</monolog:channel>
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/monolog.php
-        use Symfony\Config\MonologConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog): void {
-            $monolog->channels(['foo', 'bar', 'foo_bar']);
-        };
+        return App::config([
+            'monolog' => [
+                'channels' => ['foo', 'bar', 'foo_bar'],
+            ],
+        ]);
 
 Symfony automatically registers one service per channel (in this example, the
 channel ``foo`` creates a service called ``monolog.logger.foo``). In order to

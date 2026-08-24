@@ -1,10 +1,6 @@
 MacAddress
 ==========
 
-.. versionadded:: 7.1
-
-    The ``MacAddress`` constraint was introduced in Symfony 7.1.
-
 This constraint ensures that the given value is a valid `MAC address`_ (internally it
 uses the ``FILTER_VALIDATE_MAC`` option of the :phpfunction:`filter_var` PHP
 function).
@@ -109,10 +105,6 @@ Parameter            Description
 ~~~~~~~~
 
 **type**: ``string`` **default**: ``all``
-
-.. versionadded:: 7.1
-
-    The ``type`` option was introduced in Symfony 7.1.
 
 This option defines the kind of MAC addresses that are allowed. There are a lot
 of different possible values based on your needs:

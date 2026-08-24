@@ -39,6 +39,24 @@ that can be enabled when using :ref:`autoconfiguration <services-autoconfigure>`
 or manual :doc:`service tagging </service_container/tags>` (or any other means
 provided by your framework.)
 
+``ContainerProviderInterface``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``ContainerProviderInterface`` was introduced in Symfony 8.1.
+
+The :class:`Symfony\\Contracts\\Service\\ContainerProviderInterface` provides a
+standard way for objects to expose their service container. It defines a single
+method::
+
+    use Psr\Container\ContainerInterface;
+
+    interface ContainerProviderInterface
+    {
+        public function getContainer(): ContainerInterface;
+    }
+
 Design Principles
 -----------------
 

@@ -165,6 +165,19 @@ you'll get the following results:
   is still not resolved) and ``folder3/file3.txt`` (this file appears in the results
   because the ``folder1/folder3link`` link was followed).
 
+If you want to normalize all paths to use Unix-style forward slashes (``/``),
+use the ``useUnixPaths()`` method::
+
+    $finder->files()->useUnixPaths();
+
+.. versionadded:: 8.1
+
+    The ``useUnixPaths()`` method was introduced in Symfony 8.1.
+
+This is particularly useful on Windows where directory separators are backslashes
+(``\``) by default. When enabled, the Finder will return paths with forward slashes
+on all platforms, ensuring consistent path handling across different operating systems.
+
 Version Control Files
 ~~~~~~~~~~~~~~~~~~~~~
 

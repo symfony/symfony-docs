@@ -141,11 +141,6 @@ Validation groups and payload can be passed via constructor:
             }
         }
 
-.. versionadded:: 7.2
-
-    Support for passing validation groups and the payload to the constructor
-    of the ``Compound`` class was introduced in Symfony 7.2.
-
 Options
 -------
 

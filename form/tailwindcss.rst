@@ -11,6 +11,12 @@ going to be required so this theme makes that easy.
 .. image:: /_images/form/tailwindcss-form.png
     :alt: An HTML form showing a range of form types styled using TailwindCSS.
 
+.. tip::
+
+    If your application uses `daisyUI`_, a component library based on
+    Tailwind CSS, Symfony also provides a ``daisyui_5_layout.html.twig``
+    form theme for it.
+
 To use, first be sure you have installed and integrated `Tailwind CSS`_ and the
 `form plugin`_. Follow their respective documentation to install both packages.
 
@@ -93,3 +99,4 @@ a custom form theme using the Tailwind CSS theme as a base.
 
 .. _`Tailwind CSS`: https://tailwindcss.com
 .. _`form plugin`: https://github.com/tailwindlabs/tailwindcss-forms
+.. _`daisyUI`: https://daisyui.com/

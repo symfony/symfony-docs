@@ -166,30 +166,16 @@ parameter used, for example, to turn Twig's debug mode on:
         twig:
             debug: '%kernel.debug%'
 
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config debug="%kernel.debug%"/>
-
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            // ...
-            $twig->debug('%kernel.debug%');
-        };
+        return App::config([
+            'twig' => [
+                'debug' => '%kernel.debug%',
+            ],
+        ]);
 
 The Environments
 ----------------
@@ -255,6 +241,49 @@ includes the following:
 
     You can change the cache directory location and name. For more information
     read the article :doc:`/configuration/override_dir_structure`.
+
+.. _building-http-less-applications:
+
+Building HTTP-less Applications
+-------------------------------
+
+.. versionadded:: 8.1
+
+    The DependencyInjection Kernel infrastructure was introduced in Symfony 8.1.
+
+If your application does not handle HTTP requests (e.g. a console tool, a
+message consumer or a background worker), the DependencyInjection component
+ships its own kernel infrastructure under the
+``Symfony\Component\DependencyInjection\Kernel`` namespace. It mirrors the
+HttpKernel classes (``AbstractKernel``, ``KernelTrait``, ``AbstractBundle`` and
+``KernelInterface``) and provides the same container lifecycle without any
+HTTP-related logic.
+
+To create an HTTP-less kernel, extend
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\AbstractKernel` and use
+the :class:`Symfony\\Component\\DependencyInjection\\Kernel\\KernelTrait`::
+
+    // src/Kernel.php
+    namespace App;
+
+    use Symfony\Component\DependencyInjection\Kernel\AbstractKernel;
+    use Symfony\Component\DependencyInjection\Kernel\KernelTrait;
+
+    class Kernel extends AbstractKernel
+    {
+        use KernelTrait;
+    }
+
+The trait follows the same configuration conventions as ``MicroKernelTrait``:
+``config/bundles.php`` for bundle registration, ``config/packages/`` for
+configuration and ``config/services.yaml`` (or ``.php``) for service definitions.
+
+The services needed by any container (parameter bag, event dispatcher, filesystem,
+clock, environment variable processors, etc.) are provided by
+:class:`Symfony\\Component\\DependencyInjection\\Kernel\\ServicesBundle`. You
+rarely enable this bundle yourself, because other bundles declare it as a
+:ref:`required bundle <bundles-required-bundles>`. Both FrameworkBundle and
+:ref:`ConsoleBundle <console-bundle>` do this.
 
 .. _`front controller`: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _`decorate`: https://en.wikipedia.org/wiki/Decorator_pattern

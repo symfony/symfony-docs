@@ -121,37 +121,6 @@ methods to retrieve and update their data:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::remove`
     Removes a parameter.
 
-The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
-has some methods to filter the input values:
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`
-    Returns the alphabetic characters of the parameter value;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
-    Returns the alphabetic characters and digits of the parameter value;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
-    Returns the parameter value converted to boolean;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
-    Returns the digits of the parameter value;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
-    Returns the parameter value converted to integer;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
-    Returns the parameter value converted to a PHP enum;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
-    Returns the parameter value as a string;
-
-:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
-    Filters the parameter by using the PHP :phpfunction:`filter_var` function.
-    If invalid values are found, a
-    :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
-    is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
-    values.
-
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
@@ -214,6 +183,77 @@ which returns an instance of :class:`Symfony\\Component\\HttpFoundation\\InputBa
 wrapping this data::
 
     $data = $request->getPayload();
+
+Filtering Request Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` instance also
+has some methods to filter the input values:
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlpha`
+    Returns the alphabetic characters of the parameter value;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getAlnum`
+    Returns the alphabetic characters and digits of the parameter value;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getBoolean`
+    Returns the parameter value converted to boolean;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getDigits`
+    Returns the digits of the parameter value;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
+    Returns the parameter value converted to integer;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
+    Returns the parameter value converted to a PHP enum;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
+    Returns the parameter value as a string;
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
+    Filters the parameter by using the PHP :phpfunction:`filter_var` function.
+    If invalid values are found, a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
+    is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
+    values.
+
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filterCallback`
+    Filters the parameter through a callback.
+
+Use the ``filterCallback()`` method to filter a parameter value with your own
+callback, which must be a ``Closure`` (e.g. created with PHP's first-class
+callable syntax)::
+
+    // the query string is '?name=jane'
+
+    $request->query->filterCallback('name', strtoupper(...));
+    // returns 'JANE'
+
+    // the optional third argument is the default value (also passed through the callback)
+    $request->query->filterCallback('this-key-does-not-exist', strtoupper(...), 'anonymous');
+    // returns 'ANONYMOUS'
+
+Filtering uses the PHP :phpfunction:`filter_var` function, so returning ``null``
+from the callback counts as a failure::
+
+    $request->query->filterCallback('name', fn () => null);
+    // throws a BadRequestException
+
+    $request->query->filterCallback('name', fn () => null, null, \FILTER_NULL_ON_FAILURE);
+    // returns null instead of throwing an exception
+
+Pass the ``FILTER_REQUIRE_ARRAY`` flag to filter array values; each entry goes
+through the callback::
+
+    // the query string is '?tags[]=a&tags[]=b'
+
+    $request->query->filterCallback('tags', strtoupper(...), null, \FILTER_REQUIRE_ARRAY);
+    // returns ['A', 'B']
+
+.. versionadded:: 8.2
+
+    The ``filterCallback()`` method was introduced in Symfony 8.2.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -376,11 +416,6 @@ anonymized depending on the IP address format::
     $anonymousIpv6 = IpUtils::anonymize($ipv6, 3, 10);
     // $anonymousIpv6 = '2a01:198:603::'
 
-.. versionadded:: 7.2
-
-    The ``v4Bytes`` and ``v6Bytes`` parameters of the ``anonymize()`` method
-    were introduced in Symfony 7.2.
-
 Check If an IP Belongs to a CIDR Subnet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -458,11 +493,6 @@ You can use them individually or combine them using the
     if ($matcher->matches($request)) {
         // ...
     }
-
-.. versionadded:: 7.1
-
-    The ``HeaderRequestMatcher`` and ``QueryParameterRequestMatcher`` were
-    introduced in Symfony 7.1.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -721,10 +751,6 @@ a PHP callable::
         // disables FastCGI buffering in nginx only for this response
         $response->headers->set('X-Accel-Buffering', 'no');
 
-.. versionadded:: 7.3
-
-    Support for using string iterables was introduced in Symfony 7.3.
-
 Streaming a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -825,10 +851,6 @@ Streaming Server-Sent Events
 The :class:`Symfony\\Component\\HttpFoundation\\EventStreamResponse` class
 allows you to implement `Server-Sent Events (SSE)`_, a standard for pushing
 real-time updates from the server to the client over HTTP.
-
-.. versionadded:: 7.3
-
-    The ``EventStreamResponse`` and ``ServerEvent`` classes were introduced in Symfony 7.3.
 
 Basic usage with a generator::
 
@@ -974,11 +996,6 @@ and that will be automatically deleted after the response is sent::
     $file->rewind();
 
     $response = new BinaryFileResponse($file);
-
-.. versionadded:: 7.1
-
-    The support for ``\SplTempFileObject`` in ``BinaryFileResponse``
-    was introduced in Symfony 7.1.
 
 If the size of the served file is unknown (e.g. because it's being generated dynamically,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``

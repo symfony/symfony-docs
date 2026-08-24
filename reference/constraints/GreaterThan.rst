@@ -284,6 +284,18 @@ current time:
             }
         }
 
+Clock-aware Date Comparisons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The clock-awareness of comparison validators was introduced in Symfony 8.1.
+
+When the :doc:`Clock component </components/clock>` is installed and registered
+as a service, comparison validators automatically use it to resolve relative date
+strings (e.g. ``today``, ``+5 hours``). This makes date comparisons deterministic
+and testable by using :ref:`MockClock <clock-mockclock>`.
+
 Options
 -------
 

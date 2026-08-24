@@ -33,6 +33,36 @@ Example Usage
         'required' => false,
     ]);
 
+Handling Unchecked Checkboxes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a form contains only checkboxes, unchecked checkboxes are omitted from the
+HTTP request. In previous Symfony versions, it was impossible to distinguish between
+a user visiting the page and a user submitting the form with all checkboxes unchecked.
+
+The Form component now automatically detects forms that contain only checkboxes
+and marks them as submitted even when all checkboxes are unchecked::
+
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    // ...
+
+    // form with a single checkbox, default data = true
+    $form = $factory->createNamed('agree', CheckboxType::class, true);
+
+    // POST request with no body (all checkboxes unchecked)
+    $form->handleRequest($request);
+
+    // before Symfony 8.1: form was never submitted, data stayed true
+    // since Symfony 8.1:  form is submitted, data is false
+
+This behavior also applies to collections of checkboxes and nested forms that
+contain only checkboxes. ``PATCH`` requests are excluded, since partial updates
+must leave omitted fields unchanged.
+
+.. versionadded:: 8.1
+
+    Support for submitting forms with all checkboxes unchecked was introduced in Symfony 8.1.
+
 Field Options
 -------------
 

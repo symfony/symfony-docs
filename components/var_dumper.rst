@@ -124,31 +124,16 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
         debug:
            dump_destination: "tcp://%env(VAR_DUMPER_SERVER)%"
 
-    .. code-block:: xml
-
-        <!-- config/packages/debug.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:debug="http://symfony.com/schema/dic/debug"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/debug
-                https://symfony.com/schema/dic/debug/debug-1.0.xsd"
-        >
-            <debug:config dump-destination="tcp://%env(VAR_DUMPER_SERVER)%"/>
-        </container>
-
     .. code-block:: php
 
         // config/packages/debug.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->extension('debug', [
+        return App::config([
+            'debug' => [
                 'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
-            ]);
-        };
+            ],
+        ]);
 
 Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` class::
 
@@ -671,6 +656,26 @@ method to use a light theme::
     // ...
     $htmlDumper->setTheme('light');
 
+If your application enforces a strict `Content Security Policy`_ requiring
+nonces for inline ``<script>`` and ``<style>`` tags, configure the dumper
+with the current request's nonce so its markup is allowed::
+
+    // use this if something (e.g. a listener from NelmioSecurityBundle) sets
+    // the "_csp_nonce" request attribute
+    $htmlDumper->setNonce($request->attributes->get('_csp_nonce'));
+
+    // use a closure to resolve the nonce lazily (e.g. in long-running workers
+    // or when using a custom nonce provider)
+    $htmlDumper->setNonce(static fn () => \MyApp\Csp\NonceProvider::current());
+
+    // pass null to clear a previously set nonce
+    $htmlDumper->setNonce(null);
+
+.. versionadded:: 8.1
+
+    The :method:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper::setNonce`
+    method was introduced in Symfony 8.1.
+
 The :class:`Symfony\\Component\\VarDumper\\Dumper\\HtmlDumper` limits string
 length and nesting depth of the output to make it more readable. These options
 can be overridden by the third optional parameter of the
@@ -893,3 +898,5 @@ that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
 
         return $array;
     }
+
+.. _`Content Security Policy`: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP

@@ -123,11 +123,6 @@ This is how you can use these flags::
     // does not throw a SyntaxError because the unknown variables and functions are ignored
     $expressionLanguage->lint('unknown_var + unknown_function()', [], Parser::IGNORE_UNKNOWN_VARIABLES | Parser::IGNORE_UNKNOWN_FUNCTIONS);
 
-.. versionadded:: 7.1
-
-    The support for flags in the ``parse()`` and ``lint()`` methods
-    was introduced in Symfony 7.1.
-
 Passing in Variables
 --------------------
 
@@ -249,7 +244,7 @@ method after parsing any expression to get its AST::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
-    $ast = (new ExpressionLanguage())
+    $ast = new ExpressionLanguage()
         ->parse('1 + 2', [])
         ->getNodes()
     ;
@@ -269,7 +264,7 @@ method to turn the AST into an array::
 
     // ...
 
-    $astAsArray = (new ExpressionLanguage())
+    $astAsArray = new ExpressionLanguage()
         ->parse('1 + 2', [])
         ->getNodes()
         ->toArray()

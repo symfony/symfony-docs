@@ -14,12 +14,6 @@ under the ``web_profiler`` key in your application configuration.
     # displays the actual config values used by your application
     $ php bin/console debug:config web_profiler
 
-.. note::
-
-    When using XML, you must use the ``http://symfony.com/schema/dic/webprofiler``
-    namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd``
-
 .. warning::
 
     The web debug toolbar is not available for responses of type ``StreamedResponse``.
@@ -67,7 +61,3 @@ ajax_replace
 
 If you set this option to ``true``, the toolbar is replaced on AJAX requests.
 This only works in combination with an enabled toolbar.
-
-.. versionadded:: 7.3
-
-    The ``ajax_replace`` configuration option was introduced in Symfony 7.3.

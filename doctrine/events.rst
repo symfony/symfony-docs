@@ -174,37 +174,6 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
                         # configure a custom method name with the 'method' option
                         # method: 'checkUserChanges'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <service id="App\EventListener\UserChangedNotifier">
-                    <!--
-                        * These are the options required to define the entity listener:
-                        *   * name
-                        *   * event
-                        *   * entity
-                        *
-                        * These are other options that you may define if needed:
-                        *   * entity_manager: define it if the listener is not associated with the default manager
-                        *   * method: by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                        *           if it doesn't exist, it tries to execute the '__invoke()' method, but
-                        *           you can configure a custom method name with the 'method' option
-                    -->
-                    <tag name="doctrine.orm.entity_listener"
-                        event="postUpdate"
-                        entity="App\Entity\User"
-                        entity_manager="custom"
-                        method="checkUserChanges"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -213,27 +182,31 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
         use App\Entity\User;
         use App\EventListener\UserChangedNotifier;
 
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                UserChangedNotifier::class => [
+                    'tags' => [
+                        [
+                            'doctrine.orm.entity_listener' => [
+                                // these are the options required to define the entity listener
+                                'event' => 'postUpdate',
+                                'entity' => User::class,
 
-            $services->set(UserChangedNotifier::class)
-                ->tag('doctrine.orm.entity_listener', [
-                    // These are the options required to define the entity listener:
-                    'event' => 'postUpdate',
-                    'entity' => User::class,
+                                // these are other options that you may define if needed
 
-                    // These are other options that you may define if needed:
+                                // set the 'entity_manager' option if the listener is not associated with the default manager
+                                // 'entity_manager' => 'custom'
 
-                    // set the 'entity_manager' option if the listener is not associated with the default manager
-                    // 'entity_manager' => 'custom',
-
-                    // by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                    // if it doesn't exist, it tries to execute the '__invoke()' method, but you can
-                    // configure a custom method name with the 'method' option
-                    // 'method' => 'checkUserChanges',
-                ])
-            ;
-        };
+                                // by default, Symfony looks for a method called after the event (e.g. postUpdate())
+                                // if it doesn't exist, it tries to execute the '__invoke()' method, but you can
+                                // configure a custom method name with the 'method' option
+                                // 'method' => 'checkUserChanges'
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _doctrine-lifecycle-listener:
 
@@ -269,11 +242,6 @@ do so, define a listener for the ``postPersist`` Doctrine event::
             // ... do something with the Product entity
         }
     }
-
-.. note::
-
-    In previous Doctrine versions, instead of ``PostPersistEventArgs``, you had
-    to use ``LifecycleEventArgs``, which was deprecated in Doctrine ORM 2.14.
 
 Then, add the ``#[AsDoctrineListener]`` attribute to the class to enable it as
 a Doctrine listener in your application::
@@ -316,30 +284,6 @@ listener in the Symfony application by creating a new service for it and
                         # you can also restrict listeners to a specific Doctrine connection
                         connection: 'default'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <!--
-                    * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple listeners are associated with the same event
-                    *             (default priority = 0; higher numbers = listener is run earlier)
-                    * 'connection': restricts the listener to a specific Doctrine connection
-                -->
-                <service id="App\EventListener\SearchIndexer">
-                    <tag name="doctrine.event_listener"
-                        event="postPersist"
-                        priority="500"
-                        connection="default"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -347,28 +291,27 @@ listener in the Symfony application by creating a new service for it and
 
         use App\EventListener\SearchIndexer;
 
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                SearchIndexer::class => [
+                    'tags' => [
+                        [
+                            'doctrine.event_listener' => [
+                                // this is the only required option for the lifecycle listener tag
+                                'event' => 'postPersist',
 
-            // listeners are applied by default to all Doctrine connections
-            $services->set(SearchIndexer::class)
-                ->tag('doctrine.event_listener', [
-                    // this is the only required option for the lifecycle listener tag
-                    'event' => 'postPersist',
+                                // listeners can define their priority in case multiple listeners are associated
+                                // to the same event (default priority = 0; higher numbers = listener is run earlier)
+                                'priority' => 500,
 
-                    // listeners can define their priority in case multiple listeners are associated
-                    // to the same event (default priority = 0; higher numbers = listener is run earlier)
-                    'priority' => 500,
-
-                    # you can also restrict listeners to a specific Doctrine connection
-                    'connection' => 'default',
-                ])
-            ;
-        };
-
-.. versionadded:: 2.8.0
-
-    The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.8.0.
+                                // you can also restrict listeners to a specific Doctrine connection
+                                'connection' => 'default',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -379,4 +322,3 @@ listener in the Symfony application by creating a new service for it and
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
 .. _`DoctrineMongoDBBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
-.. _`AsDoctrineListener`: https://github.com/doctrine/DoctrineBundle/blob/2.12.x/src/Attribute/AsDoctrineListener.php

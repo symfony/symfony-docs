@@ -26,10 +26,6 @@ messages, but you can control their verbosity with the ``-q`` and ``-v`` options
     # display all messages (useful to debug errors)
     $ php bin/console some-command -vvv
 
-.. versionadded:: 7.2
-
-    The ``--silent`` option was introduced in Symfony 7.2.
-
 The verbosity level can also be controlled globally for all commands with the
 ``SHELL_VERBOSITY`` environment variable (the ``-q`` and ``-v`` options still
 have more precedence over the value of ``SHELL_VERBOSITY``):
@@ -81,10 +77,6 @@ level. For example::
             return Command::SUCCESS;
         }
     }
-
-.. versionadded:: 7.2
-
-    The ``isSilent()`` method was introduced in Symfony 7.2.
 
 When the silent or quiet level is used, all output is suppressed as the default
 :method:`Symfony\\Component\\Console\\Output\\Output::write` method returns

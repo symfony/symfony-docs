@@ -84,6 +84,25 @@ values for the year, month and day fields::
 
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
+When the ``widget`` option is set to ``single_text``, the field automatically
+adds the ``min`` and ``max`` HTML attributes based on the `years`_ option. These
+attributes default to January 1st of the first year and December 31st of the
+last year. To change the year range, use the ``years`` option. You can also
+override these attributes with custom dates using the ``attr`` option::
+
+    $builder->add('birthday', BirthdayType::class, [
+        'widget' => 'single_text',
+        'attr' => [
+            'min' => '2000-01-01',
+            'max' => '2010-12-31',
+        ],
+    ]);
+
+.. versionadded:: 8.1
+
+    The ``min``/``max`` attributes usage with default values for ``single_text``
+    widget were introduced in Symfony 8.1.
+
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc

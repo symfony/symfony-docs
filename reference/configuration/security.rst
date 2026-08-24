@@ -13,12 +13,6 @@ key in your application configuration.
     # displays the actual config values used by your application
     $ php bin/console debug:config security
 
-.. note::
-
-    When using XML, you must use the ``http://symfony.com/schema/dic/security``
-    namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/services/services-1.0.xsd``
-
 access_denied_url
 -----------------
 
@@ -27,40 +21,10 @@ access_denied_url
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
 
-erase_credentials
------------------
-
-**type**: ``boolean`` **default**: ``true``
-
-If ``true``, the ``eraseCredentials()`` method of the user object is called
-after authentication::
-
-    use Symfony\Component\Security\Core\User\UserInterface;
-
-    class User implements UserInterface
-    {
-        // ...
-
-        public function eraseCredentials(): void
-        {
-            // If you store any temporary, sensitive data on the user, clear it here
-            // $this->plainPassword = null;
-        }
-    }
-
-.. deprecated:: 7.3
-
-   Since Symfony 7.3, ``eraseCredentials()`` methods are deprecated and are
-   not called if they have the ``#[\Deprecated]`` attribute.
-
 expose_security_errors
 ----------------------
 
 **type**: ``string`` **default**: ``'none'``
-
-.. versionadded:: 7.3
-
-    The ``expose_security_errors`` option was introduced in Symfony 7.3
 
 User enumeration is a common security issue where attackers infer valid usernames
 based on error messages. For example, a message like "This user does not exist"
@@ -75,24 +39,6 @@ option can be one of the following:
 * ``'account_status'``: shows account-related exceptions (e.g. blocked or expired
   accounts) but only for users who provided the correct password;
 * ``'all'``: shows all security-related exceptions.
-
-hide_user_not_found
--------------------
-
-**type**: ``boolean`` **default**: ``true``
-
-.. deprecated:: 7.3
-
-    The ``hide_user_not_found`` option was deprecated in favor of the
-    ``expose_security_errors`` option in Symfony 7.3.
-
-If ``true``, when a user is not found a generic exception of type
-:class:`Symfony\\Component\\Security\\Core\\Exception\\BadCredentialsException`
-is thrown with the message "Bad credentials".
-
-If ``false``, the exception thrown is of type
-:class:`Symfony\\Component\\Security\\Core\\Exception\\UserNotFoundException`
-and it includes the given not found user identifier.
 
 session_fixation_strategy
 -------------------------
@@ -112,6 +58,24 @@ The possible values of this option are:
 * ``INVALIDATE`` constant from :class:`Symfony\\Component\\Security\\Http\\Session\\SessionAuthenticationStrategy`
   The entire session is regenerated, so the session ID is updated but all the
   other session attributes are lost.
+
+erase_credentials
+-----------------
+
+**type**: ``boolean`` **default**: ``true``
+
+.. deprecated:: 8.1
+
+    The ``erase_credentials`` option is deprecated since Symfony 8.1 and will
+    be removed in 9.0, as the feature behind it was removed in Symfony 8.0.
+
+If ``true``, the ``eraseCredentials()`` method of the user object was called
+after authentication. This was used to remove sensitive data (e.g. plain-text
+passwords) from the user object stored in the session.
+
+Since Symfony 8.0 removed the ``eraseCredentials()`` method from the user
+interface, this option no longer has any effect. You should remove it from
+your security configuration to avoid the deprecation warning.
 
 access_decision_manager
 -----------------------
@@ -230,47 +194,27 @@ application:
                     # the rest of options depend on the authentication mechanism
                     # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <!-- 'pattern' is a regular expression matched against the incoming
-                     request URL. If there's a match, authentication is triggered -->
-                <firewall name="main" pattern="^/admin">
-                    <!-- the rest of options depend on the authentication mechanism -->
-                    <!-- ... -->
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-
-            // 'main' is the name of the firewall (can be chosen freely)
-            $security->firewall('main')
-                // 'pattern' is a regular expression matched against the incoming
-                // request URL. If there's a match, authentication is triggered
-                ->pattern('^/admin')
-                // the rest of options depend on the authentication mechanism
+        return App::config([
+            'security' => [
                 // ...
-            ;
-        };
+
+                // 'main' is the name of the firewall (can be chosen freely)
+                'firewalls' => [
+                    'main' => [
+                        // 'pattern' is a regular expression matched against the incoming
+                        // request URL. If there's a match, authentication is triggered
+                        'pattern' => '^/admin',
+                        // the rest of options depend on the authentication mechanism
+                        // ...
+                    ],
+                ],
+            ],
+        ]);
 
 .. seealso::
 
@@ -499,48 +443,31 @@ user logs out:
                                 path: null
                                 domain: example.com
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <logout path="...">
-                        <delete-cookie name="cookie1-name"/>
-                        <delete-cookie name="cookie2-name" path="/"/>
-                        <delete-cookie name="cookie3-name" domain="example.com"/>
-                    </logout>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-
-        return static function (SecurityConfig $securityConfig): void {
-            // ...
-
-            $securityConfig->firewall('main')
-                ->logout()
-                    ->deleteCookie('cookie1-name')
-                    ->deleteCookie('cookie2-name')
-                        ->path('/')
-                    ->deleteCookie('cookie3-name')
-                        ->path(null)
-                        ->domain('example.com');
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'logout' => [
+                            'delete_cookies' => [
+                                'cookie1-name' => null,
+                                'cookie2-name' => [
+                                    'path' => '/',
+                                ],
+                                'cookie3-name' => [
+                                    'path' => null,
+                                    'domain' => 'example.com',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 clear_site_data
 ...............
@@ -551,7 +478,8 @@ The ``Clear-Site-Data`` HTTP header clears browsing data (cookies, storage, cach
 associated with the requesting website. It allows web developers to have more
 control over the data stored by a client browser for their origins.
 
-Allowed values are ``cache``, ``cookies``, ``storage`` and ``executionContexts``.
+Allowed values are ``cache``, ``cookies``, ``storage``, ``clientHints``, ``executionContexts``,
+``prefetchCache`` and ``prerenderCache``.
 It's also possible to use ``*`` as a wildcard for all directives:
 
 .. configuration-block::
@@ -570,42 +498,27 @@ It's also possible to use ``*`` as a wildcard for all directives:
                             - cookies
                             - storage
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <logout>
-                        <clear-site-data>cookies</clear-site-data>
-                        <clear-site-data>storage</clear-site-data>
-                    </logout>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'logout' => [
+                            'clear_site_data' => ['cookies', 'storage'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
-        return static function (SecurityConfig $securityConfig): void {
-            // ...
+.. versionadded:: 8.1
 
-            $securityConfig->firewall('main')
-                ->logout()
-                    ->clearSiteData(['cookies', 'storage']);
-        };
+    The ``clientHints``, ``prefetchCache`` and ``prerenderCache`` options were
+    introduced in Symfony 8.1.
 
 invalidate_session
 ..................
@@ -637,6 +550,15 @@ target
 The relative path (if the value starts with ``/``), or absolute URL (if it
 starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
+
+Set this option to ``null`` to not redirect after logout. The request then
+continues to the controller of the route referenced by the logout ``path``,
+which allows you to return your own response. See
+:ref:`Building the Logout Response Yourself <security-logout-without-redirect>`.
+
+.. versionadded:: 8.2
+
+    The support for the ``null`` value was introduced in Symfony 8.2.
 
 .. _reference-security-logout-csrf:
 
@@ -727,41 +649,25 @@ The security configuration should be:
                         username_path: security.credentials.login
                         password_path: security.credentials.password
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main" lazy="true">
-                    <json-login check-path="login"
-                        username-path="security.credentials.login"
-                        password-path="security.credentials.password"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $mainFirewall = $security->firewall('main');
-            $mainFirewall->lazy(true);
-            $mainFirewall->jsonLogin()
-                ->checkPath('/login')
-                ->usernamePath('security.credentials.login')
-                ->passwordPath('security.credentials.password')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'lazy' => true,
+                        'json_login' => [
+                            'check_path' => '/login',
+                            'username_path' => 'security.credentials.login',
+                            'password_path' => 'security.credentials.password',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 password_path
 .............
@@ -790,7 +696,7 @@ You can authenticate to an LDAP server using the LDAP variants of the
 attempt to ``bind`` against an LDAP server instead of using password comparison.
 
 Both authentication providers have the same arguments as their normal
-counterparts, with the addition of two configuration keys:
+counterparts, with the addition of the following configuration keys:
 
 service
 .......
@@ -819,6 +725,21 @@ placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you will need to override
 this value. This setting is only necessary if the user's DN cannot be derived
 statically using the ``dn_string`` config option.
+
+ldap_users_only
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.2
+
+    The ``ldap_users_only`` option was introduced in Symfony 8.2.
+
+Set this option to ``true`` to bind only the LDAP users against the LDAP
+server and to check every other user against the password stored in your
+application. This allows an LDAP firewall to use a
+:ref:`chain user provider <security-chain-user-provider>`. See
+:ref:`ldap_users_only <security-ldap-users-only>` for more details.
 
 **User provider**
 
@@ -854,46 +775,25 @@ as the user identifier.
                         credentials:     SSL_CLIENT_S_DN
                         user_identifier: emailAddress
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <x509 provider="your_user_provider"
-                        user="SSL_CLIENT_S_DN_Email"
-                        credentials="SSL_CLIENT_S_DN"
-                        user_identifier="emailAddress"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $mainFirewall = $security->firewall('main');
-            $mainFirewall->x509()
-                ->provider('your_user_provider')
-                ->user('SSL_CLIENT_S_DN_Email')
-                ->credentials('SSL_CLIENT_S_DN')
-                ->userIdentifier('emailAddress')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'x509' => [
+                            'provider' => 'your_user_provider',
+                            'user' => 'SSL_CLIENT_S_DN_Email',
+                            'credentials' => 'SSL_CLIENT_S_DN',
+                            'user_identifier' => 'emailAddress',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 user
 ....
@@ -950,38 +850,23 @@ identifier in the ``REMOTE_USER`` environment variable.
                         provider: your_user_provider
                         user:     REMOTE_USER
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <remote-user provider="your_user_provider"
-                        user="REMOTE_USER"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $mainFirewall = $security->firewall('main');
-            $mainFirewall->remoteUser()
-                ->provider('your_user_provider')
-                ->user('REMOTE_USER')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'remote_user' => [
+                            'provider' => 'your_user_provider',
+                            'user' => 'REMOTE_USER',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 provider
 ........
@@ -1353,44 +1238,23 @@ multiple firewalls, the "context" could actually be shared:
                     # ...
                     context: my_context
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="somename" context="my_context">
-                    <!-- ... -->
-                </firewall>
-                <firewall name="othername" context="my_context">
-                    <!-- ... -->
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('somename')
-                // ...
-                ->context('my_context')
-            ;
-
-            $security->firewall('othername')
-                // ...
-                ->context('my_context')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'somename' => [
+                        'context' => 'my_context',
+                    ],
+                    'othername' => [
+                        'context' => 'my_context',
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -1420,35 +1284,20 @@ the session must not be used when authenticating users:
                     # ...
                     stateless: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main" stateless="true">
-                    <!-- ... -->
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $mainFirewall = $security->firewall('main');
-            $mainFirewall->stateless(true);
-            // ...
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'stateless' => true,
+                    ],
+                ],
+            ],
+        ]);
 
 .. _reference-security-lazy:
 
@@ -1472,35 +1321,20 @@ session only if the application actually accesses the User object (e.g. calling
                     # ...
                     lazy: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main" lazy="true">
-                    <!-- ... -->
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->lazy(true);
-            // ...
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'lazy' => true,
+                    ],
+                ],
+            ],
+        ]);
 
 user_checker
 ~~~~~~~~~~~~
@@ -1529,37 +1363,20 @@ Firewalls can configure a list of required badges that must be present on the au
                     # ...
                     required_badges: ['CsrfTokenBadge', 'My\Badge']
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <!-- ... -->
-                    <required_badge>CsrfTokenBadge</required_badge>
-                    <required_badge>My\Badge</required_badge>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $mainFirewall = $security->firewall('main');
-            $mainFirewall->requiredBadges(['CsrfTokenBadge', 'My\Badge']);
-            // ...
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'required_badges' => ['CsrfTokenBadge', 'My\Badge'],
+                    ],
+                ],
+            ],
+        ]);
 
 password_hashers
 ----------------

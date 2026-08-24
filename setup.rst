@@ -14,7 +14,7 @@ Technical Requirements
 
 Before creating your first Symfony application you must:
 
-* Install PHP 8.2 or higher and these PHP extensions (which are installed and
+* Install PHP 8.4 or higher and these PHP extensions (which are installed and
   enabled by default in most PHP 8 installations): `Ctype`_, `iconv`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
 * `Install Composer`_, which is used to install PHP packages.
@@ -48,10 +48,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_directory --version="7.4.*" --webapp
+    $ symfony new my_project_directory --version="8.2.x-dev" --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_directory --version="7.4.*"
+    $ symfony new my_project_directory --version="8.2.x-dev"
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--webapp`` option installs extra packages to give
@@ -63,12 +63,12 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/skeleton:"7.4.*" my_project_directory
+    $ composer create-project symfony/skeleton:"8.2.x-dev" my_project_directory
     $ cd my_project_directory
     $ composer require webapp
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"7.4.*" my_project_directory
+    $ composer create-project symfony/skeleton:"8.2.x-dev" my_project_directory
 
 No matter which command you run to create the Symfony application, all of them
 will create a new ``my_project_directory/`` directory, download some dependencies

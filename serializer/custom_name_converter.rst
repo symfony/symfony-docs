@@ -43,19 +43,6 @@ A custom name converter can handle such cases::
         }
     }
 
-.. versionadded:: 7.1
-
-    Accessing the current class name, format and context via
-    :method:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface::normalize`
-    and :method:`Symfony\\Component\\Serializer\\NameConverter\\NameConverterInterface::denormalize`
-    was introduced in Symfony 7.1.
-
-.. note::
-
-    You can also implement
-    :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
-    to access the current class name, format and context.
-
 Then, configure the serializer to use your name converter:
 
 .. configuration-block::
@@ -68,37 +55,20 @@ Then, configure the serializer to use your name converter:
                 # pass the service ID of your name converter
                 name_converter: 'App\Serializer\OrgPrefixNameConverter'
 
-    .. code-block:: xml
-
-        <!-- config/packages/serializer.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <!-- pass the service ID of your name converter -->
-                <framework:serializer
-                    name-converter="App\Serializer\OrgPrefixNameConverter"
-                />
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/serializer.php
-        use App\Serializer\OrgPrefixNameConverter;
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework) {
-            $framework->serializer()
-                // pass the service ID of your name converter
-                ->nameConverter(OrgPrefixNameConverter::class)
-            ;
-        };
+        use App\Serializer\OrgPrefixNameConverter;
+
+        return App::config([
+            'framework' => [
+                'serializer' => [
+                    'name_converter' => OrgPrefixNameConverter::class,
+                ],
+            ],
+        ]);
 
 Now, when using the serializer in the application, all attributes will be
 prefixed by ``org_``::

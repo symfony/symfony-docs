@@ -30,10 +30,6 @@ directory, which has this default structure:
 * The ``config/routes/`` directory stores the routing configuration loaded by
   installed packages (e.g. ``framework.yaml``).
 
-.. versionadded:: 7.4
-
-    The ``config/reference.php`` file was introduced in Symfony 7.4.
-
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
 
@@ -67,7 +63,7 @@ Configuration Formats
 Unlike other frameworks, Symfony doesn't impose a specific format on you to
 configure your applications, but lets you choose between YAML and PHP.
 Throughout the Symfony documentation, all configuration examples will be
-shown in these three formats.
+shown in these two formats.
 
 There isn't any practical difference between formats. In fact, Symfony
 transforms all of them into PHP and caches them before running the application,
@@ -81,21 +77,6 @@ readable. These are the main advantages and disadvantages of each format:
 * **PHP**: very powerful and it allows you to create dynamic configuration with
   arrays, and benefits from autocompletion and static analysis using
   array shapes.
-
-.. deprecated:: 7.4
-
-    The XML and Config Builder formats are deprecated in Symfony 7.4 and
-    will be removed in Symfony 8.0.
-
-.. versionadded:: 7.4
-
-    Array shapes were introduced in Symfony 7.4.
-
-.. deprecated:: 7.4
-
-    Using ``$this`` or accessing the internal scope of the file loader in PHP
-    config files was deprecated in Symfony 7.4. Use the ``$loader`` variable
-    instead, which only exposes the loader's public API.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,52 +101,33 @@ configuration files, even if they use a different format:
             # ignore_errors: true silently discards all errors (including invalid code and not found)
             - { resource: 'my_other_config_file.yaml', ignore_errors: true }
 
+            # exclude specific files when using glob patterns
+            - { resource: 'services/*.yaml', exclude: ['services/legacy_*.yaml'] }
+
         # ...
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <imports>
-                <import resource="legacy_config.php"/>
-                <!-- glob expressions are also supported to load multiple files -->
-                <import resource="/etc/myapp/*.yaml"/>
-
-                <!-- ignore-errors="not_found" silently discards errors if the loaded file doesn't exist -->
-                <import resource="my_config_file.yaml" ignore-errors="not_found"/>
-                <!-- ignore-errors="true" silently discards all errors (including invalid code and not found) -->
-                <import resource="my_other_config_file.yaml" ignore-errors="true"/>
-            </imports>
-
-            <!-- ... -->
-        </container>
 
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->import('legacy_config.php');
+        return App::config([
+            'imports' => [
+                ['resource' => 'legacy_config.php'],
 
-            // glob expressions are also supported to load multiple files
-            $container->import('/etc/myapp/*.yaml');
+                // glob expressions are also supported to load multiple files
+                ['resource' => '/etc/myapp/*.yaml'],
 
-            // the third optional argument of import() is 'ignore_errors'
-            // 'ignore_errors' set to 'not_found' silently discards errors if the loaded file doesn't exist
-            $container->import('my_config_file.yaml', null, 'not_found');
-            // 'ignore_errors' set to true silently discards all errors (including invalid code and not found)
-            $container->import('my_config_file.yaml', null, true);
-        };
+                // ignore_errors: not_found silently discards errors if the loaded file doesn't exist
+                ['resource' => 'my_config_file.xml', 'ignore_errors' => 'not_found'],
 
-        // ...
+                // ignore_errors: true silently discards all errors (including invalid code and not found)
+                ['resource' => 'my_other_config_file.xml', 'ignore_errors' => true],
+
+                // exclude specific files when using glob patterns
+                ['resource' => 'services/*.php', 'exclude' => ['services/legacy_*.php']],
+            ],
+        ]);
 
 .. _config-parameter-intro:
 .. _config-parameters-yml:
@@ -212,49 +174,6 @@ parameters are defined under the ``parameters`` key in the
 
         # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <parameters>
-                <!-- the parameter name is an arbitrary string (the 'app.' prefix is recommended
-                     to better differentiate your parameters from Symfony parameters). -->
-                <parameter key="app.admin_email">something@example.com</parameter>
-
-                <!-- boolean parameters -->
-                <parameter key="app.enable_v2_protocol">true</parameter>
-                <!-- if you prefer to store the boolean value as a string in the parameter -->
-                <parameter key="app.enable_v2_protocol" type="string">true</parameter>
-
-                <!-- array/collection parameters -->
-                <parameter key="app.supported_locales" type="collection">
-                    <parameter>en</parameter>
-                    <parameter>es</parameter>
-                    <parameter>fr</parameter>
-                </parameter>
-
-                <!-- binary content parameters (encode the contents with base64_encode()) -->
-                <parameter key="app.some_parameter" type="binary">VGhpcyBpcyBhIEJlbGwgY2hhciAH</parameter>
-
-                <!-- PHP constants as parameter values -->
-                <parameter key="app.some_constant" type="constant">GLOBAL_CONSTANT</parameter>
-                <parameter key="app.another_constant" type="constant">App\Entity\BlogPost::MAX_ITEMS</parameter>
-
-                <!-- Enum case as parameter values -->
-                <parameter key="app.some_enum" type="constant">App\Enum\PostState::Published</parameter>
-            </parameters>
-
-            <!-- ... -->
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -263,30 +182,29 @@ parameters are defined under the ``parameters`` key in the
         use App\Entity\BlogPost;
         use App\Enum\PostState;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->parameters()
+        return App::config([
+            'parameters' => [
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
-                ->set('app.admin_email', 'something@example.com')
+                'app.admin_email' => 'something@example.com',
 
                 // boolean parameters
-                ->set('app.enable_v2_protocol', true)
+                'app.enable_v2_protocol' => true,
 
                 // array/collection parameters
-                ->set('app.supported_locales', ['en', 'es', 'fr'])
+                'app.supported_locales' => ['en', 'es', 'fr'],
 
-                // binary content parameters (use the PHP escape sequences)
-                ->set('app.some_parameter', 'This is a Bell char: \x07')
+                // binary content parameters (encode the contents with base64_encode())
+                'app.some_parameter' => base64_decode('VGhpcyBpcyBhIEJlbGwgY2hhciAA'),
 
                 // PHP constants as parameter values
-                ->set('app.some_constant', GLOBAL_CONSTANT)
-                ->set('app.another_constant', BlogPost::MAX_ITEMS)
+                'app.some_constant' => GLOBAL_CONSTANT,
+                'app.another_constant' => BlogPost::MAX_ITEMS,
 
                 // Enum case as parameter values
-                ->set('app.some_enum', PostState::Published);
-        };
-
-        // ...
+                'app.some_enum' => PostState::Published,
+            ],
+        ]);
 
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
@@ -301,41 +219,22 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             # any string surrounded by two % is replaced by that parameter value
             email_address: '%app.admin_email%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/some_package.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- any string surrounded by two % is replaced by that parameter value -->
-            <some-package:config email-address="%app.admin_email%">
-                <!-- ... -->
-            </some-package:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/some_package.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-        use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->extension('some_package', [
+        return App::config([
+            'some_package' => [
                 // when using the param() function, you only have to pass the parameter name...
                 'email_address' => param('app.admin_email'),
 
                 // ... but if you prefer it, you can also pass the name as a string
-                // surrounded by two % (same as in the YAML format) and Symfony will
+                // surrounded by two % (same as in YAML format) and Symfony will
                 // replace it by that parameter value
                 'email_address' => '%app.admin_email%',
-            ]);
-        };
+            ],
+        ]);
 
 .. note::
 
@@ -352,22 +251,16 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
                 # Parsed as 'https://symfony.com/?foo=%s&amp;bar=%d'
                 url_pattern: 'https://symfony.com/?foo=%%s&amp;bar=%%d'
 
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <parameters>
-                <parameter key="url_pattern">http://symfony.com/?foo=%%s&amp;bar=%%d</parameter>
-            </parameters>
-
         .. code-block:: php
 
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $container): void {
-                $container->parameters()
-                    ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
-            };
+            return App::config([
+                'parameters' => [
+                    'url_pattern' => 'http://symfony.com/?foo=%%s&amp;bar=%%d',
+                ],
+            ]);
 
 .. include:: /service_container/_imports-parameters-note.rst.inc
 
@@ -393,10 +286,6 @@ essential parameters for your application's functionality are not empty::
 If a non-empty parameter is ``null``, an empty string ``''``, or an empty array ``[]``,
 Symfony will throw an exception. This validation is **not** made at compile time
 but when attempting to retrieve the value of the parameter.
-
-.. versionadded:: 7.2
-
-    Validating non-empty parameters was introduced in Symfony 7.2.
 
 .. seealso::
 
@@ -485,56 +374,32 @@ files directly in the ``config/packages/`` directory.
                     # ...
             when@test: *webpack_prod
 
-        .. code-block:: xml
-
-            <!-- config/packages/webpack_encore.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-                <webpack-encore:config
-                    output-path="%kernel.project_dir%/public/build"
-                    strict-mode="true"
-                    cache="false"
-                />
-
-                <!-- cache is enabled only in the "test" environment -->
-                <when env="prod">
-                    <webpack-encore:config cache="true"/>
-                </when>
-
-                <!-- disable strict mode only in the "test" environment -->
-                <when env="test">
-                    <webpack-encore:config strict-mode="false"/>
-                </when>
-            </container>
-
         .. code-block:: php
 
-            // config/packages/framework.php
-            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-            use Symfony\Config\WebpackEncoreConfig;
+            // config/packages/webpack_encore.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container): void {
-                $webpackEncore
-                    ->outputPath('%kernel.project_dir%/public/build')
-                    ->strictMode(true)
-                    ->cache(false)
-                ;
+            return [
+                'webpack_encore' => [
+                    'output_path' => '%kernel.project_dir%/public/build',
+                    'strict_mode' => true,
+                    'cache' => false,
+                ],
 
                 // cache is enabled only in the "prod" environment
-                if ('prod' === $container->env()) {
-                    $webpackEncore->cache(true);
-                }
+                'when@prod' => [
+                    'webpack_encore' => [
+                        'cache' => true,
+                    ],
+                ],
 
                 // disable strict mode only in the "test" environment
-                if ('test' === $container->env()) {
-                    $webpackEncore->strictMode(false);
-                }
-            };
+                'when@test' => [
+                    'webpack_encore' => [
+                        'strict_mode' => false,
+                    ],
+                ],
+            ],
 
 When using PHP closures to configure your services, besides calling the
 ``$container->env()`` method shown above, you can automatically inject the
@@ -548,12 +413,6 @@ the closure::
         // `$env` is automatically filled in, so you can configure your
         // services depending on which environment you're on
     };
-
-.. deprecated:: 7.4
-
-    Using ``$this`` or the loader's internal scope in PHP configuration
-    files was deprecated in Symfony 7.4. Use the variables passed to the closure
-    (e.g. ``$containerConfigurator``) or the ``$loader`` variable instead.
 
 .. seealso::
 
@@ -651,34 +510,17 @@ This example shows how you could configure the application secret using an env v
             secret: '%env(APP_SECRET)%'
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/framework"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- by convention the env var names are always uppercase -->
-            <framework:config secret="%env(APP_SECRET)%"/>
-
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->extension('framework', [
+        return App::config([
+            'framework' => [
                 // by convention the env var names are always uppercase
-                'secret' => '%env(APP_SECRET)%',
-            ]);
-        };
+                'secret' => env('APP_SECRET'),
+            ],
+        ]);
 
 .. note::
 
@@ -697,6 +539,11 @@ This example shows how you could configure the application secret using an env v
     :doc:`env var processors </configuration/env_var_processors>` to transform
     their contents (e.g. to turn a string value into an integer).
 
+.. versionadded:: 8.1
+
+    Support for ``.`` in environment variable names (e.g. ``FOO.BAR``) was
+    introduced in Symfony 8.1.
+
 To define the value of an env var, you have several options:
 
 * :ref:`Add the value to a .env file <config-dot-env>`;
@@ -711,51 +558,27 @@ To do so, define a parameter with the same name as the env var using this syntax
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # config/services.yaml
         parameters:
             # if the SECRET env var value is not defined anywhere, Symfony uses this value
             env(SECRET): 'some_secret'
 
         # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <parameters>
-                <!-- if the SECRET env var value is not defined anywhere, Symfony uses this value -->
-                <parameter key="env(SECRET)">some_secret</parameter>
-            </parameters>
-
-            <!-- ... -->
-        </container>
-
     .. code-block:: php
 
-        // config/packages/framework.php
+        // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\DependencyInjection\ContainerBuilder;
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
-            // if the SECRET env var value is not defined anywhere, Symfony uses this value
-            $container->setParameter('env(SECRET)', 'some_secret');
-
-            // ...
-        };
+        return App::config([
+            'parameters' => [
+                'env(SECRET)' => 'some_secret',
+            ],
+        ]);
 
 .. tip::
 
-    Some hosts - like Upsun - offer easy `utilities to manage env vars`_
+    Some hosts - like Upsun.com - offer easy `utilities to manage env vars`_
     in production.
 
 .. note::
@@ -1009,7 +832,7 @@ As an alternate option, you can directly invoke the ``Dotenv`` class in your
 
     use Symfony\Component\Dotenv\Dotenv;
 
-    (new Dotenv())->bootEnv(dirname(__DIR__).'my/custom/path/to/.env');
+    new Dotenv()->bootEnv(dirname(__DIR__).'my/custom/path/to/.env');
 
 Symfony will then look for the environment variables in that file, but also in
 the local and environment-specific files (e.g. ``.*.local`` and
@@ -1019,11 +842,6 @@ to learn more about this.
 
 If you need to know the path to the ``.env`` file that Symfony is using, you can
 read the ``SYMFONY_DOTENV_PATH`` environment variable in your application.
-
-.. versionadded:: 7.1
-
-    The ``SYMFONY_DOTENV_PATH`` environment variable was introduced in Symfony
-    7.1.
 
 .. _configuration-secrets:
 
@@ -1159,6 +977,94 @@ already existing ``.env`` files).
         # .env.prod (or .env.prod.local) - this will fallback on the loaders you defined
         APP_ENV=
 
+Environment Variables in Bundle Configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you use ``%env(...)%`` in bundle configuration (e.g. ``config/packages/doctrine.yaml``),
+the value is **not** read at compile time. Instead, Symfony replaces it with a
+unique placeholder. The actual environment variable is only resolved at runtime,
+when the service using it is instantiated.
+
+**Bundle authors** must follow certain rules to ensure their bundle supports
+runtime env vars correctly:
+
+**In the Configuration class** (``TreeBuilder``):
+
+* Don't write ``beforeNormalization()`` steps that inspect or transform config
+  option *values* (steps that only reorganize keys without reading values are fine);
+* Don't write ``validate()`` steps that check config option *values* (at compile
+  time, the value is still a placeholder string, not the real value).
+
+**In the DI extension** (``load()`` method):
+
+* Don't write logic that inspects processed config option values before injecting
+  them into DI parameters or service definition arguments. At compile time, those
+  values are placeholder strings, not the actual env var values.
+
+.. tip::
+
+    The general rule is: **wire the value into the container, don't inspect it**.
+    Passing env var values through to service arguments or parameters without
+    interpreting them is enough for runtime resolution to work automatically.
+
+Handling DSNs and Values that Need Parsing
+..........................................
+
+If a service needs a parsed version of a DSN (e.g. extracting the host, port,
+and credentials from a database URL), don't parse it in the DI extension during
+container compilation. Instead, create a **factory service** that parses the DSN
+at runtime::
+
+    // src/Factory/ClientFactory.php
+    namespace App\Factory;
+
+    class ClientFactory
+    {
+        public static function create(string $dsn): SomeClient
+        {
+            $params = parse_url($dsn);
+
+            return new SomeClient(
+                host: $params['host'],
+                port: $params['port'] ?? 5432,
+                username: $params['user'] ?? '',
+                password: $params['pass'] ?? '',
+            );
+        }
+    }
+
+Then register the factory in the service configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\SomeClient:
+                factory: ['App\Factory\ClientFactory', 'create']
+                arguments:
+                    - '%env(DATABASE_DSN)%'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Factory\ClientFactory;
+        use App\SomeClient;
+
+        return App::config([
+            'services' => [
+                SomeClient::class => service()
+                    ->factory([ClientFactory::class, 'create'])
+                    ->args([env('DATABASE_DSN')]),
+            ],
+        ]);
+
+This approach is used by DoctrineBundle with its ``ConnectionFactory``, which
+parses the database URL at runtime instead of during container compilation.
+
 .. _configuration-accessing-parameters:
 
 Accessing Configuration Parameters
@@ -1229,26 +1135,6 @@ parameters as arguments of their constructors:
                 arguments:
                     $contentsDir: '%app.contents_dir%'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="app.contents_dir">...</parameter>
-            </parameters>
-
-            <services>
-                <service id="App\Service\MessageGenerator">
-                    <argument key="$contentsDir">%app.contents_dir%</argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1256,14 +1142,18 @@ parameters as arguments of their constructors:
 
         use App\Service\MessageGenerator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->parameters()
-                ->set('app.contents_dir', '...');
-
-            $container->services()
-                ->get(MessageGenerator::class)
-                    ->arg('$contentsDir', '%app.contents_dir%');
-        };
+        return App::config([
+            'parameters' => [
+                'app.contents_dir' => '...',
+            ],
+            'services' => [
+                MessageGenerator::class => [
+                    'arguments' => [
+                        '$contentsDir' => param('app.contents_dir'),
+                    ],
+                ],
+            ],
+        ]);
 
 The recommended way is to use the :ref:`#[Autowire] attribute <autowire-attribute>`.
 
@@ -1288,40 +1178,22 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
 
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true" public="false">
-                    <!-- pass this value to any $projectDir argument for any service
-                         that's created in this file (including controller arguments) -->
-                    <bind key="$projectDir">%kernel.project_dir%</bind>
-                </defaults>
-
-                <!-- ... -->
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $container->services()
-                ->defaults()
-                    // pass this value to any $projectDir argument for any service
-                    // that's created in this file (including controller arguments)
-                    ->bind('$projectDir', '%kernel.project_dir%');
-
-            // ...
-        };
+        return App::config([
+            'services' => [
+                '_defaults' => [
+                    'bind' => [
+                        // pass this value to any $projectDir argument for any service
+                        // that's created in this file (including controller arguments)
+                        '$projectDir' => param('kernel.project_dir'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. seealso::
 

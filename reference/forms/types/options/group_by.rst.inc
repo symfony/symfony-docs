@@ -41,6 +41,38 @@ If you return ``null``, the option won't be grouped. You can also pass a string
 "property path" that will be called to get the group. See the `choice_label`_ for
 details about using a property path.
 
+The group labels are translated using the ``choice_translation_domain`` option,
+so the callback can return a translation key. It can also return any
+:class:`Symfony\\Contracts\\Translation\\TranslatableInterface` instance, as
+you can do with the `choice_label`_ option. In that case, the label is translated
+with the domain of the translatable object, not with ``choice_translation_domain``::
+
+    use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use Symfony\Component\Translation\TranslatableMessage;
+    // ...
+
+    $builder->add('country', ChoiceType::class, [
+        'choices' => $countries,
+        'group_by' => fn (Country $country) => new TranslatableMessage(
+            'continent.'.$country->getContinent(),
+            [],
+            'countries',
+        ),
+    ]);
+
+.. versionadded:: 8.2
+
+    Support for returning ``TranslatableInterface`` instances from ``group_by``
+    was introduced in Symfony 8.2.
+
+.. note::
+
+    If your :doc:`form theme </form/form_themes>` overrides the
+    ``choice_widget_options`` block, render the ``<optgroup>`` label with
+    ``choice.label`` instead of the array key of the loop. When the label is
+    a translatable object, that array key is a generated value with no
+    meaning, because objects can't be used as array keys.
+
 .. tip::
 
     When defining a custom type, you should use the

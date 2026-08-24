@@ -35,54 +35,30 @@ optionally some *algorithm options*:
                     algorithm: 'auto'
                     cost:      15
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <!-- auto hasher with default options for the User class (and children) -->
-                <security:password-hasher
-                    class="App\Entity\User"
-                    algorithm="auto"
-                />
-
-                <!-- auto hasher with custom options for all PasswordAuthenticatedUserInterface instances -->
-                <security:password-hasher
-                    class="Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface"
-                    algorithm="auto"
-                    cost="15"
-                />
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Entity\User;
         use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-        use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security): void {
-            // ...
+        return App::config([
+            'security' => [
+                // ...
 
-            // auto hasher with default options for the User class (and children)
-            $security->passwordHasher(User::class)
-                ->algorithm('auto');
+                'password_hashers' => [
+                    // auto hasher with default options for the User class (and children)
+                    User::class => 'auto',
 
-            // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
-            $security->passwordHasher(PasswordAuthenticatedUserInterface::class)
-                ->algorithm('auto')
-                ->cost(15);
-        };
+                    // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
+                    PasswordAuthenticatedUserInterface::class => [
+                        'algorithm' => 'auto',
+                        'cost' => 15,
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -140,23 +116,25 @@ Further in this article, you can find a
         .. code-block:: php
 
             // config/packages/security.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
             use App\Entity\User;
-            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-            use Symfony\Config\SecurityConfig;
 
-            return static function (SecurityConfig $security, ContainerConfigurator $container): void {
-                // ...
-
-                if ('test' === $container->env()) {
-                    // Use your user class name here
-                    $security->passwordHasher(User::class)
-                        ->algorithm('auto') // This should be the same value as in config/packages/security.yaml
-                        ->cost(4) // Lowest possible value for bcrypt
-                        ->timeCost(2) // Lowest possible value for argon
-                        ->memoryCost(10) // Lowest possible value for argon
-                    ;
-                }
-            };
+            return App::config([
+                'when@test' => [
+                    'security' => [
+                        'password_hashers' => [
+                            // Use your user class name here
+                            User::class => [
+                                'algorithm' => 'auto',
+                                'cost' => 4, // Lowest possible value for bcrypt
+                                'time_cost' => 3, // Lowest possible value for argon
+                                'memory_cost' => 10, // Lowest possible value for argon
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
 
 Hashing the Password
 --------------------
@@ -247,10 +225,10 @@ you'll see a success message and a list of any other steps you need to do.
 
 .. tip::
 
-    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
-    ``--with-ulid`` to ``make:reset-password``. Using Symfony's :doc:`Uid Component </components/uid>`,
-    the entities will be generated with the ``id`` type as :ref:`Uuid <uuid>`
-    or :ref:`Ulid <ulid>` instead of ``int``.
+    You can pass either ``--with-uuid`` or ``--with-ulid`` to ``make:reset-password``.
+    Using Symfony's :doc:`Uid Component </components/uid>`, the entities
+    will be generated with the ``id`` type as :ref:`Uuid <uuid>` or
+    :ref:`Ulid <ulid>` instead of ``int``.
 
 You can customize the reset password bundle's behavior by updating the
 ``reset_password.yaml`` file. For more information on the configuration,
@@ -310,10 +288,6 @@ its configuration key::
 When injecting a specific hasher by its name, you should type-hint the generic
 :class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`.
 
-.. versionadded:: 7.4
-
-    The feature to inject specific password hashers was introduced in Symfony 7.4.
-
 .. _security-password-migration:
 
 Password Migration
@@ -357,62 +331,32 @@ on the new hasher to point to the old, legacy hasher(s):
                         - bcrypt # uses the "bcrypt" hasher with the default options
                         - legacy # uses the "legacy" hasher configured above
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:security="http://symfony.com/schema/dic/security"
-            xsi:schemaLocation="http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <security:config>
-                <!-- ... -->
-
-                <security:password-hasher class="legacy"
-                    algorithm="sha256"
-                    encode-as-base64="false"
-                    iterations="1"
-                />
-
-                <!-- algorithm: the new hasher, along with its options -->
-                <security:password-hasher class="App\Entity\User"
-                    algorithm="sodium"
-                >
-                    <!-- uses the bcrypt hasher with the default options -->
-                    <security:migrate-from>bcrypt</security:migrate-from>
-
-                    <!-- uses the legacy hasher configured above -->
-                    <security:migrate-from>legacy</security:migrate-from>
-                </security:password-hasher>
-            </security:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->passwordHasher('legacy')
-                ->algorithm('sha256')
-                ->encodeAsBase64(true)
-                ->iterations(1)
-            ;
-
-            $security->passwordHasher('App\Entity\User')
-                // the new hasher, along with its options
-                ->algorithm('sodium')
-                ->migrateFrom([
-                    'bcrypt', // uses the "bcrypt" hasher with the default options
-                    'legacy', // uses the "legacy" hasher configured above
-                ])
-            ;
-        };
+        return App::config([
+            'security' => [
+                // ...
+                'password_hashers' => [
+                    // a hasher used in the past for some users
+                    'legacy' => [
+                        'algorithm' => 'sha256',
+                        'encode_as_base64' => false,
+                        'iterations' => 1,
+                    ],
+                    User::class => [
+                        // the new hasher, along with its options
+                        'algorithm' => 'sodium',
+                        'migrate_from' => [
+                            'bcrypt', // uses the "bcrypt" hasher with the default options
+                            'legacy', // uses the "legacy" hasher configured above
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -590,39 +534,22 @@ cost. This can be done with named hashers:
                     algorithm: auto
                     cost: 15
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd"
-        >
-
-            <config>
-                <!-- ... -->
-                <security:password-hasher class="harsh"
-                    algorithm="auto"
-                    cost="15"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
+        return App::config([
+            'security' => [
             // ...
-            $security->passwordHasher('harsh')
-                ->algorithm('auto')
-                ->cost(15)
-            ;
-        };
+                'password_hashers' => [
+                    'harsh' => [
+                        'algorithm' => 'auto',
+                        'cost' => 15,
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -687,38 +614,23 @@ you must register a service for it in order to use it as a named hasher:
                 App\Entity\User:
                     id: 'App\Security\Hasher\MyCustomPasswordHasher'
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd"
-        >
-
-            <config>
-                <!-- ... -->
-                <security:password_hasher class="App\Entity\User"
-                    id="App\Security\Hasher\MyCustomPasswordHasher"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\Hasher\MyCustomPasswordHasher;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->passwordHasher('App\Entity\User')
-                ->id(MyCustomPasswordHasher::class)
-            ;
-        };
+        use App\Security\Hasher\MyCustomPasswordHasher;
+
+        return App::config([
+            'security' => [
+                // ...
+                'password_hashers' => [
+                    'App\Entity\User' => [
+                        'id' => MyCustomPasswordHasher::class,
+                    ],
+                ],
+            ],
+        ]);
 
 This creates a hasher named ``App\Entity\User`` from a service with the ID
 ``App\Security\Hasher\MyCustomPasswordHasher``.
@@ -904,40 +816,24 @@ Now, define a password hasher using the ``id`` setting:
                     # the service ID of your custom hasher (the FQCN using the default services.yaml)
                     id: 'App\Security\Hasher\MyCustomPasswordHasher'
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd"
-        >
-
-            <config>
-                <!-- ... -->
-                <!-- id: the service ID of your custom hasher (the FQCN using the default services.yaml) -->
-                <security:password_hasher class="App\Entity\User"
-                    id="App\Security\Hasher\CustomVerySecureHasher"/>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\Hasher\CustomVerySecureHasher;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->passwordHasher('App\Entity\User')
-                // the service ID of your custom hasher (the FQCN using the default services.yaml)
-                ->id(CustomVerySecureHasher::class)
-            ;
-        };
+        use App\Security\Hasher\MyCustomPasswordHasher;
+
+        return App::config([
+            'security' => [
+                // ...
+                'password_hashers' => [
+                    'App\Entity\User' => [
+                        // the service ID of your custom hasher (the FQCN using the default services.yaml)
+                        'id' => MyCustomPasswordHasher::class,
+                    ],
+                ],
+            ],
+        ]);
 
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2

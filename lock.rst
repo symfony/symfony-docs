@@ -63,6 +63,7 @@ this behavior by using the ``lock`` key as follows:
             lock: 'zookeeper://localhost01,localhost02:2181'
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
+            lock: 'mysql+advisory:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
             lock: 'pgsql+advisory:host=127.0.0.1;dbname=app'
             lock: 'sqlsrv:server=127.0.0.1;Database=app'
@@ -73,99 +74,39 @@ this behavior by using the ``lock`` key as follows:
             # using an existing service
             lock: 'snc_redis.default'
 
-    .. code-block:: xml
-
-        <!-- config/packages/lock.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:lock>
-                    <framework:resource>flock</framework:resource>
-
-                    <framework:resource>flock:///path/to/file</framework:resource>
-
-                    <framework:resource>semaphore</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-
-                    <framework:resource>memcached://m1.docker</framework:resource>
-                    <framework:resource>memcached://m2.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-
-                    <framework:resource>redis://r1.docker</framework:resource>
-                    <framework:resource>redis://r2.docker</framework:resource>
-
-                    <framework:resource>rediss://r1.docker?ssl[verify_peer]=1&amp;ssl[cafile]=...</framework:resource>
-
-                    <framework:resource>zookeeper://z1.docker</framework:resource>
-
-                    <framework:resource>zookeeper://z1.docker,z2.docker</framework:resource>
-
-                    <framework:resource>zookeeper://localhost01,localhost02:2181</framework:resource>
-
-                    <framework:resource>sqlite:///%kernel.project_dir%/var/lock.db</framework:resource>
-
-                    <framework:resource>mysql:host=127.0.0.1;dbname=app</framework:resource>
-
-                    <framework:resource>pgsql:host=127.0.0.1;dbname=app</framework:resource>
-
-                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=app</framework:resource>
-
-                    <framework:resource>sqlsrv:server=127.0.0.1;Database=app</framework:resource>
-
-                    <framework:resource>oci:host=127.0.0.1;dbname=app</framework:resource>
-
-                    <framework:resource>mongodb://127.0.0.1/app?collection=lock</framework:resource>
-
-                    <framework:resource>dynamodb://127.0.0.1/lock</framework:resource>
-
-                    <framework:resource>%env(LOCK_DSN)%</framework:resource>
-
-                    <!-- using an existing service -->
-                    <framework:resource>snc_redis.default</framework:resource>
-                </framework:lock>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/lock.php
-        use Symfony\Config\FrameworkConfig;
-        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->lock()
-                ->resource('default', ['flock'])
-                ->resource('default', ['flock:///path/to/file'])
-                ->resource('default', ['semaphore'])
-                ->resource('default', ['memcached://m1.docker'])
-                ->resource('default', ['memcached://m1.docker', 'memcached://m2.docker'])
-                ->resource('default', ['redis://r1.docker'])
-                ->resource('default', ['redis://r1.docker', 'redis://r2.docker'])
-                ->resource('default', ['rediss://r1.docker?ssl[verify_peer]=1&ssl[cafile]=...'])
-                ->resource('default', ['zookeeper://z1.docker'])
-                ->resource('default', ['zookeeper://z1.docker,z2.docker'])
-                ->resource('default', ['zookeeper://localhost01,localhost02:2181'])
-                ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
-                ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
-                ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
-                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=app'])
-                ->resource('default', ['sqlsrv:server=127.0.0.1;Database=app'])
-                ->resource('default', ['oci:host=127.0.0.1;dbname=app'])
-                ->resource('default', ['mongodb://127.0.0.1/app?collection=lock'])
-                ->resource('default', ['dynamodb://127.0.0.1/lock'])
-                ->resource('default', [env('LOCK_DSN')])
+        return App::config([
+            'framework' => [
+                'lock' => null,
+                'lock' => 'flock',
+                'lock' => 'flock:///path/to/file',
+                'lock' => 'semaphore',
+                'lock' => 'memcached://m1.docker',
+                'lock' => 'memcached://m1.docker,memcached://m2.docker',
+                'lock' => 'redis://r1.docker',
+                'lock' => 'redis://r1.docker,redis://r2.docker',
+                'lock' => 'rediss://r1.docker?ssl[verify_peer]=1&ssl[cafile]=...',
+                'lock' => 'zookeeper://z1.docker',
+                'lock' => 'zookeeper://z1.docker,z2.docker',
+                'lock' => 'zookeeper://localhost01,localhost02:2181',
+                'lock' => 'sqlite:///%kernel.project_dir%/var/lock.db',
+                'lock' => 'mysql:host=127.0.0.1;dbname=app',
+                'lock' => 'mysql+advisory:host=127.0.0.1;dbname=app',
+                'lock' => 'pgsql:host=127.0.0.1;dbname=app',
+                'lock' => 'pgsql+advisory:host=127.0.0.1;dbname=app',
+                'lock' => 'sqlsrv:server=127.0.0.1;Database=app',
+                'lock' => 'oci:host=127.0.0.1;dbname=app',
+                'lock' => 'mongodb://127.0.0.1/app?collection=lock',
+                'lock' => 'dynamodb://127.0.0.1/lock',
+                'lock' => env('LOCK_DSN'),
                 // using an existing service
-                ->resource('default', ['snc_redis.default'])
-            ;
-        };
+                'lock' => 'snc_redis.default',
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -178,9 +119,16 @@ this behavior by using the ``lock`` key as follows:
         $store = new SemaphoreStore();
         $factory = new LockFactory($store);
 
-.. versionadded:: 7.2
+.. note::
 
-    The option to use an existing service as the lock/semaphore was introduced in Symfony 7.2.
+    The ``flock`` and ``semaphore`` stores are automatically scoped by
+    ``kernel.project_id``, preventing lock collisions between multiple
+    applications running on the same server.
+
+    .. versionadded:: 8.1
+
+        Automatic scoping of ``flock`` and ``semaphore`` stores was introduced
+        in Symfony 8.1.
 
 In addition to the default lock, Symfony applications can define several
 :ref:`named locks <lock-named-locks>` to use different stores for different
@@ -305,68 +253,28 @@ provides :ref:`named locks <reference-lock-resources-name>`:
                 invoice: ['semaphore', 'redis://r2.docker']
                 report: 'semaphore'
 
-    .. code-block:: xml
-
-        <!-- config/packages/lock.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:lock>
-                    <framework:resource name="invoice">semaphore</framework:resource>
-                    <framework:resource name="invoice">redis://r2.docker</framework:resource>
-                    <framework:resource name="report">semaphore</framework:resource>
-                </framework:lock>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/lock.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->lock()
-                ->resource('invoice', ['semaphore', 'redis://r2.docker'])
-                ->resource('report', ['semaphore'])
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'invoice' => ['semaphore', 'redis://r2.docker'],
+                    'report' => 'semaphore',
+                ],
+            ],
+        ]);
 
-After having configured one or more named locks, you have two ways of injecting
-them in any service or controller:
+After having configured one or more named locks, use the ``#[Target]``
+attribute to inject a specific lock factory in any service or controller.
+Symfony creates a target with the same name as the lock.
 
-**(1) Use a specific argument name**
+For example, to inject the ``invoice`` lock defined earlier::
 
-Type-hint your constructor/method argument with ``LockFactory`` and name the
-argument using this pattern: "lock name in camelCase" + ``LockFactory`` suffix.
-For example, to inject the ``invoice`` package defined earlier::
-
-    use Symfony\Component\Lock\LockFactory;
-
-    class SomeService
-    {
-        public function __construct(
-            private LockFactory $invoiceLockFactory
-        ) {
-            // ...
-        }
-    }
-
-**(2) Use the ``#[Target]`` attribute**
-
-When :ref:`dealing with multiple implementations of the same type <autowiring-multiple-implementations-same-type>`
-the ``#[Target]`` attribute helps you select which one to inject. Symfony creates
-a target with the same name as the lock.
-
-For example, to select the ``invoice`` lock defined earlier::
-
-    // ...
     use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Component\Lock\LockFactory;
 
     class SomeService
     {
@@ -376,11 +284,6 @@ For example, to select the ``invoice`` lock defined earlier::
             // ...
         }
     }
-
-.. versionadded:: 7.4
-
-    Before Symfony 7.4, the target name had to follow the ``lock.<lock-name>.factory``
-    pattern (e.g. ``#[Target('lock.invoice.factory')]``).
 
 Named locks are only available in Symfony applications. When using the Lock
 component as standalone, create a different ``LockFactory`` for each store
@@ -702,11 +605,6 @@ Locks can be serialized using both the native PHP serialization system
 and its :phpfunction:`serialize` function, or using the Serializer
 component.
 
-.. versionadded:: 7.4
-
-    The support for serializing locks with the Serializer component was
-    introduced in Symfony 7.4.
-
 .. _lock-stores:
 
 Available Stores
@@ -747,10 +645,6 @@ the lock to avoid stalled locks.
     * ``InMemoryStore`` (``LOCK_DSN=in-memory``), which saves locks in memory during a process;
     * ``NullStore`` (``LOCK_DSN=null``) which doesn't persist anything.
 
-.. versionadded:: 7.2
-
-    The :class:`Symfony\\Component\\Lock\\Store\\NullStore` was introduced in Symfony 7.2.
-
 The following sections show how to create each store when using the component
 as standalone. In Symfony applications, select the store to use with a DSN in
 the :ref:`lock configuration <lock-configuration>` shown earlier in this
@@ -771,6 +665,17 @@ when the PHP process ends)::
     // the argument is the path of the directory where the locks are created
     // if none is given, sys_get_temp_dir() is used internally.
     $store = new FlockStore('/var/stores');
+
+.. note::
+
+    When the Lock component is used in a full Symfony application, the ``FlockStore``
+    is automatically scoped to a project-specific subdirectory (based on ``kernel.project_id``)
+    to prevent lock collisions between multiple applications on the same server.
+
+.. versionadded:: 8.1
+
+    Automatic project-scoped lock directories for ``FlockStore`` were introduced
+    in Symfony 8.1.
 
 .. warning::
 
@@ -1058,10 +963,6 @@ implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster``, ``\Relay\Relay`
 
     $store = new RedisStore($redis);
 
-.. versionadded:: 7.3
-
-    Support for ``Relay\Cluster`` was introduced in Symfony 7.3.
-
 Redis stores its items in memory, so locks are not persisted and may disappear
 by mistake at any time. If the Redis service or the machine hosting it
 restarts, every lock is lost without notifying the running processes. To avoid
@@ -1086,6 +987,14 @@ The SemaphoreStore uses the `PHP semaphore functions`_ to create the locks::
     use Symfony\Component\Lock\Store\SemaphoreStore;
 
     $store = new SemaphoreStore();
+
+    // optionally, pass a project identifier to scope locks and avoid
+    // collisions between multiple applications on the same server
+    $store = new SemaphoreStore($projectId);
+
+.. versionadded:: 8.1
+
+    The ``$projectId`` parameter was introduced in Symfony 8.1.
 
 Semaphores are handled by the kernel, so all concurrent processes must run on
 the same machine, virtual machine or container. Be careful when updating a
@@ -1192,10 +1101,6 @@ The DynamoDbStore saves locks on an Amazon DynamoDB table. Install it by running
 .. code-block:: terminal
 
     $ composer require symfony/amazon-dynamo-db-lock
-
-.. versionadded:: 7.4
-
-    The ``DynamoDbStore`` was introduced in Symfony 7.4.
 
 It requires a `DynamoDbClient`_ instance or a `Data Source Name (DSN)`_::
 

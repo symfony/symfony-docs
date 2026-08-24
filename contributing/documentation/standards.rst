@@ -88,8 +88,8 @@ Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
 (and their orders) are:
 
-* **Configuration** (including services): YAML, XML, PHP
-* **Routing**: Attributes, YAML, XML, PHP
+* **Configuration** (including services): YAML, PHP
+* **Routing**: Attributes, YAML, PHP
 * **Validation**: Attributes, YAML, XML, PHP
 * **Doctrine Mapping**: Attributes, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP

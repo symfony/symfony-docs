@@ -22,10 +22,6 @@ The component supports:
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
 * **comments** - using ``/*`` and ``*/`` (e.g. ``/* this is a comment */``)
 
-.. versionadded:: 7.2
-
-    The support for comments inside expressions was introduced in Symfony 7.2.
-
 .. warning::
 
     A backslash (``\``) must be escaped by 3 backslashes (``\\\\``) in a string
@@ -116,6 +112,24 @@ operator)::
     $expressionLanguage->evaluate('fruit?.color', ['fruit' => '...'])
     $expressionLanguage->evaluate('fruit?.getStock()', ['fruit' => '...'])
 
+.. versionadded:: 8.1
+
+    The null-safe syntax for array access was introduced in Symfony 8.1.
+
+Use the ``?.[]`` syntax to safely access array elements when the array or object
+might be ``null``::
+
+    // this will throw an exception when `fruit.getItems()` is `null`
+    $expressionLanguage->evaluate('fruit.getItems()[0]', ['fruit' => '...'])
+
+    // this will return `null` if `fruit.getItems()` is `null`
+    $expressionLanguage->evaluate('fruit.getItems()?.[0]', ['fruit' => '...'])
+
+You can chain multiple null-safe operators for both object and array access::
+
+    // safely access nested arrays and methods
+    $expressionLanguage->evaluate('order?.getItems()?.[0]?.getName()', ['order' => '...'])
+
 .. _component-expression-null-coalescing-operator:
 
 Null-Coalescing Operator
@@ -128,11 +142,6 @@ returns the right-hand side. Expressions can chain multiple coalescing operators
 * ``foo.baz ?? 'no'``
 * ``foo[3] ?? 'no'``
 * ``foo.baz ?? foo['baz'] ?? 'no'``
-
-.. versionadded:: 7.2
-
-    Starting from Symfony 7.2, no exception is thrown when trying to access a
-    non-existent variable. This is the same behavior as the `null-coalescing operator in PHP`_.
 
 .. _component-expression-functions:
 
@@ -147,6 +156,7 @@ following functions by default:
 * ``enum()``
 * ``min()``
 * ``max()``
+* ``count()``
 
 ``constant()`` function
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -228,9 +238,22 @@ PHP function to find the highest value::
 
 This will print out ``3``.
 
-.. versionadded:: 7.1
+``count()`` function
+~~~~~~~~~~~~~~~~~~~~
 
-    The ``min()`` and ``max()`` functions were introduced in Symfony 7.1.
+This function will return the number of elements of the given array or
+``Countable`` object. Internally it uses the :phpfunction:`count` PHP
+function::
+
+    var_dump($expressionLanguage->evaluate(
+        'count([1, 2, 3])'
+    ));
+
+This will print out ``3``.
+
+.. versionadded:: 8.2
+
+    The ``count()`` function was introduced in Symfony 8.2.
 
 .. tip::
 
@@ -294,11 +317,6 @@ Bitwise Operators
 * ``<<`` (left shift)
 * ``>>`` (right shift)
 
-.. versionadded:: 7.2
-
-    Support for the ``~``, ``<<`` and ``>>`` bitwise operators was introduced
-    in Symfony 7.2.
-
 Comparison Operators
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -352,10 +370,6 @@ Logical Operators
 * ``and`` or ``&&``
 * ``or`` or ``||``
 * ``xor``
-
-.. versionadded:: 7.2
-
-    Support for the ``xor`` logical operator was introduced in Symfony 7.2.
 
 For example::
 
@@ -513,5 +527,3 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :ref:`Variables available in service container expressions <services-expressions>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
-
-.. _`null-coalescing operator in PHP`: https://www.php.net/manual/en/language.operators.comparison.php#language.operators.comparison.coalesce

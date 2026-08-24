@@ -99,35 +99,20 @@ You can configure the global options using the ``default_options`` option:
                 default_options:
                     max_redirects: 7
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:default-options max-redirects="7"/>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()
-                ->defaultOptions()
-                    ->maxRedirects(7)
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'default_options' => [
+                        'max_redirects' => 7,
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -148,7 +133,7 @@ Alternatively, the :class:`Symfony\\Component\\HttpClient\\HttpOptions` class
 brings most of the available options with type-hinted getters and setters::
 
     $this->client = $client->withOptions(
-        (new HttpOptions())
+        new HttpOptions()
             ->setBaseUri('https://...')
             // replaces *all* headers at once, and deletes the headers you do not provide
             ->setHeaders(['header-name' => 'header-value'])
@@ -156,11 +141,6 @@ brings most of the available options with type-hinted getters and setters::
             ->setHeader('another-header-name', 'another-header-value')
             ->toArray()
     );
-
-.. versionadded:: 7.1
-
-    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::setHeader`
-    method was introduced in Symfony 7.1.
 
 Some options are described in this guide:
 
@@ -189,35 +169,18 @@ This option cannot be overridden per request:
                 max_host_connections: 10
                 # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client max-host-connections="10">
-                    <!-- ... -->
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()
-                ->maxHostConnections(10)
-                // ...
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'max_host_connections' => 10,
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -257,62 +220,37 @@ autoconfigure the HTTP client based on the requested URL:
                             Authorization: 'token %env(GITHUB_API_TOKEN)%'
                         # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <!-- only requests matching scope will use these options -->
-                    <framework:scoped-client name="github.client"
-                        scope="https://api\.github\.com"
-                    >
-                        <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
-                        <framework:header name="Authorization">token %env(GITHUB_API_TOKEN)%</framework:header>
-                    </framework:scoped-client>
-
-                    <!-- using base-uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
-                         will default to these options -->
-                    <framework:scoped-client name="github.client"
-                        base-uri="https://api.github.com"
-                    >
-                        <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
-                        <framework:header name="Authorization">token %env(GITHUB_API_TOKEN)%</framework:header>
-                    </framework:scoped-client>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // only requests matching scope will use these options
-            $framework->httpClient()->scopedClient('github.client')
-                ->scope('https://api\.github\.com')
-                ->header('Accept', 'application/vnd.github.v3+json')
-                ->header('Authorization', 'token %env(GITHUB_API_TOKEN)%')
-                // ...
-            ;
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        // only requests matching scope will use these options
+                        'github.client' => [
+                            'scope' => 'https://api\.github\.com',
+                            'headers' => [
+                                'Accept' => 'application/vnd.github.v3+json',
+                                'Authorization' => 'token %env(GITHUB_API_TOKEN)%',
+                            ],
+                        ],
 
-            // using base_url, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
-            // will default to these options
-            $framework->httpClient()->scopedClient('github.client')
-                ->baseUri('https://api.github.com')
-                ->header('Accept', 'application/vnd.github.v3+json')
-                ->header('Authorization', 'token %env(GITHUB_API_TOKEN)%')
-                // ...
-            ;
-        };
+                        // using base_uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
+                        // will default to these options
+                        'github.client' => [
+                            'base_uri' => 'https://api.github.com',
+                            'headers' => [
+                                'Accept' => 'application/vnd.github.v3+json',
+                                'Authorization' => 'token %env(GITHUB_API_TOKEN)%',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -427,51 +365,31 @@ each request (which overrides any global authentication):
                         # Microsoft NTLM authentication
                         auth_ntlm: 'the-username:the-password'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <!-- Available authentication options:
-                         auth-basic: HTTP Basic authentication
-                         auth-bearer: HTTP Bearer authentication (also called token authentication)
-                         auth-ntlm: Microsoft NTLM authentication -->
-                    <framework:scoped-client name="example_api"
-                        base-uri="https://example.com/"
-                        auth-basic="the-username:the-password"
-                        auth-bearer="the-bearer-token"
-                        auth-ntlm="the-username:the-password"
-                    />
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()->scopedClient('example_api')
-                ->baseUri('https://example.com/')
-                // HTTP Basic authentication
-                ->authBasic('the-username:the-password')
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'example_api' => [
+                            'base_uri' => 'https://example.com/',
 
-                // HTTP Bearer authentication (also called token authentication)
-                ->authBearer('the-bearer-token')
+                            // HTTP Basic authentication
+                            'auth_basic' => 'the-username:the-password',
 
-                // Microsoft NTLM authentication
-                ->authNtlm('the-username:the-password')
-            ;
-        };
+                            // HTTP Bearer authentication (also called token authentication)
+                            'auth_bearer' => 'the-bearer-token',
+
+                            // Microsoft NTLM authentication
+                            'auth_ntlm' => 'the-username:the-password',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -541,37 +459,22 @@ Use the ``headers`` option to define the default headers added to all requests:
                     headers:
                         'User-Agent': 'My Fancy App'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:default-options>
-                        <framework:header name="User-Agent">My Fancy App</framework:header>
-                    </framework:default-options>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()
-                ->defaultOptions()
-                    ->header('User-Agent', 'My Fancy App')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'default_options' => [
+                        'headers' => [
+                            'User-Agent' => 'My Fancy App',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -897,6 +800,21 @@ ensure local networks are made inaccessible to the HTTP client::
     // but all the other requests, including other internal networks, will be allowed
     $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
 
+    // the third optional argument is an allow list of IPs or CIDR subnets
+    // that can still be reached even when they belong to one of the blocked
+    // networks. This is useful to allow specific private hosts (e.g. a proxy)
+    // while keeping the rest of the private network blocked
+    $client = new NoPrivateNetworkHttpClient(
+        HttpClient::create(),
+        null,           // null = use the default private subnets
+        '10.0.0.42',    // also accepts an array of IPs/CIDR subnets
+    );
+
+.. versionadded:: 8.1
+
+    The ``$allowList`` argument of ``NoPrivateNetworkHttpClient`` was
+    introduced in Symfony 8.1.
+
 Profiling
 ~~~~~~~~~
 
@@ -958,37 +876,22 @@ of your application:
                     vars:
                         - secret: 'secret-token'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:default-options>
-                        <framework:vars name="secret">secret-token</framework:vars>
-                    </framework:default-options>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework) {
-            $framework->httpClient()
-                ->defaultOptions()
-                    ->vars(['secret' => 'secret-token'])
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'default_options' => [
+                        'vars' => [
+                            'secret' => 'secret-token',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 If you want to define your own logic to handle variables of URI templates, you
 can do so by redefining the ``http_client.uri_template_expander`` alias. Your
@@ -1008,9 +911,13 @@ Enabling cURL Support
 ~~~~~~~~~~~~~~~~~~~~~
 
 This component can make HTTP requests using native PHP streams and the
-``amphp/http-client`` and cURL libraries. Although they are interchangeable and
-provide the same features, including concurrent requests, HTTP/2 is only supported
-when using cURL or ``amphp/http-client``.
+``amphp/http-client`` (version 5.3.2 or higher) and cURL libraries. Although they
+are interchangeable and provide the same features, including concurrent requests,
+HTTP/2 is only supported when using cURL or ``amphp/http-client``.
+
+.. versionadded:: 8.0
+
+    Symfony started requiring ``amphp/http-client`` version 5.3.2 or higher in Symfony 8.0.
 
 .. note::
 
@@ -1069,6 +976,32 @@ Add an ``extra.curl`` option in your configuration to pass those extra options::
     Some cURL options are impossible to override (e.g. because of thread safety)
     and you'll get an exception when trying to override them.
 
+Persistent cURL Connections
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Support for persistent cURL connections was introduced in Symfony 8.1.
+
+Persistent connections can be enabled using the ``extra.use_persistent_connections``
+option::
+
+    use Symfony\Component\HttpClient\CurlHttpClient;
+
+    $client = new CurlHttpClient([
+        'extra' => [
+            'use_persistent_connections' => true,
+        ],
+    ]);
+
+When enabled, the DNS cache, SSL sessions and connection data can be reused across
+requests, reducing connection overhead. When disabled (default), non-persistent
+cURL handles are used.
+
+.. note::
+
+    Using persistent cURL connections requires running PHP 8.5 or later.
+
 HTTP Compression
 ~~~~~~~~~~~~~~~~
 
@@ -1110,35 +1043,20 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
                 default_options:
                     http_version: '2.0'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:default-options http-version="2.0"/>
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()
-                ->defaultOptions()
-                    ->httpVersion('2.0')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'default_options' => [
+                        'http_version' => '2.0',
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -1435,6 +1353,22 @@ response and get remaining contents that might come back in a new timeout, etc.
 
     Use the ``max_duration`` option to limit the time a full request/response can last.
 
+    To specifically limit the time spent establishing the connection (DNS resolution,
+    TCP connection and TLS handshake), use the ``max_connect_duration`` option::
+
+        $response = $client->request('GET', 'https://...', [
+            // fail fast if the connection cannot be established quickly
+            'max_connect_duration' => 0.5,
+            'timeout' => 10,
+        ]);
+
+    A value lower than or equal to ``0`` means unlimited, as long as the ``timeout``
+    option is respected.
+
+    .. versionadded:: 8.1
+
+        The ``max_connect_duration`` was introduced in Symfony 8.1.
+
 .. _http-client_network-errors:
 
 Dealing with Network Errors
@@ -1528,54 +1462,33 @@ so the :doc:`Cache component </cache>` must be installed in your application.
                         adapter: cache.adapter.redis_tag_aware
                         tags: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:scoped-client name="example.client"
-                        base-uri="https://example.com"
-                    >
-                        <framework:caching cache-pool="example_cache_pool"/>
-                    </framework:scoped-client>
-                </framework:http-client>
-
-                <framework:cache>
-                    <framework:pool name="example_cache_pool"
-                        adapter="cache.adapter.redis_tag_aware"
-                        tags="true"
-                    />
-                </framework:cache>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()->scopedClient('example.client')
-                ->baseUri('https://example.com')
-                ->caching()
-                    ->cachePool('example_cache_pool')
-                // ...
-            ;
-
-            $framework->cache()
-                ->pool('example_cache_pool')
-                    ->adapter('cache.adapter.redis_tag_aware')
-                    ->tags(true)
-                ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'example.client' => [
+                            'base_uri' => 'https://example.com',
+                            'caching' => [
+                                'cache_pool' => 'example_cache_pool'
+                            ]
+                        ],
+                    ],
+                ],
+                'cache' => [
+                    'pools' => [
+                        'example_cache_pool' => [
+                            'adapter' => 'cache.adapter.redis_tag_aware',
+                            'tags' => true
+                        ]
+                    ]
+                ]
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -1588,17 +1501,75 @@ so the :doc:`Cache component </cache>` must be installed in your application.
         $client = HttpClient::createForBaseUri('https://example.com');
         $cachingClient = new CachingHttpClient($client, $cache);
 
+By default, cached responses are limited to a maximum TTL of 86,400 seconds
+(24 hours). This prevents cache items from living forever when the origin
+server does not send explicit cache control directives.
+
+You can customize this value using the ``max_ttl`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    example.client:
+                        base_uri: 'https://example.com'
+                        caching:
+                            max_ttl: 3600
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'example.client' => [
+                            'base_uri' => 'https://example.com',
+                            'caching' => [
+                                'max_ttl' => 3600
+                            ]
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $cachingClient = new CachingHttpClient($client, $cache, maxTtl: 3600);
+
+.. deprecated:: 8.1
+
+    Setting ``max_ttl`` to ``null`` is deprecated since Symfony 8.1. Use a
+    positive integer instead.
+
 .. tip::
 
     It is strongly recommended to configure a
     :ref:`retry strategy <http-client-retry-failed-requests>` to gracefully
     handle temporary cache inconsistencies or validation failures.
 
-.. versionadded:: 7.4
+When a request fails (because of a network error, a timeout, or a 5xx
+response), ``CachingHttpClient`` can serve a stale cached response instead,
+as allowed by the ``stale-if-error`` cache directive. Each time this fallback
+happens, the client logs an ``info`` message on the ``http_client`` channel,
+so you can detect unhealthy servers before the stale period expires and
+errors start reaching your users.
 
-    In Symfony 7.4, caching was refactored to comply with `RFC 9111`_ and to
-    leverage the :doc:`Cache component </cache>`. In previous versions,
-    it relied on ``HttpCache`` from the HttpKernel component.
+``CachingHttpClient`` implements ``Psr\Log\LoggerAwareInterface``. When using
+the full-stack framework, the logger is injected automatically; when using
+the component standalone, call the ``setLogger()`` method to define it.
+
+.. versionadded:: 8.1
+
+    Logging of ``stale-if-error`` fallbacks in ``CachingHttpClient`` was
+    introduced in Symfony 8.1.
 
 Limit the Number of Requests
 ----------------------------
@@ -1631,59 +1602,31 @@ installed in your application::
                     limit: 10
                     rate: { interval: '5 seconds', amount: 10 }
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <framework:scoped-client name="example.client"
-                        base-uri="https://example.com"
-                        rate-limiter="http_example_limiter"
-                    />
-                </framework:http-client>
-
-                <framework:rate-limiter>
-                    <!-- Don't send more than 10 requests in 5 seconds -->
-                    <framework:limiter name="http_example_limiter"
-                        policy="token_bucket"
-                        limit="10"
-                    >
-                        <framework:rate interval="5 seconds" amount="10"/>
-                    </framework:limiter>
-                </framework:rate-limiter>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()->scopedClient('example.client')
-                ->baseUri('https://example.com')
-                ->rateLimiter('http_example_limiter');
-                // ...
-            ;
-
-            $framework->rateLimiter()
-                // Don't send more than 10 requests in 5 seconds
-                ->limiter('http_example_limiter')
-                    ->policy('token_bucket')
-                    ->limit(10)
-                    ->rate()
-                        ->interval('5 seconds')
-                        ->amount(10)
-                ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'example.client' => [
+                            'base_uri' => 'https://example.com',
+                            'rate_limiter' => 'http_example_limiter',
+                        ],
+                    ],
+                    'rate_limiter' => [
+                        // Don't send more than 10 requests in 5 seconds
+                        'http_example_limiter' => [
+                            'policy' => 'token_bucket',
+                            'limit' => 10,
+                            'rate' => ['interval' => '5 seconds', 'amount' => 10],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -1703,10 +1646,79 @@ installed in your application::
         $client = HttpClient::createForBaseUri('https://example.com');
         $throttlingClient = new ThrottlingHttpClient($client, $limiter);
 
-.. versionadded:: 7.1
+Using a Custom DNS Resolver
+---------------------------
 
-    The :class:`Symfony\\Component\\HttpClient\\ThrottlingHttpClient` was
-    introduced in Symfony 7.1.
+.. versionadded:: 8.1
+
+    Support for custom DNS resolvers in the HTTP client was introduced in Symfony 8.1.
+
+The :class:`Symfony\\Component\\HttpClient\\DnsResolvingHttpClient` decorator
+lets you replace the default DNS lookup with a callable of your own. It applies
+to the initial request and to every redirect that follows.
+
+This is useful for enforcing custom routing rules, debugging, caching lookups,
+or adding logging and metrics around name resolution.
+
+Start by writing an invokable service that maps a hostname to an IP
+address (return ``null`` to signal a lookup failure)::
+
+    namespace App\Service;
+
+    class MyCustomDnsResolver
+    {
+        public function __invoke(string $hostname): ?string
+        {
+            // implement your resolution logic (with caching, logging, etc.)
+
+            return $ip; // or null if resolution failed
+        }
+    }
+
+Then register the decorator in the service container:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # Example 1: decorate CurlHttpClient directly
+            Symfony\Component\HttpClient\DnsResolvingHttpClient:
+                decorates: Symfony\Component\HttpClient\CurlHttpClient
+                arguments:
+                    $resolver: !closure '@App\Service\MyCustomDnsResolver'
+
+            Symfony\Contracts\HttpClient\HttpClientInterface: '@Symfony\Component\HttpClient\DnsResolvingHttpClient'
+
+            # Example 2: combine with NoPrivateNetworkHttpClient
+            Symfony\Component\HttpClient\CurlHttpClient: ~
+
+            Symfony\Component\HttpClient\NoPrivateNetworkHttpClient:
+                decorates: Symfony\Component\HttpClient\CurlHttpClient
+
+            Symfony\Component\HttpClient\DnsResolvingHttpClient:
+                decorates: Symfony\Component\HttpClient\NoPrivateNetworkHttpClient
+                arguments:
+                    $resolver: !closure '@App\Service\MyCustomDnsResolver'
+
+            Symfony\Contracts\HttpClient\HttpClientInterface: '@Symfony\Component\HttpClient\DnsResolvingHttpClient'
+
+    .. code-block:: php-standalone
+
+        use App\Service\MyCustomDnsResolver;
+        use Symfony\Component\HttpClient\DnsResolvingHttpClient;
+        use Symfony\Component\HttpClient\HttpClient;
+        use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
+
+        // Example 1: wrap the default client
+        $client = HttpClient::create();
+        $dnsResolvingClient = new DnsResolvingHttpClient($client, new MyCustomDnsResolver());
+
+        // Example 2: combine with NoPrivateNetworkHttpClient
+        $client = HttpClient::create();
+        $secureClient = new NoPrivateNetworkHttpClient($client);
+        $dnsResolvingClient = new DnsResolvingHttpClient($secureClient, new MyCustomDnsResolver());
 
 Consuming Server-Sent Events
 ----------------------------
@@ -1765,8 +1777,8 @@ to wrap your HTTP client, open a connection to a server that responds with a
 Interoperability
 ----------------
 
-The component is interoperable with four different abstractions for HTTP
-clients: `Symfony Contracts`_, `PSR-18`_, `HTTPlug`_ v1/v2 and native PHP streams.
+The component is interoperable with five different abstractions for HTTP
+clients: `Symfony Contracts`_, `PSR-18`_, `HTTPlug`_ v1/v2, `Guzzle`_ and native PHP streams.
 If your application uses libraries that need any of them, the component is compatible
 with all of them. They also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
 when the :doc:`framework bundle </reference/configuration/framework>` is used.
@@ -1867,7 +1879,7 @@ You can also pass a set of default options to your client thanks to the
 
     use Symfony\Component\HttpClient\Psr18Client;
 
-    $client = (new Psr18Client())
+    $client = new Psr18Client()
         ->withOptions([
             'base_uri' => 'https://symfony.com',
             'headers' => [
@@ -1884,7 +1896,7 @@ You can also pass a set of default options to your client thanks to the
 You can use the ``auto_upgrade_http_version`` option to control whether the HTTP
 protocol version is automatically upgraded::
 
-    $client = (new Psr18Client())
+    $client = new Psr18Client()
         ->withOptions([
             // set to false to always use the HTTP version defined in your request;
             // set to true to allow the server to upgrade the HTTP version in its response
@@ -1896,10 +1908,6 @@ protocol version is automatically upgraded::
 
     The ``auto_upgrade_http_version`` option is ignored for HTTP/1.0 requests,
     which always keep that protocol version.
-
-.. versionadded:: 7.4
-
-    The ``auto_upgrade_http_version`` option was introduced in Symfony 7.4.
 
 HTTPlug
 ~~~~~~~
@@ -1994,7 +2002,7 @@ You can also pass a set of default options to your client thanks to the
     use Psr\Http\Message\ResponseInterface;
     use Symfony\Component\HttpClient\HttplugClient;
 
-    $httpClient = (new HttplugClient())
+    $httpClient = new HttplugClient()
         ->withOptions([
             'base_uri' => 'https://my.api.com',
         ]);
@@ -2005,6 +2013,90 @@ You can also pass a set of default options to your client thanks to the
 
 See the :ref:`auto_upgrade_http_version <auto-upgrade-http-version>` option for
 details about how the HTTP protocol version selection works.
+
+Guzzle
+~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``GuzzleHttpHandler`` class was introduced in Symfony 8.1.
+
+Many third-party SDKs are tightly coupled to `Guzzle`_. The
+:class:`Symfony\\Component\\HttpClient\\GuzzleHttpHandler` replaces Guzzle's
+transport layer with Symfony's HttpClient, giving you access to features such
+as HTTP/2, retry, tracing, scoping and mocking for every request made through
+these SDKs.
+
+.. code-block:: terminal
+
+    $ composer require guzzlehttp/guzzle
+
+Once installed, create a handler and pass it to Guzzle::
+
+    use GuzzleHttp\Client;
+    use Symfony\Component\HttpClient\GuzzleHttpHandler;
+
+    $guzzle = new Client(['handler' => new GuzzleHttpHandler()]);
+
+    $response = $guzzle->request('GET', 'https://symfony.com/versions.json');
+
+When using the Symfony framework, you can register the handler as a service
+and inject any :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`
+(including scoped clients) into it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            GuzzleHttp\Client:
+                arguments:
+                    - handler: !service { class: Symfony\Component\HttpClient\GuzzleHttpHandler }
+            GuzzleHttp\ClientInterface: '@GuzzleHttp\Client'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use GuzzleHttp\Client;
+        use GuzzleHttp\ClientInterface;
+        use Symfony\Component\HttpClient\GuzzleHttpHandler;
+
+        return function (ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(Client::class)
+                ->args([['handler' => inline_service(GuzzleHttpHandler::class)]]);
+
+            $services->alias(ClientInterface::class, Client::class);
+        };
+
+The handler also provides two methods for controlling the event loop when
+sending concurrent requests::
+
+    use GuzzleHttp\Client;
+    use Symfony\Component\HttpClient\GuzzleHttpHandler;
+
+    $handler = new GuzzleHttpHandler();
+    $guzzle = new Client(['handler' => $handler]);
+
+    // queue several async requests
+    $promises = [
+        $guzzle->requestAsync('GET', 'https://example.com/api/users'),
+        $guzzle->requestAsync('GET', 'https://example.com/api/posts'),
+    ];
+
+    // process a single batch of I/O without blocking
+    $handler->tick();
+
+    // or block until all pending requests are complete
+    $handler->execute();
+
+The ``tick()`` method processes a single batch of network activity and Guzzle
+callbacks. This is useful when integrating with an existing event loop. The
+``execute()`` method blocks until every pending request has completed.
 
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
@@ -2182,11 +2274,6 @@ snapshots in files::
 
     $response = MockResponse::fromFile('tests/fixtures/response.xml');
 
-.. versionadded:: 7.1
-
-    The :method:`Symfony\\Component\\HttpClient\\Response\\MockResponse::fromFile`
-    method was introduced in Symfony 7.1.
-
 Another way of using :class:`Symfony\\Component\\HttpClient\\MockHttpClient` is to
 pass a callback that generates the responses dynamically when it's called::
 
@@ -2291,55 +2378,79 @@ Then configure Symfony to use your callback:
 
     .. code-block:: yaml
 
-        # config/services_test.yaml
-        services:
-            # ...
-            App\Tests\MockClientCallback: ~
-
-        # config/packages/test/framework.yaml
-        framework:
-            http_client:
-                mock_response_factory: App\Tests\MockClientCallback
-
-    .. code-block:: xml
-
-        <!-- config/services_test.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
-            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Tests\MockClientCallback"/>
-            </services>
-        </container>
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client mock-response-factory="App\Tests\MockClientCallback">
-                    <!-- ... -->
-                </framework-http-client>
-            </framework:config>
-        </container>
+        # config/packages/framework.yaml
+        when@test:
+            framework:
+                http_client:
+                    mock_response_factory: App\Tests\MockClientCallback
 
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()
-                ->mockResponseFactory(MockClientCallback::class)
-            ;
-        };
+        use App\Tests\MockClientCallback;
+
+        return App::config([
+            'when@test' => 'framework' => [
+                'http_client' => [
+                    'mock_response_factory' => MockClientCallback::class,
+                ],
+            ],
+        ]);
+
+You can also set ``mock_response_factory`` to ``true`` to replace all HTTP
+clients with a ``MockHttpClient`` that returns empty ``200`` responses. When
+``mock_response_factory`` is set at the ``http_client`` level, all scoped
+clients inherit it. You can override this per scoped client: set it to ``false``
+to disable mocking for a specific client, to ``true`` to use an empty
+``MockHttpClient``, or to a different service ID:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/test/framework.yaml
+        framework:
+            http_client:
+                mock_response_factory: true
+                scoped_clients:
+                    my_api.client:
+                        base_uri: 'https://my-api.com'
+                        mock_response_factory: App\Tests\MyApiMockClientCallback
+                    not_mocked.client:
+                        base_uri: 'https://example.com'
+                        mock_response_factory: false
+
+    .. code-block:: php
+
+        // config/packages/test/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Tests\MyApiMockClientCallback;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'mock_response_factory' => true,
+                    'scoped_clients' => [
+                        'my_api.client' => [
+                            'base_uri' => 'https://my-api.com',
+                            'mock_response_factory' => MyApiMockClientCallback::class,
+                        ],
+                        'not_mocked.client' => [
+                            'base_uri' => 'https://example.com',
+                            'mock_response_factory' => false,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.1
+
+    Support for setting ``mock_response_factory`` per scoped HTTP client
+    and the ``true``/``false`` values were introduced in Symfony 8.1.
 
 To return json, you would normally do::
 
@@ -2368,11 +2479,6 @@ directly from a file::
     use Symfony\Component\HttpClient\Response\JsonMockResponse;
 
     $response = JsonMockResponse::fromFile('tests/fixtures/response.json');
-
-.. versionadded:: 7.1
-
-    The :method:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse::fromFile`
-    method was introduced in Symfony 7.1.
 
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -2599,6 +2705,7 @@ The following example code illustrates all three options::
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
 .. _`HTTPlug`: https://github.com/php-http/httplug/#readme
+.. _`Guzzle`: https://github.com/guzzle/guzzle
 .. _`Symfony Contracts`: https://github.com/symfony/contracts
 .. _`libcurl`: https://curl.haxx.se/libcurl/
 .. _`amphp/http-client`: https://packagist.org/packages/amphp/http-client

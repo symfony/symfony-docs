@@ -116,9 +116,9 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
     .. code-block:: php
 
         // translations/validators/validators.en.php
-        return [
+        return App::config([
             'author.name.not_blank' => 'Please enter an author name.',
-        ];
+        ]);
 
 You may need to clear your cache (even in the dev environment) after creating
 this file for the first time.
@@ -169,37 +169,18 @@ The default translation domain can be changed globally using the
             validation:
                 translation_domain: validation_errors
 
-    .. code-block:: xml
-
-        <!-- config/packages/validator.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:validation
-                    translation-domain="validation_errors"
-                />
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/validator.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework) {
-            // ...
-            $framework
-                ->validation()
-                    ->translationDomain('validation_errors')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'validation' => [
+                    'translation_domain' => 'validation_errors',
+                ],
+            ],
+        ]);
 
 Or it can be customized for a specific violation from a constraint validator::
 

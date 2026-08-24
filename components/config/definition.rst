@@ -92,10 +92,6 @@ reflect the real structure of the configuration values::
         ->end()
     ;
 
-.. versionadded:: 7.2
-
-    The ``stringNode()`` method was introduced in Symfony 7.2.
-
 The root node itself is an array node, and has children, like the boolean
 node ``auto_connect`` and the scalar node ``default_connection``. In general:
 after defining a node, a call to ``end()`` takes you one step up in the
@@ -119,10 +115,6 @@ node definition. Node types are available for:
 
 and are created with ``node($name, $type)`` or their associated shortcut
 ``xxxxNode($name)`` method.
-
-.. versionadded:: 7.2
-
-    Support for the ``string`` type was introduced in Symfony 7.2.
 
 Numeric Node Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -200,10 +192,6 @@ the cases of the enum::
 
 When using a backed enum, the values provided to the node will be cast
 to one of the enum cases if possible.
-
-.. versionadded:: 7.3
-
-    The ``enumFqcn()`` method was introduced in Symfony 7.3.
 
 Array Nodes
 ~~~~~~~~~~~
@@ -301,10 +289,6 @@ Before defining the children of an array node, you can provide options like:
         # Both configurations are valid:
         connections: ['mysql', 'sqlite']
         connections: 'mysql'  # automatically wrapped as ['mysql']
-
-    .. versionadded:: 7.4
-
-        The ``acceptAndWrap()`` method was introduced in Symfony 7.4.
 
 A basic prototyped array configuration can be defined as follows::
 
@@ -592,10 +576,6 @@ A few placeholders are available to customize the URL:
 The placeholders will be replaced when printing the configuration tree with the
 ``config:dump-reference`` command.
 
-.. versionadded:: 7.3
-
-    The ``docUrl()`` method was introduced in Symfony 7.3.
-
 Optional Sections
 -----------------
 
@@ -740,6 +720,45 @@ The example results in the following:
             </connection>
         </database>
 
+The ``append()`` method takes a single node definition. To append a flat block
+of several sibling nodes without breaking the fluent chain, use
+``appendFromCallback()`` instead. The callback receives the current
+:class:`Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder` and
+declares the nodes on it; they are appended in the order the callback defines
+them::
+
+    use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+
+    public function getConfigTreeBuilder(): TreeBuilder
+    {
+        $treeBuilder = new TreeBuilder('database');
+
+        $treeBuilder->getRootNode()
+            ->children()
+                ->arrayNode('connection')
+                    ->children()
+                        ->scalarNode('driver')->end()
+                        ->appendFromCallback($this->addCommonOptions(...))
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+        return $treeBuilder;
+    }
+
+    public function addCommonOptions(NodeBuilder $builder): void
+    {
+        $builder
+            ->integerNode('max_redirects')->end()
+            ->scalarNode('http_version')->end()
+        ;
+    }
+
+.. versionadded:: 8.2
+
+    The ``appendFromCallback()`` method was introduced in Symfony 8.2.
+
 .. _component-config-normalization:
 
 Normalization
@@ -786,12 +805,6 @@ of the option name using the second argument of the ``arrayNode()`` method::
             ->end()
         ->end()
     ;
-
-.. versionadded:: 7.4
-
-    The second argument of ``arrayNode()`` was introduced in Symfony 7.4. In prior
-    Symfony versions, you had to define the singular variant using the ``fixXmlConfig()``
-    method on the root node (``$rootNode->fixXmlConfig('extension')``).
 
 This ensures that single XML elements are still turned into an array. So you may have:
 
@@ -893,10 +906,6 @@ A validation rule also requires a "then" part:
 
 Usually, "then" is a closure. Its return value will be used as a new value
 for the node, instead of the node's original value.
-
-.. versionadded:: 7.3
-
-    The ``ifFalse()`` method was introduced in Symfony 7.3.
 
 Configuring the Node Path Separator
 -----------------------------------

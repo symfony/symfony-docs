@@ -39,37 +39,24 @@ digital signature, etc.).
                     access_token:
                         token_handler: App\Security\AccessTokenHandler
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token token-handler="App\Security\AccessTokenHandler"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\AccessTokenHandler;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler(AccessTokenHandler::class)
-            ;
-        };
+        use App\Security\AccessTokenHandler;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => AccessTokenHandler::class,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 This handler must implement
 :class:`Symfony\\Component\\Security\\Http\\AccessToken\\AccessTokenHandlerInterface`::
@@ -163,50 +150,31 @@ You can also create a custom extractor. The class must implement
                         # or provide the service ID of a custom extractor
                         token_extractors: 'App\Security\CustomTokenExtractor'
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token token-handler="App\Security\AccessTokenHandler">
-                        <!-- use a different built-in extractor -->
-                        <token-extractor>request_body</token-extractor>
-
-                        <!-- or provide the service ID of a custom extractor -->
-                        <token-extractor>App\Security\CustomTokenExtractor</token-extractor>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Security\AccessTokenHandler;
         use App\Security\CustomTokenExtractor;
-        use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler(AccessTokenHandler::class)
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => AccessTokenHandler::class,
 
-                    // use a different built-in extractor
-                    ->tokenExtractors('request_body')
+                            // use a different built-in extractor
+                            'token_extractors' => 'request_body',
 
-                    # or provide the service ID of a custom extractor
-                    ->tokenExtractors(CustomTokenExtractor::class)
-            ;
-        };
+                            // or provide the service ID of a custom extractor
+                            'token_extractors' => CustomTokenExtractor::class,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 It is possible to set multiple extractors. In this case, **the order is
 important**: the first in the list is called first.
@@ -225,45 +193,29 @@ important**: the first in the list is called first.
                             - 'header'
                             - 'App\Security\CustomTokenExtractor'
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token token-handler="App\Security\AccessTokenHandler">
-                        <token-extractor>header</token-extractor>
-                        <token-extractor>App\Security\CustomTokenExtractor</token-extractor>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Security\AccessTokenHandler;
         use App\Security\CustomTokenExtractor;
-        use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler(AccessTokenHandler::class)
-                    ->tokenExtractors([
-                        'header',
-                        CustomTokenExtractor::class,
-                    ])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => AccessTokenHandler::class,
+                            'token_extractors' => [
+                                'header',
+                                CustomTokenExtractor::class,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 3) Submit a Request
 ~~~~~~~~~~~~~~~~~~~
@@ -300,41 +252,26 @@ and configure the service ID as the ``success_handler``:
                         token_handler: App\Security\AccessTokenHandler
                         success_handler: App\Security\Authentication\AuthenticationSuccessHandler
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token token-handler="App\Security\AccessTokenHandler"
-                        success-handler="App\Security\Authentication\AuthenticationSuccessHandler"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Security\AccessTokenHandler;
         use App\Security\Authentication\AuthenticationSuccessHandler;
-        use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler(AccessTokenHandler::class)
-                    ->successHandler(AuthenticationSuccessHandler::class)
-            ;
-        };
+        return App::config([
+            'security' => [
+            'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => AccessTokenHandler::class,
+                            'success_handler' => AuthenticationSuccessHandler::class,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -376,39 +313,24 @@ and retrieve the user info:
                         token_handler:
                             oidc_user_info: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler oidc-user-info="https://www.example.com/realms/demo/protocol/openid-connect/userinfo"/>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidcUserInfo('https://www.example.com/realms/demo/protocol/openid-connect/userinfo')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc_user_info' => 'https://www.example.com/realms/demo/protocol/openid-connect/userinfo',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 To enable `OpenID Connect Discovery`_, the ``OidcUserInfoTokenHandler``
 requires the ``symfony/cache`` package to store the OIDC configuration in
@@ -436,50 +358,31 @@ Next, configure the ``base_uri`` and ``discovery`` options:
                                     cache:
                                         id: cache.app
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc-user-info base-uri="https://www.example.com/realms/demo/">
-                                <discovery cache="cache.app"/>
-                            </oidc-user-info>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidcUserInfo()
-                            ->baseUri('https://www.example.com/realms/demo/')
-                            ->discovery()
-                                ->cache(['id' => 'cache.app'])
-            ;
-        };
-
-.. versionadded:: 7.3
-
-    Support for OpenID Connect Discovery was introduced in Symfony 7.3.
+        return App::config([
+            'security' => [
+            'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc_user_info' => [
+                                    'base_uri' => 'https://www.example.com/realms/demo/',
+                                    'discovery' => [
+                                        'cache' => [
+                                            'id' => 'cache.app',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used as user
 identifier by default. To use another claim, specify it using the ``claim`` option:
@@ -498,43 +401,27 @@ identifier by default. To use another claim, specify it using the ``claim`` opti
                                 claim: email
                                 base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc-user-info claim="email" base-uri="https://www.example.com/realms/demo/protocol/openid-connect/userinfo"/>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidcUserInfo()
-                            ->claim('email')
-                            ->baseUri('https://www.example.com/realms/demo/protocol/openid-connect/userinfo')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc_user_info' => [
+                                    'claim' => 'email',
+                                    'base_uri' => 'https://www.example.com/realms/demo/protocol/openid-connect/userinfo',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The ``oidc_user_info`` token handler automatically creates an HTTP client with
 the specified ``base_uri``. If you prefer using your own client, you can
@@ -553,42 +440,26 @@ specify the service name via the ``client`` option:
                             oidc_user_info:
                                 client: oidc.client
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc-user-info client="oidc.client"/>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidcUserInfo()
-                            ->client('oidc.client')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc_user_info' => [
+                                    'client' => 'oidc.client',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 By default, the ``OidcUserInfoTokenHandler`` creates an ``OidcUser`` with the
 claims. To create your own user object from the claims, you must
@@ -644,84 +515,58 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                 audience: 'api-example'
                                 # Issuers (`iss` claim): required for validation purpose
                                 issuers: ['https://oidc.example.com']
+                                # Tolerance in seconds for clock differences between the token
+                                # issuer and this application, applied when validating the
+                                # time-based claims (`iat`, `nbf`, `exp`)
+                                allowed_time_drift: 5 # Default to 0 (no tolerance)
                                 encryption:
                                     enabled: true # Default to false
                                     enforce: false # Default to false, requires an encrypted token when true
                                     algorithms: ['ECDH-ES', 'A128GCM']
                                     keyset: '{"keys": [...]}' # Encryption private keyset
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <!-- Algorithm used to sign the JWS -->
-                            <!-- A JSON-encoded JWK -->
-                            <!-- Audience (`aud` claim): required for validation purpose -->
-                            <oidc keyset="{'keys':[{'kty':'...','k':'...'}]}" audience="api-example">
-                                <!-- Issuers (`iss` claim): required for validation purpose -->
-                                <algorithm>ES256</algorithm>
-                                <algorithm>RS256</algorithm>
-                                <issuer>https://oidc.example.com</issuer>
-                                <encryption enabled="true" enforce="true" keyset="{'keys': [...]}">
-                                    <algorithm>ECDH-ES</algorithm>
-                                    <algorithm>A128GCM</algorithm>
-                                </encryption>
-                            </oidc>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidc()
-                            // Algorithm used to sign the JWS
-                            ->algorithms(['ES256', 'RS256'])
-                            // A JSON-encoded JWKSet (public keys)
-                            ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
-                            // Audience (`aud` claim): required for validation purpose
-                            ->audience('api-example')
-                            // Issuers (`iss` claim): required for validation purpose
-                            ->issuers(['https://oidc.example.com'])
-                            ->encryption()
-                                ->enabled(true) //Default to false
-                                ->enforce(false) //Default to false, requires an encrypted token when true
-                                // Algorithm used to decrypt the JWE
-                                ->algorithms(['ECDH-ES', 'A128GCM'])
-                                // A JSON-encoded JWKSet (private keys)
-                                ->keyset('{"keys":[...]}')
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    // Algorithms used to sign the JWS
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    // A JSON-encoded JWK
+                                    'keyset' => '{"keys":[{"kty":"...","k":"..."}]}',
+                                    // Audience (`aud` claim): required for validation purpose
+                                    'audience' => 'api-example',
+                                    // Issuers (`iss` claim): required for validation purpose
+                                    'issuers' => ['https://oidc.example.com'],
+                                    // Tolerance in seconds for clock differences between the tokens
+                                    // issuer and this application, applied when validating the
+                                    // time-based claims (`iat`, `nbf`, `exp`)
+                                    'allowed_time_drift' => 5, // Default to 0 (no tolerance)
+                                    // Encryption:
+                                    'encryption' => [
+                                        'enabled' => true, // Default to false
+                                        'enforce' => false, // Default to false, requires an encrypted token when true
+                                        'algorithms' => ['ECDH-ES', 'A128GCM'],
+                                        'keyset' => '{"keys": [...]}' // Encryption private keyset
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
-            ;
-        };
+.. versionadded:: 8.2
 
-.. versionadded:: 7.1
-
-    The support of multiple algorithms to sign the JWS was introduced in Symfony 7.1.
-    In previous versions, only the ``ES256`` algorithm was supported.
-
-.. versionadded:: 7.3
-
-    Support for encryption algorithms to decrypt JWEs was introduced in Symfony 7.3.
+    The ``allowed_time_drift`` option was introduced in Symfony 8.2.
 
 To enable `OpenID Connect Discovery`_, the ``OidcTokenHandler`` requires the
 ``symfony/cache`` package to store the OIDC configuration in the cache. If you
@@ -754,53 +599,92 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                                     cache:
                                         id: cache.app
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc claim="email" audience="api-example">
-                                <algorithm>ES256</algorithm>
-                                <algorithm>RS256</algorithm>
-                                <issuer>https://oidc.example.com</issuer>
-                                <discovery base-uri="https://www.example.com/realms/demo/" cache="cache.app">
-                            </oidc>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidc()
-                            ->claim('email')
-                            ->algorithms(['ES256', 'RS256'])
-                            ->audience('api-example')
-                            ->issuers(['https://oidc.example.com'])
-                            ->discovery()
-                                ->baseUri('https://www.example.com/realms/demo/')
-                                ->cache(['id' => 'cache.app'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'claim' => 'email',
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'audience' => 'api-example',
+                                    'issuers' => ['https://oidc.example.com'],
+                                    'discovery' => [
+                                        'base_uri' => 'https://www.example.com/realms/demo/',
+                                        'cache' => [
+                                            'id' => 'cache.app',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+By default, when using OpenID Connect Discovery, only keys explicitly designated
+for signature verification (i.e. keys with ``"use": "sig"`` or ``"key_ops"``
+containing ``"sign"`` or ``"verify"`` per `RFC 7517`_) are accepted. If your
+identity provider serves keys without any usage designation (no ``use`` or
+``key_ops`` field), you can disable this strict filtering by setting the
+``enforce_key_usage_verification`` option to ``false``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oidc:
+                                # ...
+                                discovery:
+                                    base_uri: https://www.example.com/realms/demo/
+                                    cache:
+                                        id: cache.app
+                                    enforce_key_usage_verification: false
+
+    .. code-block:: php
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    // ...
+                                    'discovery' => [
+                                        'base_uri' => 'https://www.example.com/realms/demo/',
+                                        'cache' => [
+                                            'id' => 'cache.app',
+                                        ],
+                                        'enforce_key_usage_verification' => false,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+When disabled, keys are still filtered: those explicitly marked for encryption
+only (``"use": "enc"`` or ``"key_ops"`` containing only encryption operations)
+are excluded. Keys without any usage designation are included.
+
+.. versionadded:: 8.1
+
+    The ``enforce_key_usage_verification`` option was introduced in Symfony 8.1.
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used by
 default as user identifier. To use another claim, specify it on the
@@ -823,50 +707,30 @@ configuration:
                                 audience: 'api-example'
                                 issuers: ['https://oidc.example.com']
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc claim="email" keyset="{'keys':[{'kty':'...','k':'...'}]}" audience="api-example">
-                                <algorithm>ES256</algorithm>
-                                <algorithm>RS256</algorithm>
-                                <issuer>https://oidc.example.com</issuer>
-                            </oidc>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidc()
-                            ->claim('email')
-                            ->algorithms(['ES256', 'RS256'])
-                            ->keyset('{"keys":[{"kty":"...","k":"..."}]}')
-                            ->audience('api-example')
-                            ->issuers(['https://oidc.example.com'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'claim' => 'email',
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'keyset' => '{"keys":[{"kty":"...","k":"..."}]}',
+                                    'audience' => 'api-example',
+                                    'issuers' => ['https://oidc.example.com'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 By default, the ``OidcTokenHandler`` creates an ``OidcUser`` with the claims. To
 create your own User from the claims, you must
@@ -885,10 +749,6 @@ create your own User from the claims, you must
 
 Configuring Multiple OIDC Discovery Endpoints
 .............................................
-
-.. versionadded:: 7.4
-
-    Support for multiple OIDC discovery endpoints was introduced in Symfony 7.4.
 
 The ``OidcTokenHandler`` supports multiple OIDC discovery endpoints, allowing it
 to validate tokens from different identity providers:
@@ -914,59 +774,37 @@ to validate tokens from different identity providers:
                                     cache:
                                         id: cache.app
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc audience="api-example">
-                                <algorithm>ES256</algorithm>
-                                <algorithm>RS256</algorithm>
-                                <issuer>https://oidc1.example.com</issuer>
-                                <issuer>https://oidc2.example.com</issuer>
-                                <discovery cache="cache.app">
-                                    <base-uri>https://idp1.example.com/realms/demo/</base-uri>
-                                    <base-uri>https://idp2.example.com/realms/demo/</base-uri>
-                                </discovery>
-                            </oidc>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidc()
-                            ->algorithms(['ES256', 'RS256'])
-                            ->audience('api-example')
-                            ->issuers(['https://oidc1.example.com', 'https://oidc2.example.com'])
-                            ->discovery()
-                                ->baseUri([
-                                    'https://idp1.example.com/realms/demo/',
-                                    'https://idp2.example.com/realms/demo/',
-                                ])
-                                ->cache(['id' => 'cache.app'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'audience' => 'api-example',
+                                    'issuers' => ['https://oidc1.example.com', 'https://oidc2.example.com'],
+                                    'discovery' => [
+                                        'base_uri' => [
+                                            'https://idp1.example.com/realms/demo/',
+                                            'https://idp2.example.com/realms/demo/',
+                                        ],
+                                        'cache' => [
+                                            'id' => 'cache.app',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The token handler fetches the JWK sets from all configured discovery endpoints
 and builds a combined JWK set for token validation. This lets your application
@@ -976,10 +814,6 @@ accept and validate tokens from multiple identity providers within a single fire
 
 Creating an OIDC token from the command line
 --------------------------------------------
-
-.. versionadded:: 7.4
-
-    The ``security:oidc:generate-token`` command was introduced in Symfony 7.4.
 
 The ``security:oidc:generate-token`` command helps you generate JWTs. It's mostly
 useful when developing or testing applications that use OIDC authentication:
@@ -1001,10 +835,6 @@ useful when developing or testing applications that use OIDC authentication:
 
 Using CAS 2.0
 -------------
-
-.. versionadded:: 7.1
-
-    The support for CAS token handlers was introduced in Symfony 7.1.
 
 `Central Authentication Service (CAS)`_ is an enterprise multilingual single
 sign-on solution and identity provider for the web and attempts to be a
@@ -1036,42 +866,26 @@ You can configure a ``cas`` token handler as follows:
                             cas:
                                 validation_url: https://www.example.com/cas/validate
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <cas validation-url="https://www.example.com/cas/validate"/>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->cas()
-                            ->validationUrl('https://www.example.com/cas/validate')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'cas' => [
+                                    'validation_url' => 'https://www.example.com/cas/validate',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The ``cas`` token handler automatically creates an HTTP client to call
 the specified ``validation_url``. If you prefer using your own client, you can
@@ -1091,46 +905,30 @@ specify the service name via the ``http_client`` option:
                                 validation_url: https://www.example.com/cas/validate
                                 http_client: cas.client
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <cas validation-url="https://www.example.com/cas/validate" http-client="cas.client"/>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->cas()
-                            ->validationUrl('https://www.example.com/cas/validate')
-                            ->httpClient('cas.client')
-            ;
-        };
+        return App::config([
+            'security' => [
+            'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'cas' => [
+                                    'validation_url' => 'https://www.example.com/cas/validate',
+                                    'http_client' => 'cas.client',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
-By default the token handler will read the validation URL XML response with
- ``cas`` prefix but you can configure another prefix:
+By default the token handler will read the validation URL XML response with a
+``cas`` prefix but you can configure another prefix:
 
 .. configuration-block::
 
@@ -1146,43 +944,27 @@ By default the token handler will read the validation URL XML response with
                                 validation_url: https://www.example.com/cas/validate
                                 prefix: cas-example
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <cas validation-url="https://www.example.com/cas/validate" prefix="cas-example"/>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->cas()
-                            ->validationUrl('https://www.example.com/cas/validate')
-                            ->prefix('cas-example')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'cas' => [
+                                    'validation_url' => 'https://www.example.com/cas/validate',
+                                    'prefix' => 'cas-example',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Creating Users from Token
 -------------------------
@@ -1220,6 +1002,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect (OIDC)`: https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
+.. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations

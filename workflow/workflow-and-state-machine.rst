@@ -114,153 +114,71 @@ Below is the configuration for the pull request state machine.
                             from: closed
                             to: review
 
-    .. code-block:: xml
-
-        <!-- config/packages/workflow.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
-
-            <framework:config>
-                <framework:workflow name="pull_request" type="state_machine">
-                    <framework:initial-marking>start</framework:initial-marking>
-
-                    <framework:marking-store type="method" property="currentPlace"/>
-
-                    <!-- The "supports" option is useful only if you are using Twig functions ('workflow_*') -->
-                    <framework:support>App\Entity\PullRequest</framework:support>
-
-                    <framework:place>start</framework:place>
-                    <framework:place>coding</framework:place>
-                    <framework:place>test</framework:place>
-                    <framework:place>review</framework:place>
-                    <framework:place>merged</framework:place>
-                    <framework:place>closed</framework:place>
-
-                    <framework:transition name="submit">
-                        <framework:from>start</framework:from>
-
-                        <framework:to>test</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="update">
-                        <framework:from>coding</framework:from>
-                        <framework:from>test</framework:from>
-                        <framework:from>review</framework:from>
-
-                        <framework:to>test</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="wait_for_review">
-                        <framework:from>test</framework:from>
-
-                        <framework:to>review</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="request_change">
-                        <framework:from>review</framework:from>
-
-                        <framework:to>coding</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="accept">
-                        <framework:from>review</framework:from>
-
-                        <framework:to>merged</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="reject">
-                        <framework:from>review</framework:from>
-
-                        <framework:to>closed</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="reopen">
-                        <framework:from>closed</framework:from>
-
-                        <framework:to>review</framework:to>
-                    </framework:transition>
-
-                </framework:workflow>
-
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/workflow.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $pullRequest = $framework->workflows()->workflow('pull_request');
-
-            $pullRequest
-                ->type('state_machine')
-                // The "supports" option is useful only if you are using Twig functions ('workflow_*')
-                ->supports(['App\Entity\PullRequest'])
-                ->initialMarking(['start']);
-
-            $pullRequest->markingStore()
-                ->type('method')
-                ->property('currentPlace');
-
-            $pullRequest->place()->name('start');
-            $pullRequest->place()->name('coding');
-            $pullRequest->place()->name('test');
-            $pullRequest->place()->name('review');
-            $pullRequest->place()->name('merged');
-            $pullRequest->place()->name('closed');
-
-            $pullRequest->transition()
-                ->name('submit')
-                    ->from(['start'])
-                    ->to(['test']);
-
-            $pullRequest->transition()
-                ->name('update')
-                    ->from(['coding', 'test', 'review'])
-                    ->to(['test']);
-
-            $pullRequest->transition()
-                ->name('wait_for_review')
-                    ->from(['test'])
-                    ->to(['review']);
-
-            $pullRequest->transition()
-                ->name('request_change')
-                    ->from(['review'])
-                    ->to(['coding']);
-
-            $pullRequest->transition()
-                ->name('accept')
-                    ->from(['review'])
-                    ->to(['merged']);
-
-            $pullRequest->transition()
-                ->name('reject')
-                    ->from(['review'])
-                    ->to(['closed']);
-
-            $pullRequest->transition()
-                ->name('reopen')
-                    ->from(['closed'])
-                    ->to(['review']);
-        };
+        return App::config([
+            'framework' => [
+                'workflows' => [
+                    'pull_request' => [
+                        'type' => 'state_machine',
+                        'marking_store' => [
+                            'type' => 'method',
+                            'property' => 'currentPlace',
+                        ],
+                        // The "supports" option is useful only if you are using Twig functions ('workflow_*')
+                        'supports' => ['App\Entity\PullRequest'],
+                        'initial_marking' => 'start',
+                        'places' => [
+                            'start',
+                            'coding',
+                            'test',
+                            'review',
+                            'merged',
+                            'closed',
+                        ],
+                        'transitions' => [
+                            'submit' => [
+                                'from' => 'start',
+                                'to' => 'test',
+                            ],
+                            'update' => [
+                                'from' => ['coding', 'test', 'review'],
+                                'to' => 'test',
+                            ],
+                            'wait_for_review' => [
+                                'from' => 'test',
+                                'to' => 'review',
+                            ],
+                            'request_change' => [
+                                'from' => 'review',
+                                'to' => 'coding',
+                            ],
+                            'accept' => [
+                                'from' => 'review',
+                                'to' => 'merged',
+                            ],
+                            'reject' => [
+                                'from' => 'review',
+                                'to' => 'closed',
+                            ],
+                            'reopen' => [
+                                'from' => 'closed',
+                                'to' => 'review',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
     You can omit the ``places`` option if your transitions define all the places
     that are used in the workflow. Symfony will automatically extract the places
     from the transitions.
-
-    .. versionadded:: 7.1
-
-        The support for omitting the ``places`` option was introduced in
-        Symfony 7.1.
 
 Symfony automatically creates a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`)
 or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you

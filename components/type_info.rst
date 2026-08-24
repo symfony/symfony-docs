@@ -46,10 +46,6 @@ You can also use a generic method that detects the type automatically::
     Type::fromValue('...'); // same as Type::string()
     Type::fromValue(false); // same as Type::false()
 
-.. versionadded:: 7.3
-
-    The ``fromValue()`` method was introduced in Symfony 7.3.
-
 Resolvers
 ~~~~~~~~~
 
@@ -120,6 +116,35 @@ PHP package required for string resolving. Then, follow these steps::
     $typeResolver->resolve(new \ReflectionProperty(Dummy::class, 'id')); // returns an "int" Type
     $typeResolver->resolve(new \ReflectionProperty(Dummy::class, 'tags')); // returns a collection with "int" as key and "string" as values Type
 
+Generic Templates
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for covariant templates was introduced in Symfony 8.2.
+
+TypeInfo collects the generic templates declared through ``@template`` annotations,
+including their covariant variant ``@template-covariant`` (the ``@psalm-`` and
+``@phpstan-`` prefixed synonyms are also supported)::
+
+    use Symfony\Component\TypeInfo\TypeResolver\TypeResolver;
+
+    /**
+     * @template-covariant T of int|string
+     */
+    class Collection
+    {
+        /** @return T */
+        public function getFirst(): mixed
+        {
+            // ...
+        }
+    }
+
+    $typeResolver = TypeResolver::create();
+    // resolves the "getFirst()" return type using the covariant "T" template
+    $typeResolver->resolve(new \ReflectionMethod(Collection::class, 'getFirst'));
+
 Type Aliases
 ~~~~~~~~~~~~
 
@@ -179,10 +204,6 @@ You can also import type aliases defined in other classes::
     Both syntax variations are supported: with an equals sign
     (``@phpstan-type TypeAlias = Type``) or without (``@phpstan-type TypeAlias Type``).
 
-.. versionadded:: 7.3
-
-    The type alias support was introduced in Symfony 7.3.
-
 You can also define type aliases globally through the framework configuration.
 These aliases are available everywhere in the type resolver, without needing
 ``@phpstan-type`` annotations:
@@ -198,39 +219,21 @@ These aliases are available everywhere in the type resolver, without needing
                     MoneyAmount: int
                     UserData: 'array{name: string, email: string, age: int}'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:type-info>
-                    <framework:alias name="MoneyAmount">int</framework:alias>
-                    <framework:alias name="UserData">array{name: string, email: string, age: int}</framework:alias>
-                </framework:type-info>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->typeInfo()
-                ->aliases([
-                    'MoneyAmount' => 'int',
-                    'UserData' => 'array{name: string, email: string, age: int}',
-                ])
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'type_info' => [
+                    'aliases' => [
+                        'MoneyAmount' => 'int',
+                        'UserData' => 'array{name: string, email: string, age: int}',
+                    ],
+                ],
+            ],
+        ]);
 
 Once configured, these aliases can be used in PHPDoc annotations and will be
 resolved by the type resolver::
@@ -253,16 +256,8 @@ resolved by the type resolver::
     When a PHPDoc ``@phpstan-type`` annotation defines an alias with the same
     name as a configuration alias, the PHPDoc annotation takes precedence.
 
-.. versionadded:: 7.4
-
-    The ``framework.type_info.aliases`` option was introduced in Symfony 7.4.
-
 Array Shapes
 ~~~~~~~~~~~~
-
-.. versionadded:: 7.3
-
-    Support for array shapes was introduced in Symfony 7.3.
 
 TypeInfo can resolve array shapes, which describe the structure of arrays with
 specific key-value type relationships. Use the ``array{...}`` syntax in PHPDoc
@@ -324,6 +319,43 @@ You can also create array shapes manually using the ``Type::arrayShape()`` metho
         'id' => Type::int(),
     ], false, Type::string(), Type::bool());
 
+Object Shapes
+.............
+
+.. versionadded:: 8.1
+
+    Support for object shapes was introduced in Symfony 8.1.
+
+TypeInfo can resolve object shapes, which describe the structure of anonymous
+objects with specific properties and their types. Use the ``object{...}`` syntax
+in PHPDoc annotations::
+
+    use Symfony\Component\TypeInfo\TypeResolver\TypeResolver;
+
+    class Dummy
+    {
+        /**
+         * @var object{name: string, age: int, email?: string}
+         */
+        public object $person;
+    }
+
+    $typeResolver = TypeResolver::create();
+    $type = $typeResolver->resolve(new \ReflectionProperty(Dummy::class, 'person'));
+    // returns an ObjectShapeType with "name" (string), "age" (int), and optional "email" (string)
+
+The ``?`` suffix marks a property as optional (e.g. ``email?``).
+
+You can also create object shapes manually using the ``Type::objectShape()`` method::
+
+    use Symfony\Component\TypeInfo\Type;
+
+    $type = Type::objectShape([
+        'name' => Type::string(),
+        'age' => Type::int(),
+        'email' => Type::nullable(Type::string()),
+    ]);
+
 Advanced Usages
 ~~~~~~~~~~~~~~~
 
@@ -368,11 +400,6 @@ Checking if a type **accepts a value**::
     // now the second check is true because the union type accepts either an int or a string value
     $type->accepts(123); // true
     $type->accepts('z'); // true
-
-.. versionadded:: 7.3
-
-    The :method:`Symfony\\Component\\TypeInfo\\Type::accepts`
-    method was introduced in Symfony 7.3.
 
 Using callables for **complex checks**::
 

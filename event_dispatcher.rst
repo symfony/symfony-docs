@@ -170,22 +170,6 @@ dispatcher:
             App\EventListener\ExceptionListener:
                 tags: [kernel.event_listener]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\EventListener\ExceptionListener">
-                    <tag name="kernel.event_listener"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -193,13 +177,13 @@ dispatcher:
 
         use App\EventListener\ExceptionListener;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(ExceptionListener::class)
-                ->tag('kernel.event_listener')
-            ;
-        };
+        return App::config([
+            'services' => [
+                ExceptionListener::class => [
+                    'tags' => ['kernel.event_listener'],
+                ],
+            ],
+        ]);
 
     .. code-block:: php-standalone
 
@@ -360,11 +344,6 @@ can also be applied to methods directly::
 
     Note that the attribute doesn't require its ``event`` parameter to be set
     if the method already type-hints the expected event.
-
-.. versionadded:: 7.4
-
-    Support for union types in the ``$event`` argument of methods using the
-    ``#[AsEventListener]`` attribute was introduced in Symfony 7.4.
 
 .. _events-subscriber:
 .. _event_dispatcher-using-event-subscribers:
@@ -924,12 +903,19 @@ or you can get everything that partially matches the event name:
     $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
 
 The :doc:`security </security>` system uses an event dispatcher per
-firewall. Use the ``--dispatcher`` option to get the registered listeners
-for a particular event dispatcher:
+firewall. Use the ``--dispatcher`` option to get the registered listeners:
 
 .. code-block:: terminal
 
+    # get the registered listeners of a specific event dispatcher
     $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
+
+    # list all the available event dispatchers
+    $ php bin/console debug:event-dispatcher --dispatchers
+
+.. versionadded:: 8.2
+
+    The ``--dispatchers`` option was introduced in Symfony 8.2.
 
 .. _event-dispatcher-traceable-dispatcher:
 
@@ -1042,29 +1028,18 @@ First, define some token configuration as parameters:
                 client1: pass1
                 client2: pass2
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <parameters>
-                <parameter key="tokens" type="collection">
-                    <parameter key="client1">pass1</parameter>
-                    <parameter key="client2">pass2</parameter>
-                </parameter>
-            </parameters>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('tokens', [
-            'client1' => 'pass1',
-            'client2' => 'pass2',
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'parameters' => [
+                'tokens' => [
+                    'client1' => 'pass1',
+                    'client2' => 'pass2',
+                ],
+            ],
         ]);
 
 Tag Controllers to Be Checked

@@ -130,10 +130,6 @@ better entropy (and a more strict chronological order of UUID generation)::
     $uuid = Uuid::v7();
     // $uuid is an instance of Symfony\Component\Uid\UuidV7
 
-.. versionadded:: 7.4
-
-    In Symfony 7.4, the precision was increased from milliseconds to microseconds.
-
 **UUID v8** (custom)
 
 Provides an RFC-compatible format intended for experimental or vendor-specific use cases
@@ -208,40 +204,13 @@ You can configure these default values::
                 time_based_uuid_version: 6
                 time_based_uuid_node: 121212121212
 
-    .. code-block:: xml
-
-        <!-- config/packages/uid.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xmlns:framework="http://symfony.com/schema/dic/symfony"
-                   xsi:schemaLocation="http://symfony.com/schema/dic/services
-                        https://symfony.com/schema/dic/services/services-1.0.xsd
-                        http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:uid
-                    default_uuid_version="6"
-                    name_based_uuid_version="6"
-                    name_based_uuid_namespace="6ba7b810-9dad-11d1-80b4-00c04fd430c8"
-                    time_based_uuid_version="6"
-                    time_based_uuid_node="121212121212"
-                />
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/uid.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services()
-                ->defaults()
-                ->autowire()
-                ->autoconfigure();
-
-            $container->extension('framework', [
+        return App::config([
+            'framework' => [
                 'uid' => [
                     'default_uuid_version' => 6,
                     'name_based_uuid_version' => 3,
@@ -249,18 +218,13 @@ You can configure these default values::
                     'time_based_uuid_version' => 6,
                     'time_based_uuid_node' => 121212121212,
                 ],
-            ]);
-        };
-
-.. versionadded:: 7.4
-
-    Starting from Symfony 7.4, the default version for both UUIDs and time-based
-    UUIDs is v7. In previous versions, the default was v6.
+            ],
+        ]);
 
 Converting UUIDs
 ~~~~~~~~~~~~~~~~
 
-Use these methods to transform the UUID object into different bases::
+Use these methods to transform the UUID object into **different bases**::
 
     $uuid = Uuid::fromString('d9e7a184-5d5b-11ea-a62a-3499710062d0');
 
@@ -271,11 +235,7 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toHex();     // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
     $uuid->toString();  // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
 
-.. versionadded:: 7.1
-
-    The ``toString()`` method was introduced in Symfony 7.1.
-
-You can also convert some UUID versions to others::
+You can also convert some **UUID versions** to others::
 
     // convert V1 to V6 or V7
     $uuid = Uuid::v1();
@@ -288,12 +248,48 @@ You can also convert some UUID versions to others::
 
     $uuid->toV7(); // returns a Symfony\Component\Uid\UuidV7 instance
 
-.. versionadded:: 7.1
+**Converting between UUIDv7 and UUIDv4** requires specific techniques.
+The :class:`Symfony\\Component\\Uid\\Uuid47Transformer` allows converting
+between UUIDv7 and UUIDv4 using `SipHash-2-4`_ timestamp masking.
 
-    The :method:`Symfony\\Component\\Uid\\UuidV1::toV6`,
-    :method:`Symfony\\Component\\Uid\\UuidV1::toV7` and
-    :method:`Symfony\\Component\\Uid\\UuidV6::toV7`
-    methods were introduced in Symfony 7.1.
+This is useful when you want to store time ordered UUIDv7 values in the database
+while exposing UUIDv4 looking identifiers at API boundaries, hiding timing
+information from external consumers::
+
+    use Symfony\Component\Uid\UuidV7;
+
+    // the secret must be at least 16 bytes
+    $transformer = new \Symfony\Component\Uid\Uuid47Transformer($secret);
+
+    // encode a UUIDv7 into a UUIDv4-looking UUID
+    $v7 = new UuidV7();
+    $v4 = $transformer->encode($v7); // returns a UuidV4 instance
+
+    // decode back to the original UUIDv7
+    $original = $transformer->decode($v4); // returns a UuidV7 instance
+    $original->equals($v7); // true
+
+The transformation is reversible only with the same secret. Decoding with a
+different secret produces a different UUIDv7 without throwing an error.
+
+When using FrameworkBundle, the ``Uuid47Transformer`` is registered as a service
+automatically, using ``kernel.secret`` as the key. You can type-hint it in any
+service or controller to get it injected.
+
+.. note::
+
+    The ``Uuid47Transformer`` requires the ``sodium`` PHP extension.
+
+.. tip::
+
+    The ``Uuid47Transformer`` implements the same algorithm as the `uuidv47`_
+    library, which provides implementations in C, Go, JavaScript, Python, Rust,
+    Ruby and other languages. UUIDs encoded by Symfony can be decoded by any
+    of these implementations and vice versa, as long as the same secret is used.
+
+.. versionadded:: 8.1
+
+    The ``Uuid47Transformer`` class was introduced in Symfony 8.1.
 
 Working with UUIDs
 ~~~~~~~~~~~~~~~~~~
@@ -352,10 +348,60 @@ The following constants are available:
 You can also use the ``Uuid::FORMAT_ALL`` constant to accept any UUID format.
 By default, only the RFC 4122 format is accepted.
 
-.. versionadded:: 7.2
+.. tip::
 
-    The ``$format`` parameter of the :method:`Symfony\\Component\\Uid\\Uuid::isValid`
-    method and the related constants were introduced in Symfony 7.2.
+    When creating or parsing an invalid UID (UUID or ULID), the
+    :class:`Symfony\\Component\\Uid\\Exception\\InvalidArgumentException`
+    includes the invalid value in its ``$invalidValue`` property, which
+    can help with debugging::
+
+        use Symfony\Component\Uid\Uuid;
+
+        try {
+            Uuid::fromString('not-a-uuid');
+        } catch (\Symfony\Component\Uid\Exception\InvalidArgumentException $e) {
+            $e->invalidValue; // 'not-a-uuid'
+        }
+
+    .. versionadded:: 8.1
+
+        The ``$invalidValue`` property on ``InvalidArgumentException``
+        was introduced in Symfony 8.1.
+
+UUIDv6 and UUIDv7 are *time-ordered*: sorting them (as bytes, as strings or in
+a database column) gives the same order as sorting them by their timestamp.
+That's why the ``UuidV6`` and ``UuidV7`` classes implement
+:class:`Symfony\\Component\\Uid\\TimeOrderedUidInterface`, which defines a
+``createBoundaries()`` method that returns the lowest and highest UUIDs that
+share the given timestamp::
+
+    use Symfony\Component\Uid\UuidV7;
+
+    $time = new \DateTimeImmutable('2022-02-22 19:22:22 UTC');
+    [$min, $max] = UuidV7::createBoundaries($time);
+    // $min = '017f22e2-79b0-7000-8000-000000000000'
+    // $max = '017f22e2-79b0-7fff-bfff-ffffffffffff'
+
+    // if you don't pass a timestamp, the bounds are for the current time
+    [$min, $max] = UuidV7::createBoundaries();
+
+The bounds cover the full resolution of the UUID timestamp (one millisecond for
+UUIDv7, one clock tick of 100 nanoseconds for UUIDv6), so every UUID generated
+during that time sorts between them. This lets you make range queries, e.g.
+``WHERE uuid BETWEEN :min AND :max`` in SQL. To select the UUIDs created in a
+longer period, combine the lower bound of its start and the upper bound of its end::
+
+    // select all the UUIDs created on April 13, 2026
+    $dayStart = new \DateTimeImmutable('2026-04-13 00:00:00 UTC');
+    $dayEnd = new \DateTimeImmutable('2026-04-13 23:59:59.999 UTC');
+
+    $min = UuidV7::createBoundaries($dayStart)[0];
+    $max = UuidV7::createBoundaries($dayEnd)[1];
+
+.. versionadded:: 8.2
+
+    The ``createBoundaries()`` method and the ``TimeOrderedUidInterface``
+    were introduced in Symfony 8.2.
 
 .. _uid-uuid-doctrine:
 
@@ -611,6 +657,12 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     // checking if a given value is valid as ULID
     $isValid = Ulid::isValid($ulidValue); // true or false
 
+    // use the optional format argument to validate ULIDs in a
+    // specific representation (default is Base32)
+    $isValid = Ulid::isValid($ulidValue, Ulid::FORMAT_BASE_32);
+    $isValid = Ulid::isValid($ulidValue, Ulid::FORMAT_BASE_58);
+    $isValid = Ulid::isValid($ulidValue, Ulid::FORMAT_RFC_4122);
+
     // getting the ULID datetime
     $ulid1->getDateTime(); // returns a \DateTimeImmutable instance
 
@@ -618,6 +670,30 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     $ulid1->equals($ulid2); // false
     // this method returns $ulid1 <=> $ulid2
     $ulid1->compare($ulid2); // e.g. int(-1)
+
+.. versionadded:: 8.1
+
+    Support for validating ULIDs in different formats was introduced in Symfony 8.1.
+
+ULIDs are *time-ordered* too (sorting them gives the same order as sorting them
+by their timestamp), so the ``Ulid`` class also implements
+:class:`Symfony\\Component\\Uid\\TimeOrderedUidInterface`. Its
+``createBoundaries()`` method returns the lowest and highest ULIDs that share
+the given timestamp (or the current time, if you don't pass any). Every ULID
+generated during that millisecond sorts between the two bounds, so you can use
+them in range queries, e.g. ``WHERE ulid BETWEEN :min AND :max`` in SQL::
+
+    use Symfony\Component\Uid\Ulid;
+
+    $time = new \DateTimeImmutable('2026-04-13 09:30:00.123 UTC');
+    [$min, $max] = Ulid::createBoundaries($time);
+    // $min = '01KP32TAHV0000000000000000'
+    // $max = '01KP32TAHVZZZZZZZZZZZZZZZZ'
+
+.. versionadded:: 8.2
+
+    The ``createBoundaries()`` method and the ``TimeOrderedUidInterface``
+    were introduced in Symfony 8.2.
 
 .. _uid-ulid-doctrine:
 
@@ -725,25 +801,6 @@ configuration in your application before using these commands:
             Symfony\Component\Uid\Command\InspectUlidCommand: ~
             Symfony\Component\Uid\Command\InspectUuidCommand: ~
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="Symfony\Component\Uid\Command\GenerateUlidCommand"/>
-                <service id="Symfony\Component\Uid\Command\GenerateUuidCommand"/>
-                <service id="Symfony\Component\Uid\Command\InspectUlidCommand"/>
-                <service id="Symfony\Component\Uid\Command\InspectUuidCommand"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -754,15 +811,15 @@ configuration in your application before using these commands:
         use Symfony\Component\Uid\Command\InspectUlidCommand;
         use Symfony\Component\Uid\Command\InspectUuidCommand;
 
-        return static function (ContainerConfigurator $container): void {
-            // ...
-
-            $services
-                ->set(GenerateUlidCommand::class)
-                ->set(GenerateUuidCommand::class)
-                ->set(InspectUlidCommand::class)
-                ->set(InspectUuidCommand::class);
-        };
+        return App::config([
+            'services' => [
+                // ...
+                GenerateUlidCommand::class => null,
+                GenerateUuidCommand::class => null,
+                InspectUlidCommand::class => null,
+                InspectUuidCommand::class => null,
+            ],
+        ]);
 
 Now you can generate UUIDs/ULIDs as follows (add the ``--help`` option to the
 commands to learn about all their options):
@@ -816,3 +873,5 @@ commands to show all the information for a given UID:
 .. _`unique identifiers`: https://en.wikipedia.org/wiki/UID
 .. _`UUIDs`: https://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`ULIDs`: https://github.com/ulid/spec
+.. _`SipHash-2-4`: https://en.wikipedia.org/wiki/SipHash
+.. _`uuidv47`: https://github.com/stateless-me/uuidv47

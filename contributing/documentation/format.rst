@@ -243,39 +243,39 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behavior change use the ``.. versionadded:: 7.x``
+For a new feature or a behavior change use the ``.. versionadded:: 8.x``
 directive:
 
 .. code-block:: rst
 
-    .. versionadded:: 7.2
+    .. versionadded:: 8.2
 
-        ... ... ... was introduced in Symfony 7.2.
+        ... ... ... was introduced in Symfony 8.2.
 
 If you are documenting a behavior change, it may be helpful to *briefly*
 describe how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 7.2
+    .. versionadded:: 8.2
 
-       ... ... ... was introduced in Symfony 7.2. Prior to this,
+       ... ... ... was introduced in Symfony 8.2. Prior to this,
        ... ... ... ... ... ... ... ... .
 
-For a deprecation use the ``.. deprecated:: 7.x`` directive:
+For a deprecation use the ``.. deprecated:: 8.x`` directive:
 
 .. code-block:: rst
 
-    .. deprecated:: 7.2
+    .. deprecated:: 8.2
 
-        ... ... ... was deprecated in Symfony 7.2.
+        ... ... ... was deprecated in Symfony 8.2.
 
-Whenever a new major version of Symfony is released (e.g. 8.0, 9.0, etc), a new
+Whenever a new major version of Symfony is released (e.g. 9.0, 10.0, etc), a new
 branch of the documentation is created from the ``x.4`` branch of the previous
 major version. At this point, all the ``versionadded`` and ``deprecated`` tags
 for Symfony versions that have a lower major version will be removed. For
-example, if Symfony 8.0 were released today, 7.0 to 7.4 ``versionadded`` and
-``deprecated`` tags would be removed from the new ``8.0`` branch.
+example, if Symfony 9.0 were released today, 8.0 to 8.4 ``versionadded`` and
+``deprecated`` tags would be removed from the new ``9.0`` branch.
 
 .. _`reStructuredText`: https://docutils.sourceforge.io/rst.html
 .. _`Docs Builder`: https://github.com/symfony-tools/docs-builder

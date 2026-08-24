@@ -38,10 +38,6 @@ The notifier component supports the following channels:
 * :ref:`Desktop channel <notifier-desktop-channel>` displays desktop notifications
   on the same host machine.
 
-.. versionadded:: 7.2
-
-    The ``Desktop`` channel was introduced in Symfony 7.2.
-
 .. _notifier-sms-channel:
 
 SMS Channel
@@ -142,6 +138,9 @@ Service
 `Plivo`_            **Install**: ``composer require symfony/plivo-notifier`` \
                     **DSN**: ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM`` \
                     **Webhook support**: No
+`Prelude`_          **Install**: ``composer require symfony/prelude-notifier`` \
+                    **DSN**: ``prelude://API_KEY@default?sender=FROM`` \
+                    **Webhook support**: No
 `Primotexto`_       **Install**: ``composer require symfony/primotexto-notifier`` \
                     **DSN**: ``primotexto://API_KEY@default?from=FROM`` \
                     **Webhook support**: No
@@ -156,9 +155,6 @@ Service
                     **Webhook support**: No
 `Sendinblue`_       **Install**: ``composer require symfony/sendinblue-notifier`` \
                     **DSN**: ``sendinblue://API_KEY@default?sender=PHONE`` \
-                    **Webhook support**: No
-`Sms77`_            **Install**: ``composer require symfony/sms77-notifier`` \
-                    **DSN**: ``sms77://API_KEY@default?from=FROM`` \
                     **Webhook support**: No
 `SimpleTextin`_     **Install**: ``composer require symfony/simple-textin-notifier`` \
                     **DSN**: ``simpletextin://API_KEY@default?from=FROM`` \
@@ -190,6 +186,9 @@ Service
 `SMSFactor`_        **Install**: ``composer require symfony/sms-factor-notifier`` \
                     **DSN**: ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE`` \
                     **Webhook support**: No
+`SMS Proxima`_      **Install**: ``composer require symfony/sms-proxima-notifier`` \
+                    **DSN**: ``sms-proxima://TOKEN@default?from=FROM`` \
+                    **Webhook support**: No
 `SpotHit`_          **Install**: ``composer require symfony/spot-hit-notifier`` \
                     **DSN**: ``spothit://TOKEN@default?from=FROM`` \
                     **Webhook support**: No
@@ -216,6 +215,14 @@ Service
                     **Webhook support**: No
 ==================  ====================================================================================================================================
 
+.. versionadded:: 8.1
+
+    The ``Prelude`` integration was introduced in Symfony 8.1.
+
+.. versionadded:: 8.2
+
+    The ``SMS Proxima`` integration was introduced in Symfony 8.2.
+
 .. tip::
 
     Use :doc:`Symfony configuration secrets </configuration/secrets>` to securely
@@ -226,26 +233,6 @@ Service
     Some third party transports, when using the API, support status callbacks
     via webhooks. See the :doc:`Webhook documentation </webhook>` for more
     details.
-
-.. versionadded:: 7.1
-
-    The ``Smsbox``, ``SmsSluzba``, ``SMSense``, ``LOX24`` and ``Unifonic``
-    integrations were introduced in Symfony 7.1.
-
-.. versionadded:: 7.2
-
-    The ``Primotexto``, ``Sipgate`` and ``Sweego`` integrations were introduced in Symfony 7.2.
-
-.. versionadded:: 7.3
-
-    Webhook support for the ``Brevo`` integration was introduced in Symfony 7.3.
-    The extra properties in ``SentMessage`` for ``AllMySms`` and ``OvhCloud``
-    providers were introduced in Symfony 7.3 too.
-
-.. deprecated:: 7.1
-
-    The `Sms77`_ integration is deprecated since
-    Symfony 7.1, use the `Seven.io`_ integration instead.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -265,37 +252,20 @@ configure the ``texter_transports``:
                 texter_transports:
                     twilio: '%env(TWILIO_DSN)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/notifier.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:notifier>
-                    <framework:texter-transport name="twilio">
-                        %env(TWILIO_DSN)%
-                    </framework:texter-transport>
-                </framework:notifier>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/notifier.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->notifier()
-                ->texterTransport('twilio', env('TWILIO_DSN'))
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    'texter_transports' => [
+                        'twilio' => env('TWILIO_DSN'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. _sending-sms:
 
@@ -315,7 +285,7 @@ send SMS messages::
         #[Route('/login/success')]
         public function loginSuccess(TexterInterface $texter): Response
         {
-            $options = (new ProviderOptions())
+            $options = new ProviderOptions()
                 ->setPriority('high')
             ;
 
@@ -368,18 +338,22 @@ Service
                                          **DSN**: ``chatwork://API_TOKEN@default?room_id=ID``
 `Discord`_                               **Install**: ``composer require symfony/discord-notifier`` \
                                          **DSN**: ``discord://TOKEN@default?webhook_id=ID``
+`Facebook Page`_                         **Install**: ``composer require symfony/facebook-page-notifier`` \
+                                         **DSN**: ``facebook-page://PAGE_ACCESS_TOKEN@default?page_id=PAGE_ID&api_version=API_VERSION``
 `FakeChat`_                              **Install**: ``composer require symfony/fake-chat-notifier`` \
                                          **DSN**: ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 `Firebase`_                              **Install**: ``composer require symfony/firebase-notifier`` \
-                                         **DSN**: ``firebase://USERNAME:PASSWORD@default``
+                                         **DSN**: ``firebase://CLIENT_EMAIL@default?project_id=PROJECT_ID&private_key_id=PRIVATE_KEY_ID&private_key=PRIVATE_KEY``
 `GoogleChat`_                            **Install**: ``composer require symfony/google-chat-notifier`` \
                                          **DSN**: ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
+`Instagram`_                             **Install**: ``composer require symfony/instagram-notifier`` \
+                                         **DSN**: ``instagram://ACCESS_TOKEN@default?user_id=USER_ID&api_version=API_VERSION``
 `LINE Bot`_                              **Install**: ``composer require symfony/line-bot-notifier`` \
                                          **DSN**: ``linebot://TOKEN@default?receiver=RECEIVER``
 `LINE Notify`_                           **Install**: ``composer require symfony/line-notify-notifier`` \
                                          **DSN**: ``linenotify://TOKEN@default``
 `LinkedIn`_                              **Install**: ``composer require symfony/linked-in-notifier`` \
-                                         **DSN**: ``linkedin://TOKEN:USER_ID@default``
+                                         **DSN**: ``linkedin://TOKEN:USER_ID@default?author=AUTHOR``
 `Mastodon`_                              **Install**: ``composer require symfony/mastodon-notifier`` \
                                          **DSN**: ``mastodon://ACCESS_TOKEN@HOST``
 `Matrix`_                                **Install**: ``composer require symfony/matrix-notifier`` \
@@ -395,31 +369,38 @@ Service
 `Slack`_                                 **Install**: ``composer require symfony/slack-notifier`` \
                                          **DSN**: ``slack://TOKEN@default?channel=CHANNEL``
 `Telegram`_                              **Install**: ``composer require symfony/telegram-notifier`` \
-                                         **DSN**: ``telegram://TOKEN@default?channel=CHAT_ID``
+                                         **DSN**: ``telegram://TOKEN@default?channel=CHAT_ID&sslmode=SSLMODE``
+`Threads`_                               **Install**: ``composer require symfony/threads-notifier`` \
+                                         **DSN**: ``threads://ACCESS_TOKEN@default?user_id=USER_ID&api_version=API_VERSION``
 `Twitter`_                               **Install**: ``composer require symfony/twitter-notifier`` \
                                          **DSN**: ``twitter://API_KEY:API_SECRET:ACCESS_TOKEN:ACCESS_SECRET@default``
+`WhatsApp`_                              **Install**: ``composer require symfony/whats-app-notifier`` \
+                                         **DSN**: ``whatsapp://TOKEN@default?phone_number_id=PHONE_NUMBER_ID``
 `Zendesk`_                               **Install**: ``composer require symfony/zendesk-notifier`` \
                                          **DSN**: ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 `Zulip`_                                 **Install**: ``composer require symfony/zulip-notifier`` \
                                          **DSN**: ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   =====================================================================================
 
-.. versionadded:: 7.1
+.. versionadded:: 8.1
 
-    The ``Bluesky`` integration was introduced in Symfony 7.1.
+    The ``sslmode`` DSN option for the Telegram bridge was introduced in
+    Symfony 8.1.
 
-.. versionadded:: 7.2
+.. versionadded:: 8.2
 
-    The ``LINE Bot`` integration was introduced in Symfony 7.2.
+    The ``WhatsApp``, ``Facebook Page``, ``Instagram``, and ``Threads``
+    integrations and the ``author`` DSN option for the LinkedIn bridge were
+    introduced in Symfony 8.2.
 
-.. deprecated:: 7.2
+    The Firebase bridge now sends messages through the Firebase Cloud Messaging
+    v1 API, which requires a DSN built from the credentials of a service
+    account.
 
-    The ``Gitter`` integration was removed in Symfony 7.2 because that service
-    no longer provides an API.
+.. deprecated:: 8.2
 
-.. versionadded:: 7.3
-
-    The ``Matrix`` integration was introduced in Symfony 7.3.
+    The ``firebase://USERNAME:PASSWORD@default`` DSN was deprecated in Symfony
+    8.2, as the legacy Firebase API it relies on has been shut down.
 
 .. warning::
 
@@ -462,37 +443,20 @@ Chatters are configured using the ``chatter_transports`` setting:
                 chatter_transports:
                     slack: '%env(SLACK_DSN)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/notifier.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:notifier>
-                    <framework:chatter-transport name="slack">
-                        %env(SLACK_DSN)%
-                    </framework:chatter-transport>
-                </framework:notifier>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/notifier.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->notifier()
-                ->chatterTransport('slack', env('SLACK_DSN'))
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    'chatter_transports' => [
+                        'slack' => env('SLACK_DSN'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. _sending-chat-messages:
 
@@ -513,7 +477,7 @@ you to send messages to chat services::
         #[Route('/checkout/thankyou')]
         public function thankyou(ChatterInterface $chatter): Response
         {
-            $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
+            $message = new ChatMessage('You got a new invoice for 15 EUR.')
                 // if not set explicitly, the message is sent to the
                 // default transport (the first one configured)
                 ->transport('slack');
@@ -558,41 +522,21 @@ notification emails:
                 envelope:
                     sender: 'notifications@example.com'
 
-    .. code-block:: xml
-
-        <!-- config/packages/mailer.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:mailer
-                    dsn="%env(MAILER_DSN)%"
-                >
-                    <framework:envelope
-                        sender="notifications@example.com"
-                    />
-                </framework:mailer>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/mailer.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->mailer()
-                ->dsn(env('MAILER_DSN'))
-                ->envelope()
-                    ->sender('notifications@example.com')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'mailer' => [
+                    'dsn' => env('MAILER_DSN'),
+                    'envelope' => [
+                        'sender' => 'notifications@example.com',
+                    ],
+                ],
+            ],
+        ]);
 
 .. _notifier-push-channel:
 
@@ -634,10 +578,6 @@ Service
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
 
-.. versionadded:: 7.1
-
-    The `Pushy`_ integration was introduced in Symfony 7.1.
-
 .. code-block:: bash
 
     # .env
@@ -653,37 +593,20 @@ configure the ``texter_transports``:
                 texter_transports:
                     expo: '%env(EXPO_DSN)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/notifier.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:notifier>
-                    <framework:texter-transport name="expo">
-                        %env(EXPO_DSN)%
-                    </framework:texter-transport>
-                </framework:notifier>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/notifier.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->notifier()
-                ->texterTransport('expo', env('EXPO_DSN'))
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    'texter_transports' => [
+                        'expo' => env('EXPO_DSN'),
+                    ],
+                ],
+            ],
+        ]);
 
 .. _notifier-desktop-channel:
 
@@ -699,10 +622,6 @@ Provider         Install                                           DSN
 ===============  ================================================  ==============================================================================
 `JoliNotif`_     ``composer require symfony/joli-notif-notifier``  ``jolinotif://default``
 ===============  ================================================  ==============================================================================
-
-.. versionadded:: 7.2
-
-    The JoliNotif bridge was introduced in Symfony 7.2.
 
 If you are using :ref:`Symfony Flex <symfony-flex>`, installing that package will
 also create the necessary environment variable and configuration. Otherwise, you'll
@@ -727,37 +646,20 @@ need to add the following manually:
                 texter_transports:
                     jolinotif: '%env(JOLINOTIF)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/notifier.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:notifier>
-                    <framework:texter-transport name="jolinotif">
-                        %env(JOLINOTIF)%
-                    </framework:texter-transport>
-                </framework:notifier>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/notifier.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->notifier()
-                ->texterTransport('jolinotif', env('JOLINOTIF'))
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    'texter_transports' => [
+                        'jolinotif' => env('JOLINOTIF'),
+                    ],
+                ],
+            ],
+        ]);
 
 Now you can send notifications to your desktop as follows::
 
@@ -790,7 +692,7 @@ they may support features like custom sounds, icons, and more::
     use Symfony\Component\Notifier\Bridge\JoliNotif\JoliNotifOptions;
     // ...
 
-    $options = (new JoliNotifOptions())
+    $options = new JoliNotifOptions()
         ->setIconPath('/path/to/icons/error.png')
         ->setExtraOption('sound', 'sosumi')
         ->setExtraOption('url', 'https://example.com');
@@ -825,50 +727,25 @@ transport:
                     # Send notifications to the next scheduled transport calculated by round robin
                     roundrobin: '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/notifier.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:notifier>
-                    <!-- Send notifications to Slack and use Telegram if
-                         Slack errored -->
-                    <framework:chatter-transport name="slack">
-                        %env(SLACK_DSN)% || %env(TELEGRAM_DSN)%
-                    </framework:chatter-transport>
-
-                    <!-- Send notifications to the next scheduled transport
-                         calculated by round robin -->
-                    <framework:chatter-transport name="slack"><![CDATA[
-                        %env(SLACK_DSN)% && %env(TELEGRAM_DSN)%
-                    ]]></framework:chatter-transport>
-                </framework:notifier>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/notifier.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->notifier()
-                // Send notifications to Slack and use Telegram if
-                // Slack errored
-                ->chatterTransport('main', env('SLACK_DSN').' || '.env('TELEGRAM_DSN'))
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    'chatter_transports' => [
+                        // Send notifications to Slack and use Telegram if
+                        // Slack errored
+                        'main' => env('SLACK_DSN').' || '.env('TELEGRAM_DSN'),
 
-                // Send notifications to the next scheduled transport calculated by round robin
-                ->chatterTransport('roundrobin', env('SLACK_DSN').' && '.env('TELEGRAM_DSN'))
-            ;
-        };
+                        // Send notifications to the next scheduled transport calculated by round robin
+                        'roundrobin' => env('SLACK_DSN').' && '.env('TELEGRAM_DSN'),
+                    ],
+                ],
+            ]
+        ]);
 
 Creating & Sending Notifications
 --------------------------------
@@ -896,7 +773,7 @@ To send a notification, autowire the
 
             // Create a Notification that has to be sent
             // using the "email" channel
-            $notification = (new Notification('New Invoice', ['email']))
+            $notification = new Notification('New Invoice', ['email'])
                 ->content('You got a new invoice for 15 EUR.');
 
             // The receiver of the Notification
@@ -959,56 +836,29 @@ specify what channels should be used for specific levels (using
                     medium: ['browser']
                     low: ['browser']
 
-    .. code-block:: xml
-
-        <!-- config/packages/notifier.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:notifier>
-                    <!-- ... -->
-
-                    <framework:channel-policy>
-                        <!-- Use SMS, Slack and Email for urgent notifications -->
-                        <framework:urgent>sms</framework:urgent>
-                        <framework:urgent>chat/slack</framework:urgent>
-                        <framework:urgent>email</framework:urgent>
-
-                        <!-- Use Slack for highly important notifications -->
-                        <framework:high>chat/slack</framework:high>
-
-                        <!-- Use browser for medium and low notifications -->
-                        <framework:medium>browser</framework:medium>
-                        <framework:low>browser</framework:low>
-                    </framework:channel-policy>
-                </framework:notifier>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/notifier.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->notifier()
-                // Use SMS, Slack and email for urgent notifications
-                ->channelPolicy('urgent', ['sms', 'chat/slack', 'email'])
-                // Use Slack for highly important notifications
-                ->channelPolicy('high', ['chat/slack'])
-                // Use browser for medium and low notifications
-                ->channelPolicy('medium', ['browser'])
-                ->channelPolicy('low', ['browser'])
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    // ...
+                    'channel_policy' => [
+                        // Use SMS, Slack and email for urgent notifications
+                        'urgent' => ['sms', 'chat/slack', 'email'],
+
+                        // Use Slack for highly important notifications
+                        'high' => ['chat/slack'],
+
+                        // Use browser for medium and low notifications
+                        'medium' => ['browser'],
+                        'low' => ['browser'],
+                    ],
+                ],
+            ],
+        ]);
 
 Now, whenever the notification's importance is set to "high", it will be
 sent using the Slack transport::
@@ -1021,7 +871,7 @@ sent using the Slack transport::
         {
             // ...
 
-            $notification = (new Notification('New Invoice'))
+            $notification = new Notification('New Invoice')
                 ->content('You got a new invoice for 15 EUR.')
                 ->importance(Notification::IMPORTANCE_HIGH);
 
@@ -1137,19 +987,6 @@ typical alert levels, which you can implement immediately using:
             notifier.flash_message_importance_mapper:
                 class: Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper
 
-    .. code-block:: xml
-
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="notifier.flash_message_importance_mapper" class="Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1157,11 +994,13 @@ typical alert levels, which you can implement immediately using:
 
         use Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->services()
-                ->set('notifier.flash_message_importance_mapper', BootstrapFlashMessageImportanceMapper::class)
-            ;
-        };
+        return App::config([
+            'services' => [
+                'flash_message_importance_mapper' => [
+                    'class' => BootstrapFlashMessageImportanceMapper::class,
+                ],
+            ],
+        ]);
 
 Testing Notifier
 ----------------
@@ -1181,15 +1020,38 @@ entirely. You can do this by forcing Notifier to use the ``NullTransport`` for
 all configured texter and chatter transports only in the ``dev`` (and/or
 ``test``) environment:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/dev/notifier.yaml
-    framework:
-        notifier:
-            texter_transports:
-                twilio: 'null://null'
-            chatter_transports:
-                slack: 'null://null'
+    .. code-block:: yaml
+
+        # config/packages/notifier.yaml
+        when@dev:
+            framework:
+                notifier:
+                    texter_transports:
+                        twilio: 'null://null'
+                    chatter_transports:
+                        slack: 'null://null'
+
+    .. code-block:: php
+
+        // config/packages/notifier.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'when@dev' => [
+                'framework' => [
+                    'notifier' => [
+                        'texter_transports' => [
+                            'twilio' => 'null://null',
+                        ],
+                        'chatter_transports' => [
+                            'slack' => 'null://null',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _notifier-events:
 
@@ -1284,6 +1146,7 @@ is dispatched. Listeners receive a
 .. _`Engagespot`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Engagespot/README.md
 .. _`Esendex`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Esendex/README.md
 .. _`Expo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Expo/README.md
+.. _`Facebook Page`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FacebookPage/README.md
 .. _`FakeChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeChat/README.md
 .. _`FakeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeSms/README.md
 .. _`Firebase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Firebase/README.md
@@ -1292,6 +1155,7 @@ is dispatched. Listeners receive a
 .. _`GoIP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoIP/README.md
 .. _`GoogleChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoogleChat/README.md
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Infobip/README.md
+.. _`Instagram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Instagram/README.md
 .. _`Iqsms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Iqsms/README.md
 .. _`iSendPro`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Isendpro/README.md
 .. _`JoliNotif`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/JoliNotif/README.md
@@ -1318,6 +1182,7 @@ is dispatched. Listeners receive a
 .. _`OvhCloud`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OvhCloud/README.md
 .. _`PagerDuty`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/PagerDuty/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
+.. _`Prelude`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Prelude/README.md
 .. _`Primotexto`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Primotexto/README.md
 .. _`Pushover`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushover/README.md
 .. _`Pushy`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushy/README.md
@@ -1326,14 +1191,13 @@ is dispatched. Listeners receive a
 .. _`RingCentral`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RingCentral/README.md
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
+.. _`SMS Proxima`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsProxima/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
 .. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
-.. _`Seven.io`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sevenio/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
 .. _`Sipgate`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sipgate/README.md
 .. _`Slack`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Slack/README.md
-.. _`Sms77`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sms77/README.md
 .. _`SmsBiuras`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsBiuras/README.md
 .. _`Smsbox`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsbox/README.md
 .. _`Smsapi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsapi/README.md
@@ -1344,11 +1208,13 @@ is dispatched. Listeners receive a
 .. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sweego/README.md
 .. _`Telegram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telegram/README.md
 .. _`Telnyx`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telnyx/README.md
+.. _`Threads`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Threads/README.md
 .. _`TurboSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/TurboSms/README.md
 .. _`Twilio`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twilio/README.md
 .. _`Twitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twitter/README.md
 .. _`Unifonic`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Unifonic/README.md
 .. _`Vonage`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Vonage/README.md
+.. _`WhatsApp`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/WhatsApp/README.md
 .. _`Yunpian`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Yunpian/README.md
 .. _`Zendesk`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Zendesk/README.md
 .. _`Zulip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Zulip/README.md

@@ -96,12 +96,6 @@ If you prefer to store production logs in a file, set the ``path`` option of you
 log handler(s) to the desired file path (e.g. ``var/log/prod.log``). Monolog
 creates the log directory automatically if it doesn't exist.
 
-.. versionadded:: 7.3
-
-    Deferring the log directory creation to Monolog was introduced in Symfony 7.3.
-    Previously, the Kernel always created the log directory at build time, even
-    when not using file-based logging (which caused issues on read-only filesystems).
-
 Handlers: Writing Logs to Different Locations
 ---------------------------------------------
 
@@ -140,51 +134,31 @@ to write logs using the :phpfunction:`syslog` function:
                     # log error-level messages and higher
                     level: error
 
-    .. code-block:: xml
-
-        <!-- config/packages/prod/monolog.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <monolog:config>
-                <!-- this "file_log" key could be anything -->
-                <monolog:handler name="file_log"
-                    type="stream"
-                    path="%kernel.logs_dir%/%kernel.environment%.log"
-                    level="debug"/><!-- log *all* messages (debug is lowest level) -->
-
-                <monolog:handler name="syslog_handler"
-                    type="syslog"
-                    level="error"/><!-- log error-level messages and higher -->
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        use Psr\Log\LogLevel;
-        use Symfony\Config\MonologConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog): void {
-            // this "file_log" key could be anything
-            $monolog->handler('file_log')
-                ->type('stream')
-                // log to var/logs/(environment).log
-                ->path('%kernel.logs_dir%/%kernel.environment%.log')
-                // log *all* messages (LogLevel::DEBUG is lowest level)
-                ->level(LogLevel::DEBUG);
-
-            $monolog->handler('syslog_handler')
-                ->type('syslog')
-                // log error-level messages and higher
-                ->level(LogLevel::ERROR);
-        };
+        return App::config([
+            'monolog' => [
+                // this "file_log" key could be anything
+                'handlers' => [
+                    // this "file_log" key could be anything
+                    'file_log' => [
+                        'type' => 'stream',
+                        // log to var/logs/(environment).log
+                        'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                        // log *all* messages (LogLevel::DEBUG is lowest level)
+                        'level' => 'debug',
+                    ],
+                    'syslog_handler' => [
+                        'type' => 'syslog',
+                        // log error-level messages and higher
+                        'level' => 'error',
+                    ],
+                ],
+            ],
+        ]);
 
 This defines a stack of handlers. Each handler can define a ``priority``
 (default ``0``) to control its position in the stack. Handlers with a higher
@@ -206,49 +180,25 @@ which they are defined:
                     type: syslog
                     priority: 10 # called first
 
-    .. code-block:: xml
-
-        <!-- config/packages/prod/monolog.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <monolog:config>
-                <monolog:handler name="file_log"
-                    type="stream"
-                    path="%kernel.logs_dir%/%kernel.environment%.log"
-                />
-
-                <!-- called first -->
-                <monolog:handler name="syslog_handler"
-                    type="syslog"
-                    priority="10"
-                />
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        use Psr\Log\LogLevel;
-        use Symfony\Config\MonologConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog): void {
-            $monolog->handler('file_log')
-                ->type('stream')
-                ->path('%kernel.logs_dir%/%kernel.environment%.log')
-            ;
-
-            $monolog->handler('syslog_handler')
-                ->type('syslog')
-                ->priority(10) // called first
-            ;
-        };
+        return App::config([
+            'monolog' => [
+                'handlers' => [
+                    'file_log' => [
+                        'type' => 'stream',
+                        'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                    ],
+                    'syslog_handler' => [
+                        'type' => 'syslog',
+                        'priority' => 10, // called first
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -311,68 +261,33 @@ one of the messages reaches an ``action_level``. Take this example:
                     type: syslog
                     level: error
 
-    .. code-block:: xml
-
-        <!-- config/packages/prod/monolog.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <monolog:config>
-                <!-- if *one* log is error or higher, pass *all* to file_log -->
-                <monolog:handler name="filter_for_errors"
-                    type="fingers_crossed"
-                    action-level="error"
-                    handler="file_log"
-                />
-
-                <!-- now passed *all* logs, but only if one log is error or higher -->
-                <monolog:handler name="file_log"
-                    type="stream"
-                    path="%kernel.logs_dir%/%kernel.environment%.log"
-                    level="debug"
-                />
-
-                <!-- still passed *all* logs, and still only logs error or higher -->
-                <monolog:handler name="syslog_handler"
-                    type="syslog"
-                    level="error"
-                />
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        use Psr\Log\LogLevel;
-        use Symfony\Config\MonologConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog): void {
-            $monolog->handler('filter_for_errors')
-                ->type('fingers_crossed')
-                // if *one* log is error or higher, pass *all* to file_log
-                ->actionLevel(LogLevel::ERROR)
-                ->handler('file_log')
-            ;
-
-            // now passed *all* logs, but only if one log is error or higher
-            $monolog->handler('file_log')
-                ->type('stream')
-                ->path('%kernel.logs_dir%/%kernel.environment%.log')
-                ->level(LogLevel::DEBUG)
-            ;
-
-            // still passed *all* logs, and still only logs error or higher
-            $monolog->handler('syslog_handler')
-                ->type('syslog')
-                ->level(LogLevel::ERROR)
-            ;
-        };
+        return App::config([
+            'monolog' => [
+                'handlers' => [
+                    'filter_for_errors' => [
+                        'type' => 'fingers_crossed',
+                        // if *one* log is error or higher, pass *all* to file_log
+                        'action_level' => 'error',
+                        'handler' => 'file_log',
+                    ],
+                    // now passed *all* logs, but only if one log is error or higher
+                    'file_log' => [
+                        'type' => 'stream',
+                        'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                    ],
+                    // still passed *all* logs, and still only logs error or higher
+                    'syslog_handler' => [
+                        'type' => 'syslog',
+                        'level' => 'error',
+                    ],
+                ],
+            ],
+        ]);
 
 Now, if even one log entry has a ``LogLevel::ERROR`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that
@@ -418,45 +333,25 @@ option of your handler to ``rotating_file``:
                     # defaults to zero, which means infinite files
                     max_files: 10
 
-    .. code-block:: xml
-
-        <!-- config/packages/prod/monolog.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <monolog:config>
-                <!-- "max-files": max number of log files to keep
-                     defaults to zero, which means infinite files -->
-                <monolog:handler name="main"
-                    type="rotating_file"
-                    path="%kernel.logs_dir%/%kernel.environment%.log"
-                    level="debug"
-                    max-files="10"
-                />
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        use Psr\Log\LogLevel;
-        use Symfony\Config\MonologConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog): void {
-            $monolog->handler('main')
-                ->type('rotating_file')
-                ->path('%kernel.logs_dir%/%kernel.environment%.log')
-                ->level(LogLevel::DEBUG)
-                // max number of log files to keep
-                // defaults to zero, which means infinite files
-                ->maxFiles(10);
-        };
+        return App::config([
+            'monolog' => [
+                'handlers' => [
+                    'main' => [
+                        'type' => 'rotating_file',
+                        'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                        'level' => 'debug',
+                        // max number of log files to keep
+                        // defaults to zero, which means infinite files
+                        'max_files' => 10,
+                    ],
+                ],
+            ],
+        ]);
 
 Using a Logger inside a Service
 -------------------------------

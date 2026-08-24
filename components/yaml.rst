@@ -415,11 +415,6 @@ giving the enumeration FQCN::
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = ['bar' => ['foo', 'bar']];
 
-.. versionadded:: 7.1
-
-    The support for using the enum FQCN without specifying a case
-    was introduced in Symfony 7.1.
-
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -477,10 +472,6 @@ use the ``DUMP_NULL_AS_EMPTY`` flag to dump null values as empty strings::
     $dumped = Yaml::dump(['foo' => null], 2, 4, Yaml::DUMP_NULL_AS_EMPTY);
     // foo:
 
-.. versionadded:: 7.3
-
-    The ``DUMP_NULL_AS_EMPTY`` flag was introduced in Symfony 7.3.
-
 Dumping Numeric Keys as Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -510,10 +501,6 @@ if they are reserved words or contain newlines and spaces). Use the
     ], 2, 4, Yaml::DUMP_FORCE_DOUBLE_QUOTES_ON_VALUES);
     // "foo": "bar", "some foo": "some bar", "x": 3.14, "y": true, "z": null
 
-.. versionadded:: 7.3
-
-    The ``Yaml::DUMP_FORCE_DOUBLE_QUOTES_ON_VALUES`` flag was introduced in Symfony 7.3.
-
 Dumping Collection of Maps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -541,10 +528,6 @@ use the ``Yaml::DUMP_COMPACT_NESTED_MAPPING`` flag:
       - name: Jupiter
         distance: 778500000
 
-.. versionadded:: 7.3
-
-    The ``Yaml::DUMP_COMPACT_NESTED_MAPPING`` flag was introduced in Symfony 7.3.
-
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
@@ -563,7 +546,7 @@ Create a console application with ``lint:yaml`` as its only command::
     use Symfony\Component\Console\Application;
     use Symfony\Component\Yaml\Command\LintCommand;
 
-    (new Application('yaml/lint'))
+    new Application('yaml/lint')
         ->add(new LintCommand())
         ->getApplication()
         ->setDefaultCommand('lint:yaml', true)

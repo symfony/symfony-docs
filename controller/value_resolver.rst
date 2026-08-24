@@ -164,10 +164,6 @@ In addition, some components, bridges and official bundles provide other value r
     user has a user class not matching the type-hinted class, an ``AccessDeniedException``
     is thrown by the resolver to prevent access to the controller.
 
-    .. versionadded:: 7.4
-
-        Support for union types in ``#[CurrentUser]`` was introduced in Symfony 7.4.
-
 :class:`Symfony\\Component\\Security\\Http\\Controller\\SecurityTokenValueResolver`
     Injects the object that represents the current logged in token if type-hinted
     with ``TokenInterface`` or a class extending it.
@@ -195,8 +191,15 @@ In addition, some components, bridges and official bundles provide other value r
             }
         }
 
-    To learn more about the use of the ``EntityValueResolver``, see the dedicated
-    section :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>`.
+    See :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>` for
+    all the ways to customize how entities are resolved from route parameters.
+
+    .. versionadded:: 8.0
+
+        Automatic mapping of Doctrine entities to controller arguments has been removed.
+        Use the ``#[MapEntity]`` attribute or the route mapping syntax (``{param:argument}``)
+        as explained in the :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>`
+        section.
 
 PSR-7 Objects Resolver:
     Injects a Symfony HttpFoundation ``Request`` object created from a PSR-7 object
@@ -371,27 +374,6 @@ but you can set it yourself to change its ``priority`` or ``name`` attributes.
                         name: booking_id
                         priority: 150
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... be sure autowiring is enabled -->
-                <defaults autowire="true"/>
-                <!-- ... -->
-
-                <service id="App\ValueResolver\BookingIdValueResolver">
-                    <tag name="booking_id" priority="150">controller.argument_value_resolver</tag>
-                </service>
-            </services>
-
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -399,13 +381,16 @@ but you can set it yourself to change its ``priority`` or ``name`` attributes.
 
         use App\ValueResolver\BookingIdValueResolver;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
-            $services = $containerConfigurator->services();
-
-            $services->set(BookingIdValueResolver::class)
-                ->tag('controller.argument_value_resolver', ['name' => 'booking_id', 'priority' => 150])
-            ;
-        };
+        return App::config([
+            'services' => [
+                // ...
+                BookingIdValueResolver::class => [
+                    'tags' => [
+                        ['controller.argument_value_resolver' => ['name' => 'booking_id', 'priority' => 150]],
+                    ],
+                ],
+            ],
+        ]);
 
 While adding a priority is optional, it's recommended to add one to make sure
 the expected value is injected. The built-in ``RequestAttributeValueResolver``,

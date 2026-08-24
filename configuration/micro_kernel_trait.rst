@@ -168,6 +168,42 @@ that define your bundles, your services and your routes:
     as shown above. That's why this method is commonly used only to load external
     routing files (e.g. from bundles) as shown below.
 
+Restricting Allowed Environments
+--------------------------------
+
+The ``MicroKernelTrait`` provides a ``getAllowedEnvs()`` method to restrict
+which :ref:`configuration environment <configuration-environments>` names are
+valid for your application. By default, it returns an empty array, meaning any
+environment name is allowed.
+
+Override ``getAllowedEnvs()`` to return a non-empty array and the kernel will
+throw an ``InvalidArgumentException`` at boot time if the current environment
+(typically set via the ``APP_ENV`` environment variable) is not in the list::
+
+    // src/Kernel.php
+    namespace App;
+
+    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+    class Kernel extends BaseKernel
+    {
+        use MicroKernelTrait;
+
+        private function getAllowedEnvs(): array
+        {
+            return ['dev', 'prod', 'test'];
+        }
+    }
+
+With this configuration, booting the kernel with ``APP_ENV=staging`` throws
+an exception. This helps catch typos or misconfiguration early, especially in
+deployment pipelines.
+
+.. versionadded:: 8.1
+
+    The ``getAllowedEnvs()`` method was introduced in Symfony 8.1.
+
 Adding Interfaces to "Micro" Kernel
 -----------------------------------
 
@@ -311,11 +347,6 @@ Now it looks like this::
     }
 
 
-.. versionadded:: 7.3
-
-    The ``wdt.php`` and ``profiler.php`` files were introduced in Symfony 7.3.
-    Previously, you had to import ``wdt.xml`` and ``profiler.xml``
-
 Before continuing, run this command to add support for the new dependencies:
 
 .. code-block:: terminal
@@ -363,33 +394,17 @@ because the configuration started to get bigger:
             secret: SOME_SECRET
             profiler: { only_exceptions: false }
 
-    .. code-block:: xml
-
-        <!-- config/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config secret="SOME_SECRET">
-                <framework:profiler only-exceptions="false"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework
-                ->secret('SOME_SECRET')
-                ->profiler()
-                    ->onlyExceptions(false)
-            ;
-        };
+        return App::config([
+            'framework' => [
+            'secret' => 'SOME_SECRET',
+                'profiler' => ['only_exceptions' => false],
+            ],
+        ]);
 
 This also loads attribute routes from an ``src/Controller/`` directory, which
 has one file in it::

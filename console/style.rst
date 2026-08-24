@@ -186,11 +186,6 @@ Content Methods
             ],
         ]);
 
-.. versionadded:: 7.3
-
-    The ``SymfonyStyle::tree()`` and the ``SymfonyStyle::createTree()`` methods
-    were introduced in Symfony 7.3.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createTree`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\TreeHelper`
     styled according to the Symfony Style Guide, which allows you to use
@@ -260,6 +255,13 @@ Progress Bar Methods
         // displays a 100-step length progress bar
         $io->progressStart(100);
 
+        // displays a 100-step progress bar with a custom format
+        $io->progressStart(100, ' %current%/%max% [%bar%] %memory:6s%');
+
+    .. versionadded:: 8.1
+
+        The ``$format`` argument of ``progressStart()`` was introduced in Symfony 8.1.
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::progressAdvance`
     It makes the progress bar advance the given number of steps (or ``1`` step
     if no argument is passed)::
@@ -286,9 +288,40 @@ Progress Bar Methods
             // ... do some work
         }
 
+    Pass a custom format string as the third argument to override the default
+    progress bar appearance::
+
+        foreach ($io->progressIterate($iterable, null, ' %current%/%max% [%bar%] %memory:6s%') as $value) {
+            // ... do some work
+        }
+
+    .. versionadded:: 8.1
+
+        The ``$format`` argument of ``progressIterate()`` was introduced in Symfony 8.1.
+
+    .. seealso::
+
+        See the :ref:`custom formats <progressbar-custom-formats>` documentation for
+        the list of all available placeholders to use in your format strings.
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
-    styled according to the Symfony Style Guide.
+    styled according to the Symfony Style Guide::
+
+        $progressBar = $io->createProgressBar(100);
+
+    Pass a format string as the second argument to use a custom progress bar format::
+
+        $progressBar = $io->createProgressBar(100, ' %current%/%max% [%bar%] %memory:6s%');
+
+    .. versionadded:: 8.1
+
+        The ``$format`` argument of ``createProgressBar()`` was introduced in Symfony 8.1.
+
+    .. seealso::
+
+        See the :ref:`custom formats <progressbar-custom-formats>` documentation for
+        the list of all available placeholders to use in your format strings.
 
 .. _symfony-style-questions:
 
@@ -365,6 +398,20 @@ User Input Methods
     and 2)::
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::askFile`
+    It asks the user to provide a file (via paste or file path) and returns
+    an ``InputFile`` instance::
+
+        $file = $io->askFile('Provide an image:');
+
+    You can restrict the allowed MIME types by passing them as the second argument::
+
+        $file = $io->askFile('Provide an image:', ['image/png', 'image/jpeg']);
+
+    .. versionadded:: 8.1
+
+        The ``askFile()`` method was introduced in Symfony 8.1.
 
 .. _symfony-style-blocks:
 
@@ -445,6 +492,40 @@ Result Methods
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
         ]);
+
+Outline Methods
+~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The outline block methods were introduced in Symfony 8.1.
+
+The outline methods are alternatives to the result methods described above.
+Instead of filling the entire line with a background color, they render a
+colored border around the message while keeping the default text color. This
+improves readability on terminals with custom color schemes, dark or light
+backgrounds, or high contrast accessibility settings.
+
+Six convenience methods mirror the existing result methods::
+
+    $io->outlineSuccess('Operation completed successfully.');
+    $io->outlineError('Something went wrong.');
+    $io->outlineWarning('Proceed with caution.');
+    $io->outlineNote('This is a note.');
+    $io->outlineInfo('Informational message.');
+    $io->outlineCaution('Dangerous operation ahead!');
+
+A lower-level :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::outlineBlock`
+method is also available for custom titles and colors::
+
+    // custom title and color
+    $io->outlineBlock('Deployment finished in 3.2s', 'Deploy', 'fg=cyan');
+
+    // multiple messages
+    $io->outlineBlock(['Step 1 done.', 'Step 2 done.', 'Step 3 done.'], 'Build', 'fg=blue');
+
+    // plain bordered message without a title
+    $io->outlineBlock('Cache cleared successfully.');
 
 Configuring the Default Styles
 ------------------------------

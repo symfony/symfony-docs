@@ -26,63 +26,28 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                         # following line to always enable it.
                         #always_remember_me: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-
-                    <!-- secret: default to "%kernel.secret%"
-                         lifetime: 604800 is 1 week in seconds -->
-                    <remember-me
-                        secret="%kernel.secret%"
-                        lifetime="604800"
-                    />
-                    <!-- by default, the feature is enabled by checking a checkbox
-                         in the login form (see below), add always-remember-me="true"
-                         to always enable it. -->
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
+        return App::config([
+            'security' => [
                 // ...
-                ->rememberMe()
-                    ->secret('%kernel.secret%')
-                    ->lifetime(604800) // 1 week in seconds
-
-                    // by default, the feature is enabled by checking a
-                    // checkbox in the login form (see below), uncomment
-                    // the following line to always enable it.
-                    // ->alwaysRememberMe(true)
-            ;
-        };
-
-.. versionadded:: 7.2
-
-    The ``secret`` option defaults to ``%kernel.secret%`` and no longer
-    needs to be set explicitly. However, the ``APP_SECRET`` environment
-    variable **must** still be defined in your environment (especially in
-    production), as it is used as the value for ``kernel.secret``.
+                'firewalls' => [
+                    'main' => [
+                        'remember_me' => [
+                            'secret' => param('kernel.secret'),
+                            'lifetime' => 604800, // 1 week in seconds
+                            // by default, the feature is enabled by checking a
+                            // checkbox in the login form (see below), uncomment the
+                            // following line to always enable it.
+                            // 'always_remember_me' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 After enabling the ``remember_me`` system in the configuration, there are a
 couple more things to do before remember me works correctly:
@@ -177,45 +142,23 @@ allow users to opt-out. In these cases, you can use the
                         # ...
                         always_remember_me: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-
-                    <remember-me
-                        always-remember-me="true"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
+        return App::config([
+            'security' => [
             // ...
-            $security->firewall('main')
-                // ...
-                ->rememberMe()
-                    // ...
-                    ->alwaysRememberMe(true)
-            ;
-        };
+                'firewalls' => [
+                    'main' => [
+                        'remember_me' => [
+                            'always_remember_me' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Now, no request parameter is checked and each successful authentication
 will produce a remember me cookie.
@@ -338,46 +281,22 @@ are fetched from the user object using the
                         # ...
                         signature_properties: ['password', 'updatedAt']
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-
-                    <remember-me>
-                        <signature-property>password</signature-property>
-                        <signature-property>updatedAt</signature-property>
-                    </remember-me>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
-                // ...
-                ->rememberMe()
-                    // ...
-                    ->signatureProperties(['password', 'updatedAt'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'remember_me' => [
+                            'signature_properties' => ['password', 'updatedAt'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 In this example, the remember me cookie will no longer be considered valid
 if the ``updatedAt``, password or user identifier for this user changes.
@@ -421,47 +340,24 @@ You can enable the doctrine token provider using the ``doctrine`` setting:
                         token_provider:
                             doctrine: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-
-                    <remember-me>
-                        <token-provider doctrine="true"/>
-                    </remember-me>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
-                // ...
-                ->rememberMe()
-                    // ...
-                    ->tokenProvider([
-                        'doctrine' => true,
-                    ])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'remember_me' => [
+                            'token_provider' => [
+                                'doctrine' => true,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 This also instructs Doctrine to create a table for the remember me tokens.
 If you use the DoctrineMigrationsBundle, you can create a new migration for
@@ -508,48 +404,27 @@ Then, configure the service ID of your custom token provider as ``service``:
                         token_provider:
                             service: App\Security\RememberMe\CustomTokenProvider
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-
-                    <remember-me>
-                        <token-provider service="App\Security\RememberMe\CustomTokenProvider"/>
-                    </remember-me>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\RememberMe\CustomTokenProvider;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
+        use App\Security\RememberMe\CustomTokenProvider;
+
+        return App::config([
+            'security' => [
                 // ...
-                ->rememberMe()
-                    // ...
-                    ->tokenProvider([
-                        'service' => CustomTokenProvider::class,
-                    ])
-            ;
-        };
+                'firewalls' => [
+                    'main' => [
+                        'remember_me' => [
+                            'token_provider' => [
+                                'service' => CustomTokenProvider::class,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _security-remember-me-authorization:
 

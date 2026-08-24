@@ -128,10 +128,6 @@ the fragment in a valid parent structure::
     replaced by the original response content. The wrapped content is only
     used for parsing and does not modify the actual HTTP response.
 
-.. versionadded:: 7.4
-
-    The ability to wrap response content before parsing was introduced in Symfony 7.4.
-
 Clicking Links
 ~~~~~~~~~~~~~~
 
@@ -381,10 +377,6 @@ history::
     if (!$client->getHistory()->isLastPage()) {
         $crawler = $client->forward();
     }
-
-.. versionadded:: 7.4
-
-    The ``isFirstPage()`` and ``isLastPage()`` methods were introduced in Symfony 7.4.
 
 You can delete the client's history with the ``restart()`` method. This will
 also delete all the cookies::

@@ -1,10 +1,6 @@
 The JsonPath Component
 ======================
 
-.. versionadded:: 7.3
-
-    The JsonPath component was introduced in Symfony 7.3.
-
 The JsonPath component lets you query and extract data from JSON structures.
 It implements the `RFC 9535 – JSONPath`_ standard, allowing you to navigate
 complex JSON data.
@@ -142,7 +138,7 @@ escaping of keys and values, preventing syntax errors::
 
     use Symfony\Component\JsonPath\JsonPath;
 
-    $path = (new JsonPath())
+    $path = new JsonPath()
         ->key('store') // selects the 'store' key
         ->key('book')  // then the 'book' key
         ->index(1);    // then the second item (indexes start at 0)
@@ -159,20 +155,20 @@ methods to build your query:
   Adds a key selector. The key name is properly escaped::
 
       // creates the path '$["key\"with\"quotes"]'
-      $path = (new JsonPath())->key('key"with"quotes');
+      $path = new JsonPath()->key('key"with"quotes');
 
 * :method:`Symfony\\Component\\JsonPath\\JsonPath::deepScan`
   Adds the descendant operator ``..`` to perform a recursive search from the
   current point in the path::
 
       // get all prices in the store: '$["store"]..["price"]'
-      $path = (new JsonPath())->key('store')->deepScan()->key('price');
+      $path = new JsonPath()->key('store')->deepScan()->key('price');
 
 * :method:`Symfony\\Component\\JsonPath\\JsonPath::all`
   Adds the wildcard operator ``[*]`` to select all items in an array or object::
 
         // creates the path '$["store"]["book"][*]'
-        $path = (new JsonPath())->key('store')->key('book')->all();
+        $path = new JsonPath()->key('store')->key('book')->all();
 
 * :method:`Symfony\\Component\\JsonPath\\JsonPath::index`
   Adds an array index selector. Index numbers start at ``0``.
@@ -182,25 +178,25 @@ methods to build your query:
   Shortcuts for ``index(0)`` and ``index(-1)`` respectively::
 
       // get the last book: '$["store"]["book"][-1]'
-      $path = (new JsonPath())->key('store')->key('book')->last();
+      $path = new JsonPath()->key('store')->key('book')->last();
 
 * :method:`Symfony\\Component\\JsonPath\\JsonPath::slice`
   Adds an array slice selector ``[start:end:step]``::
 
       // get books from index 1 up to (but not including) index 3
       // creates the path '$["store"]["book"][1:3]'
-      $path = (new JsonPath())->key('store')->key('book')->slice(1, 3);
+      $path = new JsonPath()->key('store')->key('book')->slice(1, 3);
 
       // get every second book from the first four books
       // creates the path '$["store"]["book"][0:4:2]'
-      $path = (new JsonPath())->key('store')->key('book')->slice(0, 4, 2);
+      $path = new JsonPath()->key('store')->key('book')->slice(0, 4, 2);
 
 * :method:`Symfony\\Component\\JsonPath\\JsonPath::filter`
   Adds a filter expression. The expression string is the part that goes inside
   the ``?()`` syntax::
 
       // get expensive books: '$["store"]["book"][?(@.price > 20)]'
-      $path = (new JsonPath())
+      $path = new JsonPath()
           ->key('store')
           ->key('book')
           ->filter('@.price > 20');
@@ -212,6 +208,127 @@ For a complete overview of advanced operators like wildcards and functions withi
 filters, refer to the `Querying with Expressions`_ section above. All these
 features are supported and can be combined with the programmatic builder when
 appropriate (e.g., inside a ``filter()`` expression).
+
+.. _json-path-custom-functions:
+
+Custom Functions
+----------------
+
+.. versionadded:: 8.1
+
+    Custom function support was introduced in Symfony 8.1.
+
+The JSONPath specification allows you to `define custom functions`_. Symfony
+supports them as well, so you can register your own functions for use in filter
+expressions.
+
+First, define the function and register it as a JSONPath function:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        use Symfony\Component\JsonPath\Attribute\AsJsonPathFunction;
+
+        #[AsJsonPathFunction('upper')]
+        final class UppercaseFunction
+        {
+            public function __invoke(mixed $value): ?string
+            {
+                return \is_string($value) ? strtoupper($value) : null;
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\JsonPath\JsonCrawler;
+
+        $upper = static fn (mixed $value): ?string => \is_string($value) ? strtoupper($value) : null;
+
+        // create a service locator with the custom function
+        $functionsLocator = new class(['upper' => $upper]) implements \Psr\Container\ContainerInterface {
+            public function __construct(private array $functions) {}
+            public function get(string $id): mixed { return $this->functions[$id]; }
+            public function has(string $id): bool { return isset($this->functions[$id]); }
+        };
+
+        $crawler = new JsonCrawler('{"items": [{"title": "hello"}, {"title": "world"}]}', $functionsLocator);
+
+Then use it in your JsonPath expressions like any built-in function:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        use Symfony\Component\JsonPath\JsonPathCrawlerInterface;
+
+        class BookController
+        {
+            public function index(JsonPathCrawlerInterface $crawlerFactory): Response
+            {
+                $crawler = $crawlerFactory->crawl($json);
+
+                $result = $crawler->find('$.items[?upper(@.title) == "HELLO"]');
+
+                // ...
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        $result = $crawler->find('$.items[?upper(@.title) == "HELLO"]');
+        // returns [{"title": "hello"}]
+
+        // you can also use the JsonPathCrawler factory, which creates
+        // pre-configured JsonCrawlerInterface instances
+        use Symfony\Component\JsonPath\JsonPathCrawler;
+
+        $crawlerFactory = new JsonPathCrawler($functionsLocator);
+        $crawler = $crawlerFactory->crawl('{"items": [{"title": "hello"}]}');
+
+The ``#[AsJsonPathFunction]`` attribute accepts two arguments:
+
+``name``
+    The function name used in JsonPath expressions (required).
+
+``returnType``
+    The return type of the function (default: ``FunctionReturnType::Value``).
+    This controls how the function can be used in filter expressions, following
+    the `RFC 9535 type system`_:
+
+    * ``FunctionReturnType::Value``: the function returns a JSON value that can
+      be used in comparisons (``==``, ``<``, ``>``, etc.) but not as a standalone
+      filter test;
+    * ``FunctionReturnType::Logical``: the function returns a boolean result
+      that can be used as a standalone filter test (e.g.
+      ``$.items[?is_valid(@.field)]``) but not in comparisons;
+    * ``FunctionReturnType::Nodes``: the function returns a node list that can
+      be used as a filter test but not in comparisons.
+
+For example::
+
+    use Symfony\Component\JsonPath\Attribute\AsJsonPathFunction;
+    use Symfony\Component\JsonPath\FunctionReturnType;
+
+    #[AsJsonPathFunction('is_positive', returnType: FunctionReturnType::Logical)]
+    final class IsPositiveFunction
+    {
+        public function __invoke(mixed $value): bool
+        {
+            return is_numeric($value) && $value > 0;
+        }
+    }
+
+    // usage: $.items[?is_positive(@.value)]
+
+The number of required arguments is automatically derived from the ``__invoke()``
+method signature.
+
+.. note::
+
+    Custom functions can override built-in functions (``length``, ``count``,
+    ``match``, ``search``, ``value``). When a custom function has the same name
+    as a built-in one, the custom function takes precedence.
 
 Testing with JSON Assertions
 ----------------------------
@@ -327,3 +444,5 @@ Example of handling errors::
     }
 
 .. _`RFC 9535 – JSONPath`: https://datatracker.ietf.org/doc/html/rfc9535
+.. _`define custom functions`: https://datatracker.ietf.org/doc/html/rfc9535#name-function-extensions
+.. _`RFC 9535 type system`: https://datatracker.ietf.org/doc/html/rfc9535#name-type-system-for-function-ex

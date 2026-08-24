@@ -132,10 +132,6 @@ precision (default ``1``) of the result::
     Helper::formatTime(172799, 4);     // 1 d, 23 h, 59 min, 59 s
     Helper::formatTime(172799.056, 5); // 1 d, 23 h, 59 min, 59 s, 56 ms
 
-.. versionadded:: 7.3
-
-    Support for formatting up to milliseconds was introduced in Symfony 7.3.
-
 Formatting Memory
 -----------------
 

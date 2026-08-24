@@ -14,7 +14,7 @@ it is possible to remove this need by declaring a single command application::
     use Symfony\Component\Console\Output\OutputInterface;
     use Symfony\Component\Console\SingleCommandApplication;
 
-    (new SingleCommandApplication())
+    new SingleCommandApplication()
         ->setName('My Super Command') // Optional
         ->setVersion('1.0.0') // Optional
         ->setCode(function (OutputInterface $output, #[Argument] string $foo = 'The directory', #[Option] string $bar = ''): int {

@@ -84,10 +84,6 @@ The format of the ULID to validate. The following formats are available:
 * ``Ulid::FORMAT_BASE_58``: The ULID is encoded in `base58`_
 * ``Ulid::FORMAT_RFC4122``: The ULID is encoded in the `RFC 4122 format`_
 
-.. versionadded:: 7.2
-
-    The ``format`` option was introduced in Symfony 7.2.
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``

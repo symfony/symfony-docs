@@ -1,10 +1,6 @@
 Streaming JSON
 ==============
 
-.. versionadded:: 7.3
-
-    The JsonStreamer component was introduced in Symfony 7.3.
-
 Symfony can encode PHP data structures to JSON streams and decode JSON streams
 back into PHP data structures.
 
@@ -346,6 +342,44 @@ structure::
 
     $catShelter = $jsonStreamReader->read($json, $type); // will be populated with Cat instances
 
+Default Options
+---------------
+
+You can configure default options for both the stream writer and reader using
+the ``framework.json_streamer.default_options`` configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            json_streamer:
+                default_options:
+                    include_null_properties: true
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->jsonStreamer()
+                ->defaultOption('include_null_properties', true)
+            ;
+        };
+
+The ``include_null_properties`` option controls whether properties with ``null``
+values are included in the encoded JSON output. When set to ``true``, properties
+with ``null`` values are included; when ``false`` (the default), they are omitted.
+
+You can also pass custom options that will be available in your value transformers
+via the ``$options`` argument.
+
+.. versionadded:: 8.1
+
+    The ``default_options`` configuration was introduced in Symfony 8.1.
+
 Configuring Encoding/Decoding
 -----------------------------
 
@@ -370,9 +404,107 @@ Pass the ``include_null_properties`` option to include them explicitly::
     // Without the option: {"name": "Garfield"}
     // With the option:    {"name": "Garfield", "color": null}
 
-.. versionadded:: 7.4
+Configuring DateTime Timezone
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The ``include_null_properties`` option was introduced in Symfony 7.4.
+When encoding or decoding ``DateTimeInterface`` objects, you can convert the
+timezone by passing the ``date_time_timezone`` option as a string or a
+``\DateTimeZone`` instance::
+
+    use App\Dto\Event;
+    use Symfony\Component\TypeInfo\Type;
+
+    // ...
+
+    // encoding: converts the timezone before formatting
+    $json = $jsonStreamWriter->write($event, Type::object(Event::class), [
+        'date_time_timezone' => 'Asia/Tokyo',
+    ]);
+
+    // decoding: applies the timezone when parsing datetime strings
+    $event = $jsonStreamReader->read($json, Type::object(Event::class), [
+        'date_time_timezone' => new \DateTimeZone('Asia/Tokyo'),
+    ]);
+
+You can also customize the datetime format using the ``date_time_format`` option::
+
+    $json = $jsonStreamWriter->write($event, Type::object(Event::class), [
+        'date_time_format' => 'Y/m/d H:i:s',
+        'date_time_timezone' => 'Europe/Paris',
+    ]);
+
+.. versionadded:: 8.1
+
+    The ``date_time_timezone`` option was introduced in Symfony 8.1.
+
+Encoding BcMath and GMP Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for :phpclass:`BcMath\\Number` and :phpclass:`GMP` value objects was
+    introduced in Symfony 8.2.
+
+JsonStreamer natively encodes and decodes :phpclass:`BcMath\\Number` and
+:phpclass:`GMP` value objects (similar to the Serializer's
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NumberNormalizer`). They are
+written as JSON strings and read back into the matching value object::
+
+    use Symfony\Component\TypeInfo\Type;
+
+    // ...
+
+    $json = $jsonStreamWriter->write(new \BcMath\Number('1.23'), Type::object(\BcMath\Number::class));
+    // $json = '"1.23"'
+
+    $number = $jsonStreamReader->read('"1.23"', Type::object(\BcMath\Number::class));
+    // $number = new \BcMath\Number('1.23')
+
+Encoding UUID and ULID Objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for :class:`Symfony\\Component\\Uid\\Uuid` and
+    :class:`Symfony\\Component\\Uid\\Ulid` value objects was introduced in
+    Symfony 8.2.
+
+JsonStreamer encodes and decodes :class:`Symfony\\Component\\Uid\\Uuid`
+and :class:`Symfony\\Component\\Uid\\Ulid` objects (including their subclasses
+such as ``UuidV7``, ``NilUuid`` or ``MaxUlid``) as JSON strings::
+
+    use Symfony\Component\TypeInfo\Type;
+    use Symfony\Component\Uid\Uuid;
+
+    // ...
+
+    $uuid = Uuid::fromString('019fa28e-bfce-708e-a3d5-825064aec727');
+
+    $json = $jsonStreamWriter->write($uuid, Type::object(Uuid::class));
+    // $json = '"019fa28e-bfce-708e-a3d5-825064aec727"'
+
+By default, UIDs use their canonical representation. Use the ``uid_format``
+option to select a different format::
+
+    $json = $jsonStreamWriter->write($uuid, Type::object(Uuid::class), [
+        // you can also use 'base32', 'rfc4122' and 'canonical'
+        'uid_format' => 'base58',
+    ]);
+    // $json = '"1CdSCTDeHjTdd2uB6mig9L"'
+
+The ``uid_format`` option only affects encoding. When decoding, JsonStreamer
+accepts every representation recognized by the Uid component. UUIDs are
+restored as their version-specific class (such as ``UuidV7``), so custom
+``Uuid`` or ``Ulid`` subclasses cannot be restored as their original type.
+
+.. warning::
+
+    Declare UID properties as ``Uuid``, ``Ulid`` or an appropriate subclass,
+    but never as ``AbstractUid``. JsonStreamer has no transformer for
+    ``AbstractUid`` and encodes it as an empty JSON object. This differs from
+    the Serializer's
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`, which
+    supports ``AbstractUid``.
 
 .. _json-streamer-configure-encoded-name:
 
@@ -535,16 +667,15 @@ Transforming Value Using Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When callables are not enough, you can use a service implementing the
-:class:`Symfony\\Component\\JsonStreamer\\ValueTransformer\\ValueTransformerInterface`::
+:class:`Symfony\\Component\\JsonStreamer\\Transformer\\PropertyValueTransformerInterface`::
 
     // src/Transformer/DogUrlTransformer.php
     namespace App\Transformer;
 
-    use Symfony\Component\JsonStreamer\ValueTransformer\ValueTransformerInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\TypeInfo\Type;
 
-    class DogUrlTransformer implements ValueTransformerInterface
+    class DogUrlTransformer implements \Symfony\Component\JsonStreamer\Transformer\PropertyValueTransformerInterface
     {
         public function __construct(
             private UrlGeneratorInterface $urlGenerator,
@@ -577,10 +708,6 @@ When callables are not enough, you can use a service implementing the
     option called ``_current_object`` which gives access to the object holding
     the current property (or ``null`` if there's none).
 
-    .. versionadded:: 7.4
-
-        The ``_current_object`` option was introduced in Symfony 7.4.
-
 To use this transformer in a class, configure the ``#[ValueTransformer]`` attribute::
 
     // src/Dto/Dog.php
@@ -603,6 +730,108 @@ To use this transformer in a class, configure the ``#[ValueTransformer]`` attrib
 
     Value transformers are called frequently during encoding and decoding. Keep
     them lightweight and avoid calls to external APIs or the database.
+
+.. deprecated:: 8.1
+
+    The ``ValueTransformerInterface`` in the ``ValueTransformer`` namespace was
+    renamed to ``PropertyValueTransformerInterface`` in the ``Transformer``
+    namespace in Symfony 8.1.
+
+.. _json-streamer-value-objects:
+
+Handling Value Objects
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    Value object support was introduced in Symfony 8.1.
+
+Value objects are objects that should be serialized to/from a single scalar JSON
+value rather than being traversed property by property (e.g., ``Money``, ``Height``,
+or any custom domain type).
+
+To handle a value object, create a class implementing
+:class:`Symfony\\Component\\JsonStreamer\\Transformer\\ValueObjectTransformerInterface`::
+
+    // src/Transformer/MoneyValueObjectTransformer.php
+    namespace App\Transformer;
+
+    use App\ValueObject\Money;
+    use Symfony\Component\TypeInfo\Type;
+    use Symfony\Component\TypeInfo\Type\BuiltinType;
+
+    /**
+     * @implements \Symfony\Component\JsonStreamer\Transformer\ValueObjectTransformerInterface<Money, string>
+     */
+    class MoneyValueObjectTransformer implements \Symfony\Component\JsonStreamer\Transformer\ValueObjectTransformerInterface
+    {
+        public function transform(object $object, array $options = []): int|float|string|bool|null
+        {
+            return $object->amount.' '.$object->currency;
+        }
+
+        public function reverseTransform(int|float|string|bool|null $scalar, array $options = []): object
+        {
+            [$amount, $currency] = explode(' ', $scalar);
+
+            return new Money((int) $amount, $currency);
+        }
+
+        public static function getStreamValueType(): BuiltinType
+        {
+            return Type::string();
+        }
+
+        public static function getValueObjectClassName(): string
+        {
+            return Money::class;
+        }
+    }
+
+When using FrameworkBundle, value object transformers are auto-registered as
+services by tagging them with ``json_streamer.value_object_transformer``.
+The generated code then calls the transformer automatically instead of
+traversing the object's properties::
+
+    use App\ValueObject\Money;
+    use Symfony\Component\TypeInfo\Type;
+
+    // Write: "100 EUR"
+    $json = $jsonStreamWriter->write(new Money(100, 'EUR'), Type::object(Money::class));
+
+    // Read: "100 EUR" -> Money(100, 'EUR')
+    $money = $jsonStreamReader->read('"100 EUR"', Type::object(Money::class));
+
+.. note::
+
+    ``DateTimeInterface``, ``DateInterval`` and ``DateTimeZone`` objects are
+    handled as value objects internally. The previous
+    ``DateTimeToStringValueTransformer`` and ``StringToDateTimeValueTransformer``
+    are deprecated in favor of ``DateTimeValueObjectTransformer``.
+
+    ``DateInterval`` objects are serialized to ISO 8601 duration strings
+    (e.g. ``P2Y6M1DT12H30M5S``) and deserialized back using the
+    ``DateIntervalValueObjectTransformer``. You can customize the format
+    using the ``date_interval_format`` option::
+
+        use App\Dto\Task;
+        use Symfony\Component\TypeInfo\Type;
+
+        // ...
+
+        $json = $jsonStreamWriter->write($task, Type::object(Task::class), [
+            'date_interval_format' => 'P%yY%mM%dDT%hH%iM%sS',
+        ]);
+
+    ``DateTimeZone`` objects are serialized to their identifier string
+    (``DateTimeZone::getName()``, e.g. ``"Europe/Paris"`` or ``"+02:00"``)
+    and rebuilt with ``new \DateTimeZone($value)`` on read by the
+    ``DateTimeZoneValueObjectTransformer``.
+
+    .. versionadded:: 8.1
+
+        Support for ``DateInterval`` and ``DateTimeZone`` value objects was
+        introduced in Symfony 8.1.
 
 Configuring Keys and Values Dynamically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -672,23 +901,6 @@ configurations, providing more flexibility than attributes::
             return $propertyMetadataMap;
         }
     }
-
-.. versionadded:: 7.4
-
-    The ``PropertyMetadata::createSynthetic()`` method was introduced in
-    Symfony 7.4.
-
-.. versionadded:: 7.4
-
-    The ``valueTransformers`` parameter and the ``withAdditionalValueTransformer()``
-    method were introduced in Symfony 7.4.
-
-.. deprecated:: 7.4
-
-    The ``nativeToStreamValueTransformers`` and ``streamToNativeValueTransformers``
-    constructor parameters, as well as the ``withAdditionalNativeToStreamValueTransformer()``
-    and ``withAdditionalStreamToNativeValueTransformer()`` methods, were deprecated
-    in Symfony 7.4.
 
 Although powerful, this approach introduces complexity. Decorating property
 metadata loaders requires a deep understanding of the internals.

@@ -25,53 +25,22 @@ access control:
                     # catch all other URLs
                     - { path: '^/', roles: PUBLIC_ACCESS, requires_channel: https }
 
-        .. code-block:: xml
-
-            <!-- config/packages/security.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/security
-                    https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-                <config>
-                    <!-- ... -->
-
-                    <rule path="^/secure" role="ROLE_ADMIN" requires-channel="https"/>
-                    <rule path="^/login" role="PUBLIC_ACCESS" requires-channel="https"/>
-                    <rule path="^/" role="PUBLIC_ACCESS" requires-channel="https"/>
-                </config>
-            </srv:container>
-
         .. code-block:: php
 
             // config/packages/security.php
-            use Symfony\Config\SecurityConfig;
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (SecurityConfig $security): void {
-                // ....
-
-                $security->accessControl()
-                    ->path('^/secure')
-                    ->roles(['ROLE_ADMIN'])
-                    ->requiresChannel('https')
-                ;
-
-                $security->accessControl()
-                    ->path('^/login')
-                    ->roles(['PUBLIC_ACCESS'])
-                    ->requiresChannel('https')
-                ;
-
-                $security->accessControl()
-                    ->path('^/')
-                    ->roles(['PUBLIC_ACCESS'])
-                    ->requiresChannel('https')
-                ;
-            };
+            return App::config([
+                'security' => [
+                    // ....
+                    'access_control' => [
+                        ['path' => '^/secure', 'roles' => ['ROLE_ADMIN'], 'requires_channel' => 'https'],
+                        ['path' => '^/login', 'roles' => ['PUBLIC_ACCESS'], 'requires_channel' => 'https'],
+                        // catch all other URLs
+                        ['path' => '^/', 'roles' => ['PUBLIC_ACCESS'], 'requires_channel' => 'https'],
+                    ],
+                ],
+            ]);
 
 To make life easier while developing, you can also use an environment variable,
 like ``requires_channel: '%env(REQUIRED_SCHEME)%'``. In your ``.env`` file, set

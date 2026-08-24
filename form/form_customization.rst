@@ -247,11 +247,6 @@ form_parent(form_view)
 Returns the parent form view, or ``null`` for the root form. Prefer this over
 ``form.parent``, which fails if the form has a field named ``parent``.
 
-.. versionadded:: 7.4
-
-    The automatic ``aria-invalid`` and ``aria-describedby`` attributes were
-    introduced in Symfony 7.4.
-
 When a form field has validation errors, all built-in form themes automatically
 add the ``aria-invalid="true"`` attribute to the ``<input>`` element and link
 it to its error messages using ``aria-describedby``. If the field also has a
@@ -293,6 +288,24 @@ Renders the ``<form>`` opening tag with the configured method, action, and
 .. code-block:: twig
 
     {{ form_start(form, {method: 'GET'}) }}
+
+By default, the ``name`` attribute of the ``<form>`` element is rendered with
+the form name. It goes through the ``attr`` variable, so you can override it
+or remove it like any other attribute:
+
+.. code-block:: twig
+
+    {# override the name attribute #}
+    {{ form_start(form, {attr: {name: 'other-name'}}) }}
+
+    {# remove the name attribute entirely #}
+    {{ form_start(form, {attr: {name: false}}) }}
+
+.. versionadded:: 8.2
+
+    Rendering the ``name`` attribute through ``attr`` was introduced in
+    Symfony 8.2. Previously, the attribute was always rendered with the form
+    name and could not be overridden or removed.
 
 .. _reference-forms-twig-widget:
 
@@ -419,10 +432,6 @@ Returns the ``id`` HTML attribute value for the field (e.g., ``user_email``).
     <label for="{{ field_id(form.email) }}">Your Email</label>
     <input type="email" id="{{ field_id(form.email) }}" name="{{ field_name(form.email) }}">
 
-.. versionadded:: 7.3
-
-    The ``field_id()`` helper was introduced in Symfony 7.3.
-
 .. _reference-forms-twig-field-label:
 
 field_label(form_view)
@@ -456,5 +465,27 @@ Returns the current value of the field.
 
     {# pre-fill a custom input with the form field's value #}
     <input type="range" name="{{ field_name(form.rating) }}" value="{{ field_value(form.rating) }}">
+
+Form Flow Functions
+-------------------
+
+When using :doc:`multi-step forms </form/form_flow>`, the following functions
+give access to the state of the form flow (current step, total steps, etc.):
+
+* ``form_flow_current_step()``
+* ``form_flow_steps()``
+* ``form_flow_step_index()``
+* ``form_flow_total_steps()``
+* ``form_flow_first_step()``
+* ``form_flow_last_step()``
+* ``form_flow_next_step()``
+* ``form_flow_previous_step()``
+* ``form_flow_is_first_step()``
+* ``form_flow_is_last_step()``
+* ``form_flow_can_move_back()``
+* ``form_flow_can_move_next()``
+
+They are explained in detail in the article about
+:ref:`multi-step forms <reference-forms-twig-form-flow>`.
 
 .. _`is Twig operator`: https://twig.symfony.com/doc/3.x/templates.html#test-operator

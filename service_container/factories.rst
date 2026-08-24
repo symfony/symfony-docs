@@ -50,23 +50,6 @@ create its object:
                 # the first argument is the class and the second argument is the static method
                 factory: ['App\Email\NewsletterSenderStaticFactory', 'createNewsletterSender']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Email\NewsletterSender">
-                    <!-- the first argument is the class and the second argument is the static method -->
-                    <factory class="App\Email\NewsletterSenderStaticFactory" method="createNewsletterSender"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -75,13 +58,15 @@ create its object:
         use App\Email\NewsletterSender;
         use App\Email\NewsletterSenderStaticFactory;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                // the first argument is the class and the second argument is the static method
-                ->factory([NewsletterSenderStaticFactory::class, 'createNewsletterSender']);
-        };
+        return App::config([
+            'services' => [
+                // ...
+                NewsletterSender::class => [
+                    // the first argument is the class and the second argument is the static method
+                    'factory' => [NewsletterSenderStaticFactory::class, 'createNewsletterSender'],
+                ],
+            ],
+        ]);
 
 If the factory method needs arguments, define them with the ``arguments``
 option, as explained later in :ref:`factories-passing-arguments-factory-method`.
@@ -91,18 +76,16 @@ option, as explained later in :ref:`factories-passing-arguments-factory-method`.
     When configuring your services with PHP, you can use `first-class callable syntax`_
     to define the factory::
 
-        $services->set(NewsletterSender::class)
-            ->factory(NewsletterSenderStaticFactory::createNewsletterSender(...));
+        NewsletterSender::class => [
+            'factory' => NewsletterSenderStaticFactory::createNewsletterSender(...),
+        ],
 
     This syntax also works with global functions::
 
-        $services->set('date', \DateTime::class)
-            ->factory(\date_create(...));
-
-    .. versionadded:: 7.4
-
-        Support for first-class callable syntax in factory definitions was
-        introduced in Symfony 7.4.
+        'date' => [
+            'class' => \DateTime::class,
+            'factory' => \date_create(...),
+        ],
 
 .. note::
 
@@ -170,20 +153,6 @@ class creates the object:
             App\Email\NewsletterSender:
                 constructor: 'create'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Email\NewsletterSender" constructor="create"/>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -191,12 +160,13 @@ class creates the object:
 
         use App\Email\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->constructor('create');
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'constructor' => 'create',
+                ],
+            ],
+        ]);
 
 The same result can be achieved with the ``factory`` option by passing ``null``
 as the factory class:
@@ -212,22 +182,6 @@ as the factory class:
             App\Email\NewsletterSender:
                 factory: [null, 'create']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Email\NewsletterSender">
-                    <factory method="create"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -235,12 +189,13 @@ as the factory class:
 
         use App\Email\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->factory([null, 'create']);
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'factory' => [null, 'create'],
+                ],
+            ],
+        ]);
 
 If the factory method needs arguments, define them with the ``arguments``
 option, as explained later in :ref:`factories-passing-arguments-factory-method`.
@@ -268,29 +223,6 @@ Configuration of the service container then looks like this:
             App\Email\NewsletterSender:
                 factory: ['@App\Email\NewsletterSenderFactory', 'createNewsletterSender']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- first, create a service for the factory -->
-                <service id="App\Email\NewsletterSenderFactory"/>
-
-                <!-- second, use the factory service as the first argument of the 'factory'
-                     option and the factory method as the second argument -->
-                <service id="App\Email\NewsletterSender">
-                    <factory service="App\Email\NewsletterSenderFactory"
-                        method="createNewsletterSender"
-                    />
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -299,17 +231,18 @@ Configuration of the service container then looks like this:
         use App\Email\NewsletterSender;
         use App\Email\NewsletterSenderFactory;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                // first, create a service for the factory
+                NewsletterSenderFactory::class => null,
 
-            // first, create a service for the factory
-            $services->set(NewsletterSenderFactory::class);
-
-            // second, use the factory service as the first argument of the 'factory'
-            // method and the factory method as the second argument
-            $services->set(NewsletterSender::class)
-                ->factory([service(NewsletterSenderFactory::class), 'createNewsletterSender']);
-        };
+                // second, use the factory service as the first argument of the 'factory'
+                // option and the factory method as the second argument
+                NewsletterSender::class => [
+                    'factory' => [service(NewsletterSenderFactory::class), 'createNewsletterSender'],
+                ],
+            ],
+        ]);
 
 .. _factories-invokable:
 
@@ -349,24 +282,6 @@ method name:
             App\Email\NewsletterSender:
                 factory: '@App\Email\InvokableNewsletterSenderFactory'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Email\NewsletterSender">
-                    <factory service="App\Email\InvokableNewsletterSenderFactory"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -375,12 +290,13 @@ method name:
         use App\Email\InvokableNewsletterSenderFactory;
         use App\Email\NewsletterSender;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->factory(service(InvokableNewsletterSenderFactory::class));
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'factory' => service(InvokableNewsletterSenderFactory::class),
+                ],
+            ],
+        ]);
 
 .. _factories-passing-arguments-factory-method:
 
@@ -408,25 +324,6 @@ previous examples takes the ``twig`` service as an argument:
                 factory:   ['@App\Email\NewsletterSenderFactory', createNewsletterSender]
                 arguments: ['@twig']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Email\NewsletterSender">
-                    <factory service="App\Email\NewsletterSenderFactory" method="createNewsletterSender"/>
-                    <argument type="service" id="twig"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -435,14 +332,14 @@ previous examples takes the ``twig`` service as an argument:
         use App\Email\NewsletterSender;
         use App\Email\NewsletterSenderFactory;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSender::class)
-                ->factory([service(NewsletterSenderFactory::class), 'createNewsletterSender'])
-                ->args([service('twig')])
-            ;
-        };
+        return App::config([
+            'services' => [
+                NewsletterSender::class => [
+                    'factory' => [service(NewsletterSenderFactory::class), 'createNewsletterSender'],
+                    'arguments' => [service('twig')],
+                ],
+            ],
+        ]);
 
 Expression-Based Factories
 --------------------------
@@ -461,23 +358,6 @@ This allows you to select the created object at runtime:
                 # "@=" indicates that this is an expression
                 factory: '@=parameter("kernel.debug") ? service("traceable_newsletter") : service("newsletter")'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Email\NewsletterSenderInterface">
-                    <!-- use the "traceable_newsletter" service when debug is enabled, "newsletter" otherwise -->
-                    <factory expression="parameter('kernel.debug') ? service('traceable_newsletter') : service('newsletter')"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -485,14 +365,14 @@ This allows you to select the created object at runtime:
 
         use App\Email\NewsletterSenderInterface;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(NewsletterSenderInterface::class)
-                // use the "traceable_newsletter" service when debug is enabled, "newsletter" otherwise
-                ->factory(expr("parameter('kernel.debug') ? service('traceable_newsletter') : service('newsletter')"))
-            ;
-        };
+        return App::config([
+            'services' => [
+                NewsletterSenderInterface::class => [
+                    // use the "traceable_newsletter" service when debug is enabled, "newsletter" otherwise
+                    'factory' => expr("parameter('kernel.debug') ? service('traceable_newsletter') : service('newsletter')"),
+                ],
+            ],
+        ]);
 
 Factory expressions also support the ``arg()`` function, which returns an
 argument of the definition itself (e.g.

@@ -108,6 +108,65 @@ servers should not send ``Expires`` dates more than one year in the future."
     the ``Expires`` header value is ignored when the ``s-maxage`` or ``max-age``
     directive of the ``Cache-Control`` header is defined.
 
+Applying Cache Conditionally
+----------------------------
+
+.. versionadded:: 8.1
+
+    The ``if`` option of the ``#[Cache]`` attribute was introduced in Symfony 8.1.
+
+Use the ``if`` option to apply the ``#[Cache]`` attribute only when a given
+condition is met. This option accepts a closure or an
+:doc:`ExpressionLanguage </expression_language>` expression that
+receives the ``Request`` object and the controller arguments and must return
+a boolean value:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        // Using a closure
+        #[Cache(
+            public: true,
+            maxage: 3600,
+            if: static fn (Request $request): bool => $request->query->has('cache')
+        )]
+        public function index(Request $request): Response
+        {
+            // ...
+        }
+
+        // Using an expression
+        #[Cache(
+            public: true,
+            maxage: 3600,
+            if: "request.query.has('cache')"
+        )]
+        public function show(Request $request): Response
+        {
+            // ...
+        }
+
+When the condition evaluates to ``true``, the cache headers are applied; when
+it evaluates to ``false``, they are not.
+
+This is useful when you need to enable caching based on runtime conditions such
+as user authentication state, feature flags, or request parameters. It is also
+helpful when the controller does not return a ``Response`` object directly (e.g.
+when using `FOSRestBundle`_ or other libraries that handle view rendering).
+
+.. note::
+
+    The ``#[Cache]`` attribute is repeatable. When multiple attributes are
+    defined on the same controller, they are evaluated in order and the first
+    one whose condition returns ``true`` is applied. If no condition matches,
+    no cache headers are set by the attribute.
+
 .. _`expiration model`: https://tools.ietf.org/html/rfc2616#section-13.2
 .. _`Calculating Freshness Lifetime`: https://tools.ietf.org/html/rfc7234#section-4.2.1
 .. _`Serving Stale Responses`: https://tools.ietf.org/html/rfc7234#section-4.2.4
+.. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle

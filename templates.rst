@@ -230,39 +230,23 @@ Consider the following routing configuration:
             path:       /article/{slug}
             controller: App\Controller\BlogController::show
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="blog_index"
-                path="/"
-                controller="App\Controller\BlogController::index"/>
-
-            <route id="blog_post"
-                path="/article/{slug}"
-                controller="App\Controller\BlogController::show"/>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
         use App\Controller\BlogController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes): void {
-            $routes->add('blog_index', '/')
-                ->controller([BlogController::class, 'index'])
-            ;
-
-            $routes->add('blog_post', '/articles/{slug}')
-                ->controller([BlogController::class, 'show'])
-            ;
-        };
+        return Routes::config([
+            'blog_index' => [
+                'path' => '/',
+                'controller' => [BlogController::class, 'index'],
+            ],
+            'blog_post' => [
+                'path' => '/article/{slug}',
+                'controller' => [BlogController::class, 'show'],
+            ],
+        ]);
 
 Use the ``path()`` Twig function to link to these pages and pass the route name
 as the first argument and the route parameters as the optional second argument:
@@ -416,34 +400,19 @@ inside the main Twig configuration file:
             globals:
                 ga_tracking: 'UA-xxxxx-x'
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <!-- ... -->
-                <twig:global key="ga_tracking">UA-xxxxx-x</twig:global>
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            // ...
-
-            $twig->global('ga_tracking')->value('UA-xxxxx-x');
-        };
+        return App::config([
+            'twig' => [
+                // ...
+                'globals' => [
+                    'ga_tracking' => 'UA-xxxxx-x',
+                ],
+            ],
+        ]);
 
 Now, the variable ``ga_tracking`` is available in all Twig templates, so you
 can use it without having to pass it explicitly from the controller or service
@@ -457,11 +426,7 @@ In addition to static values, Twig global variables can also reference services
 from the :doc:`service container </service_container>`. The main drawback is
 that these services are not loaded lazily. In other words, as soon as Twig is
 loaded, your service is instantiated, even if you never use that global
-variable.
-
-To define a service as a global Twig variable, prefix the service ID string
-with the ``@`` character, which is the usual syntax to :ref:`refer to services
-in container parameters <service-container-parameters>`:
+variable:
 
 .. configuration-block::
 
@@ -471,38 +436,22 @@ in container parameters <service-container-parameters>`:
         twig:
             # ...
             globals:
-                # the value is the service's id
+                # the value is the service's id prefixed with '@'
                 uuid: '@App\Generator\UuidGenerator'
-
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <!-- ... -->
-                <twig:global key="uuid" id="App\Generator\UuidGenerator" type="service"/>
-            </twig:config>
-        </container>
 
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
-        use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            // ...
-
-            $twig->global('uuid')->value('@App\Generator\UuidGenerator');
-        };
+        return App::config([
+            'twig' => [
+                // ...
+                'globals' => [
+                    'uuid' => '@App\Generator\UuidGenerator',
+                ],
+            ],
+        ]);
 
 Now you can use the ``uuid`` variable in any Twig template to access the
 ``UuidGenerator`` service:
@@ -815,32 +764,19 @@ template fragments. Configure that special URL in the ``fragments`` option:
             # ...
             fragments: { path: /_fragment }
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- ... -->
-            <framework:config>
-                <framework:fragment path="/_fragment"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->fragments()->path('/_fragment');
-        };
+        return App::config([
+            'framework' => [
+                // ...
+                'fragments' => [
+                    'path' => '/_fragment',
+                ],
+            ],
+        ]);
 
 .. warning::
 
@@ -853,6 +789,14 @@ template fragments. Configure that special URL in the ``fragments`` option:
 
 How to Embed Asynchronous Content with hinclude.js
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. deprecated:: 8.2
+
+    The hinclude.js integration (the ``render_hinclude()`` Twig function, the
+    ``HIncludeFragmentRenderer`` class and the
+    ``framework.fragments.hinclude_default_template`` option) is deprecated
+    since Symfony 8.2. Use the ``render_esi()`` or ``render()`` functions, or
+    `Symfony UX Turbo`_, instead.
 
 .. note::
 
@@ -894,34 +838,19 @@ default content rendering some template:
             fragments:
                 hinclude_default_template: hinclude.html.twig
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- ... -->
-            <framework:config>
-                <framework:fragments hinclude-default-template="hinclude.html.twig"/>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework->fragments()
-                ->hincludeDefaultTemplate('hinclude.html.twig')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                // ...
+                'fragments' => [
+                    'hinclude_default_template' => 'hinclude.html.twig',
+                ],
+            ],
+        ]);
 
 You can define default templates per ``render()`` function (which will override
 any global default template that is defined):
@@ -1084,10 +1013,6 @@ a block to render::
         }
     }
 
-.. versionadded:: 7.2
-
-    The ``#[Template]`` attribute's ``block`` argument was introduced in Symfony 7.2.
-
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1166,53 +1091,18 @@ provided by Symfony:
                     Content-Type: 'text/html'
                     foo: 'bar'
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="acme_privacy"
-                path="/privacy"
-                controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController">
-                <!-- the path of the template to render -->
-                <default key="template">static/privacy.html.twig</default>
-
-                <!-- the response status code (default: 200) -->
-                <default key="statusCode">200</default>
-
-                <!-- special options defined by Symfony to set the page cache -->
-                <default key="maxAge">86400</default>
-                <default key="sharedAge">86400</default>
-
-                <!-- whether or not caching should apply for client caches only -->
-                <default key="private">true</default>
-
-                <!-- optionally you can define some arguments passed to the template -->
-                <default key="context">
-                    <default key="site_name">ACME</default>
-                    <default key="theme">dark</default>
-                </default>
-
-                <!-- optionally you can define HTTP headers to add to the response -->
-                <default key="headers">
-                    <default key="Content-Type">text/html</default>
-                </default>
-            </route>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return function (RoutingConfigurator $routes): void {
-            $routes->add('acme_privacy', '/privacy')
-                ->controller(TemplateController::class)
-                ->defaults([
+        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
+
+        return Routes::config([
+            'acme_privacy' => [
+                'path' => '/privacy',
+                'controller' => TemplateController::class,
+                'defaults' => [
                     // the path of the template to render
                     'template'  => 'static/privacy.html.twig',
 
@@ -1236,13 +1126,9 @@ provided by Symfony:
                     'headers' => [
                         'Content-Type' => 'text/html',
                     ]
-                ])
-            ;
-        };
-
-.. versionadded:: 7.2
-
-    The ``headers`` option was introduced in Symfony 7.2.
+                ],
+            ],
+        ]);
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1295,15 +1181,6 @@ errors. It's useful to run it before deploying your application to production
 
     # you can also excludes directories
     $ php bin/console lint:twig templates/ --excludes=data_collector --excludes=dev_tool
-
-.. versionadded:: 7.1
-
-    The option to exclude directories was introduced in Symfony 7.1.
-
-.. versionadded:: 7.3
-
-    Before Symfony 7.3, the ``--show-deprecations`` option only displayed the
-    first deprecation found, so you had to run the command repeatedly.
 
 When running the linter inside `GitHub Actions`_, the output is automatically
 adapted to the format required by GitHub, but you can force that format too:
@@ -1417,6 +1294,13 @@ use the `Twig raw filter`_ to disable the output escaping for that variable:
 Read the `Twig output escaping docs`_ to learn more about how to disable output
 escaping for a block or even an entire template.
 
+.. tip::
+
+    Value objects that hold pre-escaped or trusted content (typically shipped
+    by bundles, but applications can do the same) can be marked as safe so
+    Twig won't re-escape them, using the
+    :ref:`twig.safe_class <dic_tags-twig-safe-class>` resource tag.
+
 .. _templates-namespaces:
 
 Template Namespaces
@@ -1441,38 +1325,23 @@ the ``value`` is the Twig namespace, which is explained later:
                 'email/default/templates': ~
                 'backend/templates': ~
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <!-- ... -->
-                <!-- directories are relative to the project root dir (but you
-                     can also use absolute directories -->
-                <twig:path>email/default/templates</twig:path>
-                <twig:path>backend/templates</twig:path>
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            // ...
+        return App::config([
+            'twig' => [
+                // ...
 
-            // directories are relative to the project root dir (but you
-            // can also use absolute directories)
-            $twig->path('email/default/templates', null);
-            $twig->path('backend/templates', null);
-        };
+                // directories are relative to the project root dir (but you
+                // can also use absolute directories)
+                'paths' => [
+                    'email/default/templates' => null,
+                    'backend/templates' => null,
+                ],
+            ],
+        ]);
 
 When rendering a template, Symfony looks for it first in the ``twig.paths``
 directories that don't define a namespace and then falls back to the default
@@ -1499,34 +1368,20 @@ configuration to define a namespace for each template directory:
                 'email/default/templates': 'email'
                 'backend/templates': 'admin'
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <!-- ... -->
-                <twig:path namespace="email">email/default/templates</twig:path>
-                <twig:path namespace="admin">backend/templates</twig:path>
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            // ...
-
-            $twig->path('email/default/templates', 'email');
-            $twig->path('backend/templates', 'admin');
-        };
+        return App::config([
+            'twig' => [
+                // ...
+                'paths' => [
+                    'email/default/templates' => 'email',
+                    'backend/templates' => 'admin',
+                ],
+            ],
+        ]);
 
 Now, if you render the ``layout.html.twig`` template, Symfony will render the
 ``templates/layout.html.twig`` file. Use the special syntax ``@`` + namespace to
@@ -1630,13 +1485,6 @@ If you want to create a function instead of a filter, use the
     Along with custom filters and functions, you can also register
     `global variables`_.
 
-.. versionadded:: 7.3
-
-    Support for the ``#[AsTwigFilter]``, ``#[AsTwigFunction]`` and ``#[AsTwigTest]``
-    attributes was introduced in Symfony 7.3. Previously, you had to extend the
-    ``AbstractExtension`` class, and override the ``getFilters()`` and ``getFunctions()``
-    methods.
-
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the :ref:`service autoconfiguration <services-autoconfigure>` feature will enable
 this class as a Twig extension. Otherwise, you need to define a service manually
@@ -1739,6 +1587,7 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 .. _`Turbo Streams`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo
 .. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
 .. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
 .. _`Twig Environment`: https://github.com/twigphp/Twig/blob/3.x/src/Environment.php

@@ -85,36 +85,18 @@ Use the ``framework.http_cache`` option to enable the proxy for the
             framework:
                 http_cache: true
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <when env="prod">
-              <framework:config>
-                  <!-- ... -->
-                  <framework:http-cache enabled="true"/>
-              </framework:config>
-            </when>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework, string $env): void {
-            if ('prod' === $env) {
-                $framework->httpCache()->enabled(true);
-            }
-        };
+        return App::config([
+            'framework' => [
+                'http_cache' => [
+                    'enabled' => true,
+                ],
+            ],
+        ]);
 
 The kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.

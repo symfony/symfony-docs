@@ -210,6 +210,8 @@ variants:
 * ``very_verbose_nomax``
 * ``debug_nomax``
 
+.. _progressbar-custom-formats:
+
 Custom Formats
 ~~~~~~~~~~~~~~
 
@@ -450,3 +452,31 @@ After a couple of iterations, the output in the terminal will look like this:
 
     34/100 [=========>------------------]  34%
     68/100 [===================>--------]  68%
+
+Reporting Progress to the Terminal
+----------------------------------
+
+.. versionadded:: 8.1
+
+    Support for terminal progress reporting was introduced in Symfony 8.1.
+
+Some terminals support displaying progress directly in the terminal window or
+taskbar (thanks to the special `OSC 9;4 escape sequence`_). When supported,
+Symfony automatically reports the progress of ``ProgressBar`` instances without
+requiring any extra configuration.
+
+This works with both normal and indeterminate progress bars.
+
+If your command prompts the user while a progress bar is running, pause the
+progress reporting temporarily::
+
+    ProgressBar::pauseAll();
+
+    // ...
+
+    ProgressBar::resumeAll();
+
+The built-in :class:`Symfony\\Component\\Console\\Helper\\QuestionHelper`
+does this automatically.
+
+.. _`OSC 9;4 escape sequence`: https://learn.microsoft.com/en-us/windows/terminal/tutorials/progress-bar-sequences

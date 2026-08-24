@@ -301,6 +301,18 @@ can check that a delivery date starts within the next five hours like this:
             }
         }
 
+Clock-aware Date Ranges
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The clock-awareness of the Range validator was introduced in Symfony 8.1.
+
+When the :doc:`Clock component </components/clock>` is installed and registered
+as a service, the Range validator automatically uses it to resolve relative date
+strings (e.g. ``now``, ``+5 hours``). This makes date range comparisons
+deterministic and testable by using :ref:`MockClock <clock-mockclock>`.
+
 Options
 -------
 

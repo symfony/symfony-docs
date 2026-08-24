@@ -36,10 +36,6 @@ for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Asset
 access_decision
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 7.4
-
-    The ``access_decision()`` function was introduced in Symfony 7.4.
-
 .. code-block:: twig
 
     {{ access_decision(role, object = null) }}
@@ -56,10 +52,6 @@ gives the reason of a denial (``message``). More information can be found in
 
 access_decision_for_user
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.4
-
-    The ``access_decision_for_user()`` function was introduced in Symfony 7.4.
 
 .. code-block:: twig
 
@@ -281,6 +273,42 @@ fragment_uri
 
 Generates the URI of :ref:`a fragment <fragments-path-config>`.
 
+impersonation_exit_form
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_form(targetUri = null) }}
+
+``targetUri`` *(optional)*
+    **type**: ``string``
+
+Returns the ``action`` and the ``fields`` needed to exit
+:doc:`user impersonation </security/impersonating_user>` with a form, so the
+switching route can be restricted to ``POST``.
+
+.. code-block:: html+twig
+
+    {% set exit = impersonation_exit_form() %}
+
+    {% if exit.action %}
+        <form method="post" action="{{ exit.action }}">
+            {% for name, value in exit.fields %}
+                <input type="hidden" name="{{ name }}" value="{{ value }}">
+            {% endfor %}
+
+            <button>Exit impersonation</button>
+        </form>
+    {% endif %}
+
+If no user is being impersonated, ``action`` is an empty string and ``fields``
+is empty. Read more about
+:ref:`impersonating with a form <security-impersonation-form>`.
+
+.. versionadded:: 8.2
+
+    The ``impersonation_exit_form()`` function was introduced in Symfony 8.2.
+
 impersonation_exit_path
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -310,32 +338,85 @@ impersonation_exit_url
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
 
+impersonation_form
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_form(identifier, targetUri = null) }}
+
+``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
+    **type**: ``string``
+
+Returns the ``action`` and the ``fields`` needed to
+:doc:`impersonate a user </security/impersonating_user>` with a form, so the
+switching route can be restricted to ``POST``. The impersonated user is
+identified by the ``identifier`` argument.
+
+.. code-block:: html+twig
+
+    {% set impersonate = impersonation_form(user.userIdentifier) %}
+
+    <form method="post" action="{{ impersonate.action }}">
+        {% for name, value in impersonate.fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+
+        <button>Impersonate {{ user.userIdentifier }}</button>
+    </form>
+
+``fields`` contains the target identity and, when the firewall enables CSRF
+protection, the CSRF token, each under its configured parameter name. After the
+switch, the user is redirected to the current URI, or to ``targetUri`` when
+given. Read more about
+:ref:`impersonating with a form <security-impersonation-form>`.
+
+.. versionadded:: 8.2
+
+    The ``impersonation_form()`` function was introduced in Symfony 8.2.
+
 impersonation_path
 ~~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ impersonation_path(identifier) }}
+    {{ impersonation_path(identifier, targetUri = null) }}
 
 ``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
     **type**: ``string``
 
 Generates a URL that you can visit to
 :doc:`impersonate a user </security/impersonating_user>`, identified by the
-``identifier`` argument.
+``identifier`` argument. After the switch, the user is redirected to the current
+URI. If you prefer to redirect to a different URI, define its value in the
+``targetUri`` argument.
+
+.. versionadded:: 8.2
+
+    The ``targetUri`` argument was introduced in Symfony 8.2.
 
 impersonation_url
 ~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
-    {{ impersonation_url(identifier) }}
+    {{ impersonation_url(identifier, targetUri = null) }}
 
 ``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
     **type**: ``string``
 
 It's similar to the `impersonation_path`_ function, but it generates
 absolute URLs instead of relative URLs.
+
+.. versionadded:: 8.2
+
+    The ``targetUri`` argument was introduced in Symfony 8.2.
 
 importmap
 ~~~~~~~~~
@@ -362,10 +443,6 @@ can be found in :ref:`security-template`.
 
 is_granted_for_user
 ~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 7.3
-
-    The ``is_granted_for_user()`` function was introduced in Symfony 7.3.
 
 .. code-block:: twig
 
@@ -400,6 +477,40 @@ link
 Adds a ``Link`` HTTP header to the current response for the given link relation
 type (``rel``). It can be used for any link implementing the PSR-13 standard.
 Read more about :doc:`/web_link`.
+
+logout_form
+~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ logout_form(key = null) }}
+
+``key`` *(optional)*
+    **type**: ``string``
+
+Returns the ``action`` and the ``fields`` needed to log out with a form, so the
+logout route can be restricted to ``POST``. If no key is provided, they are
+generated for the current firewall the user is logged into.
+
+.. code-block:: html+twig
+
+    {% set logout = logout_form() %}
+
+    <form method="post" action="{{ logout.action }}">
+        {% for name, value in logout.fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+
+        <button>Log out</button>
+    </form>
+
+``fields`` contains the CSRF token under its configured parameter name, and is
+empty when the firewall does not enable CSRF protection. Read more about
+:ref:`logging out with a form <security-logout-form>`.
+
+.. versionadded:: 8.2
+
+    The ``logout_form()`` function was introduced in Symfony 8.2.
 
 logout_path
 ~~~~~~~~~~~
@@ -640,8 +751,8 @@ falls back to the behavior of `render`_ otherwise.
 
     The ``render_esi()`` function is an example of the shortcut functions
     of ``render``. It automatically sets the strategy based on what's given
-    in the function name, e.g. ``render_hinclude()`` will use the hinclude.js
-    strategy. This works for all ``render_*()`` functions.
+    in the function name, e.g. ``render_ssi()`` will use the SSI strategy.
+    This works for all ``render_*()`` functions.
 
 .. _reference-twig-function-render-ssi:
 
@@ -1016,10 +1127,6 @@ The above example will be rendered as:
 emojify
 ~~~~~~~
 
-.. versionadded:: 7.1
-
-    The ``emojify`` filter was introduced in Symfony 7.1.
-
 .. code-block:: twig
 
     {{ text|emojify(catalog = null) }}
@@ -1299,6 +1406,47 @@ sanitize_html
 Sanitizes the text using the HTML Sanitizer component. More information in
 :ref:`HTML Sanitizer <html-sanitizer-twig>`.
 
+.. _reference-twig-filter-normalize:
+
+normalize
+~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``normalize`` filter was introduced in Symfony 8.2.
+
+.. code-block:: text
+
+    {{ object|normalize(format = null, context = []) }}
+
+``object``
+    **type**: ``mixed``
+
+``format`` *(optional)*
+    **type**: ``string`` | ``null`` **default**: ``null``
+
+``context`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+
+Accepts any data that can be normalized by the
+:doc:`Serializer component </serializer>` and returns the normalized value.
+Unlike the ``serialize`` filter, this filter does not encode the result into a
+string.
+
+Use this filter when another Twig function, component or helper encodes the
+value itself. For example, ``vue_component()`` encodes its props as JSON, so
+passing a serialized string would encode the data twice:
+
+.. code-block:: text
+
+    <div {{ vue_component('ProductCard', {
+        product: product|normalize(context = { groups: 'card' }),
+    }) }}></div>
+
+If the ``serializer`` service is replaced by an implementation that does not
+implement :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`,
+using this filter throws a ``LogicException``.
+
 .. _reference-twig-filter-serialize:
 
 serialize
@@ -1319,6 +1467,9 @@ serialize
 
 Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
 and returns a serialized string in the specified ``format``.
+
+Use the :ref:`normalize filter <reference-twig-filter-normalize>` instead when
+the consumer expects arrays or scalar values and encodes the value itself.
 
 For example::
 

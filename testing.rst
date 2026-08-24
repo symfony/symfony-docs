@@ -155,7 +155,8 @@ Set Up Your Test Environment
 
 The tests create a kernel that runs in the ``test``
 :ref:`environment <configuration-environments>`. This allows you to have
-special settings for your tests inside ``config/packages/test/``.
+special settings for your tests inside ``config/packages/test/`` or
+using the ``when@test`` key.
 
 If you have Symfony Flex installed, some packages already installed some
 useful test configuration. For example, by default, the Twig bundle is
@@ -166,33 +167,23 @@ code to production:
 
     .. code-block:: yaml
 
-        # config/packages/test/twig.yaml
-        twig:
-            strict_variables: true
-
-    .. code-block:: xml
-
-        <!-- config/packages/test/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <framework:config strict-variables="true"/>
-        </container>
+        # config/packages/twig.yaml
+        when@test:
+            twig:
+                strict_variables: true
 
     .. code-block:: php
 
-        // config/packages/test/twig.php
-        use Symfony\Config\TwigConfig;
+        // config/packages/twig.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            $twig->strictVariables(true);
-        };
+        return App::config([
+            'when@test' => [
+                'twig' => [
+                    'strict_variables' => true,
+                ],
+            ],
+        ]);
 
 You can also use a different environment entirely, or override the default
 debug mode (``true``) by passing each as options to the ``bootKernel()``
@@ -214,7 +205,7 @@ method::
         // ...
 
         // ensure a fresh cache when debug mode is disabled
-        (new \Symfony\Component\Filesystem\Filesystem())->remove(__DIR__.'/../var/cache/test');
+        new \Symfony\Component\Filesystem\Filesystem()->remove(__DIR__.'/../var/cache/test');
 
 Customizing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -322,6 +313,32 @@ concrete one::
 
 No further configuration is required, as the test service container is a special one
 that allows you to interact with private services and aliases.
+
+Mocking Non-Shared Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:ref:`Non-shared services <services-shared>` are instantiated every time
+they are retrieved from the container. For this reason, in tests you must mock
+them using a ``Closure`` that acts as a factory, rather than a concrete instance::
+
+    self::bootKernel();
+    $container = static::getContainer();
+
+    $container->set(Mailer::class, function (): Mailer {
+        $mailer = $this->createMock(Mailer::class);
+        $mailer->method('send')->willReturn(true);
+
+        return $mailer;
+    });
+
+    $newsletterGenerator = $container->get(NewsletterGenerator::class);
+
+In this example, each time the container resolves ``Mailer``, the closure is
+called and a new mock instance is returned.
+
+.. versionadded:: 8.1
+
+    Support for mocking non-shared services was introduced in Symfony 8.1.
 
 .. _testing-databases:
 
@@ -778,10 +795,6 @@ session before performing the request::
         }
     }
 
-.. versionadded:: 7.4
-
-    The ``getSession()`` method was introduced in Symfony 7.4.
-
 Making AJAX Requests
 ....................
 
@@ -1065,14 +1078,6 @@ each assert method. To set this verbosity level globally, use the
 
     BrowserKitAssertionsTrait::setBrowserKitAssertionsAsVerbose(false);
 
-.. versionadded:: 7.1
-
-    The ``$verbose`` parameters were introduced in Symfony 7.1.
-
-.. versionadded:: 7.4
-
-    The ``setBrowserKitAssertionsAsVerbose()`` method was introduced in Symfony 7.4.
-
 Request Assertions
 ~~~~~~~~~~~~~~~~~~
 
@@ -1086,6 +1091,13 @@ To use these assertions, your test class must extend
     is set to the expected value.
 ``assertRouteSame($expectedRoute, array $parameters = [], string $message = '')``
     Asserts the request matches the given route and optionally route parameters.
+``assertSessionHasFlashMessage(string $messageType, string|array $messages = '')``
+    Asserts that the session's flash bag contains at least one of the given
+    messages for the specified message type.
+
+.. versionadded:: 8.1
+
+    Method ``assertSessionHasFlashMessage`` was introduced in Symfony 8.1.
 
 Browser Assertions
 ~~~~~~~~~~~~~~~~~~
@@ -1114,10 +1126,6 @@ To use these assertions, your test class must extend
         {
             self::assertThatForClient(new SomeCustomConstraint());
         }
-
-.. versionadded:: 7.4
-
-    The ``assertBrowserHistoryIsOnFirstPage()`` and ``assertBrowserHistoryIsOnLastPage()`` assertions were introduced in Symfony 7.4.
 
 Crawler Assertions
 ~~~~~~~~~~~~~~~~~~
@@ -1198,10 +1206,6 @@ To use these assertions, your test class must extend
     Asserts that the subject of the given email does (not) contain the
     expected subject.
 
-.. versionadded:: 7.4
-
-    The ``assertEmailAddressNotContains()`` assertion was introduced in Symfony 7.4.
-
 Notifier Assertions
 ~~~~~~~~~~~~~~~~~~~
 
@@ -1260,6 +1264,26 @@ To use these assertions, your test class must extend
     By default it will check on the HttpClient, but you can also pass a specific
     HttpClient ID.
 
+Console Assertions
+~~~~~~~~~~~~~~~~~~
+
+Check out :ref:`Console documentation <console-testing-commands>` for more
+information about how to run commands in tests.
+
+``assertCommandIsSuccessful(ExecutionResult $result, string $message = '')``
+    Asserts that the command finished successfully.
+``assertCommandFailed(ExecutionResult $result, string $message = '')``
+    Asserts that the command failed.
+``assertCommandIsInvalid(ExecutionResult $result, string $message = '')``
+    Asserts that the command finished with an invalid code.
+``assertCommandResultEquals(ExecutionResult $result, ?int $expectedStatusCode = null, ?string $expectedOutput = null, ?string $expectedErrorOutput = null, ?string $expectedDisplay = null, string $message = '')``
+    Asserts that the command finished with the expected status code, output,
+    error output and display, depending on your needs.
+
+.. versionadded:: 8.1
+
+    The Console assertions were introduced in Symfony 8.1.
+
 Learn more
 ----------
 
@@ -1273,12 +1297,12 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`official PHPUnit documentation`: https://docs.phpunit.de/
-.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/11.5/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://docs.phpunit.de/en/11.5/configuration.html
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/13.1/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/13.1/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PHPUnit assertion`: https://docs.phpunit.de/en/11.5/assertions.html
+.. _`PHPUnit assertion`: https://docs.phpunit.de/en/13.1/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

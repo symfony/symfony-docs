@@ -38,10 +38,6 @@ of the aliases and leave the main command name (the part before the ``|``) empty
         // ...
     }
 
-.. versionadded:: 7.4
-
-    Support for hiding commands using the pipe syntax was introduced in Symfony 7.4.
-
 .. note::
 
     Hidden commands are still available using the JSON or XML descriptor.

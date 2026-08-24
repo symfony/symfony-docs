@@ -37,11 +37,6 @@ of the output:
         }
     }
 
-.. versionadded:: 7.4
-
-    Support for injecting the ``Cursor`` helper into the ``__invoke()`` method
-    was introduced in Symfony 7.4.
-
 Using the cursor
 ----------------
 

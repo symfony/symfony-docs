@@ -31,7 +31,3 @@ method::
         // lifetimes in tests)
         $clock = null,
     );
-
-.. versionadded:: 7.2
-
-    The optional ``$clock`` argument was introduced in Symfony 7.2.

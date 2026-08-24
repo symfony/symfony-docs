@@ -69,44 +69,27 @@ information:
                 tags:
                     - { name: monolog.processor }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <services>
-                <service id="monolog.formatter.session_request"
-                    class="Monolog\Formatter\LineFormatter">
-
-                    <argument>[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%&#xA;</argument>
-                </service>
-
-                <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Logger\SessionRequestProcessor;
         use Monolog\Formatter\LineFormatter;
 
-        $container
-            ->register('monolog.formatter.session_request', LineFormatter::class)
-            ->addArgument('[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n');
-
-        $container
-            ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor');
+        return App::config([
+            'services' => [
+                'monolog.formatter.session_request' => [
+                    'class' => LineFormatter::class,
+                    'arguments' => [
+                        "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n",
+                    ],
+                ],
+                SessionRequestProcessor::class => [
+                    'tags' => ['monolog.processor'],
+                ],
+            ],
+        ]);
 
 Finally, set the formatter to be used on whatever handler you want:
 
@@ -123,42 +106,23 @@ Finally, set the formatter to be used on whatever handler you want:
                     level: debug
                     formatter: monolog.formatter.session_request
 
-    .. code-block:: xml
-
-        <!-- config/packages/prod/monolog.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <monolog:config>
-                <monolog:handler
-                    name="main"
-                    type="stream"
-                    path="%kernel.logs_dir%/%kernel.environment%.log"
-                    level="debug"
-                    formatter="monolog.formatter.session_request"
-                />
-            </monolog:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        use Symfony\Config\MonologConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (MonologConfig $monolog): void {
-            $monolog->handler('main')
-                ->type('stream')
-                ->path('%kernel.logs_dir%/%kernel.environment%.log')
-                ->level('debug')
-                ->formatter('monolog.formatter.session_request')
-            ;
-        };
+        return App::config([
+            'monolog' => [
+                'handlers' => [
+                    'main' => [
+                        'type' => 'stream',
+                        'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                        'level' => 'debug',
+                        'formatter' => 'monolog.formatter.session_request',
+                    ],
+                ],
+            ],
+        ]);
 
 If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally
@@ -186,10 +150,6 @@ The ``#[AsMonologProcessor]`` attribute takes these optional arguments:
 * ``method``: the method that processes the records (useful when applying
   the attribute to the entire class instead of a single method).
 
-.. versionadded:: 3.8
-
-    The ``#[AsMonologProcessor]`` attribute was introduced in MonologBundle 3.8.
-
 Symfony's MonologBridge provides processors that can be registered inside your application.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\DebugProcessor`
@@ -214,6 +174,15 @@ Symfony's MonologBridge provides processors that can be registered inside your a
 :class:`Symfony\\Bridge\\Monolog\\Processor\\ConsoleCommandProcessor`
     Adds information about the current console command.
 
+.. note::
+
+    When a processor implements ``Monolog\Processor\ProcessorInterface``, Symfony
+    automatically injects the ``security.untracked_token_storage`` service for any
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface`
+    argument. Unlike the regular ``security.token_storage``, reading from it does
+    not mark the session as used, which is the right behavior for log processors
+    and similar debug data collectors.
+
 .. seealso::
 
     Check out the `built-in Monolog processors`_ to learn more about how to
@@ -235,33 +204,22 @@ the ``monolog.processor`` tag:
                 tags:
                     - { name: monolog.processor, handler: main }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <services>
-                <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" handler="main"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container
-            ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', ['handler' => 'main']);
+        use App\Logger\SessionRequestProcessor;
+
+        return App::config([
+            'services' => [
+                SessionRequestProcessor::class => [
+                    'tags' => [
+                        ['monolog.processor' => ['handler' => 'main']],
+                    ],
+                ],
+            ],
+        ]);
 
 Registering Processors per Channel
 ----------------------------------
@@ -279,33 +237,22 @@ to the ``monolog.processor`` tag to only apply a processor for the given channel
                 tags:
                     - { name: monolog.processor, channel: 'app' }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:monolog="http://symfony.com/schema/dic/monolog"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/monolog
-                https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
-
-            <services>
-                <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" channel="app"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container
-            ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', ['channel' => 'app']);
+        use App\Logger\SessionRequestProcessor;
+
+        return App::config([
+            'services' => [
+                SessionRequestProcessor::class => [
+                    'tags' => [
+                        ['monolog.processor' => ['channel' => 'app']],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _`Monolog`: https://github.com/Seldaek/monolog
 .. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/main/src/Monolog/Processor

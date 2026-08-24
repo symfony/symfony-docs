@@ -4,8 +4,8 @@ How to Create a custom Route Loader
 Basic applications can define all their routes in a single configuration file -
 usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
 However, in most applications it's common to import route definitions from
-different resources: PHP attributes in controller files, YAML, XML
-or PHP files stored in some directory, etc.
+different resources: PHP attributes in controller files, YAML or PHP files
+stored in some directory, etc.
 
 Built-in Route Loaders
 ----------------------
@@ -39,74 +39,54 @@ Symfony provides several route loaders for the most common needs:
             type:     attribute
 
         app_directory:
-            # loads routes from the YAML, XML or PHP files found in that directory
+            # loads routes from the YAML or PHP files found in that directory
             resource: '../legacy/routing/'
             type:     directory
 
         app_bundle:
-            # loads routes from the YAML, XML or PHP files found in some bundle directory
+            # loads routes from the YAML or PHP files found in some bundle directory
             resource: '@AcmeOtherBundle/Resources/config/routing/'
             type:     directory
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <!-- loads routes from the given routing file stored in some bundle -->
-            <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
-
-            <!-- loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root -->
-            <import type="attribute">
-                <resource path="../src/Controller/" namespace="App\Controller"/>
-            </import>
-
-            <!-- loads routes from the PHP attributes of the controllers found in that directory -->
-            <import resource="../src/Controller/" type="attribute"/>
-
-            <!-- loads routes from the PHP attributes of the given class -->
-            <import resource="App\Controller\MyController" type="attribute"/>
-
-            <!-- loads routes from the YAML or XML files found in that directory -->
-            <import resource="../legacy/routing/" type="directory"/>
-
-            <!-- loads routes from the YAML or XML files found in some bundle directory -->
-            <import resource="@AcmeOtherBundle/Resources/config/routing/" type="directory"/>
-        </routes>
 
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return static function (RoutingConfigurator $routes): void {
-            // loads routes from the given routing file stored in some bundle
-            $routes->import('@AcmeBundle/Resources/config/routing.yaml');
-
-            // loads routes from the PHP attributes (#[Route(...)])
-            // of the controllers found in the given PSR-4 namespace root
-            $routes->import(
-                ['path' => '../src/Controller/', 'namespace' => 'App\Controller'],
-                'attribute',
-            );
-
-            // loads routes from the PHP attributes (#[Route(...)])
-            // of the controllers found in that directory
-            $routes->import('../src/Controller/', 'attribute');
-
-            // loads routes from the PHP attributes (#[Route(...)]) of the given class
-            $routes->import('App\Controller\MyController', 'attribute');
-
-            // loads routes from the YAML or XML files found in that directory
-            $routes->import('../legacy/routing/', 'directory');
-
-            // loads routes from the YAML or XML files found in some bundle directory
-            $routes->import('@AcmeOtherBundle/Resources/config/routing/', 'directory');
-        };
+        return Routes::config([
+            'app_file' => [
+                // loads routes from the given routing file stored in some bundle
+                'resource' => '@AcmeBundle/Resources/config/routing.yaml',
+            ],
+            'app_psr4' => [
+                // loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root
+                'resource' => [
+                    'path' => '../src/Controller/',
+                    'namespace' => 'App\Controller',
+                ],
+                'type' => 'attribute',
+            ],
+            'app_attributes' => [
+                // loads routes from the PHP attributes of the controllers found in that directory
+                'resource' => '../src/Controller/',
+                'type' => 'attribute',
+            ],
+            'app_class_attributes' => [
+                // loads routes from the PHP attributes of the given class
+                'resource' => 'App\Controller\MyController',
+                'type' => 'attribute',
+            ],
+            'app_directory' => [
+                // loads routes from the YAML or PHP files found in that directory
+                'resource' => '../legacy/routing/',
+                'type' => 'directory',
+            ],
+            'app_bundle' => [
+                // loads routes from the YAML or PHP files found in some bundle directory
+                'resource' => '@AcmeOtherBundle/Resources/config/routing/',
+                'type' => 'directory',
+            ],
+        ]);
 
 .. note::
 
@@ -149,26 +129,17 @@ Take these lines from the ``routes.yaml``:
             resource: ../src/Controller/
             type: attribute
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <import resource="../src/Controller" type="attribute"/>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return static function (RoutingConfigurator $routes): void {
-            $routes->import('../src/Controller', 'attribute');
-        };
+        return Routes::config([
+            'controllers' => [
+                'resource' => '../src/Controller/',
+                'type' => 'attribute',
+            ],
+        ]);
 
 When the main loader parses this, it tries all registered delegate loaders and calls
 their :method:`Symfony\\Component\\Config\\Loader\\LoaderInterface::supports`
@@ -181,8 +152,7 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
 .. note::
 
     Routes loaded this way will be cached by the Router the same way as
-    when they are defined in one of the default formats (e.g. XML, YAML,
-    PHP file).
+    when they are defined in one of the default formats (e.g. YAML, PHP files).
 
 Loading Routes with a Custom Service
 ------------------------------------
@@ -203,26 +173,17 @@ and configure the service and method to call:
             resource: 'admin_route_loader::loadRoutes'
             type: service
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <import resource="admin_route_loader::loadRoutes" type="service"/>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return static function (RoutingConfigurator $routes): void {
-            $routes->import('admin_route_loader::loadRoutes', 'service');
-        };
+        return Routes::config([
+            'admin_routes' => [
+            'resource' => 'admin_route_loader::loadRoutes',
+                'type' => 'service',
+            ],
+        ]);
 
 In this example, the routes are loaded by calling the ``loadRoutes()`` method
 of the service whose ID is ``admin_route_loader``. Your service doesn't have to
@@ -248,7 +209,7 @@ Creating a custom Loader
 ------------------------
 
 To load routes from some custom source (i.e. from something other than attributes,
-YAML or XML files), you need to create a custom route loader. This loader
+YAML or PHP files), you need to create a custom route loader. This loader
 has to implement :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface`.
 
 In most cases it is easier to extend from
@@ -334,24 +295,6 @@ Now define a service for the ``ExtraLoader``:
             App\Routing\ExtraLoader:
                 tags: [routing.loader]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Routing\ExtraLoader">
-                    <tag name="routing.loader"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -359,13 +302,13 @@ Now define a service for the ``ExtraLoader``:
 
         use App\Routing\ExtraLoader;
 
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(ExtraLoader::class)
-                ->tag('routing.loader')
-            ;
-        };
+        return App::config([
+            'services' => [
+                ExtraLoader::class => [
+                    'tags' => ['routing.loader'],
+                ],
+            ],
+        ]);
 
 Notice the tag ``routing.loader``. All services with this *tag* will be marked
 as potential route loaders and added as specialized route loaders to the
@@ -387,26 +330,17 @@ What remains to do is adding a few lines to the routing configuration:
             resource: .
             type: extra
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <import resource="." type="extra"/>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return static function (RoutingConfigurator $routes): void {
-            $routes->import('.', 'extra');
-        };
+        return Routes::config([
+            'app_extra' => [
+                'resource' => '.',
+                'type' => 'extra',
+            ],
+        ]);
 
 The important part here is the ``type`` key. Its value should be ``extra`` as
 this is the type which the ``ExtraLoader`` supports and this will make sure
@@ -467,7 +401,7 @@ configuration file - you can call the
 
     The resource name and type of the imported routing configuration can
     be anything that would normally be supported by the routing configuration
-    loader (YAML, XML, PHP, attribute, etc.).
+    loader (YAML, PHP, attribute, etc.).
 
 .. note::
 

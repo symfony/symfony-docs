@@ -136,10 +136,10 @@ on a particular schedule::
     The schedule name must be unique and by default, it is ``default``. The transport name follows
     the syntax: ``scheduler_nameofyourschedule`` (e.g. ``scheduler_default``).
 
-.. versionadded:: 7.4
+.. tip::
 
-    Throwing an exception for duplicate schedule names instead of replacing the existing schedule
-    was introduced with Symfony 7.4.
+    You can consume all your scheduler transports at once by using a regular expression
+    with the ``messenger:consume`` command (e.g. ``php bin/console messenger:consume scheduler_.*``).
 
 .. tip::
 
@@ -379,8 +379,8 @@ Finally, the recurring message has to be attached to a schedule::
     {
         public function getSchedule(): Schedule
         {
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     RecurringMessage::trigger(
                         new ExcludeHolidaysTrigger(
                             CronExpressionTrigger::fromSpec('@daily'),
@@ -423,8 +423,8 @@ checks for messages to be generated::
     {
         public function getSchedule(): Schedule
         {
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     RecurringMessage::trigger(
                         new ExcludeHolidaysTrigger(
                             CronExpressionTrigger::fromSpec('@daily'),
@@ -598,10 +598,10 @@ In your handler, you can check a condition and, if affirmative, access the
         {
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     // ...
-                    $this->removeOldReports;
+                    $this->removeOldReports,
                 );
         }
 
@@ -685,8 +685,8 @@ being transferred and processed by its handler::
         {
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
-            return $this->schedule ??= (new Schedule($this->dispatcher))
-                ->with(
+            return $this->schedule ??= new Schedule($this->dispatcher)
+                ->add(
                     // ...
                 )
                 ->before(function(PreRunEvent $event) {
@@ -764,10 +764,6 @@ after a message is consumed::
 
         // do something with the schedule, context, message or result
     }
-
-.. versionadded:: 7.3
-
-    The ``getResult()`` method was introduced in Symfony 7.3.
 
 Execute this command to find out which listeners are registered for this event
 and their priorities:
@@ -854,8 +850,8 @@ code::
 
     use Symfony\Component\Scheduler\Scheduler;
 
-    $schedule = (new Schedule())
-        ->with(
+    $schedule = new Schedule()
+        ->add(
             RecurringMessage::trigger(
                 new ExcludeHolidaysTrigger(
                     CronExpressionTrigger::fromSpec('@daily'),
@@ -900,8 +896,8 @@ This enables dynamic control of scheduled tasks at runtime::
 
         public function getSchedule(): Schedule
         {
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     // ...
                 )
             ;
@@ -977,8 +973,8 @@ worker is restarted, it resumes from the point it left off::
         {
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     // ...
                 )
                 ->stateful($this->cache)
@@ -998,18 +994,14 @@ handle a message only once, you can use the ``processOnlyLastMissedRun`` option:
         {
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     // ...
                 )
                 ->stateful($this->cache)
                 ->processOnlyLastMissedRun(true)
         }
     }
-
-.. versionadded:: 7.2
-
-    The ``processOnlyLastMissedRun`` option was introduced in Symfony 7.2.
 
 To scale your schedules more effectively, you can use multiple workers. In such
 cases, a good practice is to add a :doc:`lock </lock>` to prevent the
@@ -1025,8 +1017,8 @@ same task running more than once::
         {
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     // ...
                 )
                 ->lock($this->lockFactory->createLock('my-lock'));
@@ -1052,8 +1044,8 @@ before being further redispatched to its corresponding handler::
     {
         public function getSchedule(): Schedule
         {
-            return $this->schedule ??= (new Schedule())
-                ->with(
+            return $this->schedule ??= new Schedule()
+                ->add(
                     RecurringMessage::every('5 seconds', new RedispatchMessage(new Message(), 'async'))
                 );
         }

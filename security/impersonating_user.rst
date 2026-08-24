@@ -25,42 +25,23 @@ listener:
             firewalls:
                 main:
                     # ...
-                    switch_user: true
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <switch-user/>
-                </firewall>
-            </config>
-        </srv:container>
+                    switch_user: []
 
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
+        return App::config([
+            'security' => [
                 // ...
-                ->switchUser()
-            ;
-        };
+                'firewalls' => [
+                    'main' => [
+                        'switch_user' => [],
+                    ],
+                ],
+            ],
+        ]);
 
 To switch to another user, add a query string with the ``_switch_user``
 parameter and the username (or whatever field your user provider uses to load users)
@@ -93,38 +74,23 @@ as the value to the current URL:
                         # ...
                         switch_user: { parameter: X-Switch-User }
 
-        .. code-block:: xml
-
-            <!-- config/packages/security.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/security
-                    https://symfony.com/schema/dic/security/security-1.0.xsd">
-                <config>
-                    <!-- ... -->
-                    <firewall name="main">
-                        <!-- ... -->
-                        <switch-user parameter="X-Switch-User"/>
-                    </firewall>
-                </config>
-            </srv:container>
-
         .. code-block:: php
 
             // config/packages/security.php
-            use Symfony\Config\SecurityConfig;
-            return static function (SecurityConfig $security): void {
-                // ...
-                $security->firewall('main')
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return App::config([
+                'security' => [
                     // ...
-                    ->switchUser()
-                        ->parameter('X-Switch-User')
-                ;
-            };
+                    'firewalls' => [
+                        'main' => [
+                            'switch_user' => [
+                                'parameter' => 'X-Switch-User',
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
 
 To switch back to the original user, use the special ``_exit`` username:
 
@@ -139,6 +105,208 @@ To switch back to the original user, use the special ``_exit`` username:
 This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
 Using :ref:`role_hierarchy <security-role-hierarchy>` is a great way to give this
 role to the users that need it.
+
+.. _security-impersonation-form:
+
+Impersonating with a Form
+-------------------------
+
+By default, impersonation happens through a ``GET`` request: the
+``_switch_user`` parameter is read from the query string of any URL covered by
+the firewall. Browsers, crawlers, corporate proxies and link-preview bots follow
+such links on their own, and nothing proves that the request was a deliberate
+action of the impersonator.
+
+The ``path`` option restricts user switching to a single endpoint, which you can
+declare as ``POST`` only, and ``enable_csrf`` requires a CSRF token to go with
+the request.
+
+First, declare the route with the methods you want to allow. The ``switch_user``
+listener handles the request, so the route needs no controller:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_switch_user:
+            path: /switch-user
+            methods: [POST]
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return Routes::config([
+            'app_switch_user' => [
+                'path' => '/switch-user',
+                'methods' => ['POST'],
+            ],
+        ]);
+
+Then point the ``path`` option at that route and enable CSRF protection:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    switch_user:
+                        path: app_switch_user
+                        enable_csrf: true
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                // ...
+                'firewalls' => [
+                    'main' => [
+                        'switch_user' => [
+                            'path' => 'app_switch_user',
+                            'enable_csrf' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+If the ``path`` value starts with a ``/`` character, it's treated as a path;
+otherwise, it's treated as a route name. Leaving it unset keeps the default
+behavior, where the parameter is accepted on every URL of the firewall.
+
+The ``impersonation_form()`` Twig function returns the ``action`` and the
+``fields`` to render, so the form carries what the ``switch_user`` listener
+expects:
+
+.. code-block:: html+twig
+
+    {% set impersonate = impersonation_form(user.userIdentifier) %}
+
+    <form method="post" action="{{ impersonate.action }}">
+        {% for name, value in impersonate.fields %}
+            <input type="hidden" name="{{ name }}" value="{{ value }}">
+        {% endfor %}
+
+        <button>Impersonate {{ user.userIdentifier }}</button>
+    </form>
+
+The fields carry the target identity under the name given by the ``parameter``
+option, the CSRF token under ``csrf_parameter`` when the firewall enables it,
+and ``_target_path``, the page to come back to once the switch is done. None of
+these names has to be hardcoded in the template.
+
+.. tip::
+
+    ``_target_path`` is the page the user lands on after the switch. It defaults
+    to the page the form was rendered on, so the impersonator stays where they
+    were. Pass another URI as the second argument to control it:
+
+    .. code-block:: twig
+
+        {% set target = app.request.pathInfo %}
+        {% set impersonate = impersonation_form(user.userIdentifier, target) %}
+
+    ``impersonation_exit_form()`` takes the same URI as its only argument. When
+    the form sends no ``_target_path``, the listener redirects to the
+    ``target_route`` option and then to ``/``.
+
+Exiting impersonation works the same way with ``impersonation_exit_form()``,
+which returns an empty ``action`` when the current user is not impersonating
+anyone:
+
+.. code-block:: html+twig
+
+    {% set exit = impersonation_exit_form() %}
+
+    {% if exit.action %}
+        <form method="post" action="{{ exit.action }}">
+            {% for name, value in exit.fields %}
+                <input type="hidden" name="{{ name }}" value="{{ value }}">
+            {% endfor %}
+
+            <button>Exit impersonation</button>
+        </form>
+    {% endif %}
+
+.. note::
+
+    ``impersonation_path()`` and ``impersonation_url()`` are unchanged and still
+    build a single URL carrying the same parameters in its query string. They
+    suit a link, which a route restricted to ``POST`` rejects by design. Both
+    also accept the target URI as their second argument.
+
+.. note::
+
+    When ``path`` is set, the ``parameter`` is read from the route attributes,
+    the query string and the request body, but no longer from the request
+    headers. A firewall relying on the ``X-Switch-User`` header shown above must
+    leave ``path`` unset.
+
+CSRF protection uses the application's :ref:`default CSRF token manager <csrf-token-manager>`
+and the ``switch_user`` token id. Use ``csrf_token_manager`` to point the firewall
+at another manager (which implies ``enable_csrf: true``), ``csrf_token_id`` to
+change the token id and ``csrf_parameter`` to change the name of the field
+carrying the token:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    switch_user:
+                        path: app_switch_user
+                        csrf_token_manager: app.switch_user_csrf_manager
+                        csrf_token_id: impersonate
+                        csrf_parameter: _token
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                // ...
+                'firewalls' => [
+                    'main' => [
+                        'switch_user' => [
+                            'path' => 'app_switch_user',
+                            'csrf_token_manager' => 'app.switch_user_csrf_manager',
+                            'csrf_token_id' => 'impersonate',
+                            'csrf_parameter' => '_token',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The form helpers generate the token with the manager configured for the
+firewall. Writing the form by hand works too, but then the parameter names are
+yours to keep in sync with the configuration, and ``csrf_token()`` always uses
+the default manager of the application rather than the one of the firewall.
+
+.. versionadded:: 8.2
+
+    The ``path``, ``enable_csrf``, ``csrf_token_id``, ``csrf_parameter`` and
+    ``csrf_token_manager`` options, and the ``impersonation_form()`` and
+    ``impersonation_exit_form()`` functions, were introduced in Symfony 8.2.
 
 Knowing When Impersonation Is Active
 ------------------------------------
@@ -211,41 +379,21 @@ also adjust the query parameter name via the ``parameter`` setting:
                     # ...
                     switch_user: { role: ROLE_ADMIN, parameter: _want_to_be_this_user }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <switch-user role="ROLE_ADMIN" parameter="_want_to_be_this_user"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
+        return App::config([
+            'security' => [
             // ...
-            $security->firewall('main')
-                // ...
-                ->switchUser()
-                    ->role('ROLE_ADMIN')
-                    ->parameter('_want_to_be_this_user')
-            ;
-        };
+                'firewalls' => [
+                    'main' => [
+                        'switch_user' => ['role' => 'ROLE_ADMIN', 'parameter' => '_want_to_be_this_user'],
+                    ],
+                ],
+            ],
+        ]);
 
 Redirecting to a Specific Target Route
 --------------------------------------
@@ -269,40 +417,26 @@ This feature allows you to control the redirection target route via ``target_rou
                     # ...
                     switch_user: { target_route: app_user_dashboard }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <switch-user target-route="app_user_dashboard"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
+        return App::config([
+            'security' => [
                 // ...
-                ->switchUser()
-                    ->targetRoute('app_user_dashboard')
-            ;
-        };
+                'firewalls' => [
+                    'main' => [
+                        'switch_user' => ['target_route' => 'app_user_dashboard'],
+                    ],
+                ],
+            ],
+        ]);
+
+When switching happens on a :ref:`dedicated path <security-impersonation-form>`,
+there is no current page to come back to, so the listener redirects to the
+``_target_path`` sent with the request, then to ``target_route`` and finally
+to ``/``.
 
 Limiting User Switching
 -----------------------
@@ -325,40 +459,21 @@ be called):
                     # ...
                     switch_user: { role: CAN_SWITCH_USER }
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <switch-user role="CAN_SWITCH_USER"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            // ...
-            $security->firewall('main')
+        return App::config([
+            'security' => [
                 // ...
-                ->switchUser()
-                    ->role('CAN_SWITCH_USER')
-            ;
-        };
+                'firewalls' => [
+                    'main' => [
+                        'switch_user' => ['role' => 'CAN_SWITCH_USER'],
+                    ],
+                ],
+            ],
+        ]);
 
 Then, create a voter class that responds to this role and includes whatever custom
 logic you want::
@@ -466,76 +581,54 @@ impersonator's provider and the impersonated user's provider:
                     provider: user_provider
                     # ...
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <provider name="admin_provider">
-                    <entity class="App\Entity\Admin" property="username"/>
-                </provider>
-                <provider name="user_provider">
-                    <entity class="App\Entity\User" property="email"/>
-                </provider>
-                <provider name="all_users">
-                    <chain>
-                        <provider>admin_provider</provider>
-                        <provider>user_provider</provider>
-                    </chain>
-                </provider>
-
-                <firewall name="admin" pattern="^/admin" context="my_context" provider="admin_provider">
-                    <switch-user provider="all_users"/>
-                    <!-- ... -->
-                </firewall>
-                <firewall name="main" pattern="^/" context="my_context" provider="user_provider">
-                    <!-- ... -->
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->provider('admin_provider')
-                ->entity()
-                    ->class('App\Entity\Admin')
-                    ->property('username')
-            ;
-            $security->provider('user_provider')
-                ->entity()
-                    ->class('App\Entity\User')
-                    ->property('email')
-            ;
-            $security->provider('all_users')
-                ->chain()
-                    ->providers(['admin_provider', 'user_provider'])
-            ;
+        use App\Entity\Admin;
+        use App\Entity\User;
 
-            $security->firewall('admin')
-                ->pattern('^/admin')
-                ->context('my_context')
-                ->provider('admin_provider')
-                ->switchUser()
-                    ->provider('all_users')
-            ;
-            $security->firewall('main')
-                ->pattern('^/')
-                ->context('my_context')
-                ->provider('user_provider')
-            ;
-        };
+        return App::config([
+            'security' => [
+                // ...
+                'providers' => [
+                    'admin_provider' => [
+                        'entity' => [
+                            'class' => Admin::class,
+                            'property' => 'username',
+                        ],
+                    ],
+                    'user_provider' => [
+                        'entity' => [
+                            'class' => User::class,
+                            'property' => 'email',
+                        ],
+                    ],
+                    'all_users' => [
+                        'chain' => [
+                            'providers' => ['admin_provider', 'user_provider'],
+                        ],
+                    ],
+                ],
+
+                'firewalls' => [
+                    'admin' => [
+                        'pattern' => '^/admin',
+                        'provider' => 'admin_provider',
+                        'context' => 'my_context',
+                        'switch_user' => [
+                            'provider' => 'all_users',
+                        ],
+                    ],
+                    'main' => [
+                        'pattern' => '^/',
+                        'provider' => 'user_provider',
+                        'context' => 'my_context',
+                    ],
+                ],
+            ],
+        ]);
 
 The chain provider ``all_users`` allows the ``switch_user`` listener to load
 both admin users (when exiting impersonation) and regular users (when starting

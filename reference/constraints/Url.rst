@@ -243,10 +243,6 @@ The value of this option can also be an asterisk (``*``) to allow all protocols:
     // (e.g. 'https://', 'git+ssh://', 'file://', 'custom://')
     protocols: '*'
 
-.. versionadded:: 7.4
-
-    Support for ``*`` in the ``protocols`` option was introduced in Symfony 7.4.
-
 ``relativeProtocol``
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -321,16 +317,7 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
 ``requireTld``
 ~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 7.1
-
-    The ``requireTld`` option was introduced in Symfony 7.1.
-
-.. deprecated:: 7.1
-
-    Not setting the ``requireTld`` option is deprecated since Symfony 7.1
-    and will default to ``true`` in Symfony 8.0.
+**type**: ``boolean`` **default**: ``true``
 
 By default, URLs like ``https://aaa`` or ``https://foobar`` are considered valid
 because they are technically correct according to the `URL spec`_. If you set this option
@@ -347,10 +334,6 @@ name): e.g. ``https://example.com`` will be valid but ``https://example`` won't.
 ~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This URL does not contain a TLD.``
-
-.. versionadded:: 7.1
-
-    The ``tldMessage`` option was introduced in Symfony 7.1.
 
 This message is shown if the ``requireTld`` option is set to ``true`` and the URL
 does not contain at least one TLD.

@@ -119,8 +119,3 @@ Only private          ``4_private``        ``6_private``        ``all_private``
 Only reserved         ``4_reserved``       ``6_reserved``       ``all_reserved``
 Only public           ``4_public``         ``6_public``         ``all_public``
 ====================  ===================  ===================  ==================
-
-.. versionadded:: 7.1
-
-    The ``*_no_public``, ``*_reserved`` and ``*_public`` ranges were introduced
-    in Symfony 7.1.

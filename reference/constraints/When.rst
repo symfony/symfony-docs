@@ -9,7 +9,7 @@ Applies to  :ref:`class <validation-class-target>`
             or :ref:`property/method <validation-property-target>`
 Options     - `expression`_
             - `constraints`_
-            _ `otherwise`_
+            - `otherwise`_
             - `groups`_
             - `payload`_
             - `values`_
@@ -198,16 +198,11 @@ applied but the constraints defined in ``otherwise`` option (if provided) will b
     object that provides information such as the currently validated class, the
     name of the currently validated property, the list of violations, etc.
 
-.. versionadded:: 7.2
-
-    The ``context`` variable in expressions was introduced in Symfony 7.2.
-
 **When using a closure**, the first argument is the object being validated.
 
-.. versionadded:: 7.3
+.. note::
 
-    The support for closures in the ``expression`` option was introduced in Symfony 7.3
-    and requires PHP 8.5.
+    The support for closures in the ``expression`` option requires PHP 8.5.
 
 .. configuration-block::
 
@@ -322,10 +317,6 @@ One or multiple constraints that are applied if the expression returns true.
 **type**: ``array|Constraint``
 
 One or multiple constraints that are applied if the expression returns false.
-
-.. versionadded:: 7.3
-
-    The ``otherwise`` option was introduced in Symfony 7.3.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 

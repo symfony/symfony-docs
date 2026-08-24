@@ -376,35 +376,19 @@ add this new template at the end of the list (each theme overrides all the previ
                 - '...'
                 - 'form/custom_types.html.twig'
 
-    .. code-block:: xml
-
-        <!-- config/packages/twig.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
-            <twig:config>
-                <twig:form-theme>...</twig:form-theme>
-                <twig:form-theme>form/custom_types.html.twig</twig:form-theme>
-            </twig:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $twig): void {
-            $twig->formThemes([
-                '...',
-                'form/custom_types.html.twig',
-            ]);
-        };
+        return App::config([
+            'twig' => [
+                'form_themes' => [
+                    '...',
+                    'form/custom_types.html.twig',
+                ],
+            ],
+        ]);
 
 The last step is to create the actual Twig template that will render the type.
 The template contents depend on which HTML, CSS and JavaScript frameworks and

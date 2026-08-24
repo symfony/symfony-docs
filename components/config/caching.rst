@@ -65,7 +65,3 @@ You can explicitly define the absolute path to the meta file::
 
     // the third optional argument indicates the absolute path to the meta file
     $userMatcherCache = new ConfigCache($cachePath, true, '/my/absolute/path/to/cache.meta');
-
-.. versionadded:: 7.1
-
-    The argument to customize the meta file path was introduced in Symfony 7.1.

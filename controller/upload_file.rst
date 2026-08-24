@@ -197,10 +197,6 @@ There are some important things to consider in the code of the above controller:
     the **webkitRelativePath** as provided by the browser. Otherwise this
     value will be identical to ``getClientOriginalName()``.
 
-.. versionadded:: 7.1
-
-    The ``getClientOriginalPath()`` method was introduced in Symfony 7.1.
-
 You can use the following code to link to the PDF brochure of a product:
 
 .. code-block:: html+twig

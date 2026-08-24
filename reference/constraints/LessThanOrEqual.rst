@@ -285,6 +285,18 @@ can check that a person must be at least 18 years old like this:
             }
         }
 
+Clock-aware Date Comparisons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The clock-awareness of comparison validators was introduced in Symfony 8.1.
+
+When the :doc:`Clock component </components/clock>` is installed and registered
+as a service, comparison validators automatically use it to resolve relative date
+strings (e.g. ``today``, ``-18 years``). This makes date comparisons deterministic
+and testable by using :ref:`MockClock <clock-mockclock>`.
+
 Options
 -------
 

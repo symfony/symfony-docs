@@ -131,6 +131,21 @@ that group are valid, the second group, ``Strict``, will be validated.
     sequence, which will contain the ``Default`` group which references the
     same group sequence, ...).
 
+    You can also use the ``::class`` constant of the annotated class instead
+    of spelling its short name as a string (e.g. ``User::class`` instead of
+    ``'User'``), which is friendlier to IDEs and refactoring tools::
+
+        #[Assert\GroupSequence([User::class, 'Strict'])]
+        class User
+        {
+            // ...
+        }
+
+    .. versionadded:: 8.2
+
+        Support for using the ``::class`` constant of the annotated class in
+        ``GroupSequence`` was introduced in Symfony 8.2.
+
 .. warning::
 
     Calling ``validate()`` with a group in the sequence (``Strict`` in previous

@@ -80,6 +80,21 @@ The DOT image will look like this:
 
     The ``label`` metadata is not included in the dumped metadata, because it is used as a place's title.
 
+You can also pass the ``--with-listeners`` option to ``workflow:dump`` to
+display the workflow listeners associated with places and transitions:
+
+.. code-block:: terminal
+
+    $ php bin/console workflow:dump workflow-name --with-listeners | dot -Tsvg -o graph.svg
+
+.. versionadded:: 8.1
+
+    The ``--with-listeners`` option was introduced in Symfony 8.1.
+
+.. note::
+
+    This option is currently only supported by the DOT dumper.
+
 You can use ``metadata`` with the following keys to style the workflow:
 
 * for places:
@@ -161,171 +176,81 @@ Below is the configuration for the pull request state machine with styling added
                             from: closed
                             to: review
 
-    .. code-block:: xml
-
-        <!-- config/packages/workflow.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
-        >
-
-            <framework:config>
-                <framework:workflow name="pull_request" type="state_machine">
-                    <framework:marking-store>
-                        <framework:type>method</framework:type>
-                        <framework:property>currentPlace</framework:property>
-                    </framework:marking-store>
-
-                    <framework:support>App\Entity\PullRequest</framework:support>
-
-                    <framework:initial_marking>start</framework:initial_marking>
-
-                    <framework:place>start</framework:place>
-                    <framework:place>coding</framework:place>
-                    <framework:place>test</framework:place>
-                    <framework:place name="review">
-                        <framework:metadata>
-                            <framework:description>Human review</framework:description>
-                        </framework:metadata>
-                    </framework:place>
-                    <framework:place>merged</framework:place>
-                    <framework:place name="closed">
-                        <framework:metadata>
-                            <framework:bg_color>DeepSkyBlue</framework:bg_color>
-                        </framework:metadata>
-                    </framework:place>
-
-                    <framework:transition name="submit">
-                        <framework:from>start</framework:from>
-
-                        <framework:to>test</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="update">
-                        <framework:from>coding</framework:from>
-                        <framework:from>test</framework:from>
-                        <framework:from>review</framework:from>
-
-                        <framework:to>test</framework:to>
-
-                        <framework:metadata>
-                            <framework:arrow_color>Turquoise</framework:arrow_color>
-                        </framework:metadata>
-                    </framework:transition>
-
-                    <framework:transition name="wait_for_review">
-                        <framework:from>test</framework:from>
-
-                        <framework:to>review</framework:to>
-
-                        <framework:metadata>
-                            <framework:color>Orange</framework:color>
-                        </framework:metadata>
-                    </framework:transition>
-
-                    <framework:transition name="request_change">
-                        <framework:from>review</framework:from>
-
-                        <framework:to>coding</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="accept">
-                        <framework:from>review</framework:from>
-
-                        <framework:to>merged</framework:to>
-
-                        <framework:metadata>
-                            <framework:label>Accept PR</framework:label>
-                        </framework:metadata>
-                    </framework:transition>
-
-                    <framework:transition name="reject">
-                        <framework:from>review</framework:from>
-
-                        <framework:to>closed</framework:to>
-                    </framework:transition>
-
-                    <framework:transition name="reopen">
-                        <framework:from>closed</framework:from>
-
-                        <framework:to>review</framework:to>
-                    </framework:transition>
-
-                </framework:workflow>
-
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/workflow.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $pullRequest = $framework->workflows()->workflows('pull_request');
-
-            $pullRequest
-                ->type('state_machine')
-                ->supports(['App\Entity\PullRequest'])
-                ->initialMarking(['start']);
-
-            $pullRequest->markingStore()
-                ->type('method')
-                ->property('currentPlace');
-
-            $pullRequest->place()->name('start');
-            $pullRequest->place()->name('coding');
-            $pullRequest->place()->name('test');
-            $pullRequest->place()
-                ->name('review')
-                ->metadata(['description' => 'Human review']);
-            $pullRequest->place()->name('merged');
-            $pullRequest->place()
-                ->name('closed')
-                ->metadata(['bg_color' => 'DeepSkyBlue',]);
-
-            $pullRequest->transition()
-                ->name('submit')
-                    ->from(['start'])
-                    ->to(['test']);
-
-            $pullRequest->transition()
-                ->name('update')
-                    ->from(['coding', 'test', 'review'])
-                    ->to(['test'])
-                    ->metadata(['arrow_color' => 'Turquoise']);
-
-            $pullRequest->transition()
-                ->name('wait_for_review')
-                    ->from(['test'])
-                    ->to(['review'])
-                    ->metadata(['color' => 'Orange']);
-
-            $pullRequest->transition()
-                ->name('request_change')
-                    ->from(['review'])
-                    ->to(['coding']);
-
-            $pullRequest->transition()
-                ->name('accept')
-                    ->from(['review'])
-                    ->to(['merged'])
-                    ->metadata(['label' => 'Accept PR']);
-
-            $pullRequest->transition()
-                ->name('reject')
-                    ->from(['review'])
-                    ->to(['closed']);
-
-            $pullRequest->transition()
-                ->name('accept')
-                    ->from(['closed'])
-                    ->to(['review']);
-        };
+        return App::config([
+            'framework' => [
+                'workflows' => [
+                    'pull_request' => [
+                        'type' => 'state_machine',
+                        'marking_store' => [
+                            'type' => 'method',
+                            'property' => 'currentPlace',
+                        ],
+                        'supports' => ['App\Entity\PullRequest'],
+                        'initial_marking' => 'start',
+                        'places' => [
+                            'start',
+                            'coding',
+                            'test',
+                            'review' => [
+                                'metadata' => [
+                                    'description' => 'Human review',
+                                ],
+                            ],
+                            'merged',
+                            'closed' => [
+                                'metadata' => [
+                                    'bg_color' => 'DeepSkyBlue',
+                                ],
+                            ],
+                        ],
+                        'transitions' => [
+                            'submit' => [
+                                'from' => 'start',
+                                'to' => 'test',
+                            ],
+                            'update' => [
+                                'from' => ['coding', 'test', 'review'],
+                                'to' => 'test',
+                                'metadata' => [
+                                    'arrow_color' => 'Turquoise',
+                                ],
+                            ],
+                            'wait_for_review' => [
+                                'from' => 'test',
+                                'to' => 'review',
+                                'metadata' => [
+                                    'color' => 'Orange',
+                                ],
+                            ],
+                            'request_change' => [
+                                'from' => 'review',
+                                'to' => 'coding',
+                            ],
+                            'accept' => [
+                                'from' => 'review',
+                                'to' => 'merged',
+                                'metadata' => [
+                                    'label' => 'Accept PR',
+                                ],
+                            ],
+                            'reject' => [
+                                'from' => 'review',
+                                'to' => 'closed',
+                            ],
+                            'reopen' => [
+                                'from' => 'closed',
+                                'to' => 'review',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The PlantUML image will look like this:
 

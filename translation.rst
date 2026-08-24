@@ -79,38 +79,19 @@ are located:
             translator:
                 default_path: '%kernel.project_dir%/translations'
 
-    .. code-block:: xml
-
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config default-locale="en">
-                <framework:translator
-                    default-path="%kernel.project_dir%/translations"
-                />
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/translation.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            // ...
-            $framework
-                ->defaultLocale('en')
-                ->translator()
-                    ->defaultPath('%kernel.project_dir%/translations')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'default_locale' => 'en',
+                'translator' => [
+                    'default_path' => '%kernel.project_dir%/translations',
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -503,11 +484,6 @@ translated. You can ensure this behavior by using the
 This can be useful when rendering user-defined content or other strings
 that must remain exactly as given.
 
-.. versionadded:: 7.4
-
-    The :class:`Symfony\\Component\\Translation\\StaticMessage` class was
-    introduced in Symfony 7.4.
-
 .. _translation-in-templates:
 
 Translations in Templates
@@ -590,10 +566,6 @@ You can also specify the message domain and pass some additional variables:
 Global Translation Parameters
 -----------------------------
 
-.. versionadded:: 7.3
-
-    The global translation parameters feature was introduced in Symfony 7.3.
-
 If the content of a translation parameter is repeated across multiple
 translation messages (e.g. a company name, or a version number), you can define
 it as a global translation parameter. This helps you avoid repeating the same
@@ -615,43 +587,24 @@ of your main configuration file using either ``%...%`` or ``{...}`` syntax:
                 '{app_version}': '1.2.3'
                 '{url}': { message: 'url', parameters: { scheme: 'https://' }, domain: 'global' }
 
-    .. code-block:: xml
-
-           <!-- config/packages/translation.xml -->
-           <?xml version="1.0" encoding="UTF-8" ?>
-           <container xmlns="http://symfony.com/schema/dic/services"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns:framework="http://symfony.com/schema/dic/symfony"
-               xsi:schemaLocation="http://symfony.com/schema/dic/services
-                   https://symfony.com/schema/dic/services/services-1.0.xsd
-                   http://symfony.com/schema/dic/symfony
-                   https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-               <framework:config>
-                   <framework:translator>
-                       <!-- ... -->
-                        <!-- when using the '%' wrapping characters, you must escape them -->
-                       <framework:global name="%%app_name%%">My application</framework:global>
-                       <framework:global name="{app_version}" value="1.2.3"/>
-                       <framework:global name="{url}" message="url" domain="global">
-                            <framework:parameter name="scheme">https://</framework:parameter>
-                        </framework:global>
-                   </framework:translator>
-               </framework:config>
-           </container>
-
     .. code-block:: php
 
         // config/packages/translator.php
-        use Symfony\Config\TwigConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (TwigConfig $translator): void {
-            // ...
-            // when using the '%' wrapping characters, you must escape them
-            $translator->globals('%%app_name%%')->value('My application');
-            $translator->globals('{app_version}')->value('1.2.3');
-            $translator->globals('{url}')->value(['message' => 'url', 'parameters' => ['scheme' => 'https://']]);
-        };
+        return App::config([
+            'framework' => [
+                // ...
+                'translator' => [
+                    'globals' => [
+                        // when using the '%' wrapping characters, you must escape them
+                        '%%app_name%%' => 'My application',
+                        '{app_version}' => '1.2.3',
+                        '{url}' => ['message' => 'url', 'parameters' => ['scheme' => 'https://']],
+                    ],
+                ],
+            ],
+        ]);
 
 Once defined, you can use these parameters in translation messages anywhere in
 your application:
@@ -737,10 +690,6 @@ to spot untranslated strings:
     # when using the --no-fill option, the --prefix option is ignored
     $ php bin/console translation:extract --force --no-fill fr
 
-.. versionadded:: 7.2
-
-    The ``--no-fill`` option was introduced in Symfony 7.2.
-
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
@@ -815,35 +764,18 @@ if you're generating translations with specialized programs or teams.
                     paths:
                         - '%kernel.project_dir%/custom/path/to/translations'
 
-        .. code-block:: xml
-
-            <!-- config/packages/translation.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-                <framework:config>
-                    <framework:translator>
-                        <framework:path>%kernel.project_dir%/custom/path/to/translations</framework:path>
-                    </framework:translator>
-                </framework:config>
-            </container>
-
         .. code-block:: php
 
             // config/packages/translation.php
-            use Symfony\Config\FrameworkConfig;
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (FrameworkConfig $framework): void {
-                $framework->translator()
-                    ->paths(['%kernel.project_dir%/custom/path/to/translations'])
-                ;
-            };
+            return App::config([
+                'framework' => [
+                    'translator' => [
+                        'paths' => ['%kernel.project_dir%/custom/path/to/translations'],
+                    ],
+                ],
+            ]);
 
 Translations of Doctrine Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -880,14 +812,19 @@ Installing and Configuring a Third Party Provider
 Before pushing/pulling translations to a third-party provider, you must install
 the package that provides integration with that provider:
 
-======================  ===========================================================
+======================  ============================================================
 Provider                Install with
-======================  ===========================================================
+======================  ============================================================
 `Crowdin`_              ``composer require symfony/crowdin-translation-provider``
 `Loco (localise.biz)`_  ``composer require symfony/loco-translation-provider``
 `Lokalise`_             ``composer require symfony/lokalise-translation-provider``
 `Phrase`_                ``composer require symfony/phrase-translation-provider``
-======================  ===========================================================
+`POEditor`_             ``composer require symfony/po-editor-translation-provider``
+======================  ============================================================
+
+.. versionadded:: 8.2
+
+    The POEditor provider was reintroduced in Symfony 8.2.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -912,14 +849,15 @@ pull translations via Loco. The *only* part you need to change is the
 
 This table shows the full list of available DSN formats for each provider:
 
-======================  ==============================================================
+======================  ===============================================================
 Provider                DSN
-======================  ==============================================================
+======================  ===============================================================
 `Crowdin`_              ``crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default``
 `Loco (localise.biz)`_  ``loco://API_KEY@default``
 `Lokalise`_             ``lokalise://PROJECT_ID:API_KEY@default``
 `Phrase`_               ``phrase://PROJECT_ID:API_TOKEN@default?userAgent=myProject``
-======================  ==============================================================
+`POEditor`_             ``poeditor://PROJECT_ID:API_KEY@default``
+======================  ===============================================================
 
 To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
@@ -937,41 +875,20 @@ configure the ``providers`` option:
                         domains: ['messages']
                         locales: ['en', 'fr']
 
-    .. code-block:: xml
-
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:translator>
-                    <framework:provider name="loco" dsn="%env(LOCO_DSN)%">
-                        <framework:domain>messages</framework:domain>
-                        <!-- ... -->
-                        <framework:locale>en</framework:locale>
-                        <framework:locale>fr</framework:locale>
-                        <!-- ... -->
-                    </framework:provider>
-                </framework:translator>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         # config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => [
-                'providers' => [
-                    'loco' => [
-                        'dsn' => env('LOCO_DSN'),
-                        'domains' => ['messages'],
-                        'locales' => ['en', 'fr'],
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'translator' => [
+                    'providers' => [
+                        'loco' => [
+                            'dsn' => env('LOCO_DSN'),
+                            'domains' => ['messages'],
+                            'locales' => ['en', 'fr'],
+                        ],
                     ],
                 ],
             ],
@@ -1160,35 +1077,22 @@ A better policy is to include the locale in the URL using the
             requirements:
                 _locale: en|fr|de
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="contact" path="/{_locale}/contact">
-                controller="App\Controller\ContactController::index">
-                <requirement key="_locale">en|fr|de</requirement>
-            </route>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use App\Controller\ContactController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return function (RoutingConfigurator $routes): void {
-            $routes->add('contact', '/{_locale}/contact')
-                ->controller([ContactController::class, 'index'])
-                ->requirements([
+        use App\Controller\ContactController;
+
+        return Routes::config([
+            'contact' => [
+                'path' => '/{_locale}/contact',
+                'controller' => [ContactController::class, 'index'],
+                'requirements' => [
                     '_locale' => 'en|fr|de',
-                ])
-            ;
-        };
+                ],
+            ],
+        ]);
 
 When using the special ``_locale`` parameter in a route, the matched locale
 is *automatically set on the Request* and can be retrieved via the
@@ -1221,29 +1125,16 @@ the framework:
         framework:
             default_locale: en
 
-    .. code-block:: xml
-
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config default-locale="en"/>
-        </container>
-
     .. code-block:: php
 
         // config/packages/translation.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->defaultLocale('en');
-        };
+        return App::config([
+            'framework' => [
+                'default_locale' => 'en',
+            ],
+        ]);
 
 This ``default_locale`` is also relevant for the translator, as shown in the
 next section.
@@ -1268,10 +1159,6 @@ match between them, Symfony will try to find a partial match based on the langua
 (e.g. ``fr_CA`` would match ``fr_Latn_CH`` because their language is the same).
 If there's no perfect or partial match, this method returns the first locale passed
 as argument (that's why the order of the passed locales is important).
-
-.. versionadded:: 7.1
-
-    The feature to match locales partially was introduced in Symfony 7.1.
 
 .. _translation-fallback:
 
@@ -1306,43 +1193,51 @@ checks translation resources for several locales:
                    fallbacks: ['en']
                    # ...
 
-       .. code-block:: xml
-
-           <!-- config/packages/translation.xml -->
-           <?xml version="1.0" encoding="UTF-8" ?>
-           <container xmlns="http://symfony.com/schema/dic/services"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns:framework="http://symfony.com/schema/dic/symfony"
-               xsi:schemaLocation="http://symfony.com/schema/dic/services
-                   https://symfony.com/schema/dic/services/services-1.0.xsd
-                   http://symfony.com/schema/dic/symfony
-                   https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-               <framework:config>
-                   <framework:translator>
-                       <framework:fallback>en</framework:fallback>
-                       <!-- ... -->
-                   </framework:translator>
-               </framework:config>
-           </container>
-
        .. code-block:: php
 
            // config/packages/translation.php
-           use Symfony\Config\FrameworkConfig;
+           namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (FrameworkConfig $framework): void {
-                // ...
-                $framework->translator()
-                    ->fallbacks(['en'])
-                ;
-            };
+            return [
+                'framework' => [
+                'translator' => [
+                    'fallbacks' => ['en'],
+                ],
+            ],
+        ];
 
 .. note::
 
     When Symfony can't find a translation in the given locale, it will
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
+
+Computing Fallback Locales Programmatically
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.1
+
+    The ``LocaleFallbackProvider`` class was introduced in Symfony 8.1.
+
+Symfony determines locale fallbacks using several rules, such as the ICU parent
+locale chain, `locale subtag`_ shortening, and configured fallback locales.
+
+This logic is encapsulated in the :class:`Symfony\\Component\\Translation\\LocaleFallbackProvider`
+class. You can use this class when you need to compute the fallback chain for a
+locale outside of the ``Translator``::
+
+    use Symfony\Component\Translation\LocaleFallbackProvider;
+
+    $provider = new LocaleFallbackProvider(['en']);
+    $fallbacks = $provider->computeFallbackLocales('es_AR');
+    // ['es_419', 'es', 'en']
+
+The class also provides a method to validate locale strings::
+
+    use Symfony\Component\Translation\LocaleFallbackProvider;
+
+    // throws InvalidArgumentException if the locale contains invalid characters
+    LocaleFallbackProvider::validateLocale($locale);
 
 .. _locale-switcher:
 
@@ -1663,6 +1558,13 @@ adapted to the format required by GitHub, but you can force that format too:
     $ php bin/console lint:yaml translations/ --format=github
     $ php bin/console lint:xliff translations/ --format=github
 
+    # the YAML linter also supports formatting the output for GitLab
+    $ php bin/console lint:yaml translations/ --format=gitlab
+
+.. versionadded:: 8.3
+
+    The ``gitlab`` output format of ``lint:yaml`` was introduced in Symfony 8.2.
+
 .. tip::
 
     The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
@@ -1683,10 +1585,6 @@ to check that the translation contents are also correct:
 
         # checks the contents of the translation catalogs for Italian (it) and Japanese (ja) locales
         $ php bin/console lint:translations --locale=it --locale=ja
-
-.. versionadded:: 7.2
-
-    The ``lint:translations`` command was introduced in Symfony 7.2.
 
 Testing Translations
 --------------------
@@ -1793,59 +1691,29 @@ it in the translator configuration:
                     # also translate the contents of these HTML attributes
                     localizable_html_attributes: ['title']
 
-    .. code-block:: xml
-
-        <!-- config/packages/translation.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:translator>
-                    <!-- accents: replace characters by their accented version -->
-                    <!-- brackets: wrap strings with brackets -->
-                    <!-- expansion_factor: controls how many extra characters are added to make text longer -->
-                    <!-- parse_html: maintain the original HTML tags of the translated contents -->
-                    <framework:pseudo-localization
-                        accents="true"
-                        brackets="true"
-                        expansion_factor="1.4"
-                        parse_html="true"
-                    >
-                        <!-- also translate the contents of these HTML attributes -->
-                        <framework:localizable-html-attribute>title</framework:localizable-html-attribute>
-                    </framework:pseudo-localization>
-                </framework:translator>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/translation.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework) {
-            // ...
-            $framework
-                ->translator()
-                    ->pseudoLocalization()
+        return App::config([
+            'framework' => [
+                'translator' => [
+                    'pseudo_localization' => [
                         // replace characters by their accented version
-                        ->accents(true)
+                        'accents' => true,
                         // wrap strings with brackets
-                        ->brackets(true)
+                        'brackets' => true,
                         // controls how many extra characters are added to make text longer
-                        ->expansionFactor(1.4)
+                        'expansion_factor' => 1.4,
                         // maintain the original HTML tags of the translated contents
-                        ->parseHtml(true)
+                        'parse_html' => true,
                         // also translate the contents of these HTML attributes
-                        ->localizableHtmlAttributes(['title'])
-            ;
-        };
+                        'localizable_html_attributes' => ['title'],
+                    ],
+                ],
+            ],
+        ]);
 
 That's all. The application will now start displaying those strange, but
 readable, contents to help you internationalize it. See for example the
@@ -1907,4 +1775,6 @@ Learn more
 .. _`Loco (localise.biz)`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Loco/README.md
 .. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
 .. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
+.. _`POEditor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/PoEditor/README.md
 .. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
+.. _`locale subtag`: https://datatracker.ietf.org/doc/html/rfc4646

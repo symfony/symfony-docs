@@ -114,10 +114,6 @@ on your underlying object. Valid values are:
 * ``array`` (e.g. ``[2011, 06, 05, 12, 15, 0]``)
 * ``timestamp`` (e.g. ``1307276100``)
 
-.. versionadded:: 7.4
-
-    Support for ``date_point`` values was introduced in Symfony 7.4.
-
 The value that comes back from the form will also be normalized back into
 this format.
 

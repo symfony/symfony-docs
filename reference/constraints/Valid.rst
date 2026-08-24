@@ -258,6 +258,75 @@ Options
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+``restrictGroups``
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+Consider the following class::
+
+    // src/Entity/Address.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Address
+    {
+        #[Assert\NotBlank]
+        public string $street;
+
+        #[Assert\NotBlank(groups: ['shipping'])]
+        public string $phoneNumber;
+
+        #[Assert\NotBlank(groups: ['billing'])]
+        public string $email;
+    }
+
+The same class is used for the two addresses of an order. The street is always
+required. The phone number is only required for the shipping address, to
+coordinate the delivery. The email is only required for the billing address,
+because the invoice is sent by email::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Order
+    {
+        #[Assert\Valid(groups: ['billing'])]
+        public Address $billingAddress;
+
+        #[Assert\Valid(groups: ['shipping'])]
+        public Address $shippingAddress;
+    }
+
+During the checkout, the application validates the ``Default`` group and the
+group named after each step (``billing`` or ``shipping``). When validating the
+billing step (the ``Default`` and ``billing`` groups), the ``$billingAddress``
+is validated only against ``billing``: the email is checked, but the ``NotBlank``
+constraint of ``$street`` is **silently skipped**, even though you asked for the
+``Default`` group too.
+
+This happens because the ``groups`` option defines the full list of groups used
+to validate the nested object, and the ``Default`` group is not added in this
+example. Set ``restrictGroups`` to ``false`` to disable that behavior and
+validate each nested object against the same groups as its parent object::
+
+    #[Assert\Valid(groups: ['billing'], restrictGroups: false)]
+    public Address $billingAddress;
+
+    #[Assert\Valid(groups: ['shipping'], restrictGroups: false)]
+    public Address $shippingAddress;
+
+Even when setting the ``restrictGroups`` option to ``false``, the ``groups``
+option still decides when the cascade validation happens: when validating the
+billing step, the ``$shippingAddress`` is never validated, and vice versa.
+
+.. versionadded:: 8.2
+
+    The ``restrictGroups`` option was introduced in Symfony 8.2.
+
 ``traverse``
 ~~~~~~~~~~~~
 

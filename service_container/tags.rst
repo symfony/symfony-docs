@@ -24,22 +24,6 @@ This is how you would apply that tag to your service:
             App\Twig\AppExtension:
                 tags: ['twig.extension']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Twig\AppExtension">
-                    <tag name="twig.extension"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -47,12 +31,13 @@ This is how you would apply that tag to your service:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(AppExtension::class)
-                ->tag('twig.extension');
-        };
+        return App::config([
+            'services' => [
+                AppExtension::class => [
+                    'tags' => ['twig.extension'],
+                ],
+            ],
+        ]);
 
 Other tags are used to integrate your services into other systems. For a list of
 all the tags available in the core Symfony Framework, check out
@@ -103,14 +88,6 @@ When no tag name is specified, the fully qualified class name (FQCN) of the targ
     like their laziness, their bindings or their calls for example, you may rely
     on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
 
-.. versionadded:: 7.4
-
-    In Symfony 7.4, autoconfiguration attributes (such as ``#[AutoconfigureTag]``)
-    placed on abstract classes are also parsed when using
-    :ref:`resource-based service loading <service-container-services-load-example>`.
-    Previously, abstract classes were skipped during this process, meaning their
-    attributes were not fully processed.
-
 You can achieve the same in configuration files with the ``_instanceof`` option:
 
 .. configuration-block::
@@ -126,20 +103,6 @@ You can achieve the same in configuration files with the ``_instanceof`` option:
                     tags: ['app.custom_tag']
             # ...
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <!-- this config only applies to the services created by this file -->
-                <instanceof id="App\Security\CustomInterface" autowire="true">
-                    <!-- services whose classes are instances of CustomInterface will be tagged automatically -->
-                    <tag name="app.custom_tag"/>
-                </instanceof>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -147,20 +110,17 @@ You can achieve the same in configuration files with the ``_instanceof`` option:
 
         use App\Security\CustomInterface;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            // this config only applies to the services created by this file
-            $services
-                ->instanceof(CustomInterface::class)
+        return App::config([
+            'services' => [
+                // this config only applies to the services created by this file
+                '_instanceof' => [
                     // services whose classes are instances of CustomInterface will be tagged automatically
-                    ->tag('app.custom_tag');
-        };
-
-.. warning::
-
-    If you're using PHP configuration, you need to call ``instanceof`` before
-    any service registration to make sure tags are correctly applied.
+                    CustomInterface::class => [
+                        'tags' => ['app.custom_tag'],
+                    ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -192,26 +152,6 @@ tagged in the following example define a ``key`` attribute:
                 tags:
                     - { name: 'app.handler', key: 'handler_two' }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Handler\One">
-                    <tag name="app.handler" key="handler_one"/>
-                </service>
-
-                <service id="App\Handler\Two">
-                    <tag name="app.handler" key="handler_two"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -220,17 +160,20 @@ tagged in the following example define a ``key`` attribute:
         use App\Handler\One;
         use App\Handler\Two;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(One::class)
-                ->tag('app.handler', ['key' => 'handler_one'])
-            ;
-
-            $services->set(Two::class)
-                ->tag('app.handler', ['key' => 'handler_two'])
-            ;
-        };
+        return App::config([
+            'services' => [
+                One::class => [
+                    'tags' => [
+                        ['app.handler' => ['key' => 'handler_one']],
+                    ],
+                ],
+                Two::class => [
+                    'tags' => [
+                        ['app.handler' => ['key' => 'handler_two']],
+                    ],
+                ],
+            ],
+        ]);
 
 Tag attributes are used, for example, to :ref:`index tagged services <tags_index-by>`
 or to pass extra information to the :ref:`compiler pass that processes the tag
@@ -239,40 +182,19 @@ or to pass extra information to the :ref:`compiler pass that processes the tag
 .. tip::
 
     The ``name`` attribute is used by default to define the name of the tag.
-    If you want to add a ``name`` attribute to some tag in XML or YAML formats,
+    If you want to add a ``name`` attribute to some tag in YAML format,
     you need to use this special syntax:
 
-    .. configuration-block::
+    .. code-block:: yaml
 
-        .. code-block:: yaml
-
-            # config/services.yaml
-            services:
-                App\Handler\One:
-                    tags:
-                        # this is a tag called 'app.handler'
-                        - { name: 'app.handler', key: 'handler_one' }
-                        # this is a tag called 'app.handler' with two attributes ('name' and 'key')
-                        - app.handler: { name: 'arbitrary-value', key: 'handler_one' }
-
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <services>
-                    <service id="App\Handler\One">
-                        <!-- this is a tag called 'app.handler' -->
-                        <tag name="app.handler" key="handler_one"/>
-                        <!-- this is a tag called 'app.handler' with two attributes ('name' and 'key') -->
-                        <tag name="arbitrary-value" key="handler_one">app.handler</tag>
-                    </service>
-                </services>
-            </container>
+        # config/services.yaml
+        services:
+            App\Handler\One:
+                tags:
+                    # this is a tag called 'app.handler'
+                    - { name: 'app.handler', key: 'handler_one' }
+                    # this is a tag called 'app.handler' with two attributes ('name' and 'key')
+                    - app.handler: { name: 'arbitrary-value', key: 'handler_one' }
 
 .. tip::
 
@@ -292,6 +214,110 @@ or to pass extra information to the :ref:`compiler pass that processes the tag
             App\Handler\One:
                 tags:
                     - { name: 'app.handler' }
+
+.. _di-tag-attributes-per-tagged-service:
+
+Computing Tag Attributes per Tagged Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for computing tag attributes per tagged service was introduced in
+    Symfony 8.2.
+
+Autoconfigured tags attach the same attributes to every tagged service. To
+compute the attributes of each service instead, pass a callable in the form
+``[SomeClass::class, 'someMethod']`` as the tag attributes. When compiling
+the container, Symfony calls that static method on each concrete class
+implementing the interface::
+
+    // src/Handler/BatchHandlerInterface.php
+    namespace App\Handler;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('app.handler', attributes: [self::class, 'getTagAttributes'])]
+    interface BatchHandlerInterface
+    {
+        /**
+         * @return array<string, mixed>
+         */
+        public static function getTagAttributes(): array;
+    }
+
+Because the method is declared by the interface, PHP requires every class
+implementing it to define the method, and static analysis tools can detect
+mistakes in the callable. The method is called on the concrete class, so it
+can return attributes that depend on each class::
+
+    // src/Handler/RefundHandler.php
+    namespace App\Handler;
+
+    class RefundHandler implements BatchHandlerInterface
+    {
+        public static function getTagAttributes(): array
+        {
+            return ['key' => 'refund'];
+        }
+    }
+
+The same callable can be used with the ``#[Autoconfigure]`` attribute and with
+the ``_instanceof`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _instanceof:
+                App\Handler\BatchHandlerInterface:
+                    tags:
+                        - app.handler: [App\Handler\BatchHandlerInterface, getTagAttributes]
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Handler\BatchHandlerInterface;
+
+        return App::config([
+            'services' => [
+                '_instanceof' => [
+                    BatchHandlerInterface::class => [
+                        'tags' => [
+                            ['app.handler' => [BatchHandlerInterface::class, 'getTagAttributes']],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+On PHP 8.5 and later, where closures are allowed in attributes, you can pass a
+closure receiving the concrete class-string instead of a static method::
+
+    // src/Handler/BatchHandlerInterface.php
+
+    // ...
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('app.handler', attributes: static function (string $class): array {
+        return ['key' => $class::getSupportedBatchAction()];
+    })]
+    interface BatchHandlerInterface
+    {
+        public static function getSupportedBatchAction(): string;
+    }
+
+Closures cannot be used in YAML files, so the static method callable is the
+only form available in that format.
+
+.. note::
+
+    Tag attributes are computed when the container is compiled, once per
+    concrete and instantiable class; abstract classes and interfaces are skipped.
+    The callable must return an array; otherwise an exception is thrown.
 
 .. _tags_reference-tagged-services:
 
@@ -341,52 +367,29 @@ all services tagged with ``app.handler`` into its constructor argument:
                 arguments:
                     - !tagged_iterator app.handler
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Handler\One">
-                    <tag name="app.handler"/>
-                </service>
-
-                <service id="App\Handler\Two">
-                    <tag name="app.handler"/>
-                </service>
-
-                <service id="App\HandlerCollection">
-                    <!-- inject all services tagged with app.handler as first argument -->
-                    <argument type="tagged_iterator" tag="app.handler"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        use App\Handler\One;
+        use App\Handler\Two;
+        use App\HandlerCollection;
 
-            $services->set(App\Handler\One::class)
-                ->tag('app.handler')
-            ;
-
-            $services->set(App\Handler\Two::class)
-                ->tag('app.handler')
-            ;
-
-            $services->set(App\HandlerCollection::class)
-                // inject all services tagged with app.handler as first argument
-                ->args([tagged_iterator('app.handler')])
-            ;
-        };
+        return App::config([
+            'services' => [
+                One::class => [
+                    'tags' => ['app.handler'],
+                ],
+                Two::class => [
+                    'tags' => ['app.handler'],
+                ],
+                HandlerCollection::class => [
+                    // inject all services tagged with app.handler as first argument
+                    'arguments' => [tagged_iterator('app.handler')],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -441,52 +444,26 @@ iterator, add the ``exclude`` option:
                 arguments:
                     - !tagged_iterator { tag: app.handler, exclude: ['App\Handler\Three'] }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <!-- This is the service we want to exclude, even if the 'app.handler' tag is attached -->
-                <service id="App\Handler\Three">
-                    <tag name="app.handler"/>
-                </service>
-
-                <service id="App\HandlerCollection">
-                    <!-- inject all services tagged with app.handler as first argument -->
-                    <argument type="tagged_iterator" tag="app.handler">
-                        <exclude>App\Handler\Three</exclude>
-                    </argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        use App\Handler\Three as HandlerThree;
+        use App\HandlerCollection;
 
-            // ...
-
-            // This is the service we want to exclude, even if the 'app.handler' tag is attached
-            $services->set(App\Handler\Three::class)
-                ->tag('app.handler')
-            ;
-
-            $services->set(App\HandlerCollection::class)
-                // inject all services tagged with app.handler as first argument
-                ->args([tagged_iterator('app.handler', exclude: [App\Handler\Three::class])])
-            ;
-        };
+        return App::config([
+            'services' => [
+                // This is the service we want to exclude, even if the 'app.handler' tag is attached
+                HandlerThree::class => [
+                    'tags' => ['app.handler'],
+                ],
+                HandlerCollection::class => [
+                    // inject all services tagged with app.handler as first argument
+                    'arguments' => [tagged_iterator('app.handler', exclude: [HandlerThree::class])],
+                ],
+            ],
+        ]);
 
 In the case the referencing service is itself tagged with the tag being used in the tagged
 iterator, it is automatically excluded from the injected iterable. This behavior can be
@@ -524,52 +501,26 @@ disabled by setting the ``exclude_self`` option to ``false``:
                 arguments:
                     - !tagged_iterator { tag: app.handler, exclude: ['App\Handler\Three'], exclude_self: false }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <!-- This is the service we want to exclude, even if the 'app.handler' tag is attached -->
-                <service id="App\Handler\Three">
-                    <tag name="app.handler"/>
-                </service>
-
-                <service id="App\HandlerCollection">
-                    <!-- inject all services tagged with app.handler as first argument -->
-                    <argument type="tagged_iterator" tag="app.handler" exclude-self="false">
-                        <exclude>App\Handler\Three</exclude>
-                    </argument>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        use App\Handler\Three;
+        use App\HandlerCollection;
 
-            // ...
-
-            // This is the service we want to exclude, even if the 'app.handler' tag is attached
-            $services->set(App\Handler\Three::class)
-                ->tag('app.handler')
-            ;
-
-            $services->set(App\HandlerCollection::class)
-                // inject all services tagged with app.handler as first argument
-                ->args([tagged_iterator('app.handler', exclude: [App\Handler\Three::class], excludeSelf: false)])
-            ;
-        };
+        return App::config([
+            'services' => [
+                // This is the service we want to exclude, even if the 'app.handler' tag is attached
+                Three::class => [
+                    'tags' => ['app.handler'],
+                ],
+                HandlerCollection::class => [
+                    // inject all services tagged with app.handler as first argument
+                    'arguments' => [tagged_iterator('app.handler', exclude: [Three::class], excludeSelf: false)],
+                ],
+            ],
+        ]);
 
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -601,22 +552,6 @@ the number, the earlier the tagged service will be located in the collection:
                 tags:
                     - { name: 'app.handler', priority: 20 }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Handler\One">
-                    <tag name="app.handler" priority="20"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -624,13 +559,20 @@ the number, the earlier the tagged service will be located in the collection:
 
         use App\Handler\One;
 
-        return function(ContainerConfigurator $container): void {
-            $services = $container->services();
+        return App::config([
+            'services' => [
+                One::class => [
+                    'tags' => [
+                        ['app.handler' => ['priority' => 20]],
+                    ],
+                ],
+            ],
+        ]);
 
-            $services->set(One::class)
-                ->tag('app.handler', ['priority' => 20])
-            ;
-        };
+.. deprecated:: 8.1
+
+    The ``getDefaultPriority()`` method is deprecated since Symfony 8.1.
+    Use the :ref:`#[AsTaggedItem] attribute <tags_as-tagged-item>` instead.
 
 Another option, which is particularly useful when using autoconfiguring
 tags, is to implement the static ``getDefaultPriority()`` method on the
@@ -646,6 +588,11 @@ service itself::
             return 3;
         }
     }
+
+.. deprecated:: 8.1
+
+    The ``default_priority_method`` option is deprecated since Symfony 8.1.
+    Use the :ref:`#[AsTaggedItem] attribute <tags_as-tagged-item>` instead.
 
 If you want to have another method defining the priority
 (e.g. ``getPriority()`` rather than ``getDefaultPriority()``),
@@ -678,37 +625,21 @@ you can define it in the configuration of the collecting service:
                 arguments:
                     - !tagged_iterator { tag: app.handler, default_priority_method: getPriority }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-            <services>
-                <service id="App\HandlerCollection">
-                    <argument type="tagged_iterator" tag="app.handler" default-priority-method="getPriority"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
+        use App\HandlerCollection;
 
-            // ...
-
-            $services->set(App\HandlerCollection::class)
-                ->args([
-                    tagged_iterator('app.handler', null, null, 'getPriority'),
-                ])
-            ;
-        };
+        return App::config([
+            'services' => [
+                HandlerCollection::class => [
+                    // inject all services tagged with app.handler as first argument
+                    'arguments' => [tagged_iterator('app.handler', defaultPriorityMethod: 'getPriority')],
+                ],
+            ],
+        ]);
 
 .. _tags_index-by:
 
@@ -758,30 +689,6 @@ to index the services:
             App\HandlerCollection:
                 arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'key' }]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Handler\One">
-                    <tag name="app.handler" key="handler_one"/>
-                </service>
-
-                <service id="App\Handler\Two">
-                    <tag name="app.handler" key="handler_two"/>
-                </service>
-
-                <service id="App\HandlerCollection">
-                    <argument type="tagged_iterator" tag="app.handler" index-by="key"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -789,23 +696,26 @@ to index the services:
 
         use App\Handler\One;
         use App\Handler\Two;
+        use App\HandlerCollection;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(One::class)
-                ->tag('app.handler', ['key' => 'handler_one']);
-
-            $services->set(Two::class)
-                ->tag('app.handler', ['key' => 'handler_two']);
-
-            $services->set(App\HandlerCollection::class)
-                ->args([
+        return App::config([
+            'services' => [
+                One::class => [
+                    'tags' => [
+                        ['app.handler' => ['key' => 'handler_one']],
+                    ],
+                ],
+                Two::class => [
+                    'tags' => [
+                        ['app.handler' => ['key' => 'handler_two']],
+                    ],
+                ],
+                HandlerCollection::class => [
                     // 2nd argument is the index attribute name
-                    tagged_iterator('app.handler', 'key'),
-                ])
-            ;
-        };
+                    'arguments' => [tagged_iterator('app.handler', 'key')],
+                ],
+            ],
+        ]);
 
 In this example, the ``index_by`` option is ``key``. All services define that
 option/attribute, so that will be the value used to index the services. For example,
@@ -832,8 +742,19 @@ Symfony applies this fallback process:
    (in this example, ``getDefaultKeyName()``), call it and use the returned value;
 #. Otherwise, fall back to the default behavior and use the service ID.
 
+.. deprecated:: 8.1
+
+    The ``getDefault<CamelCase index_by value>Name()`` method convention is
+    deprecated since Symfony 8.1. Use the
+    :ref:`#[AsTaggedItem] attribute <tags_as-tagged-item>` instead.
+
 The ``default_index_method`` Option
 ...................................
+
+.. deprecated:: 8.1
+
+    The ``default_index_method`` option is deprecated since Symfony 8.1.
+    Use the :ref:`#[AsTaggedItem] attribute <tags_as-tagged-item>` instead.
 
 This option defines the name of the service class method that will be called to
 get the value used to index the services:
@@ -865,27 +786,6 @@ get the value used to index the services:
             App\HandlerCollection:
                 arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\HandlerCollection">
-                    <argument type="tagged_iterator"
-                        tag="app.handler"
-                        default-index-method="getIndex"
-                    />
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -893,17 +793,13 @@ get the value used to index the services:
 
         use App\HandlerCollection;
 
-        return function (ContainerConfigurator $container) {
-            $services = $container->services();
-
-            // ...
-
-            $services->set(HandlerCollection::class)
-                ->args([
-                    tagged_iterator('app.handler', null, 'getIndex'),
-                ])
-            ;
-        };
+        return App::config([
+            'services' => [
+                HandlerCollection::class => [
+                    'arguments' => [tagged_iterator('app.handler', defaultIndexMethod: 'getIndex')],
+                ],
+            ],
+        ]);
 
 If some service class doesn't define the method configured in ``default_index_method``,
 Symfony will fall back to using the service ID as its index inside the tagged services.
@@ -948,11 +844,7 @@ same service under different indexes::
         // ...
     }
 
-.. versionadded:: 7.3
-
-    The feature to apply the ``#[AsTaggedItem]`` attribute multiple times was
-    introduced in Symfony 7.3.
-
+.. _service-tags-resource-tags:
 .. _di-resource-tags:
 
 Tagging Non-Service Classes
@@ -1007,23 +899,6 @@ The same definitions can be declared per service in configuration files:
                     - { name: 'app.report_item', type: 'invoice' }
                     - 'app.exportable'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="App\Model\Invoice">
-                    <resource-tag name="app.report_item" type="invoice"/>
-                    <resource-tag>app.exportable</resource-tag>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -1031,26 +906,22 @@ The same definitions can be declared per service in configuration files:
 
         use App\Model\Invoice;
 
-        return function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(Invoice::class)
-                ->resourceTag('app.report_item', ['type' => 'invoice'])
-                ->resourceTag('app.exportable')
-            ;
-        };
+        return App::config([
+            'services' => [
+                Invoice::class => [
+                    'resource_tags' => [
+                        ['app.report_item' => ['type' => 'invoice']],
+                        'app.exportable',
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
     Resource tags can also be declared in the ``_defaults`` section to apply
-    them to every service defined in the same file, using the same option names
-    (``resource_tags:`` in YAML, ``<resource-tag>`` inside ``<defaults>`` in
-    XML, ``->defaults()->resourceTag(...)`` in PHP).
-
-.. versionadded:: 7.4
-
-    Declaring resource tags through configuration files, and the
-    ``#[AutoconfigureResourceTag]`` attribute, was introduced in Symfony 7.4.
+    them to every service defined in the same file, using the same
+    ``resource_tags`` option name in YAML and PHP.
 
 When the resource tag setup requires custom logic, use the
 :method:`Symfony\\Component\\DependencyInjection\\Definition::addResourceTag`
@@ -1107,11 +978,6 @@ using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTa
             $container->setParameter('app.model_classes', $classes);
         }
     }
-
-.. versionadded:: 7.3
-
-    The ``addResourceTag()`` and ``findTaggedResourceIds()`` methods were
-    introduced in Symfony 7.3.
 
 Creating Custom Tags and Processing Them with Compiler Passes
 -------------------------------------------------------------

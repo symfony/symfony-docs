@@ -35,39 +35,23 @@ and ``signature_properties`` (explained below):
                         check_route: login_check
                         signature_properties: ['id']
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <login-link check-route="login_check">
-                        <signature-property>id</signature-property>
-                    </login-link>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->loginLink()
-                    ->checkRoute('login_check')
-                    ->signatureProperties(['id'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'login_link' => [
+                            'check_route' => 'login_check',
+                            'signature_properties' => ['id'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The ``signature_properties`` are used to create a signed URL. This must
 contain at least one property of your ``User`` object that uniquely
@@ -106,29 +90,14 @@ intercept requests to this route:
         login_check:
             path: /login_check
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <!-- ... -->
-            <route id="login_check" path="/login_check"/>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use App\Controller\DefaultController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return function (RoutingConfigurator $routes): void {
-            // ...
-            $routes->add('login_check', '/login_check');
-        };
+        return Routes::config([
+            'login_check' => ['path' => '/login_check'],
+        ]);
 
 2) Generate the Login Link
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -338,41 +307,24 @@ seconds). You can customize this using the ``lifetime`` option:
                         # lifetime in seconds
                         lifetime: 300
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <!-- lifetime: lifetime in seconds -->
-                    <login-link check-route="login_check"
-                        lifetime="300"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->loginLink()
-                    ->checkRoute('login_check')
-                    // lifetime in seconds
-                    ->lifetime(300)
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'login_link' => [
+                            'check_route' => 'login_check',
+                            // lifetime in seconds
+                            'lifetime' => 300,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 
@@ -423,40 +375,23 @@ You can add more properties to the ``hash`` by using the
                         check_route: login_check
                         signature_properties: [id, email]
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <login-link check-route="login_check">
-                        <signature-property>id</signature-property>
-                        <signature-property>email</signature-property>
-                    </login-link>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->loginLink()
-                    ->checkRoute('login_check')
-                    ->signatureProperties(['id', 'email'])
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'login_link' => [
+                            'check_route' => 'login_check',
+                            'signature_properties' => ['id', 'email'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 The properties are fetched from the user object using the
 :doc:`PropertyAccess component </components/property_access>` (e.g. using
@@ -469,6 +404,39 @@ The properties are fetched from the user object using the
     ``$lastLinkRequestedAt`` property on your users that you update in the
     ``requestLoginLink()`` controller, you can invalidate all login links
     whenever a user requests a new link.
+
+Signature properties can be **enum values** (both ``UnitEnum`` and backed enums).
+Changing the enum case automatically invalidates existing login links. A common
+use case is to invalidate all existing login links when a user's security-related
+state changes (for example after requesting a password reset).
+
+For example, you can include an enum value in the signature properties::
+
+    enum LoginState: string
+    {
+        case ACTIVE = 'active';
+        case PASSWORD_RESET = 'password_reset';
+    }
+
+    class User
+    {
+        private LoginState $loginState;
+
+
+        public function getLoginLinkSignatureProperties(): array
+        {
+            return [
+                'login_state' => $this->loginState,
+            ];
+        }
+    }
+
+When the ``LoginState`` changes (e.g. from ``ACTIVE`` to ``PASSWORD_RESET``),
+all previously generated login links for that user become invalid automatically.
+
+.. versionadded:: 8.1
+
+    Support for enums in login links was introduced in Symfony 8.1.
 
 Configure a Maximum Use of a Link
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -493,47 +461,27 @@ cache. Enable this support by setting the ``max_uses`` option:
                         # optionally, configure the cache pool
                         #used_link_cache: 'cache.redis'
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <!-- max-uses: only allow the link to be used 3 times
-                         used-link-cache: optionally, configure the cache pool -->
-                    <login-link check-route="login_check"
-                        max-uses="3"
-                        used-link-cache="cache.redis"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->loginLink()
-                    ->checkRoute('login_check')
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'login_link' => [
+                            'check_route' => 'login_check',
+                            // only allow the link to be used 3 times
+                            'max_uses' => 3,
 
-                    // only allow the link to be used 3 times
-                    ->maxUses(3)
-
-                    // optionally, configure the cache pool
-                    //->usedLinkCache('cache.redis')
-            ;
-        };
+                            // optionally, configure the cache pool
+                            // 'used_link_cache' => 'cache.redis',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Make sure there is enough space left in the cache, otherwise invalid links
 can no longer be stored (and thus become valid again). Expired invalid
@@ -568,41 +516,24 @@ the authenticator only handle HTTP POST methods:
                         check_post_only: true
                         max_uses: 1
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <login-link check-route="login_check"
-                        check-post-only="true"
-                        max-uses="1"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->loginLink()
-                    ->checkRoute('login_check')
-                    ->checkPostOnly(true)
-                    ->maxUses(1)
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'login_link' => [
+                            'check_route' => 'login_check',
+                            'check_post_only' => true,
+                            'max_uses' => 1,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Then, use the ``check_route`` controller to render a page that lets the
 user create this POST request (e.g. by clicking a button)::
@@ -713,45 +644,27 @@ Then, configure this service ID as the ``success_handler``:
                         max_uses: 1
                         success_handler: App\Security\Authentication\AuthenticationSuccessHandler
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <login-link check-route="login_check"
-                        check-post-only="true"
-                        max-uses="1"
-                        lifetime="600"
-                        success-handler="App\Security\Authentication\AuthenticationSuccessHandler"
-                    />
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\Authentication\AuthenticationSuccessHandler;
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->loginLink()
-                    ->checkRoute('login_check')
-                    ->lifetime(600)
-                    ->maxUses(1)
-                    ->successHandler(AuthenticationSuccessHandler::class)
-            ;
-        };
+        use App\Security\Authentication\AuthenticationSuccessHandler;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'login_link' => [
+                            'check_route' => 'login_check',
+                            'lifetime' => 600,
+                            'max_uses' => 1,
+                            'success_handler' => AuthenticationSuccessHandler::class,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
 

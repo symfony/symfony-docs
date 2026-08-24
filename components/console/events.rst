@@ -262,9 +262,4 @@ actions on each alarm::
     The alarm feature requires the ``pcntl`` PHP extension and is not available
     on Windows.
 
-.. versionadded:: 7.2
-
-    The ``ConsoleAlarmEvent`` and ``setAlarmInterval()`` were introduced in
-    Symfony 7.2.
-
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html

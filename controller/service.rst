@@ -38,11 +38,6 @@ the class as a public, non-lazy service and enables service argument injection.
 This is the simplest and recommended way to register controllers as services
 when not extending the base controller class.
 
-.. versionadded:: 7.3
-
-    The feature to register controllers as services when using the ``#[Route]``
-    attribute was introduced in Symfony 7.3.
-
 Using the ``#[AsController]`` Attribute
 ---------------------------------------
 
@@ -163,31 +158,20 @@ a service like: ``App\Controller\HelloController::index``:
             controller: App\Controller\HelloController::index
             methods:    GET
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="hello" path="/hello" controller="App\Controller\HelloController::index" methods="GET"/>
-
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
-        use App\Controller\HelloController;
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
-        return function (RoutingConfigurator $routes): void {
-            $routes->add('hello', '/hello')
-                ->controller([HelloController::class, 'index'])
-                ->methods(['GET'])
-            ;
-        };
+        use App\Controller\HelloController;
+
+        return Routes::config([
+            'hello' => [
+                'path' => '/hello',
+                'controller' => [HelloController::class, 'index'],
+                'methods' => ['GET'],
+            ],
+        ]);
 
 .. _controller-service-invoke:
 
@@ -227,29 +211,19 @@ like any other action method:
             path:       /hello/{name}
             controller: App\Controller\HelloController
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="hello" path="/hello/{name}">
-                <default key="_controller">App\Controller\HelloController</default>
-            </route>
-
-        </routes>
-
     .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
 
         use App\Controller\HelloController;
 
-        // app/config/routing.php
-        $collection->add('hello', new Route('/hello', [
-            '_controller' => HelloController::class,
-        ]));
+        return Routes::config([
+            'hello' => [
+                'path' => '/hello/{name}',
+                'controller' => [HelloController::class, 'index'],
+            ],
+        ]);
 
 Alternatives to base Controller Methods
 ---------------------------------------

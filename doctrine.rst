@@ -23,7 +23,7 @@ Installing Doctrine
 -------------------
 
 First, install Doctrine support via the ``orm`` :ref:`Symfony pack <symfony-packs>`,
-as well as the MakerBundle, which will help generate some code:
+as well as the `MakerBundle`_, which will help generate some code:
 
 .. code-block:: terminal
 
@@ -44,9 +44,6 @@ The database connection information is stored as an environment variable called
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.37"
 
     # to use mariadb:
-    # Before doctrine/dbal < 3.7
-    # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
-    # Since doctrine/dbal 3.7
     # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=10.5.8-MariaDB"
 
     # to use a local Unix socket instead of TCP (it can improve performance slightly)
@@ -198,20 +195,10 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
 .. tip::
 
-    Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
-    ``--with-ulid`` to ``make:entity``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
-    this generates an entity with the ``id`` type as :ref:`Uuid <uuid>`
-    or :ref:`Ulid <ulid>` instead of ``int``.
-
-.. note::
-
-    If you want to use XML instead of attributes, add ``type: xml`` and
-    ``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in
-    your ``config/packages/doctrine.yaml`` file.
-
-.. note::
-
-    Starting in v1.44.0 - `MakerBundle`_: only supports entities using PHP attributes.
+    You can pass either ``--with-uuid`` or ``--with-ulid`` to ``make:entity``.
+    Leveraging Symfony's :doc:`Uid Component </components/uid>`, this generates
+    an entity with the ``id`` type as :ref:`Uuid <uuid>` or :ref:`Ulid <ulid>`
+    instead of ``int``.
 
 .. note::
 
@@ -408,8 +395,8 @@ already installed:
 
 .. tip::
 
-    Starting in `MakerBundle`_: v1.56.0 - Passing ``--formatted`` to ``make:migration``
-    generates a nice and tidy migration file.
+    Passing ``--formatted`` to ``make:migration`` generates a nice and tidy
+    migration file.
 
 If everything worked, you should see something like this:
 
@@ -800,10 +787,6 @@ the :ref:`doctrine-queries` section.
 Automatically Fetching Objects (EntityValueResolver)
 ----------------------------------------------------
 
-.. versionadded:: 2.7.1
-
-    Autowiring of the ``EntityValueResolver`` was introduced in DoctrineBundle 2.7.1.
-
 In many cases, you can use the ``EntityValueResolver`` to do the query for you
 automatically! You can simplify the controller to::
 
@@ -882,11 +865,6 @@ resolver to query the database using that property::
         // ...
     }
 
-.. versionadded:: 7.1
-
-    The ``{param:argument}`` route parameter mapping syntax was introduced
-    in Symfony 7.1.
-
 .. tip::
 
     If you set the ``doctrine.orm.controller_resolver.auto_mapping`` option
@@ -920,11 +898,53 @@ using the ``MapEntity`` attribute. You can even control the behavior of the
         }
     }
 
-Fetch via an Expression
-~~~~~~~~~~~~~~~~~~~~~~~
+.. _fetch-via-an-expression:
 
-If automatic fetching doesn't work for your use case, you can write an expression
-using the :doc:`ExpressionLanguage component </expression_language>`::
+Fetch via Custom Logic
+~~~~~~~~~~~~~~~~~~~~~~
+
+If automatic fetching doesn't work for your use case, use the ``expr`` option
+to define your own fetching logic. This option accepts a PHP closure or a
+string expression.
+
+The **closure** receives the current
+:class:`Symfony\\Component\\HttpFoundation\\Request` object and the entity's
+repository as arguments. It can return a single entity or a list of entities
+(in that case, change the type of the controller argument to ``iterable``)::
+
+    use App\Entity\Post;
+    use App\Repository\PostRepository;
+    use Symfony\Component\HttpFoundation\Request;
+    // ...
+
+    #[Route('/posts_by/{author_id}')]
+    public function authorPosts(
+        #[MapEntity(
+            class: Post::class,
+            expr: static function (Request $request, PostRepository $repository): iterable {
+                return $repository->findBy(
+                    ['author' => $request->attributes->get('author_id')],
+                    [],
+                    10
+                );
+            },
+        )]
+        iterable $posts
+    ): Response {
+    }
+
+.. versionadded:: 8.2
+
+    Support for using closures in the ``expr`` option was introduced in Symfony 8.2.
+
+If you prefer a more compact alternative, write an **expression** using the
+:doc:`ExpressionLanguage component </expression_language>` syntax.
+The downside is that expressions are defined as strings, so IDEs and static
+analysis tools can't check them for errors.
+
+Inside the expression, the ``repository`` variable is the entity's repository,
+the current request is available as ``request`` and all route wildcards (like
+``product_id``) are available as variables::
 
     #[Route('/product/{product_id}')]
     public function show(
@@ -933,41 +953,10 @@ using the :doc:`ExpressionLanguage component </expression_language>`::
     ): Response {
     }
 
-In the expression, the ``repository`` variable will be your entity's
-Repository class and any route wildcards - like ``{product_id}`` are
-available as variables.
-
-The repository method called in the expression can also return a list of entities.
-In that case, update the type of your controller argument::
-
-    #[Route('/posts_by/{author_id}')]
-    public function authorPosts(
-        #[MapEntity(class: Post::class, expr: 'repository.findBy({"author": author_id}, {}, 10)')]
-        iterable $posts
-    ): Response {
-    }
-
-.. versionadded:: 7.1
-
-    The mapping of the lists of entities was introduced in Symfony 7.1.
-
-This can also be used to help resolve multiple arguments::
-
-    #[Route('/product/{id}/comments/{comment_id}')]
-    public function show(
-        Product $product,
-        #[MapEntity(expr: 'repository.find(comment_id)')]
-        Comment $comment
-    ): Response {
-    }
-
-In the example above, the ``$product`` argument is handled automatically,
-but ``$comment`` is configured with the attribute since they cannot both follow
-the default convention.
-
-If you need to get other information from the request to query the database, you
-can also access the request in your expression thanks to the ``request``
-variable. Let's say you want the first or the last comment of a product depending on a query parameter named ``sort``::
+Custom fetching logic is also useful when resolving multiple entity arguments,
+because they can't all follow the default convention. In the following example,
+the ``$product`` argument is fetched automatically, while ``$comment`` uses an
+expression that sorts comments based on a query parameter called ``sort``::
 
     #[Route('/product/{id}/comments')]
     public function show(
@@ -976,6 +965,8 @@ variable. Let's say you want the first or the last comment of a product dependin
         Comment $comment
     ): Response {
     }
+
+Like closures, expressions can return a single entity or a list of entities.
 
 .. _doctrine-entity-value-resolver-resolve-target-entities:
 
@@ -997,11 +988,6 @@ resolved automatically::
     ): Response {
         // ...
     }
-
-.. versionadded:: 7.3
-
-    Support for target entity resolution in the ``EntityValueResolver`` was
-    introduced Symfony 7.3
 
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
@@ -1066,10 +1052,6 @@ control behavior:
             Product $product
         ): Response {
         }
-
-.. versionadded:: 7.1
-
-    The ``message`` option was introduced in Symfony 7.1.
 
 Updating an Object
 ------------------

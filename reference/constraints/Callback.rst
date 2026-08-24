@@ -2,20 +2,9 @@ Callback
 ========
 
 The purpose of the Callback constraint is to create completely custom
-validation rules and to assign any validation errors to specific fields
-on your object. If you're using validation with forms, this means that
-instead of displaying custom errors at the top of the form, you can
-display them next to the field they apply to.
-
-This process works by specifying one or more *callback* methods, each of
-which will be called during the validation process. Each of those methods
-can do anything, including creating and assigning validation errors.
-
-.. note::
-
-    A callback method itself doesn't *fail* or return any value. Instead,
-    as you'll see in the example, a callback method has the ability to directly
-    add validator "violations".
+validation rules using your own PHP code. You can define one or more
+callbacks as closures directly in the properties to validate, or as methods
+of the class (or external callables) that add the validation errors themselves.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>`
@@ -23,8 +12,85 @@ Class       :class:`Symfony\\Component\\Validator\\Constraints\\Callback`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator`
 ==========  ===================================================================
 
-Configuration
--------------
+.. _callback-in-properties:
+
+Callbacks in Properties
+-----------------------
+
+The simplest way to use this constraint is to define the callback as a closure
+in the attribute of the property to validate (closures can't be defined in YAML
+or XML configuration). The closure receives the value of the property and
+must return ``true`` or ``false``. When it returns ``false``, Symfony adds a
+violation to that property with the text of :ref:`the message option <callback-constraint-message-option>`::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Order
+    {
+        #[Assert\Callback(
+            static function (\DateTimeImmutable $value) {
+                return $value > new \DateTimeImmutable('today');
+            },
+            message: 'The delivery date must be in the future.',
+        )]
+        public \DateTimeImmutable $deliveryDate;
+
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``message`` option was introduced in Symfony 8.2.
+
+.. note::
+
+    Defining closures inside attributes requires PHP 8.5 or higher. In earlier
+    PHP versions, define the callback as a ``public static`` method of the class
+    and reference it with an array callable::
+
+        #[Assert\Callback(
+            [self::class, 'isFutureDate'],
+            message: 'The delivery date must be in the future.',
+        )]
+        public \DateTimeImmutable $deliveryDate;
+
+If the validation rule involves other properties, the closure can get the object
+being validated from the execution context, which is passed as the second
+argument::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
+    class Order
+    {
+        // ...
+
+        #[Assert\Callback(
+            static function (int $value, ExecutionContextInterface $context) {
+                return $value >= $context->getObject()->subtotal;
+            },
+            message: 'The total must be equal to or greater than the subtotal.',
+        )]
+        public int $total;
+    }
+
+The closure can also add its own violations to the execution context, as
+explained in the next section. Those violations are independent from the one
+added automatically when the closure returns ``false``.
+
+Callbacks in Class Methods
+--------------------------
+
+Instead of a closure, you can define the callback as a method of the class,
+which is called during the validation process. The method receives an
+``ExecutionContextInterface`` object that lets you add violations and
+determine to which property they should be attributed:
 
 .. configuration-block::
 
@@ -89,12 +155,8 @@ Configuration
             }
         }
 
-The Callback Method
--------------------
-
-The callback method is passed a special ``ExecutionContextInterface`` object.
-You can set "violations" directly on this object and determine to which
-field those errors should be attributed::
+The callback method itself doesn't *fail* or return any value. Instead, it adds
+"violations" to the execution context::
 
     // ...
     use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -279,12 +341,33 @@ Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\Context\\Ex
 instance as the first argument and the :ref:`payload option <reference-constraints-callback-payload>`
 as the second argument.
 
-Static or closure callbacks receive the validated object as the first argument,
+Static or closure callbacks receive the validated object or property value
+as the first argument,
 the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
 instance as the second argument and the :ref:`payload option <reference-constraints-callback-payload>`
 as the third argument.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
+
+.. _callback-constraint-message-option:
+
+``message``
+~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+By default, the return value of the callback is ignored. When this option is
+set, the callback must return a boolean and a violation with this message is
+added when it returns ``false``. This is what allows defining
+:ref:`callbacks directly in class properties <callback-in-properties>`.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ value }}``  The current (invalid) value
+===============  ==============================================================
 
 .. _reference-constraints-callback-payload:
 

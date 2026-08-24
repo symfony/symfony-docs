@@ -103,7 +103,7 @@ Once the progress finishes, it displays a special finished indicator (which defa
 to ✔). You can replace it with your own::
 
     $progressIndicator = new ProgressIndicator($output, finishedIndicatorValue: '🎉');
-    
+
     try {
         /* do something */
         $progressIndicator->finish('Finished');
@@ -120,11 +120,6 @@ The progress indicator will now look like this:
      / Processing...
      - Processing...
      🎉 Finished
-
-.. versionadded:: 7.2
-
-    The ``finishedIndicator`` parameter for the constructor was introduced in Symfony 7.2.
-    The ``finishedIndicator`` parameter for method ``finish()`` was introduced in Symfony 7.2.
 
 Customize Placeholders
 ~~~~~~~~~~~~~~~~~~~~~~

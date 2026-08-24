@@ -86,12 +86,6 @@ given version, check for that feature rather than the kernel version::
         // code for the new OptionsResolver API
     }
 
-.. deprecated:: 7.4
-
-    Symfony 7.4 deprecated the XML configuration format, which was the recommended
-    format for bundles in previous versions. Consider using the `gromnan/symfony-config-xml-to-php`_
-    tool to automatically convert XML configuration files to PHP.
-
 Testing your Bundle in Symfony Applications
 -------------------------------------------
 
@@ -162,4 +156,3 @@ as a starting point for your own GitHub CI configuration:
 
 .. _`Symfony releases plan`: https://symfony.com/releases
 .. _`Composer path repository option`: https://getcomposer.org/doc/05-repositories.md#path
-.. _`gromnan/symfony-config-xml-to-php`: https://github.com/GromNaN/symfony-config-xml-to-php

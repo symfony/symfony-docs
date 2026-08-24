@@ -64,13 +64,6 @@ are available to customize the behavior of the encoder:
     Sets the field enclosure (one character only).
 ``csv_end_of_line`` (default: ``\n``)
     Sets the character(s) used to mark the end of each line in the CSV file.
-``csv_escape_char`` (default: empty string)
-
-    .. deprecated:: 7.2
-
-        The ``csv_escape_char`` option was deprecated in Symfony 7.2.
-
-    Sets the escape character (at most one character).
 ``csv_key_separator`` (default: ``.``)
     Sets the separator for array's keys during its flattening
 ``csv_headers`` (default: ``[]``, inferred from input data's keys)
@@ -78,6 +71,8 @@ are available to customize the behavior of the encoder:
     E.g. if you set it to ``['a', 'b', 'c']`` and serialize
     ``['c' => 3, 'a' => 1, 'b' => 2]``, the order will be ``a,b,c`` instead
     of the input order (``c,a,b``).
+    When encoding, this option also accepts an associative array to
+    :ref:`select and rename the columns <serializer-csv-headers-mapping>`.
 ``csv_escape_formulas`` (default: ``false``)
     Escapes fields containing formulas by prepending them with a ``\t`` character.
 ``as_collection`` (default: ``true``)
@@ -87,6 +82,47 @@ are available to customize the behavior of the encoder:
     ``true`` generates numeric headers.
 ``output_utf8_bom`` (default: ``false``)
     Outputs special `UTF-8 BOM`_ along with encoded data.
+
+.. _serializer-csv-headers-mapping:
+
+Selecting and Renaming CSV Columns
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for associative arrays in ``csv_headers`` was introduced in Symfony 8.2.
+
+When encoding, ``csv_headers`` also accepts an associative array whose keys are
+the labels of the CSV columns and whose values are the paths read from each
+row::
+
+    use Symfony\Component\Serializer\Encoder\CsvEncoder;
+
+    $data = [
+        ['firstName' => 'Kévin', 'lastName' => 'Dunglas', 'company' => ['name' => 'Les-Tilleuls.coop']],
+        ['firstName' => 'Nicolas', 'lastName' => 'Grekas', 'company' => ['name' => 'Symfony']],
+    ];
+
+    $encoder->encode($data, 'csv', [
+        CsvEncoder::HEADERS_KEY => [
+            'Name' => 'firstName',
+            'Company' => 'company.name',
+        ],
+    ]);
+
+    // Name,Company
+    // Kévin,Les-Tilleuls.coop
+    // Nicolas,Symfony
+
+Contrary to the list syntax, only the listed columns are encoded, in the given
+order, and no other column is appended (this is why ``lastName`` is missing from
+the output above). Rows are flattened before the paths are resolved, so nested
+values are read using the ``csv_key_separator`` option (``company.name`` in the
+example). A path that doesn't exist in a given row produces an empty cell.
+
+This syntax only applies to encoding. When decoding, ``csv_headers`` still
+expects a list of column names, and it's only used when the ``no_headers``
+option is set to ``true``.
 
 The ``XmlEncoder``
 ------------------
@@ -214,19 +250,16 @@ These are the options available on the :ref:`serializer context <serializer-cont
 ``preserve_numeric_keys`` (default: ``false``)
     If set to true, it keeps numeric array indexes (e.g. ``<item key="0">``)
     instead of collapsing them into ``<item>`` nodes.
+``xml_boolean_repr`` (default: ``null``)
+    A list of the two non-empty strings that represent ``true`` and ``false``,
+    in that order (e.g. ``['true', 'false']`` or ``['approved', 'rejected']``).
+    By default, booleans are encoded as ``1`` and ``0``. This option applies to
+    both element contents and attributes, and only when encoding; decoding is
+    not changed.
 
-.. versionadded:: 7.1
+    .. versionadded:: 8.2
 
-    The ``cdata_wrapping_pattern`` option was introduced in Symfony 7.1.
-
-.. versionadded:: 7.3
-
-    The ``ignore_empty_attributes`` option was introduced in Symfony 7.3.
-
-.. versionadded:: 7.4
-
-    The ``cdata_wrapping_name_pattern`` and ``preserve_numeric_keys`` options
-    were introduced in Symfony 7.4.
+        The ``xml_boolean_repr`` option was introduced in Symfony 8.2.
 
 Example with a custom ``context``::
 
@@ -296,6 +329,22 @@ Example with ``preserve_numeric_keys``::
     //      </item>
     //  </person>
     //</response>
+
+Example with ``xml_boolean_repr``::
+
+    use Symfony\Component\Serializer\Encoder\XmlEncoder;
+
+    $data = ['@active' => true, 'enabled' => false];
+
+    $xmlEncoder->encode($data, 'xml', [
+        'xml_format_output' => true,
+        'xml_boolean_repr' => ['yes', 'no'],
+    ]);
+    // outputs:
+    // <?xml version="1.0"?>
+    // <response active="yes">
+    //   <enabled>no</enabled>
+    // </response>
 
 The ``YamlEncoder``
 -------------------
@@ -382,24 +431,6 @@ to register your class as a service and tag it with
             App\Serializer\NeonEncoder:
                 tags: ['serializer.encoder']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="App\Serializer\NeonEncoder">
-                    <tag name="serializer.encoder"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
@@ -407,13 +438,13 @@ to register your class as a service and tag it with
 
         use App\Serializer\NeonEncoder;
 
-        return function(ContainerConfigurator $container) {
-            // ...
-
-            $services->set(NeonEncoder::class)
-                ->tag('serializer.encoder')
-            ;
-        };
+        return App::config([
+            'services' => [
+                NeonEncoder::class => [
+                    'tags' => ['serializer.encoder'],
+                ],
+            ],
+        ]);
 
 Now you'll be able to serialize and deserialize NEON!
 
