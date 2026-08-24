@@ -316,8 +316,12 @@ only form available in that format.
 .. note::
 
     Tag attributes are computed when the container is compiled, once per
-    concrete and instantiable class; abstract classes and interfaces are skipped.
-    The callable must return an array; otherwise an exception is thrown.
+    tagged class. The class doesn't need to be instantiable: attributes are
+    also computed for enums and for classes with a private constructor.
+    Interfaces are always skipped. Closures are also skipped on abstract
+    classes, while the static method callable runs on them as long as they
+    define the method. The callable must return an array, otherwise an
+    exception is thrown.
 
 .. _tags_reference-tagged-services:
 
@@ -922,6 +926,105 @@ The same definitions can be declared per service in configuration files:
     Resource tags can also be declared in the ``_defaults`` section to apply
     them to every service defined in the same file, using the same
     ``resource_tags`` option name in YAML and PHP.
+
+.. _di-resource-tag-attributes-per-tagged-class:
+
+Computing Resource Tag Attributes per Tagged Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for computing resource tag attributes per tagged class was
+    introduced in Symfony 8.2.
+
+Resource tags added through autoconfiguration attach the same attributes to
+every tagged class. Like for :ref:`service tags <di-tag-attributes-per-tagged-service>`,
+you can compute the attributes of each class instead by passing a callable in
+the form ``[SomeClass::class, 'someMethod']`` as the tag attributes. When
+compiling the container, Symfony calls that static method on each class
+implementing the interface::
+
+    // src/Model/ReportItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.report_item', attributes: [self::class, 'getTagAttributes'])]
+    interface ReportItemInterface
+    {
+        /**
+         * @return array<string, mixed>
+         */
+        public static function getTagAttributes(): array;
+    }
+
+    // src/Model/Invoice.php
+    namespace App\Model;
+
+    class Invoice implements ReportItemInterface
+    {
+        public static function getTagAttributes(): array
+        {
+            return ['type' => 'invoice'];
+        }
+    }
+
+On PHP 8.5 and later, where closures are allowed in attributes, you can pass a
+closure receiving the class-string of each tagged class instead::
+
+    // src/Model/ReportItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
+
+    #[AutoconfigureResourceTag('app.report_item', attributes: static function (string $class): array {
+        return ['type' => $class::getType()];
+    })]
+    interface ReportItemInterface
+    {
+        public static function getType(): string;
+    }
+
+The static method callable can also be used with the ``#[Autoconfigure]``
+attribute and with the ``_instanceof`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _instanceof:
+                App\Model\ReportItemInterface:
+                    resource_tags:
+                        - app.report_item: [App\Model\ReportItemInterface, getTagAttributes]
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Model\ReportItemInterface;
+
+        return App::config([
+            'services' => [
+                '_instanceof' => [
+                    ReportItemInterface::class => [
+                        'resource_tags' => [
+                            ['app.report_item' => [ReportItemInterface::class, 'getTagAttributes']],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    Resource-tagged classes are never instantiated, so the attributes are
+    also computed for classes that can't be, such as enums and classes with
+    a private constructor. Interfaces are always skipped. Closures are also
+    skipped on abstract classes, but the static method callable runs on them
+    when they define the method.
 
 When the resource tag setup requires custom logic, use the
 :method:`Symfony\\Component\\DependencyInjection\\Definition::addResourceTag`
