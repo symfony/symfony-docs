@@ -566,6 +566,22 @@ the validation fails as well as supported payload formats::
 
 The default status code returned if the validation fails is 422.
 
+The payload format is determined by the ``Content-Type`` header of the request.
+Media types that use a structured syntax suffix (`RFC 6839`_) are deserialized
+with the encoder of that suffix, even if no encoder is registered for the
+exact format name: ``application/vnd.api+json``, ``application/ld+json`` or
+``application/problem+json`` payloads are decoded as ``json``, and
+``application/hal+xml`` or ``application/atom+xml`` payloads as ``xml``. This
+fallback only applies when the serializer can't decode the original format, so
+custom encoders registered for those formats (e.g. ``jsonld``) keep receiving
+their own format. The ``acceptFormat`` option keeps matching the format name
+derived from the media type (e.g. ``jsonapi`` for ``application/vnd.api+json``).
+
+.. versionadded:: 8.2
+
+    Support for media types with a structured syntax suffix in
+    ``#[MapRequestPayload]`` was introduced in Symfony 8.2.
+
 You can also use expressions to define validation groups dynamically based on
 controller arguments::
 
@@ -1374,3 +1390,4 @@ Learn more about Controllers
 .. _`phpdocumentor/type-resolver`: https://packagist.org/packages/phpdocumentor/type-resolver
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
 .. _`the WHATWG SSE specification`: https://html.spec.whatwg.org/multipage/server-sent-events.html
+.. _`RFC 6839`: https://datatracker.ietf.org/doc/html/rfc6839
