@@ -1063,11 +1063,11 @@ To use these assertions, your test class must extend
     checking for a specific cookie path or domain).
 ``assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', ?string $domain = null, string $message = '')``
     Asserts the given cookie is present and set to the expected value.
-``assertResponseFormatSame(?string $expectedFormat, string $message = '')``
+``assertResponseFormatSame(?string $expectedFormat, string $message = '', ?bool $verbose = null)``
     Asserts the response format returned by the
     :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
     is the same as the expected value.
-``assertResponseIsUnprocessable(string $message = '', bool ?$verbose = null)``
+``assertResponseIsUnprocessable(string $message = '', ?bool $verbose = null)``
     Asserts the response is unprocessable (HTTP status is 422)
 
 When they fail, these assert methods report what was expected and what happened,
