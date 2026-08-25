@@ -168,11 +168,11 @@ enforce different levels of service (free or paid):
                         'limit' => 100,
                         'interval' => '60 minutes',
                     ],
-                ],
-                'authenticated_api' => [
-                    'policy' => 'token_bucket',
-                    'limit' => 5000,
-                    'rate' => ['interval' => '15 minutes', 'amount' => 500],
+                    'authenticated_api' => [
+                        'policy' => 'token_bucket',
+                        'limit' => 5000,
+                        'rate' => ['interval' => '15 minutes', 'amount' => 500],
+                    ],
                 ],
             ],
         ]);
