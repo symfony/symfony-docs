@@ -490,6 +490,10 @@ The attribute takes more parameters to customize the trigger::
     // defines the timezone to use
     #[AsCronTask('0 0 * * *', timezone: 'Africa/Malabo')]
 
+    // dispatches the task to the given Messenger transport instead of running
+    // it in the scheduler worker (see "Efficient Management With Symfony Scheduler")
+    #[AsCronTask('0 0 * * *', transports: 'async')]
+
     // when applying this attribute to a Symfony console command, you can pass
     // arguments and options to the command using the 'arguments' option:
     #[AsCronTask('0 0 * * *', arguments: 'some_argument --some-option --another-option=some_value')]
@@ -529,6 +533,10 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
 
     // adds randomly up to 6 seconds to the trigger time to avoid load spikes
     #[AsPeriodicTask(frequency: '1 day', jitter: 6)]
+
+    // dispatches the task to the given Messenger transport instead of running
+    // it in the scheduler worker (see "Efficient Management With Symfony Scheduler")
+    #[AsPeriodicTask(frequency: '1 day', transports: 'async')]
 
     // defines the method name to call instead as well as the arguments to pass to it
     #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
@@ -1003,9 +1011,9 @@ handle a message only once, you can use the ``processOnlyLastMissedRun`` option:
         }
     }
 
-To scale your schedules more effectively, you can use multiple workers. In such
-cases, a good practice is to add a :doc:`lock </lock>` to prevent the
-same task running more than once::
+When running multiple workers for the same schedule, add a
+:doc:`lock </lock>` to prevent the same task from running more than
+once::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -1025,16 +1033,34 @@ same task running more than once::
         }
     }
 
+.. note::
+
+    The lock applies to the whole schedule, not to each task: only one worker
+    generates messages at a time and the others wait as standbys, taking over
+    if the active one stops. Running more workers gives you high availability,
+    not more throughput. To scale the processing of your tasks, dispatch them
+    to a Messenger transport as explained below.
+
 .. tip::
 
     The processing time of a message matters. If it takes a long time, all subsequent
     message processing may be delayed. So, it's a good practice to anticipate this
     and plan for frequencies greater than the processing time of a message.
 
-Additionally, for better scaling of your schedules, you have the option to wrap
-your message in a :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage`.
-This allows you to specify a transport on which your message will be redispatched
-before being further redispatched to its corresponding handler::
+To scale the processing of your tasks, don't run them inside the scheduler
+worker. Instead, redispatch them to a :doc:`Messenger transport </messenger>` so
+regular ``messenger:consume`` workers process them in parallel. When using
+attributes, pass the ``transports`` argument::
+
+    #[AsCronTask('0 0 * * *', transports: 'async')]
+    class SendDailySalesReports
+    {
+        // ...
+    }
+
+When building the schedule manually, wrap the message in a
+:class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and pass the
+name of the transport as its second argument::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
