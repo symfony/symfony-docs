@@ -1268,8 +1268,10 @@ all the expired items from the storage. The adapters that need this feature
 implement it: :doc:`ChainAdapter </cache/adapters/chain_adapter>`,
 :doc:`DoctrineDbalAdapter </cache/adapters/doctrine_dbal_adapter>`,
 :doc:`FilesystemAdapter </cache/adapters/filesystem_adapter>`,
-:doc:`PdoAdapter </cache/adapters/pdo_adapter>` and
-:doc:`PhpFilesAdapter </cache/adapters/php_files_adapter>`, as well as the
+:doc:`PdoAdapter </cache/adapters/pdo_adapter>`,
+:doc:`PdoTagAwareAdapter </cache/adapters/pdo_adapter>`,
+:doc:`PhpFilesAdapter </cache/adapters/php_files_adapter>` and
+:doc:`RedisTagAwareAdapter </cache/adapters/redis_adapter>`, as well as the
 adapters that wrap other adapters (such as ``TagAwareAdapter``, ``ProxyAdapter``
 and ``Psr16Adapter``), which delegate the pruning to the wrapped adapter::
 
@@ -1278,6 +1280,18 @@ and ``Psr16Adapter``), which delegate the pruning to the wrapped adapter::
     $cache = new FilesystemAdapter('app.cache');
     // ... do some set and get operations
     $cache->prune();
+
+.. note::
+
+    Redis removes the expired items on its own, but the Sets that
+    :doc:`RedisTagAwareAdapter </cache/adapters/redis_adapter>` uses to relate
+    tags and items keep referencing them. Pruning that adapter removes those
+    stale references and deletes the Sets that don't reference any existing
+    item anymore.
+
+.. versionadded:: 8.2
+
+    Support for pruning ``RedisTagAwareAdapter`` was introduced in Symfony 8.2.
 
 The :doc:`ChainAdapter </cache/adapters/chain_adapter>` implementation does not directly
 contain any pruning logic itself. Instead, when calling the chain adapter's
