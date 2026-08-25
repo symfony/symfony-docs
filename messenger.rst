@@ -2685,7 +2685,10 @@ The transport has a number of options:
     ``Message group ID`` for every message, so the queue processes them one at a
     time, and a unique ``Message deduplication ID`` for every message, so the
     queue delivers every message you send. Set the ``Message deduplication ID``
-    yourself when you want the queue to discard duplicates.
+    yourself, with the stamp or the interface described above, when you want
+    the queue to discard duplicates: the ``ContentBasedDeduplication``
+    attribute of the queue alone is not enough, as the default ID overrides
+    it.
 
     .. versionadded:: 8.2
 
