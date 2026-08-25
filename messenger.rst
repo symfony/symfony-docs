@@ -2680,7 +2680,11 @@ The transport has a number of options:
     Additionally, if your message implements the
     :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageGroupAwareInterface`,
     the middleware will automatically set the ``Message group ID`` of the stamp.
-    The default value of this group ID is a hash of the SQS message's headers and body.
+
+    When you don't set these IDs, the transport sends its own defaults: the same
+    ``Message group ID`` for every message, so the queue processes them one at a
+    time, and a ``Message deduplication ID`` built from a hash of the message
+    headers and body, so the queue treats two identical messages as duplicates.
 
     You can learn more about middlewares in
     :ref:`the dedicated section <messenger_middleware>`.
