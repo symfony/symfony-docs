@@ -1077,6 +1077,17 @@ name of the transport as its second argument::
         }
     }
 
+The transport name is optional: leave it out and the message is redispatched to
+the senders configured for its class, in the ``framework.messenger.routing``
+option or in its ``#[AsMessage]`` attribute::
+
+    RecurringMessage::every('5 seconds', new RedispatchMessage(new Message()));
+
+.. versionadded:: 8.2
+
+    Redispatching to the senders configured for the message was introduced in
+    Symfony 8.2.
+
 When using the ``RedispatchMessage``, Symfony will attach a
 :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
