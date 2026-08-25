@@ -721,3 +721,34 @@ but you can change the lifetime per link using the third argument of the
     // the third optional argument is the lifetime in seconds
     $loginLinkDetails = $loginLinkHandler->createLoginLink($user, null, 60);
     $loginLink = $loginLinkDetails->getUrl();
+
+Adding Extra Signed Query Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the fourth argument of the ``createLoginLink()`` method to add extra
+query string parameters to the generated link (e.g. to redirect the user
+to some specific page after logging in)::
+
+    $loginLinkDetails = $loginLinkHandler->createLoginLink($user, parameters: [
+        '_return_to' => '/account/settings',
+    ]);
+    $loginLink = $loginLinkDetails->getUrl();
+
+These parameters are covered by the link signature, together with the list
+of their names, which is added to the link as a ``hash_parameters``
+parameter. Changing any of their values, removing one of them or altering
+the ``hash_parameters`` list makes the login link invalid.
+
+Parameter names must only contain letters, digits, ``_``, ``.`` and ``-``,
+and the names used internally by the login link (``user``, ``expires``,
+``hash`` and ``hash_parameters``) are reserved.
+
+Extra query parameters that are not part of the signed list are tolerated
+and ignored when the link is consumed. This is on purpose: e-mail security
+products and clients routinely append their own tracking parameters to
+URLs, which must not invalidate the login link.
+
+.. versionadded:: 8.2
+
+    The ``$parameters`` argument of ``createLoginLink()`` was introduced in
+    Symfony 8.2.
