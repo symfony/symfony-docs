@@ -614,50 +614,62 @@ Knowing Which Mapping a Transformer Runs For
 
     The ``MappingAwareTransformCallableInterface`` was introduced in Symfony 8.2.
 
-A transformer shared by several properties can't tell which one it's
-transforming, because it only receives the value, the source and the target.
-Implement :class:`Symfony\\Component\\ObjectMapper\\MappingAwareTransformCallableInterface`
-to also receive the ``#[Map]`` attribute the transformation runs for::
+Transformers only receive the value, the source and the target, so a transformer
+shared by several properties cannot know which one it's transforming. To also
+receive the ``#[Map]`` attribute being applied, implement
+:class:`Symfony\\Component\\ObjectMapper\\MappingAwareTransformCallableInterface`
+instead of ``TransformCallableInterface``::
 
-    // src/ObjectMapper/PrefixWithTargetName.php
+    // src/ObjectMapper/RoundingTransformer.php
     namespace App\ObjectMapper;
 
+    use App\Dto\ProductInput;
+    use App\Entity\Product;
     use Symfony\Component\ObjectMapper\Attribute\Map;
     use Symfony\Component\ObjectMapper\MappingAwareTransformCallableInterface;
 
-    final class PrefixWithTargetName implements MappingAwareTransformCallableInterface
+    /**
+    * @implements MappingAwareTransformCallableInterface<ProductInput, Product>
+    */
+    final class RoundingTransformer implements MappingAwareTransformCallableInterface
     {
         public function __invoke(mixed $value, object $source, ?object $target, ?Map $mapping = null): mixed
         {
-            return $mapping?->target.': '.$value;
+            // $mapping->target is the name of the target property (e.g. 'price')
+            $precision = 'weight' === $mapping?->target ? 3 : 2;
+
+            return round($value, $precision);
         }
     }
 
-The interface extends ``TransformCallableInterface``, so such a transformer is
-declared exactly like any other one and can be shared between mappings::
+Then, use this service in as many mappings as needed::
 
     // src/Dto/ProductInput.php
     namespace App\Dto;
 
-    use App\ObjectMapper\PrefixWithTargetName;
+    use App\Entity\Product;
+    use App\ObjectMapper\RoundingTransformer;
     use Symfony\Component\ObjectMapper\Attribute\Map;
 
+    #[Map(target: Product::class)]
     class ProductInput
     {
-        #[Map(target: 'label', transform: PrefixWithTargetName::class)]
-        public string $name = 'Alice';
+        #[Map(target: 'price', transform: RoundingTransformer::class)]
+        public float $price = 0.0;
+
+        #[Map(target: 'weight', transform: RoundingTransformer::class)]
+        public float $weight = 0.0;
     }
 
-The ``$mapping`` argument is optional in the signature only because PHP forbids
-an interface from adding a required parameter to an inherited one. ObjectMapper
-always passes it, so it's never ``null`` in practice.
+.. note::
 
-``Map::$target`` however *is* ``null`` when the mapping is declared on the target
-side with ``#[Map(source: ...)]``; for a class-level transformation, it holds the
-target class name.
-
-Transformers that don't implement this interface keep being called with three
-arguments.
+    The transformer receives the ``#[Map]`` attribute exactly as declared, so
+    ``$mapping->target`` is ``null`` when the attribute omits the ``target``
+    option (for example, when the mapping is declared on the target class with
+    ``#[Map(source: ...)]``). That's why the example above sets ``target``
+    explicitly. The ``$mapping`` argument itself is nullable only because an
+    interface cannot add a required parameter to an inherited signature:
+    ObjectMapper always passes it.
 
 Class-Level Transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
