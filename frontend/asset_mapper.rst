@@ -73,37 +73,14 @@ If you look at the HTML in your page, the URL will be something
 like: ``/assets/images/duck-3c16d92m.png``. If you change
 the file, the version part of the URL will also change automatically.
 
-.. _asset-mapper-compile-assets:
-
 Serving Assets in dev vs prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ``dev`` environment, the URL ``/assets/images/duck-3c16d92m.png``
-is handled and returned by your Symfony app.
-
-For the ``prod`` environment, before deploy, you should run:
-
-.. code-block:: terminal
-
-    $ php bin/console asset-map:compile
-
-This will physically copy all the files from your mapped directories to
-``public/assets/`` so that they're served directly by your web server.
-See :ref:`Deployment <asset-mapper-deployment>` for more details.
-
-.. warning::
-
-    If you run the ``asset-map:compile`` command on your development machine,
-    you won't see any changes made to your assets when reloading the page.
-    To resolve this, delete the contents of the ``public/assets/`` directory.
-    This will allow your Symfony application to serve those assets dynamically again.
-
-.. tip::
-
-    If you need to copy the compiled assets to a different location (e.g. upload
-    them to S3), create a service that implements ``Symfony\Component\AssetMapper\Path\PublicAssetsFilesystemInterface``
-    and set its service id (or an alias) to ``asset_mapper.local_public_assets_filesystem``
-    (to replace the built-in service).
+is handled and returned by your Symfony app. For the ``prod`` environment,
+before deploy, you'll run a command to write the final versioned files into
+``public/assets/`` so that they're served directly by your web server. See
+:ref:`Compiling Assets <asset-mapper-compile-assets>` for more details.
 
 Debugging: Seeing All Mapped Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -269,8 +246,8 @@ the preloaded module and stylesheet tags get an ``integrity`` attribute:
 
 .. _app-entrypoint:
 
-The "app" Entrypoint & Preloading
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The "app" Entrypoint
+~~~~~~~~~~~~~~~~~~~~
 
 An "entrypoint" is the main JavaScript file that the browser loads,
 and your app starts with one by default::
@@ -524,6 +501,39 @@ The ``importmap:outdated`` command shows the versions kept out of reach in a
     metadata includes the publication date of each version. This response is
     much larger for popular packages.
 
+Run Security Audits on Your Dependencies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Similar to ``npm``, the AssetMapper component comes bundled with a
+command that checks security vulnerabilities in the dependencies of your application:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:audit
+
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+    Severity  Title                                          Package    Version  Patched in  More info
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+    Medium    jQuery Cross Site Scripting vulnerability      jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-257q-pV89-V3xv
+    High      Prototype Pollution in JSON5 via Parse Method  json5      1.0.0    1.0.2       https://api.github.com/advisories/GHSA-9c47-m6qq-7p4h
+    Medium    semver vulnerable to RegExp Denial of Service  semver     4.3.0    5.7.2       https://api.github.com/advisories/GHSA-c2qf-rxjj-qqgw
+    Critical  Prototype Pollution in minimist                minimist   1.1.3    1.2.6       https://api.github.com/advisories/GHSA-xvch-5gv4-984h
+    Medium    ESLint dependencies are vulnerable             minimist   1.1.3    1.2.2       https://api.github.com/advisories/GHSA-7fhm-mqm4-2wp7
+    Medium    Bootstrap Vulnerable to Cross-Site Scripting   bootstrap  4.1.3    4.3.1       https://api.github.com/advisories/GHSA-9v3M-8fp8-mi99
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+
+    7 packages found: 7 audited / 0 skipped
+    6 vulnerabilities found: 1 Critical / 1 High / 4 Medium
+
+The command will return the ``0`` exit code if no vulnerability is found, or
+the ``1`` exit code otherwise. This means that you can seamlessly integrate this
+command as part of your CI to be warned anytime a new vulnerability is found.
+
+.. tip::
+
+    The command takes a ``--format`` option to choose the output format between
+    ``txt`` and ``json``.
+
 Removing JavaScript Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -591,39 +601,6 @@ from inside ``app.js``:
     import $ from 'jquery';
     // things on "window" become global variables
     window.$ = $;
-
-Run Security Audits on Your Dependencies
-----------------------------------------
-
-Similar to ``npm``, the AssetMapper component comes bundled with a
-command that checks security vulnerabilities in the dependencies of your application:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:audit
-
-    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
-    Severity  Title                                          Package    Version  Patched in  More info
-    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
-    Medium    jQuery Cross Site Scripting vulnerability      jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-257q-pV89-V3xv
-    High      Prototype Pollution in JSON5 via Parse Method  json5      1.0.0    1.0.2       https://api.github.com/advisories/GHSA-9c47-m6qq-7p4h
-    Medium    semver vulnerable to RegExp Denial of Service  semver     4.3.0    5.7.2       https://api.github.com/advisories/GHSA-c2qf-rxjj-qqgw
-    Critical  Prototype Pollution in minimist                minimist   1.1.3    1.2.6       https://api.github.com/advisories/GHSA-xvch-5gv4-984h
-    Medium    ESLint dependencies are vulnerable             minimist   1.1.3    1.2.2       https://api.github.com/advisories/GHSA-7fhm-mqm4-2wp7
-    Medium    Bootstrap Vulnerable to Cross-Site Scripting   bootstrap  4.1.3    4.3.1       https://api.github.com/advisories/GHSA-9v3M-8fp8-mi99
-    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
-
-    7 packages found: 7 audited / 0 skipped
-    6 vulnerabilities found: 1 Critical / 1 High / 4 Medium
-
-The command will return the ``0`` exit code if no vulnerability is found, or
-the ``1`` exit code otherwise. This means that you can seamlessly integrate this
-command as part of your CI to be warned anytime a new vulnerability is found.
-
-.. tip::
-
-    The command takes a ``--format`` option to choose the output format between
-    ``txt`` and ``json``.
 
 .. _asset-mapper-handling-css:
 
@@ -713,21 +690,6 @@ for ``duck.png``:
     .quack {
         background-image: url('../images/duck-3c16d92m.png');
     }
-
-.. _asset-mapper-tailwind:
-
-Using Tailwind CSS
-~~~~~~~~~~~~~~~~~~
-
-To use the `Tailwind`_ CSS framework with the AssetMapper component, check out
-`symfonycasts/tailwind-bundle`_.
-
-.. _asset-mapper-sass:
-
-Using Sass
-~~~~~~~~~~
-
-To use Sass with AssetMapper component, check out `symfonycasts/sass-bundle`_.
 
 Lazily Importing CSS from a JavaScript File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -869,15 +831,47 @@ If you want to execute *only* ``checkout.js`` (and not ``app.js``), call
 ``{{ importmap('checkout') }}``. In this case, the full import map will still be
 included in the page, but only the ``checkout.js`` file will actually be loaded.
 
+Integrations
+------------
+
+The AssetMapper component focuses on mapping and serving your assets. For
+tooling like CSS frameworks, compilers, minifiers or linters, it integrates
+with a set of dedicated bundles:
+
+.. _asset-mapper-tailwind:
+
+Using Tailwind CSS
+~~~~~~~~~~~~~~~~~~
+
+To use the `Tailwind`_ CSS framework with the AssetMapper component, check out
+`symfonycasts/tailwind-bundle`_.
+
+.. _asset-mapper-sass:
+
+Using Sass
+~~~~~~~~~~
+
+To use Sass with AssetMapper component, check out `symfonycasts/sass-bundle`_.
+
 .. _asset-mapper-ts:
 
 Using TypeScript
-----------------
+~~~~~~~~~~~~~~~~
 
 To use TypeScript with the AssetMapper component, check out `sensiolabs/typescript-bundle`_.
 
-Third-Party Bundles & Custom Asset Paths
-----------------------------------------
+Asset Paths in Depth
+--------------------
+
+The AssetMapper component works with "asset paths": directories whose files are
+exposed publicly, optionally under a namespace prefix. Your app starts with a
+single one (the ``assets/`` directory), but you can map more directories, from
+your own project, from bundles or even from ``node_modules/``. This section
+covers where those paths can come from; see the
+:ref:`paths configuration reference <asset-mapper-paths-config>` for all the options.
+
+Third-Party Bundles
+~~~~~~~~~~~~~~~~~~~
 
 All bundles that have a ``Resources/public/`` or ``public/`` directory will
 automatically have that directory added as an "asset path", using the namespace:
@@ -916,6 +910,39 @@ used instead of the original file.
     If a bundle renders their *own* assets, but they use a non-default
     :ref:`asset package <asset-packages>`, then the AssetMapper component will
     not be used. This happens, for example, with `EasyAdminBundle`_.
+
+Importing Assets Outside of the ``assets/`` Directory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You *can* import assets that live outside of your asset path
+(i.e. the ``assets/`` directory). For example:
+
+.. code-block:: css
+
+    /* assets/styles/app.css */
+
+    /* you can reach above assets/ */
+    @import url('../../vendor/babdev/pagerfanta-bundle/Resources/public/css/pagerfanta.css');
+
+However, if you get an error like this:
+
+    The "app" importmap entry contains the path "vendor/some/package/assets/foo.js"
+    but it does not appear to be in any of your asset paths.
+
+It means that you're pointing to a valid file, but that file isn't in any of
+your asset paths. You can fix this by adding the path to your ``asset_mapper.yaml``
+file:
+
+.. code-block:: yaml
+
+    # config/packages/asset_mapper.yaml
+    framework:
+        asset_mapper:
+            paths:
+                - assets/
+                - vendor/some/package/assets
+
+Then try the command again.
 
 Using Local npm Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -962,43 +989,14 @@ Now you can import the package as usual:
     the registered directory includes every file the package needs for its
     browser imports.
 
-Importing Assets Outside of the ``assets/`` Directory
------------------------------------------------------
-
-You *can* import assets that live outside of your asset path
-(i.e. the ``assets/`` directory). For example:
-
-.. code-block:: css
-
-    /* assets/styles/app.css */
-
-    /* you can reach above assets/ */
-    @import url('../../vendor/babdev/pagerfanta-bundle/Resources/public/css/pagerfanta.css');
-
-However, if you get an error like this:
-
-    The "app" importmap entry contains the path "vendor/some/package/assets/foo.js"
-    but it does not appear to be in any of your asset paths.
-
-It means that you're pointing to a valid file, but that file isn't in any of
-your asset paths. You can fix this by adding the path to your ``asset_mapper.yaml``
-file:
-
-.. code-block:: yaml
-
-    # config/packages/asset_mapper.yaml
-    framework:
-        asset_mapper:
-            paths:
-                - assets/
-                - vendor/some/package/assets
-
-Then try the command again.
+Going to Production
+-------------------
 
 .. _asset-mapper-deployment:
+.. _asset-mapper-compile-assets:
 
-Deploying with the AssetMapper Component
-----------------------------------------
+Compiling Assets
+~~~~~~~~~~~~~~~~
 
 When you're ready to deploy, "compile" your assets by running this command:
 
@@ -1010,10 +1008,24 @@ This will write all your versioned asset files into the ``public/assets/`` direc
 along with a few JSON files (``manifest.json``, ``importmap.json``, etc.) so that
 the ``importmap`` can be rendered lightning fast.
 
+.. warning::
+
+    If you run the ``asset-map:compile`` command on your development machine,
+    you won't see any changes made to your assets when reloading the page.
+    To resolve this, delete the contents of the ``public/assets/`` directory.
+    This will allow your Symfony application to serve those assets dynamically again.
+
+.. tip::
+
+    If you need to copy the compiled assets to a different location (e.g. upload
+    them to S3), create a service that implements ``Symfony\Component\AssetMapper\Path\PublicAssetsFilesystemInterface``
+    and set its service id (or an alias) to ``asset_mapper.local_public_assets_filesystem``
+    (to replace the built-in service).
+
 .. _optimization:
 
 Optimizing Performance
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 To make your AssetMapper-powered site fly, there are a few things you need to
 do. If you want to take a shortcut, you can use a service like `Cloudflare`_,
@@ -1080,7 +1092,7 @@ Symfony will add a ``Link`` header in the response to preload the CSS files.
 .. _performance-precompressing:
 
 Pre-Compressing Assets
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Although most web servers (Caddy, Nginx, Apache, FrankenPHP) and services like Cloudflare
 provide asset compression features, AssetMapper also allows you to compress all
@@ -1191,8 +1203,8 @@ is allowed to load other resources.
     ``script-src`` such as ``'self'`` or ``'unsafe-inline'``, so any other
     ``<script>`` tags will also need to be trusted via a nonce.
 
-Issues and Debugging
---------------------
+Troubleshooting
+---------------
 
 There are a few common errors and problems you might run into.
 
@@ -1271,24 +1283,12 @@ you have ``symfony/monolog-bundle`` installed):
     WARNING   [asset_mapper] Unable to find asset "../images/ducks.png" referenced in "assets/styles/app.css".
     WARNING   [asset_mapper] Unable to find asset "./ducks.js" imported from "assets/app.js".
 
-Missing Asset Warnings on Commented-out Code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Assets Not Updating in dev
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The AssetMapper component looks in your JavaScript files for ``import`` lines so
-that it can :ref:`automatically add them to your importmap <automatic-import-mapping>`.
-This is done via regex and works very well, though it isn't perfect. If you
-comment-out an import, it will still be found and added to your importmap. That
-doesn't harm anything, but could be surprising.
-
-If the imported path cannot be found, you'll see warning log when that asset
-is being built, which you can ignore.
-
-The AssetMapper Component Caching System in dev
------------------------------------------------
-
-When developing your app in debug mode, the AssetMapper component will calculate the
-content of each asset file and cache it. Whenever that file changes, the component
-will automatically re-calculate the content.
+When developing your app in debug mode, the AssetMapper component calculates the
+content of each asset file and caches it. Whenever that file changes, the component
+automatically re-calculates the content.
 
 The system also accounts for "dependencies": If ``app.css`` contains
 ``@import url('other.css')``, then the ``app.css`` file contents will also be
@@ -1304,6 +1304,23 @@ re-calculated when you expect it to, you can run:
     $ php bin/console cache:clear
 
 This will force the AssetMapper component to re-calculate the content of all files.
+
+Also, remember that if you previously ran the ``asset-map:compile`` command on
+your machine, the compiled files in ``public/assets/`` take precedence over your
+source files. Delete the contents of that directory to let your app serve assets
+dynamically again (see :ref:`Compiling Assets <asset-mapper-compile-assets>`).
+
+Missing Asset Warnings on Commented-out Code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The AssetMapper component looks in your JavaScript files for ``import`` lines so
+that it can :ref:`automatically add them to your importmap <automatic-import-mapping>`.
+This is done via regex and works very well, though it isn't perfect. If you
+comment-out an import, it will still be found and added to your importmap. That
+doesn't harm anything, but could be surprising.
+
+If the imported path cannot be found, you'll see warning log when that asset
+is being built, which you can ignore.
 
 Frequently Asked Questions
 --------------------------
@@ -1425,8 +1442,8 @@ Not with AssetMapper, but you can install `kocal/biome-js-bundle`_ in your proje
 to lint and format your front-end assets. It's much faster than alternatives like
 Prettier and requires no configuration to handle your JavaScript, TypeScript and CSS files.
 
-Configuration Options
----------------------
+Configuration Reference
+-----------------------
 
 You can see every available configuration options and some info by running:
 
@@ -1435,6 +1452,8 @@ You can see every available configuration options and some info by running:
     $ php bin/console config:dump framework asset_mapper
 
 Some of the more important options are described below.
+
+.. _asset-mapper-paths-config:
 
 ``framework.asset_mapper.paths``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
