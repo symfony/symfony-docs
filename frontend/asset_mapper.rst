@@ -193,252 +193,13 @@ this section, the ``assets/app.js`` file is loaded & executed by the browser.
     When importing relative files, be sure to include the ``.js`` filename extension.
     Unlike in Node.js, this extension is required in the browser environment.
 
-Importing 3rd Party JavaScript Packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Suppose you want to use an `npm package`_, like `bootstrap`_. Technically,
-this can be done by importing its full URL, like from a CDN:
-
-.. code-block:: javascript
-
-    import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
-
-But yikes! Needing to include that URL is a pain! Instead, you can add this package
-to our "importmap" via the ``importmap:require`` command. This command can be used
-to add any `npm package`_:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:require bootstrap
-
-.. tip::
-
-    Add the ``--dry-run`` option to simulate package installation without actually
-    making any changes (e.g. ``php bin/console importmap:require bootstrap --dry-run``)
-
-This adds the ``bootstrap`` package to your ``importmap.php`` file::
-
-    // importmap.php
-    return [
-        'app' => [
-            'path' => './assets/app.js',
-            'entrypoint' => true,
-        ],
-        'bootstrap' => [
-            'version' => '5.3.0',
-        ],
-    ];
-
-.. note::
-
-    Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
-    such as ``@popperjs/core``. The ``importmap:require`` command will add both the
-    main package *and* its dependencies. If a package includes a main CSS file,
-    that will also be added (see :ref:`Handling 3rd-Party CSS <asset-mapper-3rd-party-css>`).
-
-.. note::
-
-    If you get a 404 error, there might be some issue with the JavaScript package
-    that prevents it from being served by the ``jsDelivr`` CDN. For example, the
-    package might be missing properties like ``main`` or ``module`` in its
-    `package.json configuration file`_. Try to contact the package maintainer to
-    ask them to fix those issues.
-
-.. tip::
-
-    If you see a network error like *Connection was reset for "https://cdn.jsdelivr.net/npm/..."*,
-    it may be caused by a proxy or firewall restriction. In that case, you can
-    temporarily configure a proxy to connect to the ``jsDelivr`` CDN:
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            http_client:
-                default_options:
-                    proxy: '185.250.180.238:8080'
-                    # if you use CURL, add extra options:
-                    extra:
-                        curl:
-                            # 61 is value of constant CURLOPT_HTTPPROXYTUNNEL
-                            '61': true
-
-Now you can import the ``bootstrap`` package like usual:
-
-.. code-block:: javascript
-
-    import { Alert } from 'bootstrap';
-    // ...
-
-All packages in ``importmap.php`` are downloaded into an ``assets/vendor/`` directory,
-which should be ignored by git (the Flex recipe adds it to ``.gitignore`` for you).
-You'll need to run the following command to download the files on other computers
-if some are missing:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:install
-
-You can update your third-party packages to their current versions by running:
-
-.. code-block:: terminal
-
-    # lists outdated packages and shows their latest versions
-    $ php bin/console importmap:outdated
-    # updates all the outdated packages
-    $ php bin/console importmap:update
-
-    # you can also run the commands only for the given list of packages
-    $ php bin/console importmap:update bootstrap lodash
-    $ php bin/console importmap:outdated bootstrap lodash
-
-.. _asset-mapper-minimum-release-age:
-
-Delaying Updates to Recent Versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 8.2
-
-    The ``minimum_release_age`` option was introduced in Symfony 8.2.
-
-Supply chain attacks usually land in freshly published npm versions. To give
-maintainers time to spot and unpublish a compromised release before your
-project picks it up, set the ``minimum_release_age`` option:
-
-.. code-block:: yaml
-
-    # config/packages/asset_mapper.yaml
-    framework:
-        asset_mapper:
-            # in seconds; 0 (the default) disables this check
-            minimum_release_age: 604800
-
-The ``importmap:update`` command then ignores the versions younger than that,
-as well as prereleases and versions above the ``latest`` tag of the package. It
-pins the newest remaining version, or keeps the installed one if there's none.
-
-The ``importmap:outdated`` command shows the versions kept out of reach in a
-``Withheld`` column (or a ``withheld`` key when using ``--format=json``):
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:outdated
-
-      ----------- --------- -------- ----------
-      Package     Current   Latest   Withheld
-      ----------- --------- -------- ----------
-      bootstrap   5.3.1     5.3.2    5.3.3
-      ----------- --------- -------- ----------
-
-.. note::
-
-    This option doesn't affect ``importmap:require``, so you can still run
-    ``importmap:require package@latest`` to install a recent version (e.g. to
-    apply an urgent security fix).
-
-.. warning::
-
-    When this option is enabled, update checks download the full npm metadata
-    of each package instead of the abbreviated one, because only the full
-    metadata includes the publication date of each version. This response is
-    much larger for popular packages.
-
-Importing Specific Files From a 3rd Party Package
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sometimes you'll need to import a specific file from a package. For example,
-suppose you're integrating `highlight.js`_ and want to import just the core
-and a specific language:
-
-.. code-block:: javascript
-
-    import hljs from 'highlight.js/lib/core';
-    import javascript from 'highlight.js/lib/languages/javascript';
-
-    hljs.registerLanguage('javascript', javascript);
-    hljs.highlightAll();
-
-In this case, adding the ``highlight.js`` package to your ``importmap.php`` file
-won't work: whatever you import - e.g. ``highlight.js/lib/core`` - needs to
-*exactly* match an entry in the ``importmap.php`` file.
-
-Instead, use ``importmap:require`` and pass it the exact paths you need. This
-also shows how you can require multiple packages at once:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:require highlight.js/lib/core highlight.js/lib/languages/javascript
-
-Requiring Non-ESM Packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 8.2
-
-    The ``--no-esm`` option was introduced in Symfony 8.2.
-
-By default, remote packages are downloaded as the ESM build that the ``jsDelivr``
-CDN generates for them. If that build is broken for some package, use the ``--no-esm``
-option to download the original file published by the package instead. When using
-this option, you must pass the exact path of the file to download:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:require "fullcalendar/index.global.js=fullcalendar" --no-esm
-
-This downloads the original ``index.global.js`` file and adds the following to
-``importmap.php``::
-
-    // importmap.php
-    return [
-        // ...
-        'fullcalendar' => [
-            'version' => '7.0.0',
-            'package_specifier' => 'fullcalendar/index.global.js',
-            'esm' => false,
-        ],
-    ];
-
-The downloaded file is not modified in any way, and the ``esm`` flag is
-preserved when running ``importmap:update``. Relative imports inside the
-file (e.g. ``import "./chunk/calendar.js"``) are downloaded next to it and
-added to the import map, so they keep working. However, bare imports (e.g.
-``import { h } from "preact"``) are not resolved; you must require those
-packages yourself.
-
-Removing JavaScript Packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you need to remove a JavaScript package that was previously added to your
-``importmap.php`` file, use the ``importmap:remove`` command. For example, to
-remove the ``lodash`` package:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:remove lodash
-
-This updates your ``importmap.php`` file and removes the specified package
-(along with any dependencies that were added with it).
-
-After running this command, it's recommended to also run the following to ensure
-that your ``assets/vendor/`` directory is in sync with the updated import map:
-
-.. code-block:: terminal
-
-    $ php bin/console importmap:install
-
-.. tip::
-
-    Removing a package from the import map does not automatically remove any
-    references to it in your JavaScript files. Make sure to update your code and
-    remove any ``import`` statements that reference the removed package.
-
 How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-How does this ``importmap.php`` file allow you to import ``bootstrap``? That's
-thanks to the ``{{ importmap() }}`` Twig function in ``base.html.twig``, which
-outputs an `importmap`_:
+All of this works thanks to the ``{{ importmap() }}`` Twig function in
+``base.html.twig``, which outputs an `importmap`_ (shown here with a
+third-party ``bootstrap`` package, which you'll learn to
+:ref:`add in a few sections <importmaps-thirdparty>`):
 
 .. code-block:: html
 
@@ -544,6 +305,251 @@ The ``importmap()`` function also outputs a set of "preloads":
 
 This is a performance optimization and you can learn more about below
 in :ref:`Performance: Add Preloading <performance-preloading>`.
+
+.. _importmaps-thirdparty:
+
+Importing 3rd Party JavaScript Packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you want to use an `npm package`_, like `bootstrap`_. Technically,
+this can be done by importing its full URL, like from a CDN:
+
+.. code-block:: javascript
+
+    import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
+
+But yikes! Needing to include that URL is a pain! Instead, you can add this package
+to our "importmap" via the ``importmap:require`` command. This command can be used
+to add any `npm package`_:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:require bootstrap
+
+.. tip::
+
+    Add the ``--dry-run`` option to simulate package installation without actually
+    making any changes (e.g. ``php bin/console importmap:require bootstrap --dry-run``)
+
+This adds the ``bootstrap`` package to your ``importmap.php`` file::
+
+    // importmap.php
+    return [
+        'app' => [
+            'path' => './assets/app.js',
+            'entrypoint' => true,
+        ],
+        'bootstrap' => [
+            'version' => '5.3.0',
+        ],
+    ];
+
+.. note::
+
+    Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
+    such as ``@popperjs/core``. The ``importmap:require`` command will add both the
+    main package *and* its dependencies. If a package includes a main CSS file,
+    that will also be added (see :ref:`Handling 3rd-Party CSS <asset-mapper-3rd-party-css>`).
+
+.. note::
+
+    If you get a 404 error, there might be some issue with the JavaScript package
+    that prevents it from being served by the ``jsDelivr`` CDN. For example, the
+    package might be missing properties like ``main`` or ``module`` in its
+    `package.json configuration file`_. Try to contact the package maintainer to
+    ask them to fix those issues.
+
+.. tip::
+
+    If you see a network error like *Connection was reset for "https://cdn.jsdelivr.net/npm/..."*,
+    it may be caused by a proxy or firewall restriction. In that case, you can
+    temporarily configure a proxy to connect to the ``jsDelivr`` CDN:
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            http_client:
+                default_options:
+                    proxy: '185.250.180.238:8080'
+                    # if you use CURL, add extra options:
+                    extra:
+                        curl:
+                            # 61 is value of constant CURLOPT_HTTPPROXYTUNNEL
+                            '61': true
+
+Now you can import the ``bootstrap`` package like usual:
+
+.. code-block:: javascript
+
+    import { Alert } from 'bootstrap';
+    // ...
+
+All packages in ``importmap.php`` are downloaded into an ``assets/vendor/`` directory,
+which should be ignored by git (the Flex recipe adds it to ``.gitignore`` for you).
+You'll need to run the following command to download the files on other computers
+if some are missing:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:install
+
+Importing Specific Files From a 3rd Party Package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes you'll need to import a specific file from a package. For example,
+suppose you're integrating `highlight.js`_ and want to import just the core
+and a specific language:
+
+.. code-block:: javascript
+
+    import hljs from 'highlight.js/lib/core';
+    import javascript from 'highlight.js/lib/languages/javascript';
+
+    hljs.registerLanguage('javascript', javascript);
+    hljs.highlightAll();
+
+In this case, adding the ``highlight.js`` package to your ``importmap.php`` file
+won't work: whatever you import - e.g. ``highlight.js/lib/core`` - needs to
+*exactly* match an entry in the ``importmap.php`` file.
+
+Instead, use ``importmap:require`` and pass it the exact paths you need. This
+also shows how you can require multiple packages at once:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:require highlight.js/lib/core highlight.js/lib/languages/javascript
+
+Requiring Non-ESM Packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``--no-esm`` option was introduced in Symfony 8.2.
+
+By default, remote packages are downloaded as the ESM build that the ``jsDelivr``
+CDN generates for them. If that build is broken for some package, use the ``--no-esm``
+option to download the original file published by the package instead. When using
+this option, you must pass the exact path of the file to download:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:require "fullcalendar/index.global.js=fullcalendar" --no-esm
+
+This downloads the original ``index.global.js`` file and adds the following to
+``importmap.php``::
+
+    // importmap.php
+    return [
+        // ...
+        'fullcalendar' => [
+            'version' => '7.0.0',
+            'package_specifier' => 'fullcalendar/index.global.js',
+            'esm' => false,
+        ],
+    ];
+
+The downloaded file is not modified in any way, and the ``esm`` flag is
+preserved when running ``importmap:update``. Relative imports inside the
+file (e.g. ``import "./chunk/calendar.js"``) are downloaded next to it and
+added to the import map, so they keep working. However, bare imports (e.g.
+``import { h } from "preact"``) are not resolved; you must require those
+packages yourself.
+
+Updating 3rd Party Packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can update your third-party packages to their current versions by running:
+
+.. code-block:: terminal
+
+    # lists outdated packages and shows their latest versions
+    $ php bin/console importmap:outdated
+    # updates all the outdated packages
+    $ php bin/console importmap:update
+
+    # you can also run the commands only for the given list of packages
+    $ php bin/console importmap:update bootstrap lodash
+    $ php bin/console importmap:outdated bootstrap lodash
+
+.. _asset-mapper-minimum-release-age:
+
+Delaying Updates to Recent Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``minimum_release_age`` option was introduced in Symfony 8.2.
+
+Supply chain attacks usually land in freshly published npm versions. To give
+maintainers time to spot and unpublish a compromised release before your
+project picks it up, set the ``minimum_release_age`` option:
+
+.. code-block:: yaml
+
+    # config/packages/asset_mapper.yaml
+    framework:
+        asset_mapper:
+            # in seconds; 0 (the default) disables this check
+            minimum_release_age: 604800
+
+The ``importmap:update`` command then ignores the versions younger than that,
+as well as prereleases and versions above the ``latest`` tag of the package. It
+pins the newest remaining version, or keeps the installed one if there's none.
+
+The ``importmap:outdated`` command shows the versions kept out of reach in a
+``Withheld`` column (or a ``withheld`` key when using ``--format=json``):
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:outdated
+
+      ----------- --------- -------- ----------
+      Package     Current   Latest   Withheld
+      ----------- --------- -------- ----------
+      bootstrap   5.3.1     5.3.2    5.3.3
+      ----------- --------- -------- ----------
+
+.. note::
+
+    This option doesn't affect ``importmap:require``, so you can still run
+    ``importmap:require package@latest`` to install a recent version (e.g. to
+    apply an urgent security fix).
+
+.. warning::
+
+    When this option is enabled, update checks download the full npm metadata
+    of each package instead of the abbreviated one, because only the full
+    metadata includes the publication date of each version. This response is
+    much larger for popular packages.
+
+Removing JavaScript Packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to remove a JavaScript package that was previously added to your
+``importmap.php`` file, use the ``importmap:remove`` command. For example, to
+remove the ``lodash`` package:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:remove lodash
+
+This updates your ``importmap.php`` file and removes the specified package
+(along with any dependencies that were added with it).
+
+After running this command, it's recommended to also run the following to ensure
+that your ``assets/vendor/`` directory is in sync with the updated import map:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:install
+
+.. tip::
+
+    Removing a package from the import map does not automatically remove any
+    references to it in your JavaScript files. Make sure to update your code and
+    remove any ``import`` statements that reference the removed package.
 
 Global Variables like jQuery
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
