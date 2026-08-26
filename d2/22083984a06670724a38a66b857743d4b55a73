@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-08-26T03:26:39Z
+
+IIUC this has been covered by #22831
+@Amoifr What do you think about it ?
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-08-26T06:20:08Z
+
+Good spot, that is exactly what happened: #22831 landed while this was open, so I rebased and reduced this PR to what it adds on top. The current diff is 4 lines:
+
+- **how** to set the ID yourself (the note above already documents `AmazonSqsFifoStamp` and `MessageDeduplicationAwareInterface`, this just points at them);
+- the caveat that turning on the queue's `ContentBasedDeduplication` attribute alone does not bring the old behavior back, because the explicit default ID overrides it. That one bit people in symfony/symfony#59741 and is called out in the UPGRADE-8.2 entry of symfony/symfony#65605.
+
+Thanks for keeping an eye on the duplicates, this one is genuinely a rounding error away from being one. 😄
