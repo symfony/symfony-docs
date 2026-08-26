@@ -283,6 +283,50 @@ The ``importmap()`` function also outputs a set of "preloads":
 This is a performance optimization and you can learn more about below
 in :ref:`Performance: Add Preloading <performance-preloading>`.
 
+Browser Support
+~~~~~~~~~~~~~~~
+
+Features like importmaps and the ``import`` statement are supported
+in all modern browsers, and the AssetMapper component ships with an `ES module shim`_
+to support ``importmap`` in old browsers. So, it works everywhere (see note
+below).
+
+Inside your own code, if you're relying on modern `ES6`_ JavaScript features
+like the `class syntax`_, this is supported in all but the oldest browsers.
+If you *do* need to support very old browsers, you should use a tool like
+:ref:`Encore <frontend-webpack-encore>` instead of the AssetMapper component.
+
+.. note::
+
+    The `import statement`_ can't be polyfilled or shimmed to work on *every*
+    browser. However, only the **oldest** browsers don't support it.
+
+    The ``importmap`` feature **is** shimmed to work in **all** browsers by the
+    AssetMapper component (using `es-module-shims`_). However, this shim only
+    polyfills **import map** support; it does **not** polyfill the ``import()``
+    syntax itself, which is a native JavaScript feature.
+
+    AssetMapper correctly rewrites dynamic imports when the path is a string literal:
+
+    .. code-block:: javascript
+
+        // static import: works everywhere (shimmed)
+        import { add } from './math.js';
+
+        // dynamic import with a string literal: rewritten by AssetMapper,
+        // but requires the browser to support import() natively
+        import('./math.js').then(({ add }) => {
+            // ...
+        });
+
+    Browsers without `native import support`_ will fail regardless of AssetMapper.
+    For those browsers, you can use `the importShim() function`_ provided by the shim.
+
+    If you use a transpiler (e.g. Babel, TypeScript) that transforms ``import()``
+    calls, make sure to run it **before** AssetMapper compiles the assets.
+    Otherwise the file hashes will change after transpilation and the versioned
+    URLs will break.
+
 .. _importmaps-thirdparty:
 
 Importing 3rd Party JavaScript Packages
@@ -328,34 +372,6 @@ This adds the ``bootstrap`` package to your ``importmap.php`` file::
     main package *and* its dependencies. If a package includes a main CSS file,
     that will also be added (see :ref:`Handling 3rd-Party CSS <asset-mapper-3rd-party-css>`).
 
-.. note::
-
-    If you get a 404 error, there might be some issue with the JavaScript package
-    that prevents it from being served by the ``jsDelivr`` CDN. For example, the
-    package might be missing properties like ``main`` or ``module`` in its
-    `package.json configuration file`_. Try to contact the package maintainer to
-    ask them to fix those issues.
-
-.. tip::
-
-    If you see a network error like *Connection was reset for "https://cdn.jsdelivr.net/npm/..."*,
-    it may be caused by a proxy or firewall restriction. In that case, you can
-    temporarily configure a proxy to connect to the ``jsDelivr`` CDN:
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            http_client:
-                default_options:
-                    proxy: '185.250.180.238:8080'
-                    # if you use CURL, add extra options:
-                    extra:
-                        curl:
-                            # 61 is value of constant CURLOPT_HTTPPROXYTUNNEL
-                            '61': true
-
 Now you can import the ``bootstrap`` package like usual:
 
 .. code-block:: javascript
@@ -371,6 +387,8 @@ if some are missing:
 .. code-block:: terminal
 
     $ php bin/console importmap:install
+
+.. _importmaps-specific-files:
 
 Importing Specific Files From a 3rd Party Package
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -860,6 +878,42 @@ Using TypeScript
 
 To use TypeScript with the AssetMapper component, check out `sensiolabs/typescript-bundle`_.
 
+Linting & Formatting
+~~~~~~~~~~~~~~~~~~~~
+
+To lint and format your front-end assets, install `kocal/biome-js-bundle`_ in
+your project. It's much faster than alternatives like Prettier and requires no
+configuration to handle your JavaScript, TypeScript and CSS files.
+
+React, Vue & JSX
+~~~~~~~~~~~~~~~~
+
+If you're writing an application in React, Svelte or another frontend
+framework, you'll probably be better off using *their* tools directly.
+
+JSX *can* be compiled directly to a native JavaScript file but if you're using a lot of JSX,
+you'll probably want to use a tool like :ref:`Encore <frontend-webpack-encore>`.
+See the `UX React Documentation`_ for more details about using it with the AssetMapper
+component.
+
+Vue files *can* be written in native JavaScript, and those *will* work with
+the AssetMapper component. But you cannot write single-file components (i.e. ``.vue``
+files), as those must be used in a build system. See the
+`UX Vue.js Documentation`_ for more details about using with the AssetMapper
+component.
+
+Minification
+~~~~~~~~~~~~
+
+The AssetMapper component doesn't minify assets: in most cases, the compression
+performed by web servers before sending them (see :ref:`Optimization <optimization>`)
+is sufficient. If you think you could benefit from minifying assets (in addition
+to later compressing them), use the `SensioLabs Minify Bundle`_.
+
+This bundle integrates seamlessly with AssetMapper and minifies all web assets
+automatically when running the ``asset-map:compile`` command (as explained in
+the :ref:`Compiling Assets <asset-mapper-compile-assets>` section).
+
 Asset Paths in Depth
 --------------------
 
@@ -944,6 +998,8 @@ file:
 
 Then try the command again.
 
+.. _asset-mapper-local-npm:
+
 Using Local npm Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -991,6 +1047,19 @@ Now you can import the package as usual:
 
 Going to Production
 -------------------
+
+The AssetMapper component is production ready and performant: it leverages
+advances in browser technology (like importmaps and native ``import`` support)
+and web servers (like HTTP/2, which allows assets to be downloaded in parallel).
+The https://ux.symfony.com site runs on the AssetMapper component and has a 99%
+Google Lighthouse score.
+
+For the same reason, the component doesn't combine assets. In the past, this was
+a common way to reduce the number of HTTP requests. Thanks to advances in web
+servers like HTTP/2, it's typically not a problem to keep your assets separate
+and let the browser download them in parallel. In fact, by keeping them separate,
+when you update one asset, the browser can continue to use the cached version of
+all of your other assets.
 
 .. _asset-mapper-deployment:
 .. _asset-mapper-compile-assets:
@@ -1310,6 +1379,40 @@ your machine, the compiled files in ``public/assets/`` take precedence over your
 source files. Delete the contents of that directory to let your app serve assets
 dynamically again (see :ref:`Compiling Assets <asset-mapper-compile-assets>`).
 
+CDN Connection Issues
+~~~~~~~~~~~~~~~~~~~~~
+
+If you see a network error like *Connection was reset for "https://cdn.jsdelivr.net/npm/..."*
+when running the ``importmap:require`` command, it may be caused by a proxy or
+firewall restriction. In that case, you can temporarily configure a proxy to
+connect to the ``jsDelivr`` CDN:
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        # ...
+        http_client:
+            default_options:
+                proxy: 'proxy.example.com:8080'
+                # if you use CURL, add extra options:
+                extra:
+                    curl:
+                        # 61 is value of constant CURLOPT_HTTPPROXYTUNNEL
+                        '61': true
+
+Package Not Servable by the CDN
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If the ``importmap:require`` command fails with a 404 error, there might be some
+issue with the JavaScript package that prevents it from being served by the
+``jsDelivr`` CDN. For example, the package might be missing properties like
+``main`` or ``module`` in its `package.json configuration file`_. This can only
+be fixed by the package maintainer. Until then, you can work around the issue by
+requiring the exact file you need (see
+:ref:`Importing Specific Files From a 3rd Party Package <importmaps-specific-files>`)
+or by :ref:`using a local npm package <asset-mapper-local-npm>`.
+
 Missing Asset Warnings on Commented-out Code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1321,126 +1424,6 @@ doesn't harm anything, but could be surprising.
 
 If the imported path cannot be found, you'll see warning log when that asset
 is being built, which you can ignore.
-
-Frequently Asked Questions
---------------------------
-
-Does the AssetMapper Component Combine Assets?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Nope! But that's because this is no longer necessary!
-
-In the past, it was common to combine assets to reduce the number of HTTP
-requests that were made. Thanks to advances in web servers like
-HTTP/2, it's typically not a problem to keep your assets separate and let the
-browser download them in parallel. In fact, by keeping them separate, when
-you update one asset, the browser can continue to use the cached version of
-all of your other assets.
-
-See :ref:`Optimization <optimization>` for more details.
-
-Does the AssetMapper Component Minify Assets?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Nope! In most cases, this is perfectly fine. The web asset compression performed
-by web servers before sending them is usually sufficient. However, if you think
-you could benefit from minifying assets (in addition to later compressing them),
-you can use the `SensioLabs Minify Bundle`_.
-
-This bundle integrates seamlessly with AssetMapper and minifies all web assets
-automatically when running the ``asset-map:compile`` command (as explained in
-the :ref:`serving assets in production <asset-mapper-compile-assets>` section).
-
-See :ref:`Optimization <optimization>` for more details.
-
-Is the AssetMapper Component Production Ready? Is it Performant?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Yes! Very! The AssetMapper component leverages advances in browser technology (like
-importmaps and native ``import`` support) and web servers (like HTTP/2, which allows
-assets to be downloaded in parallel). See the other questions about minimization
-and combination and :ref:`Optimization <optimization>` for more details.
-
-The https://ux.symfony.com site runs on the AssetMapper component and has a 99%
-Google Lighthouse score.
-
-Does the AssetMapper Component work in All Browsers?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Yes! Features like importmaps and the ``import`` statement are supported
-in all modern browsers, but the AssetMapper component ships with an `ES module shim`_
-to support ``importmap`` in old browsers. So, it works everywhere (see note
-below).
-
-Inside your own code, if you're relying on modern `ES6`_ JavaScript features
-like the `class syntax`_, this is supported in all but the oldest browsers.
-If you *do* need to support very old browsers, you should use a tool like
-:ref:`Encore <frontend-webpack-encore>` instead of the AssetMapper component.
-
-.. note::
-
-    The `import statement`_ can't be polyfilled or shimmed to work on *every*
-    browser. However, only the **oldest** browsers don't support it.
-
-    The ``importmap`` feature **is** shimmed to work in **all** browsers by the
-    AssetMapper component (using `es-module-shims`_). However, this shim only
-    polyfills **import map** support; it does **not** polyfill the ``import()``
-    syntax itself, which is a native JavaScript feature.
-
-    AssetMapper correctly rewrites dynamic imports when the path is a string literal:
-
-    .. code-block:: javascript
-
-        // static import: works everywhere (shimmed)
-        import { add } from './math.js';
-
-        // dynamic import with a string literal: rewritten by AssetMapper,
-        // but requires the browser to support import() natively
-        import('./math.js').then(({ add }) => {
-            // ...
-        });
-
-    Browsers without `native import support`_ will fail regardless of AssetMapper.
-    For those browsers, you can use `the importShim() function`_ provided by the shim.
-
-    If you use a transpiler (e.g. Babel, TypeScript) that transforms ``import()``
-    calls, make sure to run it **before** AssetMapper compiles the assets.
-    Otherwise the file hashes will change after transpilation and the versioned
-    URLs will break.
-
-Can I Use it with Sass or Tailwind?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sure! See :ref:`Using Tailwind CSS <asset-mapper-tailwind>` or :ref:`Using Sass <asset-mapper-sass>`.
-
-Can I Use it with TypeScript?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Sure! See :ref:`Using TypeScript <asset-mapper-ts>`.
-
-Can I Use it with JSX or Vue?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Probably not. And if you're writing an application in React, Svelte or another
-frontend framework, you'll probably be better off using *their* tools directly.
-
-JSX *can* be compiled directly to a native JavaScript file but if you're using a lot of JSX,
-you'll probably want to use a tool like :ref:`Encore <frontend-webpack-encore>`.
-See the `UX React Documentation`_ for more details about using it with the AssetMapper
-component.
-
-Vue files *can* be written in native JavaScript, and those *will* work with
-the AssetMapper component. But you cannot write single-file components (i.e. ``.vue``
-files), as those must be used in a build system. See the
-`UX Vue.js Documentation`_ for more details about using with the AssetMapper
-component.
-
-Can I Lint and Format My Code?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Not with AssetMapper, but you can install `kocal/biome-js-bundle`_ in your project
-to lint and format your front-end assets. It's much faster than alternatives like
-Prettier and requires no configuration to handle your JavaScript, TypeScript and CSS files.
 
 Configuration Reference
 -----------------------
