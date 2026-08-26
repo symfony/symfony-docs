@@ -24,11 +24,11 @@ every entry has the same type.
 Basic Usage
 -----------
 
-Consider a page built from a list of blocks, where a block is either a heading,
-a paragraph of text or a footer. Each kind of block has its own form type, so
-the collection cannot use a single ``entry_type``. Declare one type per kind in
-the `entry_types`_ option and tell the collection which one to use for a given
-entry with the `entry_type_provider`_ option::
+Consider a CMS page built from a list of blocks, where a block is either a
+heading, a paragraph of text or a footer. Each kind of block has its own form
+type, so the collection cannot use a single ``entry_type``. Declare one type per
+kind in the `entry_types`_ option and tell the collection which one to use for a
+given entry with the `entry_type_provider`_ option::
 
     use App\Form\Block\BlockEntryTypeProvider;
     use App\Form\Block\FooterType;
@@ -78,12 +78,13 @@ which only happens when `allow_add`_ is enabled::
         }
     }
 
-Returning a key that is not declared in `entry_types`_ throws an exception.
-Nothing tells the submitted data apart on its own, so the entry types must
-submit whatever ``forSubmittedData()`` reads, here a ``type`` field.
+Inferring the entry type from the submitted data itself can quickly become
+messy. A clean way to obtain it is to force all types to include a ``type``
+field that is hidden from the user and holds the searched entry type as a
+string.
 
 The options that configure the entries (`entry_options`_,
-`prototype_options`_ and `prototype_data`_) keep the names they have on
+`prototype_options`_ and `prototype_data`_) have the same names as they have on
 :doc:`CollectionType </reference/forms/types/collection>`, but they are keyed by
 entry name, so each kind of entry gets its own configuration::
 
@@ -119,7 +120,49 @@ If you render the whole collection field at once, each prototype is exposed as a
 ``data-prototype-<name>`` attribute of the element that surrounds the collection
 (e.g. ``data-prototype-heading``). Your JavaScript reads the attribute matching
 the kind of block the user asked for, replaces the ``__name__`` placeholder as
-usual and inserts the result in the form.
+in :doc:`CollectionType </reference/forms/types/collection>` and inserts the
+result in the form.
+
+A very basic example for add buttons:
+
+.. code-block:: html+twig
+
+    <button type="button" class="add-block" data-type="heading">Add heading</button>
+    <button type="button" class="add-block" data-type="paragraph">Add paragraph</button>
+    <button type="button" class="add-block" data-type="footer">Add footer</button>
+
+.. code-block:: javascript
+
+    document
+        .querySelectorAll('.add-block')
+        .forEach(btn => {
+            btn.addEventListener('click', addBlock);
+        });
+
+    function addBlock(e) {
+        const collection = document.querySelector('#page_blocks');
+
+        const block = document.createElement('div');
+
+        function upperCaseFirstChar(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        const dataset = 'prototype' + upperCaseFirstChar(e.currentTarget.dataset.type);
+
+        block.innerHTML = collection
+            .dataset[dataset]
+            .replace(
+                /__name__/g,
+                collection.childElementCount
+            );
+
+        collection.appendChild(block);
+    }
+
+You can find a detailed example at :ref:`form-collections-new-prototype`.
+However, it shows how to render a ``CollectionType`` instead of a
+``PolymorphicCollectionType``.
 
 Field Options
 -------------
