@@ -505,37 +505,29 @@ The ``trans`` filter can be used to translate *variable texts* and complex expre
 
     {{ message|trans({'%name%': 'Fabien'}, 'app') }}
 
-.. tip::
+You can also set the translation domain for an entire Twig template with a single tag:
 
-    You can set the translation domain for an entire Twig template with a single tag:
+.. code-block:: twig
 
-    .. code-block:: twig
+   {% trans_default_domain 'app' %}
 
-       {% trans_default_domain 'app' %}
+Note that this only influences the current template, not any "included"
+template (in order to avoid side effects). It doesn't apply either to the
+contents of ``embed`` tags. To apply the domain to the whole template,
+including the contents of ``embed`` tags, add the ``for _self`` modifier:
 
-    Note that this only influences the current template, not any "included"
-    template (in order to avoid side effects). It also does not apply to the
-    body of an ``embed`` tag.
+.. code-block:: twig
 
-    .. versionadded:: 8.2
+    {% trans_default_domain 'app' for _self %}
 
-        Add ``for _self`` to make the domain apply to the whole
-        template, including ``embed`` bodies:
+When using ``for _self``, the domain must be a string (not a variable or an
+expression) and the tag can only be used once per template, before any ``embed``
+tag. This is useful when working with :ref:`Twig Components <templates-twig-components>`,
+which use ``embed`` internally.
 
-        .. code-block:: twig
+.. versionadded:: 8.2
 
-           {% trans_default_domain 'app' for _self %}
-
-        This requires a constant domain and the tag can only be declared
-        once per template, before any ``embed`` tag. It still does not reach
-        ``include``, ``use`` or the parent of an ``extends``. A scoped
-        ``trans_default_domain`` takes precedence over it where it applies.
-
-        This is especially useful for :ref:`Twig Components <templates-twig-components>`,
-        which are built on top of ``embed`` under the hood: without
-        ``for _self``, the domain would have to be redeclared within each
-        and every Twig Component used in the same file, instead of being
-        set once at the top.
+    Support for the ``for _self`` modifier was introduced in Symfony 8.2.
 
 By default, the translated messages are output escaped; apply the ``raw``
 filter after the translation filter to avoid the automatic escaping:
