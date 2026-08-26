@@ -1783,8 +1783,9 @@ The ``repository`` option is the ID of a service implementing
 whose only method (``findPublicKeyPathFor()``) returns the path to the public key
 of the given email address, or ``null`` when there's none.
 
-Unlike S/MIME, PGP/MIME is not applied to every message: add the ``X-Pgp-Sign``
-and/or ``X-Pgp-Encrypt`` headers to select the messages to protect::
+Unlike the S/MIME signer, PGP/MIME is not applied to every message: add the
+``X-Pgp-Sign`` and/or ``X-Pgp-Encrypt`` headers to select the messages to
+protect::
 
     $email->getHeaders()->addTextHeader('X-Pgp-Sign', 'true');
     $email->getHeaders()->addTextHeader('X-Pgp-Encrypt', 'true');
