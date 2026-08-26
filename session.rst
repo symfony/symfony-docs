@@ -361,12 +361,34 @@ configuration <config-framework-session>` in
         ]);
         $session = new Session($storage);
 
+.. _session-native-handlers:
+
 Setting the ``handler_id`` config option to ``null`` means that Symfony will
-use the native PHP session mechanism. The session metadata files will be stored
-outside of the Symfony application, in a directory controlled by PHP. Although
-this usually simplifies things, some session expiration related options may not
-work as expected if other applications that write to the same directory have
-short max lifetime settings.
+use the native PHP session mechanism. Under the hood, the ``session.handler``
+service becomes a :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\StrictSessionHandler`
+that wraps PHP's own :phpclass:`SessionHandler` class, which delegates to the
+handler selected by the ``session.save_handler`` php.ini directive (``files``
+by default). The ``save_path`` config option is ignored in this case: the
+session files are stored outside of the Symfony application, in the directory
+defined by the ``session.save_path`` php.ini directive. Although this usually
+simplifies things, some session expiration related options may not work as
+expected if other applications that write to the same directory have short
+max lifetime settings.
+
+The same mechanism lets you use any other session handler provided by PHP or
+by one of its extensions (``redis`` and ``rediscluster`` from the phpredis
+extension, ``memcached``, etc.) without writing any code: keep
+``handler_id: null`` in Symfony and configure the handler in ``php.ini`` using
+``session.save_handler``, ``session.save_path`` and the settings specific to
+that handler (e.g. ``redis.session.*``).
+
+Native handlers also support session locking, which prevents race conditions
+when several requests of the same user write to the session at the same time.
+Some of the handlers provided by Symfony, such as ``RedisSessionHandler`` and
+``MemcachedSessionHandler``, don't support locking, so the native handler is a
+good option when you need it. Check the documentation of each extension for the
+details (for example, phpredis disables locking by default). See
+:ref:`the Redis section <session-database>` for a complete example.
 
 If you prefer, you can use the ``session.handler.native_file`` service as
 ``handler_id`` to let Symfony manage the sessions itself. Another useful option
@@ -551,8 +573,10 @@ installed and configured the `phpredis extension`_.
 You have two different options to use Redis to store sessions:
 
 The first option is to configure the Redis session handler directly in the
-server ``php.ini`` file. This approach uses PHP's native session locking,
-which prevents race conditions when multiple requests access the same session:
+server ``php.ini`` file and keep ``handler_id: null`` in Symfony (see
+:ref:`the native PHP session handlers <session-native-handlers>`). This approach
+uses PHP's native session locking, which prevents race conditions when multiple
+requests access the same session:
 
 .. code-block:: ini
 
