@@ -570,6 +570,20 @@ importmap_path
 
 The path of the ``importmap.php`` file.
 
+importmap_entries
+.................
+
+**type**: ``string`` **default**: ``'all'`` **possible values**: ``'all'`` or ``'reachable'``
+
+Which entries the ``importmap()`` Twig function renders: all the entries of the
+import map, or only the ones reachable from the rendered entrypoints (following
+regular and lazy imports) plus the polyfill. See
+:ref:`importmap_entries <asset-mapper-importmap-entries>`.
+
+.. versionadded:: 8.2
+
+    The ``importmap_entries`` option was introduced in Symfony 8.2.
+
 importmap_polyfill
 ..................
 

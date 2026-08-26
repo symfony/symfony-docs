@@ -1282,12 +1282,18 @@ This option is enabled by default.
 ``framework.asset_mapper.importmap_entries``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default (``all``), the ``importmap()`` function renders every entry of
-``importmap.php``, so all the entrypoints of the project and their
-dependencies are listed on every page. Set the option to ``reachable`` to
-only render the entries that are reachable from the entrypoints passed to
-``importmap()``, following both regular and lazy (dynamic) imports, plus the
-configured polyfill:
+.. versionadded:: 8.2
+
+    The ``importmap_entries`` option was introduced in Symfony 8.2.
+
+By default (``all``), the ``importmap()`` Twig function renders every entry of
+the import map (the entries of ``importmap.php`` and the files they import).
+This means that all the entrypoints of the project and their dependencies are
+listed on every page, even the pages that don't use them.
+
+Set this option to ``reachable`` to render only the entries that are reachable
+from the entrypoints passed to ``importmap()``. Both regular and lazy (dynamic)
+imports are followed and the configured polyfill is always kept:
 
 .. code-block:: yaml
 
@@ -1295,30 +1301,28 @@ configured polyfill:
         asset_mapper:
             importmap_entries: 'reachable'
 
-Preloads are not affected: they keep being based on the non-lazy imports
-only, so lazily-imported files (e.g. lazy Stimulus controllers) stay in the
-map without being preloaded.
+This option doesn't change which files are preloaded: only the entrypoints and
+their non-lazy imports are preloaded. Lazily-imported files (e.g. lazy Stimulus
+controllers) stay in the map but are not preloaded.
 
-In production, ``asset-map:compile`` stores the reachable closure of each
-entrypoint in an ``entrypoint.reachable.<name>.json`` file, so switching the
-option requires recompiling the asset map.
+In production, run the ``asset-map:compile`` command again after changing this
+option. When the option is set to ``reachable``, the command stores the
+reachable entries of each entrypoint in an ``entrypoint.reachable.<name>.json``
+file. Without those files, the entries are computed on each request. When the
+option is set back to ``all``, the next compilation removes those files.
 
 .. warning::
 
-    The reachable entries are found by tracing the ``import`` statements of
-    your JavaScript files. A fully dynamic specifier such as
-    ``import(someVariable)`` cannot be traced: if you rely on one, keep the
-    default ``all`` value.
+    The reachable entries are found by tracing the ``import`` statements of your
+    JavaScript files. A fully dynamic specifier such as ``import(someVariable)``
+    cannot be traced. If you rely on one, keep the default ``all`` value; otherwise,
+    that import fails at runtime because its entry is missing from the map.
 
 .. note::
 
-    This option filters what the rendered page lists, not what the server
-    exposes: the compiled ``importmap.json`` and ``manifest.json`` files
-    keep listing every entry of the asset map.
-
-.. versionadded:: 8.2
-
-    The ``importmap_entries`` option was introduced in Symfony 8.2.
+    This option only filters what the rendered page lists, not what the server
+    exposes: the compiled ``importmap.json`` and ``manifest.json`` files keep
+    listing every entry of the asset map.
 
 ``framework.asset_mapper.importmap_polyfill``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1415,8 +1419,8 @@ both ``app`` and ``checkout``:
         {{ importmap(['app', 'checkout']) }}
     {% endblock %}
 
-The ``importmap()`` function always includes the full import map to ensure all
-module definitions are available on the page. It also adds a ``<script type="module">``
+By default, the ``importmap()`` function includes the full import map to ensure
+all module definitions are available on the page. It also adds a ``<script type="module">``
 tag to load the specific JavaScript entry files you pass to it (in the example
 above, the ``app.js`` file *and* the ``checkout.js`` file).
 
@@ -1431,10 +1435,9 @@ included in the page, but only the ``checkout.js`` file will actually be loaded.
 
 .. note::
 
-    To stop listing the entries of the other entrypoints on the pages that do
-    not use them, set the
-    :ref:`framework.asset_mapper.importmap_entries <asset-mapper-importmap-entries>`
-    option to ``reachable``.
+    To leave the entries of the other entrypoints out of the page, set the
+    :ref:`importmap_entries <asset-mapper-importmap-entries>` option to
+    ``reachable``.
 
 Using a Content Security Policy (CSP)
 -------------------------------------
