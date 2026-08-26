@@ -923,9 +923,103 @@ The same definitions can be declared per service in configuration files:
     them to every service defined in the same file, using the same
     ``resource_tags`` option name in YAML and PHP.
 
-When the resource tag setup requires custom logic, use the
-:method:`Symfony\\Component\\DependencyInjection\\Definition::addResourceTag`
-method from PHP code::
+.. _service-tags-resource-tags-class-map:
+
+Injecting the Tagged Classes into a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``#[AutowireClassMap]`` attribute was introduced in Symfony 8.2.
+
+To use the tagged classes in a service, inject them with ``#[AutowireClassMap]``.
+The container builds an array that maps an index to each tagged class name:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Report/ReportGenerator.php
+        namespace App\Report;
+
+        use Symfony\Component\DependencyInjection\Attribute\AutowireClassMap;
+
+        class ReportGenerator
+        {
+            public function __construct(
+                // e.g. ['invoice' => Invoice::class, 'order' => Order::class]
+                #[AutowireClassMap('app.report_item', indexAttribute: 'type')]
+                private array $reportItemClasses,
+            ) {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Model\Invoice:
+                resource_tags:
+                    - { name: 'app.report_item', type: 'invoice' }
+
+            App\Model\Order:
+                resource_tags:
+                    - { name: 'app.report_item', type: 'order' }
+
+            App\Report\ReportGenerator:
+                arguments: [!tagged_class_map { tag: 'app.report_item', index_by: 'type' }]
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Model\Invoice;
+        use App\Model\Order;
+        use App\Report\ReportGenerator;
+
+        return App::config([
+            'services' => [
+                Invoice::class => [
+                    'resource_tags' => [
+                        ['app.report_item' => ['type' => 'invoice']],
+                    ],
+                ],
+                Order::class => [
+                    'resource_tags' => [
+                        ['app.report_item' => ['type' => 'order']],
+                    ],
+                ],
+                ReportGenerator::class => [
+                    // 2nd argument is the index attribute name
+                    'arguments' => [tagged_class_map('app.report_item', 'type')],
+                ],
+            ],
+        ]);
+
+The array contains class names, not service instances: the tagged classes are
+never instantiated by the container. Only concrete classes are included, so an
+interface or abstract class tagged with ``#[AutoconfigureResourceTag]`` (like
+``ReportItemInterface`` above) doesn't appear in the array.
+
+The ``indexAttribute`` argument (``index_by`` in config files) is the name of
+the tag attribute used as the array key (``type`` in the example above, which
+is why the ``Invoice`` class is stored under the ``invoice`` key). If you omit
+it, the key is read from the tag attribute named after the last part of the tag
+name (``report_item`` for the ``app.report_item`` tag). If a class doesn't
+define that tag attribute, its fully-qualified class name is used as the key
+(or the index of its ``#[AsTaggedItem]`` attribute, if it has one).
+
+When several classes share the same key, the one with the highest ``priority``
+tag attribute wins. Use the ``exclude`` argument to leave some classes out of
+the array (e.g. ``exclude: [DraftInvoice::class]``).
+
+Processing Resource Tags with Compiler Passes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you need more control than the class map provides, work with resource tags
+from PHP code. To add them with custom logic, use the
+:method:`Symfony\\Component\\DependencyInjection\\Definition::addResourceTag` method::
 
     // src/Attribute/AppModel.php
     namespace App\Attribute;
@@ -956,7 +1050,7 @@ method from PHP code::
         }
     }
 
-You can then retrieve these classes in a :ref:`compiler pass <service-container-compiler-pass-tags>`
+To process the tagged classes, retrieve them in a :ref:`compiler pass <service-container-compiler-pass-tags>`
 using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTaggedResourceIds`::
 
     // src/DependencyInjection/Compiler/ModelDiscoveryPass.php
