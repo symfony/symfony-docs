@@ -142,6 +142,23 @@ receive the real instance:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Consumer.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\Lazy;
+
+        class Consumer
+        {
+            public function __construct(
+                #[Lazy]
+                // this is equivalent: #[Autowire(lazy: true)]
+                HeavyService $heavyService,
+            ) {
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
