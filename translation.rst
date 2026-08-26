@@ -514,7 +514,28 @@ The ``trans`` filter can be used to translate *variable texts* and complex expre
        {% trans_default_domain 'app' %}
 
     Note that this only influences the current template, not any "included"
-    template (in order to avoid side effects).
+    template (in order to avoid side effects). It also does not apply to the
+    body of an ``embed`` tag.
+
+    .. versionadded:: 8.2
+
+        Add ``for _self`` to make the domain apply to the whole
+        template, including ``embed`` bodies:
+
+        .. code-block:: twig
+
+           {% trans_default_domain 'app' for _self %}
+
+        This requires a constant domain and the tag can only be declared
+        once per template, before any ``embed`` tag. It still does not reach
+        ``include``, ``use`` or the parent of an ``extends``. A scoped
+        ``trans_default_domain`` takes precedence over it where it applies.
+
+        This is especially useful for :ref:`Twig Components <templates-twig-components>`,
+        which are built on top of ``embed`` under the hood: without
+        ``for _self``, the domain would have to be redeclared within each
+        and every Twig Component used in the same file, instead of being
+        set once at the top.
 
 By default, the translated messages are output escaped; apply the ``raw``
 filter after the translation filter to avoid the automatic escaping:
