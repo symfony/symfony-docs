@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-08-20T10:29:01Z
+
+Note for reviewers: the `Code Blocks` failure is a false positive. The check runs `class_exists()` against symfony-tools/symfony-application, whose `8.2` branch still pins `extra.symfony.require` to `8.1.*`, so the brand-new `#[AutowireClassMap]` class cannot be found. Fix proposed in symfony-tools/symfony-application#48; re-running the check after it is merged will turn this green.
