@@ -535,6 +535,64 @@ extending ``AbstractController``::
         }
     }
 
+Using a Service Subscriber without Autowiring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Using :ref:`autowiring <services-autowire>` with service subscribers is
+convenient but not mandatory. When defining the service arguments explicitly,
+leave out the locator argument: the container injects it automatically.
+
+If the class receives the locator through a setter method instead of the
+constructor (e.g. the ``setContainer()`` method defined by the
+:ref:`ServiceMethodsSubscriberTrait <service-subscribers-service-subscriber-trait>`),
+the ``#[Required]`` attribute is ignored without autowiring. Declare the method
+call yourself, but don't pass any argument to it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Checkout:
+                calls:
+                    - setContainer: []
+                    # if you are not using the default service autoconfiguration,
+                    # add the following tag to the service definition:
+                    # tags: ['container.service_subscriber']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Checkout;
+
+        return App::config([
+            'services' => [
+                Checkout::class => [
+                    'calls' => [
+                        'setContainer' => [],
+                    ],
+                    // if you are not using the default service autoconfiguration,
+                    // add the following tag to the service definition:
+                    // 'tags' => ['container.service_subscriber'],
+                ],
+            ],
+        ]);
+
+If you prefer to pass the argument explicitly, reference the
+``Psr\Container\ContainerInterface`` or
+``Symfony\Contracts\Service\ServiceProviderInterface`` services (e.g.
+``'@Psr\Container\ContainerInterface'``): inside a service subscriber, the
+container replaces them with the subscriber's own locator.
+
+.. warning::
+
+    Don't inject the ``service_container`` service instead. The container
+    compiles without errors, but the subscriber receives the entire application
+    container and fails at runtime when getting a private service.
+
 Customizing the Injected Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
