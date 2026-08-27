@@ -183,7 +183,7 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``brevo+api://KEY@default``                                                         |
 +------------------------+-------------------------------------------------------------------------------------------+
-| `Cloudflare`_          | - SMTP n/a                                                                                |
+| `Cloudflare`_          | - SMTP ``cloudflare+smtp://api_token:API_TOKEN@default``                                  |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``cloudflare+api://ACCOUNT_ID:API_TOKEN@default``                                   |
 +------------------------+-------------------------------------------------------------------------------------------+
