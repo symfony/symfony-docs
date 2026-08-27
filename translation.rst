@@ -587,6 +587,11 @@ You can also specify the message domain and pass some additional variables:
     major difference: automatic output escaping is **not** applied to translations
     using a tag.
 
+.. tip::
+
+    If you need to use the translations in JavaScript code, check out the
+    `Symfony UX Translator`_ package.
+
 Global Translation Parameters
 -----------------------------
 
@@ -1908,3 +1913,4 @@ Learn more
 .. _`Lokalise`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Lokalise/README.md
 .. _`Phrase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Translation/Bridge/Phrase/README.md
 .. _`AST`: https://en.wikipedia.org/wiki/Abstract_syntax_tree
+.. _`Symfony UX Translator`: https://symfony.com/bundles/ux-translator/current/index.html
