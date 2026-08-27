@@ -1437,6 +1437,17 @@ storage on subsequent requests, as described in `RFC 9111`_.
 Internally, it relies on a :class:`tag aware cache <Symfony\\Contracts\\Cache\\TagAwareCacheInterface>`,
 so the :doc:`Cache component </cache>` must be installed in your application.
 
+Only the responses of ``GET``, ``HEAD`` and ``QUERY`` requests are cached
+(``QUERY`` is a safe and cacheable HTTP method that sends its parameters in
+the request body instead of the URL). For ``QUERY`` requests, the body and the
+``Content-Type`` header are part of the cache key, so two queries that only
+differ by their body don't share the same cached response. ``QUERY`` requests
+without a ``Content-Type`` header or with a streamed body are never cached.
+
+.. versionadded:: 8.2
+
+    Support for caching ``QUERY`` requests was introduced in Symfony 8.2.
+
 .. tip::
 
     The caching mechanism is asynchronous. The response must be fully consumed
