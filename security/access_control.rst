@@ -264,7 +264,9 @@ Securing by an Expression
 
 Once an ``access_control`` entry is matched, you can deny access via the
 ``roles`` key or use more complex logic with an expression in the ``allow_if``
-key:
+key. Use one or the other: a rule holding both is deprecated since Symfony 8.2,
+so a condition on the roles belongs inside the expression, through
+``is_granted()``:
 
 .. configuration-block::
 
@@ -276,10 +278,8 @@ key:
             access_control:
                 -
                     path: ^/_internal/secure
-                    # the 'roles' and 'allow_if' options work like an OR expression, so
-                    # access is granted if the expression is TRUE or the user has ROLE_ADMIN
-                    roles: 'ROLE_ADMIN'
-                    allow_if: "'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
+                    # access is granted if the expression is TRUE
+                    allow_if: "is_granted('ROLE_ADMIN') or '127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
 
     .. code-block:: php
 
@@ -291,10 +291,8 @@ key:
                 'access_control' => [
                     [
                         'path' => '^/_internal/secure',
-                        // the 'roles' and 'allow_if' options work like an OR expression, so
-                        // access is granted if the expression is TRUE or the user has ROLE_ADMIN
-                        'roles' => 'ROLE_ADMIN',
-                        'allow_if' => '"127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")',
+                        // access is granted if the expression is TRUE
+                        'allow_if' => 'is_granted("ROLE_ADMIN") or "127.0.0.1" == request.getClientIp() or request.headers.has("X-Secure-Access")',
                     ],
                 ],
             ],
