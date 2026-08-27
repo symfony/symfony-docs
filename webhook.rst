@@ -217,7 +217,7 @@ you need to implement two methods:
 * :method:`Symfony\\Component\\Webhook\\Client\\AbstractRequestParser::doParse`
   to verify the webhook and parse it into a RemoteEvent.
 
-::
+The resulting parser looks like this::
 
     // src/Webhook/AcmeWebhookRequestParser.php
     namespace App\Webhook;
