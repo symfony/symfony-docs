@@ -950,6 +950,80 @@ You can now choose which groups to use when serializing::
     );
     // $json contains {"name":"Jane Doe","age":32,"sportsperson":false,"email":"jane.doe@example.com"}
 
+Including Attributes Without Groups
+...................................
+
+When the ``groups`` option is used, attributes that don't carry any
+``#[Groups]`` attribute are never included. Enable the
+``enable_default_groups`` context option to make those attributes belong to
+two implicit groups instead: ``Default`` and the short name of their class
+(``Person`` in the example above), following the same convention as the
+:doc:`Validator component </validation/groups>`::
+
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    // ...
+
+    $json = $serializer->serialize($person, 'json', [
+        'groups' => ['Default'],
+        AbstractNormalizer::ENABLE_DEFAULT_GROUPS => true,
+    ]);
+    // "email" has no groups, so it belongs to the implicit groups
+    // $json contains {"email":"jane.doe@example.com"}
+
+    // the class short name behaves like the "Default" group
+    $json = $serializer->serialize($person, 'json', [
+        'groups' => ['Person'],
+        AbstractNormalizer::ENABLE_DEFAULT_GROUPS => true,
+    ]);
+    // $json contains {"email":"jane.doe@example.com"}
+
+The implicit groups only apply while no custom group is requested: as soon as
+the ``groups`` option contains a group other than ``Default`` and the class
+short name, declared groups keep their exact meaning and attributes without
+groups are excluded, even when the option is enabled::
+
+    $json = $serializer->serialize($person, 'json', [
+        'groups' => ['public-view'],
+        AbstractNormalizer::ENABLE_DEFAULT_GROUPS => true,
+    ]);
+    // $json contains {"name":"Jane Doe","sportsperson":false}
+
+The implicit groups behave like declared ones everywhere groups are checked,
+such as the ``ignored_groups`` context option or the per-group
+``#[SerializedName]`` and ``#[SerializedPath]`` resolution.
+
+You can enable this behavior for the entire application with the
+``default_context`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/serializer.yaml
+        framework:
+            serializer:
+                default_context:
+                    enable_default_groups: true
+
+    .. code-block:: php
+
+        // config/packages/serializer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'serializer' => [
+                    'default_context' => [
+                        'enable_default_groups' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``enable_default_groups`` context option was introduced in Symfony 8.2.
+
 Using the Serialization Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
