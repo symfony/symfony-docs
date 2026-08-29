@@ -98,6 +98,7 @@ Service               Install with                                        Webhoo
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``         yes
 `Mailjet`_            ``composer require symfony/mailjet-mailer``         yes
+`MailKite`_           ``composer require symfony/mail-kite-mailer``
 `Mailomat`_           ``composer require symfony/mailomat-mailer``        yes
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``     yes
@@ -115,8 +116,9 @@ Service               Install with                                        Webhoo
 
 .. versionadded:: 8.2
 
-    The ``TurboSMTP`` and ``Cloudflare`` integrations were introduced in Symfony 8.2.
-    Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
+    The ``TurboSMTP``, ``Cloudflare`` and ``MailKite`` integrations were
+    introduced in Symfony 8.2. Webhook support for ``Scaleway`` was also
+    introduced in Symfony 8.2.
 
 .. note::
 
@@ -210,6 +212,10 @@ party provider:
 | `Mailjet`_             | - SMTP ``mailjet+smtp://ACCESS_KEY:SECRET_KEY@default``                                   |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``mailjet+api://ACCESS_KEY:SECRET_KEY@default``                                     |
++------------------------+-------------------------------------------------------------------------------------------+
+| `MailKite`_            | - SMTP ``mailkite+smtp://API_KEY@default``                                                |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``mailkite+api://API_KEY@default``                                                  |
 +------------------------+-------------------------------------------------------------------------------------------+
 | `Mailomat`_            | - SMTP ``mailomat+smtp://USERNAME:PASSWORD@default``                                      |
 |                        | - HTTP n/a                                                                                |
@@ -2338,6 +2344,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
+.. _`MailKite`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailKite/README.md
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`Mailomat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailomat/README.md
 .. _`MailPace`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailPace/README.md
