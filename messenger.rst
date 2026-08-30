@@ -4029,6 +4029,59 @@ may want to use:
             ],
         ]);
 
+.. _messenger-doctrine-dbal-middleware:
+
+Middleware for DBAL Connections
+...............................
+
+The middlewares above are built on the entity managers of the ORM. These two
+work on DBAL connections instead, so they also run in applications that don't
+use the ORM:
+
+* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalPingConnectionMiddleware`
+  pings the open connections and reestablishes the broken ones;
+* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalTransactionMiddleware`
+  wraps all handlers in a single DBAL transaction.
+
+Both take the connection registry as their first argument. The ping middleware
+then takes connection names, either a single name or a list of them; passing
+none pings every DBAL connection. The transaction middleware takes a single
+optional connection name, as a transaction spanning several connections
+wouldn't be one.
+
+Unlike ``doctrine_transaction``, ``DoctrineDbalTransactionMiddleware`` doesn't
+flush any entity manager before committing: the handlers do it.
+
+They have no configuration shortcut yet, so register them as services first,
+then add their class name to the ``middleware`` list of the bus shown above,
+where the ``doctrine_*`` shortcuts are:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Symfony\Bridge\Doctrine\Messenger\DoctrineDbalPingConnectionMiddleware:
+            arguments:
+                - '@doctrine'
+                # ping every DBAL connection; pass a name or a list of names
+                # to restrict it to some of them
+                #- ['default', 'legacy']
+
+        Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware:
+            arguments:
+                - '@doctrine'
+
+.. versionadded:: 8.2
+
+    ``DoctrineDbalPingConnectionMiddleware`` and
+    ``DoctrineDbalTransactionMiddleware`` were introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    ``DoctrinePingConnectionMiddleware`` is deprecated since Symfony 8.2 in
+    favor of ``DoctrineDbalPingConnectionMiddleware``, which doesn't reset
+    closed entity managers, as workers already reset them between messages.
+
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
 
