@@ -252,6 +252,7 @@ you can use them when defining your cache pools:
 * :doc:`cache.adapter.filesystem </cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </cache/adapters/memcached_adapter>`
 * :doc:`cache.adapter.pdo </cache/adapters/pdo_adapter>`
+* :ref:`cache.adapter.pdo_tag_aware <pdo-tag-aware-adapter>` (PDO adapter optimized to work with tags)
 * :doc:`cache.adapter.psr6 </cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </cache/adapters/redis_adapter>`
 * :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
