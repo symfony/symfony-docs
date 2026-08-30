@@ -396,13 +396,14 @@ The component includes the following built-in store types:
 ==========================================================  ======  ========  ======== ======= =============
 Store                                                       Scope   Blocking  Expiring Sharing Serialization
 ==========================================================  ======  ========  ======== ======= =============
+:ref:`DoctrineDbalMysqlStore <lock-store-dbal-mysql>`       remote  yes       no       no      no
 :ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes     no
 :ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  retry     yes      no      yes
 :ref:`DynamoDbStore <lock-store-dynamodb>`                  remote  retry     yes      no      yes
 :ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
 :ref:`MemcachedStore <lock-store-memcached>`                remote  retry     yes      no      yes
 :ref:`MongoDbStore <lock-store-mongodb>`                    remote  retry     yes      no      yes
-:ref:`MysqlStore <lock-store-mysql>`                        remote  retry     no       no      no
+:ref:`MysqlStore <lock-store-mysql>`                        remote  yes       no       no      no
 :ref:`PdoStore <lock-store-pdo>`                            remote  retry     yes      no      yes
 :ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
 :ref:`RedisStore <lock-store-redis>`                        remote  retry     yes      yes     yes
@@ -530,6 +531,28 @@ MongoDB Connection String:
     The ``collection`` querystring parameter is not part of the `MongoDB Connection String`_ definition.
     It is used to allow constructing a ``MongoDbStore`` using a `Data Source Name (DSN)`_ without ``$options``.
 
+.. _lock-store-dbal-mysql:
+
+DoctrineDbalMysqlStore
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    ``DoctrineDbalMysqlStore`` was introduced in Symfony 8.2.
+
+The DoctrineDbalMysqlStore uses `MySQL user-level locks`_ (also known as advisory locks).
+It is similar to MysqlStore but requires a `Doctrine DBAL Connection`_ or
+a `Doctrine DBAL URL`_. It supports native blocking. It does not support sharing locks::
+
+    use Symfony\Component\Lock\Store\DoctrineDbalMysqlStore;
+
+    // a Doctrine Connection or DSN
+    $databaseConnectionOrDSN = 'mysql+advisory://myuser:mypassword@127.0.0.1:5634/lock';
+    $store = new DoctrineDbalMysqlStore($databaseConnectionOrDSN);
+
+Unlike the ``DoctrineDbalStore``, the ``DoctrineDbalMysqlStore`` does not need a table
+to store locks and does not expire.
+
 .. _lock-store-mysql:
 
 MysqlStore
@@ -540,8 +563,8 @@ MysqlStore
     ``MysqlStore`` was introduced in Symfony 8.2.
 
 The MysqlStore uses `MySQL user-level locks`_ (also known as advisory locks). It
-requires a `PDO`_ connection or a `Data Source Name (DSN)`_. It supports neither
-blocking nor sharing locks::
+requires a `PDO`_ connection or a `Data Source Name (DSN)`_. It supports native blocking.
+It does not support sharing locks::
 
     use Symfony\Component\Lock\Store\MysqlStore;
 
@@ -561,9 +584,9 @@ them.
 
 .. note::
 
-    This store only supports the PDO DSN syntax
-    (``mysql+advisory:host=127.0.0.1;dbname=app``). Unlike ``pgsql+advisory``,
-    the URL syntax (``mysql+advisory://user:password@host/db``) is not supported.
+    This store only accepts the PDO DSN syntax (``mysql:host=127.0.0.1;dbname=app``).
+    To connect using a URL (e.g. ``mysql+advisory://user:password@host/db``), use
+    the :ref:`DoctrineDbalMysqlStore <lock-store-dbal-mysql>` instead.
 
 .. _lock-store-pdo:
 
