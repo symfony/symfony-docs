@@ -1993,36 +1993,39 @@ Controlling Open and Click Tracking
     were introduced in Symfony 8.2.
 
 Most third-party providers can track when an email is opened and when its links
-are clicked. This is usually a global setting of the provider account, but
-privacy regulations may require to let each user refuse it. The
-:class:`Symfony\\Component\\Mailer\\Header\\TrackingHeader` class controls
-both kinds of tracking per message, in a provider-agnostic way::
+are clicked. This is usually a global setting of your provider account, but
+privacy laws may require you to let each user refuse it. Add a
+:class:`Symfony\\Component\\Mailer\\Header\\TrackingHeader` to control both
+kinds of tracking for a specific email, regardless of the provider. Its first
+argument controls open tracking and the second one, click tracking::
 
     use Symfony\Component\Mailer\Header\TrackingHeader;
 
-    // disables both open and click tracking for this email
-    $email->getHeaders()->add(new TrackingHeader(opens: false, clicks: false));
+    // disable both open and click tracking for this email
+    $email->getHeaders()->add(new TrackingHeader(false, false));
 
-    // enables click tracking and keeps the provider default for opens
-    $email->getHeaders()->add(new TrackingHeader(clicks: true));
+    // enable click tracking and keep the provider default for open tracking
+    $email->getHeaders()->add(new TrackingHeader(null, true));
 
-Both flags are nullable and default to ``null``, which keeps the default of the
-provider (or of your account) for that kind of tracking. The transports listed
-below convert the header into the native mechanism of their provider. Any
-provider-specific header or setting that you set explicitly on the message
-always wins over this generic header. On all other transports, the header is
-sent as a regular ``X-Track`` header and has no effect:
+Passing ``null`` keeps the setting of your provider account for that kind of
+tracking. The :ref:`supported transports <mailer-tracking-transports>` turn this
+header into the native option of their provider. Other transports send it as a
+regular ``X-Track: opens=false; clicks=false`` header, which has no effect.
 
-.. code-block:: text
+.. note::
 
-    X-Track: opens=false; clicks=false
+    A provider-specific header or setting defined explicitly in the email
+    always takes precedence over ``TrackingHeader``.
 
 Setting a Default for All Emails
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When tracking depends on the consent of the users, the safest default is to
-disable it for every email, and to opt in per message. Use the
-``framework.mailer.tracking`` option to define that default:
+When tracking depends on user consent, the safest approach is to disable it for
+all emails and enable it only in the emails that need it. In Symfony
+applications, use the :ref:`framework.mailer.tracking <reference-mailer-tracking>`
+option. In other applications, register a
+:class:`Symfony\\Component\\Mailer\\EventListener\\MessageListener` that adds
+an ``X-Track`` header to all emails:
 
 .. configuration-block::
 
@@ -2051,23 +2054,27 @@ disable it for every email, and to opt in per message. Use the
             ],
         ]);
 
-This option only applies to the emails that don't define their own ``X-Track``
-header. From the strongest to the weakest, the effective setting comes from: the
-``TrackingHeader`` added to the message itself, then an ``X-Track`` entry in the
-``framework.mailer.headers`` option (see
-:ref:`mailer-configure-email-globally`), then the ``tracking`` option, and
-finally the default of the provider.
+    .. code-block:: php-standalone
 
-When using the Mailer component without the framework, register a
-:class:`Symfony\\Component\\Mailer\\EventListener\\MessageListener` with an
-``X-Track`` header to get the same default::
+        use Symfony\Component\EventDispatcher\EventDispatcher;
+        use Symfony\Component\Mailer\EventListener\MessageListener;
+        use Symfony\Component\Mailer\Mailer;
+        use Symfony\Component\Mailer\Transport;
+        use Symfony\Component\Mime\Header\Headers;
 
-    use Symfony\Component\Mailer\EventListener\MessageListener;
-    use Symfony\Component\Mime\Header\Headers;
+        $headers = new Headers()
+            ->addTextHeader('X-Track', 'opens=false; clicks=false');
 
-    $headers = new Headers()
-        ->addTextHeader('X-Track', 'opens=false; clicks=false');
-    $dispatcher->addSubscriber(new MessageListener($headers));
+        $dispatcher = new EventDispatcher();
+        $dispatcher->addSubscriber(new MessageListener($headers));
+
+        // the transport dispatches the event, so it needs the dispatcher
+        $transport = Transport::fromDsn('...', $dispatcher);
+        $mailer = new Mailer($transport);
+
+A ``TrackingHeader`` added to an email always overrides this default.
+
+.. _mailer-tracking-transports:
 
 Supported Transports
 ~~~~~~~~~~~~~~~~~~~~
@@ -2087,18 +2094,17 @@ Postmark       yes  yes
 Sendgrid       yes  yes
 =============  ===  ====
 
-Some providers have specific behaviors:
+Some providers behave differently:
 
-* **Azure** only has a single toggle: setting either flag to ``false``
-  disables both kinds of tracking;
-* **Brevo** exposes a per-recipient consent flag, so disabling tracking
-  anonymizes the events instead of disabling them;
-* **Mailchimp** (Mandrill) over SMTP expects the list of tracking aspects to
-  enable, so a ``null`` flag is disabled when the other one is set explicitly.
+* **Azure** has a single toggle for both kinds of tracking: setting either flag
+  to ``false`` disables both;
+* **Brevo** doesn't disable tracking, it anonymizes the tracked events instead;
+* **Mailchimp** (Mandrill) over SMTP only accepts a list of tracking features
+  to enable, so a ``null`` flag is disabled when the other one is set explicitly.
 
-Other providers don't support per-message tracking settings: Resend and
-Mailtrap configure tracking per domain, Amazon SES through configuration sets
-(the ``X-SES-CONFIGURATION-SET`` header) and MailPace doesn't track emails.
+Resend and Mailtrap configure tracking per domain, Amazon SES via configuration
+sets (the ``X-SES-CONFIGURATION-SET`` header) and MailPace doesn't track emails,
+so the header has no effect on them.
 
 Draft Emails
 ------------

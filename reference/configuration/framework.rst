@@ -2716,15 +2716,20 @@ message_bus
 Service identifier of the message bus to use when using the
 :doc:`Messenger component </messenger>` (e.g. ``messenger.default_bus``).
 
+.. _reference-mailer-tracking:
+
 tracking
 ........
 
 **type**: ``array``
 
-The default open (``opens`` key) and click (``clicks`` key) tracking settings
-for every email that doesn't define its own ``X-Track`` header. Each key accepts
-``true``, ``false`` or ``null`` (the default, which keeps the provider's own
-setting):
+.. versionadded:: 8.2
+
+    The ``tracking`` option was introduced in Symfony 8.2.
+
+Default :ref:`open and click tracking <mailer-tracking>` settings for all
+emails. The ``opens`` and ``clicks`` keys accept ``true``, ``false`` or
+``null`` (the default, which keeps the setting of your provider account):
 
 .. configuration-block::
 
@@ -2753,13 +2758,10 @@ setting):
             ],
         ]);
 
-An ``X-Track`` entry in the ``headers`` option takes precedence over this
-option. See :ref:`Controlling Open and Click Tracking <mailer-tracking>` for
-more details and the list of supported transports.
-
-.. versionadded:: 8.2
-
-    The ``tracking`` option was introduced in Symfony 8.2.
+When several settings apply to the same email, the strongest one wins, in this
+order: the ``TrackingHeader`` added to the email, the ``X-Track`` entry of the
+:ref:`headers <mailer-headers>` option, this option and the setting of your
+provider account.
 
 transports
 ..........
