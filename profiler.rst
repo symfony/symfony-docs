@@ -281,15 +281,15 @@ to skip them (nothing is excluded by default):
         ],
     ]);
 
-The regular expressions are matched against the URL-decoded path info of the
-request (e.g. ``/blog/my-post``, without the query string). They are
-case-sensitive and must not include delimiters. Invalid expressions are
-rejected when the container is compiled.
+The regular expressions are matched against the request path (e.g.
+``/blog/my-post``) without the query string. Write them without delimiters
+(``^/api/`` instead of ``#^/api/#``) and note that they are case-sensitive:
+``^/api/`` doesn't match ``/API/users``.
 
-An excluded request is skipped entirely by the profiler, so it can't be
-profiled on demand with the ``collect_parameter`` option either. Excluding a
-main request doesn't exclude its :ref:`sub-requests <http-kernel-sub-requests>`:
-each one is matched against its own path info.
+Excluded requests are never profiled, not even when passing the ``collect_parameter``
+in the URL. :ref:`Sub-requests <http-kernel-sub-requests>` are matched separately
+using their own path, so excluding ``^/blog/`` doesn't exclude the fragments rendered
+inside those pages with ``render(controller(...))`` (their path is ``/_fragment``).
 
 Updating the Web Debug Toolbar After AJAX Requests
 --------------------------------------------------
