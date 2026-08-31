@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-08-28T17:10:12Z
+
+I think this deserve a `versionadded` note too ;)
+
+---------------------------------------------------------------------------
+
+by vadage at 2026-08-28T17:19:37Z
+
+The Cloudflare Mailer Bridge got added in Symfony 8.2 and is already mentioned in the `versionadded`. Should I add the note any way?
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-08-29T11:25:10Z
+
+> The Cloudflare Mailer Bridge got added in Symfony 8.2 and is already mentioned in the `versionadded`. Should I add the note any way?
+
+Nevermind you're right, sorry
