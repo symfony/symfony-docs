@@ -3312,6 +3312,90 @@ and ``test`` environments.
     the :doc:`WebProfilerBundle configuration </reference/configuration/web_profiler>`
     on how to disable/enable the toolbar.
 
+excluded_http_codes
+...................
+
+**type**: ``array`` **default**: ``[]``
+
+A map of HTTP status codes whose responses are not profiled. Each code can be
+restricted to some requests with a list of regular expressions matched against
+the URL-decoded path info of the request (``null`` or an empty list excludes
+every response with that status code):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            profiler:
+                excluded_http_codes:
+                    404: ~
+                    400: ['^/foo', '^/bar']
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'profiler' => [
+                    'excluded_http_codes' => [
+                        404 => null,
+                        400 => ['^/foo', '^/bar'],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``excluded_http_codes`` option was introduced in Symfony 8.2.
+
+excluded_paths
+..............
+
+**type**: ``array`` **default**: ``[]``
+
+A list of regular expressions matched against the URL-decoded path info of the
+requests. Matching requests are not profiled. The expressions are
+case-sensitive and must not include delimiters:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            profiler:
+                excluded_paths:
+                    - '^/\.well-known/'
+                    - '^/favicon\.ico$'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'profiler' => [
+                    'excluded_paths' => [
+                        '^/\.well-known/',
+                        '^/favicon\.ico$',
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``excluded_paths`` option was introduced in Symfony 8.2.
+
+See :ref:`how to exclude requests from the profiler
+<profiler-excluded-requests>` for more details.
+
 only_exceptions
 ...............
 
