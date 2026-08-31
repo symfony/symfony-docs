@@ -394,4 +394,4 @@ Learn more
 .. _`full-featured demo`: https://demo.blackfire.io?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
 .. _`Stopwatch component`: https://symfony.com/components/Stopwatch
 .. _`real-world stopwatch`: https://en.wikipedia.org/wiki/Stopwatch
-.. _`class preloading`: https://www.php.net/manual/en/opcache.preloading.php
+.. _`class preloading`: https://php.net/manual/opcache.preloading
