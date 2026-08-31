@@ -3954,8 +3954,15 @@ secret
 
 **type**: ``string`` **default**: ``''``
 
-The secret used to verify the webhook signature. The value depends on the
-third-party service sending the webhook.
+The value used to authenticate incoming webhook requests. What it holds
+depends on the third-party service: the signing key it gives you, or the HTTP
+Basic credentials configured on the webhook URL.
+
+Always set it in production. Parsers for services that sign their requests
+reject an empty value and throw. The others cannot do that: a service that
+does not sign, or that makes signing optional, leaves its parser with nothing
+to check, and the endpoint then accepts requests from any sender without
+warning.
 
 workflows
 ~~~~~~~~~

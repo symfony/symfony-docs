@@ -88,7 +88,7 @@ controller uses a routing mechanism to map incoming requests to the appropriate 
                 routing:
                     acme_webhook:  # routing name, maps to /webhook/acme_webhook
                         service: App\Webhook\AcmeWebhookRequestParser
-                        secret: '%env(WEBHOOK_SECRET)%'  # optional
+                        secret: '%env(WEBHOOK_SECRET)%'
 
     .. code-block:: xml
 
@@ -125,6 +125,19 @@ controller uses a routing mechanism to map incoming requests to the appropriate 
 The routing name becomes part of the webhook URL (e.g.,
 ``https://example.com/webhook/acme_webhook``). Each routing name must be
 unique as it connects the webhook source to your consumer code.
+
+.. warning::
+
+    Always set ``secret`` in production. Parsers for services that sign their
+    requests reject an empty value and throw, so a missing secret fails
+    loudly. The others cannot do that: a service that does not sign, or that
+    makes signing optional, leaves its parser with nothing to check, and the
+    endpoint then accepts requests from any sender without warning. What the
+    value holds depends on the service, either the signing key it gives you
+    or the HTTP Basic credentials you set on the webhook URL in its
+    dashboard. Store it using the
+    :doc:`secrets management system </configuration/secrets>` or a ``.env``
+    file.
 
 All parsers are automatically injected into the WebhookController.
 
