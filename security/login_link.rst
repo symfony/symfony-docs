@@ -202,6 +202,16 @@ link is created using
     Or use the :doc:`notifier </notifier>` component to send an SMS to the
     user's device.
 
+.. warning::
+
+    The login link is an absolute URL and its host is taken from the incoming
+    request. An attacker can request a login link for a victim using a forged
+    ``Host`` header: the victim receives a link that points to the attacker's
+    host and leaks the login link when opened. To prevent this, configure the
+    :ref:`trusted_hosts <configuration-framework-trusted-hosts>` option.
+    Setting ``framework.router.default_uri`` is not enough, because the
+    incoming request always overrides it.
+
 3) Send the Login Link to the User
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
