@@ -1715,8 +1715,13 @@ and it will select the appropriate certificate depending on the ``To`` option::
 Encrypting Messages Globally
 ............................
 
-Instead of creating a new encrypter for each email, you can configure a global S/MIME
-encrypter that automatically applies to all outgoing messages:
+Instead of creating a new encrypter for each email, you can configure a global
+S/MIME encrypter that applies to the messages having the ``X-SMime-Encrypt``
+header::
+
+    $email->getHeaders()->addTextHeader('X-SMime-Encrypt', 'true');
+
+Enable it and define where the certificates of the recipients come from:
 
 .. configuration-block::
 
@@ -1726,6 +1731,7 @@ encrypter that automatically applies to all outgoing messages:
         framework:
             mailer:
                 smime_encrypter:
+                    enabled: true
                     repository: App\Security\LocalFileCertificateRepository
 
     .. code-block:: php
@@ -1739,6 +1745,7 @@ encrypter that automatically applies to all outgoing messages:
             'framework' => [
                 'mailer' => [
                     'smime_encrypter' => [
+                        'enabled' => true,
                         'repository' => LocalFileCertificateRepository::class,
                     ],
                 ],
