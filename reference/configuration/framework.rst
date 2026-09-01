@@ -5163,6 +5163,90 @@ message_bus
 
 The service id of the Messenger bus used to dispatch incoming webhook messages.
 
+http_client
+...........
+
+**type**: ``string`` **default**: ``'http_client'``
+
+The service id of the HTTP client used to send outgoing webhooks. Set it to use
+a client of your own, for example one that goes through a proxy or uses a
+longer timeout than the default client:
+
+.. code-block:: yaml
+
+    # config/packages/webhook.yaml
+    framework:
+        webhook:
+            http_client: 'http_client.webhooks'
+
+.. versionadded:: 8.2
+
+    The ``http_client`` option was introduced in Symfony 8.2.
+
+no_private_network
+..................
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to refuse sending webhooks to URLs that resolve to a private network.
+Enable it when the destination URLs come from your users, to protect your
+application against :ref:`SSRF attacks <http-client-ssrf>`:
+
+.. code-block:: yaml
+
+    # config/packages/webhook.yaml
+    framework:
+        webhook:
+            no_private_network: true
+
+This decorates the webhook HTTP client with a
+:class:`Symfony\\Component\\HttpClient\\NoPrivateNetworkHttpClient`, so it
+requires the HttpClient component:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-client
+
+.. versionadded:: 8.2
+
+    The ``no_private_network`` option was introduced in Symfony 8.2.
+
+subnets
+'''''''
+
+**type**: ``string`` | ``array`` **default**: ``null``
+
+The subnets, in CIDR notation, to consider private. When this option is
+``null``, the standard private subnets are blocked. Set it to block a different
+set of networks and nothing else:
+
+.. code-block:: yaml
+
+    # config/packages/webhook.yaml
+    framework:
+        webhook:
+            no_private_network:
+                enabled: true
+                subnets: ['104.26.14.0/23']
+
+allow_list
+''''''''''
+
+**type**: ``string`` | ``array`` **default**: ``[]``
+
+The IPs or subnets, in CIDR notation, that can still be reached even when they
+belong to one of the blocked networks. Use it to allow a known internal host,
+such as a local proxy, while keeping the rest of the private network blocked:
+
+.. code-block:: yaml
+
+    # config/packages/webhook.yaml
+    framework:
+        webhook:
+            no_private_network:
+                enabled: true
+                allow_list: ['10.0.0.42']
+
 event_header_name
 .................
 

@@ -773,6 +773,8 @@ Alternatively, you can also disable ``verify_host`` and ``verify_peer`` (see
 :ref:`http_client config reference <reference-http-client>`), but this is not
 recommended in production.
 
+.. _http-client-ssrf:
+
 SSRF (Server-side request forgery) Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
