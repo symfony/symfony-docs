@@ -121,6 +121,9 @@ Variable                Description
 ``errors``              Validation errors for this field. Note: ``form.errors`` only contains
                         global errors, not all field errors. Use ``valid`` to check form validity
 ``form``                The ``FormView`` instance itself
+``form_id``             The ``id`` HTML attribute rendered on the ``<form>`` element when a
+                        field uses the :ref:`form_attr <reference-form-option-form-attr>` option
+                        (``null`` otherwise). Only applies to the root form element
 ``full_name``           The ``name`` HTML attribute value (e.g., ``user[email]``)
 ``help``                Help text displayed with the field
 ``id``                  The ``id`` HTML attribute value (e.g., ``user_email``)
@@ -306,6 +309,34 @@ or remove it like any other attribute:
     Rendering the ``name`` attribute through ``attr`` was introduced in
     Symfony 8.2. Previously, the attribute was always rendered with the form
     name and could not be overridden or removed.
+
+An ``id`` attribute is rendered too, but only when a field uses the
+:ref:`form_attr <reference-form-option-form-attr>` option, so that the
+``form`` attribute of that field points to this ``<form>`` element. Its value
+comes from the ``form_id`` variable, which Symfony computes while building the
+form view. To choose that id, define the ``attr`` option of the root form::
+
+    $form = $this->createForm(RegistrationFormType::class, $registration, [
+        'attr' => ['id' => 'registration-form'],
+    ]);
+
+.. warning::
+
+    Overriding this ``id`` at render time (with
+    ``form_start(form, {attr: {id: 'other-id'}})``) or removing it (with
+    ``attr: {id: false}``) leaves the fields using ``form_attr`` pointing to
+    an element that doesn't exist, so the browser stops submitting them with
+    the form.
+
+.. versionadded:: 8.2
+
+    Rendering the ``id`` attribute on the ``<form>`` element and the
+    ``form_id`` variable were introduced in Symfony 8.2.
+
+.. note::
+
+    Form themes that override the ``form_start`` block without rendering
+    ``form_id`` keep the previous behavior and render no ``id`` attribute.
 
 .. _reference-forms-twig-widget:
 
