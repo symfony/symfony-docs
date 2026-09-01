@@ -386,7 +386,7 @@ Learn more
 
 * :doc:`/http_cache/varnish`
 
-.. _`OPcache`: https://www.php.net/manual/en/book.opcache.php
+.. _`OPcache`: https://php.net/manual/book.opcache
 .. _`Composer's autoloader optimization`: https://getcomposer.org/doc/articles/autoloader-optimization.md
 .. _`cachetool`: https://github.com/gordalina/cachetool
 .. _`open_basedir`: https://www.php.net/manual/ini.core.php#ini.open-basedir
