@@ -128,16 +128,12 @@ unique as it connects the webhook source to your consumer code.
 
 .. warning::
 
-    Always set ``secret`` in production. Parsers for services that sign their
-    requests reject an empty value and throw, so a missing secret fails
-    loudly. The others cannot do that: a service that does not sign, or that
-    makes signing optional, leaves its parser with nothing to check, and the
-    endpoint then accepts requests from any sender without warning. What the
-    value holds depends on the service, either the signing key it gives you
-    or the HTTP Basic credentials you set on the webhook URL in its
-    dashboard. Store it using the
-    :doc:`secrets management system </configuration/secrets>` or a ``.env``
-    file.
+    Always set ``secret`` in production. When it's empty, some parsers throw
+    an exception, but others skip verification entirely and accept requests
+    from any sender. Depending on the service, the value is the signing key
+    it gives you or the HTTP Basic credentials you set on the webhook URL.
+    Store it using the :doc:`secrets management system </configuration/secrets>`
+    or a ``.env`` file.
 
 All parsers are automatically injected into the WebhookController.
 

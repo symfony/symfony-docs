@@ -3954,15 +3954,13 @@ secret
 
 **type**: ``string`` **default**: ``''``
 
-The value used to authenticate incoming webhook requests. What it holds
-depends on the third-party service: the signing key it gives you, or the HTTP
-Basic credentials configured on the webhook URL.
+The value used to authenticate incoming webhook requests. Depending on the
+third-party service, this is the signing key it gives you or the HTTP Basic
+credentials you set on the webhook URL.
 
-Always set it in production. Parsers for services that sign their requests
-reject an empty value and throw. The others cannot do that: a service that
-does not sign, or that makes signing optional, leaves its parser with nothing
-to check, and the endpoint then accepts requests from any sender without
-warning.
+Always set this option in production. When it's empty, some parsers throw an
+exception, but others skip verification entirely and accept requests from any
+sender.
 
 workflows
 ~~~~~~~~~
