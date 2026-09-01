@@ -84,7 +84,7 @@ controller uses a routing mechanism to map incoming requests to the appropriate 
                 routing:
                     acme_webhook:  # routing name, maps to /webhook/acme_webhook
                         service: App\Webhook\AcmeWebhookRequestParser
-                        secret: '%env(WEBHOOK_SECRET)%'  # optional
+                        secret: '%env(WEBHOOK_SECRET)%'
 
     .. code-block:: xml
 
@@ -121,6 +121,15 @@ controller uses a routing mechanism to map incoming requests to the appropriate 
 The routing name becomes part of the webhook URL (e.g.,
 ``https://example.com/webhook/acme_webhook``). Each routing name must be
 unique as it connects the webhook source to your consumer code.
+
+.. warning::
+
+    Always set ``secret`` in production. When it's empty, some parsers throw
+    an exception, but others skip verification entirely and accept requests
+    from any sender. Depending on the service, the value is the signing key
+    it gives you or the HTTP Basic credentials you set on the webhook URL.
+    Store it using the :doc:`secrets management system </configuration/secrets>`
+    or a ``.env`` file.
 
 All parsers are automatically injected into the WebhookController.
 
