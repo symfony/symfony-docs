@@ -2875,6 +2875,105 @@ the consumers before the producers. Also, a name you list as an alias cannot be
 the serialized type of another message class, since Symfony would not know
 which class to decode it into.
 
+.. _messenger-claim-check:
+
+Storing Large Messages Outside the Transport
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Claim check support was introduced in Symfony 8.2.
+
+Message brokers limit the size of the messages they accept (256 KB in Amazon
+SQS, for example). Rather than making your messages smaller, store the big ones
+somewhere else and send only a reference to them. This is known as the *claim
+check* pattern.
+
+Enable it on a transport with the ``claim_check`` option, which needs a cache
+pool to store the messages in and the maximum size, in bytes, of the messages
+sent to the transport:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            cache:
+                pools:
+                    # a dedicated pool, shared by the producers and the consumers
+                    messenger.claim_check.cache:
+                        adapter: cache.adapter.redis
+                        # claims are only removed when they expire, so keep them
+                        # longer than the messages can live in the transport
+                        default_lifetime: 604800 # 7 days
+
+            messenger:
+                transports:
+                    async:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        claim_check:
+                            cache_pool: messenger.claim_check.cache
+                            max_size: 262144 # 256 KB
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'pools' => [
+                        // a dedicated pool, shared by producers and consumers
+                        'messenger.claim_check.cache' => [
+                            'adapter' => 'cache.adapter.redis',
+                            // claims are only removed when they expire, so
+                            // keep them longer than messages live in the transport
+                            'default_lifetime' => 604800, // 7 days
+                        ],
+                    ],
+                ],
+                'messenger' => [
+                    'transports' => [
+                        'async' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            'claim_check' => [
+                                'cache_pool' => 'messenger.claim_check.cache',
+                                'max_size' => 262144, // 256 KB
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+A pool declared under ``framework.cache.pools`` must define a
+``default_lifetime``, otherwise the configuration is rejected.
+
+Messages whose encoded size (the body plus the headers) stays below
+``max_size`` are sent to the transport as usual. Bigger ones are stored in the
+cache pool, and the transport only receives a small reference holding a random
+identifier and a checksum of the stored message. When the worker consumes that
+reference, the message is loaded back from the pool, its checksum is verified
+and it's handled as if it had traveled through the transport.
+
+The pool is part of the delivery of the messages, so treat it as such:
+
+* use a pool that every producer and every consumer can reach, and don't share
+  it with the rest of the application, as clearing it discards the pending
+  messages;
+* give it a lifetime longer than the longest life of a message, delays and
+  retries included. A claim is only removed when it expires, and consuming a
+  message whose claim is gone fails with a
+  :class:`Symfony\\Component\\Messenger\\Exception\\ClaimCheckNotFoundException`
+  wrapped in a ``MessageDecodingFailedException``.
+
+.. note::
+
+    Claims are stored with the serializer of the transport, so a message that
+    goes through the cache pool is encoded exactly like the other ones.
+
 Closing Connections
 ~~~~~~~~~~~~~~~~~~~
 
