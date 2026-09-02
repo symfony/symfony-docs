@@ -2745,6 +2745,52 @@ The transport has a number of options:
 The SQS transport supports the ``--keepalive`` option by using the ``ChangeMessageVisibility``
 action to periodically update the ``VisibilityTimeout`` of the message.
 
+Reading the SQS System Attributes of a Message
+..............................................
+
+When the transport receives a message, it adds an
+:class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsReceivedStamp`
+to its envelope. Besides the receipt handle of the message, this stamp gives
+access to the `system attributes`_ that SQS returns with it, such as
+``ApproximateReceiveCount``, ``SentTimestamp`` or ``MessageGroupId``::
+
+    // src/EventListener/SqsDeliveryListener.php
+    namespace App\EventListener;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\AmazonSqsReceivedStamp;
+    use Symfony\Component\Messenger\Event\WorkerMessageReceivedEvent;
+
+    #[AsEventListener]
+    class SqsDeliveryListener
+    {
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
+        }
+
+        public function __invoke(WorkerMessageReceivedEvent $event): void
+        {
+            $stamp = $event->getEnvelope()->last(AmazonSqsReceivedStamp::class);
+            if (!$stamp instanceof AmazonSqsReceivedStamp) {
+                return;
+            }
+
+            $attributes = $stamp->getSystemAttributes();
+
+            // SQS returns every attribute as a string
+            if (3 < (int) ($attributes['ApproximateReceiveCount'] ?? 0)) {
+                $this->logger->warning('SQS redelivered this message.');
+            }
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``AmazonSqsReceivedStamp::getSystemAttributes()`` method was introduced
+    in Symfony 8.2.
+
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -4575,4 +4621,5 @@ Learn more
 .. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html
 .. _`SSL context options`: https://php.net/context.ssl
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
+.. _`system attributes`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html#API_ReceiveMessage_RequestSyntax
 .. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
