@@ -38,8 +38,9 @@ package, which you must install first:
 1) Configure the Authenticator
 ------------------------------
 
-Enable ``oidc_login`` under the firewall. Three options are required: the
-issuer URL of your provider, and the credentials it issued to your application:
+Enable ``oidc_login`` under the firewall. A confidential client needs three
+options: the issuer URL of your provider, and the credentials it issued to your
+application:
 
 .. configuration-block::
 
@@ -98,7 +99,8 @@ by hand. The discovery document is cached for an hour by default.
 parameter of the authorization request, and it is also the value the ID token
 ``aud`` claim is checked against. ``client_secret`` authenticates your
 application at the token endpoint when the authorization code is exchanged for
-tokens.
+tokens; it is required unless the application is declared as a public client,
+as described below.
 
 ``check_path`` is the path the provider redirects to. It must match one of the
 redirect URIs registered with the provider. Register the full URL there
@@ -215,6 +217,135 @@ Ask the provider for the claims you need with the ``scope`` option: ``openid``
 is always requested, as OIDC requires it, and adding ``profile`` or ``email``
 makes the provider return the matching claims from its UserInfo endpoint.
 
+Authenticating at the Token Endpoint
+------------------------------------
+
+When the authorization code is exchanged for tokens, the application
+authenticates at the token endpoint with the method set in
+``token_endpoint_auth_method``:
+
+``client_secret_post`` (default)
+    The client identifier and secret are sent in the request body.
+
+``client_secret_basic``
+    The client identifier and secret are sent as HTTP Basic credentials, each
+    form-urlencoded as `RFC 6749`_ requires.
+
+``none``
+    The application is a public client: it holds no secret at all, and PKCE
+    alone binds the authorization code to it.
+
+Use the method registered for your application at the provider; providers
+announce the ones they accept in the ``token_endpoint_auth_methods_supported``
+entry of their discovery document.
+
+A public client is an application that cannot keep a secret confidential, such
+as a single-page, a mobile or a native application. Declare it by setting
+``token_endpoint_auth_method`` to ``none`` and by leaving ``client_secret`` out
+entirely, as setting both is rejected:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        provider_uri: '%env(OIDC_PROVIDER_URI)%'
+                        client_id: '%env(OIDC_CLIENT_ID)%'
+                        token_endpoint_auth_method: 'none'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            'provider_uri' => '%env(OIDC_PROVIDER_URI)%',
+                            'client_id' => '%env(OIDC_CLIENT_ID)%',
+                            'token_endpoint_auth_method' => 'none',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Verifying the ID Token Signature
+--------------------------------
+
+The signature of the ID token is verified by default. The signing keys are
+fetched from the ``jwks_uri`` the provider announces in its discovery document,
+which must use HTTPS like every other endpoint, and they are cached: for the
+lifetime the provider advertises for that response, or for
+``discovery_cache_ttl`` seconds when it advertises none. An ID token signed with
+a key missing from the cached set makes the authenticator fetch the keys again,
+so a key rotation at the provider needs nothing on your side.
+
+Only ``RS256`` is accepted by default, the single algorithm OIDC providers are
+required to support. When your provider signs with another one, list it in the
+``algorithms`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        id_token_signature:
+                            algorithms: ['ES256']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'id_token_signature' => [
+                                'algorithms' => ['ES256'],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The accepted algorithms are ``RS256``, ``RS384``, ``RS512``, ``ES256``,
+``ES384``, ``ES512``, ``PS256``, ``PS384`` and ``PS512``. Your provider lists
+the ones it uses in the ``id_token_signing_alg_values_supported`` entry of its
+discovery document. No HMAC algorithm is accepted, so that a public key
+published by the provider can never be turned into a shared secret.
+
+Only the keys the provider explicitly designates for signature are used. Set
+``id_token_signature.enforce_key_usage_verification`` to ``false`` to also
+accept the keys it publishes without any usage designation; keys explicitly
+restricted to encryption are rejected either way. This is the same option as
+the one of the :doc:`OIDC access token handler </security/access_token>`.
+
+.. warning::
+
+    Setting ``id_token_signature.required`` to ``false`` decodes the ID token
+    without verifying it. `OIDC Core 1.0, Section 3.1.3.7`_ only tolerates that
+    because the token comes straight from the token endpoint over TLS, which
+    makes the ID token exactly as trustworthy as the TLS verification of the
+    HTTP client used for that request: never turn it off with a client
+    configured with ``verify_peer: false`` or ``verify_host: false``, nor behind
+    a TLS-terminating proxy, and never for a public client.
+
 Logging Out
 -----------
 
@@ -225,8 +356,9 @@ opening a protected page again logs them straight back in without a prompt.
 Security Considerations
 -----------------------
 
-The authenticator implements the checks the specifications require, without any
-option to weaken them:
+The authenticator implements the checks the specifications require. Apart from
+the ID token signature verification described above, none of them can be turned
+off:
 
 * ``provider_uri`` must use HTTPS, and so must every endpoint the discovery
   document announces. Loopback hosts (``localhost``, ``127.0.0.1``, ``::1``) and
@@ -239,21 +371,14 @@ option to weaken them:
   ``nonce`` claim, which binds the token to that very request;
 * PKCE is always applied, with the ``S256`` challenge method, so an intercepted
   authorization code cannot be exchanged by anyone else (`RFC 7636`_);
+* the ID token signature is verified against the keys the provider publishes,
+  unless ``id_token_signature.required`` is turned off;
 * the ID token ``iss``, ``aud``, ``azp``, ``exp``, ``iat`` and ``nbf`` claims are
   validated, with ``allowed_time_drift`` as the only tolerance;
 * the claims fetched from the UserInfo endpoint must carry the same ``sub`` as
   the ID token;
 * the identity is always the verified ``sub`` claim, and no claim can grant a
   role through the built-in ``oidc`` user provider.
-
-.. warning::
-
-    The ID token signature is not verified in Symfony 8.2: the token is accepted
-    because it comes straight from the token endpoint over TLS, which
-    `OIDC Core 1.0, Section 3.1.3.7`_ allows. This holds only as long as the HTTP
-    client used for that request verifies the TLS certificate, so never configure
-    it with ``verify_peer: false`` or ``verify_host: false``, and do not put a
-    TLS-terminating proxy in front of the token endpoint.
 
 Configuration Reference
 -----------------------
@@ -265,8 +390,9 @@ Configuration Reference
 ``client_id`` (**required**)
     The client identifier issued by the provider.
 
-``client_secret`` (**required**)
-    The client secret issued by the provider.
+``client_secret`` (**required**, except for a public client)
+    The client secret issued by the provider. It must not be set when
+    ``token_endpoint_auth_method`` is ``none``.
 
 ``scope`` (default: ``['openid']``)
     The scopes of the authorization request, as a list or as a space-separated
@@ -276,8 +402,25 @@ Configuration Reference
     The firewall path the provider redirects to. A route name is accepted too,
     in which case no route is declared for it.
 
+``token_endpoint_auth_method`` (default: ``client_secret_post``)
+    How the application authenticates at the token endpoint, one of
+    ``client_secret_post``, ``client_secret_basic`` or ``none``. The latter
+    declares a public client.
+
+``id_token_signature.required`` (default: ``true``)
+    Whether the ID token signature is verified against the keys published by
+    the provider.
+
+``id_token_signature.algorithms`` (default: ``['RS256']``)
+    The signature algorithms the ID token is accepted to be signed with.
+
+``id_token_signature.enforce_key_usage_verification`` (default: ``true``)
+    Whether only the keys the provider designates for signature are used to
+    verify the ID token.
+
 ``discovery_cache_ttl`` (default: ``3600``)
-    How long, in seconds, the discovery document is cached.
+    How long, in seconds, the discovery document is cached, and the provider
+    keys when it advertises no lifetime for them.
 
 ``allowed_time_drift`` (default: ``0``)
     The clock skew, in seconds, tolerated when validating the ID token time
@@ -286,5 +429,6 @@ Configuration Reference
 .. _`OpenID Connect`: https://openid.net/developers/how-connect-works/
 .. _`Authorization Code Flow`: https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth
 .. _`web-token/jwt-library`: https://github.com/web-token/jwt-library
+.. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
