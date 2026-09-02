@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-08-27T08:18:36Z
+
+I agree on this in theory ... but I don't like the proposed solution.
+
+If we add `.. code-block:: php` to solve some standalone `::`, some folks might think it's OK to add `.. code-block:: php` in other cases too. I think we should tweak, reorganize, reword, etc. to not need a standalone `::`. If possible, let's add some text; otherwise, let's reorganize or merge contents to remove the standalone `::`.
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-08-27T09:23:09Z
+
+Makes total sense, thanks for the review! I dropped the `.. code-block:: php` additions: the six sections in `components/string.rst` now get a short introducing sentence ending with `::`, and the last case turned out to be two consecutive literal blocks inside the same section, so I merged them into one. No standalone `::` and no explicit directive left, and DOCtor-RST is still green on the whole tree.
