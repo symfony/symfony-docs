@@ -413,6 +413,20 @@ User Input Methods
 
         The ``askFile()`` method was introduced in Symfony 8.1.
 
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::askFiles`
+    It asks the user to provide one or more files and returns an array of
+    ``InputFile`` instances::
+
+        $files = $io->askFiles('Provide images:');
+
+    A single answer can carry several files at once (e.g. by dragging and
+    dropping them together or by pasting whitespace separated paths) and the
+    question keeps asking for more until the user submits an empty answer.
+
+    .. versionadded:: 8.2
+
+        The ``askFiles()`` method was introduced in Symfony 8.2.
+
 .. _symfony-style-blocks:
 
 Result Methods

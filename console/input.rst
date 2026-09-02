@@ -1082,6 +1082,85 @@ mode, file paths are accepted as regular arguments.
     size), see the ``FileQuestion`` class in the
     :doc:`QuestionHelper documentation </components/console/helpers/questionhelper>`.
 
+Asking for Multiple Files
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for multiple files was introduced in Symfony 8.2.
+
+A command can also accept several files at once. Type-hint the parameter as
+variadic to collect them all::
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Ask;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\File\InputFile;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    // ...
+
+    #[AsCommand(name: 'app:analyze')]
+    class AnalyzeCommand
+    {
+        public function __invoke(
+            SymfonyStyle $io,
+            #[Argument(description: 'The images to analyze')]
+            #[Ask('Provide images (paste or enter paths):')]
+            InputFile ...$images,
+        ): int {
+            foreach ($images as $image) {
+                $io->writeln($image->getFilename().': '.$image->getHumanReadableSize());
+            }
+
+            return Command::SUCCESS;
+        }
+    }
+
+Interactively, a single drag & drop can carry several files at once, and the
+question keeps asking for more until you submit an empty answer (by hitting
+``Enter``). In non-interactive mode, the files are read from the whitespace
+separated paths passed as regular arguments.
+
+If a variadic parameter doesn't fit (for example because you need other
+parameters after it), use an ``array`` parameter narrowed to ``InputFile`` with
+a PHPDoc. The console reads the item type from the ``@param`` tag to know that a
+list of files is expected::
+
+    /**
+     * @param InputFile[] $images
+     */
+    public function __invoke(
+        SymfonyStyle $io,
+        #[Argument(description: 'The images to analyze')]
+        #[Ask('Provide images (paste or enter paths):')]
+        array $images,
+    ): int {
+        // ...
+    }
+
+The PHPDoc form is also the one to use on the properties of a
+:ref:`#[MapInput] <console-input-map-input>` object, where a variadic can't be
+used::
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\Ask;
+    use Symfony\Component\Console\Input\File\InputFile;
+
+    final class UploadInput
+    {
+        /**
+         * @var InputFile[]
+         */
+        #[Argument(description: 'The images to analyze')]
+        #[Ask('Provide images (paste or enter paths):')]
+        public array $images;
+    }
+
+The behavior is the same in all cases, and matches
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::askFiles`.
+
 Options with optional arguments
 -------------------------------
 
