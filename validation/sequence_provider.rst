@@ -240,8 +240,8 @@ declaring the flag on the class, whatever the sequence it returns::
     // src/Entity/Order.php
     namespace App\Entity;
 
-    use Symfony\Component\Validator\Constraints as Assert;
     use Symfony\Component\Validator\Constraints\GroupSequence;
+    use Symfony\Component\Validator\Constraints as Assert;
     use Symfony\Component\Validator\GroupSequenceProviderInterface;
 
     #[Assert\GroupSequenceProvider(cascadeCurrentGroup: true)]
