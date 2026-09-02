@@ -369,7 +369,7 @@ Service
 `Slack`_                                 **Install**: ``composer require symfony/slack-notifier`` \
                                          **DSN**: ``slack://TOKEN@default?channel=CHANNEL``
 `Telegram`_                              **Install**: ``composer require symfony/telegram-notifier`` \
-                                         **DSN**: ``telegram://TOKEN@default?channel=CHAT_ID&sslmode=SSLMODE``
+                                         **DSN**: ``telegram://TOKEN@default?channel=CHAT_ID``
 `Threads`_                               **Install**: ``composer require symfony/threads-notifier`` \
                                          **DSN**: ``threads://ACCESS_TOKEN@default?user_id=USER_ID&api_version=API_VERSION``
 `Twitter`_                               **Install**: ``composer require symfony/twitter-notifier`` \
@@ -381,11 +381,6 @@ Service
 `Zulip`_                                 **Install**: ``composer require symfony/zulip-notifier`` \
                                          **DSN**: ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   =====================================================================================
-
-.. versionadded:: 8.1
-
-    The ``sslmode`` DSN option for the Telegram bridge was introduced in
-    Symfony 8.1.
 
 .. versionadded:: 8.2
 
@@ -746,6 +741,33 @@ transport:
                 ],
             ]
         ]);
+
+.. _notifier-ssl-dsn-option:
+
+Sending Requests over Plain HTTP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Transports send their requests over HTTPS. When the DSN points to a server that
+only accepts plain HTTP (e.g. a self-hosted Telegram Bot API server), set the
+``ssl`` DSN option to ``false``:
+
+.. code-block:: env
+
+    # .env
+    TELEGRAM_DSN=telegram://TOKEN@localhost:8081?channel=CHAT_ID&ssl=false
+
+All transports that send HTTP requests support this option. Only use it with
+servers you control, because the DSN credentials and the notification contents
+are sent unencrypted. The KazInfoTeh transport is the only one that uses plain
+HTTP by default, because its API isn't served over HTTPS.
+
+The Ntfy, Telegram and Amazon SNS transports still accept their legacy options
+(``secureHttp=false`` and ``sslmode=disable``), but ``ssl`` takes precedence
+when both are set.
+
+.. versionadded:: 8.2
+
+    The ``ssl`` DSN option was introduced in Symfony 8.2.
 
 Creating & Sending Notifications
 --------------------------------
