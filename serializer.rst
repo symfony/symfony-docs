@@ -1364,6 +1364,7 @@ normalizers (in order of priority):
 
         .. code-block:: php-standalone
 
+            use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
             use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
             use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
             use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
@@ -1374,10 +1375,21 @@ normalizers (in order of priority):
             use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
             use Symfony\Component\Serializer\Serializer;
 
-            $propertyInfo = new PropertyInfoExtractor([], [new PhpDocExtractor(), new ReflectionExtractor()]);
+            $phpDocExtractor = new PhpDocExtractor();
+            $reflectionExtractor = new ReflectionExtractor();
+            $propertyInfo = new PropertyInfoExtractor([], [
+                new ConstructorExtractor([$phpDocExtractor, $reflectionExtractor]),
+                $phpDocExtractor,
+                $reflectionExtractor,
+            ]);
             $normalizers = [new ObjectNormalizer(new ClassMetadataFactory(new AttributeLoader()), null, null, $propertyInfo), new ArrayDenormalizer()];
 
             $this->serializer = new Serializer($normalizers, [new JsonEncoder()]);
+
+    The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
+    comes first, so a constructor argument takes its type from the constructor
+    docblock. Without it, the property docblock wins for that argument too, even
+    when the ``@param`` and the ``@var`` of a class declare different types.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
     This is the most powerful default normalizer and used for any object
