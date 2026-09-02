@@ -25,7 +25,8 @@ The ``ConsoleEvents::COMMAND`` Event
 
 **Typical Purposes**: Doing something before any command is run (like logging
 which command is going to be executed), or displaying something about the event
-to be executed.
+to be executed. Note any changes to the input are discarded before the command
+is executed.
 
 Just before executing any command, the ``ConsoleEvents::COMMAND`` event is
 dispatched. Listeners receive a
