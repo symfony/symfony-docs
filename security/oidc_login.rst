@@ -49,12 +49,12 @@ application:
         # config/packages/security.yaml
         security:
             providers:
-                oidc:
+                oidc_provider_name:
                     oidc: ~
 
             firewalls:
                 main:
-                    provider: oidc
+                    provider: oidc_provider_name
                     oidc_login:
                         provider_uri: '%env(OIDC_PROVIDER_URI)%'
                         client_id: '%env(OIDC_CLIENT_ID)%'
@@ -70,14 +70,14 @@ application:
         return App::config([
             'security' => [
                 'providers' => [
-                    'oidc' => [
+                    'oidc_provider_name' => [
                         'oidc' => null,
                     ],
                 ],
 
                 'firewalls' => [
                     'main' => [
-                        'provider' => 'oidc',
+                        'provider' => 'oidc_provider_name',
                         'oidc_login' => [
                             'provider_uri' => '%env(OIDC_PROVIDER_URI)%',
                             'client_id' => '%env(OIDC_CLIENT_ID)%',
@@ -106,13 +106,14 @@ as described below.
 redirect URIs registered with the provider. Register the full URL there
 (e.g. ``https://example.com/oidc/callback``), not just the path.
 
-2) Import the Callback Route
-----------------------------
+2) Import the OIDC Routes
+-------------------------
 
 The callback path needs a route, otherwise the router answers the provider's
 redirect with a 404 before the firewall ever sees it. Symfony declares that
 route for you through a route loader, which your application imports, exactly
-as it does for the logout routes:
+as it does for the logout routes. The same loader declares the route that
+starts the flow, described in the next section:
 
 .. configuration-block::
 
@@ -137,12 +138,14 @@ as it does for the logout routes:
 
 .. tip::
 
-    If you need to reference the callback path, you can use the
-    ``_oidc_login_callback_<firewallname>`` route name (e.g.
-    ``_oidc_login_callback_main``).
+    To reference either path, use the route names the loader declares for the
+    firewall: ``_oidc_login_callback_<firewallname>`` and
+    ``_oidc_login_start_<firewallname>`` (e.g. ``_oidc_login_callback_main``).
 
-If ``check_path`` holds a route name instead of a path, no route is declared for
-it and you must define that route yourself.
+If ``check_path`` or ``start_path`` holds a route name instead of a path, no
+route is declared for it and you must define that route yourself. Two firewalls
+may share a callback path, but not a start path: the route declared for it
+carries the name of the firewall whose flow it starts.
 
 3) Start the Flow
 -----------------
@@ -151,10 +154,17 @@ The authenticator is also the firewall entry point: an anonymous request to a
 protected page is redirected to the provider's authorization endpoint. Nothing
 else is needed to log a user in.
 
-To offer an explicit "Log in with ..." button, point it at any protected path:
-reaching that path triggers the entry point, which starts the flow. Do not point
-it at ``check_path``, which only handles the provider's redirect back and
-rejects a request carrying no authorization code.
+To offer an explicit "Log in with ..." button, on a login page listing several
+ways to log in for instance, point it at the ``_oidc_login_start_<firewallname>``
+route imported in the previous section, which redirects to the provider. Its
+path is ``/oidc/start`` by default, and the ``start_path`` option sets it:
+
+.. code-block:: html+twig
+
+    <a href="{{ path('_oidc_login_start_main') }}">Log in with Example</a>
+
+Never point such a button at ``check_path``, which only handles the provider's
+redirect back and rejects a request carrying no authorization code.
 
 4) Load the User
 ----------------
@@ -216,6 +226,142 @@ receives the claims as its second argument::
 Ask the provider for the claims you need with the ``scope`` option: ``openid``
 is always requested, as OIDC requires it, and adding ``profile`` or ``email``
 makes the provider return the matching claims from its UserInfo endpoint.
+
+Customizing the Authorization Request
+-------------------------------------
+
+The authenticator owns the parameters the flow relies on: ``response_type``,
+``client_id``, ``redirect_uri``, ``scope``, ``state``, ``nonce``, ``max_age``
+and the PKCE ones. Setting any of them by hand is rejected. Every other
+parameter your provider accepts goes into ``authorization_params``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        authorization_params:
+                            prompt: 'consent'
+                            ui_locales: 'fr-FR'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'authorization_params' => [
+                                'prompt' => 'consent',
+                                'ui_locales' => 'fr-FR',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+``prompt``, ``display``, ``ui_locales``, ``acr_values`` and ``login_hint`` are
+the parameters `OIDC Core 1.0, Section 3.1.2.1`_ defines for that request, and
+providers accept their own on top of them.
+
+Requiring a Recent Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``max_age`` is how old, in seconds, the authentication of the user at the
+provider may be for it to be accepted without prompting them again. It has an
+option of its own because the authenticator does more than send the parameter:
+the ID token must then carry an ``auth_time`` claim, which is checked against
+that value, with ``allowed_time_drift`` as the only tolerance.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        max_age: 300
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'max_age' => 300,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Using PKCE
+~~~~~~~~~~
+
+PKCE (`RFC 7636`_) is applied to every authorization request, with the ``S256``
+challenge method: the authenticator sends the hash of a random verifier it keeps
+in the session, and reveals the verifier itself only when it exchanges the
+authorization code, so an intercepted code cannot be exchanged by anyone else.
+
+Any current provider supports it. Only for one that rejects the
+``code_challenge`` parameter, or that supports the ``plain`` method alone, use
+the ``pkce`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        pkce:
+                            enabled: true
+                            method: 'plain'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'pkce' => [
+                                'enabled' => true,
+                                'method' => 'plain',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+A public client cannot disable PKCE, as nothing else would then tie the
+authorization code to it.
 
 Authenticating at the Token Endpoint
 ------------------------------------
@@ -344,7 +490,7 @@ the one of the :doc:`OIDC access token handler </security/access_token>`.
     makes the ID token exactly as trustworthy as the TLS verification of the
     HTTP client used for that request: never turn it off with a client
     configured with ``verify_peer: false`` or ``verify_host: false``, nor behind
-    a TLS-terminating proxy, and never for a public client.
+    a TLS-terminating proxy. A public client cannot turn it off at all.
 
 Logging Out
 -----------
@@ -356,9 +502,9 @@ opening a protected page again logs them straight back in without a prompt.
 Security Considerations
 -----------------------
 
-The authenticator implements the checks the specifications require. Apart from
-the ID token signature verification described above, none of them can be turned
-off:
+The authenticator implements the checks the specifications require. Only PKCE
+and the ID token signature verification can be turned off, and a public client
+can turn off neither:
 
 * ``provider_uri`` must use HTTPS, and so must every endpoint the discovery
   document announces. Loopback hosts (``localhost``, ``127.0.0.1``, ``::1``) and
@@ -369,10 +515,13 @@ off:
   against the value stored in the session, which is what stops login CSRF;
 * every authorization request carries a ``nonce``, checked against the ID token
   ``nonce`` claim, which binds the token to that very request;
-* PKCE is always applied, with the ``S256`` challenge method, so an intercepted
-  authorization code cannot be exchanged by anyone else (`RFC 7636`_);
+* PKCE is applied with the ``S256`` challenge method, unless the ``pkce``
+  option says otherwise, so an intercepted authorization code cannot be
+  exchanged by anyone else (`RFC 7636`_);
 * the ID token signature is verified against the keys the provider publishes,
   unless ``id_token_signature.required`` is turned off;
+* the parameters the flow relies on cannot be overridden through
+  ``authorization_params``;
 * the ID token ``iss``, ``aud``, ``azp``, ``exp``, ``iat`` and ``nbf`` claims are
   validated, with ``allowed_time_drift`` as the only tolerance;
 * the claims fetched from the UserInfo endpoint must carry the same ``sub`` as
@@ -402,6 +551,10 @@ Configuration Reference
     The firewall path the provider redirects to. A route name is accepted too,
     in which case no route is declared for it.
 
+``start_path`` (default: ``/oidc/start``)
+    The path of the route that starts the flow by redirecting to the provider.
+    A route name is accepted too, in which case no route is declared for it.
+
 ``token_endpoint_auth_method`` (default: ``client_secret_post``)
     How the application authenticates at the token endpoint, one of
     ``client_secret_post``, ``client_secret_basic`` or ``none``. The latter
@@ -418,6 +571,21 @@ Configuration Reference
     Whether only the keys the provider designates for signature are used to
     verify the ID token.
 
+``pkce.enabled`` (default: ``true``)
+    Whether the authorization code is protected with PKCE.
+
+``pkce.method`` (default: ``S256``)
+    The PKCE code challenge method, either ``S256`` or ``plain``.
+
+``max_age`` (default: none)
+    How old, in seconds, the authentication of the user at the provider may be.
+    Sent as the ``max_age`` authorization parameter, and checked against the
+    ``auth_time`` claim of the ID token.
+
+``authorization_params`` (default: ``[]``)
+    Additional parameters of the authorization request, such as ``prompt`` or
+    ``login_hint``.
+
 ``discovery_cache_ttl`` (default: ``3600``)
     How long, in seconds, the discovery document is cached, and the provider
     keys when it advertises no lifetime for them.
@@ -429,6 +597,7 @@ Configuration Reference
 .. _`OpenID Connect`: https://openid.net/developers/how-connect-works/
 .. _`Authorization Code Flow`: https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth
 .. _`web-token/jwt-library`: https://github.com/web-token/jwt-library
+.. _`OIDC Core 1.0, Section 3.1.2.1`: https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
