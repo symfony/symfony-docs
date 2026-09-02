@@ -562,6 +562,13 @@ on the constructor arguments::
     $type = $constructorExtractor->getType(Foo::class, 'bar');
     // (string) $type returns 'string'
 
+When you combine extractors inside a
+:class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor`, put the
+``ConstructorExtractor`` before the other type extractors. Otherwise the
+property docblock also answers for constructor arguments, which changes the
+result whenever the ``@param`` and the ``@var`` of a class declare different
+types.
+
 .. _`components-property-information-extractors-creation`:
 
 Creating Your Own Extractors
