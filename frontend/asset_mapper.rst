@@ -295,60 +295,54 @@ You can update your third-party packages to their current versions by running:
 
 .. _asset-mapper-minimum-release-age:
 
-Delaying Updates to Freshly Published Versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Delaying Updates to Recent Versions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 8.2
 
     The ``minimum_release_age`` option was introduced in Symfony 8.2.
 
-Supply chain attacks land in freshly published npm versions. Set the
-``minimum_release_age`` option to make ``importmap:update`` ignore the versions
-that are too recent, giving a compromised release the time to be spotted and
-unpublished before your project picks it up:
+Supply chain attacks usually land in freshly published npm versions. To give
+maintainers time to spot and unpublish a compromised release before your
+project picks it up, set the ``minimum_release_age`` option:
 
 .. code-block:: yaml
 
     # config/packages/asset_mapper.yaml
     framework:
         asset_mapper:
-            # in seconds; 0 (the default) disables the check
+            # in seconds; 0 (the default) disables this check
             minimum_release_age: 604800
 
-A version is then only proposed when it's old enough, it's not a prerelease, and
-it's not above the ``latest`` tag declared by the maintainers. The newest version
-passing these checks is the one ``importmap:update`` pins; when none does, the
-installed version is kept.
+The ``importmap:update`` command then ignores the versions younger than that,
+as well as prereleases and versions above the ``latest`` tag of the package. It
+pins the newest remaining version, or keeps the installed one if there's none.
 
-``importmap:outdated`` shows the version kept out of reach in a ``Withheld``
-column (also available as a ``withheld`` key when using ``--format=json``):
+The ``importmap:outdated`` command shows the versions kept out of reach in a
+``Withheld`` column (or a ``withheld`` key when using ``--format=json``):
 
 .. code-block:: terminal
 
     $ php bin/console importmap:outdated
 
-     ----------- --------- -------- ----------
+      ----------- --------- -------- ----------
       Package     Current   Latest   Withheld
-     ----------- --------- -------- ----------
+      ----------- --------- -------- ----------
       bootstrap   5.3.1     5.3.2    5.3.3
-     ----------- --------- -------- ----------
-
-Both the column and the JSON key only appear when the option is enabled. A
-package whose only newer version is withheld is listed with ``Latest`` equal to
-``Current``, and doesn't make the command fail, as there's nothing to act on.
+      ----------- --------- -------- ----------
 
 .. note::
 
-    ``importmap:require`` is not affected by this option. Run
-    ``importmap:require package@latest`` to install a recent version without
-    disabling the check (e.g. to apply an urgent security fix).
+    This option doesn't affect ``importmap:require``, so you can still run
+    ``importmap:require package@latest`` to install a recent version (e.g. to
+    apply an urgent security fix).
 
 .. warning::
 
-    Only the full npm metadata document includes the publication date of each
-    version, so enabling this option makes every update check download it
-    instead of the abbreviated one. The response is much larger for popular
-    packages.
+    When this option is enabled, update checks download the full npm metadata
+    of each package instead of the abbreviated one, because only the full
+    metadata includes the publication date of each version. This response is
+    much larger for popular packages.
 
 Using Local npm Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~

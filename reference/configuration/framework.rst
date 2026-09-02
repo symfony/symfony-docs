@@ -626,12 +626,11 @@ minimum_release_age
 
 **type**: ``integer`` **default**: ``0``
 
-The minimum age, in seconds, a package version must have to be considered when
-checking for updates (``0`` disables this check). It protects you from supply
-chain attacks landing in freshly published versions, as explained in
-:ref:`Delaying Updates to Freshly Published Versions <asset-mapper-minimum-release-age>`.
-Enabling it makes update checks download the full npm metadata document, which is
-larger than the abbreviated one.
+The minimum age, in seconds, that a package version must have to be considered
+by the ``importmap:update`` command (``0`` disables this check). See
+:ref:`Delaying Updates to Recent Versions <asset-mapper-minimum-release-age>`.
+Enabling it makes update checks download the full npm metadata of each package,
+which is much larger than the abbreviated one.
 
 .. versionadded:: 8.2
 
