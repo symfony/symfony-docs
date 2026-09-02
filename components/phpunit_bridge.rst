@@ -998,7 +998,7 @@ You can either:
             </listener>
     </listeners>
 
-::
+Or register the namespaces in the bootstrap file::
 
     // config/bootstrap.php
     use Symfony\Bridge\PhpUnit\ClockMock;
