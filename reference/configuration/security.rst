@@ -252,6 +252,8 @@ depend on the authentication mechanism, which can be any of these:
                         # ...
                     access_token:
                         # ...
+                    oidc_login:
+                        # ...
                     login_link:
                         # ...
                     login_throttling:
@@ -957,6 +959,14 @@ failure_handler
 
 The service id of a service that implements
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
+
+oidc_login
+~~~~~~~~~~
+
+When using the ``oidc_login`` authentication mechanism beneath a firewall, users
+are authenticated by an OpenID Connect provider using the Authorization Code
+Flow. For more details and the full list of options, see
+:doc:`/security/oidc_login`.
 
 login_link
 ~~~~~~~~~~
