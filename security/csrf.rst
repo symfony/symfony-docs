@@ -518,6 +518,55 @@ validation has been proven effective, it remains enforced for that session.
     described above is preferred, allowing the application to gracefully
     fall back to ``Origin`` / ``Referer`` checks when JavaScript is unavailable.
 
+Checking the Token in a Header
+..............................
+
+By default, the "double-submit" check only compares the token submitted in the
+form with the one stored in the cookie. Set the ``check_header`` option to also
+require the token in an HTTP header:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+    # config/packages/csrf.yaml
+    framework:
+        # ...
+        csrf_protection:
+            check_header: true
+            # the name of the cookie and the header (default: 'csrf-token')
+            cookie_name: 'app-csrf-token'
+
+.. code-block:: xml
+
+    <!-- config/packages/csrf.xml -->
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <container xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:framework="http://symfony.com/schema/dic/symfony"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://symfony.com/schema/dic/symfony
+            https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+        <framework:config>
+            <framework:csrf-protection check-header="true" cookie-name="app-csrf-token"/>
+            </framework:config>
+        </container>
+
+.. code-block:: php
+
+    // config/packages/csrf.php
+    use Symfony\Config\FrameworkConfig;
+
+    return static function (FrameworkConfig $framework): void {
+        $framework->csrfProtection()
+            ->checkHeader(true)
+            // the name of the cookie and the header (default: 'csrf-token')
+            ->cookieName('app-csrf-token')
+        ;
+    };
+
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`OWASP best practices`: https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
 .. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
