@@ -494,6 +494,11 @@ Subnet               Description
 ``ff00::/8``         Multicast (RFC 4291)
 ===================  ==========================================================
 
+.. versionadded:: 8.2
+
+    The ``192.0.0.0/24``, ``192.88.99.0/24``, ``224.0.0.0/4``, ``100::/64`` and
+    ``ff00::/8`` ranges were introduced in Symfony 8.2.
+
 Matching a Request Against a Set of Rules
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
