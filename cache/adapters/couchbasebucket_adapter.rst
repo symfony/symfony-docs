@@ -27,10 +27,7 @@ the second and third parameters::
     use Symfony\Component\Cache\Adapter\CouchbaseBucketAdapter;
 
     $cache = new CouchbaseBucketAdapter(
-        // the client object that sets options and adds the server instance(s)
-        $client,
-
-        // the name of bucket
+        // the Couchbase Bucket object (see the createConnection() method below)
         $bucket,
 
         // a string prefixed to the keys of the items stored in this cache
@@ -51,7 +48,7 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
     use Symfony\Component\Cache\Adapter\CouchbaseBucketAdapter;
 
     // pass a single DSN string to register a single server with the client
-    $client = CouchbaseBucketAdapter::createConnection(
+    $bucket = CouchbaseBucketAdapter::createConnection(
         'couchbase://localhost'
         // the DSN can include config options (pass them as a query string):
         // 'couchbase://localhost:11210?operationTimeout=10'
@@ -59,7 +56,7 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
     );
 
     // pass an array of DSN strings to register multiple servers with the client
-    $client = CouchbaseBucketAdapter::createConnection([
+    $bucket = CouchbaseBucketAdapter::createConnection([
         'couchbase://10.0.0.100',
         'couchbase://10.0.0.101',
         'couchbase://10.0.0.102',
@@ -68,7 +65,7 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
 
     // a single DSN can define multiple servers using the following syntax:
     // host[hostname-or-IP:port] (where port is optional). Sockets must include a trailing ':'
-    $client = CouchbaseBucketAdapter::createConnection(
+    $bucket = CouchbaseBucketAdapter::createConnection(
         'couchbase:?host[localhost]&host[localhost:12345]'
     );
 
@@ -82,7 +79,7 @@ option names and their respective values::
 
     use Symfony\Component\Cache\Adapter\CouchbaseBucketAdapter;
 
-    $client = CouchbaseBucketAdapter::createConnection(
+    $bucket = CouchbaseBucketAdapter::createConnection(
         // a DSN string or an array of DSN strings
         [],
 
