@@ -1110,6 +1110,17 @@ It requires a `DynamoDbClient`_ instance or a `Data Source Name (DSN)`_::
     $dynamoDbClientOrDSN = 'dynamodb://default/lock';
     $store = new DynamoDbStore($dynamoDbClientOrDSN);
 
+When the DSN defines a custom host, requests are sent to it over HTTPS. Set the
+``ssl`` option to ``false`` to use plain HTTP instead, for example to store the
+locks in a local DynamoDB instance::
+
+    $store = new DynamoDbStore('dynamodb://localhost:8000/lock?ssl=false');
+
+.. versionadded:: 8.2
+
+    The ``ssl`` option was introduced in Symfony 8.2. In previous versions, use
+    the ``sslmode=disable`` option, which keeps working.
+
 The table where values are stored is created automatically on the first call to
 the :method:`Symfony\\Component\\Lock\\Bridge\\DynamoDb\\Store\\DynamoDbStore::save` method.
 You can also create this table explicitly by calling the

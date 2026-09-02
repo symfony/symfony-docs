@@ -2605,7 +2605,7 @@ The SQS transport DSN may look like this:
 
     # .env
     MESSENGER_TRANSPORT_DSN=https://sqs.eu-west-3.amazonaws.com/123456789012/messages?access_key=AKIAIOSFODNN7EXAMPLE&secret_key=j17M97ffSVoKI0briFoo9a
-    MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?sslmode=disable
+    MESSENGER_TRANSPORT_DSN=sqs://localhost:9494/messages?ssl=false
 
 .. note::
 
@@ -2677,6 +2677,15 @@ The transport has a number of options:
 
 ``session_token``
     AWS session token
+
+``ssl`` (default: ``true``)
+    Whether to use HTTPS to reach a custom endpoint. Set it to ``false`` to use
+    plain HTTP, for example when running a local SQS-compatible service.
+
+    .. versionadded:: 8.2
+
+        The ``ssl`` option was introduced in Symfony 8.2. In previous versions,
+        use the ``sslmode=disable`` option, which keeps working.
 
 ``visibility_timeout`` (default: Queue's configuration)
     Number of seconds the message will not be visible (`Visibility Timeout`_)
