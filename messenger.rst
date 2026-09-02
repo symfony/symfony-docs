@@ -2382,34 +2382,6 @@ under the transport in ``messenger.yaml``:
             ],
         ]);
 
-Adding Messages from External Producers
-.......................................
-
-.. versionadded:: 8.2
-
-    Symfony 8.2 added support for Redis stream entries that define ``body`` and
-    ``headers`` fields directly.
-
-When Messenger sends a message to Redis, it writes a stream entry with a
-``message`` field. That field contains a JSON object with the serialized message
-``body`` and its ``headers``.
-
-External producers can either write that same ``message`` field or write
-``body`` and ``headers`` as separate stream fields:
-
-.. code-block:: terminal
-
-    $ redis-cli XADD messages '*' \
-        body '{"subject":"Hello"}' \
-        headers '{"type":"App\\Message\\Mail"}'
-
-The ``headers`` field is optional, but the default Messenger serializer needs a
-``type`` header to know which message class it should create. If an external
-producer cannot send that header, use a custom serializer for the transport.
-
-When a stream entry contains both formats, the ``message`` field takes
-precedence and Messenger ignores the separate ``body`` and ``headers`` fields.
-
 .. warning::
 
     There should never be more than one ``messenger:consume`` command running with the same
@@ -2433,6 +2405,34 @@ precedence and Messenger ignores the separate ``body`` and ``headers`` fields.
 
 The Redis transport supports the ``--keepalive`` option by using Redis's ``XCLAIM``
 command to periodically reset the message's idle time to zero.
+
+Adding Messages from External Producers
+.......................................
+
+.. versionadded:: 8.2
+
+    Support for stream entries with separate ``body`` and ``headers`` fields
+    was introduced in Symfony 8.2.
+
+When Messenger sends a message to Redis, it writes a stream entry with a
+``message`` field. That field contains a JSON object with the serialized message
+``body`` and its ``headers``.
+
+External producers can either write that same ``message`` field or write
+``body`` and ``headers`` as separate stream fields:
+
+.. code-block:: terminal
+
+    $ redis-cli XADD messages '*' \
+        body '{"subject":"Hello"}' \
+        headers '{"type":"App\\Message\\Mail"}'
+
+The ``headers`` field is optional, but the default Messenger serializer needs a
+``type`` header to know which message class it should create. If an external
+producer cannot send that header, use a custom serializer for the transport.
+
+When a stream entry contains both formats, the ``message`` field takes
+precedence and Messenger ignores the separate ``body`` and ``headers`` fields.
 
 Listing and Finding Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
