@@ -2953,6 +2953,98 @@ the consumers before the producers. Also, a name you list as an alias cannot be
 the serialized type of another message class, since Symfony would not know
 which class to decode it into.
 
+.. _messenger-claim-check:
+
+Storing Large Messages Outside the Transport
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Claim check support was introduced in Symfony 8.2.
+
+Message brokers limit the size of the messages they accept (for example, 1 MiB
+in Amazon SQS and 64 KB by default in Beanstalkd). Instead of shrinking your
+messages, you can store the big ones somewhere else and send only a reference
+to them through the transport. This is known as the *claim check* pattern.
+
+Enable it with the ``claim_check`` option of the transport, which defines the
+cache pool where messages are stored and the maximum size (in bytes) of the
+messages sent to the transport:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            cache:
+                pools:
+                    # a dedicated pool reachable by all producers and consumers
+                    app.claim_check_pool:
+                        adapter: cache.adapter.redis
+                        # required: claims are never deleted after being
+                        # consumed, so they must outlive the messages
+                        default_lifetime: 604800 # 7 days
+
+            messenger:
+                transports:
+                    async:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        claim_check:
+                            cache_pool: app.claim_check_pool
+                            # keep it below the broker limit to leave room
+                            # for the metadata added by the transport
+                            max_size: 900000
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'pools' => [
+                        // a dedicated pool reachable by all producers and consumers
+                        'app.claim_check_pool' => [
+                            'adapter' => 'cache.adapter.redis',
+                            // required: claims are never deleted after being
+                            // consumed, so they must outlive the messages
+                            'default_lifetime' => 604800, // 7 days
+                        ],
+                    ],
+                ],
+                'messenger' => [
+                    'transports' => [
+                        'async' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            'claim_check' => [
+                                'cache_pool' => 'app.claim_check_pool',
+                                // keep it below the broker limit to leave
+                                // room for the metadata added by the transport
+                                'max_size' => 900000,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Messages whose encoded size (body plus headers) is up to ``max_size`` bytes are
+sent to the transport as usual. Bigger messages are stored in the cache pool
+and the transport only receives a reference to them, made of a random
+identifier and a SHA-256 checksum. When a worker receives that reference, it
+loads the message from the pool, verifies its checksum and handles it as usual.
+
+The cache pool is now part of the message delivery, so any claim that is lost
+before its message is consumed (because it expired, the pool was cleared or
+the cache backend evicted it) makes that message fail to decode. These messages
+end up in the :ref:`failure transport <messenger-failure-transport>`, but
+retrying them doesn't help because their contents are gone. That's why the
+pool lifetime must be longer than the time a message can wait in the transport
+(delays included), the pool shouldn't be shared with the rest of the
+application and, when using Redis, its memory policy should be ``noeviction``.
+
 Closing Connections
 ~~~~~~~~~~~~~~~~~~~
 
