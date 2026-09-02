@@ -28,12 +28,13 @@ the interactive flow a web application needs:
 Installation
 ------------
 
-The authenticator validates the ID token with the `web-token/jwt-library`_
-package, which you must install first:
+The authenticator talks to the provider with the HttpClient component, and
+validates the ID token with the `web-token/jwt-library`_ package. Install both
+first:
 
 .. code-block:: terminal
 
-    $ composer require web-token/jwt-library
+    $ composer require symfony/http-client web-token/jwt-library
 
 1) Configure the Authenticator
 ------------------------------
@@ -150,9 +151,12 @@ carries the name of the firewall whose flow it starts.
 3) Start the Flow
 -----------------
 
-The authenticator is also the firewall entry point: an anonymous request to a
-protected page is redirected to the provider's authorization endpoint. Nothing
-else is needed to log a user in.
+When ``oidc_login`` is the only authenticator of the firewall able to start an
+authentication, it also becomes its entry point: an anonymous request to a
+protected page is redirected to the provider's authorization endpoint, and
+nothing else is needed to log a user in. Next to another such authenticator,
+``form_login`` for instance, name the one to use in the ``entry_point`` option
+of the firewall, otherwise the container refuses to compile.
 
 To offer an explicit "Log in with ..." button, on a login page listing several
 ways to log in for instance, point it at the ``_oidc_login_start_<firewallname>``
@@ -166,19 +170,28 @@ path is ``/oidc/start`` by default, and the ``start_path`` option sets it:
 Never point such a button at ``check_path``, which only handles the provider's
 redirect back and rejects a request carrying no authorization code.
 
+.. note::
+
+    The flow keeps its ``state``, its ``nonce`` and its PKCE verifier in the
+    session, so the authenticator needs one: it works neither on a stateless
+    firewall nor with the session disabled.
+
 4) Load the User
 ----------------
 
-Once the ID token is validated, the user is loaded by the firewall's user
-provider, from the verified ``sub`` claim, with every claim passed along as
-badge attributes.
+Once the ID token is validated, the claims of the user are fetched from the
+provider's UserInfo endpoint, and the user is loaded by the firewall's user
+provider from their ``sub`` claim, with every claim passed along as badge
+attributes. Both the source of the claims and the identifier claim can be
+changed, as described below in this section.
 
 The built-in ``oidc`` provider shown above builds a self-contained
 :class:`Symfony\\Component\\Security\\Core\\User\\OidcUser` from those claims. It
 is the quickest way to get started, with two deliberate limits:
 
-* the claims cannot grant roles: every user gets ``ROLE_USER``, and a ``roles``
-  claim sent by the provider is dropped;
+* the claims can neither grant roles nor define the identity: every user gets
+  ``ROLE_USER``, and a ``roles`` or ``user_identifier`` claim sent by the
+  provider is dropped;
 * it cannot load a user by identifier alone, so it does not work with
   :doc:`user impersonation </security/impersonating_user>`.
 
@@ -207,7 +220,7 @@ receives the claims as its second argument::
 
         public function loadUserByIdentifier(string $identifier, array $attributes = []): UserInterface
         {
-            // $identifier is the verified "sub" claim, $attributes holds every claim
+            // $identifier is "sub" by default, $attributes holds every claim
             $user = $this->entityManager->getRepository(User::class)
                 ->findOneBy(['oidcSubject' => $identifier]) ?? new User($identifier);
 
@@ -225,7 +238,106 @@ receives the claims as its second argument::
 
 Ask the provider for the claims you need with the ``scope`` option: ``openid``
 is always requested, as OIDC requires it, and adding ``profile`` or ``email``
-makes the provider return the matching claims from its UserInfo endpoint.
+makes the provider return the matching claims.
+
+The ID token and the access token the provider returned are kept as attributes
+of the security token, to call the provider's own APIs with::
+
+    $accessToken = $security->getToken()->getAttribute('oidc_access_token');
+    $idToken = $security->getToken()->getAttribute('oidc_id_token');
+
+Reading the Claims from the ID Token
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The claims are fetched from the UserInfo endpoint by default. Some providers
+put every requested claim in the ID token itself, and some expose no UserInfo
+endpoint at all. Set ``user_data_source`` to ``id_token`` to read the claims
+from the validated ID token instead, in which case the provider no longer
+needs to announce a ``userinfo_endpoint``.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        user_data_source: id_token
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'user_data_source' => 'id_token',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The ``sub`` claim of the ID token is required and validated either way, and
+when the claims come from the UserInfo endpoint their ``sub`` must match it
+(`OIDC Core 1.0, Section 5.3.2`_).
+
+Identifying Users by Another Claim
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The user identifier is the ``sub`` claim, the only one OIDC guarantees stable
+and unique for a user. When your users are keyed on another claim, ``email``
+for instance, name it in ``user_identifier_claim``. The claim is read from the
+same source as the other claims, and the authentication fails when it is
+missing, empty or not a string.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        user_identifier_claim: email
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'user_identifier_claim' => 'email',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. warning::
+
+    Whoever controls the value of that claim at the provider owns the matching
+    account in your application, so only pick a claim the provider guarantees
+    unique, verified and stable. An email address that users can change
+    themselves, or that the provider does not verify, is not one.
+
+The built-in ``oidc`` user provider then builds the user on that identifier,
+and a custom provider receives it as the first argument of
+``loadUserByIdentifier()``.
 
 Customizing the Authorization Request
 -------------------------------------
@@ -321,7 +433,7 @@ challenge method: the authenticator sends the hash of a random verifier it keeps
 in the session, and reveals the verifier itself only when it exchanges the
 authorization code, so an intercepted code cannot be exchanged by anyone else.
 
-Any current provider supports it. Only for one that rejects the
+Any recent provider should support it. Only for one that rejects the
 ``code_challenge`` parameter, or that supports the ``plain`` method alone, use
 the ``pkce`` option:
 
@@ -371,7 +483,9 @@ authenticates at the token endpoint with the method set in
 ``token_endpoint_auth_method``:
 
 ``client_secret_post`` (default)
-    The client identifier and secret are sent in the request body.
+    The client identifier and secret are sent in the POST request body,
+    which mean your applications is registered in and authorized
+    by the provider to exchange authorization code for tokens.
 
 ``client_secret_basic``
     The client identifier and secret are sent as HTTP Basic credentials, each
@@ -428,7 +542,7 @@ Verifying the ID Token Signature
 The signature of the ID token is verified by default. The signing keys are
 fetched from the ``jwks_uri`` the provider announces in its discovery document,
 which must use HTTPS like every other endpoint, and they are cached: for the
-lifetime the provider advertises for that response, or for
+lifetime the provider advertises for that response, capped at 30 days, or for
 ``discovery_cache_ttl`` seconds when it advertises none. An ID token signed with
 a key missing from the cached set makes the authenticator fetch the keys again,
 so a key rotation at the provider needs nothing on your side.
@@ -495,9 +609,82 @@ the one of the :doc:`OIDC access token handler </security/access_token>`.
 Logging Out
 -----------
 
-Logging out works as usual, see :ref:`security-logging-out`. It ends the session
-in your application only: the user stays logged in at the identity provider, so
-opening a protected page again logs them straight back in without a prompt.
+Logging out works as usual, see :ref:`security-logging-out`. By default, it ends
+the session in your application only: the user stays logged in at the identity
+provider, so opening a protected page again logs them straight back in without
+a prompt.
+
+Logging Out of the Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To log the user out of the provider itself, enable `RP-Initiated Logout`_
+with the ``enable_end_session`` option. The authenticator redirects the user
+to the ``end_session_endpoint`` the provider announces in its discovery
+document, with the ID token sent as ``id_token_hint``. Once its own session is
+closed, the provider sends the user back to ``post_logout_redirect_path``, a
+path or route name of your application.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        enable_end_session: true
+                        post_logout_redirect_path: /
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'enable_end_session' => true,
+                            'post_logout_redirect_path' => '/',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Register the full post-logout URL at the provider, exactly as the
+``check_path`` URL is registered as a redirect URI. Set
+``post_logout_redirect_path`` to ``null`` to send no
+``post_logout_redirect_uri`` at all, in which case the provider decides where
+the user ends up.
+
+When the provider cannot be reached, or announces no usable (HTTPS)
+``end_session_endpoint``, the logout completes in the application alone and
+a warning is logged.
+
+.. warning::
+
+    Logging out is now a chain of redirects: to your application, which closes
+    its session, then to the provider, which closes its own, then back to your
+    application. `Symfony UX Turbo`_ intercepts the click on the logout link
+    and follows those redirects itself, which does not work across that chain:
+    the session is closed in your application, but the redirect to the provider
+    never takes effect, so the user stays logged in there and is logged straight
+    back in on the next protected page.
+
+    Make the logout link a real navigation Turbo leaves alone, with
+    ``data-turbo="false"``:
+
+    .. code-block:: html+twig
+
+        <a href="{{ path('_logout_main') }}" data-turbo="false">Log out</a>
+
+    A logout form (see :ref:`security-logout-form`) needs the same attribute
+    on its ``<form>`` element.
 
 Security Considerations
 -----------------------
@@ -509,7 +696,9 @@ can turn off neither:
 * ``provider_uri`` must use HTTPS, and so must every endpoint the discovery
   document announces. Loopback hosts (``localhost``, ``127.0.0.1``, ``::1``) and
   the names reserved for testing (``*.localhost``, ``*.test``) are accepted for
-  local development;
+  local development, the token endpoint excepted: it carries the authorization
+  code, the PKCE verifier and the tokens it is exchanged for, so HTTPS is
+  required there even locally;
 * the discovered ``issuer`` must match the configured ``provider_uri``;
 * every authorization request carries a ``state``, checked on the callback
   against the value stored in the session, which is what stops login CSRF;
@@ -522,12 +711,14 @@ can turn off neither:
   unless ``id_token_signature.required`` is turned off;
 * the parameters the flow relies on cannot be overridden through
   ``authorization_params``;
-* the ID token ``iss``, ``aud``, ``azp``, ``exp``, ``iat`` and ``nbf`` claims are
-  validated, with ``allowed_time_drift`` as the only tolerance;
-* the claims fetched from the UserInfo endpoint must carry the same ``sub`` as
-  the ID token;
-* the identity is always the verified ``sub`` claim, and no claim can grant a
-  role through the built-in ``oidc`` user provider.
+* the ID token ``iss``, ``aud``, ``exp`` and ``iat`` claims are required and
+  validated, and its ``azp`` and ``nbf`` claims whenever the provider sends
+  them, with ``allowed_time_drift`` as the only tolerance;
+* the ``sub`` claim of the ID token is required, and the claims fetched
+  from the UserInfo endpoint, when they are the source, must carry the same one;
+* the identity is the ``sub`` claim, unless ``user_identifier_claim`` names
+  another one, which must then be present and non-empty, and no claim can
+  grant a role through the built-in ``oidc`` user provider.
 
 Configuration Reference
 -----------------------
@@ -547,6 +738,14 @@ Configuration Reference
     The scopes of the authorization request, as a list or as a space-separated
     string.
 
+``user_data_source`` (default: ``userinfo``)
+    Where the claims of the user are read from: ``userinfo`` fetches them from
+    the UserInfo endpoint, ``id_token`` reads them from the validated ID token.
+
+``user_identifier_claim`` (default: ``sub``)
+    The claim the user identifier is read from. ``sub`` is the only claim OIDC
+    guarantees stable and unique for a user.
+
 ``check_path`` (default: ``/oidc/callback``)
     The firewall path the provider redirects to. A route name is accepted too,
     in which case no route is declared for it.
@@ -554,6 +753,15 @@ Configuration Reference
 ``start_path`` (default: ``/oidc/start``)
     The path of the route that starts the flow by redirecting to the provider.
     A route name is accepted too, in which case no route is declared for it.
+
+``enable_end_session`` (default: ``false``)
+    Whether logging out also redirects the user to the provider's
+    ``end_session_endpoint`` (RP-Initiated Logout).
+
+``post_logout_redirect_path`` (default: ``/``)
+    The path or route name of your application the provider redirects to after
+    RP-Initiated Logout, sent as ``post_logout_redirect_uri``; ``null`` sends
+    none. Ignored unless ``enable_end_session`` is ``true``.
 
 ``token_endpoint_auth_method`` (default: ``client_secret_post``)
     How the application authenticates at the token endpoint, one of
@@ -594,6 +802,13 @@ Configuration Reference
     The clock skew, in seconds, tolerated when validating the ID token time
     claims.
 
+On top of these, the authenticator accepts the options every firewall
+authenticator shares: ``success_handler``, ``failure_handler``,
+``default_target_path``, ``always_use_default_target_path``,
+``target_path_parameter``, ``use_referer``, ``failure_path``,
+``failure_forward`` and ``failure_path_parameter``, all described in
+:doc:`/security/form_login`.
+
 .. _`OpenID Connect`: https://openid.net/developers/how-connect-works/
 .. _`Authorization Code Flow`: https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth
 .. _`web-token/jwt-library`: https://github.com/web-token/jwt-library
@@ -601,3 +816,6 @@ Configuration Reference
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
+.. _`OIDC Core 1.0, Section 5.3.2`: https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
+.. _`RP-Initiated Logout`: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+.. _`Symfony UX Turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
