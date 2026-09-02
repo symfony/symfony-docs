@@ -164,7 +164,8 @@ There is also a method to get the bytes stored at some position::
 Methods Related to Length and Whitespace Characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+These methods measure the contents of the string and deal with its whitespace
+characters::
 
     // returns the number of graphemes, code points or bytes of the given string
     $word = 'नमस्ते';
@@ -198,7 +199,8 @@ Methods Related to Length and Whitespace Characters
 Methods to Change Case
 ~~~~~~~~~~~~~~~~~~~~~~
 
-::
+These methods return a copy of the string with its contents converted to
+another case::
 
     // changes all graphemes/code points to lower case
     u('FOO Bar Brİan')->lower();  // 'foo bar bri̇an'
@@ -259,7 +261,8 @@ case-insensitive operations with the ``ignoreCase()`` method::
 Methods to Append and Prepend
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+These methods add contents at the beginning or the end of the string and
+extract the contents found before or after a given string::
 
     // adds the given content (one or more strings) at the beginning/end of the string
     u('world')->prepend('hello');      // 'helloworld'
@@ -297,7 +300,8 @@ Methods to Append and Prepend
 Methods to Pad and Trim
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+These methods change the length of the string by padding, repeating or
+trimming its contents::
 
     // makes a string as long as the first argument by adding the given
     // string at the beginning, end or both sides of the string
@@ -330,7 +334,7 @@ Methods to Pad and Trim
 Methods to Search and Replace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+These methods look for some contents inside the string and replace them::
 
     // checks if the string starts/ends with the given string
     u('https://symfony.com')->startsWith('https'); // true
@@ -383,7 +387,7 @@ Methods to Search and Replace
 Methods to Join, Split, Truncate and Reverse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+These methods merge, break, shorten and reverse the contents of the string::
 
     // uses the string as the "glue" to merge all the given strings
     u(', ')->join(['foo', 'bar']); // 'foo, bar'
@@ -418,8 +422,6 @@ Methods to Join, Split, Truncate and Reverse
 .. versionadded:: 7.2
 
     The ``TruncateMode`` parameter for truncate function was introduced in Symfony 7.2.
-
-::
 
     // breaks the string into lines of the given length
     u('Lorem Ipsum')->wordwrap(4);                  // 'Lorem\nIpsum'
