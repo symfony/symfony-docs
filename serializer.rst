@@ -2529,6 +2529,71 @@ not present in the mapping, the serializer falls back to the first entry
 declared for the object's class. The discriminator property can also be a
 backed enum, in which case the serializer uses the enum case's value.
 
+.. _serializer-extensible-discriminator-map:
+
+Extending a Discriminator Map from Child Classes
+................................................
+
+.. versionadded:: 8.2
+
+    The ``#[DiscriminatorMapType]`` attribute was introduced in Symfony 8.2.
+
+The mappings shown above list every class in the interface or the abstract
+class declaring them. When those classes are not known in advance (e.g. in a
+bundle that lets applications add their own types), let each class add itself
+to the map with the ``#[DiscriminatorMapType]`` attribute. The ``mapping``
+argument of ``#[DiscriminatorMap]`` then becomes optional::
+
+    // src/Model/InvoiceItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Attribute\DiscriminatorMap;
+
+    #[DiscriminatorMap(typeProperty: 'type')]
+    interface InvoiceItemInterface
+    {
+        // ...
+    }
+
+Each class then declares the type name that identifies it in that map::
+
+    // src/Model/Product.php
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Attribute\DiscriminatorMapType;
+
+    #[DiscriminatorMapType('product', InvoiceItemInterface::class)]
+    class Product implements InvoiceItemInterface
+    {
+        // ...
+    }
+
+The attribute is repeatable, so a class can add itself to the map of each
+interface it implements. Types declared in the ``mapping`` argument and types
+added by the classes themselves live in the same map, whether that map is
+declared with attributes, YAML or XML.
+
+A ``MappingException`` is thrown when the class is not a subtype of the class
+declaring the map, when two classes claim the same type name, or when the
+resulting map is empty. The ``defaultType`` option must be present in that
+resulting map too.
+
+In a Symfony application, these classes are discovered at compile time like the
+other serializer attributes, so they must be part of your service definitions
+(see :ref:`serializer-compile-time-attribute-metadata`).
+
+.. note::
+
+    When using the Serializer component without the Symfony framework, list the
+    classes contributing to each map in the third argument of the attribute
+    loader::
+
+        use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+
+        $loader = new AttributeLoader(discriminatorMapTypes: [
+            InvoiceItemInterface::class => ['product' => Product::class],
+        ]);
+
 .. _serializer-unwrapping-denormalizer:
 
 Deserializing Input Partially (Unwrapping)
@@ -2693,6 +2758,8 @@ Otherwise, a ``MappingException`` is thrown during container compilation.
 
 You can use any serialization attribute on the source class properties, including
 ``#[Groups]``, ``#[SerializedName]``, ``#[MaxDepth]``, ``#[Ignore]``, and others.
+
+.. _serializer-compile-time-attribute-metadata:
 
 Compile-Time Attribute Metadata
 ...............................
