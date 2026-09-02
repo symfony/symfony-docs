@@ -5184,15 +5184,15 @@ http_client
 **type**: ``string`` **default**: ``'http_client'``
 
 The service id of the HTTP client used to send outgoing webhooks. Set it to use
-a client of your own, for example one that goes through a proxy or uses a
-longer timeout than the default client:
+a client with different options (e.g. a proxy or a longer timeout), such as one
+of your :ref:`scoped clients <reference-http-client-scoped-clients>`:
 
 .. code-block:: yaml
 
     # config/packages/webhook.yaml
     framework:
         webhook:
-            http_client: 'http_client.webhooks'
+            http_client: 'webhooks.client'
 
 .. versionadded:: 8.2
 
@@ -5214,7 +5214,7 @@ application against :ref:`SSRF attacks <http-client-ssrf>`:
         webhook:
             no_private_network: true
 
-This decorates the webhook HTTP client with a
+This wraps the webhook HTTP client with a
 :class:`Symfony\\Component\\HttpClient\\NoPrivateNetworkHttpClient`, so it
 requires the HttpClient component:
 
@@ -5233,7 +5233,7 @@ subnets
 
 The subnets, in CIDR notation, to consider private. When this option is
 ``null``, the standard private subnets are blocked. Set it to block a different
-set of networks and nothing else:
+set of networks instead:
 
 .. code-block:: yaml
 
@@ -5241,7 +5241,6 @@ set of networks and nothing else:
     framework:
         webhook:
             no_private_network:
-                enabled: true
                 subnets: ['104.26.14.0/23']
 
 allow_list
@@ -5249,9 +5248,9 @@ allow_list
 
 **type**: ``string`` | ``array`` **default**: ``[]``
 
-The IPs or subnets, in CIDR notation, that can still be reached even when they
-belong to one of the blocked networks. Use it to allow a known internal host,
-such as a local proxy, while keeping the rest of the private network blocked:
+The IPs or subnets, in CIDR notation, that can be reached even when they belong
+to one of the blocked networks. Use it to allow a known internal host, such as
+a local proxy, while keeping the rest of the private network blocked:
 
 .. code-block:: yaml
 
@@ -5259,7 +5258,6 @@ such as a local proxy, while keeping the rest of the private network blocked:
     framework:
         webhook:
             no_private_network:
-                enabled: true
                 allow_list: ['10.0.0.42']
 
 event_header_name
