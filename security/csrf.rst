@@ -582,6 +582,42 @@ if (and only if) a session already exists, successful "double-submit" is remembe
 and becomes required for future requests. This ensures that once the optional cookie/header
 validation has been proven effective, it remains enforced for that session.
 
+To enable this header-based validation set the ``check_header`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/ux_turbo.yaml
+        framework:
+            csrf_protection:
+                check_header: true
+                # optionally change the cookie/header name (defaults to 'csrf-token')
+                cookie_name: 'csrf-token'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <framework:config>
+            <framework:csrf-protection check-header="true" cookie-name="csrf-token"/>
+        </framework:config>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->csrfProtection()
+                ->checkHeader(true)
+                ->cookieName('csrf-token')
+            ;
+        };
+
+When ``check_header`` is enabled, Symfony will look for the CSRF token in an
+HTTP header matching your ``cookie_name`` (e.g. ``X-CSRF-Token``) in addition to
+checking the standard request payload.
+
 .. note::
 
     Enforcing "double-submit" validation on all requests is not recommended,
