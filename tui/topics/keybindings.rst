@@ -91,6 +91,28 @@ still allowing per-widget customization::
         'submit' => ['ctrl+s'],
     ]));
 
+Display Labels
+--------------
+
+.. versionadded:: 8.2
+
+    The keybinding labels were introduced in Symfony 8.2.
+
+The :doc:`/tui/widgets/key_binding` widget displays the keybindings of
+the focused widget. Every widget defines which of its actions are
+displayed, in which order and with which labels. Override them for a
+given widget with ``setKeybindingLabels()``::
+
+    $list->setKeybindingLabels([
+        'select_confirm' => 'Choose',
+        'select_cancel' => 'Back',
+    ]);
+
+Actions that are absent from that array are not displayed, and passing
+``null`` restores the labels of the widget. Only the first key of an
+action is displayed, so put the main shortcut first when you override a
+binding.
+
 Action Names
 ------------
 
