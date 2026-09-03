@@ -168,9 +168,8 @@ collection::
             }
         }
 
-The elements of the collection can also be objects. Their properties are read
-with the :doc:`PropertyAccess component </components/property_access>`, so the
-``fields`` option accepts property paths such as ``coordinates[latitude]``::
+The elements of the collection can also be objects. In that case, the ``fields``
+option refers to their properties::
 
     // src/Entity/Itinerary.php
     namespace App\Entity;
@@ -179,26 +178,27 @@ with the :doc:`PropertyAccess component </components/property_access>`, so the
 
     class Itinerary
     {
-        /**
-         * @var PointOfInterest[]
-         */
-        #[Assert\Unique(fields: ['coordinates[latitude]', 'coordinates[longitude]'])]
+        // each element is a PointOfInterest object
+        #[Assert\Unique(fields: ['latitude', 'longitude'])]
         protected array $stops;
     }
 
-Properties that can't be read from an element are ignored, as it's already the
-case for array keys that don't exist. Reading anything other than a public
-property requires the PropertyAccess component to be installed in your
-application:
-
-.. code-block:: terminal
-
-    $ composer require symfony/property-access
-
 .. versionadded:: 8.2
 
-    Support for reading object properties in the ``fields`` option was
-    introduced in Symfony 8.2.
+    Support for objects in the ``fields`` option was introduced in Symfony 8.2.
+
+Public properties are read directly. Any other property is read with the
+:doc:`PropertyAccess component </components/property_access>`, so getters such
+as ``getLatitude()`` work too and you can use property paths such as
+``address.city`` or ``coordinates[latitude]``. Fields that can't be read from an
+element are ignored, both for missing array keys and for unreadable object
+properties, and the element is compared using the other fields.
+
+.. note::
+
+    Reading anything other than a public property requires having the
+    ``symfony/property-access`` package installed in your application (e.g. by
+    running ``composer require symfony/property-access``).
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
