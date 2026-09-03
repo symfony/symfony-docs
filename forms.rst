@@ -482,10 +482,14 @@ pass a service, use a reference::
     use Symfony\Component\DependencyInjection\Reference;
     // ...
 
-    #[FormField(ChoiceType::class, [
-        'choice_loader' => new Reference(TagChoiceLoader::class),
-    ])]
-    public array $tags = [];
+    #[AsFormType]
+    class PostDto
+    {
+        #[FormField(ChoiceType::class, [
+            'choice_loader' => new Reference(TagChoiceLoader::class),
+        ])]
+        public array $tags = [];
+    }
 
 Literal values stay literal, so a ``%`` sign in an option isn't mistaken for a
 container parameter.
