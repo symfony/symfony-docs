@@ -24,7 +24,7 @@ and :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger`.
 The :class:`Symfony\\Component\\HttpKernel\\Log\\Logger` class is available through the ``logger`` service.
 To pass your configuration, you can :ref:`override the "logger" service definition <service-psr4-loader>`.
 
-For more information about ``ConsoleLogger``, see :doc:`/components/console/logger`.
+For more information about ``ConsoleLogger``, see :ref:`the console logger <console-logger>`.
 
 Logging a Message
 -----------------

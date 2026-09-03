@@ -2,7 +2,7 @@ Progress Indicator
 ==================
 
 Progress indicators are useful to let users know that a command isn't stalled.
-Unlike :doc:`progress bars </components/console/helpers/progressbar>`, these
+Unlike :doc:`progress bars </console/helpers/progressbar>`, these
 indicators are used when the command duration is indeterminate (e.g. long-running
 commands, unquantifiable tasks, etc.)
 

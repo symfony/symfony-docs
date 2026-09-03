@@ -64,7 +64,7 @@ Another way to do so is to take advantage of ``Symfony\Component\Console\Command
     );
 
     $application = new Application();
-    $application->add($lazyCommand);
+    $application->addCommand($lazyCommand);
     $application->run();
 
 Built-in Command Loaders
