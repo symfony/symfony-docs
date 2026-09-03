@@ -2011,6 +2011,10 @@ The following transports only support tags:
 * MailPace
 * Resend
 
+.. versionadded::
+
+    Tag support for ``MailerSend`` was introduced in Symfony 8.2.
+
 The following transports only support metadata:
 
 * Amazon SES (note that Amazon refers to this feature as "tags", but Symfony
