@@ -177,6 +177,29 @@ You can configure which field to use for the lookup::
         }
     }
 
+The resolver can also fetch a *list* of entities. Type the parameter as
+``array`` and define the entity to query for with the ``class`` option of
+the ``#[MapEntity]`` attribute. The resolver then calls the ``findBy()``
+method instead of ``findOneBy()``::
+
+    #[AsCommand(name: 'app:users:show')]
+    class ShowUsersCommand
+    {
+        public function __invoke(
+            #[Argument]
+            #[MapEntity(class: User::class, mapping: ['users' => 'id'])]
+            array $users
+        ): int {
+            // $users contains the User entities matching the given IDs:
+            // php bin/console app:users:show 12 27 42
+        }
+    }
+
+.. versionadded:: 8.2
+
+    Support for fetching a list of entities into ``array`` arguments was
+    introduced in Symfony 8.2.
+
 To learn more about the use of the ``EntityValueResolver``, see the dedicated
 section :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>`.
 
