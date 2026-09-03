@@ -1,4 +1,4 @@
-Using Events
+fUsing Events
 ============
 
 The Application class of the Console component allows you to optionally hook
@@ -25,8 +25,7 @@ The ``ConsoleEvents::COMMAND`` Event
 
 **Typical Purposes**: Doing something before any command is run (like logging
 which command is going to be executed), or displaying something about the event
-to be executed. Note any changes to the input are discarded before the command
-is executed.
+to be executed.
 
 Just before executing any command, the ``ConsoleEvents::COMMAND`` event is
 dispatched. Listeners receive a
@@ -51,6 +50,14 @@ dispatched. Listeners receive a
         // gets the application
         $application = $command->getApplication();
     });
+
+.. note::
+
+    The command binds the input again before running, so any argument or
+    option value that you set in a listener with ``setArgument()`` or
+    ``setOption()`` is discarded. If you need to customize the input, change
+    the command definition instead. For example, add an option with
+    ``$command->addOption()`` and the command will parse it when it runs.
 
 Disable Commands inside Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
