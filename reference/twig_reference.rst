@@ -449,16 +449,21 @@ is_granted_for_user
     {{ is_granted_for_user(user, attribute, subject = null) }}
 
 ``user``
-    **type**: ``object``
+    **type**: ``object`` | ``null``
 ``attribute``
     **type**: ``string``
 ``subject`` *(optional)*
     **type**: ``object``
 
-Returns ``true`` if the user is authorized for the specified attribute.
+Returns ``true`` if the user is authorized for the specified attribute. Pass
+``null`` as the user to check a guest's permissions.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
+
+.. versionadded:: 8.2
+
+    Support for passing ``null`` as the user was introduced in Symfony 8.2.
 
 link
 ~~~~
