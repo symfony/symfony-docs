@@ -251,6 +251,8 @@ you can use them when defining your cache pools:
 * :doc:`cache.adapter.doctrine_dbal </cache/adapters/doctrine_dbal_adapter>`
 * :doc:`cache.adapter.filesystem </cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </cache/adapters/memcached_adapter>`
+* :doc:`cache.adapter.mongodb </cache/adapters/mongodb_adapter>`
+* :ref:`cache.adapter.mongodb_tag_aware <mongodb-tag-aware-adapter>` (MongoDB adapter optimized to work with tags)
 * :doc:`cache.adapter.pdo </cache/adapters/pdo_adapter>`
 * :doc:`cache.adapter.psr6 </cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </cache/adapters/redis_adapter>`
@@ -299,6 +301,7 @@ which define the default provider used by all the pools based on that adapter:
                 default_redis_provider: 'redis://localhost'
                 default_valkey_provider: 'valkey://localhost'
                 default_memcached_provider: 'memcached://localhost'
+                default_mongodb_provider: 'mongodb://localhost/app'
                 default_pdo_provider: 'pgsql:host=localhost'
 
     .. code-block:: php
@@ -315,6 +318,7 @@ which define the default provider used by all the pools based on that adapter:
                     'default_redis_provider' => 'redis://localhost',
                     'default_valkey_provider' => 'valkey://localhost',
                     'default_memcached_provider' => 'memcached://localhost',
+                    'default_mongodb_provider' => 'mongodb://localhost/app',
                     'default_pdo_provider' => 'pgsql:host=localhost',
                 ],
             ],
@@ -1265,15 +1269,21 @@ To solve this, the component provides the
 :class:`Symfony\\Component\\Cache\\PruneableInterface`, which defines the
 :method:`Symfony\\Component\\Cache\\PruneableInterface::prune` method to remove
 all the expired items from the storage. The adapters that need this feature
-implement it: :doc:`ChainAdapter </cache/adapters/chain_adapter>`,
-:doc:`DoctrineDbalAdapter </cache/adapters/doctrine_dbal_adapter>`,
-:doc:`FilesystemAdapter </cache/adapters/filesystem_adapter>`,
-:doc:`PdoAdapter </cache/adapters/pdo_adapter>`,
-:doc:`PdoTagAwareAdapter </cache/adapters/pdo_adapter>`,
-:doc:`PhpFilesAdapter </cache/adapters/php_files_adapter>` and
-:doc:`RedisTagAwareAdapter </cache/adapters/redis_adapter>`, as well as the
-adapters that wrap other adapters (such as ``TagAwareAdapter``, ``ProxyAdapter``
-and ``Psr16Adapter``), which delegate the pruning to the wrapped adapter::
+implement it:
+
+* :doc:`ChainAdapter </cache/adapters/chain_adapter>`
+* :doc:`FilesystemAdapter </cache/adapters/filesystem_adapter>` and
+  :doc:`PhpFilesAdapter </cache/adapters/php_files_adapter>`
+* :doc:`DoctrineDbalAdapter </cache/adapters/doctrine_dbal_adapter>`,
+  :doc:`PdoAdapter </cache/adapters/pdo_adapter>` and
+  :doc:`PdoTagAwareAdapter </cache/adapters/pdo_adapter>`
+* :doc:`MongoDbAdapter </cache/adapters/mongodb_adapter>` and
+  :doc:`MongoDbTagAwareAdapter </cache/adapters/mongodb_adapter>`
+* :doc:`RedisTagAwareAdapter </cache/adapters/redis_adapter>`
+
+The adapters that wrap other adapters (such as ``TagAwareAdapter``,
+``ProxyAdapter`` and ``Psr16Adapter``) delegate the pruning to the wrapped
+adapter::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
