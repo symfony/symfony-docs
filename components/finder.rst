@@ -95,6 +95,21 @@ Exclude directories from matching with the
     // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
 
+The example above excludes every directory called ``ruby``, no matter how deep
+it is inside ``__DIR__``. Prefix the directory with ``/`` to exclude it only
+when it's at the root of the search location::
+
+    // excludes __DIR__/ruby but not __DIR__/vendor/acme/ruby
+    $finder->in(__DIR__)->exclude('/ruby');
+
+    // excludes __DIR__/config/packages but not __DIR__/src/config/packages
+    $finder->in(__DIR__)->exclude('/config/packages');
+
+.. versionadded:: 8.2
+
+    The support for excluding directories relative to the search location by
+    prefixing them with ``/`` was introduced in Symfony 8.2.
+
 It's also possible to ignore directories that you don't have permission to read::
 
     $finder->ignoreUnreadableDirs()->in(__DIR__);
