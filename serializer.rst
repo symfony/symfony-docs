@@ -950,6 +950,38 @@ You can now choose which groups to use when serializing::
     );
     // $json contains {"name":"Jane Doe","age":32,"sportsperson":false,"email":"jane.doe@example.com"}
 
+Excluding Specific Groups
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``ignored_groups`` context option was introduced in Symfony 8.2.
+
+When a class defines many groups, you may prefer to list the groups to
+exclude instead of all the groups to include. Use the ``ignored_groups``
+context option for that::
+
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    // ...
+
+    $json = $serializer->serialize($person, 'json', [
+        AbstractNormalizer::GROUPS => ['public-view', 'admin-view'],
+        AbstractNormalizer::IGNORED_GROUPS => ['admin-view'],
+    ]);
+    // $json contains {"name":"Jane Doe","sportsperson":false}
+
+Ignored groups always take precedence: if an attribute belongs to both an
+allowed group and an ignored group, the serializer excludes it. This also
+applies to the special ``*`` value.
+
+Used alone, this option serializes all the properties except those belonging
+to the ignored groups::
+
+    $json = $serializer->serialize($person, 'json', [
+        AbstractNormalizer::IGNORED_GROUPS => ['admin-view'],
+    ]);
+    // $json contains {"name":"Jane Doe","sportsperson":false,"email":"jane.doe@example.com"}
+
 Using the Serialization Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
