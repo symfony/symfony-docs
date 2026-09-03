@@ -380,6 +380,8 @@ party provider:
     via webhooks. See the :doc:`Webhook documentation </webhook>` for more
     details.
 
+.. _mailer-high-availability:
+
 High Availability
 ~~~~~~~~~~~~~~~~~
 
@@ -1163,6 +1165,12 @@ frameworks to create complex HTML email messages. First, make sure Twig is insta
     # or if you're using the component in a non-Symfony app:
     # composer require symfony/twig-bridge
 
+.. seealso::
+
+    If the templates of your emails are stored in your email provider account
+    instead of your application, let the provider render them with a
+    :ref:`RemoteTemplateEmail <mailer-remote-templates>`.
+
 HTML Content
 ~~~~~~~~~~~~
 
@@ -1512,6 +1520,121 @@ You can combine all filters to create complex email messages:
 This makes use of the :ref:`styles Twig namespace <mailer-css-namespace>` we created
 earlier. You could, for example, `download the foundation-emails.css file`_
 directly from GitHub and save it in ``assets/styles``.
+
+.. _mailer-remote-templates:
+
+Rendering Emails with Provider-Hosted Templates
+-----------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``RemoteTemplateEmail`` class was introduced in Symfony 8.2.
+
+Most third-party providers can render an email from a template stored on their
+side. This lets non-developers update the contents of an email without
+deploying the application. Instead of building the body yourself, send the
+reference of the template and the variables used to render it with the
+:class:`Symfony\\Component\\Mailer\\RemoteTemplateEmail` class::
+
+    use Symfony\Component\Mailer\RemoteTemplateEmail;
+
+    $email = new RemoteTemplateEmail()
+        ->from('sales@example.com')
+        ->to('kevin@example.com')
+        ->template('order-confirmation', [
+            'firstName' => 'Kevin',
+            'orderId' => 4321,
+        ])
+    ;
+
+    $mailer->send($email);
+
+The first argument of the ``template()`` method is the reference of the
+template in your provider account. Providers identify their templates
+differently (with an id, a UUID, a name or an alias), so Symfony always passes
+it as a string and each transport converts it to the type its API expects. The
+second argument is the array of variables the provider uses to render the
+template.
+
+Everything else works as with a regular ``Email``: recipients, ``Cc``, ``Bcc``,
+``Reply-To``, attachments, :ref:`tags and metadata <mailer-tags-metadata>` and
+:ref:`tracking <mailer-tracking>` are sent along with the template. These
+emails are also serializable, so you can
+:ref:`send them asynchronously <mailer-sending-messages-async>`.
+
+.. note::
+
+    Don't confuse ``RemoteTemplateEmail`` with the ``TemplatedEmail`` class of
+    the :ref:`Twig integration <mailer-twig>`. ``TemplatedEmail`` renders a Twig
+    template inside your application, whereas ``RemoteTemplateEmail`` delegates
+    the rendering to your provider. The two are mutually exclusive: an email
+    that defines a remote template and a local text or HTML part at the same
+    time throws a ``LogicException``.
+
+.. deprecated:: 8.2
+
+    Some bridges used to select a provider template through email headers.
+    The ``templateid`` and ``params`` headers (Brevo), the ``template`` header
+    (Mailgun) and the ``X-MJ-TemplateID`` header (Mailjet) were deprecated in
+    Symfony 8.2. Use ``RemoteTemplateEmail`` instead.
+
+Overriding the Subject of the Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The subject is optional in a ``RemoteTemplateEmail``, because the provider
+template usually defines it. When you do define a subject, most providers use
+it instead of the one of the template::
+
+    $email = new RemoteTemplateEmail()
+        // ...
+        ->subject('Your order #4321 is on its way')
+        ->template('order-confirmation', ['orderId' => 4321])
+    ;
+
+Amazon SES, Mailtrap and Postmark can't override the subject of a template.
+They throw an ``InvalidArgumentException`` instead of dropping the subject
+silently, so define it in the template itself.
+
+.. _mailer-remote-templates-transports:
+
+Supported Transports
+~~~~~~~~~~~~~~~~~~~~
+
+Only the API transports of the following providers can send emails rendered
+from a provider-hosted template:
+
+==============  ==============================  ===============
+Transport       Template Reference              Custom Subject
+==============  ==============================  ===============
+Amazon SES      template name                   no
+Brevo           numeric template id             yes
+MailerSend      template id                     yes
+Mailgun         template name                   yes
+Mailjet         numeric template id             yes
+Mailtrap        template UUID                   no
+Mandrill        template name                   yes
+Postmark        template id or alias            no
+Resend          template id                     yes
+Sendgrid        template id                     yes
+==============  ==============================  ===============
+
+Some providers add their own constraints:
+
+* **Amazon SES** can't send attachments together with a template;
+* **Brevo** and **Mailjet** only accept numeric template ids, so any other
+  reference throws an ``InvalidArgumentException``;
+* **MailerSend** applies the same variables to every recipient of the email;
+* **Mailtrap** doesn't allow a tag (its "category") together with a template;
+* **Postmark** reads a numeric reference as a template id and any other
+  reference as a template alias.
+
+Sending a ``RemoteTemplateEmail`` that defines a template through any other
+transport (the SMTP transports of these same providers, ``sendmail``, etc.)
+throws a ``LogicException``. This is not a transport exception, so a
+:ref:`failover transport <mailer-high-availability>` does not try the next
+transport of the chain: make sure that all the transports of a failover or
+round-robin chain support remote templates before using them. The ``null://``
+transport accepts these emails, so it keeps working in tests.
 
 .. _signing-and-encrypting-messages:
 
@@ -1971,6 +2094,8 @@ from their serialized contents::
 
     // later, recreate the original message to actually send it
     $message = new RawMessage(unserialize($serializedEmail));
+
+.. _mailer-tags-metadata:
 
 Adding Tags and Metadata to Emails
 ----------------------------------
