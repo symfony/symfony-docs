@@ -2007,6 +2007,7 @@ The following transports currently support tags and metadata:
 
 The following transports only support tags:
 
+* MailerSend
 * MailPace
 * Resend
 
