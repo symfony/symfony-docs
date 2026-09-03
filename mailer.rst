@@ -2011,7 +2011,7 @@ The following transports only support tags:
 * MailPace
 * Resend
 
-.. versionadded::
+.. versionadded:: 8.2
 
     Tag support for ``MailerSend`` was introduced in Symfony 8.2.
 
