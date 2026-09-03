@@ -1,4 +1,4 @@
-fUsing Events
+Using Events
 ============
 
 The Application class of the Console component allows you to optionally hook
