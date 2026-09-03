@@ -54,6 +54,13 @@ Depending on your use case, you may need to override some of the following metho
 For more information on what those methods do, see the
 :ref:`custom form field type <form-type-methods-explanation>` article.
 
+.. tip::
+
+    ``getExtendedTypes()`` can also return a class that
+    :doc:`defines its form with PHP attributes </form/attribute_form_types>`.
+    Use this to add events, data transformers and other
+    :ref:`behavior to those forms <form-attributes-type-extension>`.
+
 Registering your Form Type Extension as a Service
 -------------------------------------------------
 

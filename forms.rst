@@ -421,6 +421,12 @@ the ``data_class`` option by adding the following to your form type class::
         }
     }
 
+.. tip::
+
+    If a form only lists the fields of its data class, you can skip the form
+    type class and define the form on the data class itself with
+    :doc:`PHP attributes </form/attribute_form_types>`.
+
 .. _form-property-path:
 
 Mapping Fields to Object Properties
@@ -2332,6 +2338,7 @@ Advanced Features:
     /form/data_mappers
     /form/create_form_type_extension
     /form/type_guesser
+    /form/attribute_form_types
 
 Form Themes and Customization:
 
