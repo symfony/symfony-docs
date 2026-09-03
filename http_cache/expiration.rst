@@ -53,6 +53,42 @@ additional directives):
     response in ``stale-if-error`` scenarios. That's why it's recommended to use
     both ``public`` and ``max-age`` directives.
 
+.. _http-cache-targeted-cache-control:
+
+Targeting a Specific Cache
+--------------------------
+
+.. versionadded:: 8.2
+
+    The ``Response::cacheControl()`` method was introduced in Symfony 8.2.
+
+`RFC 9213`_ makes it possible to address cache directives to a single cache
+instead of all of them: a cache that knows itself as ``CDN`` reads the
+``CDN-Cache-Control`` header and ignores ``Cache-Control``, while every other
+cache does the opposite. This is how a response is kept for hours in a CDN
+while browsers are told not to store it::
+
+    // for browsers and any other cache
+    $response->setPrivate();
+    $response->setMaxAge(0);
+
+    // for the CDN only
+    $response->cacheControl('CDN')->setMaxAge(3600);
+
+The response then carries both headers:
+
+.. code-block:: text
+
+    Cache-Control: max-age=0, private
+    CDN-Cache-Control: max-age=3600
+
+The object returned by ``cacheControl()`` provides the same kind of methods as
+the response itself: ``setPublic()``, ``setPrivate()``, ``setMaxAge()``,
+``setNoStore()``, ``setImmutable()``, ``setStaleWhileRevalidate()`` and
+``setStaleIfError()``, plus ``set()``, ``get()``, ``has()``, ``remove()`` and
+``all()`` for any other directive. There's no ``s-maxage`` counterpart, because
+the target already names the cache the directives are addressed to.
+
 Expiration with the ``Expires`` Header
 --------------------------------------
 
@@ -167,6 +203,7 @@ when using `FOSRestBundle`_ or other libraries that handle view rendering).
     no cache headers are set by the attribute.
 
 .. _`expiration model`: https://tools.ietf.org/html/rfc2616#section-13.2
+.. _`RFC 9213`: https://www.rfc-editor.org/rfc/rfc9213.html
 .. _`Calculating Freshness Lifetime`: https://tools.ietf.org/html/rfc7234#section-4.2.1
 .. _`Serving Stale Responses`: https://tools.ietf.org/html/rfc7234#section-4.2.4
 .. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
