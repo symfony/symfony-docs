@@ -957,12 +957,25 @@ Excluding Specific Groups
 
     The ``ignored_groups`` context option was introduced in Symfony 8.2.
 
-When a class defines many groups, you may prefer to list the groups to
-exclude instead of all the groups to include. Use the ``ignored_groups``
-context option for that::
+Sometimes the same property must be included in one context and excluded in
+another. For example, the ``age`` property of the previous example belongs to
+the ``admin-view`` group, and you may want to hide it in public API responses
+but keep it when storing the object. The ``#[Ignore]`` attribute can't do that
+because it always excludes the property. Use the ``ignored_groups`` context
+option instead to exclude all the properties of the given groups::
 
     use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
     // ...
+
+    $json = $serializer->serialize($person, 'json', [
+        AbstractNormalizer::IGNORED_GROUPS => ['admin-view'],
+    ]);
+    // $json contains {"name":"Jane Doe","sportsperson":false,"email":"jane.doe@example.com"}
+
+When you don't define the ``groups`` option, the serializer includes all the
+other properties, including those without groups. You can combine both options
+too. Ignored groups always take precedence, so a property that belongs to an
+allowed group and to an ignored group is excluded::
 
     $json = $serializer->serialize($person, 'json', [
         AbstractNormalizer::GROUPS => ['public-view', 'admin-view'],
@@ -970,17 +983,9 @@ context option for that::
     ]);
     // $json contains {"name":"Jane Doe","sportsperson":false}
 
-Ignored groups always take precedence: if an attribute belongs to both an
-allowed group and an ignored group, the serializer excludes it. This also
-applies to the special ``*`` value.
-
-Used alone, this option serializes all the properties except those belonging
-to the ignored groups::
-
-    $json = $serializer->serialize($person, 'json', [
-        AbstractNormalizer::IGNORED_GROUPS => ['admin-view'],
-    ]);
-    // $json contains {"name":"Jane Doe","sportsperson":false,"email":"jane.doe@example.com"}
+This is also true when using the special ``*`` value in the ``groups`` option:
+the properties of the ignored groups are excluded even if ``*`` includes all
+the other groups.
 
 Using the Serialization Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
