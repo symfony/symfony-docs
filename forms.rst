@@ -2144,6 +2144,8 @@ keys, such as field labels, and their translations to your translation files.
 
 For more details on translations, see :doc:`/translation`.
 
+.. _forms-standalone-validation:
+
 Validation
 ~~~~~~~~~~
 

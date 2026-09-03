@@ -43,18 +43,18 @@ Data passed to the form must be a
 :class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
 object.
 
-The password is hashed after the validation of the form, and only when the
-whole form is valid. This requires the integration with the Validator
-component, which is enabled by default in Symfony applications. In
-:ref:`standalone applications <forms-standalone-setup>`, add the
-``ValidatorExtension`` to the form factory, otherwise the password is never
-hashed.
+The password is hashed in the ``post_validate`` event of the field, and only if
+the whole form is valid. This event is dispatched by the Validator extension of
+the Form component, which is enabled by default in Symfony applications. In
+:ref:`standalone applications <forms-standalone-validation>`, add the
+:class:`Symfony\\Component\\Form\\Extension\\Validator\\ValidatorExtension` to
+your form factory. Without it, the password is never hashed.
 
 .. versionadded:: 8.2
 
-    Hashing the password after the validation was introduced in Symfony 8.2.
-    In previous versions, it was hashed right after the submission of the form,
-    without the Validator component being required.
+    Hashing the password in the ``post_validate`` event was introduced in
+    Symfony 8.2. In previous versions, it was hashed in the ``post_submit``
+    event of the root form, so it worked without the Validator extension.
 
 .. warning::
 
