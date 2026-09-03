@@ -1,4 +1,4 @@
-Using Events
+fUsing Events
 ============
 
 The Application class of the Console component allows you to optionally hook
@@ -50,6 +50,14 @@ dispatched. Listeners receive a
         // gets the application
         $application = $command->getApplication();
     });
+
+.. note::
+
+    The command binds the input again before running, so any argument or
+    option value that you set in a listener with ``setArgument()`` or
+    ``setOption()`` is discarded. If you need to customize the input, change
+    the command definition instead. For example, add an option with
+    ``$command->addOption()`` and the command will parse it when it runs.
 
 Disable Commands inside Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
