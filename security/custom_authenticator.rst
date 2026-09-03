@@ -317,7 +317,7 @@ ASCII-only, lowercase format::
         }
     }
 
-::
+Then, use this badge in your authenticator::
 
     // src/Security/PasswordAuthenticator.php
     namespace App\Security;
