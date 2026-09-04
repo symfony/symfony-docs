@@ -107,6 +107,7 @@ Service               Install with                                        Webhoo
 `Microsoft Graph`_    ``composer require symfony/microsoft-graph-mailer``
 `Postal`_             ``composer require symfony/postal-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``        yes
+`PufferPost`_         ``composer require symfony/puffer-post-mailer``
 `Resend`_             ``composer require symfony/resend-mailer``          yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``        yes
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``        yes
@@ -116,7 +117,8 @@ Service               Install with                                        Webhoo
 
 .. versionadded:: 8.2
 
-    The ``MailKite``, ``TurboSMTP`` and ``Cloudflare`` integrations were introduced in Symfony 8.2.
+    The ``MailKite``, ``PufferPost``, ``TurboSMTP`` and ``Cloudflare`` integrations were introduced
+    in Symfony 8.2.
     Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
 
 .. note::
@@ -241,6 +243,10 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``postmark+api://KEY@default``                                                      |
 +------------------------+-------------------------------------------------------------------------------------------+
+| `PufferPost`_          | - SMTP n/a                                                                                |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``pufferpost+api://KEY@default``                                                    |
++------------------------+-------------------------------------------------------------------------------------------+
 | `Resend`_              | - SMTP ``resend+smtp://resend:API_KEY@default``                                           |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``resend+api://API_KEY@default``                                                    |
@@ -350,6 +356,12 @@ party provider:
     (``mailkite``) and is not checked, so the DSN is simply
     ``mailkite+smtp://KEY@default``. Use ``mailkite+smtps`` for implicit TLS
     on port 465.
+
+.. note::
+
+    ``pufferpost`` is an alias for ``pufferpost+api``. PufferPost has no SMTP
+    relay, so the API transport is the only one. Templated sending goes through
+    :class:`Symfony\\Component\\Mailer\\RemoteTemplateEmail`.
 
 .. tip::
 
@@ -2510,6 +2522,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Postal`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postal/README.md
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
 .. _`Mailtrap`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailtrap/README.md
+.. _`PufferPost`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/PufferPost/README.md
 .. _`Resend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Resend/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
