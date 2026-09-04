@@ -195,7 +195,7 @@ fetch the package from the associated path.
 .. _automatic-import-mapping:
 
 But where did the ``/assets/duck.js`` import entry come from? That doesn't live
-in ``importmap.php``. Great question!
+in ``importmap.php``.
 
 The ``assets/app.js`` file above imports ``./duck.js``. When you import a file using a
 relative path, your browser looks for that file relative to the one importing
