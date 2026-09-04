@@ -11,8 +11,9 @@ The Doctrine DBAL adapters store the cache items in a table of an SQL database.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\DoctrineDbalAdapter` requires a
 `Doctrine DBAL Connection`_, or `Doctrine DBAL URL`_ as its first parameter.
-You can pass a namespace, default cache lifetime, and options array as the other
-optional arguments::
+You can pass a namespace, default cache lifetime, options array and
+:ref:`marshaller <cache-component-marshalling>` as the other optional
+arguments::
 
     use Symfony\Component\Cache\Adapter\DoctrineDbalAdapter;
 
@@ -30,7 +31,10 @@ optional arguments::
         $defaultLifetime = 0,
 
         // an array of options for configuring the database table and connection
-        $options = []
+        $options = [],
+
+        // an optional marshaller object used to serialize the cache items before storing them
+        $marshaller = null
     );
 
 .. note::
