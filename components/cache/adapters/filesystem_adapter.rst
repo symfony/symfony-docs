@@ -13,7 +13,8 @@ a collection of directories on a locally mounted filesystem.
     many other `RAM disk solutions`_ available.
 
 The FilesystemAdapter can optionally be provided a namespace, default cache lifetime,
-and cache root path as constructor parameters::
+cache root path and :ref:`marshaller <cache-component-marshalling>` as
+constructor parameters::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
@@ -30,7 +31,10 @@ and cache root path as constructor parameters::
 
         // the main cache directory (the application needs read-write permissions on it)
         // if none is specified, a directory is created inside the system temporary directory
-        $directory = null
+        $directory = null,
+
+        // an optional marshaller object used to serialize the cache items before storing them
+        $marshaller = null
     );
 
 .. warning::
