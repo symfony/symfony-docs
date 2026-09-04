@@ -10,8 +10,9 @@ The PDO adapters store the cache items in a table of an SQL database.
     by calling the ``prune()`` method.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\PdoAdapter` requires a :phpclass:`PDO`,
-or `DSN`_ as its first parameter. You can pass a namespace,
-default cache lifetime, and options array as the other optional arguments::
+or `DSN`_ as its first parameter. You can pass a namespace, default cache
+lifetime, options array and :ref:`marshaller <cache-component-marshalling>`
+as the other optional arguments::
 
     use Symfony\Component\Cache\Adapter\PdoAdapter;
 
@@ -29,7 +30,10 @@ default cache lifetime, and options array as the other optional arguments::
         $defaultLifetime = 0,
 
         // an array of options for configuring the database table and connection
-        $options = []
+        $options = [],
+
+        // an optional marshaller object used to serialize the cache items before storing them
+        $marshaller = null
     );
 
 The table where values are stored is created automatically on the first call to

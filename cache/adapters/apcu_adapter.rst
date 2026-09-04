@@ -11,7 +11,8 @@ memory, a component appreciably faster than many others, such as the filesystem.
     this adapter.
 
 The ApcuAdapter can optionally be provided a namespace, default cache lifetime,
-and cache items version string as constructor arguments::
+cache items version string and :ref:`marshaller <cache-component-marshalling>`
+as constructor arguments::
 
     use Symfony\Component\Cache\Adapter\ApcuAdapter;
 
@@ -27,7 +28,10 @@ and cache items version string as constructor arguments::
 
         // when set, all keys prefixed by $namespace can be invalidated by changing
         // this $version string
-        $version = null
+        $version = null,
+
+        // an optional marshaller object used to serialize the cache items before storing them
+        $marshaller = null
     );
 
 .. warning::

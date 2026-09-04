@@ -1397,6 +1397,8 @@ its pools. For example, to clear all caches everywhere:
 
     $ php bin/console cache:pool:clear cache.global_clearer
 
+.. _cache-component-marshalling:
+
 Marshalling (Serializing) Data
 ------------------------------
 
