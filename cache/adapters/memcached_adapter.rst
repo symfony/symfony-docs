@@ -15,8 +15,9 @@ is also available.
     greater of the `Memcached PHP extension`_ is required for this adapter.
 
 This adapter expects a `Memcached`_ instance to be passed as the first
-parameter. A namespace and default cache lifetime can optionally be passed as
-the second and third parameters::
+parameter. A namespace, default cache lifetime and
+:ref:`marshaller <cache-component-marshalling>` can optionally be passed as the
+second, third and fourth parameters::
 
     use Symfony\Component\Cache\Adapter\MemcachedAdapter;
 
@@ -30,7 +31,10 @@ the second and third parameters::
         // the default lifetime (in seconds) for cache items that do not define their
         // own lifetime, with a value 0 causing items to be stored indefinitely (i.e.
         // until MemcachedAdapter::clear() is invoked or the server(s) are restarted)
-        $defaultLifetime = 0
+        $defaultLifetime = 0,
+
+        // an optional marshaller object used to serialize the cache items before storing them
+        $marshaller = null
     );
 
 Configure the Connection
