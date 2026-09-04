@@ -400,6 +400,12 @@ to multiple transports:
     names as its only argument. For more information about stamps, see
     :ref:`Envelopes & Stamps <messenger-envelopes-stamps>`.
 
+.. tip::
+
+    Run ``php bin/console debug:messenger`` to see which transports each
+    message is routed to, or pass a message class to its ``--message``
+    option to inspect the routing of a single message.
+
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -4459,8 +4465,9 @@ you can determine the message bus based on an implemented interface:
 Debugging the Buses
 ~~~~~~~~~~~~~~~~~~~
 
-The ``debug:messenger`` command lists available messages & handlers per bus.
-You can also restrict the list to a specific bus by providing its name as an argument.
+The ``debug:messenger`` command lists available messages & handlers per bus,
+along with the transports each message is routed to. You can also restrict the
+list to a specific bus by providing its name as an argument.
 
 .. code-block:: terminal
 
@@ -4475,10 +4482,11 @@ You can also restrict the list to a specific bus by providing its name as an arg
        The following messages can be dispatched:
 
        ---------------------------------------------------------------------------------------
-        App\Message\DummyCommand
-            handled by App\MessageHandler\DummyCommandHandler
-        App\Message\MultipleBusesMessage
-            handled by App\MessageHandler\MultipleBusesMessageHandler
+         App\Message\DummyCommand
+             handled by App\MessageHandler\DummyCommandHandler
+             routed to async
+         App\Message\MultipleBusesMessage
+             handled by App\MessageHandler\MultipleBusesMessageHandler
        ---------------------------------------------------------------------------------------
 
       query.bus
@@ -4487,15 +4495,61 @@ You can also restrict the list to a specific bus by providing its name as an arg
        The following messages can be dispatched:
 
        ---------------------------------------------------------------------------------------
-        App\Message\DummyQuery
-            handled by App\MessageHandler\DummyQueryHandler
-        App\Message\MultipleBusesMessage
-            handled by App\MessageHandler\MultipleBusesMessageHandler
+         App\Message\DummyQuery
+             handled by App\MessageHandler\DummyQueryHandler
+         App\Message\MultipleBusesMessage
+             handled by App\MessageHandler\MultipleBusesMessageHandler
        ---------------------------------------------------------------------------------------
+
+      Transports
+      ----------
+
+       [INFO] TransportNamesStamp can override this routing at dispatch time.
+
+      async
+          App\Message\DummyCommand
+          App\Message\Sub\* (namespace)
+          App\Message\AuditableInterface (interface, matches implementers)
+          failed messages are routed to failed_async
+
+      failed
+          * (fallback for messages with no other route)
+
+Routing is configured once for the whole application, not per bus, so the
+``Transports`` section is displayed once, after the bus sections. The
+annotation next to each rule shows its kind, including ``from #[AsMessage]``
+for rules coming from the attribute (:ref:`configuration takes precedence
+<messenger-routing>` over the attribute, and a ``*`` fallback rule disables
+attribute routing). The :ref:`failure transport <messenger-failure-transport>`
+is shown unless a transport uses itself as its failure transport.
+
+.. versionadded:: 8.2
+
+    The routing information in the ``debug:messenger`` command was introduced
+    in Symfony 8.2.
+
+Pass a message class to the ``--message`` option to see what happens when that
+class is dispatched. The class is resolved the way ``dispatch()`` resolves it:
+through its parent classes, its interfaces, namespace wildcards, the ``*``
+fallback and ``#[AsMessage]`` attributes. The output is restricted to the
+handlers, transports and rules that apply to that message (showing ``not
+handled`` or ``not routed`` when none do) and also works for message classes
+that are not registered as services:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:messenger --message='App\Message\DummyCommand'
 
 .. tip::
 
     The command will also show the PHPDoc description of the message and handler classes.
+
+.. warning::
+
+    The routing shown by this command reflects the static configuration. The
+    :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp` can
+    :ref:`override the routing <messenger-routing>` at dispatch time, which the
+    command cannot see.
 
 Redispatching a Message
 -----------------------
