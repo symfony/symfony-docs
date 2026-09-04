@@ -249,8 +249,11 @@ the preloaded module and stylesheet tags get an ``integrity`` attribute:
 The "app" Entrypoint
 ~~~~~~~~~~~~~~~~~~~~
 
-An "entrypoint" is the main JavaScript file that the browser loads,
-and your app starts with one by default::
+An "entrypoint" is the main JavaScript file that the browser loads. Most
+projects only need the single ``app`` entrypoint that your app starts with by
+default, but you can create additional ones - for example, to load JavaScript
+or CSS only on a specific page, as shown in
+:ref:`Page-Specific CSS & JavaScript <page-specific-assets>`::
 
     // importmap.php
     return [
@@ -779,6 +782,8 @@ asset processing, creates a JavaScript module that exports a Promise resolving
 to the JSON content, and adds it to the importmap. The imported JSON file is
 versioned like any other asset, so changes to the JSON content will produce a
 new filename and browsers will load the updated version.
+
+.. _page-specific-assets:
 
 Page-Specific CSS & JavaScript
 ------------------------------
