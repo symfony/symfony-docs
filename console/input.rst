@@ -48,9 +48,8 @@ The ``Argument`` attribute accepts the following parameters:
     For example: ``#[Argument(description: 'Your username')]``.
 
 ``name``
-    The name displayed for the argument in the command help and used to retrieve
-    the argument value via ``$input->getArgument('some-name')``. By default, it's
-    the constructor parameter name converted to ``kebab-case`` (e.g. ``$lastName``
+    The name displayed for the argument in the command help. By default, it's
+    the parameter name converted to ``kebab-case`` (e.g. ``$lastName``
     becomes ``last-name``).
 
 ``suggestedValues``
@@ -269,9 +268,8 @@ The ``Option`` attribute accepts the following parameters:
     For example: ``#[Option(description: 'Number of iterations')]``.
 
 ``name``
-    The name used when passing the option to the command (e.g. ``--max-retries=5``)
-    and when retrieving its value via ``$input->getOption('some-name')``. By default,
-    it's the constructor parameter name converted to ``kebab-case`` (e.g.
+    The name used when passing the option to the command (e.g. ``--max-retries=5``).
+    By default, it's the parameter name converted to ``kebab-case`` (e.g.
     ``$maxRetries`` becomes ``max-retries``).
 
 ``shortcut``
@@ -318,11 +316,45 @@ The option mode is inferred from the parameter type and default value:
   automatically converted to the enum case, and autocompletion is provided
   (e.g. ``Format $format = Format::Json`` or ``?Format $format = null``).
 
-.. seealso::
+.. _console-option-constraints:
 
-    The ``#[Option]`` attribute enforces validation rules on type and default
-    value combinations. See :ref:`Option Attribute Constraints <console-option-constraints>`
-    for the complete list of rules and examples.
+The ``#[Option]`` attribute enforces the following rules on the parameter type
+and its default value:
+
+* Options **must always have a default value**. Unlike arguments, options cannot
+  be required because users may not provide them;
+* Nullable bool options (``?bool``) cannot have a ``true`` or ``false`` default.
+  Use ``null`` as the default to enable the negatable behavior;
+* Nullable non-bool options (e.g. ``?string``) must have ``null`` as the default value;
+* Union types are only allowed for ``string|bool``, ``int|bool`` and ``float|bool``,
+  and must have ``false`` as the default value.
+
+Examples of valid option definitions::
+
+    public function __invoke(
+        #[Option] bool $verbose = false,          // VALUE_NONE
+        #[Option] bool $colors = true,            // VALUE_NEGATABLE (--colors or --no-colors)
+        #[Option] ?bool $debug = null,            // VALUE_NEGATABLE (--debug or --no-debug)
+        #[Option] string $format = 'json',        // VALUE_REQUIRED
+        #[Option] ?string $filter = null,         // VALUE_REQUIRED (optional value)
+        #[Option] int $limit = 10,                // VALUE_REQUIRED
+        #[Option] array $roles = [],              // VALUE_IS_ARRAY
+        #[Option] string|bool $output = false,    // VALUE_OPTIONAL (--output or --output=file.txt)
+    ): int {
+        // ...
+    }
+
+Examples of **invalid** option definitions::
+
+    public function __invoke(
+        #[Option] string $format,                 // ERROR: no default value
+        #[Option] ?bool $debug = true,            // ERROR: nullable bool with true default
+        #[Option] ?string $filter = 'default',    // ERROR: nullable with non-null default
+        #[Option] string|bool $output = true,     // ERROR: union type with true default
+        #[Option] array|bool $items = false,      // ERROR: unsupported union type
+    ): int {
+        // ...
+    }
 
 Using the Classic addOption() Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -797,74 +829,114 @@ following order during the interactive phase:
     Interactive prompts only run when the command is executed in interactive
     mode. They are skipped when using the ``--no-interaction`` (``-n``) option.
 
-Options with optional arguments
--------------------------------
+.. _options-with-optional-arguments:
 
-There is nothing forbidding you to create a command with an option that
-optionally accepts a value, but it's a bit tricky. Consider this example::
+Options with Optional Values
+----------------------------
 
-    // ...
-    use Symfony\Component\Console\Input\InputOption;
-
-    $this
-        // ...
-        ->addOption(
-            'yell',
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'Should I yell while greeting?'
-        )
-    ;
-
-This option can be used in 3 ways: ``greet --yell``, ``greet --yell=louder``,
-and ``greet``. However, it's hard to distinguish between passing the option
-without a value (``greet --yell``) and not passing the option (``greet``).
-
-To solve this issue, you have to set the option's default value to ``false``::
+An option can accept a value optionally. Define it with a union type such as
+``string|bool`` and ``false`` as the default value::
 
     // ...
-    use Symfony\Component\Console\Input\InputOption;
-
-    $this
+    public function __invoke(
+        #[Option(description: 'Should I yell while greeting?')]
+        string|bool $yell = false,
+    ): int {
         // ...
-        ->addOption(
-            'yell',
-            null,
-            InputOption::VALUE_OPTIONAL,
-            'Should I yell while greeting?',
-            false // this is the new default value, instead of null
-        )
-    ;
+    }
 
-Now it's possible to differentiate between not passing the option and not
-passing any value for it::
+This option can be used in three ways and the parameter receives a different
+value in each case:
 
-    $optionValue = $input->getOption('yell');
-    if (false === $optionValue) {
-        // in this case, the option was not passed when running the command
-        $yell = false;
-        $yellLouder = false;
-    } elseif (null === $optionValue) {
-        // in this case, the option was passed when running the command
-        // but no value was given to it
-        $yell = true;
-        $yellLouder = false;
-    } else {
-        // in this case, the option was passed when running the command and
-        // some specific value was given to it
-        $yell = true;
-        if ('louder' === $optionValue) {
-            $yellLouder = true;
-        } else {
-            $yellLouder = false;
+* ``greet``: the option was not passed, so ``$yell`` is ``false``;
+* ``greet --yell``: the option was passed without a value, so ``$yell`` is ``true``;
+* ``greet --yell=louder``: the option was passed with a value, so ``$yell`` is
+  the string ``'louder'``.
+
+.. note::
+
+    When using the classic ``addOption()`` method, define the option with the
+    ``InputOption::VALUE_OPTIONAL`` mode and ``false`` as its default value.
+    Then, ``$input->getOption('yell')`` returns ``false`` when the option is not
+    passed, ``null`` when it's passed without a value and the string otherwise.
+
+.. _console-input-parsing:
+
+How Arguments and Options Are Parsed
+------------------------------------
+
+Symfony Console applications follow the same `docopt standard`_ used in most
+CLI utility tools. This section explains how the input is parsed in edge cases,
+such as when a command defines options with required values, optional values,
+etc. Have a look at the following command that defines three options::
+
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+
+    #[AsCommand(name: 'demo:args', description: 'Describe args behaviors')]
+    class DemoArgsCommand
+    {
+        public function __invoke(
+            // option without a value
+            #[Option(shortcut: 'f')] bool $foo = false,
+            // option with a required value
+            #[Option(shortcut: 'b')] string $bar = '',
+            // option with an optional value
+            #[Option(shortcut: 'c')] string|bool $cat = false,
+        ): int {
+            // ...
         }
     }
 
-The above code can be simplified as follows because ``false !== null``::
+Since the ``foo`` option doesn't accept a value, it will be either ``false``
+(when it is not passed to the command) or ``true`` (when ``--foo`` was passed
+by the user). The value of the ``bar`` option (and its ``b`` shortcut respectively)
+is required. It can be separated from the option name either by spaces or
+``=`` characters. The ``cat`` option (and its ``c`` shortcut) behaves similar
+except that it doesn't require a value. Have a look at the following table
+to get an overview of the possible ways to pass options:
 
-    $optionValue = $input->getOption('yell');
-    $yell = ($optionValue !== false);
-    $yellLouder = ($optionValue === 'louder');
+=====================  =========  ============  ============
+Input                  ``foo``    ``bar``       ``cat``
+=====================  =========  ============  ============
+``--bar=Hello``        ``false``  ``"Hello"``   ``false``
+``--bar Hello``        ``false``  ``"Hello"``   ``false``
+``-b=Hello``           ``false``  ``"=Hello"``  ``false``
+``-b Hello``           ``false``  ``"Hello"``   ``false``
+``-bHello``            ``false``  ``"Hello"``   ``false``
+``-fcWorld -b Hello``  ``true``   ``"Hello"``   ``"World"``
+``-cfWorld -b Hello``  ``false``  ``"Hello"``   ``"fWorld"``
+``-cbWorld``           ``false``  ``""``        ``"bWorld"``
+=====================  =========  ============  ============
+
+Things get a little bit more tricky when the command also accepts an optional
+argument::
+
+    // ...
+    public function __invoke(
+        // ...
+        #[Argument] ?string $arg = null,
+    ): int {
+        // ...
+    }
+
+You might have to use the special ``--`` separator to separate options from
+arguments. Have a look at the fifth example in the following table where it
+is used to tell the command that ``World`` is the value for ``arg`` and not
+the value of the optional ``cat`` option:
+
+==============================  =================  ===========  ===========
+Input                           ``bar``            ``cat``      ``arg``
+==============================  =================  ===========  ===========
+``--bar Hello``                 ``"Hello"``        ``false``    ``null``
+``--bar Hello World``           ``"Hello"``        ``false``    ``"World"``
+``--bar "Hello World"``         ``"Hello World"``  ``false``    ``null``
+``--bar Hello --cat World``     ``"Hello"``        ``"World"``  ``null``
+``--bar Hello --cat -- World``  ``"Hello"``        ``true``     ``"World"``
+``-b Hello -c World``           ``"Hello"``        ``"World"``  ``null``
+==============================  =================  ===========  ===========
 
 Fetching The Raw Command Input
 ------------------------------
@@ -875,9 +947,10 @@ you want to parse the input yourself or when you need to pass the input to anoth
 command without having to worry about the number of arguments or options::
 
     // ...
+    use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Process\Process;
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function __invoke(InputInterface $input): int
     {
         // if this command was run as:
         // php bin/console app:my-command foo --bar --baz=3 --qux=value1 --qux=value2
@@ -1026,7 +1099,7 @@ to help you unit test the completion logic::
         public function testComplete(): void
         {
             $application = new Application();
-            $application->add(new GreetCommand());
+            $application->addCommand(new GreetCommand());
 
             // create a new tester with the greet command
             $tester = new CommandCompletionTester($application->get('app:greet'));

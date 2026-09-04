@@ -110,7 +110,7 @@ The progress will then be displayed as a throbber:
 .. tip::
 
     An alternative to this is to use a
-    :doc:`/components/console/helpers/progressindicator` instead of a
+    :doc:`/console/helpers/progressindicator` instead of a
     progress bar.
 
 Whenever your task is finished, don't forget to call
