@@ -789,7 +789,7 @@ Page-Specific CSS & JavaScript
 ------------------------------
 
 Sometimes you may choose to include CSS or JavaScript files only on certain
-pages. For JavaScript, an easy way is to load the file with a `dynamic import`_:
+pages. For JavaScript, one way is to load the file with a `dynamic import`_:
 
 .. code-block:: javascript
 
