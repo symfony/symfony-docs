@@ -1053,18 +1053,14 @@ Now you can import the package as usual:
 Going to Production
 -------------------
 
-The AssetMapper component is production ready and performant: it leverages
-advances in browser technology (like importmaps and native ``import`` support)
-and web servers (like HTTP/2, which allows assets to be downloaded in parallel).
-The https://ux.symfony.com site runs on the AssetMapper component and has a 99%
-Google Lighthouse score.
+The AssetMapper component is production ready. It relies on features that all
+modern browsers support natively (importmaps and ``import`` statements) and on
+HTTP/2 and HTTP/3, which let the browser download many small files in parallel.
 
-For the same reason, the component doesn't combine assets. In the past, this was
-a common way to reduce the number of HTTP requests. Thanks to advances in web
-servers like HTTP/2, it's typically not a problem to keep your assets separate
-and let the browser download them in parallel. In fact, by keeping them separate,
-when you update one asset, the browser can continue to use the cached version of
-all of your other assets.
+That's also why the component doesn't combine assets into a single file. This
+was common in the past to reduce the number of HTTP requests, but it no longer
+improves performance. Keeping assets separate also improves caching: when you
+update one file, the browser keeps using the cached versions of all the others.
 
 .. _asset-mapper-deployment:
 .. _asset-mapper-compile-assets:
