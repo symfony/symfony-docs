@@ -176,7 +176,7 @@ How does the importmap Work?
 All of this works thanks to the ``{{ importmap() }}`` Twig function in
 ``base.html.twig``, which outputs an `importmap`_ (shown here with a
 third-party ``bootstrap`` package, which you'll learn to
-:ref:`add in a few sections <importmaps-thirdparty>`):
+:ref:`add later in this article <importmaps-thirdparty>`):
 
 .. code-block:: html
 
