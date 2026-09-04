@@ -802,8 +802,8 @@ pages. For JavaScript, one way is to load the file with a `dynamic import`_:
     }
 
 Another option is to create a separate :ref:`entrypoint <app-entrypoint>`. For
-example, create a ``checkout.js`` file that contains whatever JavaScript and
-CSS you need:
+example, create a ``checkout.js`` file that imports the JavaScript and CSS
+needed on that page:
 
 .. code-block:: javascript
 
