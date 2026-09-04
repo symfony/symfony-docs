@@ -508,15 +508,15 @@ Mailer Webhooks
 
 Receive delivery and engagement notifications from third-party mailers:
 
-==============  ==========================================
-Mailer Service  Parser service name
-==============  ==========================================
-Brevo           ``mailer.webhook.request_parser.brevo``
-Mailgun         ``mailer.webhook.request_parser.mailgun``
-Mailjet         ``mailer.webhook.request_parser.mailjet``
-Postmark        ``mailer.webhook.request_parser.postmark``
-Sendgrid        ``mailer.webhook.request_parser.sendgrid``
-==============  ==========================================
+==============  ==========================================  ============================================================================================
+Mailer Service  Parser service name                         Supported events
+==============  ==========================================  ============================================================================================
+Brevo           ``mailer.webhook.request_parser.brevo``     :class:`Symfony\\Component\\Mailer\\Bridge\\Brevo\\RemoteEvent\\BrevoPayloadConverter`
+Mailgun         ``mailer.webhook.request_parser.mailgun``   :class:`Symfony\\Component\\Mailer\\Bridge\\Mailgun\\RemoteEvent\\MailgunPayloadConverter`
+Mailjet         ``mailer.webhook.request_parser.mailjet``   :class:`Symfony\\Component\\Mailer\\Bridge\\Mailjet\\RemoteEvent\\MailjetPayloadConverter`
+Postmark        ``mailer.webhook.request_parser.postmark``  :class:`Symfony\\Component\\Mailer\\Bridge\\Postmark\\RemoteEvent\\PostmarkPayloadConverter`
+Sendgrid        ``mailer.webhook.request_parser.sendgrid``  :class:`Symfony\\Component\\Mailer\\Bridge\\Sendgrid\\RemoteEvent\\SendgridPayloadConverter`
+==============  ==========================================  ============================================================================================
 
 .. versionadded:: 6.4
 
@@ -570,6 +570,15 @@ The routing name becomes part of your webhook URL (e.g.,
 ``https://example.com/webhook/mailer_mailgun``). Configure this URL at your
 mailer provider and store the webhook secret in your environment (via the
 :doc:`secrets management system </configuration/secrets>` or in a ``.env`` file).
+
+.. warning::
+
+    At your mailer provider, subscribe only to the events supported by the
+    Symfony bridge you use, instead of subscribing to all of them. Mailer
+    providers may add new event types, and the webhook endpoint answers with a
+    ``406`` HTTP status code for any event the bridge cannot convert into a
+    :class:`Symfony\\Component\\RemoteEvent\\RemoteEvent` object. The payload
+    converter of each bridge lists the events it supports (see the table above).
 
 Then create a consumer to handle delivery and engagement events::
 
