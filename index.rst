@@ -39,6 +39,7 @@ Topics
     html_sanitizer
     http_cache
     http_client
+    key-management
     lock
     logging
     mailer
