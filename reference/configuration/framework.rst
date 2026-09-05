@@ -1601,6 +1601,22 @@ Specifies whether the client can force a cache revalidate by including a
 Cache-Control "max-age=0" directive in the request. Set it to ``true``
 for compliance with RFC 2616.
 
+.. _reference-http-cache-cache-status:
+
+cache_status
+............
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 8.2
+
+    The ``cache_status`` option was introduced in Symfony 8.2.
+
+Enables the `RFC 9211`_ ``Cache-Status`` response header and names this cache
+in it. No header is added when this option is ``null``. Read
+:ref:`Reporting the cache status <http-cache-status>` for the details of what
+the header reports.
+
 debug
 .....
 
@@ -5537,3 +5553,4 @@ to know their differences.
 .. _`shared cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#shared_cache
 .. _`private cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#private_caches
 .. _`W3C Sanitizer API standard`: https://wicg.github.io/sanitizer-api/#default-configuration
+.. _`RFC 9211`: https://www.rfc-editor.org/rfc/rfc9211.html

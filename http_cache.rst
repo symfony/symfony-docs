@@ -121,6 +121,82 @@ cache efficiency of your routes.
     You can change the name of the header used for the trace
     information using the ``trace_header`` config option.
 
+.. _http-cache-status:
+
+Reporting the Cache Status
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``cache_status`` option was introduced in Symfony 8.2.
+
+The traces above are meant for development. In production, the reverse proxy can
+report how it handled the request in the standard `RFC 9211`_ ``Cache-Status``
+response header, which is understood by other caches and by monitoring tools.
+Set the :ref:`cache_status <reference-http-cache-cache-status>` option to the
+name identifying this cache:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_cache:
+                cache_status: 'Symfony'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_cache' => [
+                    'cache_status' => 'Symfony',
+                ],
+            ],
+        ]);
+
+Responses then carry a header such as ``Cache-Status: Symfony; hit; ttl=58``.
+The name can be anything identifying the cache: a product name, a hostname or a
+generated string. The option is ``null`` by default and no header is emitted
+then.
+
+The status reported for the main request is one of the following:
+
+===================  =========================================================
+Reported as          When
+===================  =========================================================
+``hit``              the response was served from the cache
+``fwd=method``       the request method is not cacheable
+``fwd=bypass``       the cache was bypassed
+``fwd=request``      the client forced a reload
+``fwd=stale``        a stored response was revalidated, invalidated or served
+                     stale because the backend failed
+``fwd=miss``         nothing matching was stored
+===================  =========================================================
+
+A ``hit`` carries a ``ttl`` parameter: the remaining freshness lifetime of the
+served response, in seconds. It is negative when a stale response is served, as
+the RFC uses that to signal staleness, so ``ttl=-12`` and ``ttl=0`` do not mean
+the same thing.
+
+A forward carries ``stored`` when the response coming back was stored, and
+``fwd-status`` when the backend answered with a different status than the one
+sent to the client. A successful revalidation therefore reports
+``Cache-Status: Symfony; fwd=stale; fwd-status=304; stored``.
+
+As the RFC requires, the member is appended to any ``Cache-Status`` header
+received from the backend instead of replacing it, so in a chain of caches each
+one adds its own member and the reader sees the origin first.
+
+.. warning::
+
+    This option is disabled by default because it changes the responses of an
+    existing application, and because section 6 of `RFC 9211`_ notes that
+    exposing the behavior of a cache helps an attacker probe it.
+
 .. _http-cache-symfony-versus-varnish:
 
 .. sidebar:: Changing from one Reverse Proxy to another
@@ -387,3 +463,4 @@ Learn more
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/
 .. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4
+.. _`RFC 9211`: https://www.rfc-editor.org/rfc/rfc9211.html
