@@ -198,6 +198,28 @@ applied but the constraints defined in ``otherwise`` option (if provided) will b
     object that provides information such as the currently validated class, the
     name of the currently validated property, the list of violations, etc.
 
+When the :doc:`Security component </security>` is available, you can also use
+the ``is_granted()``, ``is_authenticated()``, ``is_fully_authenticated()`` and
+``is_remember_me()`` functions to condition the validation on the current
+authorization state, like in :ref:`Twig templates <security-template>`::
+
+    #[Assert\When(
+        expression: 'is_granted("ROLE_ADMIN")',
+        constraints: [new Assert\NotBlank()],
+    )]
+    protected string $adminField = '';
+
+.. note::
+
+    The security functions can only be evaluated inside a request: using them
+    in a console command or a message worker throws an exception, as there is
+    no security context to check there.
+
+.. versionadded:: 8.2
+
+    Support for the security functions in validation expressions was
+    introduced in Symfony 8.2.
+
 **When using a closure**, the first argument is the object being validated.
 
 .. note::

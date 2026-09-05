@@ -243,6 +243,25 @@ in your expression:
 You also have access to the ``is_valid()`` function in your expression. This function
 checks that the data passed to the function doesn't raise any validation violations.
 
+When the :doc:`Security component </security>` is available, you can also use
+the ``is_granted()``, ``is_authenticated()``, ``is_fully_authenticated()`` and
+``is_remember_me()`` functions to condition the validation on the current
+authorization state, like in :ref:`Twig templates <security-template>`::
+
+    #[Assert\Expression('is_authenticated() and value != ""')]
+    protected string $field = '';
+
+.. note::
+
+    The security functions can only be evaluated inside a request: using them
+    in a console command or a message worker throws an exception, as there is
+    no security context to check there.
+
+.. versionadded:: 8.2
+
+    Support for the security functions in validation expressions was
+    introduced in Symfony 8.2.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
