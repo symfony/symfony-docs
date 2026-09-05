@@ -728,6 +728,75 @@ Alternatively, you can pass multiple addresses to each method::
         // ...
     ;
 
+.. _mailer-address-groups:
+
+Groups of Addresses
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``Group`` class was introduced in Symfony 8.2.
+
+The email specification (`RFC 5322`_) allows listing several addresses under a
+single display name, which email clients show as a group. The ``to()``,
+``cc()`` and similar methods only take individual addresses, so add a
+:class:`Symfony\\Component\\Mime\\Group` object to the header yourself::
+
+    use Symfony\Component\Mime\Address;
+    use Symfony\Component\Mime\Group;
+
+    $email = new Email()
+        ->from('fabien@example.com')
+        ->subject('Dinner on Friday')
+        ->text('...')
+    ;
+
+    $email->getHeaders()->addMailboxListHeader('To', [
+        new Group('Friends', [
+            'helene@example.com',
+            new Address('thomas@example.com', 'Thomas'),
+        ]),
+        'fabien@example.com',
+    ]);
+
+The message then includes the following header:
+
+.. code-block:: text
+
+    To: Friends: helene@example.com, Thomas <thomas@example.com>;, fabien@example.com
+
+The addresses of a group are recipients like any other, so the message is
+delivered to all of them. A group without any address defines no recipient,
+which is the standard way of hiding the recipients of a message you send to
+people listed in ``Bcc`` only::
+
+    // this results in the "To: undisclosed-recipients:;" header
+    $headers = $email->getHeaders();
+    $headers->addMailboxListHeader('To', [new Group('undisclosed-recipients')]);
+
+Groups are allowed in the ``To``, ``Cc``, ``Bcc`` and ``Reply-To`` headers, and
+also in the ``From`` header since `RFC 6854`_. That last use is restricted by
+the specification, which tells email clients not to allow it in the messages
+they send, so only use it when you know your recipients handle it. The
+``Sender`` header still requires a single address.
+
+.. warning::
+
+    A ``From`` group with no address leaves the message without any author
+    address, which Symfony needs to generate the ``Message-ID`` header and to
+    define the sender of the SMTP envelope. Define a sender in that case::
+
+        $headers = $email->getHeaders();
+        $headers->addMailboxListHeader('From', [new Group('Automated System')]);
+        $email->sender('robot@example.com');
+
+.. tip::
+
+    When reading a mailbox list header back, the ``getAddresses()`` method
+    returns all of its addresses, including the ones inside groups. Use the
+    ``getAddressList()`` method to get the groups themselves instead of their
+    contents.
+
 Message Headers
 ~~~~~~~~~~~~~~~
 
@@ -2533,3 +2602,5 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`RFC 6047`: https://www.ietf.org/rfc/rfc6047.txt
 .. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sweego/README.md
 .. _`TurboSMTP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/TurboSmtp/README.md
+.. _`RFC 5322`: https://www.ietf.org/rfc/rfc5322.txt
+.. _`RFC 6854`: https://www.ietf.org/rfc/rfc6854.txt
