@@ -675,8 +675,8 @@ app
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.system``,
 ``cache.adapter.filesystem``, ``cache.adapter.psr6``, ``cache.adapter.redis``,
-``cache.adapter.memcached``, ``cache.adapter.pdo`` and
-``cache.adapter.doctrine_dbal``.
+``cache.adapter.memcached``, ``cache.adapter.mongodb``, ``cache.adapter.pdo``
+and ``cache.adapter.doctrine_dbal``.
 
 There's also a special adapter called ``cache.adapter.array`` which stores
 contents in memory using a PHP array and it's used to disable caching (mostly on
@@ -713,6 +713,18 @@ default_memcached_provider
 
 The DSN used by the Memcached provider. The provider is available as the ``cache.default_memcached_provider``
 service.
+
+default_mongodb_provider
+........................
+
+**type**: ``string`` **default**: ``mongodb://localhost/app``
+
+The DSN to use by the MongoDB provider. The provider is available as the ``cache.default_mongodb_provider``
+service.
+
+.. versionadded:: 8.2
+
+    The ``default_mongodb_provider`` option was introduced in Symfony 8.2.
 
 default_pdo_provider
 ....................
