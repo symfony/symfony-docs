@@ -241,6 +241,33 @@ same dependencies::
 Each annotated method becomes an independent command that can be run, listed
 and tested separately.
 
+When the class itself has the ``#[AsCommand]`` attribute, its name is used as
+the prefix of the names declared on the methods, like a ``#[Route]`` attribute
+on a controller class prefixes the routes of its methods. The following class
+also registers the ``app:user:create`` and ``app:user:delete`` commands::
+
+    #[AsCommand('app:user')]
+    class UserCommands
+    {
+        #[AsCommand('create')]
+        public function create(OutputInterface $output): int
+        {
+            // ...
+        }
+
+        #[AsCommand('delete', aliases: ['remove'])]
+        public function delete(OutputInterface $output): int
+        {
+            // ...
+        }
+    }
+
+The prefix also applies to the aliases (``app:user:remove`` in this example).
+If the class defines an ``__invoke()`` method, it's registered as the
+``app:user`` command as usual; otherwise, the class-level attribute only
+provides the prefix. When the class-level attribute sets ``hidden: true``, all
+the method-based commands are hidden too.
+
 .. note::
 
     When using the Console component without the service container, you can
