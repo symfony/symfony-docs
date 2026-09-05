@@ -2600,6 +2600,20 @@ the built-in ``is_granted_for_user()`` helper function:
         <a href="...">Delete</a>
     {% endif %}
 
+Pass ``null`` instead of a user to check what a guest is allowed to do. The
+attribute is voted on with no user and no roles, which is what your voters see
+for a visitor who is not logged in:
+
+.. code-block:: twig
+
+    {% if is_granted_for_user(null, 'view', post) %}
+        {# this post is public #}
+    {% endif %}
+
+.. versionadded:: 8.2
+
+    Support for passing ``null`` as the user was introduced in Symfony 8.2.
+
 Symfony also provides the ``access_decision()`` and ``access_decision_for_user()``
 Twig functions to check authorization and to retrieve the reasons for denying
 permission in :ref:`your custom security voters <creating-the-custom-voter>`:
@@ -2668,6 +2682,18 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
     If you need to check authorization for a different user or when the user session
     is unavailable (e.g., in a CLI context such as a message queue or cron job), you
     can use the ``isGrantedForUser()`` method to explicitly set the target user.
+
+    Passing ``null`` as the user checks a guest's permissions instead. This
+    differs from ``isGranted()`` with nobody logged in: ``isGrantedForUser()``
+    never reads the token storage, so it answers the same way in a CLI context
+    as it does during a request::
+
+        // is this post readable by someone who is not logged in?
+        $this->security->isGrantedForUser(null, 'view', $post);
+
+    .. versionadded:: 8.2
+
+        Support for passing ``null`` as the user was introduced in Symfony 8.2.
 
 You can also use the ``getAccessDecision()`` and ``getAccessDecisionForUser()``
 methods to check authorization and retrieve the reasons for denying
