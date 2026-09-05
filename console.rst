@@ -241,6 +241,38 @@ same dependencies::
 Each annotated method becomes an independent command that can be run, listed
 and tested separately.
 
+If you also add the ``#[AsCommand]`` attribute to the class, its name becomes
+the prefix of the command names defined in the methods (in the same way as a
+``#[Route]`` attribute on a controller class prefixes the routes of its
+methods). The following class registers the same ``app:user:create`` and
+``app:user:delete`` commands as the previous example::
+
+    #[AsCommand('app:user')]
+    class UserCommands
+    {
+        #[AsCommand('create')]
+        public function create(OutputInterface $output): int
+        {
+            // ...
+        }
+
+        #[AsCommand('delete', aliases: ['remove'])]
+        public function delete(OutputInterface $output): int
+        {
+            // ...
+        }
+    }
+
+The prefix is also added to the command aliases (the alias of the second
+command is ``app:user:remove``). Method-level names must be relative to the
+prefix: using ``app:user:create`` instead of ``create`` in the previous example
+throws an exception.
+
+If the class defines an ``__invoke()`` method, Symfony also registers it as the
+``app:user`` command; otherwise, the class-level attribute only defines the
+prefix. In addition, if the class-level attribute sets ``hidden: true``, all
+the method-based commands are hidden too.
+
 .. note::
 
     When using the Console component without the service container, you can
