@@ -643,9 +643,28 @@ Vault locally in dev mode.
 
 The ``$aad`` argument is forwarded as Vault's ``context`` parameter (HKDF
 context, base64-encoded). It works for keys created with ``derived=true``
-and is rejected on plain symmetric keys. Vault Transit does not support
-deterministic encryption per call; the ``convergent_encryption`` feature is
-set at key creation, not negotiated per request.
+and is rejected on plain symmetric keys: Vault does not reject a context on
+a non-derived key, it ignores it, so a ciphertext bound to one tenant would
+decrypt under another. The bridge therefore reads the key configuration once
+per key (``GET <mount>/keys/<name>``) whenever the AAD is non-empty, and
+throws
+:class:`Symfony\\Component\\KeyManagement\\Exception\\UnsupportedOperationException`
+when the key cannot enforce it.
+
+That read is a capability of its own, so a least-privilege token limited to
+the encryption endpoints stops working as soon as an AAD is passed:
+
+.. code-block:: text
+
+    path "transit/encrypt/*"           { capabilities = ["update"] }
+    path "transit/decrypt/*"           { capabilities = ["update"] }
+    path "transit/datakey/plaintext/*" { capabilities = ["update"] }
+    # only needed when AAD is used, to tell derived keys from non-derived ones
+    path "transit/keys/*"              { capabilities = ["read"] }
+
+Vault Transit does not support deterministic encryption per call; the
+``convergent_encryption`` feature is set at key creation, not negotiated per
+request.
 
 Flysystem
 ~~~~~~~~~
@@ -716,9 +735,25 @@ lives, which is what spares the round trips. That also means the store holds
 plaintext key material in memory: ``forget()`` drops it, and the Symfony
 wiring calls it between two units of work through the ``kernel.reset`` tag.
 
-This bridge requires Doctrine DBAL >= 4.5 (4.3 lifted the ``final``
-constructor on ``Type``, which the encrypted type needs, and 4.5 brought the
-schema editor the data key store uses).
+This bridge requires Doctrine DBAL >= 4.3, the release that lifted the
+``final`` constructor on ``Type`` the encrypted type decorates. The data key
+store describes its table through the schema editor of DBAL >= 4.5 when it is
+available and through the previous API below it; both produce the same table.
+
+Doctrine ORM
+~~~~~~~~~~~~
+
+Install the bridge:
+
+.. code-block:: terminal
+
+    $ composer require symfony/doctrine-orm-key-management
+
+It fills the blind index columns of an entity on every flush, from the
+:class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineOrm\\Attribute\\BlindIndexed`
+attribute, and adds the data key store table to the schema the ORM generates
+so ``doctrine:schema:update`` and the migrations diff know about it. See
+:ref:`key-management-blind-index-doctrine` in the framework documentation.
 
 .. _key-management-wire-format:
 
@@ -773,7 +808,9 @@ Memory Wiping
 Plaintext data keys returned by
 :method:`Symfony\\Component\\KeyManagement\\DataKeyGeneratorInterface::generateDataKey`
 are wrapped in a :class:`Symfony\\Component\\KeyManagement\\DataKey` instance whose
-plaintext is **not** exposed as a public field. Access is mediated by
+plaintext is not a field at all, so that no dump of the object can print it:
+``var_dump()``, ``print_r()``, ``var_export()`` and the VarDumper cloner have
+nothing to reach, and ``serialize()`` throws. Access is mediated by
 :method:`Symfony\\Component\\KeyManagement\\DataKey::use`, which passes the bytes to
 a caller-provided closure and releases the reference as soon as the closure
 returns or throws::
@@ -785,9 +822,11 @@ returns or throws::
     });
 
 When the ``sodium`` extension is available, ``sodium_memzero()`` clears the
-underlying PHP zval before the reference is dropped. Without sodium, PHP
-offers no in-place zeroing primitive, so the property is just nulled and
-the engine releases the buffer.
+underlying buffer before the reference is dropped, but only while nothing
+else holds it: PHP declines to zero a string another variable shares rather
+than blank it under that other holder. Without sodium there is no in-place
+zeroing primitive at all, so the holder is only dropped and the engine
+releases the buffer when it gets to it.
 
 PHP strings are reference-counted with copy-on-write, so a consumer that
 returns the plaintext, or keeps it anywhere, leaves the wipe with nothing to

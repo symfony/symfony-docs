@@ -40,6 +40,9 @@ Then install one or more bridges depending on where your master keys live:
     # Column-level envelope encryption and data key storage with Doctrine
     $ composer require symfony/doctrine-dbal-key-management
 
+    # Blind index columns filled on flush, and the store table in the ORM schema
+    $ composer require symfony/doctrine-orm-key-management
+
 The component itself ships local backends (libsodium XChaCha20-Poly1305,
 OpenSSL AES-256-GCM, sealed box) suitable for development, tests and
 self-hosted setups.
@@ -102,9 +105,21 @@ Scheme                        Required package                           Backend
 ``sodium+fly://``             ``symfony/flysystem-key-management``       XChaCha20 + Flysystem-loaded keys
 ``openssl+fly://``            ``symfony/flysystem-key-management``       AES-256-GCM + Flysystem-loaded keys
 ``sodium-sealed-box+fly://``  ``symfony/flysystem-key-management``       Sealed box + Flysystem-loaded keys
+``service://<id>``            ``symfony/framework-bundle``               A client the application built itself
 ============================  =========================================  =======================================
 
 See :doc:`/components/key-management` for the syntax and options of each scheme.
+The bridges reject any query option they do not know, so a typo in one of
+their DSNs is an error rather than a setting that is silently ignored.
+
+``service://<id>`` is the odd one out: it names a service the application
+defined itself, so that a backend Symfony does not ship is declared like any
+other client. It keeps the tag the console commands look clients up by, gets
+an envelope encrypter of its own and is decorated by the profiler, which an
+alias would not. It is resolved while the container is built, which is also
+why it cannot come from an environment variable: a value unknown until
+runtime cannot reference a service, and such a DSN is reported as an
+unsupported scheme.
 
 Local backends require their respective extension at runtime: ``ext-openssl``
 for ``openssl://``/``openssl+dir://``/``openssl+fly://``, ``ext-sodium`` for
@@ -195,8 +210,10 @@ handful of rows:
                     connection: 'doctrine.dbal.default_connection'
                     table: 'key_management_data_keys'
                     # seconds after which the current data key of a scope is
-                    # retired in favour of a fresh one; null keeps it in use
-                    max_age: null
+                    # retired in favour of a fresh one; the default of 30 days
+                    # keeps what one key seals under the collision bound of the
+                    # random 96-bit IV each payload carries
+                    max_age: 2592000
 
     .. code-block:: php
 
@@ -235,8 +252,11 @@ encrypter as a fallback so it reads the payloads written before it as well
 as the ones it writes. The per-client encrypters stay reachable under their
 own name (see `Service IDs`_) for whoever wants the other regime explicitly.
 
-The table is not created for you. Either declare it in your own migration,
-or call ``createTable()`` on the store once::
+With ``symfony/doctrine-orm-key-management`` installed, the table joins the
+schema the ORM generates, so ``doctrine:schema:update`` and a migration diff
+see it like any mapped table instead of proposing to drop it. Without that
+package, declare it in your own migration or call ``createTable()`` on the
+store once::
 
     use Symfony\Component\DependencyInjection\Attribute\Autowire;
     use Symfony\Component\KeyManagement\Bridge\DoctrineDbal\DataKeyStore;
@@ -379,6 +399,17 @@ The unqualified interfaces (``EncrypterInterface``,
 ``EnvelopeEncrypterInterface``, ...) are aliased to the default client so
 type-hinted services pick it up without further wiring.
 
+Profiling
+---------
+
+When the profiler is enabled, every configured client, envelope encrypter
+and store is decorated so that a request reports what it asked of the KMS.
+The **Key Management** panel lists the operations of the request: what each
+call site asked for, the key or scope it went through, the bytes in and out,
+and the time it took. It is the quickest way to see that a store is doing
+its job, one round trip for many encrypted values rather than one per
+value.
+
 Console Commands
 ----------------
 
@@ -494,6 +525,12 @@ it back through the same ``Type``, decrypts it via the configured
 ``EnvelopeDecrypterInterface``, and feeds the plaintext to the parent
 type's ``convertToPHPValue()``.
 
+The column is always declared as an unbounded blob, and a ``length`` on the
+mapping is ignored on purpose: an envelope is a hundred bytes or so larger
+than the value it holds, and a bounded column sized after the plaintext
+truncates it. On MySQL and MariaDB outside strict mode that truncation is a
+warning rather than an error, and it leaves a row that no longer decrypts.
+
 .. warning::
 
     The registration must happen before the first query, on every request.
@@ -511,7 +548,7 @@ encrypter, and rows written afterwards refer to the stored key. Rewrapping
 that key later moves the whole column to another master key, or another
 provider, without touching a single row.
 
-This bridge requires Doctrine DBAL >= 4.5.
+This bridge requires Doctrine DBAL >= 4.3.
 
 .. _key-management-blind-index-doctrine:
 
@@ -559,13 +596,13 @@ wrapped in the configuration:
         };
 
 Then say, on the column that holds the tag, where its value comes from. A
-listener shipped by ``symfony/doctrine-bridge`` then fills it on every flush,
-so no write path has to remember it::
+listener shipped by ``symfony/doctrine-orm-key-management`` then fills it on
+every flush, so no write path has to remember it::
 
     // src/Entity/User.php
     use Doctrine\ORM\Mapping as ORM;
-    use Symfony\Bridge\Doctrine\Attribute\BlindIndexed;
     use Symfony\Component\KeyManagement\BlindIndex\Email;
+    use Symfony\Component\KeyManagement\Bridge\DoctrineOrm\Attribute\BlindIndexed;
 
     #[ORM\Entity]
     #[ORM\Index(columns: ['email_index'])]
