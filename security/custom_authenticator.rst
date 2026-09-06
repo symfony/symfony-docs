@@ -201,6 +201,44 @@ can define what happens in these cases:
     so that it dispatches an
     :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 
+Explaining Why an Authenticator Did Not Support the Request
+-----------------------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``UnsupportedReasons`` collector was introduced in Symfony 8.2.
+
+When ``supports()`` returns ``false``, the **Security** panel of the
+:doc:`profiler </profiler>` reports that the authenticator was skipped, but not
+why. Authenticators can explain their answer by adding one or more reasons to
+the :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Debug\\UnsupportedReasons`
+collector, which the profiler then displays next to the authenticator::
+
+    use Symfony\Component\Security\Http\SecurityRequestAttributes;
+
+    public function supports(Request $request): ?bool
+    {
+        $reasons = $request->attributes->get(SecurityRequestAttributes::UNSUPPORTED_REASONS);
+
+        if (!$request->headers->has('auth-token')) {
+            $reasons?->add('the "auth-token" header is missing');
+
+            return false;
+        }
+
+        return true;
+    }
+
+The collector only exists while the profiler is enabled: outside of it, the
+request attribute is absent and the null-safe operator turns the call into a
+no-op, so reporting reasons costs nothing in production. This also means the
+reasons are a debugging aid and must never be relied on at runtime.
+
+The authenticators shipped with Symfony report their own reasons, so the
+profiler already explains why, for instance,
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\FormLoginAuthenticator`
+skipped a request whose path did not match the ``check_path`` option.
+
 .. _security-passport:
 
 Security Passports
