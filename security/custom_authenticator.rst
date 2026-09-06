@@ -201,6 +201,49 @@ can define what happens in these cases:
     so that it dispatches an
     :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 
+.. _security-unsupported-reasons:
+
+Explaining Why an Authenticator Skipped a Request
+-------------------------------------------------
+
+When ``supports()`` returns ``false``, the **Security** panel of the
+:doc:`profiler </profiler>` shows that the authenticator skipped the request,
+but not why. To explain it, add one or more reasons to the
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Debug\\UnsupportedReasons`
+object stored in a request attribute. The profiler displays them next to the
+authenticator::
+
+    // src/Security/ApiKeyAuthenticator.php
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Http\SecurityRequestAttributes;
+
+    public function supports(Request $request): ?bool
+    {
+        // this attribute is only set while the profiler is enabled and only
+        // during the supports() call; the rest of the time it's null
+        $reasons = $request->attributes->get(
+            SecurityRequestAttributes::UNSUPPORTED_REASONS
+        );
+
+        if (!$request->headers->has('auth-token')) {
+            // the nullsafe operator makes this call do nothing in production
+            $reasons?->add('the "auth-token" header is missing');
+
+            return false;
+        }
+
+        return true;
+    }
+
+These reasons are only a debugging aid, so don't use them in your application
+logic. The built-in authenticators also report their reasons (e.g.
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\FormLoginAuthenticator`
+tells when the request path doesn't match its ``check_path`` option).
+
+.. versionadded:: 8.2
+
+    The ``UnsupportedReasons`` class was introduced in Symfony 8.2.
+
 .. _security-passport:
 
 Security Passports
