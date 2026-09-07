@@ -2760,11 +2760,23 @@ action to periodically update the ``VisibilityTimeout`` of the message.
 Reading the SQS System Attributes of a Message
 ..............................................
 
-When the transport receives a message, it adds an
+.. versionadded:: 8.2
+
+    The ``AmazonSqsReceivedStamp::getSystemAttributes()`` method was introduced
+    in Symfony 8.2.
+
+When receiving a message, the transport adds an
 :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsReceivedStamp`
-to its envelope. Besides the receipt handle of the message, this stamp gives
-access to the `system attributes`_ that SQS returns with it, such as
-``ApproximateReceiveCount``, ``SentTimestamp`` or ``MessageGroupId``::
+to its envelope. Besides the receipt handle of the message, this stamp provides
+the `system attributes`_ that SQS returns with it, such as ``SentTimestamp``,
+``ApproximateReceiveCount`` or ``MessageGroupId``. Their names and values are
+the same as in the AWS API and all values are strings (timestamps are expressed
+in milliseconds since the Unix epoch).
+
+These attributes are useful, for example, to measure how long messages wait in
+the queue (``SentTimestamp``) or to detect messages that SQS delivered more
+than once (``ApproximateReceiveCount``). Read them in a listener of the
+``WorkerMessageReceivedEvent`` event or in a :ref:`middleware <messenger_middleware>`::
 
     // src/EventListener/SqsDeliveryListener.php
     namespace App\EventListener;
@@ -2785,23 +2797,25 @@ access to the `system attributes`_ that SQS returns with it, such as
         public function __invoke(WorkerMessageReceivedEvent $event): void
         {
             $stamp = $event->getEnvelope()->last(AmazonSqsReceivedStamp::class);
+            // messages received from other transports don't have this stamp
             if (!$stamp instanceof AmazonSqsReceivedStamp) {
                 return;
             }
 
             $attributes = $stamp->getSystemAttributes();
-
-            // SQS returns every attribute as a string
-            if (3 < (int) ($attributes['ApproximateReceiveCount'] ?? 0)) {
-                $this->logger->warning('SQS redelivered this message.');
+            // SQS returns all attribute values as strings
+            $receiveCount = (int) ($attributes['ApproximateReceiveCount'] ?? 1);
+            if (3 < $receiveCount) {
+                $this->logger->warning('SQS delivered this message {count} times.', ['count' => $receiveCount]);
             }
         }
     }
 
-.. versionadded:: 8.2
+.. note::
 
-    The ``AmazonSqsReceivedStamp::getSystemAttributes()`` method was introduced
-    in Symfony 8.2.
+    The transport always requests these attributes and there's no option to
+    disable it. SQS-compatible servers that don't support them ignore the
+    request, so ``getSystemAttributes()`` returns an empty array.
 
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
