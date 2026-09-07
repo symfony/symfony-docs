@@ -117,46 +117,9 @@ element::
 
     var_dump($propertyAccessor->getValue($people, '[*][name]')); // ['Ada', 'Grace']
 
-In a Symfony application, turn this feature on with the
+In a Symfony application, this feature is turned on with the
 :ref:`framework.property_access.wildcard_reads <reference-property-access-wildcard-reads>`
-option:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            property_access:
-                wildcard_reads: true
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:property-access wildcard-reads="true"/>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework): void {
-            $framework->propertyAccess()
-                ->wildcardReads(true)
-            ;
-        };
+option.
 
 The Shape of the Result
 ~~~~~~~~~~~~~~~~~~~~~~~
