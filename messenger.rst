@@ -1053,6 +1053,18 @@ If you install the `PCNTL`_ PHP extension in your project, workers will handle
 the ``SIGTERM`` or ``SIGINT`` POSIX signals to finish processing their current
 message before terminating.
 
+Sending ``SIGINT`` a second time, by pressing ``Ctrl+C`` again, stops
+``messenger:consume`` and ``messenger:failed:retry`` immediately instead of
+waiting for the current message. The command then exits with code ``130``,
+unless something else already set an exit code. This is useful while developing,
+when a handler takes long enough that waiting for it is not worth it; in
+production, let the first signal do its work so the message is not left
+half-processed.
+
+.. versionadded:: 8.2
+
+    Exiting immediately on a second ``SIGINT`` was introduced in Symfony 8.2.
+
 However, you might prefer to use different POSIX signals for graceful shutdown.
 You can override default ones by setting the ``framework.messenger.stop_worker_on_signals``
 configuration option:
