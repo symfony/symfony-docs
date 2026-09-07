@@ -311,6 +311,85 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall`
     see `Enable other Features`_.
 
+.. _components-property-access-wildcard-reads:
+
+Reading Every Element of a Collection
+-------------------------------------
+
+.. versionadded:: 8.2
+
+    Wildcard reads were introduced in Symfony 8.2.
+
+When you need the same value from every item of a collection (e.g. the names
+of all the people in a list), you don't have to loop over the items yourself.
+Enable wildcard reads and use ``[*]`` in the property path to select every
+element of a collection::
+
+    // ...
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
+        ->enableWildcardReads()
+        ->getPropertyAccessor();
+
+    $people = [
+        [
+            'name' => 'Ada',
+            'jobs' => [['title' => 'programmer'], ['title' => 'writer']],
+        ],
+        [
+            'name' => 'Grace',
+            'jobs' => [['title' => 'computer scientist']],
+        ],
+    ];
+
+    var_dump($propertyAccessor->getValue($people, '[*][name]')); // ['Ada', 'Grace']
+
+In a Symfony application, enable this feature with the
+:ref:`framework.property_access.wildcard_reads <reference-property-access-wildcard-reads>`
+option.
+
+The result is a list with one entry per element, in iteration order. Each
+wildcard adds one level of nesting, so the shape of the result depends on the
+path and not on the data::
+
+    // ...
+    var_dump($propertyAccessor->getValue($people, '[*][jobs][*][title]'));
+    // [['programmer', 'writer'], ['computer scientist']]
+
+    // a wildcard at the end of the path returns the elements unchanged
+    var_dump($propertyAccessor->getValue($people, '[0][jobs][*]'));
+    // [['title' => 'programmer'], ['title' => 'writer']]
+
+    // the keys of the collection are not kept
+    $peopleByUsername = [
+        'ada' => ['name' => 'Ada'],
+        'grace' => ['name' => 'Grace'],
+    ];
+    var_dump($propertyAccessor->getValue($peopleByUsername, '[*][name]'));
+    // ['Ada', 'Grace']
+
+    // the rest of the path is read as usual (properties, missing indexes, etc.)
+    $employees = [(object) ['name' => 'Ada'], (object) ['name' => 'Grace']];
+    var_dump($propertyAccessor->getValue($employees, '[*].name'));
+    // ['Ada', 'Grace']
+
+    $members = [['name' => 'Ada'], ['nickname' => 'Amazing Grace']];
+    var_dump($propertyAccessor->getValue($members, '[*][name]')); // ['Ada', null]
+
+Only the index form ``[*]`` is a wildcard; ``.*`` still reads a property named
+``*``. A wildcard expands arrays and any ``Traversable`` object, such as
+``ArrayObject``, Doctrine collections and generators. Any other value,
+including objects that only implement ``ArrayAccess``, can't be expanded:
+``getValue()`` throws an exception and ``isReadable()`` returns ``false``.
+
+Paths containing a wildcard are read-only: ``setValue()`` throws an exception
+and ``isWritable()`` returns ``false``.
+
+.. note::
+
+    When wildcard reads are enabled, use ``[\*]`` to read or write the index
+    named ``*`` (e.g. ``$propertyAccessor->getValue($symbols, '[\*]')``). When
+    they are disabled, ``[*]`` is a regular index like any other.
+
 Writing to Arrays
 -----------------
 
@@ -565,15 +644,22 @@ configured to enable extra features. To do that you could use the
     $propertyAccessorBuilder->enableMagicSet(); // enables magic __set
     $propertyAccessorBuilder->enableMagicMethods(); // enables magic __get, __set and __call
 
+    $propertyAccessorBuilder->enableWildcardReads(); // enables the [*] wildcard
+
     $propertyAccessorBuilder->disableMagicCall(); // disables magic __call
     $propertyAccessorBuilder->disableMagicGet(); // disables magic __get
     $propertyAccessorBuilder->disableMagicSet(); // disables magic __set
     $propertyAccessorBuilder->disableMagicMethods(); // disables magic __get, __set and __call
 
+    $propertyAccessorBuilder->disableWildcardReads(); // disables the [*] wildcard
+
     // checks if magic __call, __get or __set handling are enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
     $propertyAccessorBuilder->isMagicGetEnabled(); // true or false
     $propertyAccessorBuilder->isMagicSetEnabled(); // true or false
+
+    // checks if the [*] wildcard is enabled
+    $propertyAccessorBuilder->isWildcardReadsEnabled(); // true or false
 
     // At the end get the configured property accessor
     $propertyAccessor = $propertyAccessorBuilder->getPropertyAccessor();
