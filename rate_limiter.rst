@@ -337,9 +337,11 @@ The response then includes the following headers:
     The Unix timestamp of the moment when the limiter is back to its full
     capacity.
 
-The ``429 Too Many Requests`` response includes these headers too. As their
-values are specific to the client making the request, the response is marked as
-private, so HTTP caches don't share it between clients.
+The ``429 Too Many Requests`` response includes these headers too.
+
+As their values are specific to the client making the request, any response
+carrying these headers is marked as private, so HTTP caches don't share it
+between clients.
 
 .. note::
 
@@ -348,6 +350,14 @@ private, so HTTP caches don't share it between clients.
     that expose their state. A limiter that rejects the request always wins;
     when that limiter doesn't expose its state, the response includes no
     ``X-RateLimit-*`` header at all.
+
+.. tip::
+
+    Use this to define a secondary rate limit that is never advertised: stack a
+    limiter that doesn't expose its state behind one that does. Legitimate
+    clients keep reading the numbers of the visible limiter, while clients
+    calibrating their traffic against those numbers are still rejected by the
+    hidden limiter, whose state they never see.
 
 .. note::
 
