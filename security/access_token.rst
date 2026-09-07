@@ -519,6 +519,10 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                 # issuer and this application, applied when validating the
                                 # time-based claims (`iat`, `nbf`, `exp`)
                                 allowed_time_drift: 5 # Default to 0 (no tolerance)
+                                # Requires the `typ` header of the token to be `at+jwt`
+                                # or `application/at+jwt`, as RFC 9068 asks from an
+                                # access token
+                                enforce_at_jwt_type: true # Default to false
                                 encryption:
                                     enabled: true # Default to false
                                     enforce: false # Default to false, requires an encrypted token when true
@@ -549,6 +553,10 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                     // issuer and this application, applied when validating the
                                     // time-based claims (`iat`, `nbf`, `exp`)
                                     'allowed_time_drift' => 5, // Default to 0 (no tolerance)
+                                    // Requires the `typ` header of the token to be `at+jwt`
+                                    // or `application/at+jwt`, as RFC 9068 asks from an
+                                    // access token
+                                    'enforce_at_jwt_type' => true, // Default to false
                                     // Encryption:
                                     'encryption' => [
                                         'enabled' => true, // Default to false
@@ -566,7 +574,27 @@ it, and retrieves the user information from it. Optionally, the token can be enc
 
 .. versionadded:: 8.2
 
-    The ``allowed_time_drift`` option was introduced in Symfony 8.2.
+    The ``allowed_time_drift`` and ``enforce_at_jwt_type`` options were
+    introduced in Symfony 8.2.
+
+`RFC 9068`_ asks a resource server to check that the ``typ`` header of a JWT
+access token is ``at+jwt`` or ``application/at+jwt``, and requires that header
+to be present. The ``enforce_at_jwt_type`` option turns that check on. Without
+it, an ID token is accepted in place of an access token whenever the API and
+the login client are declared as the same client on the provider, because such
+an ID token carries the configured ``audience`` in its ``aud`` claim.
+
+The option defaults to ``false`` to keep the behavior of providers that predate
+the profile and still issue a plain ``JWT`` type. Setting it explicitly is
+recommended, as it will default to ``true`` in Symfony 9.0. Tokens minted by the
+``security:oidc:generate-token`` command always carry the ``at+jwt`` type.
+
+.. deprecated:: 8.2
+
+    Not setting the ``enforce_at_jwt_type`` option is deprecated since Symfony
+    8.2. The same applies to the ``$enforceAtJwtType`` argument of
+    :class:`Symfony\\Component\\Security\\Http\\AccessToken\\Oidc\\OidcTokenHandler`
+    when building the handler yourself.
 
 To enable `OpenID Connect Discovery`_, the ``OidcTokenHandler`` requires the
 ``symfony/cache`` package to store the OIDC configuration in the cache. If you
@@ -1003,6 +1031,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
+.. _`RFC 9068`: https://datatracker.ietf.org/doc/html/rfc9068
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
