@@ -3489,7 +3489,9 @@ wildcard_reads
 
 When enabled, the ``property_accessor`` service expands the ``[*]`` path
 element into :ref:`every element of a collection <components-property-access-wildcard-reads>`
-when its ``getValue()`` method is called.
+when its ``getValue()`` method is called. Such a path becomes read-only: its
+``setValue()`` method throws an exception and ``isWritable()`` returns
+``false``.
 
 .. versionadded:: 8.2
 
