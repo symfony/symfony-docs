@@ -91,114 +91,6 @@ You can also use multi dimensional arrays::
 
     Right square brackets ``]`` don't need to be escaped in array keys.
 
-.. _components-property-access-wildcard-reads:
-
-Reading Every Element of a Collection
--------------------------------------
-
-.. versionadded:: 8.2
-
-    Wildcard reads were introduced in Symfony 8.2.
-
-A property path reads a single branch of the object graph: every element of
-the path selects one index or one property. To read the same field from every
-element of a collection, enable wildcard reads and use the ``[*]`` path
-element::
-
-    // ...
-    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
-        ->enableWildcardReads()
-        ->getPropertyAccessor();
-
-    $people = [
-        ['name' => 'Ada', 'jobs' => [['title' => 'programmer'], ['title' => 'writer']]],
-        ['name' => 'Grace', 'jobs' => [['title' => 'computer scientist']]],
-    ];
-
-    var_dump($propertyAccessor->getValue($people, '[*][name]')); // ['Ada', 'Grace']
-
-In a Symfony application, this feature is turned on with the
-:ref:`framework.property_access.wildcard_reads <reference-property-access-wildcard-reads>`
-option.
-
-The Shape of the Result
-~~~~~~~~~~~~~~~~~~~~~~~
-
-The returned array holds one entry per matched element, in iteration order,
-and the keys of the collection are dropped. Each wildcard adds one level of
-nesting, so the shape of the result follows the path and never the data::
-
-    // ...
-    var_dump($propertyAccessor->getValue($people, '[*][jobs][*][title]'));
-    // [['programmer', 'writer'], ['computer scientist']]
-
-    // a trailing wildcard returns the elements of the collection unchanged
-    var_dump($propertyAccessor->getValue($people, '[0][jobs][*]'));
-    // [['title' => 'programmer'], ['title' => 'writer']]
-
-A wildcard applies to indexes, but the rest of the path reads properties as
-usual::
-
-    // ...
-    $employees = [(object) ['name' => 'Ada'], (object) ['name' => 'Grace']];
-
-    var_dump($propertyAccessor->getValue($employees, '[*].name')); // ['Ada', 'Grace']
-
-What Can Be Traversed
-~~~~~~~~~~~~~~~~~~~~~
-
-A wildcard expands anything iterable: arrays, ``ArrayObject``, Doctrine
-collections, and any ``Iterator``, ``IteratorAggregate`` or generator. Any
-other value makes the accessor throw a
-:class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchIndexException`.
-An empty collection returns an empty array.
-
-Under the wildcard, a missing index behaves as it does without one: it gives
-``null``, or throws a ``NoSuchIndexException`` when the accessor is built with
-:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableExceptionOnInvalidIndex`::
-
-    // ...
-    $people = [['name' => 'Ada'], ['nickname' => 'Amazing Grace']];
-
-    var_dump($propertyAccessor->getValue($people, '[*][name]')); // ['Ada', null]
-
-Reading an Index Named ``*``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-With wildcard reads enabled, escape the asterisk to address the index named
-``*``, both when reading and when writing. An extra backslash escapes the
-previous one, so ``[\\*]`` addresses the index named ``\*``, and so on::
-
-    // ...
-    $data = [];
-
-    $propertyAccessor->setValue($data, '[\*]', 'star');
-    var_dump($propertyAccessor->getValue($data, '[\*]')); // 'star', the index named *
-
-    $propertyAccessor->setValue($data, '[\\\\*]', 'backslash-star');
-    var_dump($propertyAccessor->getValue($data, '[\\\\*]')); // the index named \*
-
-.. warning::
-
-    Watch out for the quoting of these paths in PHP source code: inside a
-    single-quoted string, ``'[\*]'`` and ``'[\\*]'`` describe the same path.
-
-Wildcards Are Read-Only
-~~~~~~~~~~~~~~~~~~~~~~~
-
-A path containing a wildcard cannot be written to:
-:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue` throws
-an :class:`Symfony\\Component\\PropertyAccess\\Exception\\InvalidArgumentException`
-and :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable`
-returns ``false``. This is why such a path cannot be used as the
-``property_path`` option of a form field.
-
-.. note::
-
-    Wildcard reads are disabled by default, which keeps the previous behavior:
-    ``[*]`` reads the index named ``*``, ``[\*]`` reads the index named ``\*``
-    and both can be written to.
-
 Reading from Objects
 --------------------
 
@@ -418,6 +310,135 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     The ``__call()`` feature is disabled by default, you can enable it by calling
     :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall`
     see `Enable other Features`_.
+
+.. _components-property-access-wildcard-reads:
+
+Reading Every Element of a Collection
+-------------------------------------
+
+.. versionadded:: 8.2
+
+    Wildcard reads were introduced in Symfony 8.2.
+
+A property path reads a single branch of the object graph: every element of
+the path selects one index or one property. To read the same field from every
+element of a collection, enable wildcard reads and use the ``[*]`` path
+element::
+
+    // ...
+    $propertyAccessor = PropertyAccess::createPropertyAccessorBuilder()
+        ->enableWildcardReads()
+        ->getPropertyAccessor();
+
+    $people = [
+        [
+            'name' => 'Ada',
+            'jobs' => [['title' => 'programmer'], ['title' => 'writer']],
+        ],
+        [
+            'name' => 'Grace',
+            'jobs' => [['title' => 'computer scientist']],
+        ],
+    ];
+
+    var_dump($propertyAccessor->getValue($people, '[*][name]')); // ['Ada', 'Grace']
+
+In a Symfony application, this feature is turned on with the
+:ref:`framework.property_access.wildcard_reads <reference-property-access-wildcard-reads>`
+option.
+
+The Shape of the Result
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The returned array holds one entry per matched element, in iteration order,
+and the keys of the collection are dropped. Each wildcard adds one level of
+nesting, so the shape of the result follows the path and never the data::
+
+    // ...
+    var_dump($propertyAccessor->getValue($people, '[*][jobs][*][title]'));
+    // [['programmer', 'writer'], ['computer scientist']]
+
+    // a trailing wildcard returns the elements of the collection unchanged
+    var_dump($propertyAccessor->getValue($people, '[0][jobs][*]'));
+    // [['title' => 'programmer'], ['title' => 'writer']]
+
+    // the keys of the collection are not kept
+    var_dump($propertyAccessor->getValue(
+        ['ada' => ['name' => 'Ada'], 'grace' => ['name' => 'Grace']],
+        '[*][name]'
+    )); // ['Ada', 'Grace']
+
+Only the ``[*]`` index form is a wildcard; a ``.*`` element still reads a
+property named ``*``. The rest of the path reads indexes and properties as
+usual::
+
+    // ...
+    $employees = [(object) ['name' => 'Ada'], (object) ['name' => 'Grace']];
+
+    var_dump($propertyAccessor->getValue($employees, '[*].name'));
+    // ['Ada', 'Grace']
+
+What Can Be Traversed
+~~~~~~~~~~~~~~~~~~~~~
+
+A wildcard expands anything iterable: arrays, ``ArrayObject``, Doctrine
+collections, and any ``Iterator``, ``IteratorAggregate`` or generator. Any
+other value makes the accessor throw a
+:class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchIndexException`,
+and :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::isReadable`
+return ``false``. Implementing ``ArrayAccess`` is not enough, as the collection
+must be traversable. An empty collection returns an empty array.
+
+Reading further through a value that is neither an object nor an array, as
+``[*][name][first]`` does when the names are strings, throws an
+:class:`Symfony\\Component\\PropertyAccess\\Exception\\UnexpectedTypeException`.
+
+Under the wildcard, a missing index behaves as it does without one: it gives
+``null``, or throws a ``NoSuchIndexException`` when the accessor is built with
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableExceptionOnInvalidIndex`::
+
+    // ...
+    $members = [['name' => 'Ada'], ['nickname' => 'Amazing Grace']];
+
+    var_dump($propertyAccessor->getValue($members, '[*][name]')); // ['Ada', null]
+
+Reading an Index Named ``*``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With wildcard reads enabled, escape the asterisk to address the index named
+``*``, both when reading and when writing. An extra backslash escapes the
+previous one, so a path element of ``\\*`` addresses the index named ``\*``,
+and so on::
+
+    // ...
+    $data = [];
+
+    $propertyAccessor->setValue($data, '[\*]', 'star');
+    var_dump($propertyAccessor->getValue($data, '[\*]')); // 'star', from index *
+
+    $propertyAccessor->setValue($data, '[\\\\*]', 'backslash-star');
+    var_dump($propertyAccessor->getValue($data, '[\\\\*]')); // the index named \*
+
+.. warning::
+
+    Watch out for the quoting of these paths in PHP source code: inside a
+    single-quoted string, ``'[\*]'`` and ``'[\\*]'`` describe the same path.
+
+Wildcards Are Read-Only
+~~~~~~~~~~~~~~~~~~~~~~~
+
+A path containing a wildcard cannot be written to:
+:method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue` throws
+an :class:`Symfony\\Component\\PropertyAccess\\Exception\\InvalidArgumentException`
+and :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::isWritable`
+returns ``false``. This is why such a path cannot be used as the
+``property_path`` option of a form field.
+
+.. note::
+
+    Wildcard reads are disabled by default, which keeps the previous behavior:
+    ``[*]`` reads the index named ``*``, ``[\*]`` reads the index named ``\*``
+    and both can be written to.
 
 Writing to Arrays
 -----------------
@@ -673,15 +694,22 @@ configured to enable extra features. To do that you could use the
     $propertyAccessorBuilder->enableMagicSet(); // enables magic __set
     $propertyAccessorBuilder->enableMagicMethods(); // enables magic __get, __set and __call
 
+    $propertyAccessorBuilder->enableWildcardReads(); // enables the "[*]" wildcard
+
     $propertyAccessorBuilder->disableMagicCall(); // disables magic __call
     $propertyAccessorBuilder->disableMagicGet(); // disables magic __get
     $propertyAccessorBuilder->disableMagicSet(); // disables magic __set
     $propertyAccessorBuilder->disableMagicMethods(); // disables magic __get, __set and __call
 
+    $propertyAccessorBuilder->disableWildcardReads(); // disables the "[*]" wildcard
+
     // checks if magic __call, __get or __set handling are enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
     $propertyAccessorBuilder->isMagicGetEnabled(); // true or false
     $propertyAccessorBuilder->isMagicSetEnabled(); // true or false
+
+    // checks if the "[*]" wildcard is enabled
+    $propertyAccessorBuilder->isWildcardReadsEnabled(); // true or false
 
     // At the end get the configured property accessor
     $propertyAccessor = $propertyAccessorBuilder->getPropertyAccessor();
