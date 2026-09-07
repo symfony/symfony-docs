@@ -456,7 +456,8 @@ is_granted_for_user
     **type**: ``object``
 
 Returns ``true`` if the user is authorized for the specified attribute. Pass
-``null`` as the user to check a guest's permissions.
+``null`` as the user to check what an anonymous user (i.e. someone who is not
+logged in) is allowed to do.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.

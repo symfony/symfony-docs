@@ -2600,14 +2600,19 @@ the built-in ``is_granted_for_user()`` helper function:
         <a href="...">Delete</a>
     {% endif %}
 
-Pass ``null`` instead of a user to check what a guest is allowed to do. The
-attribute is voted on with no user and no roles, which is what your voters see
-for a visitor who is not logged in:
+Pass ``null`` instead of a user to check what an anonymous user (i.e. someone
+who is not logged in) is allowed to do. Symfony votes on the attribute with a
+token that has no user and no roles, which is exactly what your voters see
+during a request made by an anonymous user.
 
-.. code-block:: twig
+This is useful when the current user is logged in but you need to know what
+other visitors can see. For example, to show a "public" label to an editor
+if the post is visible to anyone:
+
+.. code-block:: html+twig
 
     {% if is_granted_for_user(null, 'view', post) %}
-        {# this post is public #}
+        <span class="badge">Public</span>
     {% endif %}
 
 .. versionadded:: 8.2
@@ -2683,10 +2688,12 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
     is unavailable (e.g., in a CLI context such as a message queue or cron job), you
     can use the ``isGrantedForUser()`` method to explicitly set the target user.
 
-    Passing ``null`` as the user checks a guest's permissions instead. This
-    differs from ``isGranted()`` with nobody logged in: ``isGrantedForUser()``
-    never reads the token storage, so it answers the same way in a CLI context
-    as it does during a request::
+    Pass ``null`` as the user to check what an anonymous user (i.e. someone who
+    is not logged in) is allowed to do. Unlike calling ``isGranted()`` when
+    nobody is logged in, ``isGrantedForUser()`` never reads the current session,
+    so it works the same during a request and in a CLI context. For example, a
+    command that generates a sitemap can use it to include only the contents
+    that anonymous users can see::
 
         // is this post readable by someone who is not logged in?
         $this->security->isGrantedForUser(null, 'view', $post);
