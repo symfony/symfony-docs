@@ -110,6 +110,14 @@ Additionally, you have access to a number of functions inside the expression:
     second argument with the object where permission is checked on. It's
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
+``current_user()``
+    Returns the current user object, or ``null`` when nobody is authenticated.
+    Inside these expressions, it's equivalent to the ``user`` variable, but you
+    can also use it in :ref:`validation expressions <reference-constraint-expression-security-functions>`.
+
+.. versionadded:: 8.2
+
+    The ``current_user()`` function was introduced in Symfony 8.2.
 
 .. sidebar:: ``is_remember_me()`` is different from checking ``IS_AUTHENTICATED_REMEMBERED``
 
