@@ -239,6 +239,37 @@ another case::
     // other cases can be achieved by chaining methods, e.g.:
     u('Foo: Bar-baz.')->camel()->upper(); // 'FOOBARBAZ'
 
+The case conversion methods accept an optional regular expression to convert only
+the parts of the string that it matches. The argument comes last, so it is passed
+after ``$allWords`` for ``title()`` and after ``$locale`` for the ``locale*()``
+methods::
+
+    // converts the first character only
+    u('HELLO WORLD')->lower('/^./'); // 'hELLO WORLD'
+    u('hello world')->upper('/^./'); // 'Hello world'
+
+    // converts the first word only
+    u('hello world')->upper('/^\w+/'); // 'HELLO world'
+
+    // converts the first character of every word
+    u('hello world')->title(false, '/\b./'); // 'Hello World'
+
+    // the locale variants take the pattern after the locale
+    u('istanbul')->localeUpper('en', '/^./'); // 'Istanbul'
+    u('istanbul')->localeUpper('tr', '/^./'); // 'İstanbul'
+
+    // the string is left untouched when the pattern matches nothing
+    u('hello world')->upper('/^\d/'); // 'hello world'
+
+When a pattern is given to ``title()``, the ``$allWords`` argument is ignored:
+the pattern alone decides which parts are converted. An invalid pattern throws an
+:class:`Symfony\\Component\\String\\Exception\\InvalidArgumentException`.
+
+.. versionadded:: 8.2
+
+    The ``$regexp`` argument of the case conversion methods was introduced in
+    Symfony 8.2.
+
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
 
