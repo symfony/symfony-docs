@@ -62,11 +62,18 @@ Targeting a Specific Cache
 
     The ``Response::cacheControl()`` method was introduced in Symfony 8.2.
 
-`RFC 9213`_ makes it possible to address cache directives to a single cache
-instead of all of them: a cache that knows itself as ``CDN`` reads the
-``CDN-Cache-Control`` header and ignores ``Cache-Control``, while every other
-cache does the opposite. This is how a response is kept for hours in a CDN
-while browsers are told not to store it::
+The ``Cache-Control`` header is read by every cache between your application and
+the user: the browser, your reverse proxy, a CDN, etc. `RFC 9213`_ allows sending
+different directives to a single cache using a header named after that cache.
+
+For example, a cache that identifies itself as ``CDN`` reads the ``CDN-Cache-Control``
+header and, when it's present, ignores the ``Cache-Control`` and ``Expires`` headers
+entirely. All the other caches keep reading ``Cache-Control`` as usual. Cloudflare,
+Fastly and Akamai support the ``CDN-Cache-Control`` header.
+
+This is useful, for example, to keep a response in the CDN for one hour while
+telling browsers to always revalidate it. Call the ``cacheControl()`` method
+with the name of the target cache::
 
     // for browsers and any other cache
     $response->setPrivate();
@@ -75,19 +82,39 @@ while browsers are told not to store it::
     // for the CDN only
     $response->cacheControl('CDN')->setMaxAge(3600);
 
-The response then carries both headers:
+The response now contains both headers:
 
 .. code-block:: text
 
     Cache-Control: max-age=0, private
     CDN-Cache-Control: max-age=3600
 
-The object returned by ``cacheControl()`` provides the same kind of methods as
-the response itself: ``setPublic()``, ``setPrivate()``, ``setMaxAge()``,
-``setNoStore()``, ``setImmutable()``, ``setStaleWhileRevalidate()`` and
-``setStaleIfError()``, plus ``set()``, ``get()``, ``has()``, ``remove()`` and
-``all()`` for any other directive. There's no ``s-maxage`` counterpart, because
-the target already names the cache the directives are addressed to.
+The object returned by ``cacheControl()`` provides the same methods as the
+response itself: ``setPublic()``, ``setPrivate()``, ``setMaxAge()``, ``setNoStore()``,
+``setImmutable()``, ``setStaleWhileRevalidate()`` and ``setStaleIfError()``. For
+any other directive, use the ``set()``, ``get()``, ``has()``, ``remove()`` and
+``all()`` methods. All these methods can be chained::
+
+    $response->cacheControl('CDN')
+        ->setMaxAge(3600)
+        ->setStaleWhileRevalidate(60)
+        ->set('some-proprietary-directive', 'value');
+
+.. note::
+
+    There is no ``setSharedMaxAge()`` method, so always use ``setMaxAge()``.
+    The ``s-maxage`` directive exists to tell shared caches apart from browsers,
+    which is not needed when the header already targets a single cache.
+    Moreover, RFC 9213 requires caches to support ``max-age``, but ``s-maxage``
+    is optional, so a cache that doesn't support it would get no freshness
+    information at all.
+
+.. caution::
+
+    The ``#[Cache]`` attribute doesn't provide any option to set targeted
+    directives, so you must set them on the ``Response`` object. Also,
+    Symfony's :ref:`built-in reverse proxy <symfony-gateway-cache>` ignores
+    targeted headers and only reads ``Cache-Control``.
 
 Expiration with the ``Expires`` Header
 --------------------------------------
