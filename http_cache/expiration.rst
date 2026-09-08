@@ -109,7 +109,7 @@ any other directive, use the ``set()``, ``get()``, ``has()``, ``remove()`` and
     is optional, so a cache that doesn't support it would get no freshness
     information at all.
 
-.. caution::
+.. warning::
 
     The ``#[Cache]`` attribute doesn't provide any option to set targeted
     directives, so you must set them on the ``Response`` object. Also,
