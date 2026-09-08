@@ -966,6 +966,93 @@ By default the token handler will read the validation URL XML response with a
             ],
         ]);
 
+Requiring OAuth 2.0 Scopes
+--------------------------
+
+An authorization server delegates a limited set of permissions to a client,
+which `RFC 6749`_ calls scopes and which the access token carries. Once the
+token is validated, the ``access_token`` authenticator exposes the scopes it
+was granted as the ``oauth2_scope`` token attribute, read from the ``scope``
+claim, then from the ``scp`` one that some providers use instead. Both the
+space-delimited string and the list forms are accepted.
+
+The ``oidc``, ``oidc_user_info`` and ``oauth2`` (token introspection)
+handlers hand their claims to the user badge, so they all fill that
+attribute in, and so does any custom handler that does the same. The
+``cas`` handler reads no claim, so it fills none. Read the scopes with
+``$token->getAttribute(AccessTokenAuthenticator::SCOPE_ATTRIBUTE)``
+wherever your own code needs them.
+
+An endpoint requires scopes with an ``OAUTH2_SCOPE(...)`` attribute, which
+lists them between parentheses, separated by spaces::
+
+    // src/Controller/ProfileController.php
+    namespace App\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class ProfileController
+    {
+        #[IsGranted('OAUTH2_SCOPE(profile:read)')]
+        public function show(): Response
+        {
+            // ...
+        }
+    }
+
+The same attribute works in the
+:ref:`access control rules <security-authorization-access-control>` of the
+firewall, whose ``roles`` option takes it as it takes a role:
+``{ path: ^/api/profile, roles: 'OAUTH2_SCOPE(profile:read)' }``.
+
+All the scopes an attribute lists are required, so
+``OAUTH2_SCOPE(profile:read admin:manage)`` demands both of them. To require
+any of several scopes instead, list several attributes, which is what an
+access control rule does when its ``roles`` option holds more than one.
+
+A scope is not a role: it stays out of ``getRoleNames()`` and the role
+hierarchy never applies to it. An application that wants to map one onto the
+other is free to do so in its user provider.
+
+Answering with the ``insufficient_scope`` Challenge
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:class:`Symfony\\Component\\Security\\Http\\Authorization\\OAuth2ScopeVoter`
+decides on those attributes, and
+:class:`Symfony\\Component\\Security\\Http\\Authorization\\InsufficientScopeAccessDeniedHandler`
+answers a request it denied with the challenge `RFC6750`_ defines for that
+case:
+
+.. code-block:: text
+
+    HTTP/1.1 403 Forbidden
+    WWW-Authenticate: Bearer realm="My API",error="insufficient_scope",error_description="The request requires higher privileges than provided by the access token.",scope="profile:read"
+
+The ``realm`` comes from the option of the same name and the ``scope``
+parameter lists the scopes the denied attributes required. When the firewall
+declares the ``resource_metadata`` option of the ``access_token``
+authenticator, the URL of that document is advertised in a
+``resource_metadata`` parameter too, because a client denied for a missing
+scope is the one that most needs to find the authorization server again.
+
+This answer is the fallback of the firewall: an ``access_denied_handler`` or
+an ``access_denied_url`` configured on the firewall, and an application-wide
+``access_denied_url``, keep winning over it. Any of them suppresses the
+challenge altogether, scope denials included, so look there first when it
+does not show up.
+
+A denial that no scope took part in goes to the
+``security.access.denied_handler`` service when your application registers
+one, and follows the regular handling otherwise. A firewall mixing scopes
+with roles therefore keeps answering role denials the way you configured
+it.
+
+.. versionadded:: 8.2
+
+    The ``oauth2_scope`` token attribute, the ``OAUTH2_SCOPE()`` attribute
+    and the ``insufficient_scope`` challenge were introduced in Symfony 8.2.
+
 Creating Users from Token
 -------------------------
 
@@ -1002,6 +1089,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect (OIDC)`: https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
+.. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
