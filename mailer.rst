@@ -1544,8 +1544,16 @@ Rendering Emails with Provider-Hosted Templates
 
 Most third-party providers can render an email from a template stored on their
 side. This lets non-developers update the contents of an email without
-deploying the application. Instead of building the body yourself, send the
-reference of the template and the variables used to render it with the
+deploying the application.
+
+.. note::
+
+    This is different from the :ref:`Twig integration <mailer-twig>`, where the
+    template lives in your application and is rendered by it. Here, the
+    provider renders the template.
+
+Instead of building the body yourself, send the reference of the template and
+the variables used to render it with the
 :class:`Symfony\\Component\\Mailer\\RemoteTemplateEmail` class::
 
     use Symfony\Component\Mailer\RemoteTemplateEmail;
@@ -1561,27 +1569,18 @@ reference of the template and the variables used to render it with the
 
     $mailer->send($email);
 
-The first argument of the ``template()`` method is the reference of the
-template in your provider account. Providers identify their templates
-differently (with an id, a UUID, a name or an alias), so Symfony always passes
-it as a string and each transport converts it to the type its API expects. The
-second argument is the array of variables the provider uses to render the
-template.
+The first argument of the ``template()`` method is the reference of the template
+in your provider account. Providers identify their templates differently (with
+an id, a UUID, a name or an alias), so Symfony always passes it as a string and
+each transport converts it to the type its API expects. The second argument is
+the array of variables the provider uses to render the template.
 
 Everything else works as with a regular ``Email``: recipients, ``Cc``, ``Bcc``,
 ``Reply-To``, attachments, :ref:`tags and metadata <mailer-tags-metadata>` and
-:ref:`tracking <mailer-tracking>` are sent along with the template. These
-emails are also serializable, so you can
-:ref:`send them asynchronously <mailer-sending-messages-async>`.
-
-.. note::
-
-    Don't confuse ``RemoteTemplateEmail`` with the ``TemplatedEmail`` class of
-    the :ref:`Twig integration <mailer-twig>`. ``TemplatedEmail`` renders a Twig
-    template inside your application, whereas ``RemoteTemplateEmail`` delegates
-    the rendering to your provider. The two are mutually exclusive: an email
-    that defines a remote template and a local text or HTML part at the same
-    time throws a ``LogicException``.
+:ref:`tracking <mailer-tracking>` are sent along with the template. The only
+exception is the body: an email that defines a remote template and a text or
+HTML part at the same time throws a ``LogicException``. These emails are also
+serializable, so you can :ref:`send them asynchronously <mailer-sending-messages-async>`.
 
 .. deprecated:: 8.2
 
@@ -1603,9 +1602,9 @@ it instead of the one of the template::
         ->template('order-confirmation', ['orderId' => 4321])
     ;
 
-Amazon SES, Mailtrap and Postmark can't override the subject of a template.
-They throw an ``InvalidArgumentException`` instead of dropping the subject
-silently, so define it in the template itself.
+Some providers can't override the subject of a template. They throw an exception
+instead of dropping your subject silently, so define it in the template itself.
+Check the "Custom Subject" column of the table below.
 
 .. _mailer-remote-templates-transports:
 
@@ -1626,6 +1625,7 @@ Mailjet         numeric template id             yes
 Mailtrap        template UUID                   no
 Mandrill        template name                   yes
 Postmark        template id or alias            no
+PufferPost      template id                     no
 Resend          template id                     yes
 Sendgrid        template id                     yes
 ==============  ==============================  ===============
@@ -1640,13 +1640,12 @@ Some providers add their own constraints:
 * **Postmark** reads a numeric reference as a template id and any other
   reference as a template alias.
 
-Sending a ``RemoteTemplateEmail`` that defines a template through any other
-transport (the SMTP transports of these same providers, ``sendmail``, etc.)
-throws a ``LogicException``. This is not a transport exception, so a
-:ref:`failover transport <mailer-high-availability>` does not try the next
-transport of the chain: make sure that all the transports of a failover or
-round-robin chain support remote templates before using them. The ``null://``
-transport accepts these emails, so it keeps working in tests.
+Any other transport (including the SMTP transports of these same providers)
+throws a ``LogicException`` when sending a ``RemoteTemplateEmail`` that defines
+a template. This is not a transport error, so a
+:ref:`failover or round-robin transport <mailer-high-availability>` doesn't try
+the next transport of the chain. The ``null://`` transport accepts these emails,
+so they keep working in tests.
 
 .. _signing-and-encrypting-messages:
 
