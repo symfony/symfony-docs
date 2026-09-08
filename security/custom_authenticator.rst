@@ -201,6 +201,8 @@ can define what happens in these cases:
     so that it dispatches an
     :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 
+.. _security-unsupported-reasons:
+
 Explaining Why an Authenticator Did Not Support the Request
 -----------------------------------------------------------
 
