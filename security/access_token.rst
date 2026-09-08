@@ -279,6 +279,182 @@ and configure the service ID as the ``success_handler``:
     ``failure_handler`` option and create a class that implements
     :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
 
+Publishing the Protected Resource Metadata
+------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``resource_metadata`` option was introduced in Symfony 8.2.
+
+Clients that don't have an access token yet (e.g. MCP clients) must find out
+which authorization servers issue the tokens accepted by your API. `RFC 9728`_
+solves this with a JSON document that the API publishes at
+``/.well-known/oauth-protected-resource`` and with a ``resource_metadata``
+parameter in the ``WWW-Authenticate`` header of ``401`` responses, which points
+to that document.
+
+Add the ``resource_metadata`` option to the ``access_token`` authenticator to
+publish this document and to add its URL to the ``401`` responses:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                api:
+                    access_token:
+                        realm: 'My API'
+                        token_extractors: ['header', 'query_string']
+                        token_handler: App\Security\AccessTokenHandler
+                        resource_metadata:
+                            authorization_servers: ['https://accounts.example.com']
+                            scopes_supported: ['profile', 'email']
+                            resource_name: 'My API'
+                            resource_documentation: 'https://api.example.com/docs'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\AccessTokenHandler;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'api' => [
+                        'access_token' => [
+                            'realm' => 'My API',
+                            'token_extractors' => ['header', 'query_string'],
+                            'token_handler' => AccessTokenHandler::class,
+                            'resource_metadata' => [
+                                'authorization_servers' => ['https://accounts.example.com'],
+                                'scopes_supported' => ['profile', 'email'],
+                                'resource_name' => 'My API',
+                                'resource_documentation' => 'https://api.example.com/docs',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Then, import the route loader that defines the route of this document:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/security.yaml
+        _oauth_protected_resource_metadata:
+            resource: security.authenticator.access_token.route_loader
+            type: service
+
+    .. code-block:: php
+
+        // config/routes/security.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return Routes::config([
+            '_oauth_protected_resource_metadata' => [
+                'resource' => 'security.authenticator.access_token.route_loader',
+                'type' => 'service',
+            ],
+        ]);
+
+Clients must be able to get this document without a token, so don't add any
+:ref:`access control rule <security-authorization-access-control>` that
+requires authentication for its path.
+
+If your API runs at ``https://api.example.com``, a
+``GET /.well-known/oauth-protected-resource`` request now returns:
+
+.. code-block:: json
+
+    {
+        "resource": "https://api.example.com",
+        "authorization_servers": ["https://accounts.example.com"],
+        "scopes_supported": ["profile", "email"],
+        "bearer_methods_supported": ["header", "query"],
+        "resource_name": "My API",
+        "resource_documentation": "https://api.example.com/docs"
+    }
+
+Requests without a token get a ``401`` response with the following header,
+unless another authenticator of the firewall (e.g. ``form_login``) is its
+:ref:`entry point <security-entry-point>`:
+
+.. code-block:: text
+
+    WWW-Authenticate: Bearer realm="My API",resource_metadata="https://api.example.com/.well-known/oauth-protected-resource"
+
+Requests with a token rejected by the firewall get the same URL next to the
+error details:
+
+.. code-block:: text
+
+    WWW-Authenticate: Bearer realm="My API",error="invalid_token",error_description="Invalid credentials.",resource_metadata="https://api.example.com/.well-known/oauth-protected-resource"
+
+These are the options of ``resource_metadata``. Each of them is a metadata
+parameter defined by `RFC 9728`_ and it's left out of the document when it
+has no value:
+
+``resource``
+    The identifier of the protected resource. It must be an HTTPS URL without
+    a fragment, but HTTP is allowed for loopback hosts (``localhost``,
+    ``127.0.0.1``, ``::1``) and hostnames reserved for testing
+    (``*.localhost``, ``*.test``). By default, it's the origin (scheme, host
+    and port) of the request, which is correct when the firewall protects the
+    whole application.
+
+    If the URL includes a path, that path is added after the well-known path,
+    as defined in Section 3.1 of the RFC. For example, the metadata of
+    ``https://example.com/api`` is served at
+    ``/.well-known/oauth-protected-resource/api``. This allows several
+    firewalls of the same host to publish their own metadata, as long as each
+    of them uses a different path.
+
+    Symfony reads this path when compiling the container, so you can't use an
+    environment variable as the whole value. Use it inside the URL instead
+    (e.g. ``https://%env(API_HOST)%/v1``).
+
+``authorization_servers``
+    The issuer identifiers of the authorization servers that issue the access
+    tokens accepted by this firewall (e.g. ``https://accounts.example.com``).
+    Clients use them to know where to get a token.
+
+``jwks_uri``
+    The URL of the JWK Set with the keys that your API uses to sign its own
+    responses. These are not the keys used to verify the access tokens, which
+    belong to the authorization server.
+
+``scopes_supported``
+    The scope values used by your API.
+
+``bearer_methods_supported``
+    The ways clients can send the token to your API (``header``, ``body`` or
+    ``query``). If you don't set this option, Symfony computes it from the
+    ``token_extractors`` option (``header`` becomes ``header``,
+    ``request_body`` becomes ``body`` and ``query_string`` becomes
+    ``query``). Custom extractors are ignored, so set this option explicitly
+    when using them.
+
+``resource_name``
+    The human-readable name of your API, which clients can display to end
+    users.
+
+``resource_documentation``
+    The URL of the developer documentation of your API.
+
+``resource_policy_uri``
+    The URL of the policy that explains how clients can use the data returned
+    by your API.
+
+``resource_tos_uri``
+    The URL of the terms of service of your API.
+
 Using OpenID Connect (OIDC)
 ---------------------------
 
@@ -1033,6 +1209,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC 9068`: https://datatracker.ietf.org/doc/html/rfc9068
+.. _`RFC 9728`: https://datatracker.ietf.org/doc/html/rfc9728
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
