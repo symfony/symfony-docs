@@ -1098,6 +1098,68 @@ already binds the issuer and the audience at that level, the members it
 wraps are only confronted with them when the authorization server repeats
 them there.
 
+Rather than pasting the keys in the configuration, you can read them from
+the metadata of the authorization server. Their URL is derived from the
+``issuer`` the handler already declares, so nothing else is configured. The
+``issuer`` must then be an absolute HTTPS URL, where it is otherwise only
+compared to the ``iss`` member of the response:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                response_signature:
+                                    enabled: true
+                                    discovery: true
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'response_signature' => [
+                                        'enabled' => true,
+                                        'discovery' => true,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The document is read at ``/.well-known/oauth-authorization-server``, the
+well-known path being inserted between the host and the path of the issuer
+as `RFC 8414`_ prescribes: the metadata of ``https://auth.example.com/eu``
+lives at ``https://auth.example.com/.well-known/oauth-authorization-server/eu``.
+Only its ``jwks_uri`` is read: the algorithms you accept stay declared in
+``algorithms``, so that the authorization server cannot widen them by
+announcing more. Both requests go through their own HTTP client, so the
+credentials of the introspection endpoint never reach them. The document is
+cached for an hour and the keys for as long as the server asks for in its
+cache headers, up to 30 days.
+
 These are the options of ``response_signature``:
 
 ``algorithms``
@@ -1113,8 +1175,15 @@ These are the options of ``response_signature``:
 
 ``keyset``
     JSON-encoded JWK Set holding the public keys of your authorization
-    server, the ones it announces at its ``jwks_uri``. It has no default:
-    the handler needs the keys it verifies the response against.
+    server, the ones it announces at its ``jwks_uri``. It is exclusive with
+    ``discovery``, and one of the two is required: the handler needs the
+    keys it verifies the response against.
+
+``discovery``
+    Whether to read those keys from the `RFC 8414`_ metadata of the
+    authorization server instead of declaring them. Its ``cache.id``
+    option is the pool the metadata document and the keys are stored in,
+    ``cache.app`` by default.
 
 ``enforce``
     Whether the handler refuses a plain JSON response. It defaults to
@@ -1124,7 +1193,8 @@ These are the options of ``response_signature``:
 
 .. versionadded:: 8.2
 
-    The ``response_signature`` option was introduced in Symfony 8.2.
+    The ``response_signature`` option, including its ``discovery``
+    sub-option, was introduced in Symfony 8.2.
 
 Caching the Introspection Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1358,6 +1428,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
+.. _`RFC 8414`: https://datatracker.ietf.org/doc/html/rfc8414
 .. _`RFC 9701`: https://datatracker.ietf.org/doc/html/rfc9701
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
