@@ -209,7 +209,7 @@ console.command
 **Purpose**: Add a command to the application
 
 For details on registering your own commands in the service container, read
-:doc:`/console/commands_as_services`.
+:ref:`Registering the Command <console-registering-commands>`.
 
 container.hot_path
 ------------------
