@@ -22,14 +22,6 @@ its own once a TTL index is created.
     and the `mongodb/mongodb`_ library must be installed in your application by
     running ``composer require mongodb/mongodb``.
 
-.. note::
-
-    This adapter implements :class:`Symfony\\Component\\Cache\\PruneableInterface`,
-    allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>`
-    by calling the ``prune()`` method. Pruning is rarely needed here, because the
-    TTL index created by the ``setup()`` method lets the server remove expired
-    items by itself.
-
 The :class:`Symfony\\Component\\Cache\\Adapter\\MongoDbAdapter` expects a
 ``MongoDB\Collection``, ``MongoDB\Database``, ``MongoDB\Client`` or a
 `MongoDB Connection String`_ as its first parameter. You can pass a namespace,
@@ -253,6 +245,13 @@ collection. The ``setup()`` method creates them::
 It creates a `TTL index`_ on the ``expires_at`` field, so the server deletes the
 expired items by itself, usually within a minute. The index is partial, so that
 items stored without a lifetime are not indexed at all.
+
+.. note::
+
+    Both adapters implement :class:`Symfony\\Component\\Cache\\PruneableInterface`,
+    so you can also :ref:`remove the expired items manually <component-cache-cache-pool-prune>`
+    by calling their ``prune()`` method. This is rarely needed, because the TTL
+    index lets the server remove them on its own.
 
 :class:`Symfony\\Component\\Cache\\Adapter\\MongoDbTagAwareAdapter` creates a
 second partial index, on the ``tags`` field, which turns the invalidation of a
