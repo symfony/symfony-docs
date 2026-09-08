@@ -482,6 +482,147 @@ part before the ``|``) empty::
 
     Hidden commands are still available using the JSON or XML descriptor.
 
+.. _console-sub-commands:
+
+Sub-Commands
+~~~~~~~~~~~~
+
+Commands whose names share a prefix form a tree, which you can walk with
+spaces instead of colons. Nothing declares that tree: it comes from the
+names of the registered commands.
+
+.. versionadded:: 8.2
+
+    Sub-commands and the ``CommandChain`` class were introduced in
+    Symfony 8.2.
+
+Register a command for the root of the tree::
+
+    // src/Command/DockerCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputOption;
+
+    #[AsCommand(
+        name: 'docker',
+        description: 'Manages containers.',
+    )]
+    class DockerCommand extends Command
+    {
+        protected function configure(): void
+        {
+            $this->addOption('context', 'c', InputOption::VALUE_REQUIRED);
+        }
+
+        // no execute(): running "docker" bare lists its sub-commands
+    }
+
+And a command for the leaf that does the work::
+
+    // src/Command/UpCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    #[AsCommand(
+        name: 'docker:compose:up',
+        description: 'Creates and starts containers.',
+    )]
+    class UpCommand
+    {
+        public function __invoke(
+            OutputInterface $output,
+            #[Argument] string $service = '',
+            #[Option(shortcut: 'd')] bool $detach = false,
+        ): int {
+            // ...
+        }
+    }
+
+Both of these then run the same command:
+
+.. code-block:: terminal
+
+    $ php bin/console docker compose up web --detach
+    $ php bin/console docker:compose:up web --detach
+
+The spaced form lets every registered level parse its own options, and only
+the leaf runs:
+
+.. code-block:: terminal
+
+    $ php bin/console docker --context=prod compose up web --detach
+
+Intermediate levels need no command of their own: with ``docker`` and
+``docker:compose:up`` registered, ``docker compose up`` walks through an
+implicit ``compose`` node, which accepts the options of the application and
+nothing else. A namespace is walkable as well, so ``cache clear`` runs
+``cache:clear`` even though no ``cache`` command exists. Registering the
+command of a level is what gives it options, a description and a behavior
+of its own.
+
+Running a command that has sub-commands and no code of its own lists them
+on the error output and exits with ``1``, the way a bare namespace does.
+Any command that has sub-commands, whether it runs code or not, gets an
+``Available sub-commands`` section at the end of its help and collapses the
+tree below it in the application listing; ``list docker``, the ``--raw``
+option and the machine-readable formats keep listing every command.
+Running ``docker compose up --help`` shows the help of the leaf, the
+``help`` command resolves the same spaced path, and shell completion walks
+the tree, offering the sub-commands and the options of the level the cursor
+sits on.
+
+Under a command that has sub-commands, a token naming one of them walks
+down and any other token starts the arguments of the command itself. A
+level that declares no argument has nothing to bind such a token to, so it
+fails with the sub-commands it knows as suggestions. Pass ``--`` to bind a
+value that collides with the name of a sub-command, here with ``deploy``
+and ``deploy:rollback`` registered:
+
+.. code-block:: terminal
+
+    # runs the "deploy:rollback" command
+    $ php bin/console deploy rollback
+
+    # runs "deploy" with "rollback" as its argument
+    $ php bin/console deploy -- rollback
+
+A sub-command does not inherit the options of its parent. The options of
+the application are accepted at every level, so ``docker -v compose up``
+and ``docker compose up -v`` reach the leaf the same way.
+
+Reading the Input of the Parent Levels
+......................................
+
+The commands the walk went through, and the input each of them parsed, come
+as a :class:`Symfony\\Component\\Console\\CommandChain`. Inject it into an
+invokable command like any other console utility::
+
+    use Symfony\Component\Console\CommandChain;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    public function __invoke(CommandChain $chain, OutputInterface $output): int
+    {
+        $context = $chain->getInput('docker')?->getOption('context');
+
+        // ...
+    }
+
+Look up a level by command name, or by the class of the command or of its
+invokable; the deepest match wins. ``getCommand()`` returns the command of
+a level instead of its input, and ``getCommands()`` and ``getInputs()``
+return the whole chain. Implicit levels have no entry, and the running
+command is always the last one. A listener gets the same object from
+:method:`Symfony\\Component\\Console\\Application::getCommandChain` while a
+command runs, and ``null`` outside a run. A command run on its own gets a
+chain of a single level.
+
+
 Console Output
 --------------
 
