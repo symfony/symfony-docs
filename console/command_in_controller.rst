@@ -1,7 +1,7 @@
 How to Call a Command from a Controller
 =======================================
 
-The :doc:`Console component documentation </components/console>` covers how to
+The :doc:`console commands documentation </console>` covers how to
 create a console command. This article covers how to use a console command
 directly from your controller.
 
