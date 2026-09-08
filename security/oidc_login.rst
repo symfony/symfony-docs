@@ -39,9 +39,9 @@ first:
 1) Configure the Authenticator
 ------------------------------
 
-Enable ``oidc_login`` under the firewall. A confidential client needs three
-options: the issuer URL of your provider, and the credentials it issued to your
-application:
+Enable ``oidc_login`` under the firewall. Every client needs three options:
+the issuer URL of your provider, the client identifier it issued to your
+application, and how the application authenticates at its token endpoint.
 
 .. configuration-block::
 
@@ -59,7 +59,8 @@ application:
                     oidc_login:
                         provider_uri: '%env(OIDC_PROVIDER_URI)%'
                         client_id: '%env(OIDC_CLIENT_ID)%'
-                        client_secret: '%env(OIDC_CLIENT_SECRET)%'
+                        client_authentication:
+                            client_secret_basic: '%env(OIDC_CLIENT_SECRET)%'
                         scope: ['openid', 'profile', 'email']
                         check_path: /oidc/callback
 
@@ -82,7 +83,9 @@ application:
                         'oidc_login' => [
                             'provider_uri' => '%env(OIDC_PROVIDER_URI)%',
                             'client_id' => '%env(OIDC_CLIENT_ID)%',
-                            'client_secret' => '%env(OIDC_CLIENT_SECRET)%',
+                            'client_authentication' => [
+                                'client_secret_basic' => '%env(OIDC_CLIENT_SECRET)%',
+                            ],
                             'scope' => ['openid', 'profile', 'email'],
                             'check_path' => '/oidc/callback',
                         ],
@@ -98,10 +101,11 @@ by hand. The discovery document is cached for an hour by default.
 
 ``client_id`` identifies your application to the provider. It is a required
 parameter of the authorization request, and it is also the value the ID token
-``aud`` claim is checked against. ``client_secret`` authenticates your
-application at the token endpoint when the authorization code is exchanged for
-tokens; it is required unless the application is declared as a public client,
-as described below.
+``aud`` claim is checked against. ``client_authentication`` says how your
+application authenticates at the token endpoint when the authorization code
+is exchanged for tokens; ``client_secret_basic`` sends the client secret the
+provider issued, and the other methods are described below, in the section
+about the token endpoint.
 
 ``check_path`` is the path the provider redirects to. It must match one of the
 redirect URIs registered with the provider. Register the full URL there
@@ -114,14 +118,16 @@ The callback path needs a route, otherwise the router answers the provider's
 redirect with a 404 before the firewall ever sees it. Symfony declares that
 route for you through a route loader, which your application imports, exactly
 as it does for the logout routes. The same loader declares the route that
-starts the flow, described in the next section:
+starts the flow, described in the next section. If your project uses
+:ref:`Symfony Flex <symfony-flex>`, the recipe of the SecurityBundle already
+imports it; otherwise, import it in your routes yourself:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/routes/security.yaml
-        _oidc_login_callbacks:
+        _security_oidc_login:
             resource: security.authenticator.oidc_login.route_loader
             type: service
 
@@ -131,7 +137,7 @@ starts the flow, described in the next section:
         namespace Symfony\Component\Routing\Loader\Configurator;
 
         return Routes::config([
-            '_oidc_login_callbacks' => [
+            '_security_oidc_login' => [
                 'resource' => 'security.authenticator.oidc_login.route_loader',
                 'type' => 'service',
             ],
@@ -175,6 +181,51 @@ redirect back and rejects a request carrying no authorization code.
     The flow keeps its ``state``, its ``nonce`` and its PKCE verifier in the
     session, so the authenticator needs one: it works neither on a stateless
     firewall nor with the session disabled.
+
+When the Login Fails
+~~~~~~~~~~~~~~~~~~~~
+
+When the authenticator rejects the callback, because the ``state`` expired or
+does not match, because the provider returned an ``error`` instead of a code,
+or because the ID token failed validation, the user is redirected to
+``failure_path``, which falls back to ``login_path``, ``/login`` by default. An
+application logging in through OIDC alone has no such page, so point one of
+these options at a page of yours, otherwise a failed login ends on a 404:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        failure_path: app_login_failed
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'failure_path' => 'app_login_failed',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The exception is stored in the session, and the controller of that page reads
+it with the ``getLastAuthenticationError()`` method of
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils`,
+exactly as the controller of a login form does (see :ref:`security-form-login`).
 
 4) Load the User
 ----------------
@@ -240,11 +291,19 @@ Ask the provider for the claims you need with the ``scope`` option: ``openid``
 is always requested, as OIDC requires it, and adding ``profile`` or ``email``
 makes the provider return the matching claims.
 
-The ID token and the access token the provider returned are kept as attributes
-of the security token, to call the provider's own APIs with::
+The tokens the provider returned are kept as attributes of the security
+token, to call the provider's own APIs with::
 
     $accessToken = $security->getToken()->getAttribute('oidc_access_token');
     $idToken = $security->getToken()->getAttribute('oidc_id_token');
+    $refreshToken = $security->getToken()->getAttribute('oidc_refresh_token');
+    $expiresAt = $security->getToken()->getAttribute('oidc_access_token_expires_at');
+
+The last two are ``null`` when the provider gave nothing: it only issues a
+refresh token when asked for one, with the ``offline_access`` scope on most
+providers, and ``expires_in`` is optional in the token response. The access
+token can be renewed with the refresh token, as described in
+:ref:`oidc-login-renewing-access-token`.
 
 Reading the Claims from the ID Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -480,29 +539,71 @@ Authenticating at the Token Endpoint
 
 When the authorization code is exchanged for tokens, the application
 authenticates at the token endpoint with the method set in
-``token_endpoint_auth_method``:
-
-``client_secret_post`` (default)
-    The client identifier and secret are sent in the POST request body,
-    which mean your applications is registered in and authorized
-    by the provider to exchange authorization code for tokens.
+``client_authentication``, which holds exactly one of the following keys.
 
 ``client_secret_basic``
-    The client identifier and secret are sent as HTTP Basic credentials, each
-    form-urlencoded as `RFC 6749`_ requires.
+    The client secret is sent as HTTP Basic credentials, the method
+    `RFC 6749`_, Section 2.3.1 recommends. Prefer it when the provider
+    supports it.
+
+``client_secret_post``
+    The client secret is sent in the body of the token request, for the
+    providers that support nothing else.
 
 ``none``
-    The application is a public client: it holds no secret at all, and PKCE
-    alone binds the authorization code to it.
+    Declares a public client (a single-page, a mobile or a native application),
+    which holds no secret and relies on PKCE to protect the code exchange.
+    ``client_authentication: none`` is the short form.
+
+``id``
+    The id of a service implementing
+    :class:`Symfony\\Component\\Security\\Http\\OAuth2\\ClientAuthentication\\ClientAuthenticationInterface`,
+    for a scheme Symfony does not ship such as the ``private_key_jwt`` of
+    `OIDC Core 1.0, Section 9`_. A bare string other than ``none`` is the short
+    form, e.g. ``client_authentication: app.private_key_jwt``.
 
 Use the method registered for your application at the provider; providers
 announce the ones they accept in the ``token_endpoint_auth_methods_supported``
-entry of their discovery document.
+entry of their discovery document. To send the secret in the body of the
+request, for instance:
 
-A public client is an application that cannot keep a secret confidential, such
-as a single-page, a mobile or a native application. Declare it by setting
-``token_endpoint_auth_method`` to ``none`` and by leaving ``client_secret`` out
-entirely, as setting both is rejected:
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        client_authentication:
+                            client_secret_post: '%env(OIDC_CLIENT_SECRET)%'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'client_authentication' => [
+                                'client_secret_post' => '%env(OIDC_CLIENT_SECRET)%',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+A public client is an application that cannot keep a secret confidential,
+such as a single-page, a mobile or a native application. Declare it by setting
+``client_authentication`` to ``none``; it can disable neither PKCE nor the ID
+token signature verification.
 
 .. configuration-block::
 
@@ -515,7 +616,7 @@ entirely, as setting both is rejected:
                     oidc_login:
                         provider_uri: '%env(OIDC_PROVIDER_URI)%'
                         client_id: '%env(OIDC_CLIENT_ID)%'
-                        token_endpoint_auth_method: 'none'
+                        client_authentication: none
 
     .. code-block:: php
 
@@ -529,12 +630,79 @@ entirely, as setting both is rejected:
                         'oidc_login' => [
                             'provider_uri' => '%env(OIDC_PROVIDER_URI)%',
                             'client_id' => '%env(OIDC_CLIENT_ID)%',
-                            'token_endpoint_auth_method' => 'none',
+                            'client_authentication' => 'none',
                         ],
                     ],
                 ],
             ],
         ]);
+
+Using Your Own Authentication Scheme
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A scheme Symfony does not ship, ``private_key_jwt`` for instance, is a service
+implementing
+:class:`Symfony\\Component\\Security\\Http\\OAuth2\\ClientAuthentication\\ClientAuthenticationInterface`,
+named in ``client_authentication`` by its id. Its ``authenticate()`` method
+receives the HttpClient options of the token request and returns them with the
+client authentication added, and ``getMethod()`` returns the name of the
+method::
+
+    // src/Security/PrivateKeyJwtAuthentication.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Http\OAuth2\ClientAuthentication\ClientAuthenticationInterface;
+
+    final class PrivateKeyJwtAuthentication implements ClientAuthenticationInterface
+    {
+        public function authenticate(string $clientId, string $tokenEndpoint, array $options): array
+        {
+            $options['body']['client_assertion_type'] = 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
+            $options['body']['client_assertion'] = $this->sign(['iss' => $clientId, 'sub' => $clientId, 'aud' => $tokenEndpoint]);
+
+            return $options;
+        }
+
+        public function getMethod(): string
+        {
+            return 'private_key_jwt';
+        }
+
+        // ...
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        client_authentication: app.private_key_jwt
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'client_authentication' => 'app.private_key_jwt',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The service is registered like any other, and when its ``getMethod()`` returns
+``none`` the public client rules apply to it too.
 
 Verifying the ID Token Signature
 --------------------------------
@@ -605,6 +773,238 @@ the one of the :doc:`OIDC access token handler </security/access_token>`.
     HTTP client used for that request: never turn it off with a client
     configured with ``verify_peer: false`` or ``verify_host: false``, nor behind
     a TLS-terminating proxy. A public client cannot turn it off at all.
+
+Configuring the HTTP Client
+---------------------------
+
+Every request the authenticator makes to the provider goes through the
+``http_client`` service: the discovery document, the JWKS, the token endpoint
+and the UserInfo endpoint. Some providers require a ``User-Agent`` identifying
+your application, and base their quotas and their diagnostics on it; you may
+also want a timeout or a retry policy of your own. The ``http_client`` option
+takes the id of the client to use instead, and covers the four requests at
+once:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        http_client: oidc.client
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'http_client' => 'oidc.client',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+``oidc.client`` is any service implementing
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`, most often a
+scoped client (see :doc:`/http_client`):
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        http_client:
+            scoped_clients:
+                oidc.client:
+                    scope: 'https://accounts\.example\.com'
+                    headers: { 'User-Agent': 'AcmeApp/1.0 (+https://acme.example.com)' }
+                    timeout: 5
+                    retry_failed: { max_retries: 2 }
+
+.. warning::
+
+    The ``scope`` of a scoped client must match every endpoint, not only the
+    issuer. The requests are made to the absolute URLs the provider announces
+    in its discovery document, and those often live on other hosts: Google
+    announces ``oauth2.googleapis.com`` for its token endpoint,
+    ``www.googleapis.com`` for its JWKS and ``openidconnect.googleapis.com``
+    for its UserInfo, while its issuer is ``accounts.google.com``. The options
+    of a scoped client apply to the URLs its scope matches and to nothing else,
+    without warning, so a client scoped on the issuer alone reaches the
+    discovery request and leaves the three others with the defaults.
+
+When the provider spreads its endpoints over several hosts, build the client
+with :method:`Symfony\\Contracts\\HttpClient\\HttpClientInterface::withOptions`
+instead: its options apply to every request, whatever the host.
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        oidc.client:
+            class: Symfony\Contracts\HttpClient\HttpClientInterface
+            factory: ['@http_client', 'withOptions']
+            arguments:
+                -
+                    headers: { 'User-Agent': 'AcmeApp/1.0 (+https://acme.example.com)' }
+                    timeout: 5
+
+.. warning::
+
+    Never put the client credentials on this client, with ``auth_basic`` or a
+    header of your own. They would be sent to the discovery, JWKS and UserInfo
+    requests too, which have no business seeing them, and ``auth_basic``
+    base64-encodes both halves verbatim where ``client_secret_basic``
+    encodes them with form-urlencode first, as `RFC 6749`_, Section 2.3.1 requires. The
+    ``client_authentication`` option sends them to the token endpoint alone,
+    in the form the specification asks for.
+
+.. _oidc-login-renewing-access-token:
+
+Renewing the Access Token
+-------------------------
+
+The access token expires after a short while, typically minutes. To keep
+calling the provider's APIs on behalf of the logged-in user, Symfony renews it
+with the refresh token grant of `RFC 6749, Section 6`_. The provider
+only issues a refresh token when asked, so add the scope it documents for
+that, ``offline_access`` on most providers, to the ``scope`` option.
+
+Renewing It on Demand
+~~~~~~~~~~~~~~~~~~~~~
+
+The tokens of a logged-in user are renewed by
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Oidc\\OidcTokenRefresher`,
+registered for every ``oidc_login`` firewall as the
+``security.authenticator.oidc_login.token_refresher.<firewallname>`` service,
+whether the automatic renewal described below is enabled or not. It has no
+autowiring alias, so inject it by its id::
+
+    // src/Service/ProviderApiClient.php
+    namespace App\Service;
+
+    use Symfony\Bundle\SecurityBundle\Security;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Symfony\Component\Security\Http\Authenticator\Oidc\OidcTokenRefresher;
+    use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+    class ProviderApiClient
+    {
+        public function __construct(
+            #[Autowire(service: 'security.authenticator.oidc_login.token_refresher.main')]
+            private OidcTokenRefresher $refresher,
+            private Security $security,
+            private HttpClientInterface $client,
+        ) {
+        }
+
+        public function fetchProfile(): array
+        {
+            $token = $this->security->getToken();
+            if (null === $token) {
+                throw new \LogicException('No logged-in user to call the provider API for.');
+            }
+
+            $this->refresher->refreshIfNeeded($token);
+
+            return $this->client->request('GET', 'https://api.example.com/me', [
+                'auth_bearer' => $token->getAttribute('oidc_access_token'),
+            ])->toArray();
+        }
+    }
+
+The ``refreshIfNeeded()`` method renews the tokens when the access token expires
+within the leeway, and returns whether it did. It does nothing when the token
+carries no refresh token, or when no expiry is known. The ``refresh()`` method
+renews whatever the expiry. Both replace the token attributes with the renewed
+values. An ID token returned by the grant is validated before anything is stored
+(signature when the firewall verifies signatures, ``iss``, ``aud``, ``exp``,
+``iat``, ``nbf``, and a ``sub`` equal to the one issued at login); a rejected ID
+token leaves the security token untouched. A rotated refresh token replaces the
+previous one, which is kept when the provider returns none.
+
+Both throw
+:class:`Symfony\\Component\\Security\\Http\\Exception\\OidcInvalidGrantException`
+when the provider answers with the ``invalid_grant`` error of OAuth 2.0, which
+means the refresh token is gone for good: catch it to send the user through the
+login again. Any other failure (an unreachable provider, a 5xx, a timeout) is an
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`
+and can be tried again later.
+
+Renewing It Automatically
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``refresh_access_token`` option renews the access token automatically, on
+the requests where it is about to expire:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        scope: ['openid', 'profile', 'offline_access']
+                        refresh_access_token:
+                            enabled: true
+                            leeway: 30
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'scope' => ['openid', 'profile', 'offline_access'],
+                            'refresh_access_token' => [
+                                'enabled' => true,
+                                'leeway' => 30,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+When enabled, a listener runs right after the firewall restored the security
+token from the session, so the renewed tokens are the ones this request and the
+rest of the session see. An ``invalid_grant`` answer clears the security token
+object: the user is logged out. Any other failure logs a warning and leaves
+the tokens untouched, to be tried again on the next request, so that a provider
+outage does not turn into a mass logout.
+
+.. warning::
+
+    The renewal needs ``expires_in``: a provider that reports none gets no
+    automatic renewal at all, since nothing says when the access token went
+    stale.
+
+    A provider rotating refresh tokens expects the previous one never to be
+    replayed. Two concurrent requests of the same session are serialized by a
+    session handler that locks the session, which the default one does; a
+    handler that does not lock can replay a rotated refresh token, which such
+    a provider answers by revoking the whole chain.
+
+    The option is opt-in: it sends a request to the token endpoint from inside
+    the request lifecycle, and it can log the user out.
 
 Logging Out
 -----------
@@ -695,13 +1095,15 @@ can turn off neither:
 
 * ``provider_uri`` must use HTTPS, and so must every endpoint the discovery
   document announces. Loopback hosts (``localhost``, ``127.0.0.1``, ``::1``) and
-  the names reserved for testing (``*.localhost``, ``*.test``) are accepted for
-  local development, the token endpoint excepted: it carries the authorization
-  code, the PKCE verifier and the tokens it is exchanged for, so HTTPS is
-  required there even locally;
+  the ``*.localhost`` names, which DNS resolvers always resolve to the loopback
+  address, are accepted for local development;
 * the discovered ``issuer`` must match the configured ``provider_uri``;
 * every authorization request carries a ``state``, checked on the callback
   against the value stored in the session, which is what stops login CSRF;
+* the ``iss`` authorization response parameter of `RFC 9207`_ is checked against
+  the discovered issuer, and is required whenever the provider announces
+  ``authorization_response_iss_parameter_supported``, which is what stops the
+  mix-up attack against a client registered with several providers;
 * every authorization request carries a ``nonce``, checked against the ID token
   ``nonce`` claim, which binds the token to that very request;
 * PKCE is applied with the ``S256`` challenge method, unless the ``pkce``
@@ -730,9 +1132,16 @@ Configuration Reference
 ``client_id`` (**required**)
     The client identifier issued by the provider.
 
-``client_secret`` (**required**, except for a public client)
-    The client secret issued by the provider. It must not be set when
-    ``token_endpoint_auth_method`` is ``none``.
+``client_authentication`` (**required**)
+    How the application authenticates at the token endpoint:
+    ``client_secret_basic`` or ``client_secret_post`` with the client secret,
+    ``none`` for a public client, or the ``id`` of a service implementing
+    ``ClientAuthenticationInterface``. A bare string is a service id, except
+    ``none``.
+
+``http_client`` (default: ``http_client``)
+    The id of the HTTP client used for every request made to the provider: the
+    discovery document, the JWKS, the token endpoint and the UserInfo endpoint.
 
 ``scope`` (default: ``['openid']``)
     The scopes of the authorization request, as a list or as a space-separated
@@ -763,10 +1172,12 @@ Configuration Reference
     RP-Initiated Logout, sent as ``post_logout_redirect_uri``; ``null`` sends
     none. Ignored unless ``enable_end_session`` is ``true``.
 
-``token_endpoint_auth_method`` (default: ``client_secret_post``)
-    How the application authenticates at the token endpoint, one of
-    ``client_secret_post``, ``client_secret_basic`` or ``none``. The latter
-    declares a public client.
+``refresh_access_token.enabled`` (default: ``false``)
+    Whether the access token is renewed automatically with the refresh token
+    before it expires.
+
+``refresh_access_token.leeway`` (default: ``30``)
+    How many seconds before its expiry the access token is renewed.
 
 ``id_token_signature.required`` (default: ``true``)
     Whether the ID token signature is verified against the keys published by
@@ -803,19 +1214,23 @@ Configuration Reference
     claims.
 
 On top of these, the authenticator accepts the options every firewall
-authenticator shares: ``success_handler``, ``failure_handler``,
+authenticator shares: ``success_handler`` and ``failure_handler``, to replace
+the default handlers with services of your own, and ``login_path``,
 ``default_target_path``, ``always_use_default_target_path``,
-``target_path_parameter``, ``use_referer``, ``failure_path``,
-``failure_forward`` and ``failure_path_parameter``, all described in
-:doc:`/security/form_login`.
+``target_path_parameter``, ``use_referer``, ``failure_path`` and
+``failure_path_parameter``, which configure the default ones, as described in
+:ref:`reference-security-firewall-form-login`.
 
 .. _`OpenID Connect`: https://openid.net/developers/how-connect-works/
 .. _`Authorization Code Flow`: https://openid.net/specs/openid-connect-core-1_0.html#CodeFlowAuth
 .. _`web-token/jwt-library`: https://github.com/web-token/jwt-library
 .. _`OIDC Core 1.0, Section 3.1.2.1`: https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
+.. _`RFC 6749, Section 6`: https://datatracker.ietf.org/doc/html/rfc6749#section-6
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
+.. _`RFC 9207`: https://datatracker.ietf.org/doc/html/rfc9207
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
+.. _`OIDC Core 1.0, Section 9`: https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication
 .. _`OIDC Core 1.0, Section 5.3.2`: https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
 .. _`RP-Initiated Logout`: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
 .. _`Symfony UX Turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
