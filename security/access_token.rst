@@ -833,6 +833,253 @@ useful when developing or testing applications that use OIDC authentication:
 
     The JWK used for signing must have the appropriate `key operation flags`_ set.
 
+Using OAuth 2.0 Token Introspection
+-----------------------------------
+
+`RFC 7662`_ defines an introspection endpoint, where a resource server
+asks the authorization server what it knows about an access token. The
+``oauth2`` token handler posts the token to that endpoint and builds the
+user out of the answer, so your application never has to read the token
+itself.
+
+This token handler requires the ``symfony/http-client`` package to make
+the needed HTTP requests. If you haven't installed it yet, run this
+command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-client
+
+The address of the authorization server and the way your application
+authenticates there belong to the HTTP client, not to the firewall.
+Declare a scoped client whose ``base_uri`` is the introspection endpoint
+and whose ``auth_basic`` holds the credentials of your resource server:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    oauth2.introspection:
+                        base_uri: 'https://auth.example.com/introspect'
+                        auth_basic: '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'oauth2.introspection' => [
+                            'base_uri' => 'https://auth.example.com/introspect',
+                            'auth_basic' => '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. warning::
+
+    Symfony sends these credentials as given, while the
+    ``client_secret_basic`` method of `RFC 6749`_ form-urlencodes both
+    halves. Encode a client ID or a secret holding a colon, a plus sign, a
+    space or a non-ASCII character before you pass it.
+
+Then give the service ID of that client to the ``http_client`` option of
+the token handler, together with the values it checks the response
+against:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                claim: 'sub'
+                                allowed_time_drift: 5
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'claim' => 'sub',
+                                    'allowed_time_drift' => 5,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+These are the available options:
+
+``http_client``
+    Service ID of the HTTP client the introspection endpoint is called
+    with. It defaults to the ``http_client`` service, which carries
+    neither that endpoint nor any credentials, so declare a scoped client
+    as shown above.
+
+``issuer``
+    Identifier of the authorization server, checked against the ``iss``
+    member of the introspection response. It defaults to ``null``, which
+    skips that check.
+
+``audience``
+    Identifiers of your resource server, one of which the ``aud`` member
+    of the response must name. Give a single identifier as a string and
+    several ones as a list; one match is enough, because an access token
+    minted for several resource servers is meant for each of them. It
+    defaults to an empty list, which skips that check.
+
+``claim``
+    Claim holding the user identifier (e.g. ``sub``, ``username``,
+    ``email``). It defaults to ``null``, which reads the ``sub`` claim and
+    falls back to the ``username`` one.
+
+``allowed_time_drift``
+    Tolerance, in seconds, on the ``iat``, ``nbf`` and ``exp`` members of
+    the response, to account for the clocks of the two servers running
+    slightly apart. It defaults to ``0``.
+
+``cache``
+    Pool the introspection responses are cached in, as described below.
+
+When the HTTP client is the only thing you configure, give it as a
+string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2: 'oauth2.introspection'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => 'oauth2.introspection',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The handler refuses a token the authorization server reports as
+inactive. It also refuses a response whose dates place the token outside
+its validity window, or whose ``exp``, ``nbf`` or ``iat`` is not a
+number it can read as a timestamp. `RFC 7662`_ makes all of those
+members optional, so the handler checks the dates when the response
+carries them, and the issuer and the audience when the firewall declares
+which ones it accepts. Once you declare an ``issuer`` or an
+``audience``, a response that omits the matching member is refused too.
+
+.. versionadded:: 8.2
+
+    The ``http_client``, ``issuer``, ``audience``, ``claim``,
+    ``allowed_time_drift`` and ``cache`` options of the ``oauth2`` token
+    handler were introduced in Symfony 8.2.
+
+Caching the Introspection Responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Introspecting the token on every request costs a round trip to the
+authorization server. The ``cache`` option stores the responses of
+active tokens in the pool of your choice, which requires the
+``symfony/cache`` package:
+
+.. code-block:: terminal
+
+    $ composer require symfony/cache
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                cache:
+                                    id: cache.app
+                                    ttl: 60
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'cache' => [
+                                        'id' => 'cache.app',
+                                        'ttl' => 60,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The ``id`` option is required and the ``ttl`` one defaults to ``60``
+seconds, its lowest value being ``1``. The shorter that lifetime is, the
+sooner a revoked token stops being accepted. No entry outlives the
+``exp`` the authorization server reported, and the handler never stores
+the response of an inactive token. It keys entries by a digest of the
+token, so the pool holds no usable credential.
+
 Using CAS 2.0
 -------------
 
@@ -1002,7 +1249,9 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect (OIDC)`: https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
+.. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
+.. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
