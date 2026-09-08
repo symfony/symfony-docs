@@ -482,6 +482,147 @@ part before the ``|``) empty::
 
     Hidden commands are still available using the JSON or XML descriptor.
 
+.. _console-sub-commands:
+
+Sub-Commands
+~~~~~~~~~~~~
+
+Tools like Docker or Git group related commands under a common parent
+(``docker compose up``). Symfony builds the same kind of command tree from
+the names of your commands: every colon-separated command name can also be
+run with spaces, and each level of the tree can define its own options.
+There's nothing extra to configure.
+
+.. versionadded:: 8.2
+
+    Sub-commands were introduced in Symfony 8.2.
+
+First, create the parent command. It doesn't need any code, only the options
+shared by all its sub-commands::
+
+    // src/Command/DockerCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputOption;
+
+    #[AsCommand(
+        name: 'docker',
+        description: 'Manages containers.',
+    )]
+    class DockerCommand extends Command
+    {
+        protected function configure(): void
+        {
+            $this->addOption('context', 'c', InputOption::VALUE_REQUIRED);
+        }
+
+        // no execute() method: running "docker" alone lists its sub-commands
+        // on the error output and exits with the 1 status code
+    }
+
+Then, create the sub-command that does the actual work::
+
+    // src/Command/ComposeUpCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    #[AsCommand(
+        name: 'docker:compose:up',
+        description: 'Creates and starts containers.',
+    )]
+    class ComposeUpCommand
+    {
+        public function __invoke(
+            OutputInterface $output,
+            #[Argument] string $service = '',
+            #[Option(shortcut: 'd')] bool $detach = false,
+        ): int {
+            // ...
+        }
+    }
+
+Now you can run the sub-command in any of these ways:
+
+.. code-block:: terminal
+
+    # these two commands are equivalent
+    $ php bin/console docker compose up web --detach
+    $ php bin/console docker:compose:up web --detach
+
+    # with spaces, each level parses its own options; only the last command runs
+    $ php bin/console docker --context=prod compose up web --detach
+
+The intermediate levels don't need a command of their own. In this example,
+``compose`` is not a registered command, so it only accepts the global options
+of the application (``-v``, ``--no-interaction``, etc.). Namespaces work the
+same way: ``cache clear`` runs ``cache:clear`` even though there's no ``cache``
+command. Register a command for a level only when you want to give it options,
+a description or some behavior of its own.
+
+Keep in mind that:
+
+* Sub-commands don't inherit the options of their parent commands. The global
+  options of the application are accepted at every level, so
+  ``docker -v compose up`` and ``docker compose up -v`` are equivalent.
+* The ``list`` command only shows the parent command and hides its
+  sub-commands. Run ``list docker`` or use the ``--raw`` or ``--format``
+  options to show all of them.
+* The help of a parent command ends with the list of its sub-commands. Both
+  ``docker compose up --help`` and ``help docker compose up`` show the help of
+  the ``docker:compose:up`` command.
+* Shell completion suggests the sub-commands and the options of each level.
+
+A parent command can also run some code and define its own arguments. In that
+case, if the word after the command name is the name of a sub-command, that
+sub-command runs; otherwise, the word is used as the argument of the parent
+command. Add ``--`` to pass an argument whose value is the name of a
+sub-command:
+
+.. code-block:: terminal
+
+    # given a "deploy" command with an argument and a "deploy:rollback" command
+
+    # runs the "deploy:rollback" command
+    $ php bin/console deploy rollback
+
+    # runs the "deploy" command and passes "rollback" as its argument
+    $ php bin/console deploy -- rollback
+
+Accessing the Input of Parent Commands
+......................................
+
+Sub-commands can read the options passed to their parent commands through
+the :class:`Symfony\\Component\\Console\\CommandChain` object. Add it as an
+argument of the ``__invoke()`` method::
+
+    // src/Command/ComposeUpCommand.php
+    use Symfony\Component\Console\CommandChain;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    // ...
+    public function __invoke(CommandChain $chain, OutputInterface $output): int
+    {
+        // pass the command name or the command class (App\Command\DockerCommand);
+        // it returns null if that command is not part of the current chain
+        $context = $chain->getInput('docker')?->getOption('context');
+
+        // ...
+    }
+
+The ``getCommand()`` method returns the command object instead of its input,
+and ``getCommands()`` and ``getInputs()`` return all the commands of the chain
+(from the parent to the running command, which is always the last one).
+Intermediate levels without a registered command are not included. In event
+listeners, get this object with the
+:method:`Symfony\\Component\\Console\\Application::getCommandChain` method
+(it returns ``null`` when no command is running).
+
 Console Output
 --------------
 
