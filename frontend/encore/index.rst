@@ -43,6 +43,7 @@ Guides
 * :doc:`Using Bootstrap CSS & JS </frontend/encore/bootstrap>`
 * :doc:`jQuery and Legacy Applications </frontend/encore/legacy-applications>`
 * :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
+* :doc:`Using environment variables </frontend/encore/environment-variables>`
 * :doc:`Adding custom loaders & plugins </frontend/encore/custom-loaders-plugins>`
 * :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
 * :doc:`Using Encore in a Virtual Machine </frontend/encore/virtual-machine>`
