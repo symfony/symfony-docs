@@ -1020,6 +1020,112 @@ which ones it accepts. Once you declare an ``issuer`` or an
     ``allowed_time_drift`` and ``cache`` options of the ``oauth2`` token
     handler were introduced in Symfony 8.2.
 
+Verifying a Signed Introspection Response
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A plain JSON introspection response says what the authorization server
+answered, but nothing proves that the server is the one that answered.
+`RFC 9701`_ defines a signed response for that: the members of `RFC 7662`_
+come as a JWT, signed by the authorization server and bound to its issuer
+and to the resource server the response was minted for.
+
+Verifying that signature requires the ``web-token/jwt-library`` package:
+
+.. code-block:: terminal
+
+    $ composer require web-token/jwt-library
+
+Enable the ``response_signature`` option and give it the public keys of
+your authorization server:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                response_signature:
+                                    enabled: true
+                                    keyset: '%env(AUTH_SERVER_JWKS)%'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'response_signature' => [
+                                        'enabled' => true,
+                                        'keyset' => '%env(AUTH_SERVER_JWKS)%',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The handler then asks the endpoint for a JWT, with an
+``Accept: application/token-introspection+jwt`` header, and verifies what
+comes back. That JWT must carry a ``token-introspection+jwt`` type header
+and wrap the members of `RFC 7662`_ in a ``token_introspection`` claim,
+which is what keeps an access token or an ID token of the same issuer from
+being passed off as an introspection response.
+
+The ``issuer`` and the ``audience`` options become required, because
+`RFC 9701`_ makes ``iss``, ``aud`` and ``iat`` mandatory claims of the
+response: the first two are confronted with what you declare here, and
+``iat`` with the clock, within ``allowed_time_drift``. Since the JWT
+already binds the issuer and the audience at that level, the members it
+wraps are only confronted with them when the authorization server repeats
+them there.
+
+These are the options of ``response_signature``:
+
+``algorithms``
+    Signature algorithms you accept the response to be signed with, among
+    ``RS256``, ``RS384``, ``RS512``, ``ES256``, ``ES384``, ``ES512``,
+    ``PS256``, ``PS384`` and ``PS512``. It defaults to ``['RS256']``, which
+    most authorization servers sign with; list the ones yours announces in
+    ``introspection_signing_alg_values_supported`` when it signs with
+    another. Tag a service with
+    ``security.access_token_handler.oidc.signature_algorithm`` to add an
+    algorithm to that list. No HMAC algorithm is tagged, so that a public
+    key can never be used as a shared secret.
+
+``keyset``
+    JSON-encoded JWK Set holding the public keys of your authorization
+    server, the ones it announces at its ``jwks_uri``. It has no default:
+    the handler needs the keys it verifies the response against.
+
+``enforce``
+    Whether the handler refuses a plain JSON response. It defaults to
+    ``true``: a server answering unsigned to a request that asked for a JWT
+    has downgraded the guarantee. Set it to ``false`` to accept both, which
+    also makes the handler offer both media types.
+
+.. versionadded:: 8.2
+
+    The ``response_signature`` option was introduced in Symfony 8.2.
+
 Caching the Introspection Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1252,6 +1358,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
+.. _`RFC 9701`: https://datatracker.ietf.org/doc/html/rfc9701
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
