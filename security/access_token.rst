@@ -1425,7 +1425,8 @@ These are the available options:
 
 ``cache``
     The configuration used to cache the introspection responses, as
-    explained in the next section.
+    explained in
+    :ref:`the section about caching <security-oauth2-introspection-cache>`.
 
 The handler rejects the token when the response reports it as inactive,
 when its ``exp``, ``nbf`` or ``iat`` dates are not valid timestamps or
@@ -1434,7 +1435,9 @@ place the token outside of its validity period, and when its ``iss`` or
 `RFC 7662`_ makes all these members optional, so the handler only checks
 the dates included in the response. However, when you configure the
 ``issuer`` or ``audience`` options, the response must include the
-corresponding member.
+corresponding member. The token is also rejected when the authorization
+server can't be reached or returns an error or something other than a JSON
+object.
 
 If you only need to configure the HTTP client, pass its service ID
 directly as the value of the ``oauth2`` option:
@@ -1473,8 +1476,167 @@ directly as the value of the ``oauth2`` option:
 .. versionadded:: 8.2
 
     The ``http_client``, ``issuer``, ``audience``, ``claim``,
-    ``allowed_time_drift`` and ``cache`` options of the ``oauth2`` token
-    handler were introduced in Symfony 8.2.
+    ``allowed_time_drift``, ``cache`` and ``response_signature`` options of
+    the ``oauth2`` token handler were introduced in Symfony 8.2.
+
+Verifying Signed Introspection Responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A plain JSON introspection response doesn't prove that it was sent by your
+authorization server. `RFC 9701`_ solves this with signed responses: the
+authorization server returns the introspection data inside a JWT signed with
+its private key.
+
+Verifying the signature requires the ``web-token/jwt-library`` package:
+
+.. code-block:: terminal
+
+    $ composer require web-token/jwt-library
+
+Enable the ``response_signature`` option and pass it the public keys of your
+authorization server:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                response_signature:
+                                    enabled: true
+                                    keyset: '%env(AUTH_SERVER_JWKS)%'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'response_signature' => [
+                                        'enabled' => true,
+                                        'keyset' => '%env(AUTH_SERVER_JWKS)%',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The handler now sends the ``Accept: application/token-introspection+jwt``
+header and verifies the JWT returned by the endpoint. To prevent an access
+token or an ID token of the same issuer from being used as an introspection
+response, the JWT must include a ``typ`` header set to
+``token-introspection+jwt`` and the introspection data must be inside its
+``token_introspection`` claim.
+
+`RFC 9701`_ requires the ``iss``, ``aud`` and ``iat`` claims in the JWT, so
+the ``issuer`` and ``audience`` options are mandatory when enabling this
+feature. The handler checks ``iss`` and ``aud`` against those options and
+``iat`` against the current time (using ``allowed_time_drift``). The
+``iss`` and ``aud`` members inside the ``token_introspection`` claim are
+optional in this case, but they are checked too when present.
+
+These are the options of ``response_signature``:
+
+``algorithms``
+    The signature algorithms accepted for the response: ``RS256``,
+    ``RS384``, ``RS512``, ``ES256``, ``ES384``, ``ES512``, ``PS256``,
+    ``PS384`` or ``PS512``. It defaults to ``['RS256']``, which most
+    authorization servers use. If yours uses another one, check the
+    ``introspection_signing_alg_values_supported`` value of its metadata. To
+    support other algorithms, tag their services with
+    ``security.access_token_handler.oidc.signature_algorithm``. Symfony
+    doesn't tag any HMAC algorithm, so a public key can never be used as a
+    shared secret.
+
+``keyset``
+    The JSON-encoded JWK Set with the public keys of your authorization
+    server (the ones published at its ``jwks_uri``). It's required unless you
+    enable the ``discovery`` option.
+
+``discovery``
+    When enabled, the public keys are fetched from the ``jwks_uri`` published
+    in the `authorization server metadata`_, whose URL is built from the
+    ``issuer`` option. It requires the ``symfony/cache`` package, because the
+    metadata and the keys are stored in the cache pool defined in the
+    ``cache.id`` option (``cache.app`` by default). This option
+    can't be used together with ``keyset``. The accepted algorithms are always
+    the ones of the ``algorithms`` option, whatever the metadata announces.
+
+``enforce``
+    Whether to reject plain JSON responses. It defaults to ``true``, because
+    a server that returns an unsigned response when a JWT was requested
+    removes the security guarantee. Set it to ``false`` to accept both kinds
+    of responses (the handler then sends both media types in the ``Accept``
+    header).
+
+This is how you use discovery instead of a hardcoded key set:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                response_signature:
+                                    enabled: true
+                                    discovery: true
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'response_signature' => [
+                                        'enabled' => true,
+                                        'discovery' => true,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. _security-oauth2-introspection-cache:
 
 Caching the Introspection Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1949,7 +2111,9 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
 .. _`RFC 9068`: https://datatracker.ietf.org/doc/html/rfc9068
 .. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
+.. _`RFC 9701`: https://datatracker.ietf.org/doc/html/rfc9701
 .. _`RFC 9728`: https://datatracker.ietf.org/doc/html/rfc9728
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
+.. _`authorization server metadata`: https://datatracker.ietf.org/doc/html/rfc8414
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
