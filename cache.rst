@@ -1281,6 +1281,10 @@ implement it:
   :doc:`MongoDbTagAwareAdapter </cache/adapters/mongodb_adapter>`
 * :doc:`RedisTagAwareAdapter </cache/adapters/redis_adapter>`
 
+.. versionadded:: 8.2
+
+    The ``MongoDbAdapter`` and ``MongoDbTagAwareAdapter`` were introduced in Symfony 8.2.
+
 The adapters that wrap other adapters (such as ``TagAwareAdapter``,
 ``ProxyAdapter`` and ``Psr16Adapter``) delegate the pruning to the wrapped
 adapter::
