@@ -2,9 +2,9 @@ TabsWidget
 ==========
 
 ``TabsWidget`` groups several widgets into tabs and shows one of them at
-a time. The tab headers are drawn above or beside the content, and only
-the active tab is attached to the widget tree: the others receive
-neither focus nor input.
+a time. The tab headers are drawn above, below or beside the content,
+and only the active tab is attached to the widget tree: the others
+receive neither focus nor input.
 
 When to Use
 -----------
@@ -53,14 +53,16 @@ move them::
 
     use Symfony\Component\Tui\Widget\TabPosition;
 
-    $tabs = new TabsWidget($items, TabPosition::Left);
+    $tabs = new TabsWidget($items, TabPosition::Bottom);
     // or
-    $tabs->setPosition(TabPosition::Left);
+    $tabs->setPosition(TabPosition::Bottom);
 
-Use ``TabPosition::Top`` for a row of boxes above the content, or
-``TabPosition::Left`` for a column of boxes beside it. The position also
-decides which arrow keys walk the tabs, as listed below. When the
-headers do not fit, they scroll to keep the active one visible.
+``TabPosition::Top`` and ``TabPosition::Bottom`` draw a row of boxes
+above or below the content, ``TabPosition::Left`` and
+``TabPosition::Right`` a column of boxes on either side of it. The
+position also decides which arrow keys walk the tabs, as listed below.
+When the headers do not fit, they scroll to keep the active one
+visible.
 
 Managing Tabs
 -------------
@@ -136,15 +138,15 @@ own rules can add one to any of the three::
 Default Keybindings
 -------------------
 
-==========================  ====================================
+==========================  ==========================================
 Key                         Action
-==========================  ====================================
+==========================  ==========================================
 Tab                         Next tab (wraps)
 Shift+Tab                   Previous tab (wraps)
-Left, Right                 Previous, next tab (top headers, wraps)
-Up, Down                    Previous, next tab (left headers, wraps)
+Left, Right                 Previous, next tab (row headers, wraps)
+Up, Down                    Previous, next tab (column headers, wraps)
 Enter                       Focus the active tab content
-==========================  ====================================
+==========================  ==========================================
 
 Custom Keybindings
 ------------------
