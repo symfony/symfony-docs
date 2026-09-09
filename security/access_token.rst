@@ -810,18 +810,14 @@ The token handler fetches the JWK sets from all configured discovery endpoints
 and builds a combined JWK set for token validation. This lets your application
 accept and validate tokens from multiple identity providers within a single firewall.
 
-Accepting Several Audiences
-...........................
+Accepting Multiple Audiences
+............................
 
-.. versionadded:: 8.2
-
-    Support for several audiences in the ``oidc`` token handler was
-    introduced in Symfony 8.2.
-
-The ``audience`` option holds the identifiers of this resource server.
-Give one as a string, or several as a list when the resource server
-answers for more than one identifier, as one deployed behind several API
-base URLs does:
+The ``audience`` option holds the identifiers of your application, the
+resource server the tokens are minted for. Give one as a string, or
+several as a list when your application answers for more than one
+identifier, as one served under several domains does. At least one is
+required:
 
 .. configuration-block::
 
@@ -868,32 +864,66 @@ base URLs does:
             ],
         ]);
 
-At least one identifier is required. A token is accepted when its
-``aud`` claim names any one of them; per `JSON Web Tokens (JWT)`_, that
-claim holds either a single string or a list of strings, and both shapes
-are read. The ``audience`` option of the ``oauth2`` token handler reads the
-same way.
+.. versionadded:: 8.2
 
-A single environment variable can carry the whole configuration,
-whatever its shape:
+    Support for multiple audiences in the ``oidc`` token handler was
+    introduced in Symfony 8.2.
 
-.. code-block:: yaml
+A token is accepted when its ``aud`` claim names any one of the declared
+identifiers. Per `JSON Web Tokens (JWT)`_, that claim holds either a
+single string or a list of strings, and both shapes are read. The
+``audience`` option of the ``oauth2`` token handler takes the same
+shapes and applies the same rule, but it is optional there.
 
-    # config/packages/security.yaml
-    security:
-        firewalls:
-            main:
-                access_token:
-                    token_handler:
-                        oidc:
-                            algorithms: ['ES256', 'RS256']
-                            keyset: '%env(OIDC_KEYSET)%'
-                            # a JSON list such as
-                            # ["https://api.example.com","https://admin.example.com"]
-                            # or a single identifier such as
-                            # https://api.example.com
-                            audience: '%env(json:AUDIENCES)%'
-                            issuers: ['https://oidc.example.com']
+An environment variable can carry the identifiers too. Read it with the
+``json`` processor when it holds a list, and without any processor when
+it holds a single identifier:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oidc:
+                                algorithms: ['ES256', 'RS256']
+                                keyset: '%env(OIDC_KEYSET)%'
+                                # AUDIENCES holds a JSON list of identifiers
+                                audience: '%env(json:AUDIENCES)%'
+                                # or, for API_AUDIENCE='https://api.example.com'
+                                #audience: '%env(API_AUDIENCE)%'
+                                issuers: ['https://oidc.example.com']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'keyset' => '%env(OIDC_KEYSET)%',
+                                    // AUDIENCES holds a JSON list of identifiers
+                                    'audience' => '%env(json:AUDIENCES)%',
+                                    // or, for a single identifier:
+                                    // 'audience' => '%env(API_AUDIENCE)%',
+                                    'issuers' => ['https://oidc.example.com'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _creating-a-oidc-token-from-the-command-line:
 
