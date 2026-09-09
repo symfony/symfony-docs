@@ -810,6 +810,88 @@ The token handler fetches the JWK sets from all configured discovery endpoints
 and builds a combined JWK set for token validation. This lets your application
 accept and validate tokens from multiple identity providers within a single firewall.
 
+Accepting Several Audiences
+...........................
+
+.. versionadded:: 8.2
+
+    Support for several audiences in the ``oidc`` token handler was
+    introduced in Symfony 8.2.
+
+The ``audience`` option holds the identifiers of this resource server.
+Give one as a string, or several as a list when the resource server
+answers for more than one identifier, as one deployed behind several API
+base URLs does:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oidc:
+                                algorithms: ['ES256', 'RS256']
+                                keyset: '{"keys":[{"kty":"...","k":"..."}]}'
+                                audience:
+                                    - 'https://api.example.com'
+                                    - 'https://admin.example.com'
+                                issuers: ['https://oidc.example.com']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'keyset' => '{"keys":[{"kty":"...","k":"..."}]}',
+                                    'audience' => [
+                                        'https://api.example.com',
+                                        'https://admin.example.com',
+                                    ],
+                                    'issuers' => ['https://oidc.example.com'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+At least one identifier is required. A token is accepted when its
+``aud`` claim names any one of them; per `JSON Web Tokens (JWT)`_, that claim
+holds either a single string or a list of strings, and both shapes are
+read. The ``audience`` option of the ``oauth2`` token handler reads the
+same way.
+
+A single environment variable can carry the whole configuration,
+whatever its shape:
+
+.. code-block:: yaml
+
+    # config/packages/security.yaml
+    security:
+        firewalls:
+            main:
+                access_token:
+                    token_handler:
+                        oidc:
+                            # ["https://api.example.com","https://admin.example.com"]
+                            audience: '%env(json:AUDIENCES)%'
+                            # or a single identifier: https://api.example.com
+                            #audience: '%env(API_AUDIENCE)%'
+                            # ...
+
 .. _creating-a-oidc-token-from-the-command-line:
 
 Creating an OIDC token from the command line
