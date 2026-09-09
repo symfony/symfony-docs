@@ -78,10 +78,10 @@ generic ``on()`` method::
         // ...
     });
 
-Per-widget listeners are automatically scoped to the target widget
-and cleaned up when the widget is detached from the tree. See
-:doc:`/tui/topics/events` for global listeners and the full event
-system.
+Per-widget listeners are automatically scoped to the target widget and
+live as long as the widget does, even out of the tree. See
+:doc:`/tui/topics/events` for global listeners, releasing listeners and
+the full event system.
 
 Vertical Expansion
 ------------------
