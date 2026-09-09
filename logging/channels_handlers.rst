@@ -144,6 +144,7 @@ For example to inject the service related to the ``foo_bar`` logger channel,
 change your constructor like this:
 
 .. code-block:: diff
+
     + use Symfony\Component\DependencyInjection\Attribute\Target;
 
         public function __construct(
