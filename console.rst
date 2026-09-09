@@ -343,8 +343,9 @@ prefix: using ``app:user:create`` instead of ``create`` in the previous example
 throws an exception.
 
 If the class defines an ``__invoke()`` method, Symfony also registers it as the
-``app:user`` command; otherwise, the class-level attribute only defines the
-prefix. In addition, if the class-level attribute sets ``hidden: true``, all
+``app:user`` command; otherwise, Symfony registers ``app:user`` as the
+:ref:`parent command <console-command-groups>` of the method-based commands.
+In addition, if the class-level attribute sets ``hidden: true``, all
 the method-based commands are hidden too.
 
 .. note::
@@ -680,6 +681,75 @@ Intermediate levels without a registered command are not included. In event
 listeners, get this object with the
 :method:`Symfony\\Component\\Console\\Application::getCommandChain` method
 (it returns ``null`` when no command is running).
+
+.. _console-command-groups:
+
+Defining Sub-Commands in a Single Class
+.......................................
+
+Instead of creating one class per level, you can define the parent command
+and its sub-commands in the same class using
+:ref:`method-based commands <console-method-based-commands>`. The class-level
+``#[AsCommand]`` attribute registers the parent command and its
+:ref:`options parameter <console-input-options-as-command>` defines the
+options of that parent command::
+
+    // src/Command/DockerCommands.php
+    namespace App\Command;
+
+    use App\Docker\DockerClient;
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\CommandChain;
+    use Symfony\Component\Console\Input\InputOption;
+
+    // registers the "docker" command with a "--context" option
+    #[AsCommand('docker', description: 'Manages containers.', options: [
+        new InputOption('context', 'c', InputOption::VALUE_REQUIRED, 'The context'),
+    ])]
+    class DockerCommands
+    {
+        // services injected in the constructor are available in all sub-commands
+        public function __construct(
+            private DockerClient $client,
+        ) {
+        }
+
+        // registers the "docker:compose:up" command
+        #[AsCommand('compose:up', description: 'Creates and starts containers.')]
+        public function up(
+            CommandChain $chain,
+            #[Argument] string $service = '',
+            #[Option(shortcut: 'd')] bool $detach = false,
+        ): int {
+            // returns null when running "docker:compose:up" instead of
+            // "docker compose up", because "docker" is not part of the chain
+            $context = $chain->getInput('docker')?->getOption('context');
+
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
+These commands behave like the ``DockerCommand`` and ``ComposeUpCommand``
+classes of the previous examples (e.g. running ``docker`` alone lists its
+sub-commands). The ``description``, ``help``, ``usages``, ``aliases`` and
+``hidden`` parameters of the class-level attribute apply to the parent command.
+
+If the parent command needs to run some code, create it as a ``Command``
+subclass with the same name: a command registered with that name takes
+precedence over the one defined by the class-level attribute. Do the same when
+using the Console component without the service container, because
+``Application::addCommand()`` only registers the method-based command passed
+to it, not its parent command.
+
+.. versionadded:: 8.2
+
+    The registration of the class-level ``#[AsCommand]`` attribute as a parent
+    command was introduced in Symfony 8.2.
 
 Console Output
 --------------

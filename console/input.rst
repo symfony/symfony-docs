@@ -425,6 +425,52 @@ at runtime::
     you to define complex, runtime-resolved defaults directly in the method
     signature.
 
+.. _console-input-options-as-command:
+
+Defining Options in the AsCommand Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When your code reads an option from the input instead of receiving it as a
+method parameter, define it with the ``options`` parameter of the
+``#[AsCommand]`` attribute. It works in invokable commands, method-based
+commands and ``Command`` subclasses::
+
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Input\InputOption;
+
+    #[AsCommand('app:create-user', options: [
+        new InputOption('locale', null, InputOption::VALUE_REQUIRED, 'The locale'),
+    ])]
+    class CreateUserCommand
+    {
+        public function __invoke(
+            InputInterface $input,
+            #[Argument] string $email,
+        ): int {
+            $locale = $input->getOption('locale');
+
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
+These options are added after the ones defined with ``#[Option]`` parameters
+and in the ``configure()`` method. An option can't be defined both in the
+attribute and as an ``#[Option]`` parameter. There's no equivalent parameter
+for arguments; define them with the ``#[Argument]`` attribute instead.
+
+.. versionadded:: 8.2
+
+    The ``options`` parameter of the ``#[AsCommand]`` attribute was introduced
+    in Symfony 8.2.
+
 .. _console-input-options-add-option:
 
 Using the Classic addOption() Method
