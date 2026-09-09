@@ -869,9 +869,9 @@ base URLs does:
         ]);
 
 At least one identifier is required. A token is accepted when its
-``aud`` claim names any one of them; per `JSON Web Tokens (JWT)`_, that claim
-holds either a single string or a list of strings, and both shapes are
-read. The ``audience`` option of the ``oauth2`` token handler reads the
+``aud`` claim names any one of them; per `JSON Web Tokens (JWT)`_, that
+claim holds either a single string or a list of strings, and both shapes
+are read. The ``audience`` option of the ``oauth2`` token handler reads the
 same way.
 
 A single environment variable can carry the whole configuration,
@@ -886,11 +886,14 @@ whatever its shape:
                 access_token:
                     token_handler:
                         oidc:
+                            algorithms: ['ES256', 'RS256']
+                            keyset: '%env(OIDC_KEYSET)%'
+                            # a JSON list such as
                             # ["https://api.example.com","https://admin.example.com"]
+                            # or a single identifier such as
+                            # https://api.example.com
                             audience: '%env(json:AUDIENCES)%'
-                            # or a single identifier: https://api.example.com
-                            #audience: '%env(API_AUDIENCE)%'
-                            # ...
+                            issuers: ['https://oidc.example.com']
 
 .. _creating-a-oidc-token-from-the-command-line:
 
