@@ -308,8 +308,8 @@ Command Groups
 
 .. versionadded:: 8.2
 
-    Registering the class-level ``#[AsCommand]`` attribute as a command
-    of its own, and the ``options`` entry of the attribute, were
+    The ``options`` entry of ``#[AsCommand]``, and the registration of
+    a class-level ``#[AsCommand]`` as a command of its own, were
     introduced in Symfony 8.2.
 
 The name of a class-level ``#[AsCommand]`` attribute prefixes the names
@@ -331,13 +331,7 @@ to the group, which its sub-commands read through the
     use Symfony\Component\Console\Input\InputOption;
 
     #[AsCommand('docker', description: 'Manages containers.', options: [
-        new InputOption(
-            'context',
-            'c',
-            InputOption::VALUE_REQUIRED,
-            'The Docker context',
-            'default',
-        ),
+        new InputOption('context', 'c', InputOption::VALUE_REQUIRED, 'The context'),
     ])]
     class DockerCommands
     {
@@ -369,23 +363,25 @@ when the command is run with spaces instead of colons:
 
     $ php bin/console docker --context=prod compose up web --detach
 
-Only the leaf runs; the group binds ``--context`` and the leaf reads it
-from the input of the ``docker`` level. Run bare, a group without code
-of its own lists its sub-commands on the error output and exits with
-``1``, the way a namespace does.
+Only the leaf runs: the group binds ``--context`` and the leaf reads it
+from the input of the ``docker`` level. The sub-command does not inherit
+the options of the group, and only the spaced form puts the group in the
+chain: run as ``docker:compose:up``, the leaf gets ``null`` from
+``getInput('docker')``.
 
-The description, help, usages, aliases and hidden flag of the
-class-level attribute apply to the group, and a hidden group hides its
-sub-commands as well. A command registered under the same name as a
-group keeps that name, so define a ``Command`` subclass to give the
-group code of its own.
+When you run the group on its own, it lists its sub-commands on the
+error output and exits with ``1``, the same as a bare namespace. The
+description, help, usages, aliases and hidden flag of the class-level
+attribute apply to the group. A hidden group hides its sub-commands as
+well.
 
 .. note::
 
-    Registering a group by hand needs a class of its own: with the
-    Console component alone,
-    ``$application->addCommand($commands->up(...))`` registers the
-    method commands, not the group.
+    A command registered under the name of a group keeps that name, so
+    a group that needs code of its own is a ``Command`` subclass. Such
+    a subclass is also the way to define a group without the service
+    container: passing a method to ``Application::addCommand()``
+    registers that method command alone, not its group.
 
 Declaring Options in the Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -425,7 +421,8 @@ Use it for the options the code reads from the input instead of
 receiving them as parameters; the
 :ref:`#[Option] attribute <console-input-options>` remains the way to
 bind an option to a parameter. Declaring the same name both ways fails
-when the definition is built.
+when the definition is built. There is no ``arguments`` entry: a command
+with code declares its arguments on its parameters.
 
 .. _console-registering-commands:
 
