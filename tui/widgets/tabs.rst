@@ -2,9 +2,9 @@ TabsWidget
 ==========
 
 ``TabsWidget`` groups several widgets into tabs and shows one of them at
-a time. The tab headers are drawn around the content, and only the
-active tab is attached to the widget tree: the others receive neither
-focus nor input.
+a time. The tab headers are drawn above or beside the content, and only
+the active tab is attached to the widget tree: the others receive
+neither focus nor input.
 
 When to Use
 -----------
@@ -23,23 +23,26 @@ Add a widget as a tab and attach the tabs to the Tui::
     use Symfony\Component\Tui\Widget\TextWidget;
 
     $tabs = new TabsWidget();
-    $tabs->add(new TextWidget('Deployment log'));
-    $tabs->add(new TextWidget('Settings'));
+    $tabs->add(new TextWidget('No deployment yet.')->setLabel('Logs'));
+    $tabs->add($settingsWidget->setLabel('Settings'));
 
     $tui->add($tabs);
     $tui->setFocus($tabs);
 
-``add()`` takes the id and the label of the tab from the widget itself,
-falling back to a generated ``tab_N`` id when the widget has none. To
-name them explicitly, build the tabs from ``TabItem`` objects, which
-take an id, a label and the content widget::
+``add()`` takes the id and the label of the tab from the widget itself.
+A widget without an id gets a generated ``tab_N`` one, and a widget
+without a label falls back to its id, so set them with ``setId()`` and
+``setLabel()``. Building the tabs from ``TabItem`` objects, which take
+an id, a label and the content widget, names them all at once::
 
     use Symfony\Component\Tui\Widget\TabItem;
 
-    $tabs = new TabsWidget([
+    $items = [
         new TabItem('logs', 'Logs', $logWidget),
         new TabItem('settings', 'Settings', $settingsWidget),
-    ]);
+    ];
+
+    $tabs = new TabsWidget($items);
 
 Tab Position
 ------------
@@ -54,60 +57,68 @@ move them::
     // or
     $tabs->setPosition(TabPosition::Left);
 
-``TabPosition::Top`` draws a row of boxes above the content and
-``TabPosition::Left`` a column of boxes beside it. The position also
+Use ``TabPosition::Top`` for a row of boxes above the content, or
+``TabPosition::Left`` for a column of boxes beside it. The position also
 decides which arrow keys walk the tabs, as listed below. When the
 headers do not fit, they scroll to keep the active one visible.
 
 Managing Tabs
 -------------
 
-Add, remove or clear tabs at any time, and switch the active one by
-index::
+Add and remove tabs at any time, and switch the active one by index::
 
-    $tabs->add($widget);
-    $tabs->remove($widget);
-    $tabs->clear();
+    $tabs->add($logWidget);
+    $tabs->remove($logWidget);
 
     $tabs->setActiveTab(1);
 
-``setActiveTab()`` clamps the index to the existing tabs. Read the
-current state with ``getActiveTabIndex()``, ``getActiveTabId()`` and
-``getTabs()``; ``all()`` returns the content of the active tab alone,
-since it is the only attached child.
+``remove()`` takes the content widget of the tab, not its ``TabItem``,
+and ``clear()`` removes every tab at once. ``setActiveTab()`` clamps the
+index to the existing tabs, and does nothing while there are none.
+
+Read the current state with ``getActiveTabIndex()`` and
+``getActiveTabId()``, which returns ``null`` when the widget has no
+tabs. ``getTabs()`` returns the ``TabItem`` objects, while ``all()``
+returns the content widget of the active tab alone, since it is the only
+attached child.
 
 Focus
 -----
 
 Focus stays on the tab headers while the user walks the tabs, and
-**Enter** moves it into the first focusable widget of the active tab.
-Switching tabs from there brings the focus back to the headers; to send
-it into the content of the new tab instead::
+**Enter** moves it into the first focusable widget of the active tab, if
+it has one. Switching tabs from there brings the focus back to the
+headers; to send it into the content of the new tab instead::
 
     $tabs->setFocusContentOnSwitch(true);
+
+This applies to the switches made while the focus is inside the tab
+being left. From the headers, the focus stays on the headers.
 
 Events
 ------
 
 ``TabChangeEvent`` is dispatched on every change of the active tab,
-including when the active tab is removed::
+including when the active tab is removed, as long as another tab
+remains. ``clear()`` dispatches nothing::
 
     use Symfony\Component\Tui\Event\TabChangeEvent;
 
-    $tabs->onTabChange(function (TabChangeEvent $event) {
-        $event->getPreviousIndex();
-        $event->getPreviousId();
-        $event->getIndex();
-        $event->getId();
+    $tabs->onTabChange(function (TabChangeEvent $event) use ($statusBar) {
+        $statusBar->setText(\sprintf('Viewing %s', $event->getId()));
     });
+
+The event also carries the indexes of both tabs, with
+``getPreviousIndex()`` and ``getIndex()``.
 
 Styling
 -------
 
 Three sub-elements carry the look of the headers: ``tab`` for an
 inactive label, ``tab-active`` for the active one and ``separator`` for
-the box borders. Each of them takes a ``:focus`` variant, applied while
-the widget holds the focus::
+the box borders. The default stylesheet gives ``tab`` and ``tab-active``
+a ``:focus`` variant, applied while the widget holds the focus, and your
+own rules can add one to any of the three::
 
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Widget\TabsWidget;
@@ -125,15 +136,35 @@ the widget holds the focus::
 Default Keybindings
 -------------------
 
-==========================  ==================================
+==========================  ====================================
 Key                         Action
-==========================  ==================================
+==========================  ====================================
 Tab                         Next tab (wraps)
 Shift+Tab                   Previous tab (wraps)
-Left, Right                 Previous, next tab (top headers)
-Up, Down                    Previous, next tab (left headers)
-Enter                       Focus the content of the active tab
-==========================  ==================================
+Left, Right                 Previous, next tab (top headers, wraps)
+Up, Down                    Previous, next tab (left headers, wraps)
+Enter                       Focus the active tab content
+==========================  ====================================
 
-Focus navigation between widgets stays on **F6** and **Shift+F6**, so
-the tab keys do not collide with it.
+Custom Keybindings
+------------------
+
+Pass a ``Keybindings`` instance to the constructor to override any of
+the default bindings::
+
+    use Symfony\Component\Tui\Input\Keybindings;
+
+    $tabs = new TabsWidget($items, keybindings: new Keybindings([
+        'tab_next' => ['ctrl+n'],
+        'tab_previous' => ['ctrl+p'],
+    ]));
+
+The bindings are named ``tab_next``, ``tab_previous``, ``cursor_left``,
+``cursor_right``, ``select_up``, ``select_down`` and
+``select_confirm``.
+
+.. note::
+
+    Focus navigation between widgets stays on **F6** and **Shift+F6**,
+    so the tab keys do not collide with it. See
+    :doc:`/tui/topics/focus` and :doc:`/tui/topics/keybindings`.
