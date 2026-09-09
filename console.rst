@@ -301,6 +301,132 @@ and tested separately.
         $application->addCommand($commands->create(...));
         $application->addCommand($commands->delete(...));
 
+.. _console-command-groups:
+
+Command Groups
+~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Registering the class-level ``#[AsCommand]`` attribute as a command
+    of its own, and the ``options`` entry of the attribute, were
+    introduced in Symfony 8.2.
+
+The name of a class-level ``#[AsCommand]`` attribute prefixes the names
+declared on the methods of the class, and registers the group itself as
+a command. Its ``options`` entry lists the
+:class:`Symfony\\Component\\Console\\Input\\InputOption` objects to add
+to the group, which its sub-commands read through the
+:class:`Symfony\\Component\\Console\\CommandChain` class::
+
+    // src/Command/DockerCommands.php
+    namespace App\Command;
+
+    use App\Docker\DockerClient;
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Attribute\Option;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\CommandChain;
+    use Symfony\Component\Console\Input\InputOption;
+
+    #[AsCommand('docker', description: 'Manages containers.', options: [
+        new InputOption(
+            'context',
+            'c',
+            InputOption::VALUE_REQUIRED,
+            'The Docker context',
+            'default',
+        ),
+    ])]
+    class DockerCommands
+    {
+        public function __construct(
+            private DockerClient $client,
+        ) {
+        }
+
+        #[AsCommand('compose:up', description: 'Creates containers.')]
+        public function up(
+            CommandChain $chain,
+            #[Argument] string $service = '',
+            #[Option(shortcut: 'd')] bool $detach = false,
+        ): int {
+            $context = $chain->getInput('docker')?->getOption('context');
+
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
+This registers two commands: ``docker``, the group, and
+``docker:compose:up``, its sub-command. Services shared by every command
+of the class go in the constructor. Both levels parse their own options
+when the command is run with spaces instead of colons:
+
+.. code-block:: terminal
+
+    $ php bin/console docker --context=prod compose up web --detach
+
+Only the leaf runs; the group binds ``--context`` and the leaf reads it
+from the input of the ``docker`` level. Run bare, a group without code
+of its own lists its sub-commands on the error output and exits with
+``1``, the way a namespace does.
+
+The description, help, usages, aliases and hidden flag of the
+class-level attribute apply to the group, and a hidden group hides its
+sub-commands as well. A command registered under the same name as a
+group keeps that name, so define a ``Command`` subclass to give the
+group code of its own.
+
+.. note::
+
+    Registering a group by hand needs a class of its own: with the
+    Console component alone,
+    ``$application->addCommand($commands->up(...))`` registers the
+    method commands, not the group.
+
+Declaring Options in the Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``options`` entry is not reserved to groups. Any command accepts it:
+an invokable class, a method-based command or a ``Command`` subclass.
+The listed options are added after the ones the parameters of the
+command declare, and after the ones ``configure()`` adds::
+
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Input\InputOption;
+
+    #[AsCommand('app:create-user', options: [
+        new InputOption('locale', null, InputOption::VALUE_REQUIRED, 'The locale'),
+    ])]
+    class CreateUserCommand
+    {
+        public function __invoke(
+            InputInterface $input,
+            #[Argument] string $email,
+        ): int {
+            $locale = $input->getOption('locale');
+
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
+Use it for the options the code reads from the input instead of
+receiving them as parameters; the
+:ref:`#[Option] attribute <console-input-options>` remains the way to
+bind an option to a parameter. Declaring the same name both ways fails
+when the definition is built.
+
 .. _console-registering-commands:
 
 Registering the Command
