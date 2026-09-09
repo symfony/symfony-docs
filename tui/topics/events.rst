@@ -22,7 +22,41 @@ the widget that emits them::
     });
 
 Per-widget listeners are automatically scoped to the target widget.
-They are also cleaned up when the widget is detached from the tree.
+They are stored on the widget itself, so they are kept when you remove
+the widget from the tree and add it back later. While the widget is
+detached, its own listeners are still called, but
+:ref:`global listeners <tui-global-listeners>` don't receive its events.
+
+Removing Per-Widget Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``onSubmit()``, ``onCancel()``, etc. methods are shortcuts of the
+generic ``on()`` method. Use the ``off()`` method to remove the listeners
+registered with any of them::
+
+    $listener = function (SubmitEvent $event) {
+        // ...
+    };
+    $input->onSubmit($listener);
+
+    // removes all the registrations of this listener for this event
+    $input->off(SubmitEvent::class, $listener);
+
+    // removes all the listeners of this widget for this event
+    $input->off(SubmitEvent::class);
+
+Listeners are compared in the same way as in
+:method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::removeListener`.
+A first-class callable such as ``$service->handle(...)`` creates a new
+closure on each call, but ``off()`` still considers it equal to the one
+passed to ``on()``. Closures defined with ``function () { ... }`` or
+``fn () => ...`` are not equal to other closures defined elsewhere, which
+is why the example above stores the closure in a variable.
+
+The ``off()`` method only removes the listeners stored on the widget. It
+doesn't remove the global listeners registered with ``addListener()``.
+
+.. _tui-global-listeners:
 
 Global Listeners
 ----------------
