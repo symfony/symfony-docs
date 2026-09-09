@@ -56,10 +56,11 @@ argument) to display them on another side::
     $tabs->setPosition(TabPosition::Left);
 
 ``TabPosition::Top`` and ``TabPosition::Bottom`` display the headers as
-a row of boxes, while ``TabPosition::Left`` and ``TabPosition::Right``
-display them as a column of boxes. The position also defines which arrow
-keys switch tabs, as listed below. When the headers don't
-fit in the available space, they scroll to keep the active tab visible.
+a row of boxes above or below the content, while ``TabPosition::Left``
+and ``TabPosition::Right`` display them as a column of boxes to its left
+or right. The position also defines which arrow keys switch tabs, as
+listed below. When the headers don't fit in the available space, they
+scroll to keep the active tab visible.
 
 Managing Tabs
 -------------
