@@ -143,7 +143,7 @@ Three shortcuts simplify common operations:
 * ``scale($percentage)``: Positive values darken, negative values
   lighten.
 
-::
+These methods return a new color::
 
     $lighter = Color::named('blue')->tint(40);
     $darker = Color::named('blue')->shade(40);
@@ -275,7 +275,7 @@ Property               Description
 ``flex``               Flex grow (``0`` = intrinsic, ``1+`` = proportional)
 =====================  ===================================================
 
-::
+Set them through the ``Style`` constructor::
 
     use Symfony\Component\Tui\Style\Direction;
 
