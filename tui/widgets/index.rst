@@ -16,6 +16,7 @@ the focus manager can route key events to them.
     basics
     text
     container
+    collapsible
     input
     editor
     select_list
