@@ -12,3 +12,4 @@ application.
     keybindings
     compositing
     tick_loop
+    extending_widgets
