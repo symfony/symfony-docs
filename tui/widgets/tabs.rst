@@ -55,11 +55,11 @@ move them::
 
     $tabs = new TabsWidget($items, TabPosition::Bottom);
     // or
-    $tabs->setPosition(TabPosition::Bottom);
+    $tabs->setPosition(TabPosition::Right);
 
 ``TabPosition::Top`` and ``TabPosition::Bottom`` draw a row of boxes
-above or below the content, ``TabPosition::Left`` and
-``TabPosition::Right`` a column of boxes on either side of it. The
+above or below the content; ``TabPosition::Left`` and
+``TabPosition::Right`` draw a column of boxes to its left or right. The
 position also decides which arrow keys walk the tabs, as listed below.
 When the headers do not fit, they scroll to keep the active one
 visible.
@@ -143,10 +143,13 @@ Key                         Action
 ==========================  ==========================================
 Tab                         Next tab (wraps)
 Shift+Tab                   Previous tab (wraps)
-Left, Right                 Previous, next tab (row headers, wraps)
-Up, Down                    Previous, next tab (column headers, wraps)
+Left, Right                 Previous, next tab (top or bottom headers)
+Up, Down                    Previous, next tab (left or right headers)
 Enter                       Focus the active tab content
 ==========================  ==========================================
+
+The arrow keys wrap around the ends of the list, as Tab and Shift+Tab
+do.
 
 Custom Keybindings
 ------------------
