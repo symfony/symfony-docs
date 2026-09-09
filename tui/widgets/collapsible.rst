@@ -11,8 +11,9 @@ When to Use
 
 Use ``CollapsibleWidget`` to keep a dense screen readable: the details
 of a failed job, an advanced options panel, one section per file of a
-diff. The content is attached to the widget tree only while expanded,
-so a collapsed section takes neither focus nor input.
+diff. The widget attaches its content to the widget tree only while
+expanded, so the widgets it hides can be neither focused nor reached by
+input while the section is closed.
 
 Basic Usage
 -----------
@@ -30,8 +31,12 @@ Give the widget a summary and the content it hides::
     $tui->add($collapsible);
     $tui->setFocus($collapsible);
 
-The widget starts collapsed. Pass ``expanded: true`` to open it from
-the start::
+The content is a single widget: wrap several of them in a
+:doc:`/tui/widgets/container`, or nest another ``CollapsibleWidget``
+to build sub-sections.
+
+The widget starts collapsed. Pass ``expanded: true`` to open it from the
+start::
 
     $collapsible = new CollapsibleWidget(
         'Advanced settings',
@@ -42,9 +47,10 @@ the start::
 Description
 -----------
 
-An optional description is drawn at the end of the summary line,
-aligned to the right, and moves to a line of its own when the two do
-not fit::
+An optional description sits at the end of the summary line, aligned to
+the right. When the line is too narrow for both, the summary is
+truncated and the description moves to a second line, indented under
+the summary::
 
     $collapsible = new CollapsibleWidget(
         'Advanced settings',
@@ -64,6 +70,8 @@ expanded. Pass your own symbols to the constructor::
         collapsedSymbol: '+',
         expandedSymbol: '-',
     );
+
+The symbols are read-only: set them when you build the widget.
 
 Changing the State
 ------------------
@@ -97,18 +105,23 @@ while collapsed.
 Events
 ------
 
-``ExpandEvent`` and ``CollapseEvent`` are dispatched on every change of
-state, whether it comes from a keystroke or from your code::
+The widget dispatches ``ExpandEvent`` and ``CollapseEvent`` on every
+change of state, whether a keystroke or your own code causes it.
+Calling ``expand()`` on an already expanded widget changes nothing and
+dispatches no event. See :doc:`/tui/topics/events`::
 
     use Symfony\Component\Tui\Event\CollapseEvent;
     use Symfony\Component\Tui\Event\ExpandEvent;
+    use Symfony\Component\Tui\Widget\TextWidget;
 
-    $collapsible->on(ExpandEvent::class, function () use ($bar) {
-        $bar->setText('Showing the advanced settings');
+    $status = new TextWidget('');
+
+    $collapsible->on(ExpandEvent::class, function () use ($status) {
+        $status->setText('Showing the advanced settings');
     });
 
-    $collapsible->on(CollapseEvent::class, function () use ($bar) {
-        $bar->setText('');
+    $collapsible->on(CollapseEvent::class, function () use ($status) {
+        $status->setText('');
     });
 
 Styling
@@ -116,8 +129,9 @@ Styling
 
 Three sub-elements carry the look of the summary line: ``symbol`` for
 the arrow, ``summary`` for the title and ``description`` for the text
-aligned to the right. The default stylesheet reverses the symbol and
-the summary while the widget holds the focus::
+aligned to the right. The default stylesheet draws the description in
+gray, and reverses the symbol and the summary while the widget holds
+the focus. See :doc:`/tui/style/stylesheets`::
 
     use Symfony\Component\Tui\Style\Style;
     use Symfony\Component\Tui\Widget\CollapsibleWidget;
@@ -125,6 +139,11 @@ the summary while the widget holds the focus::
     $stylesheet->addRule(
         CollapsibleWidget::class.'::summary',
         new Style(bold: true),
+    );
+
+    $stylesheet->addRule(
+        CollapsibleWidget::class.'::summary:focus',
+        new Style(bold: true, color: 'cyan'),
     );
 
 Default Keybindings
@@ -141,12 +160,14 @@ Left                        Collapse the widget
 Custom Keybindings
 ------------------
 
-Call ``setKeybindings()`` to override any of the default bindings::
+Call ``setKeybindings()`` to replace the keys of any action. Each
+action you list replaces its default keys entirely, so name every key
+you want to keep. See :doc:`/tui/topics/keybindings`::
 
     use Symfony\Component\Tui\Input\Keybindings;
 
     $collapsible->setKeybindings(new Keybindings([
-        'toggle' => ['ctrl+o'],
+        'toggle' => ['enter', 'space', 'ctrl+o'],
     ]));
 
-The bindings are named ``toggle``, ``expand`` and ``collapse``.
+The three actions are ``toggle``, ``expand`` and ``collapse``.

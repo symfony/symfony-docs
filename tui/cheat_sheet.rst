@@ -145,6 +145,21 @@ Left, Ctrl+B              Cycle value backward
 Escape, Ctrl+C            Cancel
 ========================  =========================================
 
+CollapsibleWidget
+-----------------
+
+Summary line hiding a content widget until it is expanded.
+
+**Keyboard:**
+
+====================  ==============================
+Key                   Action
+====================  ==============================
+Enter, Space          Toggle the widget
+Right                 Expand the widget
+Left                  Collapse the widget
+====================  ==============================
+
 CancellableLoaderWidget
 -----------------------
 
