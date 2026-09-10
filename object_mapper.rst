@@ -748,12 +748,12 @@ Example::
         /**
          * In class-level conditions, $value is null.
          */
-        public static function isOnline(?mixed $value, object $source): bool
+        public static function isOnline(mixed $value, object $source): bool
         {
             return 'online' === $source->type;
         }
 
-        public static function isPhysical(?mixed $value, object $source): bool
+        public static function isPhysical(mixed $value, object $source): bool
         {
             return 'physical' === $source->type;
         }
