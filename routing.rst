@@ -383,7 +383,7 @@ You can also use these functions:
     First, add the ``#[AsRoutingConditionService]`` attribute or ``routing.condition_service``
     tag to the services that you want to use in route conditions::
 
-        use Symfony\Bundle\FrameworkBundle\Routing\Attribute\AsRoutingConditionService;
+        use Symfony\Component\Routing\Attribute\AsRoutingConditionService;
         use Symfony\Component\HttpFoundation\Request;
 
         #[AsRoutingConditionService(alias: 'route_checker')]
@@ -1675,7 +1675,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         # config/routes.yaml
         doc_shortcut:
             path: /doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+            controller: Symfony\Component\Routing\Controller\RedirectController
             defaults:
                 route: 'doc_page'
                 # optionally you can define some arguments passed to the route
@@ -1696,7 +1696,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
 
         legacy_doc:
             path: /legacy/doc
-            controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController
+            controller: Symfony\Component\Routing\Controller\RedirectController
             defaults:
                 # this value can be an absolute path or an absolute URL
                 path: 'https://legacy.example.com/doc'
@@ -1707,7 +1707,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         // config/routes.php
         namespace Symfony\Component\Routing\Loader\Configurator;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
+        use Symfony\Component\Routing\Controller\RedirectController;
 
         return Routes::config([
             'doc_shortcut' => [

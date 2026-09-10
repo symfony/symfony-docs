@@ -59,11 +59,6 @@ EventDispatcher
 
 * :ref:`AsEventListener <event-dispatcher_event-listener-attributes>`
 
-FrameworkBundle
-~~~~~~~~~~~~~~~
-
-* :ref:`AsRoutingConditionService <routing-matching-expressions>`
-
 HttpKernel
 ~~~~~~~~~~
 
@@ -115,6 +110,8 @@ RemoteEvent
 Routing
 ~~~~~~~
 
+* :ref:`AsRouteLoader <routing-service-route-loaders>`
+* :ref:`AsRoutingConditionService <routing-matching-expressions>`
 * :ref:`DeprecatedAlias <routing-alias-deprecation>`
 * :doc:`Route </routing>`
 
