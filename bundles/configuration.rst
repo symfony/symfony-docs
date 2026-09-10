@@ -387,6 +387,104 @@ allow one ``Extension`` class to modify the configuration passed to another
 bundle's ``Extension`` class. This can be achieved using a prepend extension.
 For more details, see :doc:`/bundles/prepend_extension`.
 
+.. _bundle-config-alias-of:
+
+Forwarding a Configuration Section to Another Bundle
+----------------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``aliasOf()`` method was introduced in Symfony 8.2.
+
+When a section of your bundle configuration moves to another bundle, you can
+keep supporting the old key so existing applications don't break. Use the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::aliasOf`
+method to declare that the section belongs to the configuration of the other
+bundle, passing the root key of that configuration::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    // this section is now handled by AcmeBlueskyBundle
+                    ->variableNode('bluesky')->aliasOf('acme_bluesky')
+                        // optionally, ask users to move to the new key (the
+                        // deprecation is only triggered if the old key is used)
+                        ->setDeprecated('acme/social-bundle', '2.1')
+                    ->end()
+                ->end()
+            ;
+        }
+    }
+
+Symfony moves the contents of the old key to the configuration of the other
+bundle, so the following configuration is processed as if it were written under
+the ``acme_bluesky`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/acme_social.yaml
+        acme_social:
+            bluesky:
+                handle: acme.example.com
+
+    .. code-block:: php
+
+        // config/packages/acme_social.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'acme_social' => [
+                'bluesky' => [
+                    'handle' => 'acme.example.com',
+                ],
+            ],
+        ]);
+
+This happens after all bundles have
+:doc:`prepended </bundles/prepend_extension>` their configuration and before
+any of them is loaded, so the configuration that other bundles prepend under
+the old key is forwarded too.
+
+If an application uses both keys, the values of the old key are merged first, so
+the values defined under ``acme_bluesky`` take precedence.
+
+The alias node normalizes the value before forwarding it, so it can keep
+accepting a shorthand of the old section. For example, to accept a string as
+the value of the ``handle`` option::
+
+    $definition->rootNode()
+        ->children()
+            ->variableNode('bluesky')->aliasOf('acme_bluesky')
+                // "bluesky: acme.example.com" becomes "bluesky: { handle: ... }"
+                ->beforeNormalization()
+                    ->ifString()
+                    ->then(static fn (string $handle) => ['handle' => $handle])
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+Keep in mind the following restrictions:
+
+* only the direct children of the root node can be aliases and they must accept
+  arrays (use a ``variableNode()``, because the other bundle already validates
+  the contents of the section);
+* after normalization, the value must be an array or ``null`` (which is
+  forwarded as an empty array);
+* aliases can't be chained, so the alias must point to the bundle that actually
+  handles the section.
+
 Dump the Configuration
 ----------------------
 
