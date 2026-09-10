@@ -387,6 +387,101 @@ allow one ``Extension`` class to modify the configuration passed to another
 bundle's ``Extension`` class. This can be achieved using a prepend extension.
 For more details, see :doc:`/bundles/prepend_extension`.
 
+.. _bundle-config-alias-of:
+
+Forwarding a Configuration Section to Another Bundle
+----------------------------------------------------
+
+When a section of your bundle configuration moves to another bundle, users can
+keep writing it under the old key. Declare that the section belongs to the
+configuration of the other bundle with the
+:method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::aliasOf`
+method, passing the root key of that configuration::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    // this section is now handled by AcmeBlueskyBundle
+                    ->variableNode('bluesky')->aliasOf('acme_bluesky')->end()
+                ->end()
+            ;
+        }
+    }
+
+The following configuration is then processed as if it was written under the
+``acme_bluesky`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/acme_social.yaml
+        acme_social:
+            bluesky:
+                handle: acme.example.com
+
+    .. code-block:: php
+
+        // config/packages/acme_social.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'acme_social' => [
+                'bluesky' => [
+                    'handle' => 'acme.example.com',
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``aliasOf()`` method was introduced in Symfony 8.2.
+
+The value is moved after all bundles have
+:doc:`prepended </bundles/prepend_extension>` their configuration and before
+any of them is loaded, so a configuration that another bundle prepends under
+the old key is forwarded too.
+
+The node normalizes the value before forwarding it, so it can still accept a
+shorthand of the section it replaces. For example, to accept a bare string as
+the handle::
+
+    $definition->rootNode()
+        ->children()
+            ->variableNode('bluesky')->aliasOf('acme_bluesky')
+                ->beforeNormalization()
+                    ->ifString()
+                    ->then(static fn ($v) => ['handle' => $v])
+                ->end()
+            ->end()
+        ->end()
+    ;
+
+Both keys can be used at the same time: the values written under the old key
+are merged first, so the ones written under ``acme_bluesky`` take precedence.
+To ask users to move to the new key, deprecate the old one with
+``setDeprecated()``; the deprecation is triggered when the old key is used.
+
+A few rules apply:
+
+* only the direct children of the root node can be aliases, and they must
+  accept an array (use an ``arrayNode()`` or a ``variableNode()``);
+* the value must be an array or ``null`` once normalized, ``null`` being
+  forwarded as an empty array;
+* the bundle owning the target configuration must be registered, otherwise
+  an exception is thrown;
+* aliases are not chained, so the target must be the bundle that actually
+  handles the section.
+
 Dump the Configuration
 ----------------------
 
