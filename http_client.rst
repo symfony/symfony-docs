@@ -1018,7 +1018,7 @@ the remote server support it.
 
 .. warning::
 
-    If you set ``Accept-Encoding`` to e.g. ``gzip``, you will need to handle the
+    If you set ``Accept-Encoding`` to e.g. ``zstd``, you will need to handle the
     decompression yourself.
 
 HTTP/2 Support
