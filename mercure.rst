@@ -231,12 +231,6 @@ Symfony components          ``^6.4 | ^7.3 | ^8.0``
 Mercure hub                 ``v1.0.0-alpha.3`` or later
 ==========================  ==================================
 
-.. warning::
-
-    The Symfony constraint is worth reading twice: it's ``^6.4 | ^7.3 | ^8.0``,
-    not ``^6.4 | ^7.0``. Symfony versions between 7.0 and 7.2 cannot install
-    this version of the bundle - upgrade to 7.3 or later first.
-
 The protocol version is configured per hub with the ``protocol_version``
 option, and it **defaults to** ``0.x``. Upgrading the bundle alone changes
 nothing: your app keeps minting legacy ``mercure``-claim tokens and a 1.0 hub
