@@ -314,6 +314,14 @@ concrete one::
 No further configuration is required, as the test service container is a special one
 that allows you to interact with private services and aliases.
 
+.. warning::
+
+    :ref:`Application tests <functional-tests>` reboot the kernel before each
+    request after the first one, which discards the services set this way.
+    Pass a ``configure_container`` closure to ``createClient()`` to set them
+    again after every reboot, as explained in
+    :ref:`Multiple Requests in One Test <testing-multiple-requests-in-one-test>`.
+
 Mocking Non-Shared Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -643,6 +651,41 @@ to remove the ``kernel.reset`` tag from some services in your test environment::
             }
         }
     }
+
+The reboot also throws away the services you replaced on the test container
+with ``$container->set()``. Nothing warns you about it: the first request uses
+your replacement and the next ones use the real service again. Crawler methods
+such as ``clickLink()`` and ``submitForm()`` make requests too, so they are
+affected as well.
+
+Pass a ``configure_container`` closure as an option of ``createClient()`` to
+apply the replacement again after each reboot, for the entire life of the
+client::
+
+    use Psr\Clock\ClockInterface;
+    use Symfony\Component\Clock\MockClock;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
+
+    $clock = new MockClock('2024-03-01');
+    $setMockClock = function (ContainerInterface $container) use ($clock): void {
+        $container->set(ClockInterface::class, $clock);
+    };
+
+    $client = static::createClient(['configure_container' => $setMockClock]);
+
+    $client->request('GET', '/invoices/2024-0001');
+    $this->assertSelectorTextContains('#status', 'Pending');
+
+    // the closure runs again after the reboot and sets the very same clock
+    // object, so change the next request by mutating that object
+    $clock->modify('+2 months');
+
+    $client->clickLink('Refresh');
+    $this->assertSelectorTextContains('#status', 'Overdue');
+
+.. versionadded:: 8.2
+
+    The ``configure_container`` option was introduced in Symfony 8.2.
 
 Browsing the Site
 .................
