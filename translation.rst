@@ -1526,7 +1526,7 @@ Debug Command Exit Codes
 The exit code of the ``debug:translation`` command changes depending on the
 status of the translations. Use the following public constants to check it::
 
-    use Symfony\Bundle\FrameworkBundle\Command\TranslationDebugCommand;
+    use Symfony\Component\Translation\Command\TranslationDebugCommand;
 
     // generic failure (e.g. there are no translations)
     TranslationDebugCommand::EXIT_CODE_GENERAL_ERROR;
