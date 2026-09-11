@@ -284,14 +284,15 @@ They convert to/from ``DatePoint`` objects automatically::
     #[ORM\Entity]
     class Product
     {
-        // if you don't define the Doctrine type explicitly, Symfony will autodetect 'date_point':
+        // Doctrine maps DatePoint properties to the 'date_point' type by default
         #[ORM\Column]
         private DatePoint $createdAt;
 
-        // if you prefer to define the Doctrine type explicitly:
+        // set the type explicitly if you prefer to:
         #[ORM\Column(type: 'date_point')]
         private DatePoint $updatedAt;
 
+        // the 'day_point' and 'time_point' types always need the explicit type
         #[ORM\Column(type: 'day_point')]
         public DatePoint $birthday;
 
@@ -303,22 +304,8 @@ They convert to/from ``DatePoint`` objects automatically::
 
 .. versionadded:: 8.2
 
-    The autodetection of the ``date_point`` type by the Doctrine schema tools
-    (e.g. when running ``doctrine:migrations:diff`` or ``doctrine:schema:update``)
-    was introduced in Symfony 8.2. In previous versions, columns typed with
-    ``DatePoint`` fell back to ``string`` unless the Doctrine type was set
-    explicitly.
-
-Only ``date_point`` is autodetected, because it's the Doctrine type matching the
-``DatePoint`` property type. Set the ``type`` option explicitly to store a
-``DatePoint`` as a ``day_point`` or a ``time_point``, as shown above.
-
-.. note::
-
-    The typed field mapper configured in your application (through the
-    ``typed_field_mapper`` option of DoctrineBundle) is asked first for each
-    property, so this autodetection only applies to the properties it leaves
-    without a Doctrine type.
+    Mapping ``DatePoint`` properties to the ``date_point`` type by default was
+    introduced in Symfony 8.2.
 
 .. _clock_writing-tests:
 
