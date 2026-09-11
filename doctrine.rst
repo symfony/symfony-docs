@@ -898,6 +898,46 @@ using the ``MapEntity`` attribute. You can even control the behavior of the
         }
     }
 
+Fetch a List of Entities
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for fetching a list of entities into ``array`` arguments was
+    introduced in Symfony 8.2.
+
+The resolver can also fetch a *list* of entities. Type the controller argument
+as ``array`` and define the entity to query for with the ``class`` option of
+the ``#[MapEntity]`` attribute. The resolver then calls the ``findBy()`` method
+instead of ``findOneBy()``::
+
+    use App\Entity\Post;
+    // ...
+
+    #[Route('/posts_by/{author:posts}')]
+    public function authorPosts(
+        #[MapEntity(class: Post::class)]
+        array $posts
+    ): Response {
+        // ...
+    }
+
+You can also configure the criteria explicitly using the ``mapping`` option::
+
+    #[Route('/posts_by/{author_id}')]
+    public function authorPosts(
+        #[MapEntity(class: Post::class, mapping: ['author_id' => 'author'])]
+        array $posts
+    ): Response {
+        // ...
+    }
+
+If no entities match the criteria, the resolver sets the argument to an
+empty array instead of throwing a 404 error.
+
+If you need to sort or limit the results, use the ``expr`` option to fetch
+the entities :ref:`using custom logic <fetch-via-an-expression>`.
+
 .. _fetch-via-an-expression:
 
 Fetch via Custom Logic
@@ -1008,8 +1048,8 @@ control behavior:
 
 ``mapping``
     Configures the properties and values to use with the ``findOneBy()``
-    method: the key is the route placeholder name and the value is the Doctrine
-    property name::
+    method (or ``findBy()`` for ``array`` arguments): the key is the route
+    placeholder name and the value is the Doctrine property name::
 
         #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
         public function show(
