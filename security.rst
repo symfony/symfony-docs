@@ -1567,6 +1567,60 @@ or the
 Read :ref:`how to customize your success handler <login-link_customize-success-handler>`
 for more information about this.
 
+These handlers are wired as-is, so you can
+:doc:`decorate </service_container/service_decoration>` them. Symfony applies
+the options of the authenticator to the handler right before calling it, with
+the ``setOptions()`` method and, for success handlers, ``setFirewallName()``.
+A decorator must forward both calls to the service it decorates whenever that
+service relies on them, as the handlers shipped by Symfony do. Neither method
+belongs to the handler interfaces, hence the ``method_exists()`` checks below.
+Without forwarding, the authenticator options and the session target path are
+lost, and a successful login redirects to ``/``::
+
+    // src/Security/SuccessHandlerDecorator.php
+    namespace App\Security;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
+
+    #[AsDecorator('app.authentication_success_handler')]
+    class SuccessHandlerDecorator implements AuthenticationSuccessHandlerInterface
+    {
+        public function __construct(
+            private AuthenticationSuccessHandlerInterface $handler,
+        ) {
+        }
+
+        public function setOptions(array $options): void
+        {
+            if (method_exists($this->handler, 'setOptions')) {
+                $this->handler->setOptions($options);
+            }
+        }
+
+        public function setFirewallName(string $firewallName): void
+        {
+            if (method_exists($this->handler, 'setFirewallName')) {
+                $this->handler->setFirewallName($firewallName);
+            }
+        }
+
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token): ?Response
+        {
+            // ...
+
+            return $this->handler->onAuthenticationSuccess($request, $token);
+        }
+    }
+
+.. versionadded:: 8.2
+
+    Support for decorating custom authentication success and failure handlers
+    was introduced in Symfony 8.2.
+
 Login Programmatically
 ----------------------
 
