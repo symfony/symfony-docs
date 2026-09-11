@@ -1054,7 +1054,6 @@ and in route imports. Symfony defines some special attributes with the same name
                 path: '/articles/{_locale}/search.{_format}',
                 locale: 'en',
                 format: 'html',
-                query: ['page' => 1],
                 requirements: [
                     '_locale' => 'en|fr',
                     '_format' => 'html|xml',
@@ -1073,8 +1072,6 @@ and in route imports. Symfony defines some special attributes with the same name
           controller:  App\Controller\ArticleController::search
           locale:      en
           format:      html
-          query:
-              page:    1
           requirements:
               _locale: en|fr
               _format: html|xml
@@ -1092,7 +1089,6 @@ and in route imports. Symfony defines some special attributes with the same name
                 'controller' => [ArticleController::class, 'search'],
                 'locale' => 'en',
                 'format' => 'html',
-                'query' => ['page' => 1],
                 'requirements' => ['_locale' => 'en|fr', '_format' => 'html|xml'],
             ],
         ]);
