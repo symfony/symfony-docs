@@ -301,7 +301,8 @@ have deleted it entirely (for example in the production servers), override the
 
 **type**: ``string`` **default**: ``%env(default:kernel.environment:APP_RUNTIME_ENV)%``
 
-This parameter stores the name of the current runtime environment used by the
+This parameter stores the name of the current
+:ref:`runtime environment <configuration-runtime-environment>` used by the
 application. Define it with the ``APP_RUNTIME_ENV`` env var; when that env var
 is not set, this parameter falls back to the value of ``kernel.environment``.
 
@@ -310,9 +311,6 @@ This value defines the place where the application is deployed, whereas the
 the configuration options used to run the application. This allows for example
 to run an application with the ``prod`` config (``kernel.environment``) in different
 scenarios like ``staging`` or ``production`` (``kernel.runtime_environment``).
-Unlike ``kernel.environment``, Symfony resolves this parameter at runtime, so
-you can deploy the same built application in several places. Read more about
-:ref:`selecting the runtime environment <configuration-runtime-environment>`.
 
 ``kernel.runtime_mode``
 -----------------------
