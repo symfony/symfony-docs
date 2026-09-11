@@ -345,6 +345,147 @@ can also be applied to methods directly::
     Note that the attribute doesn't require its ``event`` parameter to be set
     if the method already type-hints the expected event.
 
+.. _event-dispatcher_ordering-listeners:
+
+Ordering Event Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` options of event listeners were introduced in
+    Symfony 8.2.
+
+The ``priority`` option orders all the listeners of an event at once, which
+makes it hard to place a listener next to another one when that other listener
+comes from Symfony itself or from a bundle you don't control. The ``before``
+and ``after`` options name that other listener instead. For example, a listener
+that resolves the locale of the current user has to run before
+``LocaleListener`` applies the ``_locale`` request attribute. Declare that
+constraint, and no priority, to place it there:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/EventListener/UserLocaleListener.php
+        namespace App\EventListener;
+
+        use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+        use Symfony\Component\HttpKernel\Event\RequestEvent;
+        use Symfony\Component\HttpKernel\EventListener\LocaleListener;
+
+        #[AsEventListener(before: LocaleListener::class.'::onKernelRequest')]
+        final class UserLocaleListener
+        {
+            public function __invoke(RequestEvent $event): void
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\EventListener\UserLocaleListener:
+                tags:
+                    - name: kernel.event_listener
+                      event: kernel.request
+                      before: 'locale_listener::onKernelRequest'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\EventListener\UserLocaleListener;
+        use Symfony\Component\HttpKernel\EventListener\LocaleListener;
+
+        return App::config([
+            'services' => [
+                UserLocaleListener::class => [
+                    'tags' => [
+                        ['kernel.event_listener' => [
+                            'event' => 'kernel.request',
+                            'before' => LocaleListener::class.'::onKernelRequest',
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
+Both halves of the target accept a service ID or a class name, so
+``locale_listener::onKernelRequest`` and
+``LocaleListener::class.'::onKernelRequest'`` designate the same listener. The
+``debug:event-dispatcher kernel.request`` command lists the class and the
+method of every listener of that event.
+
+Naming the service alone targets every listener that this service registers on
+the event. ``LocaleListener`` listens to ``kernel.request`` twice, once to set
+the default locale and once to apply the ``_locale`` request attribute, so
+``before: LocaleListener::class`` would place your listener ahead of both,
+whereas naming the method places it between them.
+
+Like the :ref:`ordering constraints of tagged services <tags_before-after>`,
+these options apply on top of the priority order, and Symfony ignores a target
+whose service doesn't listen to that event on that dispatcher. A constraint
+pointing at an optional bundle therefore keeps working when that bundle isn't
+installed, while cyclic constraints throw an exception when compiling the
+container.
+
+The method half is the exception: when the target service listens to the event
+but not with the method you named, compiling the container fails, so a typo in
+a method name never turns into a constraint that does nothing.
+
+Listeners run by descending priority and, at equal priority, in registration
+order. Symfony never rewrites a declared priority, so the
+``debug:event-dispatcher`` command shows the priorities you declared, and
+omitting the option, in the attribute as in the tag, is what lets the
+constraints choose one. This gives three cases:
+
+* no priority: the constraints place the listener, which takes the priority its
+  place requires, ``0`` when nothing forces another one. The listener above
+  works this way and lands at ``16``, the priority of the listener it targets;
+* a priority shared by the targeted listener: the constraint reorders them
+  among the listeners of that priority;
+* a priority that the constraint would have to cross: compiling the container
+  fails. Adding ``priority: 0`` to the listener above triggers that error,
+  since ``0`` contradicts a constraint that needs ``16`` or more.
+
+When listeners without priority target each other, the priority one of them
+needs applies to the others too. A listener that no single priority satisfies,
+like one placed before a listener at ``50`` and after one at ``-50``, is an
+error as well.
+
+:ref:`Event subscribers <events-subscriber>` declare the same options next to
+the ``method`` and ``priority`` keys returned by ``getSubscribedEvents()``::
+
+    // src/EventSubscriber/UserLocaleSubscriber.php
+    namespace App\EventSubscriber;
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\EventListener\LocaleListener;
+    use Symfony\Component\HttpKernel\KernelEvents;
+
+    class UserLocaleSubscriber implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents(): array
+        {
+            return [
+                KernelEvents::REQUEST => [
+                    'method' => 'onKernelRequest',
+                    'before' => LocaleListener::class.'::onKernelRequest',
+                ],
+            ];
+        }
+
+        // ...
+    }
+
+Subscribers are also where naming a method matters most when targeting them,
+because a subscriber like ``LocaleListener`` often registers several listeners
+on the same event.
+
 .. _events-subscriber:
 .. _event_dispatcher-using-event-subscribers:
 
