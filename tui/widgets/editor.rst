@@ -2,7 +2,7 @@ EditorWidget
 ============
 
 ``EditorWidget`` is a full-featured multi-line text editor with word
-wrapping, scrolling, undo/redo, a kill ring and autocomplete support.
+wrapping, scrolling, undo/redo and a kill ring.
 
 When to Use
 -----------
@@ -39,20 +39,6 @@ counts::
 To make the editor fill all remaining vertical space, call::
 
     $editor->expandVertically(true);
-
-Autocomplete
-------------
-
-Attach an autocomplete provider to get context-aware suggestions when
-the user presses **Tab**::
-
-    use Symfony\Component\Tui\Autocomplete\FilePathProvider;
-
-    $editor->setAutocompleteProvider(new FilePathProvider());
-
-The autocomplete dropdown appears inline and can be navigated with
-**Up**/**Down** and confirmed with **Enter**. Press **Escape** to
-dismiss it.
 
 Events
 ------
@@ -93,7 +79,6 @@ Key                           Action
 Enter                         Submit
 Shift+Enter                   Insert newline
 Escape, Ctrl+C                Cancel / close autocomplete
-Tab                           Trigger autocomplete
 Up / Down                     Move cursor or navigate autocomplete
 Left, Ctrl+B                  Move cursor left
 Right, Ctrl+F                 Move cursor right
