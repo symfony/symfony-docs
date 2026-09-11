@@ -829,6 +829,61 @@ to handle messages in a priority order:
 The worker will always first look for messages waiting on ``async_priority_high``. If
 there are none, *then* it will consume messages from ``async_priority_low``.
 
+Listing the transports on the command line only applies to that command. Set
+the ``priority`` option of each transport to make that order part of the
+application configuration: the transports with the highest priority are
+consumed first when running ``messenger:consume --all``.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async_priority_high:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        # ...
+                        priority: 10
+                    async_priority_low:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        # ...
+                        # 0 is the default value
+                        priority: 0
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'async_priority_high' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            // ...
+                            'priority' => 10,
+                        ],
+                        'async_priority_low' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            // ...
+                            // 0 is the default value
+                            'priority' => 0,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Transports named on the command line are still consumed in the given order,
+whatever their priority.
+
+.. versionadded:: 8.2
+
+    The ``priority`` transport option was introduced in Symfony 8.2.
+
 Prioritized Messages
 ~~~~~~~~~~~~~~~~~~~~
 
