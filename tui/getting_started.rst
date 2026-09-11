@@ -10,11 +10,10 @@ Creating a Tui
 The ``Tui`` class is the entry point for every application. Create
 one, add widgets and run the event loop::
 
-    use Symfony\Component\Tui\Tui;
-    use Symfony\Component\Tui\Widget\TextWidget;
-
     use Symfony\Component\Tui\Event\InputEvent;
     use Symfony\Component\Tui\Input\Keybindings;
+    use Symfony\Component\Tui\Tui;
+    use Symfony\Component\Tui\Widget\TextWidget;
 
     $tui = new Tui();
     $tui->add(new TextWidget('Hello, terminal!'));
