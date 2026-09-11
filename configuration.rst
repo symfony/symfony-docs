@@ -600,6 +600,28 @@ and environment (e.g. ``prod``) but change its behavior thanks to the
 configuration based on environment variables (e.g. to run the application in
 different scenarios: staging, quality assurance, client review, etc.)
 
+.. _configuration-runtime-environment:
+
+The ``APP_RUNTIME_ENV`` env var is dedicated to this. It names the place where
+you deploy the application, which is unrelated to the configuration environment
+that the application runs with:
+
+.. code-block:: bash
+
+    # .env (or .env.local)
+
+    # the application runs with the "prod" configuration ...
+    APP_ENV=prod
+
+    # ... but it's deployed on the staging servers
+    APP_RUNTIME_ENV=staging
+
+The :ref:`kernel.runtime_environment <configuration-kernel-runtime-environment>`
+container parameter holds this value. Unlike ``kernel.environment``, Symfony
+resolves it at runtime, so you can deploy the same built application in several
+places. It selects for example which vault to read when
+:doc:`storing sensitive information </configuration/secrets>`.
+
 .. _config-env-vars:
 
 Configuration Based on Environment Variables
