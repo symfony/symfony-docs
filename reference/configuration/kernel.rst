@@ -346,8 +346,10 @@ directory. Instead, use the ``Kernel::getProjectDir()`` method shown above.
 
 **type**: ``string`` **default**: ``%env(default:kernel.environment:APP_RUNTIME_ENV)%``
 
-This parameter stores the name of the current :doc:`runtime environment </components/runtime>`
-used by the application.
+This parameter stores the name of the current
+:ref:`runtime environment <configuration-runtime-environment>` used by the
+application. Define it with the ``APP_RUNTIME_ENV`` env var; when that env var
+is not set, this parameter falls back to the value of ``kernel.environment``.
 
 This value defines the place where the application is deployed, whereas the
 :ref:`kernel.environment <configuration-kernel-environment>` option defines
