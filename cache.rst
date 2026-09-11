@@ -254,6 +254,7 @@ you can use them when defining your cache pools:
 * :doc:`cache.adapter.mongodb </cache/adapters/mongodb_adapter>`
 * :ref:`cache.adapter.mongodb_tag_aware <mongodb-tag-aware-adapter>` (MongoDB adapter optimized to work with tags)
 * :doc:`cache.adapter.pdo </cache/adapters/pdo_adapter>`
+* :ref:`cache.adapter.pdo_tag_aware <pdo-tag-aware-adapter>` (PDO adapter optimized to work with tags)
 * :doc:`cache.adapter.psr6 </cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </cache/adapters/redis_adapter>`
 * :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
