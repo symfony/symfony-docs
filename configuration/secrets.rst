@@ -38,7 +38,9 @@ you're coding locally in the ``dev`` environment, this will create:
     but the ``prod`` decryption key should *never* be committed.
 
 You can generate a pair of cryptographic keys for the ``prod`` environment by
-running:
+running the following command. The
+:ref:`APP_RUNTIME_ENV <configuration-runtime-environment>` env var selects the
+vault where the keys are stored:
 
 .. code-block:: terminal
 

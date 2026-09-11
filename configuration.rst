@@ -614,10 +614,38 @@ going to production:
     directories to reuse the same configuration.
 
 Instead of creating new environments, you can use environment variables as
-explained in the following section. This way you can use the same application
-and environment (e.g. ``prod``) but change its behavior thanks to the
-configuration based on environment variables (e.g. to run the application in
-different scenarios: staging, quality assurance, client review, etc.)
+explained in :ref:`Configuration Based on Environment Variables <config-env-vars>`.
+This way you can use the same application and environment (e.g. ``prod``) but
+change its behavior thanks to the configuration based on environment variables
+(e.g. to run the application in different scenarios: staging, quality assurance,
+client review, etc.)
+
+.. _configuration-runtime-environment:
+
+Setting the Runtime Environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``APP_RUNTIME_ENV`` env var names the place where the application is
+deployed. It's independent from the configuration environment, so you can run
+the ``prod`` configuration on several servers and still tell them apart:
+
+.. code-block:: bash
+
+    # .env or .env.local (or a real env var defined on the server)
+
+    # the application runs with the "prod" configuration...
+    APP_ENV=prod
+
+    # ...but it's deployed on the staging servers
+    APP_RUNTIME_ENV=staging
+
+Symfony stores this value in the
+:ref:`kernel.runtime_environment <configuration-kernel-runtime-environment>`
+container parameter, which falls back to ``kernel.environment`` when the env
+var is not set. Unlike ``kernel.environment``, this parameter is resolved at
+runtime, so the same compiled container works in all the places where you
+deploy it. For example, Symfony uses it to select the vault to read when
+:doc:`storing sensitive information </configuration/secrets>`.
 
 .. _config-env-vars:
 
