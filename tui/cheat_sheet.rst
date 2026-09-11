@@ -72,7 +72,8 @@ Key                           Action
 ============================  ==============================
 Enter                         Submit
 Shift+Enter                   Insert newline
-Escape, Ctrl+C                Cancel (or close autocomplete)
+Escape                        Cancel
+Ctrl+C                        Left to the application
 Shift+Space                   Insert a space
 Up                            Move up (start of first line)
 Down                          Move down (end of last line)
