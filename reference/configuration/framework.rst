@@ -3492,6 +3492,23 @@ throw_exception_on_invalid_property_path
 When enabled, the ``property_accessor`` service throws an exception when you
 try to access an invalid property path of an object.
 
+.. _reference-property-access-wildcard-reads:
+
+wildcard_reads
+..............
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the ``property_accessor`` service expands the ``[*]`` path
+element into :ref:`every element of a collection <components-property-access-wildcard-reads>`
+when its ``getValue()`` method is called. Such a path becomes read-only: its
+``setValue()`` method throws an exception and ``isWritable()`` returns
+``false``.
+
+.. versionadded:: 8.2
+
+    The ``wildcard_reads`` option was introduced in Symfony 8.2.
+
 property_info
 ~~~~~~~~~~~~~
 
