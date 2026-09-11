@@ -297,6 +297,8 @@ as a service, comparison validators automatically use it to resolve relative dat
 strings (e.g. ``today``, ``-18 years``). This makes date comparisons deterministic
 and testable by using :ref:`MockClock <clock-mockclock>`.
 
+.. include:: /reference/constraints/_comparison-bcmath-number.rst.inc
+
 Options
 -------
 
