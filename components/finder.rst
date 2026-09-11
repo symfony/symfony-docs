@@ -247,9 +247,19 @@ The ``contains()`` method accepts strings or regexes::
 
     $finder->files()->contains('/lorem\s+ipsum$/i');
 
+Pass multiple patterns to find files that match any of them (or all)::
+
+    $finder->files()->contains('lorem')->contains('/ipsum/i');
+
+    // same as above
+    $finder->files()->contains(['lorem', '/ipsum/i']);
+
 The ``notContains()`` method excludes files containing given pattern::
 
     $finder->files()->notContains('dolor sit amet');
+
+    // pass multiple patterns to exclude files that match any of them (or all)
+    $finder->files()->notContains(['lorem ipsum', 'dolor sit amet']);
 
 Path
 ~~~~
