@@ -186,10 +186,6 @@ The ``#[AsMonologProcessor]`` attribute takes these optional arguments:
 * ``method``: the method that processes the records (useful when applying
   the attribute to the entire class instead of a single method).
 
-.. versionadded:: 3.8
-
-    The ``#[AsMonologProcessor]`` attribute was introduced in MonologBundle 3.8.
-
 Symfony's MonologBridge provides processors that can be registered inside your application.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\DebugProcessor`

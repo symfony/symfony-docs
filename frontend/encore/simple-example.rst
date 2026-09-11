@@ -162,14 +162,11 @@ Instead, you can point directly to the final built files or write code to parse
 ``entrypoints.json`` manually. The entrypoints file is needed only if you're using
 certain optional features, like ``splitEntryChunks()``.
 
-.. versionadded:: 1.9.0
-
-    The ``defer`` attribute on the ``script`` tags delays the execution of the
-    JavaScript until the page loads (similar to putting the ``script`` at the
-    bottom of the page). The ability to always add this attribute was introduced
-    in WebpackEncoreBundle 1.9.0 and is automatically enabled in that bundle's
-    recipe in the ``config/packages/webpack_encore.yaml`` file. See
-    `WebpackEncoreBundle Configuration`_ for more details.
+The ``defer`` attribute on the ``script`` tags delays the execution of the
+JavaScript until the page loads (similar to putting the ``script`` at the
+bottom of the page). This attribute is automatically enabled thanks in the
+``config/packages/webpack_encore.yaml`` file thanks to WebpackEncoreBundle's
+recipe. See `WebpackEncoreBundle Configuration`_ for more details.
 
 Requiring JavaScript Modules
 ----------------------------
