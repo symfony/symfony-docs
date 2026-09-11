@@ -1174,6 +1174,15 @@ which authenticates them.
 
 You can learn all about this authenticator in :doc:`/security/access_token`.
 
+OpenID Connect
+~~~~~~~~~~~~~~
+
+OpenID Connect delegates authentication to an identity provider: the user is
+redirected to it, authenticates there, and comes back to your application with
+an authorization code that opens the session.
+
+You can learn all about this authenticator in :doc:`/security/oidc_login`.
+
 .. _security-x509-client-certificates:
 
 X.509 Client Certificates
