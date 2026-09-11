@@ -30,6 +30,12 @@ that is passed as the collection type field data.
     You can also see a complete example in the :doc:`/form/form_collections`
     article.
 
+.. tip::
+
+    When the entries of the collection don't all share the same type, use the
+    :doc:`PolymorphicCollectionType </reference/forms/types/polymorphic_collection>`
+    instead.
+
 Basic Usage
 -----------
 
