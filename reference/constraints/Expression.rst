@@ -243,6 +243,39 @@ in your expression:
 You also have access to the ``is_valid()`` function in your expression. This function
 checks that the data passed to the function doesn't raise any validation violations.
 
+When the :doc:`Security component </security>` is available, you can also use the
+``is_granted()``, ``is_authenticated()``, ``is_fully_authenticated()``,
+``is_remember_me()`` and ``current_user()`` functions to condition the validation
+on the current authorization state, like in :ref:`Twig templates <security-template>`::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    #[Assert\Expression(
+        'is_granted("ROLE_ADMIN") or this.getAuthor() == current_user()',
+        message: 'Only an admin can edit somebody else\'s post.',
+    )]
+    class BlogPost
+    {
+        // ...
+    }
+
+.. note::
+
+    Outside of an authorization check there is no ``token`` variable to read, so
+    these functions use the security services instead. They therefore throw a
+    ``LogicException`` when the expression is evaluated outside of a request, such
+    as in a console command or a message worker, rather than silently reporting
+    that nobody is authenticated. For the same reason they cannot be used in an
+    expression that is compiled rather than evaluated.
+
+.. versionadded:: 8.2
+
+    The security functions were made available in validator expressions in Symfony 8.2.
+    The ``current_user()`` function was added to them in the same version.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
