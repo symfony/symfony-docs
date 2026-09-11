@@ -747,6 +747,34 @@ transport:
             ]
         ]);
 
+.. _notifier-ssl-dsn-option:
+
+Sending Requests over Plain HTTP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``ssl`` DSN option was introduced in Symfony 8.2.
+
+Transports send their HTTP requests over HTTPS. Set the ``ssl`` DSN option to
+``false`` to send them over plain HTTP instead. This is needed when the DSN
+points to a service running on your own infrastructure, such as a local
+Telegram Bot API server:
+
+.. code-block:: env
+
+    # .env
+    TELEGRAM_DSN=telegram://TOKEN@localhost:8081?channel=CHAT_ID&ssl=false
+
+Every transport supports this option. Only use it for hosts you control, as the
+credentials of the DSN and the contents of the notifications are then sent
+unencrypted.
+
+.. note::
+
+    In the Telegram transport, this option supersedes the ``sslmode=disable``
+    option introduced in Symfony 8.1, which keeps working.
+
 Creating & Sending Notifications
 --------------------------------
 
