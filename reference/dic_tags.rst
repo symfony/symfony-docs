@@ -264,6 +264,83 @@ is restarted):
             ],
         ]);
 
+.. _dic-tags-container-remove-if-missing:
+
+container.remove_if_missing
+---------------------------
+
+**Purpose**: Remove a service when something it needs is missing
+
+Add this tag to a service that is useless, or would fail, without some other
+service, class or package. When the condition is not met, the container removes
+the tagged service while it is compiled:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\DataCollector\SomeCollector:
+                tags:
+                    - { name: 'container.remove_if_missing', service: 'profiler' }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\DataCollector\SomeCollector;
+
+        return App::config([
+            'services' => [
+                SomeCollector::class => [
+                    'tags' => [
+                        ['container.remove_if_missing' => ['service' => 'profiler']],
+                    ],
+                ],
+            ],
+        ]);
+
+The tag needs at least one of the ``service`` or ``class`` attributes:
+
+``service``
+    The id of a service, or of an alias, that must exist. It can be registered
+    by any bundle. Pass a list of ids (e.g. ``['profiler', 'test.client']``) to
+    keep the tagged service when any one of them exists.
+
+``class``
+    A class, interface or trait that must exist.
+
+``package``
+    The Composer package that provides ``class``. The condition is then also
+    unmet when this package is only installed as a dev dependency (in
+    ``require-dev``). This attribute requires the ``class`` one.
+
+``parent_packages``
+    The packages that require ``package``. A dev-only ``package`` is accepted
+    when one of them is a dev dependency too. This attribute requires the
+    ``class`` one.
+
+All the attributes of a tag must be met, and so must all the tags of a service:
+only a list of ids in ``service`` is met by any one of its members. Add the tag
+several times to require several services.
+
+Removing a service can make the condition of another one fail, so the container
+repeats the check until no more services are removed. The aliases of a removed
+service are removed too. The check runs before the compiler passes registered
+by bundles, so they never collect a removed service. Each removal is written,
+with its reason, to the container compilation log, which the Symfony profiler
+also displays:
+
+.. code-block:: text
+
+    Removed service "App\DataCollector\SomeCollector"; reason: service "profiler" is missing.
+
+.. versionadded:: 8.2
+
+    The ``container.remove_if_missing`` tag was introduced in Symfony 8.2.
+
 controller.argument_value_resolver
 ----------------------------------
 
