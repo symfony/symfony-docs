@@ -1034,25 +1034,9 @@ special parameters created by Symfony:
     Used to set the :ref:`locale <translation-locale-url>` on the request.
 
 ``_query``
-    An array of query parameters to add to the generated URL.
-
-    .. versionadded:: 8.2
-
-        Support for defining default query parameters as a route default (via
-        the ``query`` option or the ``_query`` route default) was introduced in
-        Symfony 8.2.
-
-    When you define ``_query`` as a route default (using the ``query`` option
-    shown below), those parameters behave as *default query parameters* for the
-    route:
-
-    * They are added to every URL generated for that route, unless you override
-      them when generating the URL (an explicit value always wins over the
-      default). Set a parameter to ``null`` to remove it from the generated URL.
-    * When the route is matched, they are used to seed the request query bag, so
-      ``$request->query->get('page')`` returns the default value even when the
-      parameter is not present in the incoming URL. Values coming from the actual
-      request always take precedence over the defaults.
+    An array of query parameters to add to the generated URL. When defined as a
+    route default, it also sets the :ref:`default query parameters <routing-default-query-parameters>`
+    of that route.
 
 You can include these attributes (except ``_fragment``) both in individual routes
 and in route imports. Symfony defines some special attributes with the same name
@@ -1162,6 +1146,82 @@ the controllers of the routes:
                 'defaults' => ['page' => 1, 'title' => 'Hello world!'],
             ],
         ]);
+
+.. _routing-default-query-parameters:
+
+Default Query Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the ``_query`` special parameter in the ``defaults`` option to define the
+query parameters that a route always carries:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Attribute\Route;
+
+        class BlogController extends AbstractController
+        {
+            #[Route('/blog', name: 'blog_list', defaults: [
+                '_query' => ['page' => 1, 'sort' => 'date'],
+            ])]
+            public function list(Request $request): Response
+            {
+                // for the /blog?sort=title URL, this returns 1 and 'title': the
+                // query string of the request always wins over the defaults
+                $page = $request->query->getInt('page');
+                $sort = $request->query->getString('sort');
+
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        blog_list:
+            path:       /blog
+            controller: App\Controller\BlogController::list
+            defaults:
+                _query:
+                    page: 1
+                    sort: date
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        use App\Controller\BlogController;
+
+        return Routes::config([
+            'blog_list' => [
+                'path' => '/blog',
+                'controller' => [BlogController::class, 'list'],
+                'defaults' => ['_query' => ['page' => 1, 'sort' => 'date']],
+            ],
+        ]);
+
+The URLs generated for the route include those parameters too, unless you
+override them::
+
+    // /blog?page=1&sort=date
+    $url = $this->generateUrl('blog_list');
+    // /blog?page=2&sort=date
+    $url = $this->generateUrl('blog_list', ['page' => 2]);
+    // /blog?page=1 (a null value removes the parameter from the URL)
+    $url = $this->generateUrl('blog_list', ['sort' => null]);
+
+.. versionadded:: 8.2
+
+    Defining ``_query`` as a route default was introduced in Symfony 8.2.
 
 .. _routing-slash-in-parameters:
 
