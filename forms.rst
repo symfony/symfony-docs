@@ -421,6 +421,101 @@ the ``data_class`` option by adding the following to your form type class::
         }
     }
 
+.. _form-attributes:
+
+Defining Forms with Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``#[AsFormType]`` and ``#[FormField]`` attributes were introduced in
+    Symfony 8.2.
+
+For a form that only lists fields, you can skip the form type class and declare
+the form on the class that holds the data::
+
+    // src/Dto/UserDto.php
+    namespace App\Dto;
+
+    use Symfony\Component\Form\Attribute\AsFormType;
+    use Symfony\Component\Form\Attribute\FormField;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+    #[AsFormType(options: ['label' => 'User'])]
+    class UserDto
+    {
+        // the type is guessed, exactly as it is by FormBuilderInterface::add()
+        #[FormField]
+        public ?string $name = null;
+
+        #[FormField(EmailType::class)]
+        public ?string $email = null;
+
+        #[FormField(TextareaType::class, ['label' => 'Bio'])]
+        public ?string $bio = null;
+
+        // the field is named "publicName" in the form and mapped back to
+        // $internalName through the "property_path" option
+        #[FormField(name: 'publicName')]
+        public ?string $internalName = null;
+    }
+
+The class name is then used wherever a form type name is expected::
+
+    $form = $this->createForm(UserDto::class, $user);
+
+The ``data_class`` option is implied by the class itself and cannot be set in
+``#[AsFormType]``. When a class carrying ``#[AsFormType]`` extends another one
+that also carries it, the closest such ancestor becomes the parent type and its
+fields are inherited; otherwise the parent is ``FormType``.
+
+The attributes are read when the container is compiled, so a field type that
+doesn't exist, a duplicate field name, or ``name`` combined with a
+``property_path`` option all fail at compile time rather than on the first
+request. The class must be discovered by the service container: a class living
+in a directory excluded from your service configuration is not seen.
+
+Because options are compiled, their values must be scalars, arrays or enums. To
+pass a service, use a reference::
+
+    use Symfony\Component\DependencyInjection\Reference;
+    // ...
+
+    #[AsFormType]
+    class PostDto
+    {
+        #[FormField(ChoiceType::class, [
+            'choice_loader' => new Reference(TagChoiceLoader::class),
+        ])]
+        public array $tags = [];
+    }
+
+Literal values stay literal, so a ``%`` sign in an option isn't mistaken for a
+container parameter.
+
+This is meant for forms that only describe fields. Anything behavioral, such as
+form events, data transformers or fields computed at runtime, belongs in a
+:doc:`form type extension </form/create_form_type_extension>` targeting the data
+class, which keeps full access to dependency injection::
+
+    class UserDtoExtension extends AbstractTypeExtension
+    {
+        public static function getExtendedTypes(): iterable
+        {
+            yield UserDto::class;
+        }
+
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            // ...
+        }
+    }
+
+The derived type keeps the data class as its identity, so type extensions, the
+profiler and ``debug:form`` all refer to it by class name, and ``debug:form``
+lists them in a "Data class form types" section.
+
 .. _form-property-path:
 
 Mapping Fields to Object Properties
