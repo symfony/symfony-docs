@@ -272,6 +272,20 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
 
+When a ``ValidationFailedException`` is thrown while handling a request and
+nothing catches it, for example when one of these closures fails in a
+controller, Symfony turns it into a 422 Unprocessable Content response, like it
+does for :ref:`the mapped request payload <controller-mapping-request-payload>`.
+When the error is rendered in a format supported by the Serializer, such as
+JSON, the response also lists the constraint violations. Use the
+:ref:`framework.exceptions <framework_exceptions>` option to return another
+status code.
+
+.. versionadded:: 8.2
+
+    Turning an uncaught ``ValidationFailedException`` into a 422 response was
+    introduced in Symfony 8.2.
+
 Validating Properties
 ~~~~~~~~~~~~~~~~~~~~~
 
