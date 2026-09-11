@@ -161,6 +161,12 @@ options:
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
   is thrown).
 
+  .. deprecated:: 8.2
+
+        Configuring ``roles`` with many values is deprecated,
+        use :ref:`role hierarchy <security-role-hierarchy>` or ``allow_if`` instead.
+
+
 * ``allow_if`` If the expression returns false, then access is denied;
 
 * ``requires_channel`` If the incoming request's channel (e.g. ``http``)
@@ -181,6 +187,11 @@ options:
     Strategy is the default one (``affirmative``), then the user will be granted
     access if there's at least one valid condition. If this behavior doesn't fit
     your needs, :ref:`change the Access Decision Strategy <security-voters-change-strategy>`.
+
+.. deprecated:: 8.2
+
+    Defining both ``roles`` and ``allow_if`` was deprecated in Symfony 8.2,
+    update ``allow_if`` expression so that it also checks roles instead.
 
 .. tip::
 
