@@ -215,6 +215,144 @@ MercureBundle provides a more advanced configuration:
     The jwt.io website is a convenient way to create and sign JWTs, check out this `example JWT`_.
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
 
+Switching to the Mercure 1.0 Protocol
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``symfony/mercure-bundle`` 0.5 and later can also speak version 1.0 of the
+Mercure protocol. This requires the following versions:
+
+==========================  ==================================
+Package                     Constraint for 1.0
+==========================  ==================================
+``symfony/mercure-bundle``  ``^0.5``
+``symfony/mercure``         ``^0.8`` (pulled in by the bundle)
+PHP                         ``>=8.2``
+Symfony components          ``^6.4 | ^7.3 | ^8.0``
+Mercure hub                 ``v1.0.0-alpha.3`` or later
+==========================  ==================================
+
+The protocol version is configured per hub with the ``protocol_version``
+option, and it **defaults to** ``0.x``. Upgrading the bundle alone changes
+nothing: your app keeps minting legacy ``mercure``-claim tokens and a 1.0 hub
+rejects them with a ``401 invalid_token`` error. Set the option explicitly to
+opt in:
+
+.. code-block:: yaml
+
+    mercure:
+        hubs:
+            default:
+                url: '%env(MERCURE_URL)%'
+                public_url: '%env(MERCURE_PUBLIC_URL)%'
+                protocol_version: '1.0'
+                jwt:
+                    secret: '%env(MERCURE_JWT_SECRET)%'
+                    publish: ['*']
+                    claims:
+                        iss: '%env(MERCURE_JWT_ISSUER)%'
+                        sub: 'my-app'
+                        client_id: 'my-app'
+
+``protocol_version`` drives three things: the shape of the claims built from
+``jwt.secret``, the default value of ``cookie_name``, and how the
+``mercure()`` Twig function interprets matcher-typed topics.
+
+Claims Required by the 1.0 Protocol
+...................................
+
+`RFC 9068`_ access tokens must carry an ``iss``, ``sub`` and ``client_id``
+claim. Because of this, when ``protocol_version`` is set to ``'1.0'`` and
+either ``jwt.secret`` or ``jwt.jwks_uri`` is used, ``jwt.claims`` must define
+all three or the container fails to compile with the following error:
+
+.. code-block:: text
+
+    The ``mercure.hubs.default.jwt.claims`` option must define the ``iss``, ``sub``, ``client_id`` claim(s):
+    they are required by RFC 9068 access tokens when ``protocol_version`` is ``1.0`` and
+    ``jwt.secret`` or ``jwt.jwks_uri`` is used.
+
+``iss`` must match one of the trusted issuers the hub declares. ``sub`` and
+``client_id`` identify your application; the hub doesn't check their values,
+but it does require them to be present.
+
+This requirement doesn't apply when using ``jwt.value``, ``jwt.provider`` or a
+custom ``jwt.factory`` - if you mint tokens yourself, their shape is yours to
+get right.
+
+How the ``aud`` Claim is Filled In
+..................................
+
+``aud`` is exempt from the requirement above: when ``jwt.claims.aud`` is
+unset, the bundle defaults it to the hub's ``public_url``, falling back to
+``url``.
+
+That default works when the browser and the app reach the hub at the same
+address. It's wrong in the common Docker setup where the app publishes
+through an internal ``url`` (e.g. ``http://mercure/.well-known/mercure``)
+while the browser uses a public one, because a 1.0 hub derives its expected
+audience from the request it receives. Either pin the hub's
+``resource_identifier`` to the public URL, or set ``aud`` explicitly.
+
+Signing Keys From a JWKS Endpoint
+.................................
+
+``jwt.jwks_uri`` fetches the signing key from a JSON Web Key Set instead of
+using a shared secret. It requires ``protocol_version: '1.0'`` and the
+``web-token/jwt-library`` package:
+
+.. code-block:: terminal
+
+    $ composer require web-token/jwt-library
+
+.. code-block:: yaml
+
+    mercure:
+        hubs:
+            default:
+                url: '%env(MERCURE_URL)%'
+                protocol_version: '1.0'
+                jwt:
+                    jwks_uri: 'https://auth.example.com/.well-known/jwks.json'
+                    key_id: 'publisher-2026' # required when the set holds several matching keys
+                    algorithm: 'RS256'
+                    claims:
+                        iss: 'https://auth.example.com'
+                        sub: 'my-app'
+                        client_id: 'my-app'
+
+``jwt.secret`` and ``jwt.jwks_uri`` are mutually exclusive. Point the hub at
+the same key set using an issuer's ``jwks_uri`` configuration.
+
+The ``algorithm`` Option Has Two Spellings
+..........................................
+
+``jwt.algorithm`` has no single default, because the two token factories
+name algorithms differently:
+
+================  ===================  ===============================================  ===============
+With              Factory              Names                                            Default
+================  ===================  ===============================================  ===============
+``jwt.secret``    ``LcobucciFactory``  ``hmac.sha256``, ``hmac.sha384``, ...            ``hmac.sha256``
+``jwt.jwks_uri``  ``WebTokenFactory``  JWA names: ``HS256``, ``RS256``, ``PS256``, ...  ``HS256``
+================  ===================  ===============================================  ===============
+
+Carrying an algorithm across from ``secret`` to ``jwks_uri`` without renaming
+it is a common mistake.
+
+Cookie Name
+...........
+
+``cookie_name`` defaults to a value computed from ``protocol_version``:
+``mercureAuthorization`` on ``0.x``, ``__Secure-mercure_access_token`` on
+``1.0``. The ``__Secure-`` prefix requires HTTPS, so if you're running
+plain-HTTP local development, use a prefix-less name on **both** sides: the
+``cookie_name`` option in the bundle and the equivalent setting on the hub.
+
+.. seealso::
+
+    See the `Mercure 1.0 upgrade guide`_ for the full protocol migration,
+    including tokens minted by hand and subscriber-side changes.
+
 Basic Usage
 -----------
 
@@ -794,3 +932,5 @@ Going Further
 .. _`the online debugger`: https://uri-template-tester.mercure.rocks
 .. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket
 .. _`Symfony UX Turbo`: https://github.com/symfony/ux-turbo
+.. _`RFC 9068`: https://www.rfc-editor.org/rfc/rfc9068
+.. _`Mercure 1.0 upgrade guide`: https://github.com/dunglas/mercure/blob/main/docs/UPGRADE.md
