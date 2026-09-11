@@ -641,6 +641,82 @@ you can define it in the configuration of the collecting service:
             ],
         ]);
 
+.. _tags_before-after:
+
+Tagged Services with Ordering Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` tag attributes were introduced in Symfony 8.2.
+
+Priorities can't express "place this service between those two" when both of
+them share the same priority and come from a bundle you don't control. The
+``before`` and ``after`` attributes name the other services instead, and
+Symfony works out the resulting order when compiling the container:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Handler/TsvHandler.php
+        namespace App\Handler;
+
+        use Acme\ImportBundle\Handler\CsvHandler;
+        use Acme\ImportBundle\Handler\XlsxHandler;
+        use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+
+        #[AsTaggedItem(after: CsvHandler::class, before: XlsxHandler::class)]
+        class TsvHandler
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Handler\TsvHandler:
+                tags:
+                    - name: 'app.handler'
+                      after: 'Acme\ImportBundle\Handler\CsvHandler'
+                      before: 'Acme\ImportBundle\Handler\XlsxHandler'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Acme\ImportBundle\Handler\CsvHandler;
+        use Acme\ImportBundle\Handler\XlsxHandler;
+        use App\Handler\TsvHandler;
+
+        return App::config([
+            'services' => [
+                TsvHandler::class => [
+                    'tags' => [
+                        ['app.handler' => [
+                            'after' => CsvHandler::class,
+                            'before' => XlsxHandler::class,
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
+Both attributes accept a single service or a list of services. They don't
+replace the ``priority`` attribute: the priority order is the starting point
+and each service moves only as far as its constraints require. ``A before B``
+and ``B after A`` describe the same relation, so declare it on whichever side
+you control.
+
+Symfony matches each target against the service IDs of the collection first
+and against their class names next, which is why ``SomeClass::class`` works for
+services registered through :ref:`autoconfiguration <services-autoconfigure>`.
+Symfony ignores targets that are not part of the collection, so a constraint
+pointing at an optional bundle keeps working when that bundle isn't installed.
+Constraints that form a cycle throw an exception when compiling the container.
+
 .. _tags_index-by:
 
 Tagged Services with Index
@@ -819,9 +895,10 @@ will process them in the following order:
 The ``#[AsTaggedItem]`` Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is possible to define both the priority and the index of a tagged
-item thanks to the ``#[AsTaggedItem]`` attribute. This attribute must
-be used directly on the class of the service you want to configure::
+It is possible to define the index, the priority and the
+:ref:`ordering constraints <tags_before-after>` of a tagged item thanks to the
+``#[AsTaggedItem]`` attribute. This attribute must be used directly on the
+class of the service you want to configure::
 
     // src/Handler/One.php
     namespace App\Handler;
