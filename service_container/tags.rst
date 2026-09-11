@@ -643,6 +643,90 @@ you can define it in the configuration of the collecting service:
             ],
         ]);
 
+.. _tags_before-after:
+
+Tagged Services with Ordering Constraints
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` tag attributes were introduced in Symfony 8.2.
+
+Priorities can't place a service between two other services that have the same
+priority, for example when those services come from a bundle you don't
+control. Instead, use the ``before`` and ``after`` attributes to name those
+services and Symfony will compute the resulting order when compiling the
+container:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Handler/TsvHandler.php
+        namespace App\Handler;
+
+        use Acme\ImportBundle\Handler\CsvHandler;
+        use Acme\ImportBundle\Handler\XlsxHandler;
+        use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+
+        #[AsTaggedItem(after: CsvHandler::class, before: XlsxHandler::class)]
+        class TsvHandler
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Handler\TsvHandler:
+                tags:
+                    - name: 'app.handler'
+                      after: 'Acme\ImportBundle\Handler\CsvHandler'
+                      before: 'Acme\ImportBundle\Handler\XlsxHandler'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Acme\ImportBundle\Handler\CsvHandler;
+        use Acme\ImportBundle\Handler\XlsxHandler;
+        use App\Handler\TsvHandler;
+
+        return App::config([
+            'services' => [
+                TsvHandler::class => [
+                    'tags' => [
+                        ['app.handler' => [
+                            'after' => CsvHandler::class,
+                            'before' => XlsxHandler::class,
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
+Both attributes accept a single service or a list of services, defined by their
+service IDs or their class names. Symfony checks the service IDs first, so the
+class name is only used when no service in the collection has that ID. This
+allows targeting bundle services whose IDs are different from their classes
+(e.g. ``acme_import.handler.csv``). ``A before B`` and ``B after A`` define the
+same order, so add the constraint to the service that you control.
+
+The constraints work together with priorities:
+
+* A service without priority, like ``TsvHandler`` above, gets the priority
+  required by its constraints, or ``0`` when they don't require any specific
+  value;
+* A service with a priority keeps it, and its constraints only reorder it among
+  the services with that same priority. If a constraint contradicts the
+  priority, compiling the container fails.
+
+Symfony ignores targets that are not part of the collection, so a constraint
+that targets an optional bundle keeps working when that bundle isn't
+installed. Cyclic constraints make compiling the container fail.
+
 .. _tags_index-by:
 
 Tagged Services with Index
@@ -821,9 +905,9 @@ will process them in the following order:
 The ``#[AsTaggedItem]`` Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is possible to define both the priority and the index of a tagged
-item thanks to the ``#[AsTaggedItem]`` attribute. This attribute must
-be used directly on the class of the service you want to configure::
+The ``#[AsTaggedItem]`` attribute defines the index, the priority and the
+:ref:`ordering constraints <tags_before-after>` of a tagged item. Apply this
+attribute directly to the class of the service that you want to configure::
 
     // src/Handler/One.php
     namespace App\Handler;

@@ -345,6 +345,146 @@ can also be applied to methods directly::
     Note that the attribute doesn't require its ``event`` parameter to be set
     if the method already type-hints the expected event.
 
+.. _event-dispatcher_ordering-listeners:
+
+Ordering Event Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` options of event listeners were introduced in
+    Symfony 8.2.
+
+Priorities order all the listeners of an event at once, so running your
+listener right before or after a specific listener defined by Symfony or by a
+bundle you don't control requires finding out its priority and hoping that it
+never changes. Instead, use the ``before`` and ``after`` options to name that
+other listener. For example, a listener that sets the locale of the current
+user must run before ``LocaleListener`` applies the ``_locale`` request
+attribute:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/EventListener/UserLocaleListener.php
+        namespace App\EventListener;
+
+        use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+        use Symfony\Component\HttpKernel\Event\RequestEvent;
+        use Symfony\Component\HttpKernel\EventListener\LocaleListener;
+
+        // no priority is needed: Symfony computes it from the constraint
+        #[AsEventListener(before: LocaleListener::class.'::onKernelRequest')]
+        final class UserLocaleListener
+        {
+            public function __invoke(RequestEvent $event): void
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\EventListener\UserLocaleListener:
+                tags:
+                    - name: kernel.event_listener
+                      event: kernel.request
+                      before: 'locale_listener::onKernelRequest'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\EventListener\UserLocaleListener;
+        use Symfony\Component\HttpKernel\EventListener\LocaleListener;
+
+        return App::config([
+            'services' => [
+                UserLocaleListener::class => [
+                    'tags' => [
+                        ['kernel.event_listener' => [
+                            'event' => 'kernel.request',
+                            'before' => LocaleListener::class.'::onKernelRequest',
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
+Both options accept a single listener or a list of listeners. Each listener is
+defined as a service ID or a class name, optionally followed by ``::`` and the
+name of the listener method. For example, ``locale_listener::onKernelRequest``
+and ``LocaleListener::class.'::onKernelRequest'`` target the same listener.
+Run the ``debug:event-dispatcher`` command with the event name (e.g.
+``kernel.request``) to see the class and method of all its listeners.
+
+Without a method name, the target includes all the listeners that the service
+registers for the event. ``LocaleListener`` listens to ``kernel.request``
+twice (once to set the default locale and once to apply the ``_locale``
+request attribute), so ``before: LocaleListener::class`` would run your
+listener before both of them, whereas adding the method name runs it between
+them.
+
+Symfony applies these constraints when compiling the container:
+
+* Targets that don't listen to the event on the same event dispatcher are
+  ignored. This way, a constraint that targets an optional bundle keeps
+  working when that bundle isn't installed;
+* If the target service listens to the event, but not with the method that
+  you defined, compiling the container fails. This prevents typos from turning
+  into constraints that do nothing;
+* Cyclic constraints also make compiling the container fail.
+
+The constraints work together with priorities:
+
+* A listener without priority, like the one above, gets the priority required
+  by its constraints, or ``0`` when they don't require any specific value. In
+  the example above, the listener gets ``16``, which is the priority of
+  ``LocaleListener::onKernelRequest()``;
+* A listener with a priority keeps it, and its constraints only reorder it
+  among the listeners with that same priority. If a constraint contradicts the
+  priority (e.g. adding ``priority: 0`` to the listener above), compiling the
+  container fails;
+* If no priority can satisfy all the constraints of a listener (e.g. running
+  before a listener with priority ``50`` and after another one with priority
+  ``-50``), compiling the container fails too.
+
+:ref:`Event subscribers <events-subscriber>` can define the same ``before``
+and ``after`` options next to the ``method`` and ``priority`` keys returned by
+``getSubscribedEvents()``::
+
+    // src/EventSubscriber/UserLocaleSubscriber.php
+    namespace App\EventSubscriber;
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\EventListener\LocaleListener;
+    use Symfony\Component\HttpKernel\KernelEvents;
+
+    class UserLocaleSubscriber implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents(): array
+        {
+            return [
+                KernelEvents::REQUEST => [
+                    'method' => 'onKernelRequest',
+                    'before' => LocaleListener::class.'::onKernelRequest',
+                ],
+            ];
+        }
+
+        // ...
+    }
+
+.. note::
+
+    The ``before`` and ``after`` options only work for subscribers registered
+    as services. When using the ``addSubscriber()`` method of the dispatcher,
+    Symfony ignores them and you must define a ``priority`` for those listeners.
+
 .. _events-subscriber:
 .. _event_dispatcher-using-event-subscribers:
 
