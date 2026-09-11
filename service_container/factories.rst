@@ -40,6 +40,19 @@ create its object:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterManager.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        // the first argument is the class and the second argument is the static method
+        #[Autoconfigure(factory: ['App\Email\NewsletterManagerStaticFactory', 'createNewsletterManager'])]
+        class NewsletterManager
+        {
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -67,6 +80,10 @@ create its object:
                 ],
             ],
         ]);
+
+.. versionadded:: 8.2
+
+    The ``factory`` argument of the ``#[Autoconfigure]`` attribute was introduced in Symfony 8.2.
 
 If the factory method needs arguments, define them with the ``arguments``
 option, as explained later in :ref:`factories-passing-arguments-factory-method`.
@@ -173,6 +190,26 @@ as the factory class:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterSender.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(factory: [null, 'create'])]
+        class NewsletterSender
+        {
+            public static function create(): self
+            {
+                $newsletterSender = new self();
+
+                // ...
+
+                return $newsletterSender;
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -208,6 +245,21 @@ and create the service, instantiate the factory itself as a service too.
 Configuration of the service container then looks like this:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterManager.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        // it's necessary to create a service for the factory
+        // use the factory service as the first argument of the 'factory'
+        // option and the factory method as the second argument
+        #[Autoconfigure(factory: ['@App\Email\NewsletterManagerFactory', 'createNewsletterManager'])]
+        class NewsletterManager
+        {
+        }
 
     .. code-block:: yaml
 
@@ -273,6 +325,18 @@ method name:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterManager.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(factory: '@App\Email\InvokableNewsletterManagerFactory')]
+        class NewsletterManager
+        {
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -314,6 +378,18 @@ previous examples takes the ``twig`` service as an argument:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterManager.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(bind: ['$template', '@templating'], factory: ['@App\Email\NewsletterManagerFactory', 'createNewsletterManager'])]
+        class NewsletterManager
+        {
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -348,6 +424,19 @@ Instead of a PHP class, the factory can be an :ref:`expression <services-express
 This allows you to select the created object at runtime:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterSenderInterface.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        // use the "traceable_newsletter" service when debug is enabled, "newsletter" otherwise
+        #[Autoconfigure(factory: '@=parameter("kernel.debug") ? service("traceable_newsletter") : service("newsletter")')]
+        interface NewsletterSenderInterface
+        {
+        }
 
     .. code-block:: yaml
 
