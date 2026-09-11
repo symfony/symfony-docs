@@ -267,9 +267,9 @@ all three or the container fails to compile with the following error:
 
 .. code-block:: text
 
-    The "mercure.hubs.default.jwt.claims" option must define the "iss", "sub", "client_id" claim(s):
-    they are required by RFC 9068 access tokens when "protocol_version" is "1.0" and
-    "jwt.secret" or "jwt.jwks_uri" is used.
+    The ``mercure.hubs.default.jwt.claims`` option must define the ``iss``, ``sub``, ``client_id`` claim(s):
+    they are required by RFC 9068 access tokens when ``protocol_version`` is ``1.0`` and
+    ``jwt.secret`` or ``jwt.jwks_uri`` is used.
 
 ``iss`` must match one of the trusted issuers the hub declares. ``sub`` and
 ``client_id`` identify your application; the hub doesn't check their values,
