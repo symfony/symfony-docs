@@ -708,6 +708,81 @@ to spot untranslated strings:
     # when using the --no-fill option, the --prefix option is ignored
     $ php bin/console translation:extract --force --no-fill fr
 
+.. _translation-update-xliff-sources:
+
+Filling the Source Tags of XLIFF Files
+--------------------------------------
+
+In XLIFF files, each ``<trans-unit>`` element pairs a ``<source>`` element with
+a ``<target>`` element. Symfony stores the message key in ``<source>`` and
+its translation in ``<target>``:
+
+.. code-block:: xml
+
+    <!-- translations/messages.fr.xlf -->
+    <trans-unit id="MPmB0Cf" resname="app.greeting">
+        <source>app.greeting</source>
+        <target>Bonjour</target>
+    </trans-unit>
+
+Translation tools and translators display the ``<source>`` contents as the text
+to translate, and a message key such as ``app.greeting`` tells them nothing
+about the original message. Run the ``translation:update-xliff-sources``
+command to replace those keys with the translations of the default locale:
+
+.. code-block:: terminal
+
+    $ php bin/console translation:update-xliff-sources
+
+The ``<source>`` element now contains the message of the default locale, while
+the ``<target>`` element is left untouched:
+
+.. code-block:: xml
+
+    <!-- translations/messages.fr.xlf -->
+    <trans-unit id="MPmB0Cf" resname="app.greeting">
+        <source>Hello!</source>
+        <target>Bonjour</target>
+    </trans-unit>
+
+By default, the command updates the files of all the locales defined in the
+:ref:`enabled_locales option <reference-translator-enabled-locales>` that are
+stored in the :ref:`configured translation directories
+<translation-resource-locations>`. Use the following arguments and options to
+restrict what it updates:
+
+.. code-block:: terminal
+
+    # update the files of some locales only (the default locale is allowed too)
+    $ php bin/console translation:update-xliff-sources --locales fr --locales de
+
+    # update the files of some domains only (by default, all the domains of the
+    # given locales are updated)
+    $ php bin/console translation:update-xliff-sources --domains messages
+
+    # look for XLIFF files in the given directories instead of the configured
+    # ones
+    $ php bin/console translation:update-xliff-sources translations/ src/translations/
+
+    # generate XLIFF 2.0 files instead of XLIFF 1.2 files (which is the default)
+    $ php bin/console translation:update-xliff-sources --format xlf20
+
+The command skips the messages that don't exist in the default locale, as
+there's nothing to store in their ``<source>`` elements. It also leaves
+untouched the files whose source tags are already up to date.
+
+.. warning::
+
+    The command rewrites the files it updates in the XLIFF version given by the
+    ``--format`` option, which defaults to XLIFF 1.2. Pass ``--format xlf20``
+    when your translation files use XLIFF 2.0, otherwise the command downgrades
+    them to XLIFF 1.2.
+
+.. versionadded:: 8.2
+
+    The ``translation:update-xliff-sources`` command was introduced in
+    Symfony 8.2.
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
