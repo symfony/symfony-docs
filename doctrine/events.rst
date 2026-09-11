@@ -366,10 +366,6 @@ listener in the Symfony application by creating a new service for it and
             ;
         };
 
-.. versionadded:: 2.8.0
-
-    The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.8.0.
-
 .. tip::
 
     The value of the ``connection`` option can also be a
