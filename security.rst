@@ -667,6 +667,12 @@ many other authenticators:
 
 .. tip::
 
+    If a request is not authenticated and you are not sure why, the **Security**
+    panel of the :doc:`profiler </profiler>` lists the authenticators that were
+    skipped and :ref:`the reason each one gave <security-unsupported-reasons>`.
+
+.. tip::
+
     If your application logs users in via a third-party service such as
     Google, Facebook or Twitter (social login), check out the `HWIOAuthBundle`_
     community bundle or `Oauth2-client`_ package.
