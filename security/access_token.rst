@@ -833,6 +833,429 @@ useful when developing or testing applications that use OIDC authentication:
 
     The JWK used for signing must have the appropriate `key operation flags`_ set.
 
+Using OAuth 2.0 Token Introspection
+-----------------------------------
+
+`RFC 7662`_ defines an introspection endpoint, where a resource server
+asks the authorization server what it knows about an access token. The
+``oauth2`` token handler posts the token to that endpoint and builds the
+user out of the answer, so your application never has to read the token
+itself.
+
+This token handler requires the ``symfony/http-client`` package to make
+the needed HTTP requests. If you haven't installed it yet, run this
+command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-client
+
+The address of the authorization server and the way your application
+authenticates there belong to the HTTP client, not to the firewall.
+Declare a scoped client whose ``base_uri`` is the introspection endpoint
+and whose ``auth_basic`` holds the credentials of your resource server:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    oauth2.introspection:
+                        base_uri: 'https://auth.example.com/introspect'
+                        auth_basic: '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'oauth2.introspection' => [
+                            'base_uri' => 'https://auth.example.com/introspect',
+                            'auth_basic' => '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. warning::
+
+    Symfony sends these credentials as given, while the
+    ``client_secret_basic`` method of `RFC 6749`_ form-urlencodes both
+    halves. Encode a client ID or a secret holding a colon, a plus sign, a
+    space or a non-ASCII character before you pass it.
+
+Then give the service ID of that client to the ``http_client`` option of
+the token handler, together with the values it checks the response
+against:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                claim: 'sub'
+                                allowed_time_drift: 5
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'claim' => 'sub',
+                                    'allowed_time_drift' => 5,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+These are the available options:
+
+``http_client``
+    Service ID of the HTTP client the introspection endpoint is called
+    with. It defaults to the ``http_client`` service, which carries
+    neither that endpoint nor any credentials, so declare a scoped client
+    as shown above.
+
+``issuer``
+    Identifier of the authorization server, checked against the ``iss``
+    member of the introspection response. It defaults to ``null``, which
+    skips that check.
+
+``audience``
+    Identifiers of your resource server, one of which the ``aud`` member
+    of the response must name. Give a single identifier as a string and
+    several ones as a list; one match is enough, because an access token
+    minted for several resource servers is meant for each of them. It
+    defaults to an empty list, which skips that check.
+
+``claim``
+    Claim holding the user identifier (e.g. ``sub``, ``username``,
+    ``email``). It defaults to ``null``, which reads the ``sub`` claim and
+    falls back to the ``username`` one.
+
+``allowed_time_drift``
+    Tolerance, in seconds, on the ``iat``, ``nbf`` and ``exp`` members of
+    the response, to account for the clocks of the two servers running
+    slightly apart. It defaults to ``0``.
+
+``cache``
+    Pool the introspection responses are cached in, as described below.
+
+When the HTTP client is the only thing you configure, give it as a
+string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2: 'oauth2.introspection'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => 'oauth2.introspection',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The handler refuses a token the authorization server reports as
+inactive. It also refuses a response whose dates place the token outside
+its validity window, or whose ``exp``, ``nbf`` or ``iat`` is not a
+number it can read as a timestamp. `RFC 7662`_ makes all of those
+members optional, so the handler checks the dates when the response
+carries them, and the issuer and the audience when the firewall declares
+which ones it accepts. Once you declare an ``issuer`` or an
+``audience``, a response that omits the matching member is refused too.
+
+.. versionadded:: 8.2
+
+    The ``http_client``, ``issuer``, ``audience``, ``claim``,
+    ``allowed_time_drift`` and ``cache`` options of the ``oauth2`` token
+    handler were introduced in Symfony 8.2.
+
+Verifying a Signed Introspection Response
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A plain JSON introspection response says what the authorization server
+answered, but nothing proves that the server is the one that answered.
+`RFC 9701`_ defines a signed response for that: the members of `RFC 7662`_
+come as a JWT, signed by the authorization server and bound to its issuer
+and to the resource server the response was minted for.
+
+Verifying that signature requires the ``web-token/jwt-library`` package:
+
+.. code-block:: terminal
+
+    $ composer require web-token/jwt-library
+
+Enable the ``response_signature`` option and give it the public keys of
+your authorization server:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                response_signature:
+                                    enabled: true
+                                    keyset: '%env(AUTH_SERVER_JWKS)%'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'response_signature' => [
+                                        'enabled' => true,
+                                        'keyset' => '%env(AUTH_SERVER_JWKS)%',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The handler then asks the endpoint for a JWT, with an
+``Accept: application/token-introspection+jwt`` header, and verifies what
+comes back. That JWT must carry a ``token-introspection+jwt`` type header
+and wrap the members of `RFC 7662`_ in a ``token_introspection`` claim,
+which is what keeps an access token or an ID token of the same issuer from
+being passed off as an introspection response.
+
+The ``issuer`` and the ``audience`` options become required, because
+`RFC 9701`_ makes ``iss``, ``aud`` and ``iat`` mandatory claims of the
+response: the first two are confronted with what you declare here, and
+``iat`` with the clock, within ``allowed_time_drift``. Since the JWT
+already binds the issuer and the audience at that level, the members it
+wraps are only confronted with them when the authorization server repeats
+them there.
+
+Rather than pasting the keys in the configuration, you can read them from
+the metadata of the authorization server. Their URL is derived from the
+``issuer`` the handler already declares, so nothing else is configured. The
+``issuer`` must then be an absolute HTTPS URL, where it is otherwise only
+compared to the ``iss`` member of the response:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                issuer: 'https://auth.example.com/'
+                                audience: 'https://api.example.com'
+                                response_signature:
+                                    enabled: true
+                                    discovery: true
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'issuer' => 'https://auth.example.com/',
+                                    'audience' => 'https://api.example.com',
+                                    'response_signature' => [
+                                        'enabled' => true,
+                                        'discovery' => true,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The document is read at ``/.well-known/oauth-authorization-server``, the
+well-known path being inserted between the host and the path of the issuer
+as `RFC 8414`_ prescribes: the metadata of ``https://auth.example.com/eu``
+lives at ``https://auth.example.com/.well-known/oauth-authorization-server/eu``.
+Only its ``jwks_uri`` is read: the algorithms you accept stay declared in
+``algorithms``, so that the authorization server cannot widen them by
+announcing more. Both requests go through their own HTTP client, so the
+credentials of the introspection endpoint never reach them. The document is
+cached for an hour and the keys for as long as the server asks for in its
+cache headers, up to 30 days.
+
+These are the options of ``response_signature``:
+
+``algorithms``
+    Signature algorithms you accept the response to be signed with, among
+    ``RS256``, ``RS384``, ``RS512``, ``ES256``, ``ES384``, ``ES512``,
+    ``PS256``, ``PS384`` and ``PS512``. It defaults to ``['RS256']``, which
+    most authorization servers sign with; list the ones yours announces in
+    ``introspection_signing_alg_values_supported`` when it signs with
+    another. Tag a service with
+    ``security.access_token_handler.oidc.signature_algorithm`` to add an
+    algorithm to that list. No HMAC algorithm is tagged, so that a public
+    key can never be used as a shared secret.
+
+``keyset``
+    JSON-encoded JWK Set holding the public keys of your authorization
+    server, the ones it announces at its ``jwks_uri``. It is exclusive with
+    ``discovery``, and one of the two is required: the handler needs the
+    keys it verifies the response against.
+
+``discovery``
+    Whether to read those keys from the `RFC 8414`_ metadata of the
+    authorization server instead of declaring them. Its ``cache.id``
+    option is the pool the metadata document and the keys are stored in,
+    ``cache.app`` by default.
+
+``enforce``
+    Whether the handler refuses a plain JSON response. It defaults to
+    ``true``: a server answering unsigned to a request that asked for a JWT
+    has downgraded the guarantee. Set it to ``false`` to accept both, which
+    also makes the handler offer both media types.
+
+.. versionadded:: 8.2
+
+    The ``response_signature`` option, including its ``discovery``
+    sub-option, was introduced in Symfony 8.2.
+
+Caching the Introspection Responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Introspecting the token on every request costs a round trip to the
+authorization server. The ``cache`` option stores the responses of
+active tokens in the pool of your choice, which requires the
+``symfony/cache`` package:
+
+.. code-block:: terminal
+
+    $ composer require symfony/cache
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oauth2:
+                                http_client: 'oauth2.introspection'
+                                cache:
+                                    id: cache.app
+                                    ttl: 60
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oauth2' => [
+                                    'http_client' => 'oauth2.introspection',
+                                    'cache' => [
+                                        'id' => 'cache.app',
+                                        'ttl' => 60,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The ``id`` option is required and the ``ttl`` one defaults to ``60``
+seconds, its lowest value being ``1``. The shorter that lifetime is, the
+sooner a revoked token stops being accepted. No entry outlives the
+``exp`` the authorization server reported, and the handler never stores
+the response of an inactive token. It keys entries by a digest of the
+token, so the pool holds no usable credential.
+
 Using CAS 2.0
 -------------
 
@@ -1002,7 +1425,11 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect (OIDC)`: https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
+.. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
+.. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
+.. _`RFC 8414`: https://datatracker.ietf.org/doc/html/rfc8414
+.. _`RFC 9701`: https://datatracker.ietf.org/doc/html/rfc9701
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
