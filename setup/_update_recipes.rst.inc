@@ -9,10 +9,6 @@ it's a good idea to keep your files in sync with the recipes.
 Symfony Flex provides several commands to help upgrade your recipes. Be sure to
 commit any unrelated changes you're working on before starting:
 
-.. versionadded:: 1.18
-
-    The ``recipes:update`` command was introduced in Symfony Flex 1.18.
-
 .. code-block:: terminal
 
     # choose an outdated recipe to update

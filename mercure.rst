@@ -709,10 +709,6 @@ the other service definitions accordingly.
 Debugging
 ---------
 
-.. versionadded:: 0.2
-
-    The WebProfiler panel was introduced in MercureBundle 0.2.
-
 MercureBundle is shipped with a debug panel. Install the Debug pack to
 enable it:
 
