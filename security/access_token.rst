@@ -279,6 +279,179 @@ and configure the service ID as the ``success_handler``:
     ``failure_handler`` option and create a class that implements
     :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
 
+Serving the Protected Resource Metadata
+---------------------------------------
+
+A client holding no access token has to find out which authorization
+servers issue the tokens your API accepts. `RFC 9728`_ answers that with a
+JSON document the resource server publishes at
+``/.well-known/oauth-protected-resource``. The ``401`` responses of the
+firewall point at that document.
+
+Declaring the ``resource_metadata`` option of the ``access_token``
+authenticator serves that document and advertises its URL:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                api:
+                    access_token:
+                        realm: 'My API'
+                        token_extractors: ['header', 'query_string']
+                        token_handler:
+                            oidc: ~
+                        resource_metadata:
+                            authorization_servers: ['https://accounts.example.com']
+                            scopes_supported: ['profile', 'email']
+                            resource_name: 'My API'
+                            resource_documentation: 'https://api.example.com/docs'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'api' => [
+                        'access_token' => [
+                            'realm' => 'My API',
+                            'token_extractors' => ['header', 'query_string'],
+                            'token_handler' => [
+                                'oidc' => null,
+                            ],
+                            'resource_metadata' => [
+                                'authorization_servers' => ['https://accounts.example.com'],
+                                'scopes_supported' => ['profile', 'email'],
+                                'resource_name' => 'My API',
+                                'resource_documentation' => 'https://api.example.com/docs',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+``GET /.well-known/oauth-protected-resource`` then answers:
+
+.. code-block:: json
+
+    {
+        "resource": "https://api.example.com",
+        "authorization_servers": ["https://accounts.example.com"],
+        "scopes_supported": ["profile", "email"],
+        "bearer_methods_supported": ["header", "query"],
+        "resource_name": "My API",
+        "resource_documentation": "https://api.example.com/docs"
+    }
+
+A request carrying no token at all gets the challenge that starts the
+discovery, provided the firewall declares no other entry point:
+
+.. code-block:: text
+
+    WWW-Authenticate: Bearer realm="My API",resource_metadata="https://api.example.com/.well-known/oauth-protected-resource"
+
+and a request carrying a token the firewall rejects gets the same pointer,
+next to the reason:
+
+.. code-block:: text
+
+    WWW-Authenticate: Bearer realm="My API",error="invalid_token",error_description="Invalid credentials.",resource_metadata="https://api.example.com/.well-known/oauth-protected-resource"
+
+These are the available options, each of them a metadata parameter of
+`RFC 9728`_ and each of them omitted from the document when it has no
+value. Only ``resource`` is always there, falling back to the origin the
+document is served from:
+
+``resource``
+    Resource identifier of the firewall, as an HTTPS URL without a
+    fragment. A loopback host (``localhost``, ``127.0.0.1``, ``::1``) and a
+    name reserved for testing (``*.localhost``, ``*.test``) are accepted
+    over HTTP, for local development. It defaults to the origin the
+    document is served from, which is what a firewall covering a whole
+    application wants. When it carries a path, that path is inserted after
+    the well-known one, as Section 3.1 of the RFC prescribes:
+    ``https://example.com/api`` is served at
+    ``/.well-known/oauth-protected-resource/api``, so a single host can
+    serve several protected resources. Give each firewall its own path
+    component then, as two firewalls sharing one path is an error. That
+    path is read when the route is declared, so an environment variable
+    cannot hold the whole value; interpolate it into the URL instead, as
+    in ``https://%env(API_HOST)%/v1``.
+
+``authorization_servers``
+    Issuer identifiers of the authorization servers issuing the access
+    tokens this firewall accepts (e.g. ``https://accounts.example.com``).
+    This is what tells a client holding no token where to get one.
+
+``jwks_uri``
+    URL of the JWK Set holding the keys this resource signs its own
+    responses with. These are unrelated to the keys the access tokens are
+    verified against, which belong to the authorization server.
+
+``scopes_supported``
+    Scope values this resource uses.
+
+``bearer_methods_supported``
+    The ways a client can send the bearer token to this resource, among
+    ``header``, ``body`` and ``query``. Symfony deduces them from the
+    ``token_extractors`` option when you leave this one empty, mapping
+    ``header`` to ``header``, ``request_body`` to ``body`` and
+    ``query_string`` to ``query``. Set it explicitly when a custom
+    extractor makes that deduction incomplete.
+
+``resource_name``
+    Human-readable name of this resource, meant to be displayed to the end
+    user.
+
+``resource_documentation``
+    URL of the developer documentation of this resource.
+
+``resource_policy_uri``
+    URL of the policy telling how the client may use the data this
+    resource exposes.
+
+``resource_tos_uri``
+    URL of the terms of service of this resource.
+
+A route loader declares the route serving the document. Import it in your
+routes:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/security.yaml
+        _oauth_protected_resource_metadata:
+            resource: security.authenticator.access_token.route_loader
+            type: service
+
+    .. code-block:: php
+
+        // config/routes/security.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return Routes::config([
+            '_oauth_protected_resource_metadata' => [
+                'resource' => 'security.authenticator.access_token.route_loader',
+                'type' => 'service',
+            ],
+        ]);
+
+Keeping that path reachable without a token is up to your application: no
+:ref:`access control rule <security-authorization-access-control>` and no
+firewall pattern must require one on it, as for any other public path.
+
+.. versionadded:: 8.2
+
+    The ``resource_metadata`` option was introduced in Symfony 8.2.
+
 Using OpenID Connect (OIDC)
 ---------------------------
 
@@ -1003,6 +1176,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
+.. _`RFC 9728`: https://datatracker.ietf.org/doc/html/rfc9728
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
