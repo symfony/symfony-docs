@@ -224,5 +224,4 @@ channel.
 
     The ``#[WithMonologChannel]`` attribute was introduced in Monolog 3.5.0.
 
-.. _`MonologBundle`: https://github.com/symfony/monolog-bundle
 .. _`Monolog`: https://github.com/Seldaek/monolog
