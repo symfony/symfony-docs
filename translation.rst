@@ -700,19 +700,21 @@ also resolved, and every value they can produce is extracted::
     // extracts both "title.amended" and "title.new"
     $translator->trans('title.'.($amended ? 'amended' : 'new'));
 
-    // extracts "title.default"; the dynamic side is skipped
+    // both extract "title.default"; the dynamic side is skipped
     $translator->trans($customTitle ?? 'title.default');
+    $translator->trans($customTitle ?: 'title.default');
 
     // adds "title.dashboard" to both the "admin" and "front" domains
     $translator->trans('title.dashboard', [], $isAdmin ? 'admin' : 'front');
 
-A branch that cannot be resolved (e.g. a variable) is skipped without discarding
-the other branch. However, a concatenation is still ignored when one of its sides
-is dynamic, and also when it can produce more than 256 different values.
+A branch that cannot be resolved (e.g. a variable) is skipped without
+discarding the other branch. However, a concatenation is still ignored when one
+of its sides cannot be resolved at all, and also when it produces more than 256
+combinations.
 
 .. versionadded:: 8.2
 
-    The support for ternary and null-coalescing expressions in the extraction
+    Support for ternary and null-coalescing expressions in the extraction
     of translation messages was introduced in Symfony 8.2.
 
 By default, when the ``translation:extract`` command creates new entries in the
