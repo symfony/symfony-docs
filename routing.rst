@@ -1683,6 +1683,68 @@ defined in the class attribute.
         The ``trailingSlashOnRoot`` argument of ``CollectionConfigurator::prefix()``
         was introduced in Symfony 8.1.
 
+When importing routes, the ``condition`` option *replaces* the
+:ref:`condition <routing-matching-expressions>` of all the imported routes,
+including the conditions defined on each route. Use the ``add_condition``
+option instead to combine the new condition with the existing ones using the
+``and`` operator:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        controllers:
+            resource: routing.controllers
+            prefix: '/admin'
+            # an imported route with the "request.isXmlHttpRequest()" condition
+            # ends up with "(request.isXmlHttpRequest()) and (request.isSecure())"
+            add_condition: 'request.isSecure()'
+
+    .. code-block:: php
+
+        // config/routes/attributes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        return Routes::config([
+            'controllers' => [
+                'resource' => '../../src/Controller/',
+                'type' => 'attribute',
+                'prefix' => '/admin',
+                // an imported route with the "request.isXmlHttpRequest()" condition
+                // ends up with "(request.isXmlHttpRequest()) and (request.isSecure())"
+                'add_condition' => 'request.isSecure()',
+            ],
+        ]);
+
+If an import defines both options, the ``condition`` option is applied first
+and the ``add_condition`` option is then combined with it. The ``add_condition``
+option can also be used when defining a single route, and the same feature is
+available in PHP as the ``addCondition()`` method of routes, route collections
+and their configurators::
+
+    // config/routes.php
+    use App\Controller\AdminController;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+    return function (RoutingConfigurator $routes): void {
+        $routes->import('../src/Controller/', 'attribute')
+            ->addCondition('request.isSecure()');
+
+        $routes->collection('admin_')
+            ->addCondition('request.isSecure()')
+            ->add('dashboard', '/admin')
+                ->controller([AdminController::class, 'dashboard'])
+                // the route condition is "(request.isSecure()) and (context.getMethod() == 'GET')"
+                ->addCondition("context.getMethod() == 'GET'")
+        ;
+    };
+
+.. versionadded:: 8.2
+
+    The ``add_condition`` option and the ``addCondition()`` methods were
+    introduced in Symfony 8.2.
+
 .. seealso::
 
     Symfony can :doc:`import routes from different sources </routing/custom_route_loader>`
