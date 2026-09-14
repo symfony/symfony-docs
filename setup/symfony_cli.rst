@@ -418,7 +418,8 @@ RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_D
 Elasticsearch 9200      ``ELASTICSEARCH_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
 Kafka         9092      ``KAFKA_``
-MailCatcher   1025/1080 ``MAILER_``
+Mail catcher  1025/1080 ``MAILER_``
+              1025/8025
               or 25/80
 Blackfire     8707      ``BLACKFIRE_``
 Mercure       80        Always exposes ``MERCURE_PUBLIC_URL`` and ``MERCURE_URL`` (only works with the ``dunglas/mercure`` Docker image)

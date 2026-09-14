@@ -2267,11 +2267,29 @@ Development & Debugging
 Enabling an Email Catcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When developing locally, it is recommended to use an email catcher. If you have
-enabled Docker support via Symfony recipes, an email catcher is automatically
-configured. In addition, if you are using the :doc:`Symfony CLI </setup/symfony_cli>`
-tool, the mailer DSN is automatically exposed via the
-:ref:`symfony binary Docker integration <symfony-server-docker>`.
+When developing locally, it is recommended to use an email catcher: a fake SMTP
+server that stores the emails sent by your application and shows them in a web
+interface, instead of delivering them to the real recipients.
+
+If you have enabled Docker support via Symfony recipes, the ``symfony/mailer``
+recipe adds a `Mailpit`_ service to your Docker Compose configuration. In
+addition, if you are using the :doc:`Symfony CLI </setup/symfony_cli>` tool,
+the mailer DSN is automatically exposed via the
+:ref:`symfony binary Docker integration <symfony-server-docker>`, so you don't
+ need to configure anything else.
+
+If you don't use Docker, install and run an email catcher yourself and point the
+mailer DSN to its SMTP port. For example, `Mailpit`_ is a single binary that
+listens for SMTP connections on port ``1025`` and serves its web interface on
+port ``8025``:
+
+.. code-block:: env
+
+    # .env.local
+    MAILER_DSN=smtp://localhost:3535
+
+Open ``http://localhost:8025`` to see the emails sent by your application.
+Other popular email catchers are `MailCatcher`_, `MailDev`_ and `Mailtrap Local`_.
 
 Sending Test Emails
 ~~~~~~~~~~~~~~~~~~~
@@ -2515,6 +2533,10 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
+.. _`Mailpit`: https://github.com/axllent/mailpit
+.. _`MailCatcher`: https://mailcatcher.me/
+.. _`MailDev`: https://github.com/maildev/maildev
+.. _`Mailtrap Local`: https://github.com/mailtrap/mailtrap-local
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`Mailomat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailomat/README.md
 .. _`MailPace`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailPace/README.md
