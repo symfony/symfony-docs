@@ -161,34 +161,12 @@ proxy must implement as the value of the attribute::
         }
     }
 
-.. _lazy-services-per-argument:
-
-Injecting a Service as a Lazy Proxy
------------------------------------
-
-Marking a service ``lazy`` defers its instantiation for every consumer. When
-only one injection point needs that, inject a lazy proxy on that argument
-instead. The target service is left alone, so its other consumers still
-receive the real instance:
+When configuring services in YAML or PHP files, inject a lazy proxy on a
+specific argument with the ``@~`` prefix or the ``lazy_proxy()`` function. The
+target service is left alone, so its other consumers still receive the real
+instance:
 
 .. configuration-block::
-
-    .. code-block:: php-attributes
-
-        // src/Consumer.php
-        namespace App;
-
-        use Symfony\Component\DependencyInjection\Attribute\Lazy;
-
-        class Consumer
-        {
-            public function __construct(
-                #[Lazy]
-                // this is equivalent: #[Autowire(lazy: true)]
-                HeavyService $heavyService,
-            ) {
-            }
-        }
 
     .. code-block:: yaml
 
@@ -207,11 +185,13 @@ receive the real instance:
         use App\Consumer;
         use App\HeavyService;
 
-        return function (ContainerConfigurator $container): void {
-            $container->services()
-                ->set(Consumer::class)
-                    ->args([lazy_proxy(HeavyService::class)]);
-        };
+        return App::config([
+            'services' => [
+                Consumer::class => [
+                    'arguments' => [lazy_proxy(HeavyService::class)],
+                ],
+            ],
+        ]);
 
 The ``@~`` prefix composes with the ones controlling the behavior of invalid
 references, so ``'@~?App\Maybe'`` injects a proxy of an optional service, and
@@ -248,22 +228,24 @@ To proxy specific interfaces rather than the target's own class, use the
         use App\HeavyService;
         use App\OtherInterface;
 
-        return function (ContainerConfigurator $container): void {
-            $container->services()
-                ->set(Consumer::class)
-                    ->args([
+        return App::config([
+            'services' => [
+                Consumer::class => [
+                    'arguments' => [
                         lazy_proxy(HeavyService::class),
                         lazy_proxy(HeavyService::class, HeavyInterface::class),
                         lazy_proxy(HeavyService::class, [
                             HeavyInterface::class,
                             OtherInterface::class,
                         ]),
-                    ]);
-        };
+                    ],
+                ],
+            ],
+        ]);
 
 Naming one or more interfaces produces a proxy implementing only those, which is
 what a consumer type-hinting the interface needs. Read more about this in
-:ref:`Interface Proxifying <lazy-services-interface-proxifying>`.
+:ref:`lazy-services-interface-proxifying`.
 
 .. versionadded:: 8.2
 
