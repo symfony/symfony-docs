@@ -186,6 +186,8 @@ This option cannot be overridden per request:
 
         $client = HttpClient::create([], 10);
 
+.. _http-client-scoped-clients:
+
 Scoping Client
 ~~~~~~~~~~~~~~
 
@@ -297,7 +299,7 @@ To inject the ``github`` client service into your autowired classes, use::
     use Symfony\Component\DependencyInjection\Attribute\Target;
 
     public function __construct(
-        #[Target('github')] private HttpClientInterface $githubHttpClient,
+        #[Target('github')] private HttpClientInterface $githubClient,
     ) {
     }
 
