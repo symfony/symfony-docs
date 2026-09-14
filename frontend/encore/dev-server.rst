@@ -110,8 +110,8 @@ Hot Module Replacement HMR
 
 Hot module replacement is a superpower of the ``dev-server`` where styles and
 (in some cases) JavaScript can automatically update without needing to reload
-your page. HMR works automatically with CSS (as long as you're using the
-``dev-server`` and Encore 1.0 or higher) but only works with some JavaScript
+your page. HMR works automatically with CSS (as long as you're using
+``dev-server``) but only works with some JavaScript
 (like :doc:`Vue.js </frontend/encore/vuejs>`).
 
 Live Reloading when changing PHP / Twig Files
@@ -140,11 +140,5 @@ templates, set the following options:
 
 The ``static.watch`` option is required to disable the default reloading of
 files from the static directory, as those files are already handled by HMR.
-
-.. versionadded:: 1.0.0
-
-    Before Encore 1.0, you needed to pass a ``--hot`` flag at the command line
-    to enable HMR. You also needed to disable CSS extraction to enable HMR for
-    CSS. That is no longer needed.
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
