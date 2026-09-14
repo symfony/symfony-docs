@@ -258,6 +258,52 @@ If you have lots of validation errors, you can filter them by error code::
         // handle this specific error (display some message, send an email, etc.)
     }
 
+In an API, you don't need to render the errors yourself: throw a
+:class:`Symfony\\Component\\Validator\\Exception\\ValidationFailedException`
+with the violations instead::
+
+    use Symfony\Component\Validator\Exception\ValidationFailedException;
+    // ...
+
+    $errors = $validator->validate($author);
+    if (count($errors) > 0) {
+        throw new ValidationFailedException($author, $errors);
+    }
+
+If nothing catches this exception while handling a request, Symfony renders a
+422 Unprocessable Content response instead of a 500 one, like it does when
+:ref:`mapping the request payload <controller-mapping-request-payload>` fails.
+If the Serializer is installed and the :ref:`request format <routing-format-parameter>`
+is one it supports, such as JSON, the response body also lists the constraint violations:
+
+.. code-block:: json
+
+    {
+        "type": "https://symfony.com/errors/validation",
+        "title": "Validation Failed",
+        "status": 422,
+        "detail": "name: This value should not be blank.",
+        "violations": [
+            {
+                "propertyPath": "name",
+                "title": "This value should not be blank.",
+                "template": "This value should not be blank.",
+                "parameters": {
+                    "{{ value }}": "\"\""
+                },
+                "type": "urn:uuid:c1051bb4-d103-4f74-8988-acbcafc7fdc3"
+            }
+        ]
+    }
+
+Use the :ref:`framework.exceptions <framework_exceptions>` option to return a
+different status code.
+
+.. versionadded:: 8.2
+
+    Rendering an uncaught ``ValidationFailedException`` as a 422 response was
+    introduced in Symfony 8.2. Previous versions rendered it as a 500 response.
+
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -271,20 +317,6 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
-
-When a ``ValidationFailedException`` is thrown while handling a request and
-nothing catches it, for example when one of these closures fails in a
-controller, Symfony turns it into a 422 Unprocessable Content response, like it
-does for :ref:`the mapped request payload <controller-mapping-request-payload>`.
-When the error is rendered in a format supported by the Serializer, such as
-JSON, the response also lists the constraint violations. Use the
-:ref:`framework.exceptions <framework_exceptions>` option to return another
-status code.
-
-.. versionadded:: 8.2
-
-    Turning an uncaught ``ValidationFailedException`` into a 422 response was
-    introduced in Symfony 8.2.
 
 Validating Properties
 ~~~~~~~~~~~~~~~~~~~~~
