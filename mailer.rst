@@ -1827,11 +1827,25 @@ Development & Debugging
 Enabling an Email Catcher
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When developing locally, it is recommended to use an email catcher. If you have
-enabled Docker support via Symfony recipes, an email catcher is automatically
-configured. In addition, if you are using the :doc:`Symfony CLI </setup/symfony_cli>`
-tool, the mailer DSN is automatically exposed via the
+When developing locally, it is recommended to use an email catcher. An email
+catcher accepts the emails of your application over SMTP and shows them in a
+web interface, instead of delivering them to the recipients.
+
+If you have enabled Docker support via Symfony recipes, an email catcher is
+automatically configured. In addition, if you are using the
+:doc:`Symfony CLI </setup/symfony_cli>` tool, the mailer DSN is automatically
+exposed via the
 :ref:`symfony binary Docker integration <symfony-server-docker>`.
+
+Without Docker, start an email catcher yourself and set the mailer DSN to its
+SMTP port. For example, `Mailtrap Local`_ is an MIT-licensed single binary that
+provides SMTP on port ``3535``, plus a web interface and a JSON API on port
+``3550``:
+
+.. code-block:: env
+
+    # .env.local
+    MAILER_DSN=smtp://localhost:3535
 
 Sending Test Emails
 ~~~~~~~~~~~~~~~~~~~
@@ -2008,6 +2022,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
+.. _`Mailtrap Local`: https://github.com/mailtrap/mailtrap-local
 .. _`Markdown syntax`: https://commonmark.org/
 .. _`MailPace`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailPace/README.md
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
