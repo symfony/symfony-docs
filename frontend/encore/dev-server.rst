@@ -110,8 +110,8 @@ Hot Module Replacement HMR
 
 Hot module replacement is a superpower of the ``dev-server`` where styles and
 (in some cases) JavaScript can automatically update without needing to reload
-your page. HMR works automatically with CSS (as long as you're using the
-``dev-server`` and Encore 1.0 or higher) but only works with some JavaScript
+your page. HMR works automatically with CSS (as long as you're using
+``dev-server``) but only works with some JavaScript
 (like :doc:`Vue.js </frontend/encore/vuejs>`).
 
 Live Reloading when changing PHP / Twig Files
