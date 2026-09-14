@@ -1811,11 +1811,10 @@ Options defined for scoped clients apply only to URLs that match either their
 `base_uri`_ or the `scope`_ option when it is defined. Non-matching URLs always
 use default options.
 
-Each scoped client also defines a corresponding named autowiring alias.
-If you use for example
-``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
-as the type and name of an argument, autowiring will inject the ``my_api.client``
-service into your autowired classes.
+Each scoped client also defines a named autowiring alias whose target is the
+client name. For example, ``#[Target('my_api.client')] HttpClientInterface $httpClient``
+injects the ``my_api.client`` service. See :ref:`the HTTP client docs <http-client-scoped-clients>`
+for a full example.
 
 auth_basic
 ..........
