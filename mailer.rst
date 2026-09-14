@@ -1891,7 +1891,7 @@ recipe adds a `Mailpit`_ service to your Docker Compose configuration. In
 addition, if you are using the :doc:`Symfony CLI </setup/symfony_cli>` tool,
 the mailer DSN is automatically exposed via the
 :ref:`symfony binary Docker integration <symfony-server-docker>`, so you don't
- need to configure anything else.
+need to configure anything else.
 
 If you don't use Docker, install and run an email catcher yourself and point the
 mailer DSN to its SMTP port. For example, `Mailpit`_ is a single binary that
