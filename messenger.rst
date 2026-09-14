@@ -1906,14 +1906,17 @@ The transport has a number of options:
 
     * the broker, and not the transport, decides the order in which messages
       from different queues are handled;
-    * the ``read_timeout`` option defaults to ``1`` second, because a consumer
+    * the ``read_timeout`` option defaults to ``1`` second (a value of ``0``,
+      which means no timeout, is also replaced by ``1``), because a consumer
       waiting forever couldn't be stopped. It's also how long the worker waits
       when queues are empty;
     * when a worker stops, the prefetched messages that weren't handled yet are
-      redelivered by the broker, so higher values cause bigger redelivery bursts.
+      redelivered by the broker, so higher values cause bigger redelivery
+      bursts.
 
     The value should be greater than the ``--fetch-size`` option of the
-    ``messenger:consume`` command.
+    ``messenger:consume`` command (it's raised to the fetch size when lower).
+    A value of ``1`` doesn't bring any performance gain.
 
     .. versionadded:: 8.2
 
@@ -1921,7 +1924,7 @@ The transport has a number of options:
 
 ``read_timeout``
     Timeout for incoming activity. Note: 0 or greater seconds. May be
-    fractional.
+    fractional. When ``prefetch_count`` is set, it defaults to ``1`` second.
 
 ``retry``
     (no description available)
@@ -2062,8 +2065,8 @@ message timeout. It tells the broker that the connection is still active.
     By default, the consumers do not show up in an admin panel as this
     transport does not rely on ``\AmqpQueue::consume()`` which is blocking.
     Having a blocking receiver makes the ``--time-limit/--memory-limit`` options
-    of the ``messenger:consume`` command as well as the ``messenger:stop-workers``
-    command inefficient, as they all rely on the fact that the receiver returns
+    of the ``messenger:consume`` command as well as the
+    ``messenger:stop-workers`` command inefficient, as they all rely on the fact that the receiver returns
     immediately no matter if it finds a message or not. The consume worker is
     responsible for iterating until it receives a message to handle and/or until
     one of the stop conditions is reached. Therefore, the worker's stop logic
