@@ -127,7 +127,7 @@ Defines values that Symfony will inject in the arguments of the services. Keys
 can be argument names (``$variableName``), types (``Some\Class\Name``) or both
 (``Some\Class\Name $variableName``). The bindings defined here are merged with
 the per-service :ref:`bind <reference-dic-bind>` option. Read more in
-:doc:`/service_container/optional_dependencies`.
+:ref:`services-binding`.
 
 .. _defaults-public:
 
@@ -139,7 +139,7 @@ public
 If ``true``, services defined in the file can be retrieved directly from the
 container with ``$container->get()``. If ``false`` (the recommended default),
 they can only be injected as dependencies. Read more in
-:doc:`/service_container/alias_private`.
+:ref:`container-public`.
 
 .. _defaults-tags:
 
@@ -266,7 +266,7 @@ abstract
 
 When ``true``, the service cannot be retrieved from the container; it only
 serves as a template for child services (see `parent`_). Read more in
-:doc:`/service_container/parent_services`.
+:ref:`parent-services`.
 
 .. _reference-dic-alias:
 
@@ -278,7 +278,7 @@ alias
 When set, the service is an :ref:`alias <services-alias>` to another service.
 The value is the ID of the referenced service. When defining an alias, the
 only other keys allowed are `public`_ and `deprecated`_. Read more in
-:doc:`/service_container/alias_private`.
+:ref:`container-public`.
 
 .. _reference-dic-arguments:
 
@@ -322,7 +322,7 @@ bind
 
 Per-service argument bindings; see :ref:`_defaults bind <defaults-bind>` for
 the syntax. Per-service bindings with the same key override those declared in
-``_defaults``. Read more in :doc:`/service_container/optional_dependencies`.
+``_defaults``. Read more in :ref:`services-binding`.
 
 .. _reference-dic-calls:
 
@@ -367,7 +367,7 @@ pass and, optionally, whether the method returns a clone of the service
             ->call('withDispatcher', [service('event_dispatcher')], true)
         ;
 
-Read more in :doc:`/service_container/calls`.
+Read more in :ref:`injection-types-setter`.
 
 .. _reference-dic-class:
 
@@ -420,7 +420,7 @@ last-minute configuration to the service:
             ->configurator([service(\App\Service\NewsletterConfigurator::class), 'configure'])
         ;
 
-Read more in :doc:`/service_container/configurators`.
+Read more in :ref:`service-configurators`.
 
 .. _reference-dic-constructor:
 
@@ -442,7 +442,7 @@ decorates
 When set, the service decorates the service whose ID is given. The decorated
 service is replaced in the container by the new one and the original service
 becomes available under a new ID (see `decoration_inner_name`_). Read more in
-:doc:`/service_container/service_decoration`.
+:doc:`/service_container/decoration`.
 
 .. _reference-dic-decoration-inner-name:
 
@@ -533,8 +533,8 @@ factory
 Defines a callable used to create the service instead of calling its
 constructor. The callable can be a static method (``Acme\Factory::build``),
 a method on another service (``['@factory_service', 'build']``), a global
-function (``my_factory_function``) or an :doc:`expression
-</service_container/expression_language>` (``@=...``). When the value is a
+function (``my_factory_function``) or an :ref:`expression
+<services-expressions>` (``@=...``). When the value is a
 single service reference (``@my_factory``), the ``__invoke()`` method of the
 service is called. Cannot be combined with `constructor`_. Read more in
 :doc:`/service_container/factories`.
@@ -559,7 +559,7 @@ from_callable
 Builds the service as a ``Closure`` created from the given callable. Useful
 to register first-class callables as services. Cannot be combined with
 service-construction keys such as `factory`_, `arguments`_ or `calls`_.
-Read more in :doc:`/service_container/service_closures`.
+Read more in :ref:`autowiring_closures`.
 
 .. _reference-dic-lazy:
 
@@ -583,7 +583,7 @@ parent
 The ID of a parent service from which the configuration is inherited. The
 current service becomes a ``ChildDefinition`` and only needs to define the
 keys that differ from the parent. Read more in
-:doc:`/service_container/parent_services`.
+:ref:`parent-services`.
 
 .. _reference-dic-properties:
 
@@ -625,7 +625,7 @@ shared
 
 When ``true`` (the default), the container always returns the same instance
 when the service is requested. When ``false``, a new instance is created on
-each request. Read more in :doc:`/service_container/shared`.
+each request. Read more in :ref:`services-shared`.
 
 .. _reference-dic-stack:
 
@@ -671,7 +671,7 @@ allowed in the definition are `public`_ and `deprecated`_:
             inline_service(\App\Cache\RedisCache::class),
         ]);
 
-Read more in :doc:`/service_container/service_decoration`.
+Read more in :doc:`/service_container/decoration`.
 
 .. _reference-dic-synthetic:
 
@@ -682,7 +682,7 @@ synthetic
 
 When ``true``, the service is not created by the container itself; it must be
 injected at runtime via ``Container::set()``. Synthetic services are public
-by default. Read more in :doc:`/service_container/synthetic_services`.
+by default. Read more in :ref:`services-synthetic`.
 
 .. _reference-dic-tags:
 
@@ -776,7 +776,7 @@ resource
 **type**: ``string`` **(required)**
 
 A directory or glob pattern from which service classes are loaded. Read more
-in :doc:`/service_container/import`.
+in :ref:`service-container-services-load-example`.
 
 .. _reference-dic-prototype-namespace:
 
@@ -876,4 +876,4 @@ entry accepts the following keys:
         $container->import('legacy_services.yaml');
         $container->import('../vendor/acme/foo-bundle/services.xml', null, 'not_found');
 
-Read more in :doc:`/service_container/import`.
+Read more in :ref:`service-container-imports-directive`.
