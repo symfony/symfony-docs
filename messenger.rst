@@ -1614,6 +1614,7 @@ outside the console (e.g. in the controllers of an administration backend)::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Messenger\Failure\FailedMessageFilter;
     use Symfony\Component\Messenger\Failure\FailedMessageRepository;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class FailedMessageController extends AbstractController
     {
@@ -1622,6 +1623,7 @@ outside the console (e.g. in the controllers of an administration backend)::
         ) {
         }
 
+        #[Route('/admin/failed-messages', name: 'admin_failed_messages')]
         public function list(): Response
         {
             // only the SendInvoice messages that failed during the last day
@@ -1630,16 +1632,24 @@ outside the console (e.g. in the controllers of an administration backend)::
                 failedAfter: new \DateTimeImmutable('-1 day'),
             );
 
+            $envelopes = $this->failedMessages->all(filter: $filter, limit: 50);
+
             return $this->render('admin/failed_messages.html.twig', [
                 'count' => $this->failedMessages->count(),
-                'envelopes' => $this->failedMessages->all(filter: $filter, limit: 50),
+                'envelopes' => $envelopes,
             ]);
         }
 
+        #[Route(
+            '/admin/failed-messages/{id}/retry',
+            name: 'admin_failed_message_retry',
+            methods: ['POST'],
+        )]
         public function retry(string $id): Response
         {
             if ($envelope = $this->failedMessages->find($id)) {
-                // dispatches the message again and removes it from the failure transport
+                // dispatches the message again and removes it from the
+                // failure transport
                 $this->failedMessages->redispatch($envelope);
             }
 
@@ -1647,22 +1657,27 @@ outside the console (e.g. in the controllers of an administration backend)::
         }
     }
 
-The repository provides the following methods. All of them, except
-``getTransportNames()``, accept the name of a failure transport as their last
-argument; when it's omitted, the global ``failure_transport`` is used:
+The repository provides the following methods. Most of them accept an optional
+``$transport`` argument with the name of a failure transport. When it's
+omitted, the global ``failure_transport`` is used; if there is no global failure
+transport, passing the transport name is mandatory:
 
 * ``getTransportNames()``: the names of all the failure transports;
+* ``getGlobalTransportName()``: the name of the global failure transport, or
+  ``null`` when it's not configured;
 * ``count()``: the number of messages in the failure transport, or ``null``
   when the transport can't count them;
 * ``supportsListing()``: whether the failure transport can list its messages,
-  which is required by ``find()`` and ``all()``;
+  which is required by ``find()`` and ``all()`` (they throw an exception
+  otherwise);
 * ``find()``: the envelope of a failed message given its id, or ``null``;
 * ``all()``: the failed messages, optionally selected with a
   ``FailedMessageFilter``. The ``limit`` argument bounds the number of messages
   read from the transport before applying the filter;
 * ``remove()``: deletes the given envelope from the failure transport;
-* ``redispatch()``: dispatches the message through the bus again and removes it
-  from the failure transport.
+* ``redispatch()``: dispatches the message through the bus again, which routes
+  it to its configured transport, and then removes it from the failure
+  transport. If the dispatch fails, the message stays in the failure transport.
 
 The static ``FailedMessageRepository::getMessageId()`` method returns the id of
 a given envelope, which is the value to pass to ``find()``.
