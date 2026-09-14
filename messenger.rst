@@ -1593,6 +1593,90 @@ If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
 
+Managing Failed Messages from Your Code
+.......................................
+
+.. versionadded:: 8.2
+
+    The ``FailedMessageRepository`` and ``FailedMessageFilter`` classes were
+    introduced in Symfony 8.2.
+
+The ``messenger:failed:*`` commands are built on the
+:class:`Symfony\\Component\\Messenger\\Failure\\FailedMessageRepository`
+service. Inject it to list, inspect, remove or redispatch failed messages from
+outside the console (e.g. in the controllers of an administration backend)::
+
+    // src/Controller/Admin/FailedMessageController.php
+    namespace App\Controller\Admin;
+
+    use App\Message\SendInvoice;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Messenger\Failure\FailedMessageFilter;
+    use Symfony\Component\Messenger\Failure\FailedMessageRepository;
+
+    class FailedMessageController extends AbstractController
+    {
+        public function __construct(
+            private FailedMessageRepository $failedMessages,
+        ) {
+        }
+
+        public function list(): Response
+        {
+            // only the SendInvoice messages that failed during the last day
+            $filter = new FailedMessageFilter(
+                class: SendInvoice::class,
+                failedAfter: new \DateTimeImmutable('-1 day'),
+            );
+
+            return $this->render('admin/failed_messages.html.twig', [
+                'count' => $this->failedMessages->count(),
+                'envelopes' => $this->failedMessages->all(filter: $filter, limit: 50),
+            ]);
+        }
+
+        public function retry(string $id): Response
+        {
+            if ($envelope = $this->failedMessages->find($id)) {
+                // dispatches the message again and removes it from the failure transport
+                $this->failedMessages->redispatch($envelope);
+            }
+
+            return $this->redirectToRoute('admin_failed_messages');
+        }
+    }
+
+The repository provides the following methods. All of them, except
+``getTransportNames()``, accept the name of a failure transport as their last
+argument; when it's omitted, the global ``failure_transport`` is used:
+
+* ``getTransportNames()``: the names of all the failure transports;
+* ``count()``: the number of messages in the failure transport, or ``null``
+  when the transport can't count them;
+* ``supportsListing()``: whether the failure transport can list its messages,
+  which is required by ``find()`` and ``all()``;
+* ``find()``: the envelope of a failed message given its id, or ``null``;
+* ``all()``: the failed messages, optionally selected with a
+  ``FailedMessageFilter``. The ``limit`` argument bounds the number of messages
+  read from the transport before applying the filter;
+* ``remove()``: deletes the given envelope from the failure transport;
+* ``redispatch()``: dispatches the message through the bus again and removes it
+  from the failure transport.
+
+The static ``FailedMessageRepository::getMessageId()`` method returns the id of
+a given envelope, which is the value to pass to ``find()``.
+
+A ``FailedMessageFilter`` selects messages by their exact class name and by a
+time window whose bounds are inclusive. As with the ``--failed-after`` and
+``--failed-before`` command options, messages that were never redelivered
+don't match any time window.
+
+.. note::
+
+    The ``FailedMessageRepository`` service is only available when at least
+    one failure transport is configured.
+
 .. _messenger-handler-idempotency:
 
 Writing Idempotent Handlers
