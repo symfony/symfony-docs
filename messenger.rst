@@ -2612,6 +2612,11 @@ to ``in-memory://`` in your test configuration and assert on the specific transp
 Asserting and Consuming Queued Messages
 .......................................
 
+.. versionadded:: 8.2
+
+    The Messenger test helpers and the ``StopWorkerOnIdleListener`` were
+    introduced in Symfony 8.2.
+
 Test classes extending
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` or
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase` provide some
@@ -2639,7 +2644,8 @@ doesn't use the ``in-memory://`` DSN::
             $this->assertQueuedMessageCount(1, 'async', ScoreLoanApplication::class);
 
             // handles the queued messages with the message bus of the application
-            $handledMessages = $this->consumeQueuedMessages('async');
+            // and returns the number of successfully handled messages
+            $this->assertSame(1, $this->consumeQueuedMessages('async'));
 
             // ... assert on what the handlers did
         }
@@ -2665,22 +2671,25 @@ These are all the available helpers:
 ``consumeQueuedMessages(string $transport, ?int $limit = null)``
     Runs a worker that handles the queued messages with the message bus and
     the event dispatcher of the application. The worker stops when the
-    transport is empty, or after handling ``$limit`` messages. It returns the
-    number of handled messages.
+    transport is empty, or after receiving ``$limit`` messages (retries
+    included). It returns the number of successfully handled messages.
 
 The worker listeners of the application run as in production, so a failed
-message is retried or sent to the :ref:`failure transport <messenger-failure-transport>`
-according to your configuration. The only difference is that messages sent
-for retry are consumed again without waiting for their retry delay. This is
-how ``consumeQueuedMessages()`` deals with failures:
+message is retried or sent to the
+:ref:`failure transport <messenger-failure-transport>` according to your
+configuration. The only difference is that messages sent for retry are
+consumed again without waiting for their retry delay. This is how
+``consumeQueuedMessages()`` deals with failures and delayed messages:
 
-* when a handler fails and then succeeds on a retry, the method returns normally;
-* when a handler keeps failing, all its retries run during the same call and
-  the exception of the last attempt is rethrown, making the test fail. If a
-  failure transport is configured with the ``in-memory://`` DSN too, you can
-  catch that exception and then inspect the failure transport with the other
+* a failure that will be retried is not rethrown, so when a handler fails and
+  then succeeds on a retry, the method returns normally;
+* when a handler keeps failing, all its retries run during the same call. Once
+  all the queued messages have been consumed, the
+  :class:`Symfony\\Component\\Messenger\\Exception\\HandlerFailedException`
+  of the attempt that exhausted the retries is rethrown, making the test fail.
+  If a failure transport is configured with the ``in-memory://`` DSN too,
+  catch this exception and then inspect the failure transport with the other
   helpers;
-* a failure that will be retried is not rethrown;
 * a message delayed by your application (e.g. with a
   :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`) stays in the
   transport until it's due; it's not handled and it's not included in the
@@ -2689,14 +2698,10 @@ how ``consumeQueuedMessages()`` deals with failures:
 .. tip::
 
     If you create a :class:`Symfony\\Component\\Messenger\\Worker` yourself,
-    add the :class:`Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnIdleListener`
+    add the
+    :class:`Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnIdleListener`
     subscriber to its event dispatcher to stop the worker as soon as there are
     no more messages to handle, instead of waiting for new ones.
-
-.. versionadded:: 8.2
-
-    The Messenger test helpers and the ``StopWorkerOnIdleListener`` were
-    introduced in Symfony 8.2.
 
 Amazon SQS
 ~~~~~~~~~~
