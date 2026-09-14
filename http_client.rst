@@ -204,7 +204,7 @@ autoconfigure the HTTP client based on the requested URL:
             http_client:
                 scoped_clients:
                     # only requests matching scope will use these options
-                    github.client:
+                    github:
                         scope: 'https://api\.github\.com'
                         headers:
                             Accept: 'application/vnd.github.v3+json'
@@ -213,7 +213,7 @@ autoconfigure the HTTP client based on the requested URL:
 
                     # using base_uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
                     # will default to these options
-                    github.client:
+                    github:
                         base_uri: 'https://api.github.com'
                         headers:
                             Accept: 'application/vnd.github.v3+json'
@@ -230,7 +230,7 @@ autoconfigure the HTTP client based on the requested URL:
                 'http_client' => [
                     'scoped_clients' => [
                         // only requests matching scope will use these options
-                        'github.client' => [
+                        'github' => [
                             'scope' => 'https://api\.github\.com',
                             'headers' => [
                                 'Accept' => 'application/vnd.github.v3+json',
@@ -240,7 +240,7 @@ autoconfigure the HTTP client based on the requested URL:
 
                         // using base_uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
                         // will default to these options
-                        'github.client' => [
+                        'github' => [
                             'base_uri' => 'https://api.github.com',
                             'headers' => [
                                 'Accept' => 'application/vnd.github.v3+json',
@@ -292,10 +292,14 @@ methods defined by Symfony to :ref:`choose a specific service <services-wire-spe
 Each client has a unique service named after its configuration.
 
 Each scoped client also defines a corresponding named autowiring alias.
-If you use for example
-``Symfony\Contracts\HttpClient\HttpClientInterface $githubClient``
-as the type and name of an argument, autowiring will inject the ``github.client``
-service into your autowired classes.
+To inject the ``github`` client service into your autowired classes, use::
+
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+
+    public function __construct(
+        #[Target('github')] private HttpClientInterface $githubHttpClient,
+    ) {
+    }
 
 .. note::
 
