@@ -285,6 +285,8 @@ caching model.
 
 For details, see :doc:`/http_cache/validation`.
 
+.. _safe-methods-only-caching-get-or-head-requests:
+
 Safe Methods: Only caching GET, HEAD or QUERY requests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
