@@ -2,7 +2,7 @@ EditorWidget
 ============
 
 ``EditorWidget`` is a full-featured multi-line text editor with word
-wrapping, scrolling, undo/redo, a kill ring and autocomplete support.
+wrapping, scrolling, undo/redo and a kill ring.
 
 When to Use
 -----------
@@ -40,20 +40,6 @@ To make the editor fill all remaining vertical space, call::
 
     $editor->expandVertically(true);
 
-Autocomplete
-------------
-
-Attach an autocomplete provider to get context-aware suggestions when
-the user presses **Tab**::
-
-    use Symfony\Component\Tui\Autocomplete\FilePathProvider;
-
-    $editor->setAutocompleteProvider(new FilePathProvider());
-
-The autocomplete dropdown appears inline and can be navigated with
-**Up**/**Down** and confirmed with **Enter**. Press **Escape** to
-dismiss it.
-
 Events
 ------
 
@@ -69,8 +55,7 @@ Events
           $text = $event->getValue();
       });
 
-* ``CancelEvent``: Fired when the user presses **Escape** or
-  **Ctrl+C** (if no autocomplete dropdown is open)::
+* ``CancelEvent``: Fired when the user presses **Escape**::
 
       $editor->onCancel(function () {
           // discard changes or close the editor
@@ -92,18 +77,19 @@ Key                           Action
 ============================  ==============================
 Enter                         Submit
 Shift+Enter                   Insert newline
-Escape, Ctrl+C                Cancel / close autocomplete
-Tab                           Trigger autocomplete
-Up / Down                     Move cursor or navigate autocomplete
+Escape                        Cancel
+Ctrl+C                        Left to the application
+Shift+Space                   Insert a space
+Up / Down                     Move cursor up / down
 Left, Ctrl+B                  Move cursor left
 Right, Ctrl+F                 Move cursor right
-Alt+Left, Ctrl+Left           Move word left
-Alt+Right, Ctrl+Right         Move word right
+Alt+Left, Ctrl+Left, Alt+B    Move word left
+Alt+Right, Ctrl+Right, Alt+F  Move word right
 Home, Ctrl+A                  Move to line start
 End, Ctrl+E                   Move to line end
 Page Up / Page Down           Scroll by page
-Backspace                     Delete character backward
-Delete, Ctrl+D                Delete character forward
+Backspace, Shift+Backspace    Delete character backward
+Delete, Ctrl+D, Shift+Delete  Delete character forward
 Ctrl+W, Alt+Backspace         Delete word backward
 Alt+D, Alt+Delete             Delete word forward
 Ctrl+Shift+K                  Delete entire line
