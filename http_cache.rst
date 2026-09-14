@@ -285,10 +285,10 @@ caching model.
 
 For details, see :doc:`/http_cache/validation`.
 
-Safe Methods: Only caching GET or HEAD requests
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Safe Methods: Only caching GET, HEAD or QUERY requests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-HTTP caching only works for "safe" HTTP methods (like GET and HEAD). This means
+HTTP caching only works for "safe" HTTP methods (GET, HEAD and QUERY). This means
 three things:
 
 * Don't try to cache PUT or DELETE requests. It won't work and with good reason.
@@ -301,7 +301,7 @@ three things:
   widely implemented, so you should avoid it if possible.
 
 * You should *never* change the state of your application (e.g. update a blog post)
-  when responding to a GET or HEAD request. If those requests are cached, future
+  when responding to a GET, HEAD or QUERY request. If those requests are cached, future
   requests may not actually hit your server.
 
 More Response Methods
