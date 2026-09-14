@@ -940,6 +940,20 @@ configure the ``providers`` option:
 
 .. tip::
 
+    If you use Crowdin as a provider, pushing translations adds to the project
+    the locales of your application it does not have yet. This needs an API
+    token with a read and write ``project.settings`` scope. With a narrower
+    token, the failure is logged and those locales are skipped, as before. A
+    locale Crowdin does not know is left out too, so that the other ones are
+    still added.
+
+.. versionadded:: 8.2
+
+    Support for adding the locales missing from a Crowdin project when pushing
+    translations was introduced in Symfony 8.2.
+
+.. tip::
+
     If you use Lokalise as a provider and a locale format following the `ISO
     639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
     in Lokalise for each of your locales, in order to override the
@@ -952,6 +966,18 @@ configure the ``providers`` option:
     The Phrase provider uses Phrase's tag feature to map translations to Symfony's translation
     domains. If you need some assistance with organizing your tags in Phrase, you might want
     to consider the `Phrase Tag Bundle`_ which provides some commands helping you with that.
+
+.. tip::
+
+    If you use Phrase as a provider and you don't define the ``locales`` or the
+    ``domains`` option, every locale of the project is pulled, and so is every
+    tag (each tag matches a translation domain).
+
+.. versionadded:: 8.2
+
+    Support for pulling every locale and every domain of a Phrase project when
+    the ``locales`` and ``domains`` options are not defined was introduced in
+    Symfony 8.2.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
