@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2026-09-09T15:18:58Z
+
+Since v3.5 was released some 6 years ago https://github.com/symfony/monolog-bundle/releases?page=2#release-v3.5.0 , I'd also like to delete the "Starting from `MonologBundle`_ 3.5" part.
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2026-09-11T05:18:48Z
+
+> Since v3.5 was released some 6 years ago https://github.com/symfony/monolog-bundle/releases?page=2#release-v3.5.0 , I'd also like to delete the "Starting from `MonologBundle`_ 3.5" part.
+
+I agree, this version can not be installed with Symfony 8 (with 6 or 7 neither). This note is probably no longer relevant
