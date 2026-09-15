@@ -3372,6 +3372,15 @@ Possible options to configure with tags are:
     to prevent tampering. When enabled, messages are signed using HMAC with the
     application's secret key. Default: ``false``.
 
+``transport``
+    Name of the transport to route the handled messages to. The handler then
+    only receives messages from that transport, as with ``from_transport``
+    (see :ref:`messenger-handler-transport`).
+
+    .. versionadded:: 8.2
+
+        The ``transport`` option was introduced in Symfony 8.2.
+
 .. _handler-subscriber-options:
 
 Handling Multiple Messages
@@ -3529,6 +3538,8 @@ configuring your middleware manually, be sure to register
 chain. Also, the ``dispatch_after_current_bus`` middleware must be loaded for
 *all* of the buses being used.
 
+.. _messenger-handler-transport:
+
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3622,6 +3633,57 @@ That's it! You can now consume each transport:
 
     If a handler does *not* have ``from_transport`` config, it will be executed
     on *every* transport that the message is received from.
+
+Instead of keeping the ``from_transport`` option of each handler and the
+routing configuration in sync, use the ``transport`` option of the
+``#[AsMessageHandler]`` attribute (or of the ``messenger.message_handler``
+tag). It routes the messages handled by the handler to that transport and
+binds the handler to it, so the routing configuration of the previous example
+is no longer needed::
+
+    // src/MessageHandler/ThumbnailUploadedImageHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\UploadedImage;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler(transport: 'image_transport')]
+    class ThumbnailUploadedImageHandler
+    {
+        public function __invoke(UploadedImage $uploadedImage): void
+        {
+            // do some thumbnailing
+        }
+    }
+
+    // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
+    // ...
+
+    #[AsMessageHandler(transport: 'async_priority_normal')]
+    class NotifyAboutNewUploadedImageHandler
+    {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``transport`` option of ``#[AsMessageHandler]`` was introduced in
+    Symfony 8.2.
+
+The transports declared by handlers are added to the existing routing of the
+message (defined in the ``routing`` configuration, with the ``#[AsMessage]``
+attribute or with a namespace wildcard), and a message is never sent twice to
+the same transport. The ``debug:messenger`` command shows which routes come
+from the ``#[AsMessageHandler]`` attribute.
+
+The ``transport`` option must reference a configured transport, and it cannot
+be combined with ``handles: '*'`` or with a different ``from_transport``
+value.
+
+.. tip::
+
+    To keep a handler synchronous while other handlers of the same message are
+    asynchronous, bind it to a ``sync://`` transport.
 
 Process Messages by Batches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
