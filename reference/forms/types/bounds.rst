@@ -101,7 +101,9 @@ integer lower than, equal to, or greater than zero, like the ``<=>`` operator::
 
     $builder->add('supportedVersions', BoundsType::class, [
         'type' => VersionType::class,
-        'compare' => static fn (Version $from, Version $to): int => version_compare((string) $from, (string) $to),
+        'compare' => static function (Version $from, Version $to): int {
+            return version_compare((string) $from, (string) $to);
+        },
     ]);
 
 The bounds are not compared when any of them is empty.
