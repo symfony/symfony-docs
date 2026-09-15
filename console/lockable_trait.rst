@@ -57,7 +57,8 @@ called ``console``:
         # config/packages/lock.yaml
         framework:
             lock:
-                console: '%env(LOCK_DSN)%'
+                default: '%env(LOCK_DSN)%'
+                console: 'flock'
 
     .. code-block:: php
 
@@ -67,23 +68,31 @@ called ``console``:
         return App::config([
             'framework' => [
                 'lock' => [
-                    'console' => '%env(LOCK_DSN)%',
+                    'default' => '%env(LOCK_DSN)%',
+                    'console' => 'flock',
                 ],
             ],
         ]);
 
-The lock factory of this named lock is injected into the commands through the
-``setLockFactory()`` method of the trait. If there is no lock named ``console``
-(e.g. when only the default lock is configured), the commands keep using the
-stores mentioned above.
+The lock factory of this named lock is injected into autowired commands
+through the ``setLockFactory()`` method of the trait. If there is no lock named
+``console`` (e.g. when only the default lock is configured), the commands keep
+using the ``SemaphoreStore`` or ``FlockStore`` described above.
+
+.. note::
+
+    When configuring named locks, keep the ``default`` lock too. Otherwise, the
+    ``LockFactory`` service can no longer be autowired without the ``#[Target]``
+    attribute.
 
 .. versionadded:: 8.2
 
     The ``setLockFactory()`` method and the autowiring of the ``console``
     named lock were introduced in Symfony 8.2.
 
-You can also set a ``$lockFactory`` property with your own lock factory. It
-takes precedence over the ``console`` named lock::
+You can also set the ``$lockFactory`` property in the constructor of your
+command with your own lock factory. It takes precedence over the ``console``
+named lock::
 
     // ...
     use Symfony\Component\Console\Command\Command;
