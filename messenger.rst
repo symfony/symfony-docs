@@ -3742,6 +3742,15 @@ Possible options to configure with tags are:
     to prevent tampering. When enabled, messages are signed using HMAC with the
     application's secret key. Default: ``false``.
 
+``transport``
+    Name of the transport to route the handled messages to. The handler then
+    only receives messages from that transport, as with ``from_transport``
+    (see :ref:`messenger-handler-transport`).
+
+    .. versionadded:: 8.2
+
+        The ``transport`` option was introduced in Symfony 8.2.
+
 .. _handler-subscriber-options:
 
 Handling Multiple Messages
@@ -3899,6 +3908,8 @@ configuring your middleware manually, be sure to register
 chain. Also, the ``dispatch_after_current_bus`` middleware must be loaded for
 *all* of the buses being used.
 
+.. _messenger-handler-transport:
+
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3916,14 +3927,15 @@ Suppose you have an ``UploadedImage`` message with two handlers:
 * ``NotifyAboutNewUploadedImageHandler``: you want this to be handled
   by a transport called ``async_priority_normal``
 
-To do this, add the ``from_transport`` option to each handler. For example::
+To do this, add the ``transport`` option to each handler::
 
     // src/MessageHandler/ThumbnailUploadedImageHandler.php
     namespace App\MessageHandler;
 
     use App\Message\UploadedImage;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    #[AsMessageHandler(fromTransport: 'image_transport')]
+    #[AsMessageHandler(transport: 'image_transport')]
     class ThumbnailUploadedImageHandler
     {
         public function __invoke(UploadedImage $uploadedImage): void
@@ -3937,13 +3949,65 @@ And similarly::
     // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
     // ...
 
-    #[AsMessageHandler(fromTransport: 'async_priority_normal')]
+    #[AsMessageHandler(transport: 'async_priority_normal')]
     class NotifyAboutNewUploadedImageHandler
     {
         // ...
     }
 
-Then, make sure to "route" your message to *both* transports:
+This option routes the ``UploadedImage`` message to *both* transports and binds
+each handler to its own transport, so you don't need to add anything to the
+``routing`` configuration. That's it! You can now consume each transport:
+
+.. code-block:: terminal
+
+    # will only call ThumbnailUploadedImageHandler when handling the message
+    $ php bin/console messenger:consume image_transport -vv
+
+    $ php bin/console messenger:consume async_priority_normal -vv
+
+The transports declared by handlers are added to the rest of the routing of the
+message (defined in the ``routing`` configuration, with the ``#[AsMessage]``
+attribute or with a namespace wildcard) and a message is never sent twice to
+the same transport. Run the ``debug:messenger`` command to see which routes
+come from the ``#[AsMessageHandler]`` attribute.
+
+.. versionadded:: 8.2
+
+    The ``transport`` option of ``#[AsMessageHandler]`` was introduced in
+    Symfony 8.2.
+
+.. warning::
+
+    If a handler is not bound to any transport, it will be executed on *every*
+    transport that the message is received from. To keep a handler synchronous
+    while other handlers of the same message are asynchronous, bind it to a
+    :ref:`sync transport <messenger-handling-messages-synchronously>`.
+
+The ``from_transport`` option only binds the handler to a transport, without
+routing the message to it. If you use it, keep the ``routing`` configuration in
+sync with the handlers::
+
+    // src/MessageHandler/ThumbnailUploadedImageHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\UploadedImage;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler(fromTransport: 'image_transport')]
+    class ThumbnailUploadedImageHandler
+    {
+        // ...
+    }
+
+    // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
+    // ...
+
+    #[AsMessageHandler(fromTransport: 'async_priority_normal')]
+    class NotifyAboutNewUploadedImageHandler
+    {
+        // ...
+    }
 
 .. configuration-block::
 
@@ -3978,20 +4042,6 @@ Then, make sure to "route" your message to *both* transports:
                 ],
             ],
         ]);
-
-That's it! You can now consume each transport:
-
-.. code-block:: terminal
-
-    # will only call ThumbnailUploadedImageHandler when handling the message
-    $ php bin/console messenger:consume image_transport -vv
-
-    $ php bin/console messenger:consume async_priority_normal -vv
-
-.. warning::
-
-    If a handler does *not* have ``from_transport`` config, it will be executed
-    on *every* transport that the message is received from.
 
 .. _messenger-handler-batch:
 
