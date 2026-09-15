@@ -105,11 +105,20 @@ Additionally, you have access to a number of functions inside the expression:
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
 ``is_fully_authenticated()``
     Equal to checking if the user has the ``IS_AUTHENTICATED_FULLY`` role.
+``is_recently_authenticated()`` and ``is_very_recently_authenticated()``
+    Equal to checking if the user has the ``IS_AUTHENTICATED_RECENTLY`` and
+    ``IS_AUTHENTICATED_VERY_RECENTLY`` attributes respectively (see
+    :ref:`security-recent-authentication`).
 ``is_granted()``
     Checks if the user has the given permission. Optionally accepts a
     second argument with the object where permission is checked on. It's
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
+
+.. versionadded:: 8.2
+
+    The ``is_recently_authenticated()`` and ``is_very_recently_authenticated()``
+    functions were introduced in Symfony 8.2.
 
 .. sidebar:: ``is_remember_me()`` is different from checking ``IS_AUTHENTICATED_REMEMBERED``
 

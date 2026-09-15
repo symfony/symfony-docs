@@ -21,6 +21,33 @@ access_denied_url
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
 
+recent_authentication_lifetime
+------------------------------
+
+**type**: ``integer`` **default**: ``7200``
+
+The number of seconds during which users have the ``IS_AUTHENTICATED_RECENTLY``
+attribute after they authenticate interactively. Read more about it in
+:ref:`security-recent-authentication`.
+
+.. versionadded:: 8.2
+
+    The ``recent_authentication_lifetime`` option was introduced in Symfony 8.2.
+
+very_recent_authentication_lifetime
+-----------------------------------
+
+**type**: ``integer`` **default**: ``300``
+
+The number of seconds during which users have the
+``IS_AUTHENTICATED_VERY_RECENTLY`` attribute after they authenticate
+interactively. Read more about it in :ref:`security-recent-authentication`.
+
+.. versionadded:: 8.2
+
+    The ``very_recent_authentication_lifetime`` option was introduced in
+    Symfony 8.2.
+
 expose_security_errors
 ----------------------
 
@@ -1365,6 +1392,24 @@ verify if the identified user is allowed to log in. Each firewall can include
 a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
+
+re_authentication_entry_point
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+The ID of a service that implements
+:class:`Symfony\\Component\\Security\\Http\\EntryPoint\\ReAuthenticationEntryPointInterface`.
+It asks authenticated users to authenticate again when they are denied the
+``IS_AUTHENTICATED_RECENTLY`` or ``IS_AUTHENTICATED_VERY_RECENTLY`` attribute.
+If this option is not set and the entry point of the firewall implements that
+interface (e.g. ``oidc_login``), the entry point is used instead. This option
+can't be used in `stateless`_ firewalls. Read more about it in
+:ref:`security-recent-authentication`.
+
+.. versionadded:: 8.2
+
+    The ``re_authentication_entry_point`` option was introduced in Symfony 8.2.
 
 required_badges
 ~~~~~~~~~~~~~~~

@@ -367,6 +367,8 @@ tokens), you can use the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\SelfValidatingPassport`.
 This class only requires a ``UserBadge`` object and optionally `Passport Badges`_.
 
+.. _security-passport-badges:
+
 Passport Badges
 ---------------
 
@@ -394,6 +396,19 @@ the following badges are supported:
     Indicates that this user was pre-authenticated (i.e. before Symfony was
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
+
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\AuthenticationMethodBadge`
+    Lists the authentication methods checked by the authenticator, using the
+    constants of :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationMethod`
+    (e.g. ``AuthenticationMethod::ONE_TIME_PASSWORD``).
+    If the authenticator is interactive, these methods are stored in the token
+    and used to decide if users are
+    :ref:`recently authenticated <security-recent-authentication>`. Without
+    this badge, the method stored is ``AuthenticationMethod::UNSPECIFIED``.
+
+    .. versionadded:: 8.2
+
+        The ``AuthenticationMethodBadge`` was introduced in Symfony 8.2.
 
 .. note::
 
