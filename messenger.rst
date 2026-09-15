@@ -2607,6 +2607,102 @@ to ``in-memory://`` in your test configuration and assert on the specific transp
         $transport->getSent()[0]->getMessage()
     );
 
+.. _messenger-assertions:
+
+Asserting and Consuming Queued Messages
+.......................................
+
+.. versionadded:: 8.2
+
+    The Messenger test helpers and the ``StopWorkerOnIdleListener`` were
+    introduced in Symfony 8.2.
+
+Test classes extending
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` or
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase` provide some
+helpers to work with the messages queued on ``in-memory://`` transports. They
+fail with an explicit message when the transport is not registered or when it
+doesn't use the ``in-memory://`` DSN::
+
+    // tests/Service/LoanApplicationTest.php
+    namespace App\Tests\Service;
+
+    use App\Message\ScoreLoanApplication;
+    use App\Service\LoanApplicationService;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+    class LoanApplicationTest extends KernelTestCase
+    {
+        public function testApplicationIsScored(): void
+        {
+            $service = self::getContainer()->get(LoanApplicationService::class);
+            $service->apply('123', 25000);
+
+            // checks the number of messages queued on the "async" transport
+            $this->assertQueuedMessageCount(1, 'async');
+            // counts only the messages that are instances of the given class
+            $this->assertQueuedMessageCount(1, 'async', ScoreLoanApplication::class);
+
+            // handles the queued messages with the message bus of the application
+            // and returns the number of successfully handled messages
+            $this->assertSame(1, $this->consumeQueuedMessages('async'));
+
+            // ... assert on what the handlers did
+        }
+    }
+
+These are all the available helpers:
+
+``assertQueuedMessageCount(int $count, string $transport, ?string $messageClass = null, string $message = '')``
+    Asserts the number of messages queued on the transport, including the
+    delayed ones. When a message class is given, only the messages that are
+    instances of that class are counted. Passing a class or interface that
+    doesn't exist throws an exception, so a renamed class can't make the
+    assertion match nothing silently.
+
+``getQueuedMessages(string $transport)``
+    Returns the :class:`Symfony\\Component\\Messenger\\Envelope` objects (not
+    the messages) queued on the transport, including the delayed ones.
+
+``getMessengerTransport(string $transport)``
+    Returns the :class:`Symfony\\Component\\Messenger\\Transport\\InMemory\\InMemoryTransport`
+    service of the transport.
+
+``consumeQueuedMessages(string $transport, ?int $limit = null)``
+    Runs a worker that handles the queued messages with the message bus and
+    the event dispatcher of the application. The worker stops when the
+    transport is empty, or after receiving ``$limit`` messages (retries
+    included). It returns the number of successfully handled messages.
+
+The worker listeners of the application run as in production, so a failed
+message is retried or sent to the
+:ref:`failure transport <messenger-failure-transport>` according to your
+configuration. The only difference is that messages sent for retry are
+consumed again without waiting for their retry delay. This is how
+``consumeQueuedMessages()`` deals with failures and delayed messages:
+
+* a failure that will be retried is not rethrown, so when a handler fails and
+  then succeeds on a retry, the method returns normally;
+* when a handler keeps failing, all its retries run during the same call. Once
+  all the queued messages have been consumed, the
+  :class:`Symfony\\Component\\Messenger\\Exception\\HandlerFailedException`
+  of the attempt that exhausted the retries is rethrown, making the test fail.
+  If a failure transport is configured with the ``in-memory://`` DSN too,
+  catch this exception and then inspect the failure transport with the other
+  helpers;
+* a message delayed by your application (e.g. with a
+  :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`) stays in the
+  transport until it's due; it's not handled and it's not included in the
+  returned count.
+
+.. tip::
+
+    If you create a :class:`Symfony\\Component\\Messenger\\Worker` yourself,
+    add the
+    :class:`Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnIdleListener`
+    subscriber to its event dispatcher to stop the worker as soon as there are
+    no more messages to handle, instead of waiting for new ones.
+
 Amazon SQS
 ~~~~~~~~~~
 
