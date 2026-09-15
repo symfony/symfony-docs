@@ -2225,7 +2225,7 @@ the name of another transport where messages are stored before being forwarded:
         ]);
 
 With this configuration, messages routed to the ``orders`` transport are stored
-in the ``outbox`` transport instead. Then, run two kinds of workers:
+in the ``outbox`` transport instead. Then, run workers for both transports:
 
 .. code-block:: terminal
 
@@ -2237,8 +2237,9 @@ in the ``outbox`` transport instead. Then, run two kinds of workers:
     $ php bin/console messenger:consume orders
 
 For the message to be part of the database transaction, the outbox transport
-must use the same database connection as your changes, and the message must be
-dispatched while the transaction is open. For example, when using the
+must be a Doctrine transport that uses the same database connection as your
+changes (this is not checked), and the message must be dispatched while the
+transaction is open. For example, when using the
 :ref:`doctrine_transaction middleware <middleware-doctrine>`, dispatch the
 message from the handler without the
 :ref:`DispatchAfterCurrentBusStamp <messenger-transactional-messages>`;
@@ -2249,21 +2250,25 @@ Keep in mind the following behaviors:
 * the delay of a message (e.g. set with a ``DelayStamp``) is applied while
   the message is in the outbox, so it's forwarded without delay;
 * when forwarding a message fails (e.g. because the broker is down), the relay
-  applies the ``retry_strategy`` and the ``failure_transport`` of the outbox
+  applies the retry strategy and the failure transport of the outbox
   transport. Retrying a message from that failure transport with the
   ``messenger:failed:retry`` command forwards it again;
-* when handling a message fails on the target transport, the retried message
-  (or the one sent to its failure transport) doesn't go through the outbox
-  again, because it already did;
+* when handling a message fails on the target transport, its retries are
+  sent to the target transport directly, without going through the outbox
+  again, because they already did;
+* only the transports that define the ``outbox`` option are protected: if a
+  message is also routed to another transport, it's sent to it immediately;
 * the order in which messages are forwarded is not guaranteed (e.g. when
   several messages are available at the same time and several relay workers
   are running);
 * the relay decodes the stored messages, so its workers must be able to load
-  the classes of the messages and stamps that were stored;
+  the classes of the messages and stamps that were stored (keep this in mind
+  when renaming or removing them while messages are pending);
 * the Doctrine transport waits for ``redeliver_timeout`` (one hour by default)
   before redelivering a message whose worker stopped unexpectedly. Consider
-  lowering this option on the outbox transport, so messages are forwarded
-  sooner after a relay crash.
+  lowering this option on the outbox transport (while keeping it above the
+  time needed to forward a message), so messages are forwarded sooner after a
+  relay crash.
 
 .. _messenger-beanstalkd-transport:
 
