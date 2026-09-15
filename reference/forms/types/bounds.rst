@@ -31,8 +31,6 @@ Example Usage
     $builder->add('price', BoundsType::class, [
         'type' => MoneyType::class,
         'options' => ['currency' => 'EUR'],
-        'from_options' => ['label' => 'Minimum price'],
-        'to_options' => ['label' => 'Maximum price'],
         'compare' => true,
     ]);
 
@@ -50,6 +48,10 @@ names, define the ``property_path`` option of each bound::
 When both bounds are left empty, the data of the field is ``null``. When only
 one of them is empty, the field keeps the other bound (e.g. to define a range
 without an upper limit).
+
+The ``required``, ``translation_domain`` and ``error_bubbling`` options of the
+field are passed to both bounds, before the `options`_, `from_options`_ and
+`to_options`_ options.
 
 Rendering
 ~~~~~~~~~
@@ -75,7 +77,14 @@ When the `compare`_ option is enabled, an error is displayed if the lower bound
 is greater than the upper bound. Both bounds can be equal.
 
 The errors of the whole field, such as the ones caused by the validation
-constraints applied to it, are displayed on the ``from`` field.
+constraints applied to it, are displayed on the ``from`` field (see the
+`error_mapping`_ option).
+
+.. note::
+
+    The field doesn't render its own label, help or row: only the two bounds
+    are rendered. Use the `from_options`_ and `to_options`_ options to define
+    the label and help of each bound.
 
 Field Options
 -------------
@@ -86,27 +95,25 @@ Field Options
 **type**: ``boolean`` or ``callable`` **default**: ``false``
 
 Whether to check that the lower bound is not greater than the upper bound.
-When set to ``true``, scalar values, ``DateTimeInterface`` objects and enums
-(which are ordered as their cases are declared) are compared. The bounds are
-compared as normalized by the inner field type, so for example a ``DateType``
-is compared as a date, regardless of its ``input`` option.
+When set to ``true``, scalar values, ``DateTimeInterface`` objects and cases
+of the same enum (which are ordered as they are declared) are compared. The
+bounds are compared as normalized by the inner field type, so for example a
+``DateType`` is compared as a date, regardless of its ``input`` option.
 
 For other values, pass a callable that compares both bounds and returns an
-integer lower than, equal to, or greater than zero, like the ``<=>`` operator::
+integer lower than, equal to, or greater than zero, like the ``<=>`` operator;
+otherwise, a ``LogicException`` is thrown. The callable receives the normalized
+data of both bounds::
 
-    use App\Form\Type\VersionType;
-    use App\Model\Version;
     use Symfony\Component\Form\Extension\Core\Type\BoundsType;
     // ...
 
     $builder->add('supportedVersions', BoundsType::class, [
-        'type' => VersionType::class,
-        'compare' => static function (Version $from, Version $to): int {
-            return version_compare((string) $from, (string) $to);
-        },
+        'compare' => static fn (string $from, string $to): int
+            => version_compare($from, $to),
     ]);
 
-The bounds are not compared when any of them is empty.
+The bounds are not compared when either of them is empty.
 
 ``compare_message``
 ~~~~~~~~~~~~~~~~~~~
@@ -167,6 +174,17 @@ Overridden Options
 
 **default**: ``false``
 
+This option is passed to both bounds, so their errors are displayed next to
+each bound instead of on the whole field, which is not rendered.
+
+``error_mapping``
+~~~~~~~~~~~~~~~~~
+
+**default**: ``['.' => 'from']``
+
+When the Validator component is used, the errors of the whole field are mapped
+to the ``from`` field.
+
 Inherited Options
 -----------------
 
@@ -176,16 +194,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/data.rst.inc
 
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
-
-.. include:: /reference/forms/types/options/help.rst.inc
-
-.. include:: /reference/forms/types/options/help_attr.rst.inc
-
-.. include:: /reference/forms/types/options/help_html.rst.inc
-
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
-.. include:: /reference/forms/types/options/required.rst.inc
-
-.. include:: /reference/forms/types/options/row_attr.rst.inc
+.. include:: /reference/forms/types/options/translation_domain.rst.inc
