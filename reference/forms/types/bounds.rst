@@ -34,15 +34,31 @@ Example Usage
         'compare' => true,
     ]);
 
-The bounds are two fields named ``from`` and ``to``. Their data is mapped to
-the ``from`` and ``to`` keys of an array (e.g. ``['from' => 10, 'to' => 50]``)
-or to the ``from`` and ``to`` properties of an object. If your model uses other
-names, define the ``property_path`` option of each bound::
+The bounds are two fields named ``from`` and ``to``. By default, their data is
+mapped to the ``from`` and ``to`` keys of an array (e.g.
+``['from' => 10, 'to' => 50]``). To map them to the properties of an object,
+define the ``data_class`` option; otherwise, an array is created when the field
+has no data. If your model uses other names, define the ``property_path``
+option of each bound::
 
+    use App\Model\PriceRange;
+    use Symfony\Component\Form\Extension\Core\Type\BoundsType;
+    use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+    // ...
+
+    // maps the bounds to the minPrice and maxPrice properties of an object
     $builder->add('price', BoundsType::class, [
         'type' => MoneyType::class,
+        'data_class' => PriceRange::class,
         'from_options' => ['property_path' => 'minPrice'],
         'to_options' => ['property_path' => 'maxPrice'],
+    ]);
+
+    // maps the bounds to the "min" and "max" keys of an array
+    $builder->add('price', BoundsType::class, [
+        'type' => MoneyType::class,
+        'from_options' => ['property_path' => '[min]'],
+        'to_options' => ['property_path' => '[max]'],
     ]);
 
 When both bounds are left empty, the data of the field is ``null``. When only
