@@ -22,7 +22,48 @@ the widget that emits them::
     });
 
 Per-widget listeners are automatically scoped to the target widget.
-They are also cleaned up when the widget is detached from the tree.
+They belong to the widget itself and live as long as it does: taking it
+out of the tree and adding it back keeps them. A widget out of the tree
+still calls its own listeners, while global listeners only see its
+events while it is attached.
+
+``onSubmit()`` and its siblings are wrappers around ``on()``, which
+takes the event class and the callback::
+
+    $input->on(SubmitEvent::class, $listener);
+
+Releasing Listeners
+-------------------
+
+``off()`` releases what ``on()`` registered. Pass the listener to drop
+it, or nothing to drop every listener the widget holds for the event
+class::
+
+    $listener = function (SubmitEvent $event) {
+        // ...
+    };
+
+    $input->on(SubmitEvent::class, $listener);
+
+    $input->off(SubmitEvent::class, $listener);
+    $input->off(SubmitEvent::class);
+
+``off()`` matches the listener the way
+:method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::removeListener`
+does. Two first-class callables of the same method on the same object
+match, so ``off(SubmitEvent::class, $service->handle(...))`` releases
+what ``on(SubmitEvent::class, $service->handle(...))`` registered. An
+inline closure only matches the very instance that was registered, which
+is why the example above keeps a reference to it.
+
+When the same callable was registered more than once, ``off()`` releases
+every registration of it. Calling it for an event class the widget never
+listened to does nothing, so it is safe to call unconditionally.
+
+``off()`` only touches the listeners of the widget itself, those
+registered through ``on()`` and its wrappers. It leaves alone the ones
+registered with ``Tui::addListener()``, which live on the event
+dispatcher.
 
 Global Listeners
 ----------------
