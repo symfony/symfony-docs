@@ -402,6 +402,10 @@ Service
     The ``firebase://USERNAME:PASSWORD@default`` DSN was deprecated in Symfony
     8.2, as the legacy Firebase API it relies on has been shut down.
 
+    The `LINE Notify`_ integration is deprecated since Symfony 8.2, as the
+    LINE Notify service has been shut down. Use the `LINE Bot`_ integration
+    instead.
+
 .. warning::
 
     By default, if you have the :doc:`Messenger component </messenger>` installed,
