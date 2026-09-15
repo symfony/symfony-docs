@@ -1526,13 +1526,26 @@ the following options will be guessed too:
     ``null`` into the property. The guessed value is ``''`` for ``string``,
     ``'0'`` for ``int`` and ``float`` and ``false`` for ``bool``.
 
-    This guess only applies to the fields whose type is (or extends)
-    ``TextType``, ``IntegerType``, ``NumberType``, ``MoneyType`` or
-    ``PercentType``. It's skipped when you define the ``empty_data`` option,
-    when the field is not mapped, when the ``property_path`` option is not a
-    single property name, and when the value isn't written through a public
-    setter or a public property typed as ``string``, ``int``, ``float`` or
-    ``bool`` (nullable and union types are ignored too).
+    As for the other guessed options, this only applies when the form has a
+    ``data_class`` and the field type is guessed (the second argument of
+    ``add()`` is omitted or ``null``). It also only applies to the fields of
+    type ``TextType``, ``IntegerType``, ``NumberType``, ``MoneyType`` or
+    ``PercentType`` (or types extending them). The guess is skipped when:
+
+    * you define the ``empty_data`` option;
+    * the field is not mapped, or its ``property_path`` is not a single
+      property name;
+    * the value isn't written through a public method (such as ``setName()``)
+      or a public non-readonly property (or its ``set`` hook) typed as
+      ``string``, ``int``, ``float`` or ``bool``. Nullable and union types
+      are ignored.
+
+    .. note::
+
+        For a non-nullable ``int`` or ``float`` property, an empty submitted
+        value becomes ``0``, which is accepted by the ``NotBlank`` constraint.
+        Make the property nullable or define the ``empty_data`` option if
+        empty values must be rejected by validation.
 
     .. versionadded:: 8.2
 
