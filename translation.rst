@@ -941,16 +941,13 @@ configure the ``providers`` option:
 .. tip::
 
     If you use Crowdin as a provider, pushing translations adds to the project
-    the locales of your application it does not have yet. This needs an API
-    token with a read and write ``project.settings`` scope. With a narrower
-    token, the failure is logged and those locales are skipped, as before. A
-    locale Crowdin does not know is left out too, so that the other ones are
-    still added.
+    the locales you push that it doesn't have yet. This requires an API token
+    with read and write access to the ``project.settings`` scope.
 
-.. versionadded:: 8.2
+    .. versionadded:: 8.2
 
-    Support for adding the locales missing from a Crowdin project when pushing
-    translations was introduced in Symfony 8.2.
+        Support for adding the locales missing from a Crowdin project when pushing
+        translations was introduced in Symfony 8.2.
 
 .. tip::
 
@@ -969,15 +966,15 @@ configure the ``providers`` option:
 
 .. tip::
 
-    If you use Phrase as a provider and you don't define the ``locales`` or the
-    ``domains`` option, every locale of the project is pulled, and so is every
-    tag (each tag matches a translation domain).
+    If you don't define the ``locales`` or the ``domains`` option, every locale
+    of the project is pulled, and every tag you created is pulled as a domain.
+    The tags Phrase creates on its own are skipped.
 
-.. versionadded:: 8.2
+    .. versionadded:: 8.2
 
-    Support for pulling every locale and every domain of a Phrase project when
-    the ``locales`` and ``domains`` options are not defined was introduced in
-    Symfony 8.2.
+        Support for pulling every locale and every domain of a Phrase project
+        when the ``locales`` and ``domains`` options are not defined was
+        introduced in Symfony 8.2.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
