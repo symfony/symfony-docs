@@ -648,6 +648,30 @@ methods:
 * ``isTempFile()``: returns ``true`` if the file was created from pasted data
   (temporary files are cleaned up automatically at shutdown)
 
+Asking for Multiple Files
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``multiple`` option of ``FileQuestion`` was introduced in Symfony 8.2.
+
+Set the ``multiple`` option to ``true`` to collect several files with a single
+question. The answer is then an array of ``InputFile`` instances instead of a
+single one::
+
+    $question = new FileQuestion('Provide images:', multiple: true);
+
+    $files = $helper->ask($input, $output, $question);
+
+    foreach ($files as $file) {
+        $output->writeln($file->getFilename().': '.$file->getHumanReadableSize());
+    }
+
+A single answer can carry several files at once (e.g. by dragging and dropping
+them together or by pasting whitespace separated paths) and the question keeps
+asking for more files until the user submits an empty answer. Validation
+constraints, if any, are applied to each collected file individually.
+
 Testing a Command that Expects Input
 ------------------------------------
 
