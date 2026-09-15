@@ -2859,6 +2859,10 @@ like this:
   but stronger. Users who are logged in only because of a "remember me cookie"
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
+* ``IS_AUTHENTICATED_RECENTLY`` and ``IS_AUTHENTICATED_VERY_RECENTLY``: Stronger
+  still, users who proved their credentials a short time ago. See
+  :ref:`security-recent-authentication`.
+
 * ``IS_REMEMBERED``: *Only* users authenticated using the
   :doc:`remember me functionality </security/remember_me>`, (i.e. a
   remember-me cookie).
@@ -2866,6 +2870,232 @@ like this:
 * ``IS_IMPERSONATOR``: When the current user is
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
+
+.. _security-recent-authentication:
+
+Requiring a Recent Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``IS_AUTHENTICATED_FULLY`` is satisfied for the whole session, however long
+ago the user logged in. Some actions deserve more than that: changing the
+password or the email address, deleting the account, paying. For those,
+require that the user proved their credentials *recently*::
+
+    // src/Controller/AccountController.php
+    // ...
+
+    #[IsGranted('IS_AUTHENTICATED_RECENTLY')]
+    public function deleteAccount(): Response
+    {
+        // ...
+    }
+
+Like the other ``IS_AUTHENTICATED_*`` attributes, it works in
+``access_control``, in templates and in
+:doc:`expressions </security/expressions>`. Users who logged in less than two
+hours ago have it; users who are logged in
+through a remember-me cookie never have it, as they proved nothing in this
+session. ``IS_AUTHENTICATED_VERY_RECENTLY`` is a stricter bar for the most
+sensitive actions, with a window of five minutes. Both windows are
+configurable:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            recent_authentication_lifetime: 3600
+            very_recent_authentication_lifetime: 60
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                // ...
+                'recent_authentication_lifetime' => 3600,
+                'very_recent_authentication_lifetime' => 60,
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``IS_AUTHENTICATED_RECENTLY`` and ``IS_AUTHENTICATED_VERY_RECENTLY``
+    attributes were introduced in Symfony 8.2.
+
+Asking the User to Confirm their Credentials
+............................................
+
+When one of these attributes is denied, the user gets a 403 response like for
+any other denied attribute, unless the firewall knows how to ask for a fresh
+proof of the credentials. Configure ``re_authentication_entry_point`` with a
+service implementing
+:class:`Symfony\\Component\\Security\\Http\\EntryPoint\\ReAuthenticationEntryPointInterface`.
+It receives the request and the current token, and returns the response that
+starts the confirmation. With a form login, that is a redirect to a page
+asking for the password again::
+
+    // src/Security/ConfirmPasswordEntryPoint.php
+    namespace App\Security;
+
+    use Symfony\Component\HttpFoundation\RedirectResponse;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Http\EntryPoint\ReAuthenticationEntryPointInterface;
+
+    final class ConfirmPasswordEntryPoint implements ReAuthenticationEntryPointInterface
+    {
+        public function __construct(
+            private UrlGeneratorInterface $urlGenerator,
+        ) {
+        }
+
+        public function startReAuthentication(Request $request, TokenInterface $token): Response
+        {
+            // the page shows a password form posting to the check_path of the
+            // form login; once the user logged in again, they are sent back to
+            // the page they were denied on
+            return new RedirectResponse($this->urlGenerator->generate('app_confirm_password'));
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            firewalls:
+                main:
+                    form_login:
+                        # ...
+                    re_authentication_entry_point: App\Security\ConfirmPasswordEntryPoint
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\ConfirmPasswordEntryPoint;
+
+        return App::config([
+            'security' => [
+                // ...
+                'firewalls' => [
+                    'main' => [
+                        'form_login' => [
+                            // ...
+                        ],
+                        're_authentication_entry_point' => ConfirmPasswordEntryPoint::class,
+                    ],
+                ],
+            ],
+        ]);
+
+The option cannot be used on a
+:ref:`stateless firewall <reference-security-stateless>`, which has no session
+to record when the user authenticated. A firewall whose
+entry point implements the interface uses it without any configuration. The
+``oidc_login`` authenticator does: it sends the user back to the provider with
+``prompt=login``, so that the provider asks for the credentials again instead
+of answering from the session it holds, and with the previous ID token as
+``id_token_hint``, so that the provider knows which user to re-authenticate.
+Providers may ignore ``prompt``; configure the ``max_age`` option of
+``oidc_login`` to the same window as ``recent_authentication_lifetime`` to
+oblige them, as that one is verified when the ID token comes back.
+
+.. versionadded:: 8.2
+
+    The ``re_authentication_entry_point`` option was introduced in Symfony 8.2.
+
+Deciding what "Recently" Means
+..............................
+
+The decision belongs to the trust resolver, the same service that decides
+``IS_AUTHENTICATED_FULLY``. By default, any interactive authentication within
+the configured window counts. To decide on more than the time, extend
+:class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolver`
+and override ``isAuthenticatedRecently()`` or ``isAuthenticatedVeryRecently()``.
+The token tells which authentication methods the user proved and when::
+
+    // src/Security/BankTrustResolver.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Core\Authentication\AuthenticationMethod;
+    use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+
+    final class BankTrustResolver extends AuthenticationTrustResolver
+    {
+        public function isAuthenticatedVeryRecently(?TokenInterface $token = null): bool
+        {
+            if (!$this->isFullFledged($token)) {
+                return false;
+            }
+
+            // authentication methods, keyed as RFC 8176 names them, mapped to the
+            // Unix timestamp the user last proved each of them at
+            $proofs = $token->getAuthenticationProofs();
+
+            // a hardware key at some point in this session, and any proof in the
+            // last five minutes
+            return isset($proofs[AuthenticationMethod::HARDWARE_KEY])
+                && time() - max($proofs) <= 300;
+        }
+    }
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            security.authentication.trust_resolver:
+                class: App\Security\BankTrustResolver
+                arguments:
+                    - '%security.recent_authentication_lifetime%'
+                    - '%security.very_recent_authentication_lifetime%'
+                    - '@clock'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\BankTrustResolver;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set('security.authentication.trust_resolver', BankTrustResolver::class)
+                    ->args([
+                        param('security.recent_authentication_lifetime'),
+                        param('security.very_recent_authentication_lifetime'),
+                        service('clock'),
+                    ]);
+        };
+
+The built-in authenticators record the methods they verify: ``form_login``,
+``json_login`` and ``http_basic`` record ``AuthenticationMethod::PASSWORD``,
+``oidc_login`` records the ``amr`` claim of the ID token at the time of its
+``auth_time`` claim, and any other interactive authenticator, except
+``remember_me``, records a proof whose method is
+``AuthenticationMethod::UNSPECIFIED``. A
+:ref:`custom authenticator <security-passport-badges>` states its own with an
+``AuthenticationMethodBadge``. When a user authenticates again in the same
+session, the proofs of the previous token carry over, so that a second factor
+verified at login is still known after a password confirmation hours later.
+
+.. versionadded:: 8.2
+
+    The ``isAuthenticatedRecently()`` and ``isAuthenticatedVeryRecently()``
+    methods and the authentication proofs were introduced in Symfony 8.2.
 
 .. _user_session_refresh:
 

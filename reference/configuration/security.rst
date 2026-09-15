@@ -21,6 +21,33 @@ access_denied_url
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
 
+recent_authentication_lifetime
+------------------------------
+
+**type**: ``integer`` **default**: ``7200``
+
+Number of seconds an interactive authentication keeps granting the
+``IS_AUTHENTICATED_RECENTLY`` attribute. See
+:ref:`security-recent-authentication`.
+
+.. versionadded:: 8.2
+
+    The ``recent_authentication_lifetime`` option was introduced in Symfony 8.2.
+
+very_recent_authentication_lifetime
+-----------------------------------
+
+**type**: ``integer`` **default**: ``300``
+
+Number of seconds an interactive authentication keeps granting the
+``IS_AUTHENTICATED_VERY_RECENTLY`` attribute, a stricter bar than
+``IS_AUTHENTICATED_RECENTLY`` for the most sensitive actions.
+
+.. versionadded:: 8.2
+
+    The ``very_recent_authentication_lifetime`` option was introduced in
+    Symfony 8.2.
+
 expose_security_errors
 ----------------------
 
@@ -1365,6 +1392,23 @@ verify if the identified user is allowed to log in. Each firewall can include
 a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
+
+re_authentication_entry_point
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+The id of a service implementing
+:class:`Symfony\\Component\\Security\\Http\\EntryPoint\\ReAuthenticationEntryPointInterface`,
+asked to start a fresh authentication when ``IS_AUTHENTICATED_RECENTLY`` or
+``IS_AUTHENTICATED_VERY_RECENTLY`` is denied to an authenticated user. When
+the entry point of the firewall implements that interface, as ``oidc_login``
+does, it is used without setting this option. The option cannot be used on a
+stateless firewall. See :ref:`security-recent-authentication`.
+
+.. versionadded:: 8.2
+
+    The ``re_authentication_entry_point`` option was introduced in Symfony 8.2.
 
 required_badges
 ~~~~~~~~~~~~~~~
