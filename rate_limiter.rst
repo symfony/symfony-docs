@@ -713,6 +713,76 @@ Then, inject and use as normal::
         // ...
     }
 
+Giving a Fixed Key to Some Sub-Limiters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Every sub-limiter receives the key passed to ``create()``, so in the example above
+both of them count per client IP. Declare the limiters as a map to give some of
+them a fixed key instead, which makes them count every request together:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/rate_limiter.yaml
+        framework:
+            rate_limiter:
+                two_per_minute:
+                    policy: 'fixed_window'
+                    limit: 2
+                    interval: '1 minute'
+                global_quota:
+                    policy: 'fixed_window'
+                    limit: 5000
+                    interval: '1 hour'
+                contact_form:
+                    policy: 'compound'
+                    limiters:
+                        # no key, so this one keeps counting per client IP
+                        two_per_minute: ~
+                        # this one always uses the same key, for everybody
+                        global_quota: { key: 'global' }
+
+    .. code-block:: php
+
+        // config/packages/rate_limiter.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'rate_limiter' => [
+                    'two_per_minute' => [
+                        'policy' => 'fixed_window',
+                        'limit' => 2,
+                        'interval' => '1 minute',
+                    ],
+                    'global_quota' => [
+                        'policy' => 'fixed_window',
+                        'limit' => 5000,
+                        'interval' => '1 hour',
+                    ],
+                    'contact_form' => [
+                        'policy' => 'compound',
+                        'limiters' => [
+                            // no key, so this one keeps counting per client IP
+                            'two_per_minute' => null,
+                            // this one always uses the same key, for everybody
+                            'global_quota' => ['key' => 'global'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The controller shown above does not change: ``two_per_minute`` still counts per
+client IP, while ``global_quota`` caps the whole application at 5000 submissions
+per hour on top of it.
+
+.. versionadded:: 8.2
+
+    The ability to give a fixed key to a sub-limiter was introduced in Symfony 8.2.
+    The list form, ``limiters: [two_per_minute, five_per_hour]``, keeps working.
+
 .. _rate-limiter-builder:
 
 Creating Rate Limiters at Runtime
