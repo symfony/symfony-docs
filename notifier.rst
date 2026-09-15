@@ -397,6 +397,10 @@ Service
     v1 API, which requires a DSN built from the credentials of a service
     account.
 
+    The ``LineBotOptions`` class of the LINE Bot bridge, which sets the
+    recipient of each message instead of the ``receiver`` of the DSN, was
+    introduced in Symfony 8.2.
+
 .. deprecated:: 8.2
 
     The ``firebase://USERNAME:PASSWORD@default`` DSN was deprecated in Symfony
@@ -491,22 +495,6 @@ you to send messages to chat services::
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
 information such as the message ID and the original message contents.
-
-The LINE Bot transport sends messages to the ``receiver`` defined in its DSN.
-Use the ``LineBotOptions`` class to send a message to another user instead::
-
-    use Symfony\Component\Notifier\Bridge\LineBot\LineBotOptions;
-    use Symfony\Component\Notifier\Message\ChatMessage;
-
-    $message = new ChatMessage('You got a new invoice for 15 EUR.')
-        ->transport('linebot')
-        ->options(new LineBotOptions()->to('U4af4980629e0c6d4d9d9d9d9d9d9d9d9'));
-
-    $chatter->send($message);
-
-.. versionadded:: 8.2
-
-    The ``LineBotOptions`` class was introduced in Symfony 8.2.
 
 .. _notifier-email-channel:
 
