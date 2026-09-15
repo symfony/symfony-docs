@@ -42,8 +42,48 @@ that adds two convenient methods to lock and release commands::
     }
 
 The LockableTrait will use the ``SemaphoreStore`` if available and will default
-to ``FlockStore`` otherwise. You can override this behavior by setting
-a ``$lockFactory`` property with your own lock factory::
+to ``FlockStore`` otherwise. These stores are not scoped to your project, so two
+projects (or two parallel test processes) running a command with the same name
+on the same server share the same lock.
+
+In Symfony applications, you can change the store used by all commands that
+use the ``LockableTrait`` by configuring a :ref:`named lock <lock-named-locks>`
+called ``console``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                console: '%env(LOCK_DSN)%'
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'console' => '%env(LOCK_DSN)%',
+                ],
+            ],
+        ]);
+
+The lock factory of this named lock is injected into the commands through the
+``setLockFactory()`` method of the trait. If there is no lock named ``console``
+(e.g. when only the default lock is configured), the commands keep using the
+stores mentioned above.
+
+.. versionadded:: 8.2
+
+    The ``setLockFactory()`` method and the autowiring of the ``console``
+    named lock were introduced in Symfony 8.2.
+
+You can also set a ``$lockFactory`` property with your own lock factory. It
+takes precedence over the ``console`` named lock::
 
     // ...
     use Symfony\Component\Console\Command\Command;
