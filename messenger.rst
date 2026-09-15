@@ -1889,9 +1889,42 @@ The transport has a number of options:
 ``port``
     Port of the AMQP service
 
+``prefetch_count`` (default: ``0``)
+    Number of messages the broker can push to the consumer of each queue
+    before they are acknowledged. With the default value, messages are fetched
+    one by one, which requires a round trip to the broker per message. Any
+    value greater than ``0`` registers a long-lived consumer on each queue
+    instead, which is much faster and makes the consumers visible in the
+    RabbitMQ management UI:
+
+    .. code-block:: env
+
+        # .env
+        MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages?prefetch_count=20
+
+    This changes the transport behavior in some ways:
+
+    * the broker, and not the transport, decides the order in which messages
+      from different queues are handled;
+    * the ``read_timeout`` option defaults to ``1`` second (a value of ``0``,
+      which means no timeout, is also replaced by ``1``), because a consumer
+      waiting forever couldn't be stopped. It's also how long the worker waits
+      when queues are empty;
+    * when a worker stops, the prefetched messages that weren't handled yet are
+      redelivered by the broker, so higher values cause bigger redelivery
+      bursts.
+
+    The value should be greater than the ``--fetch-size`` option of the
+    ``messenger:consume`` command (it's raised to the fetch size when lower).
+    A value of ``1`` doesn't bring any performance gain.
+
+    .. versionadded:: 8.2
+
+        The ``prefetch_count`` option was introduced in Symfony 8.2.
+
 ``read_timeout``
     Timeout for incoming activity. Note: 0 or greater seconds. May be
-    fractional.
+    fractional. When ``prefetch_count`` is set, it defaults to ``1`` second.
 
 ``retry``
     (no description available)
@@ -2029,14 +2062,19 @@ message timeout. It tells the broker that the connection is still active.
 
 .. warning::
 
-    The consumers do not show up in an admin panel as this transport does not rely on
-    ``\AmqpQueue::consume()`` which is blocking. Having a blocking receiver makes
-    the ``--time-limit/--memory-limit`` options of the ``messenger:consume`` command as well as
-    the ``messenger:stop-workers`` command inefficient, as they all rely on the fact that
-    the receiver returns immediately no matter if it finds a message or not. The consume
-    worker is responsible for iterating until it receives a message to handle and/or until one
-    of the stop conditions is reached. Therefore, the worker's stop logic cannot be reached if it
-    is stuck in a blocking call.
+    By default, the consumers do not show up in an admin panel as this transport
+    does not rely on ``\AmqpQueue::consume()`` which is blocking. Having a
+    blocking receiver makes the ``--time-limit/--memory-limit`` options of the
+    ``messenger:consume`` command as well as the ``messenger:stop-workers``
+    command inefficient, as they all rely on the fact that the receiver returns
+    immediately no matter if it finds a message or not. The consume worker is
+    responsible for iterating until it receives a message to handle and/or until
+    one of the stop conditions is reached. Therefore, the worker's stop logic
+    cannot be reached if it is stuck in a blocking call.
+
+    When the ``prefetch_count`` option is set, the transport calls
+    ``\AmqpQueue::consume()`` but each call returns after the ``read_timeout``
+    at the latest, so the worker checks its stop conditions at least that often.
 
 .. tip::
 
