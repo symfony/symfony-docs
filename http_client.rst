@@ -1622,13 +1622,13 @@ installed in your application::
                             'rate_limiter' => 'http_example_limiter',
                         ],
                     ],
-                    'rate_limiter' => [
-                        // Don't send more than 10 requests in 5 seconds
-                        'http_example_limiter' => [
-                            'policy' => 'token_bucket',
-                            'limit' => 10,
-                            'rate' => ['interval' => '5 seconds', 'amount' => 10],
-                        ],
+                ],
+                'rate_limiter' => [
+                    // Don't send more than 10 requests in 5 seconds
+                    'http_example_limiter' => [
+                        'policy' => 'token_bucket',
+                        'limit' => 10,
+                        'rate' => ['interval' => '5 seconds', 'amount' => 10],
                     ],
                 ],
             ],
