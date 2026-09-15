@@ -94,6 +94,10 @@ Event Types
   the value, label and full item array.
 * ``SelectionChangeEvent``: the highlighted item changed (arrow
   keys, scroll).
+* ``MultiSelectEvent``: the user confirmed the checked items of a
+  multiselect list. Carries the items and their values.
+* ``SelectionToggleEvent``: an item of a multiselect list was checked
+  or unchecked. Carries the item, its new state and all checked items.
 * ``SettingChangeEvent``: a setting value changed. Carries the
   setting id and new value.
 * ``TabChangeEvent``: the active tab changed. Carries previous
