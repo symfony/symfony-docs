@@ -397,6 +397,10 @@ Service
     v1 API, which requires a DSN built from the credentials of a service
     account.
 
+    The ``LineBotOptions`` class of the LINE Bot bridge, which sets the
+    recipient of each message instead of the ``receiver`` of the DSN, was
+    introduced in Symfony 8.2.
+
 .. deprecated:: 8.2
 
     The ``firebase://USERNAME:PASSWORD@default`` DSN was deprecated in Symfony
