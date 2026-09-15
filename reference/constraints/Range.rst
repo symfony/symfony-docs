@@ -1,7 +1,8 @@
 Range
 =====
 
-Validates that a given number or ``DateTime`` object is *between* some minimum and maximum.
+Validates that a given number, :phpclass:`BcMath\\Number` or ``DateTime``
+object is *between* some minimum and maximum.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -313,6 +314,48 @@ as a service, the Range validator automatically uses it to resolve relative date
 strings (e.g. ``now``, ``+5 hours``). This makes date range comparisons
 deterministic and testable by using :ref:`MockClock <clock-mockclock>`.
 
+Arbitrary Precision Number Ranges
+---------------------------------
+
+.. versionadded:: 8.2
+
+    Support for :phpclass:`BcMath\\Number` values in the ``Range`` constraint
+    was introduced in Symfony 8.2.
+
+This constraint can also be applied to :phpclass:`BcMath\\Number` objects,
+the arbitrary precision numbers provided by the PHP ``bcmath`` extension. The
+``min`` and ``max`` limits can be given as integers, floats or numeric
+strings::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Order
+    {
+        #[Assert\Range(min: 0.01, max: 10000)]
+        protected \BcMath\Number $amount;
+    }
+
+When the validated value is a ``BcMath\Number``, the limits are converted to
+``BcMath\Number`` objects too, so the comparison keeps its arbitrary precision.
+This matters because PHP truncates the other operand to an integer when
+comparing it with a ``BcMath\Number``, which makes ``10.2`` greater than
+``10.5`` in plain PHP::
+
+    new \BcMath\Number('10.2') > 10.5; // true in plain PHP
+    // with the constraint, 10.2 is correctly considered lower than 10.5
+
+Floats written in exponent notation (e.g. ``1.0E-7``) are supported as well.
+The ``INF`` and ``NAN`` limits have no ``BcMath\Number`` representation, so
+they keep the native PHP comparison.
+
+.. seealso::
+
+    The same support is available in the comparison constraints, such as
+    :doc:`GreaterThanOrEqual </reference/constraints/GreaterThanOrEqual>`.
+
 Options
 -------
 
@@ -340,7 +383,8 @@ Parameter        Description
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
 The message displayed when the ``min`` and ``max`` values are numeric (per
-the :phpfunction:`is_numeric` PHP function) but the given value is not.
+the :phpfunction:`is_numeric` PHP function) but the given value is neither
+numeric nor a :phpclass:`BcMath\\Number` object.
 
 You can use the following parameters in this message:
 
