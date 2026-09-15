@@ -3645,17 +3645,19 @@ is no longer needed::
     namespace App\MessageHandler;
 
     use App\Message\UploadedImage;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
     #[AsMessageHandler(transport: 'image_transport')]
     class ThumbnailUploadedImageHandler
     {
-        // ...
+        public function __invoke(UploadedImage $uploadedImage): void
+        {
+            // do some thumbnailing
+        }
     }
 
     // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
-    namespace App\MessageHandler;
-
-    use App\Message\UploadedImage;
+    // ...
 
     #[AsMessageHandler(transport: 'async_priority_normal')]
     class NotifyAboutNewUploadedImageHandler
@@ -3663,25 +3665,25 @@ is no longer needed::
         // ...
     }
 
-The transports declared by handlers are added to the existing routing of the
-message (defined in the ``routing`` configuration, with the ``#[AsMessage]``
-attribute or with a namespace wildcard), and a message is never sent twice to
-the same transport. Handlers without the ``transport`` and ``from_transport``
-options still run on every transport the message is received from; bind a
-handler to a ``sync://`` transport to keep it synchronous while other handlers
-of the same message are asynchronous.
-
-An exception is thrown when the container is compiled if the transport is not
-configured, if the handler also defines a different ``fromTransport`` value or
-if it handles all messages (``handles: '*'``). The ``debug:messenger`` command
-shows the routing added by handlers as coming from the ``#[AsMessageHandler]``
-attribute, and warns about handlers whose ``from_transport`` option refers to a
-transport that is not configured.
-
 .. versionadded:: 8.2
 
     The ``transport`` option of ``#[AsMessageHandler]`` was introduced in
     Symfony 8.2.
+
+The transports declared by handlers are added to the existing routing of the
+message (defined in the ``routing`` configuration, with the ``#[AsMessage]``
+attribute or with a namespace wildcard), and a message is never sent twice to
+the same transport. The ``debug:messenger`` command shows which routes come
+from the ``#[AsMessageHandler]`` attribute.
+
+The ``transport`` option must reference a configured transport, and it cannot
+be combined with ``handles: '*'`` or with a different ``from_transport``
+value.
+
+.. tip::
+
+    To keep a handler synchronous while other handlers of the same message are
+    asynchronous, bind it to a ``sync://`` transport.
 
 Process Messages by Batches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
