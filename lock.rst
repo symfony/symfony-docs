@@ -130,6 +130,93 @@ this behavior by using the ``lock`` key as follows:
         Automatic scoping of ``flock`` and ``semaphore`` stores was introduced
         in Symfony 8.1.
 
+.. _lock-advisory-locks:
+
+Advisory Locks on an Existing Connection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``service_id`` and ``advisory`` options were introduced in Symfony 8.2.
+
+The ``mysql+advisory:`` and ``pgsql+advisory:`` DSNs shown above use advisory
+locks instead of a database table, but they open a connection of their own. To
+take advisory locks over a connection the application already has, give the
+store the id of the service holding that connection and turn ``advisory`` on:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                invoice:
+                    service_id: 'doctrine.dbal.default_connection'
+                    advisory: true
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'invoice' => [
+                        'service_id' => 'doctrine.dbal.default_connection',
+                        'advisory' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+The service must hold a ``PDO`` instance or a Doctrine DBAL ``Connection``, and
+the driver behind it decides which store is built:
+:ref:`PostgreSqlStore <lock-store-pgsql>` or
+:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>` on PostgreSQL, and
+their MySQL counterparts on MySQL and MariaDB. Any other driver is rejected with
+an exception, because it has no advisory locks to offer.
+
+The ``advisory`` option defaults to ``false``, which builds the table-based
+:ref:`PdoStore <lock-store-pdo>` or :ref:`DoctrineDbalStore <lock-store-dbal>`
+instead. That is what passing the service id as a plain string has always done,
+so leaving it out changes nothing.
+
+The same array is accepted inside the list of stores of a
+:ref:`named lock <lock-named-locks>`, next to DSNs and store keywords:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                invoice:
+                    - 'flock'
+                    - service_id: 'doctrine.dbal.default_connection'
+                      advisory: true
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'invoice' => [
+                        'flock',
+                        [
+                            'service_id' => 'doctrine.dbal.default_connection',
+                            'advisory' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
 In addition to the default lock, Symfony applications can define several
 :ref:`named locks <lock-named-locks>` to use different stores for different
 parts of the application.
