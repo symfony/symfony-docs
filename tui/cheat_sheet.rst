@@ -123,7 +123,7 @@ Escape                Close dropdown
 SelectListWidget
 ----------------
 
-Scrollable list with single-item selection.
+Scrollable list with single or multiple selection.
 
 **Keyboard:**
 
@@ -134,6 +134,7 @@ Up                          Move selection up (wraps)
 Down                        Move selection down (wraps)
 Page Up, Left, Ctrl+B       Page up
 Page Down, Right, Ctrl+F    Page down
+Space                       Toggle item (multiselect mode)
 Enter                       Confirm selection
 Escape, Ctrl+C              Cancel
 ==========================  ==============================
