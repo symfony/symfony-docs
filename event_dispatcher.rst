@@ -411,6 +411,27 @@ via its ``ExceptionEvent`` class::
         }
     }
 
+Instead of the positional ``[method, priority]`` arrays, you can use arrays with
+a ``method`` key and an optional ``priority`` key (which defaults to ``0``).
+Both forms can be mixed, even in the same list of listeners::
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ExceptionEvent::class => [
+                ['method' => 'processException', 'priority' => 10],
+                ['method' => 'logException'],
+                ['notifyException', -10],
+            ],
+            ResponseEvent::class => ['method' => 'onResponse', 'priority' => 5],
+        ];
+    }
+
+.. versionadded:: 8.2
+
+    The ``method`` and ``priority`` keys in the arrays returned by
+    ``getSubscribedEvents()`` were introduced in Symfony 8.2.
+
 In Symfony applications, that's all you need to do. Your ``services.yaml``
 file should already be set up to load services from the ``EventSubscriber``
 directory, so Symfony takes care of the rest. In other PHP applications,
