@@ -109,7 +109,7 @@ Loading Routes
 --------------
 
 The routes in a Symfony application are loaded by the
-:class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
+:class:`Symfony\\Component\\Routing\\Loader\\DelegatingLoader`.
 This loader uses several other loaders (delegates) to load resources of
 different types, for instance YAML files or ``#[Route]`` attributes in controller
 files. The specialized loaders implement
@@ -154,6 +154,8 @@ containing :class:`Symfony\\Component\\Routing\\Route` objects.
     Routes loaded this way will be cached by the Router the same way as
     when they are defined in one of the default formats (e.g. YAML, PHP files).
 
+.. _routing-service-route-loaders:
+
 Loading Routes with a Custom Service
 ------------------------------------
 
@@ -190,10 +192,18 @@ of the service whose ID is ``admin_route_loader``. Your service doesn't have to
 extend or implement any special class, but the called method must return a
 :class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
-If you're using :ref:`autoconfigure <services-autoconfigure>`, your class should
-implement the :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\RouteLoaderInterface`
-interface to be tagged automatically. If you're **not using autoconfigure**,
-tag it manually with ``routing.route_loader``.
+If you're using :ref:`autoconfigure <services-autoconfigure>`, add the
+:class:`Symfony\\Component\\Routing\\Attribute\\AsRouteLoader` attribute to your class
+to have it tagged automatically. If you're **not using autoconfigure**, tag it
+manually with ``routing.route_loader``.
+
+.. versionadded:: 8.2
+
+    The ``#[AsRouteLoader]`` attribute was introduced in Symfony 8.2. In previous
+    versions, classes implemented the
+    ``Symfony\Bundle\FrameworkBundle\Routing\RouteLoaderInterface`` interface
+    instead. Unlike the interface, the attribute is not inherited: a class extending
+    an annotated one must carry it too.
 
 .. note::
 
@@ -313,7 +323,7 @@ Now define a service for the ``ExtraLoader``:
 Notice the tag ``routing.loader``. All services with this *tag* will be marked
 as potential route loaders and added as specialized route loaders to the
 ``routing.loader`` *service*, which is an instance of
-:class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\DelegatingLoader`.
+:class:`Symfony\\Component\\Routing\\Loader\\DelegatingLoader`.
 
 Using the Custom Loader
 ~~~~~~~~~~~~~~~~~~~~~~~

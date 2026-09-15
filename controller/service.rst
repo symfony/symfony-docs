@@ -291,7 +291,6 @@ The following controllers are automatically allowed:
 
 * Classes using the ``#[AsController]`` attribute;
 * Classes extending ``AbstractController``;
-* The built-in ``TemplateController``;
 * All services tagged with ``controller.service_arguments``.
 
 If you use the ``#[Route]`` attribute on a class, Symfony already registers it
