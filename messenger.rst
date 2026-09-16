@@ -586,7 +586,9 @@ precedence over the DSN):
         framework:
             messenger:
                 transports:
-                    webhooks:
+                    sync:
+                        # "failure_transport=true" enables the failure
+                        # transport configured below for this transport
                         dsn: 'sync://?retry=true&failure_transport=true'
                         retry_strategy:
                             max_retries: 2
@@ -594,20 +596,20 @@ precedence over the DSN):
                     failed: 'doctrine://default?queue_name=failed'
 
                 routing:
-                    App\Message\PaymentReceived: webhooks
+                    App\Message\SmsNotification: sync
 
     .. code-block:: php
 
         // config/packages/messenger.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Message\PaymentReceived;
+        use App\Message\SmsNotification;
 
         return App::config([
             'framework' => [
                 'messenger' => [
                     'transports' => [
-                        'webhooks' => [
+                        'sync' => [
                             'dsn' => 'sync://?retry=true&failure_transport=true',
                             'retry_strategy' => [
                                 'max_retries' => 2,
@@ -617,7 +619,7 @@ precedence over the DSN):
                         'failed' => 'doctrine://default?queue_name=failed',
                     ],
                     'routing' => [
-                        PaymentReceived::class => 'webhooks',
+                        SmsNotification::class => 'sync',
                     ],
                 ],
             ],
@@ -625,26 +627,36 @@ precedence over the DSN):
 
 ``retry``
     When handling the message fails, it is handled again right away, as long
-    as the retry strategy of the transport allows it (``max_retries`` or the
-    ``isRetryable()`` method of a custom retry strategy). The transport doesn't
-    wait between attempts, so the ``delay``, ``multiplier``, ``max_delay`` and
-    ``jitter`` options are ignored. Exceptions implementing
-    ``UnrecoverableExceptionInterface`` are never retried, and retries forced
-    with ``RecoverableExceptionInterface`` are also limited by the retry
-    strategy. Handlers that already succeeded are not called again.
+    as the retry strategy of the transport allows it (``max_retries``, which
+    is ``3`` by default, or the ``isRetryable()`` method of a custom retry
+    strategy). The transport doesn't wait between attempts, so the ``delay``,
+    ``multiplier``, ``max_delay`` and ``jitter`` options are ignored.
+    Exceptions implementing
+    :class:`Symfony\\Component\\Messenger\\Exception\\UnrecoverableExceptionInterface`
+    are never retried. Unlike in workers, retries
+    :ref:`forced <messenger-forcing-retrying>` with
+    :class:`Symfony\\Component\\Messenger\\Exception\\RecoverableExceptionInterface`
+    also stop after ``max_retries``, as the transport can't wait between
+    attempts. Handlers that already succeeded are not called again.
 
 ``failure_transport``
-    When the message still fails, it is sent to the failure transport of the
-    transport (or to the global one) instead of throwing the exception. The
-    envelope returned by ``dispatch()`` then contains a
-    ``SentToFailureTransportStamp``, and the message can be managed with the
-    ``messenger:failed:*`` commands like any other failed message. Enabling
-    this option without any failure transport configured for the transport
-    throws an exception.
+    When the message still fails (including after an unrecoverable exception),
+    it is sent to the failure transport of the transport (or to the global
+    one) instead of throwing the exception. The envelope returned by
+    ``dispatch()`` then contains a
+    :class:`Symfony\\Component\\Messenger\\Stamp\\SentToFailureTransportStamp`,
+    which tells that the message was not handled, and an
+    :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`
+    describing the error. The message can be managed with the
+    ``messenger:failed:*`` commands like any other failed message (pass the
+    ``--transport=failed`` option in this example, as ``failed`` is not the
+    global failure transport). Enabling this option without any failure
+    transport configured for the transport throws an exception.
 
-Messages dispatched with the ``DispatchAfterCurrentBusStamp`` during a failed
-attempt are discarded, so they are not handled after a later successful
-attempt nor when the message is sent to the failure transport.
+Messages dispatched with the
+:class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`
+during a failed attempt are discarded, so they are not handled after a later
+successful attempt nor when the message is sent to the failure transport.
 
 Every failed attempt of a ``sync`` transport, whether these options are
 enabled or not, dispatches a
@@ -652,7 +664,7 @@ enabled or not, dispatches a
 ``willRetry()`` method tells if the message will be handled again). A
 :class:`Symfony\\Component\\Messenger\\Event\\SyncMessageRetryingEvent` is
 dispatched right before each new attempt. Listeners of the
-``WorkerMessageFailedEvent`` (e.g. to monitor failures) must also listen to
+``WorkerMessageFailedEvent`` (for example, to monitor failures) must also listen to
 ``SyncMessageFailedEvent`` to be notified of the failures of messages handled
 synchronously.
 
@@ -1533,6 +1545,8 @@ the message will not be retried.
     Messages that will not be retried, will still show up in the configured failure transport.
     If you want to avoid that, consider handling the error yourself and let the handler
     successfully end.
+
+.. _messenger-forcing-retrying:
 
 Forcing Retrying
 ~~~~~~~~~~~~~~~~
