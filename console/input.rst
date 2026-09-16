@@ -1117,10 +1117,9 @@ Asking for Multiple Files
 
 .. versionadded:: 8.2
 
-    Support for multiple files was introduced in Symfony 8.2.
+    Multiple file input in invokable commands was introduced in Symfony 8.2.
 
-A command can also accept several files at once. Type-hint the parameter as
-variadic to collect them all::
+To accept several files at once, make the ``InputFile`` parameter variadic::
 
     use Symfony\Component\Console\Attribute\Argument;
     use Symfony\Component\Console\Attribute\AsCommand;
@@ -1148,15 +1147,15 @@ variadic to collect them all::
         }
     }
 
-Interactively, a single drag & drop can carry several files at once, and the
-question keeps asking for more until you submit an empty answer (by hitting
-``Enter``). In non-interactive mode, the files are read from the whitespace
-separated paths passed as regular arguments.
+When asking interactively, each answer can provide several files at once (e.g.
+by dragging and dropping them together) and the question keeps asking for more
+files until the user submits an empty answer. In non-interactive mode, pass each
+file path as a separate argument.
 
-If a variadic parameter doesn't fit (for example because you need other
-parameters after it), use an ``array`` parameter narrowed to ``InputFile`` with
-a PHPDoc. The console reads the item type from the ``@param`` tag to know that a
-list of files is expected::
+PHP requires variadic parameters to be the last ones, so you can't define
+options after them. In that case, use an ``array`` parameter and declare its
+item type in the ``@param`` tag of the PHPDoc (e.g. ``InputFile[]`` or
+``list<InputFile>``)::
 
     /**
      * @param InputFile[] $images
@@ -1166,13 +1165,14 @@ list of files is expected::
         #[Argument(description: 'The images to analyze')]
         #[Ask('Provide images (paste or enter paths):')]
         array $images,
+        #[Option(description: 'Resize the images to this width')]
+        ?int $width = null,
     ): int {
         // ...
     }
 
-The PHPDoc form is also the one to use on the properties of a
-:ref:`#[MapInput] <console-input-map-input>` object, where a variadic can't be
-used::
+Use the same PHPDoc approach (with the ``@var`` tag) in the properties of
+:ref:`input DTOs <console-input-map-input>`::
 
     use Symfony\Component\Console\Attribute\Argument;
     use Symfony\Component\Console\Attribute\Ask;
@@ -1187,9 +1187,6 @@ used::
         #[Ask('Provide images (paste or enter paths):')]
         public array $images;
     }
-
-The behavior is the same in all cases, and matches
-:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::askFiles`.
 
 .. _options-with-optional-arguments:
 

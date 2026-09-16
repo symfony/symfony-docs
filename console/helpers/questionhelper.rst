@@ -651,15 +651,12 @@ methods:
 Asking for Multiple Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 8.2
+A single ``FileQuestion`` can also collect several files. Pass ``true`` as its
+fourth argument (``$multiple``) and the answer becomes an array of ``InputFile``
+instances::
 
-    The ``multiple`` option of ``FileQuestion`` was introduced in Symfony 8.2.
-
-Set the ``multiple`` option to ``true`` to collect several files with a single
-question. The answer is then an array of ``InputFile`` instances instead of a
-single one::
-
-    $question = new FileQuestion('Provide images:', multiple: true);
+    // the second and third arguments allow pasting files and entering paths
+    $question = new FileQuestion('Provide images:', true, true, true);
 
     $files = $helper->ask($input, $output, $question);
 
@@ -667,10 +664,15 @@ single one::
         $output->writeln($file->getFilename().': '.$file->getHumanReadableSize());
     }
 
-A single answer can carry several files at once (e.g. by dragging and dropping
-them together or by pasting whitespace separated paths) and the question keeps
-asking for more files until the user submits an empty answer. Validation
-constraints, if any, are applied to each collected file individually.
+Each answer can provide several files at once (e.g. by dragging and dropping
+them together or by pasting whitespace-separated paths). The question keeps
+asking for more files until the user submits an empty answer, so the returned
+array can be empty. Validation constraints are applied to each file, while a
+custom validator receives the whole array.
+
+.. versionadded:: 8.2
+
+    The ``multiple`` argument of ``FileQuestion`` was introduced in Symfony 8.2.
 
 Testing a Command that Expects Input
 ------------------------------------
