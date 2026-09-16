@@ -168,7 +168,6 @@ class::
 
     use Monolog\Attribute\WithMonologChannel;
     use Psr\Log\LoggerInterface;
-    use Symfony\Bridge\Monolog\Logger;
 
     #[WithMonologChannel('fixtures')]
     class MyFixtureService
