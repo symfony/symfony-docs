@@ -362,8 +362,8 @@ interface, which requires a single static method called
 :method:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents`.
 This method returns an array whose keys are event names and whose values are
 either the name of the method to call, an array composed of the method name and
-an optional priority, or a list of such arrays when several methods listen to
-the same event.
+an optional priority. When several methods listen to the same event, the value
+is a list of those arrays.
 
 If different event subscriber methods listen to the same event, their order is
 defined by the ``priority`` parameter. This value is a positive or negative
@@ -427,29 +427,6 @@ method::
 The dispatcher automatically registers the subscriber for each event returned
 by the ``getSubscribedEvents()`` method.
 
-Instead of the positional ``[method, priority]`` arrays, you can use arrays with
-a ``method`` key and an optional ``priority`` key. Both forms can be mixed, even
-for the same event::
-
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            ExceptionEvent::class => [
-                ['method' => 'processException', 'priority' => 10],
-                ['method' => 'logException'],
-                ['notifyException', -10],
-            ],
-        ];
-    }
-
-When a single method listens to the event, use a single array such as
-``['method' => 'processException', 'priority' => 10]``.
-
-.. versionadded:: 8.2
-
-    The ``method`` and ``priority`` keys in the arrays returned by
-    ``getSubscribedEvents()`` were introduced in Symfony 8.2.
-
 .. _ref-event-subscriber-configuration:
 
 .. tip::
@@ -458,6 +435,30 @@ When a single method listens to the event, use a single array such as
     you're :ref:`loading services <service-container-services-load-example>` from
     the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
     enabled. You can also manually add the ``kernel.event_subscriber`` tag.
+
+Instead of positional arrays, you can use arrays with a ``method`` key and an
+optional ``priority`` key, which makes the meaning of each value explicit::
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            ExceptionEvent::class => [
+                ['method' => 'processException', 'priority' => 10],
+                // the priority is optional and defaults to 0
+                ['method' => 'logException'],
+                // named and positional arrays can be mixed in the same list
+                ['notifyException', -10],
+            ],
+        ];
+    }
+
+When only one method listens to the event, return that array without wrapping
+it in a list (e.g. ``ExceptionEvent::class => ['method' => 'processException']``).
+
+.. versionadded:: 8.2
+
+    The ``method`` and ``priority`` keys in the arrays returned by
+    ``getSubscribedEvents()`` were introduced in Symfony 8.2.
 
 Request Events, Checking Types
 ------------------------------
