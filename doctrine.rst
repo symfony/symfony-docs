@@ -901,42 +901,41 @@ using the ``MapEntity`` attribute. You can even control the behavior of the
 Fetch a List of Entities
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 8.2
-
-    Support for fetching a list of entities into ``array`` arguments was
-    introduced in Symfony 8.2.
-
-The resolver can also fetch a *list* of entities. Type the controller argument
-as ``array`` and define the entity to query for with the ``class`` option of
-the ``#[MapEntity]`` attribute. The resolver then calls the ``findBy()`` method
-instead of ``findOneBy()``::
+The resolver can also fetch a list of entities. Type the controller argument
+as ``array`` (``iterable`` doesn't work) and define the entity class with the
+``class`` option of the ``MapEntity`` attribute. The resolver then uses the
+``findBy()`` method instead of ``findOneBy()``::
 
     use App\Entity\Post;
     // ...
 
+    // performs a findBy(['author' => $author]) query to find the $posts list
     #[Route('/posts_by/{author:posts}')]
     public function authorPosts(
         #[MapEntity(class: Post::class)]
         array $posts
     ): Response {
-        // ...
+        // $posts is an empty array (instead of a 404 error) when no posts match
     }
 
-You can also configure the criteria explicitly using the ``mapping`` option::
+You can also configure the criteria explicitly with the ``mapping`` option::
 
     #[Route('/posts_by/{author_id}')]
     public function authorPosts(
+        // the key is the route parameter and the value is the entity property
         #[MapEntity(class: Post::class, mapping: ['author_id' => 'author'])]
         array $posts
     ): Response {
         // ...
     }
 
-If no entities match the criteria, the resolver sets the argument to an
-empty array instead of throwing a 404 error.
+To sort or limit the results, fetch the entities
+:ref:`using custom logic <fetch-via-an-expression>` instead.
 
-If you need to sort or limit the results, use the ``expr`` option to fetch
-the entities :ref:`using custom logic <fetch-via-an-expression>`.
+.. versionadded:: 8.2
+
+    Support for fetching a list of entities into ``array`` arguments was
+    introduced in Symfony 8.2.
 
 .. _fetch-via-an-expression:
 
@@ -1061,8 +1060,8 @@ control behavior:
         }
 
 ``stripNull``
-    If true, then when ``findOneBy()`` is used, any values that are
-    ``null`` will not be used for the query.
+    If true, then when ``findOneBy()`` or ``findBy()`` is used, any values
+    that are ``null`` will not be used for the query.
 
 ``objectManager``
     By default, the ``EntityValueResolver`` uses the *default*

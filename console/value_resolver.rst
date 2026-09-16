@@ -177,10 +177,9 @@ You can configure which field to use for the lookup::
         }
     }
 
-The resolver can also fetch a *list* of entities. Type the parameter as
-``array`` and define the entity to query for with the ``class`` option of
-the ``#[MapEntity]`` attribute. The resolver then calls the ``findBy()``
-method instead of ``findOneBy()``::
+The resolver can also fetch a list of entities. Type the parameter as ``array``,
+define the entity class with the ``class`` option and the property to query
+with the ``mapping`` option. The resolver then uses the ``findBy()`` method::
 
     #[AsCommand(name: 'app:users:show')]
     class ShowUsersCommand
@@ -190,8 +189,7 @@ method instead of ``findOneBy()``::
             #[MapEntity(class: User::class, mapping: ['users' => 'id'])]
             array $users
         ): int {
-            // $users contains the User entities matching the given IDs:
-            // php bin/console app:users:show 12 27 42
+            // $users are fetched by id: php bin/console app:users:show 12 27 42
         }
     }
 
