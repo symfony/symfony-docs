@@ -63,6 +63,21 @@ displayed to the user::
 
     The ``token`` argument for the ``checkPostAuth()`` method was introduced in Symfony 7.2.
 
+.. warning::
+
+    Symfony calls user checkers on every authentication, not only when users
+    submit a login form. This includes every time a "remember me" cookie
+    authenticates a user (on any URL of the application) and every request to a
+    :ref:`stateless firewall <reference-security-stateless>`. Symfony also calls
+    ``checkPostAuth()`` every time someone
+    :doc:`impersonates a user </security/impersonating_user>`. Keep user
+    checkers fast, don't use them to change the application state and don't
+    assume that the current request is a login request.
+
+    For example, to store the last login date of users, listen to the
+    :class:`Symfony\\Component\\Security\\Http\\Event\\LoginSuccessEvent`
+    instead, which Symfony doesn't dispatch when impersonating users.
+
 Enabling the Custom User Checker
 --------------------------------
 
