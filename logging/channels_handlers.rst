@@ -223,8 +223,8 @@ channel.
 
     The ``#[WithMonologChannel]`` attribute was introduced in Monolog 3.5.0.
 
-If a service needs loggers from different channels, add the attribute to the
-constructor arguments instead of the class::
+When a service needs loggers from different channels, add the attribute to
+each constructor argument instead of the class::
 
     // src/Service/MyFixtureService.php
     namespace App\Service;
@@ -239,7 +239,8 @@ constructor arguments instead of the class::
             private LoggerInterface $fixtureLogger,
             #[WithMonologChannel('doctrine')]
             private LoggerInterface $databaseLogger,
-            // arguments without the attribute keep using the default logger
+            // arguments without the attribute get the logger of the channel
+            // defined on the class (if any) or the default logger
             private LoggerInterface $logger,
         ) {
         }
@@ -247,8 +248,8 @@ constructor arguments instead of the class::
 
 .. versionadded:: 4.1
 
-    Support for using the ``#[WithMonologChannel]`` attribute on constructor
-    arguments was introduced in MonologBundle 4.1.
+    Using the ``#[WithMonologChannel]`` attribute on constructor arguments
+    was introduced in MonologBundle 4.1.
 
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle
 .. _`Monolog`: https://github.com/Seldaek/monolog
