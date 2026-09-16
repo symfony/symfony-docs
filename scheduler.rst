@@ -458,23 +458,10 @@ be used. Also, by default, the ``__invoke`` method of your service will be calle
 but, it's also possible to specify the method to call via the ``method`` option
 and you can define arguments via ``arguments`` option if necessary.
 
-Both attributes also accept an ``env`` option to only schedule the task in some
-:ref:`environments <configuration-environments>`. When it's not set, the task is
-scheduled in all of them::
-
-    // only scheduled in the "prod" environment
-    #[AsCronTask('0 0 * * *', env: 'prod')]
-    class SendDailySalesReports
-    {
-        // ...
-    }
-
-    // scheduled in both the "prod" and "staging" environments
-    #[AsPeriodicTask(frequency: '1 hour', env: ['prod', 'staging'])]
-    class SendHourlyStockReports
-    {
-        // ...
-    }
+By default, tasks are scheduled in all
+:ref:`configuration environments <configuration-environments>`. Use the ``env``
+option to schedule them only in some environments (e.g. to not send reports
+while developing the application).
 
 .. versionadded:: 8.2
 
@@ -516,7 +503,8 @@ The attribute takes more parameters to customize the trigger::
     // it in the scheduler worker (see "Efficient Management With Symfony Scheduler")
     #[AsCronTask('0 0 * * *', transports: 'async')]
 
-    // restricts the task to the given environment(s)
+    // schedules the task only in the given environment(s); pass an array
+    // of environment names to schedule it in several environments
     #[AsCronTask('0 0 * * *', env: 'prod')]
 
     // when applying this attribute to a Symfony console command, you can pass
@@ -563,7 +551,7 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
     // it in the scheduler worker (see "Efficient Management With Symfony Scheduler")
     #[AsPeriodicTask(frequency: '1 day', transports: 'async')]
 
-    // restricts the task to the given environment(s)
+    // schedules the task only in the given environment(s)
     #[AsPeriodicTask(frequency: '1 day', env: ['prod', 'staging'])]
 
     // defines the method name to call instead as well as the arguments to pass to it
