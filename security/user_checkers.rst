@@ -55,22 +55,18 @@ displayed to the user::
 
 .. warning::
 
-    Symfony calls user checkers on every authentication, not once per user. It
-    calls them again each time a "remember me" cookie re-authenticates someone,
-    on whatever URL they come back to, and it calls ``checkPostAuth()`` again on
-    every :doc:`impersonation </security/impersonating_user>`. Write your
-    checkers so they hold in all of those cases: keep them cheap and free of
-    side effects, and do not assume that the request is a login request.
+    Symfony calls user checkers on every authentication, not only when users
+    submit a login form. This includes every time a "remember me" cookie
+    authenticates a user (on any URL of the application) and every request to a
+    :ref:`stateless firewall <reference-security-stateless>`. Symfony also calls
+    ``checkPostAuth()`` every time someone
+    :doc:`impersonates a user </security/impersonating_user>`. Keep user
+    checkers fast, don't use them to change the application state and don't
+    assume that the current request is a login request.
 
-    To record something when a user logs in, such as a last-login date, listen
-    to the :class:`Symfony\\Component\\Security\\Http\\Event\\LoginSuccessEvent`
-    event rather than writing to the database from a checker: a checker cannot
-    tell a login from an impersonation. Listen to
-    :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
-    instead to leave out "remember me" re-authentications. Throw an
-    ``AccountStatusException`` to reject the user. The firewall handles any
-    ``AuthenticationException`` the same way, but it does not catch anything
-    else, so another exception becomes a 500 response.
+    For example, to store the last login date of users, listen to the
+    :class:`Symfony\\Component\\Security\\Http\\Event\\LoginSuccessEvent`
+    instead, which Symfony doesn't dispatch when impersonating users.
 
 Enabling the Custom User Checker
 --------------------------------
