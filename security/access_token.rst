@@ -581,7 +581,7 @@ it, and retrieves the user information from it. Optionally, the token can be enc
 value (the comparison is case-insensitive). For encrypted tokens, the handler
 checks the header of the signed token after decrypting it.
 
-This check prevents token substitution attacks. If your API and your login
+This check prevents "cross-JWT confusion" attacks. If your API and your login
 application use the same client on the OpenID Connect provider, the ID tokens
 are signed by an allowed issuer and include your ``audience`` in their ``aud``
 claim. Without this check, the handler accepts those ID tokens as access tokens.
