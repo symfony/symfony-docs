@@ -27,6 +27,11 @@ the widget from the tree and add it back later. While the widget is
 detached, its own listeners are still called, but
 :ref:`global listeners <tui-global-listeners>` don't receive its events.
 
+.. versionadded:: 8.2
+
+    In Symfony versions prior to 8.2, per-widget listeners were removed
+    when the widget was detached from the tree.
+
 Removing Per-Widget Listeners
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -44,6 +49,10 @@ registered with any of them::
 
     // removes all the listeners of this widget for this event
     $input->off(SubmitEvent::class);
+
+.. versionadded:: 8.2
+
+    The ``off()`` method was introduced in Symfony 8.2.
 
 Listeners are compared in the same way as in
 :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::removeListener`.
