@@ -2924,6 +2924,66 @@ implement :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`.
 Then, your ``isEqualTo()`` method will be called when comparing users instead
 of the core logic.
 
+.. _security-check-refreshed-user-event:
+
+Adding Checks to the User Comparison
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to keep the core comparison and also log out users for other
+reasons (e.g. an administrator disabled their account during the session),
+listen to the
+:class:`Symfony\\Component\\Security\\Http\\Event\\CheckRefreshedUserEvent`
+instead of implementing ``EquatableInterface``. Symfony dispatches this event
+after refreshing the user from the session, which happens on every request of
+a stateful firewall, so keep its listeners fast and free of side effects. The
+event contains the result of the core comparison (or of your ``isEqualTo()``
+method) and listeners can change it::
+
+    // src/EventListener/DisabledUserListener.php
+    namespace App\EventListener;
+
+    use App\Entity\User;
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\Security\Core\Exception\DisabledException;
+    use Symfony\Component\Security\Http\Event\CheckRefreshedUserEvent;
+
+    final class DisabledUserListener
+    {
+        #[AsEventListener]
+        public function onCheckRefreshedUser(CheckRefreshedUserEvent $event): void
+        {
+            $user = $event->getRefreshedUser();
+
+            if ($user instanceof User && !$user->isEnabled()) {
+                // the optional exception explains why the user was logged out
+                $event->setUserChanged(true, new DisabledException());
+            }
+        }
+    }
+
+The event provides the security token (``getToken()``), the user stored in the
+session (``getOriginalUser()``) and the user returned by the user provider
+(``getRefreshedUser()``). Calling ``setUserChanged(true)`` logs the user out,
+while ``setUserChanged(false)`` keeps the user logged in and discards any
+exception set before, even if the core comparison or a previous listener
+decided otherwise.
+
+The exception passed to ``setUserChanged()`` is available in the
+``getException()`` method of the
+:class:`Symfony\\Component\\Security\\Http\\Event\\TokenDeauthenticatedEvent`.
+For example, a listener of that event can store the exception in the session
+to display it later on the login page.
+
+The listener of the example above runs for all firewalls. To run it only for
+one firewall, register it on the
+:ref:`firewall event dispatcher <security-security-events>` (e.g.
+``#[AsEventListener(dispatcher: 'security.event_dispatcher.main')]``).
+
+.. versionadded:: 8.2
+
+    The ``CheckRefreshedUserEvent`` and the ``getException()`` method of
+    ``TokenDeauthenticatedEvent`` were introduced in Symfony 8.2.
+
 .. _security-security-events:
 
 Security Events
@@ -3020,6 +3080,10 @@ Other Events
 :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
     Dispatched just before a user logs out of your application. See
     :ref:`security-logging-out`.
+
+:class:`Symfony\\Component\\Security\\Http\\Event\\CheckRefreshedUserEvent`
+    Dispatched after refreshing the user from the session, to decide whether
+    it must be deauthenticated. See :ref:`security-check-refreshed-user-event`.
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\TokenDeauthenticatedEvent`
     Dispatched when a user is deauthenticated, for instance because the
