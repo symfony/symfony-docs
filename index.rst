@@ -6,11 +6,7 @@ Symfony Documentation
 Quick Tour
 ----------
 
-Get started fast with the Symfony :doc:`Quick Tour </quick_tour/index>`:
-
-* :doc:`/quick_tour/the_big_picture`
-* :doc:`/quick_tour/flex_recipes`
-* :doc:`/quick_tour/the_architecture`
+Get started fast with the `Symfony Quick Tour`_.
 
 Getting Started
 ---------------
@@ -97,3 +93,5 @@ Want to create your own framework based on Symfony?
    :maxdepth: 2
 
    create_framework/index
+
+.. _`Symfony Quick Tour`: https://symfony.com/tour
