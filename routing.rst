@@ -1724,34 +1724,10 @@ existing ones using the ``and`` operator:
 If an import defines both options, Symfony first replaces the route conditions
 with ``condition`` and then combines the result with ``add_condition``.
 
-When using the PHP routing configurator, call the ``addCondition()`` method
-instead (the ``Route`` and ``RouteCollection`` classes also define it)::
-
-    // config/routes.php
-    use App\Controller\AdminController;
-    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-
-    return function (RoutingConfigurator $routes): void {
-        $routes->import('../src/Controller/', 'attribute')
-            // if you also call condition(), call it before addCondition();
-            // otherwise, it replaces the condition added here
-            ->addCondition('request.isSecure()');
-
-        $routes->collection('admin_')
-            // this only applies to the routes added after this call
-            ->addCondition('request.isSecure()')
-            ->add('dashboard', '/admin')
-                ->controller([AdminController::class, 'dashboard'])
-                // the condition of this route is:
-                // "(request.isSecure()) and (context.getMethod() == 'GET')"
-                ->addCondition("context.getMethod() == 'GET'")
-        ;
-    };
-
 .. versionadded:: 8.2
 
-    The ``add_condition`` option and the ``addCondition()`` method were
-    introduced in Symfony 8.2.
+    The ``add_condition`` option (and the ``addCondition()`` method of the PHP
+    routing configurator) were introduced in Symfony 8.2.
 
 .. seealso::
 
