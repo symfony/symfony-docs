@@ -995,29 +995,10 @@ implementing the interface:
     versions, pass a static method callable in the form
     ``[SomeClass::class, 'someMethod']`` instead::
 
-        // src/Model/ReportItemInterface.php
-        namespace App\Model;
-
-        use Symfony\Component\DependencyInjection\Attribute\AutoconfigureResourceTag;
-
         #[AutoconfigureResourceTag('app.report_item', [self::class, 'getTagAttributes'])]
         interface ReportItemInterface
         {
-            /**
-             * @return array<string, mixed>
-             */
-            public static function getTagAttributes(): array;
-        }
-
-        // src/Model/Invoice.php
-        namespace App\Model;
-
-        class Invoice implements ReportItemInterface
-        {
-            public static function getTagAttributes(): array
-            {
-                return ['type' => 'invoice'];
-            }
+            // ...
         }
 
 .. _service-tags-resource-tags-class-map:
