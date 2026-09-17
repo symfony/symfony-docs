@@ -496,6 +496,24 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
         // ...
     }
 
+.. deprecated:: 8.1
+
+    Relying solely on the argument name (e.g. ``$customThingCache``) to
+    autowire a custom pool is deprecated since Symfony 8.1. Always use the
+    ``#[Target]`` attribute to select a named autowiring alias, as shown
+    below. This behavior will be removed in Symfony 9.0.
+
+.. code-block:: diff
+
+    use Symfony\Contracts\Cache\CacheInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+
+    public function __construct(
+    -    private CacheInterface $customThingCache
+    +    #[Target('custom_thing.cache')] private CacheInterface $customPool
+    ) {
+    }
+
 When using the component in any PHP application, pools are namespaced with the
 first constructor argument of the adapters, which also allow configuring the
 default lifetime of the items::
