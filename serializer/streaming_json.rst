@@ -908,20 +908,17 @@ metadata loaders requires a deep understanding of the internals.
 For most use cases, attribute-based configuration is sufficient. Reserve
 dynamic loaders for advanced scenarios.
 
-Separating the Generated Code of Several Shapes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using Several Shapes for the Same Type
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 8.2
+JsonStreamer generates the code that reads or writes a type once and stores
+it in a cache file named after that type. Property metadata loaders only run
+while this code is generated, so if your loader returns a different shape
+depending on an option, all shapes share the same cache file and every later
+call reuses the code generated for the first shape.
 
-    The ``cache_variant`` option was introduced in Symfony 8.2.
-
-JsonStreamer compiles the code it generates for a class into a cache file whose
-name derives from that class. Property metadata loaders run while this code is
-generated, so a loader that returns a different shape depending on an option
-produces several payloads for the same class, and each generated file
-overwrites the previous one.
-
-Pass the ``cache_variant`` option to give each shape its own cache file::
+Use the ``cache_variant`` option to store the code of each shape in its own
+cache file::
 
     use App\Dto\Cat;
     use Symfony\Component\TypeInfo\Type;
@@ -929,19 +926,29 @@ Pass the ``cache_variant`` option to give each shape its own cache file::
     // ...
 
     $json = $jsonStreamWriter->write($cat, Type::object(Cat::class), [
-        // read by your own property metadata loader
+        // option read by your own property metadata loader
         'representation' => 'jsonld',
-        // keeps the code generated for that representation in its own file
+        // stores the code generated for this shape in a separate cache file
         'cache_variant' => 'jsonld',
     ]);
 
-JsonStreamer appends the value to the name of the generated file, so
-``<hash>.json.php`` becomes ``<hash>.jsonld.php``. The value must match
-``[a-zA-Z0-9_-]+``.
+    // the stream reader supports the same option
+    $cat = $jsonStreamReader->read($json, Type::object(Cat::class), [
+        'representation' => 'jsonld',
+        'cache_variant' => 'jsonld',
+    ]);
 
-This option doesn't change the output on its own. Two variants of the same
-class generate identical code unless something running at generation time, such
-as your metadata loader, makes them differ.
+The value of this option replaces the default ``json`` suffix of the cache file
+name (e.g. ``<hash>.json.php`` becomes ``<hash>.jsonld.php``), so it can only
+contain letters, numbers, underscores and hyphens.
+
+This option doesn't change the generated code by itself. Always pass it
+together with the options that make your property metadata loader return a
+different shape.
+
+.. versionadded:: 8.2
+
+    The ``cache_variant`` option was introduced in Symfony 8.2.
 
 .. _`DTO classes`: https://en.wikipedia.org/wiki/Data_transfer_object
 .. _ghost objects: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
