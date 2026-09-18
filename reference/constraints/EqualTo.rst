@@ -98,6 +98,8 @@ and that the ``age`` is ``20``, you could do the following:
             }
         }
 
+.. include:: /reference/constraints/_comparison-bcmath-number.rst.inc
+
 Options
 -------
 
