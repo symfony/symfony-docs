@@ -735,6 +735,8 @@ being transferred and processed by its handler::
         }
     }
 
+.. _scheduler-events:
+
 Scheduler Events
 ~~~~~~~~~~~~~~~~
 
@@ -1112,6 +1114,84 @@ option or in its ``#[AsMessage]`` attribute::
 When using the ``RedispatchMessage``, Symfony will attach a
 :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
+
+.. _scheduler-messenger-routing:
+
+Routing Scheduled Messages With Messenger
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the scheduler worker runs scheduled messages itself, even
+when their class is routed to a transport in the
+``framework.messenger.routing`` option or in its ``#[AsMessage]``
+attribute. Set the ``use_messenger_routing`` option to ``true`` to route
+scheduled messages like any other dispatched message:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/scheduler.yaml
+        framework:
+            scheduler:
+                use_messenger_routing: true
+
+    .. code-block:: php
+
+        // config/packages/scheduler.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'scheduler' => [
+                    'use_messenger_routing' => true,
+                ],
+            ],
+        ]);
+
+When this option is enabled, every scheduled message (the ones defined
+with the ``#[AsCronTask]`` and ``#[AsPeriodicTask]`` attributes and the
+ones returned by schedule providers) is wrapped in a
+``RedispatchMessage`` and sent to the senders configured for its class.
+A catch-all ``'*'`` route counts too. Messages whose class has no sender
+configured still run in the scheduler worker, and the ``transports``
+argument of the attributes, as well as the messages that you wrap in a
+``RedispatchMessage`` yourself, keep precedence.
+
+A routed message behaves like any other asynchronous message:
+
+* a ``messenger:consume`` worker must consume its transport, otherwise
+  the message stays in the queue and the task never runs;
+* the :ref:`retry strategy <messenger-retries-failures>` and the failure
+  transport apply to it;
+* the message must be serializable, including all the values passed to
+  its constructor;
+* the ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent``
+  :ref:`scheduler events <scheduler-events>` are dispatched twice: first
+  in the scheduler worker when the message is sent
+  (``PostRunEvent::getResult()`` returns ``null`` then) and again in the
+  worker that handles the message. In both cases, ``getMessage()``
+  returns the scheduled message, not the ``RedispatchMessage`` wrapping
+  it. In the worker that handles the message, the trigger of the message
+  context is a
+  :class:`Symfony\\Component\\Scheduler\\Trigger\\SerializedTrigger`,
+  which only holds the description of the original trigger and can't
+  compute the next run date.
+
+To keep running a task in the scheduler worker, route its class to a
+transport that uses the ``sync://`` DSN, or pass the name of that
+transport in the ``transports`` argument of its attribute::
+
+    #[AsCronTask('0 0 * * *', transports: 'sync')]
+    class SendDailySalesReports
+    {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``use_messenger_routing`` option was introduced in Symfony 8.2.
+    Not setting it is deprecated: its default value will change from
+    ``false`` to ``true`` in Symfony 9.0.
 
 .. _`Deploying to Production`: https://symfony.com/doc/current/messenger.html#deploying-to-production
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
