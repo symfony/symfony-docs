@@ -526,6 +526,11 @@ lose the lock it acquired automatically::
     method is used to check if the lock has been acquired by the **current
     process** only.
 
+Only the owner can release a lock. Calling ``release()`` on a ``Lock`` instance
+that doesn't own the lock does nothing and throws no exception. To release a
+lock from another process, pass that process the ``Key`` of the lock, as
+explained in :ref:`lock-serializing-locks`.
+
 .. _lock-owner-technical-details:
 
 .. note::
@@ -535,6 +540,8 @@ lose the lock it acquired automatically::
     internal and you will likely only be working with the ``Lock`` instance,
     so it's easier to think of the ``Lock`` instance as being the one that is
     the owner of the lock.
+
+.. _lock-serializing-locks:
 
 Serializing Locks
 -----------------
