@@ -1007,6 +1007,76 @@ subscribers. Then, wrap it with the immutable dispatcher::
 If your code tries to call any of the methods that modify the immutable
 dispatcher (e.g. ``addListener()``), a ``BadMethodCallException`` is thrown.
 
+.. _event-dispatcher-scoped-dispatcher:
+
+The Scoped Event Dispatcher
+---------------------------
+
+The event dispatcher of a Symfony application is shared by all services,
+so its listeners must not be added or removed at runtime. When some
+listeners must only run during a limited scope (e.g. the execution of a
+console command), wrap the event dispatcher with the
+:class:`Symfony\\Component\\EventDispatcher\\ScopedEventDispatcher` and add
+the listeners to it::
+
+    // src/Command/ImportOrdersCommand.php
+    namespace App\Command;
+
+    use App\Event\OrderImportedEvent;
+    use App\Order\OrderImporter;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+    use Symfony\Component\EventDispatcher\ScopedEventDispatcher;
+    use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+    use Symfony\Contracts\EventDispatcher\ListenerIntrospectionInterface;
+
+    #[AsCommand('app:import-orders')]
+    class ImportOrdersCommand
+    {
+        public function __construct(
+            private EventDispatcherInterface&ListenerIntrospectionInterface $eventDispatcher,
+            private OrderImporter $orderImporter,
+        ) {
+        }
+
+        public function __invoke(SymfonyStyle $io): int
+        {
+            $dispatcher = new ScopedEventDispatcher($this->eventDispatcher);
+            $dispatcher->addListener(
+                OrderImportedEvent::class,
+                function (OrderImportedEvent $event) use ($io): void {
+                    $io->writeln('Imported order '.$event->getOrderReference());
+                }
+            );
+
+            // the importer dispatches its events through the scoped dispatcher
+            $this->orderImporter->import($dispatcher);
+
+            return Command::SUCCESS;
+        }
+    }
+
+When an event is dispatched through the scoped dispatcher, the listeners
+of the wrapped dispatcher and the ones added to the scoped dispatcher are
+called, sorted by priority as if all of them were registered on the same
+dispatcher. The wrapped dispatcher isn't modified, so the rest of the
+application doesn't call the added listeners.
+
+In functional tests, instead of adding a listener to the
+``event_dispatcher`` service to observe some event, register a listener
+service in the container of the test environment.
+
+.. versionadded:: 8.2
+
+    The ``ScopedEventDispatcher`` was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    Calling ``addListener()``, ``addSubscriber()``, ``removeListener()``
+    and ``removeSubscriber()`` on the ``event_dispatcher`` service was
+    deprecated in Symfony 8.2.
+
 .. _event-dispatcher-before-after-filters:
 
 How to Set Up Before and After Filters
