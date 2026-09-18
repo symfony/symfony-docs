@@ -213,5 +213,4 @@ each constructor argument instead of the class::
     Using the ``#[WithMonologChannel]`` attribute on constructor arguments
     was introduced in MonologBundle 4.1.
 
-.. _`MonologBundle`: https://github.com/symfony/monolog-bundle
 .. _`Monolog`: https://github.com/Seldaek/monolog
