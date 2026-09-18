@@ -99,9 +99,9 @@ applications, create the dispatcher yourself:
     When injecting the event dispatcher, type-hint one of its interfaces
     instead of the concrete ``EventDispatcher`` class. Use
     :class:`Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface`
-    when you only need to dispatch events, or
-    :class:`Symfony\\Component\\EventDispatcher\\EventDispatcherInterface`
-    if you also need to :ref:`inspect or manage listeners <event-dispatcher-inspecting-listeners>`.
+    to dispatch events and
+    :class:`Symfony\\Contracts\\EventDispatcher\\ListenerIntrospectionInterface`
+    to :ref:`inspect listeners <event-dispatcher-inspecting-listeners>`.
 
 .. note::
 
@@ -746,9 +746,8 @@ inside a listener)::
 Inspecting and Removing Listeners
 ---------------------------------
 
-The :class:`Symfony\\Component\\EventDispatcher\\EventDispatcherInterface`
-defines some methods to get information about the registered listeners and to
-remove them::
+The event dispatcher provides methods to get information about the registered
+listeners and to remove them::
 
     use App\Event\OrderPlacedEvent;
 
@@ -769,10 +768,46 @@ remove them::
     $dispatcher->removeListener(OrderPlacedEvent::class, $listener);
     $dispatcher->removeSubscriber($subscriber);
 
-These methods are defined in the component interface but not in the
-:class:`Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface`. In
-Symfony applications, type-hint your service argument with the component
-interface to use these methods.
+The ``hasListeners()``, ``getListeners()`` and ``getListenerPriority()``
+methods come from
+:class:`Symfony\\Contracts\\EventDispatcher\\ListenerIntrospectionInterface`,
+while ``removeListener()`` and ``removeSubscriber()`` come from
+:class:`Symfony\\Component\\EventDispatcher\\EventDispatcherInterface`,
+which extends it. When a service only reads the registered listeners,
+type-hint its argument with ``ListenerIntrospectionInterface``, which
+Symfony autowires to the ``event_dispatcher`` service::
+
+    // src/Service/ListenerReport.php
+    namespace App\Service;
+
+    use Symfony\Contracts\EventDispatcher\ListenerIntrospectionInterface;
+
+    class ListenerReport
+    {
+        public function __construct(
+            private ListenerIntrospectionInterface $dispatcher,
+        ) {
+        }
+
+        public function countListeners(string $eventName): int
+        {
+            return \count($this->dispatcher->getListeners($eventName));
+        }
+    }
+
+If a service needs to both dispatch events and read listeners, type-hint its
+argument with ``EventDispatcherInterface&ListenerIntrospectionInterface``
+(both from the ``Symfony\Contracts\EventDispatcher`` namespace). Symfony
+autowires this intersection type too.
+
+.. versionadded:: 8.2
+
+    The ``ListenerIntrospectionInterface`` was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    The ``Symfony\Component\EventDispatcher\EventDispatcherInterface``
+    autowiring alias was deprecated in Symfony 8.2.
 
 Event Aliases
 -------------
