@@ -21,6 +21,65 @@ Field Options
 
 .. include:: /reference/forms/types/options/action.rst.inc
 
+.. _form-option-allow-array-submission:
+
+``allow_array_submission``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.2
+
+    The ``allow_array_submission`` option was introduced in Symfony 8.2.
+
+By default, a field that is neither compound nor ``multiple`` rejects
+submitted arrays before dispatching the ``PRE_SUBMIT`` event: the form
+replaces the data with ``null``, marks itself as not synchronized and
+never calls the listeners.
+
+Enable this option to defer that check until after ``PRE_SUBMIT``, so
+listeners get a chance to turn the array into data the field accepts.
+This is useful when the client sends a JSON payload where a field holds
+an object or a list instead of a single value::
+
+    use Symfony\Component\Form\Extension\Core\Type\ColorType;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
+    // ...
+
+    $builder
+        ->add('brandColor', ColorType::class, [
+            'html5' => true,
+            'allow_array_submission' => true,
+        ])
+        ->get('brandColor')
+        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            // the client submits {"brandColor": {"hex": "#ff0000"}}
+            $event->setData($event->getData()['hex']);
+        }, 512);
+
+Give your listener a priority higher than the listeners registered by
+the form type itself, so that it runs first. Most core types register
+theirs at priority ``0``, but ``ChoiceType`` uses ``256``.
+
+If the data is still an array once every listener has run, the form
+reports the same transformation failure as before:
+``Submitted data was expected to be text or number, array given.`` A
+listener may also replace the array with an uploaded file, which the
+field accepts when the ``allow_file_upload`` option, also defined by
+``FormType``, is ``true``. Otherwise the form reports this failure:
+``Submitted data was expected to be text or number, file upload given.``
+
+.. warning::
+
+    Enabling this option means that every ``PRE_SUBMIT`` listener
+    attached to that field can receive an array controlled by the
+    client. Check the type of the submitted data in your own listeners
+    before using it. The listeners of the built-in form types do check
+    it, but some of them, such as the one of ``ChoiceType``, reject
+    arrays themselves, which is another reason to run your listener
+    before them.
+
 .. _form-option-allow-extra-fields:
 
 ``allow_extra_fields``
