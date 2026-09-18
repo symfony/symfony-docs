@@ -223,6 +223,8 @@ By default, if a property exists in the source but not in the target, it is
 ignored. If a property exists in both and no ``#[Map]`` is defined, the mapper
 assumes a direct mapping when names match.
 
+.. _object_mapper-condition-services:
+
 Conditional Mapping with Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -553,6 +555,8 @@ You can use that method to format a property when mapping it::
     .. versionadded:: 8.1
 
         The ``NoSuchCallableException`` was introduced in Symfony 8.1.
+
+.. _object_mapper-transformer-services:
 
 Using Transformer Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1375,6 +1379,43 @@ Finally, use your custom mapper service::
 
 This approach keeps mapping logic centralized within dedicated services, which can
 be beneficial for complex applications or when adhering to specific architectural patterns.
+
+Caching the Mapping Metadata
+----------------------------
+
+Part of the work done by ``map()`` only depends on the source and target
+classes: which properties to visit, which ``#[Map]`` attributes apply,
+the resolved property names, how each property can be read and written,
+etc. The object mapper computes these facts once per pair of classes and
+reuses them in the next calls, which makes mapping faster when mapping
+several objects of the same classes, e.g. in Messenger workers.
+
+When the debug mode is disabled (e.g. in the ``prod`` environment), this
+metadata is also persisted. During the ``cache:warmup`` command, Symfony
+computes the metadata of every pair of classes declared with a
+class-level ``#[Map]`` attribute (the same pairs used for the automatic
+class map) and dumps it to the ``object_mapper.php`` file of the build
+directory, so the first ``map()`` call of each pair doesn't need to read
+the attributes of the classes. The metadata of the other pairs is stored
+in the ``cache.object_mapper`` pool (based on ``cache.system``) the
+first time they are mapped.
+
+Some pairs are skipped at warmup and resolved at runtime instead: pairs
+involving abstract, interface or other non-instantiable classes, and
+pairs whose ``if`` or ``transform`` options use a closure, which can't
+be exported to a PHP file. Prefer
+:ref:`condition services <object_mapper-condition-services>` and
+:ref:`transformer services <object_mapper-transformer-services>` over
+closures to benefit from the warmed cache.
+
+In debug mode, the metadata is only kept in memory for the current
+process: it's neither warmed nor stored in a cache pool, because it
+couldn't be invalidated when you change the ``#[Map]`` attributes of
+your classes.
+
+.. versionadded:: 8.2
+
+    The caching of the mapping metadata was introduced in Symfony 8.2.
 
 Advanced Configuration
 ----------------------
