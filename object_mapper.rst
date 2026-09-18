@@ -1376,6 +1376,38 @@ Finally, use your custom mapper service::
 This approach keeps mapping logic centralized within dedicated services, which can
 be beneficial for complex applications or when adhering to specific architectural patterns.
 
+Caching the Mapping Metadata
+----------------------------
+
+Most of the work done by ``map()`` only depends on the source and target
+classes: which properties to visit, which ``#[Map]`` attributes apply,
+the resolved property names, how each property can be read and written,
+etc. The object mapper computes these facts once per pair of classes and
+reuses them in the next calls, which makes mapping faster in
+long-running processes such as Messenger workers.
+
+When the debug mode is disabled (e.g. in the ``prod`` environment), this
+metadata is also stored in the ``cache.system`` pool. During the
+``cache:warmup`` command, Symfony computes the metadata of every pair of
+classes declared with a class-level ``#[Map]`` attribute and dumps it to
+the ``object_mapper.php`` file of the build directory, so the first
+``map()`` call of each pair doesn't need to read the attributes of the
+classes.
+
+Some pairs are skipped at warmup and resolved at runtime instead: pairs
+involving abstract classes or interfaces, and pairs whose ``if`` or
+``transform`` options use a closure, which can't be exported to a PHP
+file. Prefer `Conditional Mapping with Services`_ and
+`Using Transformer Services`_ over closures to benefit from the warmed
+cache.
+
+In debug mode, the metadata is not cached because the ``#[Map]``
+attributes are read from your classes and can change at any time.
+
+.. versionadded:: 8.2
+
+    The caching of the mapping metadata was introduced in Symfony 8.2.
+
 Advanced Configuration
 ----------------------
 
