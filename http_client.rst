@@ -731,6 +731,52 @@ method::
         'https://example.com/b/',
     ]]);
 
+In Symfony applications, define those fallback URIs in the
+:ref:`retry_failed.base_uris <reference-http-client-retry-base-uris>` option of
+a scoped client:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    my_api.client:
+                        # the first request uses this base URI
+                        base_uri: 'https://example.com/a/'
+                        retry_failed:
+                            # retries use these base URIs, in order
+                            base_uris:
+                                - 'https://example.com/b/'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'my_api.client' => [
+                            // the first request uses this base URI
+                            'base_uri' => 'https://example.com/a/',
+                            'retry_failed' => [
+                                // retries use these base URIs, in order
+                                'base_uris' => ['https://example.com/b/'],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``retry_failed.base_uris`` option was introduced in Symfony 8.2.
+
 HTTP Proxies
 ~~~~~~~~~~~~
 
