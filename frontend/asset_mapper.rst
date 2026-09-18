@@ -1084,7 +1084,7 @@ This will write all your versioned asset files into the ``public/assets/`` direc
 along with a few JSON files (``manifest.json``, ``importmap.json``, etc.) so that
 the ``importmap`` can be rendered lightning fast. These JSON files are only
 read by PHP; use the :ref:`metadata_dir <asset-mapper-metadata-dir>` option
-to write them outside of the public directory.
+to write them outside the public directory.
 
 .. warning::
 
@@ -1616,15 +1616,17 @@ them to another directory with this option:
         asset_mapper:
             metadata_dir: '%kernel.project_dir%/var/assets'
 
-The versioned asset files are still written to the public assets directory.
+The versioned asset files are still written to the public assets
+directory. If you compiled your assets before setting this option, remove
+the old JSON files from the public assets directory.
 
 .. warning::
 
     Don't use a directory managed by the ``cache:clear`` command, such as
     ``%kernel.cache_dir%``, ``%kernel.build_dir%`` or ``%kernel.share_dir%``
-    (unless ``APP_SHARE_DIR`` is set). Clearing the cache would remove the
-    compiled files and AssetMapper would silently compute the import map
-    on every request again.
+    (unless ``APP_SHARE_DIR`` is set). Clearing the cache would remove these
+    metadata files and AssetMapper would silently compute the asset paths
+    and the import map from the source files on every request.
 
 .. _latest asset-mapper recipe: https://github.com/symfony/recipes/tree/main/symfony/asset-mapper
 .. _import statement: https://caniuse.com/es6-module-dynamic-import
