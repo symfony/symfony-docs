@@ -89,8 +89,10 @@ allowed::
 
 Defines which `audio container formats`_ are allowed, using the format
 names reported by ``ffprobe`` (e.g. ``mp3``, ``ogg``, ``wav``, ``flac``,
-``mp4``). The comparison is case-insensitive. By default, all containers
-are allowed::
+``mp4``). The comparison is case-insensitive. When ``ffprobe`` reports
+several names for a format (e.g. ``mov,mp4,m4a`` for an M4A file), the
+file is valid if any of them is allowed. By default, all containers are
+allowed::
 
     // src/Entity/PodcastEpisode.php
     namespace App\Entity;
@@ -153,7 +155,7 @@ a description of this option.
 **type**: ``integer``
 
 If set, the bitrate of the audio file must be greater than or equal to
-this value in bits per second.
+this value in bits per second. It can't be negative.
 
 ``minChannels``
 ~~~~~~~~~~~~~~~
@@ -161,7 +163,8 @@ this value in bits per second.
 **type**: ``integer``
 
 If set, the number of channels of the audio file must be greater than or
-equal to this value (e.g. ``2`` to only allow stereo files).
+equal to this value (e.g. ``2`` to only allow stereo files). It can't be
+negative.
 
 ``minDuration``
 ~~~~~~~~~~~~~~~
@@ -169,7 +172,7 @@ equal to this value (e.g. ``2`` to only allow stereo files).
 **type**: ``integer`` | ``float``
 
 If set, the duration of the audio file must be greater than or equal to
-this value in seconds.
+this value in seconds. It can't be negative.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
@@ -282,7 +285,7 @@ The message displayed if the file contains more than one audio stream.
 **type**: ``string`` **default**: ``The file does not contain any audio stream.``
 
 The message displayed if the file doesn't contain any audio stream (e.g.
-a video file without a sound track, when ``mimeTypes`` allows video
+a video file without a soundtrack, when ``mimeTypes`` allows video
 files).
 
 ``sampleRateNotDetectedMessage``
