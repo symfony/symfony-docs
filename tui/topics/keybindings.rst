@@ -113,6 +113,7 @@ Action                      Meaning
 ``select_confirm``          Confirm selection
 ``select_page_up``          Page up in a list
 ``select_page_down``        Page down in a list
+``choice_toggle``           Toggle the highlighted item in a list
 ==========================  ==========================================
 
 macOS: Option Key as Alt/Meta
