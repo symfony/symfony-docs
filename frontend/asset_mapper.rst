@@ -1082,7 +1082,9 @@ When you're ready to deploy, "compile" your assets by running this command:
 
 This will write all your versioned asset files into the ``public/assets/`` directory,
 along with a few JSON files (``manifest.json``, ``importmap.json``, etc.) so that
-the ``importmap`` can be rendered lightning fast.
+the ``importmap`` can be rendered lightning fast. Only PHP reads those JSON
+files, so you can use the :ref:`metadata_dir <asset-mapper-metadata-dir>`
+option to write them outside the public assets directory.
 
 .. warning::
 
@@ -1592,6 +1594,40 @@ rendered by the ``{{ importmap() }}`` Twig function:
         asset_mapper:
             importmap_script_attributes:
                 crossorigin: 'anonymous'
+
+.. _asset-mapper-metadata-dir:
+
+``framework.asset_mapper.metadata_dir``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``metadata_dir`` option was introduced in Symfony 8.2.
+
+The ``asset-map:compile`` command writes the ``manifest.json``,
+``importmap.json`` and ``entrypoint.*.json`` files to the public assets
+directory (``public/assets/`` by default), where anyone can download them.
+Only PHP reads those files, so you can store them in a directory that isn't
+public:
+
+.. code-block:: yaml
+
+    framework:
+        asset_mapper:
+            metadata_dir: '%kernel.project_dir%/var/assets'
+
+The command still writes the versioned asset files to the public assets
+directory. If you compiled your assets before setting this option, delete the
+old JSON files from the public assets directory, because anyone can still
+download them.
+
+.. warning::
+
+    Don't use a directory that the ``cache:clear`` command removes, such as
+    ``%kernel.cache_dir%`` or ``%kernel.build_dir%``. If those metadata files
+    are removed, AssetMapper computes the asset paths and the import map at
+    runtime. This doesn't show any error, but it slows down every page that
+    renders assets.
 
 .. _latest asset-mapper recipe: https://github.com/symfony/recipes/tree/main/symfony/asset-mapper
 .. _import statement: https://caniuse.com/es6-module-dynamic-import
