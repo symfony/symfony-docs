@@ -111,6 +111,16 @@ applications, create the dispatcher yourself:
     you can use Symfony's dispatcher in any library that expects a PSR-14
     event dispatcher.
 
+.. deprecated:: 8.2
+
+    Autowiring the event dispatcher with the
+    :class:`Symfony\\Component\\EventDispatcher\\EventDispatcherInterface`
+    type is deprecated since Symfony 8.2, because the event dispatcher of
+    the application must not be mutated at runtime. Type-hint
+    :class:`Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface`
+    instead. If a service needs to read the registered listeners (e.g. a
+    debugging tool), inject the ``event_dispatcher`` service explicitly.
+
 Creating an Event Listener
 --------------------------
 
