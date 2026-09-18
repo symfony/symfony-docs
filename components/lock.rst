@@ -65,6 +65,8 @@ method can be safely called repeatedly, even if the lock is already acquired.
     across several requests. To disable the automatic release behavior, set the
     third argument of the ``createLock()`` method to ``false``.
 
+.. _lock-serializing-locks:
+
 Serializing Locks
 -----------------
 
@@ -365,6 +367,11 @@ lose the lock it acquired automatically::
     a lock has already been acquired by any process. As you can see in this example
     you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
     if the lock has been acquired by the **current process** only.
+
+Only the owner can release a lock. Calling ``release()`` on a ``Lock`` instance
+that doesn't own the lock does nothing and throws no exception. To release a
+lock from another process, pass that process the ``Key`` of the lock, as
+explained in :ref:`lock-serializing-locks`.
 
 .. _lock-owner-technical-details:
 
