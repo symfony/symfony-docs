@@ -1120,6 +1120,10 @@ helping you identify those messages when needed.
 Routing Scheduled Messages With Messenger
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 8.2
+
+    The ``use_messenger_routing`` option was introduced in Symfony 8.2.
+
 By default, the scheduler worker runs scheduled messages itself, even
 when their class is routed to a transport in the
 ``framework.messenger.routing`` option or in its ``#[AsMessage]``
@@ -1148,14 +1152,26 @@ scheduled messages like any other dispatched message:
             ],
         ]);
 
-When this option is enabled, every scheduled message (the ones defined
-with the ``#[AsCronTask]`` and ``#[AsPeriodicTask]`` attributes and the
-ones returned by schedule providers) is wrapped in a
+.. deprecated:: 8.2
+
+    Not setting the ``use_messenger_routing`` option is deprecated since
+    Symfony 8.2. Its default value will change to ``true`` in the next
+    major version.
+
+When this option is enabled, every scheduled message is wrapped in a
 ``RedispatchMessage`` and sent to the senders configured for its class.
-A catch-all ``'*'`` route counts too. Messages whose class has no sender
-configured still run in the scheduler worker, and the ``transports``
-argument of the attributes, as well as the messages that you wrap in a
-``RedispatchMessage`` yourself, keep precedence.
+Messages whose class has no sender configured still run in the scheduler
+worker, and the messages that you wrap in a ``RedispatchMessage``
+yourself keep their transports.
+
+Tasks defined with the ``#[AsCronTask]`` and ``#[AsPeriodicTask]``
+attributes are dispatched as a
+:class:`Symfony\\Component\\Scheduler\\Messenger\\ServiceCallMessage` (or as a
+:class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage` for
+commands), not as an instance of the class holding the attribute. Only a
+route for those classes or a catch-all ``'*'`` route applies to them,
+and the ``transports`` argument of the attributes takes precedence over
+the routing.
 
 A routed message behaves like any other asynchronous message:
 
@@ -1177,21 +1193,18 @@ A routed message behaves like any other asynchronous message:
   which only holds the description of the original trigger and can't
   compute the next run date.
 
-To keep running a task in the scheduler worker, route its class to a
-transport that uses the ``sync://`` DSN, or pass the name of that
-transport in the ``transports`` argument of its attribute::
+To keep running a task in the scheduler worker, send it to a transport
+that uses the ``sync://`` DSN (e.g. a transport named ``sync`` defined
+as ``sync: 'sync://'`` in ``framework.messenger.transports``). For
+messages returned by schedule providers, route their class to that
+transport. For tasks defined with attributes, pass the name of that
+transport in the ``transports`` argument::
 
     #[AsCronTask('0 0 * * *', transports: 'sync')]
     class SendDailySalesReports
     {
         // ...
     }
-
-.. versionadded:: 8.2
-
-    The ``use_messenger_routing`` option was introduced in Symfony 8.2.
-    Not setting it is deprecated: its default value will change from
-    ``false`` to ``true`` in Symfony 9.0.
 
 .. _`Deploying to Production`: https://symfony.com/doc/current/messenger.html#deploying-to-production
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
