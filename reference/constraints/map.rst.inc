@@ -86,6 +86,7 @@ Choice Constraints
 File Constraints
 ~~~~~~~~~~~~~~~~
 
+* :doc:`Audio </reference/constraints/Audio>`
 * :doc:`File </reference/constraints/File>`
 * :doc:`Image </reference/constraints/Image>`
 * :doc:`Video </reference/constraints/Video>`
