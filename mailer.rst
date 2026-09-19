@@ -340,6 +340,27 @@ party provider:
 
 .. note::
 
+    Amazon SES can send on behalf of a `tenant`_. Set the ``tenant`` DSN
+    option to apply it to every message sent through that transport::
+
+        MAILER_DSN=ses+smtp://USERNAME:PASSWORD@default?region=REGION&tenant=TENANT
+
+    A message can override it with the ``X-SES-TENANT`` header, which always
+    takes precedence over the DSN option::
+
+        $email->getHeaders()->addTextHeader('X-SES-TENANT', 'some-tenant');
+
+    Every tenant must have a default configuration set associated with it in
+    the AWS console. That configuration set applies automatically, unless the
+    message carries an ``X-SES-CONFIGURATION-SET`` header to use another one.
+
+    .. versionadded:: 8.2
+
+        The ``tenant`` DSN option and the ``X-SES-TENANT`` header were
+        introduced in Symfony 8.2.
+
+.. note::
+
     ``turbosmtp`` is an alias for ``turbosmtp+smtp``. The DSN user and password
     are the Consumer Key and Consumer Secret from the TurboSMTP dashboard, not
     your account email and password.
@@ -2678,4 +2699,5 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`RFC 5546`: https://www.ietf.org/rfc/rfc5546.txt
 .. _`RFC 6047`: https://www.ietf.org/rfc/rfc6047.txt
 .. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sweego/README.md
+.. _`tenant`: https://docs.aws.amazon.com/ses/latest/dg/tenant-sending.html
 .. _`TurboSMTP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/TurboSmtp/README.md
