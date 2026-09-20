@@ -619,10 +619,18 @@ controller arguments::
 
 In this example, the validation group is resolved from the ``User`` entity.
 The ``args`` variable provides access to all controller arguments by name.
+If SecurityBundle is installed, these expressions can also call the
+:ref:`security functions <security-expression-variables>` such as
+``is_granted()`` and ``current_user()``.
 
 .. versionadded:: 8.1
 
     Support for expressions in ``validationGroups`` was introduced in Symfony 8.1.
+
+.. versionadded:: 8.2
+
+    Support for the security functions in these expressions was introduced in
+    Symfony 8.2.
 
 .. tip::
 
