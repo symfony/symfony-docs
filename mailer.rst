@@ -341,8 +341,11 @@ party provider:
 .. note::
 
     Amazon SES can send on behalf of a `tenant`_. Set the ``tenant`` DSN
-    option to apply it to every message sent through that transport::
+    option to apply it to every message sent through that transport:
 
+    .. code-block:: env
+
+        # .env
         MAILER_DSN=ses+smtp://USERNAME:PASSWORD@default?region=REGION&tenant=TENANT
 
     A message can override it with the ``X-SES-TENANT`` header, which always
