@@ -1295,6 +1295,70 @@ information about how to run commands in tests.
 
     The Console assertions were introduced in Symfony 8.1.
 
+.. _testing-debug-class-loader-deprecations:
+
+Reporting Deprecations Triggered When Loading Classes
+-----------------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``DebugClassLoaderIssueTriggerResolver`` class was introduced in
+    Symfony 8.2.
+
+The :class:`Symfony\\Component\\ErrorHandler\\DebugClassLoader` triggers
+deprecations when your classes are loaded. For example, when they extend a
+class marked as ``@final``, when they override a method without the return
+type that the parent method will add, or when they don't define an argument
+that the parent method will require in the next major version.
+
+PHPUnit can ignore deprecations depending on whether your code or third-party
+code triggers them. However, these deprecations are triggered inside
+``DebugClassLoader``, so PHPUnit can't tell which of your classes caused them.
+PHPUnit considers them indirect deprecations and hides them when using the
+``ignoreIndirectDeprecations`` option, even if you must change your code to
+fix them.
+
+If you use PHPUnit 13.1 or higher, register the issue trigger resolver provided
+by the PHPUnit Bridge to fix this:
+
+.. code-block:: xml
+
+    <!-- phpunit.dist.xml -->
+    <phpunit>
+        <!-- ... -->
+        <!-- ignoreSuppressionOfDeprecations is required because DebugClassLoader
+             triggers deprecations with the @ operator -->
+        <source
+            ignoreIndirectDeprecations="true"
+            ignoreSuppressionOfDeprecations="true"
+        >
+            <!-- PHPUnit uses this to tell your code apart from third-party code -->
+            <include>
+                <directory>src</directory>
+            </include>
+            <issueTriggerResolvers>
+                <issueTriggerResolver
+                    className="Symfony\Bridge\PhpUnit\DebugClassLoaderIssueTriggerResolver"
+                />
+            </issueTriggerResolvers>
+        </source>
+    </phpunit>
+
+This resolver tells PHPUnit that the class being loaded is the one that caused
+the deprecation. Deprecations about code of your dependencies (e.g. extending a
+``@final`` or deprecated class) are reported as **direct deprecations** and
+deprecations about your own class (e.g. a missing argument that the parent
+method will require) are reported as **self deprecations**.
+
+Don't use the ``ignoreDirectDeprecations`` or ``ignoreSelfDeprecations``
+options, because they hide deprecations that require changes in your code.
+
+.. note::
+
+    The ``ignoreSuppressionOfDeprecations`` option also makes PHPUnit report
+    other deprecations silenced with the ``@`` operator. They are still
+    filtered by the other options of the ``<source>`` element.
+
 Learn more
 ----------
 
