@@ -30,7 +30,17 @@ Configuring Permissions for Symfony Applications
 
 On Linux and macOS systems, if your web server user is different from your
 command line user, you need to configure permissions properly to avoid issues.
-There are several ways to achieve that:
+There are several ways to achieve that, listed here from the most to the least
+recommended:
+
+* If your system supports **ACL** (most Linux distributions do), use it (see
+  the first method below). It is the safest one, because the permissions are
+  granted on the ``var/`` directory only;
+* If you control the configuration of your web server or your container, making
+  both sides run as the **same user** removes the problem entirely. This is the
+  default in container-based setups (Docker, FrankenPHP);
+* If ACL is unavailable (e.g. on NFS) **and** you really need two distinct
+  users, fall back to the last method, which relies on a shared group.
 
 1. Using ACL on a System that Supports ``setfacl`` (Linux/BSD)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,40 +77,156 @@ running these commands) and the web server user.
 .. note::
 
     ``setfacl`` isn't available on NFS mount points. However, storing cache and
-    logs over NFS is strongly discouraged for performance reasons.
+    logs over NFS is strongly discouraged for performance reasons. If you
+    can't use ACL, see the next section.
 
 2. Use the same User for the CLI and the Web Server
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+If the same user runs both the commands and the web server, there is no
+permission problem left to solve: every file has a single owner, and no
+inheritance mechanism is needed. This is why container-based setups (Docker,
+FrankenPHP), where a single user runs everything, usually don't need any of the
+other methods.
+
 Edit your web server configuration (commonly ``httpd.conf`` or ``apache2.conf``
 for Apache) and set its user to be the same as your CLI user (e.g. for Apache,
 update the ``User`` and ``Group`` directives).
+
+When using PHP-FPM, set the ``user`` and ``group`` directives of your pool
+configuration. Keep ``listen.owner`` and ``listen.group`` set to the web server
+user, so that it can still reach the socket:
+
+.. code-block:: ini
+
+    ; /etc/php/8.3/fpm/pool.d/www.conf
+    [www]
+    user = deployer
+    group = deployer
+
+    listen.owner = www-data
+    listen.group = www-data
+
+Then give that user the ownership of the ``var/`` directory and restart PHP-FPM:
+
+.. code-block:: terminal
+
+    $ sudo chown -R deployer:deployer var
+    $ sudo systemctl restart php-fpm
 
 .. danger::
 
     If this solution is used in a production server, be sure this user only has
     limited privileges (no access to private data or servers, execution of
     unsafe binaries, etc.) as a compromised server would give those privileges
-    to the hacker.
+    to the hacker. Use a user dedicated to the application, not your personal
+    account.
 
 3. Without Using ACL
 ~~~~~~~~~~~~~~~~~~~~
 
-If none of the previous methods work for you, change the ``umask`` so that the
-cache and log directories are group-writable or world-writable (depending
-if the web server user and the command line user are in the same group or not).
-To achieve this, put the following line at the beginning of the ``bin/console``,
-and ``public/index.php`` files::
+If ACL is not available on your system (e.g. on NFS mount points), you can get
+a similar result using only standard Linux commands. Two variants are possible,
+depending on whether the web server user and your terminal user can share a
+group. Prefer the first one, as the second makes the files world-writable.
 
-    umask(0002); // This will let the permissions be 0775
+Both variants rely on the ``umask``, which defines the permissions of **newly
+created** files. This matters because the problem is not the files that already
+exist, but the thousands of files recreated by every ``cache:clear``. A default
+``umask`` of ``0022`` creates files as ``0644``, i.e. read-only for everyone but
+their owner.
 
-    // or
+Variant A: Using a Shared Group (recommended)
+.............................................
 
-    umask(0000); // This will let the permissions be 0777
+Put both users in a dedicated group, give that group the ownership of ``var/``
+and let new files inherit it. Use the same script as above to determine your
+web server user:
+
+.. code-block:: terminal
+
+    $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx|[c]addy|[f]rankenphp' | grep -v root | head -1 | cut -d\  -f1)
+
+    # create a shared group and put both users in it
+    $ sudo groupadd symfony
+    $ sudo usermod -aG symfony "$HTTPDUSER"
+    $ sudo usermod -aG symfony $(whoami)
+
+    # give that group the ownership of var/
+    $ sudo chgrp -R symfony var
+
+    # make var/ group-writable, and set the setgid bit on directories
+    $ sudo find var -type d -exec chmod 2775 {} \;
+    $ sudo find var -type f -exec chmod 664 {} \;
+
+The ``2`` in ``2775`` is the **setgid bit**, and it is what replaces the
+inheritance provided by ACL. Without it, a new file gets the primary group of
+the user who created it, so files created by the web server would not belong to
+the ``symfony`` group and your terminal user could not write to them. With it,
+every new file and directory inherits the group of its parent directory, which
+keeps permissions correct after each ``cache:clear``.
+
+The setgid bit only propagates the *group*, never the write permission, so you
+must also set a ``umask`` of ``0002`` on both sides:
+
+.. code-block:: terminal
+
+    # for the terminal user, in ~/.bashrc or ~/.zshrc
+    $ umask 0002
+
+    # for PHP-FPM, in a systemd drop-in file (sudo systemctl edit php-fpm)
+    $ [Service]
+    $ UMask=0002
+
+Group membership and ``umask`` are read when the process starts, so restart
+your web server to apply them. Your terminal user must also open a new session
+(log out and log back in) for its new group membership to take effect:
+
+.. code-block:: terminal
+
+    $ sudo systemctl restart php-fpm
+
+Check the result by creating a file as the web server user and making sure your
+terminal user can write to it:
+
+.. code-block:: terminal
+
+    $ sudo -u "$HTTPDUSER" touch var/cache/test
+    $ ls -l var/cache/test
+    $ rm var/cache/test
+
+The file must belong to the ``symfony`` group and be group-writable
+(``-rw-rw-r-- ... symfony``), and the ``rm`` command must succeed.
 
 .. warning::
 
-    Changing the ``umask`` is not thread-safe, so the ACL methods are recommended
-    when they are available.
+    Adding the web server user to a group gives it access to **every** file
+    readable by that group, not only to ``var/``. This is why a dedicated group
+    is used above instead of the personal group of your terminal user. Make sure
+    your home directory is not traversable by the web server user
+    (``chmod 750 ~``). ACL doesn't have this drawback, as permissions are set on
+    ``var/`` only, which is why it remains the recommended method.
+
+Variant B: World-Writable Files
+...............................
+
+If the two users can't share a group (e.g. on a shared host where you can't run
+``usermod``), the only remaining option is to make the files writable by
+everyone. Put the following line at the beginning of the ``bin/console`` and
+``public/index.php`` files::
+
+    umask(0000); // This will let the permissions be 0777
+
+Setting the ``umask`` from PHP also works for variant A, as an alternative to
+configuring it for each process::
+
+    umask(0002); // This will let the permissions be 0775
+
+.. warning::
+
+    Changing the ``umask`` is not thread-safe, so the ACL method is recommended
+    when it is available. A ``umask`` of ``0000`` makes the cache and log files
+    writable by **any** user or process on the machine, so only use it when no
+    other method is possible.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
