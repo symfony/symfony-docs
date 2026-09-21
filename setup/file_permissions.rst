@@ -147,15 +147,17 @@ web server user:
 
     $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx|[c]addy|[f]rankenphp' | grep -v root | head -1 | cut -d\  -f1)
 
-    # create a shared group and put both users in it
+    # a dedicated group, so that the web server user doesn't get access
+    # to everything the terminal user can read
     $ sudo groupadd symfony
     $ sudo usermod -aG symfony "$HTTPDUSER"
     $ sudo usermod -aG symfony $(whoami)
 
-    # give that group the ownership of var/
+    # only var/ is shared, the rest of the project is left untouched
     $ sudo chgrp -R symfony var
 
-    # make var/ group-writable, and set the setgid bit on directories
+    # 2775 on directories: group-writable, and the setgid bit makes new
+    # entries inherit the group instead of the creator's primary group
     $ sudo find var -type d -exec chmod 2775 {} \;
     $ sudo find var -type f -exec chmod 664 {} \;
 
