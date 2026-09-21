@@ -130,7 +130,7 @@ a similar result using only standard Linux commands. Two variants are possible,
 depending on whether the web server user and your terminal user can share a
 group. Prefer the first one, as the second makes the files world-writable.
 
-Both variants rely on the ``umask``, which defines the permissions of **newly
+Both variants rely on the `umask`_, which defines the permissions of **newly
 created** files. This matters because the problem is not the files that already
 exist, but the thousands of files recreated by every ``cache:clear``. A default
 ``umask`` of ``0022`` creates files as ``0644``, i.e. read-only for everyone but
@@ -238,3 +238,4 @@ configuring it for each process::
     other method is possible.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
+.. _`umask`: https://en.wikipedia.org/wiki/Umask
