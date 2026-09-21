@@ -99,7 +99,7 @@ user, so that it can still reach the socket:
 
 .. code-block:: ini
 
-    ; /etc/php/8.3/fpm/pool.d/www.conf
+    ; /etc/php/8.5/fpm/pool.d/www.conf
     [www]
     user = deployer
     group = deployer
@@ -167,16 +167,19 @@ every new file and directory inherits the group of its parent directory, which
 keeps permissions correct after each ``cache:clear``.
 
 The setgid bit only propagates the *group*, never the write permission, so you
-must also set a ``umask`` of ``0002`` on both sides:
+must also set a ``umask`` of ``0002`` on both sides. For the terminal user, add
+this to ``~/.bashrc`` or ``~/.zshrc``:
 
 .. code-block:: terminal
 
-    # for the terminal user, in ~/.bashrc or ~/.zshrc
     $ umask 0002
 
-    # for PHP-FPM, in a systemd drop-in file (sudo systemctl edit php-fpm)
-    $ [Service]
-    $ UMask=0002
+For PHP-FPM, create a systemd drop-in file with ``sudo systemctl edit php-fpm``:
+
+.. code-block:: ini
+
+    [Service]
+    UMask=0002
 
 Group membership and ``umask`` are read when the process starts, so restart
 your web server to apply them. Your terminal user must also open a new session
