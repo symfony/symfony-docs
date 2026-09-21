@@ -265,8 +265,6 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
         }
 
         // key the limit on the authenticated user instead of the client IP
-        // (only in routes that require authentication; elsewhere
-        // current_user() returns null)
         #[RateLimit('per_account', key: new Expression(
             'current_user().getUserIdentifier()'
         ))]
