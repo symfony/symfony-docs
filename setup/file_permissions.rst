@@ -159,7 +159,12 @@ web server user:
     $ sudo find var -type d -exec chmod 2775 {} \;
     $ sudo find var -type f -exec chmod 664 {} \;
 
-The ``2`` in ``2775`` is the **setgid bit**, and it is what replaces the
+In ``2775`` and ``664``, the middle digit is the one that matters: it sets the
+permissions of the **group**, and it must allow writing (``7`` or ``6``). The
+default permissions of ``755`` and ``644`` only grant ``r-x`` and ``r--`` to the
+group, which is precisely why the two users can't write to each other's files.
+
+The leading ``2`` in ``2775`` is the **setgid bit**, and it is what replaces the
 inheritance provided by ACL. Without it, a new file gets the primary group of
 the user who created it, so files created by the web server would not belong to
 the ``symfony`` group and your terminal user could not write to them. With it,
