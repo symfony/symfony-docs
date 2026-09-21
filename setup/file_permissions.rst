@@ -156,22 +156,23 @@ web server user:
     # only var/ is shared, the rest of the project is left untouched
     $ sudo chgrp -R symfony var
 
-    # 2775 on directories: group-writable, and the setgid bit makes new
-    # entries inherit the group instead of the creator's primary group
+    # 2775 = setgid + rwx for the owner + rwx for the group + r-x for the others
+    # the setgid bit (2) makes new entries inherit the group of their parent
+    # directory, instead of the primary group of the user who created them
     $ sudo find var -type d -exec chmod 2775 {} \;
+
+    # 664 = rw- for the owner + rw- for the group + r-- for the others
     $ sudo find var -type f -exec chmod 664 {} \;
 
-In ``2775`` and ``664``, the middle digit is the one that matters: it sets the
-permissions of the **group**, and it must allow writing (``7`` or ``6``). The
-default permissions of ``755`` and ``644`` only grant ``r-x`` and ``r--`` to the
-group, which is precisely why the two users can't write to each other's files.
+The middle digit is the one that solves the problem: it must allow the group to
+write. The default permissions of ``755`` and ``644`` only grant ``r-x`` and
+``r--`` to the group, which is precisely why the two users can't write to each
+other's files.
 
-The leading ``2`` in ``2775`` is the `setgid bit`_, and it is what replaces the
-inheritance provided by ACL. Without it, a new file gets the primary group of
-the user who created it, so files created by the web server would not belong to
-the ``symfony`` group and your terminal user could not write to them. With it,
-every new file and directory inherits the group of its parent directory, which
-keeps permissions correct after each ``cache:clear``.
+The `setgid bit`_ is what replaces the inheritance provided by ACL. Without it,
+files created by the web server would keep its own primary group, and your
+terminal user could not write to them. With it, permissions stay correct after
+each ``cache:clear``.
 
 The setgid bit only propagates the *group*, never the write permission, so you
 must also set a ``umask`` of ``0002`` on both sides. For the terminal user, add
