@@ -221,15 +221,19 @@ Variant B: World-Writable Files
 
 If the two users can't share a group (e.g. on a shared host where you can't run
 ``usermod``), the only remaining option is to make the files writable by
-everyone. Put the following line at the beginning of the ``bin/console`` and
+everyone. Put the following lines at the beginning of the ``bin/console`` and
 ``public/index.php`` files::
 
-    umask(0000); // This will let the permissions be 0777
+    // makes new files writable by everyone, including any other user
+    // or process on the machine: only use it as a last resort
+    umask(0000); // new directories: 0777, new files: 0666
 
 Setting the ``umask`` from PHP also works for variant A, as an alternative to
 configuring it for each process::
 
-    umask(0002); // This will let the permissions be 0775
+    // makes new files writable by the group, so that the other user
+    // can delete the cache files created by the first one
+    umask(0002); // new directories: 0775, new files: 0664
 
 .. warning::
 
