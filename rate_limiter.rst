@@ -264,6 +264,17 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
             // ...
         }
 
+        // key the limit on the authenticated user instead of the client IP
+        // (only in routes that require authentication; elsewhere
+        // current_user() returns null)
+        #[RateLimit('per_account', key: new Expression(
+            'current_user().getUserIdentifier()'
+        ))]
+        public function profile(): Response
+        {
+            // ...
+        }
+
         // specify the number of tokens consumed per request (defaults to 1)
         // (e.g. to take into account more expensive operations)
         #[RateLimit('api', tokens: 5)]
@@ -272,6 +283,15 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
             // ...
         }
     }
+
+When SecurityBundle is installed, the ``key`` expression can call any of the
+:ref:`security functions <security-expression-variables>`, such as
+``current_user()`` in the previous example.
+
+.. versionadded:: 8.2
+
+    Support for the security functions in these expressions was introduced in
+    Symfony 8.2.
 
 .. tip::
 
