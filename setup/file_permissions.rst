@@ -164,7 +164,7 @@ permissions of the **group**, and it must allow writing (``7`` or ``6``). The
 default permissions of ``755`` and ``644`` only grant ``r-x`` and ``r--`` to the
 group, which is precisely why the two users can't write to each other's files.
 
-The leading ``2`` in ``2775`` is the **setgid bit**, and it is what replaces the
+The leading ``2`` in ``2775`` is the `setgid bit`_, and it is what replaces the
 inheritance provided by ACL. Without it, a new file gets the primary group of
 the user who created it, so files created by the web server would not belong to
 the ``symfony`` group and your terminal user could not write to them. With it,
@@ -179,7 +179,8 @@ this to ``~/.bashrc`` or ``~/.zshrc``:
 
     $ umask 0002
 
-For PHP-FPM, create a systemd drop-in file with ``sudo systemctl edit php-fpm``:
+For PHP-FPM, set the `UMask`_ option in a systemd drop-in file created with
+``sudo systemctl edit php-fpm``:
 
 .. code-block:: ini
 
@@ -239,3 +240,5 @@ configuring it for each process::
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`umask`: https://en.wikipedia.org/wiki/Umask
+.. _`setgid bit`: https://en.wikipedia.org/wiki/Setuid#setgid_on_directories
+.. _`UMask`: https://www.freedesktop.org/software/systemd/man/systemd.exec.html#UMask=
