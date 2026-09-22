@@ -597,12 +597,12 @@ path
 
 .. code-block:: twig
 
-    {{ path(route_name, route_parameters = [], relative = false) }}
+    {{ path(name, parameters = {}, relative = false) }}
 
 ``name``
     **type**: ``string``
 ``parameters`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 ``relative`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
@@ -785,12 +785,12 @@ t
 
 .. code-block:: twig
 
-    {{ t(message, parameters = [], domain = 'messages')|trans }}
+    {{ t(message, parameters = {}, domain = 'messages')|trans }}
 
 ``message``
     **type**: ``string``
 ``parameters`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``messages``
 
@@ -838,12 +838,12 @@ url
 
 .. code-block:: twig
 
-    {{ url(route_name, route_parameters = [], schemeRelative = false) }}
+    {{ url(name, parameters = {}, schemeRelative = false) }}
 
 ``name``
     **type**: ``string``
 ``parameters`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 ``schemeRelative`` *(optional)*
     **type**: ``boolean`` **default**: ``false``
 
