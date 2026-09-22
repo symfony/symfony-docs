@@ -460,6 +460,21 @@ and ``removeChild()`` methods to access the ``children`` property.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
 
+To decide which method to call, the component compares the items of the new
+value with the items already stored in the property, using strict comparison
+(``===``). It calls the *remover* for each item that is no longer present,
+calls the *adder* for each item that wasn't there before and keeps the items
+found in both::
+
+    // following the previous example, $person now has 'kevin' and 'wouter'
+    $propertyAccessor->setValue($person, 'children', ['wouter', 'bernhard']);
+    // this calls removeChild('kevin') and addChild('bernhard')
+    // and leaves 'wouter' untouched
+
+Strict comparison means that two objects match only if they are the same
+instance. If the new value includes a copy of an object already stored in the
+property, the component removes the existing instance and adds the copy.
+
 Using non-standard adder/remover methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
