@@ -405,14 +405,13 @@ You can also create more customized pools:
                 default_memcached_provider: 'memcached://localhost'
 
                 pools:
-                    # creates a "custom_thing.cache" service
-                    # autowireable via "CacheInterface $customThingCache"
+                    # creates a "custom_thing.cache" service and a named
+                    # autowiring alias to inject it (see the example below)
                     # uses the "app" cache configuration
                     custom_thing.cache:
                         adapter: cache.app
 
                     # creates a "my_cache_pool" service
-                    # autowireable via "CacheInterface $myCachePool"
                     my_cache_pool:
                         adapter: cache.adapter.filesystem
 
@@ -441,14 +440,13 @@ You can also create more customized pools:
                 'cache' => [
                     'default_memcached_provider' => 'memcached://localhost',
                     'pools' => [
-                        // creates a "custom_thing.cache" service
-                        // autowireable via "CacheInterface $customThingCache"
+                        // creates a "custom_thing.cache" service and a named
+                        // autowiring alias to inject it (see the example below)
                         // uses the "app" cache configuration
                         'custom_thing.cache' => [
                             'adapter' => 'cache.app',
                         ],
                         // creates a "my_cache_pool" service
-                        // autowireable via "CacheInterface $myCachePool"
                         'my_cache_pool' => [
                             'adapter' => 'cache.adapter.filesystem',
                         ],
@@ -479,26 +477,35 @@ of the cache adapter class and a :ref:`configurable seed <reference-cache-prefix
 that defaults to the project directory and compiled container class.
 
 Each custom pool becomes a service whose service ID is the name of the pool
-(e.g. ``custom_thing.cache``). An autowiring alias is also created for each pool
-using the camel case version of its name - e.g. ``custom_thing.cache`` can be
-injected automatically by naming the argument ``$customThingCache`` and type-hinting it
-with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
+(e.g. ``custom_thing.cache``). Each pool also gets a
+:ref:`named autowiring alias <autowiring-alias>`, so you can inject the pool
+with the ``#[Target]`` attribute and a type-hint of either
+:class:`Symfony\\Contracts\\Cache\\CacheInterface` or
 ``Psr\Cache\CacheItemPoolInterface``::
 
+    use Symfony\Component\DependencyInjection\Attribute\Target;
     use Symfony\Contracts\Cache\CacheInterface;
     // ...
 
     // from a controller method
-    public function listProducts(CacheInterface $customThingCache): Response
-    {
+    public function listProducts(
+        #[Target('custom_thing.cache')] CacheInterface $cache,
+    ): Response {
         // ...
     }
 
     // in a service
-    public function __construct(private CacheInterface $customThingCache)
-    {
+    public function __construct(
+        #[Target('custom_thing.cache')] private CacheInterface $cache,
+    ) {
         // ...
     }
+
+.. deprecated:: 8.1
+
+    Injecting a cache pool by naming the argument after the pool (e.g.
+    ``$customThingCache``) instead of using ``#[Target]`` was deprecated in
+    Symfony 8.1.
 
 When using the component in any PHP application, pools are namespaced with the
 first constructor argument of the adapters, which also allow configuring the
@@ -1059,6 +1066,7 @@ method of the cache pool:
 
     .. code-block:: php-symfony
 
+        use Symfony\Component\DependencyInjection\Attribute\Target;
         use Symfony\Contracts\Cache\ItemInterface;
         use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
@@ -1067,29 +1075,29 @@ method of the cache pool:
             // using autowiring to inject the "my_cache_pool" pool
             // defined in the configuration shown below
             public function __construct(
-                private TagAwareCacheInterface $myCachePool,
+                #[Target('my_cache_pool')] private TagAwareCacheInterface $cache,
             ) {
             }
 
             public function someMethod(): void
             {
-                $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item): string {
+                $value0 = $this->cache->get('item_0', function (ItemInterface $item): string {
                     $item->tag(['foo', 'bar']);
 
                     return 'debug';
                 });
 
-                $value1 = $this->myCachePool->get('item_1', function (ItemInterface $item): string {
+                $value1 = $this->cache->get('item_1', function (ItemInterface $item): string {
                     $item->tag('foo');
 
                     return 'debug';
                 });
 
                 // remove all cache keys tagged with "bar"
-                $this->myCachePool->invalidateTags(['bar']);
+                $this->cache->invalidateTags(['bar']);
 
                 // if you know the cache key, you can also delete the item directly
-                $this->myCachePool->delete('item_1');
+                $this->cache->delete('item_1');
             }
         }
 
