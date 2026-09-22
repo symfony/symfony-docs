@@ -280,7 +280,7 @@ path
 
 .. code-block:: twig
 
-    {{ path(route_name, route_parameters = [], relative = false) }}
+    {{ path(name, parameters = [], relative = false) }}
 
 ``name``
     **type**: ``string``
