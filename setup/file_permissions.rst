@@ -229,11 +229,14 @@ Variant B: World-Writable Files
 
 If the two users can't share a group (e.g. on a shared host where you can't run
 ``usermod``), the only remaining option is to make the files writable by
-everyone. Put the following lines at the beginning of the ``bin/console`` and
+everyone. Compared to the ``0002`` used above, a ``umask`` of ``0000`` also
+grants the write permission to the *others*, i.e. to every user and process of
+the machine, and not only to the members of the shared group.
+
+Put the following lines at the beginning of the ``bin/console`` and
 ``public/index.php`` files::
 
-    // makes new files writable by everyone, including any other user
-    // or process on the machine: only use it as a last resort
+    // the 0 for the others is what makes the files world-writable
     umask(0000); // new directories: 0777, new files: 0666
 
 Setting the ``umask`` from PHP also works for variant A, as an alternative to
@@ -247,8 +250,10 @@ configuring it for each process::
 
     Changing the ``umask`` is not thread-safe, so the ACL method is recommended
     when it is available. A ``umask`` of ``0000`` makes the cache and log files
-    writable by **any** user or process on the machine, so only use it when no
-    other method is possible.
+    writable by **any** user or process on the machine. As Symfony includes and
+    executes the PHP files it compiles in ``var/cache/``, anything able to write
+    there can run arbitrary code, so only use it when no other method is
+    possible.
 
 .. _`enable ACL support`: https://help.ubuntu.com/community/FilePermissionsACLs
 .. _`umask`: https://en.wikipedia.org/wiki/Umask
