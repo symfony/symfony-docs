@@ -65,6 +65,12 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
         }
     }
 
+.. warning::
+
+    Build the tree from static information only. Don't read container
+    parameters, environment variables or the state of the machine while
+    building it: the tree must be identical in every environment.
+
 Adding Node Definitions to the Tree
 -----------------------------------
 
