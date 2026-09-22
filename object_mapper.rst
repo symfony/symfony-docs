@@ -719,6 +719,8 @@ And the related target object must define the ``createFromLegacy()`` method::
         }
     }
 
+.. _object_mapper-enum-conversion:
+
 Automatic Enum Conversion
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1133,6 +1135,118 @@ created for the parent::
     // $user->streetAddress === '123 Main St' (mapped from the nested UserAddressInput)
     // $user->city === 'Springfield'
 
+.. _object_mapper-nested-property-type:
+
+Mapping Nested Objects Based on the Property Type
+-------------------------------------------------
+
+.. versionadded:: 8.2
+
+    Inferring the target of a nested object from the type of the property it's
+    written into was introduced in Symfony 8.2.
+
+A nested object is copied unchanged unless its own class declares a ``#[Map]``
+attribute or a class map lists it. If the destination property has another type,
+this fails with a ``TypeError``. To avoid it, ObjectMapper checks the class that
+types the destination property and, if it declares a ``#[Map(source: ...)]``
+attribute matching the nested object, maps the object to that class. This needs
+no configuration::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    class Order
+    {
+        public string $reference = '';
+        public Customer $customer;
+    }
+
+    // src/Dto/OrderResource.php
+    namespace App\Dto;
+
+    use App\Entity\Order;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(source: Order::class)]
+    class OrderResource
+    {
+        public string $reference = '';
+        public ?CustomerResource $customer = null;
+    }
+
+    // src/Dto/CustomerResource.php
+    namespace App\Dto;
+
+    use App\Entity\Customer;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(source: Customer::class)]
+    class CustomerResource
+    {
+        public string $name = '';
+    }
+
+Neither ``Order`` nor ``Customer`` declares a mapping, but ``$customer`` is
+typed with ``CustomerResource``, so ObjectMapper builds it from the ``Customer``
+object::
+
+    $mapper = new ObjectMapper();
+    $orderResource = $mapper->map($order, OrderResource::class);
+
+    // $orderResource->customer is a CustomerResource instance built from
+    // $order->customer, even if the Customer class declares no #[Map]
+
+ObjectMapper only infers the mapping when all these conditions are met:
+
+* The nested object has no mapping from its own class or from any other
+  metadata factory;
+* The mapper can write the destination property (it's public, a constructor
+  parameter, or the property accessor can write it);
+* The property is typed with a single class or interface that the nested object
+  isn't already an instance of. Properties with a union type, an intersection
+  type or no type are left alone, so a ``?Animal`` property still receives a
+  ``Dog`` object unchanged;
+* The class that types the property declares a ``#[Map(source: ...)]`` attribute
+  whose source is the class of the nested object, one of its parents or one of
+  its interfaces.
+
+An explicit ``#[Map]`` attribute, a class map entry and the
+:ref:`automatic enum conversion <object_mapper-enum-conversion>` take precedence
+over this inference.
+
+If several ``#[Map(source: ...)]`` attributes on the property type match the
+nested object (for example, one names its class and another one an interface it
+implements), ObjectMapper throws an "Ambiguous mapping" exception: add an ``if``
+condition to one of them. If the property type is an abstract class or an
+interface, ObjectMapper can't instantiate it: type the property with a concrete
+class or set a ``transform`` option in the ``#[Map]`` attribute that returns the
+instance.
+
+In a Symfony application, the inference is enabled by default. When using the
+component standalone, ``new ObjectMapper()`` enables it too, but passing any
+other metadata factory disables it, because that factory becomes the only source
+of mappings. This includes the common case of adding a property accessor. To
+keep the inference, wrap your factory with
+:class:`Symfony\\Component\\ObjectMapper\\Metadata\\PropertyTypeMappingMetadataFactory`::
+
+    use Symfony\Component\ObjectMapper\Metadata\PropertyTypeMappingMetadataFactory;
+    use Symfony\Component\ObjectMapper\Metadata\ReflectionObjectMapperMetadataFactory;
+    use Symfony\Component\ObjectMapper\ObjectMapper;
+
+    // this mapper doesn't infer mappings from property types
+    $mapper = new ObjectMapper(
+        new ReflectionObjectMapperMetadataFactory(),
+        $propertyAccessor,
+    );
+
+    // this mapper does
+    $mapper = new ObjectMapper(
+        new PropertyTypeMappingMetadataFactory(
+            new ReflectionObjectMapperMetadataFactory(),
+        ),
+        $propertyAccessor,
+    );
+
 Handling Recursion
 ------------------
 
@@ -1376,6 +1490,18 @@ Finally, use your custom mapper service::
 This approach keeps mapping logic centralized within dedicated services, which can
 be beneficial for complex applications or when adhering to specific architectural patterns.
 
+When ObjectMapper asks the metadata factory for the mapping of a nested object,
+the ``$context`` argument of ``create()`` contains the ``target`` and
+``target_property`` keys: the class and the property the object is written into.
+They are only set when the mapper can write that property, so a custom factory
+can use them to resolve a mapping from the destination, as the
+:ref:`property type inference <object_mapper-nested-property-type>` does.
+
+.. versionadded:: 8.2
+
+    The ``target`` and ``target_property`` context keys were introduced in
+    Symfony 8.2.
+
 Advanced Configuration
 ----------------------
 
@@ -1384,7 +1510,9 @@ The ``ObjectMapper`` constructor accepts optional arguments for advanced usage:
 * ``ObjectMapperMetadataFactoryInterface $metadataFactory``: Allows custom metadata
   factories, such as the one shown in :ref:`the MapStruct-like example <objectmapper-custom-mapping-logic>`.
   The default is :class:`Symfony\\Component\\ObjectMapper\\Metadata\\ReflectionObjectMapperMetadataFactory`,
-  which uses ``#[Map]`` attributes from source and target classes.
+  which uses ``#[Map]`` attributes from source and target classes. Passing your
+  own factory replaces this default, including the
+  :ref:`inference from property types <object_mapper-nested-property-type>`.
 * ``?PropertyAccessorInterface $propertyAccessor``: Lets you customize how
   properties are read and written to the target object, useful for accessing
   private properties or using getters/setters.
