@@ -175,12 +175,17 @@ terminal user could not write to them. With it, permissions stay correct after
 each ``cache:clear``.
 
 The setgid bit only propagates the *group*, never the write permission, so you
-must also set a ``umask`` of ``0002`` on both sides. For the terminal user, add
-this to ``~/.bashrc`` or ``~/.zshrc``:
+must also set a ``umask`` of ``0002`` on both sides.
 
-.. code-block:: terminal
+For the terminal user, configure it at the session level rather than in
+``~/.bashrc`` or ``~/.zshrc``, which are not read by the non-interactive shells
+used by deployment scripts and cron jobs. Add this line to
+``/etc/pam.d/common-session`` on Debian/Ubuntu, or to
+``/etc/pam.d/system-auth`` on RHEL/Fedora:
 
-    $ umask 0002
+.. code-block:: text
+
+    session optional pam_umask.so umask=0002
 
 For PHP-FPM, set the `UMask`_ option in a systemd drop-in file created with
 ``sudo systemctl edit php-fpm``:
