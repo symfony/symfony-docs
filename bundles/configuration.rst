@@ -272,6 +272,16 @@ The ``Configuration`` class to handle the sample configuration looks like::
         }
     }
 
+.. warning::
+
+    Build the configuration tree from static information only. Don't read
+    container parameters (such as ``kernel.debug``), environment variables
+    or the state of the machine (installed PHP extensions, operating system)
+    while building it: Symfony generates the configuration reference from the
+    tree, so it must be identical in every environment. When a default value
+    depends on such things, leave the node without a default, describe the
+    fallback in ``info()`` and resolve it when loading the configuration.
+
 .. seealso::
 
     The ``Configuration`` class can be much more complicated than shown here,
