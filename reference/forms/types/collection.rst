@@ -166,6 +166,53 @@ the value is removed from the collection. For example::
 Using a callable is particularly useful in case of compound form types, which
 may define complex conditions for considering them empty.
 
+entry_name
+~~~~~~~~~~
+
+**type**: ``string``, ``callable`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPathInterface` **default**: ``null``
+
+.. versionadded:: 8.2
+
+    The ``entry_name`` option was introduced in Symfony 8.2.
+
+By default, the form of each entry is named after the key of the entry in the
+collection, so the submitted data is matched to the entries by position. If the
+order of the entries changes between the rendering of the form and its
+submission (e.g. when the entries are loaded from a database and another user
+added or removed some of them in the meantime), the submitted data is written
+to the wrong entries. Use this option to name each form after a value that
+identifies the entry, such as its id::
+
+    use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+    // ...
+
+    $builder->add('tags', CollectionType::class, [
+        'entry_type' => TagType::class,
+        // a property path read from each entry
+        'entry_name' => 'id',
+    ]);
+
+This option also accepts a callable that receives each entry and its key in the
+collection. This is useful when some entries don't have an id yet::
+
+    $builder->add('tags', CollectionType::class, [
+        'entry_type' => TagType::class,
+        'entry_name' => fn (Tag $tag, int $key) => $tag->getId() ?? 'new_'.$key,
+    ]);
+
+This option doesn't change the keys of the collection. If the tag with id
+``42`` is stored at key ``0``, its form is named ``42`` (which is also the key
+of its submitted data and part of the ``id`` and ``name`` attributes of its
+fields), but it still reads and writes the entry stored at key ``0``. Each name
+must be unique in the collection and valid as a form name.
+
+When the `allow_add`_ option is enabled, new entries are appended after the
+existing ones, regardless of the name sent by the browser. However, if that name
+matches the name of an existing entry, the submitted data is written to that
+entry instead. A numeric counter (like the one used to replace the
+`prototype_name`_ placeholder) can match the id of an existing entry, so add a
+prefix to the names of new entries (e.g. ``new_1``).
+
 entry_options
 ~~~~~~~~~~~~~
 
