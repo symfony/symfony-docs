@@ -872,6 +872,18 @@ ensure local networks are made inaccessible to the HTTP client::
 Profiling
 ~~~~~~~~~
 
+When the :doc:`profiler </profiler>` is enabled, its HTTP Client panel lists
+the requests made by each client with their status code, duration and size of
+the sent and received data. The panel and the web debug toolbar also show the
+total time of all requests. Concurrent requests are each counted in full, so
+this total can be higher than the time your application actually waited for
+them.
+
+.. versionadded:: 8.2
+
+    The duration and transferred sizes of each request, and the total time of
+    all requests, were introduced in the profiler in Symfony 8.2.
+
 When you are using the :class:`Symfony\\Component\\HttpClient\\TraceableHttpClient`,
 responses content will be kept in memory and may exhaust it.
 
