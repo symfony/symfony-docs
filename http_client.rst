@@ -1647,6 +1647,77 @@ the component standalone, call the ``setLogger()`` method to define it.
     Logging of ``stale-if-error`` fallbacks in ``CachingHttpClient`` was
     introduced in Symfony 8.1.
 
+Customizing How Responses Are Cached
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the cache directives of each response decide whether it's stored
+and for how long. Use the ``extra.cache_policy`` option to tag cached responses
+(so you can invalidate them later) or to cache responses for a fixed time,
+whatever their directives say. Its value is a callable that runs once the
+response headers are received::
+
+    use Symfony\Component\HttpClient\CachePolicy;
+
+    // $headers maps lowercase header names to lists of values
+    $cachePolicy = function (CachePolicy $policy, int $statusCode, array $headers) {
+        $policy->tag('new-products')->expiresAfter(3600);
+    };
+
+    $response = $cachingClient->request('GET', 'https://example.com/products/new', [
+        'extra' => ['cache_policy' => $cachePolicy],
+    ]);
+
+:method:`Symfony\\Component\\HttpClient\\CachePolicy::tag` adds one or more
+cache tags to the stored response. Call ``invalidateTags()`` on the cache pool
+to remove all the responses tagged with any of the given tags::
+
+    // $cachePool is the tag-aware pool used by CachingHttpClient
+    $cachePool->invalidateTags(['new-products', 'sold-out']);
+
+:method:`Symfony\\Component\\HttpClient\\CachePolicy::expiresAfter` considers
+the response fresh for the given number of seconds. The response is cached even
+if its directives forbid it (e.g. ``Cache-Control: no-store``), and the given
+lifetime replaces the one computed from its headers. Pass ``null`` to use the
+headers again. The ``max_ttl`` option still limits how long the response is kept
+in the cache pool.
+
+Use :method:`Symfony\\Component\\HttpClient\\CachePolicy::tagFromBody` to add
+tags that depend on the response content. Its callable receives the full
+response body once it's received and returns the tags::
+
+    $response = $cachingClient->request('GET', 'https://example.com/products/42', [
+        'extra' => [
+            'cache_policy' => fn (CachePolicy $policy) => $policy->tagFromBody(
+                function (string $body): array {
+                    $product = json_decode($body, true);
+                    $tags = ['product-'.$product['id']];
+
+                    if ($product['is_new']) {
+                        $tags[] = 'new-products';
+                    }
+
+                    if (0 === $product['stock']) {
+                        $tags[] = 'sold-out';
+                    }
+
+                    return $tags;
+                }
+            ),
+        ],
+    ]);
+
+This requires the response to be buffered, which is the default behavior. If
+the ``buffer`` option is ``false`` or a closure, these tags are ignored and a
+warning is logged.
+
+The ``cache_policy`` callable also runs when a stale response is revalidated,
+with the updated headers. It can add new tags to the cached response, but the
+existing tags are kept.
+
+.. versionadded:: 8.2
+
+    The ``extra.cache_policy`` option was introduced in Symfony 8.2.
+
 Limit the Number of Requests
 ----------------------------
 
