@@ -2236,6 +2236,78 @@ Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
     :doc:`security voter </security/voters>` that looks for the user roles
     in the database.
 
+If several roles share the same parents, use the ``*`` placeholder character
+instead of listing each role:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            role_hierarchy:
+                ROLE_*: ROLE_USER
+                ROLE_*_MODERATOR: ROLE_MODERATOR
+
+                ROLE_BLOG_*: ROLE_BLOG_READER
+                ROLE_BLOG_MODERATOR: [ROLE_BLOG_DELETE_POST, ROLE_BLOG_LOCK_POST]
+
+                ROLE_SHOP_*: ROLE_SHOP_USER
+                ROLE_SHOP_MODERATOR: [ROLE_SHOP_DELETE_ITEM, ROLE_SHOP_DELETE_REVIEW]
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                // ...
+
+                'role_hierarchy' => [
+                    'ROLE_*' => ['ROLE_USER'],
+                    'ROLE_*_MODERATOR' => ['ROLE_MODERATOR'],
+
+                    'ROLE_BLOG_*' => ['ROLE_BLOG_READER'],
+                    'ROLE_BLOG_MODERATOR' => [
+                        'ROLE_BLOG_DELETE_POST',
+                        'ROLE_BLOG_LOCK_POST',
+                    ],
+
+                    'ROLE_SHOP_*' => ['ROLE_SHOP_USER'],
+                    'ROLE_SHOP_MODERATOR' => [
+                        'ROLE_SHOP_DELETE_ITEM',
+                        'ROLE_SHOP_DELETE_REVIEW',
+                    ],
+                ],
+            ],
+        ]);
+
+With this configuration:
+
+* Having any role grants ``ROLE_USER``;
+* All moderators have ``ROLE_MODERATOR``;
+* Anyone with a ``ROLE_BLOG_*`` role can access the blog;
+* Anyone with a ``ROLE_SHOP_*`` role can access the shop.
+
+Even if a role is not explicitly defined in the hierarchy, if it's matched by a
+placeholder it inherits the roles of that placeholder:
+
+* Users with ``ROLE_BLOG_ADMIN`` will also have ``ROLE_BLOG_READER``;
+* Users with ``ROLE_NEWS_MODERATOR`` will also have ``ROLE_MODERATOR``.
+
+.. warning::
+
+    The ``*`` placeholder character can only be used after a ``_`` and before
+    a ``_`` or the end of the role name. That means role names like
+    ``ROLE_BLOG*`` and ``ROLE_*BLOG`` are not considered valid placeholders.
+
+.. versionadded:: 8.2
+
+    The placeholder syntax was introduced in Symfony 8.2.
+
 To inspect the resulting hierarchy, run the ``debug:roles`` command:
 
 .. code-block:: terminal
