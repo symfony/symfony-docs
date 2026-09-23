@@ -546,6 +546,21 @@ public_prefix
 The public path where the assets will be written to (and served from when
 ``server`` is ``true``).
 
+metadata_dir
+............
+
+**type**: ``string`` **default**: ``null``
+
+The directory where the ``asset-map:compile`` command writes the
+``manifest.json``, ``importmap.json`` and ``entrypoint.*.json`` files. If you
+don't set this option, the command writes them to the public assets directory
+(``public/assets/`` by default).
+See :ref:`metadata_dir <asset-mapper-metadata-dir>`.
+
+.. versionadded:: 8.2
+
+    The ``metadata_dir`` option was introduced in Symfony 8.2.
+
 missing_import_mode
 ...................
 
