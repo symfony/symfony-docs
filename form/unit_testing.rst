@@ -206,11 +206,12 @@ allows you to return a list of extensions to register::
 
     // ...
     use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+    use Symfony\Component\Form\Extension\Validator\ViolationMapper\ViolationMapperInterface;
     use Symfony\Component\Validator\Validation;
 
     class TestedTypeTest extends TypeTestCase
     {
-        protected function getExtensions(): array
+        protected function getExtensions(?ViolationMapperInterface $violationMapper = null): array
         {
             $validator = Validation::createValidator();
 
@@ -220,7 +221,7 @@ allows you to return a list of extensions to register::
                 ->getValidator();
 
             return [
-                new ValidatorExtension($validator),
+                new ValidatorExtension($validator, $violationMapper),
             ];
         }
 
@@ -233,6 +234,11 @@ allows you to return a list of extensions to register::
     :class:`Symfony\\Component\\Form\\Extension\\Core\\CoreExtension` is
     registered in tests. You can find other extensions from the Form component
     in the ``Symfony\Component\Form\Extension`` namespace.
+
+.. versionadded:: 8.1
+
+    The ``ViolationMapperInterface`` and its integration into the form
+    validation system were introduced in Symfony 8.1.
 
 It is also possible to load custom form types, form type extensions or type
 guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypes`,
