@@ -4170,20 +4170,30 @@ may want to use:
             ],
         ]);
 
-.. deprecated:: 8.2
+.. _messenger-doctrine-dbal-middleware:
 
-    The ``doctrine_open_transaction_logger`` middleware was deprecated in
-    Symfony 8.2 in favor of ``DoctrineDbalOpenTransactionLoggerMiddleware``.
+Middleware for DBAL Connections
+...............................
 
-The :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalOpenTransactionLoggerMiddleware`
-checks DBAL connections instead of entity managers, so it also works in
-applications that don't use Doctrine ORM. By default, it checks all DBAL
-connections, while ``doctrine_open_transaction_logger`` only checks the
-connection of one entity manager.
+The middleware above work with the entity managers of Doctrine ORM. The
+following middleware work with DBAL connections instead, so you can also use
+them in applications that don't use the ORM:
 
-This middleware doesn't have a shortcut name, so register it as a service and
-then add its service ID (the class name) to the ``middleware`` option of the bus
-shown above:
+* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalPingConnectionMiddleware`
+  pings the open connections before a worker handles a message and reconnects
+  the ones that were lost. Unlike ``doctrine_ping_connection``, it doesn't reset
+  closed entity managers, because workers already reset them between messages;
+* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalOpenTransactionLoggerMiddleware`
+  logs an error when a handler opens a transaction and doesn't close it. Unlike
+  ``doctrine_open_transaction_logger``, which only checks the connection of one
+  entity manager, it checks all DBAL connections by default;
+* :class:`Symfony\\Bridge\\Doctrine\\Messenger\\DoctrineDbalTransactionMiddleware`
+  wraps all handlers in a single DBAL transaction. Unlike
+  ``doctrine_transaction``, it doesn't flush any entity manager before
+  committing, so handlers that use the ORM must call ``flush()`` themselves.
+
+These middleware don't have a configuration shortcut. Register them as services
+and then add their service IDs to the ``middleware`` option of your bus:
 
 .. configuration-block::
 
@@ -4191,12 +4201,28 @@ shown above:
 
         # config/services.yaml
         services:
+            Symfony\Bridge\Doctrine\Messenger\DoctrineDbalPingConnectionMiddleware:
+                arguments:
+                    - '@doctrine'
+                    # the name of a connection or a list of names; if omitted,
+                    # all DBAL connections are pinged
+                    #- ['default', 'legacy']
+
             Symfony\Bridge\Doctrine\Messenger\DoctrineDbalOpenTransactionLoggerMiddleware:
                 arguments:
                     - '@doctrine'
                     - '@logger'
-                    # optional: connection name(s) to check (all by default)
-                    # - ['default', 'legacy']
+                    # the name of a connection or a list of names; if omitted,
+                    # all DBAL connections are checked
+                    #- ['default', 'legacy']
+
+            Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware:
+                arguments:
+                    - '@doctrine'
+                    # the name of a single connection, because a transaction
+                    # can't span several connections; if omitted, the default
+                    # connection is used
+                    #- 'legacy'
 
     .. code-block:: php
 
@@ -4204,15 +4230,35 @@ shown above:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use Symfony\Bridge\Doctrine\Messenger\DoctrineDbalOpenTransactionLoggerMiddleware;
+        use Symfony\Bridge\Doctrine\Messenger\DoctrineDbalPingConnectionMiddleware;
+        use Symfony\Bridge\Doctrine\Messenger\DoctrineDbalTransactionMiddleware;
 
         return App::config([
             'services' => [
+                DoctrineDbalPingConnectionMiddleware::class => [
+                    'arguments' => [
+                        service('doctrine'),
+                        // the name of a connection or a list of names; if omitted,
+                        // all DBAL connections are pinged
+                        // ['default', 'legacy'],
+                    ],
+                ],
                 DoctrineDbalOpenTransactionLoggerMiddleware::class => [
                     'arguments' => [
                         service('doctrine'),
                         service('logger'),
-                        // optional: connection name(s) to check (all by default)
+                        // the name of a connection or a list of names; if omitted,
+                        // all DBAL connections are checked
                         // ['default', 'legacy'],
+                    ],
+                ],
+                DoctrineDbalTransactionMiddleware::class => [
+                    'arguments' => [
+                        service('doctrine'),
+                        // the name of a single connection, because a transaction
+                        // can't span several connections; if omitted, the default
+                        // connection is used
+                        // 'legacy',
                     ],
                 ],
             ],
@@ -4220,8 +4266,16 @@ shown above:
 
 .. versionadded:: 8.2
 
-    The ``DoctrineDbalOpenTransactionLoggerMiddleware`` was introduced in
-    Symfony 8.2.
+    ``DoctrineDbalPingConnectionMiddleware``,
+    ``DoctrineDbalOpenTransactionLoggerMiddleware`` and
+    ``DoctrineDbalTransactionMiddleware`` were introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    ``DoctrinePingConnectionMiddleware`` and
+    ``DoctrineOpenTransactionLoggerMiddleware``, used by the
+    ``doctrine_ping_connection`` and ``doctrine_open_transaction_logger``
+    shortcuts, were deprecated in Symfony 8.2.
 
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
