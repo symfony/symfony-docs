@@ -468,6 +468,10 @@ users to change their password. You can do this by using a few special
     There is also a ``IS_REMEMBERED`` attribute that grants access *only*
     when the user is authenticated via the remember me mechanism.
 
+Users have ``IS_AUTHENTICATED_FULLY`` for the whole session, no matter how
+long ago they logged in. To also require that they authenticated a short time
+ago, read :ref:`security-recent-authentication`.
+
 Customizing the Remember Me Cookie
 ----------------------------------
 
