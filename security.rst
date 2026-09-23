@@ -2929,14 +2929,31 @@ of the core logic.
 Adding Checks to the User Comparison
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to keep the core comparison and also log out users for other
-reasons (e.g. an administrator disabled their account during the session),
-listen to the
+The core comparison doesn't know about the state of the account, so users whose
+account an administrator disabled during their session stay logged in until they
+log out. In most applications that rule already lives in the
+:doc:`user checker </security/user_checkers>` of the firewall, which is where it
+belongs, because it then applies when users log in too. Enable its
+:ref:`user_checker_on_refresh <security-user-checker-on-refresh>` option to run
+that checker every time the user is refreshed as well:
+
+.. code-block:: yaml
+
+    # config/packages/security.yaml
+    security:
+        firewalls:
+            main:
+                user_checker: App\Security\UserChecker
+                user_checker_on_refresh: true
+
+Listen to the
 :class:`Symfony\\Component\\Security\\Http\\Event\\CheckRefreshedUserEvent`
-instead of implementing ``EquatableInterface``. Symfony dispatches this event
+only for rules that don't belong to a user checker, or when the checker of the
+firewall is not safe to run on every request. Symfony dispatches this event
 after refreshing the user from the session, which happens on every request of
-a stateful firewall, so keep its listeners fast and free of side effects. The
-event contains the result of the core comparison (or of your ``isEqualTo()``
+a stateful firewall, so keep its listeners fast and free of side effects.
+Unlike ``EquatableInterface``, it doesn't replace the core comparison: the
+event contains the result of that comparison (or of your ``isEqualTo()``
 method) and listeners can change it::
 
     // src/EventListener/DisabledUserListener.php
@@ -2981,8 +2998,9 @@ one firewall, register it on the
 
 .. versionadded:: 8.2
 
-    The ``CheckRefreshedUserEvent`` and the ``getException()`` method of
-    ``TokenDeauthenticatedEvent`` were introduced in Symfony 8.2.
+    The ``CheckRefreshedUserEvent``, the ``user_checker_on_refresh`` option and
+    the ``getException()`` method of ``TokenDeauthenticatedEvent`` were
+    introduced in Symfony 8.2.
 
 .. _security-security-events:
 

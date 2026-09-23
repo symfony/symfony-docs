@@ -118,6 +118,126 @@ is the service id of your user checker:
             ],
         ]);
 
+.. _security-user-checker-on-refresh:
+
+Running the User Checker When Users Are Refreshed
+-------------------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``user_checker_on_refresh`` option was introduced in Symfony 8.2.
+
+User checkers run when users authenticate, so an account disabled during a
+session keeps working until that user logs out. Enable the
+``user_checker_on_refresh`` option to run the checker of the firewall again
+every time the user is :ref:`refreshed from the session <user_session_refresh>`,
+so that such an account is rejected on the next request:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+
+        # ...
+        security:
+            firewalls:
+                main:
+                    pattern: ^/
+                    user_checker: App\Security\UserChecker
+                    user_checker_on_refresh: true
+                    # ...
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\UserChecker;
+
+        return App::config([
+            'security' => [
+                // ...
+                'firewalls' => [
+                    'main' => [
+                        'pattern' => '^/',
+                        'user_checker' => UserChecker::class,
+                        'user_checker_on_refresh' => true,
+                        // ...
+                    ],
+                ],
+            ],
+        ]);
+
+When the checker rejects the account, the user is logged out the same way as
+when their data changed, and the exception thrown by the checker is passed to
+the listeners of the
+:class:`Symfony\\Component\\Security\\Http\\Event\\TokenDeauthenticatedEvent`,
+so the login page can tell users why (see
+:ref:`Adding Checks to the User Comparison <security-check-refreshed-user-event>`).
+
+When someone :doc:`impersonates a user </security/impersonating_user>`, only
+``checkPostAuth()`` runs for the impersonated user, exactly as when the
+impersonation starts.
+
+This option requires a stateful firewall. Enabling it on a
+:ref:`stateless firewall <reference-security-stateless>` throws an exception,
+because such firewalls never refresh users from a session.
+
+.. warning::
+
+    This option makes the user checker run on every request of the firewall
+    instead of only when users authenticate. Enable it only if that checker is
+    fast, doesn't change the application state and doesn't assume that the
+    current request is a login request. Beware that, when the firewall uses the
+    :ref:`chain user checker <security-chain-user-checker>`, a package installed
+    later can add its own checker to that chain.
+
+If you can't vouch for all the checkers of a firewall, leave the option off and
+register the
+:class:`Symfony\\Component\\Security\\Http\\EventListener\\RefreshedUserCheckerListener`
+yourself with the checker you trust:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+
+        # ...
+        services:
+            Symfony\Component\Security\Http\EventListener\RefreshedUserCheckerListener:
+                arguments: ['@App\Security\AccountEnabledUserChecker']
+                tags:
+                    - name: kernel.event_listener
+                      dispatcher: security.event_dispatcher.main
+                      event: Symfony\Component\Security\Http\Event\CheckRefreshedUserEvent
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\AccountEnabledUserChecker;
+        use Symfony\Component\Security\Http\Event\CheckRefreshedUserEvent;
+        use Symfony\Component\Security\Http\EventListener\RefreshedUserCheckerListener;
+
+        return App::config([
+            'services' => [
+                RefreshedUserCheckerListener::class => [
+                    'arguments' => [service(AccountEnabledUserChecker::class)],
+                    'tags' => [
+                        ['kernel.event_listener' => [
+                            'dispatcher' => 'security.event_dispatcher.main',
+                            'event' => CheckRefreshedUserEvent::class,
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
+.. _security-chain-user-checker:
+
 Using Multiple User Checkers
 ----------------------------
 
