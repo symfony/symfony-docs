@@ -2286,7 +2286,7 @@ port ``8025``:
 .. code-block:: env
 
     # .env.local
-    MAILER_DSN=smtp://localhost:3535
+    MAILER_DSN=smtp://localhost:1025
 
 Open ``http://localhost:8025`` to see the emails sent by your application.
 Other popular email catchers are `MailCatcher`_, `MailDev`_ and `Mailtrap Local`_.
