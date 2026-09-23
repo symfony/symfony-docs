@@ -309,6 +309,80 @@ original service. When using the decorated service, the outermost decorator
 ``RateLimitingMailer`` checks the sending quota before ``LoggingMailer`` logs
 anything, so no email is logged unless it's actually sent.
 
+Placing Decorators Relative to Each Other
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``inside`` and ``outside`` arguments and the ``decoration_inside`` and
+    ``decoration_outside`` options were introduced in Symfony 8.2.
+
+Priorities only order decorators correctly if you know the priorities of the
+other decorators and update yours every time they change. Instead of a priority,
+a decorator can list the other decorators of the same service that wrap it
+(``inside``) or that it wraps (``outside``):
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/RateLimitingMailer.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+
+        // wraps LoggingMailer, whatever priority LoggingMailer has
+        #[AsDecorator(decorates: Mailer::class, outside: LoggingMailer::class)]
+        class RateLimitingMailer
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\RateLimitingMailer:
+                decorates: App\Mailer
+                # wraps LoggingMailer, whatever priority LoggingMailer has
+                decoration_outside: App\LoggingMailer
+                arguments: ['@.inner']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\LoggingMailer;
+        use App\Mailer;
+        use App\RateLimitingMailer;
+
+        return App::config([
+            'services' => [
+                // ...
+
+                RateLimitingMailer::class => [
+                    'decorates' => Mailer::class,
+                    // wraps LoggingMailer, whatever priority LoggingMailer has
+                    'decoration_outside' => LoggingMailer::class,
+                    'arguments' => [service('.inner')],
+                ],
+            ],
+        ]);
+
+Both options accept a service ID or a class name, or a list of them. They also
+work when :ref:`decorating all services with a tag <decoration-tagged-services>`.
+Symfony ignores the names that don't match any other decorator of the same
+service, so you can refer to decorators defined by optional packages.
+
+When a decorator uses these options without a priority, Symfony gives it the
+priority required by its position (``0`` when possible). When it also defines
+a priority, the options only order it among the decorators with that same
+priority, and the container fails to compile if the options contradict it.
+
 .. _decoration-tagged-services:
 
 Decorating All Services with a Tag
