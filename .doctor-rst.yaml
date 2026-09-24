@@ -115,6 +115,8 @@ exclude_rule_for_file:
       rule_name: no_relative_doc_path
     - path: components/phpunit_bridge.rst
       rule_name: indention
+    - path: console/input.rst
+      rule_name: use_deprecated_directive_instead_of_versionadded
 
 # do not report as violation
 whitelist:
