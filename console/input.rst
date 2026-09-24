@@ -291,6 +291,14 @@ The ``Option`` attribute accepts the following parameters:
     An array or a callable that provides :ref:`suggested values for the option <console-input-completion>`.
     For example: ``#[Option(suggestedValues: ['low', 'medium', 'high'])]``.
 
+``deprecated`` and ``hidden``
+    Whether the option is :ref:`deprecated or hidden <console-hidden-deprecated-options>`.
+    For example: ``#[Option(deprecated: true)]`` or ``#[Option(hidden: true)]``.
+
+    .. versionadded:: 8.2
+
+        The ``deprecated`` and ``hidden`` parameters were introduced in Symfony 8.2.
+
 The option mode is inferred from the parameter type and default value:
 
 * **Boolean flag** (``VALUE_NONE``): ``bool`` type with default ``false``.
@@ -406,6 +414,8 @@ at runtime::
     default values are especially useful in this context because they allow
     you to define complex, runtime-resolved defaults directly in the method
     signature.
+
+.. _console-input-options-add-option:
 
 Using the Classic addOption() Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -544,6 +554,77 @@ You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 
     Using any combination of ``InputOption::VALUE_NONE``, ``InputOption::VALUE_REQUIRED`` and
     ``InputOption::VALUE_OPTIONAL`` was deprecated in Symfony 8.1.
+
+.. _console-hidden-deprecated-options:
+
+Hiding and Deprecating Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Hidden and deprecated options were introduced in Symfony 8.2.
+
+Some options must keep working but shouldn't be advertised to users: options
+that your application only passes to itself (e.g. when a command spawns worker
+processes) or options that you plan to remove in favor of new ones. Use the
+``hidden`` and ``deprecated`` parameters of the ``#[Option]`` attribute to
+define them. These parameters only change how the option is displayed::
+
+    public function __invoke(
+        #[Option(
+            description: 'Use the --source option instead',
+            shortcut: 'f',
+            deprecated: true,
+        )]
+        ?string $file = null,
+
+        #[Option(description: 'ID of the batch processed by this worker', hidden: true)]
+        ?string $batchId = null,
+    ): int {
+        // ...
+    }
+
+.. note::
+
+    When using the :ref:`addOption() method <console-input-options-add-option>`,
+    add the ``InputOption::HIDDEN`` or ``InputOption::DEPRECATED`` modes to the
+    option (e.g. ``InputOption::VALUE_REQUIRED | InputOption::HIDDEN``). When
+    used alone, these modes imply ``InputOption::VALUE_NONE``.
+
+Hidden options are left out of the command synopsis, the ``help`` and ``list``
+output and shell completion. Hiding an option isn't a security measure: users
+can still pass it to the command. Add the hidden ``--show-hidden-options`` option
+to the ``help`` command to display them:
+
+.. code-block:: terminal
+
+    $ php bin/console help app:import-users --show-hidden-options
+
+    # ...
+    Options:
+      -f, --file=FILE          [deprecated] Use the --source option instead
+          --batch-id=BATCH-ID  [hidden] ID of the batch processed by this worker
+      # ...
+
+Deprecated options are still displayed in the help output, but their
+description is prefixed with ``[deprecated]``. When users pass a deprecated
+option, the command displays a warning before executing:
+
+.. code-block:: terminal
+
+    $ php bin/console app:import-users --file=users.csv
+
+      The option "--file|-f" is deprecated.
+
+    # ...
+
+This warning is written to the error output. It's not a PHP deprecation, so
+it's not logged like the deprecations triggered by your code.
+
+Call the :method:`Symfony\\Component\\Console\\Input\\InputOption::isHidden`
+and :method:`Symfony\\Component\\Console\\Input\\InputOption::isDeprecated`
+methods to check these modes. The ``json``, ``xml``, ``md`` and ``rst`` formats
+of the ``help`` command also include this information for each option.
 
 .. _console-input-map-input:
 
