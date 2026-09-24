@@ -24,12 +24,12 @@ render
 
 .. code-block:: twig
 
-    {{ render(uri, options = []) }}
+    {{ render(uri, options = {}) }}
 
 ``uri``
     **type**: ``string`` | ``ControllerReference``
 ``options`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Makes a request to the given internal URI or controller and returns the result.
 The render strategy can be specified in the ``strategy`` key of the options.
@@ -42,12 +42,12 @@ render_esi
 
 .. code-block:: twig
 
-    {{ render_esi(uri, options = []) }}
+    {{ render_esi(uri, options = {}) }}
 
 ``uri``
     **type**: ``string`` | ``ControllerReference``
 ``options`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 It's similar to the `render`_ function and defines the same arguments. However,
 it generates an ESI tag when :doc:`ESI support </http_cache/esi>` is enabled or
@@ -83,14 +83,14 @@ controller
 
 .. code-block:: twig
 
-    {{ controller(controller, attributes = [], query = []) }}
+    {{ controller(controller, attributes = {}, query = {}) }}
 
 ``controller``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 ``query`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Returns an instance of ``ControllerReference`` to be used with functions
 like :ref:`render() <reference-twig-function-render>` and
@@ -520,14 +520,14 @@ link
 
 .. code-block:: twig
 
-    {{ link(uri, rel, attributes = []) }}
+    {{ link(uri, rel, attributes = {}) }}
 
 ``uri``
     **type**: ``string``
 ``rel``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Adds a ``Link`` HTTP header to the current response for the given link relation
 type (``rel``). It can be used for any link implementing the PSR-13 standard.
@@ -538,12 +538,12 @@ preload
 
 .. code-block:: twig
 
-    {{ preload(uri, attributes = []) }}
+    {{ preload(uri, attributes = {}) }}
 
 ``uri``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Preloads a resource by adding a ``Link`` HTTP header with the ``preload`` link
 relation, telling the browser to download it as soon as possible. Read more
@@ -554,12 +554,12 @@ dns_prefetch
 
 .. code-block:: twig
 
-    {{ dns_prefetch(uri, attributes = []) }}
+    {{ dns_prefetch(uri, attributes = {}) }}
 
 ``uri``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Resource hint that indicates an origin (e.g. ``https://foo.cloudfront.net``)
 that will be used to fetch required resources, and that the user agent should
@@ -570,12 +570,12 @@ preconnect
 
 .. code-block:: twig
 
-    {{ preconnect(uri, attributes = []) }}
+    {{ preconnect(uri, attributes = {}) }}
 
 ``uri``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Resource hint that indicates an origin (e.g.
 ``https://www.google-analytics.com``) that will be used to fetch required
@@ -588,12 +588,12 @@ prefetch
 
 .. code-block:: twig
 
-    {{ prefetch(uri, attributes = []) }}
+    {{ prefetch(uri, attributes = {}) }}
 
 ``uri``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Resource hint that identifies a resource that might be required by the next
 navigation, and that the user agent should fetch so it can deliver a faster
@@ -605,12 +605,12 @@ prerender
 
 .. code-block:: twig
 
-    {{ prerender(uri, attributes = []) }}
+    {{ prerender(uri, attributes = {}) }}
 
 ``uri``
     **type**: ``string``
 ``attributes`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 
 Resource hint that identifies a resource that might be required by the next
 navigation, and that the user agent should fetch and execute so it can deliver
@@ -677,12 +677,12 @@ trans
 
 .. code-block:: twig
 
-    {{ message|trans(arguments = [], domain = null, locale = null) }}
+    {{ message|trans(arguments = {}, domain = null, locale = null) }}
 
 ``message``
     **type**: ``string`` | ``Translatable``
 ``arguments`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``null``
 ``locale`` *(optional)*
@@ -1069,7 +1069,7 @@ serialize
 
 .. code-block:: twig
 
-    {{ object|serialize(format = 'json', context = []) }}
+    {{ object|serialize(format = 'json', context = {}) }}
 
 ``object``
     **type**: ``mixed``
@@ -1129,7 +1129,7 @@ trans
     {% trans with vars from domain into locale %}{% endtrans %}
 
 ``vars`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
+    **type**: ``array`` **default**: ``{}``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``string``
 ``locale`` *(optional)*
