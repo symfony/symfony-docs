@@ -4324,6 +4324,81 @@ to configure the validation groups.
             ],
         ]);
 
+Logging Middleware
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``logging`` middleware was introduced in Symfony 8.2.
+
+Add the ``logging`` middleware to log how long each message took to process and
+how much memory it used. It's not enabled by default, so add it to each bus that
+you want to monitor:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    command_bus:
+                        middleware:
+                            - logging
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'buses' => [
+                        'command_bus' => [
+                            'middleware' => [
+                                'logging',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+This middleware measures everything that runs after it in the stack, including
+sending or handling the message, so put it before any other middleware whose
+cost you want to include. It logs the following messages in the ``messenger``
+channel. Both successful outcomes (the message was handled or it was sent to a
+transport) use the ``info`` level and failures use the ``error`` level:
+
+=========  ===========================================  ===============================
+Level      Message                                      Logged when
+=========  ===========================================  ===============================
+``info``   ``"{class}" message successfully handled.``  The message was handled
+``info``   ``"{class}" message sent to transport.``     The message was sent to a
+                                                        transport instead of handled
+``error``  ``Unable to handle "{class}" message.``      A middleware or handler threw
+                                                        an exception
+=========  ===========================================  ===============================
+
+All messages include the ``class``, ``duration_ms`` and ``memory_usage`` context
+keys. Error messages also include the ``exception`` key.
+
+Messages handled asynchronously are logged at least twice: once when they are
+dispatched (the duration is the time needed to send them to the transport) and
+once in the worker (the duration is the time needed to handle them). Each
+:ref:`retry <messenger-retries-failures>` adds another log entry. Keep this in
+mind when building dashboards from these logs, so you don't count messages twice
+or mistake the sending time for the handling time.
+
+.. note::
+
+    ``duration_ms`` is rounded to whole milliseconds, so very fast handlers
+    report ``0``. ``memory_usage`` is the difference in bytes between two calls
+    to :phpfunction:`memory_get_usage`, so it can be negative when a handler
+    frees more memory than it allocates.
+
 Messenger Events
 ~~~~~~~~~~~~~~~~
 
