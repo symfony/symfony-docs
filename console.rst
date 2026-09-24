@@ -221,6 +221,28 @@ computed once and then used as any other description.
     Support for callables in the ``description`` and ``help`` options was
     introduced in Symfony 8.2.
 
+.. note::
+
+    In interactive terminals, the long descriptions shown by ``list`` and
+    ``--help`` wrap to fit the terminal width. Piped or redirected output (e.g.
+    ``php bin/console list > commands.txt``) isn't wrapped, so scripts that
+    parse it keep working.
+
+    When using the :class:`Symfony\\Component\\Console\\Helper\\DescriptorHelper`
+    in your own code, pass the ``terminal_width`` option to set the width::
+
+        use Symfony\Component\Console\Helper\DescriptorHelper;
+
+        $helper = new DescriptorHelper();
+        $helper->describe($output, $command, [
+            'terminal_width' => 60,
+        ]);
+
+.. versionadded:: 8.2
+
+    The wrapping of descriptions to fit the terminal width was introduced in
+    Symfony 8.2.
+
 Additionally, you can extend the :class:`Symfony\\Component\\Console\\Command\\Command` class to
 leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
 and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
