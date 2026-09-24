@@ -388,6 +388,42 @@ The ``MapQueryParameter`` attribute supports the following argument types:
 * ``string``
 * Objects that extend :class:`Symfony\\Component\\Uid\\AbstractUid`
 
+.. versionadded:: 8.2
+
+    Support for types built by other value resolvers was introduced in
+    Symfony 8.2.
+
+For arguments of any other class type, the attribute stores the raw value in the
+request attributes under the argument name. Then, the value resolver that can
+build that type reads it from there, as if the value were a route parameter.
+This lets you read, for example, dates and Doctrine entities from the query
+string::
+
+    use App\Entity\Post;
+    use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapDateTime;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+    // ...
+
+    // https://example.com/dashboard?from=2026-01-15&to=31/01/2026&post=42
+    public function dashboard(
+        #[MapQueryParameter] \DateTimeImmutable $from,
+        // add #[MapDateTime] to define the expected date format
+        #[MapQueryParameter] #[MapDateTime('d/m/Y')] \DateTimeImmutable $to,
+        // the entity value resolver fetches the Post whose ID is 42
+        #[MapQueryParameter] #[MapEntity] Post $post,
+    ): Response
+    {
+        // ...
+    }
+
+Array values (e.g. ``?from[]=2026-01-15``) are rejected with the
+``validationFailedStatusCode`` of the attribute. If no value resolver builds the
+object, the argument gets its default value or ``null`` when it's nullable, and
+an error is thrown otherwise.
+
 ``#[MapQueryParameter]`` can take an optional argument called ``filter``. You can use the
 `Validate Filters`_ constants defined in PHP::
 
@@ -927,6 +963,28 @@ The attribute supports the following argument types:
   returns ``['en_US', 'en']``);
 * :class:`Symfony\\Component\\HttpFoundation\\AcceptHeader`: returns a parsed
   ``AcceptHeader`` object for advanced quality-value handling.
+
+.. versionadded:: 8.2
+
+    Support for types built by other value resolvers was introduced in
+    Symfony 8.2.
+
+As with :ref:`#[MapQueryParameter] <controller_map-request>`, for arguments of
+any other class type, the header value is stored in the request attributes so
+that another value resolver builds the object::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestHeader;
+    use Symfony\Component\Uid\Ulid;
+
+    // ...
+
+    public function dashboard(
+        // the UID value resolver builds the Ulid object from the header value
+        #[MapRequestHeader('x-trace-id')] Ulid $traceId,
+    ): Response {
+        // ...
+    }
 
 If the header is missing and the argument has no default value and is not
 nullable, a ``400 Bad Request`` response is returned. You can customize this
