@@ -202,6 +202,10 @@ to the container::
                 return false;
             }
 
-            return is_file($bundlesMetadata['FrameworkBundle']['path'] . '/Resources/config/asset_mapper.php');
+            $frameworkPath = $bundlesMetadata['FrameworkBundle']['path'];
+
+            // AssetMapper has its own bundle in recent Symfony versions
+            return isset($bundlesMetadata['AssetMapperBundle'])
+                || is_file($frameworkPath . '/Resources/config/asset_mapper.php');
         }
     }
