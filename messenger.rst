@@ -4367,10 +4367,8 @@ you want to monitor:
         ]);
 
 This middleware measures everything that runs after it in the stack, including
-sending or handling the message, so put it before any other middleware whose
-cost you want to include. It logs the following messages in the ``messenger``
-channel. Both successful outcomes (the message was handled or it was sent to a
-transport) use the ``info`` level and failures use the ``error`` level:
+sending or handling the message, so put it before any other middleware whose cost
+you want to include. It logs the following messages in the ``messenger`` channel:
 
 =========  ===========================================  ===============================
 Level      Message                                      Logged when
