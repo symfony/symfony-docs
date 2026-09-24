@@ -1246,6 +1246,17 @@ deserializing objects:
         $json = $serializer->serialize($person, 'json');
         // $json contains {"customer_name":"Jane Doe", ...}
 
+When deserializing, the data must use the serialized name (``customer_name``
+in the example above) instead of the PHP property name (``name``). This applies
+to all name converters and to the type property of discriminator maps.
+
+.. deprecated:: 8.2
+
+    Deserializing a property from its PHP name when a name converter maps it
+    to another key was deprecated in Symfony 8.2 and that key will be handled
+    as an :ref:`extra attribute <serializer-collecting-extra-attributes-errors>`
+    in Symfony 9.0.
+
 .. seealso::
 
     You can also create a custom name converter class. Read more about this
