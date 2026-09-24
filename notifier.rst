@@ -889,6 +889,101 @@ sent using the Slack transport::
         }
     }
 
+.. _notifier-admin-recipients:
+
+Sending Notifications to Administrators
+---------------------------------------
+
+Some notifications are meant for the administrators of your application, not
+for its users. Symfony sends them through the ``notifier`` service in these
+cases:
+
+* when a log record of level ``error`` or higher reaches the
+  ``notifier.monolog_handler`` service (if you add it as a Monolog handler);
+* when a Messenger message fails and won't be retried (if you enable the
+  ``notification_on_failed_messages`` option of the notifier).
+
+Define the recipients of these notifications with the
+:ref:`admin_recipients <reference-notifier-admin-recipients>` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/notifier.yaml
+        framework:
+            notifier:
+                admin_recipients:
+                    - { email: 'admin@example.com', phone: '+1555123456' }
+
+    .. code-block:: php
+
+        // config/packages/notifier.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'notifier' => [
+                    'admin_recipients' => [
+                        ['email' => 'admin@example.com', 'phone' => '+1555123456'],
+                    ],
+                ],
+            ],
+        ]);
+
+Symfony gets these recipients from the ``notifier`` service, which must
+implement :class:`Symfony\\Component\\Notifier\\AdminRecipientsProviderInterface`
+(the default :class:`Symfony\\Component\\Notifier\\Notifier` class does). If
+you decorate or replace the ``notifier`` service, implement this interface in
+your class too. Otherwise, Symfony sends the notifications to administrators
+without any recipient. This is also useful to compute the recipients at
+runtime instead of using a static list::
+
+    // src/Notifier/OnCallNotifier.php
+    namespace App\Notifier;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+    use Symfony\Component\Notifier\AdminRecipientsProviderInterface;
+    use Symfony\Component\Notifier\Notification\Notification;
+    use Symfony\Component\Notifier\NotifierInterface;
+    use Symfony\Component\Notifier\Recipient\Recipient;
+    use Symfony\Component\Notifier\Recipient\RecipientInterface;
+
+    #[AsDecorator('notifier')]
+    class OnCallNotifier implements NotifierInterface,
+        AdminRecipientsProviderInterface
+    {
+        public function __construct(
+            private NotifierInterface $notifier,
+            private OnCallSchedule $schedule,
+        ) {
+        }
+
+        public function send(
+            Notification $notification,
+            RecipientInterface ...$recipients
+        ): void {
+            $this->notifier->send($notification, ...$recipients);
+        }
+
+        public function getAdminRecipients(): array
+        {
+            // the administrators who are on call right now, instead of the
+            // ones defined in the 'admin_recipients' option
+            return [new Recipient($this->schedule->getCurrentEmail())];
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``AdminRecipientsProviderInterface`` was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    Defining a ``getAdminRecipients()`` method in a notifier that doesn't
+    implement ``AdminRecipientsProviderInterface`` was deprecated in
+    Symfony 8.2.
+
 Customize Notifications
 -----------------------
 
