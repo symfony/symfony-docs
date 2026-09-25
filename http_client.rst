@@ -2245,6 +2245,44 @@ The ``tick()`` method processes a single batch of network activity and Guzzle
 callbacks. This is useful when integrating with an existing event loop. The
 ``execute()`` method blocks until every pending request has completed.
 
+The handler also supports Guzzle's ``on_trailers`` request option. Its
+callback receives the HTTP trailers of the response (as an array of
+header names mapped to lists of values), the PSR-7 response and the
+request, once the transfer completes::
+
+    use GuzzleHttp\Client;
+    use Psr\Http\Message\RequestInterface;
+    use Psr\Http\Message\ResponseInterface;
+    use Symfony\Component\HttpClient\GuzzleHttpHandler;
+
+    $guzzle = new Client(['handler' => new GuzzleHttpHandler()]);
+
+    $guzzle->request('POST', 'https://example.com/api/users', [
+        'on_trailers' => function (
+            array $trailers,
+            ResponseInterface $response,
+            RequestInterface $request
+        ): void {
+            // e.g. ['grpc-status' => ['0']]
+            $status = $trailers['grpc-status'][0] ?? null;
+        },
+    ]);
+
+The callback is called for error responses too, and before the
+``on_stats`` callback. It receives an empty array when the response has
+no trailers. It is not called if the transfer fails (the promise is
+rejected). When the decorated client does not expose the ``trailers``
+response info, the request fails with a Guzzle ``RequestException``
+instead of silently ignoring the option. The same happens if the
+callback throws: the ``RequestException`` then has the message "An error
+was encountered during the on_trailers event" and wraps the original
+exception as its previous one.
+
+.. versionadded:: 8.2
+
+    Support for the ``on_trailers`` request option was introduced in
+    Symfony 8.2.
+
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
 
