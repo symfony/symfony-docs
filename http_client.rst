@@ -2245,6 +2245,39 @@ The ``tick()`` method processes a single batch of network activity and Guzzle
 callbacks. This is useful when integrating with an existing event loop. The
 ``execute()`` method blocks until every pending request has completed.
 
+The handler also supports the ``on_trailers`` request option of Guzzle, which
+lets you read the HTTP trailers (the header fields sent after the response
+body, like the ``grpc-status`` field of gRPC services)::
+
+    use GuzzleHttp\Client;
+    use Psr\Http\Message\RequestInterface;
+    use Psr\Http\Message\ResponseInterface;
+    use Symfony\Component\HttpClient\GuzzleHttpHandler;
+
+    $guzzle = new Client(['handler' => new GuzzleHttpHandler()]);
+
+    $guzzle->request('GET', 'https://example.com/api/users', [
+        // called once the response is complete (including error responses) and
+        // before the 'on_stats' callback; it's not called if the transfer fails
+        'on_trailers' => function (
+            array $trailers,
+            ResponseInterface $response,
+            RequestInterface $request,
+        ): void {
+            // lowercased trailer names mapped to lists of values, e.g.
+            // ['grpc-status' => ['0']]; it's empty when there are no trailers
+            $grpcStatus = $trailers['grpc-status'][0] ?? null;
+        },
+    ]);
+
+If the callback throws an exception, or if the decorated HTTP client doesn't
+provide the ``trailers`` response info, the request fails with a Guzzle
+``RequestException`` instead of ignoring the option.
+
+.. versionadded:: 8.2
+
+    The ``on_trailers`` request option support was introduced in Symfony 8.2.
+
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
 
