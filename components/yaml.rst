@@ -453,6 +453,22 @@ objects, they are automatically transformed into YAML tags::
     $dumped = Yaml::dump($data);
     // $dumped = '!my_tag { foo: bar }'
 
+The parser also accepts documents whose root node is a block scalar, tagged or
+not. This lets you parse back a tagged multi-line string dumped with the
+``DUMP_MULTI_LINE_LITERAL_BLOCK`` flag::
+
+    $data = new TaggedValue('my_tag', "first line\nsecond line\n");
+    $dumped = Yaml::dump($data, 2, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
+    // $dumped = "!my_tag |\n    first line\n    second line\n"
+
+    $parsed = Yaml::parse($dumped, Yaml::PARSE_CUSTOM_TAGS);
+    // $parsed = TaggedValue('my_tag', "first line\nsecond line\n")
+
+.. versionadded:: 8.2
+
+    Support for parsing a block scalar as the root node of a document was
+    introduced in Symfony 8.2.
+
 Dumping Null Values
 ~~~~~~~~~~~~~~~~~~~
 
