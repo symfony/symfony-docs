@@ -2246,9 +2246,9 @@ callbacks. This is useful when integrating with an existing event loop. The
 ``execute()`` method blocks until every pending request has completed.
 
 The handler also supports Guzzle's ``on_trailers`` request option. Its
-callback receives the HTTP trailers of the response (as an array of header
-names mapped to lists of values), the PSR-7 response and the request, once
-the transfer completes::
+callback receives the HTTP trailers of the response (as an array of
+header names mapped to lists of values), the PSR-7 response and the
+request, once the transfer completes::
 
     use GuzzleHttp\Client;
     use Psr\Http\Message\RequestInterface;
@@ -2268,12 +2268,15 @@ the transfer completes::
         },
     ]);
 
-The callback is called for error responses too, and before the ``on_stats``
-callback. It receives an empty array when the response has no trailers and it
-is not called if the transfer fails. When the decorated HTTP client does not
-expose the ``trailers`` response info, the request fails with a Guzzle
-``RequestException`` instead of silently ignoring the option. The same
-exception is thrown if the callback itself throws.
+The callback is called for error responses too, and before the
+``on_stats`` callback. It receives an empty array when the response has
+no trailers. It is not called if the transfer fails (the promise is
+rejected). When the decorated client does not expose the ``trailers``
+response info, the request fails with a Guzzle ``RequestException``
+instead of silently ignoring the option. The same happens if the
+callback throws: the ``RequestException`` then has the message "An error
+was encountered during the on_trailers event" and wraps the original
+exception as its previous one.
 
 .. versionadded:: 8.2
 
