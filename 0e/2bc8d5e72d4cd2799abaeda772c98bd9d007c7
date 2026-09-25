@@ -1,0 +1,124 @@
+---------------------------------------------------------------------------
+
+by welcoMattic at 2026-09-08T13:36:47Z
+
+@Spomky the page now covers your two merges: the `client_authentication` node of symfony/symfony#65895 (#22951) in "Authenticating at the Token Endpoint", and the refresh token grant of symfony/symfony#65875 (#22941) in the new "Renewing the Access Token" section. Could you review those two sections?
+
+---------------------------------------------------------------------------
+
+by Spomky at 2026-09-09T19:45:59Z
+
+@welcoMattic thanks, I'll go through those two sections.
+
+While you have the page open: symfony/symfony#65910 landed in 8.2 too and added an `http_client` option to `oidc_login`, which #22956 tracks. The page doesn't cover it yet, and since it belongs to the same authenticator it would be a shame to document it in a separate PR on top of yours. Here is the section, if you want to fold it in.
+
+It goes after "Verifying the ID Token Signature" and before the `.. _oidc-login-renewing-access-token:` label, as a top-level section:
+
+````rst
+Configuring the HTTP Client
+---------------------------
+
+Every request the authenticator makes to the provider goes through the
+``http_client`` service: the discovery document, the JWKS, the token endpoint
+and the UserInfo endpoint. Some providers require a ``User-Agent`` identifying
+your application, and base their quotas and their diagnostics on it; you may
+also want a timeout or a retry policy of your own. The ``http_client`` option
+takes the id of the client to use instead, and covers the four requests at
+once:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        http_client: oidc.client
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'http_client' => 'oidc.client',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+``oidc.client`` is any service implementing
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`, most often a
+scoped client (see :doc:`/http_client`):
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        http_client:
+            scoped_clients:
+                oidc.client:
+                    scope: 'https://accounts\.example\.com'
+                    headers: { 'User-Agent': 'AcmeApp/1.0 (+https://acme.example.com)' }
+                    timeout: 5
+                    retry_failed: { max_retries: 2 }
+
+.. caution::
+
+    The ``scope`` of a scoped client must match every endpoint, not only the
+    issuer. The requests are made to the absolute URLs the provider announces
+    in its discovery document, and those often live on other hosts: Google
+    announces ``oauth2.googleapis.com`` for its token endpoint,
+    ``www.googleapis.com`` for its JWKS and ``openidconnect.googleapis.com``
+    for its UserInfo, while its issuer is ``accounts.google.com``. The options
+    of a scoped client apply to the URLs its scope matches and to nothing else,
+    without warning, so a client scoped on the issuer alone reaches the
+    discovery request and leaves the three others with the defaults.
+
+When the provider spreads its endpoints over several hosts, build the client
+with :method:`Symfony\\Contracts\\HttpClient\\HttpClientInterface::withOptions`
+instead: its options apply to every request, whatever the host.
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        oidc.client:
+            class: Symfony\Contracts\HttpClient\HttpClientInterface
+            factory: ['@http_client', 'withOptions']
+            arguments:
+                -
+                    headers: { 'User-Agent': 'AcmeApp/1.0 (+https://acme.example.com)' }
+                    timeout: 5
+
+.. warning::
+
+    Never put the client credentials on this client, with ``auth_basic`` or a
+    header of your own. They would be sent to the discovery, JWKS and UserInfo
+    requests too, which have no business seeing them, and ``auth_basic``
+    base64-encodes both halves verbatim where ``client_secret_basic``
+    form-urlencodes them first, as `RFC 6749`_, Section 2.3.1 requires. The
+    ``client_authentication`` option sends them to the token endpoint alone,
+    in the form the specification asks for.
+````
+
+And in "Configuration Reference", after the `client_authentication` entry:
+
+````rst
+``http_client`` (default: ``http_client``)
+    The id of the HTTP client used for every request made to the provider: the
+    discovery document, the JWKS, the token endpoint and the UserInfo endpoint.
+````
+
+Two points worth keeping, both of which the `info()` of the option carries: a scoped client silently applies its options only to the URLs its scope matches, which bites whenever the provider spreads its endpoints over several hosts; and the client credentials belong to `client_authentication`, never to the HTTP client. An `auth_basic` set on the client does reach the token endpoint (`HttpClientTrait::mergeDefaultOptions()` merges `headers`), so it appears to work, but it also leaks to the three other requests and encodes the credentials differently from what RFC 6749 asks for.
+
+Happy to open a follow-up PR against 8.2 once yours is merged if you'd rather keep this one focused.
