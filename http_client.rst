@@ -1171,6 +1171,11 @@ following methods::
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
 
+    // gets the HTTP trailers (the fields that some servers, such as gRPC ones, send
+    // after the body) as string[][] with the names lower-cased; it's null until the
+    // whole response arrives, and an empty array if the server sent no trailers
+    $trailers = $response->getInfo('trailers');
+
     // the special "pause_handler" info item is a callable that allows you to delay the request
     // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
     $response->getInfo('pause_handler')(2);
@@ -1184,6 +1189,10 @@ following methods::
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
+
+.. versionadded:: 8.2
+
+    The ``trailers`` info was introduced in Symfony 8.2.
 
 .. _http-client-streaming-responses:
 
