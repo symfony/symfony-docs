@@ -708,6 +708,80 @@ to spot untranslated strings:
     # when using the --no-fill option, the --prefix option is ignored
     $ php bin/console translation:extract --force --no-fill fr
 
+.. _translation-update-xliff-sources:
+
+Using Default Locale Messages as XLIFF Sources
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In XLIFF files, each ``<trans-unit>`` element pairs a ``<source>`` element with
+a ``<target>`` element. When using keywords as messages, the ``<source>``
+element contains that keyword:
+
+.. code-block:: xml
+
+    <!-- translations/messages.fr.xlf -->
+    <trans-unit id="hRwba7W" resname="app.greeting">
+        <source>app.greeting</source>
+        <target>Bonjour</target>
+    </trans-unit>
+
+Translation tools show the ``<source>`` contents as the text to translate, but a
+keyword such as ``app.greeting`` doesn't tell translators what the original
+message says. Run the ``translation:update-xliff-sources`` command to replace
+those keywords with the messages of the default locale:
+
+.. code-block:: terminal
+
+    $ php bin/console translation:update-xliff-sources
+
+The command changes the ``<source>`` element and keeps the ``<target>``
+element as is:
+
+.. code-block:: xml
+
+    <!-- translations/messages.fr.xlf -->
+    <trans-unit id="hRwba7W" resname="app.greeting">
+        <source>Hello!</source>
+        <target>Bonjour</target>
+    </trans-unit>
+
+Messages that don't exist in the default locale keep their ``<source>``
+element unchanged.
+
+By default, the command updates the files of all the
+:ref:`enabled locales <reference-translator-enabled-locales>` stored in the
+``default_path`` and ``paths`` directories of the
+:ref:`translator configuration <translation-resource-locations>`:
+
+.. code-block:: terminal
+
+    # update only some locales (this option is required when your app
+    # doesn't define the enabled_locales option)
+    $ php bin/console translation:update-xliff-sources --locales fr --locales de
+
+    # update only some translation domains
+    $ php bin/console translation:update-xliff-sources --domains messages
+
+    # update the files stored in other directories
+    $ php bin/console translation:update-xliff-sources translations/ src/translations/
+
+    # write XLIFF 2.0 files instead of the default XLIFF 1.2 files
+    $ php bin/console translation:update-xliff-sources --format xlf20
+
+.. warning::
+
+    When any source of a locale changes, the command rewrites all the files of
+    that locale in that directory as ``.xlf`` files, using the XLIFF version
+    set in the ``--format`` option. If your files use XLIFF 2.0, pass
+    ``--format xlf20`` or the command converts them to XLIFF 1.2. If the locale
+    also has files in other formats (e.g. YAML), the command creates ``.xlf``
+    files with the same messages next to them.
+
+.. versionadded:: 8.2
+
+    The ``translation:update-xliff-sources`` command was introduced in
+    Symfony 8.2.
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
