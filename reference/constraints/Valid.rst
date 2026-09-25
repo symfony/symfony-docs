@@ -241,8 +241,11 @@ the validation of the ``Address`` fields failed.
 
 .. tip::
 
-    If you also want to validate that the ``address`` property is an instance of
-    the ``App\Entity\Address`` class, add the :doc:`Type constraint </reference/constraints/Type>`.
+    If the property can contain values of different types, use
+    :ref:`conditional cascading
+    <reference-constraint-sequentially-conditional-cascading>` to apply the
+    ``Type`` constraint before ``Valid``. This prevents validation from
+    cascading into a scalar value.
 
 Options
 -------
@@ -262,6 +265,11 @@ Options
 ~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``true``
+
+When ``Valid`` is nested in :ref:`Sequentially
+<reference-constraint-sequentially-conditional-cascading>`, configure groups on
+``Sequentially`` instead. The nested ``Valid`` cannot define its own groups, so
+setting ``restrictGroups`` to ``false`` has no effect in this form.
 
 Consider the following class::
 
