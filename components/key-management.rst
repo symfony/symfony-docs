@@ -9,7 +9,7 @@ The KeyManagement Component
 
 .. warning::
 
-    The KeyManagement component is :doc:`experimental </contributing/code/experimental>`
+    The KeyManagement component is :ref:`experimental <experimental-features>`
     and is not covered by Symfony's :doc:`Backward Compatibility Promise </contributing/code/bc>`.
 
 If you're using the Symfony Framework, read the
@@ -102,13 +102,17 @@ decrypt them. Persist it as-is (stringification yields the raw bytes).
 Additional Authenticated Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``$aad`` argument is integrity-protected (the same bytes must be
-supplied at decryption time) but is **not** encrypted. Use it to bind a
-ciphertext to a context (tenant id, user id, document type, ...) so that a
-ciphertext stolen from one row cannot be replayed in another::
+The third argument of ``encrypt()`` and the second one of ``decrypt()`` hold
+the Additional Authenticated Data (AAD): bytes that are integrity-protected
+(the same value must be supplied at decryption time) but **not** encrypted.
+Use them to bind a ciphertext to a context (tenant id, user id, document
+type, ...) so that a ciphertext stolen from one row cannot be replayed in
+another::
 
-    $ciphertext = $kms->encrypt('app-key', $payload, aad: 'tenant=acme');
-    $plaintext = $kms->decrypt($ciphertext, aad: 'tenant=acme');
+    $aad = 'tenant=acme';
+
+    $ciphertext = $kms->encrypt('app-key', $payload, $aad);
+    $plaintext = $kms->decrypt($ciphertext, $aad);
 
 AAD is treated as opaque bytes. If you have structured data, serialize it
 to a stable form (e.g. canonical JSON with sorted keys) before passing it.
@@ -120,14 +124,15 @@ Deterministic Encryption
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default each call uses a fresh random nonce, so the same plaintext
-encrypts to a different ciphertext every time. Setting ``$deterministic``
-to ``true`` derives the nonce from the AAD and the plaintext keyed by the
-master key (HMAC-SHA512 truncated for OpenSSL, keyed BLAKE2b for libsodium),
-so the same ``(key, AAD, plaintext)`` triple always yields the same
-ciphertext. This enables exact-match indexing on encrypted columns at the
-cost of leaking equality::
+encrypts to a different ciphertext every time. The fourth argument of
+``encrypt()`` derives the nonce from the AAD and the plaintext keyed by the
+master key instead (HMAC-SHA512 truncated for OpenSSL, keyed BLAKE2b for
+libsodium), so the same ``(key, AAD, plaintext)`` triple always yields the
+same ciphertext. This enables exact-match indexing on encrypted columns at
+the cost of leaking equality::
 
-    $ciphertext = $kms->encrypt('app-key', $email, deterministic: true);
+    // the third argument is the AAD, the fourth turns on determinism
+    $ciphertext = $kms->encrypt('app-key', $email, '', true);
 
 The AAD takes part in that derivation, and does so unambiguously: two
 encryptions differing only by their AAD would otherwise reuse a nonce under
@@ -136,7 +141,8 @@ Two ciphertexts are therefore only comparable when they were produced with
 the same AAD.
 
 Only the local symmetric backends offer it. Sealed box and every cloud
-bridge (AWS KMS, Azure Key Vault, Google Cloud KMS, Vault Transit) throw
+bridge (AWS KMS, Azure Key Vault, Google Cloud KMS, HashiCorp Vault Transit)
+throw
 :class:`Symfony\\Component\\KeyManagement\\Exception\\UnsupportedOperationException`
 when ``$deterministic`` is ``true``.
 
@@ -179,7 +185,7 @@ binding is defense in depth: the local AEAD always catches AAD mismatches
 even on backends where the KMS cannot enforce them.
 
 Envelopes are always randomized: there is no deterministic counterpart to
-the ``$deterministic`` flag of the direct path. A stable output would require
+the deterministic flag of the direct path. A stable output would require
 a stable data key, which ``generateDataKey()`` refuses to return by contract.
 When equal plaintexts must yield equal ciphertexts, encrypt through the
 direct path on a backend that offers the flag, or keep a
@@ -405,7 +411,7 @@ filesystem, install ``symfony/flysystem-key-management``
 DSN Schemes
 ~~~~~~~~~~~
 
-The matching factories accept a DSN, which is the format the FrameworkBundle
+The matching factories accept a DSN, which is the format the ``key_management``
 configuration uses internally:
 
 ==========================================  =======================================================================
@@ -550,7 +556,9 @@ previous AEAD setup.
 Authentication uses Azure AD's ``client_credentials`` grant by default. To
 plug Managed Identity, Workload Identity, or any other flow, implement
 :class:`Symfony\\Component\\KeyManagement\\Bridge\\AzureKeyVault\\TokenProviderInterface`
-and pass it to ``AzureKeyVault`` directly.
+and pass it to ``AzureKeyVault`` directly. Token providers are expected to
+cache the token until it expires, which is why the interface also has an
+``invalidateToken()`` method; see :ref:`key-management-token-refresh`.
 
 Google Cloud KMS
 ~~~~~~~~~~~~~~~~
@@ -601,6 +609,33 @@ GCE/GKE/Cloud Run metadata server, Workload Identity Federation, or any
 other flow, implement
 :class:`Symfony\\Component\\KeyManagement\\Bridge\\GoogleCloudKms\\TokenProviderInterface`.
 
+.. _key-management-token-refresh:
+
+Refreshing a Rejected Token
+...........................
+
+A cached token that the provider revokes, or that the KMS rejects for any
+other reason, would keep failing every call until it expires. Both bridges
+therefore call ``invalidateToken()`` on their token provider when the KMS
+answers ``401``, ask for a token again and retry the request once if the new
+token differs. A ``403`` is reported as it is: both vendors document it as a
+permission or firewall denial, which another token doesn't change.
+
+A provider that caches nothing leaves the method empty. One with a cache of
+its own drops the entry only when it still holds the rejected token, so a
+token another caller has already refreshed survives::
+
+    public function invalidateToken(#[\SensitiveParameter] string $token): void
+    {
+        if ($this->cachedToken === $token) {
+            $this->cachedToken = null;
+        }
+    }
+
+The method only evicts a cached value: it must not revoke the token remotely
+nor log it. A cache shared between processes doesn't need to compare and
+delete atomically either, the worst case being one extra token request.
+
 Cloud KMS does not expose a ``GenerateDataKey`` primitive. The bridge mirrors
 the Azure pattern: a fresh DEK is drawn locally with ``random_bytes()`` and
 wrapped via the regular ``:encrypt`` endpoint.
@@ -612,7 +647,7 @@ Install the bridge:
 
 .. code-block:: terminal
 
-    $ composer require symfony/vault-key-management
+    $ composer require symfony/hashicorp-vault-key-management
 
 It implements both
 :class:`Symfony\\Component\\KeyManagement\\EncrypterInterface` and
@@ -620,7 +655,7 @@ It implements both
 `Vault Transit secret engine`_::
 
     use Symfony\Component\HttpClient\HttpClient;
-    use Symfony\Component\KeyManagement\Bridge\Vault\TransitKms;
+    use Symfony\Component\KeyManagement\Bridge\HashiCorpVault\TransitKms;
 
     $kms = new TransitKms(
         HttpClient::createForBaseUri('https://vault.example.com:8200/v1/'),
@@ -634,7 +669,7 @@ DSN scheme:
 
 .. code-block:: text
 
-    vault-transit://<token>@<host>[:<port>][/<path>][?mount=<mount>&namespace=<ns>&scheme=http]
+    hashicorp-vault-transit://<token>@<host>[:<port>][/<path>][?mount=<mount>&namespace=<ns>&scheme=http]
 
 Default mount point is ``transit``. The ``namespace`` option maps to
 Vault's ``X-Vault-Namespace`` header (Vault Enterprise multi-tenancy). The
@@ -680,8 +715,33 @@ It exposes a
 that lets the local backends source their key material through any
 `league/flysystem`_ reader (S3, FTP, SFTP, Azure Blob, Google Cloud
 Storage, ...). It also registers three DSN schemes (``sodium+fly://``,
-``openssl+fly://`` and ``sodium-sealed-box+fly://``) that the
-FrameworkBundle picks up automatically.
+``openssl+fly://`` and ``sodium-sealed-box+fly://``) that
+``KeyManagementBundle`` picks up automatically.
+
+.. warning::
+
+    An object store is a place to keep key material, not a key manager. Even
+    behind ACLs, audit logs and server-side access controls, the application
+    still fetches the key material over the network and holds it in memory,
+    which a real KMS never allows: AWS KMS, Azure Key Vault, Google Cloud KMS
+    and HashiCorp Vault Transit run the cryptographic operations themselves
+    and never hand out the master key. Use this bridge for self-hosted and
+    development setups, not as a replacement for one of those providers.
+
+The loader keeps each key in memory after it reads it, so a remote storage is
+read once per key instead of once per KMS operation. A failed read is not
+kept, so the next lookup tries again. Call ``reset()`` to drop what is kept;
+a loader registered as a service does it between requests with the
+``kernel.reset`` tag and the ``method`` attribute set to ``reset``. A client
+built from a DSN opts into the same thing with ``reset=1``:
+
+.. code-block:: text
+
+    sodium+fly://keys.storage/keys?ext=.key&reset=1
+
+Without that option the keys stay in memory across requests. The loader
+cannot be serialized, and a clone of it starts with nothing kept while the
+original keeps what it read.
 
 Doctrine DBAL
 ~~~~~~~~~~~~~
@@ -755,6 +815,60 @@ attribute, and adds the data key store table to the schema the ORM generates
 so ``doctrine:schema:update`` and the migrations diff know about it. See
 :ref:`key-management-blind-index-doctrine` in the framework documentation.
 
+.. _key-management-composite:
+
+Wrapping Under Several Providers
+--------------------------------
+
+Everything the component protects comes down to one master key: a provider
+that is unreachable stops every decryption, and one that is gone for good
+takes every payload with it.
+:class:`Symfony\\Component\\KeyManagement\\CompositeKms` is a client made
+of several, so that neither happens. It takes a PSR-11 container of clients
+and the master key each member wraps under, ``null`` meaning the key id
+given to each call::
+
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+    use Symfony\Component\KeyManagement\CompositeKms;
+
+    $kms = new CompositeKms(new ServiceLocator([
+        'aws' => fn () => $aws,
+        'azure' => fn () => $azure,
+    ]), [
+        'aws' => null,
+        'azure' => 'https://vault.azure.net/keys/app',
+    ]);
+
+    // wrapped by both providers, in one blob
+    $ciphertext = $kms->encrypt('alias/app-key', 'hello world');
+
+    // read back through the first member that answers
+    $plaintext = $kms->decrypt($ciphertext);
+
+Writing goes through every member, and a member that cannot wrap fails the
+whole call: a ciphertext missing one wrapping would be less redundant than
+the configuration claims. Reading needs one: the members are asked in order,
+the first that answers wins, and one that is gone or failing is passed over
+with a message to the logger, since nothing else tells the caller. When none
+answers, the first member's failure is the one reported.
+
+Because it sits at the client level, every path is covered without a change
+of format: direct ciphertexts, both envelope shapes, stored data keys and
+blind index keys. A ciphertext that is not a composite frame is one a member
+wrote before it joined, and it is handed to each member in turn, so an
+application that switches to a composite client keeps reading what it wrote
+before, with nothing to rewrap.
+
+The member names are recorded in the blob, with the same consequence as the
+``client`` column of a data key store: a member that is renamed no longer
+finds its wrappings, while the others keep reading. Losing a provider for
+good is recovered by dropping it from the members, a composite of one being
+allowed; running ``key-management:rewrap-data-keys`` then wraps every stored
+key under the remaining list.
+
+In a Symfony application, a composite client is declared among the others;
+see :ref:`key-management-composite-config` in the framework documentation.
+
 .. _key-management-wire-format:
 
 The Envelope Wire Format
@@ -794,7 +908,7 @@ Serializer Integration
 ----------------------
 
 When the :doc:`Serializer component </serializer>` is installed,
-the FrameworkBundle registers
+``KeyManagementBundle`` registers
 :class:`Symfony\\Component\\KeyManagement\\Serializer\\EnvelopeNormalizer`
 automatically. It encodes an ``Envelope`` to (and from) a base64-encoded
 string so it travels through any structured format (JSON, XML, YAML, ...)
@@ -843,8 +957,7 @@ think about it if you call ``generateDataKey()`` yourself.
 Testing
 -------
 
-Two in-memory doubles live in the ``Test\`` namespace, for test fixtures
-only:
+Three doubles live in the ``Test\`` namespace, for test fixtures only:
 
 * :class:`Symfony\\Component\\KeyManagement\\Test\\InMemoryKms`: a no-crypto
   ``EncrypterInterface``/``DecrypterInterface``/``DataKeyGeneratorInterface``
@@ -863,6 +976,28 @@ only:
       use Symfony\Component\KeyManagement\Test\InMemoryDataKeyStore;
 
       $encrypter = new StoredEnvelopeEncrypter(new InMemoryDataKeyStore());
+
+:class:`Symfony\\Component\\KeyManagement\\Test\\SwitchableKms` is the third
+one, and it answers a different question: what the application does while a
+provider is down. It wraps a client and throws the exception it was given
+instead of answering while its ``$down`` property is ``true``; its ``$calls``,
+``$keyIds`` and ``$deterministic`` properties record what it was asked::
+
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+    use Symfony\Component\KeyManagement\CompositeKms;
+    use Symfony\Component\KeyManagement\Test\InMemoryKms;
+    use Symfony\Component\KeyManagement\Test\SwitchableKms;
+
+    $aws = new SwitchableKms(new InMemoryKms());
+    $kms = new CompositeKms(new ServiceLocator([
+        'aws' => fn () => $aws,
+        'azure' => fn () => new InMemoryKms(),
+    ]), ['aws' => null, 'azure' => 'backup']);
+
+    $ciphertext = $kms->encrypt('app', 'secret');
+
+    $aws->down = true;
+    $kms->decrypt($ciphertext); // still "secret", read through "azure"
 
 .. _async-aws/kms: https://async-aws.com/
 .. _Azure Key Vault REST API: https://learn.microsoft.com/rest/api/keyvault/
