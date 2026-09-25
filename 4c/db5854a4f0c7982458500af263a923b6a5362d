@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-09-08T08:13:51Z
+
+Good catch, and you are right that it is not custom-only: symfony/symfony#65839 instruments 9 built-in authenticators (form_login, json_login, http_basic, login_link, access_token, remember_me, oidc, plus the two abstract bases).
+
+I kept the detail where someone writing `supports()` needs it, and added a pointer from the "Authenticating Users" section of `security.rst` so users of the built-in ones find it too. Thanks for the read!
