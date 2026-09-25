@@ -1295,6 +1295,71 @@ information about how to run commands in tests.
 
     The Console assertions were introduced in Symfony 8.1.
 
+.. _testing-debug-class-loader-deprecations:
+
+Classifying DebugClassLoader Deprecations
+-----------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``DebugClassLoaderIssueTriggerResolver`` class was introduced in
+    Symfony 8.2.
+
+Symfony's ``DebugClassLoader`` reports potential compatibility problems while
+classes are loaded. For example, it warns when application code uses an API
+considered final or when a method signature must change before upgrading a
+dependency.
+
+PHPUnit can filter deprecations based on whether application or third-party
+code caused them. However, ``DebugClassLoader`` reports these issues on behalf
+of the loaded class, so PHPUnit can't identify the relevant source files from
+the stack trace alone. This may cause deprecations that require changes in your
+application to be classified as indirect and hidden.
+
+When using PHPUnit 13.1 or later, register the PHPUnit Bridge issue trigger
+resolver in ``phpunit.dist.xml``:
+
+.. code-block:: xml
+
+    <!-- phpunit.dist.xml -->
+    <phpunit>
+        <!-- ... -->
+        <source
+            ignoreIndirectDeprecations="true"
+            ignoreSuppressionOfDeprecations="true"
+        >
+            <include>
+                <directory>src</directory>
+            </include>
+            <issueTriggerResolvers>
+                <issueTriggerResolver className="Symfony\Bridge\PhpUnit\DebugClassLoaderIssueTriggerResolver"/>
+            </issueTriggerResolvers>
+        </source>
+    </phpunit>
+
+The ``<include>`` element defines which files belong to your application. Change
+the ``src`` directory if your application code is stored elsewhere.
+
+The ``ignoreSuppressionOfDeprecations`` option is required because
+``DebugClassLoader`` suppresses the ``trigger_error()`` call that reports these
+deprecations. This option also makes PHPUnit process other suppressed
+``E_USER_DEPRECATED`` errors, which remain subject to the configured source
+filters.
+
+The ``ignoreIndirectDeprecations`` option is optional. In this example it hides
+deprecations caused entirely by third-party code while the resolver keeps these
+application-related categories visible:
+
+* **Direct deprecations** occur when an application class uses an API from a
+  dependency. This includes notices about deprecated, final or internal APIs
+  and return type compatibility. Setting ``ignoreDirectDeprecations`` hides
+  these notices.
+* **Self deprecations** concern the loaded application class itself. In
+  particular, notices that a method will require a new argument in a parent
+  class or interface are classified as self. Setting
+  ``ignoreSelfDeprecations`` hides these actionable notices, so it isn't
+  included in the configuration above.
+
 Learn more
 ----------
 
