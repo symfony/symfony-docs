@@ -2,15 +2,15 @@ Encrypting Data with KMS
 ========================
 
 Symfony provides a Key Management System integration through the
-:doc:`KeyManagement component </components/key-management>` and the ``framework.key_management``
-configuration entry. It lets you encrypt and decrypt application data
-through a central key (held by AWS KMS, HashiCorp Vault Transit, a local
-keystore, ...) without ever exposing the master key material to the
-application.
+:doc:`KeyManagement component </components/key-management>` and the
+``key_management`` configuration it provides. It lets you encrypt and decrypt
+application data through a central key (held by AWS KMS, HashiCorp Vault
+Transit, a local keystore, ...) without ever exposing the master key material
+to the application.
 
 .. warning::
 
-    The KeyManagement component is :doc:`experimental </contributing/code/experimental>`
+    The KeyManagement component is :ref:`experimental <experimental-features>`
     and is not covered by Symfony's :doc:`Backward Compatibility Promise </contributing/code/bc>`.
 
 .. versionadded:: 8.2
@@ -32,7 +32,7 @@ Then install one or more bridges depending on where your master keys live:
     $ composer require symfony/aws-key-management
     $ composer require symfony/azure-keyvault-key-management
     $ composer require symfony/google-cloud-key-management
-    $ composer require symfony/vault-key-management
+    $ composer require symfony/hashicorp-vault-key-management
 
     # Source local keys from S3, FTP, Azure Blob, ...
     $ composer require symfony/flysystem-key-management
@@ -50,18 +50,19 @@ self-hosted setups.
 Configuration
 -------------
 
-KMS clients are declared by DSN under ``framework.key_management``:
+The component ships its own bundle, ``KeyManagementBundle``, which the
+FrameworkBundle registers as soon as the package is installed. KMS clients are
+declared by DSN under its ``key_management`` configuration:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/packages/key_management.yaml
-        framework:
-            key_management:
-                default_client: app
-                clients:
-                    app: '%env(KMS_DSN)%'
+        key_management:
+            default_client: app
+            clients:
+                app: '%env(KMS_DSN)%'
 
     .. code-block:: php
 
@@ -69,19 +70,17 @@ KMS clients are declared by DSN under ``framework.key_management``:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return App::config([
-            'framework' => [
-                'key_management' => [
-                    'default_client' => 'app',
-                    'clients' => [
-                        'app' => env('KMS_DSN'),
-                    ],
+            'key_management' => [
+                'default_client' => 'app',
+                'clients' => [
+                    'app' => env('KMS_DSN'),
                 ],
             ],
         ]);
 
 When a single client is registered, the ``default_client`` entry is
 inferred and can be omitted. As a shortcut, you can also pass a single
-DSN as the value of ``framework.key_management`` itself; it expands to one client
+DSN as the value of ``key_management`` itself; it expands to one client
 named ``default``.
 
 DSN Schemes
@@ -89,24 +88,24 @@ DSN Schemes
 
 Each backend documents its own DSN scheme. The most common ones are:
 
-============================  =========================================  =======================================
-Scheme                        Required package                           Backend
-============================  =========================================  =======================================
-``sodium://``                 ``symfony/key-management``                 Local XChaCha20-Poly1305 (inline keys)
-``sodium+dir://``             ``symfony/key-management``                 Local XChaCha20-Poly1305 (key dir)
-``openssl://``                ``symfony/key-management``                 Local AES-256-GCM (inline keys)
-``openssl+dir://``            ``symfony/key-management``                 Local AES-256-GCM (key dir)
-``sodium-sealed-box://``      ``symfony/key-management``                 Local sealed box (inline keys)
-``sodium-sealed-box+dir://``  ``symfony/key-management``                 Local sealed box (key dir)
-``aws-kms://``                ``symfony/aws-key-management``             AWS Key Management Service
-``azure-keyvault://``         ``symfony/azure-keyvault-key-management``  Azure Key Vault / Managed HSM
-``gcp-kms://``                ``symfony/google-cloud-key-management``    Google Cloud KMS
-``vault-transit://``          ``symfony/vault-key-management``           HashiCorp Vault Transit
-``sodium+fly://``             ``symfony/flysystem-key-management``       XChaCha20 + Flysystem-loaded keys
-``openssl+fly://``            ``symfony/flysystem-key-management``       AES-256-GCM + Flysystem-loaded keys
-``sodium-sealed-box+fly://``  ``symfony/flysystem-key-management``       Sealed box + Flysystem-loaded keys
-``service://<id>``            ``symfony/framework-bundle``               A client the application built itself
-============================  =========================================  =======================================
+==============================  ==========================================  ======================================
+Scheme                          Required package                            Backend
+==============================  ==========================================  ======================================
+``sodium://``                   ``symfony/key-management``                  Local XChaCha20-Poly1305 (inline keys)
+``sodium+dir://``               ``symfony/key-management``                  Local XChaCha20-Poly1305 (key dir)
+``openssl://``                  ``symfony/key-management``                  Local AES-256-GCM (inline keys)
+``openssl+dir://``              ``symfony/key-management``                  Local AES-256-GCM (key dir)
+``sodium-sealed-box://``        ``symfony/key-management``                  Local sealed box (inline keys)
+``sodium-sealed-box+dir://``    ``symfony/key-management``                  Local sealed box (key dir)
+``aws-kms://``                  ``symfony/aws-key-management``              AWS Key Management Service
+``azure-keyvault://``           ``symfony/azure-keyvault-key-management``   Azure Key Vault / Managed HSM
+``gcp-kms://``                  ``symfony/google-cloud-key-management``     Google Cloud KMS
+``hashicorp-vault-transit://``  ``symfony/hashicorp-vault-key-management``  HashiCorp Vault Transit
+``sodium+fly://``               ``symfony/flysystem-key-management``        XChaCha20 + Flysystem-loaded keys
+``openssl+fly://``              ``symfony/flysystem-key-management``        AES-256-GCM + Flysystem-loaded keys
+``sodium-sealed-box+fly://``    ``symfony/flysystem-key-management``        Sealed box + Flysystem-loaded keys
+``service://<id>``              ``symfony/key-management``                  A client the application built itself
+==============================  ==========================================  ======================================
 
 See :doc:`/components/key-management` for the syntax and options of each scheme.
 The bridges reject any query option they do not know, so a typo in one of
@@ -152,12 +151,11 @@ or rotation cadences:
     .. code-block:: yaml
 
         # config/packages/key_management.yaml
-        framework:
-            key_management:
-                default_client: app
-                clients:
-                    app: '%env(KMS_APP_DSN)%'
-                    pii: '%env(KMS_PII_DSN)%'
+        key_management:
+            default_client: app
+            clients:
+                app: '%env(KMS_APP_DSN)%'
+                pii: '%env(KMS_PII_DSN)%'
 
     .. code-block:: php
 
@@ -165,16 +163,70 @@ or rotation cadences:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return App::config([
-            'framework' => [
-                'key_management' => [
-                    'default_client' => 'app',
-                    'clients' => [
-                        'app' => env('KMS_APP_DSN'),
-                        'pii' => env('KMS_PII_DSN'),
-                    ],
+            'key_management' => [
+                'default_client' => 'app',
+                'clients' => [
+                    'app' => env('KMS_APP_DSN'),
+                    'pii' => env('KMS_PII_DSN'),
                 ],
             ],
         ]);
+
+.. _key-management-composite-config:
+
+Wrapping Under Several Providers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A client declared by its ``members`` instead of a DSN is a composite one: it
+wraps everything it encrypts under each member and reads it back through the
+first member that answers, so that a provider being unreachable, or lost for
+good, doesn't take the data with it. Each member names a configured client
+and the master key it wraps under, ``null`` meaning the key id given to each
+call:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/key_management.yaml
+        key_management:
+            clients:
+                aws: '%env(AWS_KMS_DSN)%'
+                azure: '%env(AZURE_KEY_VAULT_DSN)%'
+                app:
+                    members:
+                        # the first member mints the data keys and answers first
+                        aws: ~
+                        azure: 'https://vault.azure.net/keys/app'
+            default_client: app
+
+    .. code-block:: php
+
+        // config/packages/key_management.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'key_management' => [
+                'clients' => [
+                    'aws' => env('AWS_KMS_DSN'),
+                    'azure' => env('AZURE_KEY_VAULT_DSN'),
+                    'app' => [
+                        'members' => [
+                            'aws' => null,
+                            'azure' => 'https://vault.azure.net/keys/app',
+                        ],
+                    ],
+                ],
+                'default_client' => 'app',
+            ],
+        ]);
+
+It is a client like any other: it gets the same service ids, the same
+autowiring aliases, it is traced by the profiler and it can be the default
+one. A member must be a configured client, which a client the application
+registered itself becomes through a ``service://`` DSN, and it cannot be
+composite itself. See :ref:`key-management-composite` for what the ciphertext
+then carries and how a lost provider is recovered.
 
 .. _key-management-store-config:
 
@@ -197,23 +249,25 @@ handful of rows:
     .. code-block:: yaml
 
         # config/packages/key_management.yaml
-        framework:
-            key_management:
-                clients:
-                    app: '%env(KMS_DSN)%'
-                store:
-                    # the client wrapping the data keys this store creates
-                    client: app
-                    # the master key on that client
-                    key_id: 'alias/app-key'
-                    # defaults below
-                    connection: 'doctrine.dbal.default_connection'
-                    table: 'key_management_data_keys'
-                    # seconds after which the current data key of a scope is
-                    # retired in favour of a fresh one; the default of 30 days
-                    # keeps what one key seals under the collision bound of the
-                    # random 96-bit IV each payload carries
-                    max_age: 2592000
+        key_management:
+            clients:
+                app: '%env(KMS_DSN)%'
+            store:
+                # the master key wrapping the data keys this store creates;
+                # the only required option
+                key_id: 'alias/app-key'
+                # the client that master key belongs to; defaults to the
+                # default client
+                client: app
+                # defaults below
+                connection: 'doctrine.dbal.default_connection'
+                table: 'key_management_data_keys'
+                # seconds after which the current data key of a scope is
+                # retired in favour of a fresh one; the default of 30 days
+                # keeps what one key seals under the collision bound of the
+                # random 96-bit IV each payload carries. 0 retires the key on
+                # every call, null never retires it
+                max_age: 2592000
 
     .. code-block:: php
 
@@ -221,15 +275,13 @@ handful of rows:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return App::config([
-            'framework' => [
-                'key_management' => [
-                    'clients' => [
-                        'app' => env('KMS_DSN'),
-                    ],
-                    'store' => [
-                        'client' => 'app',
-                        'key_id' => 'alias/app-key',
-                    ],
+            'key_management' => [
+                'clients' => [
+                    'app' => env('KMS_DSN'),
+                ],
+                'store' => [
+                    'key_id' => 'alias/app-key',
+                    'client' => 'app',
                 ],
             ],
         ]);
@@ -338,8 +390,7 @@ To inject a non-default client, name it with the
     }
 
 Each client is also aliased to a parameter named after it and suffixed by
-``KeyManagement`` (``$piiKeyManagement``), which autowiring still honours
-without the attribute.
+``Kms`` (``$piiKms``), which autowiring still honours without the attribute.
 
 For envelope encryption, inject
 :class:`Symfony\\Component\\KeyManagement\\EnvelopeEncrypterInterface` /
@@ -364,7 +415,8 @@ so that components which only need to read or only need to write can
 declare that intent at the type level.
 
 When a store is configured, the unqualified interfaces resolve to the
-store-backed encrypter, and ``$storedEnvelopeEncrypter`` names it explicitly.
+store-backed encrypter, which ``#[Target('stored')]`` and the
+``$storedEnvelopeEncrypter`` parameter name both name explicitly.
 The store itself is autowired through
 :class:`Symfony\\Component\\KeyManagement\\DataKeyStoreInterface` (or
 :class:`Symfony\\Component\\KeyManagement\\RewrappableDataKeyStoreInterface` for the
@@ -373,7 +425,7 @@ administration half: listing, rewrapping and rotating).
 Service IDs
 ~~~~~~~~~~~
 
-Beyond autowiring, ``framework.key_management`` registers stable service ids that you
+Beyond autowiring, ``KeyManagementBundle`` registers stable service ids that you
 can reference manually in YAML / PHP service definitions:
 
 * ``key_management.<name>`` : the configured client. Implements
@@ -402,8 +454,10 @@ type-hinted services pick it up without further wiring.
 Profiling
 ---------
 
-When the profiler is enabled, every configured client, envelope encrypter
-and store is decorated so that a request reports what it asked of the KMS.
+When the profiler is enabled, every client tagged ``key_management.client``,
+whether the configuration or the application registered it, its envelope
+encrypter and the store are decorated so that a request reports what it
+asked of the KMS.
 The **Key Management** panel lists the operations of the request: what each
 call site asked for, the key or scope it went through, the bytes in and out,
 and the time it took. It is the quickest way to see that a store is doing
@@ -478,7 +532,7 @@ stored data key when a :ref:`store <key-management-store-config>` is
 configured.
 
 Register one ``Type`` per ``(parent type, key)`` pair you need. Inject the
-default envelope encrypter (autowired by ``framework.key_management``) and
+default envelope encrypter (autowired by ``KeyManagementBundle``) and
 call ``Type::getTypeRegistry()->register()``::
 
     // src/Kms/EncryptedTypesRegistrar.php
