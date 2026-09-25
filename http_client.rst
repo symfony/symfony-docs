@@ -1175,6 +1175,10 @@ following methods::
     // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
     $response->getInfo('pause_handler')(2);
 
+    // returns the trailer fields sent after the body once the response is complete,
+    // or null while it is not
+    $trailers = $response->getInfo('trailers');
+
 .. note::
 
     ``$response->toStream()`` is part of :class:`Symfony\\Component\\HttpClient\\Response\\StreamableInterface`.
@@ -1184,6 +1188,45 @@ following methods::
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
+
+HTTP Trailers
+~~~~~~~~~~~~~
+
+Some protocols send header fields *after* the response body. These fields
+are called trailers: gRPC, for instance, reports the outcome of a call in
+the ``grpc-status`` trailer. Read them with the ``trailers`` info once the
+response is complete::
+
+    $response = $client->request('POST', 'https://example.com/package.Service/Method', [
+        'http_version' => '2.0',
+        'headers' => ['content-type' => 'application/grpc', 'te' => 'trailers'],
+        'body' => $frame,
+    ]);
+
+    // waits for the complete response
+    $response->getContent();
+
+    // e.g. ['grpc-status' => ['0'], 'grpc-message' => ['']]
+    $trailers = $response->getInfo('trailers');
+
+The ``trailers`` info is ``null`` until the transfer completes, and stays
+``null`` if the transfer fails or is canceled. Once the response is complete,
+it is an array shaped like the one returned by ``getHeaders(false)``:
+lower-cased field names mapped to lists of values, or an empty array when the
+server sent no trailers. Trailers are never merged into the response headers.
+
+When testing, pass the trailers of a
+:class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` in its ``info``
+argument. They are published once the mock response completes, as a real
+transport would do::
+
+    $response = new MockResponse('{"status": "ok"}', [
+        'trailers' => ['grpc-status' => ['0']],
+    ]);
+
+.. versionadded:: 8.2
+
+    The ``trailers`` response info was introduced in Symfony 8.2.
 
 .. _http-client-streaming-responses:
 
