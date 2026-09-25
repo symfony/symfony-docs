@@ -21,6 +21,66 @@ Field Options
 
 .. include:: /reference/forms/types/options/action.rst.inc
 
+.. _form-option-allow-array-submission:
+
+``allow_array_submission``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 8.2
+
+    The ``allow_array_submission`` option was introduced in Symfony 8.2.
+
+When a field that is neither compound nor ``multiple`` receives an array,
+the form rejects it before dispatching the ``PRE_SUBMIT`` event: it
+discards the submitted data, marks the field as not synchronized and never
+calls its listeners.
+
+Set this option to ``true`` to run that check after ``PRE_SUBMIT`` instead,
+so your listeners can turn the array into data the field accepts. This is
+useful when a JSON payload contains an object or a list for a field that
+expects a single value::
+
+    use Symfony\Component\Form\Extension\Core\Type\ColorType;
+    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\FormEvents;
+    // ...
+
+    $builder->add('brandColor', ColorType::class, [
+        'html5' => true,
+        'allow_array_submission' => true,
+    ]);
+
+    $builder->get('brandColor')->addEventListener(
+        FormEvents::PRE_SUBMIT,
+        function (FormEvent $event): void {
+            // the client submits {"brandColor": {"hex": "#ff0000"}}
+            $submittedData = $event->getData();
+            if (\is_array($submittedData)) {
+                $event->setData($submittedData['hex'] ?? null);
+            }
+        },
+        // a priority higher than 0 runs this listener before the one of
+        // ColorType, so the HTML5 color check applies to the final value
+        1
+    );
+
+Most built-in types register their ``PRE_SUBMIT`` listeners with priority
+``0``, but ``ChoiceType`` uses ``256``, so your listener needs a higher
+priority to run first.
+
+If the data is still an array after all listeners have run, the form
+reports the same error as when this option is disabled. A listener can also
+replace the array with an uploaded file, which the field only accepts when
+the ``allow_file_upload`` option is ``true``.
+
+.. warning::
+
+    When this option is enabled, every ``PRE_SUBMIT`` listener of the field
+    can receive an array controlled by the client. Check the type of the
+    submitted data before using it, as in the example above.
+
 .. _form-option-allow-extra-fields:
 
 ``allow_extra_fields``
