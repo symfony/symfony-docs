@@ -509,6 +509,67 @@ try to set any of the parameters managed by the authenticator.
     a single firewall, register the listener in the event dispatcher of that
     firewall, as explained in :ref:`security-security-events`.
 
+Receiving the Response in a POST Request
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the provider redirects the user to ``check_path`` with the
+authorization response (the authorization code, the ``state``, etc.) in the
+query string, so this response ends up in the browser history and in the access
+logs of web servers and proxies. Providers that support the
+`Form Post Response Mode`_ can instead return an HTML page that sends the same
+response to ``check_path`` in a POST request. Enable it with the
+``response_mode`` parameter:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        authorization_params:
+                            response_mode: 'form_post'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'authorization_params' => [
+                                'response_mode' => 'form_post',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+When the callback is a POST request, the authenticator reads the response from
+the request body and ignores the query string; otherwise, it reads the response
+from the query string. The callback route defined by the imported route loader
+accepts any HTTP method, but if ``check_path`` is the name of a route of your
+own, make sure that route accepts POST requests.
+
+.. warning::
+
+    When the provider runs on another site, this POST request is cross-site.
+    Browsers don't send the session cookie with it unless the cookie uses
+    ``SameSite=None``, so the authenticator can't find the ``state`` of the
+    login attempt and the login fails. In that case, set the
+    ``framework.session.cookie_samesite`` option to ``none``. Browsers only
+    accept this value in secure cookies, so your application must use HTTPS.
+    This value also makes browsers send the session cookie in all other
+    cross-site requests, so protect your forms against CSRF attacks.
+
 Requiring a Recent Authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1534,5 +1595,6 @@ default handlers with your own services), and ``login_path``,
 .. _`OIDC Core 1.0, Section 9`: https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication
 .. _`OIDC Core 1.0, Section 5.3.2`: https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
 .. _`FAPI 2.0`: https://openid.net/specs/fapi-security-profile-2_0-final.html
+.. _`Form Post Response Mode`: https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html
 .. _`RP-Initiated Logout`: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
 .. _`Symfony UX Turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
