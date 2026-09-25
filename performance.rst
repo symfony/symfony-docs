@@ -23,6 +23,7 @@ for maximum performance:
   #. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
   #. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
   #. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
+  #. :ref:`Install the deepclone PHP extension <performance-deepclone-extension>`
 
 .. _performance-enabled-locales:
 
@@ -200,6 +201,23 @@ deployment process too):
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
+.. _performance-deepclone-extension:
+
+Install the deepclone PHP Extension
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony uses the functions of the `deepclone extension`_ to restore the objects
+stored in the PHP files of cache pools, and to copy the service container while
+compiling it. When the extension isn't installed, the ``symfony/polyfill-deepclone``
+package provides the same functions in plain PHP, which is several times slower.
+
+Install the extension with `PIE`_, on production servers and on development
+machines, where it also makes rebuilding the container faster:
+
+.. code-block:: terminal
+
+    $ pie install symfony/deepclone
+
 Disable Dumping the Container as XML in Debug Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -374,3 +392,5 @@ Learn more
 .. _`Stopwatch component`: https://symfony.com/components/Stopwatch
 .. _`real-world stopwatch`: https://en.wikipedia.org/wiki/Stopwatch
 .. _`class preloading`: https://php.net/manual/opcache.preloading
+.. _`deepclone extension`: https://github.com/symfony/php-ext-deepclone
+.. _`PIE`: https://github.com/php/pie
