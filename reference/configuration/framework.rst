@@ -750,6 +750,20 @@ The service id of the database connection, which should be either a PDO or a
 Doctrine DBAL instance. The provider is available as the ``cache.default_pdo_provider``
 service.
 
+default_provider
+................
+
+**type**: ``string``
+
+The DSN of the backend used by the ``cache.app`` pool (e.g.
+``%env(APP_CACHE_DSN)%``). The adapter is deduced from the DSN, so this option
+can't be used together with the :ref:`app <reference-cache-app>` option. Read
+:ref:`how to configure the app cache with a DSN <cache-app-dsn>`.
+
+.. versionadded:: 8.2
+
+    The ``default_provider`` option was introduced in Symfony 8.2.
+
 default_psr6_provider
 .....................
 
@@ -884,6 +898,10 @@ Overwrite the default service name or DSN respectively, if you do not want to
 use what is configured as ``default_X_provider`` under ``cache``. See the
 description of the default provider setting above for information on how to
 specify your specific provider.
+
+When the pool defines a ``provider`` but no ``adapter``, the adapter is
+deduced from the DSN. Read
+:ref:`how to configure the app cache with a DSN <cache-app-dsn>`.
 
 public
 """"""
