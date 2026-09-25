@@ -316,11 +316,204 @@ method::
 Using Enums in Workflows
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using Enums in Workflow Definitions
-...................................
+Defining Workflows with Enum Attributes
+.......................................
 
-When using a state machine, you can use PHP backend enums as places in your
-workflows. First, define your enum with backed values::
+.. versionadded:: 8.2
+
+    Attribute-based workflow definitions were introduced in Symfony 8.2.
+
+You can define a workflow directly on the enum whose cases represent its places
+by adding ``#[AsWorkflowDefinition]``. This style is intended for workflows
+whose places form a closed set represented by a string-backed enum. Every enum
+case becomes a place, so you don't need a separate place list. If your workflow
+doesn't have an exhaustive place enum, keep the definition in workflow
+configuration instead.
+
+First, add a property to the object that the workflow manages::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    use App\Workflow\BlogPostState;
+
+    final class BlogPost
+    {
+        public ?BlogPostState $currentPlace = null;
+    }
+
+Then define the places and transitions on a string-backed enum::
+
+    // src/Workflow/BlogPostState.php
+    namespace App\Workflow;
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Attribute\AsWorkflowDefinition;
+    use Symfony\Component\Workflow\Attribute\Place;
+    use Symfony\Component\Workflow\Attribute\Transition;
+    use Symfony\Component\Workflow\WorkflowType;
+
+    #[AsWorkflowDefinition(
+        name: 'blog_publishing',
+        type: WorkflowType::StateMachine,
+        supports: [BlogPost::class],
+        initialMarking: self::Draft,
+        markingStoreProperty: 'currentPlace',
+        metadata: ['title' => 'Blog publishing'],
+    )]
+    #[Transition(name: 'restart', from: self::Reviewed, to: self::Draft)]
+    #[Transition(name: 'restart', from: self::Rejected, to: self::Draft)]
+    enum BlogPostState: string
+    {
+        public const TO_REVIEW = 'to_review';
+
+        #[Place(metadata: ['label' => 'Draft'])]
+        #[Transition(name: self::TO_REVIEW, to: self::Reviewed)]
+        case Draft = 'draft';
+
+        #[Transition(
+            name: 'publish',
+            to: self::Published,
+            guard: 'is_granted("ROLE_EDITOR")',
+        )]
+        #[Transition(name: 'reject', to: self::Rejected)]
+        case Reviewed = 'reviewed';
+
+        case Published = 'published';
+        case Rejected = 'rejected';
+    }
+
+Every enum case defines a place. A ``#[Transition]`` on a case infers ``from``
+from that case; you still provide an explicit ``name`` and ``to``. ``#[Place]``
+adds metadata to its case. The ``guard`` argument uses the same
+:ref:`expressions as configured transitions
+<workflow-usage-guard-events>`.
+
+Transition names are strings. Constants such as ``TO_REVIEW`` are optional,
+but let application code reference a transition without repeating its name.
+
+Workflow-definition enums must be string-backed, and each case value becomes
+the corresponding place name. Unit enums and integer-backed enums can't define
+workflows because place names must be strings. The ``MethodMarkingStore`` can
+store a string-backed enum in a typed property, as shown above.
+
+The initial marking and every transition endpoint must belong to the definition
+enum. This also applies to cases wrapped in ``WeightedPlace``. Symfony validates
+these references when compiling the container.
+
+Choosing the Workflow Type
+..........................
+
+The ``type`` argument of ``#[AsWorkflowDefinition]`` accepts one of the two
+``WorkflowType`` enum cases. ``WorkflowType::StateMachine`` creates a state
+machine, which allows the subject to be in at most one place. This is the
+default value, so you can omit the ``type`` argument in the example above.
+
+Each state-machine transition must have one place in ``from`` and one in
+``to``. Repeat the ``#[Transition]`` attribute to define separate transitions
+that share a name or destination. For example, the two ``restart`` attributes
+above define one transition from ``reviewed`` and another from ``rejected``.
+State-machine arcs always have a weight of one.
+
+Use ``WorkflowType::Workflow`` when the subject can be in several places at the
+same time. In this model, all places in ``from`` belong to one transition and
+must be marked before it can be applied. All places in ``to`` are marked after
+the transition. The ``initialMarking`` argument accepts one enum case or a list
+of cases, which lets a workflow start in several places. Add ``#[Transition]``
+to the enum and set ``from`` explicitly when a transition has several input
+places. Use ``WeightedPlace`` when an arc needs a weight greater than one::
+
+    // src/Workflow/PublicationState.php
+    namespace App\Workflow;
+
+    use App\Entity\Publication;
+    use Symfony\Component\Workflow\Attribute\AsWorkflowDefinition;
+    use Symfony\Component\Workflow\Attribute\Transition;
+    use Symfony\Component\Workflow\WeightedPlace;
+    use Symfony\Component\Workflow\WorkflowType;
+
+    #[AsWorkflowDefinition(
+        name: 'publication',
+        type: WorkflowType::Workflow,
+        supports: [Publication::class],
+    )]
+    #[Transition(
+        name: 'publish',
+        from: [new WeightedPlace(self::Reviewed, 2), self::Signed],
+        to: self::Published,
+    )]
+    enum PublicationState: string
+    {
+        case Reviewed = 'reviewed';
+        case Signed = 'signed';
+        case Published = 'published';
+    }
+
+The ``publish`` transition requires two marks in ``Reviewed`` and one in
+``Signed``. See :doc:`/workflow/workflow-and-state-machine` for more details
+about the differences between workflows and state machines.
+
+The ``#[Transition]`` attribute is repeatable and every occurrence creates a
+distinct transition. Transition names can therefore be reused when the
+transitions don't leave the same place. For ``WorkflowType::Workflow``, this
+differs from one enum-level transition with several values in ``from``, which
+creates one multi-input transition.
+
+Besides the options shown above, ``#[AsWorkflowDefinition]`` supports custom
+support-strategy and marking-store services, audit logging, event filtering and
+custom definition validators. Workflow, place and transition metadata and
+guard expressions use the same runtime features as configured workflows.
+
+Using Attribute-Defined Workflows
+.................................
+
+The default ``App\`` service resource discovers attributed enums in ``src/``
+through autoconfiguration. The enum describes the definition during container
+compilation; it is not the runtime workflow service. Inject the generated
+``WorkflowInterface`` service using the workflow name::
+
+    // src/Service/BlogPostReviewer.php
+    namespace App\Service;
+
+    use App\Entity\BlogPost;
+    use App\Workflow\BlogPostState;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Component\Workflow\WorkflowInterface;
+
+    final class BlogPostReviewer
+    {
+        public function __construct(
+            #[Target('blog_publishing')]
+            private WorkflowInterface $workflow,
+        ) {
+        }
+
+        public function review(BlogPost $post): void
+        {
+            $this->workflow->apply($post, BlogPostState::TO_REVIEW);
+        }
+    }
+
+``BlogPostReviewer`` is a regular application service. Use this pattern for
+domain-specific methods and dependencies. Symfony doesn't generate a
+workflow-specific runtime class.
+
+Listener methods on the definition enum are not discovered. Define
+:ref:`workflow event listeners and subscribers <workflow_using-events>` as
+regular services.
+
+The short target above and its type-qualified form,
+``#[Target('blog_publishing.state_machine')]``, resolve to the same service.
+For the workflow example, the type-qualified target is
+``#[Target('publication.workflow')]``. Attribute-defined workflows and
+configured workflows can be used in the same application.
+
+Using Enums in Workflow Configuration
+.....................................
+
+As an alternative to attribute-based definitions, you can keep the workflow
+definition in configuration and use a PHP backed enum only to supply place
+values. First, define the enum::
 
     // src/Enumeration/BlogPostStatus.php
     namespace App\Enumeration;
