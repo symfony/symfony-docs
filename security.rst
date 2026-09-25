@@ -1181,6 +1181,16 @@ which authenticates them.
 
 You can learn all about this authenticator in :doc:`/security/access_token`.
 
+OpenID Connect
+~~~~~~~~~~~~~~
+
+OpenID Connect delegates the authentication to an identity provider: the user
+is redirected to it, authenticates there and comes back to your application
+with an authorization code, which Symfony exchanges for tokens to log in the
+user.
+
+You can learn all about this authenticator in :doc:`/security/oidc_login`.
+
 .. _security-x509-client-certificates:
 
 X.509 Client Certificates
