@@ -110,14 +110,15 @@ The configuration of the message frequency is stored in a class that implements
 :class:`Symfony\\Component\\Scheduler\\ScheduleProviderInterface`. This provider
 uses the method :method:`Symfony\\Component\\Scheduler\\ScheduleProviderInterface::getSchedule`
 to return a :class:`Symfony\\Component\\Scheduler\\Schedule`, which is the
-list of all the recurring messages of your application. Each entry of that list
-pairs a message (such as the ``SendDailySalesReports`` message created above)
-with a trigger that defines how often it must be generated.
+list of all the recurring messages of your application. Each entry of
+that list pairs a message (such as the ``SendDailySalesReports`` message
+created above) with a trigger that defines how often it must be
+generated.
 
 The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsSchedule` attribute,
 which by default references the schedule named ``default``, allows you to register
-on a particular schedule. The following provider creates a schedule with a
-single recurring message that is generated every day at midnight::
+on a particular schedule. The following provider creates a schedule with
+a single recurring message that is generated every day at midnight::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -141,9 +142,10 @@ single recurring message that is generated every day at midnight::
         }
     }
 
-The ``with()`` method accepts any number of ``RecurringMessage`` objects, so you
-can add as many messages as you need to the same schedule. The next section
-explains the different triggers you can use to define their frequency.
+The ``with()`` method accepts one or more ``RecurringMessage`` objects,
+so you can add as many messages as you need to the same schedule. The
+next section explains the different triggers you can use to define their
+frequency.
 
 .. tip::
 
