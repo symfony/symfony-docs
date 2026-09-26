@@ -114,6 +114,13 @@ Additionally, you have access to a number of functions inside the expression:
     second argument with the object where permission is checked on. It's
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
+``current_user()``
+    Returns the user object of the current token, or ``null`` when nobody is
+    authenticated.
+
+.. versionadded:: 8.2
+
+    The ``current_user()`` function was introduced in Symfony 8.2.
 
 .. versionadded:: 8.2
 
