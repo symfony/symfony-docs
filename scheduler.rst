@@ -109,16 +109,23 @@ Attaching Recurring Messages to a Schedule
 The configuration of the message frequency is stored in a class that implements
 :class:`Symfony\\Component\\Scheduler\\ScheduleProviderInterface`. This provider
 uses the method :method:`Symfony\\Component\\Scheduler\\ScheduleProviderInterface::getSchedule`
-to return a schedule containing the different recurring messages.
+to return a :class:`Symfony\\Component\\Scheduler\\Schedule`, which is the
+list of all the recurring messages of your application. Each entry of
+that list pairs a message (such as the ``SendDailySalesReports`` message
+created above) with a trigger that defines how often it must be
+generated.
 
 The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsSchedule` attribute,
 which by default references the schedule named ``default``, allows you to register
-on a particular schedule::
+on a particular schedule. The following provider creates a schedule with
+a single recurring message that is generated every day at midnight::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
+    use App\Scheduler\Message\SendDailySalesReports;
     use Symfony\Component\Scheduler\Attribute\AsSchedule;
+    use Symfony\Component\Scheduler\RecurringMessage;
     use Symfony\Component\Scheduler\Schedule;
     use Symfony\Component\Scheduler\ScheduleProviderInterface;
 
@@ -127,9 +134,18 @@ on a particular schedule::
     {
         public function getSchedule(): Schedule
         {
-            // ...
+            return (new Schedule())
+                ->with(
+                    // the message to generate, triggered every day at midnight
+                    RecurringMessage::cron('@daily', new SendDailySalesReports(123))
+                );
         }
     }
+
+The ``with()`` method accepts one or more ``RecurringMessage`` objects,
+so you can add as many messages as you need to the same schedule. The
+next section explains the different triggers you can use to define their
+frequency.
 
 .. tip::
 
