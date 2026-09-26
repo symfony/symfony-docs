@@ -689,6 +689,34 @@ The ``translation:extract`` command looks for missing translations in:
 
         $ composer require nikic/php-parser
 
+In PHP files, the message and the domain arguments are extracted when they are
+string literals, concatenations of literals or class constants. Ternary
+(``? :``), short ternary (``?:``) and null-coalescing (``??``) expressions are
+also resolved, and every value they can produce is extracted::
+
+    // extracts both "title.quote_amended" and "title.quote_new"
+    $translator->trans($amended ? 'title.quote_amended' : 'title.quote_new');
+
+    // extracts both "title.amended" and "title.new"
+    $translator->trans('title.'.($amended ? 'amended' : 'new'));
+
+    // both extract "title.default"; the dynamic side is skipped
+    $translator->trans($customTitle ?? 'title.default');
+    $translator->trans($customTitle ?: 'title.default');
+
+    // adds "title.dashboard" to both the "admin" and "front" domains
+    $translator->trans('title.dashboard', [], $isAdmin ? 'admin' : 'front');
+
+A branch that cannot be resolved (e.g. a variable) is skipped without
+discarding the other branch. However, a concatenation is still ignored when one
+of its sides cannot be resolved at all, and also when it produces more than 256
+combinations.
+
+.. versionadded:: 8.2
+
+    Support for ternary and null-coalescing expressions in the extraction
+    of translation messages was introduced in Symfony 8.2.
+
 By default, when the ``translation:extract`` command creates new entries in the
 translation file, it uses the same content as both the source and the pending
 translation. The only difference is that the pending translation is prefixed by
