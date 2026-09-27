@@ -163,6 +163,43 @@ The callback passed to the ``get()`` method provides two extra features:
   argument passed by reference. If you set ``$save`` to ``false`` inside the
   callback, the returned value *won't* be stored in the backend.
 
+.. _cache-detecting-failed-saves:
+
+Detecting Failed Saves
+~~~~~~~~~~~~~~~~~~~~~~
+
+When the callback computes a new value, ``get()`` returns it even if the cache
+backend can't store it (e.g. because the backend is down). This failure is
+silent, so every following call runs the callback again. If computing the
+value is expensive, you may want to log or report these failures.
+
+To do so, pass a variable as the fourth argument of ``get()``. It's filled by
+reference with the metadata of the cache item and it contains the
+``ItemInterface::METADATA_SAVE_FAILED`` key only when the computed value
+couldn't be saved::
+
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    // the third argument is the $beta value used for stampede prevention
+    // (null means the default value)
+    $value = $cache->get('my_cache_key', function (ItemInterface $item): string {
+        $item->expiresAfter(3600);
+
+        // ... do some HTTP request or heavy computations
+        return $computedValue;
+    }, null, $metadata);
+
+    // this key is never set when the value is read from the cache or when
+    // the callback sets $save to false
+    if (isset($metadata[ItemInterface::METADATA_SAVE_FAILED])) {
+        $logger->warning('The "my_cache_key" value could not be stored in the cache.');
+    }
+
+.. versionadded:: 8.2
+
+    The ``ItemInterface::METADATA_SAVE_FAILED`` constant was introduced in
+    Symfony 8.2.
+
 .. _cache-items:
 
 Cache Items
