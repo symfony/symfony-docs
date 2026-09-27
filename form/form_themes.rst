@@ -190,6 +190,25 @@ combines your theme with the globally configured themes: it first looks for
 blocks in your theme, then falls back to the global themes for anything not
 defined. This means a theme with a single block is perfectly valid.
 
+.. note::
+
+    When warming up the cache, Symfony only compiles the built-in form themes
+    listed in ``twig.form_themes`` or named anywhere in your templates (even
+    in a comment), plus the themes they use or extend. A theme chosen at
+    runtime (e.g. passed as a variable to ``form_theme``) is compiled the first
+    time it's rendered. If your cache directory is read-only, name that theme
+    in any template to have it warmed up:
+
+    .. code-block:: twig
+
+        {# this form can also use bootstrap_5_layout.html.twig #}
+        {% form_theme form theme_name %}
+
+    .. versionadded:: 8.2
+
+        Warming up only the reachable built-in form themes was introduced in
+        Symfony 8.2.
+
 Multiple themes for one form
 ............................
 
