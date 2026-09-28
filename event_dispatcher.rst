@@ -250,6 +250,12 @@ function, etc. When using the ``addListener()`` method, you can also register
         // will be executed when the order.placed event is dispatched
     });
 
+In Symfony applications, don't call ``addListener()`` on the
+``event_dispatcher`` service. Register your listeners as services, as shown
+above, or add them to a
+:ref:`scoped event dispatcher <event-dispatcher-scoped-dispatcher>` when
+they must only run temporarily.
+
 .. _event-dispatcher_event-listener-attributes:
 
 Defining Event Listeners with PHP Attributes
@@ -800,6 +806,10 @@ argument with ``EventDispatcherInterface&ListenerIntrospectionInterface``
 (both from the ``Symfony\Contracts\EventDispatcher`` namespace). Symfony
 autowires this intersection type too.
 
+Don't remove listeners from the ``event_dispatcher`` service; add the
+listeners that must only run temporarily to a
+:ref:`scoped event dispatcher <event-dispatcher-scoped-dispatcher>` instead.
+
 .. versionadded:: 8.2
 
     The ``ListenerIntrospectionInterface`` was introduced in Symfony 8.2.
@@ -1041,6 +1051,83 @@ subscribers. Then, wrap it with the immutable dispatcher::
 
 If your code tries to call any of the methods that modify the immutable
 dispatcher (e.g. ``addListener()``), a ``BadMethodCallException`` is thrown.
+
+.. _event-dispatcher-scoped-dispatcher:
+
+The Scoped Event Dispatcher
+---------------------------
+
+In Symfony applications, the listeners of the ``event_dispatcher`` service
+are defined when compiling the container. Adding or removing listeners at
+runtime makes that dispatcher slower and affects all the code that uses it.
+When some listeners must only run during a limited scope (e.g. while a
+console command runs), wrap the event dispatcher with the
+:class:`Symfony\\Component\\EventDispatcher\\ScopedEventDispatcher` and add
+the listeners or subscribers to it::
+
+    // src/Command/ImportOrdersCommand.php
+    namespace App\Command;
+
+    use App\Event\OrderImportedEvent;
+    use App\Order\OrderImporter;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+    use Symfony\Component\EventDispatcher\ScopedEventDispatcher;
+    use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+    use Symfony\Contracts\EventDispatcher\ListenerIntrospectionInterface;
+
+    #[AsCommand('app:import-orders')]
+    class ImportOrdersCommand
+    {
+        public function __construct(
+            private EventDispatcherInterface&ListenerIntrospectionInterface $dispatcher,
+            private OrderImporter $orderImporter,
+        ) {
+        }
+
+        public function __invoke(SymfonyStyle $io): int
+        {
+            $scopedDispatcher = new ScopedEventDispatcher($this->dispatcher);
+            $scopedDispatcher->addListener(
+                OrderImportedEvent::class,
+                function (OrderImportedEvent $event) use ($io): void {
+                    $io->writeln('Imported order '.$event->getOrderReference());
+                }
+            );
+
+            // the importer must dispatch its events through the scoped
+            // dispatcher; otherwise, the listener added above isn't called
+            $this->orderImporter->import($scopedDispatcher);
+
+            return Command::SUCCESS;
+        }
+    }
+
+When an event is dispatched through the scoped dispatcher, it calls both
+the listeners of the wrapped dispatcher and the ones added to the scoped
+dispatcher, sorted by priority as if all of them were registered on the same
+dispatcher. The scoped dispatcher passes the events that have no listeners
+added to it to the wrapped dispatcher. The wrapped dispatcher doesn't change,
+so the rest of the application never calls the added listeners.
+
+.. tip::
+
+    In functional tests, the tested code dispatches its events through the
+    ``event_dispatcher`` service, so a scoped dispatcher doesn't help. To
+    listen to some event, register a listener service only in the ``test``
+    :ref:`environment <configuration-environments>` (e.g. under the
+    ``when@test`` key of ``config/services.yaml``).
+
+.. versionadded:: 8.2
+
+    The ``ScopedEventDispatcher`` was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    Calling ``addListener()``, ``addSubscriber()``, ``removeListener()``
+    and ``removeSubscriber()`` on the ``event_dispatcher`` service was
+    deprecated in Symfony 8.2.
 
 .. _event-dispatcher-before-after-filters:
 
