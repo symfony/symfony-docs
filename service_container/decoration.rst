@@ -314,13 +314,13 @@ Placing Decorators Relative to Each Other
 
 .. versionadded:: 8.2
 
-    The ``inside`` and ``outside`` arguments and the ``decoration_inside`` and
-    ``decoration_outside`` options were introduced in Symfony 8.2.
+    The ``within`` and ``around`` arguments and the ``decoration_within`` and
+    ``decoration_around`` options were introduced in Symfony 8.2.
 
 Priorities only order decorators correctly if you know the priorities of the
 other decorators and update yours every time they change. Instead of a priority,
 a decorator can list the other decorators of the same service that wrap it
-(``inside``) or that it wraps (``outside``):
+(``within``) or that it wraps (``around``):
 
 .. configuration-block::
 
@@ -333,7 +333,7 @@ a decorator can list the other decorators of the same service that wrap it
         use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 
         // wraps LoggingMailer, whatever priority LoggingMailer has
-        #[AsDecorator(decorates: Mailer::class, outside: LoggingMailer::class)]
+        #[AsDecorator(decorates: Mailer::class, around: LoggingMailer::class)]
         class RateLimitingMailer
         {
             // ...
@@ -348,7 +348,7 @@ a decorator can list the other decorators of the same service that wrap it
             App\RateLimitingMailer:
                 decorates: App\Mailer
                 # wraps LoggingMailer, whatever priority LoggingMailer has
-                decoration_outside: App\LoggingMailer
+                decoration_around: App\LoggingMailer
                 arguments: ['@.inner']
 
     .. code-block:: php
@@ -367,7 +367,7 @@ a decorator can list the other decorators of the same service that wrap it
                 RateLimitingMailer::class => [
                     'decorates' => Mailer::class,
                     // wraps LoggingMailer, whatever priority LoggingMailer has
-                    'decoration_outside' => LoggingMailer::class,
+                    'decoration_around' => LoggingMailer::class,
                     'arguments' => [service('.inner')],
                 ],
             ],
