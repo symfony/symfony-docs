@@ -152,7 +152,7 @@ Further in this article, you can find a
                     $security->passwordHasher(User::class)
                         ->algorithm('auto') // This should be the same value as in config/packages/security.yaml
                         ->cost(4) // Lowest possible value for bcrypt
-                        ->timeCost(2) // Lowest possible value for argon
+                        ->timeCost(3) // Lowest possible value for argon
                         ->memoryCost(10) // Lowest possible value for argon
                     ;
                 }
