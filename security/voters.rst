@@ -34,26 +34,59 @@ which can be: affirmative, consensus, unanimous or priority.
 The Voter Interface
 -------------------
 
-A custom voter needs to implement
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
-or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter`,
-which makes creating a voter even easier::
+A voter is a service implementing
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`.
+Its ``vote()`` method receives the token, the subject and the attributes being
+checked, and returns one of three constants::
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+
+    interface VoterInterface
+    {
+        public const ACCESS_GRANTED = 1;  // the voter allows access
+        public const ACCESS_ABSTAIN = 0;  // the voter has no opinion
+        public const ACCESS_DENIED = -1;  // the voter denies access
+
+        public function vote(TokenInterface $token, mixed $subject, array $attributes);
+    }
+
+In most cases, extend the abstract
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter` class
+instead. It implements ``vote()`` and only asks for two methods::
+
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\CacheableVoterInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-    abstract class Voter implements VoterInterface
+    abstract class Voter implements VoterInterface, CacheableVoterInterface
     {
+        // return false to abstain on this attribute and subject
         abstract protected function supports(string $attribute, mixed $subject): bool;
+
+        // called only when supports() returned true: true grants, false denies
         abstract protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool;
     }
 
+``Voter::vote()`` returns ``ACCESS_ABSTAIN`` when ``supports()`` returns
+``false`` for every attribute, ``ACCESS_GRANTED`` as soon as
+``voteOnAttribute()`` returns ``true`` for one of them, and ``ACCESS_DENIED``
+otherwise.
+
+.. tip::
+
+    Since ``voteOnAttribute()`` returns a boolean, a ``Voter`` subclass cannot
+    abstain once ``supports()`` returned ``true``. Implement ``VoterInterface``
+    directly if your voter must abstain depending on the token or on the
+    state of the subject.
+
 .. note::
 
-    The Voter class also implements
+    ``Voter`` implements the ``supportsAttribute()`` and ``supportsType()``
+    methods of
     :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`
-    with methods used to improve :ref:`voting performance <voter-improve-performance>`
-    thanks to caching.
+    by returning ``true``, so your voter is called for every attribute and
+    subject type until you override them. See
+    :ref:`voting performance <voter-improve-performance>`.
 
 .. _how-to-use-the-voter-in-a-controller:
 
