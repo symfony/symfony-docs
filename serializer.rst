@@ -1709,6 +1709,8 @@ like:
             PropertyNormalizer::NORMALIZE_VISIBILITY => PropertyNormalizer::NORMALIZE_PUBLIC | PropertyNormalizer::NORMALIZE_PROTECTED,
         ]);
 
+.. _serializer-named-serializers:
+
 Named Serializers
 -----------------
 
