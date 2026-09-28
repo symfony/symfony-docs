@@ -596,6 +596,52 @@ your DTO::
         // ...
     }
 
+The ``#[MapRequestPayload]`` and ``#[MapQueryString]`` attributes use the
+default serializer. To apply different serialization rules to your API without
+changing the rest of the application, set the ``request.serializer``
+:ref:`option <reference-framework-request-serializer>` to the service ID of a
+:ref:`named serializer <serializer-named-serializers>`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            serializer:
+                named_serializers:
+                    api:
+                        name_converter: 'serializer.name_converter.camel_case_to_snake_case'
+
+            request:
+                # named serializer IDs are 'serializer.<name>'
+                serializer: 'serializer.api'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'serializer' => [
+                    'named_serializers' => [
+                        'api' => [
+                            'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
+                        ],
+                    ],
+                ],
+                'request' => [
+                    // named serializer IDs are 'serializer.<name>'
+                    'serializer' => 'serializer.api',
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``request.serializer`` option was introduced in Symfony 8.2.
+
 You can also customize the validation groups used, the status code to return if
 the validation fails as well as supported payload formats::
 
@@ -1212,6 +1258,51 @@ based on the format. If the format is not supported by the serializer, a
 .. versionadded:: 8.1
 
     The ``#[Serialize]`` attribute was introduced in Symfony 8.1.
+
+The ``#[Serialize]`` attribute uses the default serializer. To use a
+:ref:`named serializer <serializer-named-serializers>` instead, set its service
+ID in the ``response.serializer``
+:ref:`option <reference-framework-response-serializer>`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            serializer:
+                named_serializers:
+                    api:
+                        name_converter: 'serializer.name_converter.camel_case_to_snake_case'
+
+            response:
+                # named serializer IDs are 'serializer.<name>'
+                serializer: 'serializer.api'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'serializer' => [
+                    'named_serializers' => [
+                        'api' => [
+                            'name_converter' => 'serializer.name_converter.camel_case_to_snake_case',
+                        ],
+                    ],
+                ],
+                'response' => [
+                    // named serializer IDs are 'serializer.<name>'
+                    'serializer' => 'serializer.api',
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``response.serializer`` option was introduced in Symfony 8.2.
 
 Streaming File Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~
