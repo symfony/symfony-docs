@@ -434,6 +434,8 @@ each request (which overrides any global authentication):
     By using ``HttpClient::createForBaseUri()``, we ensure that the auth credentials
     won't be sent to any other hosts than https://example.com/.
 
+.. _http-client-query-string:
+
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -448,6 +450,46 @@ associative array via the ``query`` option, that will be merged with the URL::
             'name' => '...',
         ],
     ]);
+
+Many APIs expect multi-valued parameters as repeated names (``?tag=a&tag=b``)
+instead of the PHP-style ``?tag[0]=a&tag[1]=b``. To generate them, define the
+``query`` option as a list of single-entry arrays::
+
+    // it makes an HTTP GET request to https://httpbin.org/get?tag=a&tag=b&page=2
+    $response = $client->request('GET', 'https://httpbin.org/get', [
+        'query' => [
+            ['tag' => 'a'],
+            ['tag' => 'b'],
+            // brackets aren't added automatically; use ['tag[]' => 'c'] to add 'tag[]=c'
+            ['page' => 2],
+        ],
+    ]);
+
+.. versionadded:: 8.2
+
+    Passing the ``query`` option as a list of single-entry arrays was
+    introduced in Symfony 8.2.
+
+The following rules apply to this syntax:
+
+* Each item must be an array with a single ``name => value`` entry, where the
+  value is a scalar, a ``\Stringable`` object, a ``\BackedEnum`` or ``null``.
+  If the array also contains string keys, it's treated as a regular associative
+  array (e.g. ``['page' => 2, ['tag' => 'a']]``);
+* A ``null`` value removes the parameter from the URL, like in associative
+  arrays;
+* A name defined in the option replaces all the occurrences of that name in the
+  requested URL;
+* Values that share a name are grouped where the name first appears (e.g.
+  ``[['a' => 1], ['b' => 2], ['a' => 3]]`` results in ``a=1&a=3&b=2``).
+
+.. warning::
+
+    Any ``query`` or ``body`` option that is a list whose first item is an array
+    is encoded with this syntax. Functions like ``parse_str()`` and methods like
+    ``$request->query->all()`` can return such lists (e.g. from ``?0[a]=b``), so
+    filter any forwarded user input with an allow-list of accepted keys instead
+    of only removing the unwanted keys.
 
 Headers
 ~~~~~~~
@@ -557,6 +599,28 @@ of the opened file, but you can configure both with the PHP streaming configurat
 
     stream_context_set_option($fileHandle, 'http', 'filename', 'the-name.txt');
     stream_context_set_option($fileHandle, 'http', 'content_type', 'my/content-type');
+
+To repeat a field name (e.g. to upload several files under the same name),
+define the ``body`` option as a list of single-entry arrays, like in the
+``query`` option::
+
+    $response = $client->request('POST', 'https://...', [
+        'body' => [
+            ['tag' => 'a'],
+            ['tag' => 'b'],
+            ['file' => fopen('/path/to/a.pdf', 'r')],
+            ['file' => fopen('/path/to/b.pdf', 'r')],
+        ],
+    ]);
+
+.. versionadded:: 8.2
+
+    Passing the ``body`` option as a list of single-entry arrays was introduced
+    in Symfony 8.2.
+
+The same rules as in the :ref:`query option <http-client-query-string>` apply,
+except that values can also be streams, ``null`` values are skipped and fields
+keep the order of the list.
 
 .. tip::
 
