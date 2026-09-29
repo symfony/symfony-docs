@@ -312,6 +312,68 @@ For full control over the limiter logic,
 :ref:`inject the rate limiter as a service <rate-limiter-service>` in your
 controllers and services.
 
+.. _rate-limiter-expose-headers:
+
+Exposing the Rate Limit in the Response Headers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``exposeHeaders`` option was introduced in Symfony 8.2.
+
+API clients usually need to know how much of their quota is left. Set the
+``exposeHeaders`` option of the attribute to ``true`` to add the
+``X-RateLimit-*`` headers to the responses of the rate-limited controller::
+
+    // src/Controller/ApiController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpKernel\Attribute\RateLimit;
+
+    class ApiController extends AbstractController
+    {
+        #[RateLimit('api', exposeHeaders: true)]
+        public function index(): JsonResponse
+        {
+            // ...
+        }
+    }
+
+Both the successful responses and the ``429 Too Many Requests`` responses then
+include the following headers:
+
+``X-RateLimit-Limit``
+    The number of requests allowed by the limiter. When the attribute defines
+    the ``tokens`` option, this is the limit of the rate limiter divided by the
+    number of tokens consumed per request (rounded down).
+
+``X-RateLimit-Remaining``
+    The number of requests left before the limiter rejects them.
+
+``X-RateLimit-Reset``
+    The Unix timestamp when the limiter is back to its full capacity.
+
+These values are specific to each client, so Symfony also marks the response
+as private to prevent shared HTTP caches from storing it. Symfony doesn't add
+any of these headers when the response already contains one of them, or when
+the limiter never gets back to its full capacity (e.g. when using the
+``no_limiter`` policy).
+
+When several ``#[RateLimit]`` attributes apply to the same request, the headers
+describe the exposed limiter with the fewest requests left. However, if a
+limiter rejects the request, the headers always describe that limiter, and if
+that limiter doesn't expose them, the response includes no ``X-RateLimit-*``
+headers at all. This lets you combine a public limit with a hidden one::
+
+    #[RateLimit('api', exposeHeaders: true)] // clients see the state of this one
+    #[RateLimit('api_abuse')]                // clients never see this one
+    public function index(): JsonResponse
+    {
+        // ...
+    }
+
 Reacting to Exceeded Rate Limits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -504,10 +566,11 @@ Exposing the Rate Limiter Status
 
 When using a rate limiter in APIs, it's common to include some standard HTTP
 headers in the response to expose the limit status (e.g. remaining tokens, when
-new tokens will be available, etc.)
+new tokens will be available, etc.). When using the ``#[RateLimit]`` attribute,
+Symfony can :ref:`add these headers for you <rate-limiter-expose-headers>`.
 
-Use the :class:`Symfony\\Component\\RateLimiter\\RateLimit` object returned by
-the ``consume()`` method (also available via the ``getRateLimit()`` method of
+Otherwise, use the :class:`Symfony\\Component\\RateLimiter\\RateLimit` object
+returned by the ``consume()`` method (also available via the ``getRateLimit()`` method of
 the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
 ``reserve()`` method) to get the value of those HTTP headers::
 
@@ -552,6 +615,17 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
     The ``TooManyRequestsHttpException`` sets the standard ``Retry-After``
     header automatically using the value passed as its first argument, so
     you don't need to include that header yourself.
+
+.. tip::
+
+    Use the ``getResetAt()`` method of the ``RateLimit`` object to build the
+    ``X-RateLimit-Reset`` header. It returns the moment when the limiter is
+    back to its full capacity, or ``null`` when the limiter never gets back to
+    it (e.g. with the ``no_limiter`` policy).
+
+    .. versionadded:: 8.2
+
+        The ``RateLimit::getResetAt()`` method was introduced in Symfony 8.2.
 
 .. _rate-limiter-storage:
 
