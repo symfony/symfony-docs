@@ -54,7 +54,8 @@ Working with Tags
 
 .. versionadded:: 8.2
 
-    The ``PdoTagAwareAdapter`` was introduced in Symfony 8.2.
+    The ``PdoTagAwareAdapter`` and the ``cache.adapter.pdo_tag_aware`` service
+    were introduced in Symfony 8.2.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\PdoTagAwareAdapter` takes
 the same arguments as ``PdoAdapter`` and adds native support for
@@ -96,6 +97,42 @@ Option                      Default value
 ``db_tags_col``             ``item_tag``
 ``db_tags_tag_index_name``  ``idx_cache_tags_item_tag``
 ==========================  ===========================
+
+In Symfony applications, use the ``cache.adapter.pdo_tag_aware`` adapter. Pools
+based on it support tags on their own, so you don't need to set their ``tags``
+option. The ``provider`` of the pool defaults to the value of the
+``default_pdo_provider`` option, which has no default value, so you must set
+one of them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                pools:
+                    my_cache_pool:
+                        adapter: cache.adapter.pdo_tag_aware
+                        provider: 'pgsql:host=localhost'
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'cache' => [
+                    'pools' => [
+                        'my_cache_pool' => [
+                            'adapter' => 'cache.adapter.pdo_tag_aware',
+                            'provider' => 'pgsql:host=localhost',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 .. _`DSN`: https://php.net/manual/pdo.drivers.php
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
