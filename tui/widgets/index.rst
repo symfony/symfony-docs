@@ -26,3 +26,4 @@ the focus manager can route key events to them.
     cancellable_loader
     progress_bar
     markdown
+    key_binding

@@ -86,6 +86,20 @@ still allowing per-widget customization::
         'submit' => ['ctrl+s'],
     ]));
 
+Display Labels
+--------------
+
+The :doc:`/tui/widgets/key_binding` displays the keybindings of the
+focused widget. It only displays the first key of each action, so put
+the main shortcut first when you override a binding. Use the
+``setKeybindingLabels()`` method of the widgets to choose which actions
+are displayed and with which labels (see
+:ref:`how to change the displayed bindings <tui-keybinding-labels>`).
+
+.. versionadded:: 8.2
+
+    The ``setKeybindingLabels()`` method was introduced in Symfony 8.2.
+
 Action Names
 ------------
 
