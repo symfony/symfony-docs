@@ -119,8 +119,8 @@ be passed to the validator to be checked.
 
     When using the Validator component outside a Symfony application, you must
     tell the validator explicitly where to look for the constraint metadata
-    (PHP attributes, YAML or XML files, etc.). Read the
-    :doc:`/components/validator/resources` article for more details.
+    (PHP attributes, YAML or XML files, etc.). See
+    :ref:`how to load the constraint metadata <validation-metadata-loaders>`.
 
 .. tip::
 
@@ -662,6 +662,115 @@ Otherwise, a ``MappingException`` is thrown.
 
     The ``#[ExtendsValidationFor]`` attribute was introduced in Symfony 7.4.
 
+.. _validation-metadata-loaders:
+
+Loading the Constraint Metadata
+-------------------------------
+
+In Symfony applications, the validator loads the constraint metadata of your
+classes from these sources automatically:
+
+* PHP attributes (e.g. ``#[Assert\NotBlank]``);
+* YAML and XML files stored in the ``config/validator/`` directory (use the
+  :ref:`mapping.paths <reference-validation-mapping-paths>` option to add other
+  directories);
+* the static ``loadValidatorMetadata()`` method of the class, if it exists.
+
+When using the Validator component outside a Symfony application, enable each
+metadata source in the validator builder::
+
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidatorBuilder()
+        // reads PHP attributes such as #[Assert\NotBlank]
+        ->enableAttributeMapping()
+        // calls this static method of the class (if it exists) to get its metadata;
+        // use addMethodMappings() to pass several method names
+        ->addMethodMapping('loadValidatorMetadata')
+        // loading YAML files requires the symfony/yaml package;
+        // use addYamlMappings() and addXmlMappings() to pass several files
+        ->addYamlMapping('config/validator/validation.yaml')
+        ->addXmlMapping('config/validator/validation.xml')
+        ->getValidator();
+
+The builder combines all these loaders in a
+:class:`Symfony\\Component\\Validator\\Mapping\\Loader\\LoaderChain` and merges
+the metadata that each of them returns for a class. Call
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAttributeMapping`
+to disable the attribute loader after enabling it.
+
+Compile-Time Attribute Metadata
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 7.4
+
+    Compile-time discovery of classes using constraint attributes was introduced
+    in Symfony 7.4.
+
+In Symfony applications that use
+:ref:`autoconfiguration <services-autoconfigure>`, the classes that use
+constraint attributes (such as ``#[Assert\NotBlank]``, ``#[Assert\Length]``,
+etc.) are discovered at compile time. This allows the attribute loader to only
+process the classes that are known to have constraint attributes, which
+improves performance in production.
+
+If you need to explicitly register a class that uses constraint attributes
+(e.g. from a third-party library that is not part of your service
+definitions), tag it with ``validator.attribute_metadata`` and
+``container.excluded``:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Vendor\Library\SomeModel:
+            tags:
+                - { name: container.excluded }
+                - { name: validator.attribute_metadata }
+
+Caching the Metadata
+~~~~~~~~~~~~~~~~~~~~
+
+Without a cache, on every request the loaders parse the attributes and files
+again and the validator merges their results into a
+:class:`Symfony\\Component\\Validator\\Mapping\\ClassMetadata` object for each
+validated class, which slows down your application. In Symfony applications,
+this metadata is cached automatically when the ``kernel.debug`` parameter is
+``false`` (e.g. in the ``prod`` environment). Outside a Symfony application,
+pass any PSR-6 cache pool to
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMappingCache`::
+
+    use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidatorBuilder()
+        // ... add the loaders
+        ->setMappingCache(new FilesystemAdapter())
+        ->getValidator();
+
+Using a Custom Metadata Factory
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the builder passes all loaders and the cache to a
+:class:`Symfony\\Component\\Validator\\Mapping\\Factory\\LazyLoadingMetadataFactory`,
+which creates the ``ClassMetadata`` objects. To create them differently,
+implement
+:class:`Symfony\\Component\\Validator\\Mapping\\Factory\\MetadataFactoryInterface`
+and pass an instance of your class to
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMetadataFactory`::
+
+    use Acme\Validation\CustomMetadataFactory;
+    use Symfony\Component\Validator\Validation;
+
+    $validator = Validation::createValidatorBuilder()
+        ->setMetadataFactory(new CustomMetadataFactory(...))
+        ->getValidator();
+
+A custom metadata factory can't be combined with the builder methods that
+configure the loaders and the cache (``add*Mapping()``, ``add*Mappings()``,
+``enableAttributeMapping()`` and ``setMappingCache()``), so your factory must
+load and cache the metadata on its own.
+
 Debugging the Constraints
 -------------------------
 
@@ -705,5 +814,4 @@ Learn more
     :maxdepth: 1
     :glob:
 
-    /components/validator/*
     /validation/*
