@@ -3155,6 +3155,19 @@ failure_transport
 
 Transport name to send failed messages to (after all retries have failed).
 
+outbox
+""""""
+
+**type**: ``string`` **default**: ``null``
+
+Name of another transport that stores the messages sent to this transport
+before forwarding them to it. Read more about the
+:ref:`transactional outbox <messenger-outbox>`.
+
+.. versionadded:: 8.2
+
+    The ``outbox`` option was introduced in Symfony 8.2.
+
 rate_limiter
 """"""""""""
 
