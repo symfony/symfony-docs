@@ -3166,10 +3166,11 @@ them if they lack some role. This option can't be used in
 :ref:`stateless firewalls <reference-security-stateless>`.
 
 If the entry point of the firewall already implements this interface, you don't
-need to set this option. That's the case of ``oidc_login``, which redirects
-users to the OpenID Connect provider with the ``prompt=login`` parameter (so
-the provider asks for the credentials again) and the ``id_token_hint``
-parameter (so the provider knows which user to authenticate).
+need to set this option. That's the case of ``form_login`` (see below) and of
+``oidc_login``, which redirects users to the OpenID Connect provider with the
+``prompt=login`` parameter (so the provider asks for the credentials again) and
+the ``id_token_hint`` parameter (so the provider knows which user to
+authenticate).
 
 .. tip::
 
@@ -3177,6 +3178,46 @@ parameter (so the provider knows which user to authenticate).
     of ``oidc_login`` to force them to authenticate users again, because
     Symfony checks the ``auth_time`` claim of the ID token against that value.
     This option applies to all logins, not only to the new authentication.
+
+.. _security-re-authentication-form-login:
+
+Asking Users for Their Password Again with ``form_login``
+.........................................................
+
+.. versionadded:: 8.2
+
+    The support for re-authentication in ``form_login`` was introduced in
+    Symfony 8.2.
+
+``form_login`` sends users back to the login form to type their password again.
+They are already known at that point, so their identifier is stored as the last
+username and the form only has the password left to ask for. After logging in
+again, they land back on the page that was denied to them, unless the
+``_target_path`` parameter or the ``always_use_default_target_path`` option
+:doc:`redirect them elsewhere </security/form_login>`.
+
+Use
+:method:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils::getReAuthenticationAttribute`
+to know which attribute was denied, so the login page can adapt to it (e.g. hide
+the identifier field and tell users why they are asked to log in again)::
+
+    // src/Controller/LoginController.php
+    // ...
+
+    #[Route('/login', name: 'app_login')]
+    public function index(AuthenticationUtils $authenticationUtils): Response
+    {
+        // IS_AUTHENTICATED_RECENTLY, IS_AUTHENTICATED_VERY_RECENTLY or any
+        // other attribute a voter asked a new authentication for; it's null
+        // when this is a regular login
+        $reAuthentication = $authenticationUtils->getReAuthenticationAttribute();
+
+        return $this->render('login/index.html.twig', [
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $authenticationUtils->getLastAuthenticationError(),
+            're_authentication' => $reAuthentication,
+        ]);
+    }
 
 Customizing the Recent Authentication Check
 ...........................................
