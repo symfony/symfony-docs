@@ -3234,8 +3234,8 @@ when the voter denies it::
 
 Then, the firewall starts the re-authentication (with the entry point described
 above) instead of answering with a 403 error. The entry point can read the
-denied attribute from the ``SecurityRequestAttributes::RE_AUTHENTICATION_ATTRIBUTE``
-request attribute. The ``oidc_login`` entry point doesn't need any change: add
+denied attribute from the request attribute named by
+``SecurityRequestAttributes::RE_AUTHENTICATION_ATTRIBUTE``. The ``oidc_login`` entry point doesn't need any change: add
 a listener of ``OidcAuthorizationRequestEvent`` that sets the ``acr_values``
 parameter when that request attribute is ``IS_PASSKEY``.
 
