@@ -2680,6 +2680,12 @@ If you *do* choose to use the Symfony serializer, you can control the context
 on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`
 (see :ref:`Envelopes & Stamps <messenger-envelopes-stamps>`).
 
+The ``xml`` format can't restore stamp values whose type isn't defined in the
+stamp properties (e.g. ``array`` properties without a PHPDoc type). It decodes
+single-element lists as their only element and numbers and booleans as strings;
+empty lists and ``null`` become empty strings. Use the ``json`` format when your
+stamps store this kind of data.
+
 .. tip::
 
     When sending/receiving messages to/from another application, you may need
