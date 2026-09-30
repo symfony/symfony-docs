@@ -4641,6 +4641,9 @@ of the process. For each, the event class is the event name:
 
 * :class:`Symfony\\Component\\Messenger\\Event\\SendMessageToTransportsEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\MessageSentToTransportsEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\HandlerFailureEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\HandlerStartingEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\HandlerSuccessEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageFailedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageHandledEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageReceivedEvent`
@@ -4655,6 +4658,79 @@ of the process. For each, the event class is the event name:
     The ``MessageSentToTransportsEvent`` event is dispatched **only** after a
     message was sent to at least one transport. If the message was sent to
     multiple transports, the event is dispatched only once.
+
+Per-Handler Events
+..................
+
+.. versionadded:: 8.2
+
+    The ``HandlerStartingEvent``, ``HandlerSuccessEvent`` and
+    ``HandlerFailureEvent`` events were introduced in Symfony 8.2.
+
+The ``WorkerMessage*`` events are dispatched once per message, only for
+messages consumed by a worker, and they report the outcome of all the handlers
+of the message as a single result. If you need to know what happened in each
+handler, listen to the following events instead. They are dispatched once per
+handler call, both for messages consumed by a worker and for messages handled
+synchronously:
+
+* :class:`Symfony\\Component\\Messenger\\Event\\HandlerStartingEvent`, right
+  before calling the handler;
+* :class:`Symfony\\Component\\Messenger\\Event\\HandlerSuccessEvent`, after the
+  handler succeeds;
+* :class:`Symfony\\Component\\Messenger\\Event\\HandlerFailureEvent`, after the
+  handler fails.
+
+All of them define an ``envelope`` property with the message being handled and
+a ``handlerDescriptor`` property with the
+:class:`Symfony\\Component\\Messenger\\Handler\\HandlerDescriptor` of the
+handler. This way, you don't have to inspect the ``HandledStamp`` stamps or
+unwrap the ``HandlerFailedException`` to know which handler ran::
+
+    // src/EventListener/HandlerAuditListener.php
+    namespace App\EventListener;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\Messenger\Event\HandlerFailureEvent;
+    use Symfony\Component\Messenger\Event\HandlerSuccessEvent;
+
+    class HandlerAuditListener
+    {
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
+        }
+
+        #[AsEventListener]
+        public function onHandlerSuccess(HandlerSuccessEvent $event): void
+        {
+            $this->logger->info('Handler {handler} handled {message}', [
+                'handler' => $event->handlerDescriptor->getName(),
+                'message' => $event->envelope->getMessage()::class,
+            ]);
+        }
+
+        #[AsEventListener]
+        public function onHandlerFailure(HandlerFailureEvent $event): void
+        {
+            // the "exception" property holds the exception thrown by the handler
+            $this->logger->error('Handler {handler} failed: {error}', [
+                'handler' => $event->handlerDescriptor->getName(),
+                'error' => $event->exception->getMessage(),
+            ]);
+        }
+    }
+
+Each handler call dispatches at most one of ``HandlerSuccessEvent`` or
+``HandlerFailureEvent``. When a worker consumes messages with a
+:ref:`batch handler <messenger-handler-batch>`, the result isn't known when
+the message is added to the batch. In that case, ``HandlerStartingEvent`` is
+dispatched when the handler is called, but the success or failure event is
+dispatched later, when the batch is flushed and the
+:class:`Symfony\\Component\\Messenger\\Handler\\Acknowledger` receives the
+result or the error. If the worker process ends abruptly before flushing the
+batch, no success or failure event is dispatched for its pending messages.
 
 Additional Handler Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
