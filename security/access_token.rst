@@ -906,7 +906,10 @@ to validate tokens from different identity providers:
                             oidc:
                                 algorithms: ['ES256', 'RS256']
                                 audience: 'api-example'
-                                issuers: ['https://oidc1.example.com', 'https://oidc2.example.com']
+                                # each "issuer" announced by the discovery documents
+                                issuers:
+                                    - https://idp1.example.com/realms/demo
+                                    - https://idp2.example.com/realms/demo
                                 discovery:
                                     base_uri:
                                         - https://idp1.example.com/realms/demo/
@@ -933,8 +936,9 @@ to validate tokens from different identity providers:
                             <oidc audience="api-example">
                                 <algorithm>ES256</algorithm>
                                 <algorithm>RS256</algorithm>
-                                <issuer>https://oidc1.example.com</issuer>
-                                <issuer>https://oidc2.example.com</issuer>
+                                <!-- each "issuer" announced by the discovery documents -->
+                                <issuer>https://idp1.example.com/realms/demo</issuer>
+                                <issuer>https://idp2.example.com/realms/demo</issuer>
                                 <discovery cache="cache.app">
                                     <base-uri>https://idp1.example.com/realms/demo/</base-uri>
                                     <base-uri>https://idp2.example.com/realms/demo/</base-uri>
@@ -958,7 +962,11 @@ to validate tokens from different identity providers:
                         ->oidc()
                             ->algorithms(['ES256', 'RS256'])
                             ->audience('api-example')
-                            ->issuers(['https://oidc1.example.com', 'https://oidc2.example.com'])
+                            // each "issuer" announced by the discovery documents
+                            ->issuers([
+                                'https://idp1.example.com/realms/demo',
+                                'https://idp2.example.com/realms/demo',
+                            ])
                             ->discovery()
                                 ->baseUri([
                                     'https://idp1.example.com/realms/demo/',
@@ -968,9 +976,12 @@ to validate tokens from different identity providers:
             ;
         };
 
-The token handler fetches the JWK sets from all configured discovery endpoints
-and builds a combined JWK set for token validation. This lets your application
-accept and validate tokens from multiple identity providers within a single firewall.
+The token handler fetches the JWK set of each discovery endpoint and binds its
+keys to the issuer announced by that discovery document, so each token is only
+verified with the keys of its own issuer (the ``iss`` claim). That's why every
+announced issuer must be listed in the ``issuers`` option exactly as announced
+(including any trailing slash) and two discovery documents can't announce the
+same issuer.
 
 .. _creating-a-oidc-token-from-the-command-line:
 
