@@ -121,3 +121,49 @@ Widgets form a tree. Container widgets (``ContainerWidget``,
 with ``getParent()``::
 
     $parent = $widget->getParent();
+
+Widgets Owning Other Widgets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A widget that holds other widgets must make each of them its child,
+so that it takes part in the widget tree. Call ``attachChild()``
+once the child is stored, and ``detachChild()`` when it is dropped::
+
+    use Symfony\Component\Tui\Render\RenderContext;
+    use Symfony\Component\Tui\Widget\AbstractWidget;
+
+    class FramedWidget extends AbstractWidget
+    {
+        public function __construct(
+            private AbstractWidget $content,
+        ) {
+            $this->attachChild($content);
+        }
+
+        public function setContent(AbstractWidget $content): static
+        {
+            $this->detachChild($this->content);
+            $this->content = $content;
+            $this->attachChild($content);
+            $this->invalidate();
+
+            return $this;
+        }
+
+        public function render(RenderContext $context): array
+        {
+            if (null === $widgetContext = $this->getContext()) {
+                return [];
+            }
+
+            return $widgetContext->renderWidget($this->content, $context);
+        }
+    }
+
+Both methods can be called before the owning widget is attached
+itself: its children join the tree along with it.
+
+.. versionadded:: 8.2
+
+    The ``attachChild()`` and ``detachChild()`` methods were introduced
+    in Symfony 8.2.
