@@ -1015,6 +1015,90 @@ The token handler fetches the JWK sets from all configured discovery endpoints
 and builds a combined JWK set for token validation. This lets your application
 accept and validate tokens from multiple identity providers within a single firewall.
 
+Checking the Issuer of Discovery Documents
+..........................................
+
+.. versionadded:: 8.2
+
+    The ``check_issuer`` option was introduced in Symfony 8.2.
+
+A discovery document announces the issuer of its identity provider. Set the
+``check_issuer`` option to require each discovery document to announce its base
+URI as the issuer (OpenID Connect Discovery builds the discovery URL by
+appending ``/.well-known/openid-configuration`` to the issuer). The keys of each
+document then only validate the tokens of that issuer, even when there is only
+one discovery endpoint:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oidc:
+                                # ...
+                                issuers: ['https://idp.example.com/realms/demo']
+                                discovery:
+                                    base_uri: https://idp.example.com/realms/demo/
+                                    cache:
+                                        id: cache.app
+                                    # the trailing slash is ignored on both sides
+                                    check_issuer: true
+
+    .. code-block:: php
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    // ...
+                                    'issuers' => ['https://idp.example.com/realms/demo'],
+                                    'discovery' => [
+                                        'base_uri' => 'https://idp.example.com/realms/demo/',
+                                        'cache' => [
+                                            'id' => 'cache.app',
+                                        ],
+                                        // the trailing slash is ignored on both sides
+                                        'check_issuer' => true,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Some identity providers announce an issuer that is not their base URI (e.g. the
+v1.0 endpoints of Microsoft Entra ID announce
+``https://sts.windows.net/<tenant>/`` for the
+``https://login.microsoftonline.com/<tenant>/`` base URI). For them, set
+``check_issuer`` to a map of base URIs to the issuer they announce. The base
+URIs that are not listed must announce themselves:
+
+.. code-block:: yaml
+
+    security:
+        firewalls:
+            main:
+                access_token:
+                    token_handler:
+                        oidc:
+                            # ...
+                            discovery:
+                                # ...
+                                check_issuer:
+                                    'https://login.microsoftonline.com/<tenant>/': 'https://sts.windows.net/<tenant>/'
+
+The checked issuer must also be one of the ``issuers`` option, as announced by
+the discovery document (including its trailing slash, if any).
+
 .. _creating-a-oidc-token-from-the-command-line:
 
 Creating an OIDC token from the command line
