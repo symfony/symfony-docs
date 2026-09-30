@@ -122,12 +122,12 @@ with ``getParent()``::
 
     $parent = $widget->getParent();
 
-Widgets Owning Other Widgets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Adding Child Widgets to Custom Widgets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A widget that holds other widgets must make each of them its child,
-so that it takes part in the widget tree. Call ``attachChild()``
-once the child is stored, and ``detachChild()`` when it is dropped::
+When a custom widget holds other widgets, it must make each of them its
+child so they become part of the widget tree. Call ``attachChild()``
+after storing the child widget and ``detachChild()`` when removing it::
 
     use Symfony\Component\Tui\Render\RenderContext;
     use Symfony\Component\Tui\Widget\AbstractWidget;
@@ -144,8 +144,8 @@ once the child is stored, and ``detachChild()`` when it is dropped::
         {
             $this->detachChild($this->content);
             $this->content = $content;
+            // this also invalidates the render cache of the parent widget
             $this->attachChild($content);
-            $this->invalidate();
 
             return $this;
         }
@@ -160,8 +160,9 @@ once the child is stored, and ``detachChild()`` when it is dropped::
         }
     }
 
-Both methods can be called before the owning widget is attached
-itself: its children join the tree along with it.
+You can call both methods before the parent widget is added to the
+tree (e.g. in its constructor). Its child widgets join the tree
+together with it.
 
 .. versionadded:: 8.2
 
