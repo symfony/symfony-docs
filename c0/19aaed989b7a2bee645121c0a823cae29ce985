@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2026-09-29T15:42:03Z
+
+Also, the "Arguments" and "Options" sections should be reorganized, since now both are (somewhat) the same:
+* https://symfony.com/doc/current/console/input.html#using-arguments-in-invokable-commands
+* https://symfony.com/doc/current/console/input.html#using-options-in-invokable-commands
