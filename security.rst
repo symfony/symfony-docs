@@ -3158,12 +3158,14 @@ firewall:
             ],
         ]);
 
-This entry point is only used when the denied check contains
-``IS_AUTHENTICATED_RECENTLY`` or ``IS_AUTHENTICATED_VERY_RECENTLY`` alone. If
-it also contains other attributes (e.g. an ``access_control`` rule with several
-roles), users still get the 403 error, because authenticating again won't help
-them if they lack some role. This option can't be used in
-:ref:`stateless firewalls <reference-security-stateless>`.
+This entry point is only used when the voter that denied access asks for a new
+authentication. The built-in voter does it for ``IS_AUTHENTICATED_RECENTLY``
+and ``IS_AUTHENTICATED_VERY_RECENTLY`` (also when they are checked inside a
+security expression) and
+:ref:`your own voters <security-re-authentication-voters>` can do it too.
+When several attributes are checked at once (e.g. an ``access_control`` rule
+with several roles), users still get the 403 error. This option can't be used
+in :ref:`stateless firewalls <reference-security-stateless>`.
 
 If the entry point of the firewall already implements this interface, you don't
 need to set this option. That's the case of ``oidc_login``, which redirects
@@ -3273,6 +3275,67 @@ with the methods they checked. When the same user authenticates
 again during the session, the new token keeps the methods stored by the
 previous one. This way, you can still check a second factor used when logging
 in, even after users confirm their password hours later.
+
+.. _security-re-authentication-voters:
+
+Asking for a New Authentication from Your Own Voters
+....................................................
+
+.. versionadded:: 8.2
+
+    The ``requestReAuthentication()`` method was introduced in Symfony 8.2.
+
+When users could get the attribute denied by one of your own
+:doc:`voters </security/voters>` after authenticating again, call
+``requestReAuthentication()`` on the vote before returning ``false``. This way,
+the firewall asks them to authenticate again instead of returning a 403 error::
+
+    // src/Security/Voter/HardwareKeyVoter.php
+    namespace App\Security\Voter;
+
+    use Symfony\Component\Security\Core\Authentication\AuthenticationMethod;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Vote;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+    final class HardwareKeyVoter extends Voter
+    {
+        protected function supports(string $attribute, mixed $subject): bool
+        {
+            return 'IS_HARDWARE_KEY_AUTHENTICATED' === $attribute;
+        }
+
+        protected function voteOnAttribute(
+            string $attribute,
+            mixed $subject,
+            TokenInterface $token,
+            ?Vote $vote = null,
+        ): bool {
+            $proofs = $token->getAuthenticationProofs();
+            if (isset($proofs[AuthenticationMethod::HARDWARE_KEY])) {
+                return true;
+            }
+
+            // this is ignored if the firewall doesn't define a
+            // re-authentication entry point
+            $vote?->requestReAuthentication($attribute);
+
+            return false;
+        }
+    }
+
+Always pass the denied attribute to this method. The checks made by the voter
+on other attributes (e.g. with ``isGranted()``) end up in the same access
+decision, so the firewall only asks for a new authentication when the attribute
+passed to ``requestReAuthentication()`` is the one that was denied. If you use
+an :ref:`access decision strategy <security-voters-change-strategy>` other than
+``affirmative``, other voters can still deny the same attribute after users
+authenticate again.
+
+The re-authentication entry point can read the denied attribute from the
+``SecurityRequestAttributes::RE_AUTHENTICATION_ATTRIBUTE`` request attribute.
+Use it to ask for the right authentication method (e.g. with the
+``acr_values`` parameter of an OpenID Connect provider).
 
 .. _user_session_refresh:
 
