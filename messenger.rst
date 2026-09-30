@@ -2863,6 +2863,8 @@ than once (``ApproximateReceiveCount``). Read them in a listener of the
     disable it. SQS-compatible servers that don't support them ignore the
     request, so ``getSystemAttributes()`` returns an empty array.
 
+.. _messenger-serializing-messages:
+
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -2919,6 +2921,46 @@ the :doc:`Serializer component </serializer>` and can be configured in a few way
 If you *do* choose to use the Symfony serializer, you can control the context
 on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`
 (see :ref:`Envelopes & Stamps <messenger-envelopes-stamps>`).
+
+By default, ``messenger.transport.symfony_serializer`` wraps the default
+serializer of the application. Set the ``service`` option to use a
+:ref:`named serializer <serializer-named-serializers>` instead:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                serializer:
+                    default_serializer: messenger.transport.symfony_serializer
+                    symfony_serializer:
+                        # service ID of a named serializer (serializer.<name>)
+                        service: serializer.messages
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'serializer' => [
+                        'default_serializer' => 'messenger.transport.symfony_serializer',
+                        'symfony_serializer' => [
+                            // service ID of a named serializer (serializer.<name>)
+                            'service' => 'serializer.messages',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``service`` option of ``symfony_serializer`` was introduced in Symfony 8.2.
 
 .. tip::
 
