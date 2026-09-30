@@ -1519,6 +1519,32 @@ the following options will be guessed too:
     is guessed from the validation constraints (if ``Length`` or ``Range`` is used)
     or from the :doc:`Doctrine </doctrine>` metadata (via the field's length).
 
+``empty_data``
+    If the field is mapped to a property whose type doesn't allow ``null``,
+    the :ref:`empty_data <reference-form-option-empty-data>` option is guessed
+    from that type (``''`` for ``string``, ``'0'`` for ``int`` and ``float``,
+    ``false`` for ``bool``). This way, submitting an empty value doesn't fail
+    when writing ``null`` into the property.
+
+    The type is read from the public setter (e.g. ``setName()``) or, if
+    there's no setter, from the public writable property (or its ``set``
+    hook). Nullable, union and any other types are ignored. This option is
+    only guessed for fields of type ``TextType``, ``IntegerType``,
+    ``NumberType``, ``MoneyType`` or ``PercentType`` (or types extending them)
+    which are mapped and whose ``property_path``, if defined, is a single
+    property name.
+
+    .. note::
+
+        For a non-nullable ``int`` or ``float`` property, an empty submitted
+        value becomes ``0``, which passes the ``NotBlank`` constraint. Make the
+        property nullable or define the ``empty_data`` option if validation must
+        reject empty values.
+
+    .. versionadded:: 8.2
+
+        The guessing of the ``empty_data`` option was introduced in Symfony 8.2.
+
 If you'd like to change one of the guessed values, override it in the options field array::
 
     ->add('task', null, ['attr' => ['maxlength' => 4]])
