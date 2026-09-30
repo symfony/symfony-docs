@@ -11,4 +11,5 @@ application.
     events
     keybindings
     compositing
+    render_primitives
     tick_loop
