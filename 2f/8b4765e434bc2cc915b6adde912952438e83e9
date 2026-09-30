@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-09-23T13:40:31Z
+
+Heads up on the red "Code Blocks" check: it is the tooling, not the snippet. The checker runs the examples against `symfony-tools/symfony-application` on the `8.2` branch, and that app does not require `symfony/tui` (on `8.1` either), so `extends AbstractWidget` cannot load its parent class.
+
+The Tui pages merged so far pass because none of their examples declares a class extending a Tui one, and this one has to: `attachChild()` and `detachChild()` are protected. I'll send a small PR adding `symfony/tui` to symfony-application so future widget examples are checked too. 🙂
