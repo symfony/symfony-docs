@@ -568,13 +568,13 @@ long those two attributes are granted.
 Asking the Provider to Authenticate the User Again
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When access is denied because the user doesn't have the
-``IS_AUTHENTICATED_RECENTLY`` or ``IS_AUTHENTICATED_VERY_RECENTLY`` attribute,
-the authenticator starts a new authorization request. If ``oidc_login`` is the
-entry point of the firewall, it's also its re-authentication entry point, so you
-don't need to configure anything. Otherwise, set the
-``re_authentication_entry_point`` option of the firewall to the
-``security.authenticator.oidc_login.<firewallname>`` service.
+When the voter denying access asks for a new authentication (e.g. for the
+``IS_AUTHENTICATED_RECENTLY`` and ``IS_AUTHENTICATED_VERY_RECENTLY``
+attributes), the authenticator starts a new authorization request. If
+``oidc_login`` is the entry point of the firewall, it's also its
+re-authentication entry point, so you don't need to configure anything.
+Otherwise, set the ``re_authentication_entry_point`` option of the firewall to
+the ``security.authenticator.oidc_login.<firewallname>`` service.
 
 This new request includes two parameters:
 
