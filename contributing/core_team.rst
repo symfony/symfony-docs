@@ -234,20 +234,26 @@ committed directly to the repository.
 When merging a pull request, the tool asks for a category that should be chosen
 following these rules:
 
-* **Feature**: For new features and deprecations; Pull requests must be merged
+* **Feature**: For new features and deprecations; pull requests must be merged
   in the development branch.
-* **Bug**: Only for bug fixes; We are very conservative when it comes to
-  merging older, but still maintained, branches. Read the :doc:`/contributing/code/maintenance`
-  document for more information.
-* **Data**: For updates of data files such as translations, ICU/intl data and
-  mime types.
-* **Minor**: For everything that does not change the behavior or when they don't
-  need to be listed in the CHANGELOG files: typos in variable names or comments,
-  Markdown files, test files, code style fixes, etc. A component with only
-  **minor** changes since its last release will not be tagged in the next patch
-  release.
+* **Bug**: Only for bug fixes; mergers must be very conservative when it comes
+  to merging into older, but still maintained, branches. Read the
+  :doc:`/contributing/code/maintenance` document for more information.
+* **Minor**: For changes worth listing in the CHANGELOG files that are neither
+  features nor bug fixes, such as fixes of generic types in PHPDoc or updates of
+  translations and other data files (ICU/intl data, MIME types, etc.).
 * **Security**: It's the category used for security fixes and should never be
   used except by the security team.
+* **Tidy**: For changes that don't change the behavior and don't need to be
+  listed in the CHANGELOG files: code style fixes, CI updates, typos in variable
+  names or comments, test files, Markdown files, etc.
+* **Documentation**: For documentation changes, in the repositories that offer
+  this category (it's not available in the main ``symfony/symfony`` repository).
+
+Merging a change in the **feature**, **bug**, **minor** or **security**
+categories means that the affected package will get a new release. **Tidy**
+changes never trigger a release on their own: a component with only **tidy**
+changes since its last release will not be tagged in the next patch release.
 
 Getting the right category is important as it is used by automated tools to
 generate the CHANGELOG files when releasing new versions.
@@ -343,7 +349,7 @@ The **Project Leader** is also the release manager for every Symfony version.
 
 Bugfix releases are published every month for each actively maintained version.
 However, a package is not released if there are no new commits since its last
-release, or if all new commits belong to the **minor** category (which doesn't
+release, or if all new commits belong to the **tidy** category (which doesn't
 warrant a new release).
 
 Symfony Core Rules and Protocol Amendments
