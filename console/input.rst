@@ -61,7 +61,10 @@ The ``Argument`` attribute accepts the following parameters:
 
 ``suggestedValues``
     An array or a callable that provides :ref:`suggested values for the argument <console-input-completion>`.
-    For example: ``#[Argument(suggestedValues: ['Alice', 'Bob'])]``.
+    For example: ``#[Argument(suggestedValues: ['Alice', 'Bob'])]`` or
+    ``#[Argument(suggestedValues: [self::class, 'suggestUsernames'])]``. The callable
+    receives a :class:`Symfony\\Component\\Console\\Completion\\CompletionInput`
+    object and returns the list of suggested values.
 
 The argument mode (required, optional, array) is inferred from the parameter type:
 
@@ -289,7 +292,10 @@ The ``Option`` attribute accepts the following parameters:
 
 ``suggestedValues``
     An array or a callable that provides :ref:`suggested values for the option <console-input-completion>`.
-    For example: ``#[Option(suggestedValues: ['low', 'medium', 'high'])]``.
+    For example: ``#[Option(suggestedValues: ['low', 'medium', 'high'])]`` or
+    ``#[Option(suggestedValues: [self::class, 'suggestLevels'])]``. The callable
+    receives a :class:`Symfony\\Component\\Console\\Completion\\CompletionInput`
+    object and returns the list of suggested values.
 
 ``deprecated`` and ``hidden``
     Whether the option is :ref:`deprecated or hidden <console-hidden-deprecated-options>`.
