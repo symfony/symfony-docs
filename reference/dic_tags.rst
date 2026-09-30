@@ -264,6 +264,87 @@ is restarted):
             ],
         ]);
 
+.. _dic-tags-container-remove-if-missing:
+
+container.remove_if_missing
+---------------------------
+
+**Purpose**: Remove a service when something it needs is missing
+
+.. versionadded:: 8.2
+
+    The ``container.remove_if_missing`` tag was introduced in Symfony 8.2.
+
+Some services are useless, or fail, when other services, classes or packages
+are missing. For example, a data collector is useless in environments where the
+profiler is disabled. Add this tag to those services, and the container removes
+them during compilation when the condition isn't met:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\DataCollector\PaymentCollector:
+                tags:
+                    - { name: 'container.remove_if_missing', service: 'profiler' }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\DataCollector\PaymentCollector;
+
+        return App::config([
+            'services' => [
+                PaymentCollector::class => [
+                    'tags' => [
+                        ['container.remove_if_missing' => ['service' => 'profiler']],
+                    ],
+                ],
+            ],
+        ]);
+
+The tag requires the ``service`` attribute, the ``class`` attribute or both:
+
+``service``
+    The id of a service or alias that must exist (it can be defined by any
+    bundle). Pass a list of ids (e.g. ``['profiler', 'test.client']``) to keep
+    the tagged service when at least one of them exists.
+
+``class``
+    A class, interface or trait that must exist.
+
+``package``
+    The Composer package that provides ``class``. The condition also fails
+    when this package is only installed as a dev dependency (in
+    ``require-dev``). This attribute requires the ``class`` attribute.
+
+``parent_packages``
+    The packages that require ``package``. A ``package`` installed only as a
+    dev dependency is accepted when one of these packages is also installed only
+    as a dev dependency. This attribute requires the ``class`` attribute.
+
+All the attributes of the tag must be met. The only exception is a list of ids
+in ``service``, which is met when any of them exists. Add the tag several times
+to require several services; the tagged service is kept only when all its tags
+are met.
+
+Removing a service can make the condition of another service fail, so the
+container repeats the check until no more services are removed. The aliases of
+a removed service are removed too. The check runs before the compiler passes
+registered with the default priority (like most passes added by bundles), so
+those passes never process the removed services.
+
+Each removal and its reason are written to the container compilation log, which
+is also displayed in the Symfony profiler:
+
+.. code-block:: text
+
+    Removed service "App\DataCollector\PaymentCollector"; reason: service "profiler" is missing.
+
 controller.argument_value_resolver
 ----------------------------------
 
