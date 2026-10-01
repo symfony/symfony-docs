@@ -50,6 +50,7 @@ Modify or sanitize raw submitted data before processing                  ``PRE_S
 Add/remove fields based on submitted values (like dependent selects)     ``PRE_SUBMIT`` (on parent) or ``POST_SUBMIT`` (on the child)
 Modify normalized submitted data                                         ``SUBMIT``
 React after submission is complete (for logging, etc.)                   ``POST_SUBMIT``
+React to the result of validation                                        ``POST_VALIDATE``
 =======================================================================  ===============
 
 .. tip::
@@ -173,6 +174,9 @@ the request:
    instead (see :ref:`form-events-nested-forms`).
 #. Validation runs through a listener on ``POST_SUBMIT``, so a populated and
    validated object is available once submission completes.
+#. Once the root form is validated, ``FormEvents::POST_VALIDATE`` fires on each
+   submitted form of the tree, children before their parents. This is the event
+   to use when a nested form needs to know whether the form is valid.
 
 .. _form-events-nested-forms:
 
@@ -216,6 +220,9 @@ the step before ``Data transformed (View -> Norm)`` in the
 #. ``CategoryType::POST_SUBMIT``
 #. ``TaskType::SUBMIT``
 #. ``TaskType::POST_SUBMIT``
+#. ``CategoryType::POST_VALIDATE`` (dispatched during ``TaskType::POST_SUBMIT``,
+   after the whole tree has been validated)
+#. ``TaskType::POST_VALIDATE``
 
 This order matters when you need to modify parent forms based on child data.
 That's why dependent fields typically listen to ``POST_SUBMIT`` on the child:
@@ -327,6 +334,7 @@ Name                    ``FormEvents`` Constant        Event's Data
 ``form.pre_submit``     ``FormEvents::PRE_SUBMIT``     Request data
 ``form.submit``         ``FormEvents::SUBMIT``         Normalized data
 ``form.post_submit``    ``FormEvents::POST_SUBMIT``    View data
+``form.post_validate``  ``FormEvents::POST_VALIDATE``  Model data
 ======================  =============================  ===============
 
 .. _form-events-pre-set-data:
@@ -576,6 +584,73 @@ that run on ``POST_SUBMIT``.
 
     You cannot modify the form that the listener is attached to during
     ``POST_SUBMIT``. Always modify the parent form instead.
+
+.. _form-events-post-validate:
+
+POST_VALIDATE
+~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``POST_VALIDATE`` event was introduced in Symfony 8.2.
+
+Fires once the whole form tree has been validated, on each submitted form of
+the tree, children before their parents. Validation runs only once for the
+whole tree, in a listener of the root form's ``POST_SUBMIT`` event. When the
+``POST_SUBMIT`` listeners of a nested form run, the form hasn't been validated
+yet, so this is the only event where nested forms can check if the form is
+valid.
+
+**When to use:**
+
+* React to the validity of the whole form from a nested form type (e.g. a
+  captcha field that generates a new challenge when the submission fails)
+
+**What you can access:**
+
+* ``$event->getData()``: Model data
+* ``$event->getForm()->isValid()``: whether this form and its children passed
+  validation
+* ``$event->getForm()->getRoot()->isValid()``: whether the whole form passed
+  validation
+
+**What you can do:**
+
+* You **can** add custom ``FormError`` instances to the form. Listeners on
+  parent forms run later, so they see the form as invalid
+* You **cannot** add or remove fields
+* You **cannot** change the form data (``$event->setData()`` throws an
+  exception)
+
+**Example**: Generate a new captcha challenge when the form is not valid::
+
+    use Symfony\Component\Form\Event\PostValidateEvent;
+    use Symfony\Component\Form\FormEvents;
+
+    // in the buildForm() method of a reusable CaptchaType
+    $builder->addEventListener(
+        FormEvents::POST_VALIDATE,
+        function (PostValidateEvent $event): void {
+            if (!$event->getForm()->getRoot()->isValid()) {
+                // the form will be displayed again: regenerate the challenge
+                $this->challengeStorage->regenerate();
+            }
+        }
+    );
+
+.. note::
+
+    This event is dispatched by the validator extension, which is enabled by
+    default in Symfony applications. It's not dispatched on buttons or on forms
+    that weren't submitted (e.g. children missing from the data when calling
+    ``$form->submit($data, false)``).
+
+.. tip::
+
+    For application logic that runs after validation, check
+    ``$form->isSubmitted() && $form->isValid()`` in the controller or in a form
+    handler instead. Use this event for logic that belongs to a reusable form
+    type.
 
 Troubleshooting
 ---------------
