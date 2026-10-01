@@ -3592,6 +3592,89 @@ When signing is enabled:
    :class:`Symfony\\Component\\Messenger\\Exception\\InvalidMessageSignatureException`
    is thrown, and the message will not be handled.
 
+.. _messenger-transport-signing:
+
+Signing All Messages of a Transport
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``sign`` option of transports was introduced in Symfony 8.2.
+
+When you enable signing per handler, Symfony must read the type of each
+received message (and autoload the class named in it) before it knows whether
+that message requires a signature. To check the signature before reading
+anything from the message, enable the ``sign`` option of the transport instead:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                failure_transport: failed
+
+                transports:
+                    async:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        # sign all messages sent to this transport and refuse
+                        # received messages without a valid signature
+                        sign: true
+                    failed:
+                        dsn: 'doctrine://default?queue_name=failed'
+                        sign: true
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'failure_transport' => 'failed',
+
+                    'transports' => [
+                        'async' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                            // sign all messages sent to this transport and refuse
+                            // received messages without a valid signature
+                            'sign' => true,
+                        ],
+                        'failed' => [
+                            'dsn' => 'doctrine://default?queue_name=failed',
+                            'sign' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The signature also records whether the message is trusted. Messages dispatched
+by your application and messages whose signature was verified on receipt are
+signed as *verified*. Any other message (e.g. a message that failed on a
+transport that doesn't sign) is signed as *unverified*. The trust level is part
+of the signature, so a message can't become trusted while it waits in a queue.
+
+Keep in mind the following behaviors:
+
+* A received message without a valid signature (e.g. unsigned or signed with a
+  different secret) is refused. It isn't retried and goes to the
+  :ref:`failure transport <messenger-failure-transport>`, where retrying it
+  fails again.
+* Signing transports refuse messages signed as unverified. The only exception
+  is the failure transport, which accepts them so you can retry them with the
+  ``messenger:failed:retry`` command. However, it still refuses them when their
+  handler enables :ref:`message signing <messenger-message-signing>`.
+* If a transport signs all messages, its failure transport and its
+  :ref:`outbox <messenger-outbox>` must sign them too (otherwise, the container
+  doesn't compile). The opposite isn't required: you can enable signing only
+  on the failure transport, so that it refuses any message added to or changed
+  in its queue by someone else.
+* Enable this option only on transports with no pending messages, because
+  Symfony refuses the messages queued before without a valid signature.
+
 Pinging A Webservice
 --------------------
 
