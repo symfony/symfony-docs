@@ -298,6 +298,38 @@ pass the ``hostname`` and ``port`` to the ``$options`` parameter of the
         'port' => 8080, // defaults to 9080
     ]);
 
+Setting Environment Variables for the Web Server
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The built-in web server runs in its own process, which inherits the
+environment variables of the test process. Use the ``env`` option to add or
+change some of them (e.g. to use a different mailer transport)::
+
+    $client = self::createPantherClient([
+        'env' => ['MAILER_DSN' => 'null://null'],
+    ]);
+
+The web server is started only once and then reused by all tests, so this
+option only has effect in the first call that starts the web server.
+
+If your test bootstrap loads ``.env`` files, the Dotenv component stores the
+names of the variables it defined in the ``SYMFONY_DOTENV_VARS`` variable.
+The web server inherits it, so when the application loads the ``.env`` files
+again, Dotenv overrides any of those variables with the value from the
+``.env`` files, including the ones passed in ``env``. To prevent this,
+remove that variable from the web server process::
+
+    $client = self::createPantherClient([
+        'env' => [
+            'MAILER_DSN' => 'null://null',
+            // setting a variable to false removes it from the web server
+            'SYMFONY_DOTENV_VARS' => false,
+        ],
+    ]);
+
+This makes Dotenv keep the inherited value of all the variables, not only
+the ones passed in ``env``.
+
 Using Browser-Kit Clients
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
