@@ -4061,6 +4061,12 @@ Let's say you want to create a message decoder::
         }
     }
 
+Stamps implementing
+:class:`Symfony\\Component\\Messenger\\Stamp\\NonSendableStampInterface` are
+never sent to transports: the application adds them while it processes the
+message, like the ``ReceivedStamp`` added by the worker. Your decoder should not
+create such stamps from the data it receives.
+
 The next step is to tell Symfony to use this serializer in one or more of your
 transports:
 
