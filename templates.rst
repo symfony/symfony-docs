@@ -1056,7 +1056,7 @@ Rendering a Template Directly from a Route
 
 Although templates are usually rendered in controllers and services, you can
 render static pages that don't need any variables directly from the route
-definition. Use the special :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\TemplateController`
+definition. Use the special :class:`Symfony\\Bundle\\TwigBundle\\Controller\\TemplateController`
 provided by Symfony:
 
 .. configuration-block::
@@ -1066,7 +1066,7 @@ provided by Symfony:
         # config/routes.yaml
         acme_privacy:
             path:          /privacy
-            controller:    Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+            controller:    Symfony\Bundle\TwigBundle\Controller\TemplateController
             defaults:
                 # the path of the template to render
                 template:  'static/privacy.html.twig'
@@ -1096,7 +1096,7 @@ provided by Symfony:
         // config/routes.php
         namespace Symfony\Component\Routing\Loader\Configurator;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
+        use Symfony\Bundle\TwigBundle\Controller\TemplateController;
 
         return Routes::config([
             'acme_privacy' => [
