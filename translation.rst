@@ -700,7 +700,7 @@ also supported, and every value they can produce is extracted::
     // extracts both "title.amended" and "title.new"
     $translator->trans('title.'.($isAmended ? 'amended' : 'new'));
 
-    // both extract only "title.default" because variables can't be resolved
+    // both extract only "title.default" because the value of $customTitle is unknown
     $translator->trans($customTitle ?? 'title.default');
     $translator->trans($customTitle ?: 'title.default');
 
@@ -716,6 +716,48 @@ Concatenations that produce more than 256 combinations are ignored too.
 
     Support for ternary and null-coalescing expressions when extracting
     translation messages was introduced in Symfony 8.2.
+
+The AST parser also finds messages that aren't passed as literal strings:
+the values of ``match`` expressions, interpolated strings, variables
+assigned before the call and values returned by methods. For example,
+consider an enum that returns its label with a ``match`` expression::
+
+    // src/Enum/ArticleStatus.php
+    namespace App\Enum;
+
+    enum ArticleStatus: string
+    {
+        case Draft = 'draft';
+        case Published = 'published';
+
+        public function label(): string
+        {
+            return match ($this) {
+                self::Draft => 'article.status.draft',
+                self::Published => 'article.status.published',
+            };
+        }
+    }
+
+Methods are resolved only when the class of the object is known
+(``$this``, typed parameters and properties, enum cases, return types,
+etc.) and when they are defined in the extracted directories (methods
+defined in ``vendor/`` are ignored)::
+
+    // src/Controller/ArticleController.php
+    public function show(Article $article): Response
+    {
+        // extracts 'article.status.draft' and 'article.status.published'
+        // because $article is typed and getStatus() returns an ArticleStatus
+        $statusLabel = $this->translator->trans($article->getStatus()->label());
+
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    Extracting messages from ``match`` expressions, interpolated strings,
+    variables and method return values was introduced in Symfony 8.2.
 
 By default, when the ``translation:extract`` command creates new entries in the
 translation file, it uses the same content as both the source and the pending
