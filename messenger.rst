@@ -1768,6 +1768,11 @@ renamed after a deployment), Messenger routes the undecodable message through
 the normal retry/failure transport pipeline. Once the underlying issue is fixed,
 retrying the message from the failure transport will automatically re-decode it.
 
+Messenger decodes the message again with the serializer of the transport that
+originally received it. That's why the failure transport must use the same
+:ref:`serializer <messenger-serializer>` as the transports that send their
+failed messages to it.
+
 .. versionadded:: 8.1
 
     Before Symfony 8.1, messages that failed to decode threw a ``MessageDecodingFailedException``
@@ -3092,6 +3097,8 @@ than once (``ApproximateReceiveCount``). Read them in a listener of the
     The transport always requests these attributes and there's no option to
     disable it. SQS-compatible servers that don't support them ignore the
     request, so ``getSystemAttributes()`` returns an empty array.
+
+.. _messenger-serializer:
 
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
