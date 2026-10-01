@@ -1201,6 +1201,8 @@ These options also apply to the schedules created by providers.
     message processing may be delayed. So, it's a good practice to anticipate this
     and plan for frequencies greater than the processing time of a message.
 
+.. _scheduler-redispatch-messages:
+
 To scale the processing of your tasks, don't run them inside the scheduler
 worker. Instead, redispatch them to a :doc:`Messenger transport </messenger>` so
 regular ``messenger:consume`` workers process them in parallel. When using
@@ -1245,6 +1247,16 @@ option or in its ``#[AsMessage]`` attribute::
 When using the ``RedispatchMessage``, Symfony will attach a
 :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
+
+The scheduler transport doesn't yield the ``RedispatchMessage`` itself but the
+message it wraps, with a
+:class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` that makes the
+worker send it to its transports instead of handling it. This means that the
+middleware of your bus receives your own message, not a ``RedispatchMessage``.
+
+.. versionadded:: 8.2
+
+    The ``RedispatchStamp`` was introduced in Symfony 8.2.
 
 .. _scheduler-messenger-routing:
 

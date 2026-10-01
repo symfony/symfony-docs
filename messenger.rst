@@ -6282,10 +6282,35 @@ If you don't add this stamp, Messenger sends the message to the senders
 If the message class has no configured sender, Messenger handles it right away
 (synchronously).
 
+Dispatching a
+:class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` to a bus
+is deprecated, because the
+:class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+that handles it is deprecated. Dispatch the message it wraps instead::
+
+    // before
+    $this->bus->dispatch(new RedispatchMessage($message, 'async'));
+
+    // after
+    $this->bus->dispatch($message, [new TransportNamesStamp('async')]);
+
+The ``RedispatchMessage`` class itself is still used by the Scheduler to
+:ref:`redispatch the messages of a schedule <scheduler-redispatch-messages>`.
+
 .. deprecated:: 8.2
 
     Dispatching a ``RedispatchMessage`` to a bus and the
     ``RedispatchMessageHandler`` class were deprecated in Symfony 8.2.
+
+If you create a transport that yields messages created in the same process (like
+the Scheduler one), add a
+:class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` to them. The
+worker then sends each message to its senders instead of handling it. This
+stamp isn't sendable, so a message read from a queue never carries it.
+
+.. versionadded:: 8.2
+
+    The ``RedispatchStamp`` was introduced in Symfony 8.2.
 
 Learn more
 ----------
