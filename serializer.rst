@@ -2716,6 +2716,70 @@ not present in the mapping, the serializer falls back to the first entry
 declared for the object's class. The discriminator property can also be a
 backed enum, in which case the serializer uses the enum case's value.
 
+.. _serializer-extensible-discriminator-map:
+
+Extending a Discriminator Map from Child Classes
+................................................
+
+.. versionadded:: 8.2
+
+    The ``#[DiscriminatorMapType]`` attribute was introduced in Symfony 8.2.
+
+The previous examples list all the classes of the discriminator map in its
+``mapping`` option. This doesn't work when those classes aren't known in advance
+(e.g. in a bundle that lets applications define their own invoice item types).
+In those cases, omit the ``mapping`` option of ``#[DiscriminatorMap]``::
+
+    // src/Model/InvoiceItemInterface.php
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Attribute\DiscriminatorMap;
+
+    #[DiscriminatorMap(typeProperty: 'type')]
+    interface InvoiceItemInterface
+    {
+        // ...
+    }
+
+Then, add the ``#[DiscriminatorMapType]`` attribute to each class that must be
+part of the map::
+
+    // src/Model/Product.php
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Attribute\DiscriminatorMapType;
+
+    // the first argument is the type name of this class in the map and the
+    // second one is the class or interface that declares the map
+    #[DiscriminatorMapType('product', InvoiceItemInterface::class)]
+    class Product implements InvoiceItemInterface
+    {
+        // ...
+    }
+
+This attribute is repeatable, so a class can add itself to several maps (e.g.
+one for each interface it implements). The types added this way are merged
+with the types defined in the ``mapping`` option (if any), no matter if the map
+is defined with attributes, YAML or XML. The ``defaultType`` option can also
+refer to any of these added types.
+
+In Symfony applications, these classes are found when compiling the container,
+so they must be in a directory loaded as services and not excluded from it
+(see :ref:`serializer-compile-time-attribute-metadata`). When using the
+Serializer component in other PHP applications, pass the list of added types
+as the third argument of the attribute loader::
+
+    use App\Model\InvoiceItemInterface;
+    use App\Model\Product;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+
+    // keys are the classes or interfaces declaring the maps; values are
+    // the types added to each map and the classes they point to
+    $discriminatorMapTypes = [
+        InvoiceItemInterface::class => ['product' => Product::class],
+    ];
+    $loader = new AttributeLoader(true, [], $discriminatorMapTypes);
+
 .. _serializer-unwrapping-denormalizer:
 
 Deserializing Input Partially (Unwrapping)
@@ -2881,16 +2945,18 @@ Otherwise, a ``MappingException`` is thrown during container compilation.
 You can use any serialization attribute on the source class properties, including
 ``#[Groups]``, ``#[SerializedName]``, ``#[MaxDepth]``, ``#[Ignore]``, and others.
 
+.. _serializer-compile-time-attribute-metadata:
+
 Compile-Time Attribute Metadata
 ...............................
 
 When using the Symfony framework with :ref:`autoconfiguration <services-autoconfigure>`,
 classes that use serializer attributes (such as ``#[Groups]``,
 ``#[SerializedName]``, ``#[MaxDepth]``, ``#[Ignore]``, ``#[Context]``,
-``#[SerializedPath]`` or ``#[DiscriminatorMap]``) are automatically discovered
-at compile time. This allows the attribute loader to only process the classes
-that are known to have serializer attributes, improving performance in
-production.
+``#[SerializedPath]``, ``#[DiscriminatorMap]`` or ``#[DiscriminatorMapType]``)
+are automatically discovered at compile time. This allows the attribute loader
+to only process the classes that are known to have serializer attributes,
+improving performance in production.
 
 If you need to explicitly register a class that uses serializer attributes
 (e.g. from a third-party library that is not part of your service
