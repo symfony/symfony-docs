@@ -9,6 +9,7 @@ each possible section of your Symfony configuration.
 * :doc:`Framework </reference/configuration/framework>`
 * :doc:`Doctrine </reference/configuration/doctrine>`
 * `Doctrine Migrations`_
+* :doc:`Routing </reference/configuration/routing>`
 * :doc:`Security </reference/configuration/security>`
 * :doc:`Twig </reference/configuration/twig>`
 * :doc:`Monolog </reference/configuration/monolog>`
