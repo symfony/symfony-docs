@@ -256,9 +256,14 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
             // ...
         }
 
-        // the 'key' argument also accepts a Closure; it receives the controller
-        // arguments, the current Request, and the controller instance (in that order)
-        #[RateLimit('per_account', key: fn (array $args, Request $request): string => $request->query->get('email'))]
+        // the 'key' argument also accepts a closure; it receives the controller
+        // arguments, the current Request and the controller instance (in that order)
+        #[RateLimit(
+            'per_account',
+            key: static function (array $args, Request $request): string {
+                return $request->query->getString('email');
+            },
+        )]
         public function resetPasswordViaLink(): Response
         {
             // ...
@@ -290,6 +295,13 @@ When SecurityBundle is installed, the ``key`` expression can call any of the
 
     Support for the security functions in these expressions was introduced in
     Symfony 8.2.
+
+.. note::
+
+    Closures in attributes require PHP 8.5 or higher and must be ``static``
+    (arrow functions aren't allowed). On older PHP versions, pass an
+    ``Expression`` to the ``key`` argument, as in the ``resetPassword()``
+    example.
 
 .. tip::
 
