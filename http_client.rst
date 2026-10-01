@@ -1175,6 +1175,10 @@ following methods::
     // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
     $response->getInfo('pause_handler')(2);
 
+    // returns the header fields sent after the response body (called "trailers");
+    // it's null until the response is complete
+    $trailers = $response->getInfo('trailers');
+
 .. note::
 
     ``$response->toStream()`` is part of :class:`Symfony\\Component\\HttpClient\\Response\\StreamableInterface`.
@@ -1184,6 +1188,50 @@ following methods::
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
+
+HTTP Trailers
+~~~~~~~~~~~~~
+
+Some protocols send header fields *after* the response body. These fields are
+called trailers. For example, gRPC reports the result of a call in the
+``grpc-status`` trailer. Use the ``trailers`` info to read them once the
+response is complete::
+
+    $url = 'https://example.com/acme.Catalog/GetProduct';
+    $response = $client->request('POST', $url, [
+        'http_version' => '2.0',
+        'headers' => ['content-type' => 'application/grpc', 'te' => 'trailers'],
+        'body' => $grpcFrame,
+    ]);
+
+    // trailers arrive after the body, so wait for the complete response
+    $response->getContent(false);
+
+    // e.g. ['grpc-status' => ['0'], 'grpc-message' => ['']]
+    $trailers = $response->getInfo('trailers');
+
+    // gRPC servers send "trailers-only" responses (with no body) as regular headers
+    $grpcStatus = $trailers['grpc-status'][0]
+        ?? $response->getHeaders(false)['grpc-status'][0];
+
+The ``trailers`` info is ``null`` until the transfer completes and it stays
+``null`` if the transfer fails or is canceled. Then, it has the same format as
+``getHeaders(false)`` (lower-cased names mapped to lists of values) or it's an
+empty array when the server sends no trailers (which is always the case for
+responses served from the cache of ``CachingHttpClient``). Trailers are never
+merged into the response headers.
+
+In tests, pass the trailers in the ``info`` argument of
+:class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`. As with real
+responses, they are only available once the mock response completes::
+
+    $response = new MockResponse($grpcResponseFrame, [
+        'trailers' => ['grpc-status' => ['0']],
+    ]);
+
+.. versionadded:: 8.2
+
+    The ``trailers`` response info was introduced in Symfony 8.2.
 
 .. _http-client-streaming-responses:
 
