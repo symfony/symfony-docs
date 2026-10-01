@@ -3560,6 +3560,8 @@ parameter of this method (e.g. ``$envelope->all(ReceivedStamp::class)``).
     if going through transport using the :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Serializer`
     base serializer.
 
+.. _messenger-default-stamps:
+
 Default Stamps on Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3607,6 +3609,9 @@ What happens when you dispatch a message to a message bus depends on its
 collection of middleware and their order. By default, the middleware configured
 for each bus looks like this:
 
+#. ``add_default_stamps_middleware`` - adds the
+   :ref:`default stamps <messenger-default-stamps>` that the message declares;
+
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
    message was dispatched into;
 
@@ -3615,6 +3620,10 @@ for each bus looks like this:
 #. ``failed_message_processing_middleware`` - processes messages that are being
    retried via the :ref:`failure transport <messenger-failure-transport>` to make
    them properly function as if they were being received from their original transport;
+
+#. ``deduplicate_middleware`` - skips a message when another message with the
+   same :ref:`deduplication key <messenger-deduplication>` is already queued or
+   being processed (only when the :doc:`Lock component </lock>` is installed);
 
 #. Your own collection of middleware_;
 
@@ -3744,6 +3753,8 @@ The above example will forward the message to the next middleware with an
 additional stamp *if* the message has just been received (i.e. has at least one
 ``ReceivedStamp`` stamp). You can create your own stamps by implementing
 :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
+
+.. _messenger-deduplication:
 
 Message Deduplication
 ~~~~~~~~~~~~~~~~~~~~~
