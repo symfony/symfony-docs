@@ -1677,6 +1677,11 @@ renamed after a deployment), Messenger routes the undecodable message through
 the normal retry/failure transport pipeline. Once the underlying issue is fixed,
 retrying the message from the failure transport will automatically re-decode it.
 
+Messenger decodes the message again with the serializer of the transport that
+originally received it. That's why the failure transport must use the same
+:ref:`serializer <messenger-serializer>` as the transports that send their
+failed messages to it.
+
 .. versionadded:: 8.1
 
     Before Symfony 8.1, messages that failed to decode threw a ``MessageDecodingFailedException``
@@ -2622,6 +2627,8 @@ The transport has a number of options:
 
 The SQS transport supports the ``--keepalive`` option by using the ``ChangeMessageVisibility``
 action to periodically update the ``VisibilityTimeout`` of the message.
+
+.. _messenger-serializer:
 
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
