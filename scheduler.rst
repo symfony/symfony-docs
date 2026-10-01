@@ -1130,15 +1130,22 @@ When using the ``RedispatchMessage``, Symfony will attach a
 :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
 
-.. versionadded:: 8.2
+.. note::
 
-    Starting from Symfony 8.2, the scheduler transport doesn't yield the
-    ``RedispatchMessage`` itself anymore. It yields the message it wraps, with
-    a :class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` that makes
-    the worker send it to its senders instead of handling it, and with a
-    :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp` when you
-    pass transport names. This means that the handlers and the middleware of
-    your bus receive your own message, not a ``RedispatchMessage``.
+    The scheduler transport doesn't yield the ``RedispatchMessage`` itself,
+    but the message it wraps, with a
+    :class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` that makes
+    the worker send it to its senders instead of handling it. When you pass
+    transport names, it also adds a
+    :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp`. The
+    same happens to every message when the
+    ``framework.scheduler.use_messenger_routing`` option is enabled, without
+    the transport names. The handlers and the middleware of your bus
+    receive your own message, not a ``RedispatchMessage``.
+
+    .. versionadded:: 8.2
+
+        The ``RedispatchStamp`` was introduced in Symfony 8.2.
 
 .. _`Deploying to Production`: https://symfony.com/doc/current/messenger.html#deploying-to-production
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization

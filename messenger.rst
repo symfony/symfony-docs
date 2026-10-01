@@ -5376,30 +5376,37 @@ To force the transports to use when redispatching the message, add a
 
 .. deprecated:: 8.2
 
-    Dispatching a
-    :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` to a
-    bus, which the
-    :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
-    handles, is deprecated. Dispatch the message it wraps with a
-    ``TransportNamesStamp`` instead::
+    Dispatching a ``RedispatchMessage`` to a bus was deprecated in Symfony
+    8.2.
 
-        // before
-        $this->bus->dispatch(new RedispatchMessage($message, 'async'));
+Dispatching a
+:class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` to a bus,
+which the
+:class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+handles, is deprecated. Dispatch the message it wraps with a
+``TransportNamesStamp`` instead::
 
-        // after
-        $this->bus->dispatch($message, [new TransportNamesStamp('async')]);
+    // before
+    $this->bus->dispatch(new RedispatchMessage($message, 'async'));
+
+    // after
+    $this->bus->dispatch($message, [new TransportNamesStamp('async')]);
+
+.. note::
 
     The ``RedispatchMessage`` class itself is not deprecated: the
     Scheduler component still uses it to
     :ref:`redispatch the messages of a schedule <scheduler-redispatch-messages>`.
+    A transport that yields messages created in the same process, like the
+    Scheduler one, adds a
+    :class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` to them so
+    that the worker sends each message to its senders instead of handling
+    it. This stamp is not sendable, so a message read from a queue can never
+    carry it.
 
-.. versionadded:: 8.2
+    .. versionadded:: 8.2
 
-    The :class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` was
-    introduced in Symfony 8.2. A transport that yields messages created in the
-    same process, like the Scheduler one, adds it so that the worker sends the
-    received message to its senders instead of handling it. This stamp is not
-    sendable, so a message read from a queue can never carry it.
+        The ``RedispatchStamp`` was introduced in Symfony 8.2.
 
 Learn more
 ----------
