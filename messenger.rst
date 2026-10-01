@@ -3657,17 +3657,18 @@ for each bus looks like this:
 
 #. ``dispatch_after_current_bus``- see :ref:`messenger-transactional-messages`;
 
-#. ``failed_message_processing_middleware`` - processes messages that are being
-   retried via the :ref:`failure transport <messenger-failure-transport>` to make
-   them properly function as if they were being received from their original transport;
-
-#. ``decode_failed_message`` - when a message cannot be decoded (e.g. its class
-   was removed), this middleware attempts to re-decode it using the transport's
-   serializer, enabling recovery after a fix is deployed;
+#. ``decode_failed_message_middleware`` - when a message cannot be decoded (e.g.
+   its class was removed), this middleware attempts to re-decode it using the
+   transport's serializer, enabling recovery after a fix is deployed;
 
    .. versionadded:: 8.1
 
-       The ``decode_failed_message`` middleware was introduced in Symfony 8.1.
+       The ``decode_failed_message_middleware`` middleware was introduced in
+       Symfony 8.1.
+
+#. ``failed_message_processing_middleware`` - processes messages that are being
+   retried via the :ref:`failure transport <messenger-failure-transport>` to make
+   them properly function as if they were being received from their original transport;
 
 #. Your own collection of middleware_;
 
