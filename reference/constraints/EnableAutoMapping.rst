@@ -89,4 +89,4 @@ The ``groups`` option is not available for this constraint.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`Doctrine configuration reference`: https://symfony.com/bundles/DoctrineBundle/current/configuration.html
+.. _`Doctrine configuration reference`: https://symfony.com/doc/current/reference/configuration/framework.html#framework-validation-auto-mapping
