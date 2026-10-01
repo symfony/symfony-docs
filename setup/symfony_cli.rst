@@ -415,18 +415,28 @@ PostgreSQL    5432      ``DATABASE_``
 Redis         6379      ``REDIS_``
 Memcached     11211     ``MEMCACHED_``
 RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_DEFAULT_USER`` and ``RABBITMQ_DEFAULT_PASS`` env var)
+RabbitMQ UI   15672     ``RABBITMQ_MANAGEMENT_`` (only when the container also exposes port ``5672``)
 Elasticsearch 9200      ``ELASTICSEARCH_``
+Kibana        5601      ``KIBANA_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
+              27018
+              27019
 Kafka         9092      ``KAFKA_``
+Beanstalkd    11300     ``BEANSTALKD_``
 Mail catcher  1025/1080 ``MAILER_``
               1025/8025
-              or 25/80
-Blackfire     8707      ``BLACKFIRE_``
+              25/80
+              3535/3550
+Blackfire     8307      ``BLACKFIRE_``
+              8707
 Mercure       80        Always exposes ``MERCURE_PUBLIC_URL`` and ``MERCURE_URL`` (only works with the ``dunglas/mercure`` Docker image)
 ============= ========= ======================
 
-If the service is not supported, generic environment variables are set:
-``PORT``, ``IP``, and ``HOST``.
+If the service is not supported, the web server creates these generic
+environment variables with the same prefix: ``URL``, ``SCHEME``, ``HOST``,
+``PORT`` and ``IP``. The URL scheme is ``http`` for ports ``80``, ``8008``,
+``8080`` and ``8081``; ``https`` for ports ``443`` and ``8443``; and ``tcp``
+for any other port.
 
 You can open web management interfaces for the services that expose them
 by clicking on the links in the "Server" section of the web debug toolbar
