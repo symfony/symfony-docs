@@ -2643,7 +2643,7 @@ found.
 logging
 .......
 
-**default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
+**type**: ``boolean`` **default**: ``false``
 
 When ``true``, a log entry is made whenever the translator cannot find a translation
 for a given key. The logs are made to the ``translation`` channel at the
