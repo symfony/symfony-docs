@@ -2949,6 +2949,47 @@ validate the URI signatures of all its actions::
         // ...
     }
 
+.. _routing-signed-uris-secret-rotation:
+
+Rotating the Secret of Signed URIs
+..................................
+
+By default, URIs are signed with the
+:ref:`kernel.secret <configuration-framework-secret>` parameter. To sign them
+with another secret without breaking the signed URIs still in use (e.g. the ones
+sent by email or cached in pages that use ESI), list the new secret first and
+the previous one after it in the ``uri_signer.secret`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            uri_signer:
+                # the first secret signs new URIs, all of them verify
+                secret: ['%env(URI_SIGNER_SECRET)%', '%env(APP_SECRET)%']
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'uri_signer' => [
+                    // the first secret signs new URIs, all of them verify
+                    'secret' => [env('URI_SIGNER_SECRET'), env('APP_SECRET')],
+                ],
+            ],
+        ]);
+
+Remove the previous secret once the URIs it signed have expired.
+
+.. versionadded:: 8.2
+
+    The ``uri_signer.secret`` option was introduced in Symfony 8.2.
+
 Troubleshooting
 ---------------
 

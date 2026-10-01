@@ -1046,12 +1046,20 @@ used_link_cache
 The service id of the cache pool used to track used login links. This is required
 when ``max_uses`` is set.
 
+.. _reference-security-firewall-login-link-secret:
+
 secret
 ......
 
-**type**: ``string`` **default**: ``%kernel.secret%``
+**type**: ``string`` | ``array`` **default**: ``%kernel.secret%``
 
-The secret used to sign the login link URL.
+The secret used to sign the login link URL. Pass a list of secrets to rotate
+it: the first one signs and all of them verify.
+
+.. versionadded:: 8.2
+
+    Passing a list of secrets to the ``secret`` option was introduced in
+    Symfony 8.2.
 
 provider
 ........
@@ -1142,13 +1150,21 @@ The "remember me" authentication mechanism allows users to stay authenticated
 across browser sessions by storing a special cookie. For even more details, see
 :doc:`/security/remember_me`.
 
+.. _reference-security-firewall-remember-me-secret:
+
 secret
 ......
 
-**type**: ``string`` **default**: ``%kernel.secret%``
+**type**: ``string`` | ``array`` **default**: ``%kernel.secret%``
 
-The secret used to encode the cookie content. It's common to use the
-``kernel.secret`` parameter.
+The secret used to sign the cookie content. Pass a list of secrets to
+:ref:`rotate it <security-remember-me-secret-rotation>`: the first one signs
+and all of them verify.
+
+.. versionadded:: 8.2
+
+    Passing a list of secrets to the ``secret`` option was introduced in
+    Symfony 8.2.
 
 service
 .......
