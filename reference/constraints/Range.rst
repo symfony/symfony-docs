@@ -309,10 +309,10 @@ Options
 ``invalidDateTimeMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This value should be a valid number.``
+**type**: ``string`` **default**: ``This value is not a valid datetime.``
 
-The message displayed when the ``min`` and ``max`` values are PHP datetimes but
-the given value is not.
+The message displayed when the ``min`` and ``max`` values are date strings but
+the given value is not a ``DateTimeInterface`` object.
 
 You can use the following parameters in this message:
 
