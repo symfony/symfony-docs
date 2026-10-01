@@ -3359,6 +3359,19 @@ serializer
 
 Service id of a custom serializer to use for this transport.
 
+sign
+""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to sign every message sent to this transport and refuse the received
+messages without a valid signature. Read more about
+:ref:`signing every message of a transport <messenger-transport-signing>`.
+
+.. versionadded:: 8.2
+
+    The ``sign`` option was introduced in Symfony 8.2.
+
 options
 """""""
 
