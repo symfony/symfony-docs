@@ -5399,6 +5399,18 @@ The name of the HTTP header used to transmit the event ID.
 
     The ``id_header_name`` option was introduced in Symfony 8.1.
 
+timestamp_header_name
+.....................
+
+**type**: ``string`` **default**: ``'Webhook-Timestamp'``
+
+The name of the HTTP header used to transmit the Unix timestamp of when the
+webhook was sent.
+
+.. versionadded:: 8.2
+
+    The ``timestamp_header_name`` option was introduced in Symfony 8.2.
+
 signature_header_name
 .....................
 
@@ -5420,6 +5432,36 @@ The hash algorithm used to sign outgoing webhooks (e.g. ``sha256``, ``sha512``).
 .. versionadded:: 8.1
 
     The ``signing_algorithm`` option was introduced in Symfony 8.1.
+
+signature_format
+................
+
+**type**: ``string`` **default**: ``'legacy'``
+
+The signature scheme that outgoing webhooks use and that the built-in request
+parser requires. The allowed values are ``legacy`` (the ``<algo>=<hex>``
+signature), ``standard`` (the `Standard Webhooks`_ ``v1,<base64>`` signature)
+and ``transitional`` (both signatures, to migrate from one to the other). Read
+more about :ref:`Standard Webhooks signatures <webhook-standard-webhooks>`.
+
+.. versionadded:: 8.2
+
+    The ``signature_format`` option was introduced in Symfony 8.2.
+
+timestamp_tolerance
+...................
+
+**type**: ``integer`` **default**: ``300``
+
+The maximum difference, in seconds, between the timestamp of an incoming
+Standard Webhooks request and the current time. The built-in request parser
+rejects requests outside that window to prevent replay attacks. Set it to ``0``
+to accept any timestamp. This option doesn't apply to ``legacy`` signatures,
+because they don't include the timestamp.
+
+.. versionadded:: 8.2
+
+    The ``timestamp_tolerance`` option was introduced in Symfony 8.2.
 
 routing
 .......
@@ -5654,3 +5696,4 @@ to know their differences.
 .. _`shared cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#shared_cache
 .. _`private cache`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching#private_caches
 .. _`W3C Sanitizer API standard`: https://wicg.github.io/sanitizer-api/#default-configuration
+.. _`Standard Webhooks`: https://www.standardwebhooks.com/
