@@ -605,9 +605,21 @@ date of the link, the values of the configured signature properties and the
 user identifier. The used hashing algorithm is SHA-256.
 
 Once this first hash is processed and encoded in Base64, a new one is created
-from the first hash value and the ``kernel.secret`` container parameter. This
+from the first hash value and the ``secret`` option of the ``login_link``
+firewall setting (the ``kernel.secret`` container parameter by default). This
 allows Symfony to sign this final hash, which is contained in the login URL.
 The final hash is also a Base64 encoded SHA-256 hash.
+
+To change the secret without breaking the links that were already sent, pass a
+list of secrets to the ``secret`` option: the first secret signs new links and
+all of them verify the signatures. This works the same as for
+:ref:`remember me cookies <security-remember-me-secret-rotation>`. Remove the
+previous secret once the ``lifetime`` of the links signed with it has passed.
+
+.. versionadded:: 8.2
+
+    Passing a list of secrets to the ``secret`` option was introduced in
+    Symfony 8.2.
 
 .. _login-link_customize-success-handler:
 
