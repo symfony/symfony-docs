@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-09-02T06:02:20Z
+
+I reworked this for the final shape of symfony/symfony#47210 (a single `FormEvents::POST_VALIDATE` event, `PRE_VALIDATE` was dropped) and retargeted it to 8.2, keeping @Seb33300 as the author. The page was restructured since this PR was opened, so the content now follows the current event reference format.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-09-02T06:05:26Z
+
+PR merged, RFR
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-09-02T06:16:54Z
+
+The red "Code Blocks" check can be ignored: the checker installs the latest stable Symfony (prefer-stable resolves to 8.1.6), so it cannot see the `PostValidateEvent` class before 8.2.0 is tagged. DOCtor-RST and the docs builder are green.
