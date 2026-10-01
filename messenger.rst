@@ -5335,16 +5335,18 @@ only includes what applies to that message, and says ``not handled`` or
 Redispatching a Message
 -----------------------
 
-If you want to redispatch a message (using the same transport and envelope), create
-a new :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
-it through your bus. Reusing the same ``SmsNotification`` example shown earlier::
+If you want to redispatch a message from its own handler, dispatch it again
+through your bus. A dispatched message is sent to the senders
+:ref:`configured for its class <messenger-routing>` (from the
+``framework.messenger.routing`` option or the ``#[AsMessage]`` attribute), so
+you don't need to wrap it in another message. Reusing the same
+``SmsNotification`` example shown earlier::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
     use App\Message\SmsNotification;
     use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-    use Symfony\Component\Messenger\Message\RedispatchMessage;
     use Symfony\Component\Messenger\MessageBusInterface;
 
     #[AsMessageHandler]
@@ -5360,28 +5362,44 @@ it through your bus. Reusing the same ``SmsNotification`` example shown earlier:
             // then redispatch it based on your own logic
 
             if ($needsRedispatch) {
-                $this->bus->dispatch(new RedispatchMessage($message));
+                $this->bus->dispatch($message);
             }
         }
     }
 
-The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
-will take care of this message to redispatch it through the same bus it was
-dispatched at first. You can also use the second argument of the ``RedispatchMessage``
-constructor to force the transports to use when redispatching the message::
+To force the transports to use when redispatching the message, add a
+:class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp` to it::
 
-    $this->bus->dispatch(new RedispatchMessage($message, 'async'));
+    use Symfony\Component\Messenger\Stamp\TransportNamesStamp;
 
-When you don't pass any transport name, the message is sent to the senders
-:ref:`configured for its class <messenger-routing>`, whether they come from the
-``framework.messenger.routing`` option or from the ``#[AsMessage]`` attribute.
-If the message class has no configured sender, it is handled in process.
+    $this->bus->dispatch($message, [new TransportNamesStamp('async')]);
+
+.. deprecated:: 8.2
+
+    Dispatching a
+    :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` to a
+    bus, which the
+    :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+    handles, is deprecated. Dispatch the message it wraps with a
+    ``TransportNamesStamp`` instead::
+
+        // before
+        $this->bus->dispatch(new RedispatchMessage($message, 'async'));
+
+        // after
+        $this->bus->dispatch($message, [new TransportNamesStamp('async')]);
+
+    The ``RedispatchMessage`` class itself is not deprecated: the
+    Scheduler component still uses it to
+    :ref:`redispatch the messages of a schedule <scheduler-redispatch-messages>`.
 
 .. versionadded:: 8.2
 
-    Falling back to the senders configured for the message was introduced in
-    Symfony 8.2. In previous versions, omitting the transport names sent the
-    message to no sender at all.
+    The :class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` was
+    introduced in Symfony 8.2. A transport that yields messages created in the
+    same process, like the Scheduler one, adds it so that the worker sends the
+    received message to its senders instead of handling it. This stamp is not
+    sendable, so a message read from a queue can never carry it.
 
 Learn more
 ----------

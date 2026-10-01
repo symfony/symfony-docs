@@ -1083,6 +1083,8 @@ once::
     message processing may be delayed. So, it's a good practice to anticipate this
     and plan for frequencies greater than the processing time of a message.
 
+.. _scheduler-redispatch-messages:
+
 To scale the processing of your tasks, don't run them inside the scheduler
 worker. Instead, redispatch them to a :doc:`Messenger transport </messenger>` so
 regular ``messenger:consume`` workers process them in parallel. When using
@@ -1127,6 +1129,16 @@ option or in its ``#[AsMessage]`` attribute::
 When using the ``RedispatchMessage``, Symfony will attach a
 :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
+
+.. versionadded:: 8.2
+
+    Starting from Symfony 8.2, the scheduler transport doesn't yield the
+    ``RedispatchMessage`` itself anymore. It yields the message it wraps, with
+    a :class:`Symfony\\Component\\Messenger\\Stamp\\RedispatchStamp` that makes
+    the worker send it to its senders instead of handling it, and with a
+    :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp` when you
+    pass transport names. This means that the handlers and the middleware of
+    your bus receive your own message, not a ``RedispatchMessage``.
 
 .. _`Deploying to Production`: https://symfony.com/doc/current/messenger.html#deploying-to-production
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
