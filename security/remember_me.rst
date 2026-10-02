@@ -309,6 +309,63 @@ if the ``updatedAt``, password or user identifier for this user changes.
     This way, you can invalidate all remember me tokens from a user by
     changing this timestamp.
 
+.. _security-remember-me-secret-rotation:
+
+Rotating the Secret of Remember Me Cookies
+..........................................
+
+By default, remember me cookies are signed with the ``kernel.secret``
+parameter. To sign them with another secret without logging out your users,
+list the new secret first and the previous one after it in the ``secret``
+option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    remember_me:
+                        # the first secret signs new cookies, all of them verify
+                        secret: ['%env(REMEMBER_ME_SECRET)%', '%kernel.secret%']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                // ...
+                'firewalls' => [
+                    'main' => [
+                        // ...
+                        'remember_me' => [
+                            // the first secret signs new cookies, all of them verify
+                            'secret' => [
+                                env('REMEMBER_ME_SECRET'),
+                                param('kernel.secret'),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Each time a cookie logs a user in, it's replaced by a cookie signed with the
+first secret. Remove the previous secret once the ``lifetime`` of the cookies
+signed with it has passed.
+
+.. versionadded:: 8.2
+
+    Passing a list of secrets to the ``secret`` option was introduced in
+    Symfony 8.2.
+
 .. _security-remember-me-persistent:
 
 Storing Remember Me Tokens in the Database
