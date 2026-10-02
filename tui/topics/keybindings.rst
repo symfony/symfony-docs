@@ -24,8 +24,33 @@ Key identifiers can be:
 * Constants from the ``Key`` class: ``Key::ENTER``, ``Key::ESCAPE``,
   ``Key::UP``, ``Key::DOWN``, ``Key::TAB``, ``Key::F6``, etc.
 * Modifier combinations: ``'ctrl+c'``, ``'alt+d'``,
-  ``'shift+enter'``, ``'ctrl+shift+k'``.
-* Single characters: ``'+'``, ``'-'``, ``'q'``, ``'r'``.
+  ``'shift+enter'``, ``'ctrl+shift+k'``, ``'super+f1'``.
+* Single characters (letters, digits and symbols): ``'+'``, ``'-'``,
+  ``'q'``, ``'r'``.
+
+The modifiers are ``shift``, ``ctrl``, ``alt``, ``super``, ``hyper`` and
+``meta``. Terminals only report ``super``, ``hyper`` and ``meta`` in CSI
+sequences, such as the ones of the Kitty keyboard protocol, so a key
+identifier using them never matches on a terminal that doesn't send them.
+
+.. warning::
+
+    ``meta`` is the Meta modifier of the Kitty keyboard protocol, not the
+    key that terminals and readline call "Meta". The Option key of macOS
+    configured as Meta (e.g. Terminal.app's **Use Option as Meta key**)
+    sends Alt key combinations: bind ``'alt+x'``, not ``'meta+x'``, for
+    ``Option+X``.
+
+Creating a ``Keybindings`` instance with a key identifier that names an
+unknown modifier (e.g. ``'ctlr+x'`` or ``'cmd+c'``), an unknown key (e.g.
+``'escpe'``, or ``'ctrl+pageup'`` instead of ``'ctrl+page_up'``) or no
+key (e.g. ``'ctrl+'``) throws an ``InvalidArgumentException``.
+
+.. versionadded:: 8.2
+
+    The ``super``, ``hyper`` and ``meta`` modifiers, the ``Key::super()``
+    method and the validation of the key identifiers were introduced in
+    Symfony 8.2.
 
 Always use these key identifiers instead of raw escape sequences
 (``"\x03"``, ``"\x1b[A"``, etc.). The key abstraction handles
@@ -151,3 +176,6 @@ Terminal              Setting
 
 Without this setting, pressing ``Option+Backspace`` is handled by macOS
 itself and never reaches the application.
+
+With these settings, the Option key sends Alt key combinations, even
+when the terminal calls it "Meta": bind them with ``alt``, not ``meta``.
