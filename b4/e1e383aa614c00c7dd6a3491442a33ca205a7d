@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by Spomky at 2026-08-19T16:57:35Z
+
+Thanks for documenting this, as the author of the feature I am happy to see it covered so thoroughly.
+
+One inaccuracy worth fixing:
+
+> Unlike S/MIME, PGP/MIME is not applied to every message
+
+That is true of the S/MIME *signer*, but not of the S/MIME *encrypter*: `SmimeEncryptedMessageListener` has always required the `X-SMime-Encrypt` header too, it just was not documented. Something like "Unlike the S/MIME signer, PGP/MIME is not applied to every message" would avoid the confusion.
+
+For the record, I opened #22764 to document the S/MIME side (#22719), which includes that `X-SMime-Encrypt` header, the new `certificates`, `on_missing_certificate` and `encrypt_for_sender` options and the listener priorities. It touches the same part of `mailer.rst` and `framework.rst`, so whichever gets merged first, the other will need a rebase. Happy to do it on my side.
