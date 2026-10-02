@@ -32,7 +32,7 @@ The modifiers are ``shift``, ``ctrl``, ``alt``, ``super``, ``hyper`` and
 sequences, such as the ones of the Kitty keyboard protocol, so a key
 identifier using them never matches on a terminal that doesn't send them.
 
-.. caution::
+.. warning::
 
     ``meta`` is the Meta modifier of the Kitty keyboard protocol, not the
     key that terminals and readline call "Meta". The Option key of macOS
