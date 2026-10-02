@@ -3158,11 +3158,14 @@ firewall:
             ],
         ]);
 
-This entry point is only used when the denied check contains
-``IS_AUTHENTICATED_RECENTLY`` or ``IS_AUTHENTICATED_VERY_RECENTLY`` alone. If
-it also contains other attributes (e.g. an ``access_control`` rule with several
-roles), users still get the 403 error, because authenticating again won't help
-them if they lack some role. This option can't be used in
+This entry point is only used when a voter that denied the attribute asks for
+a new authentication, which ``AuthenticatedVoter`` does for
+``IS_AUTHENTICATED_RECENTLY`` and ``IS_AUTHENTICATED_VERY_RECENTLY`` (see
+:ref:`security-re-authentication-custom-attributes` to do it in your own
+voters). It's also only used when the denied check contains a single attribute.
+If it contains several (e.g. an ``access_control`` rule with several roles),
+users still get the 403 error, because authenticating again won't help them if
+they lack some role. This option can't be used in
 :ref:`stateless firewalls <reference-security-stateless>`.
 
 If the entry point of the firewall already implements this interface, you don't
@@ -3177,6 +3180,76 @@ parameter (so the provider knows which user to authenticate).
     of ``oidc_login`` to force them to authenticate users again, because
     Symfony checks the ``auth_time`` claim of the ID token against that value.
     This option applies to all logins, not only to the new authentication.
+
+.. _security-re-authentication-custom-attributes:
+
+Asking Users to Authenticate Again for Your Own Attributes
+..........................................................
+
+.. versionadded:: 8.2
+
+    The ``Vote::requestReAuthentication()`` method was introduced in Symfony
+    8.2.
+
+The firewall doesn't know which denials a new authentication can fix. The
+voter that denied the attribute does. If a fresh authentication could grant
+a custom attribute, call ``requestReAuthentication()`` on the ``Vote`` object
+when the voter denies it::
+
+    // src/Security/PasskeyVoter.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Core\Authentication\AuthenticationMethod;
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Vote;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+    final class PasskeyVoter extends Voter
+    {
+        public const IS_PASSKEY = 'IS_PASSKEY';
+
+        protected function supports(string $attribute, mixed $subject): bool
+        {
+            return self::IS_PASSKEY === $attribute;
+        }
+
+        protected function voteOnAttribute(
+            string $attribute,
+            mixed $subject,
+            TokenInterface $token,
+            ?Vote $vote = null,
+        ): bool {
+            $proofs = $token->getAuthenticationProofs();
+
+            if (isset($proofs[AuthenticationMethod::HARDWARE_KEY])) {
+                return true;
+            }
+
+            // authenticating again with a hardware key would grant this attribute
+            $vote?->requestReAuthentication($attribute);
+
+            return false;
+        }
+    }
+
+Then, the firewall starts the re-authentication (with the entry point described
+above) instead of answering with a 403 error. The entry point can read the
+denied attribute from the request attribute named by
+``SecurityRequestAttributes::RE_AUTHENTICATION_ATTRIBUTE``. The ``oidc_login`` entry point doesn't need any change: add
+a listener of ``OidcAuthorizationRequestEvent`` that sets the ``acr_values``
+parameter when that request attribute is ``IS_PASSKEY``.
+
+The attribute passed to ``requestReAuthentication()`` must be the denied one.
+The firewall ignores the request otherwise, because the votes of other checks
+that your voter makes (e.g. calling ``isGranted()``) are part of the same
+decision. A denial that has no such request stays a 403 error, and the firewall
+logs it at the debug level.
+
+.. warning::
+
+    With an :ref:`access decision strategy <security-voters-change-strategy>`
+    other than ``affirmative``, another voter denying the same attribute can
+    leave users denied even after they authenticate again.
 
 Customizing the Recent Authentication Check
 ...........................................
