@@ -121,6 +121,9 @@ Variable                Description
 ``errors``              Validation errors for this field. Note: ``form.errors`` only contains
                         global errors, not all field errors. Use ``valid`` to check form validity
 ``form``                The ``FormView`` instance itself
+``form_id``             The ``id`` HTML attribute rendered on the ``<form>`` element when some
+                        field uses the :ref:`form_attr <reference-form-option-form-attr>` option
+                        (``null`` otherwise). Only set on the root form
 ``full_name``           The ``name`` HTML attribute value (e.g., ``user[email]``)
 ``help``                Help text displayed with the field
 ``id``                  The ``id`` HTML attribute value (e.g., ``user_email``)
@@ -306,6 +309,35 @@ or remove it like any other attribute:
     Rendering the ``name`` attribute through ``attr`` was introduced in
     Symfony 8.2. Previously, the attribute was always rendered with the form
     name and could not be overridden or removed.
+
+The ``<form>`` element also gets an ``id`` attribute, but only when some field
+uses the :ref:`form_attr <reference-form-option-form-attr>` option. This way,
+the ``form`` attribute of those fields points to this ``<form>`` element. The
+value of the ``id`` comes from the ``form_id`` variable, which Symfony computes
+when creating the form view. To choose that value, define the ``id`` in the
+``attr`` option of the root form::
+
+    $form = $this->createForm(RegistrationFormType::class, $registration, [
+        'attr' => ['id' => 'registration-form'],
+    ]);
+
+.. warning::
+
+    Don't override this ``id`` when rendering the form (e.g.
+    ``form_start(form, {attr: {id: 'other-id'}})``) and don't remove it (e.g.
+    ``form_start(form, {attr: {id: false}})``). Otherwise, the fields that use
+    ``form_attr`` point to an element that doesn't exist and browsers don't
+    submit them with the form.
+
+.. versionadded:: 8.2
+
+    The ``form_id`` variable and the ``id`` attribute of the ``<form>`` element
+    were introduced in Symfony 8.2.
+
+If your form theme overrides the ``form_start`` block, update it to render the
+``form_id`` variable as the ``id`` attribute of the ``<form>`` element.
+Otherwise, the fields that use ``form_attr`` point to an element that doesn't
+exist.
 
 .. _reference-forms-twig-widget:
 
