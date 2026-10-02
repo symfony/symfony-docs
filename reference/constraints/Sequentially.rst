@@ -131,6 +131,127 @@ You can validate each of these constraints sequentially to solve these issues:
             }
         }
 
+.. _reference-constraint-sequentially-conditional-cascading:
+
+Conditionally Cascading Validation
+----------------------------------
+
+.. versionadded:: 8.2
+
+    Support for nesting ``Valid`` in ``Sequentially`` was introduced in
+    Symfony 8.2.
+
+Sometimes a property can contain values of different types, but nested
+constraints should run only after the value is confirmed to be an object of the
+expected class. Combining the :doc:`Type </reference/constraints/Type>` and
+:doc:`Valid </reference/constraints/Valid>` constraints separately does not
+guarantee their execution order.
+
+Nest ``Valid`` in ``Sequentially`` after the type guard to cascade validation
+only when the guard succeeds:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Model/ImportRequest.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class ImportRequest
+        {
+            #[Assert\Sequentially([
+                new Assert\Type(ResourceInput::class),
+                new Assert\Valid(),
+            ])]
+            public mixed $resource = null;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Model\ImportRequest:
+            properties:
+                resource:
+                    - Sequentially:
+                        constraints:
+                            - Type: App\Model\ResourceInput
+                            - Valid: ~
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Model\ImportRequest">
+                <property name="resource">
+                    <constraint name="Sequentially">
+                        <option name="constraints">
+                            <constraint name="Type">
+                                <option name="type">App\Model\ResourceInput</option>
+                            </constraint>
+                            <constraint name="Valid"/>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Model/ImportRequest.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class ImportRequest
+        {
+            public mixed $resource = null;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint(
+                    'resource',
+                    new Assert\Sequentially([
+                        new Assert\Type(ResourceInput::class),
+                        new Assert\Valid(),
+                    ]),
+                );
+            }
+        }
+
+When ``$resource`` is not a ``ResourceInput``, the ``Type`` constraint adds a
+violation and the sequence stops. When it has the expected type, ``Valid``
+cascades into the object and validates its constraints.
+
+The order is important. Place all guard constraints before ``Valid``. If
+``Valid`` runs first for a scalar value, validation tries to load object
+metadata and throws a
+:class:`Symfony\\Component\\Validator\\Exception\\NoSuchMetadataException`
+before a later type guard can stop the sequence.
+
+A ``Valid`` constraint nested in ``Sequentially`` cannot define its own groups.
+Set the groups on ``Sequentially`` instead. Those groups are also used to
+validate the nested object. For example, if the sequence has only the ``import``
+group, the nested object's ``import`` constraints run, but its ``Default``
+constraints do not. Include ``Default`` in the sequence's groups when both
+should run. Since the nested ``Valid`` cannot define groups, setting its
+``restrictGroups`` option to ``false`` has no effect.
+
+The nested ``Valid`` keeps its normal traversal behavior. Arrays are always
+traversed, while its ``traverse`` option controls whether ``Traversable`` values
+are traversed.
+
+This composition can be used on properties and methods, or passed directly to
+the validator. It cannot be used as a class-level constraint. ``Valid`` also
+cannot be nested directly in other composite constraints. If needed, nest a
+``Sequentially`` constraint containing ``Valid`` in the other composite.
+
 Options
 -------
 
