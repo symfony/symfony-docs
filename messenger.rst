@@ -1625,6 +1625,93 @@ If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
 
+Managing Failed Messages from Your Code
+.......................................
+
+.. versionadded:: 8.2
+
+    The ``FailedMessageRepository`` and ``FailedMessageFilter`` classes were
+    introduced in Symfony 8.2.
+
+The ``messenger:failed:*`` commands are built on top of the
+:class:`Symfony\\Component\\Messenger\\Failure\\FailedMessageRepository`
+service. Use it to list, inspect, remove or retry failed messages outside the
+console (e.g. in the administration area of your application)::
+
+    // src/Controller/Admin/FailedMessageController.php
+    namespace App\Controller\Admin;
+
+    use App\Message\SendInvoice;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Messenger\Failure\FailedMessageFilter;
+    use Symfony\Component\Messenger\Failure\FailedMessageRepository;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class FailedMessageController extends AbstractController
+    {
+        public function __construct(
+            private FailedMessageRepository $failedMessages,
+        ) {
+        }
+
+        #[Route('/admin/failed-messages', name: 'admin_failed_messages')]
+        public function list(): Response
+        {
+            // the SendInvoice messages that failed during the last day
+            $filter = new FailedMessageFilter(
+                SendInvoice::class,
+                new \DateTimeImmutable('-1 day'),
+            );
+
+            // null selects the global failure transport; the limit applies to
+            // the messages read from the transport, before filtering them
+            $envelopes = $this->failedMessages->all(null, $filter, 50);
+
+            return $this->render('admin/failed_messages.html.twig', [
+                // null when the transport can't count its messages
+                'totalCount' => $this->failedMessages->count(),
+                'envelopes' => $envelopes,
+            ]);
+        }
+
+        #[Route(
+            '/admin/failed-messages/{id}/retry',
+            name: 'admin_failed_message_retry',
+            methods: ['POST'],
+        )]
+        public function retry(string $id): Response
+        {
+            if ($envelope = $this->failedMessages->find($id)) {
+                // dispatches the message through the bus again and then removes
+                // it from the failure transport (only if the dispatch succeeded)
+                $this->failedMessages->redispatch($envelope);
+            }
+
+            return $this->redirectToRoute('admin_failed_messages');
+        }
+    }
+
+Most methods of the repository accept an optional ``$transport`` argument with
+the name of the failure transport to use. When you omit it, the repository uses
+the global ``failure_transport``. If your application only defines
+:ref:`failure transports per transport <messenger-multiple-failure-transports>`,
+this argument is mandatory.
+
+``find()`` and ``all()`` only work with failure transports that can list their
+messages (check it with ``supportsListing()``). To get the id that ``find()``
+expects (e.g. to generate the URL of the ``retry()`` action above), call the
+static ``FailedMessageRepository::getMessageId()`` method with the envelope.
+Use ``remove()`` to delete a message without retrying it.
+
+``FailedMessageFilter`` works like the ``--class-filter``, ``--failed-after``
+and ``--failed-before`` command options: it matches the exact message class and
+a time window whose bounds are inclusive. Messages that were never redelivered
+don't match any time window.
+
+The ``FailedMessageRepository`` service only exists when your application
+configures at least one failure transport.
+
 .. _messenger-handler-idempotency:
 
 Writing Idempotent Handlers
@@ -1684,6 +1771,8 @@ while the constraint protects against concurrent redeliveries::
     double form submission), each dispatch generates a different UUID and
     both executions will proceed. The key must remain stable across all
     dispatches of the same logical event.
+
+.. _messenger-multiple-failure-transports:
 
 Multiple Failed Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
