@@ -3266,6 +3266,22 @@ the middleware in the ``middleware`` option of a specific bus.
 
     The ``reject_redelivered_messages`` option was introduced in Symfony 8.2.
 
+.. _reference-messenger-identity-stamps:
+
+identity_stamps
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether the ``flow_context`` middleware adds a ``MessageIdStamp`` to the
+dispatched messages, a ``CausationStamp`` to the ones dispatched by a handler
+and a ``CorrelationStamp`` to the first message of each flow.
+:ref:`Read more about identity stamps <messenger-identity-stamps>`.
+
+.. versionadded:: 8.2
+
+    The ``identity_stamps`` option was introduced in Symfony 8.2.
+
 routing
 .......
 
