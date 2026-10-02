@@ -24,8 +24,28 @@ Key identifiers can be:
 * Constants from the ``Key`` class: ``Key::ENTER``, ``Key::ESCAPE``,
   ``Key::UP``, ``Key::DOWN``, ``Key::TAB``, ``Key::F6``, etc.
 * Modifier combinations: ``'ctrl+c'``, ``'alt+d'``,
-  ``'shift+enter'``, ``'ctrl+shift+k'``.
-* Single characters: ``'+'``, ``'-'``, ``'q'``, ``'r'``.
+  ``'shift+enter'``, ``'ctrl+shift+k'``, ``'super+f1'``.
+* Single characters (letters, digits and symbols): ``'+'``, ``'-'``,
+  ``'q'``, ``'r'``.
+
+The modifiers are ``shift``, ``ctrl``, ``alt``, ``super``, ``hyper`` and
+``meta``. Terminals only report ``super``, ``hyper`` and ``meta`` in CSI
+sequences (e.g. with the Kitty keyboard protocol), so key identifiers that
+use them never match on terminals that don't send those sequences.
+
+``meta`` is the Meta modifier of the Kitty keyboard protocol, not the key
+that terminals and readline call "Meta". Bind that key with ``alt``
+(see :ref:`the macOS Option key <tui-keybindings-macos-option-key>`).
+
+Key identifiers are validated when creating the ``Keybindings`` instance,
+so typos such as ``'ctlr+x'``, ``'escpe'`` or ``'ctrl+pageup'`` (instead of
+``'ctrl+page_up'``) throw an exception instead of silently never matching.
+
+.. versionadded:: 8.2
+
+    The ``super``, ``hyper`` and ``meta`` modifiers, the ``Key::super()``
+    method and the validation of the key identifiers were introduced in
+    Symfony 8.2.
 
 Always use these key identifiers instead of raw escape sequences
 (``"\x03"``, ``"\x1b[A"``, etc.). The key abstraction handles
@@ -130,6 +150,8 @@ Action                      Meaning
 ``choice_toggle``           Toggle the highlighted item in a list
 ==========================  ==========================================
 
+.. _tui-keybindings-macos-option-key:
+
 macOS: Option Key as Alt/Meta
 -----------------------------
 
@@ -151,3 +173,7 @@ Terminal              Setting
 
 Without this setting, pressing ``Option+Backspace`` is handled by macOS
 itself and never reaches the application.
+
+With these settings, the Option key sends Alt key combinations, even when
+the terminal calls it "Meta": bind ``Option+X`` as ``'alt+x'``, not
+``'meta+x'``.
