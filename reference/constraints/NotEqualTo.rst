@@ -100,6 +100,8 @@ the following:
             }
         }
 
+.. include:: /reference/constraints/_comparison-bcmath-number.rst.inc
+
 Options
 -------
 

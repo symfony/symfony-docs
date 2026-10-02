@@ -1,7 +1,8 @@
 Range
 =====
 
-Validates that a given number or ``DateTime`` object is *between* some minimum and maximum.
+Validates that a given number, :phpclass:`BcMath\\Number` or ``DateTime``
+object is *between* some minimum and maximum.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -313,6 +314,38 @@ as a service, the Range validator automatically uses it to resolve relative date
 strings (e.g. ``now``, ``+5 hours``). This makes date range comparisons
 deterministic and testable by using :ref:`MockClock <clock-mockclock>`.
 
+Arbitrary Precision Number Ranges
+---------------------------------
+
+.. versionadded:: 8.2
+
+    Support for :phpclass:`BcMath\\Number` values in the ``Range`` constraint
+    was introduced in Symfony 8.2.
+
+This constraint can also validate :phpclass:`BcMath\\Number` objects, which are
+the arbitrary precision numbers provided by the PHP ``bcmath`` extension. In
+this case, you can define the ``min`` and ``max`` options as integers, floats
+or numeric strings::
+
+    // src/Entity/Order.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Order
+    {
+        #[Assert\Range(min: 0.01, max: 10000)]
+        protected \BcMath\Number $amount;
+    }
+
+When the validated value is a ``BcMath\Number``, the validator converts the
+``min`` and ``max`` values to ``BcMath\Number`` objects too, so the comparison
+doesn't lose any precision. Without this conversion, PHP truncates the float to
+an integer when comparing it with a ``BcMath\Number``::
+
+    // this is true in plain PHP because 10.5 is truncated to 10
+    new \BcMath\Number('10.2') > 10.5;
+
 Options
 -------
 
@@ -340,7 +373,8 @@ Parameter        Description
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
 The message displayed when the ``min`` and ``max`` values are numeric (per
-the :phpfunction:`is_numeric` PHP function) but the given value is not.
+the :phpfunction:`is_numeric` PHP function) but the given value is neither
+numeric nor a :phpclass:`BcMath\\Number` object.
 
 You can use the following parameters in this message:
 
