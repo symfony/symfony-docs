@@ -243,6 +243,40 @@ in your expression:
 You also have access to the ``is_valid()`` function in your expression. This function
 checks that the data passed to the function doesn't raise any validation violations.
 
+.. _reference-constraint-expression-security-functions:
+
+When the :doc:`Security component </security>` is installed, you can also use
+the ``is_granted()``, ``is_authenticated()``, ``is_fully_authenticated()``,
+``is_remember_me()`` and ``current_user()``
+:doc:`security expression functions </security/expressions>` to make the
+validation depend on the current user::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    #[Assert\Expression(
+        'is_granted("ROLE_ADMIN") or this.getAuthor() == current_user()',
+        message: "Only admins can edit other users' posts.",
+    )]
+    class BlogPost
+    {
+        // ...
+    }
+
+.. warning::
+
+    These functions read the security context of the current request. If you
+    validate an object outside of a request (e.g. in a console command or in a
+    Messenger worker), they throw a ``LogicException`` instead of reporting that
+    nobody is authenticated.
+
+.. versionadded:: 8.2
+
+    The support for security functions in validator expressions was introduced
+    in Symfony 8.2.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``

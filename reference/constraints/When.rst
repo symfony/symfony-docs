@@ -198,6 +198,32 @@ applied but the constraints defined in ``otherwise`` option (if provided) will b
     object that provides information such as the currently validated class, the
     name of the currently validated property, the list of violations, etc.
 
+The expression can also use the same
+:ref:`security functions <reference-constraint-expression-security-functions>`
+as the ``Expression`` constraint. This allows you to apply some constraints only
+to some users::
+
+    // src/Model/Discount.php
+    namespace App\Model;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Discount
+    {
+        #[Assert\When(
+            expression: 'not is_granted("ROLE_ADMIN")',
+            constraints: [new Assert\LessThanOrEqual(50)],
+        )]
+        private ?int $value;
+
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The support for security functions in validator expressions was introduced
+    in Symfony 8.2.
+
 **When using a closure**, the first argument is the object being validated.
 
 .. note::
