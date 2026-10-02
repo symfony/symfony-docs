@@ -433,3 +433,30 @@ Using callables for **complex checks**::
     $integerType->isSatisfiedBy($isNonNullableNumber); // true
     $stringType->isSatisfiedBy($isNonNullableNumber);  // false
     $floatType->isSatisfiedBy($isNonNullableNumber);   // false
+
+**Map** a type::
+
+    use Symfony\Component\TypeInfo\Type\TemplateType;
+
+    // replace the "T" template type wherever it appears in the type tree
+    $type = Type::nullable(Type::list(Type::template('T')));
+
+    $mappedType = $type->map(
+        static fn (Type $t): Type => $t instanceof TemplateType && 'T' === $t->getName() ? Type::int() : $t
+    );
+    // $mappedType is equivalent to ?list<int>
+
+.. versionadded:: 8.2
+
+    The ``Type::map()`` method was introduced in Symfony 8.2.
+
+The ``map()`` method calls the given callable on every part of the type
+(the wrapped, composed, generic and shape parts included), from the innermost
+one to the type itself, and rebuilds the type from the returned values. The
+callable must return a ``Type`` object.
+
+Parts left unchanged are not rebuilt: mapping a type with a callable that
+returns its argument returns the very same instance. Rebuilding a composed
+type reduces it as usual (for instance, a union holding ``mixed`` becomes
+``mixed``) and throws an ``InvalidArgumentException`` if the result is not
+a valid type.
