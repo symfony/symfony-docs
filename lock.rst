@@ -289,6 +289,107 @@ Named locks are only available in Symfony applications. When using the Lock
 component as standalone, create a different ``LockFactory`` for each store
 instead.
 
+.. _lock-advisory-locks:
+
+Advisory Locks on an Existing Connection
+----------------------------------------
+
+The ``mysql+advisory:`` and ``pgsql+advisory:`` DSNs shown in the
+:ref:`lock configuration <lock-configuration>` use advisory locks instead of a
+database table, but they open their own database connection. To use advisory
+locks over a connection that your application already has, define the store as
+an array with the ``service_id`` of that connection and the ``advisory`` option
+set to ``true``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                service_id: 'doctrine.dbal.default_connection'
+                advisory: true
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'service_id' => 'doctrine.dbal.default_connection',
+                    'advisory' => true,
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``service_id`` and ``advisory`` options were introduced in Symfony 8.2.
+
+The service must be a ``PDO`` instance or a Doctrine DBAL ``Connection``.
+Symfony creates the store based on the database of that connection:
+
+* PostgreSQL: :ref:`PostgreSqlStore <lock-store-pgsql>` for ``PDO`` and
+  :ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>` for Doctrine DBAL;
+* MySQL and MariaDB: ``MysqlStore`` for ``PDO`` and ``DoctrineDbalMysqlStore``
+  for Doctrine DBAL.
+
+Other databases don't support advisory locks, so Symfony throws an exception
+when creating the store. This happens at runtime, not when compiling the
+container.
+
+The ``advisory`` option is ``false`` by default. In that case, Symfony creates
+a :ref:`PdoStore <lock-store-pdo>` or a
+:ref:`DoctrineDbalStore <lock-store-dbal>`, which store locks in a database
+table. This is the same as passing the service id as a string.
+
+You can also use this array in the list of stores of a
+:ref:`named lock <lock-named-locks>`, together with DSNs and store names:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                invoice:
+                    - 'flock'
+                    - service_id: 'doctrine.dbal.default_connection'
+                      advisory: true
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'invoice' => [
+                        'flock',
+                        [
+                            'service_id' => 'doctrine.dbal.default_connection',
+                            'advisory' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. warning::
+
+    Advisory locks belong to the database session. If the connection is closed
+    or lost (e.g. because of the server idle timeout), the database releases
+    all the locks of that session without notifying the application. Other
+    parts of the application can close the default Doctrine connection (e.g.
+    the ``doctrine_close_connection`` Messenger middleware), so consider using
+    a separate Doctrine connection only for locks (e.g. a ``lock`` connection,
+    whose service id is ``doctrine.dbal.lock_connection``).
+
 .. _lock-blocking-locks:
 
 Blocking Locks

@@ -2653,6 +2653,18 @@ the name as key and DSN or service id as value:
             ],
         ]);
 
+A store can also be an array with these keys:
+
+* ``service_id``: the id of a service that is a ``PDO`` instance or a Doctrine
+  DBAL ``Connection``;
+* ``advisory`` (default: ``false``): if ``true``, the store uses
+  :ref:`advisory locks <lock-advisory-locks>` over that connection instead of
+  a database table.
+
+.. versionadded:: 8.2
+
+    The ``service_id`` and ``advisory`` options were introduced in Symfony 8.2.
+
 .. seealso::
 
     For more details, see :doc:`/lock`.
