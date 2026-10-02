@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-08-26T12:32:25Z
+
+Heads up on the red `Code Blocks`: the checker installs a real application to run the config blocks, and its log shows it resolves to `symfony/framework-bundle (v8.1.5)`. The `service_id` and `advisory` options only exist in 8.2, which is not tagged yet, so the 8.1 config tree rejects them with `Expected scalar, but got array`. The job is `continue-on-error`, and `Build` and `DOCtor-RST` are green.
+
+I checked the examples against `Configuration::addLockSection()` and the cases added to `ConfigurationTest` by symfony/symfony#65098, so they should start passing on their own once 8.2 is released. Happy to adjust if you would rather word it differently in the meantime.
