@@ -1413,9 +1413,9 @@ The ID of a service that implements
 It asks authenticated users to authenticate again when they are denied the
 ``IS_AUTHENTICATED_RECENTLY`` or ``IS_AUTHENTICATED_VERY_RECENTLY`` attribute.
 If this option is not set and the entry point of the firewall implements that
-interface (e.g. ``oidc_login``), the entry point is used instead. This option
-can't be used in `stateless`_ firewalls. Read more about it in
-:ref:`security-recent-authentication`.
+interface (e.g. ``form_login`` or ``oidc_login``), the entry point is used
+instead. This option can't be used in `stateless`_ firewalls. Read more about
+it in :ref:`security-recent-authentication`.
 
 .. versionadded:: 8.2
 
