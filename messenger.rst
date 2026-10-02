@@ -4787,6 +4787,130 @@ configuring your middleware manually, be sure to register
 chain. Also, the ``dispatch_after_current_bus`` middleware must be loaded for
 *all* of the buses being used.
 
+.. _messenger-chain:
+
+Chaining Messages
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``ChainStamp`` was introduced in Symfony 8.2.
+
+Some processes run in steps, each one starting only when the previous one
+succeeded (e.g. charge the customer, then ship the order). Instead of making
+each handler dispatch the next message, dispatch the first message with a
+:class:`Symfony\\Component\\Messenger\\Stamp\\ChainStamp` that lists the next
+ones::
+
+    use App\Message\AskForReview;
+    use App\Message\ChargeCard;
+    use App\Message\ShipOrder;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Stamp\ChainStamp;
+    use Symfony\Component\Messenger\Stamp\DelayStamp;
+
+    // dispatches ChargeCard with a ChainStamp that lists the other messages
+    $bus->dispatch(ChainStamp::envelope(
+        new ChargeCard($orderId),
+        new ShipOrder($orderId),
+        // wrap a message in an envelope to give it its own stamps
+        // (e.g. to ask for a review one week after shipping the order)
+        new Envelope(new AskForReview($orderId), [
+            DelayStamp::delayFor(new \DateInterval('P7D')),
+        ]),
+    ));
+
+Messenger dispatches each message only after all the handlers of the previous
+message succeed, and outside of the transaction that the
+``doctrine_transaction`` middleware opens for the previous message (like
+:ref:`transactional messages <messenger-transactional-messages>`). Each
+message carries the ones that follow it, so a failing message stops the chain
+and retrying that message resumes the chain where it stopped.
+
+When the previous message was received from a transport, the next message is
+sent to that same transport, unless its routing configuration or a
+``TransportNamesStamp`` sends it elsewhere. This way, each message of the chain
+is retried on its own.
+
+A message handled by a :ref:`batch handler <messenger-handler-batch>` can't
+carry the next messages of a chain, so put that message last in the chain.
+
+.. _messenger-dispatch-on-failure:
+
+Dispatching a Message When Another One Fails
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``DispatchOnFailureStamp`` was introduced in Symfony 8.2.
+
+When a message fails, your application might need to undo what the previous
+messages did (e.g. cancel the order when charging the customer or shipping the
+order fails). Add a
+:class:`Symfony\\Component\\Messenger\\Stamp\\DispatchOnFailureStamp` that
+holds the message to dispatch in that case::
+
+    use App\Message\CancelOrder;
+    use App\Message\ChargeCard;
+    use App\Message\ShipOrder;
+    use Symfony\Component\Messenger\Stamp\ChainStamp;
+    use Symfony\Component\Messenger\Stamp\DispatchOnFailureStamp;
+
+    $bus->dispatch(
+        ChainStamp::envelope(new ChargeCard($orderId), new ShipOrder($orderId))
+            ->with(new DispatchOnFailureStamp(new CancelOrder($orderId)))
+    );
+
+The failure message replaces the
+:ref:`failure transport <messenger-failure-transport>`: when a message fails
+for good, Messenger dispatches its failure message instead of sending the
+failed message to the failure transport. The failed message only goes to the
+failure transport when Messenger can't dispatch the failure message (e.g.
+because the handler of the failure message throws an exception).
+
+A message fails for good when a worker stops retrying it or, if the message is
+handled synchronously, as soon as one of its handlers throws an exception. In
+that last case, ``dispatch()`` dispatches the failure message and then throws
+the exception. However, when the message is routed to a ``sync://`` transport
+whose ``failure_transport`` option is enabled, ``dispatch()`` doesn't throw: it
+returns the envelope of the failed message with a new ``ErrorDetailsStamp``.
+
+In a chain, each message passes its ``DispatchOnFailureStamp`` to the next
+message, unless that message has its own one. This way, Messenger dispatches
+the failure message only once, no matter which message of the chain fails.
+
+The failure message gets a
+:class:`Symfony\\Component\\Messenger\\Stamp\\FailedMessageStamp` that holds
+the message that failed and an
+:class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp` that describes
+the error. Its handler can get them by adding arguments typed with these stamp
+classes::
+
+    // src/MessageHandler/CancelOrderHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\CancelOrder;
+    use App\Message\ShipOrder;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+    use Symfony\Component\Messenger\Stamp\ErrorDetailsStamp;
+    use Symfony\Component\Messenger\Stamp\FailedMessageStamp;
+
+    #[AsMessageHandler]
+    final class CancelOrderHandler
+    {
+        public function __invoke(
+            CancelOrder $message,
+            FailedMessageStamp $failedMessage,
+            ErrorDetailsStamp $errorDetails,
+        ): void {
+            if ($failedMessage->getMessage() instanceof ShipOrder) {
+                // ... refund the customer, who was charged already
+            }
+
+            // ... cancel the order and log $errorDetails->getExceptionMessage()
+        }
+    }
+
 .. _messenger-handler-transport:
 
 Binding Handlers to Different Transports
@@ -5194,8 +5318,6 @@ for each bus looks like this:
 
        The ``reject_redelivered_messages`` option was introduced in Symfony 8.2.
 
-#. ``dispatch_after_current_bus`` - see :ref:`messenger-transactional-messages`;
-
 #. ``decode_failed_message_middleware`` - when a message cannot be decoded (e.g.
    its class was removed), this middleware attempts to re-decode it using the
    transport's serializer, enabling recovery after a fix is deployed;
@@ -5204,6 +5326,18 @@ for each bus looks like this:
 
        The ``decode_failed_message_middleware`` middleware was introduced in
        Symfony 8.1.
+
+#. ``dispatch_on_failure`` - dispatches the
+   :ref:`failure message <messenger-dispatch-on-failure>` of a message whose
+   synchronous handling fails. If you configure your middleware manually,
+   register it before ``dispatch_after_current_bus`` and
+   ``doctrine_transaction``;
+
+   .. versionadded:: 8.2
+
+       The ``dispatch_on_failure`` middleware was introduced in Symfony 8.2.
+
+#. ``dispatch_after_current_bus`` - see :ref:`messenger-transactional-messages`;
 
 #. ``failed_message_processing_middleware`` - processes messages that are being
    retried via the :ref:`failure transport <messenger-failure-transport>` to make
@@ -5217,6 +5351,14 @@ for each bus looks like this:
 
 #. ``send_message`` - if routing is configured for the transport, this sends
    messages to that transport and stops the middleware chain;
+
+#. ``chain`` - dispatches the next message of a :ref:`chain <messenger-chain>`
+   once the current one is handled. If you configure your middleware manually,
+   register it between ``send_message`` and ``handle_message``;
+
+   .. versionadded:: 8.2
+
+       The ``chain`` middleware was introduced in Symfony 8.2.
 
 #. ``handle_message`` - calls the message handler(s) for the given message.
 
