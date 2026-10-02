@@ -3716,7 +3716,13 @@ limiters
 
 **type**: ``array``
 
-The limiter names to use when using the ``compound`` policy.
+The limiter names to use when using the ``compound`` policy. Define them as a
+map to :ref:`give a fixed key <rate-limiter-compound-fixed-key>` to some of
+them.
+
+.. versionadded:: 8.2
+
+    The option to define these limiters as a map was introduced in Symfony 8.2.
 
 lock_factory
 """"""""""""

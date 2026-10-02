@@ -817,6 +817,79 @@ Then, inject and use as normal::
         // ...
     }
 
+.. _rate-limiter-compound-fixed-key:
+
+Giving a Fixed Key to Some Sub-Limiters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The option to give a fixed key to a sub-limiter was introduced in
+    Symfony 8.2.
+
+All sub-limiters use the key passed to ``create()``, so in the example above
+both of them count requests per client IP. To give a fixed key to some of them,
+define the sub-limiters as a map instead of a list. A sub-limiter with a fixed
+key counts the requests of all clients together:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/rate_limiter.yaml
+        framework:
+            rate_limiter:
+                two_per_minute:
+                    policy: 'fixed_window'
+                    limit: 2
+                    interval: '1 minute'
+                global_quota:
+                    policy: 'fixed_window'
+                    limit: 5000
+                    interval: '1 hour'
+                contact_form:
+                    policy: 'compound'
+                    limiters:
+                        # no key: uses the key passed to create()
+                        two_per_minute: ~
+                        # fixed key: shared by all clients
+                        global_quota: { key: 'global' }
+
+    .. code-block:: php
+
+        // config/packages/rate_limiter.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'rate_limiter' => [
+                    'two_per_minute' => [
+                        'policy' => 'fixed_window',
+                        'limit' => 2,
+                        'interval' => '1 minute',
+                    ],
+                    'global_quota' => [
+                        'policy' => 'fixed_window',
+                        'limit' => 5000,
+                        'interval' => '1 hour',
+                    ],
+                    'contact_form' => [
+                        'policy' => 'compound',
+                        'limiters' => [
+                            // no key: uses the key passed to create()
+                            'two_per_minute' => null,
+                            // fixed key: shared by all clients
+                            'global_quota' => ['key' => 'global'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The controller shown above doesn't change: ``two_per_minute`` still allows two
+submissions per minute to each client IP, while ``global_quota`` also limits the
+contact form to 5,000 submissions per hour in total.
+
 .. _rate-limiter-builder:
 
 Creating Rate Limiters at Runtime
