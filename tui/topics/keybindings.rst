@@ -25,7 +25,8 @@ Key identifiers can be:
   ``Key::UP``, ``Key::DOWN``, ``Key::TAB``, ``Key::F6``, etc.
 * Modifier combinations: ``'ctrl+c'``, ``'alt+d'``,
   ``'shift+enter'``, ``'ctrl+shift+k'``, ``'super+f1'``.
-* Single characters: ``'+'``, ``'-'``, ``'q'``, ``'r'``.
+* Single characters (letters, digits and symbols): ``'+'``, ``'-'``,
+  ``'q'``, ``'r'``.
 
 The modifiers are ``shift``, ``ctrl``, ``alt``, ``super``, ``hyper`` and
 ``meta``. Terminals only report ``super``, ``hyper`` and ``meta`` in CSI
@@ -41,8 +42,9 @@ identifier using them never matches on a terminal that doesn't send them.
     ``Option+X``.
 
 Creating a ``Keybindings`` instance with a key identifier that names an
-unknown modifier (e.g. ``'ctlr+x'`` or ``'cmd+c'``) or no key (e.g.
-``'ctrl+'``) throws an ``InvalidArgumentException``.
+unknown modifier (e.g. ``'ctlr+x'`` or ``'cmd+c'``), an unknown key (e.g.
+``'escpe'``, or ``'ctrl+pageup'`` instead of ``'ctrl+page_up'``) or no
+key (e.g. ``'ctrl+'``) throws an ``InvalidArgumentException``.
 
 .. versionadded:: 8.2
 
