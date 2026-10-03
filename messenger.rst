@@ -4525,6 +4525,86 @@ additional stamp *if* the message has just been received (i.e. has at least one
 ``ReceivedStamp`` stamp). You can create your own stamps by implementing
 :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
 
+Adding Middleware without Editing the Bus Configuration
+.......................................................
+
+.. versionadded:: 8.2
+
+    The ``#[AsMessageMiddleware]`` attribute and the ``messenger.middleware``
+    tag were introduced in Symfony 8.2.
+
+Instead of listing a middleware in the configuration of a bus, the middleware
+can add itself to the bus with the ``#[AsMessageMiddleware]`` attribute and
+define its position relative to the other middleware of that bus::
+
+    // src/Middleware/AuditMiddleware.php
+    namespace App\Middleware;
+
+    use Symfony\Component\Messenger\Attribute\AsMessageMiddleware;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+    use Symfony\Component\Messenger\Middleware\StackInterface;
+
+    // logs the message even when the transaction of doctrine_transaction rolls back
+    #[AsMessageMiddleware(bus: 'command.bus', before: 'doctrine_transaction')]
+    class AuditMiddleware implements MiddlewareInterface
+    {
+        public function handle(Envelope $envelope, StackInterface $stack): Envelope
+        {
+            // ...
+
+            return $stack->next()->handle($envelope, $stack);
+        }
+    }
+
+The ``bus`` argument is required. Use ``'*'`` to add the middleware to all
+buses, and repeat the attribute to add it to several buses with different
+positions. A bus that lists the middleware in its configuration keeps that
+position, and an attribute that names a specific bus takes precedence over
+``'*'`` for that bus.
+
+Without ``before`` or ``after``, the middleware runs after your own middleware
+listed in the configuration of the bus, right before the ``send_message``,
+``chain`` and ``handle_message`` middleware. Both options accept one or several
+middleware names as used in the configuration (e.g. ``validation``), service IDs
+or class names. Symfony ignores the names that don't match any middleware of the
+bus, so you can refer to a middleware that comes from an optional package.
+
+If you don't use :ref:`autoconfiguration <services-autoconfigure>`, add the
+``messenger.middleware`` tag to the service with the same options:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Middleware\AuditMiddleware:
+                tags:
+                    - name: messenger.middleware
+                      bus: command.bus
+                      before: doctrine_transaction
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Middleware\AuditMiddleware;
+
+        return App::config([
+            'services' => [
+                AuditMiddleware::class => [
+                    'tags' => [
+                        ['messenger.middleware' => [
+                            'bus' => 'command.bus',
+                            'before' => 'doctrine_transaction',
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
 Message Deduplication
 ~~~~~~~~~~~~~~~~~~~~~
 
