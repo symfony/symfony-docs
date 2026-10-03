@@ -922,20 +922,33 @@ environment variables, with their values, referenced in Symfony's container conf
 
     $ php bin/console debug:container --env-vars
 
-    ------------  ----------------  -----------------------------------
-    Name          Default value     Real value
-    ------------  ----------------  -----------------------------------
-    APP_SECRET    n/a               "471a62e2d601a8952deb186e44186cb3"
-    BAR           n/a               n/a
-    BAZ           n/a               "value"
-    FOO           "[1, "2.5", 3]"   n/a
-    ------------  ----------------  -----------------------------------
+     ------------------ ----------------- ------------ ------ ---------
+      Name               Default value     Real value   Used   Inlined
+     ------------------ ----------------- ------------ ------ ---------
+      BAR                n/a               n/a          yes    no
+      BAZ                n/a               "value"      no     no
+      FOO                "[1, "2.5", 3]"   n/a          yes    no
+      PROFILER_ENABLED   n/a               "1"          yes    yes
+     ------------------ ----------------- ------------ ------ ---------
+
+     // Inlined variables were read in at least one place when the container was
+     // compiled, so the container must be rebuilt for a new value to apply.
 
     # you can also filter the list of env vars by name:
     $ php bin/console debug:container --env-vars foo
 
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
+
+The ``Used`` column tells whether the container references the variable: a
+variable defined in a ``.env`` file but referenced nowhere shows ``no``. The
+``Inlined`` column tells whether the value was read when compiling the
+container, for :ref:`options that need it <config-env-vars-inlined>`. You must
+clear the cache after changing such a variable.
+
+.. versionadded:: 8.2
+
+    The ``Used`` and ``Inlined`` columns were introduced in Symfony 8.2.
 
 Creating Your Own Logic To Load Env Vars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1012,6 +1025,10 @@ When you use ``%env(...)%`` in bundle configuration (e.g. ``config/packages/doct
 the value is **not** read at compile time. Instead, Symfony replaces it with a
 unique placeholder. The actual environment variable is only resolved at runtime,
 when the service using it is instantiated.
+
+Options that need their value to build the container, such as the ``enabled``
+option that turns a feature on or off, are the exception. Symfony reads their
+env vars at compile time, so you must clear the cache after changing them.
 
 **Bundle authors** must follow certain rules to ensure their bundle supports
 runtime env vars correctly:
@@ -1092,6 +1109,58 @@ Then register the factory in the service configuration:
 
 This approach is used by DoctrineBundle with its ``ConnectionFactory``, which
 parses the database URL at runtime instead of during container compilation.
+
+.. _config-env-vars-inlined:
+
+Options Needing Their Value at Compile Time
+...........................................
+
+Some options can't be wired into the container as they are, because the
+extension needs their value to decide which services to register. Call
+``inlineEnvVars()`` on the node of such an option to replace its env vars with
+their value before the extension is loaded::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    // the extension registers a different service for each
+                    // value, so it needs 'redis', not the '%env(STORAGE)%' string
+                    ->enumNode('storage')
+                        ->values(['database', 'redis'])
+                        ->inlineEnvVars()
+                    ->end()
+                ->end()
+            ;
+        }
+
+        // ...
+    }
+
+Symfony reads the value once all configuration files are merged, so a value
+that another file overrides (e.g. under ``when@test``) is never read. The node
+then validates the real value, and the value is inlined in the compiled
+container, so you must clear the cache after changing the env var. If the value
+isn't known at that point, for example because it's only stored in a
+:doc:`secrets vault </configuration/secrets>`, compiling the container fails
+with an error that names the option.
+
+Array options work too, for example with ``'%env(csv:NETWORKS)%'``, but Symfony
+reads their value in every configuration file that sets them, before merging.
+The ``enabled`` option of the sections created with ``canBeEnabled()`` or
+``canBeDisabled()`` inlines its env vars this way.
+
+.. versionadded:: 8.2
+
+    The ``inlineEnvVars()`` method was introduced in Symfony 8.2.
 
 .. _configuration-accessing-parameters:
 
