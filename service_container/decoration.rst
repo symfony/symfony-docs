@@ -309,6 +309,8 @@ original service. When using the decorated service, the outermost decorator
 ``RateLimitingMailer`` checks the sending quota before ``LoggingMailer`` logs
 anything, so no email is logged unless it's actually sent.
 
+.. _decoration-relative-order:
+
 Placing Decorators Relative to Each Other
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -382,6 +384,11 @@ When a decorator uses these options without a priority, Symfony gives it the
 priority required by its position (``0`` when possible). When it also defines
 a priority, the options only order it among the decorators with that same
 priority, and the container fails to compile if the options contradict it.
+
+These options add the
+:ref:`container.decoration_order <dic-tags-container-decoration-order>` tag to
+the decorator. You can also add this tag yourself, for example with
+``_instanceof``.
 
 .. _decoration-tagged-services:
 

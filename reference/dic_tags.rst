@@ -165,6 +165,96 @@ console.command
 For details on registering your own commands in the service container, read
 :ref:`Registering the Command <console-registering-commands>`.
 
+.. _dic-tags-container-decoration-order:
+
+container.decoration_order
+--------------------------
+
+**Purpose**: Order a decorator relative to other decorators of the same service
+
+.. versionadded:: 8.2
+
+    The ``container.decoration_order`` tag was introduced in Symfony 8.2.
+
+The ``within`` and ``around`` options that
+:ref:`place decorators relative to each other <decoration-relative-order>` add
+this tag. Add it yourself to order decorators that don't use these options, for
+example all the decorators that implement an interface:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            _instanceof:
+                # RetryingMailer wraps the decorators that sign messages,
+                # so that each new attempt signs the message again
+                App\Mailer\SigningMailerInterface:
+                    tags:
+                        - name: 'container.decoration_order'
+                          within: 'App\Mailer\RetryingMailer'
+                          priority: null
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Mailer\RetryingMailer;
+        use App\Mailer\SigningMailerInterface;
+
+        return App::config([
+            'services' => [
+                '_instanceof' => [
+                    // RetryingMailer wraps the decorators that sign messages,
+                    // so that each new attempt signs the message again
+                    SigningMailerInterface::class => [
+                        'tags' => [
+                            ['container.decoration_order' => [
+                                'within' => RetryingMailer::class,
+                                'priority' => null,
+                            ]],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Bundles can also add this tag to the decorators they register in PHP code::
+
+    // src/DependencyInjection/Compiler/MailerPass.php
+    // ...
+    $container->register('acme.signing_mailer', SigningMailer::class)
+        ->setDecoratedService('acme.mailer')
+        ->setArguments([new Reference('.inner')])
+        ->addTag('container.decoration_order', [
+            'within' => 'acme.retrying_mailer',
+            'priority' => null,
+        ]);
+
+The tag supports these attributes:
+
+``within``
+    The decorators of the same service that wrap this one, as a service ID or
+    a class name, or a list of them.
+
+``around``
+    The decorators of the same service that this one wraps, as a service ID or
+    a class name, or a list of them.
+
+``priority``
+    Without this attribute, the decorator keeps its decoration priority:
+    ``within`` and ``around`` only order it among the decorators with that same
+    priority, and the container fails to compile if they contradict it. Set it
+    to ``null`` to let ``within`` and ``around`` choose the priority.
+
+``alias``
+    Another name that ``within`` and ``around`` can use to refer to this
+    decorator. Symfony sets it on the decorators it creates from another service
+    (a repeated ``#[AsDecorator]`` attribute, ``#[AsTagDecorator]`` or a stack),
+    so you can refer to them with the ID of that service.
+
 container.hot_path
 ------------------
 
