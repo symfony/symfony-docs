@@ -207,6 +207,8 @@ If you return ``null``, the option won't be grouped.
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
+.. include:: /reference/forms/types/options/sort_choices.rst.inc
+
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
