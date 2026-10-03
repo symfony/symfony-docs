@@ -1151,6 +1151,8 @@ the remote server support it.
     If you set ``Accept-Encoding`` to e.g. ``zstd``, you will need to handle the
     decompression yourself.
 
+.. _http-client-http2:
+
 HTTP/2 Support
 ~~~~~~~~~~~~~~
 
@@ -1191,6 +1193,24 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
     .. code-block:: php-standalone
 
         $client = HttpClient::create(['http_version' => '2.0']);
+
+Setting ``http_version`` to ``'2.0'`` makes the cURL and ``amphp/http-client``
+clients require HTTP/2. On ``http`` URLs, they use HTTP/2 with prior knowledge:
+they speak HTTP/2 from the first byte instead of offering an upgrade from
+HTTP/1.1, which is what cleartext HTTP/2 servers (such as gRPC servers) expect.
+On ``https`` URLs, they offer only HTTP/2 during the TLS handshake (always with
+``amphp/http-client``, and with libcurl 8.10 or higher).
+
+As a consequence, a server that speaks only HTTP/1.1 can't be reached with this
+setting. Leave the ``http_version`` option unset for such servers: the client
+then uses HTTP/1.1 on ``http`` URLs and negotiates the protocol with the server
+on ``https`` URLs.
+
+.. versionadded:: 8.2
+
+    Using HTTP/2 with prior knowledge when ``http_version`` is ``'2.0'`` was
+    introduced in Symfony 8.2. In previous Symfony versions, the clients kept
+    using HTTP/1.1 with servers that didn't support HTTP/2.
 
 Support for HTTP/2 PUSH works automatically when using a compatible client:
 pushed responses are put into a temporary cache and are used when a
