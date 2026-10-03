@@ -135,7 +135,7 @@ request format:
             webhook:
                 routing:
                     acme_webhook:
-                        service: Symfony\Component\Webhook\Client\RequestParser
+                        service: 'webhook.request_parser'
                         secret: '%env(WEBHOOK_SECRET)%'
 
     .. code-block:: php
@@ -146,12 +146,17 @@ request format:
         return static function (FrameworkConfig $config): void {
             $config->webhook()
                 ->routing('acme_webhook')
-                ->service(Symfony\Component\Webhook\Client\RequestParser::class)
+                ->service('webhook.request_parser')
                 ->secret('%env(WEBHOOK_SECRET)%');
         };
 
 The built-in parser automatically handles request validation and signature verification,
 allowing you to focus on consuming the RemoteEvent in your application logic.
+
+.. deprecated:: 8.2
+
+    Using the ``RequestParser`` class name as the ``service`` option was
+    deprecated in Symfony 8.2, use ``webhook.request_parser`` instead.
 
 Creating a Custom Parser
 ........................
@@ -586,6 +591,19 @@ Configure similarly to mailers, then consume
             // Update SMS delivery status in database, etc.
         }
     }
+
+.. tip::
+
+    To use one of these parsers in your own services, select it with
+    ``#[Target]`` on an argument typed with
+    :class:`Symfony\\Component\\Webhook\\Client\\RequestParserInterface`:
+    ``#[Target('mailer.mailgun')]``, ``#[Target('notifier.twilio')]`` or
+    ``#[Target('webhook')]`` for the built-in parser.
+
+    .. versionadded:: 8.2
+
+        Selecting webhook parsers with ``#[Target]`` was introduced in
+        Symfony 8.2.
 
 Sending Webhooks
 ----------------
