@@ -3741,6 +3741,49 @@ to the existing ones::
 
     $this->handle(new SomeMessage($data), [new SomeStamp(), new AnotherStamp()]);
 
+When a handler fails while handling a message synchronously, the bus throws a
+:class:`Symfony\\Component\\Messenger\\Exception\\HandlerFailedException`
+that wraps the exception thrown by the handler. If the code that dispatches the
+message needs that original exception (e.g. a controller that turns a "not
+found" exception into a 404 response), enable the ``unwrap_exceptions`` option
+of the bus to get it directly:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    query.bus:
+                        unwrap_exceptions: true
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'buses' => [
+                        'query.bus' => [
+                            'unwrap_exceptions' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The bus still throws the ``HandlerFailedException`` when more than one handler
+fails and when it handles a message received from a transport (e.g. in a
+worker), because the retry logic relies on that exception.
+
+.. versionadded:: 8.2
+
+    The ``unwrap_exceptions`` option was introduced in Symfony 8.2.
+
 Customizing Handlers
 --------------------
 
@@ -5265,8 +5308,69 @@ Restrict Handlers per Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, each handler will be available to handle messages on *all*
-of your buses. To prevent dispatching a message to the wrong bus without an error,
-you can restrict each handler to a specific bus using the ``messenger.message_handler`` tag:
+of your buses. When your messages define which bus they belong to (e.g. by
+implementing a ``CommandInterface`` or a ``QueryInterface``), list those classes
+or interfaces in the ``messages`` option of each bus:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    command.bus:
+                        # a class or interface name, or a list of them
+                        messages: App\Message\CommandInterface
+                    query.bus:
+                        messages: App\Message\QueryInterface
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Message\CommandInterface;
+        use App\Message\QueryInterface;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'buses' => [
+                        'command.bus' => [
+                            // a class or interface name, or a list of them
+                            'messages' => CommandInterface::class,
+                        ],
+                        'query.bus' => [
+                            'messages' => QueryInterface::class,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Now, dispatching any other message on these buses throws an exception, so you
+don't need to restrict each handler to its bus. This check only applies to the
+messages dispatched by your application; the bus doesn't check the messages
+received from a transport.
+
+Mailer, Notifier and Webhook dispatch their messages on the default bus (the
+one set in the ``default_bus`` option). If you restrict that bus, add those
+messages to its ``messages`` option too, or dispatch them on another bus with
+the ``framework.mailer.message_bus``, ``framework.notifier.message_bus`` and
+``framework.webhook.message_bus`` options.
+
+If you don't configure any bus, Symfony creates one called
+``messenger.bus.default``. To restrict it, define a bus with that same name
+under the ``buses`` option.
+
+.. versionadded:: 8.2
+
+    The ``messages`` option was introduced in Symfony 8.2.
+
+If your messages don't share a common class or interface, restrict each handler
+to a specific bus with the ``messenger.message_handler`` tag:
 
 .. configuration-block::
 
