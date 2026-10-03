@@ -113,8 +113,7 @@ Active Core Members
 
   * **Kevin Bond** (`kbond`_);
   * **Simon André** (`smnandre`_);
-  * **Hugo Alliaume** (`kocal`_);
-  * **Matheo Daninos** (`webmamba`_).
+  * **Hugo Alliaume** (`kocal`_).
 
 * **Symfony CLI Team** (``@symfony-cli/core`` on GitHub):
 
@@ -155,7 +154,8 @@ Symfony contributions:
 * **Titouan Galopin** (`tgalopin`_);
 * **Michael Cullum** (`michaelcullum`_);
 * **Thomas Calvet** (`fancyweb`_);
-* **Ryan Weaver** (`weaverryan`_).
+* **Ryan Weaver** (`weaverryan`_);
+* **Matheo Daninos** (`webmamba`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
