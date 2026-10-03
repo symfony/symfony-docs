@@ -96,6 +96,7 @@ Messenger
 
 * :ref:`AsMessage <messenger-message-attribute>`
 * :ref:`AsMessageHandler <messenger-handler>`
+* :ref:`AsMessageMiddleware <messenger-middleware-attribute>`
 
 ObjectMapper
 ~~~~~~~~~~~~
