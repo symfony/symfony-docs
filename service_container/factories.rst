@@ -40,6 +40,20 @@ create its object:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterSender.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        // the first argument is the class and the second argument is the static method
+        #[Autoconfigure(factory: [NewsletterSenderStaticFactory::class, 'createNewsletterSender'])]
+        class NewsletterSender
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -67,6 +81,11 @@ create its object:
                 ],
             ],
         ]);
+
+.. versionadded:: 8.2
+
+    The ``factory`` argument of the ``#[Autoconfigure]`` attribute, and the
+    ``factory`` key under ``_instanceof``, were introduced in Symfony 8.2.
 
 If the factory method needs arguments, define them with the ``arguments``
 option, as explained later in :ref:`factories-passing-arguments-factory-method`.
@@ -173,6 +192,19 @@ as the factory class:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterSender.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(factory: [null, 'create'])]
+        class NewsletterSender
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -208,6 +240,20 @@ and create the service, instantiate the factory itself as a service too.
 Configuration of the service container then looks like this:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterSender.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        // the factory service is referenced by its id, prefixed with "@"
+        #[Autoconfigure(factory: ['@App\Email\NewsletterSenderFactory', 'createNewsletterSender'])]
+        class NewsletterSender
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -272,6 +318,19 @@ Services can be created and configured via invokable factories by omitting the
 method name:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Email/NewsletterSender.php
+        namespace App\Email;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(factory: '@App\Email\InvokableNewsletterSenderFactory')]
+        class NewsletterSender
+        {
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -377,6 +436,20 @@ This allows you to select the created object at runtime:
 Factory expressions also support the ``arg()`` function, which returns an
 argument of the definition itself (e.g.
 ``'@=arg(0).createNewsletterSender() ?: service("default_newsletter_sender")'``).
+
+An expression is also accepted by the ``#[Autoconfigure]`` attribute, when the
+factory is declared on the created class itself::
+
+    // src/Email/NewsletterSender.php
+    namespace App\Email;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+    #[Autoconfigure(factory: '@=service("newsletter_sender_factory").createNewsletterSender()')]
+    class NewsletterSender
+    {
+        // ...
+    }
 
 .. _`factory design pattern`: https://en.wikipedia.org/wiki/Factory_(object-oriented_programming)
 .. _`first-class callable syntax`: https://www.php.net/manual/en/functions.first_class_callable_syntax.php
