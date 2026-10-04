@@ -5432,6 +5432,50 @@ only includes what applies to that message, and says ``not handled`` or
 
     $ php bin/console debug:messenger --message='App\Message\DummyCommand'
 
+Add the ``--middleware`` option to also display the
+:ref:`middleware <messenger_middleware>` of each bus, in the order they are
+called. The list is built from the compiled container, so it includes the
+default middleware added by Symfony and the middleware of buses that you
+registered as services yourself. Each middleware shows its service ID, its
+class and its PHPDoc description. Pass the bus name as an argument to inspect
+only that bus:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:messenger messenger.bus.default --middleware
+
+      messenger.bus.default
+      ---------------------
+
+       The following middleware are called, in this order:
+
+       -------------------------------------------------------------------------
+        messenger.bus.default.middleware.traceable
+            Symfony\Component\Messenger\Middleware\TraceableMiddleware
+            Collects some data about a middleware.
+        messenger.middleware.add_default_stamps_middleware
+            Symfony\Component\Messenger\Middleware\AddDefaultStampsMiddleware
+            Automatically add stamps from the DefaultStampsProviderInterface.
+        messenger.bus.default.middleware.add_bus_name_stamp_middleware
+            Symfony\Component\Messenger\Middleware\AddBusNameStampMiddleware
+            Adds the BusNameStamp to the bus.
+        ...
+        messenger.bus.default.middleware.send_message
+            Symfony\Component\Messenger\Middleware\SendMessageMiddleware
+        ...
+        messenger.bus.default.middleware.handle_message
+            Symfony\Component\Messenger\Middleware\HandleMessageMiddleware
+       -------------------------------------------------------------------------
+
+       The following messages can be dispatched:
+
+       ...
+
+.. versionadded:: 8.2
+
+    The ``--middleware`` option of the ``debug:messenger`` command was
+    introduced in Symfony 8.2.
+
 .. tip::
 
     The command will also show the PHPDoc description of the message and handler classes.
