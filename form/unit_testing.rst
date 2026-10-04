@@ -108,7 +108,7 @@ method is only set to ``false`` if a data transformer throws an exception::
 Next, verify the submission and mapping of the form. The test below checks if
 all the fields are correctly specified::
 
-    $this->assertEquals($expected, $formData);
+    $this->assertEquals($expected, $model);
 
 Finally, check the creation of the ``FormView``. You can check that a custom
 variable exists and will be available in your form themes::
