@@ -277,6 +277,15 @@ Use ``symfony php`` to ensure commands run with the correct PHP version:
     # this also works for Composer
     $ symfony composer install
 
+    # and for the Symfony console
+    $ symfony console cache:clear
+
+.. tip::
+
+    The Symfony CLI forwards unknown commands to the ``bin/console`` script of
+    your project, so ``symfony cache:clear`` is the same as
+    ``symfony console cache:clear``.
+
 Local Domain Names
 ------------------
 
@@ -340,6 +349,7 @@ Your application is now available at ``https://my-app.wip``
 .. tip::
 
     View all local domains and their configuration at http://127.0.0.1:7080
+    (or in JSON format at http://127.0.0.1:7080/index.json).
 
 You can also use wildcards:
 
@@ -352,9 +362,13 @@ This allows accessing subdomains like ``https://api.my-app.wip`` or
 
 .. tip::
 
-    If you prefer to use a different TLD, edit the ``~/.symfony5/proxy.json``
-    file (where ``~`` means the path to your user directory) and change the
-    value of the ``tld`` option from ``wip`` to any other TLD.
+    If you prefer to use a different TLD, edit the ``proxy.json`` file stored
+    in the Symfony CLI configuration directory and change the value of the
+    ``tld`` option from ``wip`` to any other TLD. This directory is
+    ``~/.config/symfony-cli/`` on Linux,
+    ``~/Library/Application Support/symfony-cli/`` on macOS and
+    ``%AppData%\symfony-cli\`` on Windows (or ``~/.symfony5/`` if that legacy
+    directory exists).
 
 When running console commands, set the ``https_proxy`` environment variable
 to make custom domains work:
@@ -429,7 +443,7 @@ Mail catcher  1025/1080 ``MAILER_``
               3535/3550
 Blackfire     8307      ``BLACKFIRE_``
               8707
-Mercure       80        Always exposes ``MERCURE_PUBLIC_URL`` and ``MERCURE_URL`` (only works with the ``dunglas/mercure`` Docker image)
+Mercure       any       Always exposes ``MERCURE_PUBLIC_URL`` and ``MERCURE_URL`` (only works with the ``dunglas/mercure`` Docker image, see :ref:`symfony-server-mercure`)
 ============= ========= ======================
 
 If the service is not supported, the web server creates these generic
@@ -530,6 +544,61 @@ prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
 to ``DATABASE``, the web server creates environment variables starting with
 ``DATABASE_`` instead as expected by the default Symfony configuration.
 
+.. _symfony-server-mercure:
+
+Mercure Integration
+~~~~~~~~~~~~~~~~~~~
+
+When a container uses the ``dunglas/mercure`` Docker image, the web server
+exposes the URL of the :doc:`Mercure </mercure>` hub as ``MERCURE_URL`` and
+``MERCURE_PUBLIC_URL``. The hub only answers on the address defined by the
+``SERVER_NAME`` environment variable of the container (``localhost`` by
+default, meaning HTTPS on port ``443``), so these URLs use the published port,
+the scheme and the hostname that match this address:
+
+.. code-block:: yaml
+
+    # compose.yaml
+    services:
+        mercure:
+            image: dunglas/mercure:v1
+            environment:
+                # serves the hub over HTTP on port 80 for any hostname
+                SERVER_NAME: ':80'
+            ports: [80]
+
+When browsers connect to the hub directly, they use a different origin than
+your application. This causes CORS errors and, when your application uses
+HTTPS, mixed content errors and authorization cookies that aren't sent to the
+hub. To avoid these issues, use the ``--proxy-mercure`` option to make the
+local web server serve the hub on the same origin as your application:
+
+.. code-block:: terminal
+
+    $ symfony server:start --proxy-mercure
+
+The local web server then forwards ``/.well-known/mercure`` requests to the hub
+and sets ``MERCURE_PUBLIC_URL`` accordingly, while your application keeps
+publishing updates directly to the hub via ``MERCURE_URL``.
+
+.. note::
+
+    Hubs that implement version 1.0 of the Mercure protocol expect the token
+    audience to match the URL that receives the request, which is always
+    ``MERCURE_URL`` when using this option. MercureBundle uses the public URL
+    of the hub as the default audience, so set it explicitly:
+
+    .. code-block:: yaml
+
+        mercure:
+            hubs:
+                default:
+                    # ...
+                    jwt:
+                        # ...
+                        claims:
+                            aud: '%env(MERCURE_URL)%'
+
 Managing Long-Running Processes
 -------------------------------
 
@@ -608,6 +677,8 @@ The ``.symfony.local.yaml`` file provides advanced configuration options:
         use_gzip: true
         # enable Cross-origin resource sharing (CORS) for all request
         allow_cors: true
+        # serve the Mercure hub detected via Docker on the web server origin
+        proxy_mercure: true
 
     # run the server in the background
     daemon: true

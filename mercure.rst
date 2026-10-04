@@ -91,6 +91,14 @@ invalid TLS certificate issues:
 
     $ symfony server:start --no-tls -d
 
+Alternatively, start it with the ``--proxy-mercure`` option to serve the hub on
+the same origin as your application, which also works with HTTPS (see
+:ref:`Mercure integration of the local web server <symfony-server-mercure>`):
+
+.. code-block:: terminal
+
+    $ symfony server:start --proxy-mercure -d
+
 If you use the Docker integration, a hub is already up and running.
 
 Configuration
