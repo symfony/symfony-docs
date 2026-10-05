@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-08-29T09:00:39Z
+
+The red `Code Blocks` check is not something this PR can fix:
+
+```
+Unrecognized option "cache_status" under "framework.http_cache".
+Available options are "allow_reload", "allow_revalidate", "debug", ...
+```
+
+The checker compiles the blocks against `symfony-tools/symfony-application`, and its `8.2` branch still pins `extra.symfony.require` to `8.1.*`, so the application resolves released 8.1 packages. `cache_status` landed in 8.2 this morning with symfony/symfony#65573, which the application therefore knows nothing about.
+
+Any documentation PR for a new 8.2 option hits the same wall. symfony-tools/symfony-application#48 bumps that branch to `8.2.*` and has been open since 20 August; once it lands this check should go green on its own, with no change here.
+
+DOCtor-RST and the docs build are both green.
