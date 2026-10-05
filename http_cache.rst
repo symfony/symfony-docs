@@ -121,6 +121,82 @@ cache efficiency of your routes.
     You can change the name of the header used for the trace
     information using the ``trace_header`` config option.
 
+.. _http-cache-status:
+
+Reporting the Cache Status
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``cache_status`` option was introduced in Symfony 8.2.
+
+The trace header described above is specific to Symfony. If you want to report
+how the cache handled each request in a format that other caches, CDNs and
+monitoring tools understand, use the standard ``Cache-Status`` HTTP header
+defined in `RFC 9211`_. Set the
+:ref:`cache_status <reference-http-cache-cache-status>` option to the name that
+identifies this cache in the header (e.g. a product name or a hostname):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        when@prod:
+            framework:
+                http_cache:
+                    cache_status: 'Symfony'
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'when@prod' => [
+                'framework' => [
+                    'http_cache' => [
+                        'cache_status' => 'Symfony',
+                    ],
+                ],
+            ],
+        ]);
+
+Responses now include a header like ``Cache-Status: Symfony; hit; ttl=58``.
+These are the values reported for the main request:
+
+==================  ============================================================
+Value               Meaning
+==================  ============================================================
+``hit``             the response was served from the cache
+``fwd=method``      the request method is not cacheable (e.g. ``POST``)
+``fwd=bypass``      the request was passed to the backend without looking up
+                    the cache (e.g. it includes an ``Expect`` header)
+``fwd=request``     the client forced a reload (see the ``allow_reload`` option)
+``fwd=stale``       a stored response was revalidated with the backend, or
+                    served stale because the backend failed
+``fwd=miss``        the cache didn't contain any response for this request
+==================  ============================================================
+
+A ``hit`` also includes the ``ttl`` parameter, which is the remaining freshness
+lifetime of the response in seconds. A negative value means that the response
+is stale (e.g. ``ttl=-12``).
+
+When the request was forwarded to the backend, the header includes ``stored``
+if the response was stored in the cache, and ``fwd-status`` if the backend
+returned a different status code than the one sent to the client. For example,
+a successful revalidation reports
+``Cache-Status: Symfony; fwd=stale; fwd-status=304; stored``.
+
+If the backend response already contains a ``Cache-Status`` header, Symfony
+appends its own value to it instead of replacing it, as required by the RFC.
+
+.. warning::
+
+    As explained in section 6 of `RFC 9211`_, this header helps attackers
+    learn how your cache behaves. Consider this before enabling it in
+    production.
+
 .. _http-cache-symfony-versus-varnish:
 
 .. sidebar:: Changing from one Reverse Proxy to another
@@ -389,3 +465,4 @@ Learn more
 .. _`RFC 7232 - Conditional Requests`: https://tools.ietf.org/html/rfc7232
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/
 .. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4
+.. _`RFC 9211`: https://www.rfc-editor.org/rfc/rfc9211.html
