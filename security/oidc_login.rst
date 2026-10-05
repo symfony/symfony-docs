@@ -911,8 +911,8 @@ secret as the key, so the secret is never sent:
             ],
         ]);
 
-The string value sets only the secret. To also set ``algorithm`` and
-``lifetime``, use the ``secret``, ``algorithm`` and ``lifetime`` keys.
+The string value sets only the secret. To also set other options, use the
+``secret``, ``algorithm``, ``lifetime`` and ``audience`` keys.
 ``algorithm`` defaults to ``HS256`` and also accepts ``HS384`` and ``HS512``.
 As required by `RFC 7518`_, Section 3.2, the secret must be at least as long as
 the output of the algorithm: 32 bytes for ``HS256``, 48 for ``HS384`` and 64 for
@@ -931,6 +931,61 @@ claim would accept a stolen assertion during all that time. The ``algorithm``
 must be one of those listed by your provider in the
 ``token_endpoint_auth_signing_alg_values_supported`` entry of its discovery
 document.
+
+By default, the assertion names the issuer of the provider as its audience
+(the ``aud`` claim) and is typed ``client-authentication+jwt`` (the ``typ``
+header), as required by `draft-ietf-oauth-rfc7523bis`_ and `FAPI 2.0`_. Symfony
+takes the issuer from the discovery document, after checking it against
+``provider_uri``. Some providers (e.g. Ory Hydra, Curity and Okta) refuse this
+audience. For them, set the ``audience`` option to ``token_endpoint``; the
+assertion then names the token endpoint and has no ``typ`` header:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        provider_uri: 'https://accounts.example.com'
+                        client_id: '%env(OIDC_CLIENT_ID)%'
+                        client_authentication:
+                            private_key_jwt:
+                                key: '%env(OIDC_CLIENT_SIGNING_KEY)%'
+                                audience: 'token_endpoint'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            'provider_uri' => 'https://accounts.example.com',
+                            'client_id' => '%env(OIDC_CLIENT_ID)%',
+                            'client_authentication' => [
+                                'private_key_jwt' => [
+                                    'key' => '%env(OIDC_CLIENT_SIGNING_KEY)%',
+                                    'audience' => 'token_endpoint',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    If you create ``ClientSecretJwt`` or ``PrivateKeyJwt`` objects yourself,
+    their assertions name the token endpoint and have no ``typ`` header unless
+    you pass the ``OidcDiscovery`` object of the provider as the
+    ``$discovery`` argument.
 
 .. _oidc-login-custom-client-authentication:
 
@@ -1484,6 +1539,10 @@ Configuration Reference
 ``client_authentication.client_secret_jwt.lifetime`` (default: ``60``)
     For how many seconds the assertion is valid.
 
+``client_authentication.client_secret_jwt.audience`` (default: ``issuer``)
+    What the assertion names as its audience: ``issuer`` (the issuer of the
+    provider) or ``token_endpoint`` (for a provider that refuses the issuer).
+
 ``client_authentication.private_key_jwt.key`` (**required**)
     The JSON-encoded JWK of the private key used to sign the assertion.
     Passing a string to ``private_key_jwt`` sets this value.
@@ -1494,6 +1553,10 @@ Configuration Reference
 
 ``client_authentication.private_key_jwt.lifetime`` (default: ``60``)
     For how many seconds the assertion is valid.
+
+``client_authentication.private_key_jwt.audience`` (default: ``issuer``)
+    What the assertion names as its audience: ``issuer`` (the issuer of the
+    provider) or ``token_endpoint`` (for a provider that refuses the issuer).
 
 ``http_client`` (default: ``http_client``)
     The id of the HTTP client used in all requests made to the provider
@@ -1586,6 +1649,7 @@ default handlers with your own services), and ``login_path``,
 .. _`RFC 6749, Section 6`: https://datatracker.ietf.org/doc/html/rfc6749#section-6
 .. _`RFC 7518`: https://datatracker.ietf.org/doc/html/rfc7518#section-3.2
 .. _`RFC 7523`: https://datatracker.ietf.org/doc/html/rfc7523
+.. _`draft-ietf-oauth-rfc7523bis`: https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc7523bis/
 .. _`RFC 7591`: https://datatracker.ietf.org/doc/html/rfc7591#section-2
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
 .. _`RFC 8176`: https://datatracker.ietf.org/doc/html/rfc8176
