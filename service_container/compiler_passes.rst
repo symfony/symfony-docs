@@ -648,3 +648,8 @@ However, a **major drawback** of this approach is that you must manually clear
 the cache when changing the value of an environment variable. This goes
 against the typical behavior of environment variables, which are designed
 to be dynamic and not require cache invalidation.
+
+If a bundle configuration option needs the value of its env vars, call
+``inlineEnvVars()`` on that option instead of resolving the env vars in the
+extension, as explained in
+:ref:`Options Needing Their Value at Compile Time <config-env-vars-inlined>`.
