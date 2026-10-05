@@ -52,6 +52,7 @@ this behavior by using the ``lock`` key as follows:
             lock: ~
             lock: 'flock'
             lock: 'flock:///path/to/file'
+            lock: 'flock+remove'
             lock: 'semaphore'
             lock: 'memcached://m1.docker'
             lock: ['memcached://m1.docker', 'memcached://m2.docker']
@@ -84,6 +85,7 @@ this behavior by using the ``lock`` key as follows:
                 'lock' => null,
                 'lock' => 'flock',
                 'lock' => 'flock:///path/to/file',
+                'lock' => 'flock+remove',
                 'lock' => 'semaphore',
                 'lock' => 'memcached://m1.docker',
                 'lock' => 'memcached://m1.docker,memcached://m2.docker',
@@ -784,6 +786,30 @@ when the PHP process ends)::
 
     Automatic project-scoped lock directories for ``FlockStore`` were introduced
     in Symfony 8.1.
+
+By default, the lock file of each resource stays on disk after the lock is
+released, so the next lock on the same resource reuses it. If your application
+locks many distinct resources (for example, one per database row), this leaves
+lots of files in the lock directory. Use the ``removeOnRelease`` argument to
+remove the file when an exclusive lock is released::
+
+    $store = new FlockStore('/var/stores', removeOnRelease: true);
+
+In a Symfony application, use the ``flock+remove`` DSN (which uses the same
+project-scoped directory as ``flock``) or ``flock+remove:///path/to/dir``.
+
+This option makes locking the same resource repeatedly slower, because the file
+is created on each acquisition and processes waiting for a removed file must
+retry. Shared locks always keep their file.
+
+All processes sharing a lock directory must use the same setting. A process
+that keeps the files doesn't detect that another process removed them, so both
+could hold the same lock at the same time.
+
+.. versionadded:: 8.2
+
+    The ``removeOnRelease`` argument of ``FlockStore`` and the ``flock+remove``
+    DSN were introduced in Symfony 8.2.
 
 .. warning::
 
