@@ -1,8 +1,9 @@
 EnableAutoMapping
 =================
 
-This constraint allows you to enable Doctrine's auto mapping (see
-`Doctrine configuration reference`_) on a class or a property. Automapping
+This constraint allows you to enable Doctrine's auto mapping (see the
+:ref:`auto_mapping option <reference-validation-auto-mapping>`) on a class or
+a property. Automapping
 allows you to determine validation rules based on Doctrine's attributes. You
 may use this constraint when automapping is globally disabled, but you still
 want to enable this feature for a class or a property specifically.
@@ -88,5 +89,3 @@ Options
 The ``groups`` option is not available for this constraint.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
-
-.. _`Doctrine configuration reference`: https://symfony.com/bundles/DoctrineBundle/current/configuration.html
