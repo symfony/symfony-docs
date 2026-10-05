@@ -318,6 +318,8 @@ when rendering the field:
 
     {{ form_widget(form.publishAt, { 'separator': '=====' }) }}
 
+.. include:: /reference/forms/types/options/sort_choices.rst.inc
+
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc

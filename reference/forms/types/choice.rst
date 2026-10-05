@@ -222,6 +222,8 @@ If this option is true, the `separator`_ option will be displayed as HTML instea
 of text. This is useful when using HTML elements (e.g. ``<hr>``) as a more modern
 visual separator.
 
+.. include:: /reference/forms/types/options/sort_choices.rst.inc
+
 Overridden Options
 ------------------
 
