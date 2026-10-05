@@ -2071,6 +2071,9 @@ http_version
 The HTTP version to use, typically ``'1.1'``  or ``'2.0'``. Leave it to ``null``
 to let Symfony select the best version automatically.
 
+Setting it to ``'2.0'`` requires the server to support HTTP/2 (read more about
+:ref:`HTTP/2 support <http-client-http2>`).
+
 local_cert
 ..........
 
