@@ -3655,6 +3655,12 @@ for each bus looks like this:
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
    message was dispatched into;
 
+#. ``reject_redelivered_message_middleware`` - prevents handling messages
+   redelivered by AMQP (e.g. after the connection was lost before acknowledging
+   them) and sends them through the
+   :ref:`retry logic <messenger-retries-failures>` instead, to avoid infinite
+   redelivery loops;
+
 #. ``dispatch_after_current_bus``- see :ref:`messenger-transactional-messages`;
 
 #. ``failed_message_processing_middleware`` - processes messages that are being
