@@ -279,6 +279,8 @@ and configure the service ID as the ``success_handler``:
     ``failure_handler`` option and create a class that implements
     :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
 
+.. _access-token-resource-metadata:
+
 Publishing the Protected Resource Metadata
 ------------------------------------------
 
@@ -1424,6 +1426,122 @@ response and the responses of inactive tokens are never cached. Cache keys
 use a hash of the token instead of the token itself, so the cache pool
 doesn't store any usable credentials.
 
+.. _access-token-dpop:
+
+Binding Access Tokens to a Key (DPoP)
+-------------------------------------
+
+.. versionadded:: 8.2
+
+    The ``dpop`` option was introduced in Symfony 8.2.
+
+A bearer access token works for anyone who presents it, so a stolen token can
+be used until it expires. DPoP (Demonstrating Proof of Possession, defined in
+`RFC 9449`_) prevents this: the authorization server binds the token to a key
+of the client (in the ``cnf`` claim of the token) and the client signs a proof
+with that key for each request. Enable the ``dpop`` option to only accept
+tokens bound to a key whose possession the request proves. This option requires
+the ``web-token/jwt-library`` package:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                api:
+                    pattern: ^/api
+                    stateless: true
+                    access_token:
+                        dpop: true
+                        token_handler:
+                            oidc:
+                                discovery:
+                                    base_uri: 'https://oidc.example.com'
+                                issuers: ['https://oidc.example.com']
+                                audience: 'api-example'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'api' => [
+                        'pattern' => '^/api',
+                        'stateless' => true,
+                        'access_token' => [
+                            'dpop' => true,
+                            'token_handler' => [
+                                'oidc' => [
+                                    'discovery' => [
+                                        'base_uri' => 'https://oidc.example.com',
+                                    ],
+                                    'issuers' => ['https://oidc.example.com'],
+                                    'audience' => 'api-example',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Clients of this firewall must send the token with the ``DPoP`` scheme instead
+of ``Bearer`` and the signed proof in the ``DPoP`` header:
+
+.. code-block:: text
+
+    GET /api/orders HTTP/1.1
+    Host: api.example.com
+    Authorization: DPoP eyJhbGciOiJFUzI1NiIsInR5cCI6ImF0K2p3dCJ9...
+    DPoP: eyJ0eXAiOiJkcG9wK2p3dCIsImFsZyI6IkVTMjU2In0...
+
+Tokens that are not bound to a key are rejected. The ``WWW-Authenticate``
+header of ``401`` responses uses the ``DPoP`` scheme and lists the accepted
+algorithms. If you :ref:`publish the protected resource metadata
+<access-token-resource-metadata>`, the document also sets
+``dpop_bound_access_tokens_required`` to ``true``.
+
+The ``dpop`` option accepts these keys:
+
+``algorithms`` (default: ``['ES256', 'PS256', 'RS256']``)
+    The algorithms that clients can use to sign the proofs. To accept another
+    algorithm, tag its service with
+    ``security.access_token_handler.oidc.signature_algorithm``.
+
+``cache`` (default: ``cache.app``)
+    The service ID of the cache pool that stores the used proofs to reject
+    replayed ones. If the proof can't be stored in the pool, the request is
+    rejected. When your application runs on several servers, this pool must be
+    shared by all of them (e.g. a Redis pool); otherwise, a proof can be
+    replayed against another server.
+
+``proof_lifetime`` (default: ``60``)
+    The number of seconds a proof is accepted after the time defined in its
+    ``iat`` claim (plus the allowed time drift).
+
+``allowed_time_drift`` (default: ``5``)
+    The number of seconds of difference allowed, in both directions, between
+    the ``iat`` claim of a proof and the time of the server.
+
+DPoP has these requirements and limitations:
+
+* The ``htu`` claim of the proof is compared with the URL of the request. If
+  your application runs behind a reverse proxy, :doc:`configure the trusted
+  proxies and hosts </deployment/proxies>` so Symfony generates the same URL
+  that the client used.
+* The firewall must be ``stateless``. Otherwise, the session would
+  authenticate the next requests without any proof.
+* The token handler must give access to the claims of the token. The
+  ``oidc_user_info`` and ``cas`` handlers don't do that, so they can't be used
+  with DPoP. A custom token handler must pass all the claims of the token
+  (including ``cnf``) as the attributes of the returned ``UserBadge``.
+* Server-provided nonces (Section 8 of the RFC) are not supported.
+
 Using CAS 2.0
 -------------
 
@@ -1597,6 +1715,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
 .. _`RFC 9068`: https://datatracker.ietf.org/doc/html/rfc9068
+.. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
 .. _`RFC 9728`: https://datatracker.ietf.org/doc/html/rfc9728
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
