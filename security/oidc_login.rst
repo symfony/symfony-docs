@@ -1413,6 +1413,119 @@ application and a warning is logged.
     A logout form (see :ref:`security-logout-form`) needs the same attribute
     on its ``<form>`` element.
 
+Logging Out Users When the Provider Ends Their Session
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The provider can also end a session on its own (e.g. when the user logs out
+directly from the provider, or from another application that propagates the
+logout to it with `RP-Initiated Logout`_). With `Back-Channel Logout`_, the
+provider then sends a logout token to your application, which logs out the user
+on the next request made by their browser. Enable it with the
+``backchannel_logout`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        provider_uri: 'https://accounts.example.com'
+                        client_id: '%env(OIDC_CLIENT_ID)%'
+                        client_authentication:
+                            client_secret_basic: '%env(OIDC_CLIENT_SECRET)%'
+                        # these are the default values; set this option to
+                        # 'true' to enable the feature using them
+                        backchannel_logout:
+                            path: /oidc/backchannel-logout
+                            cache: cache.app
+                            lifetime: 86400
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            'provider_uri' => 'https://accounts.example.com',
+                            'client_id' => '%env(OIDC_CLIENT_ID)%',
+                            'client_authentication' => [
+                                'client_secret_basic' => '%env(OIDC_CLIENT_SECRET)%',
+                            ],
+                            // these are the default values; set this option to
+                            // 'true' to enable the feature using them
+                            'backchannel_logout' => [
+                                'path' => '/oidc/backchannel-logout',
+                                'cache' => 'cache.app',
+                                'lifetime' => 86400,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The imported route loader also defines the route that receives the logout
+tokens, named ``_oidc_login_backchannel_logout_<firewallname>``. In the
+provider, register the full URL of this ``path`` as the
+``backchannel_logout_uri`` of your client and enable
+``backchannel_logout_session_required``. Logout tokens without a ``sid``
+(session ID) claim are rejected with a ``400`` response.
+
+This route verifies the signature and the claims of the logout token and stores
+the ``sid`` of the ended session in a cache pool. The request comes from the
+provider, not from the browser of the user, so the session of the user can't be
+changed at that moment. Instead, on the next request of the user, the security
+token is removed if it belongs to an ended session. This also applies to other
+firewalls that share the
+:ref:`security context <reference-security-firewall-context>` of the
+``oidc_login`` firewall.
+
+Keep these constraints in mind:
+
+* The firewall must be stateful, and each firewall needs its own ``path``;
+* The ``id_token_signature.required`` option must stay ``true``, because the
+  signature is the only proof that the logout token comes from the provider;
+* Don't protect ``path`` with an ``access_control`` rule: the provider sends
+  requests to it without any session or cookie;
+* The ``cache`` pool must be shared by all the servers of your application and
+  must not remove items before they expire. For example, APCu (which is local
+  to each server) or Redis with an LRU eviction policy could lose some logouts;
+* ``lifetime`` is how many seconds an ended session is remembered. Set it to at
+  least the maximum time that a session can stay idle; otherwise, a user who
+  comes back after that time is still logged in;
+* Users logged in with the :doc:`remember me </security/remember_me>` feature
+  are not logged out, because their security token doesn't contain any ``sid``.
+
+The security token is removed, but the session is not invalidated. To also
+invalidate the session, as the regular logout does, listen to the
+:class:`Symfony\\Component\\Security\\Http\\Event\\TokenDeauthenticatedEvent`
+and check the exception that caused it::
+
+    // src/Security/OidcSessionEndedListener.php
+    namespace App\Security;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\Security\Http\Event\TokenDeauthenticatedEvent;
+    use Symfony\Component\Security\Http\Exception\OidcSessionEndedException;
+
+    final class OidcSessionEndedListener
+    {
+        #[AsEventListener]
+        public function onTokenDeauthenticated(TokenDeauthenticatedEvent $event): void
+        {
+            if ($event->getException() instanceof OidcSessionEndedException) {
+                $event->getRequest()->getSession()->invalidate();
+            }
+        }
+    }
+
 Security Considerations
 -----------------------
 
@@ -1529,6 +1642,17 @@ Configuration Reference
     set it to ``null`` to not send it. It's ignored unless
     ``enable_end_session`` is ``true``.
 
+``backchannel_logout.path`` (default: ``/oidc/backchannel-logout``)
+    The path of the route that receives the logout tokens sent by the provider
+    (Back-Channel Logout). Setting ``backchannel_logout`` to ``true`` enables
+    this feature with the default values.
+
+``backchannel_logout.cache`` (default: ``cache.app``)
+    The id of the cache pool that stores the ended sessions.
+
+``backchannel_logout.lifetime`` (default: ``86400``)
+    For how many seconds an ended session is remembered.
+
 ``refresh_access_token.enabled`` (default: ``false``)
     Whether to renew the access token automatically, using the refresh token,
     before it expires.
@@ -1596,5 +1720,6 @@ default handlers with your own services), and ``login_path``,
 .. _`OIDC Core 1.0, Section 5.3.2`: https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
 .. _`FAPI 2.0`: https://openid.net/specs/fapi-security-profile-2_0-final.html
 .. _`Form Post Response Mode`: https://openid.net/specs/oauth-v2-form-post-response-mode-1_0.html
+.. _`Back-Channel Logout`: https://openid.net/specs/openid-connect-backchannel-1_0.html
 .. _`RP-Initiated Logout`: https://openid.net/specs/openid-connect-rpinitiated-1_0.html
 .. _`Symfony UX Turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
