@@ -433,3 +433,31 @@ Using callables for **complex checks**::
     $integerType->isSatisfiedBy($isNonNullableNumber); // true
     $stringType->isSatisfiedBy($isNonNullableNumber);  // false
     $floatType->isSatisfiedBy($isNonNullableNumber);   // false
+
+**Map** a type (e.g. to replace a generic template with an actual type)::
+
+    use Symfony\Component\TypeInfo\Type\TemplateType;
+
+    $type = Type::nullable(Type::list(Type::template('T')));
+
+    // the callable is called for every part of the type (from the innermost
+    // part to the type itself) and must return a Type object
+    $mappedType = $type->map(static function (Type $nestedType): Type {
+        if ($nestedType instanceof TemplateType && 'T' === $nestedType->getName()) {
+            return Type::int();
+        }
+
+        return $nestedType;
+    });
+    // $mappedType is ?list<int>
+
+.. versionadded:: 8.2
+
+    The ``map()`` method was introduced in Symfony 8.2.
+
+The callable receives every nested type: wrapped types, the members of union
+and intersection types, generic variable types, collection key and value types,
+shape items and template bounds. The ``map()`` method only rebuilds the parts
+that changed, so a callable that always returns its argument returns the same
+instance. Rebuilt union and intersection types are simplified (e.g. duplicated
+types are removed and a union that includes ``mixed`` becomes ``mixed``).
