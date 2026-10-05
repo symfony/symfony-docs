@@ -950,6 +950,49 @@ You can now choose which groups to use when serializing::
     );
     // $json contains {"name":"Jane Doe","age":32,"sportsperson":false,"email":"jane.doe@example.com"}
 
+.. _serializer-default-groups:
+
+Including Properties Without Groups
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``enable_default_groups`` context option was introduced in Symfony 8.2.
+
+When you define the ``groups`` option, properties without any group (like
+``email`` in the previous example) are always excluded. If you want to select
+them by group too, enable the ``enable_default_groups`` context option. It
+adds those properties to two implicit groups: ``Default`` and the short name
+of their class, the same convention used by
+:doc:`validation groups </validation/groups>`::
+
+    use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+    // ...
+
+    $json = $serializer->serialize($person, 'json', [
+        AbstractNormalizer::GROUPS => ['Default'],
+        AbstractNormalizer::ENABLE_DEFAULT_GROUPS => true,
+    ]);
+    // $json contains {"email":"jane.doe@example.com"}
+    // (using 'Person' as the group gives the same result)
+
+The implicit groups only apply when the ``groups`` option contains nothing
+but ``Default`` and the class short name. When you request any other group,
+properties without groups are excluded as usual::
+
+    $json = $serializer->serialize($person, 'json', [
+        AbstractNormalizer::GROUPS => ['public-view', 'Default'],
+        AbstractNormalizer::ENABLE_DEFAULT_GROUPS => true,
+    ]);
+    // $json contains {"name":"Jane Doe","sportsperson":false}
+
+The implicit groups also work with the ``ignored_groups`` option (e.g. ignoring
+the ``Default`` group excludes all properties without groups) and when
+:ref:`using different serialized names per group <serializer-name-per-group>`.
+
+To enable this option in the entire application, add it to the
+:ref:`default context <serializer-default-context>` of the serializer.
+
 Excluding Specific Groups
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
