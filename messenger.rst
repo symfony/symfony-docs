@@ -2551,11 +2551,11 @@ queue so that the routing can target each of them:
         framework:
             messenger:
                 transports:
-                    notifications: 'mongodb://mongodb.example.com/app?queue_name=notifications'
+                    sms: 'mongodb://mongodb.example.com/app?queue_name=sms'
                     emails: 'mongodb://mongodb.example.com/app?queue_name=emails'
                 routing:
-                    'App\Message\SmsNotification': notifications
-                    'App\Message\NewUserWelcomeEmail': emails
+                    'Symfony\Component\Notifier\Message\SmsMessage': sms
+                    'Symfony\Component\Mailer\Messenger\SendEmailMessage': emails
 
     .. code-block:: xml
 
@@ -2571,12 +2571,12 @@ queue so that the routing can target each of them:
 
             <framework:config>
                 <framework:messenger>
-                    <framework:transport name="notifications" dsn="mongodb://mongodb.example.com/app?queue_name=notifications"/>
+                    <framework:transport name="sms" dsn="mongodb://mongodb.example.com/app?queue_name=sms"/>
                     <framework:transport name="emails" dsn="mongodb://mongodb.example.com/app?queue_name=emails"/>
-                    <framework:routing message-class="App\Message\SmsNotification">
-                        <framework:sender service="notifications"/>
+                    <framework:routing message-class="Symfony\Component\Notifier\Message\SmsMessage">
+                        <framework:sender service="sms"/>
                     </framework:routing>
-                    <framework:routing message-class="App\Message\NewUserWelcomeEmail">
+                    <framework:routing message-class="Symfony\Component\Mailer\Messenger\SendEmailMessage">
                         <framework:sender service="emails"/>
                     </framework:routing>
                 </framework:messenger>
@@ -2586,20 +2586,20 @@ queue so that the routing can target each of them:
     .. code-block:: php
 
         // config/packages/messenger.php
-        use App\Message\SmsNotification;
-        use App\Message\NewUserWelcomeEmail;
+        use Symfony\Component\Mailer\Messenger\SendEmailMessage;
+        use Symfony\Component\Notifier\Message\SmsMessage;
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
-            $messenger->transport('notifications')
-                ->dsn('mongodb://mongodb.example.com/app?queue_name=notifications');
+            $messenger->transport('sms')
+                ->dsn('mongodb://mongodb.example.com/app?queue_name=sms');
             $messenger->transport('emails')
                 ->dsn('mongodb://mongodb.example.com/app?queue_name=emails');
 
-            $messenger->routing(SmsNotification::class)->senders(['notifications']);
-            $messenger->routing(NewUserWelcomeEmail::class)->senders(['emails']);
+            $messenger->routing(SmsMessage::class)->senders(['sms']);
+            $messenger->routing(SendEmailMessage::class)->senders(['emails']);
         };
 
 Then, consume both queues with a single worker using the ``--queues`` option
@@ -2607,7 +2607,7 @@ Then, consume both queues with a single worker using the ``--queues`` option
 
 .. code-block:: terminal
 
-    $ php bin/console messenger:consume notifications --queues=notifications --queues=emails
+    $ php bin/console messenger:consume sms --queues=sms --queues=emails
 
 The worker looks for the next message of all the listed queues with one
 request to the server. Keep in mind that:
@@ -2617,7 +2617,7 @@ request to the server. Keep in mind that:
   priority between the queues;
 * a message that fails is retried in the queue it was received from;
 * the worker uses the settings of the transport named in the command (here,
-  ``notifications``) for all the queues, including its failure transport.
+  ``sms``) for all the queues, including its failure transport.
 
 .. _messenger-redis-transport:
 
