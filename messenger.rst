@@ -2509,7 +2509,10 @@ The MongoDB transport DSN may look like this:
 .. code-block:: env
 
     # .env
-    MESSENGER_TRANSPORT_DSN=mongodb://user:pass@mongodb1.example.com:27017/app?collection_name=messenger_messages&queue_name=default
+    MESSENGER_TRANSPORT_DSN=mongodb://user:pass@mongodb1.example.com:27017/app
+
+    # the settings below are optional
+    MESSENGER_TRANSPORT_DSN=mongodb://mongodb1.example.com/app?collection_name=jobs&queue_name=high
 
 The transport has a number of options, set in the DSN query string or in the
 ``options`` key of the transport configuration:
@@ -2532,11 +2535,6 @@ Any other query parameter is passed to the MongoDB driver as a
 
 Listening to Several Queues
 ...........................
-
-.. versionadded:: 8.2
-
-    The support for several queues in a single request was introduced in
-    Symfony 8.2.
 
 All the queues of a MongoDB transport live in the same collection, and
 the queue name is a field of the message document. A transport sends to the
@@ -2602,17 +2600,18 @@ queue so that the routing can target each of them:
             $messenger->routing(SendEmailMessage::class)->senders(['emails']);
         };
 
-Then, consume both queues with a single worker using the ``--queues`` option
-(see :ref:`messenger-limit-queues`):
+The MongoDB transport supports the ``--queues`` option (see
+:ref:`messenger-limit-queues`), so a single worker can consume both queues:
 
 .. code-block:: terminal
 
     $ php bin/console messenger:consume sms --queues=sms --queues=emails
 
-The worker looks for the next message of all the listed queues with one
-request to the server. Keep in mind that:
+The worker claims each message with one request to the server, whatever the
+number of listed queues. Keep in mind that:
 
-* the queues must be in the same collection of the same MongoDB cluster;
+* the queues must be in the same database and collection of the same MongoDB
+  cluster;
 * messages are delivered in the order of their availability date, without any
   priority between the queues;
 * a message that fails is retried in the queue it was received from;
