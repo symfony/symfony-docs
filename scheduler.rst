@@ -750,6 +750,8 @@ being transferred and processed by its handler::
         }
     }
 
+.. _scheduler-events:
+
 Scheduler Events
 ~~~~~~~~~~~~~~~~
 
@@ -1127,6 +1129,93 @@ option or in its ``#[AsMessage]`` attribute::
 When using the ``RedispatchMessage``, Symfony will attach a
 :class:`Symfony\\Component\\Scheduler\\Messenger\\ScheduledStamp` to the message,
 helping you identify those messages when needed.
+
+.. _scheduler-messenger-routing:
+
+Routing Scheduled Messages with Messenger
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``use_messenger_routing`` option was introduced in Symfony 8.2.
+
+By default, the scheduler worker handles scheduled messages itself, even
+when their class is routed to a transport in the ``framework.messenger.routing``
+option or in its ``#[AsMessage]`` attribute. Instead of wrapping each message
+in a ``RedispatchMessage``, enable the ``use_messenger_routing`` option to send
+all scheduled messages to the senders configured for their class, like any
+other dispatched message:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/scheduler.yaml
+        framework:
+            scheduler:
+                use_messenger_routing: true
+
+    .. code-block:: php
+
+        // config/packages/scheduler.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'scheduler' => [
+                    'use_messenger_routing' => true,
+                ],
+            ],
+        ]);
+
+.. deprecated:: 8.2
+
+    Not setting the ``use_messenger_routing`` option was deprecated in Symfony
+    8.2 because its default value will change to ``true`` in Symfony 9.0.
+
+Messages whose class has no sender configured are still handled in the
+scheduler worker. Messages that you wrap in a ``RedispatchMessage`` with some
+transport names are still sent to those transports.
+
+Tasks defined with the ``#[AsCronTask]`` and ``#[AsPeriodicTask]`` attributes
+are dispatched as a
+:class:`Symfony\\Component\\Scheduler\\Messenger\\ServiceCallMessage` (or as a
+:class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage` for
+commands), not as an instance of the class holding the attribute, so the
+routing of that class doesn't apply to them. Route ``ServiceCallMessage`` or
+``RunCommandMessage`` instead, or use the ``transports`` argument of the
+attributes, which takes precedence over the routing.
+
+A routed message behaves like any other asynchronous message:
+
+* a ``messenger:consume`` worker must consume its transport; otherwise, the
+  task never runs;
+* :ref:`retries and the failure transport <messenger-retries-failures>` apply
+  to it;
+* the message and all its properties must be serializable.
+
+The ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent``
+:ref:`scheduler events <scheduler-events>` are dispatched twice: first in the
+scheduler worker when the message is sent (``PostRunEvent::getResult()``
+returns ``null`` there) and then in the worker that handles the message. In
+both cases, ``getMessage()`` returns the scheduled message, not the
+``RedispatchMessage`` wrapping it.
+
+In the worker that handles the message, the trigger of the message context is
+a :class:`Symfony\\Component\\Scheduler\\Trigger\\SerializedTrigger`. It only
+holds the description of the original trigger and can't calculate the next run
+date; use the ``nextTriggerAt`` property of the message context instead.
+
+To keep handling a task in the scheduler worker, send it to a transport that
+uses the ``sync://`` DSN. When building the schedule manually, wrap the message
+in a ``RedispatchMessage`` with the name of that transport. When using
+attributes, pass that name in the ``transports`` argument::
+
+    #[AsCronTask('0 0 * * *', transports: 'sync')]
+    class SendDailySalesReports
+    {
+        // ...
+    }
 
 .. _`Deploying to Production`: https://symfony.com/doc/current/messenger.html#deploying-to-production
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization

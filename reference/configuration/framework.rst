@@ -4287,6 +4287,28 @@ enabled
 
 Whether to enable or not the Scheduler support.
 
+use_messenger_routing
+.....................
+
+**type**: ``boolean`` **default**: ``null``
+
+If ``true``, scheduled messages are sent to the Messenger senders configured
+for their class, like any other dispatched message. If ``false``, the
+scheduler worker handles them itself, unless they are wrapped in a
+``RedispatchMessage``. See :ref:`scheduler-messenger-routing`.
+
+This option is read when the container is compiled, so its value can't come
+from an environment variable.
+
+.. versionadded:: 8.2
+
+    The ``use_messenger_routing`` option was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    Not setting the ``use_messenger_routing`` option was deprecated in Symfony
+    8.2 because its default value will change to ``true`` in Symfony 9.0.
+
 .. seealso::
 
     For more details, see the :doc:`Scheduler </scheduler>`
