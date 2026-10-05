@@ -1403,6 +1403,25 @@ a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
 
+user_checker_on_refresh
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+By default, the user checker of the firewall only runs when users authenticate.
+Set this option to ``true`` to also run it every time the user is
+:ref:`refreshed from the session <user_session_refresh>`, so that an account
+disabled during a session is rejected on the next request instead of staying
+usable until the user logs out. This option requires a stateful firewall.
+
+The user checker then runs on every request of the firewall, so enable this
+option only if that checker is safe to call that often. Learn more in
+:ref:`Running the User Checker When Users Are Refreshed <security-user-checker-on-refresh>`.
+
+.. versionadded:: 8.2
+
+    The ``user_checker_on_refresh`` option was introduced in Symfony 8.2.
+
 re_authentication_entry_point
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
