@@ -4396,9 +4396,11 @@ for each bus looks like this:
    message was dispatched into;
 
 #. ``reject_redelivered_message_middleware`` - throws a
-   ``RejectRedeliveredMessageException`` when AMQP redelivers a message, so the
-   worker republishes it through the retry logic instead of handling it
-   directly. Remove it with the
+   ``RejectRedeliveredMessageException`` when AMQP redelivers a message (e.g.
+   after the connection was lost before acknowledging it), so the worker
+   republishes it through the :ref:`retry logic <messenger-retries-failures>`
+   instead of handling it directly, to avoid infinite redelivery loops. Remove
+   it with the
    :ref:`reject_redelivered_messages <reference-messenger-reject-redelivered-messages>`
    option;
 
