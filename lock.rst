@@ -789,27 +789,30 @@ when the PHP process ends)::
     Automatic project-scoped lock directories for ``FlockStore`` were introduced
     in Symfony 8.1.
 
-By default, the lock file of a resource is kept on disk after the lock is
-released, so that the next lock on the same resource reuses it. If your
-application locks many distinct resources (for example, one per database row),
-this leaves thousands of files in the lock directory. Pass ``true`` as the
-second argument to remove the file when an exclusive lock is released::
+By default, the lock file of a resource is kept on disk after the lock
+is released, so that the next lock on the same resource reuses it. If
+your application locks many distinct resources (for example, one per
+database row), this leaves thousands of files in the lock directory.
+Pass ``true`` as the second argument to remove the file when an
+exclusive lock is released::
 
     use Symfony\Component\Lock\Store\FlockStore;
 
+    // the second argument is $removeOnRelease
     $store = new FlockStore('/var/stores', true);
 
-In a Symfony application, use the ``flock+remove`` DSN (which uses the same
-project-scoped directory as ``flock``) or ``flock+remove:///path/to/dir``.
-
-Removing the file makes locking the same resource again and again slower, because
-the file must be created each time. Shared locks always keep their file. All
-processes sharing a lock directory must use the same setting.
+In a Symfony application, use the ``flock+remove`` DSN (which uses the
+same project-scoped directory as ``flock``) or
+``flock+remove:///path/to/dir``.
 
 .. versionadded:: 8.2
 
-    The ``$removeOnRelease`` argument of ``FlockStore`` and the ``flock+remove``
-    DSN were introduced in Symfony 8.2.
+    The ``$removeOnRelease`` argument of ``FlockStore`` and the
+    ``flock+remove`` DSN were introduced in Symfony 8.2.
+
+Locking the same resource repeatedly is slower with this option, because
+the file is created each time. Shared locks always keep their file. All
+processes sharing a lock directory must use the same setting.
 
 .. warning::
 
