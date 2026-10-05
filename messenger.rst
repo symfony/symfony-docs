@@ -567,6 +567,123 @@ transport and "sending" messages there to be handled immediately:
             ],
         ]);
 
+.. _messenger-sync-transport-retries:
+
+Retries and Failures in the Sync Transport
+..........................................
+
+By default, the ``sync`` transport handles each message once and throws any
+exception back to the code that dispatched the message, ignoring the
+:ref:`retry strategy <messenger-retries-failures>` and the
+:ref:`failure transport <messenger-failure-transport>` of the transport. Enable
+them with the ``retry`` and ``failure_transport`` options (e.g. to retry a
+webhook handled during the request and to keep it when it still fails):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    sync:
+                        # these options can also be defined in the "options" of
+                        # the transport, which take precedence over the DSN
+                        dsn: 'sync://?retry=true&failure_transport=true'
+                        retry_strategy:
+                            max_retries: 2
+                        # if not defined, the global failure transport is used
+                        failure_transport: failed
+                    failed: 'doctrine://default?queue_name=failed'
+
+                routing:
+                    App\Message\SmsNotification: sync
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Message\SmsNotification;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'sync' => [
+                            // these options can also be defined in the "options" of
+                            // the transport, which take precedence over the DSN
+                            'dsn' => 'sync://?retry=true&failure_transport=true',
+                            'retry_strategy' => [
+                                'max_retries' => 2,
+                            ],
+                            // if not defined, the global failure transport is used
+                            'failure_transport' => 'failed',
+                        ],
+                        'failed' => 'doctrine://default?queue_name=failed',
+                    ],
+                    'routing' => [
+                        SmsNotification::class => 'sync',
+                    ],
+                ],
+            ],
+        ]);
+
+``retry``
+    When handling the message fails, the transport handles it again right away,
+    as long as its retry strategy allows it (``max_retries`` or the
+    ``isRetryable()`` method of a custom retry strategy). The transport runs in
+    the process that dispatched the message, so it can't wait between attempts
+    and ignores the ``delay``, ``multiplier``, ``max_delay`` and ``jitter``
+    options. For the same reason, ``max_retries`` also limits the
+    :ref:`forced retries <messenger-forcing-retrying>`. Exceptions implementing
+    :class:`Symfony\\Component\\Messenger\\Exception\\UnrecoverableExceptionInterface`
+    are never retried, and handlers that already succeeded are not called again.
+
+``failure_transport``
+    When the message still fails, the transport sends it to its failure
+    transport instead of throwing the exception. Manage these messages with the
+    ``messenger:failed:*`` commands like any other failed message (in this
+    example, pass the ``--transport=failed`` option because ``failed`` is not
+    the global failure transport).
+
+When the message is sent to the failure transport, the envelope returned by
+``dispatch()`` contains a
+:class:`Symfony\\Component\\Messenger\\Stamp\\SentToFailureTransportStamp`::
+
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Stamp\ErrorDetailsStamp;
+    use Symfony\Component\Messenger\Stamp\SentToFailureTransportStamp;
+
+    $envelope = $bus->dispatch(new SmsNotification('Your order has shipped!'));
+
+    if (null !== $envelope->last(SentToFailureTransportStamp::class)) {
+        // the message was not handled; this stamp describes the error
+        $errorDetails = $envelope->last(ErrorDetailsStamp::class);
+        // ...
+    }
+
+Messages dispatched with the
+:class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`
+during a failed attempt are discarded, so they are not handled after a later
+successful attempt or when the message is sent to the failure transport.
+
+The ``WorkerMessageFailedEvent`` is only dispatched by workers. For every
+failed attempt, the ``sync`` transport dispatches a
+:class:`Symfony\\Component\\Messenger\\Event\\SyncMessageFailedEvent`
+instead (even when these options are disabled), so listeners that monitor
+failures must listen to both events. The ``willRetry()`` method of
+``SyncMessageFailedEvent`` tells if the message will be handled again. A
+:class:`Symfony\\Component\\Messenger\\Event\\SyncMessageRetryingEvent` is
+dispatched right before each new attempt.
+
+.. versionadded:: 8.2
+
+    The ``retry`` and ``failure_transport`` options of the ``sync`` transport
+    and the ``SyncMessageFailedEvent`` and ``SyncMessageRetryingEvent`` events
+    were introduced in Symfony 8.2.
+
 Creating your Own Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1323,8 +1440,6 @@ and pass an instance to the ``Worker`` constructor::
         // ... implement the remaining interface methods
     }
 
-.. _messenger-retries-failures:
-
 Rate Limited Transport
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1365,6 +1480,8 @@ by setting its ``rate_limiter`` option:
     When a rate limiter is configured on a transport, it will block the whole
     worker when the limit is hit. You should make sure you configure a dedicated
     worker for a rate limited transport to avoid blocking other transports.
+
+.. _messenger-retries-failures:
 
 Retries & Failures
 ------------------
@@ -1468,6 +1585,8 @@ the message will not be retried.
     Messages that will not be retried, will still show up in the configured failure transport.
     If you want to avoid that, consider handling the error yourself and let the handler
     successfully end.
+
+.. _messenger-forcing-retrying:
 
 Forcing Retrying
 ~~~~~~~~~~~~~~~~
@@ -4910,6 +5029,8 @@ of the process. For each, the event class is the event name:
 * :class:`Symfony\\Component\\Messenger\\Event\\HandlerFailureEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\HandlerStartingEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\HandlerSuccessEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\SyncMessageFailedEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\SyncMessageRetryingEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageFailedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageHandledEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageReceivedEvent`
