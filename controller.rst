@@ -325,9 +325,7 @@ HTTP status code::
 You can also create an HTTP exception from a status code using the
 :method:`Symfony\\Component\\HttpKernel\\Exception\\HttpException::fromStatusCode`
 method. When a specialized exception exists for the given status code, it is
-returned:
-
-.. code-block:: php
+returned::
 
     use Symfony\Component\HttpKernel\Exception\HttpException;
 
