@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by kbond at 2026-09-16T16:37:17Z
+
+One note on framing, since it touches the section #23040 adds. Running the firewall's user checker on refresh is what most applications want: the rule already lives in the checker, where it also applies at login, and `user_checker_on_refresh: true` is the whole opt-in.
+
+So "Adding Checks to the User Comparison" now leads with the option, and keeps a `CheckRefreshedUserEvent` listener as the exception - a rule that doesn't belong in a user checker, or a checker that isn't safe to run on every request.
