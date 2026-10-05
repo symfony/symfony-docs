@@ -2551,11 +2551,11 @@ queue so that the routing can target each of them:
         framework:
             messenger:
                 transports:
-                    invoices: 'mongodb://mongodb.example.com/app?queue_name=invoices'
+                    notifications: 'mongodb://mongodb.example.com/app?queue_name=notifications'
                     emails: 'mongodb://mongodb.example.com/app?queue_name=emails'
                 routing:
-                    'App\Message\GenerateInvoice': invoices
-                    'App\Message\SendEmail': emails
+                    'App\Message\SmsNotification': notifications
+                    'App\Message\NewUserWelcomeEmail': emails
 
     .. code-block:: xml
 
@@ -2571,12 +2571,12 @@ queue so that the routing can target each of them:
 
             <framework:config>
                 <framework:messenger>
-                    <framework:transport name="invoices" dsn="mongodb://mongodb.example.com/app?queue_name=invoices"/>
+                    <framework:transport name="notifications" dsn="mongodb://mongodb.example.com/app?queue_name=notifications"/>
                     <framework:transport name="emails" dsn="mongodb://mongodb.example.com/app?queue_name=emails"/>
-                    <framework:routing message-class="App\Message\GenerateInvoice">
-                        <framework:sender service="invoices"/>
+                    <framework:routing message-class="App\Message\SmsNotification">
+                        <framework:sender service="notifications"/>
                     </framework:routing>
-                    <framework:routing message-class="App\Message\SendEmail">
+                    <framework:routing message-class="App\Message\NewUserWelcomeEmail">
                         <framework:sender service="emails"/>
                     </framework:routing>
                 </framework:messenger>
@@ -2586,20 +2586,20 @@ queue so that the routing can target each of them:
     .. code-block:: php
 
         // config/packages/messenger.php
-        use App\Message\GenerateInvoice;
-        use App\Message\SendEmail;
+        use App\Message\SmsNotification;
+        use App\Message\NewUserWelcomeEmail;
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
-            $messenger->transport('invoices')
-                ->dsn('mongodb://mongodb.example.com/app?queue_name=invoices');
+            $messenger->transport('notifications')
+                ->dsn('mongodb://mongodb.example.com/app?queue_name=notifications');
             $messenger->transport('emails')
                 ->dsn('mongodb://mongodb.example.com/app?queue_name=emails');
 
-            $messenger->routing(GenerateInvoice::class)->senders(['invoices']);
-            $messenger->routing(SendEmail::class)->senders(['emails']);
+            $messenger->routing(SmsNotification::class)->senders(['notifications']);
+            $messenger->routing(NewUserWelcomeEmail::class)->senders(['emails']);
         };
 
 Then, consume both queues with a single worker using the ``--queues`` option
@@ -2607,7 +2607,7 @@ Then, consume both queues with a single worker using the ``--queues`` option
 
 .. code-block:: terminal
 
-    $ php bin/console messenger:consume invoices --queues=invoices --queues=emails
+    $ php bin/console messenger:consume notifications --queues=notifications --queues=emails
 
 The worker looks for the next message of all the listed queues with one
 request to the server. Keep in mind that:
@@ -2617,7 +2617,7 @@ request to the server. Keep in mind that:
   priority between the queues;
 * a message that fails is retried in the queue it was received from;
 * the worker uses the settings of the transport named in the command (here,
-  ``invoices``) for all the queues, including its failure transport.
+  ``notifications``) for all the queues, including its failure transport.
 
 .. _messenger-redis-transport:
 
