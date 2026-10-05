@@ -2488,6 +2488,137 @@ and pass a number to specify the priority (default = ``1024``; lower numbers mea
         new BeanstalkdPriorityStamp(0),
     ]);
 
+.. _messenger-mongodb-transport:
+
+MongoDB Transport
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The MongoDB transport was introduced in Symfony 8.2.
+
+The MongoDB transport stores messages in a MongoDB collection. Install it by
+running:
+
+.. code-block:: terminal
+
+    $ composer require symfony/mongodb-messenger
+
+The MongoDB transport DSN may look like this:
+
+.. code-block:: env
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=mongodb://user:pass@mongodb1.example.com:27017/app?collection_name=messenger_messages&queue_name=default
+
+The transport has a number of options, set in the DSN query string or in the
+``options`` key of the transport configuration:
+
+``database`` (default: the path of the DSN)
+    The name of the database.
+
+``collection_name`` (default: ``messenger_messages``)
+    The name of the collection storing the messages.
+
+``queue_name`` (default: ``default``)
+    The name of the queue the transport sends messages to.
+
+``redeliver_timeout`` (default: ``3600``)
+    The time in seconds after which a message claimed by a worker that
+    stopped unexpectedly is delivered again.
+
+Any other query parameter is passed to the MongoDB driver as a
+`connection string option`_.
+
+Listening to Several Queues
+...........................
+
+.. versionadded:: 8.2
+
+    The support for several queues in a single request was introduced in
+    Symfony 8.2.
+
+All the queues of a MongoDB transport live in the same collection, and
+the queue name is a field of the message document. A transport sends to the
+single queue named by its ``queue_name`` option. Declare one transport per
+queue so that the routing can target each of them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    invoices: 'mongodb://mongodb.example.com/app?queue_name=invoices'
+                    emails: 'mongodb://mongodb.example.com/app?queue_name=emails'
+                routing:
+                    'App\Message\GenerateInvoice': invoices
+                    'App\Message\SendEmail': emails
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="invoices" dsn="mongodb://mongodb.example.com/app?queue_name=invoices"/>
+                    <framework:transport name="emails" dsn="mongodb://mongodb.example.com/app?queue_name=emails"/>
+                    <framework:routing message-class="App\Message\GenerateInvoice">
+                        <framework:sender service="invoices"/>
+                    </framework:routing>
+                    <framework:routing message-class="App\Message\SendEmail">
+                        <framework:sender service="emails"/>
+                    </framework:routing>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use App\Message\GenerateInvoice;
+        use App\Message\SendEmail;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('invoices')
+                ->dsn('mongodb://mongodb.example.com/app?queue_name=invoices');
+            $messenger->transport('emails')
+                ->dsn('mongodb://mongodb.example.com/app?queue_name=emails');
+
+            $messenger->routing(GenerateInvoice::class)->senders(['invoices']);
+            $messenger->routing(SendEmail::class)->senders(['emails']);
+        };
+
+Then, consume both queues with a single worker using the ``--queues`` option
+(see :ref:`messenger-limit-queues`):
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume invoices --queues=invoices --queues=emails
+
+The worker looks for the next message of all the listed queues with one
+request to the server. Keep in mind that:
+
+* the queues must be in the same collection of the same MongoDB cluster;
+* messages are delivered in the order of their availability date, without any
+  priority between the queues;
+* a message that fails is retried in the queue it was received from;
+* the worker uses the settings of the transport named in the command (here,
+  ``invoices``) for all the queues, including its failure transport.
+
 .. _messenger-redis-transport:
 
 Redis Transport
@@ -5509,5 +5640,6 @@ Learn more
 .. _`SSL context options`: https://php.net/context.ssl
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
 .. _`system attributes`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html#API_ReceiveMessage_RequestSyntax
+.. _`connection string option`: https://www.mongodb.com/docs/manual/reference/connection-string-options/
 .. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
 .. _`amphp/parallel`: https://github.com/amphp/parallel
