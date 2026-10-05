@@ -427,11 +427,19 @@ the rejection, report a metric or send an alert::
     This event is dispatched for observation only: it doesn't allow overriding
     the decision made by the rate limiter or the exception that will be thrown.
 
+:ref:`Login throttling <security-login-throttling>` also dispatches this event
+when it rejects a login attempt. In that case, ``getLimiterName()`` returns the
+ID of the rate limiter service used by the firewall
+(``security.login_throttling.<firewall name>.limiter`` by default, or the value
+of the ``limiter`` option if you define your own) and ``getKey()`` returns
+``null``. That's because the default login rate limiter combines two limits (one
+per IP address and another one per username and IP address), so no single key
+identifies the rejected attempt.
+
 .. note::
 
-    This event is only dispatched for rejections caused by the
-    ``#[RateLimit]`` attribute. Rejections coming from a rate limiter you
-    inject and consume manually don't dispatch it.
+    Rejections coming from a rate limiter you inject and consume manually
+    don't dispatch this event.
 
 .. _rate-limiter-service:
 
