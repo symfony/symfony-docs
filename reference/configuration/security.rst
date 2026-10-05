@@ -1410,8 +1410,9 @@ re_authentication_entry_point
 
 The ID of a service that implements
 :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\ReAuthenticationEntryPointInterface`.
-It asks authenticated users to authenticate again when they are denied the
-``IS_AUTHENTICATED_RECENTLY`` or ``IS_AUTHENTICATED_VERY_RECENTLY`` attribute.
+It asks authenticated users to authenticate again when a voter that denied
+the attribute requests it, as it happens for ``IS_AUTHENTICATED_RECENTLY`` and
+``IS_AUTHENTICATED_VERY_RECENTLY``.
 If this option is not set and the entry point of the firewall implements that
 interface (e.g. ``oidc_login``), the entry point is used instead. This option
 can't be used in `stateless`_ firewalls. Read more about it in
