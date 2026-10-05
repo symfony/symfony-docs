@@ -418,6 +418,7 @@ RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_D
 RabbitMQ UI   15672     ``RABBITMQ_MANAGEMENT_`` (only when the container also exposes port ``5672``)
 Elasticsearch 9200      ``ELASTICSEARCH_``
 Kibana        5601      ``KIBANA_``
+Meilisearch   7700      ``MEILISEARCH_`` (also exposes ``MEILISEARCH_API_KEY`` from the Docker ``MEILI_MASTER_KEY`` env var)
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
               27018
               27019
