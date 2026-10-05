@@ -52,6 +52,23 @@ you can create your own message sender::
         }
     }
 
+Sending Messages in Batches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When your transport can send several messages with one request, implement
+:class:`Symfony\\Component\\Messenger\\Transport\\Sender\\BatchSenderInterface`
+(which extends ``SenderInterface``). Its ``sendBatch()`` method receives all the
+messages of a :ref:`batch <messenger-batch-sending>` that go to your transport.
+Send them with as few requests as your transport allows and return the sent
+envelopes with the same keys. When only some messages were sent, throw a
+:class:`Symfony\\Component\\Messenger\\Exception\\BatchSendFailedException` that
+tells which ones were sent and which ones failed; any other exception means that
+none of them were sent.
+
+.. versionadded:: 8.2
+
+    The ``BatchSenderInterface`` interface was introduced in Symfony 8.2.
+
 Your own Receiver
 -----------------
 
