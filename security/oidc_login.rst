@@ -731,6 +731,11 @@ following keys:
     Sign a JWT assertion instead of sending the secret (see
     :ref:`oidc-login-jwt-assertion`).
 
+``tls_client_auth`` and ``self_signed_tls_client_auth``
+    Authenticate with the TLS certificate of the client (see
+    :ref:`oidc-login-tls-client-auth`). They don't take any parameter, so
+    ``client_authentication: tls_client_auth`` is the short form.
+
 ``none``
     Declares a public client: an application that can't keep a secret (e.g.
     a single-page, mobile or native application). It relies on PKCE to protect
@@ -740,8 +745,9 @@ following keys:
 ``id``
     The id of a service that implements a custom authentication method (see
     :ref:`oidc-login-custom-client-authentication`). Any string other than
-    ``none`` is the short form (e.g.
-    ``client_authentication: app.tls_client_auth``).
+    ``none``, ``tls_client_auth`` and ``self_signed_tls_client_auth`` is the
+    short form (e.g.
+    ``client_authentication: App\Security\KmsJwtAuthentication``).
 
 Use the method registered for your application in the provider. Providers list
 the methods they support in the ``token_endpoint_auth_methods_supported`` entry
@@ -987,30 +993,110 @@ assertion then names the token endpoint and has no ``typ`` header:
     you pass the ``OidcDiscovery`` object of the provider as the
     ``$discovery`` argument.
 
+.. _oidc-login-tls-client-auth:
+
+Authenticating with a TLS Certificate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With mutual TLS (`RFC 8705`_), the client authenticates with the certificate it
+presents in the TLS connection instead of a secret or a signed assertion.
+Define the certificate in the ``client_certificate`` option and pick the method
+that tells the provider how to verify it:
+
+* ``tls_client_auth``: the certificate is issued by a certificate authority
+  and the provider checks its subject against the one registered for the
+  client;
+* ``self_signed_tls_client_auth``: the certificate is self-signed and the
+  provider checks it against the certificates registered for the client (in
+  its ``jwks`` or ``jwks_uri``).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        client_certificate:
+                            # the paths of the PEM files of the certificate
+                            # and its private key
+                            certificate: '%env(OIDC_CLIENT_CERT_PATH)%'
+                            key: '%env(OIDC_CLIENT_KEY_PATH)%'
+                            # only needed if the private key is encrypted
+                            passphrase: '%env(OIDC_CLIENT_KEY_PASSPHRASE)%'
+                        client_authentication: tls_client_auth
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'client_certificate' => [
+                                // the paths of the PEM files of the certificate
+                                // and its private key
+                                'certificate' => '%env(OIDC_CLIENT_CERT_PATH)%',
+                                'key' => '%env(OIDC_CLIENT_KEY_PATH)%',
+                                // only needed if the private key is encrypted
+                                'passphrase' => '%env(OIDC_CLIENT_KEY_PASSPHRASE)%',
+                            ],
+                            'client_authentication' => 'tls_client_auth',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+If the same PEM file contains both the certificate and the private key, pass
+its path directly as the value of ``client_certificate``.
+
+The ``tls_client_auth`` and ``self_signed_tls_client_auth`` methods require
+the ``client_certificate`` option, but this option works with any other method
+too. For example, combine it with ``private_key_jwt`` to get access tokens
+bound to the certificate (`RFC 8705`_, Section 3).
+
+When a certificate is defined, the authenticator presents it in the token
+requests (including the ones that renew the access token) and in the UserInfo
+requests. If the provider lists other URLs for these endpoints in the
+``mtls_endpoint_aliases`` entry of its discovery document, those requests are
+sent to them. Aliases that can't be used safely (e.g. ``http://`` URLs) are
+rejected. The alias of the authorization endpoint is ignored, because the
+browser of the user, not your application, sends that request. The discovery
+and JWKS requests never present the certificate.
+
 .. _oidc-login-custom-client-authentication:
 
 Using Your Own Authentication Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To use a client authentication method not provided by Symfony (e.g. the
-``tls_client_auth`` method of `RFC 8705`_, Section 2), create a service that
-implements
+To use a client authentication method not provided by Symfony, or to
+authenticate in a way that the built-in methods don't support (e.g. signing the
+assertion with a key that never leaves a key management service), create a
+service that implements
 :class:`Symfony\\Component\\Security\\Http\\OAuth2\\ClientAuthentication\\ClientAuthenticationInterface`.
 Its ``authenticate()`` method receives the HttpClient options of the token
 request and returns them with the client authentication added. Its
 ``getMethod()`` method returns the name of the method as defined in
 `RFC 7591`_, Section 2::
 
-    // src/Security/TlsClientAuthentication.php
+    // src/Security/KmsJwtAuthentication.php
     namespace App\Security;
 
+    use App\Kms\AssertionSigner;
     use Symfony\Component\Security\Http\OAuth2\ClientAuthentication\ClientAuthenticationInterface;
 
-    final class TlsClientAuthentication implements ClientAuthenticationInterface
+    final class KmsJwtAuthentication implements ClientAuthenticationInterface
     {
         public function __construct(
-            private string $certificatePath,
-            private string $privateKeyPath,
+            private AssertionSigner $assertionSigner,
         ) {
         }
 
@@ -1019,18 +1105,18 @@ request and returns them with the client authentication added. Its
             string $tokenEndpoint,
             array $options,
         ): array {
-            // the TLS client certificate authenticates the client, which must
-            // also include its ID in the request body (RFC 8705, Section 2)
-            $options['body']['client_id'] = $clientId;
-            $options['local_cert'] = $this->certificatePath;
-            $options['local_pk'] = $this->privateKeyPath;
+            // the private key never leaves the KMS, which signs the assertion
+            $options['body']['client_assertion_type'] =
+                'urn:ietf:params:oauth:client-assertion-type:jwt-bearer';
+            $options['body']['client_assertion'] =
+                $this->assertionSigner->sign($clientId, $tokenEndpoint);
 
             return $options;
         }
 
         public function getMethod(): string
         {
-            return 'tls_client_auth';
+            return 'private_key_jwt';
         }
     }
 
@@ -1044,12 +1130,14 @@ request and returns them with the client authentication added. Its
                 main:
                     oidc_login:
                         # ...
-                        client_authentication: app.tls_client_auth
+                        client_authentication: App\Security\KmsJwtAuthentication
 
     .. code-block:: php
 
         // config/packages/security.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\KmsJwtAuthentication;
 
         return App::config([
             'security' => [
@@ -1057,7 +1145,7 @@ request and returns them with the client authentication added. Its
                     'main' => [
                         'oidc_login' => [
                             // ...
-                            'client_authentication' => 'app.tls_client_auth',
+                            'client_authentication' => KmsJwtAuthentication::class,
                         ],
                     ],
                 ],
@@ -1310,6 +1398,12 @@ instead, so its options apply to all requests, whatever their host:
     required by `RFC 6749`_, Section 2.3.1. The ``client_authentication``
     option only sends the credentials to the token endpoint, and in the format
     required by the specification.
+
+For the same reason, define the TLS client certificate in the
+``client_certificate`` option (see :ref:`oidc-login-tls-client-auth`) instead
+of the ``local_cert`` and ``local_pk`` options of this HTTP client. The
+requests that present the ``client_certificate`` ignore the ``local_cert``,
+``local_pk`` and ``passphrase`` options of the HTTP client.
 
 .. note::
 
@@ -1656,9 +1750,12 @@ Configuration Reference
     How the application authenticates at the token endpoint:
     ``client_secret_basic`` or ``client_secret_post`` (with the client secret),
     ``client_secret_jwt`` or ``private_key_jwt`` (with an assertion signed by
-    the client), ``none`` (for public clients) or ``id`` (with the id of a
-    service that implements ``ClientAuthenticationInterface``). Any string
-    value other than ``none`` is considered a service id.
+    the client), ``tls_client_auth`` or ``self_signed_tls_client_auth`` (with
+    the ``client_certificate`` option), ``none`` (for public clients) or ``id``
+    (with the id of a service that implements
+    ``ClientAuthenticationInterface``). Any string value other than ``none``,
+    ``tls_client_auth`` and ``self_signed_tls_client_auth`` is considered a
+    service id.
 
 ``client_authentication.client_secret_jwt.secret`` (**required**)
     The client secret used as the key of the HMAC that signs the assertion.
@@ -1689,6 +1786,21 @@ Configuration Reference
 ``client_authentication.private_key_jwt.audience`` (default: ``issuer``)
     What the assertion names as its audience: ``issuer`` (the issuer of the
     provider) or ``token_endpoint`` (for a provider that refuses the issuer).
+
+``client_certificate``
+    The TLS client certificate presented in the token and UserInfo requests.
+    Required by the ``tls_client_auth`` and ``self_signed_tls_client_auth``
+    methods. Passing a string sets ``client_certificate.certificate``.
+
+``client_certificate.certificate`` (**required**)
+    The path of the PEM file of the certificate.
+
+``client_certificate.key`` (default: ``null``)
+    The path of the PEM file of the private key, if the certificate file
+    doesn't contain it.
+
+``client_certificate.passphrase`` (default: ``null``)
+    The passphrase of the private key, if it's encrypted.
 
 ``http_client`` (default: ``http_client``)
     The id of the HTTP client used in all requests made to the provider
@@ -1795,7 +1907,7 @@ default handlers with your own services), and ``login_path``,
 .. _`RFC 7591`: https://datatracker.ietf.org/doc/html/rfc7591#section-2
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
 .. _`RFC 8176`: https://datatracker.ietf.org/doc/html/rfc8176
-.. _`RFC 8705`: https://datatracker.ietf.org/doc/html/rfc8705#section-2
+.. _`RFC 8705`: https://datatracker.ietf.org/doc/html/rfc8705
 .. _`RFC 9207`: https://datatracker.ietf.org/doc/html/rfc9207
 .. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
