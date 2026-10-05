@@ -188,9 +188,9 @@ This will print out ``/api``.
 
 .. warning::
 
-    By default, expressions can access all PHP constants via the ``constant()``
-    function. Be careful when exposing expressions to end users if your
-    application defines sensitive constants.
+    Before exposing expressions to end users, :ref:`restrict the constants
+    <expression-language-constants>` that the ``constant()`` and ``enum()``
+    functions can read.
 
 ``enum()`` function
 ~~~~~~~~~~~~~~~~~~~
