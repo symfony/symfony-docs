@@ -1272,13 +1272,52 @@ service into a closure::
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Hash\MessageHashGenerator;
         use App\Service\MessageGenerator;
 
         return App::config([
             'services' => [
                 MessageGenerator::class => [
                     'arguments' => [
-                        '$generateMessageHash' => closure('App\Hash\MessageHashGenerator'),
+                        '$generateMessageHash' => closure(
+                            service(MessageHashGenerator::class)
+                        ),
+                    ],
+                ],
+            ],
+        ]);
+
+If the service is not invokable, pass the service and the name of the method
+to call instead. For example, if ``MessageHashGenerator`` defines a ``hash()``
+method instead of ``__invoke()``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    $generateMessageHash: !closure
+                        - '@App\Hash\MessageHashGenerator'
+                        - 'hash'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Hash\MessageHashGenerator;
+        use App\Service\MessageGenerator;
+
+        return App::config([
+            'services' => [
+                MessageGenerator::class => [
+                    'arguments' => [
+                        '$generateMessageHash' => closure(
+                            [service(MessageHashGenerator::class), 'hash']
+                        ),
                     ],
                 ],
             ],
