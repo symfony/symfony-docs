@@ -7,8 +7,8 @@ The PHPUnit Bridge
 
 It comes with the following features:
 
-* Sets by default a consistent locale (``C``) for your tests (if you
-  create locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
+* Sets by default a consistent locale (``C``) for your tests (you can
+  :ref:`change this locale <phpunit-bridge-locale>` if needed);
 
 * Auto-register ``class_exists`` to load Doctrine annotations (when used);
 
@@ -437,6 +437,8 @@ Log Deprecations
 
 For turning the verbose output off and write it to a log file instead you can use
 ``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+
+.. _phpunit-bridge-locale:
 
 Setting The Locale For Tests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
