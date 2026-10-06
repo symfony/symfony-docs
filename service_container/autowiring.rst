@@ -1259,7 +1259,7 @@ service into a closure::
         use App\Hash\MessageHashGenerator;
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $container): void {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MessageGenerator::class)
@@ -1312,7 +1312,7 @@ method instead of ``__invoke()``:
         use App\Hash\MessageHashGenerator;
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $container): void {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MessageGenerator::class)
