@@ -1256,13 +1256,69 @@ service into a closure::
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Hash\MessageHashGenerator;
         use App\Service\MessageGenerator;
 
         return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MessageGenerator::class)
-                ->arg('$generateMessageHash', closure('App\Hash\MessageHashGenerator'))
+                ->arg('$generateMessageHash', closure(
+                    service(MessageHashGenerator::class)
+                ))
+            ;
+        };
+
+If the service is not invokable, pass the service and the name of the method
+to call instead. For example, if ``MessageHashGenerator`` defines a ``hash()``
+method instead of ``__invoke()``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    $generateMessageHash: !closure
+                        - '@App\Hash\MessageHashGenerator'
+                        - 'hash'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Service\MessageGenerator">
+                    <argument key="$generateMessageHash" type="closure">
+                        <argument type="service" id="App\Hash\MessageHashGenerator"/>
+                        <argument>hash</argument>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Hash\MessageHashGenerator;
+        use App\Service\MessageGenerator;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(MessageGenerator::class)
+                ->arg('$generateMessageHash', closure(
+                    [service(MessageHashGenerator::class), 'hash']
+                ))
             ;
         };
 
