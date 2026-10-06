@@ -1033,10 +1033,10 @@ the value is **not** read at compile time. Instead, Symfony replaces it with a
 unique placeholder. The actual environment variable is only resolved at runtime,
 when the service using it is instantiated.
 
-The exception are the options whose value is needed to build the container,
-such as the ``enabled`` option that turns a bundle feature on or off. Symfony
-reads their env vars while compiling the container, so you must clear the cache
-after changing them.
+The exceptions are the options whose value a bundle needs to build the
+container, such as the ``enabled`` option that turns a bundle feature on or off.
+Symfony reads their env vars while compiling the container, so you must clear
+the cache after changing them.
 
 **Bundle authors** must follow certain rules to ensure their bundle supports
 runtime env vars correctly:
@@ -1125,8 +1125,8 @@ Options Needing Their Value at Compile Time
 
 Some options can't be wired into the container as they are, because the
 extension needs their value to decide which services to register. Call
-``inlineEnvVars()`` on the node of such an option so the extension receives the
-value of its env vars instead of placeholders::
+``resolvesAtCompileTime()`` on the node of such an option so the extension
+receives the value of its env vars instead of placeholders::
 
     // src/AcmeSocialBundle.php
     namespace Acme\SocialBundle;
@@ -1144,7 +1144,7 @@ value of its env vars instead of placeholders::
                 ->children()
                     ->enumNode('storage')
                         ->values(['database', 'redis'])
-                        ->inlineEnvVars()
+                        ->resolvesAtCompileTime()
                     ->end()
                 ->end()
             ;
@@ -1170,14 +1170,14 @@ Array options also support this (e.g. with ``'%env(csv:TRUSTED_NETWORKS)%'``).
 However, Symfony reads their env vars in every configuration file that sets
 them, before merging, so it also reads the values that other files override.
 
-Symfony calls ``inlineEnvVars()`` on the ``enabled`` option created by
-``canBeEnabled()`` and ``canBeDisabled()``, so a config like
-``enabled: '%env(bool:PROFILER_ENABLED)%'`` turns the section on or off
+The ``canBeEnabled()`` and ``canBeDisabled()`` methods call
+``resolvesAtCompileTime()`` on the ``enabled`` option they create, so a config
+like ``enabled: '%env(bool:PROFILER_ENABLED)%'`` turns the section on or off
 depending on the value of the env var.
 
 .. versionadded:: 8.2
 
-    The ``inlineEnvVars()`` method was introduced in Symfony 8.2.
+    The ``resolvesAtCompileTime()`` method was introduced in Symfony 8.2.
 
 .. _configuration-accessing-parameters:
 
