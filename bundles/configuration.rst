@@ -410,6 +410,32 @@ have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getConfiguration>`
 method and return an instance of your ``Configuration``.
 
+.. _bundle-friendly-config-reference:
+
+Exporting the Configuration for IDEs
+------------------------------------
+
+When the container is compiled in debug mode, FrameworkBundle exports the
+configuration tree of every registered bundle into the ``config/reference.php``
+and ``config/schema.json`` files of the application. IDEs and static analyzers
+use them to autocomplete and validate the application configuration (see
+:ref:`configuration-ide-autocompletion`).
+
+.. versionadded:: 8.2
+
+    The ``config/schema.json`` file was introduced in Symfony 8.2.
+
+These files are meant for applications only, so your bundle must not rely on
+their contents.
+
+Both files are built from the configuration tree, so avoid changing the shape
+of the configuration in ``beforeNormalization()`` closures. The exports only
+include the input type checked by methods like ``ifString()`` or ``ifArray()``,
+while closures added with methods like ``always()`` or ``ifTrue()`` are ignored.
+In both cases, the alternative shapes that your closures accept are not
+described, so tools can't autocomplete or validate those options. Prefer
+defining explicit nodes so that the accepted structure appears in both files.
+
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case

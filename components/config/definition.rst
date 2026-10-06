@@ -988,3 +988,126 @@ Otherwise the result is a clean array of configuration values::
 
     When processing the configuration tree, the processor assumes that the top
     level array key (which matches the extension name) is already stripped off.
+
+Exporting the Configuration Tree
+--------------------------------
+
+Besides the human-readable formats printed by the ``config:dump-reference``
+command, the Config component can export a configuration tree into
+machine-readable formats that IDEs and static analyzers use to autocomplete and
+validate configuration.
+
+The following examples use this configuration tree::
+
+    use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+
+    $treeBuilder = new TreeBuilder('acme_social');
+    $treeBuilder->getRootNode()
+        ->children()
+            ->stringNode('client_id')
+                ->isRequired()
+            ->end()
+            ->booleanNode('enabled')
+                ->defaultTrue()
+            ->end()
+        ->end()
+    ;
+
+    $tree = $treeBuilder->buildTree();
+
+Both exports are built from the node definitions, so avoid changing the shape of
+the configuration in ``beforeNormalization()`` closures. The exports only
+include the input type checked by methods like ``ifString()`` or ``ifArray()``,
+while closures added with methods like ``always()`` or ``ifTrue()`` are ignored.
+In both cases, the alternative shapes that your closures accept are not
+described, so tools can't autocomplete or validate those options.
+
+Exporting PHP Array Shapes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\Config\\Definition\\ArrayShapeGenerator` class
+turns the configuration tree into a PHPDoc ``array{...}`` shape, which tools
+like PhpStorm, PHPStan or Psalm understand::
+
+    use Symfony\Component\Config\Definition\ArrayShapeGenerator;
+
+    echo ArrayShapeGenerator::generate($tree);
+
+The code above outputs the following:
+
+.. code-block:: text
+
+    array{
+     *     client_id?: string|\Symfony\Component\Config\Loader\ParamConfigurator,
+     *     enabled?: bool|\Symfony\Component\Config\Loader\ParamConfigurator, // Default: true
+     * }
+
+The generated shape is meant to be inserted into a PHPDoc block, so every line
+except the first one starts with `` * ``. Required options such as ``client_id``
+are also marked as optional when their parent array performs deep merging (the
+default behavior), because their values can be defined in different
+configuration files. In addition, scalar values accept a ``ParamConfigurator``
+object, so you can use the ``param()`` and ``env()`` functions to define them.
+
+FrameworkBundle uses this generator to build the ``config/reference.php`` file
+of Symfony applications (see :ref:`configuration-ide-autocompletion`).
+
+Exporting a JSON Schema
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``JsonSchemaDumper`` class was introduced in Symfony 8.2.
+
+The :class:`Symfony\\Component\\Config\\Definition\\Dumper\\JsonSchemaDumper`
+class turns the configuration tree into a `JSON Schema`_ (draft 2020-12). The
+schema is returned as a PHP array, so you can add other data to it before
+encoding it as JSON. Use the second argument of the ``dump()`` method to add
+extra keys to the root of the schema::
+
+    use Symfony\Component\Config\Definition\Dumper\JsonSchemaDumper;
+
+    $dumper = new JsonSchemaDumper();
+    $schema = $dumper->dump($tree, ['title' => 'Acme Social Configuration']);
+
+    echo json_encode($schema, \JSON_PRETTY_PRINT | \JSON_UNESCAPED_SLASHES);
+
+The code above outputs the following JSON Schema (the shared types defined in
+``$defs`` are shortened here for readability):
+
+.. code-block:: json
+
+    {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Acme Social Configuration",
+        "$defs": {
+            "types": {
+                "object_null": {
+                    "type": ["object", "null"]
+                },
+                "string_null": {
+                    "type": ["string", "null"]
+                },
+                "boolean": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "$ref": "#/$defs/types/object_null",
+        "properties": {
+            "client_id": {
+                "$ref": "#/$defs/types/string_null"
+            },
+            "enabled": {
+                "$ref": "#/$defs/types/boolean",
+                "default": true
+            }
+        },
+        "required": ["client_id"],
+        "additionalProperties": false
+    }
+
+FrameworkBundle uses this dumper to build the ``config/schema.json`` file of
+Symfony applications (see :ref:`configuration-ide-autocompletion`).
+
+.. _`JSON Schema`: https://json-schema.org/
