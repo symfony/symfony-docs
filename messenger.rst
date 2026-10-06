@@ -3702,14 +3702,70 @@ To enable message signing for your handler, set the ``sign`` option to ``true``:
 
 When signing is enabled:
 
-1. Messages are signed using an HMAC signature computed with your application's
-   secret key (``kernel.secret`` parameter).
+1. Messages are signed using an HMAC signature computed with the
+   ``kernel.secret`` parameter, or with the secret configured in the
+   :ref:`signing_secret <reference-messenger-serializer-signing-secret>`
+   option.
 2. The signature is added to the message headers (``Body-Sign`` and ``Sign-Algo``)
    when the message is sent to a transport.
 3. When the message is received and decoded, the signature is automatically verified.
 4. If the signature is missing or invalid, an
    :class:`Symfony\\Component\\Messenger\\Exception\\InvalidMessageSignatureException`
    is thrown, and the message will not be handled.
+
+.. _messenger-signing-secret-rotation:
+
+Rotating the Signing Secret
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A signed message is refused when no secret verifies its signature, including
+when it waits in a transport while the secret changes. To sign messages with
+another secret without refusing the ones already sent, list the new secret
+first and the previous one after it in the ``signing_secret`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                serializer:
+                    # the first secret signs new messages, all of them verify
+                    signing_secret:
+                        - '%env(MESSENGER_SIGNING_SECRET)%'
+                        - '%env(APP_SECRET)%'
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'serializer' => [
+                        // the first secret signs new messages, all of them verify
+                        'signing_secret' => [
+                            env('MESSENGER_SIGNING_SECRET'),
+                            env('APP_SECRET'),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Messages are signed again with the first secret each time they're retried.
+Remove the previous secret once the messages it signed have been consumed,
+including the ones in the failure transport.
+
+When several applications exchange messages through the same transports, add
+the new secret second in all of them first, so that they all accept it, and
+only then move it first.
+
+.. versionadded:: 8.2
+
+    The ``signing_secret`` option was introduced in Symfony 8.2.
 
 Pinging A Webservice
 --------------------

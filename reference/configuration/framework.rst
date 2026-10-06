@@ -3324,6 +3324,22 @@ default_serializer
 
 Service id to use as the default serializer for the transports.
 
+.. _reference-messenger-serializer-signing-secret:
+
+signing_secret
+""""""""""""""
+
+**type**: ``string`` | ``array`` **default**: ``[]``
+
+The secret used to :ref:`sign messages <messenger-message-signing>`. When it's
+empty, the ``kernel.secret`` parameter is used. Pass a list of secrets to
+:ref:`rotate the secret <messenger-signing-secret-rotation>`: the first one
+signs and all of them verify.
+
+.. versionadded:: 8.2
+
+    The ``signing_secret`` option was introduced in Symfony 8.2.
+
 symfony_serializer
 """"""""""""""""""
 
@@ -4181,9 +4197,12 @@ used to add more entropy to security related operations. Its value should
 be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
-In practice, Symfony uses this value for encrypting the cookies used
-in the :doc:`remember me functionality </security/remember_me>` and for
-creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
+In practice, Symfony uses this value by default to sign the cookies of the
+:doc:`remember me functionality </security/remember_me>`, the
+:doc:`login links </security/login_link>`, the
+:ref:`signed URIs <routing-signing-uris>` (e.g. when using
+:ref:`ESI (Edge Side Includes) <edge-side-includes>`) and the
+:ref:`signed Messenger messages <messenger-message-signing>`.
 That's why you should treat this value as if it were a sensitive credential and
 **never make it public**.
 
@@ -4195,12 +4214,23 @@ If ``APP_SECRET`` is not set but the ``SYMFONY_DECRYPTION_SECRET`` environment
 variable is available (used by the :doc:`secrets vault </configuration/secrets>`),
 the ``kernel.secret`` parameter is automatically derived from it. This means
 applications using the secrets vault don't need a separate ``APP_SECRET`` value.
+Rotating the vault keys then changes the ``kernel.secret`` parameter too.
 
-As with any other security-related parameter, it is a good practice to change
-this value from time to time. However, keep in mind that changing this value
-will invalidate all signed URIs and Remember Me cookies. That's why, after
-changing this value, you should regenerate the application cache and log
-out all the application users.
+Changing this value invalidates everything signed with it, and changes the
+values derived from it, such as the UUIDs returned by the ``Uuid47Transformer``
+service of the :doc:`UID component </components/uid>`. Keep it stable. To
+rotate the secret of a feature that signs data, use the option of that feature
+instead. These options accept a list of secrets: the first one signs and all of
+them verify:
+
+* :ref:`uri_signer.secret <reference-framework-uri-signer-secret>` for signed
+  URIs;
+* the :ref:`signing_secret <reference-messenger-serializer-signing-secret>`
+  option of the Messenger serializer for signed messages;
+* the ``secret`` option of the
+  :ref:`remember_me <reference-security-firewall-remember-me-secret>` and
+  :ref:`login_link <reference-security-firewall-login-link-secret>` firewall
+  settings.
 
 secrets
 ~~~~~~~
@@ -5179,6 +5209,36 @@ time_based_uuid_node
 **type**: ``string`` | ``integer`` **default**: ``null``
 
 The node to use for generating time-based UUIDs (e.g. ``'121212121212'``).
+
+uri_signer
+~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``uri_signer`` option was introduced in Symfony 8.2.
+
+Configures the ``uri_signer`` service used to
+:ref:`sign URIs <routing-signing-uris>`.
+
+expiration
+..........
+
+**type**: ``integer`` **default**: ``null``
+
+The expiration of signed URIs, in seconds, used when no expiration is passed to
+:method:`Symfony\\Component\\HttpFoundation\\UriSigner::sign`.
+
+.. _reference-framework-uri-signer-secret:
+
+secret
+......
+
+**type**: ``string`` | ``array`` **default**: ``[]``
+
+The secret used to sign URIs. When it's empty, the ``kernel.secret`` parameter
+is used. Pass a list of secrets to
+:ref:`rotate the secret <routing-signed-uris-secret-rotation>`: the first one
+signs and all of them verify.
 
 .. _reference-validation:
 
