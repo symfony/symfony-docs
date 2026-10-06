@@ -1334,6 +1334,61 @@ users are not logged out.
     provider would then revoke all the tokens of that user. The default session
     handler locks the session, so it doesn't have this problem.
 
+Injecting the Client of a Firewall
+----------------------------------
+
+Each firewall that uses ``oidc_login`` has its own
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Oidc\\OidcClientInterface`
+service, which sends the requests of your application to the provider (e.g. to
+exchange the authorization code or to renew the tokens). Inject it when you
+need to call other endpoints of the provider, such as revoking a token.
+
+To autowire it, type-hint the interface and name the argument after the
+firewall in camelCase followed by ``OidcClient`` (e.g. ``$mainOidcClient`` for
+the ``main`` firewall or ``$adminAreaOidcClient`` for the ``admin_area``
+firewall)::
+
+    // src/Security/TokenRevoker.php
+    namespace App\Security;
+
+    use Symfony\Component\Security\Http\Authenticator\Oidc\OidcClientInterface;
+
+    class TokenRevoker
+    {
+        public function __construct(
+            private OidcClientInterface $mainOidcClient,
+        ) {
+        }
+
+        public function revoke(string $refreshToken): void
+        {
+            // the first argument is the name of the endpoint in the discovery
+            // document of the provider; the client authenticates the request
+            // and adds the 'client_id' parameter to the body
+            $this->mainOidcClient->request('revocation_endpoint', [
+                'token' => $refreshToken,
+                'token_type_hint' => 'refresh_token',
+            ]);
+        }
+    }
+
+Alternatively, use the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target` attribute
+with the name of the firewall. In that case, the name of the argument doesn't
+matter::
+
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Component\Security\Http\Authenticator\Oidc\OidcClientInterface;
+
+    public function __construct(
+        #[Target('main')]
+        private OidcClientInterface $oidcClient,
+    ) {
+    }
+
+The interface can't be autowired without the name of the firewall, because an
+application can define several ``oidc_login`` firewalls.
+
 Logging Out
 -----------
 
