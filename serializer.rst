@@ -2823,6 +2823,102 @@ as the third argument of the attribute loader::
     ];
     $loader = new AttributeLoader(true, [], $discriminatorMapTypes);
 
+.. _serializer-generic-types:
+
+Deserializing Generic Types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for generic types during deserialization was introduced in
+    Symfony 8.2.
+
+Some classes hold values whose type changes from one usage to another, such as
+a paginated result or a wrapper around an API response. These classes use a
+``@template`` tag to declare a placeholder for that type::
+
+    // src/Model/Page.php
+    namespace App\Model;
+
+    /**
+     * @template T
+     */
+    class Page
+    {
+        /** @var list<T> */
+        public array $items = [];
+
+        public int $total = 0;
+    }
+
+Serializing these objects needs no extra configuration, because the serializer
+reads the type from the values themselves. Deserializing them does: the decoded
+data only contains arrays, so the serializer must know which class ``T`` stands
+for. Declare it in the PHPDoc of the property that holds the object::
+
+    // src/Model/Catalog.php
+    namespace App\Model;
+
+    class Catalog
+    {
+        /** @var Page<Product> */
+        public Page $products;
+    }
+
+The serializer then replaces ``T`` with ``Product`` in every property of
+``Page``::
+
+    $jsonData = '{"products":{"items":[{"name":"Wireless Mouse"}],"total":1}}';
+    $catalog = $serializer->deserialize($jsonData, Catalog::class, 'json');
+    // $catalog->products->items is a list of Product objects
+
+As with :ref:`array types <serializer-handling-arrays>`, the serializer reads
+generic types from PHPDoc, so you need to install the ``phpstan/phpdoc-parser``
+package.
+
+Templates are also resolved in nullable types, collections, unions and
+constructor arguments. Generic types can also be nested and can declare several
+templates::
+
+    // src/Model/Catalog.php
+    namespace App\Model;
+
+    class Catalog
+    {
+        // ...
+
+        /** @var ?Page<Product> */
+        public ?Page $discountedProducts = null;
+
+        /** @var list<Page<Product>> */
+        public array $archivedPages = [];
+
+        /** @var Page<Page<Product>> */
+        public Page $pagedProducts;
+
+        // Pair declares two templates (@template K and @template V)
+        /** @var Pair<Product, Customer> */
+        public Pair $bestSeller;
+    }
+
+When a property doesn't give a type for some template (e.g. ``Pair<Product>``
+or ``public Page $products;``), that template keeps the bound of its
+``@template`` tag (e.g. ``@template T of Product``). If the tag doesn't declare
+a bound, the serializer keeps the data as an array.
+
+The serializer can't resolve templates in these cases:
+
+* A class that binds the templates of its parent with ``@extends``, as in
+  ``/** @extends Page<Product> */ class ProductPage extends Page {}``. Declare
+  the generic type on the property instead.
+* Templates declared by the class that a
+  :ref:`discriminator map <serializer_interfaces-and-abstract-classes>` resolves
+  to. The property only gives types for the templates of its declared class, so
+  the templates added by the mapped class keep their bound.
+* The class passed to ``deserialize()``, because a class name can't include
+  generic types. Deserialize a wrapper class that declares the generic type on
+  one of its properties instead.
+
 .. _serializer-unwrapping-denormalizer:
 
 Deserializing Input Partially (Unwrapping)
