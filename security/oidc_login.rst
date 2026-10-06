@@ -1012,6 +1012,83 @@ request and returns them with the client authentication added. Its
 If ``getMethod()`` returns ``none``, the rules of public clients also apply to
 this service.
 
+.. _oidc-login-dpop:
+
+Binding Tokens to a Key (DPoP)
+------------------------------
+
+By default, the tokens issued by the provider are bearer tokens: anyone who
+steals one can use it. With DPoP (Demonstrating Proof of Possession, defined in
+`RFC 9449`_), the application signs a proof with its private key in each
+request to the provider, and the provider binds the tokens it issues to that
+key. A stolen token is useless without the key. `FAPI 2.0`_ accepts DPoP as an
+alternative to mutual TLS to bind the tokens.
+
+Set the ``dpop`` option to enable it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        dpop:
+                            key: '%env(OIDC_DPOP_KEY)%'
+                            algorithm: 'ES256'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'dpop' => [
+                                'key' => '%env(OIDC_DPOP_KEY)%',
+                                'algorithm' => 'ES256',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+``key`` is the JSON-encoded JWK of a private EC or RSA key (you can also pass
+this value directly as a string to ``dpop``). The key must match the
+``algorithm``, which defaults to ``ES256``: public keys and keys of another
+type or curve are rejected. Keep this key as secret as a client secret. You
+don't have to register it at the provider, because each proof includes the
+public key. The ``algorithm`` must be one of those listed by your provider in
+the ``dpop_signing_alg_values_supported`` entry of its discovery document.
+
+When DPoP is enabled, the requests to the token endpoint (including token
+refreshes) and to the UserInfo endpoint include a proof, and the access token
+is sent with the ``DPoP`` authorization scheme instead of ``Bearer``. The
+authorization request also includes the ``dpop_jkt`` parameter with the
+thumbprint of the key, so an attacker who steals the authorization code can't
+exchange it for tokens. The authenticator manages this parameter, so you can't
+set it in ``authorization_params``.
+
+.. warning::
+
+    Only enable ``dpop`` if your provider supports it. When it's enabled, the
+    authenticator rejects any token response whose ``token_type`` is not
+    ``DPoP``, because that means that the provider didn't bind the token. When
+    it's disabled, any ``token_type`` other than ``Bearer`` is rejected.
+
+.. note::
+
+    If your application uses the access token to call an API, that API also
+    expects a DPoP proof, which your application must create and sign itself.
+
 Verifying the ID Token Signature
 --------------------------------
 
@@ -1554,6 +1631,16 @@ Configuration Reference
     The id of the HTTP client used in all requests made to the provider
     (discovery document, JWKS, token endpoint and UserInfo endpoint).
 
+``dpop.key`` (**required** when ``dpop`` is set)
+    The JSON-encoded JWK of the private key used to sign the DPoP proofs and
+    to which the provider binds the tokens (see :ref:`oidc-login-dpop`).
+    Passing a string to ``dpop`` sets this value.
+
+``dpop.algorithm`` (default: ``ES256``)
+    The algorithm used to sign the DPoP proofs: ``ES256``, ``ES384``,
+    ``ES512``, ``PS256``, ``PS384``, ``PS512``, ``RS256``, ``RS384`` or
+    ``RS512``.
+
 ``scope`` (default: ``['openid']``)
     The scopes of the authorization request, as a list or as a space-separated
     string.
@@ -1646,6 +1733,7 @@ default handlers with your own services), and ``login_path``,
 .. _`RFC 8176`: https://datatracker.ietf.org/doc/html/rfc8176
 .. _`RFC 8705`: https://datatracker.ietf.org/doc/html/rfc8705#section-2
 .. _`RFC 9207`: https://datatracker.ietf.org/doc/html/rfc9207
+.. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
 .. _`OIDC Core 1.0, Section 9`: https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication
 .. _`OIDC Core 1.0, Section 5.3.2`: https://openid.net/specs/openid-connect-core-1_0.html#UserInfoResponse
