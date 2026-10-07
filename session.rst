@@ -117,6 +117,76 @@ sessions for anonymous users, you must *completely* avoid accessing the session.
     Sessions will also be started when using features that rely on them internally,
     such as the :ref:`stateful CSRF protection in forms <csrf-protection-forms>`.
 
+.. _session-isolate-attributes:
+
+Saving Changes to Objects Stored in the Session
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHP serializes the whole ``$_SESSION`` super-global when it writes the session.
+As a result, if you change an object read from the session, the change is saved
+even if you don't call ``set()``::
+
+    // the change is saved, even though set() is not called
+    $session->get('cart')->add($item);
+
+.. deprecated:: 8.2
+
+    Saving session attributes changed without calling ``set()`` was deprecated
+    in Symfony 8.2.
+
+In the next major version, ``get()`` will return copies of the stored values and
+only the values passed to ``set()`` will be saved. To prepare for this change,
+always call ``set()`` after changing a value::
+
+    $cart = $session->get('cart');
+    $cart->add($item);
+    $session->set('cart', $cart);
+
+When ``kernel.debug`` is enabled, Symfony triggers a deprecation each time it
+saves the session with an attribute (including objects nested in arrays) that
+changed after it was read or set without calling ``set()`` again.
+
+To opt in to the new behavior now, enable the
+:ref:`framework.session.isolate_attributes <reference-session-isolate-attributes>`
+option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                isolate_attributes: true
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'session' => [
+                    'isolate_attributes' => true,
+                ],
+            ],
+        ]);
+
+With this option, ``get()`` returns a deep clone of the stored value (the same
+clone on each call during the request) and ``set()`` stores a deep clone of the
+value you pass.
+
+If you create the
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
+class yourself, pass ``true`` as its second argument to get the same behavior.
+When this argument is ``false``, pass ``true`` as the third argument to enable
+the deprecation reports.
+
+.. note::
+
+    Symfony doesn't check custom session bags, or sessions saved without calling
+    ``Session::save()``, for changes made without ``set()``.
+
 .. _flash-messages:
 
 Flash Messages
