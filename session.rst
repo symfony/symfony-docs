@@ -117,6 +117,89 @@ sessions for anonymous users, you must *completely* avoid accessing the session.
     Sessions will also be started when using features that rely on them internally,
     such as the :ref:`stateful CSRF protection in forms <csrf-protection-forms>`.
 
+.. _session-isolate-attributes:
+
+Saving Changes to Objects Stored in the Session
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHP serializes the whole ``$_SESSION`` super-global when it writes the session.
+As a result, changing an object read from the session saves the change, even if
+you never call ``set()``::
+
+    // the change is saved, even though set() is not called
+    $session->get('cart')->add($item);
+
+.. deprecated:: 8.2
+
+    Saving changes made to a session attribute without calling ``set()``
+    afterwards is deprecated since Symfony 8.2. In Symfony 9.0, objects read
+    from the session will be copies and only the values passed to ``set()``
+    will be saved.
+
+To prepare for this change, always call ``set()`` after changing a value::
+
+    $cart = $session->get('cart');
+    $cart->add($item);
+    $session->set('cart', $cart);
+
+When ``kernel.debug`` is enabled, Symfony triggers a deprecation each time the
+session is saved with an attribute (including objects nested in arrays) that
+changed since it was read or set without a new call to ``set()``. This check
+doesn't run when debug mode is disabled.
+
+To opt in to the Symfony 9.0 behavior right now, enable the
+:ref:`framework.session.isolate_attributes <reference-session-isolate-attributes>`
+option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                isolate_attributes: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:session isolate-attributes="true"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->session()
+                ->isolateAttributes(true)
+            ;
+        };
+
+With this option, ``get()`` returns a deep clone of the stored value (the same
+clone on each call during a request) and ``set()`` stores a deep clone of the
+value you pass.
+
+If you use the ``AttributeBag`` class directly, pass ``true`` as its second
+argument (``$isolate``) to get the same behavior.
+
+.. note::
+
+    Custom session bags and code that saves the session without going through
+    ``Session::save()`` are not checked for changes made without ``set()``.
+
 .. _flash-messages:
 
 Flash Messages

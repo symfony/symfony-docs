@@ -4756,6 +4756,22 @@ and also to configure the session handler with a DSN:
     * ``sqlite``
     * ``sqlite3``
 
+.. _reference-session-isolate-attributes:
+
+isolate_attributes
+..................
+
+.. versionadded:: 8.2
+
+    The ``isolate_attributes`` option was introduced in Symfony 8.2.
+
+**type**: ``boolean`` **default**: ``false``
+
+When set to ``true``, the values read from the session and the values passed to
+``set()`` are deep-cloned. This way, only the values you pass to ``set()`` are
+saved, which will be the only behavior in Symfony 9.0. Read more about it in
+:ref:`session-isolate-attributes`.
+
 .. _reference-session-metadata-update-threshold:
 
 metadata_update_threshold
