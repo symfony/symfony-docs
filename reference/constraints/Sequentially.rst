@@ -131,6 +131,114 @@ You can validate each of these constraints sequentially to solve these issues:
             }
         }
 
+.. _reference-constraint-sequentially-conditional-cascading:
+
+Conditionally Cascading Validation
+----------------------------------
+
+.. versionadded:: 8.2
+
+    Support for the ``Valid`` constraint inside ``Sequentially`` was introduced
+    in Symfony 8.2.
+
+When a property can hold values of different types (e.g. user input that can be
+a string or an object), you may want to validate the nested object only after
+checking that it's an instance of the expected class. Applying the
+:doc:`Type </reference/constraints/Type>` and
+:doc:`Valid </reference/constraints/Valid>` constraints separately doesn't
+work, because both always run. Instead, add ``Valid`` after ``Type`` inside
+``Sequentially``:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Model/ImportRequest.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class ImportRequest
+        {
+            #[Assert\Sequentially([
+                new Assert\Type(ResourceInput::class),
+                new Assert\Valid(),
+            ])]
+            public mixed $resource = null;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Model\ImportRequest:
+            properties:
+                resource:
+                    - Sequentially:
+                        constraints:
+                            - Type: App\Model\ResourceInput
+                            - Valid: ~
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Model\ImportRequest">
+                <property name="resource">
+                    <constraint name="Sequentially">
+                        <option name="constraints">
+                            <constraint name="Type">
+                                <option name="type">App\Model\ResourceInput</option>
+                            </constraint>
+                            <constraint name="Valid"/>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Model/ImportRequest.php
+        namespace App\Model;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class ImportRequest
+        {
+            public mixed $resource = null;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint(
+                    'resource',
+                    new Assert\Sequentially([
+                        new Assert\Type(ResourceInput::class),
+                        new Assert\Valid(),
+                    ]),
+                );
+            }
+        }
+
+If ``$resource`` is not a ``ResourceInput`` object, ``Type`` adds a violation
+and the sequence stops. Otherwise, ``Valid`` validates the constraints of that
+object. Always add ``Valid`` after the constraints that check the value type;
+if ``Valid`` runs first on a scalar value, an exception is thrown.
+
+The nested ``Valid`` constraint can't define the ``groups`` option. Define it
+in ``Sequentially`` instead. These groups are also the ones used to validate
+the nested object. For example, with ``groups: ['import']``, only the
+``import`` constraints of the nested object run; add ``Default`` to that list
+to also run its ``Default`` constraints.
+
+``Valid`` can't be used directly inside other composite constraints (such as
+``All`` or ``AtLeastOneOf``). Instead, wrap it in a ``Sequentially`` constraint
+and add that to the other composite constraint.
+
 Options
 -------
 

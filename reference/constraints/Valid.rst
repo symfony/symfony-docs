@@ -243,6 +243,9 @@ the validation of the ``Address`` fields failed.
 
     If you also want to validate that the ``address`` property is an instance of
     the ``App\Entity\Address`` class, add the :doc:`Type constraint </reference/constraints/Type>`.
+    If the property can hold values of different types, add ``Type`` and
+    ``Valid`` :ref:`inside the Sequentially constraint <reference-constraint-sequentially-conditional-cascading>`
+    to only validate the nested object when it has the expected type.
 
 Options
 -------
