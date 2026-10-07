@@ -1002,6 +1002,10 @@ Upon restart, it will recalculate the messages to be generated from that point o
 To illustrate, consider a recurring message set to be sent every 3 days.
 If a worker is restarted on day 2, the message will be sent 3 days from the restart, on day 5.
 
+The same happens to messages that a worker generated but didn't handle before
+stopping (e.g. when it reaches the ``--limit`` or ``--time-limit`` option of the
+``messenger:consume`` command): the next worker skips them.
+
 While this behavior may not necessarily pose a problem, there is a possibility that it may not align with what you are seeking.
 
 That's why the scheduler allows you to remember the last execution date of a message
@@ -1078,6 +1082,68 @@ once::
     if the active one stops. Running more workers gives you high availability,
     not more throughput. To scale the processing of your tasks, dispatch them
     to a Messenger transport as explained below.
+
+Schedules built from the ``#[AsCronTask]`` and ``#[AsPeriodicTask]``
+attributes have no provider where you can call these methods. Configure them
+with the ``schedules`` option instead, using the schedule name as the key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/scheduler.yaml
+        framework:
+            scheduler:
+                schedules:
+                    default:
+                        # stores the state in the "cache.scheduler" pool and,
+                        # when the lock is enabled, locks the schedule with
+                        # the "lock.factory" service
+                        stateful: true
+
+                        # use these options to store the state and lock the
+                        # schedule with other services
+                        # cache_pool: cache.app
+                        # lock_factory: app.lock.factory
+
+                        # runs each missed task only once, instead of
+                        # once per missed run
+                        process_only_last_missed_run: true
+
+    .. code-block:: php
+
+        // config/packages/scheduler.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'scheduler' => [
+                    'schedules' => [
+                        'default' => [
+                            // stores the state in the "cache.scheduler" pool and,
+                            // when the lock is enabled, locks the schedule with
+                            // the "lock.factory" service
+                            'stateful' => true,
+
+                            // use these options to store the state and lock the
+                            // schedule with other services
+                            // 'cache_pool' => 'cache.app',
+                            // 'lock_factory' => 'app.lock.factory',
+
+                            // runs each missed task only once, instead of
+                            // once per missed run
+                            'process_only_last_missed_run' => true,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+These options also apply to the schedules created by providers.
+
+.. versionadded:: 8.2
+
+    The ``schedules`` option was introduced in Symfony 8.2.
 
 .. tip::
 
