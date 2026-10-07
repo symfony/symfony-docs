@@ -180,13 +180,15 @@ option:
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->session()
-                ->isolateAttributes(true)
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'session' => [
+                    'isolate_attributes' => true,
+                ],
+            ],
+        ]);
 
 With this option, ``get()`` returns a deep clone of the stored value (the same
 clone on each call during a request) and ``set()`` stores a deep clone of the
