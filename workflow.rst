@@ -45,6 +45,37 @@ follows:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Workflow/BlogPublishingWorkflow.php
+        namespace App\Workflow;
+
+        use App\Entity\BlogPost;
+        use Symfony\Component\Workflow\Attribute\AsWorkflow;
+        use Symfony\Component\Workflow\Attribute\Transition;
+        use Symfony\Component\Workflow\WorkflowType;
+
+        // the name of the workflow is derived from the class: "blog_publishing"
+        #[AsWorkflow(
+            type: WorkflowType::Workflow, // or WorkflowType::StateMachine (default)
+            supports: BlogPost::class,
+            initialMarking: 'draft',
+            markingProperty: 'currentPlace',
+            auditTrail: true,
+        )]
+        class BlogPublishingWorkflow
+        {
+            // the places are inferred from the transitions
+            #[Transition(from: 'draft', to: 'reviewed')]
+            public const TO_REVIEW = 'to_review';
+
+            #[Transition(from: 'reviewed', to: 'published')]
+            public const PUBLISH = 'publish';
+
+            #[Transition(from: 'reviewed', to: 'rejected')]
+            public const REJECT = 'reject';
+        }
+
     .. code-block:: yaml
 
         # config/packages/workflow.yaml
@@ -310,6 +341,106 @@ method::
 
     // initiate workflow
     $workflow->getMarking($post);
+
+.. _workflow-attributes:
+
+Defining Workflows with PHP Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``#[AsWorkflow]``, ``#[Transition]`` and ``#[Place]`` attributes and the
+    ``WorkflowTrait`` were introduced in Symfony 8.2.
+
+The ``#[AsWorkflow]`` attribute defines a workflow on a class of your
+application, so that the transitions are constants your code can reference
+instead of strings. The class is a regular service: it must live in a
+directory loaded by your service configuration (such as ``src/``). The
+attribute takes the options of the workflow configuration as arguments
+(``supports``, ``initialMarking``, ``metadata``, etc.) and derives the name of
+the workflow from the class name, unless you set its ``name`` argument.
+
+Each ``#[Transition]`` attribute decorates a constant whose value is the name
+of the transition. The places are inferred from the transitions, and the
+``#[Place]`` attribute defines a place that no transition uses or attaches
+metadata to a place::
+
+    // src/Workflow/BlogPublishingWorkflow.php
+    namespace App\Workflow;
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Attribute\AsWorkflow;
+    use Symfony\Component\Workflow\Attribute\Place;
+    use Symfony\Component\Workflow\Attribute\Transition;
+
+    #[AsWorkflow(supports: BlogPost::class, markingProperty: 'currentPlace')]
+    class BlogPublishingWorkflow
+    {
+        #[Place(metadata: ['description' => 'The post waits for a review'])]
+        public const REVIEWED = 'reviewed';
+
+        #[Transition(from: 'draft', to: self::REVIEWED)]
+        public const TO_REVIEW = 'to_review';
+
+        // a transition of a state machine has one input and one output place:
+        // repeat the attribute to define several transitions with the same name
+        #[Transition(from: self::REVIEWED, to: 'published')]
+        #[Transition(from: 'rejected', to: 'published')]
+        public const PUBLISH = 'publish';
+    }
+
+The ``#[Transition]`` attribute also accepts the ``guard`` and ``metadata``
+options of the transitions. In a workflow (``type: WorkflowType::Workflow``), a
+transition with several places in its ``from`` or ``to`` argument consumes or
+produces all of them, and an :class:`Symfony\\Component\\Workflow\\Arc` sets
+the weight of a place (e.g. ``new Arc('prepare_leg', 4)``).
+
+The ``from``, ``to`` and ``initialMarking`` arguments also accept the cases of
+string-backed enums, whose ``#[Place]`` attributes define the metadata of the
+places::
+
+    // src/Enumeration/BlogPostStatus.php
+    namespace App\Enumeration;
+
+    use Symfony\Component\Workflow\Attribute\Place;
+
+    enum BlogPostStatus: string
+    {
+        #[Place(metadata: ['description' => 'The post waits for a review'])]
+        case Reviewed = 'reviewed';
+        case Published = 'published';
+        // ...
+    }
+
+Set the ``places`` argument to such an enum to make each of its cases a place
+and to reject places that are not one of its cases::
+
+    // src/Workflow/BlogPublishingWorkflow.php
+    namespace App\Workflow;
+
+    use App\Entity\BlogPost;
+    use App\Enumeration\BlogPostStatus;
+    use Symfony\Component\Workflow\Attribute\AsWorkflow;
+    use Symfony\Component\Workflow\Attribute\Transition;
+
+    #[AsWorkflow(
+        supports: BlogPost::class,
+        markingProperty: 'status',
+        places: BlogPostStatus::class,
+    )]
+    class BlogPublishingWorkflow
+    {
+        #[Transition(from: BlogPostStatus::Reviewed, to: BlogPostStatus::Published)]
+        public const PUBLISH = 'publish';
+
+        // ...
+    }
+
+.. note::
+
+    Without the ``supports`` and ``supportStrategy`` arguments, the workflow is
+    not added to the registry, so it is only available by injection and not
+    in the :ref:`Twig functions <workflow-usage-in-twig>`.
 
 .. _using-enums-as-workflow-places:
 
@@ -741,6 +872,65 @@ For example, to inject the ``blog_publishing`` workflow defined earlier::
     If it is a state machine type, use the state machine name as the target
     (e.g. ``#[Target('my_state_machine')]``).
 
+When you define the workflow with the
+:ref:`#[AsWorkflow] attribute <workflow-attributes>`, use the ``WorkflowTrait``
+in its class. The trait exposes the methods of the workflow, and the class can
+declare its own dependencies and methods::
+
+    // src/Workflow/BlogPublishingWorkflow.php
+    namespace App\Workflow;
+
+    use App\Entity\BlogPost;
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\Workflow\Attribute\AsWorkflow;
+    use Symfony\Component\Workflow\Attribute\Transition;
+    use Symfony\Component\Workflow\Marking;
+    use Symfony\Component\Workflow\WorkflowTrait;
+
+    #[AsWorkflow(supports: BlogPost::class, markingProperty: 'currentPlace')]
+    class BlogPublishingWorkflow
+    {
+        use WorkflowTrait;
+
+        #[Transition(from: 'reviewed', to: 'published')]
+        public const PUBLISH = 'publish';
+
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
+        }
+
+        public function publish(BlogPost $post): Marking
+        {
+            $this->logger->info('Publishing a blog post.');
+
+            return $this->apply($post, self::PUBLISH);
+        }
+    }
+
+Then inject the class wherever you need the workflow::
+
+    // src/Service/BlogPostPublisher.php
+    namespace App\Service;
+
+    use App\Entity\BlogPost;
+    use App\Workflow\BlogPublishingWorkflow;
+
+    class BlogPostPublisher
+    {
+        public function __construct(
+            private BlogPublishingWorkflow $workflow,
+        ) {
+        }
+
+        public function publishIfPossible(BlogPost $post): void
+        {
+            if ($this->workflow->can($post, BlogPublishingWorkflow::PUBLISH)) {
+                $this->workflow->publish($post);
+            }
+        }
+    }
+
 To get the enabled transition of a Workflow, you can use the
 :method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
 method.
@@ -997,6 +1187,33 @@ attributes::
 You may refer to the documentation about
 :ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
 for further use.
+
+In a class using the :ref:`#[AsWorkflow] attribute <workflow-attributes>`, the
+``workflow`` argument of these attributes defaults to the workflow of the
+class::
+
+    // src/Workflow/BlogPublishingWorkflow.php
+    namespace App\Workflow;
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Attribute\AsGuardListener;
+    use Symfony\Component\Workflow\Attribute\AsWorkflow;
+    use Symfony\Component\Workflow\Attribute\Transition;
+    use Symfony\Component\Workflow\Event\GuardEvent;
+
+    #[AsWorkflow(supports: BlogPost::class, markingProperty: 'currentPlace')]
+    class BlogPublishingWorkflow
+    {
+        #[Transition(from: 'reviewed', to: 'published')]
+        public const PUBLISH = 'publish';
+
+        // listens to the guard event of the "publish" transition of this workflow
+        #[AsGuardListener(transition: self::PUBLISH)]
+        public function guardPublish(GuardEvent $event): void
+        {
+            // ...
+        }
+    }
 
 .. _workflow-usage-guard-events:
 
@@ -1381,6 +1598,8 @@ it:
                 ],
             ],
         ]);
+
+.. _workflow-usage-in-twig:
 
 Usage in Twig
 -------------
