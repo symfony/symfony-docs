@@ -32,6 +32,9 @@ email for confirmation):
 In any case, the core team has the final decision on which issues are
 considered security vulnerabilities.
 
+If after 2 weeks you haven't received an answer, your report was probably
+not identified as a security issue. Feel free to open a PR as a bug fix.
+
 Security Bug Bounties
 ---------------------
 
