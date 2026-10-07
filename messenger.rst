@@ -2294,6 +2294,18 @@ The AMQP transport automatically adds a
 messages when they are sent and received. This stamp tracks the AMQP message
 ID, which improves logging context when messages fail and are retried.
 
+The AMQP transport also copies the ID of the ``MessageIdStamp`` to the
+``message_id`` property of the AMQP message and the ID of the
+``CorrelationStamp`` to its ``correlation_id`` property, which is where
+standard AMQP clients look for them. The attributes of an ``AmqpStamp`` take
+precedence, and the transport skips IDs longer than 255 bytes (the maximum
+length allowed by AMQP).
+
+.. versionadded:: 8.2
+
+    Copying the message ID and correlation ID to the AMQP message properties
+    was introduced in Symfony 8.2.
+
 The AMQP transport supports the ``--keepalive`` option by sending periodic
 traffic on the AMQP channel while a message is being handled. AMQP has no
 per-message deadline to extend, so the keepalive interval does not change a
@@ -2828,7 +2840,8 @@ External producers can either write that same ``message`` field or write
 
 The ``headers`` field is optional, but the default Messenger serializer needs a
 ``type`` header to know which message class it should create. If an external
-producer cannot send that header, use a custom serializer for the transport.
+producer cannot send that header, :ref:`set the type of its messages
+<messenger-interop-message-type>` in the serializer of the transport.
 
 When a stream entry contains both formats, the ``message`` field takes
 precedence and Messenger ignores the separate ``body`` and ``headers`` fields.
@@ -3375,10 +3388,12 @@ stamps store this kind of data.
 
 .. tip::
 
-    When sending/receiving messages to/from another application, you may need
-    more control over the serialization process. Using a custom serializer
-    provides that control. See `SymfonyCasts' message serializer tutorial`_ for
-    details.
+    When exchanging messages with other applications, use the
+    :ref:`interop serializer <messenger-interop>`. If you need more control
+    over the serialization process, use a custom serializer (see
+    `SymfonyCasts' message serializer tutorial`_).
+
+.. _messenger-serialized-type-name:
 
 Customizing the Type Header
 ...........................
@@ -3445,6 +3460,215 @@ Aliases apply to decoding only, so when you introduce a new type name, deploy
 the consumers before the producers. Also, a name you list as an alias cannot be
 the serialized type of another message class, since Symfony would not know
 which class to decode it into.
+
+.. _messenger-interop:
+
+Exchanging Messages with Other Applications
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``InteropSerializer`` was introduced in Symfony 8.2.
+
+A transport can connect your application to other applications. For example,
+a shop application publishes the orders it receives to RabbitMQ and an
+invoicing application consumes them, or a service written in another language
+sends messages for your workers to handle.
+
+The Symfony serializer sends the stamps of the envelope along with the message
+in ``X-Message-Stamp-*`` headers. These stamps describe how the sending
+application processes the message, and they can prevent the receiving
+application from handling it:
+
+* a stamp class that doesn't exist in the receiving application makes the
+  message fail to decode;
+* the ``BusNameStamp`` contains the name of the bus that dispatched the message,
+  and the worker of the receiving application fails when it has no bus with
+  that name.
+
+Use the ``messenger.transport.interop_serializer`` service as the serializer of
+the transports that you share with other applications. It sends messages
+without their stamps and ignores the stamps of the messages it receives:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        messenger:
+            transports:
+                orders:
+                    dsn: '%env(ORDERS_TRANSPORT_DSN)%'
+                    serializer: messenger.transport.interop_serializer
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'messenger' => [
+                'transports' => [
+                    'orders' => [
+                        'dsn' => env('ORDERS_TRANSPORT_DSN'),
+                        'serializer' => 'messenger.transport.interop_serializer',
+                    ],
+                ],
+            ],
+        ]);
+
+Configure this serializer in every Symfony application that uses the
+transport. The worker of the receiving application dispatches these messages
+to its default bus, or to the bus set with the ``--bus`` option of the
+``messenger:consume`` command.
+
+The only messages that keep their stamps are the ones that a worker sends back
+to the transport to retry them or sends to a failure transport, because
+Messenger needs those stamps to count retries.
+
+This service encodes messages with the
+``messenger.transport.symfony_serializer`` service, which stores the class of
+the message in the ``type`` header. The other application rarely has a class
+with the same name, so give the message classes of both applications the same
+:ref:`serialized type name <messenger-serialized-type-name>`.
+
+.. _messenger-interop-message-type:
+
+Receiving Messages without a ``type`` Header
+............................................
+
+Applications that don't use Messenger usually don't send a ``type`` header, and
+Messenger can't decode their messages without it. If the transport carries a
+single kind of message, define your own serializer service and pass it the type
+of these messages (either a class name or a serialized type name):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            app.orders_serializer:
+                class: Symfony\Component\Messenger\Transport\Serialization\InteropSerializer
+                arguments:
+                    - '@messenger.transport.symfony_serializer'
+                    # the type of the messages that have no "type" header
+                    - 'App\Message\OrderPlaced'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Message\OrderPlaced;
+        use Symfony\Component\Messenger\Transport\Serialization\InteropSerializer;
+
+        return App::config([
+            'services' => [
+                'app.orders_serializer' => [
+                    'class' => InteropSerializer::class,
+                    'arguments' => [
+                        service('messenger.transport.symfony_serializer'),
+                        // the type of the messages that have no "type" header
+                        OrderPlaced::class,
+                    ],
+                ],
+            ],
+        ]);
+
+Then, use ``app.orders_serializer`` as the ``serializer`` option of the
+transport.
+
+If the transport carries several kinds of messages, pass a closure that returns
+the type of each message instead. The closure receives the ``body`` and
+``headers`` of the encoded message, but not its ``extra`` key, because
+:ref:`message signatures <messenger-message-signing>` don't cover it::
+
+    // src/Messenger/OrderEventTypeResolver.php
+    namespace App\Messenger;
+
+    use App\Message\OrderCancelled;
+    use App\Message\OrderPlaced;
+
+    class OrderEventTypeResolver
+    {
+        public function __invoke(array $encodedEnvelope): ?string
+        {
+            // the producer names the event in the "event" property of the body
+            $payload = json_decode($encodedEnvelope['body'], true);
+
+            return match ($payload['event'] ?? null) {
+                'order_placed' => OrderPlaced::class,
+                'order_cancelled' => OrderCancelled::class,
+                // returning null makes the message fail to decode
+                default => null,
+            };
+        }
+    }
+
+In the service definition, replace the message type with
+``!closure '@App\Messenger\OrderEventTypeResolver'`` in YAML or with
+``closure(service(OrderEventTypeResolver::class))`` in PHP.
+
+.. _messenger-interop-stamp-headers:
+
+Sharing Stamps with Other Applications
+......................................
+
+The interop serializer sends the identity of each message as plain headers:
+the ``MessageIdStamp``, ``CorrelationStamp`` and ``CausationStamp`` are sent as
+the ``message_id``, ``correlation_id`` and ``causation_id`` headers (Messenger
+adds these stamps when you enable the ``identity_stamps`` option). The
+receiving application turns these headers back into stamps, so the message
+keeps its ID and stays in the same flow. Applications that don't use Messenger
+can read and set these headers too. The :ref:`AMQP transport
+<messenger-amqp-transport>` also copies the message ID and the correlation ID
+to the properties of the AMQP message.
+
+To share any other stamp, create a service that implements
+:class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\StampHeaderMapperInterface`.
+Thanks to :ref:`autoconfiguration <services-autoconfigure>`, the
+``messenger.transport.interop_serializer`` service uses it automatically::
+
+    // src/Messenger/TenantStampHeaderMapper.php
+    namespace App\Messenger;
+
+    use App\Messenger\Stamp\TenantStamp;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Transport\Serialization\StampHeaderMapperInterface;
+
+    class TenantStampHeaderMapper implements StampHeaderMapperInterface
+    {
+        public function toHeaders(Envelope $envelope): array
+        {
+            if (!$stamp = $envelope->last(TenantStamp::class)) {
+                return [];
+            }
+
+            return ['tenant_id' => $stamp->tenantId];
+        }
+
+        public function toStamps(array $headers): array
+        {
+            // the headers come from another application: check their values
+            if (!\is_string($tenantId = $headers['tenant_id'] ?? null)) {
+                return [];
+            }
+
+            return [new TenantStamp($tenantId)];
+        }
+    }
+
+A mapper never overrides the headers that the serializer writes itself, such as
+``type``. When the transport :ref:`signs its messages
+<messenger-message-signing>`, the signature also covers the headers added by
+mappers.
+
+A serializer service that you define yourself, like the ``app.orders_serializer``
+service shown above, only sends and reads the identity stamps. To also use
+your mappers, pass ``!tagged_iterator messenger.stamp_header_mapper`` (in YAML)
+or ``tagged_iterator('messenger.stamp_header_mapper')`` (in PHP) as its third
+argument.
 
 .. _messenger-claim-check:
 
@@ -3710,6 +3934,16 @@ When signing is enabled:
 4. If the signature is missing or invalid, an
    :class:`Symfony\\Component\\Messenger\\Exception\\InvalidMessageSignatureException`
    is thrown, and the message will not be handled.
+
+The signature covers the body of the message and every header that the
+serializer writes, except ``Content-Type``. When the signature is valid, the
+serializer only reads the signed headers, so it ignores any header added after
+the message was sent.
+
+.. versionadded:: 8.2
+
+    Signing every header that the serializer writes was introduced in Symfony
+    8.2.
 
 .. _messenger-transport-signing:
 
