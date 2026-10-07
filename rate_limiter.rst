@@ -320,9 +320,88 @@ stricter per-action limit::
         // ...
     }
 
+Symfony checks the ``#[RateLimit]`` attributes before resolving the controller
+arguments, so rejected requests don't run any
+:doc:`argument value resolver </controller/value_resolver>` (e.g. one that
+queries the database to get an entity). Symfony also checks them before other
+attributes such as ``#[IsGranted]``, even if you write those attributes above
+``#[RateLimit]``. For example, when ``#[IsGranted]`` denies access to a user
+without the required role, that request still counts toward the rate limit.
+
+The exception are limits whose ``key`` or
+:ref:`condition <rate-limiter-controller-condition>` is a closure or an
+expression that uses the ``args`` variable, because they need the controller
+arguments. Symfony checks those limits after resolving the arguments, in the
+same order as the attributes. For example, when ``#[IsGranted]`` is above
+``#[RateLimit]``, the requests that it denies don't count toward the rate
+limit. If a key or condition only needs a route parameter, read it from the
+request (e.g. ``request.attributes.get('id')``) instead of reading the related
+entity from ``args``, so Symfony can check the limit before resolving the
+arguments.
+
+.. versionadded:: 8.2
+
+    Checking the rate limits before resolving the controller arguments was
+    introduced in Symfony 8.2.
+
 For full control over the limiter logic,
 :ref:`inject the rate limiter as a service <rate-limiter-service>` in your
 controllers and services.
+
+.. _rate-limiter-controller-condition:
+
+Applying a Rate Limit Conditionally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``if`` argument was introduced in Symfony 8.2.
+
+Sometimes a limit must only apply to some requests, such as the ones made by
+anonymous users. The ``methods`` argument only filters requests by HTTP
+method, so use the ``if`` argument for any other condition. For example, use
+the ``anonymous_api`` and ``authenticated_api`` limiters configured earlier to
+give authenticated users a larger quota than anonymous users::
+
+    // src/Controller/ApiController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\ExpressionLanguage\Expression;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpKernel\Attribute\RateLimit;
+
+    class ApiController extends AbstractController
+    {
+        // requests that match none of the conditions aren't rate limited,
+        // so these two attributes use opposite conditions to cover all requests
+
+        // applies only to anonymous users
+        #[RateLimit('anonymous_api', if: new Expression('!is_authenticated()'))]
+        // applies only to authenticated users, with a separate quota per user
+        // (Symfony only evaluates the key when the condition is true, so
+        // current_user() always returns a user here)
+        #[RateLimit(
+            'authenticated_api',
+            key: new Expression('current_user().getUserIdentifier()'),
+            if: new Expression('is_authenticated()'),
+        )]
+        public function index(): JsonResponse
+        {
+            // ...
+        }
+    }
+
+Like ``key``, the ``if`` argument accepts an expression or a closure (with the
+same variables and arguments), but it must return a boolean. When it returns
+``false``, Symfony skips that limiter and the request doesn't consume any of
+its tokens.
+
+.. warning::
+
+    Don't base conditions on data sent by the client (e.g. the presence of a
+    header) because clients could then choose which limiter applies to them.
+    Use the security functions instead, which rely on the authenticated user.
 
 .. _rate-limiter-expose-headers:
 
