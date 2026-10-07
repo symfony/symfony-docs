@@ -4769,8 +4769,7 @@ isolate_attributes
 
 When set to ``true``, the values read from the session and the values passed to
 ``set()`` are deep-cloned. This way, only the values you pass to ``set()`` are
-saved, which will be the only behavior in Symfony 9.0. Read more about it in
-:ref:`session-isolate-attributes`.
+saved. Read more about it in :ref:`session-isolate-attributes`.
 
 .. _reference-session-metadata-update-threshold:
 

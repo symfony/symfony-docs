@@ -147,7 +147,7 @@ session is saved with an attribute (including objects nested in arrays) that
 changed since it was read or set without a new call to ``set()``. This check
 doesn't run when debug mode is disabled.
 
-To opt in to the Symfony 9.0 behavior right now, enable the
+To opt in to the new behavior right now, enable the
 :ref:`framework.session.isolate_attributes <reference-session-isolate-attributes>`
 option:
 
@@ -195,7 +195,8 @@ clone on each call during a request) and ``set()`` stores a deep clone of the
 value you pass.
 
 If you use the ``AttributeBag`` class directly, pass ``true`` as its second
-argument (``$isolate``) to get the same behavior.
+argument (``$isolate``) to get the same behavior. A third argument
+(``$debug``) enables the deprecation reports when ``$isolate`` is ``false``.
 
 .. note::
 
