@@ -865,6 +865,23 @@ internally. If your application runs on multiple hosts, configure the app cache
 to use a shared adapter (for example Redis) so that all web and worker processes
 use the same cache.
 
+Pass one or more transport names to stop only the workers that consume them:
+
+.. code-block:: terminal
+
+    # workers that consume other transports keep running
+    $ php bin/console messenger:stop-workers async
+
+To stop workers from your own code (e.g. after changing some data that workers
+load only once when they start), call the invokable
+:class:`Symfony\\Component\\Messenger\\WorkerRestarter` service. Read
+:ref:`how to modify a schedule <scheduler-modify-schedule>` for an example.
+
+.. versionadded:: 8.2
+
+    The option to stop only the workers of some transports and the
+    ``WorkerRestarter`` class were introduced in Symfony 8.2.
+
 .. note::
 
     In a Kubernetes environment, a rolling restart of the worker ``Deployment``

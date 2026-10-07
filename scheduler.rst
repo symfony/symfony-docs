@@ -607,6 +607,8 @@ under certain circumstances.
 This is why the ``Scheduler`` incorporates a mechanism to dynamically modify the
 schedule and consider all changes in real-time.
 
+.. _scheduler-modify-schedule:
+
 Strategies for Adding, Removing, and Modifying Entries within the Schedule
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -668,6 +670,11 @@ In your handler, you can check a condition and, if affirmative, access the
         }
     }
 
+These methods change the schedule kept in memory by the process that calls
+them, so they only have an effect in the worker that consumes the schedule. The
+handler above runs in that worker as long as its message isn't
+:ref:`routed to another transport <scheduler-messenger-routing>`.
+
 Nevertheless, this system may not be the most suitable for all scenarios. Also,
 the handler should ideally be designed to process the type of message it is
 intended for, without making decisions about adding or removing a new recurring
@@ -678,7 +685,48 @@ message aimed at deleting reports, it can be challenging to achieve within the
 handler. This is because the handler will no longer be called or executed once
 there are no more messages of that type.
 
-However, the Scheduler also features an event system that is integrated into a
+When the recurring messages come from data that changes outside the worker (for
+example, tasks edited by users in a form), read that data in the schedule
+provider and restart the workers of the schedule after each change. The new
+workers call the provider again and, if the schedule is
+:ref:`stateful <scheduler-stateful-schedules>`, they resume from the last run
+instead of starting over::
+
+    // src/Controller/TaskController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Messenger\WorkerRestarter;
+
+    class TaskController extends AbstractController
+    {
+        public function __construct(
+            private WorkerRestarter $workerRestarter,
+        ) {
+        }
+
+        public function save(): Response
+        {
+            // ... save the task in the database
+
+            // the workers of the "default" schedule (transport "scheduler_default")
+            // exit after handling their current message and the process
+            // manager (e.g. Supervisor) starts new ones with the updated schedule
+            ($this->workerRestarter)('scheduler_default');
+
+            // ...
+        }
+    }
+
+Run the ``messenger:stop-workers scheduler_default`` command to do the same
+from the command line.
+
+.. versionadded:: 8.2
+
+    The ``WorkerRestarter`` class was introduced in Symfony 8.2.
+
+The Scheduler also features an event system that is integrated into a
 Symfony full-stack application by grafting onto Symfony Messenger events. These
 events are dispatched through a listener, providing a convenient means to respond.
 
@@ -991,6 +1039,8 @@ recurring messages. You can narrow down the list to a specific schedule:
 
     The ``Next Run In`` column showing the time remaining until the next run
     was introduced in Symfony 8.2.
+
+.. _scheduler-stateful-schedules:
 
 Efficient Management With Symfony Scheduler
 -------------------------------------------
