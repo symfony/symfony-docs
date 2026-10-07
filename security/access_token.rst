@@ -1153,6 +1153,118 @@ The checked issuer must also be one of the values of the ``issuers`` option,
 written exactly as the discovery document announces it (including its trailing
 slash, if any).
 
+Accepting Multiple Audiences
+............................
+
+The ``audience`` option defines the identifier of your application (the
+resource server that tokens are issued for). If your application uses more
+than one identifier (e.g. because it's served under several domains), define
+all of them as a list:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oidc:
+                                algorithms: ['ES256', 'RS256']
+                                keyset: '{"keys":[{"kty":"...","k":"..."}]}'
+                                audience:
+                                    - 'https://api.example.com'
+                                    - 'https://admin.example.com'
+                                issuers: ['https://oidc.example.com']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'keyset' => '{"keys":[{"kty":"...","k":"..."}]}',
+                                    'audience' => [
+                                        'https://api.example.com',
+                                        'https://admin.example.com',
+                                    ],
+                                    'issuers' => ['https://oidc.example.com'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The token handler accepts a token when its ``aud`` claim contains at least one
+of the configured identifiers. As defined in `JSON Web Tokens (JWT)`_, this
+claim can be a single string or a list of strings; both formats are supported.
+
+You can also define the identifiers with an environment variable. Use the
+``json`` :doc:`env var processor </configuration/env_var_processors>` when
+the variable contains a list of identifiers:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            oidc:
+                                algorithms: ['ES256', 'RS256']
+                                keyset: '%env(OIDC_KEYSET)%'
+                                # OIDC_AUDIENCES contains a JSON list of identifiers
+                                audience: '%env(json:OIDC_AUDIENCES)%'
+                                # for a single identifier, don't use any processor
+                                # audience: '%env(OIDC_AUDIENCE)%'
+                                issuers: ['https://oidc.example.com']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => [
+                                'oidc' => [
+                                    'algorithms' => ['ES256', 'RS256'],
+                                    'keyset' => '%env(OIDC_KEYSET)%',
+                                    // OIDC_AUDIENCES contains a JSON list of identifiers
+                                    'audience' => '%env(json:OIDC_AUDIENCES)%',
+                                    // for a single identifier, don't use any processor
+                                    // 'audience' => '%env(OIDC_AUDIENCE)%',
+                                    'issuers' => ['https://oidc.example.com'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    Support for multiple audiences in the ``oidc`` token handler was
+    introduced in Symfony 8.2.
+
 .. _creating-a-oidc-token-from-the-command-line:
 
 Creating an OIDC token from the command line
