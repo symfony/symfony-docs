@@ -1824,6 +1824,8 @@ like:
             PropertyNormalizer::NORMALIZE_VISIBILITY => PropertyNormalizer::NORMALIZE_PUBLIC | PropertyNormalizer::NORMALIZE_PROTECTED,
         ]);
 
+.. _serializer-named-serializers:
+
 Named Serializers
 -----------------
 
@@ -1876,8 +1878,10 @@ the ``named_serializers`` option:
             ],
         ]);
 
-You can inject these different serializer instances
-using :ref:`named aliases <autowiring-multiple-implementations-same-type>`::
+Each named serializer is registered as a service whose ID is ``serializer.``
+followed by its name (e.g. ``serializer.api_client1``). You can inject these
+different serializer instances using
+:ref:`named aliases <autowiring-multiple-implementations-same-type>`::
 
     namespace App\Controller;
 

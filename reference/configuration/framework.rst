@@ -3327,6 +3327,20 @@ Service id to use as the default serializer for the transports.
 symfony_serializer
 """"""""""""""""""
 
+service
+^^^^^^^
+
+**type**: ``string`` **default**: ``null``
+
+The service ID of the serializer used by the
+``messenger.transport.symfony_serializer`` service (e.g. ``serializer.messages``
+for the :ref:`named serializer <serializer-named-serializers>` called
+``messages``). When ``null``, the ``serializer`` service is used.
+
+.. versionadded:: 8.2
+
+    The ``service`` option was introduced in Symfony 8.2.
+
 format
 ^^^^^^
 
@@ -4043,6 +4057,7 @@ Whether to enable or not the RemoteEvent support.
 
     For more details, see the :doc:`Webhook </webhook>`
     documentation.
+
 request
 ~~~~~~~
 
@@ -4092,6 +4107,41 @@ To configure a ``jsonp`` format:
                 ],
             ],
         ]);
+
+.. _reference-framework-request-serializer:
+
+serializer
+..........
+
+**type**: ``string`` **default**: ``null``
+
+The service ID of the serializer used by the ``#[MapRequestPayload]`` and
+``#[MapQueryString]`` attributes (e.g. ``serializer.api`` for the
+:ref:`named serializer <serializer-named-serializers>` called ``api``). When
+``null``, the ``serializer`` service is used.
+
+.. versionadded:: 8.2
+
+    The ``serializer`` option was introduced in Symfony 8.2.
+
+response
+~~~~~~~~
+
+.. _reference-framework-response-serializer:
+
+serializer
+..........
+
+**type**: ``string`` **default**: ``null``
+
+The service ID of the serializer used by the ``#[Serialize]`` attribute (e.g.
+``serializer.api`` for the
+:ref:`named serializer <serializer-named-serializers>` called ``api``). When
+``null``, the ``serializer`` service is used.
+
+.. versionadded:: 8.2
+
+    The ``serializer`` option was introduced in Symfony 8.2.
 
 router
 ~~~~~~

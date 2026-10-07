@@ -3373,6 +3373,47 @@ single-element lists as their only element and numbers and booleans as strings;
 empty lists and ``null`` become empty strings. Use the ``json`` format when your
 stamps store this kind of data.
 
+The ``messenger.transport.symfony_serializer`` service uses the default
+serializer of the application. To use a
+:ref:`named serializer <serializer-named-serializers>` instead, set its service
+ID in the ``service`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                serializer:
+                    default_serializer: messenger.transport.symfony_serializer
+                    symfony_serializer:
+                        # named serializer IDs are 'serializer.<name>'
+                        service: serializer.messages
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'serializer' => [
+                        'default_serializer' => 'messenger.transport.symfony_serializer',
+                        'symfony_serializer' => [
+                            // named serializer IDs are 'serializer.<name>'
+                            'service' => 'serializer.messages',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``symfony_serializer.service`` option was introduced in Symfony 8.2.
+
 .. tip::
 
     When sending/receiving messages to/from another application, you may need
