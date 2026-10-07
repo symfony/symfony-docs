@@ -102,6 +102,11 @@ ObjectMapper
 
 * :ref:`Map <object_mapper-with-attributes>`
 
+PropertyInfo
+~~~~~~~~~~~~
+
+* :ref:`WithAccessors <property-info-with-accessors>`
+
 RemoteEvent
 ~~~~~~~~~~~
 
@@ -136,6 +141,7 @@ Serializer
 
 * :ref:`Context <serializer-context>`
 * :ref:`DiscriminatorMap <serializer_interfaces-and-abstract-classes>`
+* :ref:`DiscriminatorMapType <serializer-extensible-discriminator-map>`
 * :ref:`ExtendsSerializationFor <serializer-extends-serialization-for>`
 * :ref:`Groups <serializer-groups-attribute>`
 * :ref:`Ignore <serializer_ignoring-attributes>`
