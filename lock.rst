@@ -334,7 +334,8 @@ The attribute also accepts these optional arguments:
     The number of seconds after which the lock expires, or ``null`` to use the
     TTL of the store (300 seconds by default in the stores that expire locks).
     Symfony doesn't refresh the lock while the controller runs, so set a TTL
-    longer than the time the controller takes to run.
+    longer than the time the controller takes to run, or
+    :ref:`refresh the lock from the controller <lock-controller-argument>`.
 
 ``blocking`` (default: ``false``)
     When ``true``, the request waits until the lock is released instead of
@@ -375,6 +376,52 @@ acquires those locks after resolving the arguments. If the key only needs a
 route parameter, read it from the request (e.g.
 ``request.attributes.get("id")``) instead of reading the related entity from
 ``args``.
+
+.. _lock-controller-argument:
+
+To refresh or release the lock from the controller, add an argument
+type-hinted with :class:`Symfony\\Component\\Lock\\LockInterface` or
+:class:`Symfony\\Component\\Lock\\SharedLockInterface`. Symfony injects the
+lock acquired by the ``#[Lock]`` attribute::
+
+    // src/Controller/CatalogController.php
+    namespace App\Controller;
+
+    use App\Catalog\CatalogImporter;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\Lock;
+    use Symfony\Component\Lock\LockInterface;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class CatalogController
+    {
+        #[Lock('catalog-import', ttl: 60)]
+        #[Route('/catalog/import', methods: ['POST'])]
+        public function import(
+            LockInterface $lock,
+            CatalogImporter $catalogImporter,
+        ): Response {
+            foreach ($catalogImporter->getBatches() as $batch) {
+                $catalogImporter->import($batch);
+                // restart the TTL so the lock doesn't expire during long imports
+                $lock->refresh();
+            }
+
+            // let other requests import the catalog while this one sends the report
+            $lock->release();
+            $catalogImporter->sendReport();
+
+            return new Response('Catalog imported');
+        }
+    }
+
+Symfony only injects the lock acquired by the current request. Make the
+argument nullable to get ``null`` when there is no such lock (e.g. in a
+sub-request that reuses the lock of its main request, or when the ``methods``
+option doesn't include the HTTP method of the request). When the request
+acquires several locks, Symfony can't tell which one to inject, so use a
+single ``#[Lock]`` attribute in the controllers that get their lock as an
+argument.
 
 When a request is rejected, Symfony throws a
 :class:`Symfony\\Component\\HttpKernel\\Exception\\ConcurrentRequestHttpException`.
