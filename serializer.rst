@@ -1110,6 +1110,60 @@ For nested classes, you have to add a PHPDoc type to the property, constructor o
     ``phpstan/phpdoc-parser`` and ``phpdocumentor/reflection-docblock``
     packages are installed (these are part of the ``symfony/serializer-pack``).
 
+Deserializing Into Collection Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Support for denormalizing into collection classes was introduced in
+    Symfony 8.2.
+
+Some models store lists of objects in a collection class (e.g. Doctrine's
+``ArrayCollection``) instead of a PHP array. When a constructor argument,
+setter or property is typed with a collection class, the Serializer
+denormalizes each element and then builds an instance of that class with them.
+As with arrays, define the type of the elements with a PHPDoc type::
+
+    // src/Model/UserGroup.php
+    namespace App\Model;
+
+    use Doctrine\Common\Collections\ArrayCollection;
+    use Doctrine\Common\Collections\Collection;
+
+    class UserGroup
+    {
+        /**
+         * @param Collection<int, Person> $members
+         */
+        public function __construct(
+            public Collection $members = new ArrayCollection(),
+        ) {
+        }
+    }
+
+The Serializer builds the collection depending on the declared type:
+
+* **Concrete classes** (e.g. ``ArrayCollection``): the Serializer instantiates
+  the class passing the array of elements as the first constructor argument.
+  All other constructor arguments must be optional.
+* **Interfaces** (e.g. ``Collection``): the Serializer delegates to a
+  denormalizer that supports the interface. The ``key_type`` and ``value_type``
+  context entries hold the types of the keys and the elements. The Doctrine
+  bridge provides the
+  :class:`Symfony\\Bridge\\Doctrine\\Serializer\\Normalizer\\CollectionDenormalizer`,
+  which supports the ``Collection`` interface and builds an ``ArrayCollection``
+  by default. Register it as a service tagged with
+  :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`
+  to use it.
+
+The Serializer passes a plain array of elements instead of a collection when:
+
+* the constructor argument, setter or property accepts an ``array``;
+* the value is written through an adder method (e.g. ``addMember()``);
+* the type is missing or is ``iterable`` or ``mixed``;
+* the collection class is not an interface and its constructor can't take the
+  array of elements.
+
 Arrays of Union Types
 ~~~~~~~~~~~~~~~~~~~~~
 
