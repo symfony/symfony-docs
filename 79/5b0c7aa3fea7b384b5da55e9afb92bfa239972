@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-10-03T11:53:12Z
+
+Hi @javiereguiluz, in case it fits the 8.2 docs wave: this documents the `firewall` route option from #22705, and its checks are green. Happy to move the section if `security.rst` isn't the right home for it.
