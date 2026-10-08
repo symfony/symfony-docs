@@ -2715,6 +2715,43 @@ Symfony resolves it automatically from the controller method signature:
         }
     }
 
+If the subject is an argument that uses ``#[MapRequestPayload]``,
+``#[MapQueryString]`` or ``#[MapUploadedFile]``, Symfony maps and validates
+that argument before calling the voter, so the voter receives the mapped value:
+
+.. code-block:: php-attributes
+
+    // src/Controller/PostController.php
+    // ...
+
+    use App\Dto\PostDto;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class PostController extends AbstractController
+    {
+        #[Route('/posts', name: 'post_create', methods: ['POST'])]
+        // denies anonymous users before the request payload is decoded
+        #[IsGranted('IS_AUTHENTICATED')]
+        // maps and validates $post (an invalid payload returns a 422 response
+        // by default) and then calls the voter with the PostDto object
+        #[IsGranted('POST_CREATE', 'post')]
+        public function create(#[MapRequestPayload] PostDto $post): Response
+        {
+            // ...
+        }
+    }
+
+Access checks run in the order of their attributes. Symfony maps the argument
+only when a check needs it, which happens when the check subject is the
+argument name, a closure or an expression that uses ``args``.
+
+.. versionadded:: 8.2
+
+    Passing ``#[MapRequestPayload]``, ``#[MapQueryString]`` and
+    ``#[MapUploadedFile]`` arguments as the voter subject was introduced in
+    Symfony 8.2.
+
 If you want to use a custom status code instead of the default one (which
 is 403), this can be done by setting with the ``statusCode`` argument::
 
