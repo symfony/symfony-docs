@@ -547,6 +547,33 @@ default value for your controller arguments::
         // ...
     }
 
+By default, a single query parameter with an invalid value (e.g. ``?page=last``
+for an ``int`` property) makes the whole mapping fail, and Symfony returns the
+same status code as when validation fails. Enable the
+:ref:`skip_invalid_attributes <serializer-skip-invalid-attributes>` serializer
+option to ignore the invalid values and use the default values of your DTO
+instead::
+
+    use App\Model\SearchDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+
+    // ...
+
+    public function search(
+        #[MapQueryString(
+            serializationContext: ['skip_invalid_attributes' => true]
+        )] SearchDto $searchDto
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``skip_invalid_attributes`` serializer option was introduced in
+    Symfony 8.2.
+
 .. _controller-mapping-request-payload:
 
 Mapping Request Payload
