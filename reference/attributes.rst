@@ -109,6 +109,12 @@ ObjectMapper
 
 * :ref:`Map <object_mapper-with-attributes>`
 
+PHPUnit Bridge
+~~~~~~~~~~~~~~
+
+* :ref:`DnsSensitive <phpunit-bridge-dns-sensitive-tests>`
+* :ref:`TimeSensitive <phpunit-bridge-time-sensitive-tests>`
+
 RemoteEvent
 ~~~~~~~~~~~
 
@@ -117,7 +123,6 @@ RemoteEvent
 Routing
 ~~~~~~~
 
-* :ref:`DeprecatedAlias <routing-alias-deprecation>`
 * :doc:`Route </routing>`
 
 Scheduler
