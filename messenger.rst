@@ -2324,6 +2324,78 @@ The transport has a number of options:
 ``queues[name][binding_keys]``
     The binding keys (if any) to bind to this queue
 
+``queues[name][bindings]``
+    The source exchanges to bind this queue to, keyed by the exchange name.
+    Use it when the queue must also receive the messages published to other
+    exchanges besides the one of the transport (e.g. the exchange of another
+    application). Messenger doesn't create these exchanges, so they must exist
+    before setting up the transport:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/messenger.yaml
+            framework:
+                messenger:
+                    transports:
+                        async:
+                            dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                            options:
+                                exchange:
+                                    name: orders
+                                queues:
+                                    orders:
+                                        bindings:
+                                            # created by the billing app
+                                            billing_events:
+                                                binding_keys: [invoice_paid]
+
+        .. code-block:: php
+
+            // config/packages/messenger.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return App::config([
+                'framework' => [
+                    'messenger' => [
+                        'transports' => [
+                            'async' => [
+                                'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+                                'options' => [
+                                    'exchange' => [
+                                        'name' => 'orders',
+                                    ],
+                                    'queues' => [
+                                        'orders' => [
+                                            'bindings' => [
+                                                // created by the billing app
+                                                'billing_events' => [
+                                                    'binding_keys' => [
+                                                        'invoice_paid',
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
+
+    .. versionadded:: 8.2
+
+        The ``queues[name][bindings]`` option was introduced in Symfony 8.2.
+
+``queues[name][bindings][binding_keys]``
+    The binding/routing keys to be used for the binding. If none are defined,
+    the queue is bound without a binding key.
+
+``queues[name][bindings][binding_arguments]``
+    Additional binding arguments
+
 ``queues[name][flags]`` (default: ``AMQP_DURABLE``)
     Queue flags
 
