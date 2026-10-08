@@ -515,6 +515,8 @@ declared without namespaces (e.g. ``PHPUnit_Framework_Assert``), allowing you to
 always use the namespaced class declaration even when the test is executed with
 PHPUnit 4.
 
+.. _phpunit-bridge-time-sensitive-tests:
+
 Time-sensitive Tests
 --------------------
 
@@ -715,6 +717,8 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
     actual seconds (more or less). In contrast, the ``ClockMock`` class
     advances the internal clock the given number of seconds without actually
     waiting that time, so your test will execute 10 seconds faster.
+
+.. _phpunit-bridge-dns-sensitive-tests:
 
 DNS-sensitive Tests
 -------------------
