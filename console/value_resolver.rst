@@ -92,6 +92,8 @@ The value is retrieved from the command input::
     Read :doc:`/console/input` for more information about the ``#[Argument]``
     and ``#[Option]`` attributes.
 
+.. _console-value-resolver-datetime:
+
 ``DateTimeValueResolver``
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -265,6 +267,8 @@ annotated with ``#[Argument]`` or ``#[Option]``::
             return Command::SUCCESS;
         }
     }
+
+.. _console-managing-value-resolvers:
 
 Managing Value Resolvers
 ------------------------
