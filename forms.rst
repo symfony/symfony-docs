@@ -198,7 +198,7 @@ When you create a custom form type and specify a parent (via ``getParent()``),
 your type inherits options, template blocks, and behavior from that parent. This
 is why ``EmailType`` reuses the rendering and options from ``TextType``.
 
-There are tens of :doc:`form types provided by Symfony </reference/forms/types>`
+There are dozens of :doc:`form types provided by Symfony </reference/forms/types>`
 and you can also :doc:`create your own form types </form/create_custom_field_type>`.
 
 .. tip::
