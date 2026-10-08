@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-09-04T10:17:14Z
+
+Small thing spotted while rebasing my own PR next to this one: the multi-role example in `security.rst` exists in both halves of the configuration block, and this removes only the YAML one. The PHP one just below would keep showing the shape your new notice declares deprecated, and the two halves would be out of sync.
+
+I have taken that removal into #22845 so you do not have to touch this PR, but happy to drop it if you would rather keep the whole `security.rst` change here. Either way this one should go in first.
