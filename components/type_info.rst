@@ -401,6 +401,58 @@ Checking if a type **accepts a value**::
     $type->accepts(123); // true
     $type->accepts('z'); // true
 
+Finding out **why a value is not accepted**::
+
+    $type = TypeResolver::create()->resolve('array{id: int, tags: list<string>}');
+    $data = ['tags' => ['php', 12]];
+
+    // getMismatches() is slower than accepts(), so call it only when needed
+    if (!$type->accepts($data)) {
+        foreach ($type->getMismatches($data) as $mismatch) {
+            // [id]: expected "int", got "missing"
+            // [tags][1]: expected "string", got "int"
+            printf(
+                "%s: expected \"%s\", got \"%s\"\n",
+                $mismatch->path,
+                $mismatch->expectedType,
+                $mismatch->actualType ?? 'missing'
+            );
+        }
+    }
+
+``getMismatches()`` returns a list of
+:class:`Symfony\\Component\\TypeInfo\\TypeMismatch` objects (the list is empty
+when the type accepts the value). Each object has these properties:
+
+``path``
+    The location of the mismatching value, using the property path notation
+    (e.g. ``[data][0].name``): array keys use brackets and object shape
+    properties use dots. It's an empty string when the whole value doesn't match.
+
+``expectedType``
+    The type expected at this path. It's ``never`` when the key or property
+    isn't expected at all.
+
+``actualType``
+    The type of the value, as returned by :phpfunction:`get_debug_type`, or
+    ``null`` when the key or property is missing.
+
+Array shapes, object shapes and collections report every mismatching item.
+However, collections report the mismatch on the collection itself when the
+value isn't an array (or isn't a list, for list types), when a key doesn't
+match the collection key type or when the value is an iterable that isn't an
+array.
+
+Union types report the mismatches of the member that has the same kind as the
+value (e.g. for ``array{...}|null`` and an array value, the mismatches of the
+array shape). If no member has the same kind as the value, the union itself
+is reported as the mismatch.
+
+.. versionadded:: 8.2
+
+    The ``getMismatches()`` method and the ``TypeMismatch`` class were
+    introduced in Symfony 8.2.
+
 Using callables for **complex checks**::
 
     class Foo
