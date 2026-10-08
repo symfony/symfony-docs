@@ -106,6 +106,12 @@ ObjectMapper
 
 * :ref:`Map <object_mapper-with-attributes>`
 
+PHPUnit Bridge
+~~~~~~~~~~~~~~
+
+* :ref:`DnsSensitive <phpunit-bridge-dns-sensitive-tests>`
+* :ref:`TimeSensitive <phpunit-bridge-time-sensitive-tests>`
+
 PropertyInfo
 ~~~~~~~~~~~~
 
@@ -121,7 +127,6 @@ Routing
 
 * :ref:`AsRouteLoader <routing-service-route-loaders>`
 * :ref:`AsRoutingConditionService <routing-matching-expressions>`
-* :ref:`DeprecatedAlias <routing-alias-deprecation>`
 * :doc:`Route </routing>`
 
 Scheduler
