@@ -18,9 +18,12 @@ Command
 * :ref:`AsCommand <console_creating-command>`
 * :ref:`Ask <console-interactive-input>`
 * :ref:`AskChoice <console-input-ask-choice>`
+* :ref:`AsTargetedValueResolver <console-value-resolver-targeted>`
 * :ref:`Interact <console-interact-attribute>`
+* :ref:`MapDateTime <console-value-resolver-datetime>`
 * :ref:`MapInput <console-input-map-input>`
 * :ref:`Option <console-input-options>`
+* :ref:`ValueResolver <console-managing-value-resolvers>`
 
 Contracts
 ~~~~~~~~~
@@ -49,6 +52,7 @@ Dependency Injection
 * :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
 * :ref:`Lazy <lazy-services_configuration>`
+* :ref:`RequiredBundle <bundles-required-bundles>`
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
 * :ref:`When <service-container_limiting-to-env>`
 * :ref:`WhenNot <service-container_limiting-to-env>`
