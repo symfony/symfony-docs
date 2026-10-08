@@ -7,6 +7,7 @@ configuration is broken down by the key (e.g. ``framework``) that defines
 each possible section of your Symfony configuration.
 
 * :doc:`Framework </reference/configuration/framework>`
+* :doc:`Service Container </reference/configuration/services>`
 * :doc:`Doctrine </reference/configuration/doctrine>`
 * `Doctrine Migrations`_
 * :doc:`Security </reference/configuration/security>`
