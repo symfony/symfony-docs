@@ -235,6 +235,179 @@ processes asking for the same ``$version``::
         // ...
     }
 
+.. _lock-controller:
+
+Locking a Controller
+--------------------
+
+.. versionadded:: 8.2
+
+    The ``#[Lock]`` attribute was introduced in Symfony 8.2.
+
+Instead of creating the lock yourself, add the
+:class:`Symfony\\Component\\HttpKernel\\Attribute\\Lock` attribute to a
+controller to make sure that only one request at a time runs it. When another
+request holds the lock, Symfony rejects the request with a ``409 Conflict``
+response::
+
+    // src/Controller/OrderController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\ExpressionLanguage\Expression;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\Lock;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class OrderController extends AbstractController
+    {
+        // all requests share the same lock
+        #[Lock('catalog-import')]
+        #[Route('/catalog/import', methods: ['POST'])]
+        public function importCatalog(): Response
+        {
+            // ...
+        }
+
+        // one lock per order: the key is built from the route parameter
+        #[Lock(new Expression('"order-" ~ request.attributes.get("id")'))]
+        #[Route('/order/{id}/edit')]
+        public function edit(int $id): Response
+        {
+            // ...
+        }
+
+        // use the "invoice" named lock and make the lock expire after 60 seconds
+        #[Lock('invoice-export', factory: 'invoice', ttl: 60)]
+        #[Route('/invoice/export')]
+        public function exportInvoices(): Response
+        {
+            // ...
+        }
+
+        // wait until the lock is released instead of rejecting the request
+        #[Lock(
+            new Expression('"order-" ~ request.attributes.get("id")'),
+            blocking: true,
+        )]
+        #[Route('/order/{id}/pay', methods: ['POST'])]
+        public function pay(int $id): Response
+        {
+            // ...
+        }
+
+        // lock only the requests that use some HTTP methods (here, GET
+        // requests run without acquiring the lock)
+        #[Lock(
+            new Expression('"order-" ~ request.attributes.get("id")'),
+            methods: ['PUT', 'DELETE'],
+        )]
+        #[Route('/order/{id}', methods: ['GET', 'PUT', 'DELETE'])]
+        public function order(int $id): Response
+        {
+            // ...
+        }
+    }
+
+The first argument is the key of the lock: requests that use the same key share
+the same lock. The key is either a string, an
+:class:`Symfony\\Component\\ExpressionLanguage\\Expression` or a closure that
+returns a string, an integer or a ``Stringable`` object. Expressions can use
+the ``request`` variable (the current request), the ``args`` variable (the
+controller arguments) and the ``this`` variable (the controller instance).
+Closures receive the controller arguments, the current request and the
+controller instance, in that order.
+
+.. note::
+
+    Closures in attributes require PHP 8.5 or higher and must be ``static``
+    (arrow functions aren't allowed). On older PHP versions, use an expression.
+
+The attribute also accepts these optional arguments:
+
+``factory`` (default: ``'default'``)
+    The name of the :ref:`named lock <lock-named-locks>` to use.
+
+``ttl`` (default: ``30``)
+    The number of seconds after which the lock expires, or ``null`` to use the
+    TTL of the store (300 seconds by default in the stores that expire locks).
+    Symfony doesn't refresh the lock while the controller runs, so set a TTL
+    longer than the time the controller takes to run.
+
+``blocking`` (default: ``false``)
+    When ``true``, the request waits until the lock is released instead of
+    being rejected. There is no timeout: the request waits as long as another
+    request holds the lock (or until the lock expires).
+
+``methods`` (default: ``[]``)
+    The HTTP methods of the requests to lock. When empty, all requests are
+    locked. Locking the ``GET`` method also locks the ``HEAD`` method.
+
+``read`` (default: ``false``)
+    When ``true``, the request acquires a :ref:`shared lock <lock-shared-locks>`:
+    several requests can hold the read lock of the same key at the same time,
+    while a request that holds the write lock of that key runs alone. When the
+    store doesn't support shared locks, Symfony acquires a write lock instead.
+
+You can also add the ``#[Lock]`` attribute to the controller class to lock all
+its actions, and you can add several ``#[Lock]`` attributes to the same
+controller to acquire several locks.
+
+Symfony releases the lock right after the controller runs, whether it returns
+a response or throws an exception. When the controller returns a
+:class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`, Symfony releases
+the lock after sending the response content. Sub-requests (e.g. when
+:ref:`rendering an embedded controller <templates-embed-controllers>`) reuse
+the locks held by their main request.
+
+Symfony acquires the lock before resolving the controller arguments and before
+checking other attributes such as ``#[IsGranted]`` (even if you add those
+attributes above ``#[Lock]``). This way, rejected requests don't run any
+:doc:`argument value resolver </controller/value_resolver>` (e.g. one that
+queries the database to get an entity), and requests that waited for the lock
+get their arguments only after acquiring it.
+
+The only exceptions are keys defined with a closure or with an expression that
+uses the ``args`` variable. They need the controller arguments, so Symfony
+acquires those locks after resolving the arguments. If the key only needs a
+route parameter, read it from the request (e.g.
+``request.attributes.get("id")``) instead of reading the related entity from
+``args``.
+
+When a request is rejected, Symfony throws a
+:class:`Symfony\\Component\\HttpKernel\\Exception\\ConcurrentRequestHttpException`.
+To customize the response, listen to the
+:ref:`kernel.exception <component-http-kernel-kernel-exception>` event. This
+exception exposes the ``key`` and ``factory`` of the lock held by the
+concurrent request::
+
+    // src/EventListener/ConcurrentRequestListener.php
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+    use Symfony\Component\HttpKernel\Exception\ConcurrentRequestHttpException;
+
+    #[AsEventListener]
+    class ConcurrentRequestListener
+    {
+        public function __invoke(ExceptionEvent $event): void
+        {
+            $exception = $event->getThrowable();
+            if (!$exception instanceof ConcurrentRequestHttpException) {
+                return;
+            }
+
+            $event->setResponse(new JsonResponse([
+                'error' => sprintf(
+                    '"%s" is being processed by another request. Try again later.',
+                    $exception->key
+                ),
+            ], 409));
+        }
+    }
+
 .. _lock-named-locks:
 
 Naming Locks
@@ -533,6 +706,8 @@ for 3600 seconds or until ``Lock::release()`` is called::
         3600, // ttl
         false // autoRelease
     );
+
+.. _lock-shared-locks:
 
 Shared Locks
 ------------

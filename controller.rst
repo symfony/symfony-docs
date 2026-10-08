@@ -1569,7 +1569,7 @@ response.
 
 In other articles, you'll learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
-handle caching and more.
+handle caching, :ref:`prevent concurrent requests <lock-controller>` and more.
 
 Keep Going!
 -----------
