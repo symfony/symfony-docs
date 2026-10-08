@@ -616,6 +616,83 @@ anything else within your firewall in the :ref:`access control
 
         $ composer require --dev symfony/profiler-pack
 
+.. _security-firewall-route-option:
+
+Selecting the Firewall from the Route
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of relying on the ``pattern`` option of the firewalls, a route can
+define which firewall handles it with the ``firewall`` option. This lets you
+keep the security setup of some feature (e.g. a bundle or an application module)
+next to its routes:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/OrderController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Attribute\Route;
+
+        class OrderController extends AbstractController
+        {
+            #[Route('/api/orders', name: 'api_orders', firewall: 'api_jwt')]
+            public function orders(): Response
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        api_orders:
+            path: /api/orders
+            controller: App\Controller\OrderController::orders
+            firewall: api_jwt
+
+    .. code-block:: php
+
+        // config/routes.php
+        namespace Symfony\Component\Routing\Loader\Configurator;
+
+        use App\Controller\OrderController;
+
+        return Routes::config([
+            'api_orders' => [
+                'path' => '/api/orders',
+                'controller' => [OrderController::class, 'orders'],
+                'firewall' => 'api_jwt',
+            ],
+        ]);
+
+The ``firewall`` option is also supported when importing routes and in the
+``#[Route]`` attribute applied to controller classes, so you can select the
+firewall of a whole group of routes at once.
+
+The firewall must be defined under the ``firewalls`` option of the security
+configuration. Symfony uses it *instead of* checking the request matching
+options (``pattern``, ``host``, etc.) of the firewalls. If the firewall doesn't
+exist, Symfony throws an exception instead of using the firewall that matches
+the request. You can also disable security for a route by selecting a firewall
+defined with ``security: false``.
+
+Internally, this option is stored as the ``_firewall`` route default. That's
+why ``_firewall`` can't be used as a parameter in the route path or host
+(otherwise, the URL could select the firewall). Run the ``debug:router``
+command with the route name to see its firewall in the route defaults.
+
+:ref:`Access control <security-access-control>` rules don't change: they
+still match requests by path, route, etc. and apply to the firewall that
+handles the request, no matter how it was selected.
+
+.. versionadded:: 8.2
+
+    The ``firewall`` route option was introduced in Symfony 8.2.
+
 Fetching the Firewall Configuration for a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
