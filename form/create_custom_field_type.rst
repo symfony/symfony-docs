@@ -1,10 +1,10 @@
 How to Create a Custom Form Field Type
 ======================================
 
-Symfony comes with :doc:`tens of form types </reference/forms/types>` (called
-"form fields" in other projects) ready to use in your applications. However,
-it's common to create custom form types to solve specific purposes in your
-projects.
+Symfony comes with :doc:`dozens of form types </reference/forms/types>`
+(called "form fields" in other projects) ready to use in your applications.
+However, it's common to create custom form types to solve specific purposes in
+your projects.
 
 Creating Form Types Based on Symfony Built-in Types
 ---------------------------------------------------
