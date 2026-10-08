@@ -1589,12 +1589,19 @@ firewall)::
         public function revoke(string $refreshToken): void
         {
             // the first argument is the name of the endpoint in the discovery
-            // document of the provider; the client authenticates the request
+            // document of the provider; the second one is the form body; the
+            // optional third one is an array of HttpClient options (e.g. to
+            // add an 'Accept' header); the client authenticates the request
             // and adds the 'client_id' parameter to the body
-            $this->mainOidcClient->request('revocation_endpoint', [
+            $response = $this->mainOidcClient->request('revocation_endpoint', [
                 'token' => $refreshToken,
                 'token_type_hint' => 'refresh_token',
             ]);
+
+            // the response is lazy, so check its status code yourself
+            if (200 !== $response->getStatusCode()) {
+                throw new \RuntimeException('The token was not revoked.');
+            }
         }
     }
 
@@ -1613,7 +1620,44 @@ matter::
     }
 
 The interface can't be autowired without the name of the firewall, because an
-application can define several ``oidc_login`` firewalls.
+application can define several ``oidc_login`` firewalls. You can also inject
+the client using its service id, which is
+``security.authenticator.oidc_login.client.<firewallname>``.
+
+Calling Other Endpoints of the Provider
+---------------------------------------
+
+Besides logging users in, your application may need to call other endpoints of
+the provider: to revoke a token (`RFC 7009`_), to introspect it (`RFC 7662`_),
+to push an authorization request (`RFC 9126`_) or to run a grant that Symfony
+doesn't provide, such as the client credentials grant. Use the
+:method:`Symfony\\Component\\Security\\Http\\Authenticator\\Oidc\\OidcClientInterface::request`
+method of the firewall client to make a client-authenticated ``POST`` request
+to any endpoint announced by the provider. This request uses the same client
+authentication, TLS client certificate and mTLS endpoint aliases (`RFC 8705`_)
+as the other requests sent to the provider.
+
+The method returns the raw HttpClient response, because each endpoint answers
+differently: a JSON object, a signed JWT or an empty body. It throws an
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`
+if the provider doesn't announce the endpoint or if the endpoint URL doesn't
+use HTTPS.
+
+Keep these rules in mind:
+
+* Symfony overrides the ``body`` and ``max_redirects`` HttpClient options that
+  you pass.
+* A client assertion (see :ref:`oidc-login-jwt-assertion`) names the same
+  audience as in the requests to the token endpoint (the issuer or the token
+  endpoint, depending on the ``audience`` option), regardless of the endpoint
+  that you call.
+* When using DPoP (`RFC 9449`_), Symfony only sends a proof to the token and
+  pushed authorization request endpoints. A grant run through this method
+  returns a DPoP-bound token whose ``token_type`` Symfony doesn't check, and
+  your application must send its own proofs when using that token.
+* Public clients (``client_authentication: none``) can use this method too
+  (e.g. to revoke a token or to redeem a device code). The only request that
+  Symfony refuses is redeeming an authorization code without a PKCE verifier.
 
 Logging Out
 -----------
@@ -1901,13 +1945,16 @@ default handlers with your own services), and ``login_path``,
 .. _`OIDC Core 1.0, Section 3.1.2.1`: https://openid.net/specs/openid-connect-core-1_0.html#AuthRequest
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749#section-2.3.1
 .. _`RFC 6749, Section 6`: https://datatracker.ietf.org/doc/html/rfc6749#section-6
+.. _`RFC 7009`: https://datatracker.ietf.org/doc/html/rfc7009
 .. _`RFC 7518`: https://datatracker.ietf.org/doc/html/rfc7518#section-3.2
 .. _`RFC 7523`: https://datatracker.ietf.org/doc/html/rfc7523
 .. _`draft-ietf-oauth-rfc7523bis`: https://datatracker.ietf.org/doc/draft-ietf-oauth-rfc7523bis/
 .. _`RFC 7591`: https://datatracker.ietf.org/doc/html/rfc7591#section-2
 .. _`RFC 7636`: https://datatracker.ietf.org/doc/html/rfc7636
+.. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
 .. _`RFC 8176`: https://datatracker.ietf.org/doc/html/rfc8176
 .. _`RFC 8705`: https://datatracker.ietf.org/doc/html/rfc8705
+.. _`RFC 9126`: https://datatracker.ietf.org/doc/html/rfc9126
 .. _`RFC 9207`: https://datatracker.ietf.org/doc/html/rfc9207
 .. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
 .. _`OIDC Core 1.0, Section 3.1.3.7`: https://openid.net/specs/openid-connect-core-1_0.html#IDTokenValidation
