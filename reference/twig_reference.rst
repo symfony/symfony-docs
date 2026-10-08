@@ -2,9 +2,9 @@ Twig Extensions Defined by Symfony
 ==================================
 
 :ref:`Twig <twig-language>` is the template engine used in Symfony applications.
-There are tens of `default filters and functions defined by Twig`_, but Symfony
-also defines some filters, functions and tags to integrate the various Symfony
-components with Twig templates. This article explains them all.
+There are dozens of `default filters and functions defined by Twig`_, but
+Symfony also defines some filters, functions and tags to integrate the various
+Symfony components with Twig templates. This article explains them all.
 
 .. tip::
 
