@@ -36,9 +36,10 @@ PHP and without introducing security problems:
     product.stock < 15
 
 Expressions can be seen as a very restricted PHP sandbox and are less vulnerable
-to external injections because you must explicitly declare which variables are
-available in an expression (but you should still sanitize any data given by end
-users and passed to expressions).
+to external injections because you must explicitly declare which variables and
+:ref:`constants <expression-language-constants>` are available in an expression
+(but you should still sanitize any data given by end users and passed to
+expressions).
 
 Installation
 ------------
@@ -155,6 +156,55 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :ref:`Variables available in service container expressions <services-expressions>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
+
+.. _expression-language-constants:
+
+Limiting Access to Constants
+----------------------------
+
+The ``constant()`` and ``enum()`` functions can read any PHP constant and enum
+case of your application. When expressions come from end users, this lets them
+read sensitive values stored in constants (e.g. passwords or API keys). Register
+a :class:`Symfony\\Component\\ExpressionLanguage\\ConstantFunctionProvider` to
+list the only constants that these functions can read::
+
+    use Symfony\Component\ExpressionLanguage\ConstantFunctionProvider;
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+
+    $expressionLanguage = new ExpressionLanguage(null, [
+        new ConstantFunctionProvider([
+            // a single global constant
+            'PHP_EOL',
+            // the constants of this class whose name starts with ROLE_
+            'App\Security\Roles::ROLE_*',
+            // the constants and enum cases of all classes and enums defined
+            // in this namespace and its sub-namespaces
+            'App\Enum\*::*',
+        ]),
+    ]);
+
+    // returns App\Enum\Suit::Hearts
+    $expressionLanguage->evaluate('enum("App\\\\Enum\\\\Suit::Hearts")');
+
+    // throws an exception: Constant "DB_PASSWORD" is not allowed.
+    $expressionLanguage->evaluate('constant("DB_PASSWORD")');
+
+In each entry, ``*`` matches any sequence of characters except ``::``. Names
+are case-sensitive, and ``self::``, ``static::`` and ``parent::`` are never
+allowed because their meaning depends on where the expression runs. Use
+``['*', '*::*']`` to allow all global constants, class constants and enum cases.
+
+The expressions evaluated by Symfony itself (security, routing, validation,
+service container, etc.) can read all constants.
+
+.. versionadded:: 8.2
+
+    The ``ConstantFunctionProvider`` class was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    Using the ``constant()`` and ``enum()`` functions without registering a
+    ``ConstantFunctionProvider`` was deprecated in Symfony 8.2.
 
 .. _expression-language-caching:
 
