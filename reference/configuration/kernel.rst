@@ -108,6 +108,8 @@ method of the kernel class, which you can override to return a different value::
         }
     }
 
+.. _configuration-kernel-container-build-time:
+
 ``kernel.container_build_time``
 -------------------------------
 
@@ -119,14 +121,21 @@ results. This helps checking that a given binary or executable code was compiled
 from some trusted source code.
 
 In practice, the compiled :doc:`service container </service_container>` of your
-application will always be the same if you don't change its source code. This is
-exposed via these container parameters:
+application will always be the same if you don't change its source code and
+build it from the same directory. This is exposed via these container
+parameters:
 
 * ``container.build_hash``, a hash of the contents of all your source files;
 * ``container.build_time``, a timestamp of the moment when the container was
   built (the result of executing PHP's :phpfunction:`time` function);
 * ``container.build_id``, the result of merging the two previous parameters and
   encoding the result using CRC32.
+
+By default, the namespace of :doc:`cache pools </cache>` is computed from the
+project directory, so the compiled container changes when you build the
+application from another directory. Set the
+:ref:`prefix_seed <reference-cache-prefix-seed>` option to get the same
+container whatever the build directory.
 
 Since the ``container.build_time`` value will change every time you compile the
 application, the build will not be strictly reproducible. If you care about
