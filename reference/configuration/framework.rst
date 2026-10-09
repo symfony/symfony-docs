@@ -3285,6 +3285,24 @@ the middleware in the ``middleware`` option of a specific bus.
 
     The ``reject_redelivered_messages`` option was introduced in Symfony 8.2.
 
+deduplication
+.............
+
+lock_factory
+""""""""""""
+
+**type**: ``string`` **default**: ``null``
+
+The service ID of the lock factory used by the
+:ref:`deduplication middleware <messenger-deduplication>` to create its locks
+(e.g. ``lock.deduplication.factory`` for a :ref:`named lock <lock-named-locks>`
+called ``deduplication``). When ``null``, the middleware uses the
+``lock.factory`` service.
+
+.. versionadded:: 8.2
+
+    The ``lock_factory`` option was introduced in Symfony 8.2.
+
 routing
 .......
 

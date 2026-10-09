@@ -5048,6 +5048,49 @@ message is moved to a :ref:`failure transport <messenger-failure-transport>`.
     This middleware is automatically enabled when the :doc:`Lock component </lock>`
     is installed.
 
+By default, the middleware creates its locks with the ``lock.factory`` service,
+which uses the store of the default lock of your application. If that store
+isn't suitable for deduplication (e.g. it's local to each server but your
+workers run on several servers), define a :ref:`named lock <lock-named-locks>`
+and use the ``deduplication.lock_factory`` option to pass its lock factory:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            lock:
+                deduplication: 'redis://redis.example.com'
+
+            messenger:
+                deduplication:
+                    # the factory of a named lock is called "lock.<lock name>.factory"
+                    lock_factory: 'lock.deduplication.factory'
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'deduplication' => 'redis://redis.example.com',
+                ],
+                'messenger' => [
+                    'deduplication' => [
+                        // the factory of a named lock is called "lock.<lock name>.factory"
+                        'lock_factory' => 'lock.deduplication.factory',
+                    ],
+                ],
+            ],
+        ]);
+
+.. versionadded:: 8.2
+
+    The ``deduplication.lock_factory`` option was introduced in Symfony 8.2.
+
 .. _middleware-doctrine:
 
 Middleware for Doctrine
