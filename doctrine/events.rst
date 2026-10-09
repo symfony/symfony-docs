@@ -326,10 +326,12 @@ Ordering Lifecycle Listeners
     The ``before`` and ``after`` options of the ``doctrine.event_listener``
     tag were introduced in Symfony 8.2.
 
-Instead of finding out the priority of other listeners to run before or after
-them, use the ``before`` and ``after`` options of the tag to name those
-listeners. For example, a listener that updates the search index must run once
-the audit logger has finished:
+Priorities order all the listeners of an event at once, so running a listener
+right before or after one that you don't control requires finding out its
+priority. Instead, use the ``before`` and ``after`` options of the tag to name
+that other listener. For example, a listener that updates the search index
+must run once an ``AuditLogger`` listener (defined elsewhere in your
+application or in a bundle) has finished:
 
 .. configuration-block::
 
