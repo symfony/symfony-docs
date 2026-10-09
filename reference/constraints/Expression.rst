@@ -304,6 +304,34 @@ If ``false``, the validation fails when expression returns ``true``.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+``skipOnEmpty``
+~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+Unlike most constraints, this constraint evaluates the expression even when the
+value is ``null`` or an empty string, so that the expression can check emptiness
+(e.g. ``this.isPro() == false or value != ""``). If ``true``, ``null`` and empty
+strings are considered valid and the expression is not evaluated. Combine it
+with the :doc:`/reference/constraints/NotBlank` constraint to reject empty
+values::
+
+    // src/Model/Article.php
+    namespace App\Model;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Article
+    {
+        #[Assert\NotBlank]
+        #[Assert\Expression('value matches "/^[a-z0-9-]+$/"', skipOnEmpty: true)]
+        private string $slug;
+    }
+
+.. versionadded:: 8.2
+
+    The ``skipOnEmpty`` option was introduced in Symfony 8.2.
+
 ``values``
 ~~~~~~~~~~
 
