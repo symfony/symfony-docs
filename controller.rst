@@ -317,6 +317,20 @@ HTTP status code::
     // this exception ultimately generates a 500 status error
     throw new \Exception('Something went wrong!');
 
+.. versionadded:: 8.2
+
+    Symfony now includes built-in exception classes for additional standard HTTP
+    status codes (e.g. 402, 408, 413, 416, 417, 424, etc.).
+
+You can also create an HTTP exception from a status code using the
+:method:`Symfony\\Component\\HttpKernel\\Exception\\HttpException::fromStatusCode`
+method. When a specialized exception exists for the given status code, it is
+returned::
+
+    use Symfony\Component\HttpKernel\Exception\HttpException;
+
+    $exception = HttpException::fromStatusCode(413, 'The uploaded file is too large.');
+
 In every case, an error page is shown to the end user and a full debug
 error page is shown to the developer (i.e. when you're in "Debug" mode - see
 :ref:`page-creation-environments`).
