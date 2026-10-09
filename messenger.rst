@@ -4271,6 +4271,22 @@ with ``messenger.message_handler``.
 
 Possible options to configure with tags are:
 
+``after``
+    One or more handlers (service IDs, class names or ``service::method``) that
+    must run before this handler (see :ref:`messenger-ordering-handlers`).
+
+    .. versionadded:: 8.2
+
+        The ``after`` option was introduced in Symfony 8.2.
+
+``before``
+    One or more handlers (service IDs, class names or ``service::method``) that
+    must run after this handler (see :ref:`messenger-ordering-handlers`).
+
+    .. versionadded:: 8.2
+
+        The ``before`` option was introduced in Symfony 8.2.
+
 ``bus``
     Name of the bus from which the handler can receive messages, by default all buses.
 
@@ -4303,6 +4319,101 @@ Possible options to configure with tags are:
     .. versionadded:: 8.2
 
         The ``transport`` option was introduced in Symfony 8.2.
+
+.. _messenger-ordering-handlers:
+
+Ordering Handlers
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` options of message handlers were introduced
+    in Symfony 8.2.
+
+When a message has several handlers, they run in descending order of
+``priority``. To run a handler right before or after another one without
+knowing its priority, use the ``before`` and ``after`` options. For example,
+a handler that sends a welcome email can run once the audit log handler has
+finished:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/MessageHandler/SendWelcomeEmailHandler.php
+        namespace App\MessageHandler;
+
+        use App\Message\UserRegistered;
+        use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+        // no priority is needed: Symfony places the handler using the constraint
+        #[AsMessageHandler(after: AuditLogHandler::class)]
+        final class SendWelcomeEmailHandler
+        {
+            public function __invoke(UserRegistered $message): void
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\MessageHandler\SendWelcomeEmailHandler:
+                tags:
+                    - name: messenger.message_handler
+                      after: 'App\MessageHandler\AuditLogHandler'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\MessageHandler\AuditLogHandler;
+        use App\MessageHandler\SendWelcomeEmailHandler;
+
+        return App::config([
+            'services' => [
+                SendWelcomeEmailHandler::class => [
+                    'tags' => [
+                        ['messenger.message_handler' => [
+                            'after' => AuditLogHandler::class,
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
+Both options accept a single handler or a list of handlers. Each handler is
+defined as a service ID or a class name, optionally followed by ``::`` and the
+name of the method that handles the message (e.g.
+``AuditLogHandler::class.'::handleUserRegistered'``). Without a method name,
+the target includes all the methods that the service uses to handle the
+message.
+
+Symfony applies these constraints when compiling the container:
+
+* Targets that don't handle the message on the same bus are ignored. This way,
+  a constraint that targets an optional bundle keeps working when that bundle
+  isn't installed;
+* If the target service handles the message, but not with the method that you
+  defined, compiling the container fails. This prevents typos from turning
+  into constraints that do nothing;
+* Cyclic constraints also make compiling the container fail.
+
+The constraints work together with priorities:
+
+* A handler without priority is placed wherever its constraints require;
+* A handler with a priority keeps it, and its constraints only reorder it
+  among the handlers with that same priority. If a constraint contradicts the
+  priority, compiling the container fails.
+
+.. note::
+
+    Constraints apply among the handlers of one message class on one bus.
+    Handlers registered for a parent class, an interface or ``*`` run in the
+    same dispatch, but you can't target them with ``before`` or ``after``.
 
 .. _handler-subscriber-options:
 
