@@ -1787,6 +1787,127 @@ By default the token handler will read the validation URL XML response with a
             ],
         ]);
 
+Requiring OAuth 2.0 Scopes
+--------------------------
+
+.. versionadded:: 8.2
+
+    Support for OAuth 2.0 scopes was introduced in Symfony 8.2.
+
+An authorization server grants each access token a limited set of
+permissions, which `RFC 6749`_ calls scopes. Requiring scopes lets you
+reject a valid token when it doesn't allow the requested action, even if the
+user behind it could perform that action.
+
+Use the ``OAUTH2_SCOPE()`` attribute to require scopes. It lists the required
+scopes between parentheses, separated by spaces::
+
+    // src/Controller/ProfileController.php
+    namespace App\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class ProfileController
+    {
+        #[IsGranted('OAUTH2_SCOPE(profile:read)')]
+        public function show(): Response
+        {
+            // ...
+        }
+
+        // the token must have been granted all the scopes listed in the attribute
+        #[IsGranted('OAUTH2_SCOPE(profile:read profile:write)')]
+        public function edit(): Response
+        {
+            // ...
+        }
+    }
+
+The same attribute works in
+:ref:`access control rules <security-authorization-access-control>`. When a
+rule lists several attributes in its ``roles`` option, any of them grants
+access:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            access_control:
+                # the token must have been granted either of these scopes
+                - path: ^/api/profile
+                  roles: ['OAUTH2_SCOPE(profile:read)', 'OAUTH2_SCOPE(admin)']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                // ...
+                'access_control' => [
+                    // the token must have been granted either of these scopes
+                    [
+                        'path' => '^/api/profile',
+                        'roles' => [
+                            'OAUTH2_SCOPE(profile:read)',
+                            'OAUTH2_SCOPE(admin)',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The ``access_token`` authenticator reads the granted scopes from the ``scope``
+claim of the token or, when it's missing, from the ``scp`` claim that some
+providers use. Both claims can be a space-separated string or a list. The
+authenticator stores the scopes in the ``oauth2_scope`` attribute of the
+security token, so you can read them in your own code with
+``$token->getAttribute(AccessTokenAuthenticator::SCOPE_ATTRIBUTE)``.
+
+The claims come from the third argument of the ``UserBadge`` returned by the
+token handler. The ``oidc``, ``oidc_user_info`` and ``oauth2`` token handlers
+pass them, so they support scopes out of the box. Your custom token handlers
+must pass the claims too. The ``cas`` token handler never provides scopes.
+
+.. note::
+
+    Scopes aren't roles: they aren't included in ``getRoleNames()`` and the
+    :ref:`role hierarchy <security-role-hierarchy>` doesn't apply to them.
+
+Responding to Requests with Missing Scopes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When access is denied because of a missing scope, Symfony responds with the
+``insufficient_scope`` error defined in `RFC6750`_:
+
+.. code-block:: text
+
+    HTTP/1.1 403 Forbidden
+    WWW-Authenticate: Bearer realm="My API",error="insufficient_scope",error_description="The request requires higher privileges than provided by the access token.",scope="profile:read"
+
+The ``realm`` parameter is the value of the ``realm`` option of the
+``access_token`` authenticator and the ``scope`` parameter lists the scopes
+required by the denied attributes. If you configure the ``resource_metadata``
+option of the authenticator, the header also includes a ``resource_metadata``
+parameter with the URL of that document, so clients can find the
+authorization server that issues the missing scopes.
+
+When access is denied for other reasons (e.g. a missing role), Symfony calls
+the ``security.access.denied_handler`` service if your application defines
+it, and applies the regular handling otherwise.
+
+.. note::
+
+    Symfony doesn't send this response when the firewall defines the
+    ``access_denied_handler`` or ``access_denied_url`` options, or when the
+    application defines the global ``access_denied_url`` option. In those
+    cases, the configured handler or URL also handles missing scopes.
+
 Creating Users from Token
 -------------------------
 
