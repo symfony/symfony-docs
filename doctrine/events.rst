@@ -318,6 +318,79 @@ listener in the Symfony application by creating a new service for it and
     The value of the ``connection`` option can also be a
     :ref:`configuration parameter <configuration-parameters>`.
 
+Ordering Lifecycle Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` options of the ``doctrine.event_listener``
+    tag were introduced in Symfony 8.2.
+
+Priorities order all the listeners of an event at once, so running a listener
+right before or after one that you don't control requires finding out its
+priority. Instead, use the ``before`` and ``after`` options of the tag to name
+that other listener. For example, a listener that updates the search index
+must run once an ``AuditLogger`` listener (defined elsewhere in your
+application or in a bundle) has finished:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\EventListener\SearchIndexer:
+                tags:
+                    -
+                        name: 'doctrine.event_listener'
+                        event: 'postPersist'
+                        after: 'App\EventListener\AuditLogger'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\EventListener\AuditLogger;
+        use App\EventListener\SearchIndexer;
+
+        return App::config([
+            'services' => [
+                SearchIndexer::class => [
+                    'tags' => [
+                        [
+                            'doctrine.event_listener' => [
+                                'event' => 'postPersist',
+                                'after' => AuditLogger::class,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Both options accept a single listener or a list of listeners, defined as
+service IDs or class names. Symfony applies these constraints when compiling
+the container:
+
+* A target that doesn't listen to the same event on the same Doctrine
+  connection is ignored. This way, a constraint that targets an optional bundle
+  keeps working when that bundle isn't installed;
+* Cyclic constraints make compiling the container fail.
+
+The constraints work together with priorities:
+
+* A listener without priority is placed wherever its constraints require;
+* A listener with a priority keeps it, and its constraints only reorder it
+  among the listeners with that same priority. If a constraint contradicts the
+  priority, compiling the container fails.
+
+.. note::
+
+    The ``before`` and ``after`` options are only available in the
+    ``doctrine.event_listener`` tag. The ``#[AsDoctrineListener]`` attribute
+    belongs to DoctrineBundle, which must support them first.
+
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
