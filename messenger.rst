@@ -4305,6 +4305,8 @@ Possible options to configure with tags are:
     Defines the order in which the handler is executed when multiple handlers
     can process the same message. Handlers with a higher priority run first,
     and each handler starts only after the previous one has fully completed.
+    When omitted, the ``before`` and ``after`` options decide where the handler
+    goes; without them, the handler behaves as if its priority were ``0``.
 
 ``sign``
     Whether messages handled by this handler should be cryptographically signed
