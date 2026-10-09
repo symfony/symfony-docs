@@ -193,6 +193,9 @@ Workflow
 * :ref:`AsGuardListener <workflow_using-events>`
 * :ref:`AsLeaveListener <workflow_using-events>`
 * :ref:`AsTransitionListener <workflow_using-events>`
+* :ref:`AsWorkflow <workflow-attributes>`
+* :ref:`Place <workflow-attributes>`
+* :ref:`Transition <workflow-attributes>`
 
 .. _`AsEntityAutocompleteField`: https://symfony.com/bundles/ux-autocomplete/current/index.html#usage-in-a-form-with-ajax
 .. _`AsLiveComponent`: https://symfony.com/bundles/ux-live-component/current/index.html
