@@ -2195,6 +2195,57 @@ The service ID of the rate limiter used to limit the number of HTTP requests
 within a certain period. The service must implement the
 :class:`Symfony\\Component\\RateLimiter\\LimiterInterface`.
 
+.. _reference-http-client-recorder:
+
+recorder
+........
+
+**type**: ``array``
+
+Configures the recorder that stores HTTP requests and responses in ``.har``
+files and replays them in tests (see
+:ref:`Recording and Replaying HTTP Requests <http-client-record-replay>`).
+
+.. versionadded:: 8.2
+
+    The ``recorder`` option was introduced in Symfony 8.2.
+
+enabled
+"""""""
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to decorate the HTTP clients with the recorder. Symfony sets this
+option to ``true`` automatically when you configure any of the other
+``recorder`` options.
+
+redact
+""""""
+
+**type**: ``array`` **default**: ``[]``
+
+The names of the headers and the query-string, form and JSON fields whose
+values are masked in the recorded files, in addition to the built-in ones.
+Names are case-insensitive.
+
+redact_except
+"""""""""""""
+
+**type**: ``array`` **default**: ``[]``
+
+The names to remove from the built-in list of masked names. Names are
+case-insensitive.
+
+redactor
+""""""""
+
+**type**: ``string`` | ``null`` **default**: ``null``
+
+The ID of a service that implements
+:class:`Symfony\\Component\\HttpClient\\Recorder\\Redactor\\RedactorInterface`
+to use instead of the built-in redactor. When this option is set, the
+`redact`_ and `redact_except`_ options are ignored.
+
 resolve
 .......
 

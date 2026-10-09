@@ -2941,6 +2941,186 @@ will find the associated response based on the request method, URL and body (if 
 Note that **this won't work** if the request body or URI is random / always
 changing (e.g. if it contains current date or random UUIDs).
 
+When the file contains several responses for the same request, the factory
+returns them in the order of the file and keeps returning the last one after
+all of them have been used.
+
+.. versionadded:: 8.2
+
+    Returning several responses for the same request in the order of the file
+    was introduced in Symfony 8.2.
+
+.. _http-client-record-replay:
+
+Recording and Replaying HTTP Requests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The HTTP recorder was introduced in Symfony 8.2.
+
+Mocking every response by hand is tedious, and the mocked responses can become
+different from what the real service returns. Calling the real service instead
+makes tests slow and unreliable. The HTTP recorder solves both problems: it makes
+the real requests once, stores them in ``.har`` files that you commit with your
+tests and replays them in all later test runs.
+
+First, enable the recorder in the ``test`` environment:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/http_client.yaml
+        when@test:
+            http_client:
+                recorder: true
+
+    .. code-block:: php
+
+        // config/packages/http_client.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'when@test' => [
+                'http_client' => [
+                    'recorder' => true,
+                ],
+            ],
+        ]);
+
+The recorder is controlled by the PHPUnit extension of the
+:doc:`PHPUnit Bridge </components/phpunit_bridge>`. Register that extension in
+your PHPUnit configuration file (the Symfony Flex recipe of the bridge already
+does this for you):
+
+.. code-block:: xml
+
+    <!-- phpunit.dist.xml -->
+    <!-- ... -->
+    <extensions>
+        <bootstrap class="Symfony\Bridge\PhpUnit\SymfonyExtension"/>
+    </extensions>
+
+Then, add the ``#[UseRecord]`` attribute to the tests whose HTTP requests must
+be replayed::
+
+    // tests/Controller/WeatherControllerTest.php
+    namespace App\Tests\Controller;
+
+    use Symfony\Bridge\PhpUnit\Attribute\UseRecord;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class WeatherControllerTest extends WebTestCase
+    {
+        // replays tests/Controller/WeatherControllerTest/testForecast.har
+        #[UseRecord]
+        public function testForecast(): void
+        {
+            $client = static::createClient();
+            $client->request('GET', '/forecast/paris');
+
+            $this->assertResponseIsSuccessful();
+        }
+    }
+
+The recorder matches requests by their method, URL and body. When a request
+isn't found in the file, the test fails without making the real request. If
+the tested code catches that failure (e.g. to fall back to a default value),
+PHPUnit also reports the missing request as a warning.
+
+By default, the recorder only replays the existing files. To create or update
+them, run the tests with the ``SYMFONY_HTTP_RECORDER`` environment variable,
+then review the files and commit them:
+
+.. code-block:: terminal
+
+    # make only the real requests that are missing from the files and record them
+    $ SYMFONY_HTTP_RECORDER=missing php bin/phpunit --filter testForecast
+
+    # make all the real requests again and overwrite the files
+    $ SYMFONY_HTTP_RECORDER=record php bin/phpunit --group weather
+
+    # make the real requests without reading or writing any file
+    $ SYMFONY_HTTP_RECORDER=passthrough php bin/phpunit
+
+If the responses of a service didn't change, recording them again leaves the
+files unchanged, so the diff of your repository only shows the real changes.
+
+Before writing a file, the recorder masks credentials: the ``Authorization``,
+``Cookie``, ``Set-Cookie`` and other authentication headers, and the
+query-string, form and JSON fields that usually contain secrets, such as the
+OAuth, OpenID Connect and SAML parameters (e.g. ``access_token``,
+``client_secret``, ``code``) and fields like ``password``, ``token`` or
+``api_key``. The recorder also masks the requests made by your tests before
+matching them, so you can mask values that change on every request to make
+them match the recorded ones:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/http_client.yaml
+        when@test:
+            http_client:
+                recorder:
+                    # names masked in addition to the built-in ones
+                    redact: ['X-Acme-Signature', 'nonce']
+                    # names never masked, e.g. when "code" holds a country code
+                    redact_except: ['code']
+
+    .. code-block:: php
+
+        // config/packages/http_client.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'when@test' => [
+                'http_client' => [
+                    'recorder' => [
+                        // names masked in addition to the built-in ones
+                        'redact' => ['X-Acme-Signature', 'nonce'],
+                        // names never masked, e.g. when "code" holds a country code
+                        'redact_except' => ['code'],
+                    ],
+                ],
+            ],
+        ]);
+
+To replace the built-in masking logic entirely, define your own service and set
+it in the ``redactor`` option of the
+:ref:`recorder configuration <reference-http-client-recorder>`.
+
+By default, the file of each test is named after its test method and stored in
+a directory named after its test class, next to the test file. Tests that use a
+data provider get one file per data set
+(e.g. ``WeatherControllerTest/testForecast@paris.har``). Pass a file path to the
+attribute to use another file (e.g. to share it between several tests); relative
+paths start from the directory of the test. Add the attribute to the test class
+to apply it to all its test methods.
+
+To store all the files in a single directory instead, set the
+``http-recorder-directory`` parameter of the extension. Relative paths then
+start from that directory, and the default files are stored in subdirectories
+named after the namespace of each test (e.g.
+``tests/records/App/Tests/Controller/WeatherControllerTest/testForecast.har``):
+
+.. code-block:: xml
+
+    <!-- phpunit.dist.xml -->
+    <!-- ... -->
+    <extensions>
+        <bootstrap class="Symfony\Bridge\PhpUnit\SymfonyExtension">
+            <parameter name="http-recorder-directory" value="tests/records"/>
+        </bootstrap>
+    </extensions>
+
+The recorder only stores the responses whose content was read entirely. Use
+``getContent(false)`` to read the content of error responses without throwing
+an exception. The recorder doesn't compare streamed request bodies, and it
+only records the requests made by the kernels booted by the test itself, not
+by an application running in another process (e.g. a web server).
+
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
