@@ -4992,6 +4992,91 @@ additional stamp *if* the message has just been received (i.e. has at least one
 ``ReceivedStamp`` stamp). You can create your own stamps by implementing
 :class:`Symfony\\Component\\Messenger\\Stamp\\StampInterface`.
 
+.. _messenger-middleware-attribute:
+
+Adding Middleware without Editing the Bus Configuration
+.......................................................
+
+.. versionadded:: 8.2
+
+    The ``#[AsMessageMiddleware]`` attribute and the ``messenger.middleware``
+    tag were introduced in Symfony 8.2.
+
+Instead of listing a middleware in the configuration of a bus, you can add the
+``#[AsMessageMiddleware]`` attribute to the middleware class to register it in
+the bus and define its position relative to the other middleware of that bus.
+This is useful for middleware provided by bundles, which can't edit the bus
+configuration of the application::
+
+    // src/Middleware/AuditMiddleware.php
+    namespace App\Middleware;
+
+    use Symfony\Component\Messenger\Attribute\AsMessageMiddleware;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+    use Symfony\Component\Messenger\Middleware\StackInterface;
+
+    // runs before 'doctrine_transaction', so the audit log entry is kept
+    // even when the database transaction is rolled back
+    #[AsMessageMiddleware(bus: 'command.bus', before: 'doctrine_transaction')]
+    class AuditMiddleware implements MiddlewareInterface
+    {
+        public function handle(Envelope $envelope, StackInterface $stack): Envelope
+        {
+            // ...
+
+            return $stack->next()->handle($envelope, $stack);
+        }
+    }
+
+The ``bus`` argument is required. Use ``'*'`` to add the middleware to all
+buses, and repeat the attribute to add it to several buses with different
+positions. If the configuration of a bus already lists the middleware, it keeps
+the position defined there. For a given bus, an attribute that names that bus
+takes precedence over an attribute that uses ``'*'``.
+
+Without ``before`` or ``after``, the middleware runs after the middleware listed
+in the configuration of the bus and right before the default ``send_message``
+and ``handle_message`` middleware. Both options accept one or several middleware
+names as used in the configuration (e.g. ``validation``), service IDs or class
+names. Symfony ignores the names that don't match any middleware of the bus, so
+you can refer to middleware that comes from optional packages.
+
+If you don't use :ref:`autoconfiguration <services-autoconfigure>`, add the
+``messenger.middleware`` tag to the service with the same options:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Middleware\AuditMiddleware:
+                tags:
+                    - name: messenger.middleware
+                      bus: command.bus
+                      before: doctrine_transaction
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Middleware\AuditMiddleware;
+
+        return App::config([
+            'services' => [
+                AuditMiddleware::class => [
+                    'tags' => [
+                        ['messenger.middleware' => [
+                            'bus' => 'command.bus',
+                            'before' => 'doctrine_transaction',
+                        ]],
+                    ],
+                ],
+            ],
+        ]);
+
 .. _messenger-deduplication:
 
 Message Deduplication
