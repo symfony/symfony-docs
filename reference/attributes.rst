@@ -35,6 +35,7 @@ Dependency Injection
 ~~~~~~~~~~~~~~~~~~~~
 
 * :ref:`AsAlias <services-alias>`
+* :ref:`AsCallable <autowiring-methods-as-services>`
 * :doc:`AsDecorator </service_container/decoration>`
 * :ref:`AsTagDecorator <decoration-tagged-services>`
 * :ref:`AsTaggedItem <tags_as-tagged-item>`

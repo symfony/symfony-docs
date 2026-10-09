@@ -1346,6 +1346,8 @@ a service closure by wrapping the service reference into an instance of
         $myService->addArgument(new ServiceClosureArgument(new Reference('mailer')));
     }
 
+.. _autowiring-functional-interfaces:
+
 Generating Adapters for Functional Interfaces
 ---------------------------------------------
 
@@ -1445,6 +1447,137 @@ By doing so, Symfony will generate a class (also called an *adapter*)
 implementing ``MessageFormatterInterface`` that will forward calls of
 ``MessageFormatterInterface::format()`` to your underlying service's method
 ``MessageUtils::format()``, with all its arguments.
+
+.. _autowiring-methods-as-services:
+
+Registering Methods as Services
+-------------------------------
+
+.. versionadded:: 8.2
+
+    The ``#[AsCallable]`` attribute was introduced in Symfony 8.2.
+
+Sometimes a class performs several variants of the same task, one per method.
+For example, a ``TabularExporter`` class exports reports to CSV and TSV, while
+other services tagged with ``app.report_exporter``, such as an invokable
+``PdfExporter`` class, export reports to other formats. To get all these
+exporters from the same :ref:`locator of tagged services
+<service-locator_autowire-iterator>` without moving each method to its own
+class, add the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AsCallable`
+attribute to each method. Each method becomes a service whose value is a
+closure that calls the method. The ``tags`` option defines the tags of that
+service::
+
+    // src/Export/TabularExporter.php
+    namespace App\Export;
+
+    use App\Report\Report;
+    use Symfony\Component\DependencyInjection\Attribute\AsCallable;
+
+    class TabularExporter
+    {
+        // registers the 'App\Export\TabularExporter::exportCsv' service
+        // (pass the 'id' option to use a different service ID)
+        #[AsCallable(tags: [['app.report_exporter' => ['format' => 'csv']]])]
+        public function exportCsv(Report $report): string
+        {
+            // ...
+        }
+
+        #[AsCallable(tags: [['app.report_exporter' => ['format' => 'tsv']]])]
+        public function exportTsv(Report $report): string
+        {
+            // ...
+        }
+    }
+
+A locator of the services tagged with ``app.report_exporter`` now contains
+these closures together with the ``PdfExporter`` service::
+
+    // src/Report/ReportSender.php
+    namespace App\Report;
+
+    use Psr\Container\ContainerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
+
+    class ReportSender
+    {
+        public function __construct(
+            // contains the 'csv' and 'tsv' closures and the 'pdf' exporter
+            #[AutowireLocator('app.report_exporter', indexAttribute: 'format')]
+            private ContainerInterface $exporters,
+        ) {
+        }
+
+        public function send(Report $report, string $format): void
+        {
+            $exporter = $this->exporters->get($format);
+            // if $format is 'csv', this calls TabularExporter::exportCsv()
+            $contents = $exporter($report);
+
+            // ...
+        }
+    }
+
+The closures are lazy: getting a closure from the locator doesn't create the
+``TabularExporter`` service. Symfony creates it the first time you call any of
+its closures. Pass ``lazy: false`` to create the service when getting the
+closure instead.
+
+To get objects that implement a :ref:`functional interface
+<autowiring-functional-interfaces>` instead of closures, pass that interface to
+the ``lazy`` option (e.g. an ``ExporterInterface`` with a single
+``export(Report $report): string`` method). Symfony then registers a lazy
+adapter that implements the interface and calls your method::
+
+    // src/Export/TabularExporter.php
+    // ...
+
+    #[AsCallable(
+        lazy: ExporterInterface::class,
+        tags: [['app.report_exporter' => ['format' => 'csv']]],
+        target: 'csv',
+    )]
+    public function exportCsv(Report $report): string
+    {
+        // ...
+    }
+
+If ``PdfExporter`` implements ``ExporterInterface`` too, all the services of
+the locator implement that interface, so you can call
+``$this->exporters->get($format)->export($report)``. In addition, the
+``target`` option registers a :ref:`named autowiring alias <autowiring-alias>`.
+Pass its name to the ``#[Target]`` attribute to inject that service into a
+specific argument::
+
+    // src/Report/AccountingReportSender.php
+    namespace App\Report;
+
+    use App\Export\ExporterInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+
+    class AccountingReportSender
+    {
+        public function __construct(
+            // use \Closure or the interface of the 'lazy' option as the type
+            #[Target('csv')]
+            private ExporterInterface $csvExporter,
+        ) {
+        }
+    }
+
+When you add the attribute to an abstract method, such as an interface method,
+Symfony registers that method as a service for each service that implements
+it. In that case, you can :ref:`compute the tag attributes for each
+service <di-tag-attributes-per-tagged-service>`, for example with
+``tags: [['app.report_exporter' => [self::class, 'getTagAttributes']]]``.
+
+.. note::
+
+    If you :doc:`decorate </service_container/decoration>` the
+    ``TabularExporter`` service, the closures and adapters call the methods of
+    the decorator instead, so the decorator must define those methods too.
 
 .. _autowiring-anonymous-services-inline:
 
