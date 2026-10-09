@@ -684,6 +684,108 @@ dispatched right before each new attempt.
     and the ``SyncMessageFailedEvent`` and ``SyncMessageRetryingEvent`` events
     were introduced in Symfony 8.2.
 
+.. _messenger-batch-sending:
+
+Sending Messages in Batches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``BatchDispatcher`` class was introduced in Symfony 8.2.
+
+When you dispatch many messages in a row, each of them is sent to its transport
+with its own request. Use the
+:class:`Symfony\\Component\\Messenger\\BatchDispatcher` to send them in batches
+instead. This reduces the number of requests (and the cost with transports that
+charge per request, such as Amazon SQS)::
+
+    // src/Service/ReminderSender.php
+    namespace App\Service;
+
+    use App\Message\SendReminder;
+    use Symfony\Component\Messenger\BatchDispatcher;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    class ReminderSender
+    {
+        public function __construct(
+            private MessageBusInterface $bus,
+        ) {
+        }
+
+        public function sendReminders(array $userIds): void
+        {
+            $messages = [];
+            foreach ($userIds as $userId) {
+                $messages[] = new SendReminder($userId);
+            }
+
+            // returns the envelopes once sent, in the order of the messages;
+            // $messages can contain Envelope objects and the optional second
+            // argument is an array of stamps added to all the messages
+            $envelopes = (new BatchDispatcher($this->bus))->dispatch($messages);
+        }
+    }
+
+Each message goes through the middleware of the bus as usual, so routing and
+:ref:`synchronous handling <messenger-handling-messages-synchronously>` don't
+change. The bus only defers sending them until all the messages have gone
+through it. Then, each transport gets all its messages at once:
+
+* Amazon SQS sends up to 10 messages per request;
+* Doctrine and AMPHP SQL insert up to 100 messages per SQL statement;
+* Redis sends up to 1,000 messages per round trip (one by one with Redis
+  Cluster);
+* MongoDB inserts them with one request (one per group of consecutive messages
+  when they use different MongoDB sessions);
+* AMQP waits for the publisher confirms of all the messages at once when the
+  ``confirm_timeout`` option is set (without it, publishing doesn't wait for
+  the broker);
+* a transport using an :ref:`outbox <messenger-outbox>` stores the messages
+  with one request when the outbox transport supports batches.
+
+Other transports (e.g. Beanstalkd) send the messages one by one and stop at the
+first one that fails.
+
+If a message fails to go through the bus (e.g. because a middleware throws an
+exception), that exception is thrown and none of the messages are sent. If some
+messages can't be sent to their transports, a
+:class:`Symfony\\Component\\Messenger\\Exception\\BatchSendFailedException`
+tells which ones failed, using the position of the messages as keys::
+
+    use Symfony\Component\Messenger\Exception\BatchSendFailedException;
+
+    try {
+        (new BatchDispatcher($this->bus))->dispatch($messages);
+    } catch (BatchSendFailedException $e) {
+        // the envelopes of the messages that didn't fail
+        $envelopes = $e->getEnvelopes();
+
+        foreach ($e->getExceptions() as $position => $exception) {
+            // $messages[$position] wasn't sent because of $exception
+        }
+    }
+
+When the messages are dispatched by some code that receives the bus as an
+argument, use the ``run()`` method. It calls a function with a bus that collects
+the messages and sends them in batches once the function returns::
+
+    $envelopes = (new BatchDispatcher($this->bus))->run(
+        function (MessageBusInterface $bus) use ($newsletter): void {
+            $this->newsletterMailer->sendToSubscribers($newsletter, $bus);
+        }
+    );
+
+If the function throws an exception, none of the messages are sent. Inside the
+function, the bus returns the envelopes before sending them, so they don't have
+the stamps added by the transports (e.g. ``TransportMessageIdStamp``). Use the
+envelopes returned by ``run()`` instead.
+
+.. note::
+
+    When sending messages in batches, the Doctrine and AMPHP SQL transports
+    add the ``TransportMessageIdStamp`` only when using PostgreSQL.
+
 Creating your Own Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
