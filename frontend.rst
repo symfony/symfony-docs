@@ -141,9 +141,21 @@ contains a web server.
 Other Front-End Articles
 ------------------------
 
-* :doc:`/frontend/create_ux_bundle`
-* :doc:`/frontend/custom_version_strategy`
-* :doc:`/frontend/server-data`
+.. toctree::
+    :hidden:
+    :glob:
+
+    frontend/asset_mapper
+    frontend/encore/installation
+    frontend/encore/simple-example
+    frontend/encore/*
+
+.. toctree::
+    :titlesonly:
+
+    /frontend/create_ux_bundle
+    /frontend/custom_version_strategy
+    /frontend/server-data
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/

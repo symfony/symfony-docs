@@ -471,11 +471,19 @@ Other Dispatchers
 Besides the commonly used ``EventDispatcher``, the component comes
 with some other dispatchers:
 
-* :doc:`/components/event_dispatcher/immutable_dispatcher`
-* :doc:`/components/event_dispatcher/traceable_dispatcher`
+.. toctree::
+    :maxdepth: 1
+
+    /components/event_dispatcher/immutable_dispatcher
+    /components/event_dispatcher/traceable_dispatcher
 
 Learn More
 ----------
+
+.. toctree::
+    :hidden:
+
+    /components/event_dispatcher/generic_event
 
 * :doc:`/components/event_dispatcher/generic_event`
 * :ref:`The kernel.event_listener tag <dic-tags-kernel-event-listener>`
