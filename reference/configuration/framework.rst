@@ -5914,11 +5914,18 @@ is an array with the following options:
 service
 '''''''
 
-**type**: ``string``
+**type**: ``string`` **default**: ``'webhook.request_parser'``
 
 The service id of the request parser (a class implementing
 :class:`Symfony\\Component\\Webhook\\Client\\RequestParserInterface`) that will
-handle incoming requests for this webhook type. This option is required.
+handle incoming requests for this webhook type. By default, it's the built-in
+parser of the Webhook component, which verifies the signature scheme set in the
+`signature_format`_ option.
+
+.. versionadded:: 8.2
+
+    The default value of the ``service`` option was introduced in Symfony 8.2.
+    In previous Symfony versions, this option was required.
 
 secret
 ''''''
