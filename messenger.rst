@@ -2060,6 +2060,8 @@ The transport has a number of options:
     test classes extending
     :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
     or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
+    The next request made by the test client resets them too, so check the sent
+    messages before calling methods like ``$client->followRedirect()``.
 
 You can optionally use two complementary testing strategies for message
 handling. First, test handlers as plain PHP classes by injecting mocks and
