@@ -996,9 +996,41 @@ runtime instead of using a static list::
         }
     }
 
+To get the administrator recipients in your own services, type-hint a
+constructor argument with ``AdminRecipientsProviderInterface``. Symfony
+autowires it to the ``notifier`` service, so you get the same recipients that
+Symfony uses, including the ones returned by a decorator like the one above::
+
+    // src/Service/MaintenanceReporter.php
+    namespace App\Service;
+
+    use Symfony\Component\Notifier\AdminRecipientsProviderInterface;
+    use Symfony\Component\Notifier\Notification\Notification;
+    use Symfony\Component\Notifier\NotifierInterface;
+
+    class MaintenanceReporter
+    {
+        public function __construct(
+            private NotifierInterface $notifier,
+            private AdminRecipientsProviderInterface $adminRecipients,
+        ) {
+        }
+
+        public function report(string $summary): void
+        {
+            // the recipients defined in the 'admin_recipients' option, or the
+            // ones returned by the decorator of the 'notifier' service, if any
+            $recipients = $this->adminRecipients->getAdminRecipients();
+
+            $notification = new Notification($summary, ['email']);
+            $this->notifier->send($notification, ...$recipients);
+        }
+    }
+
 .. versionadded:: 8.2
 
-    The ``AdminRecipientsProviderInterface`` was introduced in Symfony 8.2.
+    The ``AdminRecipientsProviderInterface`` and its autowiring alias were
+    introduced in Symfony 8.2.
 
 .. deprecated:: 8.2
 
