@@ -125,6 +125,14 @@ Symfony ships with the following value resolvers in the
 
         The ``RateLimitValueResolver`` was introduced in Symfony 8.2.
 
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\LockValueResolver`
+    Injects the lock acquired by the :ref:`#[Lock] attribute <lock-controller-argument>`
+    if type-hinted with ``LockInterface`` or ``SharedLockInterface``.
+
+    .. versionadded:: 8.2
+
+        The ``LockValueResolver`` was introduced in Symfony 8.2.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DefaultValueResolver`
     Will set the default value of the argument if present and the argument
     is optional.
