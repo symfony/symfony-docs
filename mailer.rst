@@ -113,12 +113,13 @@ Service               Install with                                        Webhoo
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``        yes
 `Sweego`_             ``composer require symfony/sweego-mailer``          yes
 `TurboSMTP`_          ``composer require symfony/turbo-smtp-mailer``      yes
+`Zoho CPaaS`_         ``composer require symfony/zoho-cpaas-mailer``
 ===================== =================================================== ===============
 
 .. versionadded:: 8.2
 
-    The ``MailKite``, ``PufferPost``, ``TurboSMTP`` and ``Cloudflare`` integrations were introduced
-    in Symfony 8.2.
+    The ``MailKite``, ``PufferPost``, ``TurboSMTP``, ``Cloudflare`` and
+    ``Zoho CPaaS`` integrations were introduced in Symfony 8.2.
     Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
 
 .. note::
@@ -267,6 +268,11 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``turbosmtp+api://KEY:SECRET@default``                                              |
 +------------------------+-------------------------------------------------------------------------------------------+
+| `Zoho CPaaS`_          | - SMTP ``zohocpaas+smtp://USERNAME:PASSWORD@default``                                     |
+|                        | - SMTP (implicit TLS) ``zohocpaas+smtps://USERNAME:PASSWORD@default``                     |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``zohocpaas+api://API_KEY@default``                                                 |
++------------------------+-------------------------------------------------------------------------------------------+
 
 .. versionadded:: 8.2
 
@@ -362,6 +368,20 @@ party provider:
     ``pufferpost`` is an alias for ``pufferpost+api``. PufferPost has no SMTP
     relay, so the API transport is the only one. Templated sending goes through
     :class:`Symfony\\Component\\Mailer\\RemoteTemplateEmail`.
+
+.. note::
+
+    ``zohocpaas`` is an alias for ``zohocpaas+api``. Both SMTP transports
+    encrypt the connection: ``zohocpaas+smtp`` connects to port 587 and
+    upgrades it with STARTTLS, while ``zohocpaas+smtps`` uses TLS from the
+    start on port 465. Use the one whose port your network allows. A port in
+    the DSN replaces the default one.
+
+    The API key only works with the hosts of the data center of your account.
+    The ``default`` host uses the US data center (``cpaas.zoho.com`` for the
+    API and ``smtp.zeptomail.com`` for SMTP). For other data centers, set the
+    host that your Agent shows, such as
+    ``zohocpaas+api://API_KEY@cpaas.zoho.eu``.
 
 .. tip::
 
@@ -2661,6 +2681,7 @@ Mailgun        yes  yes
 Mailjet        yes  yes
 Postmark       yes  yes
 Sendgrid       yes  yes
+Zoho CPaaS     yes  yes
 =============  ===  ====
 
 Some providers behave differently:
@@ -3075,5 +3096,6 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`RFC 6047`: https://www.ietf.org/rfc/rfc6047.txt
 .. _`Sweego`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sweego/README.md
 .. _`TurboSMTP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/TurboSmtp/README.md
+.. _`Zoho CPaaS`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/ZohoCpaas/README.md
 .. _`RFC 5322`: https://www.ietf.org/rfc/rfc5322.txt
 .. _`RFC 6854`: https://www.ietf.org/rfc/rfc6854.txt
