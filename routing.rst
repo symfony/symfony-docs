@@ -2794,6 +2794,26 @@ service, which you can inject in your services or controllers::
         }
     }
 
+In Twig templates, use the :ref:`sign_url <reference-twig-filter-sign-url>`
+filter to sign an absolute URL. It takes the same optional expiration as
+``sign()`` (explained in the next section):
+
+.. code-block:: html+twig
+
+    {# the URL must be absolute, because signatures are checked against the
+       absolute URL of the request; without an argument, the link uses the
+       default expiration configured in "framework.uri_signer.expiration" #}
+    <a href="{{ url('ticket_show', {id: ticket.id})|sign_url }}">Your ticket</a>
+
+    {# the link expires one day after the conference ends #}
+    <a href="{{ url('ticket_show', {id: ticket.id})|sign_url(ticket.conference.endsAt|date_modify('+1 day')) }}">
+        Your ticket
+    </a>
+
+.. versionadded:: 8.2
+
+    The ``sign_url`` Twig filter was introduced in Symfony 8.2.
+
 To verify a signed URI, use ``check()``::
 
     $this->uriSigner->check($signedUrl);
