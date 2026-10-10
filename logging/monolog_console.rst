@@ -135,6 +135,39 @@ Now, log messages will be shown on the console based on the log levels and verbo
 By default (normal verbosity level), warnings and higher will be shown. But in
 :doc:`full verbosity mode </console/verbosity>`, all messages will be shown.
 
+Filtering Logs by Channel
+-------------------------
+
+In full verbosity mode, the logs of all
+:doc:`channels </logging/channels_handlers>` can make the output hard to read.
+For example, when a command fails while calling an external API, you may only
+want to see the logs of the ``http_client`` channel. Instead of changing the
+``channels`` option of the handler and clearing the cache, define the
+``SYMFONY_CONSOLE_LOG_CHANNELS`` environment variable when running the command:
+
+.. code-block:: terminal
+
+    # displays only the logs of the "http_client" channel
+    $ SYMFONY_CONSOLE_LOG_CHANNELS=http_client php bin/console app:import -vvv
+
+    # use a comma-separated list to display the logs of several channels
+    $ SYMFONY_CONSOLE_LOG_CHANNELS=app,http_client php bin/console app:import -vvv
+
+    # prefix channels with "!" to display the logs of all channels except them
+    # (you can't combine included and excluded channels in the same list)
+    $ SYMFONY_CONSOLE_LOG_CHANNELS='!php,!cache' php bin/console app:import -vvv
+
+The logs that the console doesn't display still reach the other handlers (e.g.
+the one writing to ``var/log/dev.log``). This variable can't display the
+channels that the ``channels`` option of the handler excludes. For example,
+with the configuration shown above, ``SYMFONY_CONSOLE_LOG_CHANNELS=doctrine``
+displays nothing because the ``doctrine`` channel is excluded.
+
+.. versionadded:: 8.2
+
+    The ``SYMFONY_CONSOLE_LOG_CHANNELS`` environment variable was introduced
+    in Symfony 8.2.
+
 Limiting Output to Interactive Mode
 -----------------------------------
 
