@@ -972,6 +972,13 @@ repository as arguments. It can return a single entity or a list of entities
     ): Response {
     }
 
+.. note::
+
+    With the ``{param:argument}`` route syntax, the request attribute is named
+    after the argument, not after the route parameter. For example, in a
+    ``/product/{slug:product}`` route, the closure reads the slug with
+    ``$request->attributes->get('product')``.
+
 .. versionadded:: 8.2
 
     Support for using closures in the ``expr`` option was introduced in Symfony 8.2.
