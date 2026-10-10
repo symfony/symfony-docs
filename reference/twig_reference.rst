@@ -287,20 +287,6 @@ Returns the ``action`` and the ``fields`` needed to exit
 :doc:`user impersonation </security/impersonating_user>` with a form, so the
 switching route can be restricted to ``POST``.
 
-.. code-block:: html+twig
-
-    {% set exit = impersonation_exit_form() %}
-
-    {% if exit.action %}
-        <form method="post" action="{{ exit.action }}">
-            {% for name, value in exit.fields %}
-                <input type="hidden" name="{{ name }}" value="{{ value }}">
-            {% endfor %}
-
-            <button>Exit impersonation</button>
-        </form>
-    {% endif %}
-
 If no user is being impersonated, ``action`` is an empty string and ``fields``
 is empty. Read more about
 :ref:`impersonating with a form <security-impersonation-form>`.
@@ -354,18 +340,6 @@ Returns the ``action`` and the ``fields`` needed to
 :doc:`impersonate a user </security/impersonating_user>` with a form, so the
 switching route can be restricted to ``POST``. The impersonated user is
 identified by the ``identifier`` argument.
-
-.. code-block:: html+twig
-
-    {% set impersonate = impersonation_form(user.userIdentifier) %}
-
-    <form method="post" action="{{ impersonate.action }}">
-        {% for name, value in impersonate.fields %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}">
-        {% endfor %}
-
-        <button>Impersonate {{ user.userIdentifier }}</button>
-    </form>
 
 ``fields`` contains the target identity and, when the firewall enables CSRF
 protection, the CSRF token, each under its configured parameter name. After the
@@ -498,21 +472,10 @@ Returns the ``action`` and the ``fields`` needed to log out with a form, so the
 logout route can be restricted to ``POST``. If no key is provided, they are
 generated for the current firewall the user is logged into.
 
-.. code-block:: html+twig
-
-    {% set logout = logout_form() %}
-
-    <form method="post" action="{{ logout.action }}">
-        {% for name, value in logout.fields %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}">
-        {% endfor %}
-
-        <button>Log out</button>
-    </form>
-
 ``fields`` contains the CSRF token under its configured parameter name, and is
 empty when the firewall does not enable CSRF protection. Read more about
-:ref:`logging out with a form <security-logout-form>`.
+:ref:`logging out with a form <security-logout-form>`, including a macro that
+renders it.
 
 .. versionadded:: 8.2
 

@@ -187,19 +187,14 @@ behavior, where the parameter is accepted on every URL of the firewall.
 
 The ``impersonation_form()`` Twig function returns the ``action`` and the
 ``fields`` to render, so the form carries what the ``switch_user`` listener
-expects:
+expects. Render them with the macro shown for the
+:ref:`logout form <security-logout-form>`:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
-    {% set impersonate = impersonation_form(user.userIdentifier) %}
+    {% from '_macros.html.twig' import post_form %}
 
-    <form method="post" action="{{ impersonate.action }}">
-        {% for name, value in impersonate.fields %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}">
-        {% endfor %}
-
-        <button>Impersonate {{ user.userIdentifier }}</button>
-    </form>
+    {{ post_form(impersonation_form(user.userIdentifier), 'Impersonate') }}
 
 The fields carry the target identity under the name given by the ``parameter``
 option, the CSRF token under ``csrf_parameter`` when the firewall enables it,
@@ -225,18 +220,12 @@ Exiting impersonation works the same way with ``impersonation_exit_form()``,
 which returns an empty ``action`` when the current user is not impersonating
 anyone:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {% set exit = impersonation_exit_form() %}
 
     {% if exit.action %}
-        <form method="post" action="{{ exit.action }}">
-            {% for name, value in exit.fields %}
-                <input type="hidden" name="{{ name }}" value="{{ value }}">
-            {% endfor %}
-
-            <button>Exit impersonation</button>
-        </form>
+        {{ post_form(exit, 'Exit impersonation') }}
     {% endif %}
 
 .. note::

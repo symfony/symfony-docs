@@ -1910,25 +1910,37 @@ Then point the ``path`` option at that route:
         ]);
 
 The ``logout_form()`` Twig function returns the ``action`` and the ``fields`` to
-render, so the form carries what the logout listener expects:
+render, so the form carries what the logout listener expects. The
+:ref:`impersonation forms <security-impersonation-form>` return the same
+structure, so define a macro that renders any of them:
 
 .. code-block:: html+twig
 
-    {% set logout = logout_form() %}
+    {# templates/_macros.html.twig #}
+    {% macro post_form(form, label) %}
+        <form method="post" action="{{ form.action }}">
+            {% for name, value in form.fields %}
+                <input type="hidden" name="{{ name }}" value="{{ value }}">
+            {% endfor %}
 
-    <form method="post" action="{{ logout.action }}">
-        {% for name, value in logout.fields %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}">
-        {% endfor %}
+            <button>{{ label }}</button>
+        </form>
+    {% endmacro %}
 
-        <button>Log out</button>
-    </form>
+Then import it where you render the form:
 
-The parameter name comes from the ``csrf_parameter`` option and the token from
-the firewall's ``csrf_token_manager``, so neither has to be hardcoded in the
-template. When the firewall does not set
-:ref:`enable_csrf <reference-security-logout-csrf>`, ``fields`` is empty and the
-form still submits the configured path over ``POST``.
+.. code-block:: twig
+
+    {# templates/base.html.twig #}
+    {% from '_macros.html.twig' import post_form %}
+
+    {{ post_form(logout_form(), 'Log out') }}
+
+When the firewall enables
+:ref:`CSRF protection <reference-security-logout-csrf>`, ``fields`` contains a
+token from the firewall's ``csrf_token_manager`` under the name set by the
+``csrf_parameter`` option, so the form needs nothing else. Otherwise, ``fields``
+is empty and the form still submits the configured path over ``POST``.
 
 The function takes the same optional firewall key as ``logout_path()``.
 
