@@ -2479,15 +2479,25 @@ To inspect the resulting hierarchy, run the ``debug:roles`` command:
 
 .. tip::
 
-    To help debug your roles hierarchy, you can generate a visual representation
+    To help debug your role hierarchy, you can generate a visual representation
     of it as an SVG or PNG image. First, install the free and open-source
     `Mermaid CLI`_, which provides the ``mmdc`` command, and then run:
 
     .. code-block:: terminal
 
-        $ php bin/console debug:security:role-hierarchy | mmdc -o roles.svg
+        # the mermaid format always dumps the whole role hierarchy
+        # (it doesn't accept role names as arguments)
+        $ php bin/console debug:roles --format=mermaid | mmdc -o roles.svg
+
+        # change the orientation of the graph (TB, TD, BT, RL or LR; default: TB)
+        $ php bin/console debug:roles --format=mermaid --direction=LR | mmdc -o roles.svg
 
     You can then open the ``roles.svg`` file to see the generated graph.
+
+.. deprecated:: 8.2
+
+    The ``debug:security:role-hierarchy`` command was deprecated in Symfony 8.2.
+    Use the ``debug:roles --format=mermaid`` command instead.
 
 Programmatic Access to Role Hierarchy
 """""""""""""""""""""""""""""""""""""
