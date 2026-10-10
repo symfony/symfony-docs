@@ -124,7 +124,8 @@ Using the Built-in Parser
 For webhooks originating from other Symfony applications, you can use the
 built-in :class:`Symfony\\Component\\Webhook\\Client\\RequestParser` instead
 of creating a custom parser. This parser handles the standard Symfony webhook
-request format:
+request format, and it's used by default when a webhook route doesn't define
+the ``service`` option:
 
 .. configuration-block::
 
@@ -135,7 +136,6 @@ request format:
             webhook:
                 routing:
                     acme_webhook:
-                        service: 'webhook.request_parser'
                         secret: '%env(WEBHOOK_SECRET)%'
 
     .. code-block:: php
@@ -146,12 +146,17 @@ request format:
         return static function (FrameworkConfig $config): void {
             $config->webhook()
                 ->routing('acme_webhook')
-                ->service('webhook.request_parser')
                 ->secret('%env(WEBHOOK_SECRET)%');
         };
 
 The built-in parser automatically handles request validation and signature verification,
 allowing you to focus on consuming the RemoteEvent in your application logic.
+
+.. versionadded:: 8.2
+
+    The default value of the ``service`` option was introduced in Symfony 8.2.
+    In previous Symfony versions, you had to set it to ``webhook.request_parser``
+    explicitly.
 
 .. deprecated:: 8.2
 
