@@ -3307,6 +3307,15 @@ option :doc:`redirects them elsewhere </security/form_login>`. Set the
 ``re_authentication_entry_point`` option only if you want to display a
 different page instead.
 
+.. tip::
+
+    Symfony only redirects users back to pages requested with ``GET``. If the
+    action that requires a recent authentication is submitted with ``POST``
+    (e.g. the button that deletes the account), require the recent
+    authentication on the page that displays the button too. Otherwise, users
+    who confirm their password land on the default target path and must submit
+    the action again.
+
 Call
 :method:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationUtils::getReAuthenticationAttribute`
 to adapt the login page when users authenticate again (e.g. to tell them why
