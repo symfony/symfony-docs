@@ -481,6 +481,13 @@ Next, configure the ``base_uri`` and ``discovery`` options:
 
     Support for OpenID Connect Discovery was introduced in Symfony 7.3.
 
+.. note::
+
+    The ``base_uri`` of the discovery must end with a slash when it has a path,
+    as in ``https://www.example.com/realms/demo/``: the discovery path is
+    resolved against it as a relative URL, which replaces the last segment of
+    a base URI that does not end with a slash.
+
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used as user
 identifier by default. To use another claim, specify it using the ``claim`` option:
 
@@ -801,6 +808,13 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                                 ->cache(['id' => 'cache.app'])
             ;
         };
+
+.. note::
+
+    The ``base_uri`` of the discovery must end with a slash when it has a path,
+    as in ``https://www.example.com/realms/demo/``: the discovery path is
+    resolved against it as a relative URL, which replaces the last segment of
+    a base URI that does not end with a slash.
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used by
 default as user identifier. To use another claim, specify it on the
