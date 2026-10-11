@@ -753,6 +753,10 @@ To redirect the client to another URL, you can use the
 
     $response = new RedirectResponse('http://example.com/');
 
+.. seealso::
+
+    Read :ref:`how redirect responses are cached <controller-redirect-caching>`.
+
 .. _streaming-response:
 
 Streaming a Response

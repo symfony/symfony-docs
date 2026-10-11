@@ -53,6 +53,17 @@ additional directives):
     response in ``stale-if-error`` scenarios. That's why it's recommended to use
     both ``public`` and ``max-age`` directives.
 
+.. note::
+
+    The ``#[Cache]`` attribute leaves unchanged the responses whose status code
+    isn't cacheable (e.g. ``201`` or ``500``).
+
+    .. versionadded:: 8.2
+
+        Support for ``308`` responses in the ``#[Cache]`` attribute and in the
+        :ref:`Symfony reverse proxy <symfony-gateway-cache>` was introduced in
+        Symfony 8.2.
+
 .. _http-cache-targeted-cache-control:
 
 Targeting a Specific Cache
