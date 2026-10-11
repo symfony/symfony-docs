@@ -261,6 +261,8 @@ Options
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+.. _reference-constraint-valid-restrict-groups:
+
 ``restrictGroups``
 ~~~~~~~~~~~~~~~~~~
 

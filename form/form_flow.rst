@@ -214,6 +214,69 @@ As group steps aren't actual form steps, they are never displayed as the current
 step: navigation traverses them to the closest child in the direction it
 moves (the first one when moving forward, the last one when moving backward).
 
+Validating the Data of Each Step
+--------------------------------
+
+Instead of using the :doc:`inherit_data </form/inherit_data_option>` option,
+the form type of a step can define its own ``data_class`` option. The step then
+maps its own object, stored in a property of the data object of the flow. When
+the user submits the step, the flow validates this object with the same
+validation groups as the data object of the flow.
+
+Don't add the :doc:`Valid </reference/constraints/Valid>` constraint to the
+properties that store these objects. A ``Valid`` constraint without the
+``groups`` option applies to all validation groups, so it would also cascade
+into the objects of the steps that the user hasn't reached yet. These objects
+are still empty, so their constraints would fail.
+
+Sometimes you need these ``Valid`` constraints anyway, because another part of
+the application validates the whole object at once (e.g. an API endpoint that
+:ref:`maps the request payload <controller-mapping-request-payload>` to the
+same class). In this case, restrict each ``Valid`` constraint to its step with
+the ``groups`` option and set its
+:ref:`restrictGroups <reference-constraint-valid-restrict-groups>` option to
+``false``::
+
+    // src/Model/ProposalDraft.php
+    namespace App\Model;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class ProposalDraft
+    {
+        public string $currentStep = '';
+
+        // validated only on the "speaker" step, with the same groups as this
+        // object (e.g. "Default" and "speaker")
+        #[Assert\Valid(groups: ['speaker'], restrictGroups: false)]
+        public SpeakerData $speaker;
+
+        // validated only on the "talk" step
+        #[Assert\Valid(groups: ['talk'], restrictGroups: false)]
+        public TalkData $talk;
+    }
+
+To validate all the objects at once, the API endpoint must use the ``Default``
+group and the groups of all the steps::
+
+    use App\Model\ProposalDraft;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
+    // ...
+
+    public function submitProposal(
+        #[MapRequestPayload(validationGroups: ['Default', 'speaker', 'talk'])]
+        ProposalDraft $proposalDraft,
+    ): Response {
+        // ...
+    }
+
+.. versionadded:: 8.2
+
+    The ``restrictGroups`` option of the ``Valid`` constraint was introduced in
+    Symfony 8.2.
+
 Persisting Data Between Requests
 --------------------------------
 
