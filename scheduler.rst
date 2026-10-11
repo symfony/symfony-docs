@@ -482,6 +482,15 @@ while developing the application).
 
     The ``env`` option was introduced in Symfony 8.2.
 
+The ``stamps`` option adds :ref:`Messenger stamps <messenger-envelopes-stamps>`
+to the message that schedules the task, so middleware and transports can read
+that metadata. Pass the stamp class names and map a class to the arguments of
+its constructor when it takes any.
+
+.. versionadded:: 8.2
+
+    The ``stamps`` option was introduced in Symfony 8.2.
+
 .. _scheduler-attributes-cron-task:
 
 ``AsCronTask`` Example
@@ -521,6 +530,9 @@ The attribute takes more parameters to customize the trigger::
     // schedules the task only in the given environment(s); pass an array
     // of environment names to schedule it in several environments
     #[AsCronTask('0 0 * * *', env: 'prod')]
+
+    // adds Messenger stamps to the message scheduling the task
+    #[AsCronTask('0 0 * * *', stamps: [DelayStamp::class => [1000]])]
 
     // when applying this attribute to a Symfony console command, you can pass
     // arguments and options to the command using the 'arguments' option:
@@ -568,6 +580,9 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
 
     // schedules the task only in the given environment(s)
     #[AsPeriodicTask(frequency: '1 day', env: ['prod', 'staging'])]
+
+    // adds Messenger stamps to the message scheduling the task
+    #[AsPeriodicTask(frequency: '1 day', stamps: [DelayStamp::class => [1000]])]
 
     // defines the method name to call instead as well as the arguments to pass to it
     #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
