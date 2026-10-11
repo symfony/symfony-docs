@@ -1502,6 +1502,30 @@ pass ``null`` to it::
     guessing your field types (including constraints that are not part of the
     validation group(s) being used).
 
+Symfony also guesses the field type from the PHP type declared on the property
+of the data class. This is useful when the property has no validation
+constraints nor Doctrine metadata, which are considered more reliable when they
+exist:
+
+=============================================================  =================================================================
+Property type                                                  Guessed form type
+=============================================================  =================================================================
+``int``                                                        ``IntegerType``
+``float``                                                      ``NumberType``
+``bool``                                                       ``CheckboxType``
+``\DateTime``                                                  ``DateTimeType`` (with ``'input' => 'datetime'``)
+``\DateTimeImmutable``, ``\DateTimeInterface``                 ``DateTimeType`` (with ``'input' => 'datetime_immutable'``)
+``Symfony\Component\Clock\DatePoint``                          ``DateTimeType`` (with ``'input' => 'date_point'``)
+``\DateInterval``                                              ``DateIntervalType``
+=============================================================  =================================================================
+
+Nullable types (e.g. ``?int``) are guessed like their non-nullable counterpart.
+
+.. versionadded:: 8.2
+
+    Guessing the field type from the declared type of the property was
+    introduced in Symfony 8.2.
+
 Form Type Options Guessing
 ..........................
 
@@ -1512,7 +1536,10 @@ the following options will be guessed too:
     The ``required`` option is guessed based on the validation rules (i.e. is
     the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
     field ``nullable``). This is very useful, as your client-side validation will
-    automatically match your validation rules.
+    automatically match your validation rules. When nothing more specific is
+    known, the field is also guessed as not required if its property is
+    nullable (e.g. ``?string``) or a ``bool`` (a required checkbox would have
+    to be checked, while the property accepts ``false``).
 
 ``maxlength``
     If the field is some sort of text field, then the ``maxlength`` option attribute
