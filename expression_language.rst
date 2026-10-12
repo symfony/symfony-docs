@@ -81,49 +81,6 @@ The main class of the component is
     See :doc:`/reference/formats/expression_language` to learn the syntax of
     the ExpressionLanguage component.
 
-Parsing and Linting Expressions
-...............................
-
-The ExpressionLanguage component provides a way to parse and lint expressions.
-The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
-method returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`
-instance that can be used to inspect and manipulate the expression. The
-:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::lint`, on the
-other hand, throws a :class:`Symfony\\Component\\ExpressionLanguage\\SyntaxError`
-if the expression is not valid::
-
-    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-
-    $expressionLanguage = new ExpressionLanguage();
-
-    var_dump($expressionLanguage->parse('1 + 2', []));
-    // displays the AST nodes of the expression which can be
-    // inspected and manipulated
-
-    $expressionLanguage->lint('1 + 2', []); // doesn't throw anything
-
-    $expressionLanguage->lint('1 + a', []);
-    // throws a SyntaxError exception:
-    // "Variable "a" is not valid around position 5 for expression `1 + a`."
-
-The behavior of these methods can be configured with some flags defined in the
-:class:`Symfony\\Component\\ExpressionLanguage\\Parser` class:
-
-* ``IGNORE_UNKNOWN_VARIABLES``: don't throw an exception if a variable is not
-  defined in the expression;
-* ``IGNORE_UNKNOWN_FUNCTIONS``: don't throw an exception if a function is not
-  defined in the expression.
-
-This is how you can use these flags::
-
-    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
-    use Symfony\Component\ExpressionLanguage\Parser;
-
-    $expressionLanguage = new ExpressionLanguage();
-
-    // does not throw a SyntaxError because the unknown variables and functions are ignored
-    $expressionLanguage->lint('unknown_var + unknown_function()', [], Parser::IGNORE_UNKNOWN_VARIABLES | Parser::IGNORE_UNKNOWN_FUNCTIONS);
-
 Passing in Variables
 --------------------
 
@@ -205,6 +162,86 @@ service container, etc.) can read all constants.
 
     Using the ``constant()`` and ``enum()`` functions without registering a
     ``ConstantFunctionProvider`` was deprecated in Symfony 8.2.
+
+Parsing Expressions
+-------------------
+
+The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
+method returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`
+instance that can be used to inspect and manipulate the expression::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    var_dump($expressionLanguage->parse('1 + 2', []));
+    // displays the AST nodes of the expression which can be
+    // inspected and manipulated
+
+Linting Expressions
+-------------------
+
+.. versionadded:: 8.2
+
+    The ``lint:expressions`` command was introduced in Symfony 8.2.
+
+Expressions are stored as strings, so their errors only show up when they are
+evaluated. In a Symfony application, run the ``lint:expressions`` command to
+find these errors in advance. It checks the expressions defined in controller
+attributes (e.g. ``#[IsGranted]``, ``#[IsCsrfTokenValid]`` and ``#[Cache]``)
+and in the configuration (e.g. the :ref:`allow_if <security-allow-if>` option
+of ``access_control`` and the ``guard`` option of workflow transitions):
+
+.. code-block:: terminal
+
+    $ php bin/console lint:expressions
+      ERROR  in security.access_control
+      >> Variable "usr" is not valid around position 1 for expression `usr.id == 1`. Did you mean "user"?
+
+     [ERROR] Found 1 error while linting 2 expressions.
+
+Each expression is linted with the same expression language that evaluates it.
+That's why the command always reports unknown functions, but it only reports
+unknown variables when that expression language knows which variables are
+available.
+
+The command requires the debug mode to be enabled. It returns a non-zero exit
+code when some expression is not valid, so you can run it in your continuous
+integration pipeline along with the other ``lint:*`` commands.
+
+When using the ExpressionLanguage component as a standalone library, call the
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::lint`
+method instead. It throws a :class:`Symfony\\Component\\ExpressionLanguage\\SyntaxError`
+if the expression is not valid::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    $expressionLanguage->lint('1 + 2', []); // doesn't throw anything
+
+    $expressionLanguage->lint('1 + a', []);
+    // throws a SyntaxError exception:
+    // "Variable "a" is not valid around position 5 for expression `1 + a`."
+
+The behavior of the ``parse()`` and ``lint()`` methods can be configured with
+some flags defined in the
+:class:`Symfony\\Component\\ExpressionLanguage\\Parser` class:
+
+* ``IGNORE_UNKNOWN_VARIABLES``: don't throw an exception if a variable is not
+  defined in the expression;
+* ``IGNORE_UNKNOWN_FUNCTIONS``: don't throw an exception if a function is not
+  defined in the expression.
+
+This is how you can use these flags::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+    use Symfony\Component\ExpressionLanguage\Parser;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    // does not throw a SyntaxError because the unknown variables and functions are ignored
+    $expressionLanguage->lint('unknown_var + unknown_function()', [], Parser::IGNORE_UNKNOWN_VARIABLES | Parser::IGNORE_UNKNOWN_FUNCTIONS);
 
 .. _expression-language-caching:
 
