@@ -273,6 +273,64 @@ fragment_uri
 
 Generates the URI of :ref:`a fragment <fragments-path-config>`.
 
+impersonation_button
+~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_button(label, identifier, targetUri = null, attr = {}, formAttr = {}) }}
+
+``label``
+    **type**: ``string``
+``identifier``
+    **type**: ``string``
+``targetUri`` *(optional)*
+    **type**: ``string``
+``attr`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+``formAttr`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+
+Renders a form with a button to
+:doc:`impersonate a user </security/impersonating_user>` with a ``POST``
+request. ``label`` is the text of the button and ``identifier`` identifies the
+impersonated user. After the switch, the user is redirected to the current URI,
+or to ``targetUri`` when given. ``attr`` and ``formAttr`` define the HTML
+attributes of the button and of the form. Read more about
+:ref:`impersonating with a form <security-impersonation-form>`.
+
+.. versionadded:: 8.2
+
+    The ``impersonation_button()`` function was introduced in Symfony 8.2.
+
+impersonation_exit_button
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_button(label = 'Exit impersonation', targetUri = null, attr = {}, formAttr = {}) }}
+
+``label`` *(optional)*
+    **type**: ``string`` **default**: ``Exit impersonation``
+``targetUri`` *(optional)*
+    **type**: ``string``
+``attr`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+``formAttr`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+
+Renders a form with a button to exit
+:doc:`user impersonation </security/impersonating_user>` with a ``POST``
+request. After exiting impersonation, the user is redirected to the current
+URI, or to ``targetUri`` when given. ``attr`` and ``formAttr`` define the HTML
+attributes of the button and of the form. If no user is being impersonated, the
+function renders nothing. Read more about
+:ref:`impersonating with a form <security-impersonation-form>`.
+
+.. versionadded:: 8.2
+
+    The ``impersonation_exit_button()`` function was introduced in Symfony 8.2.
+
 impersonation_exit_form
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -285,24 +343,13 @@ impersonation_exit_form
 
 Returns the ``action`` and the ``fields`` needed to exit
 :doc:`user impersonation </security/impersonating_user>` with a form, so the
-switching route can be restricted to ``POST``.
-
-.. code-block:: html+twig
-
-    {% set exit = impersonation_exit_form() %}
-
-    {% if exit.action %}
-        <form method="post" action="{{ exit.action }}">
-            {% for name, value in exit.fields %}
-                <input type="hidden" name="{{ name }}" value="{{ value }}">
-            {% endfor %}
-
-            <button>Exit impersonation</button>
-        </form>
-    {% endif %}
+switching route can be restricted to ``POST``. Use it to write the HTML of the
+form yourself; otherwise, use `impersonation_exit_button`_.
 
 If no user is being impersonated, ``action`` is an empty string and ``fields``
-is empty. Read more about
+is empty. The returned ``csrf_field`` is the name of the field that contains the
+CSRF token, or ``null`` when the firewall doesn't enable CSRF protection. Read
+more about
 :ref:`impersonating with a form <security-impersonation-form>`.
 
 .. versionadded:: 8.2
@@ -353,24 +400,15 @@ impersonation_form
 Returns the ``action`` and the ``fields`` needed to
 :doc:`impersonate a user </security/impersonating_user>` with a form, so the
 switching route can be restricted to ``POST``. The impersonated user is
-identified by the ``identifier`` argument.
-
-.. code-block:: html+twig
-
-    {% set impersonate = impersonation_form(user.userIdentifier) %}
-
-    <form method="post" action="{{ impersonate.action }}">
-        {% for name, value in impersonate.fields %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}">
-        {% endfor %}
-
-        <button>Impersonate {{ user.userIdentifier }}</button>
-    </form>
+identified by the ``identifier`` argument. Use it to write the HTML of the form
+yourself; otherwise, use `impersonation_button`_.
 
 ``fields`` contains the target identity and, when the firewall enables CSRF
-protection, the CSRF token, each under its configured parameter name. After the
-switch, the user is redirected to the current URI, or to ``targetUri`` when
-given. Read more about
+protection, the CSRF token, each under its configured parameter name. The
+returned ``csrf_field`` is the name of the field that contains the CSRF token,
+or ``null`` when the firewall doesn't enable CSRF protection. After the switch,
+the user is redirected to the current URI, or to ``targetUri`` when given. Read
+more about
 :ref:`impersonating with a form <security-impersonation-form>`.
 
 .. versionadded:: 8.2
@@ -484,6 +522,32 @@ Adds a ``Link`` HTTP header to the current response for the given link relation
 type (``rel``). It can be used for any link implementing the PSR-13 standard.
 Read more about :doc:`/web_link`.
 
+logout_button
+~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ logout_button(label = 'Log out', key = null, attr = {}, formAttr = {}) }}
+
+``label`` *(optional)*
+    **type**: ``string`` **default**: ``Log out``
+``key`` *(optional)*
+    **type**: ``string``
+``attr`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+``formAttr`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+
+Renders a form with a button to log out with a ``POST`` request. ``label`` is
+the text of the button. If no key is provided, the form logs out of the current
+firewall the user is logged into. ``attr`` and ``formAttr`` define the HTML
+attributes of the button and of the form. Read more about
+:ref:`logging out with a form <security-logout-form>`.
+
+.. versionadded:: 8.2
+
+    The ``logout_button()`` function was introduced in Symfony 8.2.
+
 logout_form
 ~~~~~~~~~~~
 
@@ -496,22 +560,13 @@ logout_form
 
 Returns the ``action`` and the ``fields`` needed to log out with a form, so the
 logout route can be restricted to ``POST``. If no key is provided, they are
-generated for the current firewall the user is logged into.
-
-.. code-block:: html+twig
-
-    {% set logout = logout_form() %}
-
-    <form method="post" action="{{ logout.action }}">
-        {% for name, value in logout.fields %}
-            <input type="hidden" name="{{ name }}" value="{{ value }}">
-        {% endfor %}
-
-        <button>Log out</button>
-    </form>
+generated for the current firewall the user is logged into. Use it to write the
+HTML of the form yourself; otherwise, use `logout_button`_.
 
 ``fields`` contains the CSRF token under its configured parameter name, and is
-empty when the firewall does not enable CSRF protection. Read more about
+empty when the firewall doesn't enable CSRF protection. The returned
+``csrf_field`` is the name of the field that contains the CSRF token, or
+``null`` in that case. Read more about
 :ref:`logging out with a form <security-logout-form>`.
 
 .. versionadded:: 8.2
