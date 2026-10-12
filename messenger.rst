@@ -3297,12 +3297,13 @@ These are all the available helpers:
     Returns the :class:`Symfony\\Component\\Messenger\\Transport\\InMemory\\InMemoryTransport`
     service of the transport.
 
-``consumeQueuedMessages(string $transport, ?int $limit = null)``
+``consumeQueuedMessages(?string $transport = null, ?int $limit = null)``
     Runs a worker that handles the queued messages with the message bus and
     the event dispatcher of the application. The worker stops when there are
     no more messages to handle or, if ``$limit`` is given, after receiving that
     number of messages (retries included). It returns the number of messages
-    handled successfully.
+    handled successfully. When no transport is given, it consumes all the
+    in-memory transports, as explained below.
 
 The worker listeners of the application run as they do in production, so a
 failed message is retried or sent to the
@@ -3322,6 +3323,22 @@ consumed again without waiting for their retry delay. This is how
 * a message delayed by your application (e.g. with a
   :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`) stays in the
   transport; it's not handled and it's not included in the returned count.
+
+When a message goes through several transports (e.g. a handler dispatches
+new messages to other transports), call ``consumeQueuedMessages()`` without
+a transport name to follow it through the application with a single call::
+
+    // consumes all the in-memory transports, in the order they are configured,
+    // until they are empty (this includes the messages dispatched by handlers)
+    $this->consumeQueuedMessages();
+
+    // the messages sent to a failure transport are not handled; consume that
+    // transport explicitly to handle them
+    $this->consumeQueuedMessages('failed');
+
+Without a ``$limit``, the test fails if the transports are still not empty
+after handling 1000 messages, so a handler that keeps dispatching messages
+can't make the test run forever. Pass a ``$limit`` to consume more messages.
 
 .. tip::
 
