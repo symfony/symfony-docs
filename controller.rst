@@ -1296,6 +1296,10 @@ The ``#[Serialize]`` attribute accepts the following arguments:
     The class to map the returned value to with the
     :doc:`ObjectMapper </object_mapper>` before serializing it (see
     :ref:`controller_serialize_map`).
+``stream``
+    Whether to stream the returned value as JSON with the
+    :doc:`JsonStreamer component </serializer/streaming_json>` instead of
+    serializing it (default: ``false``; see :ref:`controller_serialize_stream`).
 
 The response format is determined by the request format (``$request->getRequestFormat()``),
 which defaults to ``json``. The ``Content-Type`` header is set automatically
@@ -1408,6 +1412,72 @@ not mapped and are serialized as they are.
 
     The ``map`` argument of the ``#[Serialize]`` attribute was introduced in
     Symfony 8.2.
+
+.. _controller_serialize_stream:
+
+Streaming Controller Return Values
+..................................
+
+When a controller returns a large collection, serializing it builds the whole
+JSON string in memory before sending it. Set the ``stream`` argument to
+``true`` to write the returned value as JSON with the
+:doc:`JsonStreamer component </serializer/streaming_json>` instead, in a
+:class:`Symfony\\Component\\HttpFoundation\\StreamedResponse` (this requires
+the JsonStreamer component to be installed and enabled)::
+
+    use App\Entity\Product;
+    use App\Repository\ProductRepository;
+    use Symfony\Component\HttpKernel\Attribute\Serialize;
+
+    class ProductController
+    {
+        /**
+         * @return list<Product>
+         */
+        #[Serialize(
+            200,   // status code
+            [],    // headers
+            [],    // options passed to the stream writer
+            null,  // class to map the returned value to
+            true   // stream the returned value
+        )]
+        public function list(ProductRepository $productRepository): iterable
+        {
+            return $productRepository->findAll();
+        }
+    }
+
+The JsonStreamer component needs the type of the value to write, so Symfony
+reads it from the return type of the controller, including its ``@return``
+annotation. Use ``list<Product>`` instead of ``iterable<Product>`` in that
+annotation, because the keys of an ``iterable`` can be strings, so it's
+written as a JSON object instead of a JSON array.
+
+When you also set the :ref:`map argument <controller_serialize_map>`, the
+type of the value to write is the mapped class (or a list of that class when
+the controller returns an iterable), so you don't need the ``@return``
+annotation::
+
+    use App\Dto\ProductOutput;
+    use App\Repository\ProductRepository;
+    use Symfony\Component\HttpKernel\Attribute\Serialize;
+
+    class ProductController
+    {
+        #[Serialize(200, [], [], ProductOutput::class, true)]
+        public function list(ProductRepository $productRepository): iterable
+        {
+            return $productRepository->findAll();
+        }
+    }
+
+Streaming only supports the JSON format; other request formats get a
+``415 Unsupported Media Type`` response.
+
+.. versionadded:: 8.2
+
+    The ``stream`` argument of the ``#[Serialize]`` attribute was introduced
+    in Symfony 8.2.
 
 Streaming File Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~
