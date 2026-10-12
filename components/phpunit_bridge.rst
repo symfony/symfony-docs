@@ -761,6 +761,94 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
     advances the internal clock the given number of seconds without actually
     waiting that time, so your test will execute 10 seconds faster.
 
+.. _phpunit-bridge-clock-mock-clock-component:
+
+Mocking the Time with the Clock Component
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The integration of ``ClockMock`` with the Clock component was introduced
+    in Symfony 8.2.
+
+In time-sensitive tests, ``ClockMock`` follows the ``MockClock`` set as the
+global clock of the :doc:`Clock component </components/clock>` (e.g. by calling
+:ref:`ClockSensitiveTrait::mockTime() <clock_writing-tests>`). This way, a
+single ``mockTime()`` call changes the time of the ``clock`` service, of new
+``DatePoint`` objects and of the mocked PHP functions::
+
+    namespace App\Tests;
+
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Bridge\PhpUnit\Attribute\TimeSensitive;
+    use Symfony\Component\Clock\Test\ClockSensitiveTrait;
+
+    class MyTest extends TestCase
+    {
+        use ClockSensitiveTrait;
+
+        #[TimeSensitive]
+        public function testSomething(): void
+        {
+            $clock = self::mockTime('2030-01-01 00:00:00 UTC');
+            $this->assertSame(1_893_456_000, time());
+
+            // moving the MockClock also moves the mocked PHP functions...
+            $clock->sleep(3600);
+            $this->assertSame(1_893_459_600, time());
+
+            // ...and the mocked PHP functions also move the MockClock
+            sleep(60);
+            $this->assertSame('01:01:00', $clock->now()->format('H:i:s'));
+        }
+    }
+
+``ClockMock`` ignores any ``MockClock`` that was already the global clock when
+``ClockMock`` was enabled (e.g. a clock that a previous test didn't restore).
+
+Mocking the Time Used by Symfony Components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some Symfony components call ``time()`` or ``microtime()`` instead of using a
+clock. To make them follow the mocked time, add their namespaces to the
+``clock-mock-namespaces`` parameter of the ``SymfonyExtension``:
+
+* rate limiter: ``Symfony\Component\RateLimiter``,
+  ``Symfony\Component\RateLimiter\Policy``,
+  ``Symfony\Component\RateLimiter\Storage`` and
+  ``Symfony\Component\RateLimiter\Util``. If the limiters use the default
+  cache storage, add the cache namespaces too;
+* HTTP cookies, sessions and HTTP cache freshness:
+  ``Symfony\Component\HttpFoundation``,
+  ``Symfony\Component\HttpFoundation\Session\Storage\Handler``,
+  ``Symfony\Component\HttpKernel\EventListener``,
+  ``Symfony\Component\HttpKernel\HttpCache`` and
+  ``Symfony\Component\BrowserKit``;
+* cache: ``Symfony\Component\Cache``, ``Symfony\Component\Cache\Adapter``,
+  ``Symfony\Component\Cache\Messenger`` and ``Symfony\Component\Cache\Traits``;
+* HTTP client: ``Symfony\Component\HttpClient``,
+  ``Symfony\Component\HttpClient\Internal`` and
+  ``Symfony\Component\HttpClient\Response``. Timeouts then use the mocked time
+  too, but only when using the ``MockHttpClient`` (not with real network
+  requests).
+
+For example, to mock the time used by rate limiters:
+
+.. code-block:: xml
+
+    <!-- phpunit.xml.dist -->
+    <!-- ... -->
+    <extensions>
+        <bootstrap class="Symfony\Bridge\PhpUnit\SymfonyExtension">
+            <parameter name="clock-mock-namespaces" value="App\Service,Symfony\Component\RateLimiter,Symfony\Component\RateLimiter\Policy,Symfony\Component\RateLimiter\Storage,Symfony\Component\RateLimiter\Util"/>
+        </bootstrap>
+    </extensions>
+
+Use this parameter instead of ``ClockMock::register()`` for these namespaces:
+the mocked functions must exist before that code runs for the first time, and
+the parameter creates them before any test runs. In tests that aren't
+time-sensitive, these functions return the real time.
+
 .. _phpunit-bridge-dns-sensitive-tests:
 
 DNS-sensitive Tests
