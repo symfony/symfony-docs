@@ -807,10 +807,44 @@ To set a specific firewall (``main`` is set by default)::
 
     $client->loginUser($testUser, 'my_firewall');
 
-.. note::
+.. _testing_login_user_stateless_access_token:
 
-    By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
-    Instead, add the appropriate token/header in each ``request()`` call.
+Logging in Users on Stateless Firewalls
+"""""""""""""""""""""""""""""""""""""""
+
+Stateless firewalls don't read the session, so by design ``loginUser()``
+doesn't work with them. Instead, add the appropriate token or header in each
+``request()`` call.
+
+Stateless firewalls that use the
+:doc:`access_token authenticator </security/access_token>` are the only
+exception. On those firewalls, the test client also sends the token created by ``loginUser()``
+with each request, so you can test your API without faking the identity
+provider or signing tokens by hand. This works with any token handler::
+
+    // tests/Controller/Api/ProposalControllerTest.php
+    use Symfony\Component\Security\Core\User\InMemoryUser;
+    use Symfony\Component\Security\Http\Authenticator\AccessTokenAuthenticator;
+
+    $client = static::createClient();
+    $testUser = new InMemoryUser('admin', 'password', ['ROLE_ADMIN']);
+    // the second argument is the name of the stateless firewall and the third
+    // one defines the token attributes (e.g. the granted OAuth 2.0 scopes)
+    $client->loginUser($testUser, 'api', [
+        AccessTokenAuthenticator::SCOPE_ATTRIBUTE => ['proposals:read'],
+    ]);
+
+    $client->request('GET', '/api/proposals');
+
+Symfony loads the user from the user provider of the firewall, as it does for
+a real access token, so the user must exist in that provider. If a request
+includes its own access token, Symfony uses that token instead of the one
+created by ``loginUser()``.
+
+.. versionadded:: 8.2
+
+    Support for stateless ``access_token`` firewalls in ``loginUser()`` was
+    introduced in Symfony 8.2.
 
 .. _testing_setup_the_session:
 .. _setup-the-session:
