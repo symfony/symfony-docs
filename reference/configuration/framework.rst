@@ -5470,12 +5470,19 @@ has been compromised in a data breach.
 enabled
 """""""
 
-**type**: ``boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true`` (``false`` when
+:ref:`framework.test <reference-framework-test>` is enabled)
 
 If you set this option to ``false``, no HTTP requests will be made and the given
 password will be considered valid. This is useful when you don't want or can't
 make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
+
+.. versionadded:: 8.2
+
+    Disabling this option by default when ``framework.test`` is enabled was
+    introduced in Symfony 8.2. Set it to ``true`` explicitly to make the HTTP
+    requests in the ``test`` environment.
 
 endpoint
 """"""""
