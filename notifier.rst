@@ -1150,6 +1150,25 @@ You can benefit from this class by using it directly or extending the
 
 See :ref:`testing documentation <notifier-assertions>` for the list of available assertions.
 
+The notifier assertions also see the notifications sent during the previous
+requests of the same test, so you can follow a redirect before checking the
+notifications::
+
+    // this request sends a notification and returns a redirect response
+    $client->request('POST', '/contact', ['message' => 'Hello']);
+    $client->followRedirect();
+
+    // the notification sent during the first request is still counted
+    self::assertNotificationCount(1);
+
+If you check that a later request sends no notification, take into account the
+notifications sent by the previous requests of the test.
+
+.. versionadded:: 8.2
+
+    Seeing the notifications sent during the previous requests was introduced
+    in Symfony 8.2.
+
 Disabling Delivery
 ------------------
 

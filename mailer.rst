@@ -3040,12 +3040,23 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
         }
     }
 
-.. tip::
+The mailer assertions also see the emails sent during the previous requests of
+the same test, so you can follow a redirect before checking the emails::
 
-   If your controller returns a redirect response after sending the email, make
-   sure to have your client *not* follow redirects. The kernel is rebooted after
-   following the redirection and the message will be lost from the mailer event
-   handler.
+    // this request sends an email and returns a redirect response
+    $client->request('POST', '/contact', ['message' => 'Hello']);
+    $client->followRedirect();
+
+    // the email sent during the first request is still counted
+    self::assertEmailCount(1);
+
+If you check that a later request sends no email, take into account the emails
+sent by the previous requests of the test.
+
+.. versionadded:: 8.2
+
+    Seeing the emails sent during the previous requests was introduced in
+    Symfony 8.2.
 
 .. _`AhaSend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/AhaSend/README.md
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
