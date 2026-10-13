@@ -334,8 +334,8 @@ Symfony creates the store based on the database of that connection:
 
 * PostgreSQL: :ref:`PostgreSqlStore <lock-store-pgsql>` for ``PDO`` and
   :ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>` for Doctrine DBAL;
-* MySQL and MariaDB: ``MysqlStore`` for ``PDO`` and ``DoctrineDbalMysqlStore``
-  for Doctrine DBAL.
+* MySQL and MariaDB: :ref:`MysqlStore <lock-store-mysql>` for ``PDO`` and
+  ``DoctrineDbalMysqlStore`` for Doctrine DBAL.
 
 Other databases don't support advisory locks, so Symfony throws an exception
 when creating the store. This happens at runtime, not when compiling the
@@ -733,6 +733,7 @@ Store                                                       Scope   Blocking  Ex
 :ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes     no
 :ref:`MemcachedStore <lock-store-memcached>`                remote  retry     yes      no      yes
 :ref:`MongoDbStore <lock-store-mongodb>`                    remote  retry     yes      no      yes
+:ref:`MysqlStore <lock-store-mysql>`                        remote  retry     no       no      no
 :ref:`PdoStore <lock-store-pdo>`                            remote  retry     yes      no      yes
 :ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes     no
 :ref:`RedisStore <lock-store-redis>`                        remote  retry     yes      yes     yes
@@ -941,6 +942,47 @@ time in ``expireAfterSeconds`` to account for any clock drift between nodes.
 meaning the collection's settings will take effect. ``readPreference`` is
 ``primary`` for all queries. Read more about
 `Replica Set Read and Write Semantics`_ in MongoDB.
+
+.. _lock-store-mysql:
+
+MysqlStore
+~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    ``MysqlStore`` was introduced in Symfony 8.2.
+
+The MysqlStore uses `MySQL user-level locks`_ (also known as advisory locks). It
+requires a `PDO`_ connection or a `Data Source Name (DSN)`_. It supports neither
+blocking nor sharing locks::
+
+    use Symfony\Component\Lock\Store\MysqlStore;
+
+    // a PDO instance or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'mysql:host=localhost;port=5634;dbname=app';
+    $store = new MysqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
+
+Unlike the ``PdoStore``, the ``MysqlStore`` does not need a table to store locks
+and it does not expire. Locks are bound to the database connection that acquired
+them, so they are automatically released at the end of the session in case the
+client cannot unlock for any reason. These locking functions are also available
+in MariaDB, which uses the same ``mysql`` PDO driver.
+
+If the MySQL service or the machine hosting it restarts, every lock would be
+lost without notifying the running processes. If the TCP connection is lost,
+MySQL may release locks without notifying the application.
+
+.. note::
+
+    This store requires MySQL 5.7.5 or MariaDB 10.0.2 or newer. Older versions
+    only allow one user-level lock per session, so acquiring a lock releases the
+    previously held one.
+
+.. note::
+
+    This store only supports the PDO DSN syntax
+    (``mysql+advisory:host=127.0.0.1;dbname=app``). Unlike ``pgsql+advisory``,
+    the URL syntax (``mysql+advisory://user:password@host/db``) is not supported.
 
 .. _lock-store-pdo:
 
@@ -1322,6 +1364,7 @@ configuration are still running.
 .. _`MongoDB Connection String`: https://docs.mongodb.com/manual/reference/connection-string/
 .. _`mongodb/mongodb`: https://packagist.org/packages/mongodb/mongodb
 .. _`MongoDBClient::__construct`: https://docs.mongodb.com/php-library/current/reference/method/MongoDBClient__construct/
+.. _`MySQL user-level locks`: https://dev.mysql.com/doc/refman/en/locking-functions.html
 .. _`PDO`: https://www.php.net/pdo
 .. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
 .. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
