@@ -5478,11 +5478,13 @@ password will be considered valid. This is useful when you don't want or can't
 make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
 
+Set it to ``true`` explicitly to make the HTTP requests in the ``test``
+environment.
+
 .. versionadded:: 8.2
 
     Disabling this option by default when ``framework.test`` is enabled was
-    introduced in Symfony 8.2. Set it to ``true`` explicitly to make the HTTP
-    requests in the ``test`` environment.
+    introduced in Symfony 8.2.
 
 endpoint
 """"""""

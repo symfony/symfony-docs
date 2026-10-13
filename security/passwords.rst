@@ -103,8 +103,7 @@ Further in this article, you can find a
     .. versionadded:: 8.2
 
         The automatic use of the lowest costs when ``framework.test`` is
-        enabled was introduced in Symfony 8.2. In previous versions, you
-        had to lower these options in a ``when@test`` section yourself.
+        enabled was introduced in Symfony 8.2.
 
 Hashing the Password
 --------------------
