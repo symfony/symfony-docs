@@ -541,6 +541,17 @@ notification emails:
             ],
         ]);
 
+If you don't set the envelope sender, the email channel uses as the sender the
+``From`` header defined in the
+:ref:`global configuration of the mailer <mailer-configure-email-globally>`.
+A "from" address set explicitly in the email message of the notification
+(see :ref:`notifier-customize-messages`) always takes precedence.
+
+.. versionadded:: 8.2
+
+    The fallback to the global ``From`` header of the mailer was introduced
+    in Symfony 8.2.
+
 .. _notifier-push-channel:
 
 Push Channel
@@ -1039,6 +1050,8 @@ very high and the recipient has a phone number::
             return ['email'];
         }
     }
+
+.. _notifier-customize-messages:
 
 Customize Notification Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
