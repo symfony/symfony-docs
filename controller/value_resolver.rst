@@ -115,6 +115,16 @@ Symfony ships with the following value resolvers in the
     type-hinted with ``SessionInterface`` or a class implementing
     ``SessionInterface``.
 
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RateLimitValueResolver`
+    Injects the rate limit consumed by the ``#[RateLimit]`` attributes of the
+    controller if type-hinted with
+    :class:`Symfony\\Component\\RateLimiter\\RateLimit`. Read more about it in
+    :ref:`the rate limiter docs <rate-limiter-consumed-rate-limit>`.
+
+    .. versionadded:: 8.2
+
+        The ``RateLimitValueResolver`` was introduced in Symfony 8.2.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DefaultValueResolver`
     Will set the default value of the argument if present and the argument
     is optional.
