@@ -728,6 +728,87 @@ of the profiler to delete all their information.
     Support for resetting non-shared services tagged with ``kernel.reset``
     was introduced in Symfony 8.1.
 
+kernel.test_state
+-----------------
+
+**Purpose**: Keep or reset the state of a service for the duration of a test
+
+.. versionadded:: 8.2
+
+    The ``kernel.test_state`` tag was introduced in Symfony 8.2.
+
+In :ref:`application tests <functional-tests>`, the test client
+:ref:`reboots the kernel or resets the services <testing-multiple-requests-in-one-test>`
+tagged with ``kernel.reset`` between requests. Use this tag for services whose
+state must last for the whole test instead of a single request. The tag only
+works when the :ref:`framework.test <reference-framework-test>` option is
+enabled, and it requires one of the following attributes:
+
+``method``
+    The name of the method that Symfony calls on the service when the test
+    ends (when :method:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase::ensureKernelShutdown`
+    runs). Use it for services whose state outlives the kernel, such as a cache
+    pool, so the next test starts from a clean state. For example, Symfony uses
+    it to clear the ``cache.rate_limiter`` pool between tests.
+
+``keep``
+    When ``true``, Symfony keeps a copy of the service before each kernel reset
+    or reboot, until the test ends. Use it for services also tagged with
+    ``kernel.reset`` that collect data during requests (such as the
+    ``mailer.message_logger_listener`` service) so test helpers like
+    ``MailerAssertionsTrait`` can still read what previous requests recorded.
+    Call ``getKeptState('<service id>')`` on the test container to get these
+    copies (oldest first).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # calls clear() on this service when each test ends
+            App\Cache\ReportCache:
+                tags:
+                    - { name: kernel.test_state, method: clear }
+
+            # keeps a copy of this service before each kernel reset or reboot
+            App\Logger\AuditTrail:
+                tags:
+                    - { name: kernel.reset, method: reset }
+                    - { name: kernel.test_state, keep: true }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Cache\ReportCache;
+        use App\Logger\AuditTrail;
+
+        return App::config([
+            'services' => [
+                // calls clear() on this service when each test ends
+                ReportCache::class => [
+                    'tags' => [
+                        ['kernel.test_state' => ['method' => 'clear']],
+                    ],
+                ],
+                // keeps a copy of this service before each kernel reset or reboot
+                AuditTrail::class => [
+                    'tags' => [
+                        ['kernel.reset' => ['method' => 'reset']],
+                        ['kernel.test_state' => ['keep' => true]],
+                    ],
+                ],
+            ],
+        ]);
+
+The copy kept with ``keep`` is a shallow clone of the service. Unless the
+service defines a ``__clone()`` method that copies its internal objects, the
+method called by ``kernel.reset`` must replace the objects that store the
+service state (e.g. ``$this->events = new EventList()``) instead of changing
+them in place (e.g. ``$this->events->clear()``).
+
 .. _dic_tags-mime:
 
 mime.mime_type_guesser
