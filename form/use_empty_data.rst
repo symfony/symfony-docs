@@ -22,7 +22,9 @@ your form. For example, in a controller::
 By default, ``empty_data`` is set to ``null``. Or, if you have specified
 a ``data_class`` option for your form class, it will default to a new instance
 of that class. That instance will be created by calling the constructor
-with no arguments.
+with no arguments or, if the constructor has required arguments or promoted
+readonly properties, by passing it the data of the form fields (see
+:ref:`forms-empty-data-constructor`).
 
 If you want to override this default behavior, there are two ways to do this:
 
@@ -37,8 +39,7 @@ Option 1: Instantiate a new Class
 ---------------------------------
 
 One reason you might use this option is if you want to use a constructor
-that takes arguments. Remember, the default ``data_class`` option calls
-that constructor with no arguments::
+that takes arguments that don't come from the form fields (e.g. a service)::
 
     // src/Form/Type/BlogType.php
     namespace App\Form\Type;
@@ -99,3 +100,88 @@ The closure must accept a ``FormInterface`` instance as the first argument::
             },
         ]);
     }
+
+.. _forms-empty-data-constructor:
+
+Using the Constructor of the Data Class
+---------------------------------------
+
+.. versionadded:: 8.2
+
+    The mapping of the fields to the constructor of the data class was
+    introduced in Symfony 8.2.
+
+Immutable classes, such as the ones that use promoted ``readonly`` properties,
+receive all their data in the constructor and can't be modified after creating
+them. If the constructor of the ``data_class`` is public and has required
+arguments or promoted readonly properties, you don't need to define the
+``empty_data`` option or the ``setter`` option of each field. Symfony passes
+the data of the form fields to the constructor, matching each argument with the
+field whose property path is the name of that argument (e.g. ``email``, but not
+``address.street``)::
+
+    // src/Model/SignUp.php
+    namespace App\Model;
+
+    final readonly class SignUp
+    {
+        public function __construct(
+            public string $email,
+            public \DateTimeImmutable $birthDate,
+            // the form doesn't define a 'newsletter' field, so the
+            // default value of this argument is used
+            public bool $newsletter = false,
+        ) {
+        }
+    }
+
+    // src/Form/Type/SignUpType.php
+    namespace App\Form\Type;
+
+    use App\Model\SignUp;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    class SignUpType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder
+                ->add('email', EmailType::class)
+                ->add('birthDate', DateType::class, ['widget' => 'single_text'])
+            ;
+        }
+
+        public function configureOptions(OptionsResolver $resolver): void
+        {
+            $resolver->setDefaults(['data_class' => SignUp::class]);
+        }
+    }
+
+This works for any required constructor argument, promoted or not. Arguments
+without a matching field get their default value. If a required argument has
+no matching field, the form fails; add that field or define the ``empty_data``
+option. Disabled and unsubmitted fields pass their initial data to the
+constructor. Symfony doesn't map fields to variadic arguments, nor fields that
+define the ``setter`` option or set the ``mapped`` option to ``false``.
+
+When editing an existing object, if the user changes a field mapped to a
+promoted readonly property, Symfony creates a new object with the new value and
+reads the other arguments from the previous object. As a result,
+``$form->getData()`` returns a new object and the original object doesn't
+change. Symfony only does this when the constructor promotes all the properties
+of the class (including the ones declared in its parent classes), so no data is
+lost. Otherwise, the form fails because it can't write the new value into the
+readonly property. Fields mapped to promoted properties that aren't readonly
+pass their value to the constructor and are then written like any other
+property.
+
+If the submitted value of a field is empty and the argument isn't nullable,
+Symfony uses the default value of the argument. If the argument has no default
+value, the form adds an error to that field. When the Validator component is
+installed, the constraints of the mapped property (e.g. ``NotBlank`` or
+``NotNull``) are validated against the field data first. If they pass, the
+``invalid_message`` of the field is displayed.
