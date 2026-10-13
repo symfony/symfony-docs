@@ -425,7 +425,13 @@ has no value:
 ``authorization_servers``
     The issuer identifiers of the authorization servers that issue the access
     tokens accepted by this firewall (e.g. ``https://accounts.example.com``).
-    Clients use them to know where to get a token.
+    Clients use them to know where to get a token. It defaults to the
+    ``issuers`` option of the
+    :ref:`oidc token handler <access-token-oidc-token-handler>` or to the
+    ``issuer`` option of the
+    :ref:`oauth2 token handler <access-token-oauth2-introspection>`. Set it
+    explicitly when the ``oidc`` token handler uses OpenID Connect Discovery
+    without defining the ``issuers`` option.
 
 ``jwks_uri``
     The URL of the JWK Set with the keys that your API uses to sign its own
@@ -654,6 +660,8 @@ claims. To create your own user object from the claims, you must
         }
     }
 
+.. _access-token-oidc-token-handler:
+
 2) Configure the OidcTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -692,6 +700,7 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                 # Audience (`aud` claim): required for validation purpose
                                 audience: 'api-example'
                                 # Issuers (`iss` claim): required for validation purpose
+                                # (optional when using OpenID Connect Discovery)
                                 issuers: ['https://oidc.example.com']
                                 # Tolerance in seconds for clock differences between the token
                                 # issuer and this application, applied when validating the
@@ -725,6 +734,7 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                     // Audience (`aud` claim): required for validation purpose
                                     'audience' => 'api-example',
                                     // Issuers (`iss` claim): required for validation purpose
+                                    // (optional when using OpenID Connect Discovery)
                                     'issuers' => ['https://oidc.example.com'],
                                     // Tolerance in seconds for clock differences between the tokens
                                     // issuer and this application, applied when validating the
@@ -783,8 +793,8 @@ haven't installed it yet, run the following command:
 
     $ composer require symfony/cache
 
-Then, you can remove the ``keyset`` configuration option (it will be imported
-from the OpenID Connect Discovery), and configure the ``discovery`` option:
+Then, remove the ``keyset`` option (and optionally, the ``issuers`` option) and
+configure the ``discovery`` option instead:
 
 .. configuration-block::
 
@@ -800,7 +810,6 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                                 claim: email
                                 algorithms: ['ES256', 'RS256']
                                 audience: 'api-example'
-                                issuers: ['https://oidc.example.com']
                                 discovery:
                                     base_uri: https://www.example.com/realms/demo/
                                     cache:
@@ -821,7 +830,6 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                                     'claim' => 'email',
                                     'algorithms' => ['ES256', 'RS256'],
                                     'audience' => 'api-example',
-                                    'issuers' => ['https://oidc.example.com'],
                                     'discovery' => [
                                         'base_uri' => 'https://www.example.com/realms/demo/',
                                         'cache' => [
@@ -835,6 +843,16 @@ from the OpenID Connect Discovery), and configure the ``discovery`` option:
                 ],
             ],
         ]);
+
+The handler imports the keys from the discovery document. If you don't set the
+``issuers`` option, the handler only accepts the tokens whose ``iss`` claim is
+the issuer announced by that document and verifies them only with the keys of
+that document.
+
+.. versionadded:: 8.2
+
+    The option to omit ``issuers`` when using OpenID Connect Discovery was
+    introduced in Symfony 8.2.
 
 By default, when using OpenID Connect Discovery, only keys explicitly designated
 for signature verification (i.e. keys with ``"use": "sig"`` or ``"key_ops"``
@@ -973,10 +991,6 @@ to validate tokens from different identity providers:
                             oidc:
                                 algorithms: ['ES256', 'RS256']
                                 audience: 'api-example'
-                                # each "issuer" announced by the discovery documents
-                                issuers:
-                                    - https://idp1.example.com/realms/demo
-                                    - https://idp2.example.com/realms/demo
                                 discovery:
                                     base_uri:
                                         - https://idp1.example.com/realms/demo/
@@ -998,11 +1012,6 @@ to validate tokens from different identity providers:
                                 'oidc' => [
                                     'algorithms' => ['ES256', 'RS256'],
                                     'audience' => 'api-example',
-                                    // each "issuer" announced by the discovery documents
-                                    'issuers' => [
-                                        'https://idp1.example.com/realms/demo',
-                                        'https://idp2.example.com/realms/demo',
-                                    ],
                                     'discovery' => [
                                         'base_uri' => [
                                             'https://idp1.example.com/realms/demo/',
@@ -1022,10 +1031,10 @@ to validate tokens from different identity providers:
 
 The token handler fetches the JWK set of each discovery endpoint and binds its
 keys to the issuer announced by that discovery document, so each token is only
-verified with the keys of its own issuer (the ``iss`` claim). That's why every
-announced issuer must be listed in the ``issuers`` option exactly as announced
-(including any trailing slash) and two discovery documents can't announce the
-same issuer.
+verified with the keys of its own issuer (the ``iss`` claim). That's why two
+discovery documents can't announce the same issuer. If you set the ``issuers``
+option, it must list every announced issuer exactly as announced, including any
+trailing slash.
 
 Checking the Issuer of Discovery Documents
 ..........................................
@@ -1054,7 +1063,6 @@ discovery endpoint:
                         token_handler:
                             oidc:
                                 # ...
-                                issuers: ['https://idp.example.com/realms/demo']
                                 discovery:
                                     base_uri: https://idp.example.com/realms/demo/
                                     cache:
@@ -1076,7 +1084,6 @@ discovery endpoint:
                             'token_handler' => [
                                 'oidc' => [
                                     // ...
-                                    'issuers' => ['https://idp.example.com/realms/demo'],
                                     'discovery' => [
                                         'base_uri' => 'https://idp.example.com/realms/demo/',
                                         'cache' => [
@@ -1113,7 +1120,6 @@ that are not listed in the map must announce their own base URI as the issuer:
                         token_handler:
                             oidc:
                                 # ...
-                                issuers: ['https://sts.windows.net/<tenant>/']
                                 discovery:
                                     base_uri: https://login.microsoftonline.com/<tenant>/
                                     # ...
@@ -1133,7 +1139,6 @@ that are not listed in the map must announce their own base URI as the issuer:
                             'token_handler' => [
                                 'oidc' => [
                                     // ...
-                                    'issuers' => ['https://sts.windows.net/<tenant>/'],
                                     'discovery' => [
                                         'base_uri' => 'https://login.microsoftonline.com/<tenant>/',
                                         // ...
@@ -1149,9 +1154,9 @@ that are not listed in the map must announce their own base URI as the issuer:
             ],
         ]);
 
-The checked issuer must also be one of the values of the ``issuers`` option,
-written exactly as the discovery document announces it (including its trailing
-slash, if any).
+If you set the ``issuers`` option, it must also contain the checked issuer,
+written exactly as the discovery document announces it (including any trailing
+slash).
 
 Accepting Multiple Audiences
 ............................
@@ -1287,6 +1292,8 @@ useful when developing or testing applications that use OIDC authentication:
 .. note::
 
     The JWK used for signing must have the appropriate `key operation flags`_ set.
+
+.. _access-token-oauth2-introspection:
 
 Using OAuth 2.0 Token Introspection
 -----------------------------------
