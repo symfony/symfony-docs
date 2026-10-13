@@ -846,7 +846,8 @@ Testing Webhooks
 Use the ``sendWebhook()`` method of the test client to test the webhooks that
 your application receives. It posts a webhook to the endpoint, signed as the
 ``framework.webhook.routing`` entry of the given type expects it and
-timestamped by the ``clock`` service::
+timestamped by the ``clock`` service. The following example assumes a
+``payments`` routing entry that uses the ``webhook.request_parser`` service::
 
     // tests/Webhook/PaymentWebhookTest.php
     namespace App\Tests\Webhook;
