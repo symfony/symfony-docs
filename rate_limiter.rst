@@ -228,6 +228,7 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\RateLimit;
+    use Symfony\Component\Routing\Attribute\Route;
 
     class ApiController extends AbstractController
     {
@@ -252,6 +253,15 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
         // can't be spread across multiple IPs to bypass the limit)
         #[RateLimit('per_account', key: new Expression('request.request.get("email")'))]
         public function resetPassword(): Response
+        {
+            // ...
+        }
+
+        // build the bucket key from a route parameter; Symfony replaces the
+        // {id} placeholder with the value of the 'id' route parameter
+        #[Route('/user/{id}/messages', methods: ['POST'])]
+        #[RateLimit('per_account', key: 'user-{id}')]
+        public function sendMessage(): Response
         {
             // ...
         }
@@ -286,6 +296,16 @@ which Symfony turns into a ``429 Too Many Requests`` response with a
             // ...
         }
     }
+
+When the ``key`` is a string, Symfony replaces each ``{name}`` placeholder in
+it with the value of the request attribute of the same name (e.g. a route
+parameter). That attribute must exist and its value must be a string, an
+integer or a ``Stringable`` object.
+
+.. versionadded:: 8.2
+
+    The ``{name}`` placeholders in the ``key`` argument were introduced in
+    Symfony 8.2.
 
 When SecurityBundle is installed, the ``key`` expression can call any of the
 :ref:`security functions <security-expression-variables>`, such as
@@ -335,9 +355,9 @@ arguments. Symfony checks those limits after resolving the arguments, in the
 same order as the attributes. For example, when ``#[IsGranted]`` is above
 ``#[RateLimit]``, the requests that it denies don't count toward the rate
 limit. If a key or condition only needs a route parameter, read it from the
-request (e.g. ``request.attributes.get('id')``) instead of reading the related
-entity from ``args``, so Symfony can check the limit before resolving the
-arguments.
+request (e.g. with a ``{id}`` placeholder or ``request.attributes.get('id')``)
+instead of reading the related entity from ``args``, so Symfony can check the
+limit before resolving the arguments.
 
 .. versionadded:: 8.2
 
