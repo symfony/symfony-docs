@@ -1271,6 +1271,10 @@ The ``#[Serialize]`` attribute accepts the following arguments:
 ``context``
     The serialization context passed to the :doc:`Serializer </serializer>`
     (e.g. ``['groups' => ['read']]``).
+``map``
+    The class to map the returned value to with the
+    :doc:`ObjectMapper </object_mapper>` before serializing it (see
+    :ref:`controller_serialize_map`).
 
 The response format is determined by the request format (``$request->getRequestFormat()``),
 which defaults to ``json``. The ``Content-Type`` header is set automatically
@@ -1330,6 +1334,51 @@ ID in the ``response.serializer``
 .. versionadded:: 8.2
 
     The ``response.serializer`` option was introduced in Symfony 8.2.
+
+.. _controller_serialize_map:
+
+Mapping Controller Return Values
+................................
+
+API controllers often convert their entities into DTOs before returning them,
+so the response doesn't expose the internal structure of the entities. Instead
+of doing that conversion in every controller, set the ``map`` argument to the
+DTO class. The controller then returns the entity and the
+:doc:`ObjectMapper </object_mapper>` maps it to that class before serializing
+it (this requires the ObjectMapper component to be installed and enabled)::
+
+    use App\Dto\ProductOutput;
+    use App\Entity\Product;
+    use App\Repository\ProductRepository;
+    use Symfony\Component\HttpKernel\Attribute\Serialize;
+
+    class ProductController
+    {
+        // the arguments are: status code, headers, serialization context
+        // and the class to map the returned value to
+        #[Serialize(200, [], [], ProductOutput::class)]
+        public function show(Product $product): Product
+        {
+            return $product;
+        }
+
+        #[Serialize(200, [], [], ProductOutput::class)]
+        public function list(ProductRepository $productRepository): array
+        {
+            // each item of the array is mapped to ProductOutput; if you return
+            // an iterable (e.g. a generator), its items are mapped lazily
+            // while they are serialized
+            return $productRepository->findAll();
+        }
+    }
+
+Values that aren't objects (e.g. ``null`` or scalar items of an array) are
+not mapped and are serialized as they are.
+
+.. versionadded:: 8.2
+
+    The ``map`` argument of the ``#[Serialize]`` attribute was introduced in
+    Symfony 8.2.
 
 Streaming File Responses
 ~~~~~~~~~~~~~~~~~~~~~~~~
