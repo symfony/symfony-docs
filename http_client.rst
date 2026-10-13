@@ -2965,29 +2965,10 @@ makes tests slow and unreliable. The HTTP recorder solves both problems: it make
 the real requests once, stores them in ``.har`` files that you commit with your
 tests and replays them in all later test runs.
 
-First, enable the recorder in the ``test`` environment:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/http_client.yaml
-        when@test:
-            http_client:
-                recorder: true
-
-    .. code-block:: php
-
-        // config/packages/http_client.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        return App::config([
-            'when@test' => [
-                'http_client' => [
-                    'recorder' => true,
-                ],
-            ],
-        ]);
+The recorder is enabled by default in the ``test`` environment (more precisely,
+whenever the :ref:`framework.test <reference-framework-test>` option is
+enabled). To disable it, set the
+:ref:`recorder <reference-http-client-recorder>` option to ``false``.
 
 The recorder is controlled by the PHPUnit extension of the
 :doc:`PHPUnit Bridge </components/phpunit_bridge>`. Register that extension in
