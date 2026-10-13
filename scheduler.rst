@@ -176,6 +176,10 @@ the frequency of the message. Symfony provides different types of triggers:
 :class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeTrigger`
     A trigger that excludes certain times from a given trigger.
 
+:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeOfDayTrigger`
+    A trigger that excludes the same time window every day from a given
+    trigger.
+
 :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger`
     A trigger that adds a random jitter to a given trigger. The jitter is some
     time that is added to the original triggering date/time. This
@@ -185,10 +189,11 @@ the frequency of the message. Symfony provides different types of triggers:
 :class:`Symfony\\Component\\Scheduler\\Trigger\\PeriodicalTrigger`
     A trigger that uses a ``DateInterval`` to determine the next run date.
 
-The :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger` and
-:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeTrigger` are decorators
-and modify the behavior of the trigger they wrap. You can get the decorated
-trigger as well as the decorators by calling the
+The :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger`,
+:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeTrigger` and
+:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeOfDayTrigger`
+are decorators and modify the behavior of the trigger they wrap. You can get
+the decorated trigger as well as the decorators by calling the
 :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::inner`
 and :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::decorators`
 methods::
@@ -329,6 +334,57 @@ When starting the scheduler, the message isn't sent to the messenger immediately
 If you don't set a ``from`` parameter, the first frequency period starts from the
 moment the scheduler runs. For example, if you start it at 8:33 and the message
 is scheduled hourly, it will run at 9:33, 10:33, 11:33, etc.
+
+Excluding a Daily Time Window
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``ExcludeTimeOfDayTrigger`` class was introduced in Symfony 8.2.
+
+Some messages must not run during a period that repeats every day, such as
+a nightly maintenance or backup window. The ``ExcludeTimeTrigger`` can't
+handle this case because it excludes a single period between two absolute
+dates. Instead, wrap the trigger in an
+:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeOfDayTrigger`
+and pass the start and end times of the window (in ``H:i`` or ``H:i:s``
+format)::
+
+    use App\Message\ProcessPendingOrders;
+    use Symfony\Component\Scheduler\RecurringMessage;
+    use Symfony\Component\Scheduler\Trigger\CronExpressionTrigger;
+    use Symfony\Component\Scheduler\Trigger\ExcludeTimeOfDayTrigger;
+
+    // runs every 10 minutes, except between 23:00 and 04:00 (both included)
+    RecurringMessage::trigger(
+        new ExcludeTimeOfDayTrigger(
+            CronExpressionTrigger::fromSpec('*/10 * * * *'),
+            '23:00',
+            '04:00'
+        ),
+        new ProcessPendingOrders()
+    );
+
+When the end time is earlier than the start time, as in the previous example,
+the window spans midnight. The start and end times must be different.
+
+By default, the window times use the timezone of the run dates calculated
+by the decorated trigger. Pass a ``DateTimeZone`` object as the fourth
+argument to use another timezone. This keeps the window at the same local
+time even if the decorated trigger works in UTC::
+
+    new ExcludeTimeOfDayTrigger(
+        CronExpressionTrigger::fromSpec('*/10 * * * *'),
+        '23:00',
+        '04:00',
+        new \DateTimeZone('Europe/Paris')
+    );
+
+The window uses local clock times, so it doesn't move on the days when
+a daylight saving time change skips or repeats an hour.
+
+If all the run dates of the decorated trigger fall inside the window, the
+trigger stops searching after one year and returns no next run date.
 
 Custom Triggers
 ~~~~~~~~~~~~~~~
