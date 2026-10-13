@@ -1397,6 +1397,43 @@ Using the filter will be rendered as:
     {{ 'message'|trans(arguments = {'%name%': 'John'}, domain = 'messages', locale = 'en') }}
     {# output: Hello John #}
 
+.. _reference-twig-filter-trans-html:
+
+trans_html
+~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``trans_html`` filter was introduced in Symfony 8.2.
+
+.. code-block:: twig
+
+    {{ message|trans_html(tags, arguments = {}, domain = null, locale = null, count = null) }}
+
+``message``
+    **type**: ``string`` | ``Translatable``
+``tags``
+    **type**: ``array`` **required**
+``arguments`` *(optional)*
+    **type**: ``array`` **default**: ``{}``
+``domain`` *(optional)*
+    **type**: ``string`` **default**: ``null``
+``locale`` *(optional)*
+    **type**: ``string`` **default**: ``null``
+``count`` *(optional)*
+    **type**: ``integer`` **default**: ``null``
+
+Translates the text into the current language, renders the tags of the message
+as the HTML elements defined in ``tags`` and escapes everything else. When
+``count`` is set, the filter also passes it as the ``%count%`` parameter. More
+information in :ref:`Translating Messages That Contain HTML <translation-html>`.
+
+.. code-block:: html+twig
+
+    {# translated message: 'Read the <terms>terms of service</terms>.' #}
+    {{ 'signup.terms'|trans_html({terms: {tag: 'a', attr: {href: '/terms'}}}) }}
+    {# output: Read the <a href="/terms">terms of service</a>. #}
+
 sanitize_html
 ~~~~~~~~~~~~~
 
