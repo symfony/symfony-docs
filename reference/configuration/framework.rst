@@ -564,11 +564,17 @@ See :ref:`metadata_dir <asset-mapper-metadata-dir>`.
 missing_import_mode
 ...................
 
-**type**: ``string`` **default**: ``'warn'`` **possible values**: ``'strict'``, ``'warn'`` or ``'ignore'``
+**type**: ``string`` **default**: ``'strict'`` when the debug mode is enabled, ``'warn'`` otherwise **possible values**: ``'strict'``, ``'warn'`` or ``'ignore'``
 
 Behavior if an asset cannot be found when imported from JavaScript or CSS files
-(e.g. ``import './non-existent.js'``). ``strict`` means an exception is thrown,
-``warn`` means a warning is logged, ``ignore`` means the import is left as-is.
+(e.g. ``import './non-existent.js'``): ``strict`` throws an exception, ``warn``
+logs a warning and ``ignore`` leaves the import as-is. The default value depends
+on the :ref:`debug mode <debug-mode>`, so missing imports fail loudly while
+developing the application.
+
+.. versionadded:: 8.2
+
+    The ``strict`` default value in debug mode was introduced in Symfony 8.2.
 
 extensions
 ..........
