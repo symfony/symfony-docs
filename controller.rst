@@ -152,6 +152,27 @@ and ``redirect()`` methods::
     redirect to a URL provided by end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
+.. _controller-redirect-caching:
+
+Temporary redirects include a ``Cache-Control: no-cache, private`` header, so
+caches revalidate them with your application before reusing them. Permanent
+redirects (``301`` and ``308``) don't include it, so browsers can cache them as
+the HTTP specification allows. Set the ``Cache-Control`` header yourself to
+change this::
+
+    // browsers can cache this permanent HTTP 308 redirect
+    return $this->redirectToRoute('homepage', [], 308);
+
+    // caches must revalidate this permanent redirect with your application
+    $response = $this->redirectToRoute('homepage', [], 308);
+    $response->headers->set('Cache-Control', 'no-cache, private');
+
+    return $response;
+
+.. versionadded:: 8.2
+
+    Browser caching of ``308`` redirects was introduced in Symfony 8.2.
+
 .. _controller-rendering-templates:
 
 Rendering Templates
