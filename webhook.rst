@@ -31,6 +31,8 @@ process webhooks through three phases:
 
     Like video tutorials? Check out the `Webhook Component for Email Events screencast`_.
 
+.. _webhook-centralized-endpoint:
+
 A Centralized Webhook Endpoint
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -832,6 +834,79 @@ Custom Sending Logic
 For advanced use cases, you can implement custom sending logic using
 :class:`Symfony\\Component\\Webhook\\Server\\TransportInterface` to control
 header generation, signing, and HTTP transport.
+
+Testing Webhooks
+----------------
+
+.. versionadded:: 8.2
+
+    The ``sendWebhook()`` method and the webhook assertions were introduced in
+    Symfony 8.2.
+
+Use the ``sendWebhook()`` method of the test client to test the webhooks that
+your application receives. It posts a webhook to the endpoint, signed as the
+``framework.webhook.routing`` entry of the given type expects it and
+timestamped by the ``clock`` service::
+
+    // tests/Webhook/PaymentWebhookTest.php
+    namespace App\Tests\Webhook;
+
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class PaymentWebhookTest extends WebTestCase
+    {
+        public function testPaymentSucceeded(): void
+        {
+            $client = static::createClient();
+
+            // the arguments are the routing name, the event name and the payload
+            $client->sendWebhook('payments', 'payment.succeeded', [
+                'data' => ['reference' => 'ORD-42'],
+            ]);
+
+            $this->assertResponseIsSuccessful();
+        }
+
+        public function testInvalidSignature(): void
+        {
+            $client = static::createClient();
+
+            // the last argument is a secret to sign the webhook with instead
+            // of the configured one, to check that the webhook is rejected
+            $client->sendWebhook(
+                'payments',
+                'payment.succeeded',
+                [],
+                'whsec_'.base64_encode('not the secret')
+            );
+
+            $this->assertResponseStatusCodeSame(406);
+        }
+    }
+
+The method requires the route of the
+:ref:`centralized webhook endpoint <webhook-centralized-endpoint>` to be
+imported. It can only sign the routing entries that use the generic
+``webhook.request_parser`` service. For the other ones, it throws an exception
+and you must create the request by hand.
+
+To test the webhooks that your application sends, make your test class extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` (or use the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebhookAssertionsTrait`). It
+provides :ref:`webhook assertions <testing-webhook-assertions>` that check the
+webhooks sent through the ``webhook.transport`` service, even when the client
+reboots the kernel between two requests::
+
+    $url = 'https://example.com/webhook';
+
+    $this->assertWebhookSent($url, 'order.paid', ['order' => 42]);
+    $this->assertWebhookNotSent($url, 'order.refunded');
+    $this->assertWebhookCount(1);
+
+.. note::
+
+    Sent webhooks still go through the HTTP client, so mock it in your tests
+    as usual to avoid real HTTP requests.
 
 .. _`Standard Webhooks`: https://www.standardwebhooks.com/
 .. _`Webhook Component for Email Events screencast`: https://symfonycasts.com/screencast/mailtrap/email-event-webhook
