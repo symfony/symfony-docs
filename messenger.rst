@@ -2719,7 +2719,7 @@ solves this by storing the message in the database, inside the same transaction
 as your changes, and forwarding it to the broker later.
 
 Use the ``outbox`` option of a transport to enable this pattern. Its value is
-the name of another transport that stores the messages before forwarding them:
+the DSN of the transport that stores the messages before forwarding them:
 
 .. configuration-block::
 
@@ -2731,9 +2731,9 @@ the name of another transport that stores the messages before forwarding them:
                 transports:
                     orders:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                        # messages sent to "orders" are stored in "outbox" first
-                        outbox: outbox
-                    outbox: 'doctrine://default?queue_name=outbox'
+                        # Symfony creates an "orders.outbox" transport with this
+                        # DSN to store the messages before forwarding them
+                        outbox: 'doctrine://default?queue_name=outbox'
 
     .. code-block:: php
 
@@ -2746,23 +2746,27 @@ the name of another transport that stores the messages before forwarding them:
                     'transports' => [
                         'orders' => [
                             'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                            // messages sent to "orders" are stored in "outbox" first
-                            'outbox' => 'outbox',
+                            // Symfony creates an "orders.outbox" transport with
+                            // this DSN to store the messages before forwarding them
+                            'outbox' => 'doctrine://default?queue_name=outbox',
                         ],
-                        'outbox' => 'doctrine://default?queue_name=outbox',
                     ],
                 ],
             ],
         ]);
 
-With this configuration, messages routed to the ``orders`` transport are stored
-in the ``outbox`` transport instead. Then, run workers for both transports:
+The ``orders.outbox`` transport uses the default serializer and the same
+``sign``, ``failure_transport`` and ``retry_strategy`` options as the
+``orders`` transport. To configure it differently, define the outbox as any
+other transport and set its name as the value of the ``outbox`` option.
+
+Then, run a worker for each transport:
 
 .. code-block:: terminal
 
     # the relay: forwards the stored messages to the "orders" transport
     # (it never calls the message handlers)
-    $ php bin/console messenger:consume outbox
+    $ php bin/console messenger:consume orders.outbox
 
     # handles the messages sent to the "orders" transport as usual
     $ php bin/console messenger:consume orders

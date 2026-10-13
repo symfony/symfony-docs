@@ -3493,8 +3493,10 @@ outbox
 
 **type**: ``string`` **default**: ``null``
 
-Name of another transport that stores the messages sent to this transport
-before forwarding them to it. Read more about the
+Name or DSN of the transport that stores the messages sent to this transport
+before forwarding them to it. When using a DSN, Symfony creates a transport
+named after this one with the ``.outbox`` suffix (e.g. ``orders.outbox``).
+Read more about the
 :ref:`transactional outbox <messenger-outbox>`.
 
 .. versionadded:: 8.2
