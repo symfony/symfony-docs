@@ -608,27 +608,33 @@ Schema Validation
 
 .. versionadded:: 8.2
 
-    The ``--check-schema`` option was introduced in Symfony 8.2.
+    The validation of YAML files against a JSON Schema was introduced in
+    Symfony 8.2.
 
-Besides checking the syntax, the linter can validate the contents of the files
-against a `JSON Schema`_. First, install the library that performs the validation:
+Besides checking the syntax, the linter validates the contents of the files
+against a `JSON Schema`_. This validation requires the ``opis/json-schema``
+library. If it's not installed, the linter only checks the syntax:
 
 .. code-block:: terminal
 
     $ composer require opis/json-schema
 
-Then, add the ``--check-schema`` option to the command:
+By default, the linter validates each file against the schema declared in the
+file itself:
 
 .. code-block:: terminal
 
-    # validate the file against the given schema
-    $ php lint.php path/to/file.yaml --check-schema=path/to/schema.json
-
     # validate each file against the schema declared in the file itself
-    $ php lint.php path/to/directory --check-schema
+    $ php lint.php path/to/directory
+
+    # validate all files against the given schema
+    $ php lint.php path/to/directory --schema=path/to/schema.json
+
+    # only check the syntax, without validating the contents
+    $ php lint.php path/to/directory --no-check-schema
 
     # add the -v option to display the schema used for each file
-    $ php lint.php path/to/directory --check-schema -v
+    $ php lint.php path/to/directory -v
 
 A file declares its schema in a comment placed before any YAML content. This is
 the same header used by editors that support the `YAML language server`_:
@@ -644,18 +650,25 @@ The shorter ``# $schema=path/to/schema.json`` header also works. Relative paths
 are resolved from the directory of the linted file and remote schemas (URLs) are
 not supported. Files that declare no schema are reported as valid.
 
+The linter skips the schemas that it can't load (e.g. missing files or remote
+URLs). Add the ``--check-schema`` option to make the validation mandatory. Then,
+the command fails if the ``opis/json-schema`` library is not installed or if a
+schema can't be loaded. The ``--schema`` option also makes the validation
+mandatory, so you can't combine it with the ``--no-check-schema`` option.
+
 In Symfony applications, the ``lint:yaml`` command also knows the schemas of the
 config files that follow the Symfony conventions, so they don't need a header:
 
 .. code-block:: terminal
 
-    $ php bin/console lint:yaml config/ --check-schema
+    $ php bin/console lint:yaml config/
 
 Files in ``config/packages/`` are validated against ``config/schema.json``, a
 file that Symfony generates in debug mode with the config options of all
 installed bundles. Routing, service, serializer and validator config files are
 validated against the schema of their component, even when they are stored
-inside bundles. The rest of the files are reported as valid.
+inside bundles. The rest of the files are reported as valid. Files that only
+contain comments are not validated.
 
 .. _`YAML`: https://yaml.org/
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
