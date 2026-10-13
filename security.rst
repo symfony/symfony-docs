@@ -1818,16 +1818,17 @@ and redirect them to the configured ``target``.
     If you need to reference the logout path, you can use the ``_logout_<firewallname>``
     route name (e.g. ``_logout_main``).
 
-If your project does not use :ref:`Symfony Flex <symfony-flex>`, make sure
-you have imported the logout route loader in your routes:
+If your project does not use :ref:`Symfony Flex <symfony-flex>`, import the
+security route loader in your routes. It defines the logout routes and the other
+routes that your firewalls need:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/routes/security.yaml
-        _symfony_logout:
-            resource: security.route_loader.logout
+        _security:
+            resource: security.route_loader
             type: service
 
     .. code-block:: php
@@ -1836,11 +1837,16 @@ you have imported the logout route loader in your routes:
         namespace Symfony\Component\Routing\Loader\Configurator;
 
         return Routes::config([
-            '_symfony_logout' => [
-                'resource' => 'security.route_loader.logout',
+            '_security' => [
+                'resource' => 'security.route_loader',
                 'type' => 'service',
             ],
         ]);
+
+.. deprecated:: 8.2
+
+    The ``security.route_loader.logout`` service was deprecated in Symfony 8.2
+    in favor of ``security.route_loader``.
 
 .. _security-logout-form:
 

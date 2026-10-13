@@ -343,15 +343,17 @@ publish this document and to add its URL to the ``401`` responses:
             ],
         ]);
 
-Then, import the route loader that defines the route of this document:
+Symfony defines the route of this document in the security route loader. If
+your project uses :ref:`Symfony Flex <symfony-flex>`, the SecurityBundle recipe
+already imports it. Otherwise, import it yourself:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
         # config/routes/security.yaml
-        _oauth_protected_resource_metadata:
-            resource: security.authenticator.access_token.route_loader
+        _security:
+            resource: security.route_loader
             type: service
 
     .. code-block:: php
@@ -360,8 +362,8 @@ Then, import the route loader that defines the route of this document:
         namespace Symfony\Component\Routing\Loader\Configurator;
 
         return Routes::config([
-            '_oauth_protected_resource_metadata' => [
-                'resource' => 'security.authenticator.access_token.route_loader',
+            '_security' => [
+                'resource' => 'security.route_loader',
                 'type' => 'service',
             ],
         ]);

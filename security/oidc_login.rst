@@ -118,8 +118,8 @@ by default. Register the full URL of this path as a redirect URI in the provider
 
 The callback path needs a route; otherwise, the router returns a 404 error
 before the firewall can handle the redirect of the provider. Symfony defines
-this route (and the route that starts the flow, explained in the next section)
-in a route loader that your application must import, as it does for the
+this route, and the route that starts the flow (explained in the next section),
+in the security route loader, which also defines the
 :ref:`logout routes <security-logging-out>`. If your project uses
 :ref:`Symfony Flex <symfony-flex>`, the SecurityBundle recipe already imports
 it. Otherwise, import it yourself:
@@ -129,8 +129,8 @@ it. Otherwise, import it yourself:
     .. code-block:: yaml
 
         # config/routes/security.yaml
-        _security_oidc_login:
-            resource: security.authenticator.oidc_login.route_loader
+        _security:
+            resource: security.route_loader
             type: service
 
     .. code-block:: php
@@ -139,8 +139,8 @@ it. Otherwise, import it yourself:
         namespace Symfony\Component\Routing\Loader\Configurator;
 
         return Routes::config([
-            '_security_oidc_login' => [
-                'resource' => 'security.authenticator.oidc_login.route_loader',
+            '_security' => [
+                'resource' => 'security.route_loader',
                 'type' => 'service',
             ],
         ]);
