@@ -4907,7 +4907,7 @@ be used instead:
 storage_factory_id
 ..................
 
-**type**: ``string`` **default**: ``session.storage.factory.native``
+**type**: ``string`` **default**: ``session.storage.factory.mock_file`` when the ``test`` option is enabled, ``session.storage.factory.native`` otherwise
 
 The service ID used for creating the ``SessionStorageInterface`` that stores
 the session. This service is available in the Symfony application via the
@@ -4918,6 +4918,15 @@ To see a list of all available storages, run:
 .. code-block:: terminal
 
     $ php bin/console debug:container session.storage.factory.
+
+When the :ref:`test <reference-framework-test>` option is enabled, the default
+storage keeps sessions in files instead of using the native PHP session
+functions, so tests can run without sending headers.
+
+.. versionadded:: 8.2
+
+    The ``session.storage.factory.mock_file`` default value when the ``test``
+    option is enabled was introduced in Symfony 8.2.
 
 use_cookies
 ...........

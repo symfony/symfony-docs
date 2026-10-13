@@ -299,7 +299,6 @@ configuration <config-framework-session>` in
                 # improves the security of the cookies used for sessions
                 cookie_secure: auto
                 cookie_samesite: lax
-                storage_factory_id: session.storage.factory.native
 
     .. code-block:: php
 
@@ -320,7 +319,6 @@ configuration <config-framework-session>` in
                     // improves the security of the cookies used for sessions
                     'cookie_secure' => 'auto',
                     'cookie_samesite' => Cookie::SAMESITE_LAX,
-                    'storage_factory_id' => 'session.storage.factory.native',
                 ],
             ],
         ]);
