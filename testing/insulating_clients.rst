@@ -30,9 +30,14 @@ Shutting down the kernel does not make previously created clients unusable.
 Existing clients (like ``$harry`` in the above example) can still perform requests
 after the call, but the next ``createClient()`` call will boot a fresh kernel instance.
 
-This works except when your code maintains a global state or if it depends on
-a third-party library that has some kind of global state. In such a case, you
-can insulate your clients::
+The assertions provided by ``WebTestCase``, such as
+``assertResponseIsSuccessful()`` or ``assertEmailCount()``, always check the
+last client created and its kernel (``$sally`` in the above example). To check
+other clients, use their own methods, like ``$harry->getResponse()``.
+
+Using several clients works except when your code maintains a global state or
+if it depends on a third-party library that has some kind of global state. In
+such a case, you can insulate your clients::
 
     // ...
     use Symfony\Component\HttpFoundation\Response;
