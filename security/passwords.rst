@@ -92,49 +92,16 @@ Further in this article, you can find a
     generate secure password hashes. In general, this makes your password
     hashing more secure.
 
-    In tests however, secure hashes are not important, so you can change
-    the password hasher configuration in ``test`` environment to run tests
-    faster:
+    In tests, however, secure hashes are not important. That's why Symfony uses
+    the lowest allowed ``cost``, ``time_cost`` and ``memory_cost`` values when
+    the :ref:`framework.test <reference-framework-test>` option is enabled,
+    which makes tests faster. Set these options explicitly in your hasher
+    configuration to use other values in tests.
 
-    .. configuration-block::
+    .. versionadded:: 8.2
 
-        .. code-block:: yaml
-
-            # config/packages/security.yaml
-            when@test:
-                security:
-                    # ...
-
-                    password_hashers:
-                        # Use your user class name here
-                        App\Entity\User:
-                            algorithm: auto
-                            cost: 4 # Lowest possible value for bcrypt
-                            time_cost: 3 # Lowest possible value for argon
-                            memory_cost: 10 # Lowest possible value for argon
-
-        .. code-block:: php
-
-            // config/packages/security.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-            use App\Entity\User;
-
-            return App::config([
-                'when@test' => [
-                    'security' => [
-                        'password_hashers' => [
-                            // Use your user class name here
-                            User::class => [
-                                'algorithm' => 'auto',
-                                'cost' => 4, // Lowest possible value for bcrypt
-                                'time_cost' => 3, // Lowest possible value for argon
-                                'memory_cost' => 10, // Lowest possible value for argon
-                            ],
-                        ],
-                    ],
-                ],
-            ]);
+        The lowest hashing costs when ``framework.test`` is enabled were
+        introduced in Symfony 8.2.
 
 Hashing the Password
 --------------------
@@ -711,12 +678,6 @@ You can change the cost at any time — even if you already have some passwords
 hashed using a different cost. New passwords will be hashed using the new
 cost, while the already hashed ones will be validated using a cost that was
 used back when they were hashed.
-
-.. tip::
-
-    A simple technique to make tests much faster when using BCrypt is to set
-    the cost to ``4``, which is the minimum value allowed, in the ``test``
-    environment configuration.
 
 .. _reference-security-sodium:
 

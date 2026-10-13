@@ -5470,12 +5470,18 @@ has been compromised in a data breach.
 enabled
 """""""
 
-**type**: ``boolean`` **default**: ``true``
+**type**: ``boolean`` **default**: ``true`` (``false`` when the `test`_ option is enabled)
 
-If you set this option to ``false``, no HTTP requests will be made and the given
-password will be considered valid. This is useful when you don't want or can't
-make HTTP requests, such as in ``dev`` and ``test`` environments or in
-continuous integration servers.
+If you set this option to ``false``, the constraint doesn't make any HTTP
+requests and considers the given password valid. This is useful when you don't
+want or can't make HTTP requests, such as in the ``dev`` environment or in
+continuous integration servers. When the `test`_ option is enabled, this option
+is ``false`` by default, so your tests don't make HTTP requests.
+
+.. versionadded:: 8.2
+
+    The ``false`` default value of this option when the ``test`` option is
+    enabled was introduced in Symfony 8.2.
 
 endpoint
 """"""""
