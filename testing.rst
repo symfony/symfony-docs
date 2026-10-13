@@ -1318,6 +1318,35 @@ To use these assertions, your test class must extend
     By default it will check on the HttpClient, but you can also pass a specific
     HttpClient ID.
 
+.. _testing-webhook-assertions:
+
+Webhook Assertions
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The webhook assertions were introduced in Symfony 8.2.
+
+To use these assertions, your test class must extend
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`, or use
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebhookAssertionsTrait`. They
+check the webhooks sent through the ``webhook.transport`` service, so they
+require the :doc:`Webhook component </webhook>` and the HttpClient component.
+
+``assertWebhookCount(int $count, ?string $url = null, string $message = '')``
+    Asserts that the given number of webhooks has been sent (in total or to
+    the given URL).
+``assertWebhookSent(string $url, ?string $event = null, ?array $payload = null, string $message = '')``
+    Asserts that a webhook has been sent to the given URL and, if specified,
+    with the given event name and payload.
+``assertWebhookNotSent(string $url, ?string $event = null, ?array $payload = null, string $message = '')``
+    Asserts that no webhook has been sent to the given URL or, if specified,
+    with the given event name and payload.
+``getSentWebhooks(?string $url = null)``
+    Returns the sent webhooks (in total or to the given URL) as
+    :class:`Symfony\\Component\\Webhook\\Messenger\\SendWebhookMessage`
+    objects, ordered from oldest to newest.
+
 Console Assertions
 ~~~~~~~~~~~~~~~~~~
 
