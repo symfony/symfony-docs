@@ -31,7 +31,7 @@ Overridden Options
 ``active_at``
 ~~~~~~~~~~~~~
 
-**type**: ``\DateTimeInterface::class`` or ``null`` **default**: ``null``
+**type**: ``\DateTimeInterface::class`` or ``null`` **default**: the current date (in UTC)
 
 An active currency is one that is still in use today as `legal tender`_
 somewhere. This option allows you to show only the currencies that are active
@@ -45,6 +45,10 @@ at that date::
 
 In the previous example, the list of currencies won't include items like the
 Slovenian Tolar, which stopped being used on January 14, 2007.
+
+Set this option to ``null`` to not filter currencies by date (the
+`legal_tender`_ option still applies). This is required when using the
+`not_active_at`_ option, because both options can't be used at the same time.
 
 .. versionadded:: 7.4
 
@@ -97,6 +101,8 @@ This option allows you to show only the currencies that are inactive at that dat
     use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 
     $builder->add('currency', CurrencyType::class, [
+        // "active_at" must be null when using "not_active_at"
+        'active_at' => null,
         'not_active_at' => new \DateTimeImmutable('2007-01-15', new \DateTimeZone('Etc/UTC')),
     ]);
 
