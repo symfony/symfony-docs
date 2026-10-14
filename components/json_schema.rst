@@ -269,4 +269,48 @@ processors::
         [new ExamplesPropertySchemaEnricher()],
     );
 
+Using the Generator in Symfony Applications
+-------------------------------------------
+
+In a Symfony application, the FrameworkBundle registers the
+:class:`Symfony\\Component\\JsonSchema\\JsonSchemaBundle` as soon as the
+component is installed. It requires no configuration and lets you inject the
+generator as a service::
+
+    // src/Service/BookSchemaFactory.php
+    namespace App\Service;
+
+    use Symfony\Component\JsonSchema\SchemaGeneratorInterface;
+
+    class BookSchemaFactory
+    {
+        public function __construct(
+            private SchemaGeneratorInterface $schemaGenerator,
+        ) {
+        }
+
+        // ...
+    }
+
+The generator follows the mapping of the Serializer and Validator components
+when they are enabled, and the dates and UIDs are described according to the
+``datetime_format`` and ``uid_normalization_format`` options of the default
+serializer context.
+
+Services that implement one of the extension interfaces described in the
+previous section are autoconfigured with the following tags:
+
+* ``json_schema.class_schema_resolver``
+* ``json_schema.property_schema_provider``
+* ``json_schema.property_schema_enricher``
+* ``json_schema.definition_processor``
+
+The built-in class schema resolver runs last, so your own resolvers can
+describe dates, UIDs and enums in a different way. The Validator enricher runs
+first and the ``#[JsonSchemaConstraint]`` enricher runs last.
+
+.. versionadded:: 8.2
+
+    The ``JsonSchemaBundle`` was introduced in Symfony 8.2.
+
 .. _`JSON Schema`: https://json-schema.org/
