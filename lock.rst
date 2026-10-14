@@ -324,8 +324,9 @@ The attribute also accepts these optional arguments:
     The name of the :ref:`named lock <lock-named-locks>` to use.
 
 ``ttl`` (default: ``30``)
-    The number of seconds after which the lock expires, or ``null`` to never
-    expire it. The lock isn't refreshed while the controller runs, so set a
+    The number of seconds after which the lock expires, or ``null`` to use the
+    TTL of the store, 300 seconds by default for the stores that expire locks.
+    The lock isn't refreshed while the controller runs, so set a
     TTL longer than the controller takes to run.
 
 ``blocking`` (default: ``false``)
