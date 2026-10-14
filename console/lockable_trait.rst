@@ -31,6 +31,10 @@ that adds two convenient methods to lock and release commands::
             // If you prefer to wait until the lock is released, use this:
             // $this->lock(null, true);
 
+            // expiring stores (e.g. Redis) release the lock after 300 seconds by
+            // default; if the command can run longer, pass a TTL (in seconds):
+            // $this->lock(null, false, 3600);
+
             // ...
 
             // if not released explicitly, Symfony releases the lock
@@ -40,6 +44,11 @@ that adds two convenient methods to lock and release commands::
             return Command::SUCCESS;
         }
     }
+
+.. versionadded:: 8.2
+
+    The ``$ttl`` argument of the ``lock()`` method was introduced in
+    Symfony 8.2.
 
 The ``LockableTrait`` uses the ``SemaphoreStore`` if available and the
 ``FlockStore`` otherwise. These stores aren't scoped to your project, so
