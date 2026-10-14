@@ -412,8 +412,20 @@ In Twig, pass translatable objects to the ``trans`` filter just like regular str
 
 .. tip::
 
-    The translation parameters of a ``TranslatableMessage`` can themselves be
-    :class:`Symfony\\Component\\Translation\\TranslatableMessage` instances.
+    Translation parameters can also be translatable objects. They are
+    translated using the same locale as the message that contains them::
+
+        use Symfony\Component\Translation\TranslatableMessage;
+
+        $orderStatus = new TranslatableMessage('order.status.shipped');
+
+        // as a parameter of a translatable message...
+        $message = new TranslatableMessage('order.status', [
+            '%status%' => $orderStatus,
+        ]);
+
+        // ...or as a parameter passed directly to the translator
+        $translator->trans('order.status', ['%status%' => $orderStatus]);
 
 Translatable Objects In Practice
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -485,9 +497,10 @@ any class. The interface requires a single ``trans()`` method::
     }
 
 Any object that implements ``TranslatableInterface`` can be passed to the
-``trans`` Twig filter and will be translated automatically. This approach is
-useful when translation logic is more complex than a static message ID, for
-example when the message depends on runtime conditions.
+``trans`` Twig filter or used as a translation parameter, and it's translated
+automatically. This approach is useful when translation logic is more complex
+than a static message ID, for example when the message depends on runtime
+conditions.
 
 .. _translation-in-templates:
 
