@@ -280,7 +280,9 @@ generator as a service::
     // src/Service/BookSchemaFactory.php
     namespace App\Service;
 
+    use App\Entity\Book;
     use Symfony\Component\JsonSchema\SchemaGeneratorInterface;
+    use Symfony\Component\TypeInfo\Type;
 
     class BookSchemaFactory
     {
@@ -289,11 +291,16 @@ generator as a service::
         ) {
         }
 
-        // ...
+        public function createSchema(): array
+        {
+            $schema = $this->schemaGenerator->generate(Type::object(Book::class));
+
+            return $schema->toArray();
+        }
     }
 
 The generator follows the mapping of the Serializer and Validator components
-when they are enabled, and the dates and UIDs are described according to the
+when they are enabled, and dates and UIDs are described according to the
 ``datetime_format`` and ``uid_normalization_format`` options of the default
 serializer context.
 
@@ -305,12 +312,9 @@ previous section are autoconfigured with the following tags:
 * ``json_schema.property_schema_enricher``
 * ``json_schema.definition_processor``
 
-The built-in class schema resolver runs last, so your own resolvers can
-describe dates, UIDs and enums in a different way. The Validator enricher runs
-first and the ``#[JsonSchemaConstraint]`` enricher runs last.
-
-.. versionadded:: 8.2
-
-    The ``JsonSchemaBundle`` was introduced in Symfony 8.2.
+The built-in class schema resolver runs last, so your own resolvers (default
+priority ``0``) can describe dates, UIDs and enums in a different way. The
+Validator enricher runs first and the ``#[JsonSchemaConstraint]`` enricher runs
+last, so your own enrichers run in between.
 
 .. _`JSON Schema`: https://json-schema.org/
