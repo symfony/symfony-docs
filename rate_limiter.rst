@@ -796,6 +796,50 @@ You can use the ``cache_pool`` option to override the cache used by a specific l
     set the ``storage_service`` setting of each limiter to the service ID
     of this class.
 
+.. _rate-limiter-reset-in-tests:
+
+Resetting the Rate Limiters in Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``cache.rate_limiter`` pool isn't cleared between tests, so a test that
+exhausts a limiter would make the following tests start with that limiter
+already exhausted. That's why, when the ``framework.test`` option is enabled,
+Symfony clears this pool every time the kernel is shut down with
+``KernelTestCase::ensureKernelShutdown()``. This happens at the end of each test
+and when booting a new kernel, so all limiters start fresh in every test. The
+state is still kept across all the requests made with the same kernel.
+
+If a test relies on the tokens consumed by a previous test (or before a kernel
+shutdown in the same test), update it to consume those tokens itself.
+
+Limiters that use their own ``cache_pool`` or ``storage_service`` aren't reset,
+because that pool or storage can contain other data. If you need a fresh state
+for them, clear the cache pool (or reset your custom storage) yourself, for
+example at the start of your test::
+
+    // tests/Controller/ApiControllerTest.php
+    namespace App\Tests\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class ApiControllerTest extends WebTestCase
+    {
+        public function testTooManyRequests(): void
+        {
+            $client = static::createClient();
+
+            // the pool defined with the "cache_pool" option of your limiter
+            static::getContainer()->get('cache.anonymous_rate_limiter')->clear();
+
+            // ...
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The automatic reset of the ``cache.rate_limiter`` pool in tests was
+    introduced in Symfony 8.2.
+
 Using Locks to Prevent Race Conditions
 --------------------------------------
 
