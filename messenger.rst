@@ -2510,10 +2510,14 @@ The MongoDB transport DSN may look like this:
 
     # .env
     MESSENGER_TRANSPORT_DSN=mongodb://user:pass@mongodb1.example.com:27017/app
+    MESSENGER_TRANSPORT_DSN=mongodb+srv://user:pass@cluster.example.com/app
 
     # the settings below are optional
     MESSENGER_TRANSPORT_DSN=mongodb://mongodb1.example.com/app?collection_name=jobs&queue_name=high
 
+The DSN is a `MongoDB connection string`_ (both the ``mongodb`` and the
+``mongodb+srv`` schemes are supported) completed with the options below, which
+Symfony removes before forwarding the connection string to the MongoDB driver.
 The transport has a number of options, set in the DSN query string or in the
 ``options`` key of the transport configuration:
 
@@ -2555,50 +2559,28 @@ queue so that the routing can target each of them:
                     'Symfony\Component\Notifier\Message\SmsMessage': sms
                     'Symfony\Component\Mailer\Messenger\SendEmailMessage': emails
 
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:transport name="sms" dsn="mongodb://mongodb.example.com/app?queue_name=sms"/>
-                    <framework:transport name="emails" dsn="mongodb://mongodb.example.com/app?queue_name=emails"/>
-                    <framework:routing message-class="Symfony\Component\Notifier\Message\SmsMessage">
-                        <framework:sender service="sms"/>
-                    </framework:routing>
-                    <framework:routing message-class="Symfony\Component\Mailer\Messenger\SendEmailMessage">
-                        <framework:sender service="emails"/>
-                    </framework:routing>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\Mailer\Messenger\SendEmailMessage;
         use Symfony\Component\Notifier\Message\SmsMessage;
-        use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework): void {
-            $messenger = $framework->messenger();
-
-            $messenger->transport('sms')
-                ->dsn('mongodb://mongodb.example.com/app?queue_name=sms');
-            $messenger->transport('emails')
-                ->dsn('mongodb://mongodb.example.com/app?queue_name=emails');
-
-            $messenger->routing(SmsMessage::class)->senders(['sms']);
-            $messenger->routing(SendEmailMessage::class)->senders(['emails']);
-        };
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'sms' => 'mongodb://mongodb.example.com/app?queue_name=sms',
+                        'emails' => 'mongodb://mongodb.example.com/app?queue_name=emails',
+                    ],
+                    'routing' => [
+                        SmsMessage::class => 'sms',
+                        SendEmailMessage::class => 'emails',
+                    ],
+                ],
+            ],
+        ]);
 
 The MongoDB transport supports the ``--queues`` option (see
 :ref:`messenger-limit-queues`), so a single worker can consume both queues:
@@ -5639,6 +5621,7 @@ Learn more
 .. _`SSL context options`: https://php.net/context.ssl
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
 .. _`system attributes`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html#API_ReceiveMessage_RequestSyntax
+.. _`MongoDB connection string`: https://www.mongodb.com/docs/manual/reference/connection-string/
 .. _`connection string option`: https://www.mongodb.com/docs/manual/reference/connection-string-options/
 .. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
 .. _`amphp/parallel`: https://github.com/amphp/parallel
