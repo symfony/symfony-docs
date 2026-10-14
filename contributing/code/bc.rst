@@ -74,7 +74,7 @@ backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | **If you implement the interface and...**     | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
-| Implement a method                            | Yes                         |
+| Implement a method                            | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
 | Add an argument to an implemented method      | Yes                         |
 +-----------------------------------------------+-----------------------------+
@@ -124,9 +124,9 @@ covered by our backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Override a protected property                 | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Override a public method                      | Yes                         |
+| Override a public method                      | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
-| Override a protected method                   | Yes                         |
+| Override a protected method                   | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
 | Add a new property                            | No                          |
 +-----------------------------------------------+-----------------------------+
@@ -265,7 +265,7 @@ Add constructor without mandatory arguments                               Yes   
 Add argument with a default value                                         Yes             :ref:`[11] <note-11>`
 Rename argument                                                           Yes             :ref:`[10] <note-10>`
 Remove argument                                                           No              :ref:`[3] <note-3>`
-Add default value to an argument                                          Yes
+Add default value to an argument                                          Yes             :ref:`[14] <note-14>`
 Change default value of an argument                                       No              :ref:`[12] <note-12>`
 Remove default value of an argument                                       No              :ref:`[13] <note-13>`
 Add type hint to an argument                                              No
@@ -290,7 +290,7 @@ Move to parent class                                                      Yes
 :ref:`Add argument with a default value <add-argument-public-method>`     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 Rename argument                                                           Yes             :ref:`[10] <note-10>`
 Remove argument                                                           No              :ref:`[3] <note-3>`
-Add default value to an argument                                          No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add default value to an argument                                          No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[14] <note-14>`
 Remove default value of an argument                                       No              :ref:`[13] <note-13>`
 Add type hint to an argument                                              No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 Remove type hint of an argument                                           No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
@@ -310,7 +310,7 @@ Move to parent class                                                      Yes
 :ref:`Add argument with a default value <add-argument-public-method>`     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 Rename argument                                                           Yes             :ref:`[10] <note-10>`
 Remove argument                                                           No              :ref:`[3] <note-3>`
-Add default value to an argument                                          No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add default value to an argument                                          No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[14] <note-14>`
 Change default value of an argument                                       No              :ref:`[12] <note-12>`
 Remove default value of an argument                                       No              :ref:`[13] <note-13>` :ref:`[7] <note-7>`
 Add type hint to an argument                                              No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
@@ -490,8 +490,9 @@ return type is only possible with a child type.
 
 **[10]** Parameter names are only covered by the compatibility promise for
 constructors of Attribute classes and for methods that use the PHPDoc tags
-below. In other cases, using PHP named arguments might break your code when
-upgrading to newer Symfony versions.
+below. Covered parameters are never renamed. Other parameters can be renamed,
+so using PHP named arguments for them might break your code when upgrading to
+newer Symfony versions.
 
 * With ``@optional-arguments-by-name``, the names of optional parameters are
   covered, but not their order, so you must pass the optional arguments by name.
@@ -521,9 +522,12 @@ For example::
     new Pagination(3, 50);
 
 When the PHPDoc of a class, interface, trait or enum has one of these tags, the
-tag applies to all its methods. A method that overrides or implements a tagged
-method follows the same rules. Static analyzers can check calls against these
+tag applies to all its methods. Static analyzers can check calls against these
 tags.
+
+When you implement or override a method that uses one of these tags, keep the
+same parameter names. Code that calls your method through the interface or the
+parent class can pass arguments by name. This doesn't apply to constructors.
 
 .. _note-11:
 
@@ -541,6 +545,12 @@ of existing code that relies on the current default value.
 
 **[13]** Removing a default value is a BC break because it makes previously
 optional arguments required, breaking existing code that doesn't pass all arguments.
+
+.. _note-14:
+
+**[14]** Not allowed when the method uses the ``@optional-arguments-by-name``
+tag. Callers pass required arguments by position and optional arguments by
+name, so making a required argument optional would break the existing calls.
 
 Making Code Changes in a Backward Compatible Way
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
