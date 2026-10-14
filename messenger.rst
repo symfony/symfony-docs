@@ -943,6 +943,38 @@ time. So, instead of allowing your worker to run forever, use a flag like
 before exiting (then the process manager will create a new process). There are
 also other options like ``--memory-limit=128M`` and ``--time-limit=3600``.
 
+**Handle the Pending Messages and Exit**
+
+In cron jobs, CI pipelines or deployment scripts, you may want a worker that
+handles the messages already waiting in the transports and then exits, instead
+of waiting for new ones. Use the ``--stop-when-empty`` option:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume async --stop-when-empty
+
+When the transports are empty, the worker doesn't exit immediately. First, it
+finishes the messages still being handled (when using
+:ref:`--concurrency <messenger-concurrency>`) and the messages waiting in
+:ref:`batch handlers <messenger-handler-batch>`. Then, it checks the transports
+again, so it also handles the messages dispatched by those handlers.
+
+The worker doesn't wait for delayed messages, including the failed messages
+waiting for their retry delay. They stay in the transport until another worker
+handles them.
+
+.. warning::
+
+    The :ref:`Amazon SQS transport <messenger-amazon-sqs-transport>` stops
+    waiting for messages after ``poll_timeout`` seconds (``0.1`` by default).
+    If SQS takes longer to respond, the worker considers the queue empty and
+    exits without handling its messages. Set ``poll_timeout`` to a value close
+    to ``wait_time`` to avoid this.
+
+.. versionadded:: 8.2
+
+    The ``--stop-when-empty`` option was introduced in Symfony 8.2.
+
 **Stopping Workers That Encounter Errors**
 
 If a worker dependency like your database server is down, or timeout is reached,
@@ -3373,6 +3405,8 @@ can't make the test run forever. Pass a ``$limit`` to consume more messages.
     :class:`Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnIdleListener`
     subscriber to its event dispatcher to stop the worker as soon as there are
     no more messages to handle, instead of waiting for new ones.
+
+.. _messenger-amazon-sqs-transport:
 
 Amazon SQS
 ~~~~~~~~~~
