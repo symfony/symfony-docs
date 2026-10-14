@@ -4271,7 +4271,7 @@ routes and imports the router should load.
 strict_requirements
 ...................
 
-**type**: ``mixed`` **default**: ``true``
+**type**: ``mixed`` **default**: ``true`` when the debug mode is enabled, ``null`` otherwise
 
 Determines the routing generator behavior. When generating a route that
 has specific :ref:`parameter requirements <routing-requirements>`, the generator
@@ -4285,11 +4285,17 @@ The value can be one of:
     Disable exceptions when the requirements are not met and return ``''``
     instead;
 ``null``
-    Disable checking the requirements (thus, match the route even when the
+    Disable checking the requirements (thus, generate the URL even when the
     requirements don't match).
 
-``true`` is recommended in the development environment, while ``false``
-or ``null`` might be preferred in production.
+By default, the requirements are checked in :ref:`debug mode <debug-mode>` to
+detect invalid parameters while developing the application, and they are not
+checked otherwise to avoid that overhead in production.
+
+.. versionadded:: 8.2
+
+    The ``null`` default value when the debug mode is disabled was introduced
+    in Symfony 8.2.
 
 .. _reference-router-type:
 
