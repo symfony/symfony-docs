@@ -106,7 +106,7 @@ covered by our backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Type hint against the class                   | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Create a new instance                         | Yes                         |
+| Create a new instance                         | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
 | Extend the class                              | Yes                         |
 +-----------------------------------------------+-----------------------------+
@@ -263,6 +263,7 @@ Remove private property                                                   Yes
 Add constructor without mandatory arguments                               Yes             :ref:`[1] <note-1>`
 :ref:`Add argument without a default value <add-argument-public-method>`  No
 Add argument with a default value                                         Yes             :ref:`[11] <note-11>`
+Rename argument                                                           Yes             :ref:`[10] <note-10>`
 Remove argument                                                           No              :ref:`[3] <note-3>`
 Add default value to an argument                                          Yes
 Change default value of an argument                                       No              :ref:`[12] <note-12>`
@@ -488,12 +489,48 @@ return type is only possible with a child type.
 .. _note-10:
 
 **[10]** Parameter names are only covered by the compatibility promise for
-constructors of Attribute classes. Using PHP named arguments might break your
-code when upgrading to newer Symfony versions.
+constructors of Attribute classes and for methods that use the PHPDoc tags
+below. In other cases, using PHP named arguments might break your code when
+upgrading to newer Symfony versions.
+
+* With ``@optional-arguments-by-name``, the names of optional parameters are
+  covered, but not their order, so you must pass the optional arguments by name.
+  The order of required parameters is covered, but not their names, so pass the
+  required arguments by position;
+* With ``@arguments-by-name``, the names of all parameters are covered, but not
+  their order, so you must pass all arguments by name;
+* With ``@stable-parameter-names``, the names and the order of all parameters
+  are covered, so you can pass arguments by name or by position.
+
+For example::
+
+    class Pagination
+    {
+        /**
+         * @optional-arguments-by-name
+         */
+        public function __construct(int $page, int $itemsPerPage = 20)
+        {
+            // ...
+        }
+    }
+
+    // OK
+    new Pagination(3, itemsPerPage: 50);
+    // might break on upgrade because the order of optional parameters can change
+    new Pagination(3, 50);
+
+When the PHPDoc of a class, interface, trait or enum has one of these tags, the
+tag applies to all its methods. A method that overrides or implements a tagged
+method follows the same rules. Static analyzers can check calls against these
+tags.
 
 .. _note-11:
 
 **[11]** Only optional argument(s) of a constructor at last position may be added.
+When the constructor has the ``@optional-arguments-by-name`` or
+``@arguments-by-name`` tag, a new optional argument may also be added before the
+existing optional arguments.
 
 .. _note-12:
 
