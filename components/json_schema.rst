@@ -63,12 +63,12 @@ For example, given the following class::
     // src/Entity/Book.php
     namespace Acme\Entity;
 
-    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Constraints\NotBlank;
 
     class Book
     {
         public function __construct(
-            #[Assert\NotBlank]
+            #[NotBlank]
             public string $title,
             public ?Author $author = null,
         ) {
