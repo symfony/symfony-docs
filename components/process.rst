@@ -467,6 +467,80 @@ mode by calling :method:`Symfony\\Component\\Process\\Process::setPty`::
     // unlike TTY mode, the process output is still readable here
     dump($process->getOutput());
 
+Inheriting the Standard Streams
+-------------------------------
+
+By default, your program reads the output of the process through pipes. Call
+:method:`Symfony\\Component\\Process\\Process::inheritStdio` to make the process
+use the standard input, output and error output of your program instead, as
+when a shell script runs a command::
+
+    use Symfony\Component\Process\Process;
+
+    $process = new Process(['vendor/bin/phpunit']);
+    $process->inheritStdio();
+    $process->run();
+
+    // the process wrote directly to the standard output of your program,
+    // so its output isn't captured
+    dump($process->getOutput()); // ''
+
+    // the exit code is still available
+    dump($process->getExitCode());
+
+.. versionadded:: 8.2
+
+    The ``inheritStdio()`` method was introduced in Symfony 8.2.
+
+The process behaves as if you ran the command in your shell: it displays colors
+when your program runs in a terminal, it writes plain text when you redirect the
+output of your program to a file (``php script.php > output.log``) and it reads
+the data sent to your program through a pipe
+(``cat backup.sql | php script.php``).
+
+This is the main difference from TTY mode, which connects the process to the
+terminal (``/dev/tty``) instead of the standard streams of your program. TTY
+mode ignores the redirections of your program and doesn't work when there is no
+terminal (e.g. on some CI servers).
+
+If you set an input with ``setInput()``, the process reads it instead of the
+standard input of your program. The output and error output are still
+inherited::
+
+    $process = new Process(['psql', '-v', 'ON_ERROR_STOP=1']);
+    $process->inheritStdio();
+    $process->setInput(fopen('backup.sql', 'r'));
+    $process->run();
+
+Since your program doesn't read the output of the process:
+
+* ``getOutput()`` and ``getErrorOutput()`` return empty strings and the
+  callbacks passed to ``start()``, ``run()`` or ``mustRun()`` are never called;
+* you can't use ``getIterator()``, ``waitUntil()``, idle timeouts or TTY mode;
+* PTY mode is ignored.
+
+The process runs in the same process group as your program, so the signals sent
+by the terminal (e.g. when pressing ``Ctrl+C``) reach both of them. To keep your
+program running in this case, register a signal handler that does nothing. The
+process is still interrupted and ``run()`` throws a
+:class:`Symfony\\Component\\Process\\Exception\\ProcessSignaledException`::
+
+    use Symfony\Component\Process\Exception\ProcessSignaledException;
+    use Symfony\Component\Process\Process;
+
+    // don't use SIG_IGN instead: the process would inherit it and
+    // pressing Ctrl+C wouldn't stop the process
+    pcntl_signal(SIGINT, static function (): void {});
+
+    $process = new Process(['vendor/bin/phpunit']);
+    $process->inheritStdio();
+
+    try {
+        $process->run();
+    } catch (ProcessSignaledException) {
+        // ... the user pressed Ctrl+C
+    }
+
 Stopping a Process
 ------------------
 
