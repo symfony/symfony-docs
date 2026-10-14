@@ -522,8 +522,9 @@ For example::
     new Pagination(3, 50);
 
 When the PHPDoc of a class, interface, trait or enum has one of these tags, the
-tag applies to all its methods. Static analyzers can check calls against these
-tags.
+tag applies to its public and protected methods. In a trait, it applies to
+private methods too, because the classes that use the trait can call them.
+Static analyzers can check calls against these tags.
 
 When you implement or override a method that uses one of these tags, keep the
 same parameter names. Code that calls your method through the interface or the
