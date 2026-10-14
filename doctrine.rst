@@ -976,6 +976,14 @@ repository as arguments. It can return a single entity or a list of entities
 
     Support for using closures in the ``expr`` option was introduced in Symfony 8.2.
 
+.. note::
+
+    When using the ``{param:argument}`` route syntax, the request attribute
+    that stores the route parameter value is named after the controller
+    argument. For example, in the ``/product/{slug:product}`` route, read the
+    slug with ``$request->attributes->get('product')`` (there's no ``slug``
+    request attribute).
+
 If you prefer a more compact alternative, write an **expression** using the
 :doc:`ExpressionLanguage component </expression_language>` syntax.
 The downside is that expressions are defined as strings, so IDEs and static
