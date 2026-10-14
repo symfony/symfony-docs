@@ -1349,6 +1349,9 @@ Listeners receive a
         // gets the signal number
         $signal = $event->getHandlingSignal();
 
+        // gets the exit code (by default, 128 + the signal number)
+        $exitCode = $event->getExitCode();
+
         // sets the exit code
         $event->setExitCode(0);
 
@@ -1385,6 +1388,15 @@ command, the operating system sends the ``SIGINT`` signal to it.
     `constants of the PCNTL PHP extension`_. The extension has to be installed
     for these constants to be available.
 
+When a signal stops a command, the application exits with ``128`` plus the
+signal number (e.g. ``130`` for ``SIGINT`` and ``143`` for ``SIGTERM``). Shells
+report this same exit code for processes killed by a signal, so scripts and CI
+jobs don't treat an interrupted command as successful.
+
+.. versionadded:: 8.2
+
+    Exiting with ``128`` plus the signal number was introduced in Symfony 8.2.
+
 In a Symfony application, a command can handle these signals by implementing the
 :class:`Symfony\\Component\\Console\\Command\\SignalableCommandInterface` and
 subscribing to one or more signals::
@@ -1414,14 +1426,22 @@ subscribing to one or more signals::
 
             // ...
 
-            // return an integer to set the exit code, or
-            // false to continue normal execution
-            return 0;
+            // return an integer to set the exit code, or false to continue
+            // normal execution; $previousExitCode is 128 + the signal number,
+            // unless a ConsoleEvents::SIGNAL listener changed it
+            return $previousExitCode;
         }
     }
 
 This registers a signal handler for that command only. To run the same handler
 for all commands, use :ref:`events <console-events_signal>` instead.
+
+.. tip::
+
+    `systemd`_ considers a service failed when it exits with ``143`` after
+    receiving ``SIGTERM`` (e.g. on ``systemctl stop``). To avoid this, add
+    ``SuccessExitStatus=143`` to the service unit or set the exit code to ``0``
+    when handling ``SIGTERM`` in the command or in a listener.
 
 You can also use :method:`Symfony\\Component\\Console\\Application::setAlarmInterval`
 to trigger a recurring alarm interval, causing the OS to deliver a ``SIGALRM`` signal
@@ -1842,6 +1862,7 @@ tables, formatting the output or running external processes:
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
+.. _`systemd`: https://systemd.io/
 .. _`constants of the PCNTL PHP extension`: https://www.php.net/manual/en/pcntl.constants.php
 .. _`PSR-3`: https://www.php-fig.org/psr/psr-3/
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
