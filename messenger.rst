@@ -3309,6 +3309,28 @@ These are all the available helpers:
     handled successfully. When no transport is given, it consumes all the
     in-memory transports, as explained below.
 
+The test client reboots the kernel before each request, which empties the
+in-memory transports. However, these helpers also see the messages queued
+during the previous requests of the same test (until the kernel is shut down
+at the end of the test), so you can follow a redirect before checking them::
+
+    $client->submitForm('Submit', [/* ... */]);
+    $client->followRedirect();
+
+    // sees the message queued while handling the form submission,
+    // even if it happened in the previous request
+    $this->assertQueuedMessageCount(1, 'async', ScoreLoanApplication::class);
+    $this->consumeQueuedMessages('async');
+
+This also works when the DSN of the transport comes from an environment
+variable (e.g. when ``.env.test`` sets it to ``in-memory://``).
+
+.. note::
+
+    The transports themselves only store the messages of the last request.
+    Calling ``getSent()`` on the transport or running ``messenger:consume``
+    doesn't show the messages of the previous requests.
+
 The worker listeners of the application run as they do in production, so a
 failed message is retried or sent to the
 :ref:`failure transport <messenger-failure-transport>` according to your
