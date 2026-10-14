@@ -4045,14 +4045,16 @@ should be properly secured to prevent unauthorized access, Symfony adds an extra
 layer of protection by supporting message signing.
 
 This is particularly important for handlers that execute commands or processes,
-which is why the ``RunProcessHandler`` has message signing **enabled by default**.
+which is why the handlers of ``RunCommandMessage``, ``RunProcessMessage`` and
+``ServiceCallMessage`` require a signature **by default**.
 
 .. _messenger-message-signing:
 
-Enabling Message Signing
-~~~~~~~~~~~~~~~~~~~~~~~~
+Requiring a Signature in a Handler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To enable message signing for your handler, set the ``sign`` option to ``true``:
+To make a handler refuse messages without a verified signature, set its
+``sign`` option to ``true``:
 
 .. configuration-block::
 
@@ -4089,16 +4091,19 @@ To enable message signing for your handler, set the ``sign`` option to ``true``:
         $container->register(SmsNotificationHandler::class)
             ->addTag('messenger.message_handler', ['sign' => true]);
 
-When signing is enabled:
+This handler accepts the messages that your application dispatches and handles
+in the same process, and the messages received from a transport that
+:ref:`signs all its messages <messenger-transport-signing>`. If you handle
+these messages asynchronously, route them to such a transport.
 
-1. Messages are signed using an HMAC signature computed with your application's
-   secret key (``kernel.secret`` parameter).
-2. The signature is added to the message headers (``Body-Sign`` and ``Sign-Algo``)
-   when the message is sent to a transport.
-3. When the message is received and decoded, the signature is automatically verified.
-4. If the signature is missing or invalid, an
-   :class:`Symfony\\Component\\Messenger\\Exception\\InvalidMessageSignatureException`
-   is thrown, and the message will not be handled.
+If you route them to a transport that doesn't sign all its messages, Symfony
+still signs and verifies them one by one. This behavior is deprecated, and
+the handler will refuse those messages in the next major version.
+
+.. deprecated:: 8.2
+
+    Signing messages per handler instead of per transport was deprecated in
+    Symfony 8.2.
 
 .. _messenger-transport-signing:
 
@@ -4109,10 +4114,9 @@ Signing All Messages of a Transport
 
     The ``sign`` option of transports was introduced in Symfony 8.2.
 
-When you enable signing per handler, Symfony must read the type of each
-received message (and autoload the class named in it) before it knows whether
-that message requires a signature. To check the signature before reading
-anything from the message, enable the ``sign`` option of the transport instead:
+Enable the ``sign`` option of a transport to sign all the messages sent to it
+with an HMAC computed from the ``kernel.secret`` parameter. Symfony checks the
+signature of received messages before reading anything from them:
 
 .. configuration-block::
 
@@ -4173,8 +4177,8 @@ Keep in mind the following behaviors:
   fails again.
 * Signing transports refuse messages signed as unverified. The only exception
   is the failure transport, which accepts them so you can retry them with the
-  ``messenger:failed:retry`` command. However, it still refuses them when their
-  handler enables :ref:`message signing <messenger-message-signing>`.
+  ``messenger:failed:retry`` command. However, the handlers that
+  :ref:`require a signature <messenger-message-signing>` refuse them.
 * If a transport signs all messages, its failure transport and its
   :ref:`outbox <messenger-outbox>` must sign them too (otherwise, the container
   doesn't compile). The opposite isn't required: you can enable signing only
@@ -5923,6 +5927,10 @@ serializer must be able to decode messages without them.
     don't use ``extra`` to determine the message type. The
     :ref:`message signature <messenger-message-signing>` doesn't cover
     ``extra``, so a type taken from it can't be trusted.
+
+    .. deprecated:: 8.2
+
+        The ``MessageTypeAwareSerializerInterface`` was deprecated in Symfony 8.2.
 
 .. versionadded:: 8.2
 

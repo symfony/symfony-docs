@@ -1368,7 +1368,9 @@ are dispatched as a
 commands), not as an instance of the class holding the attribute, so the
 routing of that class doesn't apply to them. Route ``ServiceCallMessage`` or
 ``RunCommandMessage`` instead, or use the ``transports`` argument of the
-attributes, which takes precedence over the routing.
+attributes, which takes precedence over the routing. Because the handlers of
+these messages :ref:`require a signature <messenger-message-signing>`, send
+them to a transport that :ref:`signs all its messages <messenger-transport-signing>`.
 
 A routed message behaves like any other asynchronous message:
 
