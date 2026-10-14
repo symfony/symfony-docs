@@ -52,8 +52,9 @@ holds a root schema and the named definitions it references:
 * ``getRoot()`` returns the root schema;
 * ``getDefinitions()`` returns the definitions, indexed by name;
 * ``toArray()`` (also used by ``json_encode()``) returns a complete document,
-  with the ``$schema`` keyword and the definitions placed where the dialect
-  expects them (``$defs`` for JSON Schema);
+  with the definitions placed where the dialect expects them (``$defs`` for
+  JSON Schema, ``components/schemas`` for OpenAPI) and, for JSON Schema, the
+  ``$schema`` keyword;
 * ``flatten()`` returns a self-contained schema where every reference is
   replaced by its definition. Only the references that close a cycle in
   recursive types are kept.
@@ -77,7 +78,7 @@ For example, given the following class::
 
 The generated schema looks like this::
 
-    $schema = $generator->generate(Type::object(Book::class))->flatten();
+    $schema = $generator->generate(Type::object(Book::class))->flatten()->getRoot();
 
     // [
     //     'type' => 'object',
@@ -103,7 +104,8 @@ The root of the schema is an object with one property per parameter. Each
 property is described by the type of the parameter, its default value, its
 ``@param`` description and its ``#[JsonSchemaConstraint]`` attribute (see
 :ref:`json-schema-constraint-attribute`). Parameters without a default value
-are required.
+are required. The constraints of the Validator component are not applied to
+parameters.
 
 Configuring the Schema
 ----------------------
@@ -149,7 +151,9 @@ The constructor accepts the following arguments, in this order:
 
 ``definitionName`` and ``definitionPrefix``
     Customize the name of the definition of the root class. The prefix replaces
-    the short name of the class and the name is appended to it.
+    the short name of the class. The name replaces the suffix built from the
+    other options (groups, direction, etc.) and is separated from the prefix
+    by a hyphen; an empty name leaves the prefix alone.
 
 ``format``
     The serializer format, such as ``json``. It is unrelated to the dialect.
@@ -171,7 +175,8 @@ Describing Properties with Attributes
 
 The validation constraints of the Validator component, such as ``NotBlank``,
 ``Length``, ``Range`` or ``Email``, are converted to the matching JSON Schema
-keywords. When a property needs more information, add the
+keywords. ``NotBlank`` (unless it allows ``null``) and ``NotNull`` also make
+the property required. When a property needs more information, add the
 :class:`Symfony\\Component\\JsonSchema\\Attribute\\JsonSchemaConstraint`
 attribute to a property or to a parameter::
 
@@ -194,13 +199,10 @@ attribute to a property or to a parameter::
         }
     }
 
-The attribute accepts the title, the description and the common JSON Schema
-keywords (``format``, ``enum``, ``const``, ``pattern``, ``minLength``,
-``maxLength``, ``minimum``, ``maximum``, ``exclusiveMinimum``,
-``exclusiveMaximum``, ``multipleOf``, ``minItems``, ``maxItems``,
-``uniqueItems``, ``minProperties``, ``maxProperties``, ``default``,
-``example``, ``deprecated``, ``readOnly`` and ``writeOnly``). Its ``required``
-argument overrides whether the property is required.
+The attribute accepts a title, a description and the usual JSON Schema keywords
+(``format``, ``enum``, ``pattern``, ``minimum``, ``maxItems``, ``default``,
+``example``, etc.). Its ``required`` argument overrides whether the property is
+required.
 
 Sharing Definitions in a Document
 ---------------------------------
@@ -224,7 +226,8 @@ definitions are available from the document::
 Definitions are named by a *definition policy*. The default one,
 :class:`Symfony\\Component\\JsonSchema\\DefinitionPolicy\\ShortNameDefinitionPolicy`,
 uses the short name of the class followed by the groups, the direction and
-the other options that change its shape (e.g. ``Book-book.write_input``).
+the other options that change its shape (e.g. ``Book-book.write_input`` for
+the ``book:write`` group and the input direction).
 
 Extending the Generator
 -----------------------
@@ -253,9 +256,11 @@ another type in the same document:
 :class:`Symfony\\Component\\JsonSchema\\DefinitionProcessor\\DefinitionProcessorInterface`
     Post-processes each object definition once its properties are built.
 
-The class schema resolvers and the property schema providers passed to
-``create()`` run before the built-in ones. The property schema enrichers and
-the definition processors run after them::
+The class schema resolvers passed to ``create()`` run before the built-in one.
+The property schema enrichers run after the built-in ones (Validator
+constraints and ``#[JsonSchemaConstraint]``) and so do the definition
+processors. There are no built-in property schema providers or definition
+processors::
 
     $generator = SchemaGenerator::create(
         null,
