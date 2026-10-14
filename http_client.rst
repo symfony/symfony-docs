@@ -714,6 +714,22 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
         'max_redirects' => 0,
     ]);
 
+The client never follows redirects from ``https://`` to ``http://`` URLs,
+because that would send the request headers (which may contain credentials)
+and body unencrypted. Instead, it returns the 3xx response. If you accept the
+risk, request the target URL yourself::
+
+    $response = $client->request('GET', 'https://example.com/legacy');
+
+    // the URL of the redirect that wasn't followed (e.g. 'http://example.com/new')
+    // or null if the response is not a redirect
+    $redirectUrl = $response->getInfo('redirect_url');
+
+.. versionadded:: 8.2
+
+    Not following redirects from ``https://`` to ``http://`` URLs was
+    introduced in Symfony 8.2.
+
 .. _http-client-retry-failed-requests:
 
 Retry Failed Requests
