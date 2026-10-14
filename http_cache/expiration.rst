@@ -71,7 +71,8 @@ Targeting a Specific Cache
 
 .. versionadded:: 8.2
 
-    The ``Response::cacheControl()`` method was introduced in Symfony 8.2.
+    The ``Response::cacheControl()`` method and the ``target`` argument of the
+    ``#[Cache]`` attribute were introduced in Symfony 8.2.
 
 The ``Cache-Control`` header is read by every cache between your application and
 the user: the browser, your reverse proxy, a CDN, etc. `RFC 9213`_ allows sending
@@ -120,10 +121,37 @@ any other directive, use the ``set()``, ``get()``, ``has()``, ``remove()`` and
     is optional, so a cache that doesn't support it would get no freshness
     information at all.
 
+When using the ``#[Cache]`` attribute, set targeted directives with its ``target``
+argument. It accepts the name of a cache, or a list of names to set the same
+directives for several caches::
+
+    use Symfony\Component\HttpKernel\Attribute\Cache;
+    // ...
+
+    // for browsers and any other cache
+    #[Cache(public: true, maxage: 60)]
+    // for the generic CDN header and the Cloudflare-specific header only
+    #[Cache(maxage: 3600, staleWhileRevalidate: 60, target: ['CDN', 'Cloudflare-CDN'])]
+    public function index(): Response
+    {
+        // ...
+    }
+
+The response now contains these headers:
+
+.. code-block:: text
+
+    Cache-Control: max-age=60, public
+    CDN-Cache-Control: max-age=3600, stale-while-revalidate=60
+    Cloudflare-CDN-Cache-Control: max-age=3600, stale-while-revalidate=60
+
+When using ``target``, only the ``maxage``, ``public``, ``mustRevalidate``,
+``staleWhileRevalidate``, ``staleIfError`` and ``noStore`` arguments are allowed.
+Other arguments, such as ``smaxage`` or ``vary``, don't apply to targeted
+headers and throw an exception.
+
 .. warning::
 
-    The ``#[Cache]`` attribute doesn't provide any option to set targeted
-    directives, so you must set them on the ``Response`` object. Also,
     Symfony's :ref:`built-in reverse proxy <symfony-gateway-cache>` ignores
     targeted headers and only reads ``Cache-Control``.
 
