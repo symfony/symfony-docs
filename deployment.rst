@@ -183,6 +183,12 @@ Make sure you clear and warm-up your Symfony cache:
 
     $ APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
 
+.. tip::
+
+    To generate the same compiled container each time you build the same source
+    code, see
+    :ref:`reproducible builds <configuration-kernel-container-build-time>`.
+
 E) Other Things!
 ~~~~~~~~~~~~~~~~
 
