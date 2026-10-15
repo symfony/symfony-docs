@@ -772,6 +772,40 @@ defined in ``vendor/`` are ignored)::
     Extracting messages from ``match`` expressions, interpolated strings,
     variables and method return values was introduced in Symfony 8.2.
 
+In Twig templates, the command also extracts the form labels and help
+messages passed as string literals to the ``form_label()``,
+``form_widget()``, ``form_help()`` and ``form_row()`` functions:
+
+.. code-block:: twig
+
+    {# extracts "company.api_token" in the default domain ("messages") #}
+    {{ form_label(form.apiToken, 'company.api_token') }}
+
+    {# extracts "user.email" and "user.email_help" in the "admin" domain #}
+    {{ form_row(form.email, {
+        label: 'user.email',
+        help: 'user.email_help',
+        translation_domain: 'admin',
+    }) }}
+
+    {# extracts nothing because the label is not a string literal #}
+    {{ form_label(form.email, emailLabel) }}
+
+The command can't access the options defined in the form class, so it only
+reads the ``translation_domain`` option passed in the template, when it's a
+string literal or a ``constant()`` call. If this option is missing or
+``null``, the command uses the default domain; if it's ``false``, the
+messages aren't extracted; if it's any other expression (e.g. a variable),
+the messages are extracted in the undefined domain.
+
+The ``{% trans_default_domain %}`` tag is ignored because form themes don't
+use it to translate labels and help messages.
+
+.. versionadded:: 8.2
+
+    Extracting the labels and help messages passed to form functions in
+    Twig templates was introduced in Symfony 8.2.
+
 By default, when the ``translation:extract`` command creates new entries in the
 translation file, it uses the same content as both the source and the pending
 translation. The only difference is that the pending translation is prefixed by
