@@ -175,6 +175,14 @@ There are three ways to mark a test as legacy:
 Configuration
 -------------
 
+.. note::
+
+    The ``SYMFONY_DEPRECATIONS_HELPER`` environment variable explained in this
+    section only works with PHPUnit 9 or lower. With PHPUnit 10 or higher, the
+    bridge doesn't register its deprecation handler and ignores this variable.
+    Use the `failOnDeprecation`_ option of PHPUnit instead to make tests fail
+    when they trigger deprecations.
+
 In case you need to inspect the stack trace of a particular deprecation
 triggered by your unit tests, you can set the ``SYMFONY_DEPRECATIONS_HELPER``
 `environment variable`_ to a regular expression that matches this deprecation's
@@ -1147,6 +1155,7 @@ not find the SUT:
 .. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/11.5/assertions.html#assertstringmatchesformat
 .. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
 .. _`environment variable`: https://docs.phpunit.de/en/11.5/configuration.html#the-env-element
+.. _`failOnDeprecation`: https://docs.phpunit.de/en/11.5/configuration.html#the-failondeprecation-attribute
 .. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
 .. _`@covers`: https://docs.phpunit.de/en/11.5/annotations.html#covers
