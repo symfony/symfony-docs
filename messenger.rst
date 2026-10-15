@@ -960,8 +960,9 @@ finishes the messages still being handled (when using
 again, so it also handles the messages dispatched by those handlers.
 
 The worker doesn't wait for delayed messages, including the failed messages
-waiting for their retry delay. They stay in the transport until another worker
-handles them.
+waiting for their retry delay, nor for the transports that are
+:ref:`cooling down after failures <messenger-cooldown>`. Their messages stay in
+the transport until another worker handles them.
 
 .. warning::
 
@@ -980,7 +981,9 @@ handles them.
 If a worker dependency like your database server is down, or timeout is reached,
 you can try to add :ref:`reconnect logic <middleware-doctrine>`, or just quit
 the worker if it receives too many errors with the ``--failure-limit`` option
-of the ``messenger:consume`` command.
+of the ``messenger:consume`` command. You can also make the worker
+:ref:`stop consuming a transport for a while <messenger-cooldown>` after several
+failures in a row.
 
 **Restart Workers on Deploy**
 
@@ -1768,7 +1771,9 @@ this is configurable for each transport:
     If failures in your application involve external services, including
     rate-limiting issues, the default retry window may be too short. Consider
     increasing ``max_retries``, ``delay``, ``multiplier``, and ``max_delay`` to
-    better match your use case.
+    better match your use case, or
+    :ref:`cool down the transport <messenger-cooldown>` so the next messages
+    don't use up their retries while the service is down.
 
 .. tip::
 
@@ -1780,6 +1785,117 @@ this is configurable for each transport:
     Thanks to :class:`Symfony\\Component\\Messenger\\Stamp\\SerializedMessageStamp`,
     the serialized form of the message is saved, which prevents to serialize it
     again if the message is later retried.
+
+.. _messenger-cooldown:
+
+Cooling Down a Transport After Failures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``cooldown_strategy`` option was introduced in Symfony 8.2.
+
+When messages fail because a service they depend on is down or rate limited,
+the next messages of the transport will probably fail too and use up their
+retries. Enable the ``cooldown_strategy`` option of the transport to make the
+worker stop consuming it for a while after several failures in a row. In the
+meantime, the worker keeps consuming its other transports:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async_api:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+                        # set it to ~ to use the default values
+                        cooldown_strategy:
+                            # number of failures in a row that start a cooldown
+                            failure_threshold: 5
+                            # duration of the first cooldown (in milliseconds)
+                            delay: 1000
+                            # multiplier for each further failure in a row
+                            multiplier: 2
+                            # maximum duration of a cooldown (0 means no limit)
+                            max_delay: 60000
+                            # randomness factor (between 0 and 1.0)
+                            jitter: 0.1
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'async_api' => [
+                            'dsn' => env('MESSENGER_TRANSPORT_DSN'),
+
+                            // set it to true to use the default values
+                            'cooldown_strategy' => [
+                                // number of failures in a row that start a cooldown
+                                'failure_threshold' => 5,
+                                // duration of the first cooldown (in milliseconds)
+                                'delay' => 1000,
+                                // multiplier for each further failure in a row
+                                'multiplier' => 2,
+                                // maximum duration of a cooldown (0 means no limit)
+                                'max_delay' => 60000,
+                                // randomness factor (between 0 and 1.0)
+                                'jitter' => 0.1,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+With this configuration, five failures in a row pause the transport for one
+second, and each further failure in a row pauses it again for twice as long, up
+to one minute. A message handled successfully resets the count. The worker
+retries the failed messages as usual, and the next messages wait in the
+transport until the cooldown ends.
+
+A cooldown lasts at least the :ref:`retry delay <messenger-forcing-retrying>`
+that the failure asks for, but never longer than ``max_delay``. For example,
+when a rate-limited API responds with a ``Retry-After`` header of 30 seconds
+and the handler uses it as the retry delay, the first cooldown lasts 30 seconds
+instead of one second.
+
+Failures that forbid a retry don't count, because the message itself caused
+them. For example, when a handler throws an
+:class:`Symfony\\Component\\Messenger\\Exception\\UnrecoverableMessageHandlingException`
+because the message refers to an order that no longer exists, the next messages
+can still succeed. The failures that happen during a cooldown don't count
+either, because their messages were already being handled when the cooldown
+started.
+
+When fetching messages from the transport fails, for example while the broker
+restarts, the worker logs the error and counts it as a failure. Without the
+``cooldown_strategy`` option, this error stops the worker.
+
+Each worker counts its own failures and cools down on its own. The worker
+checks the cooldown before each fetch, so it still handles the messages it
+already fetched (see the ``--fetch-size`` option) and the messages it handles in
+parallel (see the :ref:`--concurrency option <messenger-concurrency>`).
+
+For other needs, such as sharing a cooldown between all workers, set the
+``cooldown_strategy`` option to the id of a service implementing
+:class:`Symfony\\Component\\Messenger\\Cooldown\\CooldownStrategyInterface`.
+The worker calls its ``checkStatus()`` method before each fetch from the
+transport. It reports each handled message with ``recordSuccess()``, and each
+failed message or fetch with ``recordFailure()``.
+
+.. tip::
+
+    Symfony triggers a :class:`Symfony\\Component\\Messenger\\Event\\WorkerTransportCoolingDownEvent`
+    when a worker starts skipping a transport because it is cooling down.
 
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
@@ -5690,6 +5806,7 @@ of the process. For each, the event class is the event name:
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerRunningEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStartedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStoppedEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\WorkerTransportCoolingDownEvent`
 
 .. note::
 

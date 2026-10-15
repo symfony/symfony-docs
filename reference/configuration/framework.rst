@@ -3579,6 +3579,74 @@ jitter
 
 Randomness to apply to the delay (between ``0`` and ``1``).
 
+cooldown_strategy
+"""""""""""""""""
+
+Makes the worker stop consuming this transport for a while after failures.
+Read more about
+:ref:`cooling down a transport after failures <messenger-cooldown>`.
+
+.. versionadded:: 8.2
+
+    The ``cooldown_strategy`` option was introduced in Symfony 8.2.
+
+enabled
+^^^^^^^
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to cool the transport down after failures. Setting any other
+``cooldown_strategy`` option also enables it.
+
+service
+^^^^^^^
+
+**type**: ``string`` **default**: ``null``
+
+Service id to override the cooldown strategy entirely. When set, the other
+``cooldown_strategy`` options are not allowed. You can also pass the service id
+directly as the value of ``cooldown_strategy``.
+
+failure_threshold
+^^^^^^^^^^^^^^^^^
+
+**type**: ``integer`` **default**: ``5``
+
+Number of failures in a row that start a cooldown. Each worker counts its own
+failures.
+
+delay
+^^^^^
+
+**type**: ``integer`` **default**: ``1000``
+
+Duration in milliseconds of the first cooldown (or the initial value when
+``multiplier`` is used).
+
+multiplier
+^^^^^^^^^^
+
+**type**: ``float`` **default**: ``2``
+
+If greater than 1, the cooldown grows exponentially for each further failure in
+a row: ``delay = delay * (multiplier ^ (failures - failure_threshold))``.
+
+max_delay
+^^^^^^^^^
+
+**type**: ``integer`` **default**: ``60000``
+
+Maximum duration in milliseconds of a cooldown, even when the failure asks for
+a longer :ref:`retry delay <messenger-forcing-retrying>`. A value of ``0`` means
+infinite.
+
+jitter
+^^^^^^
+
+**type**: ``float`` **default**: ``0.1``
+
+Randomness to apply to the duration (between ``0`` and ``1``).
+
 stop_worker_on_signals
 ......................
 
