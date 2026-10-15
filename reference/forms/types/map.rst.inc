@@ -63,6 +63,7 @@ Field Groups
 
 * :doc:`BoundsType </reference/forms/types/bounds>`
 * :doc:`CollectionType </reference/forms/types/collection>`
+* :doc:`PolymorphicCollectionType </reference/forms/types/polymorphic_collection>`
 * :doc:`RepeatedType </reference/forms/types/repeated>`
 
 Hidden Fields
