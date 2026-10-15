@@ -340,9 +340,19 @@ It's also possible to change verbosity per deprecation type. For example, using
 ``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
 "indirect" and "other".
 
-The ``quiet`` option hides details for the specified deprecation types, but will
-not change the outcome in terms of exit code. That's what :ref:`max <making-tests-fail>`
-is for, and both settings are orthogonal.
+The ``verbose`` and ``quiet`` options only change the output, not the exit
+code (use the :ref:`max <making-tests-fail>` option for that). However, the
+bridge always displays the details of the deprecation types that make the
+tests fail. Since any deprecation makes the tests fail by default, these
+options only hide details when you combine them with a ``max`` threshold:
+
+.. code-block:: terminal
+
+    # hides the details of indirect and other deprecations, which don't make the tests fail
+    $ SYMFONY_DEPRECATIONS_HELPER='max[total]=999999&quiet[]=indirect&quiet[]=other' ./vendor/bin/simple-phpunit
+
+    # hides the same details, but direct deprecations still make the tests fail
+    $ SYMFONY_DEPRECATIONS_HELPER='max[direct]=0&quiet[]=indirect&quiet[]=other' ./vendor/bin/simple-phpunit
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -387,8 +397,9 @@ the compiling and warming up of the container:
 Log Deprecations
 ~~~~~~~~~~~~~~~~
 
-For turning the verbose output off and write it to a log file instead you can use
-``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+To turn the verbose output off and write it to a log file instead, use
+``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``. Like
+``verbose`` and ``quiet``, this option doesn't change the exit code.
 
 Setting The Locale For Tests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
