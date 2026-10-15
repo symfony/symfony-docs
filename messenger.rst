@@ -2892,6 +2892,118 @@ and pass a number to specify the priority (default = ``1024``; lower numbers mea
         new BeanstalkdPriorityStamp(0),
     ]);
 
+.. _messenger-mongodb-transport:
+
+MongoDB Transport
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The MongoDB transport was introduced in Symfony 8.2.
+
+The MongoDB transport stores messages in a MongoDB collection. Install it by
+running:
+
+.. code-block:: terminal
+
+    $ composer require symfony/mongodb-messenger
+
+The MongoDB transport DSN may look like this:
+
+.. code-block:: env
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=mongodb://user:pass@mongodb1.example.com:27017/app
+    MESSENGER_TRANSPORT_DSN=mongodb+srv://user:pass@cluster.example.com/app
+
+    # the settings below are optional
+    MESSENGER_TRANSPORT_DSN=mongodb://mongodb1.example.com/app?collection_name=jobs&queue_name=high
+
+The DSN is a `MongoDB connection string`_ (both the ``mongodb`` and the
+``mongodb+srv`` schemes are supported) completed with the options below, which
+Symfony removes before forwarding the connection string to the MongoDB driver.
+The transport has a number of options, set in the DSN query string or in the
+``options`` key of the transport configuration:
+
+``database`` (default: the path of the DSN)
+    The name of the database.
+
+``collection_name`` (default: ``messenger_messages``)
+    The name of the collection storing the messages.
+
+``queue_name`` (default: ``default``)
+    The name of the queue the transport sends messages to.
+
+``redeliver_timeout`` (default: ``3600``)
+    The time in seconds after which a message claimed by a worker that
+    stopped unexpectedly is delivered again.
+
+Any other query parameter is passed to the MongoDB driver as a
+`connection string option`_.
+
+Listening to Several Queues
+...........................
+
+All the queues of a MongoDB transport live in the same collection, and
+the queue name is a field of the message document. A transport sends to the
+single queue named by its ``queue_name`` option. Declare one transport per
+queue so that the routing can target each of them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    sms: 'mongodb://mongodb.example.com/app?queue_name=sms'
+                    emails: 'mongodb://mongodb.example.com/app?queue_name=emails'
+                routing:
+                    'Symfony\Component\Notifier\Message\SmsMessage': sms
+                    'Symfony\Component\Mailer\Messenger\SendEmailMessage': emails
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Mailer\Messenger\SendEmailMessage;
+        use Symfony\Component\Notifier\Message\SmsMessage;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'transports' => [
+                        'sms' => 'mongodb://mongodb.example.com/app?queue_name=sms',
+                        'emails' => 'mongodb://mongodb.example.com/app?queue_name=emails',
+                    ],
+                    'routing' => [
+                        SmsMessage::class => 'sms',
+                        SendEmailMessage::class => 'emails',
+                    ],
+                ],
+            ],
+        ]);
+
+The MongoDB transport supports the ``--queues`` option (see
+:ref:`messenger-limit-queues`), so a single worker can consume both queues:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume sms --queues=sms --queues=emails
+
+The worker claims each message with one request to the server, whatever the
+number of listed queues. Keep in mind that:
+
+* the queues must be in the same database and collection of the same MongoDB
+  cluster;
+* messages are delivered in the order of their availability date, without any
+  priority between the queues;
+* a message that fails is retried in the queue it was received from;
+* the worker uses the settings of the transport named in the command (here,
+  ``sms``) for all the queues, including its failure transport.
+
 .. _messenger-redis-transport:
 
 Redis Transport
@@ -6426,5 +6538,7 @@ Learn more
 .. _`SSL context options`: https://php.net/context.ssl
 .. _`SQS CreateQueue API`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_CreateQueue.html
 .. _`system attributes`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_ReceiveMessage.html#API_ReceiveMessage_RequestSyntax
+.. _`MongoDB connection string`: https://www.mongodb.com/docs/manual/reference/connection-string/
+.. _`connection string option`: https://www.mongodb.com/docs/manual/reference/connection-string-options/
 .. _`no more than 10 priority levels`: https://www.rabbitmq.com/docs/priority
 .. _`amphp/parallel`: https://github.com/amphp/parallel
