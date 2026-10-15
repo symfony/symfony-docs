@@ -296,6 +296,72 @@ Before defining the children of an array node, you can provide options like:
         connections: ['mysql', 'sqlite']
         connections: 'mysql'  # automatically wrapped as ['mysql']
 
+``acceptElementsAtParentLevel()``
+    Declares that the elements of a prototyped array node can also be defined
+    in its parent node. This is a common shortcut when a map usually contains a
+    single element. For example, the options of a connection can be set under
+    ``database`` instead of under ``database.connections.default``::
+
+        // the keys of 'database' that aren't options of a connection;
+        // they stay in 'database' and the other keys are moved to the connection
+        $excludedKeys = ['default_connection' => true];
+
+        $rootNode
+            ->children()
+                ->arrayNode('database')
+                    ->beforeNormalization()
+                        ->ifTrue(static fn ($v): bool => \is_array($v)
+                            && !isset($v['connections']))
+                        ->then(static function (array $v) use ($excludedKeys) {
+                            $connection = array_diff_key($v, $excludedKeys);
+                            $v = array_intersect_key($v, $excludedKeys);
+                            $name = $v['default_connection'] ?? 'default';
+                            $v['connections'] = [$name => $connection];
+
+                            return $v;
+                        })
+                    ->end()
+                    ->children()
+                        ->scalarNode('default_connection')->end()
+                        ->arrayNode('connections')
+                            ->useAttributeAsKey('name')
+                            // accepts "host" and "user" in the parent "database" node
+                            ->acceptElementsAtParentLevel()
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('host')->end()
+                                    ->scalarNode('user')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
+    With this configuration, the following shortcut is equivalent to defining
+    ``host`` and ``user`` under ``database.connections.default``:
+
+    .. code-block:: yaml
+
+        database:
+            host: 'localhost'
+            user: 'root'
+
+    This method doesn't change how the configuration is processed. The
+    ``beforeNormalization()`` closure of the parent node must move the shortcut
+    keys into an element of the child node, as in the previous example. The
+    declaration lets the
+    :class:`Symfony\\Component\\Config\\Definition\\Dumper\\JsonSchemaDumper`
+    and :class:`Symfony\\Component\\Config\\Definition\\ArrayShapeGenerator`
+    classes describe those keys in the parent node instead of accepting any
+    value. The key defined with ``useAttributeAsKey()`` (``name`` in this
+    example) isn't accepted in the parent node.
+
+    .. versionadded:: 8.2
+
+        The ``acceptElementsAtParentLevel()`` method was introduced in Symfony 8.2.
+
 A basic prototyped array configuration can be defined as follows::
 
     $node
