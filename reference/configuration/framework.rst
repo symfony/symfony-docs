@@ -2213,11 +2213,11 @@ files and replays them in tests (see
 enabled
 """""""
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true`` when the ``test`` option is enabled, ``false`` otherwise
 
-Whether to decorate the HTTP clients with the recorder. Symfony sets this
-option to ``true`` automatically when you configure any of the other
-``recorder`` options.
+Whether to decorate the HTTP clients with the recorder. By default, the
+recorder is enabled only when the :ref:`test <reference-framework-test>` option
+is enabled. Configuring the other ``recorder`` options doesn't enable it.
 
 redact
 """"""
