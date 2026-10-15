@@ -266,10 +266,10 @@ workflows to make them fail when there are vulnerabilities.
 
 .. tip::
 
-    In continuous integration services you can check security vulnerabilities
-    by running the ``composer audit`` command. This uses the same data internally
-    as ``check:security`` but does not require installing the entire Symfony CLI
-    during CI or on CI workers.
+    In continuous integration services, run the ``composer audit`` command
+    instead. It doesn't require installing the Symfony CLI and it reports more
+    vulnerabilities, because Packagist combines the `PHP security advisories database`_
+    used by ``check:security`` with the `GitHub Advisory Database`_.
 
 Symfony LTS Versions
 --------------------
@@ -335,6 +335,7 @@ Learn More
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`GitHub Advisory Database`: https://github.com/advisories
 .. _`Symfony releases`: https://symfony.com/releases
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
