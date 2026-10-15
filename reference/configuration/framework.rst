@@ -4646,6 +4646,8 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
 Be aware that if you configure it, you'll have to set other session-related options
 as parameters as well.
 
+.. _reference-framework-session-cookie-domain:
+
 cookie_domain
 .............
 

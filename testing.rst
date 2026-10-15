@@ -910,6 +910,19 @@ You can also override HTTP headers on a per request basis::
     uppercase and prefix the result with ``HTTP_``. For example, if your
     header name is ``X-Session-Token``, pass ``HTTP_X_SESSION_TOKEN``.
 
+Like browsers, the client sends cookies set without a ``Domain`` attribute
+only to the host that set them. If you change the host between requests (e.g.
+from ``example.com`` to ``admin.example.com``), the client doesn't send those
+cookies. For example, the session cookie isn't sent, so the user is no longer
+logged in. To share the session between subdomains, set the
+:ref:`cookie_domain <reference-framework-session-cookie-domain>` session
+option (e.g. to ``.example.com``).
+
+.. versionadded:: 8.2
+
+    Sending cookies without a ``Domain`` attribute only to the host that set
+    them was introduced in Symfony 8.2.
+
 Reporting Exceptions
 ....................
 
