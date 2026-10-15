@@ -384,6 +384,13 @@ Next, configure the ``base_uri`` and ``discovery`` options:
             ],
         ]);
 
+.. note::
+
+    If ``base_uri`` contains a path, it must end with a slash. Otherwise, the
+    last segment of the path is lost when building the discovery URL (e.g.
+    ``https://www.example.com/realms/demo`` results in
+    ``https://www.example.com/realms/.well-known/openid-configuration``).
+
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used as user
 identifier by default. To use another claim, specify it using the ``claim`` option:
 
@@ -673,6 +680,13 @@ are excluded. Keys without any usage designation are included.
 .. versionadded:: 8.1
 
     The ``enforce_key_usage_verification`` option was introduced in Symfony 8.1.
+
+.. note::
+
+    If the ``base_uri`` of the discovery contains a path, it must end with a
+    slash. Otherwise, the last segment of the path is lost when building the
+    discovery URL (e.g. ``https://www.example.com/realms/demo`` results in
+    ``https://www.example.com/realms/.well-known/openid-configuration``).
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used by
 default as user identifier. To use another claim, specify it on the
