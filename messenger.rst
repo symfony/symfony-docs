@@ -2892,6 +2892,30 @@ and pass a number to specify the priority (default = ``1024``; lower numbers mea
         new BeanstalkdPriorityStamp(0),
     ]);
 
+By default, messages are sent to the tube defined in the ``tube_name`` option.
+When the tube is only known at runtime (e.g. one tube per customer), use the
+:class:`Symfony\\Component\\Messenger\\Bridge\\Beanstalkd\\Transport\\BeanstalkdTubeStamp`
+to send a message to another tube::
+
+    use App\Message\SomeMessage;
+    use Symfony\Component\Messenger\Bridge\Beanstalkd\Transport\BeanstalkdTubeStamp;
+
+    $this->bus->dispatch(new SomeMessage('some data'), [
+        // overrides the "tube_name" option of the transport for this message
+        new BeanstalkdTubeStamp('customer_'.$customerId),
+    ]);
+
+.. versionadded:: 8.2
+
+    The ``BeanstalkdTubeStamp`` was introduced in Symfony 8.2.
+
+This stamp only changes the tube where the message is sent. Workers only
+consume messages from the tube defined in the ``tube_name`` option of their
+transport, so define a transport for each of these tubes and run a worker
+for it. When you know all the tubes in advance, you can instead define one
+transport per tube and select it with the
+:class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp`.
+
 .. _messenger-redis-transport:
 
 Redis Transport
