@@ -2837,6 +2837,125 @@ Keep in mind the following behaviors:
   time needed to forward a message) so the relay forwards messages sooner
   after a crash.
 
+.. _messenger-inbox:
+
+Skipping Redelivered Messages With a Transactional Inbox
+........................................................
+
+.. versionadded:: 8.2
+
+    The ``inbox`` transport option was introduced in Symfony 8.2.
+
+A worker acknowledges a message after its handlers return. Sometimes the
+worker stops, or loses its connection to the broker, after the database
+transaction is committed but before the acknowledgment. The broker then
+delivers the message again, and the handlers run twice. This happens more often
+with an :ref:`outbox <messenger-outbox>`, because its relay can forward a
+message and stop before acknowledging it.
+
+The *transactional inbox* pattern prevents this. It records each handled
+message in the database, in the same transaction as the changes of the
+handlers. Then it skips the messages that it recorded already.
+
+Use the ``inbox`` option of a transport to enable this pattern:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        messenger:
+            # the inbox records each message by the id that this option adds
+            identity_stamps: true
+            buses:
+                messenger.bus.default:
+                    middleware:
+                        # the inbox records messages in this transaction
+                        - doctrine_transaction
+            transports:
+                orders:
+                    dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                    # records the handled messages in the "messenger_inbox"
+                    # table of the default Doctrine connection
+                    inbox: true
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'messenger' => [
+                // the inbox records each message by the id that this option adds
+                'identity_stamps' => true,
+                'buses' => [
+                    'messenger.bus.default' => [
+                        'middleware' => [
+                            // the inbox records messages in this transaction
+                            'doctrine_transaction',
+                        ],
+                    ],
+                ],
+                'transports' => [
+                    'orders' => [
+                        'dsn' => '%env(MESSENGER_TRANSPORT_DSN)%',
+                        // records the handled messages in the "messenger_inbox"
+                        // table of the default Doctrine connection
+                        'inbox' => true,
+                    ],
+                ],
+            ],
+        ]);
+
+Before calling the handlers of a message from the ``orders`` transport, the
+inbox inserts a row in its table. The row contains the name of the transport
+and the id of the message. When the row exists already, the worker skips the
+handlers and acknowledges the message. When a handler fails, the rollback of
+the transaction removes the row, so a retry handles the message again.
+
+The handlers must run in a database transaction on the connection of the
+inbox, for example with the :ref:`doctrine_transaction middleware
+<middleware-doctrine>`. Otherwise, the inbox throws an exception for each
+message. Create the table with the ``messenger:setup-transports`` command. When
+you use Doctrine migrations, the generated migrations also create it.
+
+Instead of ``true``, the ``inbox`` option accepts these keys:
+
+``connection`` (default: the default connection)
+    The name of the Doctrine DBAL connection that the handlers use.
+
+``table_name`` (default: ``messenger_inbox``)
+    The name of the table. Several transports can use the same table.
+
+``retention`` (default: ``604800``, 7 days)
+    The number of seconds a record is kept. It must exceed the time the
+    transport can take to deliver a message again, such as the
+    ``redeliver_timeout`` option of the Doctrine transport.
+
+Keep in mind the following behaviors:
+
+* the inbox only protects the changes made in the database transaction. Other
+  side effects, such as HTTP requests or emails, must support being repeated.
+  You can also dispatch them as messages to a transport that has an outbox;
+* the inbox can't record a message without an id. The worker handles this
+  message and logs a warning. For example, this happens when another
+  application sends the message without enabling the ``identity_stamps``
+  option;
+* the inbox records a message retried from a failure transport for the
+  transport where it failed;
+* two workers can get the same message, for example when the broker delivers
+  it again after a lost connection. The second worker then waits until the
+  transaction of the first one ends;
+* a message dispatched with the ``DispatchAfterCurrentBusStamp`` must be sent
+  to a transport that has an outbox. The outbox stores the message in the same
+  transaction. Symfony refuses any other such message, because it would be
+  dispatched after the commit and lost if its dispatch failed. This also
+  applies to the next message of a ``ChainStamp``, which gets this stamp;
+* the inbox doesn't record the messages of
+  :ref:`batch handlers <messenger-handler-batch>`;
+* the inbox deletes the records older than ``retention`` from time to time,
+  when it records new messages.
+
 .. _messenger-beanstalkd-transport:
 
 Beanstalkd Transport
@@ -4643,6 +4762,11 @@ configuring your middleware manually, be sure to register
 ``dispatch_after_current_bus`` before ``doctrine_transaction`` in the middleware
 chain. Also, the ``dispatch_after_current_bus`` middleware must be loaded for
 *all* of the buses being used.
+
+When the current message comes from a transport with an
+:ref:`inbox <messenger-inbox>`, send the messages that have the
+``DispatchAfterCurrentBusStamp`` to a transport with an
+:ref:`outbox <messenger-outbox>`.
 
 .. _messenger-handler-transport:
 
