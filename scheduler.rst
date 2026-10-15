@@ -538,6 +538,39 @@ while developing the application).
 
     The ``env`` option was introduced in Symfony 8.2.
 
+Use the ``stamps`` option to add
+:ref:`Messenger stamps <messenger-envelopes-stamps>` to the message dispatched
+for the task (e.g. to delay it). Attributes can't hold objects, so list the
+stamp classes instead of their instances. When a stamp needs constructor
+arguments, map its class to them::
+
+    // src/Scheduler/Task/SendDailySalesReports.php
+    namespace App\Scheduler\Task;
+
+    use Symfony\Component\Messenger\Stamp\DelayStamp;
+    use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
+    use Symfony\Component\Scheduler\Attribute\AsCronTask;
+
+    #[AsCronTask('0 2 * * *', transports: 'async', stamps: [
+        // a stamp without constructor arguments
+        DispatchAfterCurrentBusStamp::class,
+        // a stamp with its constructor arguments; a single argument can also be
+        // passed without the array (e.g. DelayStamp::class => 7000). A DelayStamp
+        // only delays the task when it's dispatched to a Messenger transport
+        DelayStamp::class => [7000],
+    ])]
+    class SendDailySalesReports
+    {
+        public function __invoke()
+        {
+            // ...
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``stamps`` option was introduced in Symfony 8.2.
+
 .. _scheduler-attributes-cron-task:
 
 ``AsCronTask`` Example
@@ -577,6 +610,11 @@ The attribute takes more parameters to customize the trigger::
     // schedules the task only in the given environment(s); pass an array
     // of environment names to schedule it in several environments
     #[AsCronTask('0 0 * * *', env: 'prod')]
+
+    // adds Messenger stamps to the message dispatched for the task
+    #[AsCronTask('0 0 * * *', transports: 'async', stamps: [
+        DelayStamp::class => [1000],
+    ])]
 
     // when applying this attribute to a Symfony console command, you can pass
     // arguments and options to the command using the 'arguments' option:
@@ -624,6 +662,11 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
 
     // schedules the task only in the given environment(s)
     #[AsPeriodicTask(frequency: '1 day', env: ['prod', 'staging'])]
+
+    // adds Messenger stamps to the message dispatched for the task
+    #[AsPeriodicTask(frequency: '1 day', transports: 'async', stamps: [
+        DelayStamp::class => [1000],
+    ])]
 
     // defines the method name to call instead as well as the arguments to pass to it
     #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
