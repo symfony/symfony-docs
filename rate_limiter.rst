@@ -460,6 +460,21 @@ already made in the current time window). By default, all limiters use the
 ``cache.rate_limiter`` cache pool created with the :doc:`Cache component </cache>`.
 This means that every time you clear the cache, the rate limiter will be reset.
 
+.. tip::
+
+    By default, this pool stores its data in the filesystem, so the state of
+    the limiters also persists between tests and the requests made in one test
+    can reach the limit in the next tests. Clear the pool before each test::
+
+        // tests/Controller/LoginControllerTest.php
+        protected function setUp(): void
+        {
+            // create the client before getting the container, because
+            // createClient() fails if the kernel is already booted
+            $this->client = static::createClient();
+            static::getContainer()->get('cache.rate_limiter')->clear();
+        }
+
 You can use the ``cache_pool`` option to override the cache used by a specific limiter
 (or even :ref:`create a new cache pool <cache-create-pools>` for it):
 
