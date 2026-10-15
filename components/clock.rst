@@ -363,6 +363,17 @@ By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
 :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full
 control on your time-sensitive code's behavior.
 
+.. tip::
+
+    In the :ref:`time-sensitive tests <phpunit-bridge-clock-mock-clock-component>`
+    of the PHPUnit Bridge, the mocked ``time()``, ``sleep()`` and other PHP
+    time functions follow the clock set by ``mockTime()``.
+
+    .. versionadded:: 8.2
+
+        The integration of ``ClockMock`` with the Clock component was
+        introduced in Symfony 8.2.
+
 Exceptions Management
 ---------------------
 
