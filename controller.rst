@@ -1375,15 +1375,23 @@ it (this requires the ObjectMapper component to be installed and enabled)::
 
     class ProductController
     {
-        // the arguments are: status code, headers, serialization context
-        // and the class to map the returned value to
-        #[Serialize(200, [], [], ProductOutput::class)]
+        #[Serialize(
+            200,                  // status code
+            [],                   // headers
+            [],                   // serialization context
+            ProductOutput::class  // class to map the returned value to
+        )]
         public function show(Product $product): Product
         {
             return $product;
         }
 
-        #[Serialize(200, [], [], ProductOutput::class)]
+        #[Serialize(
+            200,
+            [],
+            [],
+            ProductOutput::class
+        )]
         public function list(ProductRepository $productRepository): array
         {
             // each item of the array is mapped to ProductOutput; if you return
