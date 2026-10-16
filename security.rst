@@ -1843,6 +1843,15 @@ routes that your firewalls need:
             ],
         ]);
 
+This loader also defines the routes needed by other authenticators, such as
+:doc:`OpenID Connect login </security/oidc_login>` and the
+:doc:`access token authenticator </security/access_token>`, so you only need
+this one import.
+
+.. versionadded:: 8.2
+
+    The ``security.route_loader`` service was introduced in Symfony 8.2.
+
 .. deprecated:: 8.2
 
     The ``security.route_loader.logout`` service was deprecated in Symfony 8.2
