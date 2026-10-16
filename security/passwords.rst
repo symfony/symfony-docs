@@ -92,49 +92,18 @@ Further in this article, you can find a
     generate secure password hashes. In general, this makes your password
     hashing more secure.
 
-    In tests however, secure hashes are not important, so you can change
-    the password hasher configuration in ``test`` environment to run tests
-    faster:
+    In tests however, secure hashes are not important. When the
+    :ref:`framework.test <reference-framework-test>` option is enabled, the
+    password hashers that don't set the ``cost``, ``time_cost`` or
+    ``memory_cost`` options use the lowest values that bcrypt and argon2
+    accept (``4``, ``3`` and ``10`` respectively), so your tests run faster
+    without any extra configuration. Set these options explicitly to keep
+    other values in the ``test`` environment.
 
-    .. configuration-block::
+    .. versionadded:: 8.2
 
-        .. code-block:: yaml
-
-            # config/packages/security.yaml
-            when@test:
-                security:
-                    # ...
-
-                    password_hashers:
-                        # Use your user class name here
-                        App\Entity\User:
-                            algorithm: auto
-                            cost: 4 # Lowest possible value for bcrypt
-                            time_cost: 3 # Lowest possible value for argon
-                            memory_cost: 10 # Lowest possible value for argon
-
-        .. code-block:: php
-
-            // config/packages/security.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-            use App\Entity\User;
-
-            return App::config([
-                'when@test' => [
-                    'security' => [
-                        'password_hashers' => [
-                            // Use your user class name here
-                            User::class => [
-                                'algorithm' => 'auto',
-                                'cost' => 4, // Lowest possible value for bcrypt
-                                'time_cost' => 3, // Lowest possible value for argon
-                                'memory_cost' => 10, // Lowest possible value for argon
-                            ],
-                        ],
-                    ],
-                ],
-            ]);
+        The automatic use of the lowest costs when ``framework.test`` is
+        enabled was introduced in Symfony 8.2.
 
 Hashing the Password
 --------------------
