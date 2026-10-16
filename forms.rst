@@ -421,6 +421,30 @@ the ``data_class`` option by adding the following to your form type class::
         }
     }
 
+.. tip::
+
+    For forms that only list fields, you can also declare the form directly on
+    the data class with the ``#[AsFormType]`` and ``#[FormField]`` PHP
+    attributes, and then use the class name as the form type::
+
+        // src/Dto/UserDto.php
+        namespace App\Dto;
+
+        use Symfony\Component\Form\Attribute\AsFormType;
+        use Symfony\Component\Form\Attribute\FormField;
+
+        #[AsFormType]
+        class UserDto
+        {
+            #[FormField]
+            public ?string $name = null;
+        }
+
+        // in a controller
+        $form = $this->createForm(UserDto::class, $user);
+
+    Read more about this in :doc:`/form/attribute_form_types`.
+
 .. _form-property-path:
 
 Mapping Fields to Object Properties
@@ -2332,6 +2356,7 @@ Advanced Features:
     /form/data_mappers
     /form/create_form_type_extension
     /form/type_guesser
+    /form/attribute_form_types
 
 Form Themes and Customization:
 
