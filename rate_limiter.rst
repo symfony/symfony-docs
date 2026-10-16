@@ -485,6 +485,54 @@ headers at all. This lets you combine a public limit with a hidden one::
         // ...
     }
 
+.. _rate-limiter-consumed-rate-limit:
+
+Reading the Consumed Rate Limit
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``RateLimitValueResolver`` was introduced in Symfony 8.2.
+
+Sometimes you need the state of the rate limit inside the controller, for
+example to tell users how many more messages they can send. Type-hint a
+controller argument with the :class:`Symfony\\Component\\RateLimiter\\RateLimit`
+class to get the rate limit consumed by the ``#[RateLimit]`` attributes of the
+controller. Symfony doesn't consume any extra tokens to inject it::
+
+    // src/Controller/ContactController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\RateLimit as RateLimitAttribute;
+    use Symfony\Component\RateLimiter\RateLimit;
+
+    class ContactController extends AbstractController
+    {
+        #[RateLimitAttribute('contact_form')]
+        public function send(RateLimit $rateLimit): Response
+        {
+            // ... send the message
+
+            $this->addFlash('success', sprintf(
+                'Message sent. You can send %d more messages.',
+                $rateLimit->getRemainingTokens()
+            ));
+
+            return $this->redirectToRoute('contact');
+        }
+    }
+
+When several ``#[RateLimit]`` attributes apply to the same request, the argument
+gets the rate limit with the fewest requests left, regardless of the
+``exposeHeaders`` option.
+
+When no attribute applies to the request (because the controller doesn't
+define any or because their ``methods`` or ``if`` arguments exclude the
+request), the argument gets its default value or ``null`` if it's nullable.
+Otherwise, Symfony throws an exception.
+
 Reacting to Exceeded Rate Limits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
