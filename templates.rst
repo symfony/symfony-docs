@@ -1024,6 +1024,57 @@ to define the template to render::
         }
     }
 
+The ``render()`` method and the ``#[Template]`` attribute render the entire
+template before sending the response. To send the contents to the browser while
+Twig renders the template, use the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::stream`
+method, which returns a :class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\StreamedResponse;
+
+    class ProductController extends AbstractController
+    {
+        public function index(): StreamedResponse
+        {
+            // ...
+
+            // the `stream()` method sends the response headers and then
+            // renders the template, sending its contents as they are generated
+            return $this->stream('product/index.html.twig', [
+                'category' => '...',
+                'promotions' => ['...', '...'],
+            ]);
+        }
+    }
+
+When using the ``#[Template]`` attribute, set its ``stream`` argument to
+``true`` to get the same behavior::
+
+    #[Template('product/index.html.twig', stream: true)]
+    public function index(): array
+    {
+        // ...
+
+        return [
+            'category' => '...',
+            'promotions' => ['...', '...'],
+        ];
+    }
+
+Symfony sends the response headers before rendering the template, so the
+template can't change them. Anything that modifies headers (e.g. setting
+cookies or starting the session) must happen in the controller. For example,
+if the template renders a CSRF token, start the session in the controller with
+``$request->getSession()->start()``. In addition, if an error occurs while
+rendering the template, the response status code can't change anymore.
+
+Read the :ref:`streaming response <streaming-response>` docs to learn about the
+server and PHP buffers that can delay sending the contents to the browser.
+
 The :ref:`base AbstractController <the-base-controller-classes-services>` also provides the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock`
 and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
