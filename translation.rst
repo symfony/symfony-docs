@@ -1001,6 +1001,35 @@ in a special way (e.g. not using files or Doctrine entities), you need to provid
 a custom class implementing the :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
 interface. See the :ref:`dic-tags-translation-loader` tag for more information.
 
+.. _translation-cache:
+
+Translation Cache
+-----------------
+
+The translator compiles each catalog into a PHP file stored in the
+``var/cache/<env>/translations/`` directory. The translator loads these files
+with ``include``, so OPcache can cache them too.
+
+When debug mode is disabled (e.g. in the ``prod`` environment), the translator
+doesn't check whether the translation files changed after building the cache.
+If you update the contents of existing translation files in production, delete
+that directory so the translator rebuilds the catalogs on the next request:
+
+.. code-block:: terminal
+
+    $ rm -rf var/cache/prod/translations/
+
+If you add new translation files, you must clear the entire cache instead, as
+explained in the previous sections.
+
+.. tip::
+
+    To invalidate translations on several servers at once (e.g. based on a
+    version number stored in a shared cache), create a class that implements
+    :class:`Symfony\\Component\\Config\\ConfigCacheFactoryInterface` and pass
+    it to the ``setConfigCacheFactory()`` method of the ``translator.default``
+    service.
+
 .. _translation-providers:
 
 Translation Providers
