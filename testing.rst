@@ -652,6 +652,11 @@ to remove the ``kernel.reset`` tag from some services in your test environment::
         }
     }
 
+Symfony shuts down the kernel when the client reboots it and at the end of each
+test. If your services open files or network connections, read
+:ref:`service-container-releasing-resources-on-shutdown` to learn how to close
+them at that moment.
+
 The reboot also discards the services that you replaced in the test container
 with ``$container->set()``. This happens without any error or warning: the
 first request uses your replacement and the next ones use the original service

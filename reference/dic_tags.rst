@@ -708,10 +708,12 @@ can also register it manually:
             ],
         ]);
 
+.. _reference-dic-tags-kernel-reset:
+
 kernel.reset
 ------------
 
-**Purpose**: Clean up services between requests
+**Purpose**: Clean up services between requests and at kernel shutdown
 
 In all main requests (not :ref:`sub-requests <http-kernel-sub-requests>`) except
 the first one, Symfony looks for any service tagged with the ``kernel.reset`` tag
@@ -727,6 +729,121 @@ of the profiler to delete all their information.
 
     Support for resetting non-shared services tagged with ``kernel.reset``
     was introduced in Symfony 8.1.
+
+Symfony also calls these methods when the kernel shuts down (i.e. when
+``$kernel->shutdown()`` runs). With
+:ref:`autoconfiguration <services-autoconfigure>`, Symfony adds this tag to the
+services that implement :class:`Symfony\\Contracts\\Service\\ResetInterface`
+and sets its ``on_shutdown`` attribute to ``flag`` for the services that
+implement :class:`Symfony\\Contracts\\Service\\ShutdownInterface`. Read
+:ref:`service-container-resetting-services` to learn how to use these
+interfaces.
+
+``method``
+~~~~~~~~~~
+
+**type**: ``string`` **required**
+
+The name of the method that Symfony calls to reset the service.
+
+``on_invalid``
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+Set it to ``ignore`` when the method is optional: Symfony then skips the
+services whose class doesn't define it. Otherwise, resetting those services
+fails with an error.
+
+``on_shutdown``
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 8.2
+
+    The ``on_shutdown`` attribute was introduced in Symfony 8.2.
+
+By default, Symfony calls the method without arguments both during ordinary
+resets and at kernel shutdown. Set this attribute to one of these values to
+change that:
+
+* ``flag``: Symfony passes ``true`` to the method at shutdown and no arguments
+  during ordinary resets. The method must define an optional boolean argument
+  whose default value is ``false``.
+* ``only``: Symfony calls the method (without arguments) only at shutdown and
+  skips it during ordinary resets. Use it for methods that release resources,
+  such as ``close()``.
+
+For example, to pass the shutdown flag to the ``reset()`` method:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\TemporaryFileBuffer:
+                # otherwise, autoconfiguration adds this same tag
+                autoconfigure: false
+                tags:
+                    - { name: kernel.reset, method: reset, on_shutdown: flag }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\TemporaryFileBuffer;
+
+        return App::config([
+            'services' => [
+                TemporaryFileBuffer::class => [
+                    // otherwise, autoconfiguration adds this same tag
+                    'autoconfigure' => false,
+                    'tags' => [
+                        [
+                            'name' => 'kernel.reset',
+                            'method' => 'reset',
+                            'on_shutdown' => 'flag',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+To call an existing cleanup method only at shutdown:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\SftpConnection:
+                tags:
+                    - { name: kernel.reset, method: close, on_shutdown: only }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\SftpConnection;
+
+        return App::config([
+            'services' => [
+                SftpConnection::class => [
+                    'tags' => [
+                        [
+                            'name' => 'kernel.reset',
+                            'method' => 'close',
+                            'on_shutdown' => 'only',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 kernel.test_state
 -----------------
