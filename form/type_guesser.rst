@@ -2,9 +2,19 @@ Creating a custom Type Guesser
 ==============================
 
 The Form component can guess the type and some options of a form field by
-using type guessers. The component already includes a type guesser using the
-assertions of the Validation component, but you can also add your own custom
-type guessers.
+using type guessers. The component already includes these type guessers:
+
+* a type guesser using the assertions of the Validation component;
+* :class:`Symfony\\Component\\Form\\EnumFormTypeGuesser`, which guesses an
+  ``EnumType`` field for the properties typed with a PHP enum;
+* :class:`Symfony\\Component\\Form\\TypeInfoFormTypeGuesser`, which guesses
+  the field from the :ref:`declared type of the properties <form-type-guessing>`.
+
+You can also add your own custom type guessers.
+
+.. versionadded:: 8.2
+
+    The ``TypeInfoFormTypeGuesser`` was introduced in Symfony 8.2.
 
 .. sidebar:: Form Type Guessers in the Bridges
 
