@@ -154,7 +154,7 @@ frequency of the messages.
 .. tip::
 
     You can consume all your scheduler transports at once by using a regular expression
-    with the ``messenger:consume`` command (e.g. ``php bin/console messenger:consume scheduler_.*``).
+    with the ``messenger:consume`` command (e.g. ``php bin/console messenger:consume scheduler_.\*``).
 
 .. tip::
 
