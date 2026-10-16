@@ -89,6 +89,11 @@ JsonPath
 
 * :ref:`AsJsonPathFunction <json-path-custom-functions>`
 
+JsonSchema
+~~~~~~~~~~
+
+* :ref:`JsonSchemaConstraint <json-schema-constraint-attribute>`
+
 JsonStreamer
 ~~~~~~~~~~~~
 
