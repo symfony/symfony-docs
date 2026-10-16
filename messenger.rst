@@ -1605,6 +1605,9 @@ If a service is not stateless and you want to reset its properties after each me
 the service must implement :class:`Symfony\\Contracts\\Service\\ResetInterface` where you can reset the
 properties in the ``reset()`` method.
 
+Your service must remain usable after each reset. To also release resources at
+kernel shutdown, see :ref:`service-container-resetting-services`.
+
 If you don't want to reset the container, add the ``--no-reset`` option when
 running the ``messenger:consume`` command.
 

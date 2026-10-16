@@ -1723,6 +1723,85 @@ disabled by default and enabled only when executing the ``lint:container`` comma
 If you don't mind the performance loss, you can enable these compiler passes in
 your application.
 
+.. _service-container-resetting-services:
+
+Resetting Services
+------------------
+
+Services can keep data between requests or messages in a long-running process.
+Implement :class:`Symfony\\Contracts\\Service\\ResetInterface` to clear this
+state when Symfony resets services. After ``reset()``, your service must remain
+usable for the next request or message.
+
+With :ref:`autoconfiguration <services-autoconfigure>`, Symfony adds the
+:ref:`kernel.reset tag <reference-dic-tags-kernel-reset>` for you. Without
+autoconfiguration, add the tag explicitly to register your reset method.
+
+Releasing Resources on Shutdown
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``ShutdownInterface`` interface was introduced in Symfony 8.2.
+
+Symfony shuts down the kernel between :ref:`test cases <integration-tests>`
+and between requests with
+:ref:`FrankenPHP's kernel reset mode <runtime-frankenphp-reset-kernel>`.
+It doesn't do so automatically under PHP-FPM or in FrankenPHP's default worker
+mode. Keeping the kernel alive lets workers reuse connections across requests.
+
+To also close resources when the kernel shuts down, implement
+:class:`Symfony\\Contracts\\Service\\ShutdownInterface`. This interface extends
+``ResetInterface`` and adds an optional ``$shutdown = false`` argument to
+``reset()``. For example, a file buffer can empty its contents between requests
+and close its stream at shutdown::
+
+    // src/Service/TemporaryFileBuffer.php
+    namespace App\Service;
+
+    use Symfony\Contracts\Service\ShutdownInterface;
+
+    class TemporaryFileBuffer implements ShutdownInterface
+    {
+        private mixed $stream;
+
+        public function __construct()
+        {
+            $this->stream = fopen('php://temp', 'w+');
+        }
+
+        public function append(string $data): void
+        {
+            fwrite($this->stream, $data);
+        }
+
+        public function reset(bool $shutdown = false): void
+        {
+            if ($shutdown) {
+                fclose($this->stream);
+                $this->stream = null;
+
+                return;
+            }
+
+            ftruncate($this->stream, 0);
+            rewind($this->stream);
+        }
+    }
+
+When ``$kernel->shutdown()`` is called, Symfony calls ``reset(true)`` on these
+services. Ordinary resets call ``reset()`` without arguments. After
+``reset(true)``, your service no longer needs to remain usable, so you can close
+resources or break circular references.
+
+Autoconfiguration sets ``on_shutdown: flag`` on the ``kernel.reset`` tag for
+services that implement ``ShutdownInterface``. Only initialized services take
+part in these resets; unused lazy services stay uninitialized.
+
+To call an existing cleanup method without implementing an interface, tag the
+method with ``kernel.reset`` and set ``on_shutdown`` to ``only``. Symfony then
+calls that method without arguments at shutdown and skips ordinary resets.
+
 .. _service-container-standalone:
 
 Using the Container in Standalone PHP Applications

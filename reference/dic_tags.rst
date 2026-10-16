@@ -708,10 +708,12 @@ can also register it manually:
             ],
         ]);
 
+.. _reference-dic-tags-kernel-reset:
+
 kernel.reset
 ------------
 
-**Purpose**: Clean up services between requests
+**Purpose**: Clean up services between requests and at kernel shutdown
 
 In all main requests (not :ref:`sub-requests <http-kernel-sub-requests>`) except
 the first one, Symfony looks for any service tagged with the ``kernel.reset`` tag
@@ -727,6 +729,97 @@ of the profiler to delete all their information.
 
     Support for resetting non-shared services tagged with ``kernel.reset``
     was introduced in Symfony 8.1.
+
+Symfony also calls these methods when ``$kernel->shutdown()`` is called.
+
+``on_shutdown``
+~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 8.2
+
+    The ``on_shutdown`` attribute was introduced in Symfony 8.2.
+
+By default, Symfony calls the method without arguments during ordinary resets
+and at shutdown. Set ``on_shutdown`` to one of these values:
+
+* ``flag``: pass ``true`` at shutdown. The method must accept an optional boolean
+  argument that defaults to ``false``. Ordinary resets still pass no arguments.
+* ``only``: call the method only at shutdown, without arguments. Use this for
+  methods such as ``close()`` that release resources.
+
+For example, to pass the shutdown flag:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\TemporaryFileBuffer:
+                autoconfigure: false
+                tags:
+                    - { name: kernel.reset, method: reset, on_shutdown: flag }
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Service\TemporaryFileBuffer;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\App;
+
+        return App::config([
+            'services' => [
+                TemporaryFileBuffer::class => [
+                    'autoconfigure' => false,
+                    'tags' => [
+                        [
+                            'name' => 'kernel.reset',
+                            'method' => 'reset',
+                            'on_shutdown' => 'flag',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+To call an existing cleanup method only at shutdown:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\Connection:
+                tags:
+                    - { name: kernel.reset, method: close, on_shutdown: only }
+
+    .. code-block:: php
+
+        // config/services.php
+        use App\Service\Connection;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\App;
+
+        return App::config([
+            'services' => [
+                Connection::class => [
+                    'tags' => [
+                        [
+                            'name' => 'kernel.reset',
+                            'method' => 'close',
+                            'on_shutdown' => 'only',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+With autoconfiguration, Symfony adds this tag to services that implement
+:class:`Symfony\\Contracts\\Service\\ResetInterface` and sets ``on_shutdown`` to ``flag``
+for :class:`Symfony\\Contracts\\Service\\ShutdownInterface`. You can also tag
+methods on services that don't implement either interface. See
+:ref:`Resetting Services <service-container-resetting-services>` for an example.
 
 kernel.test_state
 -----------------
