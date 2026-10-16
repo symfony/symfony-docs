@@ -553,6 +553,74 @@ filter after the translation filter to avoid the automatic escaping:
     {{ message|trans|raw }}
     {{ '<h3>bar</h3>'|trans|raw }}
 
+.. _translation-html:
+
+Translating Messages That Contain HTML
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``trans_html`` filter and the ``HtmlTranslator`` class were introduced
+    in Symfony 8.2.
+
+Some messages need HTML elements, such as a link in the middle of a sentence.
+The ``raw`` filter outputs both the translation and its parameters unescaped,
+so any HTML they contain (including HTML entered by users) ends up in your page.
+The ``trans_html`` filter is safer: it escapes everything except the HTML
+elements defined in the template.
+
+In the message contents, wrap text in tags without attributes. You can use any
+tag name:
+
+.. code-block:: yaml
+
+    # translations/messages.en.yaml
+    order_shipped: 'Order %number% has shipped. <track_link>Track it</track_link>.'
+
+In the template, pass the HTML element of each tag as the first argument of the
+filter. The other arguments are the same as in the ``trans`` filter:
+
+.. code-block:: html+twig
+
+    {{ 'order_shipped'|trans_html({
+        track_link: {tag: 'a', attr: {href: path('order_track', {id: order.id})}},
+    }, {'%number%': order.number}) }}
+    {# output: Order AC-1234 has shipped. <a href="/orders/42/track">Track it</a>. #}
+
+To render a tag as several nested elements, pass a list of elements, from the
+outermost to the innermost (e.g. ``[{tag: 'strong'}, {tag: 'a', ...}]``).
+
+The filter escapes everything else: the message text, the parameter values
+(including :ref:`global parameters <translation-global-parameters>`), the
+attribute values and the tags not defined in the template. If the tags of a
+message are unbalanced (e.g. a tag is never closed), the filter escapes the
+whole message. Parameter values that Twig already considers safe, such as
+content captured with the ``set`` tag, are inserted as is.
+
+The filter also accepts translatable objects, such as the ones created with the
+:ref:`t() function <reference-twig-function-t>`.
+
+Outside templates, use the :class:`Symfony\\Component\\Translation\\HtmlTranslator`
+service. Its ``trans()`` method takes the tags right after the message ID,
+followed by the parameters, the domain and the locale::
+
+    // src/Controller/OrderController.php
+    use App\Entity\Order;
+    use Symfony\Component\HttpFoundation\JsonResponse;
+    use Symfony\Component\Translation\HtmlTranslator;
+    // ...
+
+    public function show(Order $order, HtmlTranslator $htmlTranslator): JsonResponse
+    {
+        $trackingUrl = $this->generateUrl('order_track', ['id' => $order->getId()]);
+
+        return $this->json([
+            'message' => $htmlTranslator->trans('order_shipped', [
+                'track_link' => ['tag' => 'a', 'attr' => ['href' => $trackingUrl]],
+            ], ['%number%' => $order->getNumber()]),
+        ]);
+    }
+
 .. _translation-tags:
 
 Using Twig Tags
@@ -593,6 +661,8 @@ You can also specify the message domain and pass some additional variables:
 
     If you need to use the translations in JavaScript code, check out the
     `Symfony UX Translator`_ package.
+
+.. _translation-global-parameters:
 
 Global Translation Parameters
 -----------------------------
