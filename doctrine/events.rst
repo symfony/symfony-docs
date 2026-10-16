@@ -318,6 +318,81 @@ listener in the Symfony application by creating a new service for it and
     The value of the ``connection`` option can also be a
     :ref:`configuration parameter <configuration-parameters>`.
 
+Ordering Lifecycle Listeners
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``before`` and ``after`` options of the ``doctrine.event_listener``
+    tag were introduced in Symfony 8.2.
+
+When a listener must run right before or after another listener that you don't
+control (e.g. one defined by a bundle), using priorities requires finding out
+the priority of that other listener. Instead, use the ``before`` and ``after``
+options of the ``doctrine.event_listener`` tag to reference that listener
+directly. For example, to update the search index only after the listener of
+some audit bundle has run:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\EventListener\SearchIndexer:
+                tags:
+                    -
+                        name: 'doctrine.event_listener'
+                        event: 'postPersist'
+                        # the value is the service ID of the other listener;
+                        # use an array to reference more than one listener
+                        after: 'Acme\AuditBundle\EventListener\AuditLogger'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Acme\AuditBundle\EventListener\AuditLogger;
+        use App\EventListener\SearchIndexer;
+
+        return App::config([
+            'services' => [
+                SearchIndexer::class => [
+                    'tags' => [
+                        [
+                            'doctrine.event_listener' => [
+                                'event' => 'postPersist',
+                                // the value is the service ID of the other listener;
+                                // use an array to reference more than one listener
+                                'after' => AuditLogger::class,
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Symfony resolves these constraints when compiling the container. If the
+referenced listener doesn't exist or doesn't listen to the same event on the
+same Doctrine connection, the constraint is ignored. This way, your listener
+keeps working when the optional bundle that defines the other listener isn't
+installed.
+
+These constraints also work together with priorities. A listener that doesn't
+define a priority is placed wherever its constraints require. A listener that
+defines a priority keeps it, and its constraints only change its order among
+the listeners with that same priority. If a constraint contradicts a priority,
+or if constraints create a cycle (e.g. A runs after B and B runs after A),
+compiling the container fails.
+
+.. note::
+
+    The ``#[AsDoctrineListener]`` attribute doesn't support the ``before``
+    and ``after`` options; use the ``doctrine.event_listener`` tag instead.
+
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
