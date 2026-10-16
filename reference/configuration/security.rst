@@ -1564,7 +1564,14 @@ cost
 This option is only available for the ``bcrypt`` algorithm. It defines the
 value of the ``cost`` used to hash the password. The allowed range is ``4``
 to ``31``. Each single increment of the cost **doubles** the time it takes
-to hash a password.
+to hash a password. When the :ref:`framework.test <reference-framework-test>`
+option is enabled, this option defaults to ``4`` (the lowest allowed value) to
+make tests faster.
+
+.. versionadded:: 8.2
+
+    The ``4`` default value of this option when ``framework.test`` is enabled
+    was introduced in Symfony 8.2.
 
 memory_cost
 ~~~~~~~~~~~
@@ -1572,7 +1579,14 @@ memory_cost
 **type**: ``integer`` **default**: ``null``
 
 This option is only available for the ``sodium`` (Argon2) algorithm. It defines
-the amount of memory (in KiB) the algorithm may consume.
+the amount of memory (in KiB) the algorithm may consume. When the
+:ref:`framework.test <reference-framework-test>` option is enabled, this option
+defaults to ``10`` (the lowest allowed value) to make tests faster.
+
+.. versionadded:: 8.2
+
+    The ``10`` default value of this option when ``framework.test`` is enabled
+    was introduced in Symfony 8.2.
 
 time_cost
 ~~~~~~~~~
@@ -1580,7 +1594,14 @@ time_cost
 **type**: ``integer`` **default**: ``null``
 
 This option is only available for the ``sodium`` (Argon2) algorithm. It defines
-the number of iterations used to hash the password.
+the number of iterations used to hash the password. When the
+:ref:`framework.test <reference-framework-test>` option is enabled, this option
+defaults to ``3`` (the lowest allowed value) to make tests faster.
+
+.. versionadded:: 8.2
+
+    The ``3`` default value of this option when ``framework.test`` is enabled
+    was introduced in Symfony 8.2.
 
 hash_algorithm
 ~~~~~~~~~~~~~~

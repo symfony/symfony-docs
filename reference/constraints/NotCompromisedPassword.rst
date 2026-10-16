@@ -90,7 +90,8 @@ For example, if the password is ``test``, the entire SHA-1 hash is
 
     When using this constraint inside a Symfony application, define the
     :ref:`not_compromised_password <reference-validation-not-compromised-password>`
-    option to avoid making HTTP requests in the ``dev`` and ``test`` environments.
+    option to avoid making HTTP requests in the ``dev`` environment. In the
+    ``test`` environment, Symfony disables this check by default.
 
 Available Options
 -----------------
