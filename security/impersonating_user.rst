@@ -185,9 +185,47 @@ If the ``path`` value starts with a ``/`` character, it's treated as a path;
 otherwise, it's treated as a route name. Leaving it unset keeps the default
 behavior, where the parameter is accepted on every URL of the firewall.
 
-The ``impersonation_form()`` Twig function returns the ``action`` and the
-``fields`` to render, so the form carries what the ``switch_user`` listener
-expects:
+The ``impersonation_button()`` Twig function renders a form with a button that
+sends the switch request with ``POST``. Its arguments are the label of the
+button and the identifier of the user to impersonate. Exiting impersonation
+works the same way with ``impersonation_exit_button()``, which renders nothing
+when the current user is not impersonating anyone:
+
+.. code-block:: twig
+
+    {{ impersonation_button('Impersonate', user.userIdentifier) }}
+
+    {# the label of the button defaults to "Exit impersonation" #}
+    {{ impersonation_exit_button() }}
+
+    {# add HTML attributes to the button and to the form #}
+    {{ impersonation_button('Impersonate', user.userIdentifier,
+        attr: {class: 'btn-link'}, formAttr: {class: 'd-inline'}) }}
+
+The form contains the target identity under the name given by the ``parameter``
+option, the CSRF token under ``csrf_parameter`` when the firewall enables it,
+and ``_target_path``, the page to come back to once the switch is done. None of
+these names has to be hardcoded in the template.
+
+.. tip::
+
+    ``_target_path`` is the page the user lands on after the switch. It defaults
+    to the page the form was rendered on, so the impersonator stays where they
+    were. Pass another URI as the third argument to change it:
+
+    .. code-block:: twig
+
+        {% set target = path('admin_users') %}
+        {{ impersonation_button('Impersonate', user.userIdentifier, target) }}
+
+    ``impersonation_exit_button()`` takes the same URI as its second argument.
+    When the form sends no ``_target_path``, the listener redirects to the
+    ``target_route`` option and then to ``/``.
+
+To write the HTML of the form yourself, use the ``impersonation_form()`` and
+``impersonation_exit_form()`` functions. They return the ``action`` and the
+hidden ``fields`` of the form. ``impersonation_exit_form()`` returns an empty
+``action`` when the current user is not impersonating anyone:
 
 .. code-block:: html+twig
 
@@ -200,44 +238,6 @@ expects:
 
         <button>Impersonate {{ user.userIdentifier }}</button>
     </form>
-
-The fields carry the target identity under the name given by the ``parameter``
-option, the CSRF token under ``csrf_parameter`` when the firewall enables it,
-and ``_target_path``, the page to come back to once the switch is done. None of
-these names has to be hardcoded in the template.
-
-.. tip::
-
-    ``_target_path`` is the page the user lands on after the switch. It defaults
-    to the page the form was rendered on, so the impersonator stays where they
-    were. Pass another URI as the second argument to control it:
-
-    .. code-block:: twig
-
-        {% set target = app.request.pathInfo %}
-        {% set impersonate = impersonation_form(user.userIdentifier, target) %}
-
-    ``impersonation_exit_form()`` takes the same URI as its only argument. When
-    the form sends no ``_target_path``, the listener redirects to the
-    ``target_route`` option and then to ``/``.
-
-Exiting impersonation works the same way with ``impersonation_exit_form()``,
-which returns an empty ``action`` when the current user is not impersonating
-anyone:
-
-.. code-block:: html+twig
-
-    {% set exit = impersonation_exit_form() %}
-
-    {% if exit.action %}
-        <form method="post" action="{{ exit.action }}">
-            {% for name, value in exit.fields %}
-                <input type="hidden" name="{{ name }}" value="{{ value }}">
-            {% endfor %}
-
-            <button>Exit impersonation</button>
-        </form>
-    {% endif %}
 
 .. note::
 
@@ -305,7 +305,8 @@ the default manager of the application rather than the one of the firewall.
 .. versionadded:: 8.2
 
     The ``path``, ``enable_csrf``, ``csrf_token_id``, ``csrf_parameter`` and
-    ``csrf_token_manager`` options, and the ``impersonation_form()`` and
+    ``csrf_token_manager`` options, and the ``impersonation_button()``,
+    ``impersonation_exit_button()``, ``impersonation_form()`` and
     ``impersonation_exit_form()`` functions, were introduced in Symfony 8.2.
 
 Knowing When Impersonation Is Active

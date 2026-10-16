@@ -1924,8 +1924,28 @@ Then point the ``path`` option at that route:
             ],
         ]);
 
-The ``logout_form()`` Twig function returns the ``action`` and the ``fields`` to
-render, so the form carries what the logout listener expects:
+The ``logout_button()`` Twig function renders a form with a button that sends
+the logout request with ``POST``:
+
+.. code-block:: twig
+
+    {{ logout_button() }}
+
+    {# the label of the button defaults to "Log out" #}
+    {{ logout_button('Sign out') }}
+
+    {# add HTML attributes to the button and to the form #}
+    {{ logout_button(attr: {class: 'btn-link'}, formAttr: {class: 'd-inline'}) }}
+
+When the firewall sets :ref:`enable_csrf <reference-security-logout-csrf>`, the
+form also contains a CSRF token. The name of its field comes from the
+``csrf_parameter`` option and the token comes from the firewall's
+``csrf_token_manager``, so you don't have to add anything to the template. The
+second argument of the function is the same optional firewall key that
+``logout_path()`` takes.
+
+To write the HTML of the form yourself, use the ``logout_form()`` function. It
+returns the ``action`` and the hidden ``fields`` of the form:
 
 .. code-block:: html+twig
 
@@ -1939,14 +1959,6 @@ render, so the form carries what the logout listener expects:
         <button>Log out</button>
     </form>
 
-The parameter name comes from the ``csrf_parameter`` option and the token from
-the firewall's ``csrf_token_manager``, so neither has to be hardcoded in the
-template. When the firewall does not set
-:ref:`enable_csrf <reference-security-logout-csrf>`, ``fields`` is empty and the
-form still submits the configured path over ``POST``.
-
-The function takes the same optional firewall key as ``logout_path()``.
-
 .. note::
 
     ``logout_path()`` and ``logout_url()`` are unchanged and still suit a link
@@ -1955,7 +1967,8 @@ The function takes the same optional firewall key as ``logout_path()``.
 
 .. versionadded:: 8.2
 
-    The ``logout_form()`` function was introduced in Symfony 8.2.
+    The ``logout_button()`` and ``logout_form()`` functions were introduced in
+    Symfony 8.2.
 
 .. _security-logout-without-redirect:
 
