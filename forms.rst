@@ -1528,7 +1528,8 @@ the following options will be guessed too:
 
     The type is read from the public setter (e.g. ``setName()``) or, if
     there's no setter, from the public writable property (or its ``set``
-    hook). Nullable, union and any other types are ignored. This option is
+    hook) or from the promoted readonly properties of the constructor.
+    Nullable, union and any other types are ignored. This option is
     only guessed for fields of type ``TextType``, ``IntegerType``,
     ``NumberType``, ``MoneyType`` or ``PercentType`` (or types extending them)
     which are mapped and whose ``property_path``, if defined, is a single
