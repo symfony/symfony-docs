@@ -540,9 +540,7 @@ Next, configure the ``base_uri`` and ``discovery`` options:
                         token_handler:
                             oidc_user_info:
                                 base_uri: https://www.example.com/realms/demo/
-                                discovery:
-                                    cache:
-                                        id: cache.app
+                                discovery: true
 
     .. code-block:: php
 
@@ -551,17 +549,13 @@ Next, configure the ``base_uri`` and ``discovery`` options:
 
         return App::config([
             'security' => [
-            'firewalls' => [
+                'firewalls' => [
                     'main' => [
                         'access_token' => [
                             'token_handler' => [
                                 'oidc_user_info' => [
                                     'base_uri' => 'https://www.example.com/realms/demo/',
-                                    'discovery' => [
-                                        'cache' => [
-                                            'id' => 'cache.app',
-                                        ],
-                                    ],
+                                    'discovery' => true,
                                 ],
                             ],
                         ],
@@ -576,6 +570,14 @@ Next, configure the ``base_uri`` and ``discovery`` options:
     last segment of the path is lost when building the discovery URL (e.g.
     ``https://www.example.com/realms/demo`` results in
     ``https://www.example.com/realms/.well-known/openid-configuration``).
+
+The handler stores the OIDC configuration in the ``cache.security.discovery``
+pool, which ``KernelTestCase`` clears after each test. To use another pool,
+set its service ID in the ``discovery.cache.id`` option.
+
+.. versionadded:: 8.2
+
+    The ``cache.security.discovery`` pool was introduced in Symfony 8.2.
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used as user
 identifier by default. To use another claim, specify it using the ``claim`` option:
@@ -821,8 +823,6 @@ configure the ``discovery`` option instead:
                                 audience: 'api-example'
                                 discovery:
                                     base_uri: https://www.example.com/realms/demo/
-                                    cache:
-                                        id: cache.app
 
     .. code-block:: php
 
@@ -841,9 +841,6 @@ configure the ``discovery`` option instead:
                                     'audience' => 'api-example',
                                     'discovery' => [
                                         'base_uri' => 'https://www.example.com/realms/demo/',
-                                        'cache' => [
-                                            'id' => 'cache.app',
-                                        ],
                                     ],
                                 ],
                             ],
@@ -862,6 +859,14 @@ that document.
 
     The option to omit ``issuers`` when using OpenID Connect Discovery was
     introduced in Symfony 8.2.
+
+The handler stores the OIDC configuration in the ``cache.security.discovery``
+pool, which ``KernelTestCase`` clears after each test. To use another pool,
+set its service ID in the ``discovery.cache.id`` option.
+
+.. versionadded:: 8.2
+
+    The ``cache.security.discovery`` pool was introduced in Symfony 8.2.
 
 By default, when using OpenID Connect Discovery, only keys explicitly designated
 for signature verification (i.e. keys with ``"use": "sig"`` or ``"key_ops"``
@@ -883,8 +888,6 @@ identity provider serves keys without any usage designation (no ``use`` or
                                 # ...
                                 discovery:
                                     base_uri: https://www.example.com/realms/demo/
-                                    cache:
-                                        id: cache.app
                                     enforce_key_usage_verification: false
 
     .. code-block:: php
@@ -899,9 +902,6 @@ identity provider serves keys without any usage designation (no ``use`` or
                                     // ...
                                     'discovery' => [
                                         'base_uri' => 'https://www.example.com/realms/demo/',
-                                        'cache' => [
-                                            'id' => 'cache.app',
-                                        ],
                                         'enforce_key_usage_verification' => false,
                                     ],
                                 ],
@@ -1011,8 +1011,6 @@ to validate tokens from different identity providers:
                                     base_uri:
                                         - https://idp1.example.com/realms/demo/
                                         - https://idp2.example.com/realms/demo/
-                                    cache:
-                                        id: cache.app
 
     .. code-block:: php
 
@@ -1032,9 +1030,6 @@ to validate tokens from different identity providers:
                                         'base_uri' => [
                                             'https://idp1.example.com/realms/demo/',
                                             'https://idp2.example.com/realms/demo/',
-                                        ],
-                                        'cache' => [
-                                            'id' => 'cache.app',
                                         ],
                                     ],
                                 ],
@@ -1081,8 +1076,6 @@ discovery endpoint:
                                 # ...
                                 discovery:
                                     base_uri: https://idp.example.com/realms/demo/
-                                    cache:
-                                        id: cache.app
                                     # a trailing slash in the base URI or in the
                                     # announced issuer is ignored when comparing them
                                     check_issuer: true
@@ -1102,9 +1095,6 @@ discovery endpoint:
                                     // ...
                                     'discovery' => [
                                         'base_uri' => 'https://idp.example.com/realms/demo/',
-                                        'cache' => [
-                                            'id' => 'cache.app',
-                                        ],
                                         // a trailing slash in the base URI or in the
                                         // announced issuer is ignored when comparing them
                                         'check_issuer' => true,
@@ -1601,9 +1591,10 @@ These are the options of ``response_signature``:
     in the `authorization server metadata`_, whose URL is built from the
     ``issuer`` option. It requires the ``symfony/cache`` package, because the
     metadata and the keys are stored in the cache pool defined in the
-    ``cache.id`` option (``cache.app`` by default). This option
-    can't be used together with ``keyset``. The accepted algorithms are always
-    the ones of the ``algorithms`` option, whatever the metadata announces.
+    ``cache.id`` option (``cache.security.discovery`` by default). This
+    option can't be used together with ``keyset``. The accepted algorithms
+    are always the ones of the ``algorithms`` option, regardless of what the
+    metadata announces.
 
 ``enforce``
     Whether to reject plain JSON responses. It defaults to ``true``, because
@@ -1810,7 +1801,7 @@ The ``dpop`` option accepts these keys:
     algorithm, tag its service with
     ``security.access_token_handler.oidc.signature_algorithm``.
 
-``cache`` (default: ``cache.app``)
+``cache`` (default: ``cache.security``)
     The service ID of the cache pool that stores the used proofs to reject
     replayed ones. If the proof can't be stored in the pool, the request is
     rejected. When your application runs on several servers, this pool must be

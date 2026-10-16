@@ -1765,7 +1765,7 @@ on the next request made by their browser. Enable it with the
                         # 'true' to enable the feature using them
                         backchannel_logout:
                             path: /oidc/backchannel-logout
-                            cache: cache.app
+                            cache: cache.security
                             lifetime: 86400
 
     .. code-block:: php
@@ -1787,7 +1787,7 @@ on the next request made by their browser. Enable it with the
                             // 'true' to enable the feature using them
                             'backchannel_logout' => [
                                 'path' => '/oidc/backchannel-logout',
-                                'cache' => 'cache.app',
+                                'cache' => 'cache.security',
                                 'lifetime' => 86400,
                             ],
                         ],
@@ -2008,7 +2008,7 @@ Configuration Reference
     (Back-Channel Logout). Setting ``backchannel_logout`` to ``true`` enables
     this feature with the default values.
 
-``backchannel_logout.cache`` (default: ``cache.app``)
+``backchannel_logout.cache`` (default: ``cache.security``)
     The id of the cache pool that stores the ended sessions.
 
 ``backchannel_logout.lifetime`` (default: ``86400``)
