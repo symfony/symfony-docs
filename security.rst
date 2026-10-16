@@ -3203,6 +3203,8 @@ durations (in seconds) with these options:
             ],
         ]);
 
+.. _security-re-authentication:
+
 Asking Users to Authenticate Again
 ..................................
 
@@ -3210,8 +3212,10 @@ Asking Users to Authenticate Again
 
     The ``re_authentication_entry_point`` option was introduced in Symfony 8.2.
 
-When these attributes are denied, users get a 403 error by default. Instead,
-you can ask them to authenticate again. Create a service that implements
+When these attributes are denied, users get a 403 error by default. Users
+logged in with a :doc:`remember me cookie </security/remember_me>` get the
+login page instead, as anonymous users do. In both cases, you can ask them to
+authenticate again. Create a service that implements
 :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\ReAuthenticationEntryPointInterface`
 and returns the response that starts the new authentication::
 
@@ -3288,6 +3292,11 @@ it also contains other attributes (e.g. an ``access_control`` rule with several
 roles), users still get the 403 error, because authenticating again won't help
 them if they lack some role. This option can't be used in
 :ref:`stateless firewalls <reference-security-stateless>`.
+
+Users logged in with a remember me cookie also authenticate again with this
+entry point when they're denied ``IS_AUTHENTICATED_FULLY``. With
+``oidc_login``, the provider then asks these users for their credentials, even
+if their session at the provider is still active.
 
 If the entry point of the firewall already implements this interface, you don't
 need to set this option. That's the case of
