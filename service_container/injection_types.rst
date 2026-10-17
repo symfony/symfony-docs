@@ -138,7 +138,7 @@ You can also configure the method call explicitly using the ``calls`` key:
             'services' => [
                 NewsletterSender::class => [
                     'calls' => [
-                        'setMailer' => [service('mailer')],
+                        ['setMailer' => [service('mailer')]],
                     ],
                 ],
             ],
@@ -407,7 +407,7 @@ call if the service exists and remove the method call if it does not:
             'services' => [
                 NewsletterSender::class => [
                     'calls' => [
-                        'setLogger' => [service('logger')->ignoreOnInvalid()],
+                        ['setLogger' => [service('logger')->ignoreOnInvalid()]],
                     ],
                 ],
             ],

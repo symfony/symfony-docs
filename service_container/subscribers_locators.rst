@@ -482,7 +482,7 @@ call yourself, but don't pass any argument to it:
             'services' => [
                 Checkout::class => [
                     'calls' => [
-                        'setContainer' => [],
+                        ['setContainer' => []],
                     ],
                     // if you are not using the default service autoconfiguration,
                     // add the following tag to the service definition:
