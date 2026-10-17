@@ -116,3 +116,83 @@ adding a ``setLogger()`` method::
         {
             // ...
         }
+
+Ignoring Uninitialized Dependencies
+-----------------------------------
+
+Some services only need a dependency if the application already used it
+during the current request. For example, a listener that flushes a newsletter
+queue at the end of the request doesn't need to create the queue when nothing
+was added to it. Use the ``ignore_uninitialized`` strategy to inject the
+service only if the container already created it, and ``null`` otherwise:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\EventListener\NewsletterQueueFlusher:
+                # the '@!' syntax injects the service only if the container
+                # already created it; otherwise, it injects null
+                arguments: ['@!App\Newsletter\NewsletterQueue']
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\EventListener\NewsletterQueueFlusher">
+                    <argument type="service" id="App\Newsletter\NewsletterQueue"
+                        on-invalid="ignore_uninitialized"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\EventListener\NewsletterQueueFlusher;
+        use App\Newsletter\NewsletterQueue;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(NewsletterQueueFlusher::class)
+                ->args([service(NewsletterQueue::class)->ignoreOnUninitialized()]);
+        };
+
+Since the container can inject ``null``, the argument must be nullable::
+
+    // src/EventListener/NewsletterQueueFlusher.php
+    namespace App\EventListener;
+
+    use App\Newsletter\NewsletterQueue;
+
+    class NewsletterQueueFlusher
+    {
+        public function __construct(
+            private ?NewsletterQueue $queue,
+        ) {
+        }
+
+        public function __invoke(): void
+        {
+            // the queue is null if no code used it during this request
+            $this->queue?->flush();
+        }
+    }
+
+The container checks whether it already created the dependency at the moment
+it creates the service that uses it, not later. This works in the example
+because the container creates event listeners lazily, the first time the
+application dispatches their event. When used within a method call, the
+container removes the method call if it hasn't created the dependency yet,
+like the ``ignore`` strategy does for missing services.
