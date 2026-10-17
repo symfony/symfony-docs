@@ -452,9 +452,9 @@ as arguments of other services:
                     <argument type="constant">App\Config\SomeEnum::SomeCase</argument>
 
                     <!-- when not using autowiring, you can pass service arguments explicitly -->
-                    <argument type="service"
-                              id="some-service-id"
-                              on-invalid="dependency_injection-ignore"/>
+                    <argument type="service" id="some-service-id"/>
+                    <!-- use on-invalid="null" to pass null if the service doesn't exist -->
+                    <argument type="service" id="some-service-id" on-invalid="null"/>
 
                     <!-- binary contents are passed encoded as base64 strings -->
                     <argument type="binary">VGhpcyBpcyBhIEJlbGwgY2hhciAH</argument>
@@ -475,9 +475,6 @@ as arguments of other services:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\DependencyInjection\ContainerInterface;
-        use Symfony\Component\DependencyInjection\Reference;
-
         return static function (ContainerConfigurator $container) {
             $services = $container->services();
 
@@ -494,10 +491,11 @@ as arguments of other services:
                 ->arg(6, Symfony\Component\HttpKernel\Kernel::VERSION)
                 ->arg(7, App\Config\SomeEnum::SomeCase)
 
-                // when not using autowiring, you can pass service arguments explicitly
-                ->arg(8, service('some-service-id')) # fails if service doesn't exist
-                # passes null if service doesn't exist
-                ->arg(9, new Reference('some-service-id', Reference::IGNORE_ON_INVALID_REFERENCE))
+                // when not using autowiring, you can pass service arguments explicitly;
+                // this fails if the service doesn't exist
+                ->arg(8, service('some-service-id'))
+                // this passes null if the service doesn't exist
+                ->arg(9, service('some-service-id')->nullOnInvalid())
 
                 // collection with mixed argument types
                 ->arg(10, [
