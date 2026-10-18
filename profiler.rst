@@ -357,6 +357,18 @@ event::
         }
     }
 
+The AJAX panel of the toolbar also lists the requests that the page sends with
+``fetch()`` and ``XMLHttpRequest`` while it loads (before the toolbar is
+initialized). The toolbar doesn't capture these early requests when the page is
+a streamed response (e.g. a
+:class:`Symfony\\Component\\HttpFoundation\\StreamedResponse`) and it never
+captures requests made with ``EventSource``.
+
+.. versionadded:: 8.2
+
+    Capturing the AJAX requests sent before the toolbar is initialized was
+    introduced in Symfony 8.2.
+
 .. _profiler-data-collector:
 
 Creating a Data Collector
