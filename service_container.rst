@@ -792,9 +792,10 @@ argument of a service:
                     <argument type="constant">Symfony\Component\HttpKernel\Kernel::VERSION</argument>
                     <argument type="constant">App\Config\SomeEnum::SomeCase</argument>
 
-                    <!-- when not using autowiring, you can pass service arguments explicitly -->
+                    <!-- when not using autowiring, you can pass service arguments explicitly;
+                         this fails if the service doesn't exist -->
                     <argument type="service" id="some-service-id"/>
-                    <!-- use on-invalid="null" to pass null if the service doesn't exist -->
+                    <!-- on-invalid="null" passes null if the service doesn't exist -->
                     <argument type="service" id="some-service-id" on-invalid="null"/>
 
                     <!-- binary contents are passed encoded as base64 strings -->
@@ -816,8 +817,6 @@ argument of a service:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\DependencyInjection\Reference;
-
         return static function (ContainerConfigurator $container) {
             $services = $container->services();
 
@@ -838,7 +837,7 @@ argument of a service:
                 // this fails if the service doesn't exist
                 ->arg(8, service('some-service-id'))
                 // this passes null if the service doesn't exist
-                ->arg(9, new Reference('some-service-id', Reference::NULL_ON_INVALID_REFERENCE))
+                ->arg(9, service('some-service-id')->nullOnInvalid())
 
                 // collection with mixed argument types
                 ->arg(10, [
