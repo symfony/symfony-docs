@@ -1436,7 +1436,11 @@ attributes).
 If this option is not set and the entry point of the firewall implements that
 interface (e.g. ``form_login`` or ``oidc_login``), the entry point is used
 instead. This option can't be used in `stateless`_ firewalls. Read more about
-it in :ref:`security-recent-authentication`.
+it in :ref:`security-re-authentication`.
+
+Users logged in with a :doc:`remember me cookie </security/remember_me>` also
+authenticate again with this entry point when they're denied
+``IS_AUTHENTICATED_FULLY``.
 
 .. versionadded:: 8.2
 

@@ -457,7 +457,7 @@ users to change their password. You can do this by using a few special
     {
         // require the user to log in during *this* session
         // if they were only logged in via a remember me cookie, they
-        // will be redirected to the login page
+        // must authenticate again
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ...
@@ -467,6 +467,25 @@ users to change their password. You can do this by using a few special
 
     There is also a ``IS_REMEMBERED`` attribute that grants access *only*
     when the user is authenticated via the remember me mechanism.
+
+If the firewall has a
+:ref:`re-authentication entry point <security-re-authentication>`, users
+logged in with a remember me cookie authenticate again with it. For example,
+``form_login`` sends these users to the login form with their identifier
+already filled in, so they only have to type their password.
+
+.. note::
+
+    After typing their password again, users stay remembered only if they
+    check the ``_remember_me`` checkbox again. Typing a wrong password removes
+    the remember me cookie. To check this box by default for remembered users,
+    use the ``IS_REMEMBERED`` attribute in the template of the login form:
+
+    .. code-block:: html+twig
+
+        {# templates/login/index.html.twig #}
+        <input type="checkbox" name="_remember_me"
+            {{ is_granted('IS_REMEMBERED') ? 'checked' }}>
 
 Users have ``IS_AUTHENTICATED_FULLY`` for the whole session, no matter how
 long ago they logged in. To also require that they authenticated a short time

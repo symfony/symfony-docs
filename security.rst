@@ -3225,6 +3225,8 @@ durations (in seconds) with these options:
             ],
         ]);
 
+.. _security-re-authentication:
+
 Asking Users to Authenticate Again
 ..................................
 
@@ -3232,8 +3234,10 @@ Asking Users to Authenticate Again
 
     The ``re_authentication_entry_point`` option was introduced in Symfony 8.2.
 
-When these attributes are denied, users get a 403 error by default. Instead,
-you can ask them to authenticate again. Create a service that implements
+When these attributes are denied, users get a 403 error by default (users
+logged in with a remember me cookie get the login page instead, as anonymous
+users do). Instead, you can ask them to authenticate again. Create a service
+that implements
 :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\ReAuthenticationEntryPointInterface`
 and returns the response that starts the new authentication::
 
@@ -3327,6 +3331,11 @@ authenticate).
     of ``oidc_login`` to force them to authenticate users again, because
     Symfony checks the ``auth_time`` claim of the ID token against that value.
     This option applies to all logins, not only to the new authentication.
+
+Users logged in with a remember me cookie also authenticate again with this
+entry point when they're denied ``IS_AUTHENTICATED_FULLY``. With
+``oidc_login``, the provider asks these users for their credentials even if
+their session at the provider is still active.
 
 .. _security-re-authentication-form-login:
 
