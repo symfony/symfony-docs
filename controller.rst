@@ -1211,6 +1211,36 @@ response types.  Some of these are mentioned below. To learn more about the
     (specifically the :ref:`kernel.view event <component-http-kernel-kernel-view>`),
     an advanced feature you'll learn about later.
 
+Some actions don't need to return any content (e.g. archiving a resource). Their
+controllers can declare a ``void`` return type instead of creating an empty
+response::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class ProductController extends AbstractController
+    {
+        #[Route('/products/{id}/archive', methods: ['POST'])]
+        public function archive(int $id): void
+        {
+            // ... archive the product
+
+            // Symfony sends an empty response with the 204 (No Content) status
+            // code, unless a kernel.view listener sets a different response
+        }
+    }
+
+Controllers that return ``null`` without declaring the ``void`` return type
+still need a ``kernel.view`` listener that creates the response.
+
+.. versionadded:: 8.2
+
+    Support for controllers declaring a ``void`` return type was introduced
+    in Symfony 8.2.
+
 Accessing Configuration Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

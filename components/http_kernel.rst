@@ -407,7 +407,8 @@ has a little bit more work to do - :ref:`kernel.view <component-http-kernel-kern
 .. note::
 
     A controller must return *something*. If a controller returns ``null``,
-    an exception will be thrown immediately.
+    an exception will be thrown immediately, unless the controller declares
+    a ``void`` return type (see the next section).
 
 .. _component-http-kernel-kernel-view:
 
@@ -431,7 +432,14 @@ is in the correct format (e.g HTML, JSON, etc).
 
 At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
-return a ``Response``.
+return a ``Response``. The only exception is controllers declaring a ``void``
+return type: the kernel creates an empty response with the ``204`` (No Content)
+status code for them.
+
+.. versionadded:: 8.2
+
+    Support for controllers declaring a ``void`` return type was introduced
+    in Symfony 8.2.
 
 .. note::
 
