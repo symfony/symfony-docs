@@ -24,15 +24,6 @@ services:
   from the locator. Prefer them when your class needs occasional access to
   several services instead of one.
 
-.. note::
-
-    When using PHP 8.4 or later, lazy services rely on native lazy objects,
-    so ``final`` and ``readonly`` classes are fully supported.
-
-    On older PHP versions, lazy services do not support ``final`` or ``readonly``
-    classes, but you can :ref:`restrict the proxy to an interface <lazy-services-interface-proxifying>`
-    to work around this limitation.
-
 .. _lazy-services_configuration:
 
 Making a Service Lazy
@@ -115,6 +106,12 @@ the service class is injected instead. A lazy ghost object is an object created
 empty which initializes itself (i.e. instantiates the real service) when you
 access it for the first time.
 
+.. note::
+
+    On PHP versions older than 8.4, lazy services don't support ``final`` or
+    ``readonly`` classes unless you :ref:`restrict the proxy to an interface
+    <lazy-services-interface-proxifying>`.
+
 Making Only Specific Injections Lazy
 ------------------------------------
 
@@ -160,43 +157,21 @@ features, such as selecting the service to inject::
         }
     }
 
-If the argument uses a union or intersection type, pass the interface that the
-proxy must implement as the value of the attribute::
-
-    class MessageGenerator
-    {
-        public function __construct(
-            #[Lazy(FooInterface::class)]
-            FooInterface|BarInterface $foo,
-
-            // when using the #[Autowire] attribute, pass the interface in the lazy argument:
-            // #[Autowire(service: 'foo', lazy: FooInterface::class)]
-            // FooInterface|BarInterface $foo,
-        ) {
-            // ...
-        }
-    }
-
 .. _lazy-services-interface-proxifying:
 
 Restricting the Proxy to an Interface
 -------------------------------------
 
-.. note::
+By default, the lazy object injected into other services has the same type as
+the service class. You can instead configure a proxy that only implements some
+specific interfaces. This is useful to:
 
-    This technique is rarely needed nowadays. If you are using PHP 8.4 or later,
-    ``final`` and ``readonly`` classes are supported natively, so the only
-    remaining use case is to restrict the methods that can be called on the
-    proxy.
+* Prevent calling methods that don't belong to those interfaces;
+* Make lazy an argument that uses a union type;
+* Lazy load `final`_ or ``readonly`` classes on PHP versions older than 8.4.
 
-Internally, the proxies generated to lazily load services inherit from the class
-used by the service. However, sometimes this is not possible at all (e.g. because
-the class is `final`_ and can not be extended) or not convenient.
-
-To work around this limitation, you can configure the proxy to only implement
-specific interfaces. In the following example, the ``AppExtension`` class
-implements two interfaces, but the proxy generated for it only implements
-``ExtensionInterface``:
+In the following example, the ``AppExtension`` class implements two interfaces,
+but the proxy generated for it only implements ``ExtensionInterface``:
 
 .. configuration-block::
 
@@ -279,12 +254,36 @@ new "proxy" tags.
 
 .. tip::
 
-    This feature can also act as a safe guard: given that the proxy does not
+    This feature can also act as a safeguard: given that the proxy does not
     extend the original class, only the methods defined by the interface can
     be called, which prevents calling implementation-specific methods. It also
     prevents injecting the dependency at all if you type-hinted a concrete
     implementation instead of the interface.
 
+To restrict the proxy only for some specific injections, pass the interface as
+the value of the ``#[Lazy]`` attribute (or of the ``lazy`` argument of the
+``#[Autowire]`` attribute). This is required when the argument uses a union
+type::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use App\Formatter\HtmlFormatterInterface;
+    use App\Formatter\TextFormatterInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Lazy;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            // to autowire a union type, all its types must be aliases of the
+            // same service; the proxy only implements TextFormatterInterface
+            #[Lazy(TextFormatterInterface::class)]
+            TextFormatterInterface|HtmlFormatterInterface $formatter,
+        ) {
+            // ...
+        }
+    }
+
 .. _`ghost object`: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
-.. _`final`: https://www.php.net/manual/en/language.oop5.final.php
+.. _`final`: https://php.net/manual/language.oop5.final
 .. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
