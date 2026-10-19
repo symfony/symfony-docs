@@ -61,6 +61,65 @@ You can configure this using the ``entry_point`` setting:
     You can then set ``entry_point`` to the service id (e.g.
     ``entry_point: App\Security\CustomEntryPoint``)
 
+.. _security-entry-point-path:
+
+Redirecting Anonymous Users to a Login Page
+-------------------------------------------
+
+Some authenticators (e.g. ``json_login`` or custom authenticators) don't
+redirect anonymous users to a login page. Instead of creating an entry point
+class only to return that redirection, set the ``entry_point_path`` option of
+the firewall:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            firewalls:
+                main:
+                    json_login:
+                        check_path: api_login
+
+                    # a path (/login), an absolute URL (https://example.com/login)
+                    # or a route name where anonymous users are redirected to log in
+                    entry_point_path: app_login
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'json_login' => [
+                            'check_path' => 'api_login',
+                        ],
+                        // a path (/login), an absolute URL
+                        // (https://example.com/login) or a route name where
+                        // anonymous users are redirected to log in
+                        'entry_point_path' => 'app_login',
+                    ],
+                ],
+            ],
+        ]);
+
+This option accepts the same values as the ``login_path`` option of
+``form_login``. It works even if the firewall doesn't define any authenticator,
+but you can't use it together with the ``entry_point`` option.
+
+Before redirecting, the firewall stores the requested URL in the session, so
+you can send users back to it after they log in. This only happens in stateful
+firewalls and for safe requests (e.g. ``GET``) that are not AJAX requests.
+
+.. versionadded:: 8.2
+
+    The ``entry_point_path`` option was introduced in Symfony 8.2.
+
 Multiple Authenticators with Separate Entry Points
 --------------------------------------------------
 
