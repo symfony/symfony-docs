@@ -651,7 +651,7 @@ avoid duplicated service definitions:
                     'abstract' => true,
                     'arguments' => [service('doctrine.orm.entity_manager')],
                     'calls' => [
-                        'setLogger' => [service('logger')],
+                        ['setLogger' => [service('logger')]],
                     ],
                 ],
                 DoctrineUserRepository::class => [
