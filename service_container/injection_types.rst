@@ -401,7 +401,8 @@ value. The container injects the service if it exists and ``null`` otherwise::
     }
 
 When configuring services explicitly, you can choose between two strategies
-for missing dependencies: ``null`` and ``ignore``.
+for missing dependencies (``null`` and ``ignore``) and one strategy for
+dependencies that the container hasn't created yet (``ignore_uninitialized``).
 
 Setting Missing Dependencies to ``null``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -518,9 +519,10 @@ Ignoring Uninitialized Dependencies
 
 Some services only need a dependency if the application already used it. For
 example, a listener that flushes a newsletter queue at the end of the request
-doesn't need to create the queue when the request didn't add anything to it.
+doesn't need to create the queue when nothing used it during that request.
 Use the ``ignore_uninitialized`` strategy to inject the service only if the
-container already created it, and ``null`` otherwise:
+container already created it, and ``null`` otherwise (the argument must accept
+``null``):
 
 .. configuration-block::
 
@@ -529,7 +531,7 @@ container already created it, and ``null`` otherwise:
         # config/services.yaml
         services:
             App\EventListener\NewsletterQueueFlusher:
-                # the '@!' syntax injects the service only if it was already created
+                # the '@!' syntax injects the service only if the container already created it
                 arguments: ['@!App\Newsletter\NewsletterQueue']
 
     .. code-block:: xml
@@ -564,12 +566,16 @@ container already created it, and ``null`` otherwise:
                 ->args([service(NewsletterQueue::class)->ignoreOnUninitialized()]);
         };
 
-The container checks whether it already created the dependency at the moment
-it creates the service that uses it, not later. This works in the example
-because the container creates event listeners only when the application
-dispatches their event. When used within a method call, the container removes
-the method call if it hasn't created the dependency yet, like the ``ignore``
-strategy does for missing services.
+The container checks the dependency only when it creates the service that uses
+it. If the container creates the dependency later, the service keeps the
+``null`` value. This works in the example because the container creates event
+listeners only when the application dispatches their event. Non-shared
+dependencies are always ``null`` because the container never stores their
+instances.
+
+When used within a method call, the container removes the method call if it
+hasn't created the dependency yet, like the ``ignore`` strategy does for
+missing services.
 
 .. tip::
 
