@@ -708,6 +708,8 @@ can also register it manually:
             ],
         ]);
 
+.. _dic-tags-kernel-reset:
+
 kernel.reset
 ------------
 
@@ -727,6 +729,119 @@ of the profiler to delete all their information.
 
     Support for resetting non-shared services tagged with ``kernel.reset``
     was introduced in Symfony 8.1.
+
+Symfony also resets the tagged services when the kernel shuts down. For example,
+this happens at the end of each test and when the
+:ref:`test client <testing-multiple-requests-in-one-test>` reboots the kernel.
+It also happens after each request when the
+:ref:`FRANKENPHP_RESET_KERNEL <runtime-frankenphp-reset-kernel>` environment
+variable is set.
+
+Besides ``method``, the tag supports the following attributes:
+
+``on_invalid``
+    Set it to ``ignore`` to skip the services whose class doesn't have the
+    method.
+
+``on_shutdown``
+    Set it to ``flag`` to pass ``true`` as the first argument of the method
+    when the kernel shuts down. On the other resets, such as between two
+    messages handled by a :ref:`Messenger worker <messenger-worker>`, Symfony
+    calls the method without arguments. Set it to ``only`` to call the method
+    only when the kernel shuts down.
+
+For example, a service can keep a network connection open between requests and
+close it only when the kernel shuts down:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Search/SearchClient.php
+        namespace App\Search;
+
+        use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+        #[AutoconfigureTag('kernel.reset', ['method' => 'close', 'on_shutdown' => 'only'])]
+        class SearchClient
+        {
+            /** @var resource|null */
+            private $connection;
+
+            // ...
+
+            public function close(): void
+            {
+                if ($this->connection) {
+                    fclose($this->connection);
+                    $this->connection = null;
+                }
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Search\SearchClient:
+                tags:
+                    - { name: kernel.reset, method: close, on_shutdown: only }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Search\SearchClient;
+
+        return App::config([
+            'services' => [
+                SearchClient::class => [
+                    'tags' => [
+                        ['kernel.reset' => ['method' => 'close', 'on_shutdown' => 'only']],
+                    ],
+                ],
+            ],
+        ]);
+
+If the same method resets the state of your service and closes its connections,
+implement :class:`Symfony\\Contracts\\Service\\ShutdownInterface` instead. Its
+``reset()`` method has a ``$shutdown`` argument. When
+:ref:`autoconfiguration <services-autoconfigure>` is enabled, Symfony adds the
+``kernel.reset`` tag with ``on_shutdown: flag`` to these services, so you don't
+need to configure them::
+
+    // src/Search/SearchClient.php
+    namespace App\Search;
+
+    use Symfony\Contracts\Service\ShutdownInterface;
+
+    class SearchClient implements ShutdownInterface
+    {
+        private array $results = [];
+
+        /** @var resource|null */
+        private $connection;
+
+        // ...
+
+        public function reset(bool $shutdown = false): void
+        {
+            // forgets the results of the previous request
+            $this->results = [];
+
+            // $shutdown is true only when the kernel shuts down
+            if ($shutdown && $this->connection) {
+                fclose($this->connection);
+                $this->connection = null;
+            }
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``on_shutdown`` attribute and ``ShutdownInterface`` were introduced in
+    Symfony 8.2.
 
 kernel.test_state
 -----------------
