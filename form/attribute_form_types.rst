@@ -157,7 +157,6 @@ of a collection::
     use Symfony\Component\Form\Attribute\AsFormType;
     use Symfony\Component\Form\Attribute\FormField;
     use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-    use Symfony\Component\Validator\Constraints as Assert;
 
     #[AsFormType]
     class CustomerDto
@@ -166,7 +165,6 @@ of a collection::
         public ?string $name = null;
 
         #[FormField(AddressDto::class)]
-        #[Assert\Valid]
         public ?AddressDto $address = null;
 
         #[FormField(CollectionType::class, [
@@ -306,8 +304,24 @@ attributes::
 
 As with any embedded object, the constraints of a nested data class are only
 checked when the property holding it has the
-:doc:`Valid </reference/constraints/Valid>` constraint, as ``$address`` does
-in the ``CustomerDto`` example above.
+:doc:`Valid </reference/constraints/Valid>` constraint::
+
+    // src/Dto/CustomerDto.php
+    namespace App\Dto;
+
+    use Symfony\Component\Form\Attribute\AsFormType;
+    use Symfony\Component\Form\Attribute\FormField;
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    #[AsFormType]
+    class CustomerDto
+    {
+        // ...
+
+        #[FormField(AddressDto::class)]
+        #[Assert\Valid]
+        public ?AddressDto $address = null;
+    }
 
 .. _form-attributes-type-extension:
 
