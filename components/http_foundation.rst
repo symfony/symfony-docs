@@ -754,6 +754,14 @@ containing JSON serializable data::
         ],
     );
 
+.. note::
+
+    This response doesn't stream objects that implement
+    :phpclass:`JsonSerializable`, even when they are iterable (e.g. some lazy
+    collections of third-party libraries). It encodes the result of their
+    ``jsonSerialize()`` method all at once. To stream their items, pass their
+    iterator instead (e.g. ``$collection->getIterator()``).
+
 When loading data via Doctrine, you can use the ``toIterable()`` method to
 fetch results row by row and minimize resources consumption.
 See the `Doctrine Batch processing`_ documentation for more::
