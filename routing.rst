@@ -2794,6 +2794,28 @@ service, which you can inject in your services or controllers::
         }
     }
 
+In Twig templates, use the :ref:`sign_url <reference-twig-filter-sign-url>`
+filter. It takes the same optional
+:ref:`expiration <routing-expiring-signed-uris>` as the ``sign()`` method:
+
+.. code-block:: html+twig
+
+    {# the URL must be absolute (generated with url() instead of path()) because
+       signatures are checked against the absolute URL of the request; without
+       an argument, the link uses the default expiration configured in the
+       "framework.uri_signer.expiration" option #}
+    <a href="{{ url('ticket_show', {id: ticket.id})|sign_url }}">Your ticket</a>
+
+    {# this link expires one day after the conference ends #}
+    {% set expiration = ticket.conference.endsAt|date_modify('+1 day') %}
+    <a href="{{ url('ticket_show', {id: ticket.id})|sign_url(expiration) }}">
+        Your ticket
+    </a>
+
+.. versionadded:: 8.2
+
+    The ``sign_url`` Twig filter was introduced in Symfony 8.2.
+
 To verify a signed URI, use ``check()``::
 
     $this->uriSigner->check($signedUrl);
@@ -2807,6 +2829,8 @@ instead::
 
     Use the ``verify()`` method instead of ``check()`` if you also want to know
     the reason(s) :ref:`why a signature is not valid <routing-verifying-signed-uris>`.
+
+.. _routing-expiring-signed-uris:
 
 Expiring Signed URIs
 ....................
