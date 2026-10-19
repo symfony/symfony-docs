@@ -596,11 +596,11 @@ a Symfony service for the connection to the Redis server:
                     // you can also use \RedisArray, \RedisCluster, \Relay\Relay or \Predis\Client classes
                     'class' => \Redis::class,
                     'calls' => [
-                        'connect' => [env('REDIS_HOST'), env('REDIS_PORT')->int()],
+                        ['connect' => [env('REDIS_HOST'), env('REDIS_PORT')->int()]],
                         // uncomment the following if your Redis server requires a password:
-                        // 'auth' => [env('REDIS_PASSWORD')],
+                        // ['auth' => [env('REDIS_PASSWORD')]],
                         // uncomment the following if your Redis server requires a user and a password (when user is not default):
-                        // 'auth' => [env('REDIS_USER'), env('REDIS_PASSWORD')],
+                        // ['auth' => [[env('REDIS_USER'), env('REDIS_PASSWORD')]]],
                     ],
                 ],
             ],
