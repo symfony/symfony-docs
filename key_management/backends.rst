@@ -328,10 +328,6 @@ policy must include it:
 Scaleway Key Manager
 --------------------
 
-.. versionadded:: 8.2
-
-    The Scaleway Key Manager bridge was introduced in Symfony 8.2.
-
 Backed by the `Scaleway Key Manager`_ API. Encryption and decryption happen
 inside Scaleway; the key never reaches the application. The client must be
 scoped to the regional Key Manager URL and the bridge sends the secret key
@@ -348,13 +344,14 @@ of an IAM API key in the ``X-Auth-Token`` header::
     );
 
     // the key id is the UUID of a key whose usage is "symmetric_encryption"
-    $ciphertext = $kms->encrypt('11111111-2222-3333-4444-555555555555', 'hello world');
+    $keyId = '11111111-2222-3333-4444-555555555555';
+    $ciphertext = $kms->encrypt($keyId, 'hello world');
 
 DSN scheme:
 
 .. code-block:: text
 
-    scaleway-kms://<secretKey>@<host>[:<port>]?region=<region>[&timeout=<seconds>&max_duration=<seconds>]
+    scaleway-kms://<secret_key>@<host>[:<port>]?region=<region>[&timeout=<seconds>&max_duration=<seconds>]
 
 The ``region`` option is required (``fr-par``, ``nl-ams``, ``pl-waw`` and
 so on). The host ``default`` selects ``https://api.scaleway.com``; any other
@@ -368,21 +365,23 @@ part of the DSN, usually through an environment variable:
 A DSN with a password is refused: Key Manager calls don't need the project
 id, which the ``PROJECT_ID:SECRET_KEY`` form of the Scaleway Mailer DSN
 carries. The API key needs the ``KeyManagerFullAccess`` permission set, or a
-narrower one granting the encrypt, decrypt and data key operations.
+narrower one granting the encrypt and decrypt operations.
 
 ``timeout`` (idle timeout) and ``max_duration`` (whole request) are in
-seconds. Without a client of its own, the factory builds one with a
-5-second ``timeout`` and a 10-second ``max_duration``. Requests never
-follow redirects, since the ``X-Auth-Token`` header would follow a redirect
-to another host.
+seconds and override the timeouts of the HTTP client. The bundle gives the
+factory the application's ``http_client`` service; without one, the factory
+builds a client with a 5-second ``timeout`` and a 10-second
+``max_duration``. Requests never follow redirects, since the
+``X-Auth-Token`` header would follow a redirect to another host.
 
 The ``$aad`` argument is sent as Scaleway's ``associated_data``, which
 AES-256-GCM authenticates: decrypting with another AAD fails. Scaleway has
 a data key endpoint, but it only makes 32-byte keys, cannot bind associated
 data and refuses asymmetric keys. The bridge therefore draws the data key
 locally with ``random_bytes()`` and wraps it through the encryption
-endpoint, with the AAD when there is one. The key can be any length from
-16 bytes, on symmetric and RSA keys.
+endpoint, with the AAD when there is one. The key can be 16 bytes or
+longer, within the payload limit of the Scaleway key, on symmetric and
+asymmetric keys.
 
 On decryption, an HTTP ``400`` or ``404`` is reported as a
 :class:`Symfony\\Component\\KeyManagement\\Exception\\DecryptionFailedException`,
