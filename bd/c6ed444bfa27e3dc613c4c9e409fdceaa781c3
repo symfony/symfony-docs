@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by bigboss86 at 2026-10-19T23:09:24Z
+
+Thanks for documenting this! I checked it against the merged code (symfony/symfony#67140) and everything matches: the three value forms, the target path saved only for stateful firewalls on safe non-AJAX requests, and the conflict with `entry_point`. 👍
