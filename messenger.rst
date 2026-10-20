@@ -4492,7 +4492,9 @@ Signing All Messages of a Transport
     The ``sign`` option of transports was introduced in Symfony 8.2.
 
 Enable the ``sign`` option of a transport to sign all the messages sent to it
-with an HMAC computed from the ``kernel.secret`` parameter. Symfony checks the
+with an HMAC computed from the secret configured in the
+:ref:`signing_secret <reference-messenger-serializer-signing-secret>` option
+(which defaults to the ``kernel.secret`` parameter). Symfony checks the
 signature of received messages before reading anything from them:
 
 .. configuration-block::
@@ -4563,6 +4565,60 @@ Keep in mind the following behaviors:
   in its queue by someone else.
 * Enable this option only on transports with no pending messages, because
   Symfony refuses the messages queued before without a valid signature.
+
+.. _messenger-signing-secret-rotation:
+
+Rotating the Signing Secret
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you change the signing secret, the messages signed with the previous secret
+that are still waiting in a transport fail the signature check and are not
+handled. To change the secret without losing those messages, list the new
+secret first and the previous one after it in the ``signing_secret`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                serializer:
+                    # the first secret signs new messages, all of them verify
+                    signing_secret:
+                        - '%env(MESSENGER_SIGNING_SECRET)%'
+                        - '%kernel.secret%'
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'serializer' => [
+                        // the first secret signs new messages, all of them verify
+                        'signing_secret' => [
+                            env('MESSENGER_SIGNING_SECRET'),
+                            param('kernel.secret'),
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+Messages are signed again with the first secret each time they're retried.
+Remove the previous secret once all the messages signed with it have been
+consumed, including the ones stored in the failure transport.
+
+When several applications exchange messages through the same transports,
+first add the new secret as the second item of the list in all of them, so
+they all accept it. Then, move it to the first position in all of them.
+
+.. versionadded:: 8.2
+
+    The ``signing_secret`` option was introduced in Symfony 8.2.
 
 Pinging A Webservice
 --------------------
