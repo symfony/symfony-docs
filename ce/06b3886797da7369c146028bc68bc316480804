@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-09-10T21:05:27Z
+
+The red Code Blocks job is the known cache-warmup limitation for Acme bundle configs: the existing `acme_social` examples of this page fail the same way and are in the baseline.
