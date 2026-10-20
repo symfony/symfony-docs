@@ -4525,6 +4525,22 @@ time_based_uuid_node
 
 The node to use for generating time-based UUIDs (e.g. ``'121212121212'``).
 
+.. _reference-framework-uid-uuid47-secret:
+
+uuid47_secret
+.............
+
+**type**: ``string`` **default**: ``null``
+
+The key used by the ``Uuid47Transformer`` service to
+:ref:`convert between UUIDv7 and UUIDv4 <uid-uuid47-transformer>`. It must be at
+least 16 bytes long. If it's ``null``, the service uses the value of the
+:ref:`kernel.secret <configuration-framework-secret>` parameter.
+
+.. versionadded:: 8.1
+
+    The ``uuid47_secret`` option was introduced in Symfony 8.1.
+
 .. _reference-validation:
 
 validation
