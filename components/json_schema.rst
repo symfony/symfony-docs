@@ -29,6 +29,11 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
+The component requires PHP 8.2 or higher and works with the 7.4 and 8.x
+releases of the Symfony components it relies on (such as TypeInfo,
+PropertyInfo, Serializer and Validator). This allows using it in projects
+that can't require a newer PHP version yet.
+
 Usage
 -----
 
