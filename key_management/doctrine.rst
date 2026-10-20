@@ -1,0 +1,157 @@
+.. _key-management-doctrine:
+
+Encrypting Doctrine Columns
+===========================
+
+With ``symfony/doctrine-dbal-key-management`` installed, a Doctrine column
+can be encrypted with no code at all. Mark the property and name the key it
+is encrypted under::
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\KeyManagement\Bridge\DoctrineOrm\Attribute\Encrypted;
+
+    #[ORM\Entity]
+    class User
+    {
+        #[ORM\Column]
+        #[Encrypted(key: 'user.email')]
+        private string $email = '';
+
+        #[ORM\Column(type: 'date_immutable', nullable: true)]
+        #[Encrypted(key: 'user.email')]
+        private ?\DateTimeImmutable $bornOn = null;
+    }
+
+Nothing else is needed: the bundle collects those columns while the
+container is built and registers the Doctrine types they need when the
+kernel boots. ``key`` is the master key encrypting the values, or the
+:ref:`scope <key-management-store-config>` of their data key when a store
+is configured.
+
+The column keeps the type its mapping gives it, declared on
+``#[ORM\Column]`` or guessed from the type of the property. The value goes
+through that type first and is encrypted afterwards, so a date is stored as
+an encrypted date, not as an encrypted string.
+
+.. include:: /key_management/_experimental.rst.inc
+
+.. note::
+
+    The attribute needs an encrypter to exist, which means either a
+    configured ``store`` or a ``default_client``. Without one, the
+    container fails to compile and says so.
+
+An encrypted column cannot be searched. See
+:doc:`/key_management/searching` for how to find a row by a value the
+database holds only as ciphertext.
+
+Declaring the Types Yourself
+----------------------------
+
+The attribute is a shortcut over named Doctrine types, which you can also
+declare directly. Use this when a column is mapped in XML or PHP rather
+than by attribute, or when you want to pick the type name:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/key_management.yaml
+        key_management:
+            clients:
+                app: '%env(KMS_DSN)%'
+            store:
+                key_id: 'alias/app-key'
+            doctrine_dbal:
+                types:
+                    app_user_email:
+                        type: string
+                        key: 'user.email'
+
+    .. code-block:: php
+
+        // config/packages/key_management.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'key_management' => [
+                'clients' => [
+                    'app' => env('KMS_DSN'),
+                ],
+                'store' => [
+                    'key_id' => 'alias/app-key',
+                ],
+                'doctrine_dbal' => [
+                    'types' => [
+                        'app_user_email' => [
+                            'type' => 'string',
+                            'key' => 'user.email',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The name is then used like any Doctrine type::
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+
+    #[ORM\Entity]
+    class User
+    {
+        #[ORM\Column(type: 'app_user_email')]
+        private string $email = '';
+    }
+
+A declared type and an ``#[Encrypted]`` column that share the same ``type``
+and ``key`` are the same type: the attribute reuses the declared one
+instead of registering a second. Otherwise the attribute generates the name
+``encrypted_<type>@<key>``.
+
+Both forms use whatever
+:class:`Symfony\\Component\\KeyManagement\\EnvelopeEncrypterInterface`
+resolves to, which is the store-backed encrypter when a ``store`` is
+configured and the default client's otherwise. A column that has to use
+another encrypter needs an
+:class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedTypes`
+service of its own.
+
+What the Column Holds
+---------------------
+
+The stored value is the envelope, as bytes, in a binary column. Reading the
+row decrypts it and hands the plaintext back to the underlying type, so the
+property behaves exactly as it did before.
+
+The column is always declared as an unbounded blob, and a ``length`` on the
+mapping is ignored on purpose. An envelope is a hundred bytes or so larger
+than the value it holds, and a column sized after the plaintext would
+truncate it. On MySQL and MariaDB outside strict mode that truncation is a
+warning rather than an error, which would leave a row that no longer
+decrypts.
+
+A column holding zero bytes is refused with Doctrine's
+``ValueNotConvertible``, like any other value that is not an envelope.
+Encrypting an empty string gives a non-empty envelope, so an empty column
+can only mean the value was never written through the type, and handing it
+to the underlying type unchecked would return ``''``, ``false`` or ``0``
+without ever authenticating anything. A leading byte naming a format that
+does not exist is refused the same way, so a reader cannot tell an attempt
+at downgrading a payload from a corrupt column.
+
+Moving a Column to a Stored Data Key
+------------------------------------
+
+Keep the same type name and configure a
+:doc:`store </key_management/store>` with ``read_self_contained: true``.
+New rows then carry a reference to a stored data key while older ones keep
+being read through the KMS. Once no old row is left, turn the option off.
+
+Re-wrapping that data key later moves the whole column to another master
+key, or another provider, without touching a single row.
