@@ -254,7 +254,8 @@ keep failing every call until it expires. The Azure and Google bridges
 therefore call ``invalidateToken()`` when the provider answers ``401``, ask
 for a token again, and retry once if the new token differs. A ``403`` is
 reported as it is: both vendors document it as a permission or firewall
-denial, which another token does not change.
+denial, which another token does not change. The Vault bridge does the same
+when Vault answers a ``403`` with an ``invalid token`` error.
 
 A provider that caches nothing leaves the method empty. One with a cache
 drops the entry only while it still holds the rejected token, so a token
@@ -277,11 +278,12 @@ HashiCorp Vault Transit
 Backed by the `Vault Transit secret engine`_::
 
     use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\KeyManagement\Bridge\HashiCorpVault\StaticTokenProvider;
     use Symfony\Component\KeyManagement\Bridge\HashiCorpVault\TransitKms;
 
     $kms = new TransitKms(
         HttpClient::createForBaseUri('https://vault.example.com:8200/v1/'),
-        $_SERVER['VAULT_TOKEN'],
+        new StaticTokenProvider($_SERVER['VAULT_TOKEN']),
     );
 
     $ciphertext = $kms->encrypt('app-key', 'hello world');
@@ -296,6 +298,50 @@ DSN scheme:
 The mount point defaults to ``transit``. ``namespace`` maps to Vault's
 ``X-Vault-Namespace`` header, for Vault Enterprise. ``scheme`` defaults to
 ``https``; pass ``scheme=http`` for a local dev server.
+
+``TransitKms`` gets its token from a
+:class:`Symfony\\Component\\KeyManagement\\Bridge\\HashiCorpVault\\TokenProviderInterface`,
+which has a ``getToken()`` and an ``invalidateToken()`` method. Two
+implementations are bundled:
+
+* :class:`Symfony\\Component\\KeyManagement\\Bridge\\HashiCorpVault\\StaticTokenProvider`
+  returns a token obtained out of band. The DSN token goes through it;
+* :class:`Symfony\\Component\\KeyManagement\\Bridge\\HashiCorpVault\\KubernetesAuthTokenProvider`
+  logs in to the `Kubernetes auth method`_ with the service-account token
+  of the pod, so that an application doesn't need a long-lived Vault token
+  or a Vault Agent sidecar::
+
+    use Symfony\Component\KeyManagement\Bridge\HashiCorpVault\KubernetesAuthTokenProvider;
+
+    $client = HttpClient::createForBaseUri('https://vault.example.com:8200/v1/');
+    $kms = new TransitKms($client, new KubernetesAuthTokenProvider($client, 'my-app'));
+
+The second argument of ``KubernetesAuthTokenProvider`` is the Vault role.
+The next ones are the path the auth method is enabled at (``kubernetes`` by
+default, without the ``auth/`` prefix), the path of the service-account
+token (``/var/run/secrets/kubernetes.io/serviceaccount/token`` by default)
+and the Vault Enterprise namespace. The service-account token is read at
+each login, since the kubelet rotates it. The Vault token is cached in
+memory until 60 seconds before its lease ends (half of the lease for
+shorter ones), or until it is invalidated when it has no lease.
+
+The cache lives in the PHP process, so with PHP-FPM every request logs in
+again and gets a new Vault token, which Vault keeps until its lease ends.
+Use a worker runtime such as FrankenPHP, or wrap the provider in one of
+your own that caches the token in a store shared by all the processes. To
+authenticate with another method, implement ``TokenProviderInterface``.
+
+In an application, a client built from a DSN always uses the token of the
+DSN. To use a provider, declare the ``TransitKms`` as a service and
+reference it with ``service://<id>`` in ``key_management.clients``, as
+:doc:`/key_management/clients` explains.
+
+Since version 1.17, Vault answers an expired or revoked token with an HTTP
+``403`` and an ``invalid token`` error. Only then does the bridge follow
+:ref:`the token refresh <key-management-token-refresh>`. Any other ``403``,
+such as a policy lacking a capability, is reported as it is, since a new
+token would not fix it. Older versions only answer ``permission denied``,
+so the request is not retried.
 
 The ``$aad`` argument is passed as Vault's ``context``, its HKDF context.
 It works on a key created with ``derived=true`` and is refused on a plain
@@ -405,5 +451,6 @@ keeps what it read.
 .. _Azure Key Vault REST API: https://learn.microsoft.com/rest/api/keyvault/
 .. _Google Cloud KMS REST API: https://cloud.google.com/kms/docs/reference/rest
 .. _Vault Transit secret engine: https://developer.hashicorp.com/vault/docs/secrets/transit
+.. _Kubernetes auth method: https://developer.hashicorp.com/vault/docs/auth/kubernetes
 .. _KMIP: https://www.oasis-open.org/committees/kmip/
 .. _league/flysystem: https://flysystem.thephpleague.com/
