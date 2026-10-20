@@ -2548,6 +2548,8 @@ has many safety checks that will throw a ``LogicException`` if the chunk
 passthru doesn't behave correctly; e.g. if a chunk is yielded after an ``isLast()``
 one, or if a content chunk is yielded before an ``isFirst()`` one, etc.
 
+.. _http-client-testing:
+
 Testing
 -------
 
