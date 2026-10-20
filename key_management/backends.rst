@@ -254,8 +254,9 @@ keep failing every call until it expires. The Azure and Google bridges
 therefore call ``invalidateToken()`` when the provider answers ``401``, ask
 for a token again, and retry once if the new token differs. A ``403`` is
 reported as it is: both vendors document it as a permission or firewall
-denial, which another token does not change. The Vault bridge does the same
-when Vault answers a ``403`` with an ``invalid token`` error.
+denial, which another token does not change. The Vault bridge invalidates
+and retries the same way, but on a ``403`` carrying an ``invalid token``
+error, which is how Vault rejects an expired or revoked token.
 
 A provider that caches nothing leaves the method empty. One with a cache
 drops the entry only while it still holds the rejected token, so a token
@@ -314,7 +315,10 @@ implementations are bundled:
     use Symfony\Component\KeyManagement\Bridge\HashiCorpVault\KubernetesAuthTokenProvider;
 
     $client = HttpClient::createForBaseUri('https://vault.example.com:8200/v1/');
-    $kms = new TransitKms($client, new KubernetesAuthTokenProvider($client, 'my-app'));
+    $kms = new TransitKms(
+        $client,
+        new KubernetesAuthTokenProvider($client, 'my-app'),
+    );
 
 The second argument of ``KubernetesAuthTokenProvider`` is the Vault role.
 The next ones are the path the auth method is enabled at (``kubernetes`` by
@@ -322,11 +326,13 @@ default, without the ``auth/`` prefix), the path of the service-account
 token (``/var/run/secrets/kubernetes.io/serviceaccount/token`` by default)
 and the Vault Enterprise namespace. The service-account token is read at
 each login, since the kubelet rotates it. The Vault token is cached in
-memory until 60 seconds before its lease ends (half of the lease for
-shorter ones), or until it is invalidated when it has no lease.
+memory until 60 seconds before its lease ends, or until half of the lease
+when it is shorter than two minutes. A token without a lease stays cached
+until it is invalidated.
 
-The cache lives in the PHP process, so with PHP-FPM every request logs in
-again and gets a new Vault token, which Vault keeps until its lease ends.
+The token is cached in the provider object, which PHP-FPM rebuilds for
+every request, so each request that calls Vault logs in again and gets a
+new Vault token, which Vault keeps until its lease ends.
 Use a worker runtime such as FrankenPHP, or wrap the provider in one of
 your own that caches the token in a store shared by all the processes. To
 authenticate with another method, implement ``TokenProviderInterface``.
