@@ -1137,6 +1137,102 @@ created for the parent::
     // $user->streetAddress === '123 Main St' (mapped from the nested UserAddressInput)
     // $user->city === 'Springfield'
 
+Merging Several Sources into the Same Property
+----------------------------------------------
+
+.. versionadded:: 8.2
+
+    Merging the objects mapped to the same property was introduced in Symfony 8.2.
+
+Sometimes the data of a single target object is split across several source
+objects (e.g. a sign-up form where identity and contact details come in
+separate DTOs). In those cases, add several ``#[Map(source: ...)]`` attributes
+to the target property. When those source properties hold objects that map to
+the same class, the mapper maps all of them into the object it created for the
+first one, so the target property ends up with the data of all of them::
+
+    // src/Dto/IdentityInput.php
+    namespace App\Dto;
+
+    use App\Entity\Profile;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(target: Profile::class)]
+    class IdentityInput
+    {
+        public string $name = '';
+    }
+
+    // src/Dto/ContactInput.php
+    namespace App\Dto;
+
+    use App\Entity\Profile;
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    #[Map(target: Profile::class)]
+    class ContactInput
+    {
+        public string $email = '';
+    }
+
+    // src/Dto/SignUpInput.php
+    namespace App\Dto;
+
+    class SignUpInput
+    {
+        public IdentityInput $identity;
+        public ContactInput $contact;
+    }
+
+    // src/Entity/Account.php
+    namespace App\Entity;
+
+    use Symfony\Component\ObjectMapper\Attribute\Map;
+
+    class Account
+    {
+        #[Map(source: 'identity')]
+        #[Map(source: 'contact')]
+        public Profile $profile;
+    }
+
+    // src/Entity/Profile.php
+    namespace App\Entity;
+
+    class Profile
+    {
+        public string $name = '';
+        public string $email = '';
+    }
+
+Each source object only writes the properties it maps, so it doesn't overwrite
+the values set by the previous ones::
+
+    $signUpInput = new SignUpInput();
+    $signUpInput->identity = new IdentityInput();
+    $signUpInput->identity->name = 'Jane';
+    $signUpInput->contact = new ContactInput();
+    $signUpInput->contact->email = 'jane@example.com';
+
+    $mapper = new ObjectMapper();
+    $account = $mapper->map($signUpInput, Account::class);
+
+    // $account->profile->name === 'Jane' (mapped from IdentityInput)
+    // $account->profile->email === 'jane@example.com' (mapped from ContactInput)
+
+Nested objects are merged in the same way. If the ``if`` condition of a
+``#[Map]`` attribute skips a source, the target object stays as it was.
+
+In the following cases, the mapper doesn't merge the values and the last one
+replaces the previous ones:
+
+* the values aren't objects (e.g. strings or arrays);
+* the mapper doesn't create the object, e.g. when it copies the object as is
+  from the source or when a ``transform`` callable returns it as the final value
+  (the mapper doesn't write into that object when mapping the next sources);
+* the class of the object has readonly properties, which can't be changed after
+  creating the object.
+
 Handling Recursion
 ------------------
 
