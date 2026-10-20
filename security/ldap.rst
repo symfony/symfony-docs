@@ -829,7 +829,7 @@ Configuration example for form login and query_string
         };
 
 .. _`LDAP`: https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol
-.. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
+.. _`LDAP PHP extension`: https://php.net/manual/book.ldap
 .. _`RFC4515`: https://datatracker.ietf.org/doc/rfc4515/
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection
 .. _`SASL`: https://en.wikipedia.org/wiki/Simple_Authentication_and_Security_Layer
