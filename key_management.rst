@@ -5,7 +5,8 @@ A Key Management System (KMS) is a service that holds encryption keys and
 uses them on your behalf. Your application sends it data to encrypt or
 decrypt and gets the result back; it never sees the key itself. AWS KMS,
 Azure Key Vault, Google Cloud KMS, HashiCorp Vault, Scaleway Key Manager
-and any KMIP server all work this way, and so do the local backends Symfony ships for development.
+and any KMIP server all work this way, and so do the local backends
+Symfony ships for development.
 
 Symfony integrates them through the ``key_management`` configuration. With
 it you can:
