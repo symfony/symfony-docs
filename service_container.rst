@@ -874,6 +874,125 @@ argument of a service:
 
         The ``key-type`` attribute for XML service argument keys was introduced in Symfony 7.2.
 
+.. _service-container-iterator-argument:
+
+Injecting a Lazy Collection of Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you inject a list of services as an array argument, the container creates
+all of them when it creates the service that receives the list, even if your
+code only uses some of them. Use the ``iterator`` argument type instead to
+create each service only when your code loops over it. For example, a shipping
+cost calculator asks several rate providers, in order of preference, until one
+of them supports the destination country::
+
+    // src/Shipping/ShippingCostCalculator.php
+    namespace App\Shipping;
+
+    class ShippingCostCalculator
+    {
+        /**
+         * @param iterable<RateProviderInterface> $rateProviders
+         */
+        public function __construct(
+            private iterable $rateProviders,
+        ) {
+        }
+
+        public function calculate(string $countryCode, int $weightInGrams): int
+        {
+            // the container creates each provider only when the loop reaches it,
+            // so it never creates the providers that come after the matching one
+            foreach ($this->rateProviders as $rateProvider) {
+                if ($rateProvider->supports($countryCode)) {
+                    return $rateProvider->getRate($countryCode, $weightInGrams);
+                }
+            }
+
+            throw new \LogicException('No rate provider supports this country.');
+        }
+    }
+
+Define the list of services in the ``iterator`` argument:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Shipping\ShippingCostCalculator:
+                arguments:
+                    # the loop gets the services in this order
+                    - !iterator
+                        - '@App\Shipping\CourierRateProvider'
+                        - '@App\Shipping\PostalRateProvider'
+                        # the '@?' syntax skips the service if it doesn't exist
+                        - '@?App\Shipping\FreightRateProvider'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Shipping\ShippingCostCalculator">
+                    <!-- the loop gets the services in this order -->
+                    <argument type="iterator">
+                        <argument type="service"
+                            id="App\Shipping\CourierRateProvider"/>
+                        <argument type="service"
+                            id="App\Shipping\PostalRateProvider"/>
+                        <!-- on-invalid="ignore" skips missing services -->
+                        <argument type="service" on-invalid="ignore"
+                            id="App\Shipping\FreightRateProvider"/>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Shipping\CourierRateProvider;
+        use App\Shipping\FreightRateProvider;
+        use App\Shipping\PostalRateProvider;
+        use App\Shipping\ShippingCostCalculator;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(ShippingCostCalculator::class)
+                // the loop gets the services in this order
+                ->args([iterator([
+                    service(CourierRateProvider::class),
+                    service(PostalRateProvider::class),
+                    // ignoreOnInvalid() skips the service if it doesn't exist
+                    service(FreightRateProvider::class)->ignoreOnInvalid(),
+                ])]);
+        };
+
+The container injects an iterable object. You can loop over it as many times
+as you need, and ``count()`` returns the number of services without creating
+them.
+
+Prefix a service with ``@!`` (``on-invalid="ignore_uninitialized"`` in XML and
+``ignoreOnUninitialized()`` in PHP) to skip it when the container hasn't
+created it yet. This is useful, for example, to reset only the services that
+the application used during the request.
+
+.. seealso::
+
+    If all the services share a tag, inject them with a
+    :ref:`tagged iterator <tags_reference-tagged-services>` instead of listing
+    them one by one.
+
 .. _service-container-parameters:
 
 Injecting Container Parameters
