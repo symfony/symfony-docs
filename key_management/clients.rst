@@ -29,6 +29,7 @@ Scheme                          Package                                     Back
 ``azure-keyvault://``           ``symfony/azure-keyvault-key-management``   Azure Key Vault / Managed HSM
 ``gcp-kms://``                  ``symfony/google-cloud-key-management``     Google Cloud KMS
 ``hashicorp-vault-transit://``  ``symfony/hashicorp-vault-key-management``  HashiCorp Vault Transit
+``scaleway-kms://``             ``symfony/scaleway-key-management``         Scaleway Key Manager
 ``kmip://``                     ``symfony/kmip-key-management``             Any KMIP 1.x or 2.x server
 ``sodium+fly://``               ``symfony/flysystem-key-management``        XChaCha20, keys read through Flysystem
 ``openssl+fly://``              ``symfony/flysystem-key-management``        AES-256-GCM, keys read through Flysystem
