@@ -102,49 +102,28 @@ Making Only Specific Injections Lazy
 Marking a service as lazy makes it lazy everywhere it's injected. If you prefer
 to keep it as a regular service, you can make it lazy only for some specific
 injections. To do so, add the ``#[Lazy]`` attribute to the argument where the
-service is injected::
-
-    // src/Service/MessageGenerator.php
-    namespace App\Service;
-
-    use Symfony\Component\DependencyInjection\Attribute\Lazy;
-    use Twig\Extension\ExtensionInterface;
-
-    class MessageGenerator
-    {
-        public function __construct(
-            #[Lazy]
-            ExtensionInterface $extension,
-        ) {
-            // ...
-        }
-    }
-
-The ``lazy`` argument of the ``#[Autowire]`` attribute produces the same
-result. Use that attribute instead when you also need some of its other
-features, such as selecting the service to inject::
-
-    // src/Service/MessageGenerator.php
-    namespace App\Service;
-
-    use App\Twig\AppExtension;
-    use Symfony\Component\DependencyInjection\Attribute\Autowire;
-    use Twig\Extension\ExtensionInterface;
-
-    class MessageGenerator
-    {
-        public function __construct(
-            #[Autowire(service: AppExtension::class, lazy: true)]
-            ExtensionInterface $extension,
-        ) {
-            // ...
-        }
-    }
-
-When configuring arguments in YAML or PHP files, reference the service with the
-``@~`` prefix instead of ``@`` or use the ``lazy_proxy()`` function:
+service is injected. In YAML files, prefix the service reference with ``@~``
+instead of ``@``; in PHP files, use the ``lazy_proxy()`` function:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Service/MessageGenerator.php
+        namespace App\Service;
+
+        use Symfony\Component\DependencyInjection\Attribute\Lazy;
+        use Twig\Extension\ExtensionInterface;
+
+        class MessageGenerator
+        {
+            public function __construct(
+                #[Lazy]
+                ExtensionInterface $extension,
+            ) {
+                // ...
+            }
+        }
 
     .. code-block:: yaml
 
@@ -181,43 +160,26 @@ When configuring arguments in YAML or PHP files, reference the service with the
             ],
         ]);
 
-By default, the proxy has the same type as the service class. To make it
-implement only some interfaces instead (read
-:ref:`lazy-services-interface-proxifying` to learn when this is useful), use
-the ``!lazy_proxy`` YAML tag or the second argument of ``lazy_proxy()``:
+The ``lazy`` argument of the ``#[Autowire]`` attribute produces the same
+result as ``#[Lazy]``. Use that attribute instead when you also need some of
+its other features, such as selecting the service to inject::
 
-.. configuration-block::
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
 
-    .. code-block:: yaml
+    use App\Twig\AppExtension;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Twig\Extension\ExtensionInterface;
 
-        # config/services.yaml
-        services:
-            App\Service\MessageGenerator:
-                arguments:
-                    - !lazy_proxy
-                        service: '@App\Twig\AppExtension'
-                        # use an array to implement more than one interface
-                        interface: 'Twig\Extension\ExtensionInterface'
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Service\MessageGenerator;
-        use App\Twig\AppExtension;
-        use Twig\Extension\ExtensionInterface;
-
-        return App::config([
-            'services' => [
-                MessageGenerator::class => [
-                    'arguments' => [
-                        // use an array to implement more than one interface
-                        lazy_proxy(AppExtension::class, ExtensionInterface::class),
-                    ],
-                ],
-            ],
-        ]);
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Autowire(service: AppExtension::class, lazy: true)]
+            ExtensionInterface $extension,
+        ) {
+            // ...
+        }
+    }
 
 .. versionadded:: 8.2
 
@@ -310,26 +272,65 @@ new "proxy" tags.
 To restrict the proxy only for some specific injections, pass the interface as
 the value of the ``#[Lazy]`` attribute (or of the ``lazy`` argument of the
 ``#[Autowire]`` attribute). This is required when the argument uses a union
-type::
+type. In YAML files, use the ``!lazy_proxy`` tag with the ``interface`` option;
+in PHP files, pass the interface as the second argument of ``lazy_proxy()``:
 
-    // src/Service/MessageGenerator.php
-    namespace App\Service;
+.. configuration-block::
 
-    use App\Formatter\HtmlFormatterInterface;
-    use App\Formatter\TextFormatterInterface;
-    use Symfony\Component\DependencyInjection\Attribute\Lazy;
+    .. code-block:: php-attributes
 
-    class MessageGenerator
-    {
-        public function __construct(
-            // to autowire a union type, all its types must be aliases of the
-            // same service; the proxy only implements TextFormatterInterface
-            #[Lazy(TextFormatterInterface::class)]
-            TextFormatterInterface|HtmlFormatterInterface $formatter,
-        ) {
-            // ...
+        // src/Service/MessageGenerator.php
+        namespace App\Service;
+
+        use App\Formatter\HtmlFormatterInterface;
+        use App\Formatter\TextFormatterInterface;
+        use Symfony\Component\DependencyInjection\Attribute\Lazy;
+
+        class MessageGenerator
+        {
+            public function __construct(
+                // to autowire a union type, all its types must be aliases of the
+                // same service; the proxy only implements TextFormatterInterface
+                #[Lazy(TextFormatterInterface::class)]
+                TextFormatterInterface|HtmlFormatterInterface $formatter,
+            ) {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Service\MessageGenerator:
+                arguments:
+                    - !lazy_proxy
+                        service: '@App\Formatter\MessageFormatter'
+                        # use an array to implement more than one interface
+                        interface: 'App\Formatter\TextFormatterInterface'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Formatter\MessageFormatter;
+        use App\Formatter\TextFormatterInterface;
+        use App\Service\MessageGenerator;
+
+        return App::config([
+            'services' => [
+                MessageGenerator::class => [
+                    'arguments' => [
+                        lazy_proxy(
+                            MessageFormatter::class,
+                            // use an array to implement more than one interface
+                            TextFormatterInterface::class,
+                        ),
+                    ],
+                ],
+            ],
+        ]);
 
 .. _`ghost object`: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
 .. _`final`: https://php.net/manual/language.oop5.final
