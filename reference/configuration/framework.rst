@@ -5635,7 +5635,9 @@ If you set this option to ``false``, the constraint doesn't make any HTTP
 requests and considers the given password valid. This is useful when you don't
 want or can't make HTTP requests, such as in the ``dev`` environment or in
 continuous integration servers. When the `test`_ option is enabled, this option
-is ``false`` by default, so your tests don't make HTTP requests.
+is ``false`` by default, so your tests don't make HTTP requests. Set it to
+``true`` explicitly if you want to make the HTTP requests in the ``test``
+environment.
 
 .. versionadded:: 8.2
 

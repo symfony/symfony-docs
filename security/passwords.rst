@@ -93,9 +93,10 @@ Further in this article, you can find a
     hashing more secure.
 
     In tests, however, secure hashes are not important. That's why Symfony uses
-    the lowest allowed ``cost``, ``time_cost`` and ``memory_cost`` values when
-    the :ref:`framework.test <reference-framework-test>` option is enabled,
-    which makes tests faster. Set these options explicitly in your hasher
+    the lowest allowed ``cost``, ``time_cost`` and ``memory_cost`` values
+    (``4``, ``3`` and ``10`` respectively) when the
+    :ref:`framework.test <reference-framework-test>` option is enabled, which
+    makes tests faster. Set these options explicitly in your hasher
     configuration to use other values in tests.
 
     .. versionadded:: 8.2

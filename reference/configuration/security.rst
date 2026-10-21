@@ -1594,7 +1594,8 @@ You can also set this to the ``id`` of a service to use a custom password hasher
 cost
 ~~~~
 
-**type**: ``integer`` **default**: ``null``
+**type**: ``integer`` **default**: ``null`` (``4`` when
+:ref:`framework.test <reference-framework-test>` is enabled)
 
 This option is only available for the ``bcrypt`` algorithm. It defines the
 value of the ``cost`` used to hash the password. The allowed range is ``4``
@@ -1611,7 +1612,8 @@ make tests faster.
 memory_cost
 ~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``null``
+**type**: ``integer`` **default**: ``null`` (``10`` when
+:ref:`framework.test <reference-framework-test>` is enabled)
 
 This option is only available for the ``sodium`` (Argon2) algorithm. It defines
 the amount of memory (in KiB) the algorithm may consume. When the
@@ -1626,7 +1628,8 @@ defaults to ``10`` (the lowest allowed value) to make tests faster.
 time_cost
 ~~~~~~~~~
 
-**type**: ``integer`` **default**: ``null``
+**type**: ``integer`` **default**: ``null`` (``3`` when
+:ref:`framework.test <reference-framework-test>` is enabled)
 
 This option is only available for the ``sodium`` (Argon2) algorithm. It defines
 the number of iterations used to hash the password. When the
