@@ -1650,6 +1650,23 @@ This is how you use discovery instead of a hardcoded key set:
             ],
         ]);
 
+As `RFC 8414`_ prescribes, the ``/.well-known/oauth-authorization-server`` path
+is inserted between the host and the path of the issuer. For example, the
+metadata of the ``https://auth.example.com/eu`` issuer is read from
+``https://auth.example.com/.well-known/oauth-authorization-server/eu``. The
+``issuer`` must be an absolute URL that uses HTTPS (except on ``localhost``)
+and it must match the ``issuer`` announced in the metadata.
+
+Only the ``jwks_uri`` of the metadata is used, and only the keys explicitly
+designated for signature verification are accepted, as explained above for
+OpenID Connect Discovery. This filtering can't be disabled. Both requests use
+the default ``http_client`` service, so the credentials of the introspection
+endpoint are never sent to those URLs.
+
+The metadata is cached for one hour. The keys are cached for as long as the
+``Cache-Control`` or ``Expires`` headers of the ``jwks_uri`` response allow
+(30 days at most), or for one hour when those headers are missing.
+
 .. _security-oauth2-introspection-cache:
 
 Caching the Introspection Responses
@@ -2123,6 +2140,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`RFC 6749`: https://datatracker.ietf.org/doc/html/rfc6749
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
+.. _`RFC 8414`: https://datatracker.ietf.org/doc/html/rfc8414
 .. _`RFC 9068`: https://datatracker.ietf.org/doc/html/rfc9068
 .. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
 .. _`RFC 9701`: https://datatracker.ietf.org/doc/html/rfc9701
