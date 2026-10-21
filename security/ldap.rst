@@ -282,6 +282,7 @@ delete existing ones::
     // pass FALSE as the second method argument to make them case-insensitive
     $isContractor = $entry->hasAttribute('contractorCompany', false);
 
+    // only the attributes changed since the entry was fetched are sent to the server
     $entry->setAttribute('email', ['fabpot@symfony.com']);
     $entryManager->update($entry);
 
@@ -291,6 +292,19 @@ delete existing ones::
 
     // removing an existing entry
     $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
+
+This way, ``update()`` doesn't overwrite the attributes that other clients
+changed after you fetched the entry, and it also works when the bound user is
+only allowed to modify some attributes. Entries created with ``new Entry()``
+always send all their attributes. To send all the attributes of a fetched entry,
+pass a copy of it to ``update()``::
+
+    $entryManager->update(new Entry($entry->getDn(), $entry->getAttributes()));
+
+.. versionadded:: 8.2
+
+    Sending only the changed attributes of fetched entries in ``update()`` was
+    introduced in Symfony 8.2.
 
 Batch Updating
 ..............
