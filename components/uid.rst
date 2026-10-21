@@ -248,6 +248,8 @@ You can also convert some **UUID versions** to others::
 
     $uuid->toV7(); // returns a Symfony\Component\Uid\UuidV7 instance
 
+.. _uid-uuid47-transformer:
+
 **Converting between UUIDv7 and UUIDv4** requires specific techniques.
 The :class:`Symfony\\Component\\Uid\\Uuid47Transformer` allows converting
 between UUIDv7 and UUIDv4 using `SipHash-2-4`_ timestamp masking.
@@ -273,8 +275,35 @@ The transformation is reversible only with the same secret. Decoding with a
 different secret produces a different UUIDv7 without throwing an error.
 
 When using FrameworkBundle, the ``Uuid47Transformer`` is registered as a service
-automatically, using ``kernel.secret`` as the key. You can type-hint it in any
-service or controller to get it injected.
+automatically. You can type-hint it in any service or controller to get it
+injected. By default, it uses the
+:ref:`kernel.secret <configuration-framework-secret>` parameter as the key, so
+rotating the application secret changes the encoded value of every UUID and the
+UUIDv4 values that you already exposed no longer decode to their original
+UUIDv7. To avoid this, define a dedicated key with the
+:ref:`uuid47_secret <reference-framework-uid-uuid47-secret>` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/uid.yaml
+        framework:
+            uid:
+                uuid47_secret: '%env(UUID47_SECRET)%'
+
+    .. code-block:: php
+
+        // config/packages/uid.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'uid' => [
+                    'uuid47_secret' => '%env(UUID47_SECRET)%',
+                ],
+            ],
+        ]);
 
 .. note::
 
