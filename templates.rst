@@ -1175,18 +1175,6 @@ definition. Use the ``template`` key, which requires TwigBundle:
             ],
         ]);
 
-.. versionadded:: 8.2
-
-    The ``template`` route key was introduced in Symfony 8.2. In earlier
-    versions, set the ``controller`` key to
-    ``Symfony\Bundle\FrameworkBundle\Controller\TemplateController`` and the
-    ``template`` default instead.
-
-.. deprecated:: 8.2
-
-    Using the ``Symfony\Bundle\FrameworkBundle\Controller\TemplateController``
-    controller is deprecated. Use the ``template`` route key instead.
-
 When you define routes with the fluent PHP configuration, use the
 ``template()`` method of the route instead::
 
@@ -1199,6 +1187,15 @@ When you define routes with the fluent PHP configuration, use the
             ->defaults(['maxAge' => 86400])
         ;
     };
+
+.. versionadded:: 8.2
+
+    The ``template`` route key was introduced in Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    The ``Symfony\Bundle\FrameworkBundle\Controller\TemplateController``
+    controller was deprecated in Symfony 8.2.
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

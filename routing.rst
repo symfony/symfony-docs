@@ -1880,17 +1880,14 @@ When you define routes with the fluent PHP configuration, use the
 
 .. versionadded:: 8.2
 
-    The ``redirect_to_route`` and ``redirect_to`` route keys, and the
-    ``redirectToRoute()`` and ``redirectTo()`` methods, were introduced in
-    Symfony 8.2. In earlier versions, set the ``controller`` key to
-    ``Symfony\Bundle\FrameworkBundle\Controller\RedirectController`` and use the
-    ``route`` or ``path`` default instead.
+    The ``redirect_to_route`` and ``redirect_to`` route keys and the
+    ``redirectToRoute()`` and ``redirectTo()`` methods were introduced in
+    Symfony 8.2.
 
 .. deprecated:: 8.2
 
-    Using the ``Symfony\Bundle\FrameworkBundle\Controller\RedirectController``
-    controller is deprecated. Use the ``redirect_to_route`` or ``redirect_to``
-    route keys instead.
+    The ``Symfony\Bundle\FrameworkBundle\Controller\RedirectController``
+    controller was deprecated in Symfony 8.2.
 
 .. tip::
 
