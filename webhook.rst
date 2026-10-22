@@ -504,22 +504,22 @@ Mailer Webhooks
 
 Receive delivery and engagement notifications from third-party mailers:
 
-==============  ============================================
-Mailer Service  Parser service name
-==============  ============================================
-AhaSend         ``mailer.webhook.request_parser.ahasend``
-Brevo           ``mailer.webhook.request_parser.brevo``
-Mandrill        ``mailer.webhook.request_parser.mailchimp``
-MailerSend      ``mailer.webhook.request_parser.mailersend``
-Mailgun         ``mailer.webhook.request_parser.mailgun``
-Mailjet         ``mailer.webhook.request_parser.mailjet``
-Mailomat        ``mailer.webhook.request_parser.mailomat``
-Mailtrap        ``mailer.webhook.request_parser.mailtrap``
-Postmark        ``mailer.webhook.request_parser.postmark``
-Resend          ``mailer.webhook.request_parser.resend``
-Sendgrid        ``mailer.webhook.request_parser.sendgrid``
-Sweego          ``mailer.webhook.request_parser.sweego``
-==============  ============================================
+==============  ============================================  ================================================================================================
+Mailer Service  Parser service name                           Payload converter
+==============  ============================================  ================================================================================================
+AhaSend         ``mailer.webhook.request_parser.ahasend``     :class:`Symfony\\Component\\Mailer\\Bridge\\AhaSend\\RemoteEvent\\AhaSendPayloadConverter`
+Brevo           ``mailer.webhook.request_parser.brevo``       :class:`Symfony\\Component\\Mailer\\Bridge\\Brevo\\RemoteEvent\\BrevoPayloadConverter`
+Mandrill        ``mailer.webhook.request_parser.mailchimp``   :class:`Symfony\\Component\\Mailer\\Bridge\\Mailchimp\\RemoteEvent\\MailchimpPayloadConverter`
+MailerSend      ``mailer.webhook.request_parser.mailersend``  :class:`Symfony\\Component\\Mailer\\Bridge\\MailerSend\\RemoteEvent\\MailerSendPayloadConverter`
+Mailgun         ``mailer.webhook.request_parser.mailgun``     :class:`Symfony\\Component\\Mailer\\Bridge\\Mailgun\\RemoteEvent\\MailgunPayloadConverter`
+Mailjet         ``mailer.webhook.request_parser.mailjet``     :class:`Symfony\\Component\\Mailer\\Bridge\\Mailjet\\RemoteEvent\\MailjetPayloadConverter`
+Mailomat        ``mailer.webhook.request_parser.mailomat``    :class:`Symfony\\Component\\Mailer\\Bridge\\Mailomat\\RemoteEvent\\MailomatPayloadConverter`
+Mailtrap        ``mailer.webhook.request_parser.mailtrap``    :class:`Symfony\\Component\\Mailer\\Bridge\\Mailtrap\\RemoteEvent\\MailtrapPayloadConverter`
+Postmark        ``mailer.webhook.request_parser.postmark``    :class:`Symfony\\Component\\Mailer\\Bridge\\Postmark\\RemoteEvent\\PostmarkPayloadConverter`
+Resend          ``mailer.webhook.request_parser.resend``      :class:`Symfony\\Component\\Mailer\\Bridge\\Resend\\RemoteEvent\\ResendPayloadConverter`
+Sendgrid        ``mailer.webhook.request_parser.sendgrid``    :class:`Symfony\\Component\\Mailer\\Bridge\\Sendgrid\\RemoteEvent\\SendgridPayloadConverter`
+Sweego          ``mailer.webhook.request_parser.sweego``      :class:`Symfony\\Component\\Mailer\\Bridge\\Sweego\\RemoteEvent\\SweegoPayloadConverter`
+==============  ============================================  ================================================================================================
 
 .. versionadded:: 7.1
 
@@ -582,6 +582,15 @@ The routing name becomes part of your webhook URL (e.g.,
 ``https://example.com/webhook/mailer_mailgun``). Configure this URL at your
 mailer provider and store the webhook secret in your environment (via the
 :doc:`secrets management system </configuration/secrets>` or in a ``.env`` file).
+
+.. warning::
+
+    At your mailer provider, subscribe only to the events supported by the
+    Symfony bridge instead of subscribing to all events. The webhook endpoint
+    returns a ``406`` HTTP status code for any event that the bridge can't
+    convert into a :class:`Symfony\\Component\\RemoteEvent\\RemoteEvent`
+    object, and providers may add new event types at any time. Check the
+    payload converter listed in the table above to see the supported events.
 
 Then create a consumer to handle delivery and engagement events::
 
