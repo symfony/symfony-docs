@@ -3383,7 +3383,7 @@ storage_service
 The service ID of a custom storage implementation. This takes precedence over
 any configured ``cache_pool``.
 
-remote-event
+remote_event
 ~~~~~~~~~~~~
 
 enabled
@@ -3391,12 +3391,12 @@ enabled
 
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
-Whether to enable or not the RemoteEvent support.
+Whether to enable the RemoteEvent support or not.
 
 .. seealso::
 
-    For more details, see the :doc:`Webhook </webhook>`
-    documentation.
+    For more details, see the :doc:`Webhook </webhook>` documentation.
+
 request
 ~~~~~~~
 
