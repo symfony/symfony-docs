@@ -338,6 +338,23 @@ HTTP status code::
     // this exception ultimately generates a 500 status error
     throw new \Exception('Something went wrong!');
 
+Symfony provides exception classes for the most common HTTP error status codes
+(check out the `HttpKernel Exception namespace`_). When the status code is only
+known at runtime, use the
+:method:`Symfony\\Component\\HttpKernel\\Exception\\HttpException::fromStatusCode`
+method. It returns the specialized exception for that status code, or a generic
+``HttpException`` when there isn't one::
+
+    use Symfony\Component\HttpKernel\Exception\HttpException;
+
+    // this throws a ContentTooLargeHttpException
+    throw HttpException::fromStatusCode(413, 'The uploaded file is too large.');
+
+.. versionadded:: 8.2
+
+    The exception classes for the 402, 408, 413, 416, 417, 424, 425, 451 and
+    501 status codes were introduced in Symfony 8.2.
+
 In every case, an error page is shown to the end user and a full debug
 error page is shown to the developer (i.e. when you're in "Debug" mode - see
 :ref:`page-creation-environments`).
@@ -1771,3 +1788,4 @@ Learn more about Controllers
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
 .. _`the WHATWG SSE specification`: https://html.spec.whatwg.org/multipage/server-sent-events.html
 .. _`RFC 6839`: https://datatracker.ietf.org/doc/html/rfc6839
+.. _`HttpKernel Exception namespace`: https://github.com/symfony/symfony/tree/{version}/src/Symfony/Component/HttpKernel/Exception
