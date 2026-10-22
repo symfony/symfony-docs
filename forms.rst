@@ -1502,6 +1502,30 @@ pass ``null`` to it::
     guessing your field types (including constraints that are not part of the
     validation group(s) being used).
 
+Symfony also guesses the field type from the PHP type declared on the property
+of the data class. Validation constraints and Doctrine metadata take precedence,
+so this guess is used only when they don't provide a more specific one:
+
+==============================================  ===========================================================
+Property type                                   Guessed form type
+==============================================  ===========================================================
+``int``                                         ``IntegerType``
+``float``                                       ``NumberType``
+``bool``                                        ``CheckboxType``
+``\DateTime``                                   ``DateTimeType`` (with ``'input' => 'datetime'``)
+``\DateTimeImmutable``, ``\DateTimeInterface``  ``DateTimeType`` (with ``'input' => 'datetime_immutable'``)
+:ref:`DatePoint <clock_date-point>`             ``DateTimeType`` (with ``'input' => 'date_point'``)
+``\DateInterval``                               ``DateIntervalType``
+==============================================  ===========================================================
+
+Nullable types (e.g. ``?int``) result in the same form type as their
+non-nullable versions.
+
+.. versionadded:: 8.2
+
+    Guessing the field type from the declared type of the property was
+    introduced in Symfony 8.2.
+
 Form Type Options Guessing
 ..........................
 
@@ -1512,7 +1536,15 @@ the following options will be guessed too:
     The ``required`` option is guessed based on the validation rules (i.e. is
     the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
     field ``nullable``). This is very useful, as your client-side validation will
-    automatically match your validation rules.
+    automatically match your validation rules. If neither of them provides
+    this information, the field is guessed as not required when its property
+    is nullable (e.g. ``?string``) or ``bool`` (a required checkbox must be
+    checked, but the property also accepts ``false``).
+
+    .. versionadded:: 8.2
+
+        Guessing the ``required`` option from the declared type of the
+        property was introduced in Symfony 8.2.
 
 ``maxlength``
     If the field is some sort of text field, then the ``maxlength`` option attribute
