@@ -66,7 +66,8 @@ The ``Argument`` attribute accepts the following parameters:
     receives a :class:`Symfony\\Component\\Console\\Completion\\CompletionInput`
     object and returns the list of suggested values. It can also declare a
     second :class:`Symfony\\Component\\Console\\Completion\\CompletionSuggestions`
-    parameter to :ref:`let the shell complete file system paths <console-input-completion-paths>`.
+    parameter to
+    :ref:`let the shell complete file system paths <console-input-completion-paths>`.
 
 The argument mode (required, optional, array) is inferred from the parameter type:
 
@@ -299,7 +300,8 @@ The ``Option`` attribute accepts the following parameters:
     receives a :class:`Symfony\\Component\\Console\\Completion\\CompletionInput`
     object and returns the list of suggested values. It can also declare a
     second :class:`Symfony\\Component\\Console\\Completion\\CompletionSuggestions`
-    parameter to :ref:`let the shell complete file system paths <console-input-completion-paths>`.
+    parameter to
+    :ref:`let the shell complete file system paths <console-input-completion-paths>`.
 
 ``deprecated`` and ``hidden``
     Whether the option is :ref:`deprecated or hidden <console-hidden-deprecated-options>`.
@@ -1620,8 +1622,11 @@ object. Use ``suggestDirectories()`` to complete only directories::
     }
 
 The shell completes the paths in addition to the values returned by the
-closure. Arguments and options of type ``InputFile`` (or a collection of
-them) complete paths without any code.
+closure. If you call both methods, ``suggestPaths()`` wins.
+
+Arguments and options declared with the ``#[Argument]`` and ``#[Option]``
+attributes complete paths without any code when their type is ``InputFile``
+(or a collection of them) and you don't define ``suggestedValues``.
 
 .. versionadded:: 8.2
 
