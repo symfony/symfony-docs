@@ -1514,6 +1514,8 @@ annotation::
         #[Serialize(
             200,                                        // status code
             ['Cache-Control' => 'public, max-age=60'],  // headers
+            // the stream writer doesn't support serialization groups;
+            // pass JsonStreamer options instead
             ['include_null_properties' => true],        // stream writer options
             ProductOutput::class,                       // class to map values to
             true                                        // stream the returned value
