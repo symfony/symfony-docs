@@ -96,6 +96,12 @@ JsonStreamer
 * :ref:`StreamedName <json-streamer-configure-encoded-name>`
 * :ref:`ValueTransformer <json-streamer-configure-encoded-value>`
 
+KeyManagement
+~~~~~~~~~~~~~
+
+* :ref:`BlindIndexed <key-management-blind-index-doctrine>`
+* :ref:`Encrypted <key-management-doctrine>`
+
 Messenger
 ~~~~~~~~~
 
