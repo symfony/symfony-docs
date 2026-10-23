@@ -440,6 +440,49 @@ method trigger a deprecation notice at autoload time. If the abstract class
 already declares the method (either abstract or with a default implementation),
 the annotation is treated as plain documentation and no deprecation is triggered.
 
+Detecting Attributes with a Missing ``use`` Statement
+.....................................................
+
+.. versionadded:: 8.2
+
+    The detection of attributes pointing to a missing class was introduced
+    in Symfony 8.2.
+
+When the ``use`` statement of an attribute is missing, PHP resolves the
+attribute name relative to the namespace of the current file. PHP doesn't
+check that this class exists until ``newInstance()`` is called, so the code
+looking for the attribute never finds it and no error is reported::
+
+    namespace Acme\Entity;
+
+    // the "use Acme\Attribute\Encrypted;" statement is missing,
+    // so PHP resolves this attribute to "Acme\Entity\Encrypted"
+    class Patient
+    {
+        #[Encrypted]
+        private string $phone;
+    }
+
+``DebugClassLoader`` triggers a deprecation notice for each attribute whose
+class doesn't exist and belongs to the namespace of the class using it (or to
+one of its sub-namespaces):
+
+.. code-block:: text
+
+    Attribute "Acme\Entity\Encrypted" used on "Acme\Entity\Patient::$phone"
+    does not exist. Did you forget a "use" statement?
+
+This also detects aliases that aren't imported. For example, if the
+``use Symfony\Component\Validator\Constraints as Assert;`` statement is
+missing, ``#[Assert\NotBlank]`` resolves to ``Acme\Entity\Assert\NotBlank``
+in the previous example.
+
+Attributes from other namespaces are neither checked nor autoloaded, because
+their class may be missing on purpose (e.g. when it belongs to an optional
+dependency). If the class of a checked attribute exists but can't be loaded
+(e.g. because its parent class is missing), the deprecation notice explains
+the reason.
+
 Compile-time Deprecations
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
