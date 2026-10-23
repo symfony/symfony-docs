@@ -98,7 +98,8 @@ of the provider:
 authenticator fetches ``.well-known/openid-configuration`` from it to discover
 the authorization, token and UserInfo endpoints, so you don't have to configure
 them. The discovery document is cached for one hour by default (change it with
-the ``discovery_cache_ttl`` option).
+the ``discovery_cache_ttl`` option). To fetch the document from another URL,
+configure :ref:`discovery_uri <oidc-login-discovery-uri>`.
 
 ``client_id`` identifies your application to the provider. The authenticator
 sends it in the authorization request and checks the ``aud`` claim of the ID
@@ -1304,6 +1305,61 @@ encryption are always rejected. This option works the same as in the
     or when the requests go through a proxy that terminates TLS. Public
     clients can't disable this verification.
 
+.. _oidc-login-discovery-uri:
+
+Customizing the Discovery URL
+-----------------------------
+
+By default, the authenticator fetches the discovery document from
+``.well-known/openid-configuration`` under ``provider_uri``. If your application
+must get this document from another URL (e.g. because it reaches the provider
+through an internal host while the issuer keeps its public URL), set the full
+URL of the document in the ``discovery_uri`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    oidc_login:
+                        # ...
+                        provider_uri: 'https://sso.example.com'
+                        discovery_uri: 'https://sso.internal.example.com/.well-known/openid-configuration'
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'oidc_login' => [
+                            // ...
+                            'provider_uri' => 'https://sso.example.com',
+                            'discovery_uri' => 'https://sso.internal.example.com/.well-known/openid-configuration',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The ``issuer`` of the document must still match ``provider_uri``, and the
+discovery URL must use HTTPS like all the other endpoints (see
+:ref:`oidc-login-security-checks`). If you use a scoped HTTP client, its scope
+must also match the host of the discovery URL (see
+:ref:`oidc-login-http-client`).
+
+.. versionadded:: 8.2
+
+    The ``discovery_uri`` option was introduced in Symfony 8.2.
+
+.. _oidc-login-http-client:
+
 Configuring the HTTP Client
 ---------------------------
 
@@ -1362,10 +1418,10 @@ scoped client (see :doc:`/http_client`):
 
 .. warning::
 
-    The ``scope`` of the scoped client must match all the endpoints, not only
-    the issuer. The requests are sent to the URLs announced by the provider in
-    its discovery document, which are often on other hosts. For example, the
-    issuer of Google is ``accounts.google.com``, but it uses
+    The ``scope`` of the scoped client must match the discovery URL and all
+    the endpoints announced in the discovery document, not only the issuer.
+    These endpoints are often on other hosts. For example, the issuer of
+    Google is ``accounts.google.com``, but it uses
     ``oauth2.googleapis.com`` for its token endpoint, ``www.googleapis.com``
     for its JWKS and ``openidconnect.googleapis.com`` for its UserInfo
     endpoint. The options of a scoped client only apply to the URLs that match
@@ -1851,6 +1907,8 @@ and check the exception that caused it::
         }
     }
 
+.. _oidc-login-security-checks:
+
 Security Considerations
 -----------------------
 
@@ -1858,9 +1916,10 @@ The authenticator implements all the checks required by the specifications.
 You can only disable PKCE and the ID token signature verification, and public
 clients can't disable either of them. These are the main checks:
 
-* ``provider_uri`` and all the endpoints announced in the discovery document
-  must use HTTPS. For local development, loopback hosts (``localhost``,
-  ``127.0.0.1``, ``::1``) and ``*.localhost`` hosts are also accepted;
+* ``provider_uri``, ``discovery_uri`` and all the endpoints announced in the
+  discovery document must use HTTPS. For local development, loopback hosts
+  (``localhost``, ``127.0.0.1``, ``::1``) and ``*.localhost`` hosts are also
+  accepted;
 * The ``issuer`` of the discovery document must match ``provider_uri``;
 * All authorization requests include a ``state`` parameter, which is checked
   in the callback against the value stored in the session. This prevents login
@@ -1897,8 +1956,13 @@ Configuration Reference
 -----------------------
 
 ``provider_uri`` (**required**)
-    The issuer URL of the OIDC provider, used for
-    ``.well-known/openid-configuration`` discovery. Must use HTTPS.
+    The issuer URL of the OIDC provider. Unless ``discovery_uri`` is set, it's
+    also used for ``.well-known/openid-configuration`` discovery. Must use
+    HTTPS.
+
+``discovery_uri`` (default: ``null``)
+    The full URL of the discovery document, used instead of the one built from
+    ``provider_uri`` (see :ref:`oidc-login-discovery-uri`). Must use HTTPS.
 
 ``client_id`` (**required**)
     The client identifier issued by the provider.
