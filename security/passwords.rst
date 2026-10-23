@@ -353,6 +353,18 @@ With this setup:
   Symfony will verify the password with the old algorithm and then rehash
   and update the password using the new algorithm.
 
+The new hasher must support rehashing for password migration to work. Use
+``auto`` or a custom hasher whose ``needsRehash()`` method can return ``true``.
+The built-in ``plaintext``, ``pbkdf2`` and message digest hashers (such as
+``sha512``) never need rehashing, so configuring ``migrate_from`` on them has
+no effect. You can still list these hashers as migration sources in
+``migrate_from`` on the new hasher, as shown above.
+
+.. deprecated:: 8.2
+
+    Configuring ``migrate_from`` on a built-in ``plaintext``, ``pbkdf2`` or
+    message digest hasher was deprecated in Symfony 8.2.
+
 .. tip::
 
     The *auto*, *native*, *bcrypt* and *argon* hashers automatically enable
