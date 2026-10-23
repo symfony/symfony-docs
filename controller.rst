@@ -1511,7 +1511,7 @@ annotation::
 
     class ProductController
     {
-        #[Serialize(200, [], [], ProductOutput::class, true)]
+        #[Serialize(200, [], ['groups' => ['list']], ProductOutput::class, true)]
         public function list(ProductRepository $productRepository): iterable
         {
             return $productRepository->findAll();
