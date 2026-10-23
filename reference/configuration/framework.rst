@@ -4446,7 +4446,9 @@ In that case, rotating the vault keys also changes the value of
 
 Changing this value invalidates all the data signed with it and changes all
 the values derived from it, such as the UUIDs encoded by the
-``Uuid47Transformer`` service of the :doc:`UID component </components/uid>`.
+``Uuid47Transformer`` service of the :doc:`UID component </components/uid>`
+(unless you set the
+:ref:`uid.uuid47_secret <reference-framework-uid-uuid47-secret>` option).
 That's why you should keep this value stable. If you change it anyway, clear
 the application cache and expect all users to be logged out.
 
