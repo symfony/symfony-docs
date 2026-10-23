@@ -205,13 +205,7 @@ correct types will be assigned to the model.
 Overridden Options
 ------------------
 
-compound
-~~~~~~~~
-
-**type**: ``boolean`` **default**: same value as ``expanded`` option
-
-This option specifies if a form is compound. The value is by default
-overridden by the value of the ``expanded`` option.
+.. include:: /reference/forms/types/options/choice_type_compound.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
@@ -233,7 +227,7 @@ the parent field (the form in most cases).
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
+.. include:: /reference/forms/types/options/choice_type_invalid_message.rst.inc
 
 Inherited Options
 -----------------
