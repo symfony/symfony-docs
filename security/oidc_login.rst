@@ -1322,9 +1322,11 @@ If your provider serves its discovery document at a different URL, set
             firewalls:
                 main:
                     oidc_login:
-                        # ...
                         provider_uri: 'https://accounts.example.com'
                         discovery_uri: 'https://metadata.example.com/oidc'
+                        client_id: '%env(OIDC_CLIENT_ID)%'
+                        client_authentication:
+                            client_secret_basic: '%env(OIDC_CLIENT_SECRET)%'
 
     .. code-block:: php
 
@@ -1336,9 +1338,12 @@ If your provider serves its discovery document at a different URL, set
                 'firewalls' => [
                     'main' => [
                         'oidc_login' => [
-                            // ...
                             'provider_uri' => 'https://accounts.example.com',
                             'discovery_uri' => 'https://metadata.example.com/oidc',
+                            'client_id' => '%env(OIDC_CLIENT_ID)%',
+                            'client_authentication' => [
+                                'client_secret_basic' => '%env(OIDC_CLIENT_SECRET)%',
+                            ],
                         ],
                     ],
                 ],
