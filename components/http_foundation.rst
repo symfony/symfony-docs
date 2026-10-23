@@ -422,7 +422,7 @@ check if a given request meets certain conditions (e.g. it comes from some IP
 address, it uses a certain HTTP method, etc.):
 
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`:
-  Checks that the request attributes match the given regular
+  Checks that all the given request attributes match their regular
   expressions.
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`:
   Evaluates an ExpressionLanguage expression against the request.
@@ -631,7 +631,7 @@ of methods to manipulate the HTTP headers related to the cache:
   Restricts the response to a single user, so shared caches must not
   store it.
 * :method:`Symfony\\Component\\HttpFoundation\\Response::expire`:
-  Marks the response as stale by setting its ``Age`` header to its
+  Marks a fresh response as stale by setting its ``Age`` header to its
   maximum age.
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`:
   Sets the ``Expires`` header, the date after which the response is
