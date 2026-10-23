@@ -16,8 +16,10 @@ Symfony Deployment Basics
 The typical steps taken while deploying a Symfony application include:
 
 #. Upload your code to the production server;
+#. Configure your production environment variables and secrets;
 #. Install your vendor dependencies (typically done via Composer and may be done
    before uploading);
+#. Compile your assets, if needed;
 #. Running database migrations or similar tasks to update any changed data structures;
 #. Clearing (and optionally, warming up) your cache.
 
@@ -129,6 +131,23 @@ On production, you have two options:
 There is no significant advantage to either option: use whichever is most natural
 for your hosting environment.
 
+Set :ref:`APP_SECRET <configuration-framework-secret>` to a random value that
+is unique to your production application:
+
+.. code-block:: terminal
+
+    # this generates a random string of 32 characters
+    $ php -r 'echo bin2hex(random_bytes(16));'
+
+Never commit this value to your repository. Use the same value on all your
+application servers and keep it between deployments, because changing it
+invalidates all signed URIs and "remember me" cookies.
+
+If you use :doc:`encrypted secrets </configuration/secrets>`, the production
+decryption key must also be available on the server, either as a file or in the
+``SYMFONY_DECRYPTION_SECRET`` environment variable. See
+:ref:`Deploy Secrets to Production <secrets-deploy-to-production>` for details.
+
 .. tip::
 
     You might not want your application to process the ``.env.*`` files on
@@ -189,7 +208,24 @@ Make sure you clear and warm-up your Symfony cache:
     code, see
     :ref:`reproducible builds <configuration-kernel-container-build-time>`.
 
-E) Other Things!
+E) Compile your Assets
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you use AssetMapper, download the third-party packages of your importmap
+(the ``assets/vendor/`` directory is not committed to the repository because
+the Flex recipe adds it to ``.gitignore``) and then compile your assets:
+
+.. code-block:: terminal
+
+    $ APP_ENV=prod APP_DEBUG=0 php bin/console importmap:install
+    $ APP_ENV=prod APP_DEBUG=0 php bin/console asset-map:compile
+
+See :ref:`Compiling Assets <asset-mapper-deployment>` for more details.
+
+If you use Webpack Encore, read
+:ref:`how to deploy your Encore assets <how-do-i-deploy-my-encore-assets>`.
+
+F) Other Things!
 ~~~~~~~~~~~~~~~~
 
 There may be lots of other things that you need to do, depending on your
@@ -199,8 +235,6 @@ setup:
 * Clearing your APCu cache
 * Add/edit CRON jobs
 * Restarting your workers
-* :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
-* :ref:`Compile your assets <asset-mapper-deployment>` if you're using the AssetMapper component
 * Pushing assets to a CDN
 * :ref:`Dumping error pages as static HTML files <dumping-error-pages-as-static-html-files>`
 * On a shared hosting platform using the Apache web server, you may need to

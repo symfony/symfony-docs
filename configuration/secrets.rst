@@ -251,6 +251,8 @@ values via the ``.env.test`` file:
     into your services with the ``#[Autowire]`` attribute. See
     :ref:`Fixing Non-Autowireable Arguments <autowire-attribute>` for more details.
 
+.. _secrets-deploy-to-production:
+
 Deploy Secrets to Production
 ----------------------------
 
