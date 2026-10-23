@@ -1511,7 +1511,13 @@ annotation::
 
     class ProductController
     {
-        #[Serialize(200, [], [], ProductOutput::class, true)]
+        #[Serialize(
+            200,                                        // status code
+            ['Cache-Control' => 'public, max-age=60'],  // headers
+            ['include_null_properties' => true],        // stream writer options
+            ProductOutput::class,                       // class to map values to
+            true                                        // stream the returned value
+        )]
         public function list(ProductRepository $productRepository): iterable
         {
             return $productRepository->findAll();
