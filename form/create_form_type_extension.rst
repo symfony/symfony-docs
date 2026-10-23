@@ -54,6 +54,13 @@ Depending on your use case, you may need to override some of the following metho
 For more information on what those methods do, see the
 :ref:`custom form field type <form-type-methods-explanation>` article.
 
+.. tip::
+
+    ``getExtendedTypes()`` can also return a class that defines its form with
+    the ``#[AsFormType]`` attribute. This is how you add events, data
+    transformers or dynamic fields to such a form. See
+    :ref:`form-attributes-type-extension`.
+
 Registering your Form Type Extension as a Service
 -------------------------------------------------
 
