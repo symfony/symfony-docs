@@ -53,7 +53,18 @@ values for the year and week fields::
         ],
     ]);
 
-.. include:: /reference/forms/types/options/html5.rst.inc
+html5
+~~~~~
+
+**type**: ``boolean`` **default**: ``true`` if ``widget`` is
+``single_text``, ``false`` otherwise
+
+If ``true``, the field renders as an HTML5 ``week`` input. If ``false``, it
+renders as a ``text`` input. Enabling this option when the `widget`_ option
+isn't ``single_text`` throws an exception.
+
+Set it to ``false`` when using a custom JavaScript datepicker, which often
+requires a ``text`` input instead of an HTML5 one.
 
 input
 ~~~~~
@@ -72,7 +83,7 @@ this format.
 widget
 ~~~~~~
 
-**type**: ``string`` **default**: ``choice``
+**type**: ``string`` **default**: ``single_text``
 
 The basic way in which this field should be rendered. Can be one of the
 following:
@@ -80,6 +91,12 @@ following:
 * ``choice``: renders two select inputs;
 * ``text``: renders a two field input of type ``text`` (year and week);
 * ``single_text``: renders a single input of type ``week``.
+
+.. warning::
+
+    Some browsers, such as Firefox and Safari on desktop, don't support the
+    ``week`` input type and display a plain text input instead. Use the
+    ``choice`` widget if the field must work the same in all browsers.
 
 years
 ~~~~~
@@ -146,8 +163,8 @@ Field Variables
 +==========+============+======================================================================+
 | widget   | ``mixed``  | The value of the `widget`_ option.                                   |
 +----------+------------+----------------------------------------------------------------------+
-| type     | ``string`` | Only present when widget is ``single_text`` and HTML5 is activated,  |
-|          |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
+| type     | ``string`` | Only present when `widget`_ is ``single_text`` and `html5`_ is       |
+|          |            | ``true``. Its value is always ``week``.                              |
 +----------+------------+----------------------------------------------------------------------+
 
 .. _`ISO 8601`: https://en.wikipedia.org/wiki/ISO_8601
