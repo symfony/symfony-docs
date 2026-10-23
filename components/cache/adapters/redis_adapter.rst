@@ -10,6 +10,9 @@ Redis Cache Adapter
 
 This adapter stores the values in-memory using one (or more) `Redis server`_ instances.
 
+You can :ref:`compress cache values <cache-compressing-values>` to reduce Redis
+storage and network traffic.
+
 Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Memcached adapter </components/cache/adapters/memcached_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment. The ability
