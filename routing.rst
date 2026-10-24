@@ -1773,7 +1773,7 @@ to get the current route name (``app.current_route``) and its parameters
 Special Routes
 --------------
 
-Symfony defines some special controllers to render templates and redirect to
+Symfony defines some special route keys to render templates and redirect to
 other routes from the route configuration so you don't have to create a
 controller action.
 
@@ -1786,7 +1786,8 @@ in the main article about Symfony templates.
 Redirecting to URLs and Routes Directly from a Route
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``RedirectController`` to redirect to other routes and URLs:
+Use the ``redirect_to_route`` key to redirect to another route and the
+``redirect_to`` key to redirect to a path or an absolute URL:
 
 .. configuration-block::
 
@@ -1795,9 +1796,9 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         # config/routes.yaml
         doc_shortcut:
             path: /doc
-            controller: Symfony\Component\Routing\Controller\RedirectController
+            # the name of the route to redirect to
+            redirect_to_route: 'doc_page'
             defaults:
-                route: 'doc_page'
                 # optionally you can define some arguments passed to the route
                 page: 'index'
                 version: 'current'
@@ -1816,10 +1817,9 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
 
         legacy_doc:
             path: /legacy/doc
-            controller: Symfony\Component\Routing\Controller\RedirectController
+            # this value can be an absolute path or an absolute URL
+            redirect_to: 'https://legacy.example.com/doc'
             defaults:
-                # this value can be an absolute path or an absolute URL
-                path: 'https://legacy.example.com/doc'
                 permanent: true
 
     .. code-block:: php
@@ -1827,14 +1827,12 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
         // config/routes.php
         namespace Symfony\Component\Routing\Loader\Configurator;
 
-        use Symfony\Component\Routing\Controller\RedirectController;
-
         return Routes::config([
             'doc_shortcut' => [
                 'path' => '/doc',
-                'controller' => [RedirectController::class, 'doc_page'],
+                // the name of the route to redirect to
+                'redirect_to_route' => 'doc_page',
                 'defaults' => [
-                    'route' => 'doc_page',
                     // optionally you can define some arguments passed to the route
                     'page' => 'index',
                     'version' => 'current',
@@ -1854,14 +1852,42 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
             ],
             'legacy_doc' => [
                 'path' => '/legacy/doc',
-                'controller' => [RedirectController::class, 'legacy_doc'],
+                // this value can be an absolute path or an absolute URL
+                'redirect_to' => 'https://legacy.example.com/doc',
                 'defaults' => [
-                    // this value can be an absolute path or an absolute URL
-                    'path' => 'https://legacy.example.com/doc',
                     'permanent' => true,
                 ],
             ],
         ]);
+
+When you define routes with the fluent PHP configuration, use the
+``redirectToRoute()`` and ``redirectTo()`` methods of the route::
+
+    // config/routes.php
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+    return static function (RoutingConfigurator $routes): void {
+        $routes->add('doc_shortcut', '/doc')
+            ->redirectToRoute('doc_page')
+            ->defaults(['page' => 'index', 'version' => 'current'])
+        ;
+
+        $routes->add('legacy_doc', '/legacy/doc')
+            ->redirectTo('https://legacy.example.com/doc')
+            ->defaults(['permanent' => true])
+        ;
+    };
+
+.. versionadded:: 8.2
+
+    The ``redirect_to_route`` and ``redirect_to`` route keys and the
+    ``redirectToRoute()`` and ``redirectTo()`` methods were introduced in
+    Symfony 8.2.
+
+.. deprecated:: 8.2
+
+    The ``Symfony\Bundle\FrameworkBundle\Controller\RedirectController``
+    controller was deprecated in Symfony 8.2.
 
 .. tip::
 
