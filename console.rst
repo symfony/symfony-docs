@@ -116,6 +116,10 @@ your shell.
 After installing and restarting your terminal, you're all set to use
 completion (by default, by pressing the Tab key).
 
+Commands that take file system paths or directories, like ``lint:yaml`` or
+``assets:install``, also let the shell complete them. See
+:ref:`console-input-completion-paths` to do the same in your commands.
+
 .. tip::
 
     Many PHP tools are built using the Symfony Console component (e.g.
