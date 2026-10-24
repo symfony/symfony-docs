@@ -60,8 +60,6 @@ of the provider:
                     provider: oidc_provider_name
                     oidc_login:
                         provider_uri: '%env(OIDC_PROVIDER_URI)%'
-                        # uncomment if the discovery document has a different URL
-                        # discovery_uri: 'https://metadata.example.com/oidc'
                         client_id: '%env(OIDC_CLIENT_ID)%'
                         client_authentication:
                             client_secret_basic: '%env(OIDC_CLIENT_SECRET)%'
@@ -85,8 +83,6 @@ of the provider:
                         'provider' => 'oidc_provider_name',
                         'oidc_login' => [
                             'provider_uri' => '%env(OIDC_PROVIDER_URI)%',
-                            // uncomment if the discovery document has a different URL
-                            // 'discovery_uri' => 'https://metadata.example.com/oidc',
                             'client_id' => '%env(OIDC_CLIENT_ID)%',
                             'client_authentication' => [
                                 'client_secret_basic' => '%env(OIDC_CLIENT_SECRET)%',
@@ -1314,12 +1310,64 @@ encryption are always rejected. This option works the same as in the
 Customizing the Discovery URL
 -----------------------------
 
-If your provider serves its discovery document at a different URL, set
-``discovery_uri`` to the full URL of that document, as shown in the
-configuration above. The document's ``issuer`` must still match
-``provider_uri``. The discovery URL must use HTTPS, except for loopback hosts
-during local development. If you use a scoped HTTP client, its scope must also
-match the discovery host (see below).
+If your application reads the discovery document from an internal host while
+the provider keeps its public issuer URL, set ``discovery_uri`` to the full
+URL of the document:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            providers:
+                oidc_provider_name:
+                    oidc: ~
+
+            firewalls:
+                main:
+                    provider: oidc_provider_name
+                    oidc_login:
+                        provider_uri: 'https://sso.example.com'
+                        discovery_uri: 'https://internal.example.com/oidc'
+                        client_id: '%env(OIDC_CLIENT_ID)%'
+                        client_authentication:
+                            client_secret_basic: '%env(OIDC_CLIENT_SECRET)%'
+                        scope: ['openid', 'profile', 'email']
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'security' => [
+                'providers' => [
+                    'oidc_provider_name' => [
+                        'oidc' => null,
+                    ],
+                ],
+
+                'firewalls' => [
+                    'main' => [
+                        'provider' => 'oidc_provider_name',
+                        'oidc_login' => [
+                            'provider_uri' => 'https://sso.example.com',
+                            'discovery_uri' => 'https://internal.example.com/oidc',
+                            'client_id' => '%env(OIDC_CLIENT_ID)%',
+                            'client_authentication' => [
+                                'client_secret_basic' => '%env(OIDC_CLIENT_SECRET)%',
+                            ],
+                            'scope' => ['openid', 'profile', 'email'],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+The document's ``issuer`` must still match ``provider_uri``. The discovery URL
+must use HTTPS, except for loopback hosts during local development. If you use
+a scoped HTTP client, its scope must also match the discovery host (see below).
 
 .. versionadded:: 8.2
 
