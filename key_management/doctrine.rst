@@ -55,9 +55,19 @@ When a ``store`` is configured, ``key`` can be left out. Each column then gets
 its own scope, derived from the names of the schema, the table and the column
 that hold the values::
 
-    #[ORM\Column]
-    #[Encrypted]
-    private string $email = '';
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\KeyManagement\Bridge\DoctrineOrm\Attribute\Encrypted;
+
+    #[ORM\Entity]
+    class User
+    {
+        #[ORM\Column]
+        #[Encrypted]
+        private string $email = '';
+    }
 
 The scope follows the physical names that Doctrine resolves, naming strategies,
 embedded prefixes and inherited columns included. Renaming the entity or the
