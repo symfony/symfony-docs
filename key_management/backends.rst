@@ -367,12 +367,10 @@ id, which the ``PROJECT_ID:SECRET_KEY`` form of the Scaleway Mailer DSN
 carries. The API key needs the ``KeyManagerFullAccess`` permission set, or a
 narrower one granting the encrypt and decrypt operations.
 
-``timeout`` (idle timeout) and ``max_duration`` (whole request) are in
-seconds and override the timeouts of the HTTP client. The bundle gives the
-factory the application's ``http_client`` service; without one, the factory
-builds a client with a 5-second ``timeout`` and a 10-second
-``max_duration``. Requests never follow redirects, since the
-``X-Auth-Token`` header would follow a redirect to another host.
+The ``timeout`` and ``max_duration`` options and the HTTP client work as for the
+other providers, see :ref:`DSN Schemes <key-management-dsn-schemes>`. Requests
+never follow redirects, since the ``X-Auth-Token`` header would follow a
+redirect to another host.
 
 The ``$aad`` argument is sent as Scaleway's ``associated_data``, which
 AES-256-GCM authenticates: decrypting with another AAD fails. Scaleway has
@@ -392,7 +390,7 @@ key, for instance); their message includes Scaleway's ``help_message``. An
 unknown key on encryption is a ``KeyNotFoundException``.
 
 Scaleway encrypts at most 64 KiB per call, so use envelope encryption for
-larger payloads. Deterministic encryption is not supported.
+larger payloads.
 
 KMIP
 ----

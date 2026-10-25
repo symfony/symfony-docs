@@ -49,11 +49,11 @@ plain alias would give it. Because the service has to be known while the
 container is built, this scheme is the only one that cannot come from an
 environment variable.
 
-The AWS, Azure, Google Cloud and Vault clients send their requests through the
-``http_client`` service of the application. Without one, they use an HTTP client
-with a 5-second idle timeout and a 10-second maximum duration. Their ``timeout``
-and ``max_duration`` options, in seconds, override these timeouts. Requests
-never follow redirects, since a redirect to another host would send the
+The AWS, Azure, Google Cloud, Vault and Scaleway clients send their requests
+through the ``http_client`` service of the application. Without one, they use an
+HTTP client with a 5-second idle timeout and a 10-second maximum duration. Their
+``timeout`` and ``max_duration`` options, in seconds, override these timeouts.
+Requests never follow redirects, since a redirect to another host would send the
 credentials and the payload again.
 
 Local backends need their PHP extension at runtime: ``ext-openssl`` for the
