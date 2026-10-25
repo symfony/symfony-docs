@@ -167,6 +167,10 @@ itself, through the same index service::
     as an address or an account number, and leave the rest to a decrypted
     scan.
 
+A tag isn't authenticated either. A database writer can copy a tag to another
+row together with the encrypted value. Finding a row by its tag therefore
+doesn't prove that the value belongs to that row.
+
 Choosing a Projection
 ---------------------
 

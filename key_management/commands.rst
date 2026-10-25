@@ -61,6 +61,11 @@ is read or rewritten:
     $ php bin/console key-management:rewrap-data-keys --from=aws --to=azure \
         --key-id=my-vault-key
 
+The store must trust ``--to`` and the clients of the rows. That means its
+``client`` option, or a client listed in its ``allowed_clients`` option. The
+command also signs every key again with the first ``secret`` of the store, which
+is how an old secret is retired.
+
 Common Options
 --------------
 

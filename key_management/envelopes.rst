@@ -37,6 +37,16 @@ recorded so that the envelope stays readable after the alias moves on. A
 reader checking ``$envelope->keyId`` to refuse a payload copied from
 another column or another tenant is reading that resolved value.
 
+A self-contained envelope also tells the backend which master key to
+decrypt its data key with. A database writer can therefore create one
+under any master key that your credentials can use. On AWS, that includes
+the keys of other accounts when your IAM policy allows ``kms:Decrypt`` on
+every resource, so list your own key ARNs instead. On Google Cloud, the
+owner of a key can let your service account use it without any change on
+your side. Authenticate the value separately when writes must be trusted.
+A payload that refers to a :doc:`data key store </key_management/store>`
+doesn't have this problem, since the store checks every key with a secret.
+
 .. _key-management-wire-format:
 
 The Wire Format
@@ -58,19 +68,23 @@ Both use AES-256-GCM with a 32-byte data key, a 12-byte IV and a 16-byte
 tag. That key length is also the one every shipped backend can produce, so
 an envelope round-trips through all of them.
 
-The format id is authenticated. It is prefixed to the authenticated data of
-the local cipher, when sealing and when opening alike, so a frame assembled
-from the pieces of the other format fails its tag check whatever AAD the
-caller passes. Both layouts otherwise agree on their lengths, which would
-make such a frame parse cleanly.
+The format id is authenticated. So are the key id and the wrapped data key of a
+self-contained frame, and the reference of a stored frame. These fields are
+prefixed to the authenticated data of the local cipher, when sealing and when
+opening alike. A frame assembled from the pieces of another frame then fails its
+tag check, whatever AAD the caller passes. That includes a frame whose data key
+was wrapped again, even under the same master key. A stored frame authenticates
+the reference rather than the wrapping, which is what lets the store re-wrap its
+keys without touching any payload.
 
 A leading byte no shipped format claims is refused exactly where a
 malformed frame is, and with the same error, so a reader cannot tell an
 attempt at downgrading a payload from a corrupt column.
 
 Ids are a wire contract: once a format ships, its id and its layout are
-frozen. A different cipher, different lengths or a different layout is a
-new format with a new id, never an edit to an existing one. Formats are not
+frozen. A different cipher, different lengths, a different layout or
+different authenticated fields need a new format with a new id. An existing
+format is never edited. Formats are not
 a configuration point either. Each encrypter owns the one matching its
 shape, and
 :method:`Symfony\\Component\\KeyManagement\\EnvelopeFormat::fromId`

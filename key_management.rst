@@ -226,32 +226,9 @@ produce equal bytes. A backend that cannot enforce AAD throws
 :class:`Symfony\\Component\\KeyManagement\\Exception\\UnsupportedOperationException`
 on a non-empty value rather than ignoring it.
 
-In envelope mode the AAD is passed twice: to the KMS, which binds the
-encrypted data key to it, and to the local cipher, which binds the payload.
-That is deliberate, so the local cipher catches a mismatch even on a
-backend where the KMS cannot.
-
-Encrypting the Same Value to the Same Bytes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Each call normally draws a fresh random nonce, so the same plaintext
-encrypts to different bytes every time. The fourth argument of
-``encrypt()`` derives the nonce from the AAD and the plaintext instead,
-keyed by the master key, so the same ``(key, AAD, plaintext)`` values
-always produce the same ciphertext::
-
-    // the third argument is the AAD, the fourth turns determinism on
-    $ciphertext = $this->encrypter->encrypt('app-key', $email, '', true);
-
-This allows an exact-match lookup on an encrypted value, at the cost of
-revealing which values are equal. Only the local symmetric backends offer
-it: the sealed box and every remote backend throw
-:class:`Symfony\\Component\\KeyManagement\\Exception\\UnsupportedOperationException`
-when the argument is ``true``. Envelopes have no deterministic counterpart
-at all.
-
-For a database column, :doc:`/key_management/searching` does the same job
-without encrypting deterministically, and is the better answer.
+In envelope mode, the local cipher authenticates the AAD and the KMS never
+sees it. A mismatch is therefore refused on every backend, including the
+ones that cannot authenticate data.
 
 Choosing a Client
 ~~~~~~~~~~~~~~~~~
@@ -314,10 +291,12 @@ hand in a YAML or PHP service definition:
 ``key_management.factory``
     Turns a DSN into a backend. Used by the bundle itself.
 
-Two tags are meant for services of your own: ``key_management.client``,
-which adds a client to the ones the console commands and the profiler know
-about, and ``key_management.blind_index``, covered in
-:doc:`/key_management/searching`.
+Two tags are meant for services of your own. ``key_management.client`` adds a
+client to the ones that the profiler and the encrypt, decrypt and data key
+commands know about. ``key_management.blind_index`` is covered in
+:doc:`/key_management/searching`. The data key store doesn't use tagged clients.
+It only trusts the ``client`` and ``allowed_clients`` options of its
+configuration.
 
 Profiling
 ---------

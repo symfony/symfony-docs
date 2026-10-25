@@ -31,6 +31,10 @@ Configuration
                 # the client that key belongs to; defaults to the default client
                 client: app
                 # defaults below
+                # other clients the store accepts, for example during a migration
+                allowed_clients: []
+                # signs the rows of the table; list several secrets to rotate it
+                secret: '%kernel.secret%'
                 connection: 'doctrine.dbal.default_connection'
                 table: 'key_management_data_keys'
                 # seconds before the current data key of a scope is replaced by a
@@ -86,10 +90,12 @@ after which the next write creates a fresh one. Payloads written earlier
 keep referring to the key they were written with, so nothing has to be
 rewritten.
 
-The default of 30 days is not arbitrary: each payload draws a random
-96-bit nonce, and 30 days of writing under one key keeps the chance of two
-payloads drawing the same one negligible. Lower it if a scope is written to
-very heavily; ``null`` turns the replacement off entirely.
+The default of 30 days is not arbitrary. Each payload draws a random 96-bit
+nonce, and NIST SP 800-38D limits a key used this way to 2^32 encryptions,
+across all your servers. ``max_age`` doesn't count them: 30 days stays
+under that limit up to about 1,650 writes per second in one scope. Lower it
+for a scope written more often than that; ``null`` turns the replacement
+off entirely.
 
 Reading Payloads Written Before the Store
 -----------------------------------------
@@ -122,13 +128,43 @@ the key minted for one tenant comes to serve another, and a replaced key
 copied under a fresh reference comes back into service.
 
 Every row therefore carries a 32-byte **binding**, computed from the
-reference and the scope that row states under a subkey of the data key
-itself. The store recomputes it after decrypting the key and compares the
-two, raising
+reference and the scope that row states, under a subkey derived from the
+data key and from the ``secret`` option. The store recomputes it after
+decrypting the key and compares the two, raising
 :class:`Symfony\\Component\\KeyManagement\\Exception\\DecryptionFailedException`
-on a mismatch. Forging one takes the plaintext key, which takes the KMS, so
-write access to the table is not enough. This check needs nothing from the
-provider and is always performed.
+on a mismatch. This check needs nothing from the provider and is always
+performed.
+
+The secret stops a database writer from inserting a data key of their own as the
+newest row of a scope. Without it, your application would encrypt new values
+with that key. Wrapping such a key doesn't need your credentials. The public key
+of a sealed box is enough. So is a master key of the attacker that your KMS
+credentials are allowed to use. The secret defaults to the ``kernel.secret``
+parameter. Keep it out of the database, like your other secrets.
+
+To change the secret, list the new one first and keep the old one. New
+keys are signed with the first secret, and keys signed with any of them
+are accepted:
+
+.. code-block:: yaml
+
+    # config/packages/key_management.yaml
+    key_management:
+        store:
+            key_id: 'alias/app-key'
+            secret: ['%env(STORE_SECRET)%', '%kernel.secret%']
+
+Then sign every key again with the new secret, by re-wrapping the keys
+under the current client and master key, and remove the old secret:
+
+.. code-block:: terminal
+
+    $ php bin/console key-management:rewrap-data-keys --to=app \
+        --key-id=alias/app-key
+
+Removing a secret before that command has run makes the keys signed with
+it unreadable. This includes changing ``kernel.secret`` while the store
+uses it.
 
 ``bind_wrapping_context`` adds a second, independent check carried out by
 the provider itself. The reference and the scope are passed as the
@@ -208,6 +244,12 @@ matter of rewriting a handful of rows rather than any payload. The
 ``key-management:rewrap-data-keys`` command does it; see
 :doc:`/key_management/commands`.
 
+The store only uses its ``client`` and the clients listed in
+``allowed_clients``, whatever a row of the table says. To move the keys to
+another client, add it to ``allowed_clients`` and re-wrap the keys. Then make
+the new client the ``client`` of the store. Keep the old client in
+``allowed_clients`` until no row refers to it anymore.
+
 :class:`Symfony\\Component\\KeyManagement\\RewrappableDataKeyStoreInterface`
 is what that command drives, and it is kept separate from
 :class:`Symfony\\Component\\KeyManagement\\DataKeyStoreInterface` so that
@@ -218,11 +260,12 @@ the encryption path never sees it:
     :class:`Symfony\\Component\\KeyManagement\\StoredDataKey` instances,
     oldest first, optionally only those wrapped by one client.
 
-``rewrap(string $reference, Ciphertext $wrapped, string $client)``
-    Replaces the wrapping of a stored key. Its reference and its scope stay
-    as they are, so payloads referring to it keep resolving, and its
-    binding stays valid since that is keyed by the data key, which
-    re-wrapping does not change.
+``rewrap(StoredDataKey $row, DataKey $rewrapped, string $client)``
+    Replaces the wrapping of a stored key. ``$rewrapped`` contains the data
+    key and its new wrapping. The store refuses a data key that doesn't
+    match the binding of the row, then signs the row again with its first
+    secret. The reference and the scope stay as they are, so payloads
+    referring to the key keep resolving.
 
 ``wrappingContextOf(StoredDataKey $row)``
     The authenticated data this store wraps that row with, or an empty

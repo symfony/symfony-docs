@@ -36,6 +36,10 @@ AES-256-GCM with a random 12-byte nonce, and the same 32-byte keys. Use it
 when ``ext-sodium`` is unavailable, or to share keys with systems that only
 speak AES.
 
+Because its nonces are random, NIST SP 800-38D limits a key to 2^32
+encryptions, the data keys it wraps included. Prefer libsodium for a key
+that encrypts more values than that.
+
 Sealed Box
 ~~~~~~~~~~
 
@@ -56,8 +60,9 @@ Generate a keypair with::
     $publicKey = sodium_crypto_box_publickey($keypair);  // 32 bytes
 
 A sealed box cannot be opened by whoever sealed it, since the sender
-authenticates nothing. This backend therefore supports neither AAD nor
-deterministic encryption.
+authenticates nothing. This backend therefore doesn't support AAD. It
+doesn't authenticate the writer either. Anyone holding the public key can
+create a ciphertext that the backend decrypts.
 
 Key Loaders
 ~~~~~~~~~~~
@@ -319,10 +324,6 @@ the encryption endpoints stops working as soon as an AAD is passed:
     # only needed with AAD, to tell derived keys from non-derived ones
     path "transit/keys/*"              { capabilities = ["read"] }
 
-Vault Transit offers no per-call deterministic encryption: its
-``convergent_encryption`` feature is set when the key is created, not
-negotiated per request.
-
 KMIP
 ----
 
@@ -360,7 +361,7 @@ A whole KMIP message must fit in 16 MiB, headers included, so direct
 encryption is capped well below that. Envelope encryption is not, since
 only the data key crosses the wire. Each operation opens its own TLS
 connection, which a :doc:`data key store </key_management/store>` makes far
-less frequent. Deterministic encryption is not supported.
+less frequent.
 
 .. _key-management-flysystem:
 

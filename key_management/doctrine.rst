@@ -145,6 +145,17 @@ without ever authenticating anything. A leading byte naming a format that
 does not exist is refused the same way, so a reader cannot tell an attempt
 at downgrading a payload from a corrupt column.
 
+Each value is authenticated together with the key of its column and the name of
+its Doctrine type. A value copied to a column with another key or another type
+is refused. A value copied to another row of the same column still decrypts,
+though, since a Doctrine type never sees the row it converts. When the owner of
+a value matters, store the row identity inside the value and check it after
+decryption.
+
+``NULL`` is stored as is: it is neither encrypted nor authenticated. Deny
+protected operations when a required encrypted value is missing, so that
+deleting it doesn't grant anything.
+
 Moving a Column to a Stored Data Key
 ------------------------------------
 

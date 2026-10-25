@@ -154,6 +154,10 @@ are passed over with a message to the logger, since nothing else tells the
 caller, and when none answers the frame is refused without echoing the
 member names it carries.
 
+Since one member is enough to read a ciphertext, anyone who can encrypt for
+one member can write a ciphertext that the composite reads. With a sealed
+box member, its public key is enough.
+
 Because it sits at the client level, a composite client covers every path
 without a change of format: direct ciphertexts, both envelope shapes,
 stored data keys and blind index keys.

@@ -51,8 +51,8 @@ Taking a Provider Down
 :class:`Symfony\\Component\\KeyManagement\\Test\\SwitchableKms` answers a
 different question: what the application does while a provider is down. It
 wraps a client and throws the exception it was given, instead of answering,
-while its ``$down`` property is ``true``. Its ``$calls``, ``$keyIds`` and
-``$deterministic`` properties record what it was asked::
+while its ``$down`` property is ``true``. Its ``$calls`` and ``$keyIds``
+properties record what it was asked::
 
     use Symfony\Component\DependencyInjection\ServiceLocator;
     use Symfony\Component\KeyManagement\CompositeKms;
