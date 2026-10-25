@@ -1026,11 +1026,16 @@ this will not create extra instances of a non-shared service::
         }
     }
 
-Finally, you can pass the ``lazy: true`` option to the
-:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
-attribute. By doing so, the callable will automatically be lazy, which means
-that the encapsulated service will be instantiated **only** at the
-closure's first call.
+The closure is lazy: injecting it doesn't create the
+``third_party.remote_message_formatter`` service. Symfony creates it the first
+time you call the closure. Pass ``lazy: false`` to create the service when
+injecting the closure instead (e.g. when the service implements the method with
+the ``__call()`` magic method).
+
+.. versionadded:: 8.2
+
+    Closures created with ``#[AutowireCallable]`` and ``#[AutowireMethodOf]``
+    became lazy by default in Symfony 8.2.
 
 ``AutowireMethodOf``
 ~~~~~~~~~~~~~~~~~~~~
