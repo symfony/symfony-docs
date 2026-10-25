@@ -41,12 +41,19 @@ Bridges reject any query option they do not know, so a typo is an error
 rather than a setting silently ignored.
 
 ``service://<id>`` is the odd one out. It names a service you registered
-yourself, so a backend Symfony does not ship is declared like any other
-client: it gets the tag the console commands look clients up by, an
-envelope encrypter of its own and the profiler decoration, none of which a
+yourself, so a backend Symfony does not ship is declared like any other client:
+it gets the tag the encrypt, decrypt and data key commands look clients up by,
+an envelope encrypter of its own and the profiler decoration, none of which a
 plain alias would give it. Because the service has to be known while the
-container is built, this one scheme cannot come from an environment
-variable; such a DSN is refused with a message saying so.
+container is built, this one scheme cannot come from an environment variable;
+such a DSN is refused with a message saying so.
+
+The AWS, Azure, Google Cloud and Vault clients send their requests through the
+``http_client`` service of the application. Without one, they use an HTTP client
+with a 5-second idle timeout and a 10-second maximum duration. Their ``timeout``
+and ``max_duration`` options, in seconds, override these timeouts. Requests
+never follow redirects, since a redirect to another host would send the
+credentials and the payload again.
 
 Local backends need their PHP extension at runtime: ``ext-openssl`` for the
 ``openssl`` schemes, ``ext-sodium`` for the ``sodium`` and sealed-box ones.

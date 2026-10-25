@@ -45,10 +45,10 @@ Two more bridges cover related needs:
 
 .. code-block:: terminal
 
-    # encrypted Doctrine columns, and the table holding the data keys
+    # encrypted Doctrine DBAL types, and the table holding the data keys
     $ composer require symfony/doctrine-dbal-key-management
 
-    # blind index columns filled on flush, and that table in the ORM schema
+    # the Encrypted and BlindIndexed attributes, and that table in the ORM schema
     $ composer require symfony/doctrine-orm-key-management
 
     # read local keys from S3, FTP, Azure Blob, ... through Flysystem
@@ -212,13 +212,15 @@ The third argument of ``encrypt()``, and the second of ``decrypt()``, is
 the Additional Authenticated Data (AAD): bytes that are authenticated but
 not encrypted, and that must be supplied again, identical, to decrypt::
 
-    $aad = 'tenant=acme';
+    $aad = 'user.email:tenant=acme';
 
     $ciphertext = $this->encrypter->encrypt('app-key', $payload, $aad);
     $plaintext = $this->decrypter->decrypt($ciphertext, $aad);
 
-A ciphertext stolen from one tenant then fails to decrypt under another,
-rather than quietly succeeding.
+Put in the AAD everything the value must belong to, here the column and the
+tenant. A ciphertext copied to another column or another tenant then fails to
+decrypt, rather than quietly succeeding. Compute the AAD from what you are
+reading, such as the row or the request, and never from the ciphertext itself.
 
 AAD is opaque bytes. Structured context has to be serialized to a stable
 form first, such as JSON with sorted keys, or two equal contexts will not
@@ -285,8 +287,11 @@ hand in a YAML or PHP service definition:
     reference instead.
 
 ``key_management.doctrine_dbal.encrypted_types``
-    Holds the encrypted Doctrine types and registers them when the kernel
-    boots. Registered only when some are declared.
+    Contains the encrypted Doctrine types. A DoctrineBundle connection registers
+    these types when the connection is created, so they can wrap the types of
+    ``doctrine.dbal.types``. Without DoctrineBundle, the types are registered
+    when the kernel boots. Registered only when some types are declared, in the
+    configuration or through ``#[Encrypted]``.
 
 ``key_management.factory``
     Turns a DSN into a backend. Used by the bundle itself.

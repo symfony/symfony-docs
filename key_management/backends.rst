@@ -129,7 +129,7 @@ DSN scheme:
 
 .. code-block:: text
 
-    aws-kms://[<accessKey>:<secretKey>@]<host>[:<port>]?region=<region>[&session_token=<token>&scheme=http]
+    aws-kms://[<accessKey>:<secretKey>@]<host>[:<port>]?region=<region>[&session_token=<token>&scheme=http&timeout=<seconds>&max_duration=<seconds>]
 
 The host ``default`` selects the public AWS endpoint for the region; any
 other host is a custom endpoint, such as LocalStack or a VPC endpoint.
@@ -174,7 +174,7 @@ DSN scheme:
 
 .. code-block:: text
 
-    azure-keyvault://<clientId>:<clientSecret>@<vault-name>.vault.azure.net?tenant=<tenantId>[&algorithm=...&wrap_algorithm=...&api_version=...&audience=...]
+    azure-keyvault://<clientId>:<clientSecret>@<vault-name>.vault.azure.net?tenant=<tenantId>[&algorithm=...&wrap_algorithm=...&api_version=...&audience=...&timeout=<seconds>&max_duration=<seconds>]
 
 The host is the full vault DNS name; use ``<name>.managedhsm.azure.net``
 for Managed HSM. The audience is inferred from that suffix, and
@@ -233,7 +233,7 @@ DSN scheme:
 
 .. code-block:: text
 
-    gcp-kms://default?credentials=/path/to/service-account.json
+    gcp-kms://default?credentials=/path/to/service-account.json[&timeout=<seconds>&max_duration=<seconds>]
 
 The host ``default`` selects the public endpoint; any other host is a
 custom one. ``credentials`` points at a service-account JSON key file.
@@ -296,7 +296,7 @@ DSN scheme:
 
 .. code-block:: text
 
-    hashicorp-vault-transit://<token>@<host>[:<port>][/<path>][?mount=<mount>&namespace=<ns>&scheme=http]
+    hashicorp-vault-transit://<token>@<host>[:<port>][/<path>][?mount=<mount>&namespace=<ns>&scheme=http&timeout=<seconds>&max_duration=<seconds>]
 
 The mount point defaults to ``transit``. ``namespace`` maps to Vault's
 ``X-Vault-Namespace`` header, for Vault Enterprise. ``scheme`` defaults to

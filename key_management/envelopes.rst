@@ -37,15 +37,27 @@ recorded so that the envelope stays readable after the alias moves on. A
 reader checking ``$envelope->keyId`` to refuse a payload copied from
 another column or another tenant is reading that resolved value.
 
-A self-contained envelope also tells the backend which master key to
-decrypt its data key with. A database writer can therefore create one
-under any master key that your credentials can use. On AWS, that includes
-the keys of other accounts when your IAM policy allows ``kms:Decrypt`` on
-every resource, so list your own key ARNs instead. On Google Cloud, the
-owner of a key can let your service account use it without any change on
-your side. Authenticate the value separately when writes must be trusted.
-A payload that refers to a :doc:`data key store </key_management/store>`
-doesn't have this problem, since the store checks every key with a secret.
+A self-contained envelope also tells the backend which master key to decrypt its
+data key with. A database writer can therefore create one under any master key
+that your credentials can use. On AWS, that includes the keys of other accounts
+when your IAM policy allows ``kms:Decrypt`` on every resource, so list your own
+key ARNs instead. On Google Cloud, the owner of a key can let your service
+account use it without any change on your side. The code that decrypts envelopes
+can refuse the ones written under another key::
+
+    $keyId = $envelope->keyId;
+    if (null !== $keyId && !\in_array($keyId, $expectedKeyIds, true)) {
+        throw new \RuntimeException('This payload was written under another key.');
+    }
+
+List the key ids that your backend reports, as explained above. Add the new ARN
+before you move an AWS alias, and compare only the name part of an Azure
+``name/version`` id. The check doesn't help with a sealed box, since anyone
+holding its public key can write under the expected key id. Encrypted Doctrine
+columns don't run it either. Authenticate the value separately when writes must
+be trusted. A payload that refers to a
+:doc:`data key store </key_management/store>` doesn't have this problem, since
+the store checks every key with a secret.
 
 .. _key-management-wire-format:
 
