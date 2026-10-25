@@ -82,9 +82,12 @@ that have the same names in two databases sharing one store can therefore read
 each other's values. Give them explicit keys when that matters. Without a store,
 leaving the key out fails, since there is no default master key to encrypt with.
 
-The bundle registers the types of these columns when each entity manager is
-created. This loads the metadata of every mapped class at that time, but only
-when a column leaves its key out.
+The first time an entity manager is created, the bundle finds the types of these
+columns, which loads the metadata of every mapped class. It then keeps them in
+the ``cache.key_management.encrypted_columns`` pool, a child of
+``cache.system``, so the next entity managers load no metadata. In debug mode,
+the types are found again for each entity manager, so that a change to the
+mapping is seen at once.
 
 Declaring the Types Yourself
 ----------------------------
