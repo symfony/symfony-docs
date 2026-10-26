@@ -31,7 +31,7 @@ Storing Data Keys Without a Database
 ------------------------------------
 
 :class:`Symfony\\Component\\KeyManagement\\Test\\InMemoryDataKeyStore` is
-an array-backed ``RewrappableDataKeyStoreInterface`` that wraps its data
+an array-backed ``RewrappableDataKeyStoreInterface`` that can wrap its data
 keys through any KMS client and orders its UUIDv7 references the way a
 database would::
 
@@ -41,9 +41,9 @@ database would::
     $encrypter = new StoredEnvelopeEncrypter(new InMemoryDataKeyStore());
 
 Its ``$maxAgeSeconds`` argument accepts ``0`` to replace the key on every
-call. For anything finer, it reads the time from the global clock, so
-:ref:`ClockSensitiveTrait <clock_writing-tests>` can move time forward and
-watch a key be replaced at its real age.
+call. For other values, it reads the time from the global clock, so a test
+using :ref:`ClockSensitiveTrait <clock_writing-tests>` can move time
+forward and check that a key is replaced at its real age.
 
 Taking a Provider Down
 ----------------------

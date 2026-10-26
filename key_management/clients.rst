@@ -45,8 +45,8 @@ yourself, so a backend Symfony does not ship is declared like any other client:
 it gets the tag the encrypt, decrypt and data key commands look clients up by,
 an envelope encrypter of its own and the profiler decoration, none of which a
 plain alias would give it. Because the service has to be known while the
-container is built, this one scheme cannot come from an environment variable;
-such a DSN is refused with a message saying so.
+container is built, this scheme is the only one that cannot come from an
+environment variable.
 
 The AWS, Azure, Google Cloud and Vault clients send their requests through the
 ``http_client`` service of the application. Without one, they use an HTTP client
@@ -64,7 +64,7 @@ which ``league/mime-type-detection`` uses.
 Multiple Clients
 ----------------
 
-Most applications need one client. Declare several when different parts of
+Declare several clients when different parts of
 the system have different providers, regions or rotation schedules. One of
 them is then the default, which is the one autowiring injects:
 
@@ -109,7 +109,7 @@ A client declared by its ``members`` instead of a DSN is a *composite*
 client, which prevents both. It encrypts everything under each member and
 reads it back through the first member that answers. Each member names a
 client declared alongside it and the master key it wraps under; use
-``null`` to reuse whatever key id the call itself names:
+``null`` to reuse the key id passed to the call:
 
 .. configuration-block::
 
@@ -125,7 +125,8 @@ client declared alongside it and the master key it wraps under; use
                     members:
                         # the first member creates the data keys and is read first
                         aws: ~
-                        azure: 'https://vault.azure.net/keys/app'
+                        # a key name, optionally followed by /<version>
+                        azure: 'app-key'
 
     .. code-block:: php
 
@@ -140,8 +141,10 @@ client declared alongside it and the master key it wraps under; use
                     'azure' => env('AZURE_KEY_VAULT_DSN'),
                     'app' => [
                         'members' => [
+                            // creates the data keys and is read first
                             'aws' => null,
-                            'azure' => 'https://vault.azure.net/keys/app',
+                            // a key name, optionally followed by /<version>
+                            'azure' => 'app-key',
                         ],
                     ],
                 ],
@@ -156,10 +159,9 @@ composite in turn.
 
 Writing goes through every member, and a member that cannot wrap fails the
 whole call: a ciphertext missing one wrapping would be less redundant than
-the configuration claims. Reading needs one member to answer. The others
-are passed over with a message to the logger, since nothing else tells the
-caller, and when none answers the frame is refused without echoing the
-member names it carries.
+the configuration claims. Reading needs only one member to answer. Each
+member that fails is skipped and logged, since nothing else tells the
+caller.
 
 Since one member is enough to read a ciphertext, anyone who can encrypt for
 one member can write a ciphertext that the composite reads. With a sealed
@@ -173,17 +175,16 @@ Adopting a Composite Client
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A ciphertext that is not a composite frame is one a member wrote before
-joining, and it is handed to each member in turn, so an application
-adopting a composite client keeps reading what it wrote before. Those
-frames still carry a single wrapping, though, so they are no more redundant
-than they were: re-encrypt them once the composite is deployed if that is
-what you are after. Stored data keys are moved with one command, which
-wraps every row under the current member list:
+joining the composite client. The composite hands it to each member in
+turn, so an application adopting a composite client keeps reading what it
+wrote before. Those ciphertexts still carry a single wrapping, though, so
+re-encrypt them once the composite is deployed if they must be redundant
+too. Stored data keys are moved with one command, which wraps every row
+under the current member list:
 
 .. code-block:: terminal
 
-    $ php bin/console key-management:rewrap-data-keys --to=app \
-        --key-id=alias/app-key
+    $ php bin/console key-management:rewrap-data-keys
 
 Retiring a Member
 ~~~~~~~~~~~~~~~~~
@@ -200,11 +201,15 @@ while still reading what it wrapped, move its name to ``retired``:
 
         # config/packages/key_management.yaml
         key_management:
+            default_client: app
             clients:
+                aws: '%env(AWS_KMS_DSN)%'
+                azure: '%env(AZURE_KEY_VAULT_DSN)%'
+                gcp: '%env(GCP_KMS_DSN)%'
                 app:
                     members:
                         aws: ~
-                        azure: 'https://vault.azure.net/keys/app'
+                        azure: 'app-key'
                     # read, never written to; kept until nothing needs it
                     retired:
                         - gcp
@@ -216,21 +221,27 @@ while still reading what it wrapped, move its name to ``retired``:
 
         return App::config([
             'key_management' => [
+                'default_client' => 'app',
                 'clients' => [
+                    'aws' => env('AWS_KMS_DSN'),
+                    'azure' => env('AZURE_KEY_VAULT_DSN'),
+                    'gcp' => env('GCP_KMS_DSN'),
                     'app' => [
                         'members' => [
                             'aws' => null,
-                            'azure' => 'https://vault.azure.net/keys/app',
+                            'azure' => 'app-key',
                         ],
+                        // read, never written to; kept until nothing needs it
                         'retired' => ['gcp'],
                     ],
                 ],
             ],
         ]);
 
-A retired member is still a full path to the plaintext, so drop it as soon
-as every frame it alone could read is gone. Re-wrap the stored data keys
-first, then remove it.
+A retired member is still a full path to the plaintext, so remove it as
+soon as no frame depends on it alone. Re-wrap the stored data keys first,
+then remove it.
 
-Losing a provider permanently is recovered the same way: drop it from
-``members``, a composite of one being allowed, and re-wrap.
+To recover from losing a provider permanently, remove it from ``members``
+(a composite client can have a single member) and re-wrap the stored data
+keys.

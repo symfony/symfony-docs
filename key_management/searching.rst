@@ -17,19 +17,20 @@ and the database never holds the key.
 Registering an Index
 --------------------
 
-Start by minting the key the tags are derived under:
+Start by creating the key that the tags are derived from:
 
 .. code-block:: terminal
 
     $ php bin/console key-management:generate-data-key alias/app-key
 
-The command prints the wrapped key and the ``key_id`` that wrapped it. Keep
-both: the key id is the one the provider reported, which on AWS is a key
-ARN rather than the alias that was asked for.
+Among other values, the command prints the wrapped key and the ``key_id`` of
+the master key that wrapped it. Keep both: the key id is the one the
+provider reported, which on AWS is a key ARN rather than the alias that was
+asked for.
 
 Then register one service per index. It needs the client that unwraps that
-key, the wrapped key and its key id, and a **projection** saying what of
-the value is indexed:
+key, the wrapped key and its key id, and a **projection** saying which part
+of the value is indexed:
 
 .. configuration-block::
 
@@ -114,8 +115,9 @@ on every flush, so no write path has to remember it::
         private string $emailIndex = '';
     }
 
-The first argument of the attribute is the property being indexed, the
-second the name of the index, as its tag states it. It goes on the column
+The first argument of the attribute is the property being indexed, and the
+second one is the name of the index, as set in the ``index`` attribute of
+its tag. It goes on the column
 holding the tag rather than on the source property, so a value can be
 indexed by several columns, each under an index of its own.
 
@@ -174,8 +176,8 @@ doesn't prove that the value belongs to that row.
 Choosing a Projection
 ---------------------
 
-A projection decides what of a value is indexed, on the way in and on the
-way out alike. It is a class rather than a step each call site performs,
+A projection decides which part of a value is indexed, both when writing
+the tag and when searching for it. It is a class rather than a step each call site performs,
 because a tag computed on a trimmed value and searched on an untrimmed one
 silently matches nothing, which is the failure a blind index exists to
 avoid. Three ship with the component:
@@ -200,15 +202,13 @@ precomposed ``é``, with an ``e`` followed by a combining accent, in
 uppercase or as ``xn--caf-dma.example`` therefore all share one tag. A
 domain that is not a valid internationalized one is lowercased instead.
 
-.. note::
-
-    ``Email`` leaves the local part alone because the standard says the
-    receiving server owns it. Most providers do treat it as
-    case-insensitive in practice, so an application letting someone register
-    as ``Ada@example.com`` and sign in as ``ada@example.com`` will not find
-    the row. Fold the address once where it enters the application, or write
-    a projection that folds it and accept that two addresses the standard
-    considers distinct are indexed as one.
+``Email`` leaves the local part alone because the standard says the
+receiving server owns it. Most providers treat it as case-insensitive in
+practice, so an application letting someone register as ``Ada@example.com``
+and sign in as ``ada@example.com`` won't find the row. Fold the address
+once where it enters the application, or write a projection that folds it
+and accept that two addresses the standard considers distinct are indexed
+as one.
 
 Anything more specific belongs in a projection of your own, which is a
 class with a single ``project()`` method::
@@ -240,8 +240,8 @@ returns a tag for each::
     $tags = $this->index->allOf($name);   // one tag per form
 
 It is a separate interface so that such an index is refused where one tag
-is expected, whatever the value at hand: ``of()`` points at ``allOf()``
-instead of silently keeping one tag of several. The row then needs a column
+is expected, for any value: ``of()`` throws an exception pointing to
+``allOf()`` instead of silently keeping one tag of several. The row then needs a column
 the database can intersect, ``text[]`` with a GIN index on PostgreSQL for
 instance, and a query that matches any of the tags.
 
@@ -257,8 +257,8 @@ Deriving the Key from the Store
 through the KMS, once per index and per process. When a
 :doc:`store </key_management/store>` is configured, use
 :class:`Symfony\\Component\\KeyManagement\\StoredKeyBlindIndex` instead: it
-names a key the store holds, which the store opens once for every index
-over it and for everything else encrypting under it.
+names a key the store holds, which the store decrypts once for every index
+using it and for everything else encrypting under it.
 
 It takes a reference, not a scope, because the key behind a scope is
 replaced as it ages and no tag already written would match the new one.
@@ -268,8 +268,8 @@ Read the reference once and record it::
     $reference = $store->current('blind-index/tenant-42')->reference;
 
 Then pass it, in place of ``$kms`` and ``$wrappedKey``, as the ``$store``
-and ``$reference`` arguments of the service. Everything else, the tag, the
-projection and the attribute, stays the same.
+and ``$reference`` arguments of the service. Everything else (the service
+tag, the projection and the attribute) stays the same.
 
 Choosing the Keyed Function
 ---------------------------
@@ -282,10 +282,10 @@ not hold the value.
 
 :class:`Symfony\\Component\\KeyManagement\\BlindIndex\\HmacSha256` is the
 default and needs nothing beyond what PHP always has.
-:class:`Symfony\\Component\\KeyManagement\\BlindIndex\\Blake2b` is around
-three times faster for the same tag width but needs ``ext-sodium``. The
-difference is worth having when a row carries many tags and is invisible
-when it carries one. Pass it as the last argument of the index.
+:class:`Symfony\\Component\\KeyManagement\\BlindIndex\\Blake2b` is faster
+for the same tag width but needs ``ext-sodium``. The difference only
+matters when a row carries many tags. Pass it as the last argument of the
+index.
 
 Which one is in use is part of the stored data, so it is chosen explicitly
 rather than probed at runtime: the same value gives a different tag under

@@ -5,7 +5,7 @@ By default each encrypted payload carries its own data key. That means one
 KMS call per value, a couple hundred extra bytes per value, and a master
 key that cannot be changed without rewriting every payload.
 
-Configuring a ``store`` inverts all three. Data keys are kept in a database
+Configuring a ``store`` changes all three. Data keys are kept in a database
 table, payloads carry a 16-byte reference to one, and the KMS is called
 once per key and per process. Changing the master key, or the provider,
 then means re-encrypting those few rows and no payload at all.
@@ -56,16 +56,31 @@ Configuration
                     'app' => env('KMS_DSN'),
                 ],
                 'store' => [
+                    // the master key wrapping the data keys; the only required one
                     'key_id' => 'alias/app-key',
+                    // the client that key belongs to; defaults to the default client
                     'client' => 'app',
+                    // defaults below
+                    // other clients the store accepts, such as during a migration
+                    'allowed_clients' => [],
+                    // signs the rows of the table; list several secrets to rotate it
+                    'secret' => param('kernel.secret'),
+                    'connection' => 'doctrine.dbal.default_connection',
+                    'table' => 'key_management_data_keys',
+                    // seconds before the current data key of a scope is replaced
+                    // by a fresh one; 0 replaces it on every call, null never does
+                    'max_age' => 2592000,
+                    // read payloads that carry their own data key (see below)
+                    'read_self_contained' => false,
+                    // have the provider authenticate each data key (see below)
+                    'bind_wrapping_context' => false,
                 ],
             ],
         ]);
 
-This needs the ``symfony/doctrine-dbal-key-management`` package. Without it
-the container fails to compile, with the command to run. The Doctrine DBAL
-table is the only store shipped for production use, and an application
-configures a single one. To keep data keys anywhere else, implement
+This requires the ``symfony/doctrine-dbal-key-management`` package. The
+Doctrine DBAL table is the only store shipped for production use, and an
+application configures a single one. To keep data keys anywhere else, implement
 :class:`Symfony\\Component\\KeyManagement\\RewrappableDataKeyStoreInterface`
 and register it yourself.
 
@@ -73,8 +88,9 @@ Configuring a store changes what
 :class:`Symfony\\Component\\KeyManagement\\EnvelopeEncrypterInterface` and
 :class:`Symfony\\Component\\KeyManagement\\EnvelopeDecrypterInterface`
 resolve to, so a service injecting either of them starts writing the stored
-shape with no change of its own. The per-client encrypters stay reachable
-under their own name for whoever wants the other regime explicitly.
+shape with no change of its own. The envelope encrypter of each client is
+still available under its own service id and autowiring alias, for the
+services that must keep writing payloads that carry their own data key.
 
 Scopes
 ------
@@ -105,17 +121,33 @@ migrated holds both. A payload that carries its own data key resolves no
 row, so none of the checks below apply to it, and the store refuses it
 unless you ask for it:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/key_management.yaml
-    key_management:
-        store:
-            key_id: 'alias/app-key'
-            read_self_contained: true
+    .. code-block:: yaml
+
+        # config/packages/key_management.yaml
+        key_management:
+            store:
+                key_id: 'alias/app-key'
+                read_self_contained: true
+
+    .. code-block:: php
+
+        // config/packages/key_management.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'key_management' => [
+                'store' => [
+                    'key_id' => 'alias/app-key',
+                    'read_self_contained' => true,
+                ],
+            ],
+        ]);
 
 Turn it on while you migrate a dataset to the stored shape, and off once no
 payload is left in the old one. It needs a default client, since that is
-what reads those payloads; asking for it without one fails at compile time.
+the client that reads those payloads.
 
 .. _key-management-store-binding:
 
@@ -124,16 +156,14 @@ What a Row Is Bound To
 
 A data key sitting in a table is only as trustworthy as the row around it.
 Without a check, a row edited underneath the store resolves all the same:
-the key minted for one tenant comes to serve another, and a replaced key
+the key created for one tenant comes to serve another, and a replaced key
 copied under a fresh reference comes back into service.
 
 Every row therefore carries a 32-byte **binding**, computed from the
 reference and the scope that row states, under a subkey derived from the
 data key and from the ``secret`` option. The store recomputes it after
-decrypting the key and compares the two, raising
-:class:`Symfony\\Component\\KeyManagement\\Exception\\DecryptionFailedException`
-on a mismatch. This check needs nothing from the provider and is always
-performed.
+decrypting the key and refuses the key when the two don't match. This check
+needs nothing from the provider and is always performed.
 
 The secret stops a database writer from inserting a data key of their own as the
 newest row of a scope. Without it, your application would encrypt new values
@@ -146,25 +176,40 @@ To change the secret, list the new one first and keep the old one. New
 keys are signed with the first secret, and keys signed with any of them
 are accepted:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/key_management.yaml
-    key_management:
-        store:
-            key_id: 'alias/app-key'
-            secret: ['%env(STORE_SECRET)%', '%kernel.secret%']
+    .. code-block:: yaml
 
-Then sign every key again with the new secret, by re-wrapping the keys
-under the current client and master key, and remove the old secret:
+        # config/packages/key_management.yaml
+        key_management:
+            store:
+                key_id: 'alias/app-key'
+                secret: ['%env(STORE_SECRET)%', '%kernel.secret%']
+
+    .. code-block:: php
+
+        // config/packages/key_management.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'key_management' => [
+                'store' => [
+                    'key_id' => 'alias/app-key',
+                    'secret' => [env('STORE_SECRET'), param('kernel.secret')],
+                ],
+            ],
+        ]);
+
+Then sign every key again with the new secret, by re-wrapping the keys under the
+client and the master key of the store:
 
 .. code-block:: terminal
 
-    $ php bin/console key-management:rewrap-data-keys --to=app \
-        --key-id=alias/app-key
+    $ php bin/console key-management:rewrap-data-keys
 
-Removing a secret before that command has run makes the keys signed with
-it unreadable. This includes changing ``kernel.secret`` while the store
-uses it.
+Then remove the old secret. Removing a secret before that command has run makes
+the keys signed with it unreadable. This includes changing ``kernel.secret``
+while the store uses it.
 
 ``bind_wrapping_context`` adds a second, independent check carried out by
 the provider itself. The reference and the scope are passed as the
@@ -183,8 +228,7 @@ re-wrapped. Do it in one command:
 
 .. code-block:: terminal
 
-    $ php bin/console key-management:rewrap-data-keys --to=app \
-        --key-id=alias/app-key --accept-unbound
+    $ php bin/console key-management:rewrap-data-keys --accept-unbound
 
 The Table
 ---------
@@ -230,11 +274,8 @@ invisible to the store, as long as they are nullable or have a default.
 
 There is no timestamp column on purpose: a UUIDv7 carries its creation
 instant and sorts chronologically, so the newest row of a scope is its
-current key and its age is read back from the reference itself.
-
-This needs Doctrine DBAL 4.3 or later. The store describes its table
-through the schema editor of DBAL 4.5 when it is available and through the
-previous API below it; both produce the same table.
+current key and its age is read back from the reference itself. The store
+requires Doctrine DBAL 4.3 or later.
 
 Re-wrapping and Replacing Keys
 ------------------------------
@@ -245,7 +286,7 @@ matter of rewriting a handful of rows rather than any payload. The
 :doc:`/key_management/commands`.
 
 The store only uses its ``client`` and the clients listed in
-``allowed_clients``, whatever a row of the table says. To move the keys to
+``allowed_clients``, regardless of the client a row of the table names. To move the keys to
 another client, add it to ``allowed_clients`` and re-wrap the keys. Then make
 the new client the ``client`` of the store. Keep the old client in
 ``allowed_clients`` until no row refers to it anymore.

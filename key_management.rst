@@ -41,7 +41,7 @@ separate package, so you only install what you use:
     $ composer require symfony/hashicorp-vault-key-management
     $ composer require symfony/kmip-key-management
 
-Two more bridges cover related needs:
+Three more packages cover related needs:
 
 .. code-block:: terminal
 
@@ -64,11 +64,11 @@ convenient for development, tests and self-hosted setups. See
 How It Works
 ------------
 
-Three words come up everywhere below.
+A few terms come up everywhere below.
 
 The **master key** is the key the KMS holds. It never leaves the provider.
-You name it in the configuration (``alias/app-key`` on AWS, a key URL on
-Google Cloud, and so on) and the provider does the rest.
+You name it in the configuration (``alias/app-key`` on AWS, a resource name
+on Google Cloud and so on) and the provider does the rest.
 
 A **data key** is a short key, 32 bytes, that your application uses to
 encrypt one payload locally. The KMS creates it, hands you two copies, one
@@ -175,7 +175,7 @@ client::
     }
 
 Encrypting and decrypting are two interfaces rather than one so that a
-service which only writes, or only reads, can say so in its signature.
+service that only writes, or only reads, can say so in its signature.
 
 ``encrypt()`` returns a
 :class:`Symfony\\Component\\KeyManagement\\Ciphertext`, a
@@ -184,8 +184,8 @@ together with the key id needed to read them back. Store it as it is:
 casting it to a string yields the raw bytes. That key id is the one the
 provider reported, which is not always the one that was asked for, since
 AWS KMS resolves an alias to a key ARN and Azure Key Vault pins the version
-it used. Both are recorded so the ciphertext stays readable after the alias
-moves on.
+it used. Recording the resolved id keeps the ciphertext readable after the
+alias moves on.
 
 Those two interfaces talk to the provider directly, which caps the payload
 size. For anything that is not a short string, inject the envelope
@@ -252,7 +252,7 @@ To inject a client other than the default one, name it with the
 
 Each client is also aliased to an argument named after it: ``$piiKms`` for
 the client itself and ``$piiEnvelopeEncrypter`` for its envelope encrypter,
-which autowiring honours without the attribute.
+which autowiring honors without the attribute.
 
 When a store is configured, the envelope interfaces resolve to the
 store-backed encrypter. ``#[Target('stored')]`` and the argument name
@@ -311,10 +311,10 @@ the store are decorated to record what a request asked of the KMS. The
 **Key Management** panel then lists each operation: the call site, the key
 or scope it went through, the bytes in and out and the time it took.
 
-This is where you confirm a store is doing its job, which looks like one
+This is where you confirm that a store is doing its job: it shows one
 round trip for many encrypted values rather than one per value.
 
-Learn more
+Learn More
 ----------
 
 .. toctree::

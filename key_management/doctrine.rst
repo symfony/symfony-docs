@@ -3,9 +3,9 @@
 Encrypting Doctrine Columns
 ===========================
 
-With ``symfony/doctrine-orm-key-management`` installed, a Doctrine column
-can be encrypted with no code at all. Mark the property and name the key it
-is encrypted under::
+With ``symfony/doctrine-orm-key-management`` installed, you can encrypt a
+Doctrine column without writing any code. Mark the property and name the
+key it is encrypted under::
 
     // src/Entity/User.php
     namespace App\Entity;
@@ -40,9 +40,8 @@ an encrypted date, not as an encrypted string.
 
 .. note::
 
-    The attribute needs an encrypter to exist, which means either a
-    configured ``store`` or a ``default_client``. Without one, the
-    container fails to compile and says so.
+    The attribute requires either a ``store`` or a ``default_client`` to be
+    configured.
 
 An encrypted column cannot be searched. See
 :doc:`/key_management/searching` for how to find a row by a value the
@@ -78,9 +77,9 @@ generated for the old names. That scope is
 ``$schema`` is ``null`` for a table without a schema.
 
 The scope doesn't contain the database, the connection or the tenant. Columns
-that have the same names in two databases sharing one store can therefore read
-each other's values. Give them explicit keys when that matters. Without a store,
-leaving the key out fails, since there is no default master key to encrypt with.
+with the same names in two databases sharing one store therefore share their
+data keys, and a value copied from one to the other still decrypts. Give them
+explicit keys when that matters.
 
 The first time an entity manager is created, the bundle finds the types of these
 columns, which loads the metadata of every mapped class. It then keeps them in
@@ -155,10 +154,10 @@ and ``key`` are the same type: the attribute reuses the declared one
 instead of registering a second. Otherwise the attribute generates the name
 ``encrypted_<type>@<key>``.
 
-Both forms use whatever
+Both forms use the service that
 :class:`Symfony\\Component\\KeyManagement\\EnvelopeEncrypterInterface`
-resolves to, which is the store-backed encrypter when a ``store`` is
-configured and the default client's otherwise. A column that has to use
+resolves to: the store-backed encrypter when a ``store`` is configured, and
+the envelope encrypter of the default client otherwise. A column that has to use
 another encrypter needs an
 :class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedTypes`
 service of its own. Declare it as a public service and call its
@@ -180,14 +179,11 @@ truncate it. On MySQL and MariaDB outside strict mode that truncation is a
 warning rather than an error, which would leave a row that no longer
 decrypts.
 
-A column holding zero bytes is refused with Doctrine's
-``ValueNotConvertible``, like any other value that is not an envelope.
-Encrypting an empty string gives a non-empty envelope, so an empty column
-can only mean the value was never written through the type, and handing it
-to the underlying type unchecked would return ``''``, ``false`` or ``0``
-without ever authenticating anything. A leading byte naming a format that
-does not exist is refused the same way, so a reader cannot tell an attempt
-at downgrading a payload from a corrupt column.
+A column holding zero bytes is refused, like any other value that is not
+an envelope. Encrypting an empty string gives a non-empty envelope, so an
+empty column can only mean the value was never written through the type,
+and handing it to the underlying type unchecked would return ``''``,
+``false`` or ``0`` without authenticating anything.
 
 Each value is authenticated together with the key of its column and the name of
 the Doctrine type it wraps. A value copied to a column with another key or
@@ -272,9 +268,10 @@ Moving a Column to a Stored Data Key
 Configure a :doc:`store </key_management/store>` with
 ``read_self_contained: true``. Keep the ``key`` and the type of the column,
 since both are authenticated with every value. The key then becomes the scope of
-the stored data key, so don't leave it out at the same time. New rows then
-contain a reference to a stored data key while older ones keep being read
-through the KMS. Once no old row is left, turn the option off.
+the stored data keys, so don't leave it out at the same time. Values written
+from then on contain a reference to a stored data key, while older ones keep
+being read through the KMS. Once every old value has been rewritten, turn the
+option off.
 
-Re-wrapping that data key later moves the whole column to another master
+Re-wrapping those data keys later moves the whole column to another master
 key, or another provider, without touching a single row.

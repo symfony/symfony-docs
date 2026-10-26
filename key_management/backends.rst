@@ -59,10 +59,9 @@ Generate a keypair with::
     $keypair = sodium_crypto_box_keypair();              // 64 bytes
     $publicKey = sodium_crypto_box_publickey($keypair);  // 32 bytes
 
-A sealed box cannot be opened by whoever sealed it, since the sender
-authenticates nothing. This backend therefore doesn't support AAD. It
-doesn't authenticate the writer either. Anyone holding the public key can
-create a ciphertext that the backend decrypts.
+A sealed box takes no authenticated data and doesn't authenticate its
+sender, so this backend doesn't support AAD, and anyone holding the public
+key can create a ciphertext that the backend decrypts.
 
 Key Loaders
 ~~~~~~~~~~~
@@ -110,7 +109,7 @@ loader to one file extension:
 AWS KMS
 -------
 
-Backed by the lightweight `async-aws/kms`_ client. Encryption, decryption
+Backed by the `async-aws/kms`_ client. Encryption, decryption
 and data key creation all happen inside AWS; the master key never reaches
 the application::
 
@@ -148,8 +147,9 @@ the blob.
 
 AWS exposes AAD as its ``EncryptionContext``, an ``array<string, string>``.
 To keep the opaque-bytes contract of ``EncrypterInterface``, this bridge
-stores the AAD as one base64-encoded entry under a conventional key. A
-non-empty AAD is therefore not interchangeable with another provider.
+stores the AAD as one base64-encoded entry under a fixed key. Other tools
+decrypting such a ciphertext must therefore pass the same encryption
+context.
 
 Azure Key Vault
 ---------------
@@ -192,9 +192,9 @@ A key id is either ``<name>`` or ``<name>/<version>``, and both segments
 are validated against what Azure accepts, so a malformed id such as
 ``../secrets`` is refused rather than normalized into another vault path.
 
-Azure uses the latest version of a key when a request names none, which
-once meant that a rotation broke every ciphertext written before it. Every
-ciphertext and every wrapped data key now records a versioned key id: the
+Azure uses the latest version of a key when a request names none, so a
+rotation would break every ciphertext written before it. Every ciphertext
+and every wrapped data key therefore records a versioned key id: the
 version Azure reports for a versionless write, or the one the caller
 pinned. A response naming another key, or another version, fails the write.
 
@@ -245,9 +245,9 @@ access token. For Application Default Credentials, the metadata server of
 GCE, GKE or Cloud Run, or Workload Identity Federation, implement
 :class:`Symfony\\Component\\KeyManagement\\Bridge\\GoogleCloudKms\\TokenProviderInterface`.
 
-Cloud KMS has no ``GenerateDataKey`` primitive. The bridge does what the
-Azure one does: it draws a data key locally with ``random_bytes()`` and
-wraps it through the regular encryption endpoint.
+Cloud KMS has no ``GenerateDataKey`` primitive, so the bridge draws a data
+key locally with ``random_bytes()`` and wraps it through the regular
+encryption endpoint, as the Azure bridge does.
 
 .. _key-management-token-refresh:
 
@@ -267,12 +267,12 @@ another caller has already refreshed survives::
 
     public function invalidateToken(#[\SensitiveParameter] string $token): void
     {
-        if ($this->cachedToken === $token) {
+        if ($token === $this->cachedToken) {
             $this->cachedToken = null;
         }
     }
 
-The method only evicts a cached value. It must not revoke the token
+The method only evicts a cached value. It must neither revoke the token
 remotely nor log it, and a cache shared between processes does not need to
 compare and delete atomically: the worst case is one extra token request.
 
@@ -313,8 +313,9 @@ when the key cannot enforce it. A key created with ``derived=true`` is also
 what a data key store needs to turn
 :ref:`bind_wrapping_context <key-management-store-binding>` on.
 
-That read is a capability of its own, so a least-privilege token limited to
-the encryption endpoints stops working as soon as an AAD is passed:
+That read needs a capability of its own. A least-privilege token limited to
+the encryption endpoints stops working as soon as an AAD is passed, so its
+policy must include it:
 
 .. code-block:: text
 
@@ -339,7 +340,7 @@ master key and performs the encryption::
         .'&key=/run/secrets/client.key&version=2.0&ca=/run/secrets/ca.crt'
     ));
 
-    // the key id is the KMIP Unique Identifier of an active symmetric key
+    $keyId = /* the KMIP Unique Identifier of an active symmetric key */;
     $ciphertext = $kms->encrypt($keyId, 'hello world');
 
 DSN scheme:
@@ -359,9 +360,9 @@ its Cryptographic Usage Mask, and use its Unique Identifier as the key id.
 
 A whole KMIP message must fit in 16 MiB, headers included, so direct
 encryption is capped well below that. Envelope encryption is not, since
-only the data key crosses the wire. Each operation opens its own TLS
-connection, which a :doc:`data key store </key_management/store>` makes far
-less frequent.
+only the data key crosses the network. Each operation opens its own TLS
+connection, which a :doc:`data key store </key_management/store>` makes
+much less frequent.
 
 .. _key-management-flysystem:
 

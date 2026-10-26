@@ -25,19 +25,16 @@ back::
         Envelope::fromBytes(file_get_contents('/var/data/payload.bin'))
     );
 
-An envelope decrypts the same way whatever backend produced it, as long as
-the backend decrypting it reaches the same master key. Swapping a local
-backend in development for AWS KMS in production therefore needs no
-re-encryption.
+An envelope has the same layout no matter which backend produced it, and
+any backend reaching the same master key decrypts it. Switching from a
+local backend in development to AWS KMS in production therefore needs no
+code change.
 
-The key id an envelope carries is the one the backend reported, which is
-not always the one that was asked for. AWS KMS resolves an alias to a key
-ARN and Azure Key Vault pins the version it used, both of which are
-recorded so that the envelope stays readable after the alias moves on. A
-reader checking ``$envelope->keyId`` to refuse a payload copied from
-another column or another tenant is reading that resolved value.
+``$envelope->keyId`` holds the key id that the backend reported, which is
+not always the one that was asked for: AWS KMS resolves an alias to a key
+ARN and Azure Key Vault pins the version it used.
 
-A self-contained envelope also tells the backend which master key to decrypt its
+A self-contained envelope tells the backend which master key to decrypt its
 data key with. A database writer can therefore create one under any master key
 that your credentials can use. On AWS, that includes the keys of other accounts
 when your IAM policy allows ``kms:Decrypt`` on every resource, so list your own
@@ -84,7 +81,7 @@ The format id is authenticated. So are the key id and the wrapped data key of a
 self-contained frame, and the reference of a stored frame. These fields are
 prefixed to the authenticated data of the local cipher, when sealing and when
 opening alike. A frame assembled from the pieces of another frame then fails its
-tag check, whatever AAD the caller passes. That includes a frame whose data key
+tag check, regardless of the AAD the caller passes. That includes a frame whose data key
 was wrapped again, even under the same master key. A stored frame authenticates
 the reference rather than the wrapping, which is what lets the store re-wrap its
 keys without touching any payload.
@@ -96,12 +93,13 @@ attempt at downgrading a payload from a corrupt column.
 Ids are a wire contract: once a format ships, its id and its layout are
 frozen. A different cipher, different lengths, a different layout or
 different authenticated fields need a new format with a new id. An existing
-format is never edited. Formats are not
-a configuration point either. Each encrypter owns the one matching its
-shape, and
+format is never edited.
+
+Formats are not a configuration option either. Each encrypter owns the one
+matching its shape, and
 :method:`Symfony\\Component\\KeyManagement\\EnvelopeFormat::fromId`
-resolves nothing but the formats shipped with the component, so a payload
-written anywhere reads back anywhere.
+resolves only the formats shipped with the component, so a payload written
+by any application can be read by any other.
 
 Sending an Envelope Through the Serializer
 ------------------------------------------
@@ -128,23 +126,21 @@ bytes to a closure and releases them as soon as it returns or throws::
 
     $dataKey = $kms->generateDataKey('app-key', 32);
 
-    $ciphertext = $dataKey->use(function (string $dek) use ($plaintext, $iv, &$tag) {
+    $ciphertext = $dataKey->use(function (string $key) use ($plaintext, $iv, &$tag) {
         return openssl_encrypt(
-            $plaintext, 'aes-256-gcm', $dek, \OPENSSL_RAW_DATA, $iv, $tag
+            $plaintext, 'aes-256-gcm', $key, \OPENSSL_RAW_DATA, $iv, $tag
         );
     });
 
 With ``ext-sodium`` available, ``sodium_memzero()`` clears the buffer
-before the reference is dropped, but only while nothing else holds it: PHP
-declines to zero a string another variable shares rather than blank it
-under that holder. Without sodium there is no in-place zeroing primitive at
-all, so the holder is dropped and the engine frees the buffer when it gets
-to it.
+before the reference is dropped, but only while no other variable holds the
+same string: PHP doesn't zero a shared string, so that the other variable
+isn't blanked too. Without sodium, PHP has no way to zero a string in
+place, so the reference is dropped and the engine frees the buffer later.
 
-PHP strings are reference-counted with copy-on-write, so a consumer that
-returns the plaintext, or keeps it anywhere, leaves the wipe with nothing
-to wipe. Pass the parameter straight to the cryptographic primitives and
-let it go.
+PHP strings are reference-counted with copy-on-write, so a closure that
+returns the plaintext key, or stores it anywhere, prevents the wipe. Pass
+the parameter directly to the cryptographic functions and don't keep it.
 
 A :class:`Symfony\\Component\\KeyManagement\\DataKeyHandle` makes the
 opposite trade-off, and is what a
@@ -153,5 +149,5 @@ of its own out of the ``DataKey``, so the ``DataKey`` still wipes what it
 held, and keeps the plaintext usable across calls until ``release()`` or
 destruction.
 
-The envelope encrypters already do all of this. It only matters when
-``generateDataKey()`` is called directly.
+The envelope encrypters already handle all of this, so it only matters when
+you call ``generateDataKey()`` yourself.
