@@ -190,11 +190,28 @@ does not exist is refused the same way, so a reader cannot tell an attempt
 at downgrading a payload from a corrupt column.
 
 Each value is authenticated together with the key of its column and the name of
-the Doctrine type it wraps. A value copied to a column with another key or
-another type is refused. Changing the key or the type of a column therefore
-means rewriting its values. Renaming the encrypted type doesn't require that.
-Neither does changing the PHP class behind a type name, as long as the new class
-reads the old values.
+the Doctrine type it wraps, such as ``string``. A value copied to a column with
+another key or another type name is refused. Changing the key or the type name
+of a column therefore means rewriting its values, even when both type names
+resolve to the same PHP class. Neither the name of the encrypted type nor its
+configuration is authenticated: renaming the type doesn't require rewriting,
+and neither does changing the PHP class behind the type name, as long as the
+new class reads the old values.
+
+Two columns using the same key and the same type name can read each other's
+values. Give them different keys or scopes to keep them apart.
+
+Rotating the master key behind a key that keeps its name, such as an alias moved
+to a new key, doesn't require rewriting values. Changing the configured alias,
+key name or ARN does, even if the KMS can still read the old key.
+
+When you build an
+:class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedType`
+yourself, pass the type name as its fourth argument. Only ``null``, the
+default, falls back to the class of the wrapped type, which then changes with
+that class and requires rewriting the values when it is renamed or subclassed.
+Use the ``type`` of the configuration as the name when a type you build and a
+configured one must read each other's values.
 
 A value copied to another row of the same column still decrypts, though, since a
 Doctrine type never sees the row it converts. When the owner of a value matters,
@@ -210,9 +227,13 @@ Moving a Column to a Stored Data Key
 Configure a :doc:`store </key_management/store>` with
 ``read_self_contained: true``. Keep the ``key`` and the type of the column,
 since both are authenticated with every value. The key then becomes the scope of
-the stored data key, so don't leave it out at the same time. New rows then
-contain a reference to a stored data key while older ones keep being read
-through the KMS. Once no old row is left, turn the option off.
+the stored data key, so don't leave it out at the same time, and keep it equal
+to the previous key: another scope would prevent the fallback from reading the
+existing values. New rows then contain a reference to a stored data key while
+older ones keep being read through the KMS. Once no old row is left, turn the
+option off, since a self-contained payload carries its own wrapped data key and
+skips the scope and binding checks of the store. The envelope still
+authenticates the key and the type name of the column.
 
 Re-wrapping that data key later moves the whole column to another master
 key, or another provider, without touching a single row.

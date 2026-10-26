@@ -232,6 +232,11 @@ In envelope mode, the local cipher authenticates the AAD and the KMS never
 sees it. A mismatch is therefore refused on every backend, including the
 ones that cannot authenticate data.
 
+For the same reason, a self-contained envelope cannot rely on a KMS policy
+conditioned on the AAD, such as the ``kms:EncryptionContext`` condition of AWS
+KMS. A :doc:`data key store </key_management/store>` can bind a context at the
+backend instead.
+
 Choosing a Client
 ~~~~~~~~~~~~~~~~~
 
