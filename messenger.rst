@@ -5575,21 +5575,8 @@ or if it's being retried after failure.
 
 .. tip::
 
-    Symfony doesn't inject the :class:`Symfony\\Component\\Messenger\\Envelope`
-    automatically when you add it as an argument of the ``__invoke()`` method
-    in your handler. To do so, you can create the following custom :ref:`middleware <messenger_middleware>`
-    to stamp the envelope before ``HandleMessageMiddleware`` runs::
-
-        final class InjectEnvelopeMiddleware implements MiddlewareInterface
-        {
-            public function handle(Envelope $envelope, StackInterface $stack): Envelope
-            {
-                return $stack->next()->handle(
-                    $envelope->with(new HandlerArgumentsStamp([$envelope])),
-                    $stack
-                );
-            }
-        }
+    A handler can receive the envelope and its stamps as
+    :ref:`arguments <messenger-handler-arguments>`.
 
 If you need to add metadata or some configuration to a message, wrap it with the
 :class:`Symfony\\Component\\Messenger\\Envelope` class and add stamps. For
@@ -5699,6 +5686,205 @@ the same class already exists on the envelope::
         [new DelayStamp(500)]
     );
 
+.. _messenger-propagated-stamps:
+
+Propagating Stamps to Dispatched Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``PropagatedStampInterface`` and the ``CorrelationStamp`` were
+    introduced in Symfony 8.2.
+
+Handlers often dispatch other messages, and those messages need some context
+about the flow they belong to, such as the tenant or the user who started it.
+Instead of adding this context as a property of every message class only to pass
+it along, put it in a stamp that implements
+:class:`Symfony\\Component\\Messenger\\Stamp\\PropagatedStampInterface`::
+
+    // src/Message/Stamp/TenantStamp.php
+    namespace App\Message\Stamp;
+
+    use Symfony\Component\Messenger\Stamp\PropagatedStampInterface;
+
+    final class TenantStamp implements PropagatedStampInterface
+    {
+        public function __construct(
+            public readonly string $tenantId,
+        ) {
+        }
+    }
+
+Add the stamp only once, to the message that starts the flow::
+
+    use App\Message\ImportCatalog;
+    use App\Message\Stamp\TenantStamp;
+
+    $bus->dispatch(new ImportCatalog($csvPath), [
+        new TenantStamp($tenant->getId()),
+    ]);
+
+While a message is handled, Messenger copies its propagated stamps to every
+message dispatched by its handler, so the handler of ``ImportCatalog`` doesn't
+need to know about tenants::
+
+    // src/MessageHandler/ImportCatalogHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\ImportCatalog;
+    use App\Message\ImportRow;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler]
+    final class ImportCatalogHandler
+    {
+        // ...
+
+        public function __invoke(ImportCatalog $message): void
+        {
+            foreach ($this->csvReader->read($message->csvPath) as $row) {
+                // each ImportRow message gets the TenantStamp of ImportCatalog
+                $this->bus->dispatch(new ImportRow($row));
+            }
+        }
+    }
+
+The handler of ``ImportRow`` then gets the stamp as a
+:ref:`handler argument <messenger-handler-arguments>`::
+
+    // src/MessageHandler/ImportRowHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\ImportRow;
+    use App\Message\Stamp\TenantStamp;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler]
+    final class ImportRowHandler
+    {
+        public function __invoke(ImportRow $message, TenantStamp $tenant): void
+        {
+            // ... add the row to the catalog of $tenant->tenantId
+        }
+    }
+
+Stamps propagate according to these rules:
+
+* Messenger copies all the stamps of each propagated class, in order, unless
+  the dispatched message already has a stamp of that class. To change the
+  context for one part of the flow, add a stamp of the same class when
+  dispatching that message;
+* Copied stamps are propagated again: the messages dispatched by the handler of
+  ``ImportRow`` also get the ``TenantStamp``, even when they are dispatched to
+  another bus;
+* The stamps are sent to transports together with the message, so propagated
+  stamps must be serializable and must not implement
+  :class:`Symfony\\Component\\Messenger\\Stamp\\NonSendableStampInterface`.
+
+.. warning::
+
+    Anyone who can write to a transport can add any propagated stamp to the
+    messages. If a propagated stamp grants rights (e.g. it holds a tenant or a
+    user identifier), :ref:`sign those messages <messenger-message-signing>` or
+    check the stamp again in the handlers that use it.
+
+Messenger provides one propagated stamp,
+:class:`Symfony\\Component\\Messenger\\Stamp\\CorrelationStamp`. Give it the
+identifier of the request or process that starts a flow (e.g. to group the logs
+of all the messages of that flow)::
+
+    use Symfony\Component\Messenger\Stamp\CorrelationStamp;
+
+    // $requestId is the identifier of the current HTTP request
+    // (e.g. the value of the X-Request-Id header added by your load balancer)
+    $bus->dispatch(new ImportCatalog($csvPath), [
+        new CorrelationStamp($requestId),
+    ]);
+
+Messenger only adds this stamp by itself when you enable
+:ref:`identity stamps <messenger-identity-stamps>`.
+
+.. _messenger-identity-stamps:
+
+Identifying Messages and Flows
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``identity_stamps`` option was introduced in Symfony 8.2.
+
+To follow a flow of messages in your logs across transports and retries, each
+message needs its own identifier, the identifier of the message that caused it
+and the identifier of the flow. Enable the ``identity_stamps`` option to make
+Messenger add them to all dispatched messages:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                identity_stamps: true
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'messenger' => [
+                    'identity_stamps' => true,
+                ],
+            ],
+        ]);
+
+When this option is enabled, Messenger adds the following stamps, except when
+the message already has a stamp of that class:
+
+* :class:`Symfony\\Component\\Messenger\\Stamp\\MessageIdStamp` identifies the
+  message. Unlike ``TransportMessageIdStamp``, which identifies one delivery of
+  the message in one transport, its value doesn't change when the message is
+  retried, sent to the failure transport and retried from there;
+* :class:`Symfony\\Component\\Messenger\\Stamp\\CausationStamp` holds the id of
+  the message whose handler dispatched this message;
+* :class:`Symfony\\Component\\Messenger\\Stamp\\CorrelationStamp` identifies the
+  flow. The first message of a flow gets one with its own id, and the messages
+  dispatched while it's handled :ref:`inherit it <messenger-propagated-stamps>`.
+
+If the :doc:`Uid component </components/uid>` is installed, the ids are UUIDv7
+values (which are ordered by creation time). Otherwise, they are strings of 32
+random hexadecimal characters. To generate ids in another format, install the
+Uid component and redefine the ``messenger.message_id_generator`` service as a
+closure that returns the new id:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # use ULIDs as message ids
+            messenger.message_id_generator:
+                from_callable: ['Symfony\Component\Uid\Ulid', 'generate']
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Uid\Ulid;
+
+        return App::config([
+            'services' => [
+                // use ULIDs as message ids
+                'messenger.message_id_generator' => [
+                    'from_callable' => [Ulid::class, 'generate'],
+                ],
+            ],
+        ]);
+
 .. _messenger_middleware:
 
 Middleware
@@ -5735,6 +5921,24 @@ for each bus looks like this:
 
        The ``decode_failed_message_middleware`` middleware was introduced in
        Symfony 8.1.
+
+#. ``add_identity_stamps`` - adds the
+   :ref:`identity stamps <messenger-identity-stamps>` to the message. It's only
+   included when the
+   :ref:`identity_stamps <reference-messenger-identity-stamps>` option is
+   enabled;
+
+#. ``propagate_stamps`` - copies the
+   :ref:`propagated stamps <messenger-propagated-stamps>` of the message being
+   handled to the messages dispatched by its handler. If you list the middleware
+   yourself, keep this one at this position (right after ``add_identity_stamps``
+   when the ``identity_stamps`` option is enabled) and include it in all buses,
+   so stamps are propagated from one bus to another;
+
+   .. versionadded:: 8.2
+
+       The ``add_identity_stamps`` and ``propagate_stamps`` middleware were
+       introduced in Symfony 8.2.
 
 #. ``dispatch_on_failure`` - dispatches the
    :ref:`failure message <messenger-dispatch-on-failure>` of a message whose
@@ -6485,11 +6689,51 @@ dispatched later, when the batch is flushed and the
 result or the error. If the worker process ends abruptly before flushing the
 batch, no success or failure event is dispatched for its pending messages.
 
+.. _messenger-handler-arguments:
+
 Additional Handler Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's possible to have messenger pass additional data to the message handler
-using the :class:`Symfony\\Component\\Messenger\\Stamp\\HandlerArgumentsStamp`.
+To read the stamps of the message being handled, add handler arguments typed
+with a stamp class after the message argument. For example, to send an invoice
+without its PDF attachment after two failed attempts::
+
+    // src/MessageHandler/SendInvoiceHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\SendInvoice;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+    use Symfony\Component\Messenger\Stamp\RedeliveryStamp;
+
+    #[AsMessageHandler]
+    final class SendInvoiceHandler
+    {
+        public function __invoke(
+            SendInvoice $message,
+            // null on the first attempt, when the message carries no such stamp
+            ?RedeliveryStamp $redelivery = null,
+        ): void {
+            if ($redelivery?->getRetryCount() >= 2) {
+                // ... send the invoice without the PDF attachment
+            }
+        }
+    }
+
+Each of these arguments receives the last stamp of that exact class, as returned
+by ``$envelope->last()``, so arguments typed with an interface or a parent class
+never receive a stamp. When the envelope has no stamp of that class, the
+argument keeps its default value if it has one or gets ``null`` if it's
+nullable. Otherwise, handling the message fails.
+
+Type an argument with :class:`Symfony\\Component\\Messenger\\Envelope` to get
+the whole envelope (e.g. to read all the stamps of some class).
+
+.. versionadded:: 8.2
+
+    Stamp and envelope arguments in handlers were introduced in Symfony 8.2.
+
+To pass other data to the handler, use the
+:class:`Symfony\\Component\\Messenger\\Stamp\\HandlerArgumentsStamp`.
 Add this stamp to the envelope in a middleware and fill it with any additional
 data you want to have available in the handler::
 
@@ -6532,6 +6776,10 @@ Then your handler will look like this::
             // ...
         }
     }
+
+When a handler also has stamp or envelope arguments, declare them after the
+arguments passed by ``HandlerArgumentsStamp`` (and after the ``Acknowledger``
+argument of :ref:`batch handlers <messenger-handler-batch>`).
 
 Message Serializer For Custom Data Formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

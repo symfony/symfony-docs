@@ -3360,6 +3360,23 @@ called ``deduplication``). When ``null``, the middleware uses the
 
     The ``lock_factory`` option was introduced in Symfony 8.2.
 
+.. _reference-messenger-identity-stamps:
+
+identity_stamps
+...............
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to add the ``add_identity_stamps`` middleware to the default middleware
+of every bus. This middleware adds a ``MessageIdStamp`` to all dispatched
+messages, a ``CausationStamp`` to the messages dispatched by a handler and a
+``CorrelationStamp`` to the first message of each flow.
+:ref:`Read more about identity stamps <messenger-identity-stamps>`.
+
+.. versionadded:: 8.2
+
+    The ``identity_stamps`` option was introduced in Symfony 8.2.
+
 routing
 .......
 
