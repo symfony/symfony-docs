@@ -64,7 +64,9 @@ The ``Argument`` attribute accepts the following parameters:
     For example: ``#[Argument(suggestedValues: ['Alice', 'Bob'])]`` or
     ``#[Argument(suggestedValues: [self::class, 'suggestUsernames'])]``. The callable
     receives a :class:`Symfony\\Component\\Console\\Completion\\CompletionInput`
-    object and returns the list of suggested values.
+    object and returns the list of suggested values. Add a second
+    :class:`Symfony\\Component\\Console\\Completion\\CompletionSuggestions`
+    parameter to :ref:`complete file system paths <console-input-completion-paths>`.
 
 The argument mode (required, optional, array) is inferred from the parameter type:
 
@@ -295,7 +297,9 @@ The ``Option`` attribute accepts the following parameters:
     For example: ``#[Option(suggestedValues: ['low', 'medium', 'high'])]`` or
     ``#[Option(suggestedValues: [self::class, 'suggestLevels'])]``. The callable
     receives a :class:`Symfony\\Component\\Console\\Completion\\CompletionInput`
-    object and returns the list of suggested values.
+    object and returns the list of suggested values. Add a second
+    :class:`Symfony\\Component\\Console\\Completion\\CompletionSuggestions`
+    parameter to :ref:`complete file system paths <console-input-completion-paths>`.
 
 ``deprecated`` and ``hidden``
     Whether the option is :ref:`deprecated or hidden <console-hidden-deprecated-options>`.
@@ -1567,6 +1571,70 @@ tab after typing ``app:greet Fa`` will give you these names as a suggestion.
     You may use ``CompletionInput::getCompletionValue()`` to get the
     current input if that helps improving performance (e.g. by reducing the
     number of rows fetched from the database).
+
+.. _console-input-completion-paths:
+
+Completing File System Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The ``suggestPaths()`` and ``suggestDirectories()`` methods were
+    introduced in Symfony 8.2.
+
+Installing the completion script turns off the path completion that your
+shell provides by default. To complete file system paths for an argument or
+an option, add a second
+:class:`Symfony\\Component\\Console\\Completion\\CompletionSuggestions`
+parameter to the completion callable and call one of its methods::
+
+    use Symfony\Component\Console\Completion\CompletionInput;
+    use Symfony\Component\Console\Completion\CompletionSuggestions;
+    use Symfony\Component\Console\Input\InputArgument;
+
+    // ...
+    protected function configure(): void
+    {
+        $this
+            ->addArgument(
+                'source',
+                InputArgument::REQUIRED,
+                'The file to import',
+                null,
+                function (CompletionInput $input, CompletionSuggestions $suggestions): array {
+                    // complete both files and directories
+                    $suggestions->suggestPaths();
+
+                    // values returned here are suggested in addition to the paths
+                    return [];
+                }
+            )
+            ->addArgument(
+                'target',
+                InputArgument::REQUIRED,
+                'The directory where the result is written',
+                null,
+                function (CompletionInput $input, CompletionSuggestions $suggestions): array {
+                    // complete only directories
+                    $suggestions->suggestDirectories();
+
+                    return [];
+                }
+            )
+        ;
+    }
+
+If you call both methods, ``suggestPaths()`` takes precedence.
+
+Arguments and options defined with the ``#[Argument]`` and ``#[Option]``
+attributes complete paths automatically when their type is
+:ref:`InputFile <console-input-file>` (or an array of ``InputFile``) and
+they don't define ``suggestedValues``.
+
+.. note::
+
+    Completion scripts installed before upgrading don't complete paths. Run
+    the ``completion`` command and install its output again to enable it.
 
 Testing the Completion script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
