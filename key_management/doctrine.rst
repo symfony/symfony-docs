@@ -196,13 +196,75 @@ means rewriting its values. Renaming the encrypted type doesn't require that.
 Neither does changing the PHP class behind a type name, as long as the new class
 reads the old values.
 
-A value copied to another row of the same column still decrypts, though, since a
-Doctrine type never sees the row it converts. When the owner of a value matters,
-store the row identity inside the value and check it after decryption.
+Copied, Deleted and Restored Values
+-----------------------------------
 
-``NULL`` is stored as is: it is neither encrypted nor authenticated. Deny
-protected operations when a required encrypted value is missing, so that
-deleting it doesn't grant anything.
+An attacker who can write to your database can't read an encrypted value.
+Decryption fails when the attacker changes the value. They can still copy a
+value to another row of the same column, since a Doctrine type never sees the
+row it converts. They can set the column to ``NULL``, which the type stores as
+is, without encrypting or authenticating it. And they can put back an older
+value of the same row.
+
+When a value protects something, like a two-factor authentication secret, store
+the identity of the row inside the value and check it after decryption. Also
+give every row a value, so that a missing value is always an error, never a user
+without two-factor authentication::
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UuidType;
+    use Symfony\Component\KeyManagement\Bridge\DoctrineOrm\Attribute\Encrypted;
+    use Symfony\Component\Uid\Uuid;
+
+    #[ORM\Entity]
+    class User
+    {
+        #[ORM\Id]
+        #[ORM\Column(type: UuidType::NAME, unique: true)]
+        private Uuid $id;
+
+        /**
+         * @var array{user: string, secret: ?string}
+         */
+        #[ORM\Column(type: 'json')]
+        #[Encrypted(key: 'user.two_factor')]
+        private array $twoFactor;
+
+        public function __construct()
+        {
+            $this->id = Uuid::v7();
+            $this->setTwoFactorSecret(null);
+        }
+
+        public function setTwoFactorSecret(?string $secret): void
+        {
+            $this->twoFactor = ['user' => (string) $this->id, 'secret' => $secret];
+        }
+
+        public function getTwoFactorSecret(): ?string
+        {
+            if ($this->twoFactor['user'] !== (string) $this->id) {
+                throw new \RuntimeException('This secret belongs to another user.');
+            }
+
+            return $this->twoFactor['secret'];
+        }
+    }
+
+A user without two-factor authentication has a ``null`` secret inside the
+encrypted value, instead of a ``NULL`` column. Copying that value to the row of
+another user makes ``getTwoFactorSecret()`` throw an exception. The column isn't
+nullable, so the database refuses ``NULL``. If a row contains ``NULL`` anyway,
+the property stays uninitialized, and reading the secret throws an error too.
+
+Putting back an older value of the same row isn't detected, for example the
+value saved before the user turned two-factor authentication on. To detect it,
+you need data that the attacker can't change, stored outside the database. A
+version number stored next to the value, or inside it, doesn't help. The
+attacker puts the old version number back together with the old value.
 
 Moving a Column to a Stored Data Key
 ------------------------------------
