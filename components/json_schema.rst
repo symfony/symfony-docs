@@ -29,6 +29,10 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
+The component requires PHP 8.2 or higher. The TypeInfo and PropertyInfo
+components are installed with it, while the Serializer and Validator
+components are optional.
+
 Usage
 -----
 
@@ -140,7 +144,8 @@ The constructor accepts the following arguments, in this order:
     The serializer ``attributes`` option: the properties to include.
 
 ``ignoredAttributes``
-    The properties to exclude.
+    The properties to exclude, like the ``ignored_attributes`` option of the
+    serializer.
 
 ``allowExtraAttributes``
     Set it to ``false`` to add ``additionalProperties: false`` to the
@@ -197,7 +202,7 @@ attribute to a property or to a parameter::
             // comes from the @param tag
             #[JsonSchemaConstraint('Search terms')]
             string $query,
-            // not required because it has a default value
+            // optional, and its default value is added to the schema
             int $limit = 10,
         ): array {
             // ...
