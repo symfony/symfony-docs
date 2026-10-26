@@ -1107,8 +1107,7 @@ Rendering a Template Directly from a Route
 
 Although templates are usually rendered in controllers and services, you can
 render static pages that don't need any variables directly from the route
-definition. Use the special :class:`Symfony\\Bundle\\TwigBundle\\Controller\\TemplateController`
-provided by Symfony:
+definition. Use the ``template`` option, which requires TwigBundle:
 
 .. configuration-block::
 
@@ -1116,17 +1115,15 @@ provided by Symfony:
 
         # config/routes.yaml
         acme_privacy:
-            path:          /privacy
-            controller:    Symfony\Bundle\TwigBundle\Controller\TemplateController
+            path: /privacy
+            # the path of the template to render
+            template: 'static/privacy.html.twig'
             defaults:
-                # the path of the template to render
-                template:  'static/privacy.html.twig'
-
                 # the response status code (default: 200)
                 statusCode: 200
 
                 # special options defined by Symfony to set the page cache
-                maxAge:    86400
+                maxAge: 86400
                 sharedAge: 86400
 
                 # whether or not caching should apply for client caches only
@@ -1140,28 +1137,24 @@ provided by Symfony:
                 # optionally you can define HTTP headers to add to the response
                 headers:
                     Content-Type: 'text/html'
-                    foo: 'bar'
+                    X-Acme-Page: 'privacy'
 
     .. code-block:: php
 
         // config/routes.php
         namespace Symfony\Component\Routing\Loader\Configurator;
 
-        use Symfony\Bundle\TwigBundle\Controller\TemplateController;
-
         return Routes::config([
             'acme_privacy' => [
                 'path' => '/privacy',
-                'controller' => TemplateController::class,
+                // the path of the template to render
+                'template' => 'static/privacy.html.twig',
                 'defaults' => [
-                    // the path of the template to render
-                    'template'  => 'static/privacy.html.twig',
-
                     // the response status code (default: 200)
                     'statusCode' => 200,
 
                     // special options defined by Symfony to set the page cache
-                    'maxAge'    => 86400,
+                    'maxAge' => 86400,
                     'sharedAge' => 86400,
 
                     // whether or not caching should apply for client caches only
@@ -1171,15 +1164,34 @@ provided by Symfony:
                     'context' => [
                         'site_name' => 'ACME',
                         'theme' => 'dark',
-                        ],
+                    ],
 
                     // optionally you can define HTTP headers to add to the response
                     'headers' => [
                         'Content-Type' => 'text/html',
-                    ]
+                        'X-Acme-Page' => 'privacy',
+                    ],
                 ],
             ],
         ]);
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return static function (RoutingConfigurator $routes): void {
+            $routes->add('acme_privacy', '/privacy')
+                // the path of the template to render
+                ->template('static/privacy.html.twig')
+                ->defaults(['maxAge' => 86400])
+            ;
+        };
+
+.. versionadded:: 8.2
+
+    The ``template`` option (and the ``template()`` method of the PHP routing
+    configurator) was introduced in Symfony 8.2.
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
