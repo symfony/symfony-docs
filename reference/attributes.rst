@@ -72,6 +72,7 @@ HttpKernel
 * :ref:`AsTargetedValueResolver <controller-targeted-value-resolver>`
 * :ref:`Cache <http-cache-expiration-intro>`
 * :ref:`IsSignatureValid <routing-signing-uris>`
+* :ref:`Lock <lock-controller>`
 * :ref:`MapDateTime <functionality-shipped-with-the-httpkernel>`
 * :ref:`MapQueryParameter <controller_map-request>`
 * :ref:`MapQueryString <controller_map-request>`
