@@ -223,12 +223,23 @@ algorithms, and any Vault Transit key not created with ``derived=true``.
 And a provider that ignores authenticated data instead of refusing it adds
 no protection, since only the provider ever checks the context.
 
-Turning it on leaves the data keys already stored unreadable until they are
-re-wrapped. Do it in one command:
+Turning it on takes effect immediately: the store refuses the keys already
+stored until they are re-wrapped, so encrypting under a scope whose current key
+is one of them fails too. Re-wrap all of them with one command, which you can
+run again if it is interrupted:
 
 .. code-block:: terminal
 
     $ php bin/console key-management:rewrap-data-keys --accept-unbound
+
+The command wraps every key with its context, including the keys it accepted
+without one.
+
+.. warning::
+
+    This can't be undone. If you turn the option off later, the keys written or
+    re-wrapped while it was on become unreadable, and the command can't re-wrap
+    them without their context.
 
 The Table
 ---------
@@ -301,16 +312,17 @@ the encryption path never sees it:
     :class:`Symfony\\Component\\KeyManagement\\StoredDataKey` instances,
     oldest first, optionally only those wrapped by one client.
 
-``rewrap(StoredDataKey $row, DataKey $rewrapped, string $client)``
-    Replaces the wrapping of a stored key. ``$rewrapped`` contains the data
-    key and its new wrapping. The store refuses a data key that doesn't
-    match the binding of the row, then signs the row again with its first
-    secret. The reference and the scope stay as they are, so payloads
-    referring to the key keep resolving.
+``rewrap(string $reference, Ciphertext $wrapped, string $client)``
+    Replaces the wrapping of a stored key. ``$wrapped`` is the data key
+    wrapped again with the context returned by ``wrappingContextOf()``.
+    The store doesn't decrypt it to check it, so the command checks the
+    binding of the row before calling this method, and any other caller
+    must do the same. The reference and the scope stay as they are, so
+    payloads referring to the key keep resolving.
 
 ``wrappingContextOf(StoredDataKey $row)``
     The authenticated data this store wraps that row with, or an empty
-    string when the provider authenticates nothing. Re-wrapping happens
+    string when ``bind_wrapping_context`` is off. Re-wrapping happens
     outside the store, so it has to bind what the store binds.
 
 ``rotate(string $scope)``
