@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by iz-ahmad at 2026-09-21T04:59:02Z
+
+The CI / Code Blocks failure is because `PropertyTypeMappingMetadataFactory` comes from [symfony/symfony#65970](https://github.com/symfony/symfony/pull/65970) (merged on 2026-09-18), and the Symfony version this checker installs likely doesn't contain it yet. The same job already reports the 8.2 `IterableToArrayCollection` class as missing as well.
