@@ -423,17 +423,30 @@ The HttpFoundation component provides some matcher classes that allow you to
 check if a given request meets certain conditions (e.g. it comes from some IP
 address, it uses a certain HTTP method, etc.):
 
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HeaderRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\QueryParameterRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`:
+  Checks that all the given request attributes match their regular
+  expressions.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`:
+  Evaluates an ExpressionLanguage expression against the request.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HeaderRequestMatcher`:
+  Checks that the request contains all the given HTTP headers.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`:
+  Checks that the host matches a regular expression (case-insensitive).
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`:
+  Checks that the client IP address is one of the given addresses or
+  ranges (e.g. ``192.168.1.0/24``).
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonRequestMatcher`:
+  Checks that the request content is valid JSON.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`:
+  Checks that the HTTP method is one of the given methods.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`:
+  Checks that the URL path matches a regular expression.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`:
+  Checks that the request uses the given port.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\QueryParameterRequestMatcher`:
+  Checks that the request contains all the given query parameters.
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`:
+  Checks that the request uses one of the given schemes (e.g. ``https``).
 
 You can use them individually or combine them using the
 :class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` class::
@@ -609,19 +622,42 @@ Managing the HTTP Cache
 The :class:`Symfony\\Component\\HttpFoundation\\Response` class has a rich set
 of methods to manipulate the HTTP headers related to the cache:
 
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleIfError`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleWhileRevalidate`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`
-* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPublic`:
+  Allows shared caches (such as proxies) to store the response.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setPrivate`:
+  Marks the response as intended for a single user, so shared caches must
+  not store it.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::expire`:
+  Marks a fresh response as stale by setting its ``Age`` header to its
+  maximum age and removing its ``Expires`` header.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`:
+  Sets the ``Expires`` header, the date after which the response is
+  considered stale.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`:
+  Sets the ``max-age`` directive, the number of seconds the response
+  stays fresh.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`:
+  Sets the ``s-maxage`` directive, the freshness lifetime for shared
+  caches only. It also marks the response as public.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleIfError`:
+  Sets the ``stale-if-error`` directive, the number of seconds a stale
+  response can be served when the backend fails.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleWhileRevalidate`:
+  Sets the ``stale-while-revalidate`` directive, the number of seconds a
+  stale response can be served while it is refreshed in the background.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`:
+  Sets the time-to-live for shared caches, in seconds from now. It
+  updates ``s-maxage``, so it also marks the response as public.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`:
+  Sets the time-to-live for private caches, such as the browser, in
+  seconds from now (it updates ``max-age``).
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`:
+  Sets the ``Last-Modified`` header, used for conditional requests.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag`:
+  Sets the ``ETag`` header, a validator used for conditional requests.
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setVary`:
+  Sets the ``Vary`` header, the request headers that caches use to store
+  different versions of the same response.
 
 .. note::
 
