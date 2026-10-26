@@ -318,12 +318,10 @@ when the key cannot enforce it. A key created with ``derived=true`` is also
 what a data key store needs to turn
 :ref:`bind_wrapping_context <key-management-store-binding>` on.
 
-With ``convergent_encryption=true``, equal plaintexts encrypted with the
-same AAD give equal ciphertexts, and each AAD value is a convergence scope
-of its own.
-
 That read is a capability of its own, so a least-privilege token limited to
-the encryption endpoints stops working as soon as an AAD is passed:
+the encryption endpoints stops working as soon as an AAD reaches the bridge,
+which happens with direct calls or with ``bind_wrapping_context`` on, not
+with an envelope encrypter alone:
 
 .. code-block:: text
 
@@ -332,6 +330,10 @@ the encryption endpoints stops working as soon as an AAD is passed:
     path "transit/datakey/plaintext/*" { capabilities = ["update"] }
     # only needed with AAD, to tell derived keys from non-derived ones
     path "transit/keys/*"              { capabilities = ["read"] }
+
+With ``convergent_encryption=true``, equal plaintexts encrypted with the
+same AAD give equal ciphertexts, and each AAD value is a convergence scope
+of its own.
 
 KMIP
 ----

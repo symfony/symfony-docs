@@ -193,25 +193,26 @@ Each value is authenticated together with the key of its column and the name of
 the Doctrine type it wraps, such as ``string``. A value copied to a column with
 another key or another type name is refused. Changing the key or the type name
 of a column therefore means rewriting its values, even when both type names
-resolve to the same PHP class. Neither the name of the encrypted type nor its
-configuration is authenticated: renaming the type doesn't require rewriting,
-and neither does changing the PHP class behind the type name, as long as the
-new class reads the old values.
+resolve to the same PHP class. Neither the name of the encrypted type nor the
+configuration of the wrapped type is authenticated: renaming the type doesn't
+require rewriting, and neither does changing the PHP class behind the type
+name, as long as the new class reads the old values.
 
 Two columns using the same key and the same type name can read each other's
 values. Give them different keys or scopes to keep them apart.
 
 Rotating the master key behind a key that keeps its name, such as an alias moved
-to a new key, doesn't require rewriting values. Changing the configured alias,
-key name or ARN does, even if the KMS can still read the old key.
+to a new key, doesn't require rewriting values. Changing the configured
+``key``, whether an alias, a key name, an ARN or a scope, does, even if the KMS
+can still read the old key.
 
 When you build an
 :class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedType`
 yourself, pass the type name as its fourth argument. Only ``null``, the
 default, falls back to the class of the wrapped type, which then changes with
 that class and requires rewriting the values when it is renamed or subclassed.
-Use the ``type`` of the configuration as the name when a type you build and a
-configured one must read each other's values.
+Use the ``type`` option of ``key_management.doctrine_dbal.types`` as the name
+when a type you build and a configured one must read each other's values.
 
 A value copied to another row of the same column still decrypts, though, since a
 Doctrine type never sees the row it converts. When the owner of a value matters,
