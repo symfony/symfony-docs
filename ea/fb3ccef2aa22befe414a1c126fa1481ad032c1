@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by bigboss86 at 2026-10-24T01:47:28Z
+
+Thanks! I checked it against symfony/symfony#67382 and the behavior is described correctly (full URL, HTTPS except loopback hosts, `issuer` still checked against `provider_uri`, scoped client covering the discovery host).
+
+Two suggestions:
+
+1. The main example of step 1 is the minimal setup most readers copy, and `discovery_uri` is only needed in specific setups. What about removing the commented lines from it and showing the example in the new section instead? "as shown in the configuration above" points to an example ~1,250 lines above.
+
+2. The section could start with when this option is needed. The description of symfony/symfony#67382 gives a realistic case: the application reads the discovery document from another host (e.g. an internal one) while the public issuer stays the same:
+
+```yaml
+oidc_login:
+    provider_uri: 'https://sso.example.com/realms/demo'
+    discovery_uri: 'https://provider.internal/realms/demo/.well-known/openid-configuration'
+```
