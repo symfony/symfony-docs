@@ -27,9 +27,9 @@ diagnostics to standard error, so you can combine them in a pipeline:
 These two commands only work with payloads carrying their own data key.
 The command line has no store to resolve a stored data key with, so read
 those payloads through the application. Once the application has a
-:doc:`store </key_management/store>`, its envelope interfaces read what
-``key-management:encrypt`` writes only with ``read_self_contained`` on, while
-the envelope encrypter of each client always does.
+:doc:`store </key_management/store>`, the envelope interfaces read what
+``key-management:encrypt`` writes only when ``read_self_contained`` is on. The
+envelope encrypter of each client always reads it.
 
 Creating a Data Key
 -------------------
@@ -59,7 +59,7 @@ payload is read or rewritten:
 
 .. code-block:: terminal
 
-    # list the keys that would move, first; a dry run contacts no KMS, so it
+    # list the keys that would move first; a dry run contacts no KMS, so it
     # doesn't check that the keys can be unwrapped
     $ php bin/console key-management:rewrap-data-keys --to=azure \
         --key-id=my-vault-key --dry-run -v

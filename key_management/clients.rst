@@ -172,14 +172,15 @@ the configuration claims. Reading needs only one member to answer. Each
 member that fails is skipped and logged on the ``key_management`` channel,
 since nothing else tells the caller.
 
-The authenticated data of a direct call goes to every member, so a single
-member that cannot authenticate data, such as a sealed box, makes every such
-call fail, and rules out ``bind_wrapping_context``. Only the first member
-creates the data keys. The others wrap them through their encryption
-operation and read them back through their decryption one, which their
-credentials must allow: ``kms:Encrypt`` and ``kms:Decrypt`` on AWS, or on
-Azure Key Vault ``encrypt`` and ``decrypt`` with the ``algorithm`` option
-rather than ``wrapKey`` and ``wrap_algorithm``.
+The authenticated data of a direct call goes to every member, so a single member
+that cannot authenticate data, such as a sealed box, makes every such call fail
+and rules out ``bind_wrapping_context``. Only the first member creates the data
+keys, and it also wraps the ones that ``key-management:rewrap-data-keys`` moves.
+The other members wrap them through their encryption operation and read them
+back through their decryption one, which their credentials must allow:
+``kms:Encrypt`` and ``kms:Decrypt`` on AWS, or ``encrypt`` and ``decrypt``
+under the ``algorithm`` option on Azure Key Vault, rather than ``wrapKey`` and
+``unwrapKey`` under ``wrap_algorithm``.
 
 Since one member is enough to read a ciphertext, anyone who can encrypt for
 one member can write a ciphertext that the composite reads. With a sealed

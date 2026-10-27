@@ -97,7 +97,7 @@ The inline schemes take the keys as ``keys[<id>]=<base64>`` query options:
 Written in the URL-safe base64 of RFC 4648 section 5, with or without
 padding, a key needs no ``urlencode()`` step. Standard base64 is accepted
 too, as long as each ``+`` is written ``%2B``: a query string reads a ``+``
-as a space, and such a key is refused. That permissive decoding is available
+as a space, so a key containing a raw ``+`` is refused. That permissive decoding is available
 on its own as :class:`Symfony\\Component\\KeyManagement\\Base64UrlSafe`.
 
 The directory schemes take an optional ``ext`` option restricting the
@@ -200,13 +200,16 @@ sovereign cloud needs an ``AzureKeyVault`` built by hand, with a
 ``ClientCredentialsTokenProvider`` given the authority of that cloud as its
 last argument, and declared with a ``service://`` DSN.
 
-``algorithm`` is the algorithm of encryption and ``wrap_algorithm`` the one
-of key wrapping, both ``RSA-OAEP-256`` by default. Only ``A128GCM``,
-``A192GCM`` and ``A256GCM``, which Managed HSM offers, support AAD. An AEAD
-blob carries its algorithm (``ALG.iv.tag.value``), so a bridge reconfigured
-from AEAD to another algorithm still reads what it wrote. Any other blob is
-read with the algorithm configured, so keep that one as long as such blobs
-exist.
+Azure encrypts and wraps keys through separate operations, each with its own
+permission. Direct calls go through ``encrypt`` and ``decrypt``, under the
+``algorithm`` option. Data keys, including the ones that
+``key-management:rewrap-data-keys`` moves, go through ``wrapKey`` and
+``unwrapKey``, under ``wrap_algorithm``. Both options default to
+``RSA-OAEP-256``. Only ``A128GCM``, ``A192GCM`` and ``A256GCM``, which only
+Managed HSM offers, support AAD. An AEAD blob carries its algorithm
+(``ALG.iv.tag.value``), so a bridge reconfigured from AEAD to another algorithm
+still reads what it wrote. Any other blob is read with the configured
+algorithm, so don't change that option while such blobs exist.
 
 A key id is either ``<name>`` or ``<name>/<version>``, and both segments
 are validated against what Azure accepts, so a malformed id such as
@@ -376,10 +379,10 @@ token would not fix it. Older versions only answer ``permission denied``,
 so the request is not retried.
 
 Every request carries a ``context``, Vault's HKDF input. It is the AAD
-prefixed with a fixed label of the bridge, so that arbitrary bytes, an
-empty AAD included, always give a distinct and non-empty context, which
-is what a key created with ``derived=true`` requires. Such a key is
-therefore usable when no AAD is passed.
+prefixed with a fixed label of the bridge, so that every AAD, an empty one
+included, gives a distinct and non-empty context, which is what a key
+created with ``derived=true`` requires. Such a key is therefore usable when
+no AAD is passed.
 
 A non-empty AAD is refused on a plain symmetric key, because Vault
 ignores a context on a non-derived key rather than rejecting it, which
@@ -392,9 +395,9 @@ what a data key store needs to turn
 :ref:`bind_wrapping_context <key-management-store-binding>` on.
 
 That read is a capability of its own, so a least-privilege token limited to
-the encryption endpoints stops working as soon as an AAD reaches the bridge,
-which happens with direct calls or with ``bind_wrapping_context`` on, not
-with an envelope encrypter alone:
+the encryption endpoints stops working as soon as an AAD reaches the bridge.
+That happens with direct calls passing an AAD and with
+``bind_wrapping_context`` on, but not with an envelope encrypter alone:
 
 .. code-block:: text
 
@@ -404,9 +407,9 @@ with an envelope encrypter alone:
     # only needed with AAD, to tell derived keys from non-derived ones
     path "transit/keys/*"              { capabilities = ["read"] }
 
-With ``convergent_encryption=true``, equal plaintexts encrypted with the
-same AAD give equal ciphertexts, and each AAD value is a convergence scope
-of its own.
+On a key created with ``convergent_encryption=true``, equal plaintexts
+encrypted with the same AAD give equal ciphertexts, so each AAD value is a
+convergence scope of its own.
 
 Scaleway Key Manager
 --------------------
@@ -543,9 +546,9 @@ which ``KeyManagementBundle`` picks up automatically.
 
 The host of these DSNs names a Flysystem storage, and their path is the
 directory of the keys inside it. The storages of `league/flysystem-bundle`_
-are found by their name. A ``FilesystemReader`` service of your own needs
-the ``key_management.flysystem`` tag, with a ``key`` attribute set to that
-name.
+are found by their name. A Flysystem ``FilesystemReader`` service of your own
+needs the ``key_management.flysystem`` tag, with a ``key`` attribute set to
+that name.
 
 .. warning::
 
@@ -560,10 +563,10 @@ name.
 
 The loader keeps each key in memory once it has read it, so a remote store
 is read once per key rather than once per operation. A failed read is not
-kept, so the next lookup tries again. ``reset()`` drops everything. Tag a
-loader you register as a service with ``kernel.reset`` and the ``reset``
-method to do that between requests; a client built from a DSN asks for the
-same with ``reset=1``:
+kept, so the next lookup tries again. ``reset()`` drops everything. To do
+that between requests, tag a loader you register as a service with
+``kernel.reset`` and a ``method`` attribute set to ``reset``; a client built
+from a DSN asks for the same with ``reset=1``:
 
 .. code-block:: text
 

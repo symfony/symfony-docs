@@ -319,8 +319,9 @@ hand in a YAML or PHP service definition:
 
 Four tags are meant for services of your own. ``key_management.client`` adds a
 client to the ones that the profiler and the encrypt, decrypt and data key
-commands know about, under the name its ``key`` attribute gives, the service
-id by default. ``key_management.factory``, which autoconfiguration adds to
+commands know about, under the name given by its ``key`` attribute or, without
+that attribute, under its service id. ``key_management.factory``, which
+autoconfiguration adds to
 every :class:`Symfony\\Component\\KeyManagement\\Factory\\KmsFactoryInterface`,
 makes a DSN scheme of your own available. ``key_management.flysystem`` is
 covered in :ref:`key-management-flysystem` and ``key_management.blind_index``
@@ -334,9 +335,9 @@ Profiling
 When the profiler is enabled, every client, every envelope encrypter and
 the store are traced to record what a request asked of the KMS. No
 plaintext, ciphertext, data key or AAD is recorded. The **Key Management**
-panel adds the operations up by call site, by key or scope and by service:
-how many there were, how many reached the KMS, the bytes in and out and the
-time they took.
+panel groups the operations by call site, by key or scope and by service, and
+shows for each group how many operations there were, how many reached the KMS,
+the bytes in and out and the time they took.
 
 This is where you confirm that a store is doing its job: it shows one
 round trip for many encrypted values rather than one per value.

@@ -42,11 +42,11 @@ database would::
 
 Its ``$maxAgeSeconds`` argument is ``null`` by default, so a key is never
 replaced, and ``0`` replaces it on every call. To check that a key is
-replaced at its real age, also pass a clock, its next argument: a
+replaced at its real age, also pass a clock as the next argument: a
 :class:`Symfony\\Component\\Clock\\MockClock` that the test moves forward,
 or a :class:`Symfony\\Component\\Clock\\Clock`, which follows the global
-clock of :ref:`ClockSensitiveTrait <clock_writing-tests>`. Without one, the
-store reads the time of the system.
+clock of :ref:`ClockSensitiveTrait <clock_writing-tests>`. Without a clock,
+the store uses the system time.
 
 Taking a Provider Down
 ----------------------

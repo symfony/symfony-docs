@@ -78,9 +78,9 @@ of the value is indexed:
 The ``index`` attribute of the tag is the name of the index. It is what an
 entity refers to, and it is also mixed into the derivation, so several
 indexes can share one key without ever giving a value the same tag. With
-``symfony/doctrine-orm-key-management`` installed, the tag gives that name
-to the ``$name`` argument of the service and refuses another one. Without
-that package, pass the name as ``$name`` yourself.
+``symfony/doctrine-orm-key-management`` installed, the tag passes that name
+as the ``$name`` argument of the service, and refuses a service that sets
+another one. Without that package, pass the name as ``$name`` yourself.
 
 .. warning::
 
@@ -126,8 +126,8 @@ indexed by several columns, each under an index of its own.
 
 A ``null`` value gives a ``null`` tag, so the property holding the tag must
 be nullable when the indexed one is. The listener fills the tag of the
-entities that a flush inserts or updates, and no other: the rows written
-before the index existed need a script of your own.
+entities that a flush inserts or updates, and no other: fill the tags of the
+rows written before the index existed with a script of your own.
 
 .. warning::
 

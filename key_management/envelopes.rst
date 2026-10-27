@@ -90,8 +90,8 @@ keys without touching any payload.
 
 A leading byte no shipped format claims is refused exactly where a
 malformed frame is. An encrypted Doctrine column and the decrypt command
-report both the same way, so an attempt at downgrading a payload looks like
-a corrupt value.
+report both cases with the same error, so an attempt at downgrading a payload
+looks like a corrupt value.
 
 Ids are a wire contract: once a format ships, its id and its layout are
 frozen. A different cipher, different lengths, a different layout or

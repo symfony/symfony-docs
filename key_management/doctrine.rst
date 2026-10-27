@@ -158,8 +158,7 @@ the application runs through the front controller, the console (including the
 schema tool and migrations) or the tests. Without DoctrineBundle, the bundle
 registers them when the kernel boots. Registering them doesn't create the store
 or its database connection. Also like the attribute, they require a ``store``
-or a ``default_client`` to be configured; otherwise, the container fails to
-compile.
+or a default client; otherwise, the container fails to compile.
 
 The name is then used like any Doctrine type::
 
@@ -216,25 +215,25 @@ the Doctrine type it wraps, such as ``string``. A value copied to a column with
 another key or another type name is refused. Changing the key or the type name
 of a column therefore means rewriting its values, even when both type names
 resolve to the same PHP class. Neither the name of the encrypted type nor the
-configuration of the wrapped type is authenticated: renaming the type doesn't
-require rewriting, and neither does changing the PHP class behind the type
-name, as long as the new class reads the old values.
+configuration of the wrapped type is authenticated: renaming the encrypted type
+doesn't require rewriting, and neither does changing the PHP class behind the
+wrapped type name, as long as the new class reads the old values.
 
 Two columns using the same key and the same type name can read each other's
 values. Give them different keys or scopes to keep them apart.
 
 Rotating the master key behind a key that keeps its name, such as an alias moved
-to a new key, doesn't require rewriting values. Changing the configured
-``key``, whether an alias, a key name, an ARN or a scope, does, even if the KMS
-can still read the old key.
+to a new key, doesn't require rewriting values. Changing the configured ``key``
+(an alias, a key name, an ARN or a scope) does, even when the KMS can still read
+the old key.
 
 When you build an
 :class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedType`
-yourself, pass the type name as its fourth argument. Only ``null``, the
-default, falls back to the class of the wrapped type, which then changes with
-that class and requires rewriting the values when it is renamed or subclassed.
-Use the ``type`` option of ``key_management.doctrine_dbal.types`` as the name
-when a type you build and a configured one must read each other's values.
+yourself, pass the name of the wrapped type as its fourth argument. With
+``null``, the default, the class of the wrapped type is authenticated instead,
+so renaming or subclassing that class requires rewriting the values. To make a
+type you build and a configured one read each other's values, pass the same
+name as the ``type`` option of ``key_management.doctrine_dbal.types``.
 
 Copied, Deleted and Restored Values
 -----------------------------------
@@ -324,10 +323,10 @@ the stored data keys, so don't leave it out at the same time. Values written
 from then on contain a reference to a stored data key, while older ones keep
 being read through the KMS. Doctrine writes a value again only when it changes,
 so rewrite the old ones with a script of your own that reads and writes each of
-them through the encrypted type. Then turn the option off, since a
-self-contained payload carries its own wrapped data key and skips the scope and
-binding checks of the store. The envelope still authenticates the key and the
-type name of the column.
+them through the encrypted type. Then turn the option off: a self-contained
+payload carries its own wrapped data key and skips the scope and binding checks
+of the store, even though its envelope still authenticates the key and the type
+name of the column.
 
 Re-wrapping those data keys later moves the whole column to another master
 key, or another provider, without touching a single row.
