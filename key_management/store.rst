@@ -226,7 +226,7 @@ unwrap a key whose row has been altered.
 It is off by default for two reasons. A provider that cannot authenticate
 data refuses to wrap anything at all when given some, which rules out the
 sealed box, Azure Key Vault under any ``wrap_algorithm`` but the ``A*GCM``
-ones, a Scaleway key whose usage is ``asymmetric_encryption``, and any Vault
+ones, a Scaleway key whose usage is ``asymmetric_encryption`` and any Vault
 Transit key not created with ``derived=true``.
 And a provider that ignores authenticated data instead of refusing it adds
 no protection, since only the provider ever checks the context.

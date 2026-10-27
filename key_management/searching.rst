@@ -209,8 +209,8 @@ describes, rather than lowercasing it. ``café.example`` written with a
 precomposed ``é``, with an ``e`` followed by a combining accent, in
 uppercase or as ``xn--caf-dma.example`` therefore all share one tag. A
 domain that is not a valid internationalized one is lowercased instead.
-Both projections also trim the surrounding whitespace and take the domain
-after the last ``@``.
+The two email projections also trim the surrounding whitespace and take the
+domain after the last ``@``.
 
 ``Email`` leaves the local part alone because the standard says the
 receiving server owns it. Most providers treat it as case-insensitive in

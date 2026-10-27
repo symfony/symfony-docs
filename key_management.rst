@@ -334,9 +334,9 @@ Profiling
 When the profiler is enabled, every client, every envelope encrypter and
 the store are traced to record what a request asked of the KMS. No
 plaintext, ciphertext, data key or AAD is recorded. The **Key Management**
-panel adds the operations up by call site, by key or scope, and by
-service: how many there were, how many reached the KMS, the bytes in and
-out and the time they took.
+panel adds the operations up by call site, by key or scope and by service:
+how many there were, how many reached the KMS, the bytes in and out and the
+time they took.
 
 This is where you confirm that a store is doing its job: it shows one
 round trip for many encrypted values rather than one per value.
