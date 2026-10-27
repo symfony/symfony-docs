@@ -198,6 +198,27 @@ applied but the constraints defined in ``otherwise`` option (if provided) will b
     object that provides information such as the currently validated class, the
     name of the currently validated property, the list of violations, etc.
 
+When the :doc:`Security component </security>` is available, you can also
+use security functions in the expression, such as ``is_granted()``,
+``is_authenticated()``, ``is_fully_authenticated()`` and
+``is_remember_me()``::
+
+    // src/Model/SomeClass.php
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class SomeClass
+    {
+        #[Assert\When(
+            expression: 'is_granted("ROLE_ADMIN")',
+            constraints: [new Assert\NotBlank()],
+        )]
+        private ?string $adminOnlyField;
+    }
+
+.. versionadded:: 8.1
+
+    The support for security functions in ``When`` expressions was introduced in Symfony 8.1
+
 **When using a closure**, the first argument is the object being validated.
 
 .. note::
