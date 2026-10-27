@@ -23,7 +23,7 @@ XChaCha20-Poly1305-IETF with a random 24-byte nonce. Every key the loader
 returns must be exactly 32 bytes::
 
     $key = sodium_crypto_aead_xchacha20poly1305_ietf_keygen();
-    file_put_contents('/etc/kms/app-key', $key);
+    file_put_contents('/etc/kms/app-key.bin', $key);
 
 This is the recommended local backend when ``ext-sodium`` is available. It
 ships with PHP but is sometimes disabled at compile time.
@@ -75,8 +75,10 @@ Two implementations ship:
     passed through environment variables.
 
 :class:`Symfony\\Component\\KeyManagement\\KeyLoader\\FilesystemKeyLoader`
-    Reads files from a local directory. The key id is the file basename; an
-    extension can be configured (``.bin``, ``.key``, ...).
+    Reads each key from the file named after its key id in a local
+    directory, subdirectories included, with an optional extension
+    (``.bin``, ``.key``, ...). The file holds the raw key, with no encoding
+    and no trailing newline.
 
 To read keys from S3, FTP, Azure Blob or anything else Flysystem supports,
 see :ref:`key-management-flysystem`.
@@ -92,10 +94,11 @@ The inline schemes take the keys as ``keys[<id>]=<base64>`` query options:
 
     sodium://?keys[app-key]=BASE64_ENCODED_32_BYTES&keys[other]=BASE64_ENCODED_32_BYTES
 
-Both standard base64 and the URL-safe variant of RFC 4648 section 5 are
-accepted, with or without padding, so a DSN written by hand needs no
-``urlencode()`` step. That permissive decoding is available on its own as
-:class:`Symfony\\Component\\KeyManagement\\Base64UrlSafe`.
+Written in the URL-safe base64 of RFC 4648 section 5, with or without
+padding, a key needs no ``urlencode()`` step. Standard base64 is accepted
+too, as long as each ``+`` is written ``%2B``: a query string reads a ``+``
+as a space, and such a key is refused. That permissive decoding is available
+on its own as :class:`Symfony\\Component\\KeyManagement\\Base64UrlSafe`.
 
 The directory schemes take an optional ``ext`` option restricting the
 loader to one file extension:
@@ -114,12 +117,20 @@ and data key creation all happen inside AWS; the master key never reaches
 the application::
 
     use AsyncAws\Core\Configuration;
+    use AsyncAws\Core\HttpClient\AwsHttpClientFactory;
     use AsyncAws\Kms\KmsClient;
+    use Symfony\Component\HttpClient\HttpClient;
     use Symfony\Component\KeyManagement\Bridge\AwsKms\AwsKms;
 
-    $kms = new AwsKms(new KmsClient(Configuration::create([
-        'region' => 'eu-west-1',
-    ])));
+    $kms = new AwsKms(new KmsClient(
+        Configuration::create(['region' => 'eu-west-1']),
+        null,
+        // a redirect would send the credentials and the plaintext again, and
+        // the retryable client retries the throttled calls
+        AwsHttpClientFactory::createRetryableClient(
+            HttpClient::create(['max_redirects' => 0])
+        ),
+    ));
 
     // a key ARN, a key id or an alias
     $ciphertext = $kms->encrypt('alias/app-key', 'hello world');
@@ -139,6 +150,11 @@ option applies to custom hosts only and defaults to ``https``; pass
 (``aws-kms://localhost:4566?region=eu-west-1&scheme=http``). Combining it
 with the ``default`` host is refused.
 
+The client built from the DSN talks through the ``http_client`` service of
+the application, which ``async-aws`` uses as is: throttled calls are
+retried only when that client has a
+:ref:`retry strategy <http-client-retry-failed-requests>`.
+
 Every ciphertext records the key ARN that AWS reported rather than the id
 it was given. An alias moved to a new key, which is how a rotation is
 usually performed by hand, therefore leaves older ciphertexts readable:
@@ -147,7 +163,7 @@ the blob.
 
 AWS exposes AAD as its ``EncryptionContext``, an ``array<string, string>``.
 To keep the opaque-bytes contract of ``EncrypterInterface``, this bridge
-stores the AAD as one base64-encoded entry under a fixed key. Other tools
+stores the AAD, base64-encoded, under the fixed ``aad`` key. Other tools
 decrypting such a ciphertext must therefore pass the same encryption
 context.
 
@@ -178,15 +194,19 @@ DSN scheme:
 
 The host is the full vault DNS name; use ``<name>.managedhsm.azure.net``
 for Managed HSM. The audience is inferred from that suffix, and
-``audience=...`` overrides it for the sovereign clouds whose audience
-differs from the commercial one. ``api_version`` defaults to ``7.4``.
+``audience=...`` overrides it. ``api_version`` defaults to ``7.4``. The
+token is always requested from the public Microsoft Entra authority, so a
+sovereign cloud needs an ``AzureKeyVault`` built by hand, with a
+``ClientCredentialsTokenProvider`` given the authority of that cloud as its
+last argument, and declared with a ``service://`` DSN.
 
-The default algorithm is ``RSA-OAEP-256`` for both encryption and key
-wrapping. ``A256GCM``, which supports AAD natively, and ``A256KW`` are
-accepted on Managed HSM when named explicitly. Decryption survives an
-algorithm change, because an AEAD blob carries its algorithm
-(``ALG.iv.tag.value``): a bridge reconfigured from AEAD to RSA still reads
-what it wrote.
+``algorithm`` is the algorithm of encryption and ``wrap_algorithm`` the one
+of key wrapping, both ``RSA-OAEP-256`` by default. Only ``A128GCM``,
+``A192GCM`` and ``A256GCM``, which Managed HSM offers, support AAD. An AEAD
+blob carries its algorithm (``ALG.iv.tag.value``), so a bridge reconfigured
+from AEAD to another algorithm still reads what it wrote. Any other blob is
+read with the algorithm configured, so keep that one as long as such blobs
+exist.
 
 A key id is either ``<name>`` or ``<name>/<version>``, and both segments
 are validated against what Azure accepts, so a malformed id such as
@@ -247,7 +267,7 @@ GCE, GKE or Cloud Run, or Workload Identity Federation, implement
 
 Cloud KMS has no ``GenerateDataKey`` primitive, so the bridge draws a data
 key locally with ``random_bytes()`` and wraps it through the regular
-encryption endpoint, as the Azure bridge does.
+encryption endpoint.
 
 .. _key-management-token-refresh:
 
@@ -301,7 +321,8 @@ DSN scheme:
 
     hashicorp-vault-transit://<token>@<host>[:<port>][/<path>][?mount=<mount>&namespace=<ns>&scheme=http&timeout=<seconds>&max_duration=<seconds>]
 
-The mount point defaults to ``transit``. ``namespace`` maps to Vault's
+The path is the prefix of the Vault API, ``/v1/`` by default, and the mount
+point defaults to ``transit``. ``namespace`` maps to Vault's
 ``X-Vault-Namespace`` header, for Vault Enterprise. ``scheme`` defaults to
 ``https``; pass ``scheme=http`` for a local dev server.
 
@@ -487,9 +508,9 @@ The bridge always verifies the server certificate; no option turns that off.
 ``ca`` is the certificate authority file to verify it against (the system
 trust store by default) and ``peer_name`` is the expected server name (the
 DSN host by default). ``passphrase`` unlocks an encrypted private key,
-``timeout`` is the connection timeout in seconds (``10`` by default) and
-``iv_length`` is the length in bytes of the AES-GCM IV used for new
-ciphertexts (``12`` by default).
+``timeout`` is the time in seconds an operation may take, from the connection
+to the response (``10`` by default), and ``iv_length`` is the length in bytes
+of the AES-GCM IV used for new ciphertexts (``12`` by default).
 
 Provision an active AES key, with Encrypt and Decrypt in its Cryptographic
 Usage Mask, and use its Unique Identifier as the key id.
@@ -520,6 +541,12 @@ Storage and so on. It also registers three DSN schemes,
 ``sodium+fly://``, ``openssl+fly://`` and ``sodium-sealed-box+fly://``,
 which ``KeyManagementBundle`` picks up automatically.
 
+The host of these DSNs names a Flysystem storage, and their path is the
+directory of the keys inside it. The storages of `league/flysystem-bundle`_
+are found by their name. A ``FilesystemReader`` service of your own needs
+the ``key_management.flysystem`` tag, with a ``key`` attribute set to that
+name.
+
 .. warning::
 
     An object store is a place to keep key material, not a key manager.
@@ -533,10 +560,10 @@ which ``KeyManagementBundle`` picks up automatically.
 
 The loader keeps each key in memory once it has read it, so a remote store
 is read once per key rather than once per operation. A failed read is not
-kept, so the next lookup tries again. ``reset()`` drops everything; a
-loader registered as a service does that between requests through the
-``kernel.reset`` tag, and a client built from a DSN asks for the same with
-``reset=1``:
+kept, so the next lookup tries again. ``reset()`` drops everything. Tag a
+loader you register as a service with ``kernel.reset`` and the ``reset``
+method to do that between requests; a client built from a DSN asks for the
+same with ``reset=1``:
 
 .. code-block:: text
 
@@ -554,3 +581,4 @@ keeps what it read.
 .. _Scaleway Key Manager: https://www.scaleway.com/en/docs/key-manager/
 .. _KMIP: https://www.oasis-open.org/committees/kmip/
 .. _league/flysystem: https://flysystem.thephpleague.com/
+.. _league/flysystem-bundle: https://github.com/thephpleague/flysystem-bundle
