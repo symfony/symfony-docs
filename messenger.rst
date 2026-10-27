@@ -6471,8 +6471,15 @@ Other Middlewares
 
 Add the ``router_context`` middleware if you need to generate absolute URLs in
 the consumer (e.g. render a template with links). This middleware stores the
-original request context (i.e. the host, the HTTP port, etc.) which is needed
-when building absolute URLs.
+original request context (e.g. the host, the HTTP port, etc.) which is needed
+when building absolute URLs. It also stores the request context parameters
+(e.g. ``_locale``), so the URLs generated in the consumer use the same locale
+as the request that dispatched the message.
+
+.. versionadded:: 8.2
+
+    Storing the request context parameters in the ``router_context`` middleware
+    was introduced in Symfony 8.2.
 
 Add the ``validation`` middleware if you need to validate the message
 object using the :doc:`Validator component </validation>` before handling it.
