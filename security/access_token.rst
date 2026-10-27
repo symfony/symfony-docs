@@ -370,7 +370,9 @@ already imports it. Otherwise, import it yourself:
 
 Clients must be able to get this document without a token, so don't add any
 :ref:`access control rule <security-authorization-access-control>` that
-requires authentication for its path.
+requires authentication for its path. Symfony serves it with the
+``Access-Control-Allow-Origin: *`` header, so clients that run in a browser
+can read it from any origin.
 
 If your API runs at ``https://api.example.com``, a
 ``GET /.well-known/oauth-protected-resource`` request now returns:
@@ -400,6 +402,14 @@ error details:
 .. code-block:: text
 
     WWW-Authenticate: Bearer realm="My API",error="invalid_token",error_description="Invalid credentials.",resource_metadata="https://api.example.com/.well-known/oauth-protected-resource"
+
+Clients that run in a browser on another origin can only read the responses
+of your API if your API sends CORS headers. Symfony doesn't add them because
+only your application knows which origins can call your API. If you use
+`NelmioCorsBundle`_, add ``WWW-Authenticate`` to its ``expose_headers`` option
+so these clients can read the ``resource_metadata`` URL. The bundle also
+answers preflight requests before the firewall runs, so your access control
+rules don't reject them.
 
 These are the options of ``resource_metadata``. Each of them is a metadata
 parameter defined by `RFC 9728`_ and it's left out of the document when it
@@ -2134,6 +2144,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`Central Authentication Service (CAS)`: https://en.wikipedia.org/wiki/Central_Authentication_Service
 .. _`GMP PHP extension`: https://www.php.net/manual/en/book.gmp.php
 .. _`JSON Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
+.. _`NelmioCorsBundle`: https://symfony.com/bundles/NelmioCorsBundle/current/index.html
 .. _`OpenID Connect (OIDC)`: https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)
 .. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
