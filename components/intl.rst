@@ -448,6 +448,25 @@ internal Symfony Intl data files using the PHP ``zlib`` extension:
     # adjust the path to the 'compress' binary based on your application installation
     $ php ./vendor/symfony/intl/Resources/bin/compress
 
+If your application only uses some locales, you can also remove the data of all
+the other locales. Run the ``prune`` script after ``composer install`` too and
+pass it the locales to keep:
+
+.. code-block:: terminal
+
+    # keeps 'fr', 'de', their regional variants (e.g. 'fr_CA') and English
+    $ php ./vendor/symfony/intl/Resources/bin/prune fr de
+
+The script always keeps the English data because English is the fallback locale
+used when a name isn't translated. If you ask for names in a removed locale, you
+get the English names (e.g. ``Countries::getName('FR', 'it')`` returns ``France``
+instead of ``Francia``). Pruning doesn't change the list of valid codes, so
+``Locales::exists('it')`` still returns ``true``.
+
+.. versionadded:: 8.2
+
+    The ``prune`` script was introduced in Symfony 8.2.
+
 Learn more
 ----------
 
