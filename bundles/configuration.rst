@@ -466,9 +466,6 @@ This happens after all bundles have
 any of them is loaded, so the configuration that other bundles prepend under
 the old key is forwarded too.
 
-If an application uses both keys, the values of the old key are merged first, so
-the values defined under ``acme_bluesky`` take precedence.
-
 The alias node normalizes the value before forwarding it, so it can keep
 accepting a shorthand of the old section. For example, to accept a string as
 the value of the ``handle`` option::
