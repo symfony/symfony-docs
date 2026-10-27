@@ -506,6 +506,10 @@ for autoconfiguration. Any class using these attributes will have tags applied
 to them. Autoconfiguration attributes are also parsed on abstract classes when
 loading services from a resource.
 
+Run the ``debug:autoconfiguration`` command to list all the classes,
+interfaces and attributes that trigger autoconfiguration in your application
+(see :ref:`how to debug the container <container-debug-container>`).
+
 .. _services-constructor-injection:
 
 Injecting Services/Config into a Service
@@ -1819,6 +1823,17 @@ which is useful to debug dependency injection issues:
 
     # pass a search term to filter the results
     $ php bin/console debug:autowiring logger
+
+    # shows the classes, interfaces and attributes that trigger autoconfiguration
+    # and the tags, method calls and bindings that each of them adds
+    $ php bin/console debug:autoconfiguration
+
+    # pass a search term to filter the results (e.g. by tag name)
+    $ php bin/console debug:autoconfiguration kernel.reset
+
+.. versionadded:: 8.2
+
+    The ``debug:autoconfiguration`` command was introduced in Symfony 8.2.
 
 Linting Service Definitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
