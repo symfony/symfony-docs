@@ -676,3 +676,4 @@
 /components/console/helpers/table /console/helpers/table
 /components/console/helpers/tree /console/helpers/tree
 /components/validator/resources /validation#validation-metadata-loaders
+/components/key-management /key_management
