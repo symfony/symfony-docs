@@ -1300,9 +1300,9 @@ Serializing Controller Return Values Automatically
 
 Instead of manually calling the serializer and building a response, you can add
 the :class:`Symfony\\Component\\HttpKernel\\Attribute\\Serialize` attribute to
-your controller method. The controller can then return any object or array, and
-Symfony will serialize it automatically based on the request format (defaulting
-to JSON)::
+your controller method or class. The controller can then return any object or
+array, and Symfony will serialize it automatically based on the request format
+(defaulting to JSON)::
 
     use Symfony\Component\HttpKernel\Attribute\Serialize;
 
@@ -1329,6 +1329,25 @@ You can also customize the HTTP status code, headers, and serialization context:
             return new ProductCreated(1);
         }
     }
+
+If you add the attribute to the controller class, it applies to all the actions
+of that class. This is useful for invokable controllers::
+
+    use Symfony\Component\HttpKernel\Attribute\Serialize;
+
+    #[Serialize(code: 201, context: ['groups' => ['read']])]
+    class CreateProductController
+    {
+        public function __invoke(): ProductCreated
+        {
+            // ... create the product
+
+            return new ProductCreated(1);
+        }
+    }
+
+If both the class and the method define the attribute, the method attribute
+takes precedence.
 
 The ``#[Serialize]`` attribute accepts the following arguments:
 
