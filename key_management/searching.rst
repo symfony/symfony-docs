@@ -77,14 +77,17 @@ of the value is indexed:
 
 The ``index`` attribute of the tag is the name of the index. It is what an
 entity refers to, and it is also mixed into the derivation, so several
-indexes can share one key without ever giving a value the same tag. The
-service must not pass a ``$name`` argument of its own; the tag provides it.
+indexes can share one key without ever giving a value the same tag. With
+``symfony/doctrine-orm-key-management`` installed, the tag gives that name
+to the ``$name`` argument of the service and refuses another one. Without
+that package, pass the name as ``$name`` yourself.
 
 .. warning::
 
-    That key must never be replaced. Every tag already written was derived
-    under it, and a new key matches none of them. Replacing it means
-    recomputing every tag, which means reading and rewriting every row.
+    That key must never be replaced, and the index must never be renamed.
+    Every tag already written was derived under both, and a new key or a new
+    name matches none of them. Changing either means recomputing every tag,
+    which means reading and rewriting every row.
 
 .. _key-management-blind-index-doctrine:
 
@@ -120,6 +123,11 @@ second one is the name of the index, as set in the ``index`` attribute of
 its tag. It goes on the column
 holding the tag rather than on the source property, so a value can be
 indexed by several columns, each under an index of its own.
+
+A ``null`` value gives a ``null`` tag, so the property holding the tag must
+be nullable when the indexed one is. The listener fills the tag of the
+entities that a flush inserts or updates, and no other: the rows written
+before the index existed need a script of your own.
 
 .. warning::
 
@@ -177,10 +185,10 @@ Choosing a Projection
 ---------------------
 
 A projection decides which part of a value is indexed, both when writing
-the tag and when searching for it. It is a class rather than a step each call site performs,
-because a tag computed on a trimmed value and searched on an untrimmed one
-silently matches nothing, which is the failure a blind index exists to
-avoid. Three ship with the component:
+the tag and when searching for it. It is a class rather than a step each
+call site performs, because a tag computed on a trimmed value and searched
+on an untrimmed one silently matches nothing, which is the failure a blind
+index exists to avoid. Three ship with the component:
 
 :class:`Symfony\\Component\\KeyManagement\\BlindIndex\\Projection\\Verbatim`
     Indexes the value byte for byte. ``Ada`` and ``ada`` are then two
@@ -201,6 +209,8 @@ describes, rather than lowercasing it. ``café.example`` written with a
 precomposed ``é``, with an ``e`` followed by a combining accent, in
 uppercase or as ``xn--caf-dma.example`` therefore all share one tag. A
 domain that is not a valid internationalized one is lowercased instead.
+Both projections also trim the surrounding whitespace and take the domain
+after the last ``@``.
 
 ``Email`` leaves the local part alone because the standard says the
 receiving server owns it. Most providers treat it as case-insensitive in
@@ -264,12 +274,14 @@ It takes a reference, not a scope, because the key behind a scope is
 replaced as it ages and no tag already written would match the new one.
 Read the reference once and record it::
 
-    // once, in a script or a migration
-    $reference = $store->current('blind-index/tenant-42')->reference;
+    // once, in a script or a migration; the reference is 16 binary bytes
+    $reference = base64_encode($store->current('blind-index/tenant-42')->reference);
 
-Then pass it, in place of ``$kms`` and ``$wrappedKey``, as the ``$store``
-and ``$reference`` arguments of the service. Everything else (the service
-tag, the projection and the attribute) stays the same.
+Then pass the ``key_management.store`` service and that reference, decoded
+by the ``base64:`` environment variable processor, as the ``$store`` and
+``$reference`` arguments of the service, in place of ``$kms`` and
+``$wrappedKey``. Everything else (the service tag, the projection and the
+attribute) stays the same.
 
 Choosing the Keyed Function
 ---------------------------
@@ -278,7 +290,8 @@ A tag is 32 bytes, which
 :class:`Symfony\\Component\\KeyManagement\\BlindIndex\\AlgorithmInterface`
 fixes and the component checks on every derivation, since a column sized
 once would truncate a wider one and a truncated tag matches rows that do
-not hold the value.
+not hold the value. ``of()`` and ``allOf()`` return each tag as 64
+hexadecimal characters, hence the ``length: 64`` of the column holding it.
 
 :class:`Symfony\\Component\\KeyManagement\\BlindIndex\\HmacSha256` is the
 default and needs nothing beyond what PHP always has.
