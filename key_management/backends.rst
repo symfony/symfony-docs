@@ -496,13 +496,16 @@ Usage Mask, and use its Unique Identifier as the key id.
 
 A whole KMIP message must fit in 16 MiB, headers included. Direct encryption
 sends the plaintext to the server, so it is capped well below that. Envelope
-encryption is not, since only the data key crosses the network. Each
-operation opens its own TLS connection, which a
-:doc:`data key store </key_management/store>` makes much less frequent.
+encryption with :class:`Symfony\\Component\\KeyManagement\\EnvelopeEncrypter`
+is not, since only the data key crosses the network. Each operation opens its
+own TLS connection, which a :doc:`data key store </key_management/store>`
+makes much less frequent.
 
 Some servers report a bad authentication tag as a generic failure. PyKMIP,
 for instance, answers ``General Failure``, so the bridge throws a
-``RuntimeException`` instead of a ``DecryptionFailedException``.
+:class:`Symfony\\Component\\KeyManagement\\Exception\\RuntimeException`
+instead of a
+:class:`Symfony\\Component\\KeyManagement\\Exception\\DecryptionFailedException`.
 
 .. _key-management-flysystem:
 
