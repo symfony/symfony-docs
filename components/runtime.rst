@@ -345,6 +345,9 @@ The following options are supported by the ``SymfonyRuntime``:
     To disable looking for ``.env`` files.
 ``dotenv_path`` (default: ``.env``)
     To define the path of dot-env files.
+``dotenv_extra_paths`` (default: ``[]``)
+    To define the paths (relative to the project directory) of additional
+    dot-env files to load after the ``.env`` files (e.g. ``[".env.extra"]``).
 ``dotenv_overload`` (default: ``false``)
     To tell Dotenv whether to override ``.env`` vars with ``.env.local`` (or other ``.env.*`` files)
 ``use_putenv``
@@ -355,6 +358,10 @@ The following options are supported by the ``SymfonyRuntime``:
     To define the project directory relative to the parent directory of your ``composer.json`` file.
 ``test_envs`` (default: ``["test"]``)
     To define the names of the test envs.
+
+.. versionadded:: 7.1
+
+    The ``dotenv_extra_paths`` option was introduced in Symfony 7.1.
 
 .. versionadded:: 7.4
 
