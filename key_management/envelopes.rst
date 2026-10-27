@@ -50,11 +50,13 @@ can refuse the ones written under another key::
 List the key ids that your backend reports, as explained above. Add the new ARN
 before you move an AWS alias, and compare only the name part of an Azure
 ``name/version`` id. The check doesn't help with a sealed box, since anyone
-holding its public key can write under the expected key id. Encrypted Doctrine
-columns don't run it either. Authenticate the value separately when writes must
-be trusted. A payload that refers to a
-:doc:`data key store </key_management/store>` doesn't have this problem, since
-the store checks every key with a secret.
+holding its public key can write under the expected key id. Nor does it help
+with a :ref:`composite client <key-management-composite>`: its envelopes
+record the key id passed to the call, while each member reads the key id
+stored in its own wrapping. Encrypted Doctrine columns don't run it either.
+Authenticate the value separately when writes must be trusted. A payload
+that refers to a :doc:`data key store </key_management/store>` doesn't have
+this problem, since the store checks every key with a secret.
 
 .. _key-management-wire-format:
 
@@ -87,8 +89,9 @@ the reference rather than the wrapping, which is what lets the store re-wrap its
 keys without touching any payload.
 
 A leading byte no shipped format claims is refused exactly where a
-malformed frame is, and with the same error, so a reader cannot tell an
-attempt at downgrading a payload from a corrupt column.
+malformed frame is. An encrypted Doctrine column and the decrypt command
+report both the same way, so an attempt at downgrading a payload looks like
+a corrupt value.
 
 Ids are a wire contract: once a format ships, its id and its layout are
 frozen. A different cipher, different lengths, a different layout or

@@ -82,7 +82,10 @@ This requires the ``symfony/doctrine-dbal-key-management`` package. The
 Doctrine DBAL table is the only store shipped for production use, and an
 application configures a single one. To keep data keys anywhere else, implement
 :class:`Symfony\\Component\\KeyManagement\\RewrappableDataKeyStoreInterface`
-and register it yourself.
+and build a :class:`Symfony\\Component\\KeyManagement\\StoredEnvelopeEncrypter`
+on it yourself: the ``store`` option, the autowiring aliases it registers and
+the ``key-management:rewrap-data-keys`` command only cover the Doctrine DBAL
+store.
 
 Configuring a store changes what
 :class:`Symfony\\Component\\KeyManagement\\EnvelopeEncrypterInterface` and
@@ -222,9 +225,9 @@ unwrap a key whose row has been altered.
 
 It is off by default for two reasons. A provider that cannot authenticate
 data refuses to wrap anything at all when given some, which rules out the
-sealed box, Azure Key Vault under ``RSA-OAEP-256`` or the ``A*KW``
-algorithms, a Scaleway key whose usage is ``asymmetric_encryption``, and any
-Vault Transit key not created with ``derived=true``.
+sealed box, Azure Key Vault under any ``wrap_algorithm`` but the ``A*GCM``
+ones, a Scaleway key whose usage is ``asymmetric_encryption``, and any Vault
+Transit key not created with ``derived=true``.
 And a provider that ignores authenticated data instead of refusing it adds
 no protection, since only the provider ever checks the context.
 
@@ -285,7 +288,11 @@ Column                        Type              Role
 ``binding``                   ``BINARY(32)``    Ties the key to the ``id`` and ``scope`` of its row
 ============================  ================  ==============================================================
 
-Every query names those six explicitly, so columns of your own are
+Besides its primary key on ``id``, the table has an index on ``scope`` and
+``id``, named ``<table>_scope_idx``, which finds the current key of a scope.
+Declare it in a migration of your own too.
+
+Every query names those six columns explicitly, so columns of your own are
 invisible to the store, as long as they are nullable or have a default.
 
 There is no timestamp column on purpose: a UUIDv7 carries its creation

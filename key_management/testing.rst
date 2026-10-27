@@ -2,7 +2,7 @@ Testing Code That Uses a KMS
 ============================
 
 Three doubles live in the ``Test\`` namespace of the component, for test
-fixtures only. None of them reaches a provider.
+fixtures only. None of them needs a provider.
 
 .. include:: /key_management/_experimental.rst.inc
 
@@ -40,10 +40,13 @@ database would::
 
     $encrypter = new StoredEnvelopeEncrypter(new InMemoryDataKeyStore());
 
-Its ``$maxAgeSeconds`` argument accepts ``0`` to replace the key on every
-call. For other values, it reads the time from the global clock, so a test
-using :ref:`ClockSensitiveTrait <clock_writing-tests>` can move time
-forward and check that a key is replaced at its real age.
+Its ``$maxAgeSeconds`` argument is ``null`` by default, so a key is never
+replaced, and ``0`` replaces it on every call. To check that a key is
+replaced at its real age, also pass a clock, its next argument: a
+:class:`Symfony\\Component\\Clock\\MockClock` that the test moves forward,
+or a :class:`Symfony\\Component\\Clock\\Clock`, which follows the global
+clock of :ref:`ClockSensitiveTrait <clock_writing-tests>`. Without one, the
+store reads the time of the system.
 
 Taking a Provider Down
 ----------------------

@@ -14,6 +14,8 @@ diagnostics to standard error, so you can combine them in a pipeline:
 
 .. code-block:: terminal
 
+    # a value given as an argument shows up in the shell history and in the
+    # process list, so pass a secret through the standard input instead
     $ php bin/console key-management:encrypt app-key 'hello world'
     $ php bin/console key-management:encrypt app-key < secrets.json
     $ php bin/console key-management:decrypt < envelope.b64
@@ -24,7 +26,10 @@ diagnostics to standard error, so you can combine them in a pipeline:
 
 These two commands only work with payloads carrying their own data key.
 The command line has no store to resolve a stored data key with, so read
-those payloads through the application.
+those payloads through the application. Once the application has a
+:doc:`store </key_management/store>`, its envelope interfaces read what
+``key-management:encrypt`` writes only with ``read_self_contained`` on, while
+the envelope encrypter of each client always does.
 
 Creating a Data Key
 -------------------
@@ -54,9 +59,10 @@ payload is read or rewritten:
 
 .. code-block:: terminal
 
-    # see what would move, first
+    # list the keys that would move, first; a dry run contacts no KMS, so it
+    # doesn't check that the keys can be unwrapped
     $ php bin/console key-management:rewrap-data-keys --to=azure \
-        --key-id=my-vault-key --dry-run
+        --key-id=my-vault-key --dry-run -v
 
     # only the keys still wrapped by the old client
     $ php bin/console key-management:rewrap-data-keys --from=aws --to=azure \
