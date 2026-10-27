@@ -1,0 +1,192 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-09-14T08:44:01Z
+
+The component was merged into 8.2, with a few things renamed during the final review round. This page needs updating for them.
+
+**The configuration lives under `key_management`, not `framework.key_management`.** The component ships its own `KeyManagementBundle`, which the FrameworkBundle registers when the package is installed, the way every component bundle works since the FrameworkBundle split. There is no `framework.key_management` alias, so every configuration sample changes shape:
+
+```yaml
+# config/packages/key_management.yaml
+key_management:
+    clients:
+        app: '%env(KMS_DSN)%'
+    store:
+        client: app
+        key_id: 'alias/app-key'
+```
+
+A bare DSN at the root is the single default client, `key_management: 'sodium://?keys[app]=...'`. A `service://<id>` DSN names a client the application registered itself.
+
+**The HashiCorp Vault bridge is renamed.** The package is `symfony/hashicorp-vault-key-management` and its DSN scheme is `hashicorp-vault-transit://`. The old `symfony/vault-key-management` and `vault-transit://` spellings never shipped, so there is nothing to document as a change, they are simply wrong now. The rename disambiguates it from the Azure Key Vault bridge, which the component also ships.
+
+**Injecting a specific client uses the attribute.** Named autowiring aliases matched by parameter name are deprecated since Symfony 8.1, so the documentation should show the target attribute rather than the argument name:
+
+```php
+public function __construct(
+    #[Target('vault')] private EncrypterInterface $encrypter,
+) {
+}
+```
+
+The same target name works for `DecrypterInterface`, `DataKeyGeneratorInterface`, `EnvelopeEncrypterInterface` and `EnvelopeDecrypterInterface`. Without the attribute, the type hint alone resolves to the default client, which is the one named in `default_client` or the only one configured. The store's encrypter answers to `#[Target('stored')]`, and a client cannot be named `stored` while a store is configured.
+
+**Smaller points worth carrying:**
+
+- `DataKeyGeneratorInterface` autowires to the default client, which is what a hand-registered blind index needs.
+- With a store configured, `EnvelopeEncrypterInterface` and `EnvelopeDecrypterInterface` resolve to the store-backed encrypter, with the default client's encrypter behind it so payloads written before the store keep being read. The per-client encrypters stay reachable through their target.
+- The four commands are registered when the Console component is installed. In debug mode the clients, the envelope encrypters and the store are traced for the profiler panel.
+- A blind index over an internationalized email domain wants `idn_to_ascii()` before indexing: folding case does not make two spellings of the same label agree, so the composed and decomposed forms tag differently.
+
+Happy to review a pass over this once it is written.
+
+---------------------------------------------------------------------------
+
+by Spomky at 2026-09-25T19:10:27Z
+
+Rebased on 8.2 and updated to the component as merged. The parts that had drifted since the pages were written:
+
+* the component carries its own `KeyManagementBundle`, so the configuration root is `key_management` rather than `framework.key_management`;
+* the HashiCorp Vault bridge is `symfony/hashicorp-vault-key-management`, its scheme is `hashicorp-vault-transit://` and its class lives under `Bridge\HashiCorpVault\`;
+* a client is autowired by the `$<name>Kms` argument name, not `$<name>KeyManagement`;
+* `store.client` is optional and defaults to the default client, and `store.max_age` takes `0` and `null`.
+
+It also covers the three features merged after the component: `CompositeKms` and its `members` configuration (#23080), the Flysystem key memoization and its `reset=1` option (#23098), and the refresh of a token the KMS rejects with a 401 (#23099). Your review comments are addressed in the threads above.
+
+The **Code Blocks** check fails on `[Missing class]` for every `Symfony\Component\KeyManagement\…` class: `symfony/key-management` has no version published yet, so the test application of `symfony-tools/symfony-application` cannot install it. That job is `continue-on-error`, and the errors should go away once the split repository is published. **Build** and **DOCtor-RST** pass.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-03T05:31:49Z
+
+Heads up: symfony/symfony#66527 adds a sixth column to the table of `DataKeyStore`: `binding`, a `BINARY(32)` HMAC of the reference and the scope, keyed by the data key and checked once the key is unwrapped. It also makes `get()` hand back the keys the store already holds, the way `current()` does, so a row deleted, edited or copied elsewhere is only seen after the next `forget()`.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-07T14:52:52Z
+
+Can you please also list `#[BlindIndexed]` in `reference/attributes.rst`? It'd be a new section after JsonStreamer:
+
+```rst
+KeyManagement
+~~~~~~~~~~~~~
+
+* :ref:`BlindIndexed <key-management-blind-index-doctrine>`
+```
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-10-12T12:39:14Z
+
+Heads up for this page: symfony/symfony#66766 (docs ticket #23256) lets the bundle register the encrypted types itself, so "Encrypted Doctrine Columns" no longer needs the `EncryptedTypesRegistrar` service:
+
+```yaml
+key_management:
+    clients:
+        default: '%env(KMS_DSN)%'
+    store:
+        key_id: 'alias/app-key'
+    doctrine_dbal:
+        types:
+            app_user_email: { type: string, key: 'user.email' }
+```
+
+The types use the encrypter that `EnvelopeEncrypterInterface` resolves to: the store-backed one when `store` is configured (`key` is then a scope), the default client's otherwise (`key` is a master key). The bundle registers them when the kernel boots, so a hand-made `EncryptedTypes` service is only needed for columns using another encrypter.
+
+Happy to send this as a PR to your branch if that's easier for you. 🙂
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-13T14:16:22Z
+
+@Spomky here are the recipes that symfony/symfony#66636 removed from the KeyManagement README. The first one fits in "Data Key Stores", after the paragraph on the AAD. The second one fits in "Envelope Mode".
+
+The example in "Additional Authenticated Data" has the gap that the first recipe fixes. With `$aad = 'tenant=acme'`, a payload of another column of the same tenant still opens.
+
+````markdown
+Refusing a payload written somewhere else
+-----------------------------------------
+
+An envelope says which data key opens it, and whoever can write the column chooses these bytes. A valid payload copied into another column, another tenant or another key scope still finds a valid data key. So the copy opens, unless the reader checks where the payload belongs. You can do this check with the existing API, on both formats.
+
+For a payload written by `StoredEnvelopeEncrypter`, use the AAD. The whole scope uses the same data key, so the data key cannot tell two columns or two tenants apart. The AAD is bound to each payload, so put in it everything the payload must belong to, for example the column and the tenant:
+
+```php
+$aad = 'user.email:tenant:'.$tenantId;
+
+$envelope = $encrypter->encrypt('user.email', $email, $aad);
+$email = $encrypter->decrypt($envelope, $aad);
+```
+
+A payload written for another column or another tenant was sealed with another AAD, so it fails its tag check instead of opening. The reader must compute the AAD by itself, from the row it reads or from the request it serves. Never build the AAD from the envelope, for example from its key id. The envelope would then be checked against itself.
+
+A payload that contains its own wrapped data key also contains the id of its master key. You can check this id before the KMS is called:
+
+```php
+if (null !== $envelope->keyId && !\in_array($envelope->keyId, $expectedKeyIds, true)) {
+    throw new \RuntimeException('This payload was written under another master key.');
+}
+```
+
+This check only refuses payloads written under another master key. For payloads written under the same master key, use the AAD as above. It works on this format too, when the backend can enforce an AAD.
+
+The envelope contains the key id that the backend reports. This is not always the id given to `encrypt()`, and it can change over time:
+
+ * AWS KMS records the ARN of the key behind an alias. This ARN changes when the alias is moved to another key, so add the new ARN to `$expectedKeyIds` before you move the alias.
+ * Azure Key Vault records `name/version` when only a name is given. The version changes each time the key is rotated, so compare `strstr($envelope->keyId, '/', true)` with the name instead.
+
+````
+
+---------------------------------------------------------------------------
+
+by Spomky at 2026-10-13T19:21:07Z
+
+Hi all,
+
+Thank you for your review. I completely revised the documentation and addressed most of your comments.
+This PR now includes not only the main component features but all merged one proposed in the meantime.
+This should be clearer now.
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-10-14T04:59:24Z
+
+Thanks a lot @Spomky! I just went through the new version, and the `doctrine_dbal.types` part is exactly what I had in mind for #23256, so no need for my PR on your branch anymore. One less thing to rebase, which is always good news. 😄
+
+Thanks for all the work on this component and its docs!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-25T08:35:47Z
+
+@Spomky I pushed two commits here to catch the docs up with the component.
+The first one follows symfony/symfony#67408, which removes the deterministic mode and adds `secret` and `allowed_clients` to the store.
+It also says what envelopes and stored keys authenticate.
+The second one covers what was merged after your rework, like the automatic scope of `#[Encrypted]` and the registration of the types per connection.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-25T14:19:47Z
+
+One more commit, after symfony/symfony#67492.
+The Doctrine page now says that the types of columns that omit their key are found once and kept in the system cache.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-26T07:26:14Z
+
+I pushed one more commit. The Doctrine page now has an example with a two-factor secret, for values that a database writer copies, deletes or puts back.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-26T07:58:51Z
+
+One more commit, after symfony/symfony#67510. The rewrap examples no longer pass `--to` and `--key-id` when they re-wrap the keys under the configuration of the store, since that's now the default.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-10-27T09:53:13Z
+
+Let's merge this one "as is" and we can then merge all the recent PRs that document the new additions done to the component.
+
+Florent (and reviewers) thanks for this colossal contribution 🙇
