@@ -354,20 +354,26 @@ such as a policy lacking a capability, is reported as it is, since a new
 token would not fix it. Older versions only answer ``permission denied``,
 so the request is not retried.
 
-The ``$aad`` argument is passed as Vault's ``context``, its HKDF context.
-It works on a key created with ``derived=true`` and is refused on a plain
-symmetric key, because Vault ignores a context on a non-derived key rather
-than rejecting it, which would let a ciphertext bound to one tenant decrypt
-under another. The bridge therefore reads the key configuration once per
-key whenever the AAD is non-empty, and throws
+Every request carries a ``context``, Vault's HKDF input. It is the AAD
+prefixed with a fixed label of the bridge, so that arbitrary bytes, an
+empty AAD included, always give a distinct and non-empty context, which
+is what a key created with ``derived=true`` requires. Such a key is
+therefore usable when no AAD is passed.
+
+A non-empty AAD is refused on a plain symmetric key, because Vault
+ignores a context on a non-derived key rather than rejecting it, which
+would let a ciphertext bound to one tenant decrypt under another. The
+bridge therefore reads the key configuration once per key whenever the
+AAD is non-empty, and throws
 :class:`Symfony\\Component\\KeyManagement\\Exception\\UnsupportedOperationException`
 when the key cannot enforce it. A key created with ``derived=true`` is also
 what a data key store needs to turn
 :ref:`bind_wrapping_context <key-management-store-binding>` on.
 
-That read needs a capability of its own. A least-privilege token limited to
-the encryption endpoints stops working as soon as an AAD is passed, so its
-policy must include it:
+That read is a capability of its own, so a least-privilege token limited to
+the encryption endpoints stops working as soon as an AAD reaches the bridge,
+which happens with direct calls or with ``bind_wrapping_context`` on, not
+with an envelope encrypter alone:
 
 .. code-block:: text
 
@@ -376,6 +382,10 @@ policy must include it:
     path "transit/datakey/plaintext/*" { capabilities = ["update"] }
     # only needed with AAD, to tell derived keys from non-derived ones
     path "transit/keys/*"              { capabilities = ["read"] }
+
+With ``convergent_encryption=true``, equal plaintexts encrypted with the
+same AAD give equal ciphertexts, and each AAD value is a convergence scope
+of its own.
 
 Scaleway Key Manager
 --------------------

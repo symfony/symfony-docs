@@ -228,11 +228,18 @@ AAD is opaque bytes. Structured context has to be serialized to a stable
 form first, such as JSON with sorted keys, or two equal contexts will not
 produce equal bytes. A backend that cannot enforce AAD throws
 :class:`Symfony\\Component\\KeyManagement\\Exception\\UnsupportedOperationException`
-on a non-empty value rather than ignoring it.
+on a non-empty value when you call it directly, rather than ignoring it.
 
 In envelope mode, the local cipher authenticates the AAD and the KMS never
 sees it. A mismatch is therefore refused on every backend, including the
 ones that cannot authenticate data.
+
+For the same reason, a self-contained envelope cannot rely on a KMS policy
+conditioned on the AAD, such as the ``kms:EncryptionContext`` condition of AWS
+KMS. A :doc:`data key store </key_management/store>` with
+:ref:`bind_wrapping_context <key-management-store-binding>` does pass a context
+to the KMS, but it is the reference and the scope of the stored key, not your
+AAD.
 
 Choosing a Client
 ~~~~~~~~~~~~~~~~~

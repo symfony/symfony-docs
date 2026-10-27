@@ -206,11 +206,29 @@ and handing it to the underlying type unchecked would return ``''``,
 ``false`` or ``0`` without authenticating anything.
 
 Each value is authenticated together with the key of its column and the name of
-the Doctrine type it wraps. A value copied to a column with another key or
-another type is refused. Changing the key or the type of a column therefore
-means rewriting its values. Renaming the encrypted type doesn't require that.
-Neither does changing the PHP class behind a type name, as long as the new class
-reads the old values.
+the Doctrine type it wraps, such as ``string``. A value copied to a column with
+another key or another type name is refused. Changing the key or the type name
+of a column therefore means rewriting its values, even when both type names
+resolve to the same PHP class. Neither the name of the encrypted type nor the
+configuration of the wrapped type is authenticated: renaming the type doesn't
+require rewriting, and neither does changing the PHP class behind the type
+name, as long as the new class reads the old values.
+
+Two columns using the same key and the same type name can read each other's
+values. Give them different keys or scopes to keep them apart.
+
+Rotating the master key behind a key that keeps its name, such as an alias moved
+to a new key, doesn't require rewriting values. Changing the configured
+``key``, whether an alias, a key name, an ARN or a scope, does, even if the KMS
+can still read the old key.
+
+When you build an
+:class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedType`
+yourself, pass the type name as its fourth argument. Only ``null``, the
+default, falls back to the class of the wrapped type, which then changes with
+that class and requires rewriting the values when it is renamed or subclassed.
+Use the ``type`` option of ``key_management.doctrine_dbal.types`` as the name
+when a type you build and a configured one must read each other's values.
 
 Copied, Deleted and Restored Values
 -----------------------------------
@@ -291,7 +309,9 @@ since both are authenticated with every value. The key then becomes the scope of
 the stored data keys, so don't leave it out at the same time. Values written
 from then on contain a reference to a stored data key, while older ones keep
 being read through the KMS. Once every old value has been rewritten, turn the
-option off.
+option off, since a self-contained payload carries its own wrapped data key and
+skips the scope and binding checks of the store. The envelope still
+authenticates the key and the type name of the column.
 
 Re-wrapping those data keys later moves the whole column to another master
 key, or another provider, without touching a single row.
