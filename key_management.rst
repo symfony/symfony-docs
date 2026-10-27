@@ -159,6 +159,7 @@ Encrypting from a Service
 Type-hint the interface you need and autowiring injects the default
 client::
 
+    use Symfony\Component\KeyManagement\Ciphertext;
     use Symfony\Component\KeyManagement\DecrypterInterface;
     use Symfony\Component\KeyManagement\EncrypterInterface;
 
@@ -170,9 +171,17 @@ client::
         ) {
         }
 
-        public function store(string $token): string
+        public function store(string $token): array
         {
-            return (string) $this->encrypter->encrypt('app-key', $token);
+            $ciphertext = $this->encrypter->encrypt('app-key', $token);
+
+            // keep both: decrypt() needs the key id, not only the bytes
+            return [$ciphertext->blob, $ciphertext->keyId];
+        }
+
+        public function read(string $blob, string $keyId): string
+        {
+            return $this->decrypter->decrypt(new Ciphertext($blob, $keyId));
         }
     }
 
@@ -182,8 +191,8 @@ service that only writes, or only reads, can say so in its signature.
 ``encrypt()`` returns a
 :class:`Symfony\\Component\\KeyManagement\\Ciphertext`, a
 :phpclass:`Stringable` container holding the bytes the provider returned
-together with the key id needed to read them back. Store it as it is:
-casting it to a string yields the raw bytes. That key id is the one the
+together with the key id needed to read them back. Store both, since
+casting it to a string yields the bytes alone. That key id is the one the
 provider reported, which is not always the one that was asked for, since
 AWS KMS resolves an alias to a key ARN and Azure Key Vault pins the version
 it used. Recording the resolved id keeps the ciphertext readable after the
@@ -302,25 +311,32 @@ hand in a YAML or PHP service definition:
     these types when the connection is created, so they can wrap the types of
     ``doctrine.dbal.types``. Without DoctrineBundle, the types are registered
     when the kernel boots. Registered only when some types are declared, in the
-    configuration or through ``#[Encrypted]``.
+    configuration or through an ``#[Encrypted]`` column with an explicit
+    ``key``.
 
 ``key_management.factory``
     Turns a DSN into a backend. Used by the bundle itself.
 
-Two tags are meant for services of your own. ``key_management.client`` adds a
+Four tags are meant for services of your own. ``key_management.client`` adds a
 client to the ones that the profiler and the encrypt, decrypt and data key
-commands know about. ``key_management.blind_index`` is covered in
-:doc:`/key_management/searching`. The data key store doesn't use tagged clients.
-It only trusts the ``client`` and ``allowed_clients`` options of its
+commands know about, under the name its ``key`` attribute gives, the service
+id by default. ``key_management.factory``, which autoconfiguration adds to
+every :class:`Symfony\\Component\\KeyManagement\\Factory\\KmsFactoryInterface`,
+makes a DSN scheme of your own available. ``key_management.flysystem`` is
+covered in :ref:`key-management-flysystem` and ``key_management.blind_index``
+in :doc:`/key_management/searching`. The data key store doesn't use tagged
+clients. It only trusts the ``client`` and ``allowed_clients`` options of its
 configuration.
 
 Profiling
 ---------
 
 When the profiler is enabled, every client, every envelope encrypter and
-the store are decorated to record what a request asked of the KMS. The
-**Key Management** panel then lists each operation: the call site, the key
-or scope it went through, the bytes in and out and the time it took.
+the store are traced to record what a request asked of the KMS. No
+plaintext, ciphertext, data key or AAD is recorded. The **Key Management**
+panel adds the operations up by call site, by key or scope, and by
+service: how many there were, how many reached the KMS, the bytes in and
+out and the time they took.
 
 This is where you confirm that a store is doing its job: it shows one
 round trip for many encrypted values rather than one per value.
