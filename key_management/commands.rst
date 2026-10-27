@@ -77,7 +77,9 @@ the store, which is how an old secret is retired.
 
 Before re-wrapping a row, the command checks its
 :ref:`binding <key-management-store-binding>`, as the store does when reading
-it. The command reports each row that fails this check and leaves it unchanged.
+it. The command reports each row that fails this check, or that its client
+cannot unwrap, and leaves it unchanged. When any row is left unchanged, the
+command fails: fix the reported causes and run it again.
 
 When :ref:`bind_wrapping_context <key-management-store-binding>` is on, the
 command wraps every key with the context of its row. The keys stored before
