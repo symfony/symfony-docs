@@ -88,6 +88,7 @@ File Constraints
 
 * :doc:`File </reference/constraints/File>`
 * :doc:`Image </reference/constraints/Image>`
+* :doc:`Audio </reference/constraints/Audio>`
 * :doc:`Video </reference/constraints/Video>`
 
 Financial and other Number Constraints
