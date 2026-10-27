@@ -241,6 +241,8 @@ KMS. A :doc:`data key store </key_management/store>` with
 to the KMS, but it is the reference and the scope of the stored key, not your
 AAD.
 
+.. _key-management-choosing-client:
+
 Choosing a Client
 ~~~~~~~~~~~~~~~~~
 
