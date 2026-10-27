@@ -44,8 +44,8 @@ an encrypted date, not as an encrypted string.
 
 .. note::
 
-    The attribute requires either a ``store`` or a ``default_client`` to be
-    configured.
+    The attribute requires a ``store`` or a default client: the one that
+    ``default_client`` names, or the only client configured.
 
 An encrypted column cannot be searched. See
 :doc:`/key_management/searching` for how to find a row by a value the
@@ -74,8 +74,10 @@ that hold the values::
 
 The scope follows the physical names that Doctrine resolves, naming strategies,
 embedded prefixes and inherited columns included. Renaming the entity or the
-property keeps existing values readable, but renaming the table or the column
-changes the scope. Before such a rename, set ``key`` to the scope that was
+property keeps existing values readable only while the table and the column
+keep their names, for instance through the ``name`` option of ``#[ORM\Table]``
+and ``#[ORM\Column]``. Renaming the table or the column changes the scope.
+Before such a rename, set ``key`` to the scope that was
 generated for the old names. That scope is
 ``'orm:'.hash('sha256', serialize([$schema, $table, $column]))``, where
 ``$schema`` is ``null`` for a table without a schema.
@@ -91,6 +93,10 @@ the ``cache.key_management.encrypted_columns`` pool, a child of
 ``cache.system``, so the next entity managers load no metadata. In debug mode,
 the types are found again for each entity manager, so that a change to the
 mapping is seen at once.
+
+The bundle handles the columns that omit their key only when it finds at least
+one of them in the directories your services are loaded from. Otherwise,
+loading such a column fails as if no store was configured.
 
 Declaring the Types Yourself
 ----------------------------
@@ -193,11 +199,11 @@ row decrypts it and hands the plaintext back to the underlying type, so the
 property behaves exactly as it did before.
 
 The column is always declared as an unbounded blob, and a ``length`` on the
-mapping is ignored on purpose. An envelope is a hundred bytes or so larger
-than the value it holds, and a column sized after the plaintext would
-truncate it. On MySQL and MariaDB outside strict mode that truncation is a
-warning rather than an error, which would leave a row that no longer
-decrypts.
+mapping is ignored on purpose. An envelope is larger than the value it
+holds, by 47 bytes with a store and by a hundred bytes or more without one,
+and a column sized after the plaintext would truncate it. On MySQL and
+MariaDB outside strict mode that truncation is a warning rather than an
+error, which would leave a row that no longer decrypts.
 
 A column holding zero bytes is refused, like any other value that is not
 an envelope. Encrypting an empty string gives a non-empty envelope, so an
@@ -300,6 +306,14 @@ you need data that the attacker can't change, stored outside the database. A
 version number stored next to the value, or inside it, doesn't help. The
 attacker puts the old version number back together with the old value.
 
+Encrypting a Column That Already Holds Values
+---------------------------------------------
+
+Adding ``#[Encrypted]`` to a column doesn't encrypt the values it already
+holds. The column becomes a blob, and reading a value that isn't an envelope
+fails. Encrypt them in a migration of your own: read each value with the type
+the column had, then write it back through the encrypted type.
+
 Moving a Column to a Stored Data Key
 ------------------------------------
 
@@ -308,10 +322,12 @@ Configure a :doc:`store </key_management/store>` with
 since both are authenticated with every value. The key then becomes the scope of
 the stored data keys, so don't leave it out at the same time. Values written
 from then on contain a reference to a stored data key, while older ones keep
-being read through the KMS. Once every old value has been rewritten, turn the
-option off, since a self-contained payload carries its own wrapped data key and
-skips the scope and binding checks of the store. The envelope still
-authenticates the key and the type name of the column.
+being read through the KMS. Doctrine writes a value again only when it changes,
+so rewrite the old ones with a script of your own that reads and writes each of
+them through the encrypted type. Then turn the option off, since a
+self-contained payload carries its own wrapped data key and skips the scope and
+binding checks of the store. The envelope still authenticates the key and the
+type name of the column.
 
 Re-wrapping those data keys later moves the whole column to another master
 key, or another provider, without touching a single row.
