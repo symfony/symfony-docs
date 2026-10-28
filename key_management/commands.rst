@@ -75,6 +75,19 @@ store: they must be its ``client`` or be listed in its ``allowed_clients``
 option. The command also signs every key again with the first ``secret`` of
 the store, which is how an old secret is retired.
 
+Before re-wrapping a row, the command checks its
+:ref:`binding <key-management-store-binding>`, as the store does when reading
+it. The command reports each row that fails this check and leaves it unchanged.
+
+When :ref:`bind_wrapping_context <key-management-store-binding>` is on, the
+command wraps every key with the context of its row. The keys stored before
+the option was turned on have no context yet, so pass ``--accept-unbound``
+once to re-wrap them:
+
+.. code-block:: terminal
+
+    $ php bin/console key-management:rewrap-data-keys --accept-unbound
+
 Common Options
 --------------
 
@@ -82,7 +95,4 @@ The encrypt, decrypt and data key commands take ``--client`` to pick a
 client, which is required as soon as several are registered and none is
 named ``default``, and ``--aad`` to pass authenticated data.
 ``key-management:generate-data-key`` also takes ``--length``, 16 bytes
-minimum. ``key-management:rewrap-data-keys`` takes ``--accept-unbound``,
-needed once when turning
-:ref:`bind_wrapping_context <key-management-store-binding>` on, since the
-keys already stored carry no context yet.
+minimum.
