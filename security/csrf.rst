@@ -264,6 +264,32 @@ which results in a ``403`` response.
     attribute threw the ``Security\Core`` exception of the same name, which
     extends ``AuthenticationException``.
 
+To handle the invalid token in the controller instead (e.g. to show a message
+and redirect users back to the form), add a nullable argument typed with this
+exception::
+
+    use Symfony\Component\Security\Http\Exception\InvalidCsrfTokenException;
+    // ...
+
+    #[IsCsrfTokenValid('delete-item', tokenKey: 'token')]
+    public function delete(?InvalidCsrfTokenException $invalidToken = null): Response
+    {
+        if (null !== $invalidToken) {
+            $this->addFlash('error', 'Your session expired, please try again.');
+
+            return $this->redirectToRoute('item_list');
+        }
+
+        // ... do something, like deleting an object
+    }
+
+Read more about it in :ref:`controller-attribute-failures`.
+
+.. versionadded:: 8.2
+
+    Passing the invalid token exception to the controller was introduced in
+    Symfony 8.2.
+
 This attribute can also be applied to a controller class. When used this way,
 the CSRF token validation will be applied to **all actions** defined in that
 controller::

@@ -739,33 +739,35 @@ The **order in which attributes are processed** depends on the kernel event:
 Example: Creating a Custom Attribute Listener
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-First, create a PHP attribute::
+First, create a PHP attribute. In this example, the ``#[Honeypot]`` attribute
+rejects the form submissions that fill in a field hidden to humans, which only
+spam bots do::
 
-    // src/Attribute/MyRateLimit.php
+    // src/Attribute/Honeypot.php
     namespace App\Attribute;
 
-    #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-    class MyRateLimit
+    #[\Attribute(\Attribute::TARGET_METHOD)]
+    class Honeypot
     {
         public function __construct(
-            public int $maxRequests = 100,
-            public int $periodInSeconds = 60,
+            public string $field,
         ) {
         }
     }
 
 Then, apply it to a controller::
 
-    // src/Controller/ApiController.php
+    // src/Controller/ContactController.php
     namespace App\Controller;
 
-    use App\Attribute\MyRateLimit;
+    use App\Attribute\Honeypot;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
 
-    class ApiController
+    class ContactController extends AbstractController
     {
-        #[MyRateLimit(maxRequests: 10, periodInSeconds: 30)]
-        public function index(): Response
+        #[Honeypot('website')]
+        public function send(): Response
         {
             // ...
         }
@@ -775,35 +777,116 @@ Finally, create a listener that targets this specific attribute with the
 :class:`Symfony\\Component\\HttpKernel\\Attribute\\AsControllerAttributeListener`
 attribute, passing the kernel event to listen to and the attribute class::
 
-    // src/EventListener/MyRateLimitListener.php
+    // src/EventListener/HoneypotListener.php
     namespace App\EventListener;
 
-    use App\Attribute\MyRateLimit;
+    use App\Attribute\Honeypot;
     use Symfony\Component\HttpKernel\Attribute\AsControllerAttributeListener;
     use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
+    use Symfony\Component\HttpKernel\Event\ControllerAttributeEvent;
+    use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-    #[AsControllerAttributeListener(ControllerArgumentsEvent::class, MyRateLimit::class)]
-    class MyRateLimitListener
+    #[AsControllerAttributeListener(ControllerArgumentsEvent::class, Honeypot::class)]
+    class HoneypotListener
     {
-        public function __invoke(object $event): void
+        public function __invoke(ControllerAttributeEvent $event): void
         {
-            // $event is a ControllerAttributeEvent instance
-            $attribute = $event->attribute; // MyRateLimit instance
+            $attribute = $event->attribute; // Honeypot instance
             $request = $event->kernelEvent->getRequest();
 
-            // implement rate limiting logic using $attribute->maxRequests
-            // and $attribute->periodInSeconds...
+            if ('' !== $request->getPayload()->getString($attribute->field)) {
+                throw new BadRequestHttpException('Spam detected.');
+            }
         }
     }
 
 This listener is only invoked when the resolved controller has the
-``#[MyRateLimit]`` attribute. There is no need to manually inspect the
+``#[Honeypot]`` attribute. There is no need to manually inspect the
 controller for attributes.
 
 .. versionadded:: 8.2
 
     The :class:`Symfony\\Component\\HttpKernel\\Attribute\\AsControllerAttributeListener`
     attribute was introduced in Symfony 8.2.
+
+.. _http-kernel-recoverable-attributes:
+
+Letting Controllers Handle the Failures of Custom Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\RecoverableAttribute`
+    attribute was introduced in Symfony 8.2.
+
+Some built-in attributes, such as ``#[IsCsrfTokenValid]`` or ``#[RateLimit]``,
+can :ref:`pass their failures to the controller <controller-attribute-failures>`
+instead of throwing them. To do the same with your own attributes, add the
+:class:`Symfony\\Component\\HttpKernel\\Attribute\\RecoverableAttribute`
+attribute to their class and list the exceptions that controllers can handle
+(in this example, a custom ``SpamDetectedException`` class)::
+
+    // src/Attribute/Honeypot.php
+    namespace App\Attribute;
+
+    use App\Exception\SpamDetectedException;
+    use Symfony\Component\HttpKernel\Attribute\RecoverableAttribute;
+
+    #[\Attribute(\Attribute::TARGET_METHOD)]
+    #[RecoverableAttribute(SpamDetectedException::class)]
+    class Honeypot
+    {
+        // ...
+    }
+
+When a listener of this attribute throws an exception during the
+``kernel.controller`` or ``kernel.controller_arguments`` events, Symfony looks
+for one of the listed exceptions in the thrown exception and in its previous
+exceptions. This allows the listener to wrap the domain exception in an HTTP
+exception. Controllers that don't handle the failure still get the right HTTP
+error (``400`` in this example), and controllers that handle it get an
+exception that describes what went wrong::
+
+    // src/EventListener/HoneypotListener.php
+    use App\Exception\SpamDetectedException;
+    // ...
+
+    public function __invoke(ControllerAttributeEvent $event): void
+    {
+        // ...
+
+        if ('' !== $request->getPayload()->getString($attribute->field)) {
+            throw new BadRequestHttpException(
+                'Spam detected.',
+                new SpamDetectedException(),
+            );
+        }
+    }
+
+Now, controllers can add a nullable argument typed with
+``SpamDetectedException`` to receive this exception instead of letting Symfony
+throw the ``BadRequestHttpException``. In this example, the controller shows the usual
+confirmation page so bots can't tell that their submission was rejected::
+
+    // src/Controller/ContactController.php
+    use App\Exception\SpamDetectedException;
+    // ...
+
+    #[Honeypot('website')]
+    public function send(?SpamDetectedException $spamDetected = null): Response
+    {
+        if (null === $spamDetected) {
+            // ... send the message
+        }
+
+        return $this->redirectToRoute('contact_sent');
+    }
+
+.. warning::
+
+    Controllers that add this argument run as if the check passed unless they
+    check the argument. Don't make an attribute recoverable when skipping its
+    check is a security risk (that's why ``#[IsGranted]`` isn't recoverable).
 
 Performance
 ~~~~~~~~~~~

@@ -80,6 +80,7 @@ HttpKernel
 * :ref:`MapRequestPayload <controller_map-request>`
 * :ref:`MapUploadedFile <controller_map-uploaded-file>`
 * :ref:`RateLimit <rate-limiter-controller>`
+* :ref:`RecoverableAttribute <http-kernel-recoverable-attributes>`
 * :ref:`Serialize <controller_serialize>`
 * :ref:`ValueResolver <managing-value-resolvers>`
 * :ref:`WithHttpStatus <framework_exceptions>`

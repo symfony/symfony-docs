@@ -533,6 +533,54 @@ define any or because their ``methods`` or ``if`` arguments exclude the
 request), the argument gets its default value or ``null`` if it's nullable.
 Otherwise, Symfony throws an exception.
 
+Handling Exceeded Rate Limits in the Controller
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Passing the exceeded rate limit to the controller was introduced in
+    Symfony 8.2.
+
+When the ``#[RateLimit]`` attribute rejects a request, Symfony throws a
+``TooManyRequestsHttpException``, which results in a ``429`` response. To
+handle the rejection in the controller instead (e.g. to show a message in an
+HTML form), add a nullable argument typed with
+:class:`Symfony\\Component\\RateLimiter\\Exception\\RateLimitExceededException`.
+This exception gives access to the rate limit, such as the time when the
+limiter accepts the next request::
+
+    // src/Controller/ContactController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\RateLimit;
+    use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
+
+    class ContactController extends AbstractController
+    {
+        #[RateLimit('contact_form', methods: ['POST'])]
+        public function send(
+            ?RateLimitExceededException $limitExceeded = null,
+        ): Response {
+            if (null !== $limitExceeded) {
+                $this->addFlash('error', sprintf(
+                    'You sent too many messages. Try again after %s.',
+                    $limitExceeded->getRetryAfter()->format('H:i'),
+                ));
+
+                return $this->redirectToRoute('contact');
+            }
+
+            // ... send the message
+        }
+    }
+
+Symfony still dispatches the ``RateLimitExceededEvent`` explained in the next
+section, and the response still includes the rate limit headers when using the
+``exposeHeaders`` option. Read more about it in
+:ref:`controller-attribute-failures`.
+
 Reacting to Exceeded Rate Limits
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

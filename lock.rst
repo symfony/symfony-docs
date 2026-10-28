@@ -457,6 +457,36 @@ concurrent request::
         }
     }
 
+To handle the rejection in the controller instead (e.g. to show a message in
+an HTML page), add a nullable argument typed with
+:class:`Symfony\\Component\\Lock\\Exception\\LockConflictedException`.
+Symfony then runs the controller without acquiring the lock::
+
+    use Symfony\Component\Lock\Exception\LockConflictedException;
+    // ...
+
+    #[Lock(new Expression('"order-" ~ request.attributes.get("id")'))]
+    #[Route('/order/{id}/edit')]
+    public function edit(
+        int $id,
+        ?LockConflictedException $lockConflict = null,
+    ): Response {
+        if (null !== $lockConflict) {
+            $this->addFlash('error', 'This order is being edited by someone else.');
+
+            return $this->redirectToRoute('order_show', ['id' => $id]);
+        }
+
+        // ...
+    }
+
+Read more about it in :ref:`controller-attribute-failures`.
+
+.. versionadded:: 8.2
+
+    Passing the lock conflict exception to the controller was introduced in
+    Symfony 8.2.
+
 .. _lock-named-locks:
 
 Naming Locks

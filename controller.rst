@@ -362,6 +362,99 @@ error page is shown to the developer (i.e. when you're in "Debug" mode - see
 To customize the error page that's shown to the user, see the
 :doc:`/controller/error_pages` article.
 
+.. _controller-attribute-failures:
+
+Handling the Failures of Controller Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 8.2
+
+    Passing the failures of controller attributes to the controller was
+    introduced in Symfony 8.2.
+
+Some controller attributes check the request before running the controller and
+throw an exception when the check fails. In HTML applications, the resulting
+error page isn't always the best experience. For example, when a signed link
+expires, you may prefer to redirect users and tell them what happened.
+
+To do so, add a nullable controller argument typed with the exception of the
+attribute. When the attribute fails, Symfony passes the exception to that
+argument and runs the controller instead of throwing the exception::
+
+    use Symfony\Component\HttpFoundation\Exception\SignedUriException;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\IsSignatureValid;
+    // ...
+
+    #[IsSignatureValid]
+    public function verifyEmail(?SignedUriException $signatureError = null): Response
+    {
+        if (null !== $signatureError) {
+            $this->addFlash('error', 'This link is invalid or has expired.');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        // ...
+    }
+
+The following attributes can pass their failures to the controller:
+
+* :ref:`#[IsCsrfTokenValid] <csrf-controller-attributes>`:
+  :class:`Symfony\\Component\\Security\\Http\\Exception\\InvalidCsrfTokenException`;
+* :ref:`#[IsSignatureValid] <routing-signed-uris-attribute>`:
+  :class:`Symfony\\Component\\HttpFoundation\\Exception\\SignedUriException`;
+* :ref:`#[Lock] <lock-controller>`:
+  :class:`Symfony\\Component\\Lock\\Exception\\LockConflictedException`;
+* :ref:`#[RateLimit] <rate-limiter-controller>`:
+  :class:`Symfony\\Component\\RateLimiter\\Exception\\RateLimitExceededException`.
+
+The argument only receives the exceptions that its type names. Use a subclass
+to filter them: type the argument with ``?ExpiredSignedUriException`` to handle
+expired links and let Symfony throw the exception of tampered ones. Use a union
+type to handle the failures of several attributes in the same argument::
+
+    use App\Entity\Post;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\RateLimit;
+    use Symfony\Component\RateLimiter\Exception\RateLimitExceededException;
+    use Symfony\Component\Security\Http\Attribute\IsCsrfTokenValid;
+    use Symfony\Component\Security\Http\Exception\InvalidCsrfTokenException;
+    // ...
+
+    #[IsCsrfTokenValid('delete-post')]
+    #[RateLimit('delete_post')]
+    public function delete(
+        Post $post,
+        InvalidCsrfTokenException|RateLimitExceededException|null $failure = null,
+    ): Response {
+        if (null !== $failure) {
+            $this->addFlash('error', match (true) {
+                $failure instanceof InvalidCsrfTokenException => 'Your session expired, please try again.',
+                $failure instanceof RateLimitExceededException => 'Too many deletions, please try again later.',
+            });
+
+            return $this->redirectToRoute('post_show', ['id' => $post->getId()]);
+        }
+
+        // ...
+    }
+
+Keep the following in mind when handling these failures:
+
+* A broad type such as ``?\Exception`` doesn't receive any failure. This way,
+  Symfony still throws the failures that the controller doesn't expect (e.g.
+  the ones of an attribute added to the controller class);
+* Each argument receives a single failure. When several attributes fail,
+  Symfony throws the failures that no other argument can receive;
+* A failure passed to the controller doesn't stop Symfony from checking the
+  other attributes of the controller;
+* ``#[IsGranted]`` never passes its failures to the controller, so an
+  unchecked argument can't bypass access control.
+
+To make your own attributes behave the same way, see
+:ref:`http-kernel-recoverable-attributes`.
+
 .. _controller-request-argument:
 
 The Request Object as a Controller Argument
