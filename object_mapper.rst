@@ -658,22 +658,20 @@ Then, use this service in as many mappings as needed::
     #[Map(target: Product::class)]
     class ProductInput
     {
-        #[Map(target: 'price', transform: RoundingTransformer::class)]
+        #[Map(transform: RoundingTransformer::class)]
         public float $price = 0.0;
 
-        #[Map(target: 'weight', transform: RoundingTransformer::class)]
+        #[Map(transform: RoundingTransformer::class)]
         public float $weight = 0.0;
     }
 
 .. note::
 
-    The transformer receives the ``#[Map]`` attribute exactly as declared, so
-    ``$mapping->target`` is ``null`` when the attribute omits the ``target``
-    option (for example, when the mapping is declared on the target class with
-    ``#[Map(source: ...)]``). That's why the example above sets ``target``
-    explicitly. The ``$mapping`` argument itself is nullable only because an
-    interface cannot add a required parameter to an inherited signature:
-    ObjectMapper always passes it.
+    ``$mapping->source`` and ``$mapping->target`` always contain the source and
+    target property names, even when ``#[Map]`` omits these options or when you
+    declare ``#[Map]`` on the target class. ObjectMapper always passes the
+    ``$mapping`` argument; it's ``null`` only when you call the transformer
+    yourself with three arguments.
 
 Class-Level Transformation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
