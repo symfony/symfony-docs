@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-08-07T11:21:29Z
+
+I don't fully understand this: the escaping is needed for the RST docs or for the actual command invokation?
+
+I think we have other similar examples, so let's verify this and if needed, we might have to fix the other commands too. Thanks.
+
+---------------------------------------------------------------------------
+
+by msphn at 2026-08-07T13:14:24Z
+
+@javiereguiluz for the command invocation.
+
+P.S. Or to be precise, it depends on the shell you execute it in, but the escape did work in ALL, sh, zsh, bash and without escaping it did not.
+
+Escaping it made it work across my pipeline in bitbucket and locally, as well as in all my docker containers.
+
+P.S.S. so it's a more universal command that way.
+
+P.S.S.S. specifically many shells that support globbing struggle with *.
