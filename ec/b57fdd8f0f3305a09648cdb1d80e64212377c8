@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-25T12:44:17Z
+
+@lacatoire I merged the updated #22280 into your branch, since it now drops the deterministic mode removed by symfony/symfony#67408.
+I also removed the matching sentence from the Scaleway section.
+The HTTP client paragraph now links to the shared one in "DSN Schemes", which also lists Scaleway, instead of repeating it.
