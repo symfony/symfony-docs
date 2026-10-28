@@ -418,10 +418,9 @@ has no value:
 ``resource``
     The identifier of the protected resource. It must be an HTTPS URL without
     a fragment, but HTTP is allowed for loopback hosts (``localhost``,
-    ``127.0.0.1``, ``::1``) and hostnames reserved for testing
-    (``*.localhost``, ``*.test``). By default, it's the origin (scheme, host
-    and port) of the request, which is correct when the firewall protects the
-    whole application.
+    ``127.0.0.1``, ``::1`` and ``*.localhost``). By default, it's the origin
+    (scheme, host and port) of the request, which is correct when the firewall
+    protects the whole application.
 
     If the URL includes a path, that path is added after the well-known path,
     as defined in Section 3.1 of the RFC. For example, the metadata of
@@ -430,9 +429,61 @@ has no value:
     firewalls of the same host to publish their own metadata, as long as each
     of them uses a different path.
 
-    Symfony reads this path when compiling the container, so you can't use an
-    environment variable as the whole value. Use it inside the URL instead
-    (e.g. ``https://%env(API_HOST)%/v1``).
+    This option accepts environment variables (e.g.
+    ``https://%env(API_HOST)%/v1``). Symfony resolves them when compiling the
+    container, so you must clear the cache after changing their values.
+
+    When the same application is served from several origins (e.g.
+    ``http://localhost:8000`` and ``https://api.example.com``), set only the
+    path of the resource (e.g. ``/v1``). Symfony prepends the origin of each
+    request to it and serves the metadata at
+    ``/.well-known/oauth-protected-resource/v1``. If the authorization server
+    binds the access tokens to your API as defined in `RFC 8707`_, their
+    ``aud`` claim contains the full URL of the resource. In that case, define
+    the ``audience`` option of the token handler with an environment variable:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            security:
+                firewalls:
+                    api:
+                        access_token:
+                            token_handler:
+                                oidc:
+                                    # ...
+                                    # e.g. https://api.example.com/v1
+                                    audience: '%env(API_URL)%'
+                            resource_metadata:
+                                resource: '/v1'
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return App::config([
+                'security' => [
+                    'firewalls' => [
+                        'api' => [
+                            'access_token' => [
+                                'token_handler' => [
+                                    'oidc' => [
+                                        // ...
+                                        // e.g. https://api.example.com/v1
+                                        'audience' => '%env(API_URL)%',
+                                    ],
+                                ],
+                                'resource_metadata' => [
+                                    'resource' => '/v1',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]);
 
 ``authorization_servers``
     The issuer identifiers of the authorization servers that issue the access
@@ -2152,6 +2203,7 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC 7662`: https://datatracker.ietf.org/doc/html/rfc7662
 .. _`RFC 8414`: https://datatracker.ietf.org/doc/html/rfc8414
+.. _`RFC 8707`: https://datatracker.ietf.org/doc/html/rfc8707
 .. _`RFC 9068`: https://datatracker.ietf.org/doc/html/rfc9068
 .. _`RFC 9449`: https://datatracker.ietf.org/doc/html/rfc9449
 .. _`RFC 9701`: https://datatracker.ietf.org/doc/html/rfc9701
