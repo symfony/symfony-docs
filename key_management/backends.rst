@@ -325,6 +325,73 @@ policy must include it:
     # only needed with AAD, to tell derived keys from non-derived ones
     path "transit/keys/*"              { capabilities = ["read"] }
 
+Scaleway Key Manager
+--------------------
+
+Backed by the `Scaleway Key Manager`_ API. Encryption and decryption happen
+inside Scaleway; the key never reaches the application. The client must be
+scoped to the regional Key Manager URL and the bridge sends the secret key
+of an IAM API key in the ``X-Auth-Token`` header::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\KeyManagement\Bridge\Scaleway\ScalewayKms;
+
+    $kms = new ScalewayKms(
+        HttpClient::createForBaseUri(
+            'https://api.scaleway.com/key-manager/v1alpha1/regions/fr-par/',
+        ),
+        $_SERVER['SCW_SECRET_KEY'],
+    );
+
+    // the key id is the UUID of a key whose usage is "symmetric_encryption"
+    $keyId = '11111111-2222-3333-4444-555555555555';
+    $ciphertext = $kms->encrypt($keyId, 'hello world');
+
+DSN scheme:
+
+.. code-block:: text
+
+    scaleway-kms://<secret_key>@<host>[:<port>]?region=<region>[&timeout=<seconds>&max_duration=<seconds>]
+
+The ``region`` option is required (``fr-par``, ``nl-ams``, ``pl-waw`` and
+so on). The host ``default`` selects ``https://api.scaleway.com``; any other
+host is used as a custom HTTPS endpoint. The secret key goes in the user
+part of the DSN, usually through an environment variable:
+
+.. code-block:: text
+
+    scaleway-kms://%env(SCW_SECRET_KEY)%@default?region=fr-par
+
+A DSN with a password is refused: Key Manager calls don't need the project
+id, which the ``PROJECT_ID:SECRET_KEY`` form of the Scaleway Mailer DSN
+carries. The API key needs the ``KeyManagerFullAccess`` permission set, or a
+narrower one granting the encrypt and decrypt operations.
+
+The ``timeout`` and ``max_duration`` options and the HTTP client work as for the
+other providers, see :ref:`DSN Schemes <key-management-dsn-schemes>`. Requests
+never follow redirects, since the ``X-Auth-Token`` header would follow a
+redirect to another host.
+
+The ``$aad`` argument is sent as Scaleway's ``associated_data``, which
+AES-256-GCM authenticates: decrypting with another AAD fails. Scaleway has
+a data key endpoint, but it only makes 32-byte keys, cannot bind associated
+data and refuses asymmetric keys. The bridge therefore draws the data key
+locally with ``random_bytes()`` and wraps it through the encryption
+endpoint, with the AAD when there is one. The key can be 16 bytes or
+longer, within the payload limit of the Scaleway key, on symmetric and
+asymmetric keys.
+
+On decryption, an HTTP ``400`` or ``404`` is reported as a
+:class:`Symfony\\Component\\KeyManagement\\Exception\\DecryptionFailedException`,
+so that an unknown key cannot be told from a tampered ciphertext.
+Authentication, quota and server errors stay a ``RuntimeException``, and so
+do ``412`` errors (a disabled key, or an AAD on an ``asymmetric_encryption``
+key, for instance); their message includes Scaleway's ``help_message``. An
+unknown key on encryption is a ``KeyNotFoundException``.
+
+Scaleway encrypts at most 64 KiB per call, so use envelope encryption for
+larger payloads.
+
 KMIP
 ----
 
@@ -407,5 +474,6 @@ keeps what it read.
 .. _Azure Key Vault REST API: https://learn.microsoft.com/rest/api/keyvault/
 .. _Google Cloud KMS REST API: https://cloud.google.com/kms/docs/reference/rest
 .. _Vault Transit secret engine: https://developer.hashicorp.com/vault/docs/secrets/transit
+.. _Scaleway Key Manager: https://www.scaleway.com/en/docs/key-manager/
 .. _KMIP: https://www.oasis-open.org/committees/kmip/
 .. _league/flysystem: https://flysystem.thephpleague.com/

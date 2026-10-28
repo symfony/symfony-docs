@@ -29,6 +29,7 @@ Scheme                          Package                                     Back
 ``azure-keyvault://``           ``symfony/azure-keyvault-key-management``   Azure Key Vault / Managed HSM
 ``gcp-kms://``                  ``symfony/google-cloud-key-management``     Google Cloud KMS
 ``hashicorp-vault-transit://``  ``symfony/hashicorp-vault-key-management``  HashiCorp Vault Transit
+``scaleway-kms://``             ``symfony/scaleway-key-management``         Scaleway Key Manager
 ``kmip://``                     ``symfony/kmip-key-management``             Any KMIP 1.x or 2.x server
 ``sodium+fly://``               ``symfony/flysystem-key-management``        XChaCha20, keys read through Flysystem
 ``openssl+fly://``              ``symfony/flysystem-key-management``        AES-256-GCM, keys read through Flysystem
@@ -48,11 +49,11 @@ plain alias would give it. Because the service has to be known while the
 container is built, this scheme is the only one that cannot come from an
 environment variable.
 
-The AWS, Azure, Google Cloud and Vault clients send their requests through the
-``http_client`` service of the application. Without one, they use an HTTP client
-with a 5-second idle timeout and a 10-second maximum duration. Their ``timeout``
-and ``max_duration`` options, in seconds, override these timeouts. Requests
-never follow redirects, since a redirect to another host would send the
+The AWS, Azure, Google Cloud, Vault and Scaleway clients send their requests
+through the ``http_client`` service of the application. Without one, they use an
+HTTP client with a 5-second idle timeout and a 10-second maximum duration. Their
+``timeout`` and ``max_duration`` options, in seconds, override these timeouts.
+Requests never follow redirects, since a redirect to another host would send the
 credentials and the payload again.
 
 Local backends need their PHP extension at runtime: ``ext-openssl`` for the
