@@ -1859,24 +1859,25 @@ Use the ``redirect_to_route`` option to redirect to another route and the
             ],
         ]);
 
-    .. code-block:: php
+When using the fluent PHP routing configurator, call the ``redirectToRoute()``
+and ``redirectTo()`` methods::
 
-        // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+    // config/routes.php
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return static function (RoutingConfigurator $routes): void {
-            $routes->add('doc_shortcut', '/doc')
-                // the name of the route to redirect to
-                ->redirectToRoute('doc_page')
-                ->defaults(['page' => 'index', 'version' => 'current'])
-            ;
+    return static function (RoutingConfigurator $routes): void {
+        $routes->add('doc_shortcut', '/doc')
+            // the name of the route to redirect to
+            ->redirectToRoute('doc_page')
+            ->defaults(['page' => 'index', 'version' => 'current'])
+        ;
 
-            $routes->add('legacy_doc', '/legacy/doc')
-                // this value can be an absolute path or an absolute URL
-                ->redirectTo('https://legacy.example.com/doc')
-                ->defaults(['permanent' => true])
-            ;
-        };
+        $routes->add('legacy_doc', '/legacy/doc')
+            // this value can be an absolute path or an absolute URL
+            ->redirectTo('https://legacy.example.com/doc')
+            ->defaults(['permanent' => true])
+        ;
+    };
 
 .. versionadded:: 8.2
 

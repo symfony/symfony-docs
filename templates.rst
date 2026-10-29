@@ -1175,18 +1175,18 @@ definition. Use the ``template`` option, which requires TwigBundle:
             ],
         ]);
 
-    .. code-block:: php
+When using the fluent PHP routing configurator, call the ``template()`` method::
 
-        // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+    // config/routes.php
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return static function (RoutingConfigurator $routes): void {
-            $routes->add('acme_privacy', '/privacy')
-                // the path of the template to render
-                ->template('static/privacy.html.twig')
-                ->defaults(['maxAge' => 86400])
-            ;
-        };
+    return static function (RoutingConfigurator $routes): void {
+        $routes->add('acme_privacy', '/privacy')
+            // the path of the template to render
+            ->template('static/privacy.html.twig')
+            ->defaults(['maxAge' => 86400])
+        ;
+    };
 
 .. versionadded:: 8.2
 
