@@ -31,6 +31,10 @@ connection is created. ``key`` is the master key encrypting the values, or the
 :ref:`scope <key-management-store-config>` of their data key when a store is
 configured.
 
+When ``key`` is set, the bundle looks for these attributes in the entities,
+embeddables and mapped superclasses of the directories that your services are
+loaded from. With the default ``App\`` resource, this includes ``src/Entity/``.
+
 The column keeps the type its mapping gives it, declared on
 ``#[ORM\Column]`` or guessed from the type of the property. The value goes
 through that type first and is encrypted afterwards, so a date is stored as
@@ -93,7 +97,14 @@ Declaring the Types Yourself
 
 The attribute is a shortcut over named Doctrine types, which you can also
 declare directly. Use this when a column is mapped in XML or PHP rather
-than by attribute, or when you want to pick the type name:
+than by attribute, or when you want to pick the type name.
+
+You also need it when the bundle misses an ``#[Encrypted]`` column with a
+``key``, because its entity is mapped in XML, or is outside or excluded from the
+directories that your services are loaded from. The same happens when a custom
+typed field mapper makes the ORM use another type than the one guessed by the
+bundle. Loading the metadata of such an entity then fails, ``cache:warmup``
+included. Declare the types of its columns and the attribute reuses them:
 
 .. configuration-block::
 
