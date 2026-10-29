@@ -219,23 +219,23 @@ Switching to the Mercure 1.0 Protocol
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``symfony/mercure-bundle`` 0.5 and later can also speak version 1.0 of the
-Mercure protocol. This requires the following versions:
+Mercure protocol, and 0.6 uses it by default. This requires the following
+versions:
 
 ==========================  ==================================
 Package                     Constraint for 1.0
 ==========================  ==================================
-``symfony/mercure-bundle``  ``^0.5``
+``symfony/mercure-bundle``  ``>=0.5``
 ``symfony/mercure``         ``^0.8`` (pulled in by the bundle)
 PHP                         ``>=8.2``
 Symfony components          ``^6.4 | ^7.3 | ^8.0``
-Mercure hub                 ``v1.0.0-alpha.3`` or later
+Mercure hub                 ``v1.0.0`` or later
 ==========================  ==================================
 
 The protocol version is configured per hub with the ``protocol_version``
-option, and it **defaults to** ``0.x``. Upgrading the bundle alone changes
-nothing: your app keeps minting legacy ``mercure``-claim tokens and a 1.0 hub
-rejects them with a ``401 invalid_token`` error. Set the option explicitly to
-opt in:
+option. It defaults to ``1.0`` since MercureBundle 0.6, and to ``0.x`` in 0.5.
+A 1.0 hub rejects legacy ``mercure``-claim tokens with a ``401 invalid_token``
+error:
 
 .. code-block:: yaml
 
@@ -244,6 +244,8 @@ opt in:
             default:
                 url: '%env(MERCURE_URL)%'
                 public_url: '%env(MERCURE_PUBLIC_URL)%'
+                # the default since MercureBundle 0.6,
+                # set it to '0.x' to talk to a 0.x hub
                 protocol_version: '1.0'
                 jwt:
                     secret: '%env(MERCURE_JWT_SECRET)%'
@@ -252,6 +254,9 @@ opt in:
                         iss: '%env(MERCURE_JWT_ISSUER)%'
                         sub: 'my-app'
                         client_id: 'my-app'
+
+While migrating, the ``protocol_version_compatibility 8`` directive lets a 1.0
+hub accept the legacy tokens too.
 
 ``protocol_version`` drives three things: the shape of the claims built from
 ``jwt.secret``, the default value of ``cookie_name``, and how the
@@ -284,21 +289,22 @@ How the ``aud`` Claim is Filled In
 
 ``aud`` is exempt from the requirement above: when ``jwt.claims.aud`` is
 unset, the bundle defaults it to the hub's ``public_url``, falling back to
-``url``.
+``url``. Since MercureBundle 0.6.1, publisher tokens, which never reach
+browsers, also carry ``url``, where they are sent.
 
-That default works when the browser and the app reach the hub at the same
-address. It's wrong in the common Docker setup where the app publishes
-through an internal ``url`` (e.g. ``http://mercure/.well-known/mercure``)
-while the browser uses a public one, because a 1.0 hub derives its expected
-audience from the request it receives. Either pin the hub's
-``resource_identifier`` to the public URL, or set ``aud`` explicitly.
+A 1.0 hub derives its expected audience from the request it receives, so with
+0.6.1 this works when the app publishes through an internal ``url`` (e.g.
+``http://mercure/.well-known/mercure``) while browsers subscribe through the
+public one. If the hub pins its ``resource_identifier``, pin it to the public
+URL.
 
 Signing Keys From a JWKS Endpoint
 .................................
 
 ``jwt.jwks_uri`` fetches the signing key from a JSON Web Key Set instead of
-using a shared secret. It requires ``protocol_version: '1.0'`` and the
-``web-token/jwt-library`` package:
+using a shared secret. Signing requires the private key, so serve this set
+from a protected endpoint, never from a public ``jwks.json``. It requires
+``protocol_version: '1.0'`` and the ``web-token/jwt-library`` package:
 
 .. code-block:: terminal
 
@@ -312,7 +318,8 @@ using a shared secret. It requires ``protocol_version: '1.0'`` and the
                 url: '%env(MERCURE_URL)%'
                 protocol_version: '1.0'
                 jwt:
-                    jwks_uri: 'https://auth.example.com/.well-known/jwks.json'
+                    # a protected endpoint holding the private key
+                    jwks_uri: '%env(MERCURE_SIGNING_JWKS_URI)%'
                     key_id: 'publisher-2026' # required when the set holds several matching keys
                     algorithm: 'RS256'
                     claims:
@@ -320,8 +327,8 @@ using a shared secret. It requires ``protocol_version: '1.0'`` and the
                         sub: 'my-app'
                         client_id: 'my-app'
 
-``jwt.secret`` and ``jwt.jwks_uri`` are mutually exclusive. Point the hub at
-the same key set using an issuer's ``jwks_uri`` configuration.
+``jwt.secret`` and ``jwt.jwks_uri`` are mutually exclusive. Give the hub the
+matching public keys, for instance through an issuer's ``jwks_uri``.
 
 The ``algorithm`` Option Has Two Spellings
 ..........................................
@@ -344,9 +351,11 @@ Cookie Name
 
 ``cookie_name`` defaults to a value computed from ``protocol_version``:
 ``mercureAuthorization`` on ``0.x``, ``__Secure-mercure_access_token`` on
-``1.0``. The ``__Secure-`` prefix requires HTTPS, so if you're running
-plain-HTTP local development, use a prefix-less name on **both** sides: the
-``cookie_name`` option in the bundle and the equivalent setting on the hub.
+``1.0``. The ``__Secure-`` prefix requires HTTPS, so since MercureBundle 0.6,
+the 1.0 default is ``mercure_access_token`` when ``kernel.debug`` is enabled,
+matching the hub's ``playground`` directive. If you serve plain HTTP outside
+of debug mode, use a prefix-less name on **both** sides: the ``cookie_name``
+option in the bundle and the equivalent setting on the hub.
 
 .. seealso::
 
