@@ -15,9 +15,16 @@ If you pass a callable, it will receive one argument: the choice itself. When us
 the :doc:`/reference/forms/types/entity`, the argument will be the entity object
 for each choice or ``null`` if a placeholder is used, which you need to handle::
 
-    'choice_value' => function (?MyOptionEntity $entity): string {
-        return $entity ? $entity->getId() : '';
-    },
+    use App\Entity\Category;
+    use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    // ...
+
+    $builder->add('category', EntityType::class, [
+        'class' => Category::class,
+        'choice_value' => function (?Category $category): string {
+            return $category ? (string) $category->getId() : '';
+        },
+    ]);
 
 .. tip::
 
