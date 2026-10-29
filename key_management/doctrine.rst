@@ -146,6 +146,15 @@ included. Declare the types of its columns and the attribute reuses them:
             ],
         ]);
 
+Like the types of the attribute, the bundle registers these types each time
+DoctrineBundle creates a connection. They exist before the first query, whether
+the application runs through the front controller, the console (including the
+schema tool and migrations) or the tests. Without DoctrineBundle, the bundle
+registers them when the kernel boots. Registering them doesn't create the store
+or its database connection. Also like the attribute, they require a ``store``
+or a ``default_client`` to be configured; otherwise, the container fails to
+compile.
+
 The name is then used like any Doctrine type::
 
     // src/Entity/User.php
