@@ -44,8 +44,8 @@ an encrypted date, not as an encrypted string.
 
 .. note::
 
-    The attribute requires either a ``store`` or a ``default_client`` to be
-    configured.
+    The attribute requires a ``store`` or a default client: the one that
+    ``default_client`` names, or the only client configured.
 
 An encrypted column cannot be searched. See
 :doc:`/key_management/searching` for how to find a row by a value the
@@ -74,8 +74,10 @@ that hold the values::
 
 The scope follows the physical names that Doctrine resolves, naming strategies,
 embedded prefixes and inherited columns included. Renaming the entity or the
-property keeps existing values readable, but renaming the table or the column
-changes the scope. Before such a rename, set ``key`` to the scope that was
+property keeps existing values readable only while the table and the column
+keep their names, for instance through the ``name`` option of ``#[ORM\Table]``
+and ``#[ORM\Column]``. Renaming the table or the column changes the scope.
+Before such a rename, set ``key`` to the scope that was
 generated for the old names. That scope is
 ``'orm:'.hash('sha256', serialize([$schema, $table, $column]))``, where
 ``$schema`` is ``null`` for a table without a schema.
@@ -91,6 +93,10 @@ the ``cache.key_management.encrypted_columns`` pool, a child of
 ``cache.system``, so the next entity managers load no metadata. In debug mode,
 the types are found again for each entity manager, so that a change to the
 mapping is seen at once.
+
+The bundle handles the columns that omit their key only when it finds at least
+one of them in the directories your services are loaded from. Otherwise,
+loading such a column fails as if no store was configured.
 
 Declaring the Types Yourself
 ----------------------------
@@ -152,8 +158,7 @@ the application runs through the front controller, the console (including the
 schema tool and migrations) or the tests. Without DoctrineBundle, the bundle
 registers them when the kernel boots. Registering them doesn't create the store
 or its database connection. Also like the attribute, they require a ``store``
-or a ``default_client`` to be configured; otherwise, the container fails to
-compile.
+or a default client; otherwise, the container fails to compile.
 
 The name is then used like any Doctrine type::
 
@@ -193,11 +198,11 @@ row decrypts it and hands the plaintext back to the underlying type, so the
 property behaves exactly as it did before.
 
 The column is always declared as an unbounded blob, and a ``length`` on the
-mapping is ignored on purpose. An envelope is a hundred bytes or so larger
-than the value it holds, and a column sized after the plaintext would
-truncate it. On MySQL and MariaDB outside strict mode that truncation is a
-warning rather than an error, which would leave a row that no longer
-decrypts.
+mapping is ignored on purpose. An envelope is larger than the value it
+holds, by 47 bytes with a store and by a hundred bytes or more without one,
+and a column sized after the plaintext would truncate it. On MySQL and
+MariaDB outside strict mode that truncation is a warning rather than an
+error, which would leave a row that no longer decrypts.
 
 A column holding zero bytes is refused, like any other value that is not
 an envelope. Encrypting an empty string gives a non-empty envelope, so an
@@ -206,11 +211,29 @@ and handing it to the underlying type unchecked would return ``''``,
 ``false`` or ``0`` without authenticating anything.
 
 Each value is authenticated together with the key of its column and the name of
-the Doctrine type it wraps. A value copied to a column with another key or
-another type is refused. Changing the key or the type of a column therefore
-means rewriting its values. Renaming the encrypted type doesn't require that.
-Neither does changing the PHP class behind a type name, as long as the new class
-reads the old values.
+the Doctrine type it wraps, such as ``string``. A value copied to a column with
+another key or another type name is refused. Changing the key or the type name
+of a column therefore means rewriting its values, even when both type names
+resolve to the same PHP class. Neither the name of the encrypted type nor the
+configuration of the wrapped type is authenticated: renaming the encrypted type
+doesn't require rewriting, and neither does changing the PHP class behind the
+wrapped type name, as long as the new class reads the old values.
+
+Two columns using the same key and the same type name can read each other's
+values. Give them different keys or scopes to keep them apart.
+
+Rotating the master key behind a key that keeps its name, such as an alias moved
+to a new key, doesn't require rewriting values. Changing the configured ``key``
+(an alias, a key name, an ARN or a scope) does, even when the KMS can still read
+the old key.
+
+When you build an
+:class:`Symfony\\Component\\KeyManagement\\Bridge\\DoctrineDbal\\EncryptedType`
+yourself, pass the name of the wrapped type as its fourth argument. With
+``null``, the default, the class of the wrapped type is authenticated instead,
+so renaming or subclassing that class requires rewriting the values. To make a
+type you build and a configured one read each other's values, pass the same
+name as the ``type`` option of ``key_management.doctrine_dbal.types``.
 
 Copied, Deleted and Restored Values
 -----------------------------------
@@ -282,6 +305,14 @@ you need data that the attacker can't change, stored outside the database. A
 version number stored next to the value, or inside it, doesn't help. The
 attacker puts the old version number back together with the old value.
 
+Encrypting a Column That Already Holds Values
+---------------------------------------------
+
+Adding ``#[Encrypted]`` to a column doesn't encrypt the values it already
+holds. The column becomes a blob, and reading a value that isn't an envelope
+fails. Encrypt them in a migration of your own: read each value with the type
+the column had, then write it back through the encrypted type.
+
 Moving a Column to a Stored Data Key
 ------------------------------------
 
@@ -290,8 +321,12 @@ Configure a :doc:`store </key_management/store>` with
 since both are authenticated with every value. The key then becomes the scope of
 the stored data keys, so don't leave it out at the same time. Values written
 from then on contain a reference to a stored data key, while older ones keep
-being read through the KMS. Once every old value has been rewritten, turn the
-option off.
+being read through the KMS. Doctrine writes a value again only when it changes,
+so rewrite the old ones with a script of your own that reads and writes each of
+them through the encrypted type. Then turn the option off: a self-contained
+payload carries its own wrapped data key and skips the scope and binding checks
+of the store, even though its envelope still authenticates the key and the type
+name of the column.
 
 Re-wrapping those data keys later moves the whole column to another master
 key, or another provider, without touching a single row.

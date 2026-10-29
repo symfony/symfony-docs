@@ -39,7 +39,12 @@ Scheme                          Package                                     Back
 
 :doc:`/key_management/backends` documents the options each one takes.
 Bridges reject any query option they do not know, so a typo is an error
-rather than a setting silently ignored.
+rather than a setting silently ignored. The local schemes don't check
+their options, though.
+
+Percent-encode the credentials and the option values of a DSN when they
+contain characters that have a meaning in a URL, such as the ``/`` that
+AWS secret keys often contain.
 
 ``service://<id>`` is the odd one out. It names a service you registered
 yourself, so a backend Symfony does not ship is declared like any other client:
@@ -50,11 +55,12 @@ container is built, this scheme is the only one that cannot come from an
 environment variable.
 
 The AWS, Azure, Google Cloud, Vault and Scaleway clients send their requests
-through the ``http_client`` service of the application. Without one, they use an
-HTTP client with a 5-second idle timeout and a 10-second maximum duration. Their
-``timeout`` and ``max_duration`` options, in seconds, override these timeouts.
-Requests never follow redirects, since a redirect to another host would send the
-credentials and the payload again.
+through the ``http_client`` service of the application, with the timeouts of
+that service. Without one, they use an HTTP client with a 5-second idle timeout
+and a 10-second maximum duration. Their ``timeout`` and ``max_duration``
+options, in seconds, override the timeouts of either client. Requests never
+follow redirects, since a redirect to another host would send the credentials
+and the payload again.
 
 Local backends need their PHP extension at runtime: ``ext-openssl`` for the
 ``openssl`` schemes, ``ext-sodium`` for the ``sodium`` and sealed-box ones.
@@ -96,6 +102,8 @@ them is then the default, which is the one autowiring injects:
         ]);
 
 With a single client, ``default_client`` is inferred and can be left out.
+With several clients and no ``default_client``, autowiring needs the
+:ref:`name of a client <key-management-choosing-client>`.
 
 .. _key-management-composite:
 
@@ -161,8 +169,18 @@ composite in turn.
 Writing goes through every member, and a member that cannot wrap fails the
 whole call: a ciphertext missing one wrapping would be less redundant than
 the configuration claims. Reading needs only one member to answer. Each
-member that fails is skipped and logged, since nothing else tells the
-caller.
+member that fails is skipped and logged on the ``key_management`` channel,
+since nothing else tells the caller.
+
+The authenticated data of a direct call goes to every member, so a single member
+that cannot authenticate data, such as a sealed box, makes every such call fail
+and rules out ``bind_wrapping_context``. Only the first member creates the data
+keys, and it also wraps the ones that ``key-management:rewrap-data-keys`` moves.
+The other members wrap them through their encryption operation and read them
+back through their decryption one, which their credentials must allow:
+``kms:Encrypt`` and ``kms:Decrypt`` on AWS, or ``encrypt`` and ``decrypt``
+under the ``algorithm`` option on Azure Key Vault, rather than ``wrapKey`` and
+``unwrapKey`` under ``wrap_algorithm``.
 
 Since one member is enough to read a ciphertext, anyone who can encrypt for
 one member can write a ciphertext that the composite reads. With a sealed
@@ -180,12 +198,21 @@ joining the composite client. The composite hands it to each member in
 turn, so an application adopting a composite client keeps reading what it
 wrote before. Those ciphertexts still carry a single wrapping, though, so
 re-encrypt them once the composite is deployed if they must be redundant
-too. Stored data keys are moved with one command, which wraps every row
-under the current member list:
+too.
+
+Stored data keys are moved with one command. Each row records the client
+that wrapped it, and the store only uses its ``client`` and its
+:ref:`allowed_clients <key-management-store-config>`. When the composite
+client becomes the ``client`` of the store, list the former client in
+``allowed_clients``, so that the rows it wrapped stay readable, then wrap
+every row under the current member list:
 
 .. code-block:: terminal
 
     $ php bin/console key-management:rewrap-data-keys
+
+Remove the former client from ``allowed_clients`` once no row refers to it
+anymore.
 
 Retiring a Member
 ~~~~~~~~~~~~~~~~~
