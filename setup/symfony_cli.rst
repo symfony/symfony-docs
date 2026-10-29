@@ -493,14 +493,14 @@ check the "Symfony Server" section in the web debug toolbar. You'll see that
                 labels:
                     com.symfony.server.service-ignore: true
 
-If your Docker Compose file is not at the root of the project, use the
-``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment variables to define
-its location, same as for ``docker-compose``:
+If your Docker Compose file is not at the root of the project, define its
+location with the ``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment
+variables. They work the same as with ``docker compose``:
 
 .. code-block:: bash
 
     # start your containers:
-    COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name docker-compose up -d
+    COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name docker compose up -d
 
     # run any Symfony CLI command:
     COMPOSE_FILE=docker/compose.yaml COMPOSE_PROJECT_NAME=project_name symfony var:export

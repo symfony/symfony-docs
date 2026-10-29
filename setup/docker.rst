@@ -24,7 +24,12 @@ your ``compose.yaml`` file will automatically be updated to include a
 
 The first time you install a recipe containing Docker config, Flex will ask you
 if you want to include it. Or, you can set your preference in ``composer.json``,
-by setting the ``extra.symfony.docker`` config to ``true`` or ``false``.
+by setting the ``extra.symfony.docker`` config to ``true`` or ``false``. If this
+option isn't defined but the ``SYMFONY_DOCKER`` environment variable is, Flex
+doesn't ask and stores the value of that variable in this option.
+
+When updating recipes (e.g. with ``composer recipes:update``), Flex only updates
+the Docker configuration if the ``extra.symfony.docker`` option is ``true``.
 
 Some recipes also include additions to your ``Dockerfile``. To get those changes,
 you need to already have a ``Dockerfile`` at the root of your app *with* the
@@ -38,11 +43,12 @@ following code somewhere inside:
 The recipe will find this section and add the changes inside. If you're using
 `https://github.com/dunglas/symfony-docker`_, you'll already have this.
 
-After installing the package, rebuild your containers by running:
+When a recipe changes your Docker Compose files, rebuild your containers by
+running:
 
 .. code-block:: terminal
 
-    $ docker-compose up --build
+    $ docker compose up --build
 
 Symfony Binary Web Server and Docker Support
 --------------------------------------------
