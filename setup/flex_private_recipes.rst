@@ -393,12 +393,17 @@ run the following command:
 
     $ composer update
 
-If the private bundles/packages have already been installed and you just want to
-install the new private recipes, run the following command:
+If the private bundles/packages have already been installed and you want to
+install their new private recipes, run the ``recipes:install`` command:
 
 .. code-block:: terminal
 
+    # list the packages whose recipe is not installed yet
     $ composer recipes
+
+    # install the recipes of the given packages; the --force option is needed
+    # because these packages are already registered in the symfony.lock file
+    $ composer recipes:install acme/private-bundle acme/other-bundle --force -v
 
 .. _`release of version 1.16`: https://github.com/symfony/flex/releases/tag/v1.16.0
 .. _`Symfony recipe files`: https://github.com/symfony/recipes/tree/flex/main
