@@ -2953,6 +2953,8 @@ valid or not, you can use the ``verify()`` method which throws exceptions on fai
     If ``symfony/clock`` is installed, it is used when generating and verifying
     expiration dates. This allows you to :ref:`mock the current time in your tests <clock_writing-tests>`.
 
+.. _routing-signed-uris-attribute:
+
 Controller Attributes to Verify Signed URIs
 ...........................................
 
@@ -2994,6 +2996,39 @@ validate the URI signatures of all its actions::
     {
         // ...
     }
+
+To handle invalid signatures in the controller instead (e.g. to send a new link
+when the previous one expired), add a nullable argument typed with
+``SignedUriException``. To handle only some failures, type the argument with
+one of its subclasses:
+:class:`Symfony\\Component\\HttpFoundation\\Exception\\ExpiredSignedUriException`,
+:class:`Symfony\\Component\\HttpFoundation\\Exception\\UnsignedUriException` or
+:class:`Symfony\\Component\\HttpFoundation\\Exception\\UnverifiedSignedUriException`::
+
+    use Symfony\Component\HttpFoundation\Exception\ExpiredSignedUriException;
+    // ...
+
+    #[IsSignatureValid]
+    public function verifyEmail(
+        ?ExpiredSignedUriException $linkExpired = null,
+    ): Response {
+        // unsigned and tampered links still result in an error page
+        if (null !== $linkExpired) {
+            // ... send a new link
+            $this->addFlash('error', 'This link has expired. We sent you a new one.');
+
+            return $this->redirectToRoute('app_login');
+        }
+
+        // ...
+    }
+
+Read more about it in :ref:`controller-attribute-failures`.
+
+.. versionadded:: 8.2
+
+    Passing the invalid signature exception to the controller was introduced
+    in Symfony 8.2.
 
 .. _routing-signed-uris-secret-rotation:
 
