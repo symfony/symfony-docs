@@ -209,3 +209,25 @@ to the container::
                 || is_file($frameworkPath . '/Resources/config/asset_mapper.php');
         }
     }
+
+When an application installs your package, Symfony Flex runs the
+``importmap:require`` command to add each ``importmap`` entry to the
+``importmap.php`` file of the application. When the application removes your
+package, Flex runs the ``importmap:remove`` command for these entries, unless
+another installed package also declares them.
+
+Instead of a version constraint, an entry can point to a file of your package.
+Use the ``path:`` prefix and the ``%PACKAGE%`` placeholder, which Flex replaces
+with the assets directory of your package. If the file is an
+:ref:`entrypoint <app-entrypoint>`, use the ``entrypoint:`` prefix instead:
+
+.. code-block:: json
+
+    {
+        "symfony": {
+            "importmap": {
+                "@hotwired/stimulus": "^3.0.0",
+                "@acme/feature/helpers": "path:%PACKAGE%/dist/helpers.js"
+            }
+        }
+    }
