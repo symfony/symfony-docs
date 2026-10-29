@@ -459,7 +459,7 @@ master key and performs the encryption::
         .'&key=/run/secrets/client.key&version=2.0&ca=/run/secrets/ca.crt'
     ));
 
-    $keyId = /* the KMIP Unique Identifier of an active symmetric key */;
+    $keyId = /* the KMIP Unique Identifier of an active AES key */;
     $ciphertext = $kms->encrypt($keyId, 'hello world');
 
 DSN scheme:
@@ -469,19 +469,30 @@ DSN scheme:
     kmip://[<user>:<password>@]<host>[:<port>]?cert=<path>&key=<path>&version=<version>[&ca=<path>][&peer_name=<name>][&passphrase=<passphrase>][&iv_length=12][&timeout=10]
 
 ``cert``, ``key`` and ``version`` are required: the client certificate and
-its private key, and the KMIP protocol version to speak (``1.0`` to
-``2.1``). ``ca`` and ``peer_name`` pin the server certificate,
-``passphrase`` unlocks an encrypted private key, and ``timeout`` is the
-connection timeout in seconds.
+its private key, and the KMIP protocol version to speak (``1.4`` or ``2.0``).
+The client certificate is required even when the DSN includes a username and
+password. The port defaults to ``5696``.
 
-Provision an active symmetric key for AES-GCM, with Encrypt and Decrypt in
-its Cryptographic Usage Mask, and use its Unique Identifier as the key id.
+The bridge always verifies the server certificate; no option turns that off.
+``ca`` is the certificate authority file to verify it against (the system
+trust store by default) and ``peer_name`` is the expected server name (the
+DSN host by default). ``passphrase`` unlocks an encrypted private key,
+``timeout`` is the connection timeout in seconds (``10`` by default) and
+``iv_length`` is the length in bytes of the AES-GCM IV used for new
+ciphertexts (``12`` by default).
 
-A whole KMIP message must fit in 16 MiB, headers included, so direct
-encryption is capped well below that. Envelope encryption is not, since
-only the data key crosses the network. Each operation opens its own TLS
-connection, which a :doc:`data key store </key_management/store>` makes
-much less frequent.
+Provision an active AES key, with Encrypt and Decrypt in its Cryptographic
+Usage Mask, and use its Unique Identifier as the key id.
+
+A whole KMIP message must fit in 16 MiB, headers included. Direct encryption
+sends the plaintext to the server, so it is capped well below that. Envelope
+encryption is not, since only the data key crosses the network. Each
+operation opens its own TLS connection, which a
+:doc:`data key store </key_management/store>` makes much less frequent.
+
+Some servers report a bad authentication tag as a generic failure. PyKMIP,
+for instance, answers ``General Failure``, so the bridge throws a
+``RuntimeException`` instead of a ``DecryptionFailedException``.
 
 .. _key-management-flysystem:
 

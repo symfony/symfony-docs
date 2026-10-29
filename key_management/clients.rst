@@ -30,7 +30,7 @@ Scheme                          Package                                     Back
 ``gcp-kms://``                  ``symfony/google-cloud-key-management``     Google Cloud KMS
 ``hashicorp-vault-transit://``  ``symfony/hashicorp-vault-key-management``  HashiCorp Vault Transit
 ``scaleway-kms://``             ``symfony/scaleway-key-management``         Scaleway Key Manager
-``kmip://``                     ``symfony/kmip-key-management``             Any KMIP 1.x or 2.x server
+``kmip://``                     ``symfony/kmip-key-management``             Any KMIP 1.4 or 2.0 server
 ``sodium+fly://``               ``symfony/flysystem-key-management``        XChaCha20, keys read through Flysystem
 ``openssl+fly://``              ``symfony/flysystem-key-management``        AES-256-GCM, keys read through Flysystem
 ``sodium-sealed-box+fly://``    ``symfony/flysystem-key-management``        Sealed box, keys read through Flysystem
