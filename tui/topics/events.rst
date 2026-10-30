@@ -124,6 +124,33 @@ Multiple listeners can be registered; they run in priority order.
 The input flow is: ``InputEvent`` listeners, then focus manager
 (F6 cycling), then the focused widget.
 
+Paste Lifecycle Events
+----------------------
+
+When the terminal supports bracketed paste, the pasted text can arrive
+over several terminal reads. Listen to ``PasteStartedEvent`` and
+``PasteCompletedEvent`` to know whether a paste is still being received::
+
+    use Symfony\Component\Tui\Event\PasteCompletedEvent;
+    use Symfony\Component\Tui\Event\PasteStartedEvent;
+
+    $isPasting = false;
+
+    $tui->addListener(function (PasteStartedEvent $event) use (&$isPasting) {
+        $isPasting = true;
+    });
+
+    // also dispatched when the paste can't be delivered (e.g. because it
+    // exceeds the input limit or the Tui stops while receiving it)
+    $tui->addListener(function (PasteCompletedEvent $event) use (&$isPasting) {
+        $isPasting = false;
+    });
+
+.. versionadded:: 8.2
+
+    The ``PasteStartedEvent`` and ``PasteCompletedEvent`` events were
+    introduced in Symfony 8.2.
+
 Event Types
 -----------
 
@@ -146,3 +173,6 @@ Event Types
   setting id and new value.
 * ``FocusEvent``: focus moved between widgets. Carries the new
   and previous widget.
+* ``PasteStartedEvent``: a bracketed paste started.
+* ``PasteCompletedEvent``: a bracketed paste ended, whether or not its
+  content was delivered.

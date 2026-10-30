@@ -10,7 +10,8 @@ When to Use
 
 Use ``TextWidget`` whenever you need to display a read-only piece of
 text: a title, a status message, a paragraph of instructions, etc.
-For user-editable text, use :doc:`/tui/widgets/input` or :doc:`/tui/widgets/editor` instead.
+For user-editable text, use :doc:`/tui/widgets/input` or
+:doc:`/tui/widgets/editor` instead.
 
 Basic Usage
 -----------

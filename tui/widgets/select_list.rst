@@ -51,9 +51,10 @@ Filtering
 ---------
 
 Call ``setFilter()`` to narrow the list to items whose ``value`` (not
-the ``label`` shown on screen) starts with the given string, ignoring
-case. This is useful when combining a ``SelectListWidget`` with an
-:doc:`/tui/widgets/input`::
+the ``label`` or the ``description`` shown on screen) starts with the
+given string, ignoring case. This is useful when combining a
+``SelectListWidget`` with an :doc:`/tui/widgets/input` used as a search
+box::
 
     $list->setFilter('ban'); // shows only "Banana"
 

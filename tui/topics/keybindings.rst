@@ -25,6 +25,12 @@ Key identifiers can be:
   ``Key::UP``, ``Key::DOWN``, ``Key::TAB``, ``Key::F6``, etc.
 * Modifier combinations: ``'ctrl+c'``, ``'alt+d'``,
   ``'shift+enter'``, ``'ctrl+shift+k'``, ``'super+f1'``.
+* Helpers that build those combinations: ``Key::ctrl('c')``,
+  ``Key::shift('tab')``, ``Key::alt(Key::BACKSPACE)``, plus
+  ``Key::super()``, ``Key::ctrlShift()``, ``Key::ctrlAlt()``,
+  ``Key::shiftAlt()`` and ``Key::ctrlShiftAlt()``. They return the
+  same strings as the literal forms above, so both styles are
+  interchangeable.
 * Single characters (letters, digits and symbols): ``'+'``, ``'-'``,
   ``'q'``, ``'r'``.
 

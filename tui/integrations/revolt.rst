@@ -24,7 +24,7 @@ blocking operations. Since Amp is built on Revolt (the same event
 loop Tui uses), they integrate without any glue code.
 
 **Processes**: use ``amphp/process`` instead of ``proc_open()`` or
-Symfony Process::
+the Symfony Process component::
 
     use Amp\Process\Process;
 
