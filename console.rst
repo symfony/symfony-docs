@@ -1791,27 +1791,52 @@ Building a Single-Command Application
 When building a command line tool, you may not need to provide several commands.
 In that case, having to pass the command name each time is tedious. Use the
 :class:`Symfony\\Component\\Console\\SingleCommandApplication` class to create
-an application that runs a single command, without having to pass its name::
+an application that runs a single command, without having to pass its name.
+The following example uses the :doc:`Finder component </components/finder>`
+to count the files of a directory::
 
     #!/usr/bin/env php
     <?php
-    require __DIR__.'/vendor/autoload.php';
+    // bin/file-counter.php
+    require __DIR__.'/../vendor/autoload.php';
 
     use Symfony\Component\Console\Attribute\Argument;
     use Symfony\Component\Console\Attribute\Option;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Output\OutputInterface;
     use Symfony\Component\Console\SingleCommandApplication;
+    use Symfony\Component\Finder\Finder;
 
     new SingleCommandApplication()
-        ->setName('My Super Command') // optional
+        ->setName('File Counter') // optional
         ->setVersion('1.0.0') // optional
-        ->setCode(function (OutputInterface $output, #[Argument] string $directory = '.', #[Option] string $format = 'txt'): int {
-            // output arguments and options
+        ->setCode(function (
+            OutputInterface $output,
+            #[Argument('The directory to scan')] string $directory = '.',
+            #[Option('Also count the files ignored by Git', shortcut: 'a')]
+            bool $all = false,
+        ): int {
+            $finder = new Finder()->files()->in($directory);
+            // by default, skip the files listed in .gitignore
+            $finder->ignoreVCSIgnored(!$all);
+
+            $output->writeln(sprintf(
+                'Found %d files in %s', iterator_count($finder), $directory
+            ));
 
             return Command::SUCCESS;
         })
         ->run();
+
+Now you can run the command without passing its name:
+
+.. code-block:: terminal
+
+    # counts the files of the current directory, except the ones ignored by Git
+    $ php bin/file-counter.php
+
+    # counts all the files of the src/ directory
+    $ php bin/file-counter.php src/ --all
 
 .. _console-default-command:
 
