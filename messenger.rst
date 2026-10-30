@@ -5810,6 +5810,39 @@ disable the idle timeout entirely::
 
     The ``getIdleTimeout()`` method was introduced in Symfony 8.1.
 
+The worker doesn't process a full batch while it handles the message that
+completes the batch. Instead, it processes the batch in a separate dispatch,
+right after the dispatch of that message. It does the same with pending batches
+when it's idle or stopped. This way, if you use the
+:ref:`doctrine_transaction middleware <middleware-doctrine>`, the ``process()``
+method runs in its own database transaction: if another handler of the message
+that completes the batch fails, the worker retries only that message and the
+database keeps the changes made by the batch.
+
+Batch handlers that don't use ``BatchHandlerTrait`` can get the same behavior
+by calling the ``deferFlush()`` method of the ``Acknowledger`` when their batch
+is full. If this method returns ``true``, the worker calls ``flush(true)`` on
+the handler right after the dispatch::
+
+    public function __invoke(MyMessage $message, ?Acknowledger $ack = null): mixed
+    {
+        // ... if $ack is null, handle the message now and return its result
+
+        $this->jobs[] = [$message, $ack];
+
+        // flush the batch now if the worker can't flush it after the dispatch
+        if (\count($this->jobs) >= 100 && !$ack->deferFlush()) {
+            $this->flush(true);
+        }
+
+        return \count($this->jobs);
+    }
+
+.. versionadded:: 8.2
+
+    Processing a full batch in a separate dispatch and the ``deferFlush()``
+    method were introduced in Symfony 8.2.
+
 Extending Messenger
 -------------------
 
