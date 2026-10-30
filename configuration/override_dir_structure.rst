@@ -304,6 +304,36 @@ file:
     ``public_html/`` directory, and then replace it with a symbolic link to
     the ``public/`` dir in your project.
 
+.. _override-assets-dir:
+
+Override the Assets Directory
+-----------------------------
+
+If you rename or move the ``assets/`` directory, update its path in:
+
+* AssetMapper: the :ref:`asset_mapper.paths <mapping-assets>` option and the
+  ``importmap.php`` file;
+* Webpack Encore: the ``webpack.config.js`` file;
+* StimulusBundle: the ``stimulus.controller_paths`` and
+  ``stimulus.controllers_json`` options.
+
+Then, add the ``extra.assets-dir`` option in the ``composer.json`` file so
+Symfony Flex finds the ``controllers.json`` file when you install or remove
+UX packages:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+        "extra": {
+            "...": "...",
+            "assets-dir": "my_new_assets_dir"
+        }
+    }
+
+Flex recipes still copy their files to ``assets/``, so move those files to your
+new directory after installing a package.
+
 Override the Vendor Directory
 -----------------------------
 
