@@ -235,7 +235,7 @@ To use Stimulus, first install StimulusBundle:
 
 The Flex recipe should add several files/directories:
 
-* ``assets/bootstrap.js`` - initializes Stimulus;
+* ``assets/stimulus_bootstrap.js`` - initializes Stimulus;
 * ``assets/controllers/`` - a directory where you'll put your Stimulus controllers;
 * ``assets/controllers.json`` - file that helps load Stimulus controllers from UX
   packages that you'll install.
