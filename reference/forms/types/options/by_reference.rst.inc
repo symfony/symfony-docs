@@ -19,10 +19,10 @@ To explain this further, here's a simple example::
     $builder
         ->add('title', TextType::class)
         ->add(
-            $builder->create('author', FormType::class, ['by_reference' => ?])
+            $builder->create('author', FormType::class, ['by_reference' => true])
                 ->add('name', TextType::class)
                 ->add('email', EmailType::class)
-        )
+        );
 
 If ``by_reference`` is true, the following takes place internally
 when you call ``submit()`` (or ``handleRequest()``) on the form::
