@@ -44,6 +44,7 @@ define a callable that takes each choice as the only argument and must return
                 ])
             ;
         }
+    }
 
 The option can be a callable or a property path when choices are objects::
 
@@ -64,15 +65,18 @@ The option can be a callable or a property path when choices are objects::
         // src/Form/Type/AddressType.php
         // ...
         use Symfony\Component\Form\ChoiceList\ChoiceList;
+        use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
         // ...
-        'choice_filter' => $allowedCountries ? ChoiceList::filter(
-            // pass the type as first argument
-            $this,
-            function (string $countryCode) use ($allowedCountries): bool {
-                return in_array($countryCode, $allowedCountries, true);
-            },
-            // pass the option that makes the filter "vary" to compute a unique hash
-            $allowedCountries
-        ) : null,
+        $builder->add('country', CountryType::class, [
+            'choice_filter' => $allowedCountries ? ChoiceList::filter(
+                // pass the type as first argument
+                $this,
+                function (string $countryCode) use ($allowedCountries): bool {
+                    return in_array($countryCode, $allowedCountries, true);
+                },
+                // pass the option that makes the filter "vary" to compute a unique hash
+                $allowedCountries
+            ) : null,
+        ]);
         // ...

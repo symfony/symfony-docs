@@ -223,13 +223,7 @@ visual separator.
 Overridden Options
 ------------------
 
-compound
-~~~~~~~~
-
-**type**: ``boolean`` **default**: same value as ``expanded`` option
-
-This option specifies if a form is compound. The value is by default
-overridden by the value of the ``expanded`` option.
+.. include:: /reference/forms/types/options/choice_type_compound.rst.inc
 
 .. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
@@ -249,9 +243,9 @@ error_bubbling
 Set that error on this field must be attached to the field instead of
 the parent field (the form in most cases).
 
-.. include:: /reference/forms/types/options/choice_type_trim.rst.inc
+.. include:: /reference/forms/types/options/choice_type_invalid_message.rst.inc
 
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
+.. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
 Inherited Options
 -----------------
@@ -259,6 +253,8 @@ Inherited Options
 These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
+
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
@@ -274,15 +270,19 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
+
 .. include:: /reference/forms/types/options/inherit_data.rst.inc
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/label_html.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
@@ -291,12 +291,6 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
-
-.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
-
-.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
-
-.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
 
 Field Variables
 ---------------
