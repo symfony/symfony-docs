@@ -12,3 +12,9 @@ Supported Constraints
 The following constraints are natively available in Symfony:
 
 .. include:: /reference/constraints/map.rst.inc
+
+.. toctree::
+    :hidden:
+    :glob:
+
+    /reference/constraints/*
