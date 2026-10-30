@@ -13,3 +13,4 @@ application.
     compositing
     render_primitives
     tick_loop
+    program_status
