@@ -26,6 +26,8 @@ manually, but then you should use the ``ChoiceType`` directly.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
+
 ``input``
 ~~~~~~~~~
 
@@ -59,6 +61,19 @@ with the ``choice_translation_locale`` option.
 Overridden Options
 ------------------
 
+``choice_loader``
+~~~~~~~~~~~~~~~~~
+
+**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface` **default**: a loader for PHP timezones
+
+The default loader uses :phpmethod:`DateTimeZone::listIdentifiers` to load
+the timezones. When the `intl`_ option is ``true``, it uses
+:class:`Symfony\\Component\\Intl\\Timezones` instead and translates the
+timezone names into the locale defined by the `choice_translation_locale`_
+option. To provide a custom loader, see :ref:`reference-form-choice-loader`.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+
 ``choices``
 ~~~~~~~~~~~
 
@@ -72,8 +87,6 @@ The Timezone type defaults the choices to all timezones returned by
     If you want to override the built-in choices of the timezone type, you
     will also have to set the ``choice_loader`` option to ``null``.
 
-.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
-
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
@@ -81,9 +94,27 @@ Inherited Options
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_filter.rst.inc
+
+.. include:: /reference/forms/types/options/choice_label.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_compound.rst.inc
+
 .. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
 
+.. include:: /reference/forms/types/options/error_bubbling.rst.inc
+
 .. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -99,6 +130,10 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/by_reference.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
@@ -113,8 +148,6 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
-.. include:: /reference/forms/types/options/error_bubbling.rst.inc
-
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/help.rst.inc
@@ -123,18 +156,26 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/label_html.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 .. _`ICU Project`: https://icu.unicode.org/

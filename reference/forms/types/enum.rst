@@ -89,15 +89,31 @@ class
 The fully-qualified class name (FQCN) of the PHP enum used to get the values
 displayed by this form field.
 
-Inherited Options
------------------
+Overridden Options
+------------------
 
-These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
+``choice_label``
+~~~~~~~~~~~~~~~~
 
-choices
-~~~~~~~
+**type**: ``string``, ``callable``, ``false`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: a callable that returns the enum case name
 
-**type**: ``array`` **default**: ``[]``
+The default callable uses the enum case name as the label, or the enum case
+itself if it implements ``TranslatableInterface``, as shown above. If you
+provide string keys in ``choices``, it uses those keys as labels instead.
+To customize the labels, see :ref:`reference-form-choice-label`.
+
+``choice_value``
+~~~~~~~~~~~~~~~~
+
+**type**: ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: a callable for backed enums, ``null`` otherwise
+
+For backed enums, the default callable uses the backing value of each enum
+case as its choice value.
+
+``choices``
+~~~~~~~~~~~
+
+**type**: ``array`` **default**: all cases of the enum
 
 By default, this field displays all the cases of the related PHP enum. Use this
 option to explicitly define which options to display::
@@ -116,15 +132,18 @@ option to explicitly define which options to display::
 You can add keys to the ``choices`` array, which will then be used as labels::
 
     'choices' => [
-        'Align to the right' => TextAlign::Left,
-        'Align to the left' => TextAlign::Right,
+        'Align to the left' => TextAlign::Left,
+        'Align to the right' => TextAlign::Right,
     ],
+
+Inherited Options
+-----------------
+
+These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
 .. include:: /reference/forms/types/options/choice_filter.rst.inc
-
-.. include:: /reference/forms/types/options/choice_label.rst.inc
 
 .. include:: /reference/forms/types/options/choice_loader.rst.inc
 
@@ -134,11 +153,11 @@ You can add keys to the ``choices`` array, which will then be used as labels::
 
 .. include:: /reference/forms/types/options/choice_translation_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/choice_value.rst.inc
+.. include:: /reference/forms/types/options/choice_type_compound.rst.inc
+
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
-
-.. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -195,7 +214,7 @@ This callback will group choices in 3 categories: ``Upper``, ``Lower`` and ``Oth
 
 If you return ``null``, the option won't be grouped.
 
-.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
+.. include:: /reference/forms/types/options/choice_type_invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -211,6 +230,10 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/by_reference.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
@@ -219,24 +242,34 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/label_html.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 .. _`PHP enumeration`: https://www.php.net/manual/language.enumerations.php

@@ -54,6 +54,10 @@ Set this option to ``null`` to not filter currencies by date (the
 
     The ``active_at`` option was introduced in Symfony 7.4.
 
+.. include:: /reference/forms/types/options/choice_loader_intl.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+
 ``choices``
 ~~~~~~~~~~~
 
@@ -72,8 +76,6 @@ the moment of creating the form type.
     The default value of ``choices`` changed in Symfony 7.4. In previous versions,
     this option contained all currencies, including those that were no longer legal
     tender in their countries.
-
-.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
@@ -118,11 +120,27 @@ Inherited Options
 
 These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`:
 
+.. include:: /reference/forms/types/options/choice_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_filter.rst.inc
+
+.. include:: /reference/forms/types/options/choice_label.rst.inc
+
+.. include:: /reference/forms/types/options/choice_name.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/choice_value.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_compound.rst.inc
+
 .. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
+
+.. include:: /reference/forms/types/options/group_by.rst.inc
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
@@ -138,6 +156,10 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/attr.rst.inc
 
+.. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/by_reference.rst.inc
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
@@ -152,25 +174,35 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
+.. include:: /reference/forms/types/options/error_mapping.rst.inc
+
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
 
+.. include:: /reference/forms/types/options/help_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_format.rst.inc
+
 .. include:: /reference/forms/types/options/label_html.rst.inc
 
-.. include:: /reference/forms/types/options/label_format.rst.inc
+.. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. include:: /reference/forms/types/options/choice_type_translation_domain.rst.inc
 
 .. _`3-letter ISO 4217`: https://en.wikipedia.org/wiki/ISO_4217
 .. _`legal tender`: https://en.wikipedia.org/wiki/Legal_tender
