@@ -724,6 +724,71 @@ use the :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
         }
     }
 
+.. _security-firewall-listeners:
+
+Adding Custom Listeners to the Firewall
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On each request, the firewall calls a list of listeners: one loads the user
+from the session, another one runs the authenticators, another one applies the
+``access_control`` rules, etc. Bundles that extend the security system (e.g. to
+add two-factor authentication) can add their own listeners to this list. A
+firewall listener implements
+:class:`Symfony\\Component\\Security\\Http\\Firewall\\FirewallListenerInterface`,
+usually by extending
+:class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractListener`::
+
+    // src/Security/OAuthTokenRefreshListener.php
+    namespace App\Security;
+
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpKernel\Event\RequestEvent;
+    use Symfony\Component\Security\Http\Attribute\FirewallListenerOrder;
+    use Symfony\Component\Security\Http\Firewall\AbstractListener;
+    use Symfony\Component\Security\Http\Firewall\ContextListener;
+
+    // 'before' and 'after' accept a service ID or a class name, or an array
+    // of them to reference several listeners
+    #[FirewallListenerOrder(after: ContextListener::class)]
+    class OAuthTokenRefreshListener extends AbstractListener
+    {
+        public function supports(Request $request): ?bool
+        {
+            // return false to skip this listener for the current request
+            return $request->hasPreviousSession();
+        }
+
+        public function authenticate(RequestEvent $event): void
+        {
+            // ... refresh the expired OAuth token of the user loaded from the session
+        }
+    }
+
+To add the listener to a firewall, create a security factory that implements
+:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\FirewallListenerFactoryInterface`
+and register it in the ``build()`` method of your bundle with the
+``addAuthenticatorFactory()`` method of the security extension.
+
+Firewall listeners run in the order of their ``getPriority()`` method (the
+higher the number, the earlier the listener runs). Many listeners keep the
+default ``0`` priority defined by ``AbstractListener``, so use the
+``#[FirewallListenerOrder]`` attribute to run your listener ``before`` or
+``after`` other listeners with the same priority. Symfony resolves these
+constraints when compiling the container:
+
+* Priorities always apply, including the default ``0``. Constraints only
+  change the order of listeners with the same priority, and a constraint that
+  contradicts the priorities makes the compilation fail;
+* Constraints on listeners that aren't enabled in the firewall (e.g. the
+  ``switch_user`` listener) are ignored;
+* The firewall calls the logout listener before the first listener with a
+  lower priority (or after all listeners in ``lazy`` firewalls), so listeners
+  with the same priority as the logout listener can't run after it.
+
+.. versionadded:: 8.2
+
+    The ``#[FirewallListenerOrder]`` attribute was introduced in Symfony 8.2.
+
 .. _security-authenticators:
 
 Authenticating Users
