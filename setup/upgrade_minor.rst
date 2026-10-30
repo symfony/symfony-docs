@@ -57,6 +57,15 @@ Your ``composer.json`` file should also have an ``extra`` block that you will
           }
       }
 
+If you forget to update the constraint of some ``symfony/`` package in the
+``require`` section, that constraint takes precedence over the ``extra`` block
+and Flex displays a warning like this one:
+
+.. code-block:: text
+
+    Version constraint "6.3.*" for "symfony/console" has no intersection
+    with "6.4.*", keeping the package unrestricted
+
 Next, use Composer to download new versions of the libraries:
 
 .. code-block:: terminal

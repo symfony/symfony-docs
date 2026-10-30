@@ -163,7 +163,7 @@ starting with ``symfony/`` to the new major version:
 A more efficient way to handle Symfony dependency updates is by setting the
 ``extra.symfony.require`` configuration option in your ``composer.json`` file.
 In Symfony applications using :doc:`Symfony Flex </setup/flex>`, this setting
-restricts Symfony packages to a single specific version, improving both
+restricts all Symfony packages to the given version constraint, improving both
 dependency management and Composer update performance:
 
 .. code-block:: diff
@@ -188,6 +188,16 @@ dependency management and Composer update performance:
     +         }
     +     }
       }
+
+Set this option to a version constraint such as ``7.0.*`` or ``^7.0``, not to
+an exact version such as ``7.0.1``. Otherwise, the update fails when a Symfony
+package has no release with that exact version or when a security advisory
+blocks it.
+
+If a package in the ``require`` section uses a constraint that doesn't intersect
+with ``extra.symfony.require``, Flex keeps that constraint and displays a
+warning. This lets you require a development version of some package (e.g.
+``dev-main``); Flex doesn't display the warning for these constraints.
 
 .. warning::
 
