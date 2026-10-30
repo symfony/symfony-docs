@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by tacman at 2024-11-29T14:28:57Z
+
+I also add a filename and instructions for running it.  I don't understand the second part of the page, where the command can be registered.  Is that for bin/console?  Or if you want to have your own set of commands, like bin/my-files, where you would have file-counter and others, like bin/console has?
+
+---------------------------------------------------------------------------
+
+by alexisLefebvre at 2024-12-06T17:36:07Z
+
+This PR contains too many commits. You should be able to rebase it on `7.1` and remove the unwanted commits, or it may be simpler to create a new branch from `7.1` and cherry-pick the commits you want. If you can't reduce the commits for this PR, close it and open a new PR which should contain a few commits only.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-12-07T08:58:18Z
+
+I switched back to `7.2` target branch, we can adjust while merging, but shouldn't we target `6.4`?
