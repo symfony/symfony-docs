@@ -245,6 +245,11 @@ with Symfony Flex to install a specific Symfony version:
     # recommended to have a better output and faster download time)
     composer update --prefer-dist --no-progress
 
+Set this variable to a version constraint such as ``7.*``, ``7.4.*`` or
+``^7.4``. Don't use a single number such as ``7``: Composer considers it an
+exact version (``7.0.0``) and the update fails for any package that has no
+release with that version number.
+
 .. warning::
 
     If you want to cache your Composer dependencies, **do not** cache the
@@ -255,8 +260,9 @@ Installation
 ------------
 
 Bundles should set ``"type": "symfony-bundle"`` in their ``composer.json`` file.
-With this, :ref:`Symfony Flex <symfony-flex>` will be able to automatically
-enable your bundle when it's installed.
+With this, :ref:`Symfony Flex <symfony-flex>` automatically enables your bundle
+when it's installed: in all environments, or only in the ``dev`` and ``test``
+environments when the application requires it as a dev dependency.
 
 If your bundle requires any setup (e.g. configuration, new files, changes to
 ``.gitignore``, etc), then you should create a `Symfony Flex recipe`_.
