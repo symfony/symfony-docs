@@ -178,13 +178,19 @@ The configurable paths are:
 
 * ``bin-dir``: defaults to ``bin/``
 * ``config-dir``: defaults to ``config/``
-* ``src-dir`` defaults to ``src/``
-* ``var-dir`` defaults to ``var/``
-* ``public-dir`` defaults to ``public/``
+* ``src-dir``: defaults to ``src/``
+* ``var-dir``: defaults to ``var/``
+* ``public-dir``: defaults to ``public/``
+* ``assets-dir``: defaults to ``assets/``
 
 If you customize these paths, some files copied from a recipe still may contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
+
+Flex only uses the ``assets-dir`` option to find the ``controllers.json`` file;
+recipes still copy their files to ``assets/``. Read
+:ref:`how to override the assets directory <override-assets-dir>` to learn
+which other files to update.
 
 Learn more
 ----------
