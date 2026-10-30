@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-07T14:52:50Z
+
+Can you please also list both attributes in `reference/attributes.rst`? There's no Form section yet, it'd go after EventDispatcher:
+
+```rst
+Form
+~~~~
+
+* :ref:`AsFormType <form-attributes>`
+* :ref:`FormField <form-attributes>`
+```
+
+---------------------------------------------------------------------------
+
+by Amoifr at 2026-10-08T14:08:10Z
+
+Done, thanks! Sorry for the delay, I had missed this one.
