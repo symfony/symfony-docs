@@ -4,6 +4,13 @@ Upgrading Existing Applications to Symfony Flex
 Symfony Flex is optional, but it's so convenient and improves your productivity
 so much that it's strongly recommended to use it in all your applications.
 
+.. note::
+
+    This article applies to applications created before Symfony Flex existed,
+    such as those based on the Symfony Standard Edition. Applications created
+    with the ``symfony new`` command or the ``symfony/skeleton`` project already
+    use Flex.
+
 Symfony Flex recommends that applications use the following directory structure,
 which is the same used by default in Symfony, but you can
 :ref:`customize some directories <flex-customize-paths>`:
@@ -57,7 +64,7 @@ manual steps:
 
          {
              "require": {
-                 "symfony/flex": "^1.0",
+                 "symfony/flex": "^2.0",
        +   },
        +   "conflict": {
        +       "symfony/symfony": "*"
@@ -197,9 +204,9 @@ Learn more
 
 * :doc:`/setup/flex_private_recipes`
 
-.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.3/config/services.yaml
+.. _`default services.yaml file`: https://github.com/symfony/recipes/blob/main/symfony/framework-bundle/7.4/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/a0770a7f26eeda9890a104fa3de8f68c4120fca5/composer.json#L30-L39
 .. _`shown in this example of the skeleton-project`: https://github.com/symfony/skeleton/blob/a0770a7f26eeda9890a104fa3de8f68c4120fca5/composer.json#L55-L57
-.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/5.3/public/index.php
-.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/master/symfony/console/5.3/bin/console
+.. _`copying Symfony's index.php source`: https://github.com/symfony/recipes/blob/main/symfony/framework-bundle/7.4/public/index.php
+.. _`copying Symfony's bin/console source`: https://github.com/symfony/recipes/blob/main/symfony/console/5.3/bin/console
 .. _`Symfony Requirements Checker`: https://github.com/symfony/requirements-checker
