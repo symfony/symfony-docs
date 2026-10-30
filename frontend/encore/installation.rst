@@ -83,7 +83,7 @@ is the main config file for both Webpack and Webpack Encore:
          */
         .addEntry('app', './assets/app.js')
 
-        // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+        // enables the Symfony UX Stimulus bridge (used in assets/stimulus_bootstrap.js)
         .enableStimulusBridge('./assets/controllers.json')
 
         // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -164,7 +164,7 @@ Next, open the new ``assets/app.js`` file which contains some JavaScript code
     import './styles/app.css';
 
     // start the Stimulus application
-    import './bootstrap';
+    import './stimulus_bootstrap.js';
 
 And the new ``assets/styles/app.css`` file:
 
@@ -175,12 +175,12 @@ And the new ``assets/styles/app.css`` file:
         background-color: lightgray;
     }
 
-You should also add an ``assets/bootstrap.js`` file, which initializes Stimulus:
-a system that you'll learn about soon:
+You should also add an ``assets/stimulus_bootstrap.js`` file. It initializes
+Stimulus, a system that you'll learn about soon:
 
 .. code-block:: javascript
 
-    // assets/bootstrap.js
+    // assets/stimulus_bootstrap.js
     import { startStimulusApp } from '@symfony/stimulus-bridge';
 
     // Registers Stimulus controllers from controllers.json and in the controllers/ directory
