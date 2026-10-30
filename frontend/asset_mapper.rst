@@ -576,6 +576,11 @@ that your ``assets/vendor/`` directory is in sync with the updated import map:
 
     $ php bin/console importmap:install
 
+When you remove a UX package with Composer, Symfony Flex runs the
+``importmap:remove`` command for the entries that this package added to your
+``importmap.php`` file. Flex keeps the entries that other installed packages
+still need.
+
 .. tip::
 
     Removing a package from the import map does not automatically remove any
@@ -1409,6 +1414,12 @@ connect to the ``jsDelivr`` CDN:
                     curl:
                         # 61 is value of constant CURLOPT_HTTPPROXYTUNNEL
                         '61': true
+
+When you install a UX package with Composer, Symfony Flex runs the
+``importmap:require`` command for its JavaScript dependencies. If this command
+fails, the installation continues and Flex lists the packages that it couldn't
+add. After fixing the connection issue, run ``composer update --lock`` to add
+them.
 
 Package Not Servable by the CDN
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
