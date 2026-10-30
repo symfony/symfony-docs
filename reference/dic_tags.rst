@@ -407,6 +407,23 @@ instead of scanning directories).
 
     The ``doctrine.orm.entity`` tag was introduced in Symfony 8.2.
 
+.. _dic-tags-form-data-class:
+
+form.data_class
+---------------
+
+**Purpose**: Create a form type from a class with ``#[AsFormType]``
+
+Any class that defines the ``#[AsFormType]`` attribute is automatically tagged
+with this :ref:`resource tag <service-tags-resource-tags>` when
+:ref:`autoconfiguration <services-autoconfigure>` is enabled. The form type is
+then created from the class when the container is compiled. Read
+:doc:`/form/attribute_form_types` for details.
+
+.. versionadded:: 8.2
+
+    The ``form.data_class`` tag was introduced in Symfony 8.2.
+
 .. _dic-tags-form-type:
 
 form.type
