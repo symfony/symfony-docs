@@ -81,7 +81,7 @@ and a managed, High Availability Hub are also provided.
 
 Thanks to :doc:`the Docker integration of Symfony </setup/docker>`,
 :ref:`Flex <symfony-flex>` proposes to install a Mercure hub for development.
-Run ``docker-compose up`` to start the hub if you have chosen this option.
+Run ``docker compose up`` to start the hub if you have chosen this option.
 
 If you use the :ref:`Symfony local web server <symfony-cli-server>`,
 you must start it with the ``--no-tls`` option to prevent mixed content and
