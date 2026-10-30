@@ -113,13 +113,11 @@ Remove the status of a task, and of the tasks nested under it, with
 Terminal Support
 ----------------
 
-The terminal is asked whether it supports the protocol the first time you
-report a status, and receives reports only if it does. Terminals that
-don't support it never see them, so reporting a status is always safe.
-The statuses are sent again when the Tui starts after being stopped.
+Reports are sent as they are, without checking whether the terminal
+supports the protocol: terminals ignore the sequences they don't know, so
+reporting a status is always safe.
 
-In tests, the ``VirtualTerminal`` behaves like a supporting terminal: it
-writes every report to its output, so you can assert on what the
-application reports.
+In tests, the ``VirtualTerminal`` writes every report to its output, so
+you can assert on what the application reports.
 
 .. _`Program Status Protocol`: https://www.superlogical.com/rex/docs/build/program-status
