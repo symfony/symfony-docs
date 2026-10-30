@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by Mynyx at 2026-04-16T08:48:16Z
+
+I believe there is a misunderstanding here. The configuration under the key `framework` should remain in the Framework Configuration Reference. In contrast to `framework.router`, the examples mentioned are not based on the `framework` key  (`debug`, `twig`, `monolog`).
+
+What's missing, is a documentation on the actual routing configuration (`routes.yaml`).
