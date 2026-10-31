@@ -307,10 +307,10 @@ the security token, so you can use them to call the APIs of the provider::
 
     $token = $security->getToken();
 
-    $accessToken = $token->getAttribute('oidc_access_token');
+    $accessToken = $token->getAttribute('oauth2_access_token');
     $idToken = $token->getAttribute('oidc_id_token');
-    $refreshToken = $token->getAttribute('oidc_refresh_token');
-    $expiresAt = $token->getAttribute('oidc_access_token_expires_at');
+    $refreshToken = $token->getAttribute('oauth2_refresh_token');
+    $expiresAt = $token->getAttribute('oauth2_access_token_expires_at');
 
 The last two attributes are ``null`` when the provider doesn't return them.
 Providers only issue a refresh token when you request it (on most providers,
@@ -1521,7 +1521,7 @@ inject it using its id::
             $this->refresher->refreshIfNeeded($token);
 
             return $this->client->request('GET', 'https://api.example.com/me', [
-                'auth_bearer' => $token->getAttribute('oidc_access_token'),
+                'auth_bearer' => $token->getAttribute('oauth2_access_token'),
             ])->toArray();
         }
     }
