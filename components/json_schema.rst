@@ -239,6 +239,14 @@ uses the short name of the class followed by the groups, the direction and
 the other options that change its shape (e.g. ``Book-book.write_input`` for
 the ``book:write`` group and the input direction).
 
+Because the name depends on these options, the same class can have several
+definitions in a document. Use ``getDefinitionClasses()`` to find the class of
+a definition, for example to map a ``$ref`` back to its class::
+
+    // indexed by name and in the same order as getDefinitions():
+    // ['Book-book.write' => Book::class, 'Author-book.write' => Author::class]
+    $classes = $document->getDefinitionClasses();
+
 Extending the Generator
 -----------------------
 
