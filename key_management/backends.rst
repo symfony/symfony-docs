@@ -500,23 +500,62 @@ DSN scheme:
 
 .. code-block:: text
 
-    kmip://[<user>:<password>@]<host>[:<port>]?cert=<path>&key=<path>&version=<version>[&ca=<path>][&peer_name=<name>][&passphrase=<passphrase>][&iv_length=12][&timeout=10]
+    kmip://[<user>:<password>@]<host>[:<port>]?cert=<path>&key=<path>&version=<version>[&ca=<path>][&peer_name=<name>][&passphrase=<passphrase>][&cipher=aes-gcm][&mode=<vendor-mode>][&iv_length=12][&timeout=10]
 
 ``cert``, ``key`` and ``version`` are required: the client certificate and
-its private key, and the KMIP protocol version to speak (``1.4`` or ``2.0``).
-The client certificate is required even when the DSN includes a username and
-password. The port defaults to ``5696``.
+its private key, and the KMIP protocol version to speak (``1.4``, ``2.0`` or
+``2.1``). The bridge only performs authenticated Encrypt and Decrypt
+operations, whichever version you select. The client certificate is required
+even when the DSN includes a username and password. The port defaults to
+``5696``.
 
 The bridge always verifies the server certificate; no option turns that off.
 ``ca`` is the certificate authority file to verify it against (the system
 trust store by default) and ``peer_name`` is the expected server name (the
-DSN host by default). ``passphrase`` unlocks an encrypted private key,
+DSN host by default). ``passphrase`` unlocks an encrypted private key and
 ``timeout`` is the time in seconds an operation may take, from the connection
-to the response (``10`` by default), and ``iv_length`` is the length in bytes
-of the AES-GCM IV used for new ciphertexts (``12`` by default).
+to the response (``10`` by default).
 
-Provision an active AES key, with Encrypt and Decrypt in its Cryptographic
-Usage Mask, and use its Unique Identifier as the key id.
+The ``cipher`` option selects the algorithm the server encrypts with, which
+determines the key to provision on the server:
+
+``aes-gcm`` (default)
+    An active AES key. Only this cipher accepts ``iv_length``, the length in
+    bytes of the IV used for new ciphertexts (``12`` by default).
+``chacha20-poly1305``
+    An active 256-bit ChaCha20Poly1305 key, on a server that supports this
+    algorithm.
+``aes-gcm-siv``
+    An active 128-bit or 256-bit AES key. KMIP defines no Block Cipher Mode
+    for AES-GCM-SIV, so you must also set the ``mode`` option to the vendor
+    value documented by your server, a hexadecimal string between
+    ``0x80000000`` and ``0x8FFFFFFF``.
+
+In all cases, the key needs Encrypt and Decrypt in its Cryptographic Usage
+Mask, and its Unique Identifier is the key id. All three ciphers produce a
+16-byte authentication tag, and ChaCha20-Poly1305 and AES-GCM-SIV always use
+a 12-byte nonce.
+
+This DSN selects AES-GCM-SIV on a server that documents ``0x80000002`` as its
+mode (other servers can use a different value):
+
+.. code-block:: text
+
+    kmip://kmip.example.com?...&cipher=aes-gcm-siv&mode=0x80000002
+
+Each ciphertext records the cipher, the mode and the IV length used to produce
+it. Changing ``cipher`` or ``iv_length`` therefore only applies to new
+ciphertexts, and earlier ones stay readable as long as the server and the key
+still support them. Decryption only accepts the vendor mode set in ``mode``,
+though: keep that option in the DSN, even after changing ``cipher``, as long
+as you store AES-GCM-SIV ciphertexts.
+
+The bridge draws a random nonce for each encryption. With AES-GCM, NIST
+SP 800-38D therefore limits a key to 2^32 encryptions, even with a longer
+``iv_length``, across all the applications that use the key. ChaCha20-Poly1305
+also uses random 12-byte nonces, so apply the same limit to it. AES-GCM-SIV
+resists nonce reuse: a repeated nonce only reveals whether the same plaintext
+was encrypted twice with the same associated data.
 
 A whole KMIP message must fit in 16 MiB, headers included. Direct encryption
 sends the plaintext to the server, so it is capped well below that. Envelope
