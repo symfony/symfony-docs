@@ -2333,6 +2333,8 @@ the ``failure_transport`` configured at the transport level.
     # remove a message without retrying it from "failure_transport"
     $ php bin/console messenger:failed:remove 20 --transport=failure_transport
 
+.. _messenger-decode-failures:
+
 Handling Decode Failures
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -7128,6 +7130,7 @@ Let's say you want to create a message decoder::
     namespace App\Messenger\Serializer;
 
     use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
     use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 
     class MessageWithTokenDecoder implements SerializerInterface
@@ -7140,9 +7143,10 @@ Let's say you want to create a message decoder::
                 $data['token'] = $encodedEnvelope['token'];
 
                 // other operations like getting information from stamps
-            } catch (\Throwable $throwable) {
-                // wrap any exception that may occur in the envelope to send it to the failure transport
-                return new Envelope($throwable);
+            } catch (\Throwable $e) {
+                // return (don't throw) a decoding failure that keeps the received
+                // payload, so the message can be retried and decoded again later
+                return MessageDecodingFailedException::wrap($encodedEnvelope, $e->getMessage(), 0, $e);
             }
 
             return new Envelope($data);
@@ -7150,11 +7154,38 @@ Let's say you want to create a message decoder::
 
         public function encode(Envelope $envelope): array
         {
+            $message = $envelope->getMessage();
+            // a message that failed to decode is sent again as it was received
+            // (when it's retried or sent to the failure transport)
+            if ($message instanceof MessageDecodingFailedException && $message->encodedEnvelope) {
+                return $message->encodedEnvelope;
+            }
+
             // this decoder does not encode messages, but you can implement it by returning
             // an array with serialized stamps if you need to send messages in a custom format
             throw new \LogicException('This serializer is only used for decoding messages.');
         }
     }
+
+When the payload can't be decoded, return the envelope created by
+:method:`Symfony\\Component\\Messenger\\Exception\\MessageDecodingFailedException::wrap`
+instead of throwing the exception. That envelope keeps the received payload, so
+Messenger can :ref:`retry it and decode it again <messenger-decode-failures>`
+once the cause is fixed. Your ``encode()`` method must send that payload again
+as it was received, like the example above does.
+
+If you decoded some stamps before the failure (for example, the retry counter
+stored in a ``RedeliveryStamp``), add them to the returned envelope with its
+``with()`` method. If you throw a ``MessageDecodingFailedException`` instead,
+the transport wraps it the same way but can only add its own stamps. Without the
+stamps carried by the message, the retry counter restarts every time the message
+is received, so an undecodable message is retried indefinitely instead of
+reaching the failure transport.
+
+.. versionadded:: 8.1
+
+    The ``MessageDecodingFailedException::wrap()`` method was introduced in
+    Symfony 8.1.
 
 Stamps implementing
 :class:`Symfony\\Component\\Messenger\\Stamp\\NonSendableStampInterface` are
