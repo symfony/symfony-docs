@@ -3151,6 +3151,24 @@ The Beanstalkd transport DSN may look like this:
 
 The transport has a number of options:
 
+``body_only`` (default: ``false``)
+    Beanstalkd jobs have no headers, so by default each job contains a JSON
+    object with the body and the headers of the message. When set to ``true``,
+    jobs contain only the body, so you can :ref:`exchange messages
+    <messenger-interop>` with applications that don't use Messenger.
+
+    Messages lose their headers in this format, so :ref:`set the type of the
+    received messages <messenger-interop-message-type>` in the serializer of
+    the transport and don't enable the :ref:`sign option
+    <messenger-transport-signing>` of the transport.
+
+    Enable this option only when the tube has no jobs. Otherwise, the transport
+    reads the existing jobs as message bodies without reporting any error.
+
+    .. versionadded:: 8.2
+
+        The ``body_only`` option was introduced in Symfony 8.2.
+
 ``bury_on_reject`` (default: ``false``)
     When set to ``true``, rejected messages are placed into a "buried" state
     in Beanstalkd instead of being deleted.
