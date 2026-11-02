@@ -407,6 +407,17 @@ The properties are fetched from the user object using the
 :doc:`PropertyAccess component </components/property_access>` (e.g. using
 ``getEmail()`` or a public ``$email`` property in this example).
 
+.. warning::
+
+    The ``hash`` doesn't depend on the firewall or the host. A login link that
+    points to another host still works on your application, so configure the
+    :ref:`trusted_hosts <configuration-framework-trusted-hosts>` option to
+    reject requests with a forged ``Host`` header. If users of several firewalls
+    or tenants have the same identifier and signature property values, a login
+    link created for one of them also works for the others. To prevent this, add
+    a property that is different for each firewall or tenant (e.g. a tenant ID)
+    to ``signature_properties``.
+
 .. tip::
 
     You can also use the signature properties to add very advanced
