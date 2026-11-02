@@ -127,6 +127,7 @@ whitelist:
         - 'The bin/console Command'
         - '.. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection'
         - '.. versionadded:: 7.0' # Encore
+        - '.. versionadded:: 2.7.0' # Flex in frontend/create_ux_bundle.rst
         - '123,' # assertion for var_dumper - components/var_dumper.rst
         - '"foo",' # assertion for var_dumper - components/var_dumper.rst
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
