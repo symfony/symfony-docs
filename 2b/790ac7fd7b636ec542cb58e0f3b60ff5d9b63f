@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by saifulferoz at 2026-08-09T10:42:35Z
+
+Good catch, thanks — you're right. I'd based the original text on an earlier revision of the PR; the merged `StoreFactory::createStore()` takes a positional `bool $advisory` argument and routes a Doctrine DBAL connection by platform, so it can return `DoctrineDbalMysqlStore` as well as `DoctrineDbalPostgreSqlStore`.
+
+I've updated the section to reflect that, fixed the `createStore($connection, true)` signature, documented the new `DoctrineDbalMysqlStore` store, and added it to the stores table.
+
+Note: the "Code Blocks" check fails on `use Symfony\Component\Lock\Store\DoctrineDbalMysqlStore;` because the class only exists on the (unreleased) 8.2 branch and the checker installs a stable `symfony/lock`. That job is `continue-on-error`, and it should resolve once 8.2 is tagged.
