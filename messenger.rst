@@ -867,8 +867,8 @@ the message from being redelivered until the worker completes processing it:
 
 .. note::
 
-    This option is only available for the following transports: AMQP,
-    Beanstalkd, AmazonSQS, Doctrine and Redis.
+    This option is only available for the following transports: Amazon SQS,
+    AMPHP SQL, AMQP, Beanstalkd, Doctrine, MongoDB and Redis.
 
 .. _messenger-concurrency:
 
@@ -3252,7 +3252,7 @@ The MongoDB transport DSN may look like this:
     MESSENGER_TRANSPORT_DSN=mongodb+srv://user:pass@cluster.example.com/app
 
     # the settings below are optional
-    MESSENGER_TRANSPORT_DSN=mongodb://mongodb1.example.com/app?collection_name=jobs&queue_name=high
+    MESSENGER_TRANSPORT_DSN=mongodb://mongodb1.example.com/app?collection=jobs&queue_name=high
 
 The DSN is a `MongoDB connection string`_ that uses either the ``mongodb`` or
 the ``mongodb+srv`` scheme. Configure the transport with the following options,
@@ -3260,10 +3260,10 @@ defined in the DSN query string or under the ``options`` key of the transport.
 Symfony removes them from the connection string before passing it to the
 MongoDB driver:
 
-``database`` (default: the path of the DSN)
+``database`` (default: the path of the DSN, or ``app`` if the DSN has no path)
     The name of the database.
 
-``collection_name`` (default: ``messenger_messages``)
+``collection`` (default: ``messenger_messages``)
     The name of the collection storing the messages.
 
 ``queue_name`` (default: ``default``)
@@ -3276,6 +3276,9 @@ MongoDB driver:
 
 Symfony passes any other query parameter to the MongoDB driver as a
 `connection string option`_.
+
+The MongoDB transport supports the ``--keepalive`` option by periodically
+renewing the worker's claim on the message to prevent it from being redelivered.
 
 Consuming Several Queues
 ........................
@@ -4598,8 +4601,8 @@ When using a transport that requires a connection, you can close it by calling t
 :method:`Symfony\\Component\\Messenger\\Transport\\CloseableTransportInterface::close`
 method to free up resources in long-running processes.
 
-This interface is implemented by the following transports: AmazonSqs, Amqp, and Redis.
-If you need to close a Doctrine connection, you can do so
+The Amazon SQS, AMPHP SQL, AMQP, Beanstalkd and Redis transports implement this
+interface. If you need to close a Doctrine connection, you can do so
 :ref:`using middleware <middleware-for-doctrine>`.
 
 Running Commands And External Processes

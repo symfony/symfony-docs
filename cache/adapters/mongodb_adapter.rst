@@ -61,7 +61,9 @@ environment variable is enough to configure a cache pool::
     $cache = new MongoDbAdapter('mongodb://localhost');
 
     // stores the items in the "cache.sessions" collection of the "bookstore" database
-    $cache = new MongoDbAdapter('mongodb://localhost/bookstore?collection_name=cache.sessions');
+    $cache = new MongoDbAdapter(
+        'mongodb://localhost/bookstore?collection=cache.sessions'
+    );
 
     // MongoDB Atlas and any other deployment resolved through DNS seed lists
     $cache = new MongoDbAdapter('mongodb+srv://user:password@cluster.example.com/bookstore');
@@ -69,7 +71,7 @@ environment variable is enough to configure a cache pool::
 The connection string is read as follows:
 
 * the database name comes from the path, and defaults to ``app``;
-* the collection name comes from the ``collection_name`` query parameter, and
+* the collection name comes from the ``collection`` query parameter, and
   defaults to ``cache_items``;
 * the key prefix comes from the ``namespace`` query parameter, unless a namespace
   is given as the second constructor argument, which takes precedence;
@@ -91,8 +93,8 @@ across several pools, or to share it with the
 
     // the database and collection are then read from the options
     $cache = new MongoDbAdapter($client, '', 0, [
-        'database_name' => 'bookstore',
-        'collection_name' => 'cache_items',
+        'database' => 'bookstore',
+        'collection' => 'cache_items',
     ]);
 
     // or pass the collection directly
@@ -103,13 +105,13 @@ Configure the Options
 
 The fourth argument of the constructor takes the following options:
 
-``database_name`` (type: ``string``, default: ``app``)
+``database`` (type: ``string``, default: ``app``)
     The name of the database holding the collection. It is also read from the
     path of the connection string.
 
-``collection_name`` (type: ``string``, default: ``cache_items``)
+``collection`` (type: ``string``, default: ``cache_items``)
     The name of the collection storing the cache items. It is also read from the
-    ``collection_name`` query parameter of the connection string.
+    ``collection`` query parameter of the connection string.
 
 ``driverOptions`` (type: ``array``, default: ``[]``)
     The driver options passed to `MongoDBClient::__construct`_. Only used when a
@@ -128,7 +130,7 @@ usually more convenient::
 
     // as a collection option, on a client built elsewhere
     $cache = new MongoDbAdapter($client, '', 0, [
-        'database_name' => 'bookstore',
+        'database' => 'bookstore',
         'readPreference' => new ReadPreference(ReadPreference::SECONDARY_PREFERRED),
     ]);
 
