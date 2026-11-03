@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-08-06T15:32:09Z
+
+Ping @lyrixx in case you can review this proposal. Thanks!
+
+---------------------------------------------------------------------------
+
+by richardhj at 2024-08-06T16:18:30Z
+
+I think JSON CONTAINS and JSON_CONTAINS PATH in these usages are functional equivalent in these cases but I wonder what is more performant :-)
