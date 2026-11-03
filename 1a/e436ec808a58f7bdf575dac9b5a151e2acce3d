@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2026-10-14T14:37:27Z
+
+Thanks @stof, PR updated, these rules are now explicit:
+
+- Covered parameters are never renamed. That's in note 10, which the "Rename argument" rows point to.
+- Implementations and overrides keep the same parameter names, constructors excepted. Note 10 says it, and the "Implement a method" and "Override a ... method" rows now point to it.
+- A method tagged `@optional-arguments-by-name` can't add a default value to a required argument (new note 14).
+
+---------------------------------------------------------------------------
+
+by stof at 2026-10-19T09:32:41Z
+
+> "Static analyzers can check calls against these tags" is only true once the PHPStan, Psalm and phpDocumentor PRs are merged. Maybe "will be able to"?
+
+We got positive feedback from the phpstan and Psalm maintainers, so they will likely be merged.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2026-10-29T11:38:42Z
+
+Folks, do you consider this one ready to merge ... or do you prefer to keep discussing about it? Thanks.
