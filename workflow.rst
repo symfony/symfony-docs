@@ -868,6 +868,18 @@ if you are using Doctrine, the matching column definition should use the type ``
     this Doctrine type will store its value only as a string, resulting in the
     loss of the object's current place.
 
+.. tip::
+
+    Filtering objects by their current place requires database-specific JSON
+    functions. With Doctrine and MySQL, install the `DoctrineJsonFunctions`_
+    library, register its ``JSON_CONTAINS_PATH`` DQL function and use it in
+    your queries::
+
+        $queryBuilder
+            ->andWhere("JSON_CONTAINS_PATH(post.currentPlaces, 'one', :place) = 1")
+            // 'draft' is the name of the place to look for
+            ->setParameter('place', '$.draft');
+
 Accessing the Workflow in a Class
 ---------------------------------
 
@@ -1984,4 +1996,5 @@ Learn more
    /workflow/workflow-and-state-machine
    /workflow/dumping-workflows
 
+.. _`DoctrineJsonFunctions`: https://github.com/ScientaNL/DoctrineJsonFunctions
 .. _`glob patterns`: https://php.net/glob
