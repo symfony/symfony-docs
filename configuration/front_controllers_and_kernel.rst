@@ -191,6 +191,30 @@ parameter used, for example, to turn Twig's debug mode on:
             $twig->debug('%kernel.debug%');
         };
 
+Debug mode also controls PHP `assertions`_: the
+:doc:`Runtime component </components/runtime>` turns them on when debug mode is
+enabled and off when it's disabled. This overrides the ``zend.assertions``
+value of your ``php.ini`` file, unless it's set to ``-1``, because PHP doesn't
+allow changing that value at runtime.
+
+Assertions help you find bugs during development and aren't meant to run in
+production. For checks that must also run in production, use an ``if``
+statement instead of ``assert()``. If you still need assertions with debug mode
+disabled, turn them on in the closure returned by your front controllers
+(``public/index.php`` and ``bin/console``)::
+
+    // public/index.php
+    use App\Kernel;
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+
+    return function (array $context): Kernel {
+        // the Runtime component changes zend.assertions before calling this closure
+        ini_set('zend.assertions', 1);
+
+        return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+    };
+
 The Environments
 ----------------
 
@@ -259,3 +283,4 @@ includes the following:
 .. _`front controller`: https://en.wikipedia.org/wiki/Front_Controller_pattern
 .. _`decorate`: https://en.wikipedia.org/wiki/Decorator_pattern
 .. _Debug component: https://github.com/symfony/debug
+.. _assertions: https://php.net/manual/function.assert
