@@ -1648,6 +1648,45 @@ and set the ``limiter`` option to its service ID:
             ],
         ]);
 
+.. _security-login-timing:
+
+Login Timing and User Enumeration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A login with an unknown username would fail faster than a login with a wrong
+password, because only the second one hashes the password. Attackers could
+measure this difference to find out which usernames exist in your application.
+That's why, when the user doesn't exist, Symfony hashes the submitted password
+anyway, with the :ref:`password hasher <security-encoding-user-password>`
+configured for your user class, so both logins take about the same time.
+Symfony does the same for users who have no password and for users who your
+:doc:`user checker </security/user_checkers>` rejects before checking the
+password (e.g. users with a disabled account).
+
+This applies to form login, JSON login, HTTP basic authentication and
+:doc:`custom authenticators </security/custom_authenticator>` that use password
+credentials. Symfony doesn't hash the password in the following cases:
+
+* when using :doc:`LDAP authentication </security/ldap>`, because the LDAP
+  server checks the password, unless you enable the
+  :ref:`ldap_users_only <security-ldap-users-only>` option;
+* when your user class has no password hasher configured;
+* when the :ref:`expose_security_errors <reference-security-expose-security-errors>`
+  option is set to ``'all'``, because error messages already reveal whether the
+  user exists.
+
+For users rejected by the user checker, Symfony only hashes the password when
+``expose_security_errors`` is set to ``'none'``, its default value.
+
+This removes the biggest timing difference, but other steps, such as loading
+the user, can still take a different amount of time.
+:ref:`Login throttling <security-login-throttling>` runs before this hashing and
+remains the main protection against password guessing.
+
+.. versionadded:: 8.2
+
+    This login timing protection was introduced in Symfony 8.2.
+
 Customize Successful and Failed Authentication Behavior
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

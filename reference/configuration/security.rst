@@ -48,6 +48,8 @@ interactively. Read more about it in :ref:`security-recent-authentication`.
     The ``very_recent_authentication_lifetime`` option was introduced in
     Symfony 8.2.
 
+.. _reference-security-expose-security-errors:
+
 expose_security_errors
 ----------------------
 
