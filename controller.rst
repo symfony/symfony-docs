@@ -564,6 +564,19 @@ the validation fails as well as supported payload formats::
 
 The default status code returned if the validation fails is 422.
 
+If you don't set ``acceptFormat``, the attribute only accepts form data, JSON
+and XML payloads. Any other format results in a 415 HTTP response, even if the
+serializer can decode it. This includes CSV, YAML and the custom
+:ref:`request formats <reference-framework-request-formats>` you define. To
+accept these formats, list them in ``acceptFormat``::
+
+    public function dashboard(
+        #[MapRequestPayload(acceptFormat: ['json', 'yaml'])] UserDto $userDto
+    ): Response
+    {
+        // ...
+    }
+
 .. tip::
 
     If you build a JSON API, make sure to declare your route as using the JSON
