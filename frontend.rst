@@ -30,8 +30,8 @@ Symfony comes with several powerful options to help you build a modern and fast 
 ================================  ==================================  ===========================  ==========
                                   AssetMapper                         Reprise                      Encore
 ================================  ==================================  ===========================  ==========
-Production Ready?                 yes                                 no                           yes
-Stable?                           yes                                 no                           yes
+Production Ready?                 yes                                 yes                          yes
+Stable?                           yes                                 yes                          yes
 Requirements                      none                                Node.js                      Node.js
 Requires a build step?            no                                  yes                          yes
 Works in all browsers?            yes                                 yes                          yes
@@ -87,11 +87,6 @@ to a polyfill.
 Symfony Reprise
 ~~~~~~~~~~~~~~~
 
-.. warning::
-
-    Symfony Reprise is **experimental**: its API and behavior may still change,
-    sometimes drastically.
-
 `Symfony Reprise`_ is the modern, faster alternative to Webpack Encore. Instead of
 wrapping Webpack, it brings first-class Symfony integration to today's JavaScript
 bundlers, `Vite`_ and `Rsbuild`_, which build on much faster tooling (esbuild,
@@ -127,20 +122,13 @@ Webpack Encore
 
 .. note::
 
-    Webpack Encore is fully supported, but **for new projects AssetMapper is
-    recommended**. Choose Encore when you already use it, or when you need a full
-    JavaScript bundler.
+    Webpack Encore is in low-maintenance mode (bug fixes, security patches and
+    ``peerDependencies`` updates only). For new projects, use AssetMapper or, if
+    you need a bundler, :ref:`Symfony Reprise <frontend-reprise>`.
 
 `Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
 It wraps Webpack, giving you a clean & powerful API for bundling JavaScript modules,
 pre-processing CSS & JS and compiling and minifying assets.
-
-.. note::
-
-    Webpack Encore is now Symfony's legacy bundler-based option. It's still
-    supported, but if you're starting a new project that needs a bundler, consider
-    :ref:`Symfony Reprise <frontend-reprise>`, a more modern and faster alternative
-    built on Vite and Rsbuild.
 
 :doc:`Read the Encore Documentation </frontend/encore/index>`
 
@@ -167,12 +155,13 @@ as the default webapp.
 Stimulus & Symfony UX Components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once you've installed AssetMapper or Webpack Encore, it's time to start building your
-front-end. You can write your JavaScript however you want, but we recommend
-using `Stimulus`_, `Turbo`_ and a set of tools called `Symfony UX`_.
+Once you've installed AssetMapper, Symfony Reprise or Webpack Encore, it's time
+to start building your front-end. You can write your JavaScript however you
+want, but the recommended options are `Stimulus`_, `Turbo`_ and a set of tools
+called `Symfony UX`_.
 
 To learn about Stimulus & the UX Components, see
-the `StimulusBundle Documentation`_
+the `StimulusBundle Documentation`_.
 
 .. _frontend-js:
 
