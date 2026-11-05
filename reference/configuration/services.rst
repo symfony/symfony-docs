@@ -4,17 +4,7 @@ Service Container Configuration Reference (DependencyInjection)
 The :doc:`service container </service_container>` is configured under the
 ``services`` key of any of the configuration files loaded by the application
 (typically ``config/services.yaml``). This reference describes all the keys
-available to define and configure services in YAML, XML and PHP.
-
-.. note::
-
-    When using XML, you must use the ``http://symfony.com/schema/dic/services``
-    namespace and the related XSD schema is available at:
-    ``https://symfony.com/schema/dic/services/services-1.0.xsd``
-
-.. deprecated:: 7.4
-
-    The XML format to configure services was deprecated in Symfony 7.4.
+available to define and configure services in YAML and PHP.
 
 A ``services`` section is made of four kinds of entries:
 
@@ -55,20 +45,6 @@ values:
                 autowire: true
                 autoconfigure: true
                 public: false
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <defaults autowire="true" autoconfigure="true" public="false"/>
-            </services>
-        </container>
 
     .. code-block:: php
 
@@ -177,16 +153,6 @@ a ``name`` key and any number of attributes:
                     - 'app.custom_tag'
                     - { name: 'app.another_tag', priority: 100 }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <services>
-            <defaults>
-                <tag name="app.custom_tag"/>
-                <tag name="app.another_tag" priority="100"/>
-            </defaults>
-        </services>
-
     .. code-block:: php
 
         // config/services.php
@@ -213,15 +179,6 @@ the same file whose class extends or implements a given type:
                 App\Domain\LoaderInterface:
                     public: true
                     tags: ['app.loader']
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <services>
-            <instanceof id="App\Domain\LoaderInterface" public="true">
-                <tag name="app.loader"/>
-            </instanceof>
-        </services>
 
     .. code-block:: php
 
@@ -351,18 +308,6 @@ of modifying it (``!returns_clone`` in YAML):
                     - setLogger: ['@logger']
                     - withDispatcher: !returns_clone ['@event_dispatcher']
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="App\Service\MessageGenerator">
-            <call method="setLogger">
-                <argument type="service" id="logger"/>
-            </call>
-            <call method="withDispatcher" returns-clone="true">
-                <argument type="service" id="event_dispatcher"/>
-            </call>
-        </service>
-
     .. code-block:: php
 
         // config/services.php
@@ -409,14 +354,6 @@ and applies some last-minute configuration to it:
         services:
             App\Service\NewsletterManager:
                 configurator: ['@App\Service\NewsletterConfigurator', 'configure']
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="App\Service\NewsletterManager">
-            <configurator service="App\Service\NewsletterConfigurator"
-                method="configure"/>
-        </service>
 
     .. code-block:: php
 
@@ -513,14 +450,6 @@ omitted, Symfony uses a generic deprecation message:
                     package: 'acme/legacy-bundle'
                     version: '1.2'
                     message: 'Use NewService instead of "%service_id%".'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="App\Service\OldService">
-            <deprecated package="acme/legacy-bundle"
-                version="1.2">Use NewService instead of "%service_id%".</deprecated>
-        </service>
 
     .. code-block:: php
 
@@ -667,18 +596,6 @@ When using ``stack``, the only other keys allowed are
                       arguments: ['@.inner']
                     - class: App\Cache\RedisCache
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <services>
-            <stack id="app.cache_chain">
-                <service class="App\Cache\TraceableCache">
-                    <argument type="service" id=".inner"/>
-                </service>
-                <service class="App\Cache\RedisCache"/>
-            </stack>
-        </services>
-
     .. code-block:: php
 
         // config/services.php
@@ -723,14 +640,6 @@ number of attributes:
                     - 'kernel.event_subscriber'
                     - { name: 'app.handler', priority: 10 }
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="App\EventSubscriber\OrderSubscriber">
-            <tag name="kernel.event_subscriber"/>
-            <tag name="app.handler" priority="10"/>
-        </service>
-
     .. code-block:: php
 
         // config/services.php
@@ -759,15 +668,6 @@ a directory. It's identified by the ``resource`` key:
                     - '../src/DependencyInjection/'
                     - '../src/Entity/'
                     - '../src/Kernel.php'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <services>
-            <prototype namespace="App\"
-                resource="../src/"
-                exclude="../src/{DependencyInjection,Entity,Kernel.php}"/>
-        </services>
 
     .. code-block:: php
 
@@ -806,7 +706,7 @@ namespace
 
 The PHP namespace of the classes found in ``resource``, used to build the
 service IDs. In YAML it defaults to the entry key (``App\`` in the example
-above); in XML and PHP it's required.
+above); in PHP it's required.
 
 .. _reference-services-prototype-resource:
 
@@ -823,8 +723,8 @@ more in :ref:`service-container-services-load-example`.
 Environment-specific Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``when@<env>`` key (``<when env="<env>">`` in XML) loads the nested
-configuration only when the application runs in the given environment:
+The ``when@<env>`` key loads the nested configuration only when the application
+runs in the given environment:
 
 .. configuration-block::
 
@@ -835,15 +735,6 @@ configuration only when the application runs in the given environment:
             services:
                 App\Debug\Profiler:
                     public: true
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <when env="dev">
-            <services>
-                <service id="App\Debug\Profiler" public="true"/>
-            </services>
-        </when>
 
     .. code-block:: php
 
@@ -865,7 +756,7 @@ accepts the following keys:
 * ``resource`` (``string``, **required**): the path of the file or directory
   to import. Glob patterns are supported;
 * ``type`` (``string``, **default**: ``null``): the loader to use (``yaml``,
-  ``xml``, ``php``, ``glob``, ``directory``, etc.). When omitted, it's guessed
+  ``php``, ``glob``, ``directory``, etc.). When omitted, it's guessed
   from the resource (e.g. from the file extension);
 * ``ignore_errors`` (``boolean`` | ``string``, **default**: ``false``): when
   ``true``, all the errors that occur while loading the resource are ignored.
@@ -879,14 +770,6 @@ accepts the following keys:
         imports:
             - { resource: 'legacy_services.yaml' }
             - { resource: 'services_local.yaml', ignore_errors: not_found }
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <imports>
-            <import resource="legacy_services.yaml"/>
-            <import resource="services_local.yaml" ignore-errors="not_found"/>
-        </imports>
 
     .. code-block:: php
 

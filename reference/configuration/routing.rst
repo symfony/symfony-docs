@@ -2,8 +2,8 @@ Routing Configuration Reference
 ===============================
 
 This reference describes all the options available to define
-:doc:`routes </routing>` with PHP attributes and in the YAML, XML and PHP
-routing files (e.g. ``config/routes.yaml``).
+:doc:`routes </routing>` with PHP attributes and in the YAML and PHP routing
+ files (e.g. ``config/routes.yaml``).
 
 .. seealso::
 
@@ -12,20 +12,15 @@ routing files (e.g. ``config/routes.yaml``).
     explained in the
     :doc:`FrameworkBundle configuration reference </reference/configuration/framework>`.
 
-.. deprecated:: 7.4
-
-    The XML format to configure routes is deprecated in Symfony 7.4.
-
 .. _reference-routing-route-definition:
 
 Route Options
 ~~~~~~~~~~~~~
 
 Each route has a unique name: the ``name`` argument of the ``#[Route]``
-attribute, the key of the route in YAML, the ``id`` attribute in XML or the
-first argument of the ``add()`` method in PHP. When a ``#[Route]`` attribute
-doesn't define a name, Symfony generates one from the controller class and
-method names.
+attribute, the key of the route in YAML or the first argument of the ``add()``
+method in PHP. When a ``#[Route]`` attribute doesn't define a name, Symfony
+generates one from the controller class and method names.
 
 .. _reference-routing-alias:
 
@@ -34,10 +29,10 @@ alias
 
 **type**: ``string`` | ``array`` | ``DeprecatedAlias``
 
-Defines another name for an existing route. In YAML, XML and PHP files, the
-alias is a separate route definition whose only options are ``alias`` and
-`deprecated`_. In PHP attributes, the ``alias`` argument lists the alternative
-names of the route. Read more about :ref:`route aliasing <routing-alias>`.
+Defines another name for an existing route. In YAML and PHP files, the alias is
+a separate route definition whose only options are ``alias`` and `deprecated`_.
+In PHP attributes, the ``alias`` argument lists the alternative names of the
+route. Read more about :ref:`route aliasing <routing-alias>`.
 
 .. configuration-block::
 
@@ -55,11 +50,6 @@ names of the route. Read more about :ref:`route aliasing <routing-alias>`.
         # config/routes.yaml
         product_details:
             alias: product_show
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="product_details" alias="product_show"/>
 
     .. code-block:: php
 
@@ -96,14 +86,6 @@ URLs. Read more about the variables and functions available in
             path: /posts/{id}
             controller: App\Controller\BlogController::show
             condition: "params['id'] < 1000"
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="post_show" path="/posts/{id}"
-            controller="App\Controller\BlogController::show">
-            <condition>params['id'] &lt; 1000</condition>
-        </route>
 
     .. code-block:: php
 
@@ -164,15 +146,6 @@ special parameters such as ``_controller``, ``_format`` or ``_locale``
             defaults:
                 page: 1
                 title: 'Hello world!'
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="blog_list" path="/blog/{page}"
-            controller="App\Controller\BlogController::list">
-            <default key="page">1</default>
-            <default key="title">Hello world!</default>
-        </route>
 
     .. code-block:: php
 
@@ -240,13 +213,6 @@ Read more about :ref:`deprecating route aliases <routing-alias-deprecation>`.
                 package: 'acme/package'
                 version: '1.2'
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="product_show" alias="product_details">
-            <deprecated package="acme/package" version="1.2"/>
-        </route>
-
     .. code-block:: php
 
         // config/routes.php
@@ -264,8 +230,7 @@ env
 Registers the route only in the given
 :ref:`configuration environments <configuration-environments>`. This option
 only exists in PHP attributes. In the other formats, wrap the routes with
-``when@<env>`` (YAML) or ``<when env="...">`` (XML), or check the value of
-``$routes->env()`` (PHP).
+``when@<env>`` (YAML), or check the value of ``$routes->env()`` (PHP).
 
 .. configuration-block::
 
@@ -285,14 +250,6 @@ only exists in PHP attributes. In the other formats, wrap the routes with
             tools:
                 path: /tools
                 controller: App\Controller\DefaultController::developerTools
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <when env="dev">
-            <route id="tools" path="/tools"
-                controller="App\Controller\DefaultController::developerTools"/>
-        </when>
 
     .. code-block:: php
 
@@ -349,12 +306,6 @@ locale (this isn't supported in PHP attributes).
             host: m.example.com
             controller: App\Controller\MainController::mobileHomepage
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="mobile_homepage" path="/" host="m.example.com"
-            controller="App\Controller\MainController::mobileHomepage"/>
-
     .. code-block:: php
 
         // config/routes.php
@@ -401,13 +352,6 @@ any method. Read more about
             path: /api/posts/{id}
             controller: App\Controller\BlogApiController::show
             methods: [GET, HEAD]
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="api_post_show" path="/api/posts/{id}"
-            controller="App\Controller\BlogApiController::show"
-            methods="GET|HEAD"/>
 
     .. code-block:: php
 
@@ -468,19 +412,6 @@ and create :ref:`localized routes <i18n-routing>`.
         blog_show:
             path: /blog/{slug}
             controller: App\Controller\BlogController::show
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="blog_show" path="/blog/{slug}"
-                controller="App\Controller\BlogController::show"/>
-        </routes>
 
     .. code-block:: php
 
@@ -546,14 +477,6 @@ about :ref:`parameters validation <routing-requirements>`.
             requirements:
                 page: '\d+'
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="blog_list" path="/blog/{page}"
-            controller="App\Controller\BlogController::list">
-            <requirement key="page">\d+</requirement>
-        </route>
-
     .. code-block:: php
 
         // config/routes.php
@@ -614,12 +537,6 @@ bytes.
             controller: App\Controller\ProductController::show
             utf8: true
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <route id="product_show" path="/products/{name}"
-            controller="App\Controller\ProductController::show" utf8="true"/>
-
     .. code-block:: php
 
         // config/routes.php
@@ -660,25 +577,6 @@ the case of ``defaults``, ``options`` and ``requirements``).
             requirements:
                 _locale: 'en|es|fr'
 
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <import resource="../src/Controller/"
-                type="attribute"
-                exclude="../src/Controller/{Debug*Controller.php}"
-                prefix="/blog"
-                trailing-slash-on-root="false"
-                name-prefix="blog_">
-                <requirement key="_locale">en|es|fr</requirement>
-            </import>
-        </routes>
-
     .. code-block:: php
 
         // config/routes.php
@@ -715,9 +613,7 @@ name_prefix
 
 **type**: ``string`` **default**: ``null``
 
-A string added at the beginning of the name of all imported routes. It's
-called ``name-prefix`` in XML and it's set with the ``namePrefix()`` method
-in PHP.
+A string added at the beginning of the name of all imported routes.
 
 .. _reference-routing-prefix:
 
@@ -747,11 +643,10 @@ trailing_slash_on_root
 
 **type**: ``boolean`` **default**: ``true``
 
-When the path of an imported route is ``/``, adding the `prefix`_ to it
-results in a trailing slash (e.g. ``/blog/``). Set this option to ``false``
-to remove that trailing slash (e.g. ``/blog``). It's called
-``trailing-slash-on-root`` in XML and it's set with the second argument of
-the ``prefix()`` method in PHP.
+When the path of an imported route is ``/``, adding the `prefix`_ to it results
+in a trailing slash (e.g. ``/blog/``). Set this option to ``false`` to remove
+that trailing slash (e.g. ``/blog``). It's set with the second argument of the
+``prefix()`` method in PHP.
 
 .. _reference-routing-type:
 
