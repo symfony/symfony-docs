@@ -253,7 +253,7 @@ that your ``webpack.config.js`` file contains
 
 Then, load the entry in the templates of your bundle:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# templates/layout.html.twig #}
     {% block stylesheets %}
@@ -303,7 +303,7 @@ file of the application::
 
 Then, load the entry in the templates of your bundle:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# templates/layout.html.twig #}
     {% block javascripts %}
