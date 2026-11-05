@@ -136,6 +136,7 @@ whitelist:
         - '"foo",' # assertion for var_dumper - components/var_dumper.rst
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
         - '.. versionadded:: 0.2' # MercureBundle
+        - '.. versionadded:: 0.8' # MercureBundle
         - '.. versionadded:: 3.6' # MonologBundle
         - '.. versionadded:: 3.8' # MonologBundle
         - '.. versionadded:: 3.5' # Monolog
