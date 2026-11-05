@@ -258,10 +258,6 @@ class::
 Generic Classes
 ---------------
 
-.. versionadded:: 8.3
-
-    Support for generic class arguments was introduced in Symfony 8.3.
-
 To describe PHPDoc-typed properties with the default generator, install the
 optional PHPDoc packages:
 
@@ -511,22 +507,38 @@ Limitations
 ~~~~~~~~~~~
 
 JsonSchema does not resolve generic ``@extends``, ``@implements`` or trait
-``@use`` declarations, or infer discriminator subclass arguments. Inherited
-properties can use the child's argument when the child reuses the parent's
-template name, as in ``Child<T> extends Base<T>``. A fixed parent argument can
-still be interpreted incorrectly::
+``@use`` declarations, or infer discriminator subclass arguments.
+
+For reflected properties, template substitution requires the PHP property and
+its associated accessors or mutators to be declared by the specialized class.
+Mixing a locally declared property with inherited accessors, or the reverse,
+keeps the type returned by PropertyInfo. An inherited constructor with a
+parameter named after the property also prevents substitution.
+
+Inherited templates therefore use the bounds extracted by PropertyInfo. For
+example::
 
     /**
      * @template T
-     * @extends Envelope<string>
+     * @extends Envelope<T>
      */
     class ChildEnvelope extends Envelope
     {
     }
 
-``ChildEnvelope<int>`` can describe inherited ``data`` as an integer, even
-though ``Envelope<string>`` requires a string. Use concrete property types or
-an extractor that resolves these relationships when needed.
+``ChildEnvelope<int>`` keeps the name ``ChildEnvelope-of.int``, but its
+inherited ``data`` property accepts any value. To specialize ``data``, redeclare
+it with ``@var T`` in the child and override any inherited accessors or
+constructor associated with it.
+
+If a custom extractor reports a property with no matching PHP property,
+recognized accessor, mutator or constructor parameter, bindings apply only
+if the class has no parent.
+
+JsonSchema recognizes accessors using PropertyInfo's default prefixes. With
+custom accessor or mutator prefixes, return concrete types from your extractor
+for inherited template declarations. Concrete property types and concrete
+types supplied by an extractor are preserved.
 
 A template used in an intersection, such as ``T&Named``, cannot receive a union
 argument such as ``Foo|Bar``. Type arguments are not validated against their
@@ -540,21 +552,21 @@ the same string representation.
 
 Normal recursion works: a ``Node<T>`` with a ``Node<T>|null`` property references
 its own definition. For example, ``Node<string>`` uses one ``Node-of.string``
-definition. A ``GrowingNode<T>`` with a ``GrowingNode<list<T>>|null`` property
-keeps creating larger types instead, and is stopped by the expansion limits.
+definition. A generic type whose arguments still contain a ``TemplateType``
+uses the raw class, so using ``Node`` without arguments keeps its original
+``Node`` definition.
 
-The generator limits each specialization's argument list and each property
-type that needs template substitution to 1,024 type nodes, 64 nesting levels
-and 64 KiB of estimated type text. Each occurrence of an argument counts, and
-each property is checked separately.
-
-These limits can also reject finite types. A property whose array shape declares
-over a thousand entries typed as ``T`` can work when the class is used without
-arguments but exceed a limit when specialized, even with ``int`` as the argument.
-
-Exceeding a limit stops generation and rolls back document state. Xdebug may
-stop recursion earlier at its own frame limit. Extensions remain responsible
-for avoiding unbounded recursion when they describe additional types.
+A ``GrowingNode<T>`` with a ``GrowingNode<list<T>>|null`` property keeps creating
+larger specializations instead. Generation rejects concrete generic types when
+their argument types exceed 64 nesting levels or their combined arguments expand
+to more than 1,024 type nodes. The limits count TypeInfo's type structure, so a
+single PHPDoc construct can add several nodes or nesting levels. Shared argument
+types count at every occurrence. Deep or large finite arguments can also reach
+these limits. Generation then fails and rolls back document state. These limits
+apply to generic arguments, not to the number of properties or ordinary classes
+in a definition path. Xdebug may stop recursion earlier at its own frame limit.
+Extensions remain responsible for avoiding unbounded recursion when describing
+additional types.
 
 .. _json-schema-extending-generator:
 
@@ -593,11 +605,6 @@ receive an ``ObjectType`` or a ``GenericType`` wrapping an ``ObjectType``.
 must forward the complete type. When calling a definition policy, class
 resolver or definition processor yourself, pass ``Type::object($class)`` for
 an ordinary class and the complete ``GenericType`` for a specialization.
-
-.. versionadded:: 8.3
-
-    Passing the complete object type to class-level extension hooks was introduced
-    in Symfony 8.3.
 
 For example, this processor adds a title containing the class and any generic
 arguments, even when no property uses a template::
