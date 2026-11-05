@@ -436,9 +436,15 @@ Definition Names
 ~~~~~~~~~~~~~~~~
 
 Built-in type and class arguments use readable labels, such as
-``Envelope-of.Customer`` and ``Pair-of.string.int``. Nullable types,
-collections, unions, intersections, shapes and nested generic arguments use a
-hash instead. For example, ``Envelope<int|string>`` produces
+``Envelope-of.Customer`` and ``Pair-of.string.int``. Nested generics and lists
+extend these labels recursively when all their parts are readable:
+``Envelope<Envelope<Customer>>`` becomes ``Envelope-of.Envelope_Customer`` and
+``Envelope<list<Customer>>`` becomes ``Envelope-of.list_Customer``.
+
+Nullable types, non-list collections (such as ``array<Customer>`` and
+``Customer[]``), unions, intersections, shapes and generic arguments containing
+these types use a hash instead. For example,
+``Envelope<int|string>`` produces
 ``Envelope-of.generic.95cee375039d6796``. Readable labels longer than 128 bytes
 also use a hash. The hash is derived from the argument types, so the same types
 produce the same argument hash between runs.
