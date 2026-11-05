@@ -111,6 +111,10 @@ that Symfony should expect via the `format`_ option.
 Field Options
 -------------
 
+.. include:: /reference/forms/types/options/calendar.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+
 .. include:: /reference/forms/types/options/days.rst.inc
 
 ``placeholder``
@@ -153,20 +157,6 @@ values for the year, month and day fields::
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-``calendar``
-~~~~~~~~~~~~
-
-**type**: ``integer`` or ``\IntlCalendar`` **default**: ``null``
-
-The calendar to use for formatting and parsing the date. The value should be
-an ``integer`` from :phpclass:`IntlDateFormatter` calendar constants or an instance
-of the :phpclass:`IntlCalendar` to use. By default, the Gregorian calendar
-with the application default locale is used.
-
-.. versionadded:: 7.2
-
-    The ``calendar`` option was introduced in Symfony 7.2.
-
 .. include:: /reference/forms/types/options/date_widget.rst.inc
 
 .. include:: /reference/forms/types/options/years.rst.inc
@@ -181,11 +171,18 @@ Overridden Options
 
 The ``DateTime`` classes are treated as immutable objects.
 
-.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
-
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
 .. include:: /reference/forms/types/options/data_class_date.rst.inc
+
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
+
+The actual default value of this option depends on other field options:
+
+* If ``widget`` is ``single_text``, then ``''`` (empty string);
+* Otherwise ``[]`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 ``error_bubbling``
 ~~~~~~~~~~~~~~~~~~

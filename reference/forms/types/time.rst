@@ -190,6 +190,15 @@ The ``DateTime`` classes are treated as immutable objects.
 
 .. include:: /reference/forms/types/options/data_class_date.rst.inc
 
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
+
+The actual default value of this option depends on other field options:
+
+* If ``widget`` is ``single_text``, then ``''`` (empty string);
+* Otherwise ``[]`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
+
 error_bubbling
 ~~~~~~~~~~~~~~
 

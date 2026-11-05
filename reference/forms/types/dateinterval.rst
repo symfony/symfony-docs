@@ -303,6 +303,46 @@ when the ``widget`` option is set to ``choice``::
 Overridden Options
 ------------------
 
+``by_reference``
+~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+This is the only allowed value, because the form must not clone ``\DateInterval``
+objects.
+
+``compound``
+~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false`` if `widget`_ is ``single_text``, ``true`` otherwise
+
+This option specifies whether the type contains child types or not. This option
+is managed internally for built-in types, so there is no need to configure
+it explicitly.
+
+``data_class``
+~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+The internal normalized representation of this type is an array, not a
+``\DateInterval`` object. Therefore, this type sets the ``data_class`` option to
+``null`` to prevent ``FormType`` from setting it to ``\DateInterval``.
+
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
+
+The actual default value of this option depends on other field options:
+
+* If ``widget`` is ``single_text``, then ``''`` (empty string);
+* Otherwise ``[]`` (empty array).
+
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
+
+``error_bubbling``
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options

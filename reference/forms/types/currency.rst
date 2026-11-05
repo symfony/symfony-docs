@@ -23,11 +23,6 @@ manually, but then you should use the ``ChoiceType`` directly.
 Field Options
 -------------
 
-.. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
-
-Overridden Options
-------------------
-
 ``active_at``
 ~~~~~~~~~~~~~
 
@@ -54,30 +49,22 @@ Set this option to ``null`` to not filter currencies by date (the
 
     The ``active_at`` option was introduced in Symfony 7.4.
 
-.. include:: /reference/forms/types/options/choice_loader_intl.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_locale.rst.inc
 
-.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+``include_undated``
+~~~~~~~~~~~~~~~~~~~
 
-``choices``
-~~~~~~~~~~~
+**type**: ``boolean`` **default**: ``true``
 
-**default**: ``Symfony\Component\Intl\Currencies::getNames()``
-
-The ``choices`` option defaults to all currencies that are `legal tender`_ at
-the moment of creating the form type.
-
-.. warning::
-
-    If you want to override the built-in choices of the currency type, you
-    will also have to set the ``choice_loader`` option to ``null``.
+Some currencies don't define any validity dates. This option defines whether
+those currencies count as active at any date. By default they do, so the
+`active_at`_ option includes them and the `not_active_at`_ option excludes them.
+Set this option to ``false`` to get the opposite result. It has no effect when
+both `active_at`_ and `not_active_at`_ are ``null``.
 
 .. versionadded:: 7.4
 
-    The default value of ``choices`` changed in Symfony 7.4. In previous versions,
-    this option contained all currencies, including those that were no longer legal
-    tender in their countries.
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
+    The ``include_undated`` option was introduced in Symfony 7.4.
 
 ``legal_tender``
 ~~~~~~~~~~~~~~~~
@@ -115,6 +102,34 @@ Slovenian Tolar, which stopped being used on January 14, 2007.
 
     The ``not_active_at`` option was introduced in Symfony 7.4.
 
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/choice_loader_intl.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+
+``choices``
+~~~~~~~~~~~
+
+**default**: ``Symfony\Component\Intl\Currencies::getNames()``
+
+The ``choices`` option defaults to all currencies that are `legal tender`_ at
+the moment of creating the form type.
+
+.. warning::
+
+    If you want to override the built-in choices of the currency type, you
+    will also have to set the ``choice_loader`` option to ``null``.
+
+.. versionadded:: 7.4
+
+    The default value of ``choices`` changed in Symfony 7.4. In previous versions,
+    this option contained all currencies, including those that were no longer legal
+    tender in their countries.
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
 Inherited Options
 -----------------
 
@@ -125,6 +140,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. include:: /reference/forms/types/options/choice_filter.rst.inc
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
+
+.. include:: /reference/forms/types/options/choice_lazy.rst.inc
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
@@ -149,6 +166,10 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. include:: /reference/forms/types/options/placeholder_attr.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/separator.rst.inc
+
+.. include:: /reference/forms/types/options/separator_html.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 
