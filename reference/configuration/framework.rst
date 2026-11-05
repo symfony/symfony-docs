@@ -3739,6 +3739,8 @@ enabled
 
 **type**: ``boolean`` **default**: ``false``
 
+.. _reference-framework-request-formats:
+
 formats
 .......
 
