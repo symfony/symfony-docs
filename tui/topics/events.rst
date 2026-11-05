@@ -171,6 +171,8 @@ Event Types
   items checked after the toggle.
 * ``SettingChangeEvent``: a setting value changed. Carries the
   setting id and new value.
+* ``TabChangeEvent``: the active tab changed. Carries previous
+  and new indices/ids.
 * ``FocusEvent``: focus moved between widgets. Carries the new
   and previous widget.
 * ``PasteStartedEvent``: a bracketed paste started.
