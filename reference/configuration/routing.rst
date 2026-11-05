@@ -3,7 +3,7 @@ Routing Configuration Reference
 
 This reference describes all the options available to define
 :doc:`routes </routing>` with PHP attributes and in the YAML and PHP routing
- files (e.g. ``config/routes.yaml``).
+files (e.g. ``config/routes.yaml``).
 
 .. seealso::
 
@@ -258,11 +258,6 @@ only exists in PHP attributes. In the other formats, wrap the routes with
             $routes->add('tools', '/tools')
                 ->controller([DefaultController::class, 'developerTools']);
         }
-
-.. versionadded:: 7.4
-
-    The ability to pass an array of environments to the ``env`` option was
-    introduced in Symfony 7.4.
 
 .. _reference-routing-format:
 
