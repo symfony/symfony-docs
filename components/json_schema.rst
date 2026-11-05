@@ -471,6 +471,36 @@ assign distinct names to distinct types and configurations.
 ``SchemaDocument::getDefinitionClasses()`` maps each definition name to its
 base class; several definitions can map to the same class.
 
+When exporting definitions to another schema format, use
+``SchemaDocument::getDefinitionTypes()`` to keep their generic arguments. It
+returns each definition's ``ObjectType`` or ``GenericType``, indexed by name::
+
+    use Symfony\Component\JsonSchema\Configuration;
+    use Symfony\Component\JsonSchema\SchemaDocument;
+    use Symfony\Component\TypeInfo\Type\GenericType;
+
+    $document = new SchemaDocument();
+    $generator->generate(Type::object(Inbox::class), new Configuration(), $document);
+
+    foreach ($document->getDefinitionTypes() as $name => $type) {
+        if ($type instanceof GenericType) {
+            $class = $type->getWrappedType()->getClassName();
+            $arguments = $type->getVariableTypes();
+        } else {
+            $class = $type->getClassName();
+            $arguments = [];
+        }
+
+        // map $name to $class and $arguments in the target format
+    }
+
+Different groups or directions can produce several definitions for the same
+type. With the default naming policy, types with the same string representation
+share a definition for the same configuration. The getter keeps the type used
+to generate it first. For example, ``Type::enum(Status::class)`` and
+``Type::object(Status::class)`` arguments for ``Envelope`` share one definition
+when ``Status`` is an enum.
+
 Limitations
 ~~~~~~~~~~~
 
