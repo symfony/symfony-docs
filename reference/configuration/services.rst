@@ -127,10 +127,6 @@ A list of :ref:`resource tags <di-resource-tags>` to apply to every class
 defined in the file. It uses the same syntax as the
 :ref:`tags <reference-services-defaults-tags>` option.
 
-.. versionadded:: 7.4
-
-    The ``resource_tags`` option was introduced in Symfony 7.4.
-
 .. _reference-services-defaults-tags:
 
 tags
@@ -556,10 +552,6 @@ A list of :ref:`resource tags <di-resource-tags>` to apply to this class. They
 use the same syntax as :ref:`tags <reference-services-tags>`, but the class is
 excluded from the container, so it's not registered as a service. Compiler
 passes can still find the class through its tags.
-
-.. versionadded:: 7.4
-
-    The ``resource_tags`` option was introduced in Symfony 7.4.
 
 .. _reference-services-shared:
 
