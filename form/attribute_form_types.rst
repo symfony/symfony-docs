@@ -212,6 +212,8 @@ rendering the form. The parent class can be abstract::
         public ?string $name = null;
     }
 
+The child class only declares its own fields::
+
     // src/Dto/CarDto.php
     namespace App\Dto;
 
@@ -244,6 +246,8 @@ class is read from that child class::
         #[FormField]
         public ?string $name = null;
     }
+
+The child class only declares its own fields::
 
     // src/Dto/SpeakerDto.php
     namespace App\Dto;
