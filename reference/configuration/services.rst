@@ -322,14 +322,9 @@ class
 
 **type**: ``string`` **default**: ``null``
 
-The fully-qualified class name of the service. When omitted, Symfony uses the
-service ID as the class name, so you only need this option when the service ID
-is not a class name.
-
-.. deprecated:: 7.4
-
-    Omitting ``class`` when the service ID looks like a class name but no such
-    class or interface exists was deprecated in Symfony 7.4.
+The fully-qualified class name of the service. You can omit this option when
+the service ID is the fully-qualified name of an existing namespaced class or
+interface, because Symfony then uses the service ID as the class name.
 
 .. _reference-services-configurator:
 
