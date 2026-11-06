@@ -53,7 +53,6 @@ self-explanatory and not coupled to Symfony:
     │  ├─ packages/
     │  ├─ routes/
     │  └─ services.yaml
-    ├─ migrations/
     ├─ public/
     │  ├─ build/
     │  └─ index.php
@@ -65,6 +64,7 @@ self-explanatory and not coupled to Symfony:
     │  ├─ Entity/
     │  ├─ EventSubscriber/
     │  ├─ Form/
+    │  ├─ Migrations/
     │  ├─ Repository/
     │  ├─ Security/
     │  └─ Twig/
