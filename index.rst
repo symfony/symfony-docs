@@ -35,6 +35,7 @@ Topics
     html_sanitizer
     http_cache
     http_client
+    json_streamer
     lock
     logging
     mailer

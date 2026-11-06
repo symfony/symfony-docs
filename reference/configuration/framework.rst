@@ -2735,7 +2735,7 @@ Whether to enable or not the JSON Streamer support.
 
 .. seealso::
 
-    For more details, see the :doc:`Streaming JSON </serializer/streaming_json>`
+    For more details, see the :doc:`Streaming JSON </json_streamer>`
     documentation.
 
 .. _reference-lock:
