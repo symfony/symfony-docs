@@ -1375,6 +1375,21 @@ achieved by specifying the adapter.
 Tag Aware Adapters
 ~~~~~~~~~~~~~~~~~~
 
+:class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter` processes large
+tag invalidations in bounded batches. Redis can process other commands between
+batches.
+
+The work still grows with the number of linked items. ``invalidateTags()`` waits
+for every batch before returning success. Items become cache misses as cleanup
+deletes them.
+
+If invalidation is interrupted, invalidating the same tags again or calling
+``prune()`` resumes cleanup.
+
+.. versionadded:: 8.3
+
+    Bounded tag invalidation was introduced in Symfony 8.3.
+
 To store tags, you need to wrap a cache adapter with the
 :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter` class or implement
 :class:`Symfony\\Contracts\\Cache\\TagAwareCacheInterface` and its
