@@ -1,0 +1,82 @@
+---------------------------------------------------------------------------
+
+by welcoMattic at 2026-02-23T15:17:57Z
+
+Need more work as the config provided in the PR seems not to be totally accurate.
+I'm AFK next week because of ConFoo Montreal 2026. Try to finish this doc as soon as I'm back.
+
+---------------------------------------------------------------------------
+
+by Spomky at 2026-04-09T13:11:56Z
+
+There is another point worth mentioning: you may need to adjust it slightly, for example when your HTTP client is private and requires credentials, or when you use a claim other than `sub`.
+*(note that in such cases, a configuration option would be helpful.)*
+
+```yaml
+# config/packages/framework.yaml
+framework:
+    http_client:
+        scoped_clients:
+            oauth2.introspect.client:
+                base_uri: '%env(OIDC_SERVER_URI)%/realms/%env(OIDC_SERVER_REALM)%/protocol/openid-connect/token/introspect'
+                auth_basic: '%env(OIDC_CLIENT_ID)%:%env(OIDC_CLIENT_SECRET)%'
+```
+
+```yaml
+# config/services.yaml
+services:
+    App\Security\OAuth2IntrospectionTokenHandler:
+        arguments:
+            $client: '@oauth2.introspect.client'
+```
+
+```php
+// src/Security/OAuth2IntrospectionTokenHandler.php
+<?php
+
+declare(strict_types=1);
+
+namespace App\Security;
+
+use function is_string;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Throwable;
+
+final readonly class OAuth2IntrospectionTokenHandler implements AccessTokenHandlerInterface
+{
+    public function __construct(
+        private HttpClientInterface $client,
+    ) {
+    }
+
+    public function getUserBadgeFrom(string $accessToken): UserBadge
+    {
+        try {
+            $claims = $this->client->request('POST', '', [
+                'body' => [
+                    'token' => $accessToken,
+                    'token_type_hint' => 'access_token',
+                ],
+            ])->toArray();
+
+            $username = $claims['username'] ?? null;
+            if ($username === null) {
+                throw new BadCredentialsException('"username" claim not found on the authorization server response.');
+            }
+
+            $active = $claims['active'] ?? false;
+            if (! $active) {
+                throw new BadCredentialsException('The token is not active.');
+            }
+
+            return new UserBadge($username);
+        } catch (Throwable $e) {
+            throw new BadCredentialsException('Invalid credentials.', $e->getCode(), $e);
+        }
+    }
+}
+
+```
