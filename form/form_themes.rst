@@ -147,8 +147,6 @@ You can specify multiple themes. Symfony searches them in **reverse order**
 (last theme in the list is checked first), falling back through the list until
 it finds a matching block:
 
-.. code-block:: yaml
-
 .. configuration-block::
 
     .. code-block:: yaml

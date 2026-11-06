@@ -3076,6 +3076,9 @@ Authorization (Denying Access)
     :maxdepth: 1
 
     security/voters
+    security/access_token
+    security/login_link
+    security/user_providers
     security/access_control
     security/expressions
     security/access_denied_handler

@@ -73,4 +73,5 @@ Learn more
 
     /console
     /components/console/*
+    /components/console/helpers/index
     /console/*
