@@ -258,6 +258,12 @@ class::
 Generic Classes
 ---------------
 
+.. note::
+
+    Generic specialization requires TypeInfo's ``Type::map()`` method, introduced
+    in Symfony 8.2. With older TypeInfo versions, generic objects use their raw
+    class definitions.
+
 To describe PHPDoc-typed properties with the default generator, install the
 optional PHPDoc packages:
 
@@ -369,30 +375,53 @@ Each class uses its own arguments. In ``Envelope<Pair<string, int>>``, the
 envelope's ``data`` references ``Pair-of.string.int``, whose ``first`` and
 ``second`` properties use ``string`` and ``int`` respectively.
 
-PHPStan- and Psalm-prefixed template tags also work. Repeated aliases of the
-same template name occupy one argument position. Supported phpdoc-parser 1.x
-and 2.x versions both work for generic properties.
-
-Use plain ``@template`` declarations with the built-in extractor for
-compatibility with all supported TypeInfo versions. Covariant declarations
-(``@template-covariant`` and their vendor prefixes) require support from
-TypeInfo. Contravariant declarations (``@template-contravariant``) are not
-supported.
-
-.. versionadded:: 8.2
-
-    Support for ``@template-covariant`` declarations in the TypeInfo component was
-    introduced in Symfony 8.2.
-
-An unsupported declaration still occupies an argument position, so later
-templates receive the correct arguments. Properties using it are described as
-if the class had no arguments; its bound may not be extracted either.
+Plain, covariant and contravariant template declarations are supported,
+including their PHPStan- and Psalm-prefixed forms. Repeated aliases of the same
+template name occupy one argument position. Supported phpdoc-parser 1.x and 2.x
+versions both work for generic properties.
 
 If you pass your own PropertyInfo extractor to ``new SchemaGenerator()`` or
 replace your application's PropertyInfo type extractors, they must return
 TypeInfo ``TemplateType`` values for properties typed with a template, as
 ``PhpStanExtractor`` does. Keep ``phpstan/phpdoc-parser`` installed so JsonSchema
 can read the class's template declarations.
+
+Inherited Generic Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With the built-in PHPDoc extractor, TypeInfo resolves inherited types using
+``@extends`` and ``@implements`` declarations. It also applies ``@use`` mappings
+to trait properties, getters and setters before JsonSchema substitutes the
+class's arguments. A child can therefore use different template names from its
+parent::
+
+    use Symfony\Component\TypeInfo\Type;
+
+    /**
+     * @template T
+     * @template U
+     * @extends Envelope<U>
+     */
+    class ChildEnvelope extends Envelope
+    {
+        /** @var T */
+        public mixed $extra;
+    }
+
+    $schema = $generator->generate(Type::generic(
+        Type::object(ChildEnvelope::class),
+        Type::int(),
+        Type::object(Customer::class),
+    ));
+
+Here, ``data`` uses the ``Customer`` schema and ``extra`` uses the integer
+schema. Concrete parent arguments, such as ``@extends Envelope<string>``,
+remain concrete regardless of the child's template names.
+
+Without a matching ``@extends``, ``@implements`` or ``@use`` tag, templates
+from a parent class, interface or trait use the arguments of templates with
+the same names in the class being described. Unmatched templates keep their
+bounds.
 
 Collections and Pagination
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -506,49 +535,12 @@ when ``Status`` is an enum.
 Limitations
 ~~~~~~~~~~~
 
-JsonSchema does not resolve generic ``@extends``, ``@implements`` or trait
-``@use`` declarations, or infer discriminator subclass arguments.
-
-For reflected properties, template substitution requires the PHP property and
-its associated accessors or mutators to be declared by the specialized class.
-Mixing a locally declared property with inherited accessors, or the reverse,
-keeps the type returned by PropertyInfo. An inherited constructor with a
-parameter named after the property also prevents substitution.
-
-Inherited templates therefore use the bounds extracted by PropertyInfo. For
-example::
-
-    /**
-     * @template T
-     * @extends Envelope<T>
-     */
-    class ChildEnvelope extends Envelope
-    {
-    }
-
-``ChildEnvelope<int>`` keeps the name ``ChildEnvelope-of.int``, but its
-inherited ``data`` property accepts any value. To specialize ``data``, redeclare
-it with ``@var T`` in the child and override any inherited accessors or
-constructor associated with it.
-
-If a custom extractor reports a property with no matching PHP property,
-recognized accessor, mutator or constructor parameter, bindings apply only
-if the class has no parent.
-
-JsonSchema recognizes accessors using PropertyInfo's default prefixes. With
-custom accessor or mutator prefixes, return concrete types from your extractor
-for inherited template declarations. Concrete property types and concrete
-types supplied by an extractor are preserved.
+Generic arguments supplied for a discriminator base class are not propagated
+to its mapped subclasses.
 
 A template used in an intersection, such as ``T&Named``, cannot receive a union
 argument such as ``Foo|Bar``. Type arguments are not validated against their
 declared bounds or variance.
-
-Some TypeInfo versions deduplicate union members by their string representation.
-Distinct types with the same string representation, such as a ``GenericType``
-and a ``CollectionType`` wrapping it, can therefore lose an alternative during
-substitution. Intersection substitution can also discard distinct members with
-the same string representation.
 
 Normal recursion works: a ``Node<T>`` with a ``Node<T>|null`` property references
 its own definition. For example, ``Node<string>`` uses one ``Node-of.string``
@@ -557,14 +549,15 @@ uses the raw class, so using ``Node`` without arguments keeps its original
 ``Node`` definition.
 
 A ``GrowingNode<T>`` with a ``GrowingNode<list<T>>|null`` property keeps creating
-larger specializations instead. Generation rejects concrete generic types when
-their argument types exceed 64 nesting levels or their combined arguments expand
+larger specializations instead. JsonSchema uses the raw class definition when
+argument types exceed 64 nesting levels or the combined arguments expand
 to more than 1,024 type nodes. The limits count TypeInfo's type structure, so a
 single PHPDoc construct can add several nodes or nesting levels. Shared argument
 types count at every occurrence. Deep or large finite arguments can also reach
-these limits. Generation then fails and rolls back document state. These limits
-apply to generic arguments, not to the number of properties or ordinary classes
-in a definition path. Xdebug may stop recursion earlier at its own frame limit.
+these limits and use the raw class definition too. Previously generated
+specializations remain available. These limits apply to generic arguments,
+not to the number of properties or ordinary classes in a definition path.
+Xdebug may stop recursion earlier at its own frame limit.
 Extensions remain responsible for avoiding unbounded recursion when describing
 additional types.
 
