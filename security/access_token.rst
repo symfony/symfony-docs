@@ -1099,7 +1099,7 @@ introspection endpoint of your authorization server:
         };
 
 Then, define a service that extends the ``security.access_token_handler.oauth2``
-:doc:`parent service </service_container/parent_services>` to make it use this
+:ref:`parent service <parent-services>` to make it use this
 HTTP client:
 
 .. configuration-block::
