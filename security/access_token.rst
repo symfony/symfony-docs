@@ -845,6 +845,190 @@ useful when developing or testing applications that use OIDC authentication:
 
     The JWK used for signing must have the appropriate `key operation flags`_ set.
 
+Using OAuth 2.0 Token Introspection
+-----------------------------------
+
+.. versionadded:: 7.3
+
+    The OAuth 2.0 token introspection handler was introduced in Symfony 7.3.
+
+Use this handler when your API receives access tokens that it can't validate
+by itself, such as opaque tokens issued by an OAuth 2.0 authorization server.
+Symfony sends these tokens to the token introspection endpoint of the
+authorization server, as defined in `RFC7662`_, to check if they are valid.
+
+Configure the Oauth2TokenHandler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``Oauth2TokenHandler`` requires the ``symfony/http-client`` and
+``symfony/string`` packages. If you haven't installed them yet, run this
+command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-client symfony/string
+
+First, define a :doc:`scoped HTTP client </http_client>` whose base URI is the
+introspection endpoint of your authorization server:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                scoped_clients:
+                    oauth2.client:
+                        base_uri: 'https://authorization-server.example.com/introspection'
+                        # credentials of your app in the authorization server
+                        auth_basic: '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <!-- credentials of your app in the authorization server -->
+                    <framework:scoped-client name="oauth2.client"
+                        base-uri="https://authorization-server.example.com/introspection"
+                        auth-basic="%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%"
+                    />
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->httpClient()->scopedClient('oauth2.client')
+                ->baseUri('https://authorization-server.example.com/introspection')
+                // credentials of your app in the authorization server
+                ->authBasic('%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%')
+            ;
+        };
+
+Then, define a service that extends the ``security.access_token_handler.oauth2``
+:ref:`parent service <parent-services>` to make it use this
+HTTP client:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            app.oauth2_token_handler:
+                parent: security.access_token_handler.oauth2
+                # replaces the default HTTP client with the scoped client
+                arguments:
+                    index_0: '@oauth2.client'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="app.oauth2_token_handler"
+                    parent="security.access_token_handler.oauth2"
+                >
+                    <!-- replaces the default HTTP client with the scoped client -->
+                    <argument index="0" type="service" id="oauth2.client"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function (ContainerConfigurator $container): void {
+            $container->services()
+                ->set('app.oauth2_token_handler')
+                    ->parent('security.access_token_handler.oauth2')
+                    // replaces the default HTTP client with the scoped client
+                    ->arg('index_0', service('oauth2.client'))
+            ;
+        };
+
+Finally, set this service as the token handler of your firewall:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler: app.oauth2_token_handler
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <access-token token-handler="app.oauth2_token_handler"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            $security->firewall('main')
+                ->accessToken()
+                    ->tokenHandler('app.oauth2_token_handler')
+            ;
+        };
+
+On each request, the handler sends the access token to the introspection
+endpoint. The token is valid only if the response contains ``"active": true``
+and a ``sub`` or ``username`` claim, which becomes the user identifier.
+
+The handler always creates an ``OAuth2User`` object with the claims returned by
+the authorization server; the user provider of the firewall isn't used.
+
+.. note::
+
+    The ``token_handler: { oauth2: ~ }`` option also enables this handler, but
+    it uses the default ``http_client`` service. It only works when the
+    ``base_uri`` of that client is your introspection endpoint.
+
 Using CAS 2.0
 -------------
 
@@ -1016,5 +1200,6 @@ for :ref:`stateless firewalls <reference-security-stateless>`.
 .. _`OpenID Connect Discovery`: https://openid.net/specs/openid-connect-discovery-1_0.html
 .. _`RFC 7517`: https://datatracker.ietf.org/doc/html/rfc7517
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
+.. _`RFC7662`: https://datatracker.ietf.org/doc/html/rfc7662
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`key operation flags`: https://www.iana.org/assignments/jose/jose.xhtml#web-key-operations
