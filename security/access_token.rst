@@ -848,10 +848,6 @@ useful when developing or testing applications that use OIDC authentication:
 Using OAuth 2.0 Token Introspection
 -----------------------------------
 
-.. versionadded:: 7.3
-
-    The OAuth 2.0 token introspection handler was introduced in Symfony 7.3.
-
 Use this handler when your API receives access tokens that it can't validate
 by itself, such as opaque tokens issued by an OAuth 2.0 authorization server.
 Symfony sends these tokens to the token introspection endpoint of the
@@ -884,44 +880,27 @@ introspection endpoint of your authorization server:
                         # credentials of your app in the authorization server
                         auth_basic: '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%'
 
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:http-client>
-                    <!-- credentials of your app in the authorization server -->
-                    <framework:scoped-client name="oauth2.client"
-                        base-uri="https://authorization-server.example.com/introspection"
-                        auth-basic="%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%"
-                    />
-                </framework:http-client>
-            </framework:config>
-        </container>
-
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (FrameworkConfig $framework): void {
-            $framework->httpClient()->scopedClient('oauth2.client')
-                ->baseUri('https://authorization-server.example.com/introspection')
-                // credentials of your app in the authorization server
-                ->authBasic('%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%')
-            ;
-        };
+        return App::config([
+            'framework' => [
+                'http_client' => [
+                    'scoped_clients' => [
+                        'oauth2.client' => [
+                            'base_uri' => 'https://authorization-server.example.com/introspection',
+                            // credentials of your app in the authorization server
+                            'auth_basic' => '%env(OAUTH2_ID)%:%env(OAUTH2_SECRET)%',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 Then, define a service that extends the ``security.access_token_handler.oauth2``
-:ref:`parent service <parent-services>` to make it use this
-HTTP client:
+:ref:`parent service <parent-services>` to make it use this HTTP client:
 
 .. configuration-block::
 
@@ -937,40 +916,24 @@ HTTP client:
                 arguments:
                     index_0: '@oauth2.client'
 
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <!-- ... -->
-
-                <service id="app.oauth2_token_handler"
-                    parent="security.access_token_handler.oauth2"
-                >
-                    <!-- replaces the default HTTP client with the scoped client -->
-                    <argument index="0" type="service" id="oauth2.client"/>
-                </service>
-            </services>
-        </container>
-
     .. code-block:: php
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function (ContainerConfigurator $container): void {
-            $container->services()
-                ->set('app.oauth2_token_handler')
-                    ->parent('security.access_token_handler.oauth2')
+        return App::config([
+            'services' => [
+                // ...
+
+                'app.oauth2_token_handler' => [
+                    'parent' => 'security.access_token_handler.oauth2',
                     // replaces the default HTTP client with the scoped client
-                    ->arg('index_0', service('oauth2.client'))
-            ;
-        };
+                    'arguments' => [
+                        'index_0' => service('oauth2.client'),
+                    ],
+                ],
+            ],
+        ]);
 
 Finally, set this service as the token handler of your firewall:
 
@@ -985,36 +948,22 @@ Finally, set this service as the token handler of your firewall:
                     access_token:
                         token_handler: app.oauth2_token_handler
 
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token token-handler="app.oauth2_token_handler"/>
-                </firewall>
-            </config>
-        </srv:container>
-
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (SecurityConfig $security): void {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler('app.oauth2_token_handler')
-            ;
-        };
+        return App::config([
+            'security' => [
+                'firewalls' => [
+                    'main' => [
+                        'access_token' => [
+                            'token_handler' => 'app.oauth2_token_handler',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 On each request, the handler sends the access token to the introspection
 endpoint. The token is valid only if the response contains ``"active": true``
