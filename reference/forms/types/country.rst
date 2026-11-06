@@ -91,6 +91,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/choice_label.rst.inc
 
+.. include:: /reference/forms/types/options/choice_lazy.rst.inc
+
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_parameters.rst.inc
@@ -114,6 +116,10 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 .. include:: /reference/forms/types/options/placeholder_attr.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/separator.rst.inc
+
+.. include:: /reference/forms/types/options/separator_html.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc
 

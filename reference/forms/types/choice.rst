@@ -202,23 +202,9 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
-``separator``
-~~~~~~~~~~~~~
+.. include:: /reference/forms/types/options/separator.rst.inc
 
-**type**: ``string`` **default**: ``-------------------``
-
-This option allows you to customize the visual separator shown after the preferred
-choices. You can use HTML elements like ``<hr>`` to display a more modern separator,
-but you'll also need to set the `separator_html`_ option to ``true``.
-
-``separator_html``
-~~~~~~~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-If this option is true, the `separator`_ option will be displayed as HTML instead
-of text. This is useful when using HTML elements (e.g. ``<hr>``) as a more modern
-visual separator.
+.. include:: /reference/forms/types/options/separator_html.rst.inc
 
 Overridden Options
 ------------------

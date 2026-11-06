@@ -63,6 +63,22 @@ complement the root `AGENTS.md`.
   option used by a single type is written inline under `Field Options`.
 - To make an included option linkable, place an anchor on its own line right
   before the `.. include::` line.
+- Parent and child types: always list the type's own and overridden options and
+  the options inherited from any parent other than `FormType`. A new option on
+  a parent type must be added to all its child pages (run
+  `debug:form <type> --format=json` to see what each type resolves).
+- From `FormType`, new pages list this common set: `attr`,
+  `attr_translation_parameters`, `data`, `disabled`, `empty_data`,
+  `error_bubbling`, `error_mapping`, `help`, `help_attr`, `help_html`,
+  `help_translation_parameters`, `label`, `label_attr`, `label_format`,
+  `label_html`, `label_translation_parameters`, `mapped`, `required`, `row_attr`
+  and `translation_domain`, plus `invalid_message_parameters` wherever
+  `invalid_message` is listed. Some existing pages only list part of this set.
+  The `form`, `button`, `submit` and `reset` pages don't follow this rule.
+  Exclusions: `hidden` has no `help*`, `label*`, `translation_domain` or
+  `required` (it only renders the widget), `repeated` has no `label*` (it only
+  renders its children) and `file` and `password` have no `data` (`file` inputs
+  can't be prefilled and `password` inputs render empty by default).
 
 ## Configuration Pages (`configuration/`)
 
