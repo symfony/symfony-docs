@@ -2162,7 +2162,7 @@ The Redis transport DSN may look like this:
 
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
-    # Full DSN Example
+    # Full DSN Example (the path sets the stream, the group and the consumer name)
     MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0
     # Redis Cluster Example
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
@@ -2180,7 +2180,8 @@ The Redis transport DSN may look like this:
     MESSENGER_TRANSPORT_DSN=redis://master-user:master-pass@?host[redis1:26379]&host[redis2:26379]&sentinel_master=db&auth[]=sentinel-user&auth[]=sentinel-pass
 
 A number of options can be configured via the DSN or via the ``options`` key
-under the transport in ``messenger.yaml``:
+under the transport in ``messenger.yaml``. When an option is set in both places,
+the value from the DSN is used:
 
 ``stream`` (default: ``messages``)
     The Redis stream name
@@ -2203,6 +2204,12 @@ under the transport in ``messenger.yaml``:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                         options:
                             consumer: '%env(MESSENGER_CONSUMER_NAME)%'
+
+    The third segment of the DSN path (``/messages/symfony/consumer``) and the
+    ``consumer`` query parameter also set the consumer name, and both take
+    precedence over this option. When the name comes from the ``options`` key,
+    keep the DSN path to the stream and the group (``/messages/symfony``),
+    otherwise the option is silently ignored.
 
 ``auto_setup`` (default: ``true``)
     Whether to create the Redis group automatically
