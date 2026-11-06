@@ -102,6 +102,49 @@ option on the form.
 
 .. include:: /reference/forms/types/options/constraints.rst.inc
 
+``csrf_field_name``
+~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``_token``
+
+The name of the hidden field that stores the CSRF token. The default value comes
+from the :ref:`form.csrf_protection.field_name <reference-framework-form-csrf-protection>`
+option of FrameworkBundle.
+
+``csrf_message``
+~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The CSRF token is invalid. Please try to resubmit the form.``
+
+The validation error displayed when the submitted CSRF token isn't valid.
+
+``csrf_protection``
+~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to protect this form against CSRF attacks. The default value comes from
+the :ref:`form.csrf_protection.enabled <reference-framework-form-csrf-protection>`
+option of FrameworkBundle. Symfony only adds the token to the root form.
+
+``csrf_token_id``
+~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` or ``null`` **default**: ``null``
+
+The string used to generate the value of the CSRF token. By default, the
+autoconfigured form types of your application use the
+:ref:`form.csrf_protection.token_id <reference-framework-form-csrf-protection>`
+option of FrameworkBundle when it's set. All other forms use the name of the form
+or, if it's empty, the class of the form type.
+
+``csrf_token_manager``
+~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: :class:`Symfony\\Component\\Security\\Csrf\\CsrfTokenManagerInterface` **default**: the default CSRF token manager
+
+The service used to generate and validate the CSRF token of this form.
+
 .. include:: /reference/forms/types/options/data.rst.inc
 
 .. include:: /reference/forms/types/options/data_class.rst.inc

@@ -44,6 +44,8 @@ Inherited Options
 
 These options inherit from the :doc:`DateType </reference/forms/types/date>`:
 
+.. include:: /reference/forms/types/options/calendar.rst.inc
+
 .. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/days.rst.inc
@@ -71,6 +73,8 @@ values for the year, month and day fields::
     ]);
 
 .. include:: /reference/forms/types/options/date_format.rst.inc
+
+.. include:: /reference/forms/types/options/html5.rst.inc
 
 .. include:: /reference/forms/types/options/date_input.rst.inc
 

@@ -147,6 +147,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/choice_help.rst.inc
 
+.. include:: /reference/forms/types/options/choice_lazy.rst.inc
+
 .. include:: /reference/forms/types/options/choice_loader.rst.inc
 
 .. include:: /reference/forms/types/options/choice_name.rst.inc
@@ -225,6 +227,10 @@ If you return ``null``, the option won't be grouped.
 .. include:: /reference/forms/types/options/placeholder_attr.rst.inc
 
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
+
+.. include:: /reference/forms/types/options/separator.rst.inc
+
+.. include:: /reference/forms/types/options/separator_html.rst.inc
 
 .. include:: /reference/forms/types/options/sort_choices.rst.inc
 

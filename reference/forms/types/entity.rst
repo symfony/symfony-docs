@@ -221,10 +221,22 @@ Set this option to use a different format:
 Overridden Options
 ------------------
 
+``choice_loader``
+~~~~~~~~~~~~~~~~~
+
+**type**: :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface` **default**: a loader based on :class:`Symfony\\Bridge\\Doctrine\\Form\\ChoiceList\\DoctrineChoiceLoader`
+
+The default loader gets the entities from the database using the `class`_, `em`_
+and `query_builder`_ options. When you set the `choices`_ option, this option
+defaults to ``null`` and no loader is used. To provide a custom loader, see
+:ref:`reference-form-choice-loader`.
+
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
 In the ``EntityType``, this defaults to the ``id`` of the entity, if it can
 be read. Otherwise, it falls back to using auto-incrementing integers.
+
+.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 
@@ -256,13 +268,15 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
 
+.. include:: /reference/forms/types/options/choice_filter.rst.inc
+
 .. include:: /reference/forms/types/options/choice_help.rst.inc
 
 .. include:: /reference/forms/types/options/choice_lazy.rst.inc
 
-.. include:: /reference/forms/types/options/choice_loader.rst.inc
+.. include:: /reference/forms/types/options/choice_translation_parameters.rst.inc
 
-.. include:: /reference/forms/types/options/choice_translation_domain_disabled.rst.inc
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
@@ -317,6 +331,10 @@ when rendering the field:
 .. code-block:: twig
 
     {{ form_widget(form.publishAt, { 'separator': '=====' }) }}
+
+.. include:: /reference/forms/types/options/separator.rst.inc
+
+.. include:: /reference/forms/types/options/separator_html.rst.inc
 
 .. include:: /reference/forms/types/options/sort_choices.rst.inc
 
