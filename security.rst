@@ -1630,6 +1630,15 @@ failed requests for ``IP address``. The second limit protects against an
 attacker using multiple usernames from bypassing the first limit, without
 disrupting normal users on big networks (such as offices).
 
+Before using the username in the first limit, Symfony trims and case-folds it,
+and removes accents as well as invisible and control characters. This way, all
+variants of a username share the same limit. This matters because your user
+provider might match those variants to the same user (e.g. because of the
+collation of a database column). Removing the accents of precomposed characters
+(such as ``é``) requires the ``intl`` PHP extension or the
+``symfony/polyfill-intl-normalizer`` package. Folding ``ß`` to ``ss`` requires
+the ``mbstring`` PHP extension.
+
 .. tip::
 
     Limiting the failed login attempts is only one basic protection against
