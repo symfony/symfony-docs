@@ -4623,6 +4623,17 @@ The Amazon SQS, AMPHP SQL, AMQP, Beanstalkd and Redis transports implement this
 interface. If you need to close a Doctrine connection, you can do so
 :ref:`using middleware <middleware-for-doctrine>`.
 
+Symfony closes these transports automatically when
+:ref:`the kernel shuts down <service-container-releasing-resources-on-shutdown>`
+(e.g. at the end of each test). The
+:ref:`service resets <service-container-resetting-services>` that happen
+between messages in a worker don't close them, so workers keep reusing their
+connections.
+
+.. versionadded:: 8.2
+
+    Closing the transports at kernel shutdown was introduced in Symfony 8.2.
+
 Running Commands And External Processes
 ---------------------------------------
 
