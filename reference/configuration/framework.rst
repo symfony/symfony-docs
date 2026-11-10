@@ -2466,7 +2466,9 @@ scope
 
 For scoped clients only: the regular expression that the URL must match before
 applying all other non-default options. By default, the scope is derived from
-`base_uri`_.
+`base_uri`_. The regular expression only needs to match the beginning of the
+URL, so end it with a ``/`` (e.g. ``https://api\.github\.com/``) to not match
+other hosts such as ``https://api.github.com.example.org/``.
 
 timeout
 .......

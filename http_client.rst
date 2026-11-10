@@ -242,7 +242,7 @@ autoconfigure the HTTP client based on the requested URL:
                 scoped_clients:
                     # only requests matching scope will use these options
                     github.client:
-                        scope: 'https://api\.github\.com'
+                        scope: 'https://api\.github\.com/'
                         headers:
                             Accept: 'application/vnd.github.v3+json'
                             Authorization: 'token %env(GITHUB_API_TOKEN)%'
@@ -272,7 +272,7 @@ autoconfigure the HTTP client based on the requested URL:
                 <framework:http-client>
                     <!-- only requests matching scope will use these options -->
                     <framework:scoped-client name="github.client"
-                        scope="https://api\.github\.com"
+                        scope="https://api\.github\.com/"
                     >
                         <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
                         <framework:header name="Authorization">token %env(GITHUB_API_TOKEN)%</framework:header>
@@ -298,7 +298,7 @@ autoconfigure the HTTP client based on the requested URL:
         return static function (FrameworkConfig $framework): void {
             // only requests matching scope will use these options
             $framework->httpClient()->scopedClient('github.client')
-                ->scope('https://api\.github\.com')
+                ->scope('https://api\.github\.com/')
                 ->header('Accept', 'application/vnd.github.v3+json')
                 ->header('Authorization', 'token %env(GITHUB_API_TOKEN)%')
                 // ...
@@ -342,6 +342,9 @@ autoconfigure the HTTP client based on the requested URL:
 
 You can define several scopes, so that each set of options is added only if a
 requested URL matches one of the regular expressions set by the ``scope`` option.
+These regular expressions only need to match the beginning of the URL, so end
+them with a ``/`` to not match other hosts (e.g. ``https://api\.github\.com``
+also matches ``https://api.github.com.example.org/``).
 
 .. note::
 
