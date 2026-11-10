@@ -18,7 +18,7 @@ The basic idea of this constraint is that you supply it with an array of
 valid values (this can be done in several ways) and it validates that the
 value of the given property exists in that array.
 
-If your valid choice list is simple, you can pass them in directly via the
+If your valid choice list is simple, you can pass the choices directly via the
 `choices`_ option:
 
 .. configuration-block::
@@ -387,7 +387,7 @@ of the input values cannot be found, the validation will fail.
 **type**: ``string`` **default**: ``One or more of the given values is invalid.``
 
 This is the message that you will receive if the ``multiple`` option is
-set to ``true`` and one of the values on the underlying array being checked
+set to ``true`` and one of the values in the underlying array being checked
 is not in the array of valid choices.
 
 You can use the following parameters in this message:

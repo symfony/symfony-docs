@@ -35,7 +35,7 @@ input
 
 **type**: ``string`` **default**: ``number``
 
-The format of the input data - i.e. the format that the number is stored on
+The format of the input data - i.e. the format in which the number is stored in
 your underlying object. Valid values are ``number`` and ``string``. Setting
 this option to ``string`` can be useful if the underlying data is a string
 for precision reasons (for example, Doctrine uses strings for the ``decimal``

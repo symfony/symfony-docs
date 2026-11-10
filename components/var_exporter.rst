@@ -110,7 +110,7 @@ their properties without calling their constructors or any other methods::
     $fooObject = Instantiator::instantiate(Foo::class, ['propertyName' => $propertyValue]);
 
 The instantiator can also populate the property of a parent class. Assuming ``Bar``
-is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+is the parent class of ``Foo`` and defines a ``privateBarProperty`` property::
 
     use Symfony\Component\VarExporter\Instantiator;
 
@@ -148,7 +148,7 @@ basic usage of the hydrator populating a property of an object::
     Hydrator::hydrate($object, ['propertyName' => $propertyValue]);
 
 The hydrator can also populate the property of a parent class. Assuming ``Bar``
-is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+is the parent class of ``Foo`` and defines a ``privateBarProperty`` property::
 
     use Symfony\Component\VarExporter\Hydrator;
 
@@ -225,9 +225,9 @@ LazyGhostTrait
     objects instead. Note that using the trait with PHP versions earlier than 8.4
     does not trigger a deprecation, to ease the transition.
 
-Ghost objects are empty objects, which see their properties populated the first
+Ghost objects are empty objects whose properties are populated the first
 time any method is called. Thanks to :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait`,
-the implementation of the lazy mechanism is eased. The ``MyLazyObject::populateHash()``
+implementing the lazy mechanism is easier. The ``MyLazyObject::populateHash()``
 method will be called only when the object is actually used and needs to be
 initialized::
 
@@ -292,7 +292,7 @@ convert non-lazy classes to lazy ones::
         $instance->validateHash();
     });
 
-While you never query ``$processor->hash`` value, heavy methods will never be
+As long as you never query the ``$processor->hash`` value, heavy methods will never be
 triggered. But still, the ``$processor`` object exists and can be used in your
 code, passed to methods, functions, etc.
 
@@ -313,12 +313,12 @@ LazyProxyTrait
 
 The purpose of virtual proxies is the same as
 :ref:`ghost objects <var-exporter_ghost-objects>`, but their internal behavior is
-completely different. Where ghost objects requires extending a base class, virtual
+completely different. Where ghost objects require extending a base class, virtual
 proxies take advantage of the **Liskov Substitution principle**. This principle
-describes that if two objects are implementing the same interface, you can swap
+states that if two objects implement the same interface, you can swap
 between the different implementations without breaking your application. This is
 what virtual proxies take advantage of. To use virtual proxies, you may use
-:class:`Symfony\\Component\\VarExporter\\ProxyHelper` to generate proxy's class
+:class:`Symfony\\Component\\VarExporter\\ProxyHelper` to generate the proxy class
 code::
 
     namespace App\Hash;
@@ -367,9 +367,9 @@ code::
         return $instance;
     });
 
-Just like ghost objects, while you never query ``$processor->hash``, its value
+Just like ghost objects, as long as you never query ``$processor->hash``, its value
 will not be computed. The main difference with ghost objects is that this time,
-a proxy of an abstract class was created. This also works with internal PHP class.
+a proxy of an abstract class was created. This also works with internal PHP classes.
 
 .. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/

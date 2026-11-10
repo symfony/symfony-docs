@@ -109,7 +109,7 @@ Parameter        Description
 This option defines the pattern used to validate the email address. Valid values are:
 
 * ``html5`` uses the regular expression of the `HTML5 email input element`_,
-  except it enforces a tld to be present.
+  except that it requires a TLD to be present.
 * ``html5-allow-no-tld`` uses exactly the same regular expression as the `HTML5 email input element`_,
   making the backend validation consistent with the one provided by browsers.
 * ``strict`` validates the address according to `RFC 5322`_ using the

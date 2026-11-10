@@ -134,7 +134,7 @@ Its value is a combination of one or more of the :ref:`flags defined by the Yaml
 
 **type**: ``string`` **default**: ``This value is not valid YAML.``
 
-This message shown if the underlying data is not a valid YAML value.
+This message is shown if the underlying data is not a valid YAML value.
 
 You can use the following parameters in this message:
 

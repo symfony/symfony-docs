@@ -3,7 +3,7 @@ Positive
 
 Validates that a value is a positive number. Zero is neither positive nor
 negative, so you must use :doc:`/reference/constraints/PositiveOrZero` if you
-want to allow zero as value.
+want to allow zero as a value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

@@ -343,7 +343,7 @@ These methods look for some contents inside the string and replace them::
     // checks if the string contents are exactly the same as the given contents
     u('foo')->equalsTo('foo'); // true
 
-    // checks if the string content match the given regular expression.
+    // checks if the string content matches the given regular expression.
     u('avatar-73647.png')->match('/avatar-(\d+)\.png/');
     // result = ['avatar-73647.png', '73647', null]
 
@@ -466,7 +466,7 @@ objects::
     u('спасибо')->ascii(); // 'spasibo'
 
     // returns an array with the code point or points stored at the given position
-    // (code points of 'नमस्ते' graphemes = [2344, 2350, 2360, 2340]
+    // (code points of 'नमस्ते' graphemes = [2344, 2350, 2360, 2340])
     u('नमस्ते')->codePointsAt(0); // [2344]
     u('नमस्ते')->codePointsAt(2); // [2360]
 
@@ -622,7 +622,7 @@ with the slugger to transform any emojis into their textual representation::
     // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
 
 If you want to use a specific locale for the emoji, or to use the short codes
-from GitHub, Gitlab or Slack, use the first argument of ``withEmoji()`` method::
+from GitHub, Gitlab or Slack, use the first argument of the ``withEmoji()`` method::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 

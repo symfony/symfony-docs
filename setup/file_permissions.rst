@@ -5,10 +5,10 @@ Symfony generates certain files in the ``var/`` directory of your project when
 running the application. In the ``dev`` :ref:`environment <configuration-environments>`,
 the ``bin/console`` and ``public/index.php`` files use ``umask()`` to make sure
 that the directory is writable. This means that you don't need to configure
-permissions when developing the application in your local machine.
+permissions when developing the application on your local machine.
 
 However, using ``umask()`` is not considered safe in production. That's why you
-often need to configure some permissions explicitly in your production servers
+often need to configure some permissions explicitly on your production servers
 as explained in this article.
 
 Permissions Required by Symfony Applications
@@ -19,7 +19,7 @@ These are the permissions required to run Symfony applications:
 * The ``var/log/`` directory must exist and must be writable by both your
   web server user and the terminal user;
 * The ``var/cache/`` directory must be writable by the terminal user (the
-  user running ``cache:warmup`` or ``cache:clear`` commands);
+  user running the ``cache:warmup`` or ``cache:clear`` commands);
 * The ``var/cache/`` directory must be writable by the web server user if you use
   a :doc:`filesystem-based cache </cache/adapters/filesystem_adapter>`.
 
@@ -35,7 +35,7 @@ There are several ways to achieve that:
 1. Using ACL on a System that Supports ``setfacl`` (Linux/BSD)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using Access Control Lists (ACL) permissions is the most safe and
+Using Access Control Lists (ACL) permissions is the safest and
 recommended method to make the ``var/`` directory writable. You may need to
 install ``setfacl`` and `enable ACL support`_ on your disk partition before
 using this method. Then, use the following script to determine your web
@@ -45,7 +45,7 @@ server user and grant the needed permissions:
 
     $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx|[c]addy|[f]rankenphp' | grep -v root | head -1 | cut -d\  -f1)
 
-    # if the following commands don't work, try adding `-n` option to `setfacl`
+    # if the following commands don't work, try adding the `-n` option to `setfacl`
 
     # set permissions for future files and folders
     $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
@@ -78,7 +78,7 @@ update the ``User`` and ``Group`` directives).
 
 .. danger::
 
-    If this solution is used in a production server, be sure this user only has
+    If this solution is used on a production server, be sure this user only has
     limited privileges (no access to private data or servers, execution of
     unsafe binaries, etc.) as a compromised server would give those privileges
     to the hacker.
@@ -88,8 +88,8 @@ update the ``User`` and ``Group`` directives).
 
 If none of the previous methods work for you, change the ``umask`` so that the
 cache and log directories are group-writable or world-writable (depending
-if the web server user and the command line user are in the same group or not).
-To achieve this, put the following line at the beginning of the ``bin/console``,
+on whether the web server user and the command line user are in the same group or
+not). To achieve this, put the following line at the beginning of the ``bin/console``
 and ``public/index.php`` files::
 
     umask(0002); // This will let the permissions be 0775

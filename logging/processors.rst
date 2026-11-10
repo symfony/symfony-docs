@@ -1,9 +1,9 @@
-How to Add extra Data to Log Messages via a Processor
+How to Add Extra Data to Log Messages via a Processor
 =====================================================
 
 `Monolog`_ allows you to process every record before logging it by adding some
-extra data. This is the role of a processor, which can be applied for the whole
-handler stack or only for a specific handler or channel.
+extra data. This is the role of a processor, which can be applied to the whole
+handler stack or only to a specific handler or channel.
 
 A processor is a callable receiving the record as its first argument.
 Processors are configured using the ``monolog.processor`` DIC tag. See the
@@ -193,11 +193,11 @@ Symfony's MonologBridge provides processors that can be registered inside your a
     error message to the record.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor`
-    Adds information from the current user's token to the record namely
+    Adds information from the current user's token to the record, namely the
     username, roles and whether the user is authenticated.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\SwitchUserTokenProcessor`
-    Adds information about the user who is impersonating the logged in user,
+    Adds information about the user who is impersonating the logged-in user,
     namely username, roles and whether the user is authenticated.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor`
@@ -205,7 +205,7 @@ Symfony's MonologBridge provides processors that can be registered inside your a
     object.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\RouteProcessor`
-    Adds information about current route (controller, action, route parameters).
+    Adds information about the current route (controller, action, route parameters).
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\ConsoleCommandProcessor`
     Adds information about the current console command.
@@ -263,7 +263,7 @@ Registering Processors per Channel
 ----------------------------------
 
 By default, processors are applied to all channels. Add the ``channel`` option
-to the ``monolog.processor`` tag to only apply a processor for the given channel:
+to the ``monolog.processor`` tag to only apply a processor to the given channel:
 
 .. configuration-block::
 

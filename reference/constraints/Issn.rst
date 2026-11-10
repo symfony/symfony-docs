@@ -77,7 +77,7 @@ Options
 ``caseSensitive``
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` default: ``false``
+**type**: ``boolean`` **default**: ``false``
 
 The validator will allow ISSN values to end with a lower case 'x' by default.
 When switching this to ``true``, the validator requires an upper case 'X'.
@@ -87,7 +87,7 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 ``message``
 ~~~~~~~~~~~
 
-**type**: ``string`` default: ``This value is not a valid ISSN.``
+**type**: ``string`` **default**: ``This value is not a valid ISSN.``
 
 The message shown if the given value is not a valid ISSN.
 
@@ -105,9 +105,9 @@ Parameter        Description
 ``requireHyphen``
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` default: ``false``
+**type**: ``boolean`` **default**: ``false``
 
-The validator will allow non hyphenated ISSN values by default. When switching
+The validator will allow non-hyphenated ISSN values by default. When switching
 this to ``true``, the validator requires a hyphenated ISSN value.
 
 .. _`International Standard Serial Number (ISSN)`: https://en.wikipedia.org/wiki/Issn

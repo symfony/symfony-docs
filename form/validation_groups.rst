@@ -108,7 +108,7 @@ Choosing Validation Groups via a Service
 
 If validation group logic requires services or can't fit in a closure, use a
 dedicated validation group resolver service. The class of this service must
-be invokable and receives the form object as its first argument::
+be invokable and receive the form object as its first argument::
 
     // src/Validation/ValidationGroupResolver.php
     namespace App\Validation;

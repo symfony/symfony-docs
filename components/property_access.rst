@@ -64,7 +64,7 @@ method::
     // You can avoid the exception by adding the nullsafe operator
     $value = $propertyAccessor->getValue($person, '[age?]');
 
-You can also use multi dimensional arrays::
+You can also use multidimensional arrays::
 
     // ...
     $persons = [
@@ -148,8 +148,8 @@ Using Hassers/Issers
 ~~~~~~~~~~~~~~~~~~~~
 
 And it doesn't even stop there. If there is no getter found, the accessor will
-look for an isser or hasser. This method is created using the same way as
-getters, this means that you can do something like this::
+look for an isser or hasser. This method is created in the same way as
+getters, which means that you can do something like this::
 
     // ...
     class Person
@@ -202,7 +202,7 @@ method::
         ->disableExceptionOnInvalidPropertyPath()
         ->getPropertyAccessor();
 
-    // instead of throwing an exception the following code returns null
+    // instead of throwing an exception, the following code returns null
     $value = $propertyAccessor->getValue($person, 'birthday');
 
 Accessing Nullable Property Paths
@@ -307,14 +307,14 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 
 .. warning::
 
-    The ``__call()`` feature is disabled by default, you can enable it by calling
+    The ``__call()`` feature is disabled by default. You can enable it by calling
     :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall`
-    see `Enable other Features`_.
+    (see `Enable other Features`_).
 
 Writing to Arrays
 -----------------
 
-The ``PropertyAccessor`` class can do more than just read an array, it can
+The ``PropertyAccessor`` class can do more than just read an array: it can
 also write to an array. This can be achieved using the
 :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::setValue` method::
 
@@ -373,8 +373,8 @@ can use setters, the magic ``__set()`` method or properties to set values::
     var_dump($person->getLastName()); // 'de Jong'
     var_dump($person->getChildren()); // [Person()];
 
-You can also use ``__call()`` to set values but you need to enable the feature,
-see `Enable other Features`_::
+You can also use ``__call()`` to set values, but you need to enable the feature
+(see `Enable other Features`_)::
 
     // ...
     class Person
@@ -506,7 +506,7 @@ Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`
     var_dump($person->getTeam()); // ['kevin', 'wouter']
 
 Instead of calling ``add<SingularOfThePropertyName>()`` and ``remove<SingularOfThePropertyName>()``, the PropertyAccess
-component will call ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
+component will call the ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
 
 Checking Property Paths
 -----------------------
@@ -569,7 +569,7 @@ Enable other Features
 ~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessor` can be
-configured to enable extra features. To do that you could use the
+configured to enable extra features. To do that, you can use the
 :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
 
     // ...
@@ -585,7 +585,7 @@ configured to enable extra features. To do that you could use the
     $propertyAccessorBuilder->disableMagicSet(); // disables magic __set
     $propertyAccessorBuilder->disableMagicMethods(); // disables magic __get, __set and __call
 
-    // checks if magic __call, __get or __set handling are enabled
+    // checks if magic __call, __get or __set handling is enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
     $propertyAccessorBuilder->isMagicGetEnabled(); // true or false
     $propertyAccessorBuilder->isMagicSetEnabled(); // true or false

@@ -1,4 +1,4 @@
-The XLIFF format
+The XLIFF Format
 ================
 
 Most professional translation tools support XLIFF_. These files use the XML

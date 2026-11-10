@@ -3,8 +3,8 @@ How to Embed Forms
 
 Often, you'll want to build a form that will include fields from many different
 objects. For example, a registration form may contain data belonging to
-a ``User`` object as well as many ``Address`` objects. Fortunately this can
-be achieved by the Form component.
+a ``User`` object as well as many ``Address`` objects. Fortunately, this can
+be achieved with the Form component.
 
 .. _forms-embedding-single-object:
 
@@ -115,7 +115,7 @@ Render the ``Category`` fields in the same way as the original ``Task`` fields:
     {# ... #}
 
 When the user submits the form, the submitted data for the ``Category`` fields
-are used to construct an instance of ``Category``, which is then set on the
+is used to construct an instance of ``Category``, which is then set on the
 ``category`` field of the ``Task`` instance.
 
 The ``Category`` instance is accessible naturally via ``$task->getCategory()``

@@ -2,7 +2,7 @@ NegativeOrZero
 ==============
 
 Validates that a value is a negative number or equal to zero. If you don't
-want to allow zero as value, use :doc:`/reference/constraints/Negative` instead.
+want to allow zero as a value, use :doc:`/reference/constraints/Negative` instead.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -13,7 +13,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanOrEqualV
 Basic Usage
 -----------
 
-The following constraint ensures that the ``level`` of a ``UnderGroundGarage``
+The following constraint ensures that the ``level`` of an ``UnderGroundGarage``
 is a negative number or equal to zero:
 
 .. configuration-block::

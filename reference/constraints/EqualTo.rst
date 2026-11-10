@@ -2,7 +2,7 @@ EqualTo
 =======
 
 Validates that a value is equal to another value, defined in the options.
-To force that a value is *not* equal, see :doc:`/reference/constraints/NotEqualTo`.
+To validate that a value is *not* equal, see :doc:`/reference/constraints/NotEqualTo`.
 
 .. warning::
 

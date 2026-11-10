@@ -2,7 +2,7 @@ This option determines what value the field will *return* when the submitted
 value is empty (or missing). It does not set an initial value if none is
 provided when the form is rendered in a view.
 
-This means it helps you handling form submission with blank fields. For
+This means it helps you handle form submission with blank fields. For
 example, if you want the ``name`` field to be explicitly set to ``John Doe``
 when no value is selected, you can do it like this::
 

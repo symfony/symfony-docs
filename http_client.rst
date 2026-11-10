@@ -84,7 +84,7 @@ Configuration
 The HTTP client contains many options you might need to take full control of
 the way the request is performed, including DNS pre-resolution, SSL parameters,
 public key pinning, etc. They can be defined globally in the configuration (to
-apply them to all requests) and to each request (which overrides any global
+apply them to all requests) and for each request (which overrides any global
 configuration).
 
 You can configure the global options using the ``default_options`` option:
@@ -227,8 +227,8 @@ Scoping Client
 ~~~~~~~~~~~~~~
 
 It's common that some of the HTTP client options depend on the URL of the
-request (e.g. you must set some headers when making requests to GitHub API but
-not for other hosts). If that's your case, the component provides scoped
+request (e.g. you must set some headers when making requests to the GitHub API but
+not for other hosts). If that's the case, the component provides scoped
 clients (using :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`) to
 autoconfigure the HTTP client based on the requested URL:
 
@@ -304,7 +304,7 @@ autoconfigure the HTTP client based on the requested URL:
                 // ...
             ;
 
-            // using base_url, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
+            // using base_uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
             // will default to these options
             $framework->httpClient()->scopedClient('github.client')
                 ->baseUri('https://api.github.com')
@@ -349,12 +349,12 @@ requested URL matches one of the regular expressions set by the ``scope`` option
     options defined in the scoped client. The options passed to ``request()``
     take precedence and override or extend the default ones.
 
-If you use scoped clients in the Symfony framework, you must use any of the
+If you use scoped clients in the Symfony framework, you must use one of the
 methods defined by Symfony to :ref:`choose a specific service <services-wire-specific-service>`.
 Each client has a unique service named after its configuration.
 
 Each scoped client also defines a corresponding named autowiring alias.
-If you use for example
+For example, if you use
 ``Symfony\Contracts\HttpClient\HttpClientInterface $githubClient``
 as the type and name of an argument, autowiring will inject the ``github.client``
 service into your autowired classes.
@@ -404,7 +404,7 @@ Authentication
 ~~~~~~~~~~~~~~
 
 The HTTP client supports different authentication mechanisms. They can be
-defined globally in the configuration (to apply them to all requests) and to
+defined globally in the configuration (to apply them to all requests) and for
 each request (which overrides any global authentication):
 
 .. configuration-block::
@@ -507,14 +507,14 @@ each request (which overrides any global authentication):
 .. note::
 
     The NTLM authentication mechanism requires using the cURL transport.
-    By using ``HttpClient::createForBaseUri()``, we ensure that the auth credentials
-    won't be sent to any other hosts than https://example.com/.
+    By using ``HttpClient::createForBaseUri()``, you ensure that the auth credentials
+    won't be sent to any hosts other than https://example.com/.
 
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 You can either append them manually to the requested URL, or define them as an
-associative array via the ``query`` option, that will be merged with the URL::
+associative array via the ``query`` option, which will be merged with the URL::
 
     // it makes an HTTP GET request to https://httpbin.org/get?token=...&name=...
     $response = $client->request('GET', 'https://httpbin.org/get', [
@@ -630,7 +630,7 @@ A generator or any ``Traversable`` can also be used instead of a closure.
 
     When uploading JSON payloads, use the ``json`` option instead of ``body``. The
     given content will be JSON-encoded automatically and the request will add the
-    ``Content-Type: application/json`` automatically too::
+    ``Content-Type: application/json`` header automatically too::
 
         $response = $client->request('POST', 'https://...', [
             'json' => ['param1' => 'value1', '...'],
@@ -674,7 +674,7 @@ of the opened file, but you can configure both with the PHP streaming configurat
         $formData->getParts(); // Returns two instances of TextPart both
                                // with the name "array_field"
 
-The ``Content-Type`` of each form's part is detected automatically. However,
+The ``Content-Type`` of each form part is detected automatically. However,
 you can override it by passing a ``DataPart``::
 
     use Symfony\Component\Mime\Part\DataPart;
@@ -704,7 +704,7 @@ Cookies
 ~~~~~~~
 
 The HTTP client provided by this component is stateless but handling cookies
-requires a stateful storage (because responses can update cookies and they must
+requires stateful storage (because responses can update cookies and they must
 be used for subsequent requests). That's why this component doesn't handle
 cookies automatically.
 
@@ -755,7 +755,7 @@ between retries (first retry = 1 second; third retry: 4 seconds) and only for
 the following HTTP status codes: ``423``, ``425``, ``429``, ``502`` and ``503``
 when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
 an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the
-amount of times a request is retried.
+number of times a request is retried.
 
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
 to learn how to tweak each of them to fit your application needs.
@@ -778,14 +778,14 @@ Retry Over Several Base URIs
 
 The ``RetryableHttpClient`` can be configured to use multiple base URIs. This
 feature provides increased flexibility and reliability for making HTTP
-requests. Pass an array of base URIs as option ``base_uri`` when making a
+requests. Pass an array of base URIs as the ``base_uri`` option when making a
 request::
 
     $response = $client->request('GET', 'some-page', [
         'base_uri' => [
-            // first request will use this base URI
+            // the first request will use this base URI
             'https://example.com/a/',
-            // if first request fails, the following base URI will be used
+            // if the first request fails, the following base URI will be used
             'https://example.com/b/',
         ],
     ]);
@@ -836,12 +836,12 @@ options:
 * ``proxy`` should be set to the ``http://...`` URL of the proxy to get through
 
 * ``no_proxy`` disables the proxy for a comma-separated list of hosts that do not
-  require it to get reached.
+  require it to be reached.
 
 Progress Callback
 ~~~~~~~~~~~~~~~~~
 
-By providing a callable to the ``on_progress`` option, one can track
+By providing a callable to the ``on_progress`` option, you can track
 uploads/downloads as they complete. This callback is guaranteed to be called on
 DNS resolution, on arrival of headers and on completion; additionally it is
 called when new data is uploaded or downloaded and at least once per second::
@@ -901,7 +901,7 @@ Profiling
 ~~~~~~~~~
 
 When you are using the :class:`Symfony\\Component\\HttpClient\\TraceableHttpClient`,
-responses content will be kept in memory and may exhaust it.
+response contents will be kept in memory and may exhaust it.
 
 You can disable this behavior by setting the ``extra.trace_content`` option to ``false``
 in your requests::
@@ -941,7 +941,7 @@ package that expands those URI templates to turn them into URLs:
 
 When using this client in the framework context, all existing HTTP clients
 are decorated by the :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient`.
-This means that URI template feature is enabled by default for all HTTP clients
+This means that the URI template feature is enabled by default for all HTTP clients
 you may use in your application.
 
 You can configure variables that will be replaced globally in all URI templates
@@ -1047,7 +1047,7 @@ Configuring CurlHttpClient Options
 PHP allows configuring lots of `cURL options`_ via the :phpfunction:`curl_setopt`
 function. In order to make the component more portable when not using cURL, the
 :class:`Symfony\\Component\\HttpClient\\CurlHttpClient` only uses some of those
-options (and they are ignored in the rest of clients).
+options (and they are ignored in the rest of the clients).
 
 Add an ``extra.curl`` option in your configuration to pass those extra options::
 
@@ -1074,8 +1074,8 @@ HTTP Compression
 
 The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
 
-* using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
-* using the native HTTP client: `Zlib PHP extension`_ is installed
+* using the cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* using the native HTTP client: the `Zlib PHP extension`_ is installed
 
 If the server does respond with a gzipped response, it's decoded transparently.
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
@@ -1199,7 +1199,7 @@ following methods::
 
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
-    when you'll call it.
+    when you call it.
 
 .. _http-client-streaming-responses:
 
@@ -1238,7 +1238,7 @@ Canceling Responses
 
 To abort a request (e.g. because it didn't complete in due time, or you want to
 fetch only the first bytes of the response, etc.), you can either use the
-:method:`Symfony\\Contracts\\HttpClient\\ResponseInterface::cancel`::
+:method:`Symfony\\Contracts\\HttpClient\\ResponseInterface::cancel` method::
 
     $response->cancel();
 
@@ -1279,7 +1279,7 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
 throw an appropriate exception, all of which implement the
 :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`.
 
-To opt-out from this exception and deal with 300-599 status codes on your own,
+To opt out of this exception and deal with 300-599 status codes on your own,
 pass ``false`` as the optional argument to every call of those methods,
 e.g. ``$response->getHeaders(false);``.
 
@@ -1287,7 +1287,7 @@ If you do not call any of these 3 methods at all, the exception will still be th
 when the ``$response`` object is destructed.
 
 Calling ``$response->getStatusCode()`` is enough to disable this behavior
-(but then don't miss checking the status code yourself).
+(but then don't forget to check the status code yourself).
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
@@ -1312,10 +1312,10 @@ responses in an array::
     unset($responses);
 
 This behavior provided at destruction-time is part of the fail-safe design of the
-component. No errors will be unnoticed: if you don't write the code to handle
+component. No errors will go unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
-opt-out from these fallback mechanisms as the destructor won't have anything
+opt out of these fallback mechanisms as the destructor won't have anything
 remaining to do.
 
 .. _http-client-concurrent-requests:
@@ -1358,7 +1358,7 @@ code waits only when necessary.
     or access to certificate files). To avoid hitting these limits, consider
     processing requests in batches.
 
-    There is, however, a maximum amount of concurrent connections that can be open
+    There is, however, a maximum number of concurrent connections that can be open
     per host (``6`` by default). See :ref:`max_host_connections <reference-http-client-max-host-connections>`.
 
 Multiplexing Responses
@@ -1404,7 +1404,7 @@ content pauses for too long. This can be configured with the ``timeout`` request
 option::
 
     // A TransportExceptionInterface will be issued if nothing
-    // happens for 2.5 seconds when accessing from the $response
+    // happens for 2.5 seconds when accessing the $response
     $response = $client->request('GET', 'https://...', ['timeout' => 2.5]);
 
 The ``default_socket_timeout`` PHP ini setting is used if the option is not set.
@@ -1420,8 +1420,8 @@ method will yield a special chunk whose ``isTimeout()`` will return ``true``::
         }
     }
 
-A timeout is not necessarily an error: you can decide to stream again the
-response and get remaining contents that might come back in a new timeout, etc.
+A timeout is not necessarily an error: you can decide to stream the response
+again and get the remaining contents, which might lead to a new timeout, etc.
 
 .. tip::
 
@@ -1429,7 +1429,7 @@ response and get remaining contents that might come back in a new timeout, etc.
 
 .. note::
 
-    Timeouts control how long one is willing to wait *while the HTTP transaction
+    Timeouts control how long you are willing to wait *while the HTTP transaction
     is idle*. Big responses can last as long as needed to complete, provided they
     remain active during the transfer and never pause for longer than specified.
 
@@ -1443,14 +1443,14 @@ Dealing with Network Errors
 Network errors (broken pipe, failed DNS resolution, etc.) are thrown as instances
 of :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`.
 
-First of all, you don't *have* to deal with them: letting errors bubble to your
+First of all, you don't *have* to deal with them: letting errors bubble up to your
 generic exception-handling stack might be really fine in most use cases.
 
 If you want to handle them, here is what you need to know:
 
 To catch errors, you need to wrap calls to ``$client->request()`` but also calls
 to any methods of the returned responses. This is because responses are lazy, so
-that network errors can happen when calling e.g. ``getStatusCode()`` too::
+network errors can happen when calling e.g. ``getStatusCode()`` too::
 
     use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
@@ -1476,12 +1476,12 @@ in the foreach loop::
         try {
             if ($chunk->isTimeout()) {
                 // ... decide what to do when a timeout occurs
-                // if you want to stop a response that timed out, don't miss
-                // calling $response->cancel() or the destructor of the response
+                // if you want to stop a response that timed out, don't forget
+                // to call $response->cancel() or the destructor of the response
                 // will try to complete it one more time
             } elseif ($chunk->isFirst()) {
                 // if you want to check the status code, you must do it when the
-                // first chunk arrived, using $response->getStatusCode();
+                // first chunk arrives, using $response->getStatusCode();
                 // not doing so might trigger an HttpExceptionInterface
             } elseif ($chunk->isLast()) {
                 // ... do something with $response
@@ -1760,7 +1760,7 @@ to wrap your HTTP client, open a connection to a server that responds with a
 
     If you know that the content of the ``ServerSentEvent`` is in the JSON format, you can
     use the :method:`Symfony\\Component\\HttpClient\\Chunk\\ServerSentEvent::getArrayData`
-    method to directly get the decoded JSON as array.
+    method to directly get the decoded JSON as an array.
 
 Interoperability
 ----------------
@@ -1772,7 +1772,7 @@ with all of them. They also benefit from :ref:`autowiring aliases <service-autow
 when the :doc:`framework bundle </reference/configuration/framework>` is used.
 
 If you are writing or maintaining a library that makes HTTP requests, you can
-decouple it from any specific HTTP client implementations by coding against
+decouple it from any specific HTTP client implementation by coding against
 either Symfony Contracts (recommended), PSR-18 or HTTPlug v2.
 
 Symfony Contracts
@@ -1796,8 +1796,8 @@ interface you need to code against when a client is needed::
     }
 
 All request options mentioned above (e.g. timeout management) are also defined
-in the wordings of the interface, so that any compliant implementation (like
-this component) is guaranteed to provide them. That's a major difference with
+in the interface, so that any compliant implementation (like
+this component) is guaranteed to provide them. That's a major difference from
 the other abstractions, which provide none related to the transport itself.
 
 Another major feature covered by the Symfony Contracts is async/multiplexing,
@@ -1806,7 +1806,7 @@ as described in the previous sections.
 PSR-18 and PSR-17
 ~~~~~~~~~~~~~~~~~
 
-This component implements the `PSR-18`_ (HTTP Client) specifications via the
+This component implements the `PSR-18`_ (HTTP Client) specification via the
 :class:`Symfony\\Component\\HttpClient\\Psr18Client` class, which is an adapter
 to turn a Symfony :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`
 into a PSR-18 ``ClientInterface``. This class also implements the relevant
@@ -1982,7 +1982,7 @@ Then you're ready to go::
     // wait for a specific promise to resolve while monitoring them all
     $response = $promise->wait();
 
-    // wait maximum 1 second for pending promises to resolve
+    // wait at most 1 second for pending promises to resolve
     $httpClient->wait(1.0);
 
     // wait for all remaining promises to resolve
@@ -2073,7 +2073,7 @@ The solution is to also decorate the response object itself.
 :class:`Symfony\\Component\\HttpClient\\Response\\TraceableResponse` are good
 examples as a starting point.
 
-In order to help writing more advanced response processors, the component provides
+To help you write more advanced response processors, the component provides
 an :class:`Symfony\\Component\\HttpClient\\AsyncDecoratorTrait`. This trait allows
 processing the stream of chunks as they come back from the network::
 
@@ -2098,18 +2098,18 @@ processing the stream of chunks as they come back from the network::
 
 Because the trait already implements a constructor and the ``stream()`` method,
 you don't need to add them. The ``request()`` method should still be defined;
-it shall return an
+it must return an
 :class:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse`.
 
 The custom processing of chunks should happen in ``$passthru``: this generator
 is where you need to write your logic. It will be called for each chunk yielded
 by the underlying client. A ``$passthru`` that does nothing would just ``yield
-$chunk;``. You could also yield a modified chunk, split the chunk into many
+$chunk;``. You could also yield a modified chunk, split the chunk into smaller
 ones by yielding several times, or even skip a chunk altogether by issuing a
 ``return;`` instead of yielding.
 
 In order to control the stream, the chunk passthru receives an
-:class:`Symfony\\Component\\HttpClient\\Response\\AsyncContext` as second
+:class:`Symfony\\Component\\HttpClient\\Response\\AsyncContext` as its second
 argument. This context object has methods to read the current state of the
 response. It also allows altering the response stream with methods to create
 new chunks of content, pause the stream, cancel the stream, change the info of
@@ -2237,7 +2237,7 @@ assertions on the request before returning the mocked response::
         $client = new MockHttpClient();
         $client->setResponseFactory($responses);
 
-If you need to test responses with HTTP status codes different than 200,
+If you need to test responses with HTTP status codes other than 200,
 define the ``http_code`` option::
 
     use Symfony\Component\HttpClient\MockHttpClient;
@@ -2341,7 +2341,7 @@ Then configure Symfony to use your callback:
             ;
         };
 
-To return json, you would normally do::
+To return JSON, you would normally do::
 
     use Symfony\Component\HttpClient\Response\MockResponse;
 
@@ -2523,13 +2523,13 @@ If your service performs multiple requests or if your ``.har`` file contains mul
 request/response pairs, the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory`
 will find the associated response based on the request method, URL and body (if any).
 Note that **this won't work** if the request body or URI is random / always
-changing (e.g. if it contains current date or random UUIDs).
+changing (e.g. if it contains the current date or random UUIDs).
 
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As explained in the :ref:`Network Errors section <http-client_network-errors>`,
-when making HTTP requests you might face errors at transport level.
+when making HTTP requests you might face errors at the transport level.
 
 That's why it's useful to test how your application behaves in case of a transport
 error. :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` allows
@@ -2538,7 +2538,7 @@ you to do so in multiple ways.
 In order to test errors that occur before headers have been received,
 set the ``error`` option value when creating the ``MockResponse``.
 Transport errors of this kind occur, for example, when a host name
-cannot be resolved or the host was unreachable. The
+cannot be resolved or the host is unreachable. The
 ``TransportException`` will be thrown as soon as a method like
 ``getStatusCode()`` or ``getHeaders()`` is called.
 

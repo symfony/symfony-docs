@@ -98,7 +98,7 @@ to create a page?
    in their own section, including how to return JSON responses;
 
 #. *Create a route*: The route defines the URL path to your page and what controller method to call.
-    You'll learn more about :doc:`routing </routing>` in its own section, including how to make *variable* URLs.
+   You'll learn more about :doc:`routing </routing>` in its own section, including how to make *variable* URLs.
 
 The bin/console Command
 -----------------------

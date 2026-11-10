@@ -17,7 +17,7 @@ Databases are a broad topic, so the documentation is divided into three articles
   in Symfony applications;
 * Read :doc:`this other article </doctrine/dbal>` if you need **low-level access**
   to perform raw SQL queries to relational databases (similar to PHP's `PDO`_);
-* Read `DoctrineMongoDBBundle docs`_ if you are working with **MongoDB databases**.
+* Read the `DoctrineMongoDBBundle docs`_ if you are working with **MongoDB databases**.
 
 Installing Doctrine
 -------------------
@@ -44,7 +44,7 @@ The database connection information is stored as an environment variable called
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.37"
 
     # to use mariadb:
-    # Before doctrine/dbal < 3.7
+    # Before doctrine/dbal 3.7
     # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
     # Since doctrine/dbal 3.7
     # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=10.5.8-MariaDB"
@@ -397,7 +397,7 @@ Example usage::
 Migrations: Creating the Database Tables/Schema
 -----------------------------------------------
 
-The ``Product`` class is fully-configured and ready to save to a ``product`` table.
+The ``Product`` class is fully configured and ready to save to a ``product`` table.
 If you just defined this class, your database doesn't actually have the ``product``
 table yet. To add it, you can leverage the `DoctrineMigrationsBundle`_, which is
 already installed:
@@ -719,8 +719,8 @@ be able to go to ``/product/1`` to see your new product::
         }
     }
 
-Another possibility is to use the ``ProductRepository`` using Symfony's autowiring
-and injected by the dependency injection container::
+Another possibility is to inject the ``ProductRepository`` with Symfony's
+autowiring::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -846,7 +846,7 @@ yourself::
 .. tip::
 
     When enabled globally, it's possible to disable the behavior on a specific
-    controller, by using the ``MapEntity`` set to ``disabled``::
+    controller by setting the ``disabled`` option of ``MapEntity`` to ``true``::
 
         public function show(
             #[CurrentUser]
@@ -934,7 +934,7 @@ using the :doc:`ExpressionLanguage component </expression_language>`::
     }
 
 In the expression, the ``repository`` variable will be your entity's
-Repository class and any route wildcards - like ``{product_id}`` are
+Repository class and any route wildcards (like ``{product_id}``) are
 available as variables.
 
 The repository method called in the expression can also return a list of entities.
@@ -1001,7 +1001,7 @@ resolved automatically::
 .. versionadded:: 7.3
 
     Support for target entity resolution in the ``EntityValueResolver`` was
-    introduced Symfony 7.3
+    introduced in Symfony 7.3.
 
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
@@ -1198,7 +1198,7 @@ a new method for this to your repository::
     }
 
 The string passed to ``createQuery()`` might look like SQL, but it is
-`Doctrine Query Language`_. This allows you to type queries using commonly
+`Doctrine Query Language`_. This allows you to type queries using a commonly
 known query language, but referencing PHP objects instead (i.e. in the ``FROM``
 statement).
 

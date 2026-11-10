@@ -55,7 +55,7 @@ This UUID variant is **not implemented** by the Uid component.
 
 **UUID v3** (name-based, MD5)
 
-Generates UUIDs from names that belong, and are unique within, some given namespace
+Generates UUIDs from names that belong to, and are unique within, some given namespace
 (`read the UUIDv3 spec <https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-3>`__).
 This variant is useful to generate deterministic UUIDs from arbitrary strings.
 It works by populating the UUID contents with the ``md5`` hash of concatenating
@@ -123,7 +123,7 @@ Generates time-ordered UUIDs based on a high-resolution Unix Epoch timestamp
 source (the number of microseconds since midnight 1 Jan 1970 UTC, leap seconds excluded)
 (`read the UUIDv7 spec <https://datatracker.ietf.org/doc/html/draft-ietf-uuidrev-rfc4122bis#name-uuid-version-7>`__).
 It's recommended to use this version over UUIDv1 and UUIDv6 because it provides
-better entropy (and a more strict chronological order of UUID generation)::
+better entropy (and a stricter chronological order of UUID generation)::
 
     use Symfony\Component\Uid\Uuid;
 
@@ -193,7 +193,7 @@ By default, this factory generates the following UUIDs:
 * Random-based UUIDs: UUIDv4
 * Time-based node and UUID namespace: ``null``
 
-You can configure these default values::
+You can configure these default values:
 
 .. configuration-block::
 
@@ -299,7 +299,7 @@ Working with UUIDs
 ~~~~~~~~~~~~~~~~~~
 
 UUID objects created with the ``Uuid`` class can use the following methods
-(which are equivalent to the ``uuid_*()`` method of the PHP extension)::
+(which are equivalent to the ``uuid_*()`` methods of the PHP extension)::
 
     use Symfony\Component\Uid\NilUuid;
     use Symfony\Component\Uid\Uuid;
@@ -318,7 +318,7 @@ UUID objects created with the ``Uuid`` class can use the following methods
     $uuid = Uuid::v1();
     $uuid->getDateTime(); // returns a \DateTimeImmutable instance
 
-    // checking if a given value is valid as UUID
+    // checking if a given value is valid as a UUID
     $isValid = Uuid::isValid($uuid); // true or false
 
     // comparing UUIDs and checking for equality
@@ -332,7 +332,7 @@ UUID objects created with the ``Uuid`` class can use the following methods
     //   * int < 0 if $uuid1 is less than $uuid4
     $uuid1->compare($uuid4); // e.g. int(4)
 
-If you're working with different UUIDs format and want to validate them,
+If you're working with different UUID formats and want to validate them,
 you can use the ``$format`` parameter of the :method:`Symfony\\Component\\Uid\\Uuid::isValid`
 method to specify the UUID format you're expecting::
 
@@ -534,7 +534,7 @@ are encoded as 26-character strings (vs 36-character UUIDs).
 .. note::
 
     If you generate more than one ULID during the same millisecond in the
-    same process then the random portion is incremented by one bit in order
+    same process, then the random portion is incremented by one bit in order
     to provide monotonicity for sorting. The random portion is not random
     compared to the previous ULID in this case.
 
@@ -608,7 +608,7 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     $ulid1 = new Ulid();
     $ulid2 = new Ulid();
 
-    // checking if a given value is valid as ULID
+    // checking if a given value is valid as a ULID
     $isValid = Ulid::isValid($ulidValue); // true or false
 
     // getting the ULID datetime

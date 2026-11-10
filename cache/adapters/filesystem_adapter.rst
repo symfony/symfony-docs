@@ -59,8 +59,8 @@ Working with Tags
 
 In order to use tag-based invalidation, you can wrap your adapter in
 :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but it's often
-more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemTagAwareAdapter`.
-Since tag invalidation logic is implemented using links on filesystem, this
+better to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\FilesystemTagAwareAdapter`.
+Since tag invalidation logic is implemented using links on the filesystem, this
 adapter offers better read performance when using tag-based invalidation::
 
     use Symfony\Component\Cache\Adapter\FilesystemTagAwareAdapter;

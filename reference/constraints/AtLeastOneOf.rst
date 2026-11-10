@@ -18,7 +18,7 @@ The following constraints ensure that:
 * the ``password`` of a ``Student`` either contains ``#`` or is at least ``10``
   characters long;
 * the ``grades`` of a ``Student`` is an array which contains at least ``3``
-  elements or that each element is greater than or equal to ``5``.
+  elements or where each element is greater than or equal to ``5``.
 
 .. configuration-block::
 
@@ -146,7 +146,7 @@ constraints
 
 **type**: ``array``
 
-This required option is the array of validation constraints from which at least one of
+This required option is the array of validation constraints of which at least one
 has to be satisfied in order for the validation to succeed.
 
 includeInternalMessages
@@ -154,9 +154,9 @@ includeInternalMessages
 
 **type**: ``boolean`` **default**: ``true``
 
-If set to ``true``, the message that is shown if the validation fails,
-will include the list of messages for the internal constraints. See option
-`message`_ for an example.
+If set to ``true``, the message that is shown if the validation fails
+will include the list of messages for the internal constraints. See the `message`_
+option for an example.
 
 message
 ~~~~~~~
@@ -165,7 +165,7 @@ message
 
 This is the intro of the message that will be shown if the validation fails. By default,
 it will be followed by the list of messages for the internal constraints
-(configurable by `includeInternalMessages`_ option). For example,
+(configurable by the `includeInternalMessages`_ option). For example,
 if the above ``grades`` property fails to validate, the message will be
 ``This value should satisfy at least one of the following constraints:
 [1] This collection should contain 3 elements or more.
@@ -178,7 +178,7 @@ messageCollection
 
 This is the message that will be shown if the validation fails
 and the internal constraint is either :doc:`/reference/constraints/All`
-or :doc:`/reference/constraints/Collection`. See option `message`_ for an example.
+or :doc:`/reference/constraints/Collection`. See the `message`_ option for an example.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 

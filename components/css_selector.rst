@@ -19,7 +19,7 @@ Usage
 
     This article explains how to use the CssSelector features as an independent
     component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
-    article to learn about how to use it when creating Symfony tests.
+    article to learn how to use it when creating Symfony tests.
 
 Why Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -76,7 +76,7 @@ Limitations of the CssSelector Component
 Not all CSS selectors can be converted to `XPath`_ equivalents.
 
 There are several CSS selectors that only make sense in the context of a
-web-browser.
+web browser.
 
 * link-state selectors: ``:link``, ``:visited``, ``:target``
 * selectors based on user action: ``:hover``, ``:focus``, ``:active``

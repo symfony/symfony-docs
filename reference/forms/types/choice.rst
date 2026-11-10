@@ -4,7 +4,8 @@ ChoiceType Field (select drop-downs, radio buttons & checkboxes)
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 
-To use this field, you must specify *either* ``choices`` or ``choice_loader`` option.
+To use this field, you must specify *either* the ``choices`` or the ``choice_loader``
+option.
 
 +---------------------------+----------------------------------------------------------------------+
 | Rendered as               | can be various tags (see below)                                      |
@@ -95,7 +96,7 @@ about all of these options in the sections below.
 
 .. warning::
 
-    The *placeholder* is a specific field, when the choices are optional the
+    The *placeholder* is a specific field. When the choices are optional, the
     first item in the list must be empty, so the user can unselect.
     Be sure to always handle the empty choice ``null`` when using callbacks.
 
@@ -162,8 +163,8 @@ is the item's label and the array value is the item's value::
     ]);
 
 If there are choice values that are not scalar or the stringified
-representation is not unique Symfony will use incrementing integers
-as values. When the form gets submitted the correct values with the
+representation is not unique, Symfony will use incrementing integers
+as values. When the form gets submitted, the correct values with the
 correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_attr.rst.inc
@@ -226,8 +227,8 @@ error_bubbling
 
 **type**: ``boolean`` **default**: ``false``
 
-Set that error on this field must be attached to the field instead of
-the parent field (the form in most cases).
+The errors of this field are attached to the field itself instead of the parent
+field (the form in most cases).
 
 .. include:: /reference/forms/types/options/choice_type_invalid_message.rst.inc
 
@@ -321,21 +322,21 @@ Accessing Form Choice Data
 The ``form.vars`` variable of each choice entry holds data such as whether the
 choice is selected or not. If you need to get the full list of choices data and
 values, use the ``choices`` variable from the parent form of the choice entry
-(which is the ``ChoiceType`` itself) with ``form.parent.vars.choices``::
+(which is the ``ChoiceType`` itself) with ``form.parent.vars.choices``:
 
 .. code-block:: twig
 
     {# `true` or `false`, whether the current choice is selected as radio or checkbox #}
     {{ form.vars.data }}
 
-    {# the current choice value (i.e a category name when `'choice_value' => 'name'` #}
+    {# the current choice value (e.g. a category name when `'choice_value' => 'name'`) #}
     {{ form.vars.value }}
 
     {# a map of `ChoiceView` or `ChoiceGroupView` instances indexed by choice values or group names #}
     {{ form.parent.vars.choices }}
 
-Following the same advanced example as above (where choices values are entities),
-the ``Category`` object is inside ``form.parent.vars.choices[key].data``::
+Following the same advanced example as above (where choice values are entities),
+the ``Category`` object is inside ``form.parent.vars.choices[key].data``:
 
 .. code-block:: html+twig
 

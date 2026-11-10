@@ -14,8 +14,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CompoundValidato
 Basic Usage
 -----------
 
-Suppose that you have different places where a user password must be validated,
-you can create your own named set of requirements to be reused consistently everywhere:
+Suppose that you have different places where a user password must be validated.
+You can create your own named set of requirements to be reused consistently everywhere:
 
 .. configuration-block::
 
@@ -102,7 +102,7 @@ You can now use it anywhere you need it:
             }
         }
 
-Validation groups and payload can be passed via constructor:
+Validation groups and payload can be passed via the constructor:
 
 .. configuration-block::
 

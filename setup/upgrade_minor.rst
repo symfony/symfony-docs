@@ -21,7 +21,7 @@ There are two steps to upgrading a minor version:
 The ``composer.json`` file is configured to allow Symfony packages to be
 upgraded to patch versions. But to upgrade to a new minor version, you will
 probably need to update the version constraint next to each library starting
-``symfony/``. Suppose you are upgrading from Symfony 6.3 to 6.4:
+with ``symfony/``. Suppose you are upgrading from Symfony 6.3 to 6.4:
 
 .. code-block:: diff
 
@@ -78,7 +78,7 @@ Next, use Composer to download new versions of the libraries:
 
 .. _`upgrade-minor-symfony-code`:
 
-2) Updating your Code to Work with the new Version
+2) Updating your Code to Work with the New Version
 --------------------------------------------------
 
 In theory, you should be done! However, you *may* need to make a few changes

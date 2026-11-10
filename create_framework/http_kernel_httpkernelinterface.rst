@@ -3,7 +3,7 @@ The HttpKernel Component: HttpKernelInterface
 
 In the conclusion of the second chapter of this book, I've talked about one
 great benefit of using the Symfony components: the *interoperability* between
-all frameworks and applications using them. Let's do a big step towards this
+all frameworks and applications using them. Let's take a big step towards this
 goal by making our framework implement ``HttpKernelInterface``::
 
     namespace Symfony\Component\HttpKernel;
@@ -109,7 +109,7 @@ content and check that the number only changes every 10 seconds::
     efficient reverse proxy like `Varnish`_.
 
 Using HTTP cache headers to manage your application cache is very powerful and
-allows you to tune finely your caching strategy as you can use both the
+allows you to finely tune your caching strategy as you can use both the
 expiration and the validation models of the HTTP specification. If you are not
 comfortable with these concepts, read the :doc:`HTTP caching </http_cache>` chapter of the
 Symfony documentation.
@@ -142,8 +142,8 @@ caching strategies into a single array::
     $response->setEtag('abcde');
 
 When using the validation model, the ``isNotModified()`` method allows you to
-cut on the response time by short-circuiting the response generation as early as
-possible::
+cut down on the response time by short-circuiting the response generation as
+early as possible::
 
     $response->setETag('whatever_you_compute_as_an_etag');
 
@@ -196,7 +196,7 @@ ease debugging, you can enable the debug mode::
         ['debug' => true]
     );
 
-The debug mode adds a ``X-Symfony-Cache`` header to each response that
+The debug mode adds an ``X-Symfony-Cache`` header to each response that
 describes what the cache layer did:
 
 .. code-block:: text

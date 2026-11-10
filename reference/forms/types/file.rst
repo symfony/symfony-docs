@@ -103,9 +103,6 @@ This option sets the appropriate file-related data mapper to be used by the type
 This option determines what value the field will return when the submitted
 value is empty.
 
-Overridden Options
-------------------
-
 .. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options

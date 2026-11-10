@@ -42,15 +42,15 @@ the serialization context to pass in these options using the key
 All context options available for the JSON encoder are:
 
 ``json_decode_associative`` (default: ``false``)
-    If set to ``true`` returns the result as an array, returns a nested ``stdClass`` hierarchy otherwise.
+    If set to ``true``, returns the result as an array; otherwise, returns a nested ``stdClass`` hierarchy.
 ``json_decode_detailed_errors`` (default: ``false``)
-    If set to ``true`` exceptions thrown on parsing of JSON are more specific. Requires `seld/jsonlint`_ package.
+    If set to ``true``, exceptions thrown when parsing JSON are more specific. Requires the `seld/jsonlint`_ package.
 ``json_decode_options`` (default: ``0``)
-    Flags passed to :phpfunction:`json_decode` function.
+    Flags passed to the :phpfunction:`json_decode` function.
 ``json_encode_options`` (default: ``\JSON_PRESERVE_ZERO_FRACTION``)
-    Flags passed to :phpfunction:`json_encode` function.
+    Flags passed to the :phpfunction:`json_encode` function.
 ``json_decode_recursion_depth`` (default: ``512``)
-    Sets maximum recursion depth.
+    Sets the maximum recursion depth.
 
 The ``CsvEncoder``
 ------------------
@@ -72,7 +72,7 @@ are available to customize the behavior of the encoder:
 
     Sets the escape character (at most one character).
 ``csv_key_separator`` (default: ``.``)
-    Sets the separator for array's keys during its flattening
+    Sets the separator for array keys when flattening the array.
 ``csv_headers`` (default: ``[]``, inferred from input data's keys)
     Sets the order of the header and data columns.
     E.g. if you set it to ``['a', 'b', 'c']`` and serialize
@@ -83,17 +83,17 @@ are available to customize the behavior of the encoder:
 ``as_collection`` (default: ``true``)
     Always returns results as a collection, even if only one line is decoded.
 ``no_headers`` (default: ``false``)
-    Setting to ``false`` will use first row as headers when denormalizing,
+    Setting it to ``false`` uses the first row as headers when denormalizing;
     ``true`` generates numeric headers.
 ``output_utf8_bom`` (default: ``false``)
-    Outputs special `UTF-8 BOM`_ along with encoded data.
+    Outputs a special `UTF-8 BOM`_ along with the encoded data.
 
 The ``XmlEncoder``
 ------------------
 
 This encoder transforms PHP values into XML and vice versa.
 
-For example, take an object that is normalized as following::
+For example, take an object that is normalized as follows::
 
     $normalizedArray = ['foo' => [1, 2], 'bar' => true];
 
@@ -122,7 +122,7 @@ The special ``#`` key can be used to define the data of a node::
      */
 
 Furthermore, keys beginning with ``@`` will be considered attributes, and
-the key  ``#comment`` can be used for encoding XML comments::
+the key ``#comment`` can be used for encoding XML comments::
 
     $encoder = new XmlEncoder();
     $xml = $encoder->encode([
@@ -181,7 +181,7 @@ These are the options available on the :ref:`serializer context <serializer-cont
 ``xml_encoding`` (default: ``utf-8``)
     Sets the XML encoding attribute.
 ``xml_standalone`` (default: ``true``)
-    Adds standalone attribute in the generated XML.
+    Adds the standalone attribute in the generated XML.
 ``xml_type_cast_attributes`` (default: ``true``)
     This provides the ability to forget the attribute type casting.
 ``xml_root_node_name`` (default: ``response``)
@@ -200,8 +200,8 @@ These are the options available on the :ref:`serializer context <serializer-cont
     If set to ``true``, removes all empty tags in the generated XML.
 ``cdata_wrapping`` (default: ``true``)
     If set to ``false``, will not wrap any value containing one of the
-    following characters ( ``<``, ``>``, ``&``) in `a CDATA section`_ like
-    following: ``<![CDATA[...]]>``.
+    following characters (``<``, ``>``, ``&``) in `a CDATA section`_ like
+    this: ``<![CDATA[...]]>``.
 ``cdata_wrapping_pattern`` (default: ``/[<>&]/``)
     A regular expression pattern to determine if a value should be wrapped
     in a CDATA section.
@@ -210,7 +210,7 @@ These are the options available on the :ref:`serializer context <serializer-cont
     should always be wrapped in a CDATA section, even if their contents don't
     require it. Example: ``'/(firstname|lastname)/'``
 ``ignore_empty_attributes`` (default: ``false``)
-    If set to true, ignores all attributes with empty values in the generated XML
+    If set to true, ignores all attributes with empty values in the generated XML.
 ``preserve_numeric_keys`` (default: ``false``)
     If set to true, it keeps numeric array indexes (e.g. ``<item key="0">``)
     instead of collapsing them into ``<item>`` nodes.
@@ -301,7 +301,7 @@ The ``YamlEncoder``
 -------------------
 
 This encoder requires the :doc:`Yaml Component </components/yaml>` and
-transforms from and to Yaml.
+transforms from and to YAML.
 
 Like other encoders, several :ref:`context options <serializer-context>` are
 available:
@@ -312,7 +312,7 @@ available:
     The level of indentation (used internally).
 ``yaml_flags`` (default: ``0``)
     A bit field of ``Yaml::DUMP_*``/``Yaml::PARSE_*`` constants to
-    customize the encoding/decoding YAML string.
+    customize the encoding/decoding of the YAML string.
 
 .. _serializer-custom-encoder:
 

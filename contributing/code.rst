@@ -228,7 +228,7 @@ A pull request (PR) is the way to send a bug fix or a new feature to Symfony.
 
 Before working on a change, `search the existing issues and pull requests`_ to
 see if someone already reported the topic or started a PR. If you have any
-question during the process, ask on the ``#contribs`` channel of the
+questions during the process, ask on the ``#contribs`` channel of the
 `Symfony Slack`_.
 
 All the code you contribute must be :ref:`released under the MIT license <symfony-license>`.
@@ -383,7 +383,7 @@ execute the following:
 .. tip::
 
     Dependencies might fail to update and in this case Composer might need you
-    to tell it what Symfony version you are working on. To do so set
+    to tell it what Symfony version you are working on. To do so, set the
     ``COMPOSER_ROOT_VERSION`` variable, e.g.:
 
     .. code-block:: terminal

@@ -72,7 +72,7 @@ And update ``example.com/web/front.php`` accordingly::
 
     $response->send();
 
-To wrap up the refactoring, let's move everything but routes definition from
+To wrap up the refactoring, let's move everything but the route definitions from
 ``example.com/src/app.php`` into yet another namespace: ``Calendar``.
 
 For the classes defined under the ``Simplex`` and ``Calendar`` namespaces to
@@ -158,16 +158,16 @@ To sum up, here is the new file layout:
     └── web
         └── front.php
 
-That's it! Our application has now four different layers and each of them has
+That's it! Our application now has four different layers and each of them has
 a well-defined goal:
 
 * ``web/front.php``: The front controller; the only exposed PHP code that
-  makes the interface with the client (it gets the Request and sends the
+  interacts with the client (it gets the Request and sends the
   Response) and provides the boiler-plate code to initialize the framework and
   our application;
 
 * ``src/Simplex``: The reusable framework code that abstracts the handling of
-  incoming Requests (by the way, it makes your controllers/templates better
+  incoming Requests (by the way, it makes your controllers/templates more
   testable -- more about that later on);
 
 * ``src/Calendar``: Our application specific code (the controllers and the

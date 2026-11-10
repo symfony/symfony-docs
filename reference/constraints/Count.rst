@@ -129,7 +129,7 @@ Parameter                 Description
 
 **type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
-The message that will be shown if min and max values are equal and the underlying
+The message that will be shown if the min and max values are equal and the underlying
 collection elements count is not exactly this value.
 
 You can use the following parameters in this message:

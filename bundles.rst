@@ -14,8 +14,8 @@ The Bundle System
     Do you prefer video tutorials? Check out the `Symfony Bundle Development screencast series`_.
 
 A bundle is similar to a plugin in other software, but even better. The core
-features of Symfony framework are implemented with bundles (FrameworkBundle,
-SecurityBundle, DebugBundle, etc.) Bundles are also used to add new features in
+features of the Symfony framework are implemented with bundles (FrameworkBundle,
+SecurityBundle, DebugBundle, etc.). Bundles are also used to add new features to
 your application via `third-party bundles`_.
 
 Bundles used in your applications must be enabled per
@@ -65,7 +65,7 @@ Start by creating a new class called ``AcmeBlogBundle``::
 .. warning::
 
     If your bundle must be compatible with previous Symfony versions you have to
-    extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle` instead.
+    extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle` class instead.
 
 .. tip::
 
@@ -94,7 +94,7 @@ Bundle Directory Structure
 
 The directory structure of a bundle is meant to help keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
-to be adjusted if needed:
+enough to be adjusted if needed:
 
 ``assets/``
     Contains the web asset sources like JavaScript and TypeScript files, CSS and

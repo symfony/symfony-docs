@@ -143,7 +143,7 @@ Using Multiple User Checkers
 ----------------------------
 
 It is common for applications to have multiple authentication entry points (such as
-traditional form based login and an API) which may have unique checker rules for each
+traditional form-based login and an API) which may have unique checker rules for each
 entry point as well as common rules for all entry points. To allow using multiple user
 checkers on a firewall, a service for the :class:`Symfony\\Component\\Security\\Core\\User\\ChainUserChecker`
 class is created for each firewall.
@@ -151,7 +151,7 @@ class is created for each firewall.
 To use the chain user checker, first you will need to tag your user checker services with the
 ``security.user_checker.<firewall>`` tag (where ``<firewall>`` is the name of the firewall
 in your security configuration). The service tag also supports the priority attribute, allowing you to define the
-order in which user checkers are called::
+order in which user checkers are called:
 
 .. configuration-block::
 
@@ -213,7 +213,7 @@ order in which user checkers are called::
         };
 
 Once your checker services are tagged, next you will need to configure your firewalls to use the
-``security.user_checker.chain.<firewall>`` service::
+``security.user_checker.chain.<firewall>`` service:
 
 .. configuration-block::
 

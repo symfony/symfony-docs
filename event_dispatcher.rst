@@ -223,7 +223,7 @@ listener class:
 
     There is an optional attribute for the ``kernel.event_listener`` tag called
     ``priority``, which is a positive or negative integer that defaults to ``0``
-    and it controls the order in which listeners are executed (the higher the
+    and controls the order in which listeners are executed (the higher the
     number, the earlier a listener is executed). This is useful when you need to
     guarantee that one listener is executed before another. The priorities of the
     internal Symfony listeners usually range from ``-256`` to ``256`` but your
@@ -236,7 +236,7 @@ listener class:
 
     There is an optional attribute for the ``kernel.event_listener`` tag called
     ``event`` which is useful when the listener's ``$event`` argument is not typed.
-    If you configure it, it will change type of ``$event`` object.
+    If you configure it, it will change the type of the ``$event`` object.
     For the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`.
     Check out the :doc:`Symfony events reference </reference/events>` to see
     what type of object each event provides.
@@ -373,8 +373,8 @@ Creating an Event Subscriber
 ----------------------------
 
 Another way to listen to events is via an **event subscriber**, which is a class
-that defines one or more methods that listen to one or various events. The main
-difference with the event listeners is that subscribers always know the events
+that defines one or more methods that listen to one or more events. The main
+difference from event listeners is that subscribers always know the events
 to which they are listening.
 
 Event subscribers implement the
@@ -615,7 +615,7 @@ have added or modified in the event::
 
     If you don't need to pass any additional data to the event listeners, you
     can also use the default
-    :class:`Symfony\\Contracts\\EventDispatcher\\Event` class. In such case,
+    :class:`Symfony\\Contracts\\EventDispatcher\\Event` class. In that case,
     define and document the event name as a constant in some class, similar to
     the :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class used by
     Symfony::
@@ -798,7 +798,7 @@ name (FQCN) of the corresponding event class::
         }
     }
 
-Internally, the event FQCN are treated as aliases for the original event names.
+Internally, the event FQCNs are treated as aliases for the original event names.
 Since the mapping already happens when compiling the service container, event
 listeners and subscribers using FQCN instead of event names will appear under
 the original event name when inspecting the event dispatcher.
@@ -897,7 +897,7 @@ The listeners pass assumes that the event dispatcher's service
 id is ``event_dispatcher``, that event listeners are tagged with the
 ``kernel.event_listener`` tag, that event subscribers are tagged
 with the ``kernel.event_subscriber`` tag and that the alias mapping is
-stored as parameter ``event_dispatcher.event_aliases``.
+stored in the ``event_dispatcher.event_aliases`` parameter.
 
 Debugging Event Listeners
 -------------------------
@@ -955,7 +955,7 @@ class directly by passing the wrapped dispatcher and a
         new Stopwatch()
     );
 
-Use the traceable dispatcher as any other dispatcher to register event
+Use the traceable dispatcher like any other dispatcher to register event
 listeners and dispatch events. When your application has processed all the
 events, use the
 :method:`Symfony\\Component\\EventDispatcher\\Debug\\TraceableEventDispatcher::getCalledListeners`
@@ -1014,7 +1014,7 @@ Token Validation Example
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Imagine that you need to develop an API where some controllers are public
-but some others are restricted to one or some clients. For these private features,
+but some others are restricted to one or more clients. For these private features,
 you might provide a token to your clients to identify themselves.
 
 So, before executing your controller action, you need to check if the action
@@ -1239,7 +1239,7 @@ method knows to add the extra header. Have fun!
 How to Customize a Method Behavior without Using Inheritance
 ------------------------------------------------------------
 
-If you want to do something right before, or directly after a method is
+If you want to do something right before or directly after a method is
 called, you can dispatch an event respectively at the beginning or at the
 end of the method::
 
@@ -1275,8 +1275,8 @@ end of the method::
 
 In this example, two events are dispatched:
 
-#. ``mailer.pre_send``, before the method is called,
-#. and ``mailer.post_send`` after the method is called.
+#. ``mailer.pre_send``, before the method is called;
+#. ``mailer.post_send``, after the method is called.
 
 Each uses a custom Event class to communicate information to the listeners
 of the two events. For example, ``BeforeSendMailEvent`` might look like

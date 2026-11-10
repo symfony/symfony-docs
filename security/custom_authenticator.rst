@@ -188,7 +188,7 @@ can define what happens in these cases:
     route is protected by an API key header.
 
 ``onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response``
-    If authentication failed (e. g. wrong username or password), this method
+    If authentication failed (e.g. wrong username or password), this method
     is called with the ``AuthenticationException`` thrown.
 
     This method can return a response (e.g. send a 401 Unauthorized in API
@@ -206,7 +206,7 @@ can define what happens in these cases:
     **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
     instances. This message might contain sensitive information that you
     don't want to be publicly exposed. Instead, use ``$exception->getMessageKey()``
-    and ``$exception->getMessageData()`` like shown in the full example
+    and ``$exception->getMessageData()`` as shown in the full example
     above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
     if you want to set custom error messages.
 
@@ -216,7 +216,7 @@ can define what happens in these cases:
     logged into your application, you may want your authenticator to implement the
     :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`
     so that it dispatches an
-    :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
+    :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`.
 
 .. _security-passport:
 
@@ -256,7 +256,7 @@ associated with the user. It allows loading the user through the configured
 
 .. note::
 
-    You can optionally pass a user loader as second argument to the
+    You can optionally pass a user loader as the second argument to the
     ``UserBadge``. This callable receives the ``$userIdentifier``
     and must return a ``UserInterface`` object (otherwise a
     ``UserNotFoundException`` is thrown)::
@@ -369,7 +369,7 @@ The following credential classes are supported by default:
 
         // ...
         return new Passport(new UserBadge($email), new CustomCredentials(
-            // If this function returns anything else than `true`, the credentials
+            // If this function returns anything other than `true`, the credentials
             // are marked as invalid.
             // The $credentials parameter is equal to the next argument of this class
             function (string $credentials, UserInterface $user): bool {
@@ -409,7 +409,7 @@ the following badges are supported:
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\CsrfTokenBadge`
     Automatically validates CSRF tokens for this authenticator during
     authentication. The constructor requires a token ID (unique per form)
-    and CSRF token (unique per request). See :doc:`/security/csrf`.
+    and a CSRF token (unique per request). See :doc:`/security/csrf`.
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PreAuthenticatedUserBadge`
     Indicates that this user was pre-authenticated (i.e. before Symfony was
@@ -454,7 +454,7 @@ would initialize the passport like this::
 Passport Attributes
 -------------------
 
-Besides badges, passports can define attributes, which allows the ``authenticate()``
+Besides badges, passports can define attributes, which allow the ``authenticate()``
 method to store arbitrary information in the passport to access it from other
 authenticator methods (e.g. ``createToken()``)::
 

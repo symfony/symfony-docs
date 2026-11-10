@@ -2,8 +2,8 @@ LessThan
 ========
 
 Validates that a value is less than another value, defined in the options. To
-force that a value is less than or equal to another value, see
-:doc:`/reference/constraints/LessThanOrEqual`. To force a value is greater
+validate that a value is less than or equal to another value, see
+:doc:`/reference/constraints/LessThanOrEqual`. To validate that a value is greater
 than another value, see :doc:`/reference/constraints/GreaterThan`.
 
 ==========  ===================================================================

@@ -198,7 +198,7 @@ Using Aliases to Enable Autowiring
 
 The main way to configure autowiring is to create a service whose id exactly matches
 its class. In the previous example, the service's id is ``App\Formatter\TextFormatter``,
-which allows to autowire this type automatically.
+which allows Symfony to autowire this type automatically.
 
 This can also be accomplished using an **alias**: a definition that gives an
 additional name to an existing service. Suppose that for some reason, the id of
@@ -360,8 +360,9 @@ Working with Interfaces
 -----------------------
 
 You might also find yourself type-hinting abstractions (e.g. interfaces) instead
-of concrete classes as it replaces your dependencies with other objects.
-To follow this best practice, suppose you decide to create a ``FormatterInterface``::
+of concrete classes because it allows you to replace your dependencies with other
+objects. To follow this best practice, suppose you decide to create a
+``FormatterInterface``::
 
     // src/Formatter/FormatterInterface.php
     namespace App\Formatter;
@@ -459,7 +460,7 @@ dealing with the ``FormatterInterface``.
 .. tip::
 
     Autowiring is powerful enough to guess which service to inject even when using
-    union and intersection types. This means you're able to type-hint argument with
+    union and intersection types. This means you're able to type-hint arguments with
     complex types like this::
 
         use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -497,7 +498,7 @@ Suppose you create a second class called ``HtmlFormatter`` that implements
     }
 
 If you register this as a service, you now have two services that implement the
-``App\Formatter\FormatterInterface`` type. The autowiring subsystem can not decide
+``App\Formatter\FormatterInterface`` type. The autowiring subsystem cannot decide
 which one to use. Remember, autowiring isn't magic; it looks for a service
 whose id matches the type-hint. So you need to choose one by :ref:`creating an alias
 <autowiring-interface-alias>` from the type to the correct service id. That
@@ -723,7 +724,7 @@ argument (e.g. a string), this cannot be autowired: Symfony will throw a clear
 exception.
 
 To fix this, you can :ref:`manually wire the problematic argument <services-manually-wire-args>`
-in the service configuration. You wire up only the difficult arguments,
+in the service configuration. You wire up only the difficult arguments;
 Symfony takes care of the rest.
 
 You can also use the ``#[Autowire]`` parameter attribute to instruct the autowiring
@@ -1146,7 +1147,7 @@ the service is :ref:`not shared <services-shared>`::
         }
     }
 
-To define a service closure and inject it to another service, create an
+To define a service closure and inject it into another service, create an
 argument of type ``service_closure``:
 
 .. configuration-block::
@@ -1161,7 +1162,7 @@ argument of type ``service_closure``:
                 # In case the dependency is optional
                 # arguments: [!service_closure '@?mailer']
 
-            # you can also use the special '@>' syntax as a shortcut of '!service_closure'
+            # you can also use the special '@>' syntax as a shortcut for '!service_closure'
             App\Service\AnotherService:
                 arguments: ['@>mailer']
 

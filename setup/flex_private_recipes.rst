@@ -267,7 +267,7 @@ The ``index.json`` file has the following format:
     }
 
 Create an entry in ``"recipes"`` for each of your bundle recipes. Replace
-``your-gitlab-account-name``, ``your-gitlab-repository`` and ``your-gitlab-project-id``
+``your-gitlab-account-name``, ``your-recipes-repository`` and ``your-gitlab-project-id``
 with your own details.
 
 Store Your Recipes in the Private Repository

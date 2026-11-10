@@ -24,7 +24,7 @@ Usage
 
     This article explains how to use the DomCrawler features as an independent
     component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
-    article to learn about how to use it when creating Symfony tests.
+    article to learn how to use it when creating Symfony tests.
 
 The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
 to query and manipulate HTML and XML documents.
@@ -53,7 +53,7 @@ which are nodes that can be traversed as follows::
 Specialized :class:`Symfony\\Component\\DomCrawler\\Link`,
 :class:`Symfony\\Component\\DomCrawler\\Image` and
 :class:`Symfony\\Component\\DomCrawler\\Form` classes are useful for
-interacting with html links, images and forms as you traverse through the HTML
+interacting with HTML links, images and forms as you traverse through the HTML
 tree.
 
 .. note::
@@ -156,7 +156,7 @@ Verify if the current node matches a selector::
 Node Traversing
 ~~~~~~~~~~~~~~~
 
-Access node by its position on the list::
+Access a node by its position in the list::
 
     $crawler->filter('body > p')->eq(0);
 
@@ -202,10 +202,10 @@ Access the node name (HTML tag name) of the first node of the current selection 
 
 Access the value of the first node of the current selection::
 
-    // if the node does not exist, calling to text() will result in an exception
+    // if the node does not exist, calling text() will result in an exception
     $message = $crawler->filterXPath('//body/p')->text();
 
-    // avoid the exception passing an argument that text() returns when node does not exist
+    // pass a default value to avoid the exception when the node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
     // by default, text() trims whitespace characters, including the internal ones
@@ -262,7 +262,7 @@ Call an anonymous function on each node of the list::
 The anonymous function receives the node (as a Crawler) and the position as arguments.
 The result is an array of values returned by the anonymous function calls.
 
-When using nested crawler, beware that ``filterXPath()`` is evaluated in the
+When using nested crawlers, beware that ``filterXPath()`` is evaluated in the
 context of the crawler::
 
     $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i): void {
@@ -339,10 +339,10 @@ and :phpclass:`DOMNode` objects::
     Or you can get the HTML of the first node using
     :method:`Symfony\\Component\\DomCrawler\\Crawler::html`::
 
-        // if the node does not exist, calling to html() will result in an exception
+        // if the node does not exist, calling html() will result in an exception
         $html = $crawler->html();
 
-        // avoid the exception passing an argument that html() returns when node does not exist
+        // pass a default value to avoid the exception when the node does not exist
         $html = $crawler->html('Default <strong>HTML</strong> content');
 
     Or you can get the outer HTML of the first node using
@@ -414,7 +414,7 @@ Links
 
 Use the ``filter()`` method to find links by their ``id`` or ``class``
 attributes and use the ``selectLink()`` method to find links by their content
-(it also finds clickable images with that content in its ``alt`` attribute).
+(it also finds clickable images with that content in their ``alt`` attribute).
 
 Both methods return a ``Crawler`` instance with just the selected link. Use the
 ``link()`` method to get the :class:`Symfony\\Component\\DomCrawler\\Link` object
@@ -480,10 +480,10 @@ form that the button lives in::
 
     // button example: <button id="my-super-button" type="submit">My super button</button>
 
-    // you can get button by its label
+    // you can get the button by its label
     $form = $crawler->selectButton('My super button')->form();
 
-    // or by button id (#my-super-button) if the button doesn't have a label
+    // or by the button id (#my-super-button) if the button doesn't have a label
     $form = $crawler->selectButton('my-super-button')->form();
 
     // or you can filter the whole form, for example a form has a class attribute: <form class="form-vertical" method="POST">
@@ -624,7 +624,7 @@ Selecting Invalid Choice Values
 
 By default, choice fields (select, radio) have internal validation activated
 to prevent you from setting invalid values. If you want to be able to set
-invalid values, you can use the  ``disableValidation()`` method on either
+invalid values, you can use the ``disableValidation()`` method on either
 the whole form or specific field(s)::
 
     // disables validation for a specific field

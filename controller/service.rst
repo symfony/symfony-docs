@@ -7,7 +7,7 @@ and your controllers extend the `AbstractController`_ class, they *are* automati
 registered as services. This means you can use dependency injection like any
 other normal service.
 
-If you prefer to not extend the ``AbstractController`` class, you can register
+If you prefer not to extend the ``AbstractController`` class, you can register
 your controllers as services in several ways:
 
 #. Using the ``#[Route]`` attribute;
@@ -251,7 +251,7 @@ like any other action method:
             '_controller' => HelloController::class,
         ]));
 
-Alternatives to base Controller Methods
+Alternatives to Base Controller Methods
 ---------------------------------------
 
 When using a controller defined as a service, you can still extend the

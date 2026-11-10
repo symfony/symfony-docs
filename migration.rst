@@ -23,7 +23,7 @@ Prerequisites
 
 Before you start introducing Symfony to the existing application, you have to
 ensure certain requirements are met by your existing application and
-environment.  Making the decisions and preparing the environment before
+environment. Making the decisions and preparing the environment before
 starting the migration process is crucial for its success.
 
 .. note::
@@ -51,7 +51,7 @@ faster on fixing deprecations to be able to upgrade.
     When upgrading to Symfony you might be tempted to also use
     :ref:`Flex <symfony-flex>`. Please note that it primarily
     focuses on bootstrapping a new Symfony application according to best
-    practices regarding the directory structure. When you work in the
+    practices regarding the directory structure. When you work within the
     constraints of an existing application you might not be able to
     follow these constraints, making Flex less useful.
 
@@ -80,7 +80,7 @@ Another point you will have to look out for is conflicts between
 dependencies in both applications. This is especially important if your
 existing application already uses Symfony components or libraries commonly
 used in Symfony applications such as Doctrine ORM or Twig.
-A good way for ensuring compatibility is to use the same ``composer.json``
+A good way to ensure compatibility is to use the same ``composer.json``
 for both projects' dependencies.
 
 Once you have introduced Composer for managing your project's dependencies
@@ -109,7 +109,7 @@ Setting up the Environment
 There might be additional steps you need to take depending on the libraries
 you use, the original framework your project is based on and most importantly
 the age of the project as PHP itself underwent many improvements throughout
-the years that your code might not have caught on to, yet. As long as both
+the years that your code might not have caught up with yet. As long as both
 your existing code and a new Symfony project can run in parallel on the
 same system you are on the right track. All these steps do not require you to
 introduce Symfony just yet and will already open up some opportunities for
@@ -120,8 +120,8 @@ Establishing a Safety Net for Regressions
 
 Before you can safely make changes to the existing code, you must ensure that
 nothing will break. One reason for choosing to migrate is making sure that the
-application is in a state where it can run at all times. The best way for
-ensuring a working state is to establish automated tests.
+application is in a state where it can run at all times. The best way to
+ensure a working state is to establish automated tests.
 
 It is quite common for an existing application to either not have a test suite
 at all or have low code coverage. Introducing unit tests for this code is
@@ -130,26 +130,26 @@ from Symfony components or might be adapted to the new application.
 Additionally legacy code tends to be hard to write tests for, making the process
 slow and cumbersome.
 
-Instead of providing low level tests, that ensure each class works as expected, it
-might make sense to write high level tests ensuring that at least anything user
+Instead of providing low level tests that ensure each class works as expected, it
+might make sense to write high level tests ensuring that anything user
 facing works on at least a superficial level. These kinds of tests are commonly
 called End-to-End tests, because they cover the whole application from what the
 user sees in the browser down to the very code that is being run and connected
 services like a database. To automate this you have to make sure that you can
-get a test instance of your system running as easily as possible and making
-sure that external systems do not change your production environment, e.g.
+get a test instance of your system running as easily as possible and
+that external systems do not change your production environment, e.g.
 provide a separate test database with (anonymized) data from a production
-system or being able to set up a new schema with a basic dataset for your test
+system or set up a new schema with a basic dataset for your test
 environment. Since these tests do not rely as much on isolating testable code
 and instead look at the interconnected system, writing them is usually easier
-and more productive when doing a migration. You can then limit your effort on
+and more productive when doing a migration. You can then limit your effort to
 writing lower level tests on parts of the code that you have to change or
 replace in the new application making sure it is testable right from the start.
 
 There are tools aimed at End-to-End testing you can use such as
 `Symfony Panther`_ or you can write :doc:`functional tests </testing>`
 in the new Symfony application as soon as the initial setup is completed.
-For example you can add so called Smoke Tests, which only ensure a certain
+For example you can add so-called Smoke Tests, which only ensure a certain
 path is accessible by checking the HTTP status code returned or looking for
 a text snippet from the page.
 
@@ -173,7 +173,7 @@ Booting Symfony in a Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When looking at how a typical PHP application is bootstrapped there are
-two major approaches. Nowadays most frameworks provide a so called
+two major approaches. Nowadays most frameworks provide a so-called
 front controller which acts as an entrypoint. No matter which URL-path
 in your application you are going to, every request is being sent to
 this front controller, which then determines which parts of your
@@ -188,7 +188,7 @@ your Symfony application by either copying the file from the
 FrameworkBundle. You will also likely have to update your web server
 (e.g. Apache or nginx) to always use this front controller. You can
 look at :doc:`Web Server Configuration </setup/web_server_configuration>`
-for examples on how this might look. For example when using Apache you can
+for examples of how this might look. For example when using Apache you can
 use Rewrite Rules to ensure PHP files are ignored and instead only index.php
 is called:
 
@@ -213,7 +213,7 @@ is called:
 This change will make sure that from now on your Symfony application is
 the first one handling all requests. The next step is to make sure that
 your existing application is started and taking over whenever Symfony
-can not yet handle a path previously managed by the existing application.
+cannot yet handle a path previously managed by the existing application.
 
 From this point, many tactics are possible and every project requires its
 unique approach for migration. This guide shows two examples of commonly used
@@ -286,7 +286,7 @@ There are 2 major deviations from the original file:
 Line 18
   First of all, ``$kernel`` is made globally available. This allows you to use
   Symfony features inside your existing application and gives access to
-  services configured in our Symfony application. This helps you prepare your
+  services configured in your Symfony application. This helps you prepare your
   own code to work better within the Symfony application before you transition
   it over. For instance, by replacing outdated or redundant libraries with
   Symfony components.
@@ -358,7 +358,7 @@ somewhat like this::
 This is the most generic approach you can take that is likely to work
 no matter what your previous system was. You might have to account for
 certain "quirks", but since your original application is only started
-after Symfony finished handling the request you reduced the chances
+after Symfony has finished handling the request you reduce the chances
 for side effects and any interference.
 
 Since the old script is called in the global variable scope it will reduce side
@@ -374,15 +374,15 @@ old queries. This will also allow you to incrementally improve the legacy code
 making it easier to transition it over to the new Symfony application.
 
 The major downside is that both systems are not well integrated
-into each other leading to some redundancies and possibly duplicated code.
+with each other, leading to some redundancies and possibly duplicated code.
 For example, since the Symfony application is already done handling the
-request you can not take advantage of kernel events or utilize Symfony's
+request you cannot take advantage of kernel events or utilize Symfony's
 routing for determining which legacy script to call.
 
 Legacy Route Loader
 ~~~~~~~~~~~~~~~~~~~
 
-The major difference to the LegacyBridge-approach from before is, that the
+The major difference from the previous LegacyBridge-approach is that the
 logic is moved inside the Symfony application. It removes some of the
 redundancies and allows you to also interact with parts of the legacy
 application from inside Symfony, instead of just the other way around.
@@ -394,7 +394,7 @@ application from inside Symfony, instead of just the other way around.
     yourself with the concepts by reading up on it in :doc:`Routing </routing>`.
 
 The legacy route loader is :doc:`a custom route loader </routing/custom_route_loader>`.
-The legacy route loader has a similar functionality as the previous
+The legacy route loader has a similar functionality to the previous
 LegacyBridge, but it is a service that is registered inside Symfony's Routing
 component::
 
@@ -446,7 +446,7 @@ in your route configuration, e.g. when you call the ``debug:router``-command:
 In order to use these routes you will need to create a controller that handles
 these routes. You might have noticed the ``_controller`` attribute in the
 previous code example, which tells Symfony which Controller to call whenever it
-tries to access one of our legacy routes. The controller itself can then use the
+tries to access one of your legacy routes. The controller itself can then use the
 other route attributes (i.e. ``requestPath`` and ``legacyScript``) to determine
 which script to call and wrap the output in a response class::
 
@@ -478,7 +478,7 @@ the legacy application. This will simulate the legacy script being called
 directly, in case it relies on these variables (e.g. when determining
 relative paths or file names). Finally the action requires the old script,
 which essentially calls the original script as before, but it runs inside
-our current application scope, instead of the global scope.
+your current application scope, instead of the global scope.
 
 There are some risks to this approach, as it is no longer run in the global
 scope. However, since the legacy code now runs inside a controller action, you gain

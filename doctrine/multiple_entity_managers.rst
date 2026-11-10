@@ -11,7 +11,7 @@ entities, each with their own database connection strings or separate cache conf
 
 .. note::
 
-    Using multiple entity managers is not complicated to configure, but more
+    Using multiple entity managers is not complicated to configure, but it's more
     advanced and not usually required. Be sure you actually need multiple
     entity managers before adding in this layer of complexity.
 
@@ -172,21 +172,21 @@ When working with multiple connections to create your databases:
 
 .. code-block:: terminal
 
-    # Play only with "default" connection
+    # Use only the "default" connection
     $ php bin/console doctrine:database:create
 
-    # Play only with "customer" connection
+    # Use only the "customer" connection
     $ php bin/console doctrine:database:create --connection=customer
 
 When working with multiple entity managers to generate migrations:
 
 .. code-block:: terminal
 
-    # Play only with "default" mappings
+    # Use only the "default" mappings
     $ php bin/console doctrine:migrations:diff
     $ php bin/console doctrine:migrations:migrate
 
-    # Play only with "customer" mappings
+    # Use only the "customer" mappings
     $ php bin/console doctrine:migrations:diff --em=customer
     $ php bin/console doctrine:migrations:migrate --em=customer
 
@@ -208,7 +208,7 @@ the default entity manager (i.e. ``default``) is returned::
             $entityManager = $doctrine->getManager();
             $entityManager = $doctrine->getManager('default');
 
-            // This method returns instead the "customer" entity manager
+            // This method returns the "customer" entity manager instead
             $customerEntityManager = $doctrine->getManager('customer');
 
             // ...

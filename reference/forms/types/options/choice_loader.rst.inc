@@ -23,8 +23,8 @@ if you want to take advantage of lazy loading::
     ]);
 
 This will cause the call of ``StaticClass::getConstants()`` to not happen if the
-request is redirected and if there is no pre set or submitted data. Otherwise
-the choice options would need to be resolved thus triggering the callback.
+request is redirected and if there is no preset or submitted data. Otherwise,
+the choice options would need to be resolved, thus triggering the callback.
 
 If the built-in ``CallbackChoiceLoader`` doesn't fit your needs, you can create
 your own loader by implementing the

@@ -5,7 +5,7 @@
 
 When using the ``preferred_choices`` option, those preferred choices are displayed
 twice by default: at the top of the list and in the full list below. Set this
-option to ``false``, to only display preferred choices at the top of the list::
+option to ``false`` to only display preferred choices at the top of the list::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...

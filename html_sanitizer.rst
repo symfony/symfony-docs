@@ -87,7 +87,7 @@ automatically when type-hinting for
     elements and attributes, as defined by the `W3C Standard Proposal`_. In
     practice, this means that the resulting code will not contain any
     scripts, styles or other elements that can cause the website to behave
-    or look different. Later in this article, you'll learn how to
+    or look differently. Later in this article, you'll learn how to
     :ref:`fully customize the HTML sanitizer <html-sanitizer-configuration>`.
 
 Sanitizing HTML for a Specific Context
@@ -96,7 +96,7 @@ Sanitizing HTML for a Specific Context
 The default :method:`Symfony\\Component\\HtmlSanitizer\\HtmlSanitizer::sanitize`
 method cleans the HTML code for usage in the ``<body>`` element. Using the
 :method:`Symfony\\Component\\HtmlSanitizer\\HtmlSanitizer::sanitizeFor`
-method, you can instruct HTML sanitizer to customize this for the
+method, you can instruct the HTML sanitizer to customize this for the
 ``<head>`` or a more specific HTML tag::
 
     // tags not allowed in <head> will be removed
@@ -218,7 +218,7 @@ You can do this by defining a new HTML sanitizer in the configuration:
         );
 
 This configuration defines a new ``html_sanitizer.sanitizer.app.post_sanitizer``
-service. Now you have two ways of injecting it in any service or controller:
+service. Now you have two ways of injecting it into any service or controller:
 
 **(1) Use a specific argument name**
 
@@ -872,7 +872,7 @@ URLs of ``<a>`` elements:
 
                 // specifies the allowed hosts, the attribute will be dropped if the
                 // URL contains a different host which is not a subdomain of the allowed host
-                ->allowLinkHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
+                ->allowLinkHosts(['symfony.com']) // Also allows any subdomain (e.g. www.symfony.com)
 
                 // whether to allow relative links (i.e. URLs without scheme and host)
                 ->allowRelativeLinks()
@@ -907,7 +907,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
                         # specifies the allowed hosts, the attribute will be dropped if the URL
                         # contains a different host which is not a subdomain of the allowed host
-                        allowed_media_hosts: ['symfony.com'] # Also allows any subdomain (i.e. www.symfony.com)
+                        allowed_media_hosts: ['symfony.com'] # Also allows any subdomain (e.g. www.symfony.com)
 
                         # whether to allow relative URLs (i.e. URLs without scheme and host)
                         allow_relative_medias: true
@@ -941,7 +941,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
                     <!-- specifies the allowed hosts, the attribute will be dropped if the URL
                          contains a different host which is not a subdomain of the allowed host.
-                         Also allows any subdomain (i.e. www.symfony.com) -->
+                         Also allows any subdomain (e.g. www.symfony.com) -->
                     <allowed-media-host>symfony.com</allowed-media-host>
                 </framework:html-sanitizer>
             </framework:config>
@@ -966,7 +966,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
                     // specifies the allowed hosts, the attribute will be dropped if the URL
                     // contains a different host which is not a subdomain of the allowed host
-                    ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
+                    ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (e.g. www.symfony.com)
 
                     // whether to allow relative URLs (i.e. URLs without scheme and host)
                     ->allowRelativeMedias(true)
@@ -991,7 +991,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
                 // specifies the allowed hosts, the attribute will be dropped if the URL
                 // contains a different host which is not a subdomain of the allowed host
-                ->allowMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
+                ->allowMediaHosts(['symfony.com']) // Also allows any subdomain (e.g. www.symfony.com)
 
                 // whether to allow relative URLs (i.e. URLs without scheme and host)
                 ->allowRelativeMedias()

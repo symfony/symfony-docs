@@ -5,7 +5,7 @@ When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
 .. image:: /_images/components/console/progressbar.gif
-    :alt: Console output showing a progress bar advance to 100%, with the estimated time left, the memory usage and a special message that changes when the bar closes completion.
+    :alt: Console output showing a progress bar advance to 100%, with the estimated time left, the memory usage and a special message that changes when the bar is close to completion.
 
 .. note::
 
@@ -57,7 +57,7 @@ Instead of advancing the bar by a number of steps (with the
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
 
-If you are resuming long-standing tasks, it's useful to start drawing the progress
+If you are resuming long-running tasks, it's useful to start drawing the progress
 bar at a certain point. Use the second optional argument of ``start()`` to set
 that starting point::
 
@@ -76,16 +76,16 @@ that starting point::
     use the :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws`
     method to limit the number of redraws and the
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency` method
-    to redraw every N iterations. By default, redraw frequency is
+    to redraw every N iterations. By default, the redraw frequency is
     **100ms** or **10%** of your ``max``.
 
 If you don't know the exact number of steps in advance, set it to a reasonable
 value and then call the ``setMaxSteps()`` method to update it as needed::
 
-    // start with a 50 units progressbar
+    // start with a 50-unit progress bar
     $progressBar = new ProgressBar($output, 50);
 
-    // a complex task has just been created: increase the progressbar to 200 units
+    // a complex task has just been created: increase the progress bar to 200 units
     $progressBar->setMaxSteps(200);
 
 Another solution is to omit the steps argument when creating the
@@ -134,7 +134,7 @@ which starts, advances and finishes the progress bar automatically::
 
     $progressBar = new ProgressBar($output);
 
-    // $iterable can be array
+    // $iterable can be an array
     $iterable = [1, 2];
     foreach ($progressBar->iterate($iterable) as $value) {
         // ... do some work
@@ -350,7 +350,7 @@ Custom Placeholders
 ~~~~~~~~~~~~~~~~~~~
 
 If you want to display some information that depends on the progress bar
-display that are not available in the list of built-in placeholders, you can
+display that is not available in the list of built-in placeholders, you can
 create your own. Let's see how you can create a ``remaining_steps`` placeholder
 that displays the number of remaining steps::
 
@@ -420,7 +420,7 @@ of the custom placeholders::
 Displaying Multiple Progress Bars
 ---------------------------------
 
-When using :ref:`Console output sections <console-output-sections>` it's
+When using :ref:`Console output sections <console-output-sections>`, it's
 possible to display multiple progress bars at the same time and change their
 progress independently::
 

@@ -8,7 +8,7 @@ will be used by the validator.
 
 If set to ``null``, the validator will use only the ``Default`` group. For the
 other possible values, see the main article about
-:doc:`using validation groups in Symfony forms </form/validation_groups>`
+:doc:`using validation groups in Symfony forms </form/validation_groups>`.
 
 In some cases, you want to validate your groups step by step. To do this, you
 can pass a :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequence`

@@ -8,7 +8,7 @@ the results of running ``figlet symfony``, it might output something like
 this:
 
 .. image:: /_images/components/console/debug_formatter.png
-    :alt: Console output, with the first line showing "RUN Running figlet", followed by lines showing the output of the command prefixed with "OUT" and "RES Finished the command" as last line in the output.
+    :alt: Console output, with the first line showing "RUN Running figlet", followed by lines showing the output of the command prefixed with "OUT" and "RES Finished the command" as the last line in the output.
 
 Using the Debug Formatter
 -------------------------
@@ -21,7 +21,7 @@ It accepts strings and returns a formatted string, which you then
 output to the console (or even log the information or do anything else).
 
 All methods of this helper have an identifier as the first argument. This is a
-unique value for each program. This way, the helper can debug information for
+unique value for each program. This way, the helper can show debug information for
 multiple programs at the same time. When using the
 :doc:`Process component </components/process>`, you probably want to use
 :phpfunction:`spl_object_hash`.
@@ -37,7 +37,7 @@ Starting a Program
 
 As soon as you start a program, you can use
 :method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::start` to
-display information that the program is started::
+display information that the program has started::
 
     // ...
     $process = new Process(...);
@@ -103,7 +103,7 @@ And this in case of failure:
 The third argument is a boolean which tells the function if the output is error
 output or not. When ``true``, the output is considered error output.
 
-The fourth and fifth argument allow you to override the prefix for the normal
+The fourth and fifth arguments allow you to override the prefix for the normal
 output and error output respectively.
 
 Stopping a Program
@@ -111,7 +111,7 @@ Stopping a Program
 
 When a program is stopped, you can use
 :method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::stop` to
-notify this to the users::
+notify the users about this::
 
     // ...
     $output->writeln(
@@ -130,7 +130,7 @@ This will output:
 
 In case of failure, this will be in red and in case of success it will be green.
 
-Using multiple Programs
+Using Multiple Programs
 -----------------------
 
 As said before, you can also use the helper to display more programs at the

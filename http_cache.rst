@@ -150,14 +150,14 @@ cache efficiency of your routes.
 
     Fortunately, since all reverse proxies are effectively the same, you should
     be able to switch to something more robust - like Varnish - without any problems.
-    See :doc:`How to use Varnish </http_cache/varnish>`
+    See :doc:`How to use Varnish </http_cache/varnish>`.
 
 .. _http-cache-introduction:
 
 Making your Responses HTTP Cacheable
 ------------------------------------
 
-Once you've added a reverse proxy cache (e.g. like the Symfony reverse proxy or Varnish),
+Once you've added a reverse proxy cache (e.g. the Symfony reverse proxy or Varnish),
 you're ready to cache your responses. To do that, you need to *communicate* to your
 cache *which* responses are cacheable and for how long. This is done by setting HTTP
 cache headers on the response.
@@ -355,7 +355,7 @@ Using Edge Side Includes
 ------------------------
 
 When pages contain dynamic parts, you may not be able to cache entire pages,
-but only parts of it. Read :doc:`/http_cache/esi` to find out how to configure
+but only parts of them. Read :doc:`/http_cache/esi` to find out how to configure
 different cache strategies for specific parts of your page.
 
 HTTP Caching and User Sessions

@@ -245,7 +245,7 @@ your controller::
 When you ask for the ``MessageGenerator`` service, the container constructs a new
 ``MessageGenerator`` object and returns it. It also constructs and injects its
 formatter dependency, as explained in the next sections. But if you never ask
-for the service, it's *never* constructed: saving memory and speed. As a bonus,
+for the service, it's *never* constructed: saving memory and time. As a bonus,
 the ``MessageGenerator`` service is only created *once*: the same instance is
 returned each time you ask for it.
 
@@ -514,7 +514,7 @@ Autoconfiguration also works with attributes. Some attributes like
 :class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener` and
 :class:`Symfony\\Component\\Console\\Attribute\\AsCommand` are registered
 for autoconfiguration. Any class using these attributes will have tags applied
-to them.
+to it.
 
 .. versionadded:: 7.4
 
@@ -747,7 +747,7 @@ argument of a service:
                     - !php/const App\Config\SomeEnum::SomeCase
 
                     # when not using autowiring, you can pass service arguments explicitly
-                    - '@some-service-id'  # the leading '@' tells this is a service ID, not a string
+                    - '@some-service-id'  # the leading '@' tells that this is a service ID, not a string
                     - '@?some-service-id' # using '?' means to pass null if service doesn't exist
 
                     # if the value of a string argument starts with '@', you need to escape
@@ -1180,7 +1180,7 @@ In this context, you have access to 3 functions:
     Returns the value of an env variable.
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
-via a ``container`` variable, which allows you to write more elaborated
+via a ``container`` variable, which allows you to write more elaborate
 expressions like ``container.hasParameter('some_param') ? parameter('some_param') : 'default_value'``.
 
 Expressions can be used in ``arguments``, ``properties``, as arguments with
@@ -1821,7 +1821,7 @@ Importing Configuration via Container Extensions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Third-party bundle container configuration, including Symfony core services,
-are usually loaded using another method: a :doc:`container extension </bundles/extension>`.
+is usually loaded using another method: a :doc:`container extension </bundles/extension>`.
 
 Internally, each bundle defines its services in files like you've seen so far.
 However, these files aren't imported using the ``imports`` directive. Instead, bundles
@@ -2053,7 +2053,7 @@ public, override the ``public`` setting:
         use App\Service\PublicService;
 
         return function(ContainerConfigurator $container): void {
-            // ... same as code before
+            // ... same code as before
 
             // explicitly configure the service
             $services->set(PublicService::class)
@@ -2107,7 +2107,7 @@ which is useful to debug dependency injection issues:
 .. code-block:: terminal
 
     # shows all services registered in the container (public and private)
-    # and the PHP class associated to each of them
+    # and the PHP class associated with each of them
     $ php bin/console debug:container
 
     # add this option to also display "hidden services" (those whose ID starts with a dot)
@@ -2305,7 +2305,7 @@ into the container::
     $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.xml');
 
-    // loading a YAML config file (this requires to also install the Yaml
+    // loading a YAML config file (this also requires installing the Yaml
     // component: composer require symfony/yaml)
     $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.yaml');

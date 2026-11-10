@@ -51,14 +51,14 @@ method will try to acquire the semaphore::
         $semaphore->release();
     }
 
-If the semaphore can not be acquired, the method returns ``false``. The
+If the semaphore cannot be acquired, the method returns ``false``. The
 ``acquire()`` method can be safely called repeatedly, even if the semaphore is
 already acquired.
 
 .. note::
 
     Unlike other implementations, the Semaphore component distinguishes
-    semaphores instances even when they are created for the same resource. If a
+    semaphore instances even when they are created for the same resource. If a
     semaphore has to be used by several services, they should share the same
     ``Semaphore`` instance returned by the ``SemaphoreFactory::createSemaphore``
     method.

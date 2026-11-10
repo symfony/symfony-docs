@@ -137,7 +137,7 @@ Now, every time this service is used, a deprecation warning is triggered,
 advising you to stop or to change your uses of that service.
 
 The message is actually a message template, which replaces occurrences of the
-``%service_id%`` placeholder by the service's id. You **must** have at least one
+``%service_id%`` placeholder with the service's id. You **must** have at least one
 occurrence of the ``%service_id%`` placeholder in your template.
 
 .. note::
@@ -149,8 +149,8 @@ occurrence of the ``%service_id%`` placeholder in your template.
 .. tip::
 
     It is strongly recommended that you define a custom message because the
-    default one is too generic. A good message informs when this service was
-    deprecated, until when it will be maintained and the alternative services
+    default one is too generic. A good message explains when this service was
+    deprecated, how long it will be maintained and which alternative services
     to use (if any).
 
 For :doc:`service decorators </service_container/decoration>`, if the
@@ -296,7 +296,7 @@ the name of the argument and some short description about its purpose:
 Anonymous Services
 ------------------
 
-In some cases, you may want to prevent a service being used as a dependency of
+In some cases, you may want to prevent a service from being used as a dependency of
 other services. This can be achieved by creating an anonymous service. These
 services are like regular services but they don't define an ID and they are
 created where they are used.
@@ -351,9 +351,9 @@ The following example shows how to inject an anonymous service into another serv
 
     Anonymous services do NOT inherit the definitions provided from the
     defaults defined in the configuration. So you'll need to explicitly mark
-    service as :ref:`autowired <services-autowire>` or
-    :ref:`autoconfigured <services-autoconfigure>` when doing an anonymous
-    service e.g.: ``inline_service(Foo::class)->autowire()->autoconfigure()``.
+    the service as :ref:`autowired <services-autowire>` or
+    :ref:`autoconfigured <services-autoconfigure>` when defining an anonymous
+    service, e.g.: ``inline_service(Foo::class)->autowire()->autoconfigure()``.
 
 Anonymous services can also be used as :doc:`factories </service_container/factories>`:
 
@@ -547,7 +547,7 @@ the ``EmailConfigurator::configure()`` method.
 Synthetic Services: Injecting Instances into the Container
 ----------------------------------------------------------
 
-In some applications, you may need to inject a class instance as service,
+In some applications, you may need to inject a class instance as a service,
 instead of configuring the container to create a new instance.
 
 For instance, the ``kernel`` service in Symfony is injected into the container
@@ -791,8 +791,8 @@ All attributes on the parent service are shared with the child **except** for
 Overriding Parent Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There may be times where you want to override what service is injected for
-one child service only. You can override most settings by specifying it in
+There may be times when you want to override what service is injected for
+one child service only. You can override most settings by specifying them in
 the child class:
 
 .. configuration-block::

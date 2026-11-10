@@ -13,7 +13,7 @@ caching strategy than the main page.
 
 The ESI specification describes tags you can embed in your pages to communicate
 with the gateway cache. Only one tag is implemented in Symfony, ``include``,
-as this is the only useful one outside of Akamai context:
+as this is the only useful one outside of the Akamai context:
 
 .. code-block:: html
 
@@ -155,7 +155,7 @@ used ``render()``.
 
 .. note::
 
-    Symfony considers that a gateway cache supports ESI if its request include
+    Symfony considers that a gateway cache supports ESI if its requests include
     the ``Surrogate-Capability`` HTTP header and the value of that header
     contains the ``ESI/1.0`` string anywhere.
 
@@ -272,7 +272,7 @@ The ``render_esi`` helper supports three other useful options:
     alternative URL to be used if the ``src`` cannot be found.
 
 ``ignore_errors``
-    If set to true, an ``onerror`` attribute will be added to the ESI with a value
+    If set to true, an ``onerror`` attribute will be added to the ESI tag with a value
     of ``continue`` indicating that, in the event of a failure, the gateway cache
     will remove the ESI tag silently.
 

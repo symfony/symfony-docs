@@ -8,7 +8,7 @@ The component provides a ``ClockInterface`` with the following implementations
 for different use cases:
 
 :class:`Symfony\\Component\\Clock\\NativeClock`
-    Provides a way to interact with the system clock, this is the same as doing
+    Provides a way to interact with the system clock; this is the same as doing
     ``new \DateTimeImmutable()``.
 :class:`Symfony\\Component\\Clock\\MockClock`
     Commonly used in tests as a replacement for the ``NativeClock`` to be able
@@ -75,8 +75,8 @@ When using the Clock component, you manipulate
 :class:`Symfony\\Component\\Clock\\DatePoint` instances. You can learn more
 about it in :ref:`the dedicated section <clock_date-point>`.
 
-Available Clocks Implementations
---------------------------------
+Available Clock Implementations
+-------------------------------
 
 The Clock component provides some ready-to-use implementations of the
 :class:`Symfony\\Component\\Clock\\ClockInterface`, which you can use
@@ -111,7 +111,7 @@ MockClock
 ~~~~~~~~~
 
 The ``MockClock`` is instantiated with a time and does not move forward on its own. The time is
-fixed until ``sleep()`` or ``modify()`` are called. This gives you full control over what your code
+fixed until ``sleep()`` or ``modify()`` is called. This gives you full control over what your code
 assumes is the current time.
 
 When writing a test for this service, you can check both cases where something
@@ -147,8 +147,8 @@ is expired or not, by modifying the clock's time::
 Monotonic Clock
 ~~~~~~~~~~~~~~~
 
-The ``MonotonicClock`` allows you to implement a precise stopwatch; depending on
-the system up to nanosecond precision. It can be used to measure the elapsed
+The ``MonotonicClock`` allows you to implement a precise stopwatch with up to
+nanosecond precision, depending on the system. It can be used to measure the elapsed
 time between two calls without being affected by inconsistencies sometimes introduced
 by the system clock, e.g. by updating it. Instead, it consistently increases time,
 making it especially useful for measuring performance.
@@ -191,8 +191,8 @@ You can now call the ``$this->now()`` method to get the current time::
 
 Thanks to the ``ClockAwareTrait``, and by using the ``MockClock`` implementation,
 you can set the current time arbitrarily without having to change your service code.
-This will help you test every case of your method without the need of actually
-being in a month or another.
+This will help you test every case of your method without actually
+having to be in one month or another.
 
 .. _clock_date-point:
 
@@ -204,7 +204,7 @@ class. This is a small wrapper on top of PHP's :phpclass:`DateTimeImmutable`.
 You can use it seamlessly everywhere a :phpclass:`DateTimeImmutable` or
 :phpclass:`DateTimeInterface` is expected. The ``DatePoint`` object fetches the
 date and time from the :class:`Symfony\\Component\\Clock\\Clock` class. This means
-that if you did any changes to the clock as stated in the
+that if you made any changes to the clock as stated in the
 :ref:`usage section <clock_usage>`, it will be reflected when creating a new
 ``DatePoint``. You can also create a new ``DatePoint`` instance directly, for
 instance when using it as a default value::
@@ -220,7 +220,7 @@ instance when using it as a default value::
         }
     }
 
-The constructor also allows setting a timezone or custom referenced date::
+The constructor also allows setting a timezone or custom reference date::
 
     // you can specify a timezone
     $withTimezone = new DatePoint(timezone: new \DateTimeZone('UTC'));
@@ -246,7 +246,7 @@ timestamps::
 
 .. note::
 
-    In addition ``DatePoint`` offers stricter return types and provides consistent
+    In addition, ``DatePoint`` offers stricter return types and provides consistent
     error handling across versions of PHP, thanks to polyfilling `PHP 8.3's behavior`_
     on the topic.
 
@@ -258,7 +258,7 @@ timestamps::
 
 .. note::
 
-    This feature polyfills PHP 8.4's behavior on the topic, as microseconds manipulation
+    This feature polyfills PHP 8.4's behavior on the topic, as microsecond manipulation
     is not available in previous versions of PHP.
 
 .. versionadded:: 7.1
@@ -368,10 +368,10 @@ above example. This is how you can write that test::
         }
     }
 
-This test will behave the same no matter which time of the year you run it.
+This test will behave the same no matter what time of the year you run it.
 By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
 :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full
-control on your time-sensitive code's behavior.
+control over your time-sensitive code's behavior.
 
 Exceptions Management
 ---------------------

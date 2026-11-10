@@ -41,7 +41,7 @@ to include the full URL to the CDN.
 
 When deploying to a subdirectory of your CDN, you must add the path at the end of your URL -
 e.g. ``Encore.setPublicPath('https://my-cool-app.com.global.prod.fastly.net/awesome-website')``
-will generate assets URLs like ``https://my-cool-app.com.global.prod.fastly.net/awesome-website/dashboard.js``
+will generate asset URLs like ``https://my-cool-app.com.global.prod.fastly.net/awesome-website/dashboard.js``
 
 If you are using ``Encore.enableIntegrityHashes()`` and your CDN and your domain
 are not the `same-origin`_, you may need to set the ``crossorigin`` option in

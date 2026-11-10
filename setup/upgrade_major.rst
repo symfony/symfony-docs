@@ -32,7 +32,7 @@ functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
 ``6.4.*``), you should be able to upgrade without a problem. That means that
 you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
-(e.g. 5.4) so that you can see *all* the deprecations.
+(e.g. 6.4) so that you can see *all* the deprecations.
 
 To help you find deprecations, notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
@@ -47,7 +47,7 @@ Ultimately, you should aim to stop using the deprecated functionality.
 Sometimes the warning might tell you exactly what to change.
 
 But other times, the warning might be unclear: a setting somewhere might
-cause a class deeper to trigger the warning. In this case, Symfony does its
+cause a class deeper in the code to trigger the warning. In this case, Symfony does its
 best to give a clear message, but you may need to research that warning further.
 
 And sometimes, the warning may come from a third-party library or bundle
@@ -95,7 +95,7 @@ Now, you can start fixing the notices:
         2x in PageAdminTest::testPageList from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
         1x in PageAdminTest::testPageEdit from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
 
-Once you fixed them all, the command ends with ``0`` (success) and you're
+Once you've fixed them all, the command ends with ``0`` (success) and you're
 done!
 
 .. warning::
@@ -258,15 +258,15 @@ important to add the native PHP return types to your classes before
 upgrading to Symfony 6.0 or 7.0. Otherwise, you will get incompatible declaration
 errors.
 
-When debug mode is enabled (typically in the dev and test environment),
+When debug mode is enabled (typically in the dev and test environments),
 Symfony will trigger deprecations for every incompatible method
-declarations. For instance, the ``UserInterface::getRoles()`` method will
+declaration. For instance, the ``UserInterface::getRoles()`` method will
 have an ``array`` return type in Symfony 6. In Symfony 5.4, you will get a
 deprecation notice about this and you must add the return type declaration
 to your ``getRoles()`` method.
 
 To help with this, Symfony provides a script that can add these return
-types automatically for you. Make sure you installed the ``symfony/error-handler``
+types automatically for you. Make sure you have installed the ``symfony/error-handler``
 component. When installed, generate a complete class map using Composer and
 run the script to iterate over the class map and fix any incompatible
 method:
@@ -288,7 +288,7 @@ method:
 
 The behavior of this script can be modified using the ``SYMFONY_PATCH_TYPE_DECLARATIONS``
 env var. The value of this env var is url-encoded (e.g.
-``param1=value1&param2=value2``), the following parameters are available:
+``param1=value1&param2=value2``); the following parameters are available:
 
 ``force``
     Enables fixing return types, the value must be one of:
@@ -304,13 +304,13 @@ env var. The value of this env var is url-encoded (e.g.
     used when running the script.
 
 ``deprecations``
-    Set to ``0`` to disable deprecations. Otherwise, a deprecation notice
+    Set to ``0`` to disable deprecations. Otherwise, a deprecation notice is triggered
     when a child class misses a return type while the parent declares an
     ``@return`` annotation (defaults to ``1``).
 
 If there are specific files that should be ignored, you can set the
 ``SYMFONY_PATCH_TYPE_EXCLUDE`` env var to a regex. This regex will be
-matched to the full path to the class and each matching path will be
+matched against the full path to the class and each matching path will be
 ignored (e.g. ``SYMFONY_PATCH_TYPE_EXCLUDE="/tests\/Fixtures\//"``).
 Classes in the ``vendor/`` directory are always ignored.
 
@@ -325,10 +325,10 @@ Classes in the ``vendor/`` directory are always ignored.
 
 .. sidebar:: Patching Types for Open Source Maintainers
 
-    Open source bundles and packages need to be more cautious with adding
+    Open source bundles and packages need to be more cautious about adding
     return types, as adding a return type forces all users extending the
     class to add the return type as well. The recommended approach is to
-    use a 2 step process:
+    use a two-step process:
 
     1. First, create a minor release (i.e. without backwards compatibility
        breaks) where you add types that can be safely introduced and add

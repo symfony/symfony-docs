@@ -249,7 +249,7 @@ Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you extend the base ``AbstractController``, you can only get access to the most
-common services (e.g. ``twig``, ``router``, ``doctrine``, etc.), directly from the
+common services (e.g. ``twig``, ``router``, ``doctrine``, etc.) directly from the
 container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
@@ -324,7 +324,7 @@ Use a Single Action to Render and Process the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :ref:`Rendering forms <rendering-forms>` and :ref:`processing forms <processing-forms>`
-are two of the main tasks when handling forms. Both are too similar (most of the
+are two of the main tasks when handling forms. Both are very similar (most of the
 time, almost identical), so it's much simpler to let a single controller action
 handle both.
 

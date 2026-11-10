@@ -3,7 +3,7 @@
 
 **type**: ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``null``
 
-When using predefined choice types from Symfony core or vendor libraries (i.e.
+When using predefined choice types from Symfony core or vendor libraries (e.g.
 :doc:`CountryType </reference/forms/types/country>`) this option lets you
 define a callable that takes each choice as the only argument and must return
 ``true`` to keep it or ``false`` to discard it::
@@ -58,7 +58,7 @@ The option can be a callable or a property path when choices are objects::
 
 .. tip::
 
-    Considering this ``AddressType`` could be an entry of a ``CollectionType``
+    Considering this ``AddressType`` could be an entry of a ``CollectionType``,
     you should use the :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList`
     class helper to enable caching::
 

@@ -4,7 +4,7 @@ How to Use Voters to Check User Permissions
 ===========================================
 
 Voters are Symfony's most powerful way of managing permissions. They allow you
-to centralize all permission logic, then reuse them in many places.
+to centralize all permission logic, then reuse it in many places.
 
 However, if you don't reuse permissions or your rules are basic, you can always
 put that logic directly into your controller instead. Here's an example of how
@@ -24,7 +24,8 @@ example for voters.
 Here's how Symfony works with voters: All voters are called each time you
 use the ``isGranted()`` method on Symfony's authorization checker or call
 ``denyAccessUnlessGranted()`` in a controller (which uses the authorization
-checker), or by :ref:`access controls <security-access-control-enforcement-options>`.
+checker) or when Symfony checks
+:ref:`access controls <security-access-control-enforcement-options>`.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
 decision (to allow or deny access to the resource) according to
@@ -300,8 +301,8 @@ your voter will be called and you can control access.
 Checking for Roles inside a Voter
 ---------------------------------
 
-What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
-to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by using an
+What if you want to call ``isGranted()`` from *inside* your voter (e.g. you want
+to see if the current user has ``ROLE_SUPER_ADMIN``)? That's possible by using an
 :class:`access decision manager <Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface>`
 inside your voter. You can use this to, for example, *always* allow access to a user
 with ``ROLE_SUPER_ADMIN``::
@@ -405,7 +406,7 @@ Changing the Message and Status Code Returned
 
 By default, the ``#[IsGranted]`` attribute will throw a
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-and return an HTTP **403** status code with **Access Denied** as message.
+and return an HTTP **403** status code with **Access Denied** as the message.
 
 However, you can change this behavior by specifying the message and status code returned::
 

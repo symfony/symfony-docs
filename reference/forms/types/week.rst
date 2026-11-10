@@ -71,8 +71,8 @@ input
 
 **type**: ``string`` **default**: ``array``
 
-The format of the *input* data - i.e. the format that the date is stored
-on your underlying object. Valid values are:
+The format of the *input* data - i.e. the format in which the date is stored
+in your underlying object. Valid values are:
 
 * ``string`` (e.g. ``"2011-W17"``)
 * ``array`` (e.g. ``[2011, 17]``)
