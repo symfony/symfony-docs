@@ -1059,6 +1059,16 @@ once::
     not more throughput. To scale the processing of your tasks, dispatch them
     to a Messenger transport as explained below.
 
+.. warning::
+
+    The lock expires after 300 seconds unless you pass a different TTL (in
+    seconds) as the second argument of ``createLock()``. This TTL must be
+    longer than the time needed to process all the messages that are due at
+    the same time. Otherwise, another worker can acquire the expired lock and
+    run some of those messages again. To keep that time short, redispatch long
+    tasks to a Messenger transport as explained below, so the scheduler worker
+    only dispatches them.
+
 .. tip::
 
     The processing time of a message matters. If it takes a long time, all subsequent
