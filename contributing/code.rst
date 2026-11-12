@@ -259,6 +259,8 @@ Work on the code and commit as much as you want, keeping these rules in mind:
   code style automatically);
 * Add tests that prove the bug is fixed or the feature works;
 * Never break backward compatibility (see the :doc:`BC promise </contributing/code/bc>`);
+* If you are adding a new Mailer, Notifier or Translation bridge, follow the
+  :doc:`checklist for new bridges </contributing/code/create_bridge>`;
 * Don't edit files unrelated to your change (e.g. to fix coding standards)
   because it makes the review harder.
 
