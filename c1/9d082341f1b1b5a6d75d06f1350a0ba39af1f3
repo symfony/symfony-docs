@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-03-25T15:29:13Z
+
+Thanks for this Matthieu. However, we try to avoid adding short articles to the docs. I wonder if we could instead add this as a short and actionable list of items in some existing page?
+
+Let's ask to @OskarStark too. Thanks.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-05-15T03:18:57Z
+
+I would not mix documentation with contribution guidelines, but we could create a section on the contribution guide dedicated for creating new bridges
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-08-09T14:19:16Z
+
+@OskarStark I don't understand your comment. In which existing docs or repository should we add the new docs proposed here? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2025-06-19T15:55:39Z
+
+Oskar, can you please review this again and see if it's good to merge?
+
+@MrYamous in the checklist, all the items that say "Add XXX to the list of foo and bar" should define a link in `list of foo and bar` pointing directly to that list (or the document that includes it) to be more actionable. Thanks!
