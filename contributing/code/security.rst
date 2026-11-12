@@ -13,6 +13,10 @@ bug tracker and don't publish it publicly. Instead, all security issues must
 be sent to **security [at] symfony.com**. Emails sent to this address are
 forwarded to the Symfony core team private mailing-list.
 
+Symfony is a `CVE Numbering Authority`_ (CNA), which assigns CVE identifiers to
+the vulnerabilities of its projects. Use the same address to request one, even
+for a vulnerability that is already public.
+
 The following issues are not considered security issues and should be handled
 as regular bug fixes (if you have any doubts, don't hesitate to send us an
 email for confirmation):
@@ -47,7 +51,7 @@ confirmed, the core team works on a solution following these steps:
 
 #. Send an acknowledgment to the reporter;
 #. Work on a patch;
-#. Get a CVE identifier from `mitre.org`_;
+#. Reserve a CVE identifier and send it to the reporter;
 #. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
@@ -63,6 +67,7 @@ confirmed, the core team works on a solution following these steps:
 #. Package new versions for all affected versions;
 #. Publish the post on the official Symfony `blog`_ (it must also be added to
    the "`Security Advisories`_" category);
+#. Publish the CVE record in the CVE List, within a day of the post;
 #. Update the public `security advisories database`_ maintained by the
    FriendsOfPHP organization and which is used by
    :ref:`the check:security command <security-checker>`.
@@ -205,5 +210,5 @@ vulnerabilities that were fixed in Symfony releases, starting from Symfony
 .. _`Git repository`: https://github.com/symfony/symfony
 .. _blog: https://symfony.com/blog/
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
-.. _`mitre.org`: https://cveform.mitre.org/
+.. _`CVE Numbering Authority`: https://symfony.com/TODO
 .. _`Security Advisories`: https://symfony.com/blog/category/security-advisories
