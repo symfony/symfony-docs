@@ -4,6 +4,7 @@
   * :doc:`Coding Standards </contributing/code/standards>`
   * :doc:`Code Conventions </contributing/code/conventions>`
   * :doc:`Backward Compatibility </contributing/code/bc>`
+  * :doc:`Creating a New Bridge </contributing/code/create_bridge>`
   * :doc:`Security Issues </contributing/code/security>`
   * :doc:`Maintenance </contributing/code/maintenance>`
   * :doc:`Release Process </contributing/code/releases>`
