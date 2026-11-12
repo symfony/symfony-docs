@@ -900,6 +900,13 @@ ensure local networks are made inaccessible to the HTTP client::
     // but all the other requests, including other internal networks, will be allowed
     $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
 
+.. caution::
+
+    When requests are sent through an HTTP proxy, the proxy resolves the host
+    names itself. ``NoPrivateNetworkHttpClient`` can't check the IP address
+    the proxy connects to, so it's the proxy's responsibility to block requests
+    to private networks.
+
 Profiling
 ~~~~~~~~~
 
