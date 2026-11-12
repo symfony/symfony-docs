@@ -1,0 +1,26 @@
+{
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "platform": {
+            "php": "8.4"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
+    },
+    "repositories": [
+        { "type": "vcs", "url": "https://github.com/wouterj/docs-builder" },
+        { "type": "vcs", "url": "https://github.com/wouterj/guides-readthedocs" }
+    ],
+    "require": {
+        "php": ">=8.4",
+        "symfony-tools/docs-builder": "dev-phpdocumentor-guides as 2.0.0",
+        "phpdocumentor/filesystem": "dev-main as 1.12.0",
+        "wouterj/guides-readthedocs": "dev-main"
+    }
+}
