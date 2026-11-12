@@ -660,40 +660,99 @@ You can instead make use of the ``MockHub`` class::
         }
     }
 
-For functional testing, you can instead create a stub of the Hub::
+For functional testing, MercureBundle records the updates instead of
+publishing them when the :ref:`framework.test <reference-framework-test>`
+option is enabled, so no hub is needed. Use the ``MercureAssertionsTrait`` in
+test classes extending ``KernelTestCase`` or ``WebTestCase`` to check them::
 
-    // tests/Functional/Stub/HubStub.php
-    namespace App\Tests\Functional\Stub;
+    // tests/Controller/BookControllerTest.php
+    namespace App\Tests\Controller;
 
-    use Symfony\Component\Mercure\HubInterface;
-    use Symfony\Component\Mercure\Update;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+    use Symfony\Bundle\MercureBundle\Test\MercureAssertionsTrait;
 
-    class HubStub implements HubInterface
+    class BookControllerTest extends WebTestCase
     {
-        public function publish(Update $update): string
-        {
-            return 'id';
-        }
+        use MercureAssertionsTrait;
 
-        // implement rest of HubInterface methods here
+        public function testCreatingABookPublishesAnUpdate(): void
+        {
+            $client = static::createClient();
+            $client->request('POST', '/books', ['title' => 'Dune']);
+
+            self::assertMercureUpdateCount(1);
+            self::assertMercureUpdatePublished('https://example.com/books/1');
+
+            $this->assertJsonStringEqualsJsonString(
+                '{"title":"Dune"}',
+                self::getMercureUpdate()->getData()
+            );
+        }
     }
 
-Use ``HubStub`` to replace the default hub service so no updates are actually
-sent:
+The trait provides the following methods:
 
-.. code-block:: yaml
+``assertMercureUpdateCount(int $count, ?string $hub = null, string $message = '')``
+    Asserts that the given number of updates was published.
+``assertMercureUpdatePublished(string $topic, ?string $hub = null, string $message = '')``
+    Asserts that an update was published to the given topic.
+``getMercureUpdates(?string $hub = null)``
+    Returns the published :class:`Symfony\\Component\\Mercure\\Update` objects,
+    in publishing order.
+``getMercureUpdate(int $index = 0, ?string $hub = null)``
+    Returns the update at the given index, or ``null`` if there is none.
 
-    # config/services_test.yaml
-    services:
-        mercure.hub.default:
-            class: App\Tests\Functional\Stub\HubStub
+Each method checks the updates of all hubs by default. Pass the name of a hub
+as the ``$hub`` argument to only check the updates of that hub.
 
-As MercureBundle supports multiple hubs, you may have to replace
-the other service definitions accordingly.
+.. note::
 
-.. tip::
+    The recorded updates are cleared when the kernel handles a new request. If
+    your controller redirects after publishing an update, make sure the client
+    does *not* follow redirects, or the update will be lost before you can
+    check it.
 
-    Symfony Panther has `a feature to test applications using Mercure`_.
+.. versionadded:: 0.8
+
+    The ``MercureAssertionsTrait`` and the ``record_updates_in_test`` option
+    were introduced in MercureBundle 0.8.
+
+Symfony Panther has `a feature to test applications using Mercure`_. These
+end-to-end tests need the updates to reach a real hub. Panther's web server runs
+in the ``test`` environment by default, so either run it in another environment
+with the ``PANTHER_APP_ENV`` environment variable, or disable the recording of
+the hub in the ``test`` environment (the ``MercureAssertionsTrait`` then no
+longer sees its updates):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/mercure.yaml
+        when@test:
+            mercure:
+                hubs:
+                    default:
+                        record_updates_in_test: false
+
+    .. code-block:: xml
+
+        <!-- config/packages/test/mercure.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <config>
+            <hub name="default" record_updates_in_test="false"/>
+        </config>
+
+    .. code-block:: php
+
+        // config/packages/test/mercure.php
+        $container->loadFromExtension('mercure', [
+            'hubs' => [
+                'default' => [
+                    'record_updates_in_test' => false,
+                ],
+            ],
+        ]);
 
 Debugging
 ---------
