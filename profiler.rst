@@ -31,7 +31,7 @@ Symfony Profiler, which will look like this:
 .. note::
 
     The debug toolbar is only injected into HTML responses. For other kinds of
-    contents (e.g. JSON responses in API requests) the profiler URL is available
+    content (e.g. JSON responses in API requests) the profiler URL is available
     in the ``X-Debug-Token-Link`` HTTP response header. Browse the ``/_profiler``
     URL to see all profiles.
 
@@ -100,7 +100,7 @@ The profiler gets its information using some services called "data collectors".
 Symfony comes with several collectors that get information about the request,
 the logger, the routing, the cache, etc.
 
-Run this command to get the list of collectors actually enabled in your app:
+Run this command to get the list of collectors currently enabled in your app:
 
 .. code-block:: terminal
 
@@ -216,7 +216,7 @@ parameter is included in the URL):
     ]);
 
 This configuration disables the profiler by default (``collect: false``) to
-improve the application performance; but enables it for requests that include a
+improve the application performance, but enables it for requests that include a
 query parameter called ``profile`` (you can freely choose this query parameter name).
 
 In addition to the query parameter, this feature also works when submitting a
@@ -690,7 +690,7 @@ you'll need to configure the data collector explicitly:
                         name: data_collector
                         # must match the value returned by the getName() method
                         id: 'App\DataCollector\RequestCollector'
-                        # optional template (it has more priority than the value returned by getTemplate())
+                        # optional template (it has higher priority than the value returned by getTemplate())
                         template: 'data_collector/template.html.twig'
                         # optional priority (positive or negative integer; default = 0)
                         # priority: 300
@@ -710,7 +710,7 @@ you'll need to configure the data collector explicitly:
                             'data_collector' => [
                                 // must match the value returned by the getName() method
                                 'id' => RequestCollector::class,
-                                // optional template (it has more priority than the value returned by getTemplate())
+                                // optional template (it has higher priority than the value returned by getTemplate())
                                 'template' => 'data_collector/template.html.twig',
                                 // optional priority (positive or negative integer; default = 0)
                                 // 'priority' => 300,

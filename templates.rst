@@ -91,7 +91,7 @@ create a new file in the ``templates/`` directory to store the template contents
     <p>You have {{ notifications|length }} new notifications.</p>
 
 Then, create a :doc:`controller </controller>` that renders this template and
-passes to it the needed variables::
+passes the needed variables to it::
 
     // src/Controller/UserController.php
     namespace App\Controller;
@@ -139,7 +139,7 @@ Template Location
 ~~~~~~~~~~~~~~~~~
 
 Templates are stored by default in the ``templates/`` directory. When a service
-or controller renders the ``product/index.html.twig`` template, they are actually
+or controller renders the ``product/index.html.twig`` template, it is actually
 referring to the ``<your-project>/templates/product/index.html.twig`` file.
 
 The default templates directory is configurable with the
@@ -149,7 +149,7 @@ template directories :ref:`as explained later <templates-namespaces>` in this ar
 Template Variables
 ~~~~~~~~~~~~~~~~~~
 
-A common need for templates is to print the values stored in the templates
+A common need for templates is to print the values of the variables
 passed from the controller or service. Variables usually store objects and
 arrays instead of strings, numbers and boolean values. That's why Twig provides
 quick access to complex PHP variables. Consider the following template:
@@ -573,7 +573,7 @@ In practice, the ``base.html.twig`` template would look like this:
     </html>
 
 The `Twig block tag`_ defines the page sections that can be overridden in the
-child templates. They can be empty, like the ``content`` block or define a default
+child templates. They can be empty, like the ``content`` block, or define default
 content, like the ``title`` block, which is displayed when child templates don't
 override them.
 
@@ -681,7 +681,7 @@ Embedding Controllers
     For most "reusable UI unit" needs (like the recent-articles example below),
     prefer :ref:`Twig Components <templates-twig-components>`. Embedding
     controllers still makes sense when you specifically need to run a controller
-    as a sub-request; for example to cache that fragment separately with
+    as a sub-request, for example, to cache that fragment separately with
     :doc:`ESI </http_cache/esi>`.
 
 :ref:`Including template fragments <templates-include>` is useful to reuse the
@@ -781,7 +781,7 @@ template fragments. Configure that special URL in the ``fragments`` option:
 .. warning::
 
     Embedding controllers requires making requests to those controllers and
-    rendering some templates as result. This can have a significant impact on
+    rendering some templates as a result. This can have a significant impact on
     the application performance if you embed lots of controllers. If possible,
     :doc:`cache the template fragment </http_cache/esi>`.
 
@@ -807,8 +807,8 @@ How to Embed Asynchronous Content with hinclude.js
 Templates can also embed contents asynchronously with the ``hinclude.js``
 JavaScript library.
 
-First, include the `hinclude.js`_ library in your page
-:ref:`linking to it <templates-link-to-assets>` from the template or adding it
+First, include the `hinclude.js`_ library in your page by
+:ref:`linking to it <templates-link-to-assets>` from the template or by adding it
 to your application JavaScript :doc:`using AssetMapper </frontend>`.
 
 As the embedded content comes from another page (or controller for that matter),
@@ -825,8 +825,8 @@ Symfony uses a version of the standard ``render()`` function to configure
     When using the ``controller()`` function, you must also configure the
     :ref:`fragments path option <fragments-path-config>`.
 
-When JavaScript is disabled or it takes a long time to load you can display a
-default content rendering some template:
+When JavaScript is disabled or it takes a long time to load, you can display
+default content by rendering some template:
 
 .. configuration-block::
 
@@ -1040,7 +1040,7 @@ methods::
     }
 
 This might come in handy when dealing with blocks in
-:ref:`templates inheritance <template_inheritance-layouts>` or when using
+:ref:`template inheritance <template_inheritance-layouts>` or when using
 `Turbo Streams`_.
 
 Similarly, you can use the ``#[Template]`` attribute on the controller to specify
@@ -1203,8 +1203,8 @@ also provides a method to check for template existence. First, get the loader::
 
     class YourService
     {
-        // this code assumes that your service uses autowiring to inject dependencies
-        // otherwise, inject the service called 'twig' manually
+        // this code assumes that your service uses autowiring to inject
+        // dependencies; otherwise, inject the service called 'twig' manually
         public function __construct(Environment $twig)
         {
             $loader = $twig->getLoader();
@@ -1242,7 +1242,7 @@ errors. It's useful to run it before deploying your application to production
     # you can also show the deprecated features used in your templates
     $ php bin/console lint:twig --show-deprecations templates/email/
 
-    # you can also excludes directories
+    # you can also exclude directories
     $ php bin/console lint:twig templates/ --excludes=data_collector --excludes=dev_tool
 
 When running the linter inside `GitHub Actions`_, the output is automatically
@@ -1335,7 +1335,7 @@ so they can impersonate you on other websites. This is known as a `Cross-Site Sc
 or XSS attack.
 
 To prevent this attack, use *"output escaping"* to transform the characters
-which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).
+which have special meaning (e.g. replace ``<`` with the ``&lt;`` HTML entity).
 Symfony applications are safe by default because they perform automatic output
 escaping:
 
@@ -1417,7 +1417,7 @@ If any of those templates exists, Symfony will use it instead of using
 ``templates/layout.html.twig``, which is probably the template you wanted to use.
 
 Twig solves this problem with **namespaces**, which group several templates
-under a logic name unrelated to their actual location. Update the previous
+under a logical name unrelated to their actual location. Update the previous
 configuration to define a namespace for each template directory:
 
 .. configuration-block::
@@ -1463,7 +1463,7 @@ Bundle Templates
 If you :ref:`install packages/bundles <symfony-flex>` in your application, they
 may include their own Twig templates (in the ``templates/`` directory of each
 bundle). To avoid messing with your own templates, Symfony adds bundle
-templates under an automatic namespace created after the bundle name.
+templates under an automatic namespace named after the bundle.
 
 For example, the templates of a bundle called ``AcmeBlogBundle`` are available
 under the ``AcmeBlog`` namespace. If this bundle includes the template

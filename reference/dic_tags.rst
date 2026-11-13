@@ -154,7 +154,7 @@ wrapping their names with ``%`` characters).
 
     When using the ``auto_alias`` tag, it's not mandatory to define the aliased
     services as private. However, doing that (like in the above example) makes
-    sense most of the times to prevent accessing those services directly instead
+    sense most of the time to prevent accessing those services directly instead
     of using the generic service alias.
 
 console.command
@@ -168,7 +168,7 @@ For details on registering your own commands in the service container, read
 container.hot_path
 ------------------
 
-**Purpose**: Add to list of always needed services
+**Purpose**: Add to the list of always needed services
 
 This tag identifies the services that are always needed. It is only applied to
 a very short list of bootstrapping services (like ``router``, ``event_dispatcher``,
@@ -176,11 +176,11 @@ a very short list of bootstrapping services (like ``router``, ``event_dispatcher
 of these services, with a special case for event listeners, where only listed events
 are propagated to their related listeners.
 
-It will replace, in cache for generated service factories, the PHP autoload by
+In the cached service factories, it replaces the PHP autoload with
 plain inlined ``include_once``. The benefit is a complete bypass of the autoloader
 for services and their class hierarchy. The result is a significant performance improvement.
 
-Use this tag with great caution, you have to be sure that the tagged service is always used.
+Use this tag with great caution; you have to be sure that the tagged service is always used.
 
 .. _dic-tags-container-nopreload:
 
@@ -465,7 +465,7 @@ kernel.cache_clearer
 **Purpose**: Register your service to be called during the cache clearing
 process
 
-Cache clearing occurs whenever you call ``cache:clear`` command. If your
+Cache clearing occurs whenever you call the ``cache:clear`` command. If your
 bundle caches files, you should add a custom cache clearer for clearing those
 files during the cache clearing process.
 
@@ -606,7 +606,7 @@ can also register it manually:
 .. note::
 
     The ``priority`` is optional and its value is a positive or negative integer
-    that defaults to ``0``. The higher the number, the earlier that warmers are
+    that defaults to ``0``. The higher the number, the earlier the warmers are
     executed.
 
 .. warning::
@@ -734,7 +734,7 @@ kernel.reset
 
 In all main requests (not :ref:`sub-requests <http-kernel-sub-requests>`) except
 the first one, Symfony looks for any service tagged with the ``kernel.reset`` tag
-to reinitialize their state. This is done by calling to the method whose name is
+to reinitialize their state. This is done by calling the method whose name is
 configured in the ``method`` argument of the tag.
 
 This is mostly useful when running your projects in application servers that
@@ -1045,7 +1045,7 @@ You can add a processor globally:
     If your service is not a callable (using ``__invoke()``) you can add the
     ``method`` attribute in the tag to use a specific method.
 
-You can add also a processor for a specific handler by using the ``handler``
+You can also add a processor for a specific handler by using the ``handler``
 attribute:
 
 .. configuration-block::
@@ -1134,7 +1134,7 @@ routing.loader
 **Purpose**: Register a custom service that loads routes
 
 To enable a custom routing loader, add it as a regular service in one
-of your configuration and tag it with ``routing.loader``:
+of your configuration files and tag it with ``routing.loader``:
 
 .. configuration-block::
 
@@ -1274,7 +1274,7 @@ you need on that file in order to load your translations.
 
 If you're loading translations from a database, you'll still need a resource
 file, but it might either be blank or contain a little bit of information
-about loading those resources from the database. The file is key to trigger
+about loading those resources from the database. The file is key to triggering
 the ``load()`` method on your custom loader.
 
 .. _reference-dic-tags-translation-extractor:
@@ -1379,7 +1379,7 @@ Symfony already comes with many dumpers:
 You can create your own dumper by extending
 :class:`Symfony\\Component\\Translation\\Dumper\\FileDumper` or implementing
 :class:`Symfony\\Component\\Translation\\Dumper\\DumperInterface` and tagging
-the service with ``translation.dumper``. The tag has one option: ``alias``
+the service with ``translation.dumper``. The tag has one option: ``alias``.
 This is the name that's used to determine which dumper should be used.
 
 .. configuration-block::
@@ -1414,7 +1414,7 @@ This is the name that's used to determine which dumper should be used.
 translation.provider_factory
 ----------------------------
 
-**Purpose**: to register a factory related to custom translation providers
+**Purpose**: To register a factory related to custom translation providers
 
 When creating custom :ref:`translation providers <translation-providers>`, you
 must register your factory as a service and tag it with ``translation.provider_factory``:
@@ -1452,7 +1452,7 @@ twig.extension
 **Purpose**: To register a custom Twig Extension
 
 To enable a Twig extension, add it as a regular service in one of your
-configuration and tag it with ``twig.extension``. If you're using the
+configuration files and tag it with ``twig.extension``. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the service is auto-registered and auto-tagged. But, you can also register it manually:
 

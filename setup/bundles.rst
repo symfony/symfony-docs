@@ -6,8 +6,8 @@ every two years. Your third-party bundle can support more than one major version
 (e.g. 5.x and 6.x), but you must apply some techniques to do so, as explained in
 this article.
 
-Allowing to Install New Symfony Components
-------------------------------------------
+Allowing the Installation of New Symfony Components
+---------------------------------------------------
 
 Consider a bundle that requires three Symfony components, locked to version ``5.4``:
 
@@ -52,7 +52,7 @@ You can **detect deprecations** in two ways:
    (``composer require --dev symfony/phpunit-bridge``) and run your tests using:
    ``./vendor/bin/simple-phpunit``
 
-Fix the reported deprecations, rerun the test suite, and repeat the process
+Fix the reported deprecations, rerun the test suite and repeat the process
 until no deprecations remain.
 
 Fixing Deprecations
@@ -73,7 +73,7 @@ hard-to-maintain code::
         // code for Symfony 6.x
     }
 
-Instead, **use feature-based checks**, which are more accurate, robust, and
+Instead, **use feature-based checks**, which are more accurate, robust and
 forward-compatible. For example, if a new method was added to a component in a
 given version, check for that feature rather than the kernel version::
 

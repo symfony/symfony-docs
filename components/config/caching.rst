@@ -17,7 +17,7 @@ The example below shows you how to collect resources, then generate some
 code based on the resources that were loaded and write this code to the
 cache. The cache also receives the collection of resources that were used
 for generating the code. By looking at the "last modified" timestamp of
-these resources, the cache can tell if it is still fresh or that its contents
+these resources, the cache can tell if it is still fresh or if its contents
 should be regenerated::
 
     use Symfony\Component\Config\ConfigCache;

@@ -166,7 +166,7 @@ Enabling PHP-FPM
 
 .. note::
 
-    PHP-FPM must be installed locally for the Symfony server to utilize.
+    PHP-FPM must be installed locally for the Symfony server to use it.
 
 When the server starts, it checks for ``web/index_dev.php``, ``web/index.php``,
 ``public/app_dev.php``, ``public/app.php``, ``public/index.php`` in that order. If one is found, the
@@ -222,7 +222,7 @@ Selecting PHP Version
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have multiple PHP versions installed on your computer, you can tell
-Symfony which one to use creating a file called ``.php-version`` at the project
+Symfony which one to use by creating a file called ``.php-version`` at the project
 root directory:
 
 .. code-block:: terminal
@@ -543,7 +543,7 @@ If your service names don't match Symfony conventions, use labels:
 In this example, the service is named ``db``, so environment variables would be
 prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
 to ``DATABASE``, the web server creates environment variables starting with
-``DATABASE_`` instead as expected by the default Symfony configuration.
+``DATABASE_`` instead, as expected by the default Symfony configuration.
 
 .. _symfony-server-mercure:
 
@@ -666,7 +666,7 @@ The ``.symfony.local.yaml`` file provides advanced configuration options:
         # forces the port that will be used to run the server
         port: 8000
         # sets the HTTP port you prefer for this project [default: 8000]
-        # (only will be used if it's available; otherwise a random port is chosen)
+        # (it will only be used if it's available; otherwise a random port is chosen)
         preferred_port: 8001
         # used to disable the default auto-redirection from HTTP to HTTPS
         allow_http: true
@@ -676,7 +676,7 @@ The ``.symfony.local.yaml`` file provides advanced configuration options:
         p12: path/to/custom-cert.p12
         # toggle GZIP compression
         use_gzip: true
-        # enable Cross-origin resource sharing (CORS) for all request
+        # enable Cross-origin resource sharing (CORS) for all requests
         allow_cors: true
         # serve the Mercure hub detected via Docker on the web server origin
         proxy_mercure: true

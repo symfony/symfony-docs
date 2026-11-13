@@ -363,7 +363,7 @@ Extending the ExpressionLanguage
 --------------------------------
 
 The ExpressionLanguage can be extended by adding custom functions. For
-instance, in the Symfony Framework, the security has custom functions to check
+instance, in the Symfony Framework, the security system has custom functions to check
 the user's role.
 
 .. note::
@@ -448,8 +448,8 @@ register::
 
 .. tip::
 
-    To create an expression function from a PHP function with the
-    :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
+    Use the :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp`
+    static method to create an expression function from a PHP function::
 
         ExpressionFunction::fromPhp('strtoupper');
 

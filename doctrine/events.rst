@@ -22,7 +22,7 @@ There are different ways to listen to these Doctrine events:
   related to a single entity**;
 * **Lifecycle listeners**, they are similar to entity listeners but their event
   methods are called for all entities, not only those of a certain type. They are
-  ideal to **share event logic between entities**.
+  ideal for **sharing event logic between entities**.
 
 The performance of each type of listener depends on how many entities it applies to:
 lifecycle callbacks are faster than entity listeners, which in turn are faster
@@ -278,7 +278,7 @@ listener in the Symfony application by creating a new service for it and
                         event: 'postPersist'
 
                         # listeners can define their priority in case listeners are associated
-                        # to the same event (default priority = 0; higher numbers = listener is run earlier)
+                        # with the same event (default priority = 0; higher numbers = listener is run earlier)
                         priority: 500
 
                         # you can also restrict listeners to a specific Doctrine connection
@@ -301,7 +301,7 @@ listener in the Symfony application by creating a new service for it and
                                 'event' => 'postPersist',
 
                                 // listeners can define their priority in case multiple listeners are associated
-                                // to the same event (default priority = 0; higher numbers = listener is run earlier)
+                                // with the same event (default priority = 0; higher numbers = listener is run earlier)
                                 'priority' => 500,
 
                                 // you can also restrict listeners to a specific Doctrine connection

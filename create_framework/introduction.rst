@@ -23,7 +23,7 @@ a few good reasons to start creating your own framework:
 * To create a framework tailored to your very specific needs (be sure
   first that your needs are really specific);
 
-* To experiment creating a framework for fun (in a learn-and-throw-away
+* To experiment with creating a framework for fun (in a learn-and-throw-away
   approach);
 
 * To refactor an old/existing application that needs a good dose of recent web
@@ -38,12 +38,12 @@ you can use as is or as a start for your very own. It will start with a simple
 framework and more features will be added with time. Eventually, you will have
 a fully-featured full-stack web framework.
 
-And each step will be the occasion to learn more about some of the Symfony
+And each step will be an opportunity to learn more about some of the Symfony
 Components.
 
 Many modern web frameworks advertise themselves as being MVC frameworks. This
 tutorial won't talk about the MVC pattern, as the Symfony Components are able to
-create any type of frameworks, not just the ones that follow the MVC
+create any type of framework, not just the ones that follow the MVC
 architecture. Anyway, if you have a look at the MVC semantics, this book is
 about how to create the Controller part of a framework. For the Model and the
 View, it really depends on your personal taste and you can use any existing

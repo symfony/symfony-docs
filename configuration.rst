@@ -275,7 +275,7 @@ own parameters to your ``config/services.yaml`` when installed.
 .. tip::
 
     By convention, parameters whose names start with a dot ``.`` (for example,
-    ``.mailer.transport``), are available only during the container compilation.
+    ``.mailer.transport``) are available only during the container compilation.
     They are useful when working with :doc:`Compiler Passes </service_container/compiler_passes>`
     to declare some temporary parameters that won't be available later in the application.
 
@@ -286,7 +286,7 @@ essential parameters for your application's functionality are not empty::
     $container->parameterCannotBeEmpty('app.private_key', 'Did you forget to set a value for the "app.private_key" parameter?');
 
 If a non-empty parameter is ``null``, an empty string ``''``, or an empty array ``[]``,
-Symfony will throw an exception. This validation is **not** made at compile time
+Symfony will throw an exception. This validation is **not** performed at compile time
 but when attempting to retrieve the value of the parameter.
 
 .. seealso::
@@ -334,12 +334,12 @@ Take the ``framework`` package, installed by default, as an example:
 * In the **prod** environment, nothing extra will be set as there is no
   ``config/packages/prod/framework.yaml`` file;
 * In the **dev** environment, there is no file either (
-  ``config/packages/dev/framework.yaml`` does not exist).
+  ``config/packages/dev/framework.yaml`` does not exist);
 * In the **test** environment, the ``config/packages/test/framework.yaml`` file
   is loaded to override some of the settings previously configured in
   ``config/packages/framework.yaml``.
 
-In reality, each environment differs only somewhat from others. This means that
+In reality, each environment differs only somewhat from the others. This means that
 all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
@@ -464,7 +464,7 @@ going to production:
 #. Add the needed configuration files in ``config/packages/staging/`` to
    define the behavior of the new environment. Symfony loads the
    ``config/packages/*.yaml`` files first, so you only need to configure the
-   differences to those files;
+   differences from those files;
 #. Select the ``staging`` environment using the ``APP_ENV`` env var as explained
    in the previous section.
 
@@ -487,7 +487,7 @@ Setting the Runtime Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``APP_RUNTIME_ENV`` env var names the place where the application is
-deployed. It's independent from the configuration environment, so you can run
+deployed. It's independent of the configuration environment, so you can run
 the ``prod`` configuration on several servers and still tell them apart:
 
 .. code-block:: bash
@@ -554,7 +554,7 @@ This example shows how you could configure the application secret using an env v
 
 .. note::
 
-    Your env vars can also be accessed via the PHP super globals ``$_ENV`` and
+    Your env vars can also be accessed via the PHP superglobals ``$_ENV`` and
     ``$_SERVER`` (both are equivalent)::
 
         $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
@@ -772,7 +772,7 @@ the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.loca
 **should not be committed** because only you will use them. In fact, the
 ``.gitignore`` file that comes with Symfony prevents them from being committed.
 
-Overriding Environment Variables Defined By The System
+Overriding Environment Variables Defined by the System
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to override an environment variable defined by the system, use the
@@ -835,7 +835,7 @@ get the environment variables and will not spend time parsing the ``.env`` files
     Update your deployment tools/workflow to run the ``dotenv:dump`` command after
     each deploy to improve the application performance.
 
-Storing Environment Variables In Other Files
+Storing Environment Variables in Other Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the environment variables are stored in the ``.env`` file located
@@ -857,7 +857,7 @@ path is part of the options you can set in your ``composer.json`` file:
           }
       }
 
-As an alternate option, you can directly invoke the ``Dotenv`` class in your
+As an alternative, you can directly invoke the ``Dotenv`` class in your
 ``bootstrap.php`` file or any other file of your application::
 
     use Symfony\Component\Dotenv\Dotenv;
@@ -959,7 +959,7 @@ after changing the value of an inlined variable.
 
     The ``Used`` and ``Inlined`` columns were introduced in Symfony 8.2.
 
-Creating Your Own Logic To Load Env Vars
+Creating Your Own Logic to Load Env Vars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can implement your own logic to load environment variables if the default
@@ -1009,22 +1009,22 @@ environment variables from the file::
         }
     }
 
-That's it! Now the application will look for a ``env.json`` file in the
+That's it! Now the application will look for an ``env.json`` file in the
 current directory to populate environment variables (in addition to the
 already existing ``.env`` files).
 
 .. tip::
 
-    If you want an env var to have a value on a certain environment but to fallback
-    on loaders on another environment, assign an empty value to the env var for
-    the environment you want to use loaders:
+    If you want an env var to have a value in a certain environment but to fall back
+    on loaders in another environment, assign an empty value to the env var for
+    the environment where you want to use loaders:
 
     .. code-block:: bash
 
         # .env (or .env.local)
         APP_ENV=prod
 
-        # .env.prod (or .env.prod.local) - this will fallback on the loaders you defined
+        # .env.prod (or .env.prod.local) - this will fall back on the loaders you defined
         APP_ENV=
 
 Environment Variables in Bundle Configuration

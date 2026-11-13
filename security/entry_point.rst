@@ -59,7 +59,7 @@ You can configure this using the ``entry_point`` setting:
     class that implements
     :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`.
     You can then set ``entry_point`` to the service id (e.g.
-    ``entry_point: App\Security\CustomEntryPoint``)
+    ``entry_point: App\Security\CustomEntryPoint``).
 
 .. _security-entry-point-path:
 

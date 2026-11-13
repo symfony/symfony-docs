@@ -14,8 +14,8 @@ This component is useful to schedule tasks like maintenance (database cleanup,
 cache clearing, etc.), background processing (queue handling, data synchronization,
 etc.), periodic data updates, scheduled notifications (emails, alerts), and more.
 
-This document focuses on using the Scheduler component in the context of a full
-stack Symfony application.
+This document focuses on using the Scheduler component in the context of a full-stack
+Symfony application.
 
 Installation
 ------------
@@ -249,13 +249,13 @@ For example::
 Hashed Cron Expressions
 .......................
 
-If you have many triggers scheduled at same time (for example, at midnight, ``0 0 * * *``)
-this will create a very long running list of schedules at that exact time.
+If you have many triggers scheduled at the same time (for example, at midnight, ``0 0 * * *``),
+this will create a very long list of schedules running at that exact time.
 This may cause an issue if a task has a memory leak.
 
 You can add a hash symbol (``#``) in expressions to generate random values.
 Although the values are random, they are predictable and consistent because they
-are generated based on the message. A message with string representation ``my task``
+are generated based on the message. A message with the string representation ``my task``
 and a defined frequency of ``# # * * *`` will have an idempotent frequency
 of ``56 20 * * *`` (every day at 8:56pm).
 
@@ -289,7 +289,7 @@ For example::
 
 .. note::
 
-    The day of month range is ``1-28``, this is to account for February
+    The day of month range is ``1-28`` to account for February,
     which has a minimum of 28 days.
 
 Periodical Triggers
@@ -478,7 +478,7 @@ A Dynamic Vision for the Messages Generated
 This proves particularly useful when the message depends on data stored in
 databases or third-party services.
 
-Following the previous example of reports generation: they depend on customer requests.
+Following the previous example of report generation: they depend on customer requests.
 Depending on the specific demands, any number of reports may need to be generated
 at a defined frequency. For these dynamic scenarios, it gives you the capability
 to dynamically define your message(s) instead of statically. This is achieved by
@@ -527,9 +527,9 @@ by adding one of these attributes to a service or a command:
 
 For both of these attributes, you have the ability to define the schedule to
 use via the ``schedule`` option. By default, the ``default`` named schedule will
-be used. Also, by default, the ``__invoke`` method of your service will be called
-but, it's also possible to specify the method to call via the ``method`` option
-and you can define arguments via ``arguments`` option if necessary.
+be used. Also, by default, the ``__invoke`` method of your service will be called,
+but it's also possible to specify the method to call via the ``method`` option
+and you can define arguments via the ``arguments`` option if necessary.
 
 By default, tasks are scheduled in all
 :ref:`configuration environments <configuration-environments>`. Use the ``env``
@@ -596,7 +596,7 @@ This is the most basic way to define a cron trigger with this attribute::
 
 The attribute takes more parameters to customize the trigger::
 
-    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
+    // randomly adds up to 6 seconds to the trigger time to avoid load spikes
     #[AsCronTask('0 0 * * *', jitter: 6)]
 
     // defines the method name to call instead as well as the arguments to pass to it
@@ -655,7 +655,7 @@ The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigg
     // the frequency can be defined as an integer representing the number of seconds
     #[AsPeriodicTask(frequency: 86400)]
 
-    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
+    // randomly adds up to 6 seconds to the trigger time to avoid load spikes
     #[AsPeriodicTask(frequency: '1 day', jitter: 6)]
 
     // dispatches the task to the given Messenger transport instead of running
@@ -706,7 +706,7 @@ throughout a given timeframe) or the deletion of old reports needs to be halted
 under certain circumstances.
 
 This is why the ``Scheduler`` incorporates a mechanism to dynamically modify the
-schedule and consider all changes in real-time.
+schedule and consider all changes in real time.
 
 .. _scheduler-modify-schedule:
 
@@ -719,7 +719,7 @@ all associated recurring messages, resulting in the reset and recalculation of
 the in-memory stack of recurring messages.
 
 For instance, for various reasons, if there's no need to generate a report, a
-callback can be employed to conditionally skip generating of some or all reports.
+callback can be employed to conditionally skip generating some or all reports.
 
 However, if the intention is to completely remove a recurring message and its recurrence,
 the :class:`Symfony\\Component\\Scheduler\\Schedule` offers a :method:`Symfony\\Component\\Scheduler\\Schedule::remove`
@@ -727,7 +727,7 @@ or a :method:`Symfony\\Component\\Scheduler\\Schedule::removeById` method. This 
 be particularly useful in your case, especially if you need to halt the generation
 of the recurring message, which involves deleting old reports.
 
-In your handler, you can check a condition and, if affirmative, access the
+In your handler, you can check a condition and, if it's met, access the
 :class:`Symfony\\Component\\Scheduler\\Schedule` and invoke this method::
 
     // src/Scheduler/SaleTaskProvider.php
@@ -848,7 +848,7 @@ Access to the schedule is a crucial feature, allowing effortless addition or
 removal of message types. Additionally, it will be possible to access the
 currently processed message and its message context.
 
-In consideration of our scenario, you can listen to the ``PRE_RUN_EVENT`` and
+In this scenario, you can listen to the ``PRE_RUN_EVENT`` and
 check if a certain condition is met. For instance, you might decide to add a
 recurring message for cleaning old reports again, with the same or different
 configurations, or add any other recurring message(s).
@@ -884,7 +884,7 @@ being transferred and processed by its handler::
                     // can access the schedule
                     $schedule = $event->getSchedule()->getSchedule();
 
-                    // can target directly the RecurringMessage being processed
+                    // can directly target the RecurringMessage being processed
                     $schedule->removeById($messageContext->id);
 
                     // allows calling ShouldCancel() to avoid handling the message
@@ -923,7 +923,7 @@ or cancel a message before it's consumed::
 
         // do something with the schedule, context or message
 
-        // and/or cancel message
+        // and/or cancel the message
         $event->shouldCancel(true);
     }
 
@@ -968,7 +968,7 @@ FailureEvent
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\FailureEvent`
 
 ``FailureEvent`` allows you to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-when a message consumption throws an exception::
+when consuming a message throws an exception::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Scheduler\Event\FailureEvent;
@@ -983,7 +983,7 @@ when a message consumption throws an exception::
 
         // do something with the schedule, context, message or error (logging, ...)
 
-        // and/or ignore failure event
+        // and/or ignore the failure event
         $event->shouldIgnore(true);
     }
 
@@ -1002,7 +1002,7 @@ Consuming Messages
 The Scheduler component offers two ways to consume messages, depending on your
 needs: using the ``messenger:consume`` command or creating a worker programmatically.
 The first solution is the recommended one when using the Scheduler component in
-the context of a full stack Symfony application, the second one is more suitable
+the context of a full-stack Symfony application; the second one is more suitable
 when using the Scheduler component as a standalone component.
 
 Running a Worker
@@ -1146,7 +1146,7 @@ recurring messages. You can narrow down the list to a specific schedule:
 Efficient Management With Symfony Scheduler
 -------------------------------------------
 
-When a worker is restarted or undergoes shutdown for a period, the Scheduler transport won't be able to generate the messages (because they are created on-the-fly by the scheduler transport).
+When a worker is restarted or undergoes shutdown for a period, the Scheduler transport won't be able to generate the messages (because they are created on the fly by the scheduler transport).
 This implies that any messages scheduled to be sent during the worker's inactive period are not sent, and the Scheduler will lose track of the last processed message.
 Upon restart, it will recalculate the messages to be generated from that point onward.
 
@@ -1162,7 +1162,7 @@ While this behavior may not necessarily pose a problem, there is a possibility t
 That's why the scheduler allows you to remember the last execution date of a message
 via the ``stateful`` option (and the :doc:`Cache component </cache>`).
 This allows the system to retain the state of the schedule, ensuring that when a
-worker is restarted, it resumes from the point it left off::
+worker is restarted, it resumes from where it left off::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;

@@ -4,7 +4,7 @@ Bic
 This constraint is used to ensure that a value has the proper format of a
 `Business Identifier Code (BIC)`_. BIC is an internationally agreed means to
 uniquely identify both financial and non-financial institutions. You may also
-check that the BIC's country code is the same as a given IBAN's one.
+check that the BIC's country code is the same as that of a given IBAN.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -84,7 +84,7 @@ Available Options
 
 **type**: ``string`` **default**: ``null``
 
-An IBAN value to validate that its country code is the same as the BIC's one.
+An IBAN value used to check that its country code is the same as that of the BIC.
 
 ``ibanMessage``
 ~~~~~~~~~~~~~~~
@@ -98,10 +98,10 @@ The default message supplied when the value does not pass the combined BIC/IBAN 
 
 **type**: ``string`` **default**: ``null``
 
-It defines the object property whose value stores the IBAN used to check the BIC with.
+It defines the object property whose value stores the IBAN used to check the BIC.
 
 For example, if you want to compare the ``$bic`` property of some object
-with regard to the ``$iban`` property of the same object, use
+with the ``$iban`` property of the same object, use
 ``ibanPropertyPath="iban"`` in the comparison constraint of ``$bic``.
 
 ``message``

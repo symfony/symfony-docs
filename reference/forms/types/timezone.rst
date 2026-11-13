@@ -33,8 +33,8 @@ Field Options
 
 **type**: ``string`` **default**: ``string``
 
-The format of the *input* data - i.e. the format that the timezone is stored
-on your underlying object. Valid values are:
+The format of the *input* data - i.e. the format in which the timezone is stored
+in your underlying object. Valid values are:
 
 * ``datetimezone`` (a ``\DateTimeZone`` object)
 * ``intltimezone`` (an ``\IntlTimeZone`` object)

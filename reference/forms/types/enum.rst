@@ -214,7 +214,7 @@ You can now group choices by the enum case value::
         }
     ]);
 
-This callback will group choices in 3 categories: ``Upper``, ``Lower`` and ``Other``.
+This callback will group choices into 3 categories: ``Upper``, ``Lower`` and ``Other``.
 
 If you return ``null``, the option won't be grouped.
 

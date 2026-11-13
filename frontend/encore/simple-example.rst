@@ -43,7 +43,7 @@ of your project. It already holds the basic config you need:
 
         .addEntry('app', './assets/app.js')
 
-        // uncomment this if you want use jQuery in the following example
+        // uncomment this if you want to use jQuery in the following example
         .autoProvidejQuery()
     ;
 
@@ -305,7 +305,7 @@ To learn more, check out the `symfony/ux-turbo`_ package.
 Page-Specific JavaScript or CSS
 -------------------------------
 
-So far, you only have one final JavaScript file: ``app.js``. Encore may be split
+So far, you only have one final JavaScript file: ``app.js``. Encore may split it
 into multiple files for performance (see :doc:`split chunks </frontend/encore/split-chunks>`),
 but all of that code is still downloaded on every page.
 
@@ -330,7 +330,7 @@ your controller class:
     }
 
 That's it! This controller's code - and any modules that it imports - will be
-split to *separate* files by Encore. Then, those files won't be downloaded until
+split into *separate* files by Encore. Then, those files won't be downloaded until
 the moment a matching element (e.g. ``<div data-controller="lazy-example">``)
 appears on the page!
 
@@ -473,7 +473,7 @@ Keep Going!
 -----------
 
 Encore supports many more features! For a full list of what you can do, see
-`Encore's index.js file`_. Or, go back to :ref:`list of Frontend articles <encore-toc>`.
+`Encore's index.js file`_. Or, go back to the :ref:`list of Frontend articles <encore-toc>`.
 
 .. _`resolve.fullySpecified`: https://webpack.js.org/configuration/module/#resolvefullyspecified
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js

@@ -8,7 +8,7 @@ Enabling Vue.js (``vue-loader``) with Webpack Encore
 
 .. tip::
 
-    Check out live demos of Symfony UX Vue.js component at `https://ux.symfony.com/vue`_!
+    Check out live demos of the Symfony UX Vue.js component at `https://ux.symfony.com/vue`_!
 
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
@@ -138,7 +138,7 @@ You can't use ``<style>`` in ``.jsx`` files. As a workaround, you can import
 Using Scoped Styles
 ~~~~~~~~~~~~~~~~~~~
 
-You can't use `Scoped Styles`_ (``<style scoped>``) either in ``.jsx`` files. As
+You can't use `Scoped Styles`_ (``<style scoped>``) in ``.jsx`` files either. As
 a workaround, you can use `CSS Modules`_ by suffixing import paths with
 ``?module``:
 
@@ -209,7 +209,7 @@ the default variable delimiters.
 If you set for example ``delimiters: ['${', '}$']``, then you can use the
 following in your Twig templates:
 
- .. code-block:: twig
+.. code-block:: twig
 
     {{ twig_variable }}   {# renders a Twig variable #}
     ${ vuejs_variable }$  {# renders a Vue.js variable #}

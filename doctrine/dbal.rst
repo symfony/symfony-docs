@@ -34,7 +34,7 @@ Then configure the ``DATABASE_URL`` environment variable in ``.env``:
     # customize this line!
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.37"
 
-Further things can be configured in ``config/packages/doctrine.yaml`` - see
+Further things can be configured in ``config/packages/doctrine.yaml`` - see the
 `Doctrine DBAL configuration reference`_. Remove the ``orm`` key in that file
 if you *don't* want to use the Doctrine ORM.
 
@@ -208,7 +208,7 @@ Registering custom Mapping Types
 
 You can register custom mapping types through Symfony's configuration. They
 will be added to all configured connections. For more information on custom
-mapping types, read Doctrine's `Custom Mapping Types`_ section of their documentation.
+mapping types, read the `Custom Mapping Types`_ section of the Doctrine documentation.
 
 .. configuration-block::
 

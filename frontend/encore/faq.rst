@@ -32,7 +32,7 @@ The *only* files that need to be deployed to your production servers are the
 final, built assets (e.g. the ``public/build`` directory). You do *not* need to install
 Node.js, deploy ``webpack.config.js``, the ``node_modules`` directory or even your source
 asset files, **unless** you plan on running ``encore production`` on your production
-machine. Once your assets are built, these are the *only* thing that need to live
+machine. Once your assets are built, these are the *only* things that need to live
 on the production server.
 
 Do I Need to Install Node.js on My Production Server?
@@ -91,7 +91,7 @@ This error happens when your code (or some library that you are using) expects `
 or ``jQuery`` to be a global variable. But, when you use Webpack and ``import $ from 'jquery'``,
 no global variables are set.
 
-The fix depends on if the error is happening in your code or inside some third-party
+The fix depends on whether the error is happening in your code or inside some third-party
 code that you're using. See :doc:`/frontend/encore/legacy-applications` for the fix.
 
 Uncaught ReferenceError: webpackJsonp is not defined
@@ -151,7 +151,7 @@ productive (for example by resolving aliases). However, you may face this error:
     calling Encore directly.
 
 It fails because the Encore Runtime Environment is only configured when you are
-running it (e.g. when executing ``npx encore dev``). Fix this issue calling to
+running it (e.g. when executing ``npx encore dev``). Fix this issue by calling the
 ``Encore.isRuntimeEnvironmentConfigured()`` and
 ``Encore.configureRuntimeEnvironment()`` methods:
 
@@ -182,7 +182,7 @@ locally or on your Continuous Integration server:
 This is happening because you did not build your Encore assets, so there is no
 ``entrypoints.json`` file. To solve this error, either build Encore assets or
 set the ``strict_mode`` option to ``false`` (this prevents Encore's Twig
-functions to trigger exceptions when there's no ``entrypoints.json`` file):
+functions from triggering exceptions when there's no ``entrypoints.json`` file):
 
 .. code-block:: yaml
 

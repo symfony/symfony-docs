@@ -38,7 +38,7 @@ entities, a ``Company`` and a ``Customer``::
 As you can see, each entity shares a few of the same fields: ``address``,
 ``zipcode``, ``city``, ``country``.
 
-Start with building two forms for these entities, ``CompanyType`` and ``CustomerType``::
+Start by building two forms for these entities, ``CompanyType`` and ``CustomerType``::
 
     // src/Form/Type/CompanyType.php
     namespace App\Form\Type;

@@ -16,7 +16,7 @@ Usage
 -----
 
 The :class:`Symfony\\Component\\Process\\Process` class executes a command in a
-sub-process, taking care of the differences between operating system and
+sub-process, taking care of the differences between operating systems and
 escaping arguments to prevent security issues. It replaces PHP functions like
 :phpfunction:`exec`, :phpfunction:`passthru`, :phpfunction:`shell_exec` and
 :phpfunction:`system`::
@@ -46,7 +46,7 @@ the contents of the output and
 the contents of the error output.
 
 You can also use the :class:`Symfony\\Component\\Process\\Process` class with the
-for each construct to get the output while it is generated. By default, the loop waits
+``foreach`` construct to get the output while it is generated. By default, the loop waits
 for new output before going to the next iteration::
 
     $process = new Process(['ls', '-lsa']);
@@ -148,7 +148,7 @@ environment variables using the second argument of the ``run()``,
     // On both Unix-like and Windows
     $process->run(null, ['MESSAGE' => 'Something to output']);
 
-If you prefer to create portable commands that are independent from the
+If you prefer to create portable commands that are independent of the
 operating system, you can write the above command as follows::
 
     // works the same on Windows, Linux and macOS
@@ -183,7 +183,7 @@ to remove to ``false``::
 Getting real-time Process Output
 --------------------------------
 
-When executing a long running command (like ``rsync`` to a remote
+When executing a long-running command (like ``rsync`` to a remote
 server), you can give feedback to the end user in real-time by passing an
 anonymous function to the
 :method:`Symfony\\Component\\Process\\Process::run` method::
@@ -279,8 +279,8 @@ in the output and its type::
 
 Instead of waiting until the process has finished, you can use the
 :method:`Symfony\\Component\\Process\\Process::waitUntil` method to keep or stop
-waiting based on some PHP logic. The following example starts a long running
-process and checks its output to wait until its fully initialized::
+waiting based on some PHP logic. The following example starts a long-running
+process and checks its output to wait until it's fully initialized::
 
     $process = new Process(['/usr/bin/php', 'slow-starting-server.php']);
     $process->start();
@@ -442,7 +442,7 @@ the relationship between your program and the process: teletype (tty) and
 pseudo-teletype (pty). See `What Are TTY and PTY?`_ above to learn about them.
 
 In TTY mode, you connect the input and output of the process to the input
-and output of your program. This allows for instance to open an editor like
+and output of your program. This allows you, for instance, to open an editor like
 Vim or Nano as a process. You enable TTY mode by calling
 :method:`Symfony\\Component\\Process\\Process::setTty`::
 
@@ -562,7 +562,7 @@ Executing PHP Code in Isolation
 -------------------------------
 
 If you want to execute some PHP code in isolation, use the ``PhpProcess``
-instead::
+class instead::
 
     use Symfony\Component\Process\PhpProcess;
 
@@ -610,7 +610,7 @@ the :class:`Symfony\\Component\\Process\\PhpSubprocess` class to run the command
 Process Timeout
 ---------------
 
-By default processes have a timeout of 60 seconds, but you can change it passing
+By default, processes have a timeout of 60 seconds, but you can change it by passing
 a different timeout (in seconds) to the ``setTimeout()`` method::
 
     use Symfony\Component\Process\Process;
@@ -622,7 +622,7 @@ a different timeout (in seconds) to the ``setTimeout()`` method::
 If the timeout is reached, a
 :class:`Symfony\\Component\\Process\\Exception\\ProcessTimedOutException` is thrown.
 
-For long running commands, it is your responsibility to perform the timeout
+For long-running commands, it is your responsibility to perform the timeout
 check regularly::
 
     $process->setTimeout(3600);
@@ -656,7 +656,7 @@ considers the time since the last output was produced by the process::
     $process->setIdleTimeout(60);
     $process->run();
 
-In the case above, a process is considered timed out, when either the total runtime
+In the case above, a process is considered timed out when either the total runtime
 exceeds 3600 seconds, or the process does not produce any output for 60 seconds.
 
 Process Signals

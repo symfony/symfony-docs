@@ -64,7 +64,7 @@ normalization process::
 Registering it in your Application
 ----------------------------------
 
-Before using this normalizer in a Symfony application it must be registered as
+Before using this normalizer in a Symfony application, it must be registered as
 a service and :doc:`tagged </service_container/tags>` with ``serializer.normalizer``.
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is done automatically!
@@ -132,8 +132,7 @@ corresponding ``supports*()`` call can be cached. The array format is as follows
 #. A ``null`` value means the normalizer or denormalizer does not support that type.
 #. The ``native-<type>`` strings (e.g. ``native-string``, ``native-integer``,
    ``native-boolean``) declare support for scalar values, using the names returned
-   by :phpfunction:`gettype`;
-
+   by :phpfunction:`gettype`.
 
 Here is an example of how to use the ``getSupportedTypes()`` method::
 
@@ -148,7 +147,7 @@ Here is an example of how to use the ``getSupportedTypes()`` method::
             return [
                 'object' => null,             // doesn't support any classes or interfaces
                 '*' => false,                 // supports any other types, but the decision is not cacheable
-                MyCustomClass::class => true, // supports MyCustomClass and decision is cacheable
+                MyCustomClass::class => true, // supports MyCustomClass and the decision is cacheable
             ];
         }
     }

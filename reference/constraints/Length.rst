@@ -104,7 +104,7 @@ Options
 
 **type**: ``string``  **default**: ``UTF-8``
 
-The charset to be used when computing value's length with the
+The charset to be used when computing the value's length with the
 :phpfunction:`mb_check_encoding` and :phpfunction:`mb_strlen`
 PHP functions.
 
@@ -217,7 +217,7 @@ the given value's length is **less** than this min value.
 
 This option is required when the ``max`` option is not defined.
 
-It is important to notice that ``null`` values are considered
+It is important to note that ``null`` values are considered
 valid no matter if the constraint requires a minimum length. Validators
 are triggered only if the value is not ``null``.
 

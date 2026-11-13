@@ -58,15 +58,15 @@ files and ``PlantUmlDumper`` to create the PlantUML files::
 
 .. code-block:: terminal
 
-    # replace 'dump-graph.php' by the name of your PHP script
+    # replace 'dump-graph.php' with the name of your PHP script
     $ php dump-graph.php | dot -Tsvg -o graph.svg
     $ php dump-graph.php | java -jar plantuml.jar -p  > graph.png
 
 Styling
 -------
 
-You can use ``--with-metadata`` option in the ``workflow:dump`` command to include places, transitions and
-workflow's metadata.
+You can use the ``--with-metadata`` option in the ``workflow:dump`` command to include the metadata of places,
+transitions and workflows.
 
 The DOT image will look like this:
 
@@ -108,11 +108,11 @@ You can use ``metadata`` with the following keys to style the workflow:
   * ``color``: a color;
   * ``arrow_color``: a color.
 
-Strings can include ``\n`` characters to display the contents in multiple lines.
+Strings can include ``\n`` characters to display the contents on multiple lines.
 Colors can be defined as:
 
 * a color name from `PlantUML's color list`_;
-* an hexadecimal color (both ``#AABBCC`` and ``#ABC`` formats are supported).
+* a hexadecimal color (both ``#AABBCC`` and ``#ABC`` formats are supported).
 
 .. note::
 

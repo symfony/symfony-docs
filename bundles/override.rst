@@ -46,7 +46,7 @@ extend from the original template, not from the overridden one:
 
     Symfony internals use some bundles too, so you can apply the same technique
     to override the core Symfony templates. For example, you can
-    :doc:`customize error pages </controller/error_pages>` overriding TwigBundle
+    :doc:`customize error pages </controller/error_pages>` by overriding TwigBundle
     templates.
 
 Routing
@@ -58,7 +58,7 @@ in your application (e.g. ``config/routes.yaml``).
 
 The easiest way to "override" a bundle's routing is to never import it at
 all. Instead of importing a third-party bundle's routing, copy
-that routing file into your application, modify according to your needs,
+that routing file into your application, modify it according to your needs,
 and import your copy instead.
 
 Controllers
@@ -90,7 +90,7 @@ and its limitations in `the Doctrine documentation`_.
 Forms
 -----
 
-Existing form types can be modified defining
+Existing form types can be modified by defining
 :doc:`form type extensions </form/create_form_type_extension>`.
 
 .. _override-validation:

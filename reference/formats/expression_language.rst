@@ -32,7 +32,7 @@ The component supports:
 
     Control characters (e.g. ``\n``) in expressions are replaced with
     whitespace. To avoid this, escape the sequence with a single backslash
-    (e.g.  ``\\n``).
+    (e.g. ``\\n``).
 
 .. _component-expression-objects:
 
@@ -407,7 +407,7 @@ Array Operators
 * ``in`` (contain)
 * ``not in`` (does not contain)
 
-These operators are using strict comparison. For example::
+These operators use strict comparison. For example::
 
     class User
     {
@@ -428,7 +428,7 @@ The ``$inGroup`` would evaluate to ``true``.
 
 .. note::
 
-    The ``in`` and ``not in`` operators are using strict comparison.
+    The ``in`` and ``not in`` operators use strict comparison.
 
 Numeric Operators
 ~~~~~~~~~~~~~~~~~
@@ -468,16 +468,16 @@ Other Operators
 * ``?.`` (:ref:`null-safe operator <component-expression-null-safe-operator>`)
 * ``??`` (:ref:`null-coalescing operator <component-expression-null-coalescing-operator>`)
 
-Operators Precedence
-~~~~~~~~~~~~~~~~~~~~
+Operator Precedence
+~~~~~~~~~~~~~~~~~~~
 
 Operator precedence determines the order in which operations are processed in an
 expression. For example, the result of the expression ``1 + 2 * 4`` is ``9``
 and not ``12`` because the multiplication operator (``*``) takes precedence over
 the addition operator (``+``).
 
-To avoid ambiguities (or to alter the default order of operations) add
-parentheses in your expressions (e.g. ``(1 + 2) * 4`` or ``1 + (2 * 4)``.
+To avoid ambiguities (or to alter the default order of operations), add
+parentheses in your expressions (e.g. ``(1 + 2) * 4`` or ``1 + (2 * 4)``).
 
 The following table summarizes the operators and their associativity from the
 **highest to the lowest precedence**:

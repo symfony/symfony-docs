@@ -4,16 +4,16 @@ How to Use Passwordless Login Link Authentication
 Login links, also called "magic links", are a passwordless authentication
 mechanism. Whenever a user wants to log in, a new link is generated and sent to
 them (e.g. using an email). The link fully authenticates the user in the
-application when clicking on it.
+application when they click on it.
 
 This authentication method can help you eliminate most of the customer support
 related to authentication (e.g. I forgot my password, how can I change or reset
-my password, etc.)
+my password, etc.).
 
 Using the Login Link Authenticator
 ----------------------------------
 
-This guide assumes you have :doc:`setup security and have created a user object </security>`
+This guide assumes you have :doc:`set up security and have created a user object </security>`
 in your application.
 
 1) Configure the Login Link Authenticator
@@ -131,8 +131,8 @@ this interface::
                 $email = $request->getPayload()->get('email');
                 $user = $userRepository->findOneBy(['email' => $email]);
 
-                // create a login link for $user this returns an instance
-                // of LoginLinkDetails
+                // create a login link for $user (this returns an instance
+                // of LoginLinkDetails)
                 $loginLinkDetails = $loginLinkHandler->createLoginLink($user);
                 $loginLink = $loginLinkDetails->getUrl();
 
@@ -184,11 +184,11 @@ link is created using
 3) Send the Login Link to the User
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now the link is created, it needs to be sent to the user. Anyone with the
+Now that the link is created, it needs to be sent to the user. Anyone with the
 link is able to log in as this user, so you need to make sure to send it to
-a known device of them (e.g. using e-mail or SMS).
+one of their known devices (e.g. using e-mail or SMS).
 
-You can send the link using any library or method. However the login link
+You can send the link using any library or method. However, the login link
 authenticator provides integration with the :doc:`Notifier component </notifier>`.
 Use the special :class:`Symfony\\Component\\Security\\Http\\LoginLink\\LoginLinkNotification`
 to create a notification and send it to the user's email address or phone
@@ -284,7 +284,7 @@ Important Considerations
 
 Login links are a convenient way of authenticating users, but they are also
 considered less secure than a traditional username and password form. It is
-not recommended to use login links in security critical applications.
+not recommended to use login links in security-critical applications.
 
 However, the implementation in Symfony does have a couple of extension points
 to make the login links more secure. In this section, the most important
@@ -463,7 +463,7 @@ Configure a Maximum Use of a Link
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is a common characteristic of login links to limit the number of times
-it can be used. Symfony can support this by storing used login links in the
+they can be used. Symfony can support this by storing used login links in the
 cache. Enable this support by setting the ``max_uses`` option:
 
 .. configuration-block::
@@ -504,7 +504,7 @@ cache. Enable this support by setting the ``max_uses`` option:
             ],
         ]);
 
-Make sure there is enough space left in the cache, otherwise invalid links
+Make sure there is enough space left in the cache; otherwise, invalid links
 can no longer be stored (and thus become valid again). Expired invalid
 links are automatically removed from the cache.
 
@@ -521,7 +521,7 @@ make it work as expected. Email providers and browsers often load a
 preview of the links, meaning that the link is already invalidated by
 the preview loader.
 
-In order to solve this issue, first set the ``check_post_only`` option let
+In order to solve this issue, first set the ``check_post_only`` option to let
 the authenticator only handle HTTP POST methods:
 
 .. configuration-block::
@@ -613,13 +613,13 @@ hash contained in the login link.
 
 This hasher creates a first hash with the expiration
 date of the link, the values of the configured signature properties and the
-user identifier. The used hashing algorithm is SHA-256.
+user identifier. The hashing algorithm used is SHA-256.
 
 Once this first hash is processed and encoded in Base64, a new one is created
 from the first hash value and the ``secret`` option of the ``login_link``
 firewall setting (the ``kernel.secret`` container parameter by default). This
 allows Symfony to sign this final hash, which is contained in the login URL.
-The final hash is also a Base64 encoded SHA-256 hash.
+The final hash is also a Base64-encoded SHA-256 hash.
 
 To change the secret without breaking the links that were already sent, pass a
 list of secrets to the ``secret`` option: the first secret signs new links and
@@ -637,7 +637,7 @@ previous secret once the ``lifetime`` of the links signed with it has passed.
 Customizing the Success Handler
 -------------------------------
 
-Sometimes, the default success handling does not fit your use-case (e.g.
+Sometimes, the default success handling does not fit your use case (e.g.
 when you need to generate and return an API key). To customize how the
 success handler behaves, create your own handler as a class that implements
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`::
@@ -747,7 +747,7 @@ features such as the locale used to generate the link::
 
 .. _customizing-link-lifetime:
 
-By default, generated links use :ref:`the lifetime configured globally <login-link-lifetime>`
+By default, generated links use :ref:`the lifetime configured globally <login-link-lifetime>`,
 but you can change the lifetime per link using the third argument of the
 ``createLoginLink()`` method::
 

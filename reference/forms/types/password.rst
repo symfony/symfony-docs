@@ -99,7 +99,7 @@ Overridden Options
 
 **type**: ``boolean`` **default**: ``false``
 
-Unlike the rest of form types, the ``PasswordType`` doesn't apply the
+Unlike the rest of the form types, the ``PasswordType`` doesn't apply the
 :phpfunction:`trim` function to the value submitted by the user. This ensures that
 the password is merged back onto the underlying object exactly as it was typed
 by the user.

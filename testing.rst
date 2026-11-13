@@ -25,7 +25,7 @@ wrong, merely different from what the Symfony documentation is using.
 `Integration Tests`_
     These tests test a combination of classes and commonly interact with
     Symfony's service container. These tests do not yet cover the fully
-    working application, those are called *Application tests*.
+    working application; those are called *Application tests*.
 
 `Application Tests`_
     Application tests (also known as functional tests) test the behavior of a
@@ -132,7 +132,7 @@ class to help you create and boot the kernel in your tests using
     }
 
 The ``KernelTestCase`` also makes sure your kernel is rebooted for each
-test. This assures that each test is run independently from each other.
+test. This ensures that each test runs independently from the others.
 
 To run your application tests, the ``KernelTestCase`` class needs to
 find the application kernel to initialize. The kernel class is
@@ -148,7 +148,7 @@ usually defined in the ``KERNEL_CLASS`` environment variable
 
     If your use case is more complex, you can also override the
     ``getKernelClass()`` or ``createKernel()`` methods of your functional
-    test, which takes precedence over the ``KERNEL_CLASS`` env var.
+    test, which take precedence over the ``KERNEL_CLASS`` env var.
 
 Set Up Your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -196,10 +196,10 @@ method::
 
 .. tip::
 
-    It is recommended to run your test with ``debug`` set to ``false`` on
+    It is recommended to run your tests with ``debug`` set to ``false`` on
     your CI server, as it significantly improves test performance. This
     disables clearing the cache. If your tests don't run in a clean
-    environment each time, you have to manually clear it using for instance
+    environment each time, you have to manually clear it using, for instance,
     this code in ``tests/bootstrap.php``::
 
         // ...
@@ -304,7 +304,7 @@ concrete one::
 
             $container->set(NewsRepositoryInterface::class, $newsRepository);
 
-            // will be injected the mocked repository
+            // the mocked repository will be injected
             $newsletterGenerator = $container->get(NewsletterGenerator::class);
 
             // ...
@@ -390,7 +390,7 @@ After that, you can create the test database and all tables using:
 
     A common practice is to append the ``_test`` suffix to the original
     database names in tests. If the database name in production is called
-    ``project_acme`` the name of the testing database could be
+    ``project_acme``, the name of the testing database could be
     ``project_acme_test``.
 
 Resetting the Database Automatically Before each Test
@@ -452,7 +452,7 @@ generate an empty fixture class:
     The class name of the fixtures to create (e.g. AppFixtures):
     > ProductFixture
 
-Then you modify and use this class to load new entities in the database. For
+Then you modify and use this class to load new entities into the database. For
 instance, to load ``Product`` objects into Doctrine, use::
 
     // src/DataFixtures/ProductFixture.php
@@ -503,7 +503,7 @@ have a very specific workflow:
 
 .. note::
 
-    The tools used in this section can be installed via the ``symfony/test-pack``,
+    The tools used in this section can be installed via the ``symfony/test-pack``;
     use ``composer require symfony/test-pack`` if you haven't done so already.
 
 Write Your First Application Test
@@ -641,10 +641,10 @@ to remove the ``kernel.reset`` tag from some services in your test environment::
         public function process(ContainerBuilder $container): void
         {
             if ('test' === $this->environment) {
-                // prevents the security token to be cleared
+                // prevents the security token from being cleared
                 $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
 
-                // prevents Doctrine entities to be detached
+                // prevents Doctrine entities from being detached
                 $container->getDefinition('doctrine')->clearTag('kernel.reset');
 
                 // ...
@@ -734,9 +734,9 @@ Logging in Users (Authentication)
 .................................
 
 When you want to add application tests for protected pages, you have to
-first "login" as a user. Reproducing the actual steps - such as
+first "log in" as a user. Reproducing the actual steps - such as
 submitting a login form - makes a test very slow. For this reason, Symfony
-provides a ``loginUser()`` method to simulate logging in your functional
+provides a ``loginUser()`` method to simulate logging in during your functional
 tests.
 
 Instead of logging in with real users, it's recommended to create a user
@@ -780,7 +780,7 @@ You can pass any
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance to
 ``loginUser()``. This method creates a special
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
-stores in the session of the test client. If you need to define custom
+stores it in the session of the test client. If you need to define custom
 attributes in this token, you can use the ``tokenAttributes`` argument of the
 :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method.
 
@@ -795,7 +795,7 @@ by instantiating :class:`Symfony\\Component\\Security\\Core\\User\\InMemoryUser`
     $client->loginUser($testUser);
 
 Before doing this, you must define the in-memory user in your test environment
-configuration to ensure it exists and can be authenticated::
+configuration to ensure it exists and can be authenticated:
 
 .. code-block:: yaml
 
@@ -901,7 +901,7 @@ second argument of ``createClient()``::
         'HTTP_USER_AGENT' => 'MySuperBrowser/1.0',
     ]);
 
-You can also override HTTP headers on a per request basis::
+You can also override HTTP headers on a per-request basis::
 
     $client->request('GET', '/', [], [], [
         'HTTP_HOST'       => 'en.example.com',
@@ -910,8 +910,8 @@ You can also override HTTP headers on a per request basis::
 
 .. warning::
 
-    The name of your custom headers must follow the syntax defined in the
-    `section 4.1.18 of RFC 3875`_: replace ``-`` by ``_``, transform it into
+    The names of your custom headers must follow the syntax defined in
+    `section 4.1.18 of RFC 3875`_: replace ``-`` with ``_``, transform it into
     uppercase and prefix the result with ``HTTP_``. For example, if your
     header name is ``X-Session-Token``, pass ``HTTP_X_SESSION_TOKEN``.
 
@@ -969,7 +969,7 @@ Accessing the Profiler Data
 
 On each request, you can enable the Symfony profiler to collect data about the
 internal handling of that request. For example, the profiler could be used to
-verify that a given page runs less than a certain number of database
+verify that a given page runs fewer than a certain number of database
 queries when loading.
 
 To get the profiler for the last request, do the following::
@@ -1163,7 +1163,7 @@ To use these assertions, your test class must extend
     :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
     is the same as the expected value.
 ``assertResponseIsUnprocessable(string $message = '', ?bool $verbose = null)``
-    Asserts the response is unprocessable (HTTP status is 422)
+    Asserts the response is unprocessable (HTTP status is 422).
 
 When they fail, these assert methods report what was expected and what happened,
 without including the response body. Pass the optional ``verbose`` argument to
@@ -1245,7 +1245,7 @@ To use these assertions, your test class must extend
     Asserts that the given selector does (not) match at least one element
     in the response.
 ``assertSelectorCount(int $expectedCount, string $selector, string $message = '')``
-    Asserts that the expected number of selector elements are in the response
+    Asserts that the expected number of selector elements are in the response.
 ``assertSelectorTextContains(string $selector, string $text, string $message = '')``/``assertSelectorTextNotContains(string $selector, string $text, string $message = '')``
     Asserts that the first element matching the given selector does (not)
     contain the expected text.
@@ -1254,21 +1254,21 @@ To use these assertions, your test class must extend
     contain the expected text.
 ``assertSelectorTextSame(string $selector, string $text, string $message = '')``
     Asserts that the contents of the first element matching the given
-    selector does equal the expected text.
+    selector equal the expected text.
 ``assertAnySelectorTextSame(string $selector, string $text, string $message = '')``
-    Asserts that the any element matching the given selector does equal the
+    Asserts that any element matching the given selector equals the
     expected text.
 ``assertPageTitleSame(string $expectedTitle, string $message = '')``
     Asserts that the ``<title>`` element is equal to the given title.
 ``assertPageTitleContains(string $expectedTitle, string $message = '')``
     Asserts that the ``<title>`` element contains the given title.
 ``assertInputValueSame(string $fieldName, string $expectedValue, string $message = '')``/``assertInputValueNotSame(string $fieldName, string $expectedValue, string $message = '')``
-    Asserts that value of the form input with the given name does (not)
+    Asserts that the value of the form input with the given name does (not)
     equal the expected value.
 ``assertCheckboxChecked(string $fieldName, string $message = '')``/``assertCheckboxNotChecked(string $fieldName, string $message = '')``
     Asserts that the checkbox with the given name is (not) checked.
 ``assertFormValue(string $formSelector, string $fieldName, string $value, string $message = '')``/``assertNoFormValue(string $formSelector, string $fieldName, string $message = '')``
-    Asserts that value of the field of the first form matching the given
+    Asserts that the value of the field of the first form matching the given
     selector does (not) equal the expected value.
 
 .. _mailer-assertions:
@@ -1357,13 +1357,13 @@ To use these assertions, your test class must extend
 
 ``assertHttpClientRequest(string $expectedUrl, string $expectedMethod = 'GET', string|array|null $expectedBody = null, array $expectedHeaders = [], string $httpClientId = 'http_client')``
     Asserts that the given URL has been called using, if specified,
-    the given method body and headers. By default it will check on the HttpClient,
+    the given method, body and headers. By default it will check on the HttpClient,
     but you can also pass a specific HttpClient ID.
-    (It will succeed if the request has been called multiple times.)
+    (It will succeed if the request has been made multiple times.)
 
 ``assertNotHttpClientRequest(string $unexpectedUrl, string $expectedMethod = 'GET', string $httpClientId = 'http_client')``
     Asserts that the given URL has not been called using GET or the specified method.
-    By default it will check on the HttpClient, but a HttpClient id can be specified.
+    By default it will check on the HttpClient, but an HttpClient ID can be specified.
 
 ``assertHttpClientRequestCount(int $count, string $httpClientId = 'http_client')``
     Asserts that the given number of requests has been made on the HttpClient.

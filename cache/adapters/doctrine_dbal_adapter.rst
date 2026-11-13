@@ -10,7 +10,7 @@ The Doctrine DBAL adapters store the cache items in a table of an SQL database.
     by calling the ``prune()`` method.
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\DoctrineDbalAdapter` requires a
-`Doctrine DBAL Connection`_, or `Doctrine DBAL URL`_ as its first parameter.
+`Doctrine DBAL Connection`_ or a `Doctrine DBAL URL`_ as its first parameter.
 You can pass a namespace, default cache lifetime, options array and
 :ref:`marshaller <cache-component-marshalling>` as the other optional
 arguments::
@@ -39,11 +39,11 @@ arguments::
 
 .. note::
 
-    DBAL Connection are lazy-loaded by default; some additional options may be
+    DBAL connections are lazy-loaded by default; some additional options may be
     necessary to detect the database engine and version without opening the
     connection.
 
-The adapter uses SQL syntax that is optimized for database server that it is connected to.
+The adapter uses SQL syntax that is optimized for the database server that it is connected to.
 The following database servers are known to be compatible:
 
 * MySQL 5.7 and newer
@@ -56,7 +56,7 @@ The following database servers are known to be compatible:
 .. note::
 
     Newer releases of Doctrine DBAL might increase these minimal versions. Check
-    the manual page on `Doctrine DBAL Platforms`_ if your database server is
+    the manual page on `Doctrine DBAL Platforms`_ to see if your database server is
     compatible with the installed Doctrine DBAL version.
 
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php

@@ -2,7 +2,7 @@ GreaterThanOrEqual
 ==================
 
 Validates that a value is greater than or equal to another value, defined in
-the options. To force that a value is greater than another value, see
+the options. To validate that a value is greater than another value, see
 :doc:`/reference/constraints/GreaterThan`.
 
 ==========  ===================================================================

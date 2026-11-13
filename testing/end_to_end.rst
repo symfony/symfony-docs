@@ -169,7 +169,7 @@ Here is an example of a ``PantherTestCase``::
             $this->assertPageTitleContains('My Title');
             $this->assertSelectorTextContains('#main', 'My body');
 
-            // ... or the one provided by Panther
+            // ... or the ones provided by Panther
             $this->assertSelectorIsEnabled('.search');
             $this->assertSelectorIsDisabled('[type="submit"]');
             $this->assertSelectorIsVisible('.errors');
@@ -215,7 +215,7 @@ finishes::
             // wait for the button to become enabled
             $client->waitForEnabled('[type="submit"]');
 
-            // wait for  the button to become disabled
+            // wait for the button to become disabled
             $client->waitForDisabled('[type="submit"]');
 
             // wait for the attribute to contain content
@@ -517,8 +517,7 @@ following environment variable: ``PANTHER_CHROME_ARGUMENTS='--ignore-certificate
     This option is insecure, use it only for testing in development environments,
     never in production (e.g. for web crawlers).
 
-For Firefox, instantiate the client like this, you can do this at client
-creation::
+For Firefox, set this option when creating the client::
 
     $client = Client::createFirefoxClient(null, null, ['capabilities' => ['acceptInsecureCerts' => true]]);
 
@@ -627,13 +626,13 @@ test-infrastructure with some Panther mechanisms::
 Configuring Panther Through Environment Variables
 -------------------------------------------------
 
-The following environment variables can be set to change some Panther's
+The following environment variables can be set to change some of Panther's
 behavior:
 
 ``PANTHER_NO_HEADLESS``
     Disable the browser's headless mode (will display the testing window, useful to debug)
 ``PANTHER_WEB_SERVER_DIR``
-    Change the project's document root (defaults to ``./public/``, relative paths **must start** by ``./``)
+    Change the project's document root (defaults to ``./public/``, relative paths **must start** with ``./``)
 ``PANTHER_WEB_SERVER_PORT``
     Change the web server's port (defaults to ``9080``)
 ``PANTHER_WEB_SERVER_ROUTER``
@@ -701,7 +700,7 @@ On Firefox, here is how you would do it::
 Interactive Mode
 ----------------
 
-Panther can make a pause in your test suites after a failure.
+Panther can pause your test suites after a failure.
 Thanks to this break time, you can investigate the encountered problem through
 the web browser. To enable this mode, you need the ``--debug`` PHPUnit option
 without the headless mode:
@@ -871,7 +870,7 @@ The following features are not currently supported:
 * Selecting invalid choices in the select
 
 Also, there is a known issue if you are using Bootstrap 5. It implements a
-scrolling effect which tends to mislead Panther. To fix this, we advise you to
+scrolling effect which tends to mislead Panther. To fix this,
 deactivate this effect by setting the Bootstrap 5 ``$enable-smooth-scroll``
 variable to ``false`` in your style file:
 

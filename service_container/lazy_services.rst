@@ -17,7 +17,7 @@ services. Depending on your needs, one of them can be a better fit than lazy
 services:
 
 * :ref:`Service closures <autowiring_closures>` inject a closure that creates
-  and returns the service when calling it. Prefer them when your own code must
+  and returns the service when you call it. Prefer them when your own code must
   control explicitly when (and whether) the service is created;
 * :doc:`Service locators </service_container/subscribers_locators>`
   inject a set of services, and each of them is only created when you fetch it
@@ -196,7 +196,7 @@ the service class. You can instead configure a proxy that only implements some
 specific interfaces. This is useful to:
 
 * Prevent calling methods that don't belong to those interfaces;
-* Make lazy an argument that uses a union type;
+* Make an argument that uses a union type lazy;
 * Lazy load `final`_ or ``readonly`` classes on PHP versions older than 8.4.
 
 In the following example, the ``AppExtension`` class implements two interfaces,

@@ -252,7 +252,7 @@ Returns the parent form view, or ``null`` for the root form. Prefer this over
 
 When a form field has validation errors, all built-in form themes automatically
 add the ``aria-invalid="true"`` attribute to the ``<input>`` element and link
-it to its error messages using ``aria-describedby``. If the field also has a
+it to its error messages using ``aria-describedby``. If the field also has
 help text, both the help and error IDs are included in the ``aria-describedby``
 value. This improves accessibility for screen readers without any extra
 configuration.

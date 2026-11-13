@@ -3,7 +3,7 @@ Password Hashing and Verification
 
 Most applications use passwords to log in users. These passwords should be
 hashed to securely store them. Symfony's PasswordHasher component provides
-all utilities to safely hash and verify passwords.
+all the utilities to safely hash and verify passwords.
 
 Make sure it is installed by running:
 
@@ -88,7 +88,7 @@ Further in this article, you can find a
 
 .. tip::
 
-    Hashing passwords is resource intensive and takes time in order to
+    Hashing passwords is resource-intensive and takes time in order to
     generate secure password hashes. In general, this makes your password
     hashing more secure.
 
@@ -184,7 +184,7 @@ install the SymfonyCastsResetPasswordBundle:
     $ composer require symfonycasts/reset-password-bundle
 
 Then, use the ``make:reset-password`` command. This asks you a few
-questions about your app and generates all the files you need! After,
+questions about your app and generates all the files you need! Afterward,
 you'll see a success message and a list of any other steps you need to do.
 
 .. code-block:: terminal
@@ -200,7 +200,7 @@ you'll see a success message and a list of any other steps you need to do.
 
 You can customize the reset password bundle's behavior by updating the
 ``reset_password.yaml`` file. For more information on the configuration,
-check out the `SymfonyCastsResetPasswordBundle`_  guide.
+check out the `SymfonyCastsResetPasswordBundle`_ guide.
 
 Injecting a Specific Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -248,7 +248,7 @@ its configuration key::
         {
             $plaintextToken = 'some-secret-token';
 
-            // Note: use hash(), not hashPassword(), as we are not using a UserInterface object
+            // Note: use hash(), not hashPassword(), as the token is not a UserInterface object
             $hashedToken = $this->passwordHasher->hash($plaintextToken);
         }
     }
@@ -348,7 +348,7 @@ on the new hasher to point to the old, legacy hasher(s):
 
 With this setup:
 
-* New users will be hashed with the new algorithm;
+* Passwords of new users will be hashed with the new algorithm;
 * Whenever a user logs in whose password is still stored using the old algorithm,
   Symfony will verify the password with the old algorithm and then rehash
   and update the password using the new algorithm.
@@ -371,7 +371,7 @@ listed in the ``migrate_from`` option of the new hasher.
     password migration using the following list of ``migrate_from`` algorithms:
 
     #. :ref:`PBKDF2 <reference-security-pbkdf2>` (which uses :phpfunction:`hash_pbkdf2`);
-    #. Message digest (which uses :phpfunction:`hash`)
+    #. Message digest (which uses :phpfunction:`hash`).
 
     Both use the ``hash_algorithm`` setting as the algorithm. It is recommended to
     use ``migrate_from`` instead of ``hash_algorithm``, unless the *auto*
@@ -397,7 +397,7 @@ After this, you're done and passwords are always hashed as securely as possible!
 
     When using the PasswordHasher component outside a Symfony application,
     you must manually use the ``PasswordHasherInterface::needsRehash()``
-    method to check if a rehash is needed and ``PasswordHasherInterface::hash()``
+    method to check if a rehash is needed and the ``PasswordHasherInterface::hash()``
     method to rehash the plaintext password using the new algorithm.
 
 .. _upgrade-the-password-doctrine:
@@ -500,7 +500,7 @@ is used for ``App\Entity\User``.
 
 This may be secure enough for a regular user, but what if you want your
 admins to have a stronger algorithm, for example ``auto`` with a higher
-cost. This can be done with named hashers:
+cost? This can be done with named hashers:
 
 .. configuration-block::
 
@@ -621,7 +621,7 @@ Hashing a Stand-Alone String
 The password hasher can be used to hash strings independently
 of users. By using the
 :class:`Symfony\\Component\\PasswordHasher\\Hasher\\PasswordHasherFactory`,
-you can declare multiple hashers, retrieve any of them with
+you can declare multiple hashers, retrieve any of them by
 its name and create hashes. You can then verify that a string matches the given
 hash::
 
@@ -660,8 +660,8 @@ Supported Algorithms
 
 .. _reference-security-encoder-auto:
 
-The "auto"  Hasher
-~~~~~~~~~~~~~~~~~~
+The "auto" Hasher
+~~~~~~~~~~~~~~~~~
 
 It automatically selects the best available hasher (currently Bcrypt). If
 PHP or Symfony adds new password hashers in the future, it might select a
@@ -680,17 +680,17 @@ It produces hashed passwords with the `bcrypt password hashing function`_.
 Hashed passwords are ``60`` characters long, so make sure to
 allocate enough space for them to be persisted. Also, passwords include the
 `cryptographic salt`_ inside them (it's generated automatically for each new
-password) so you don't have to deal with it.
+password), so you don't have to deal with it.
 
 Its only configuration option is ``cost``, which is an integer in the range of
 ``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
 time** it takes to hash a password. It's designed this way so the password
-strength can be adapted to the future improvements in computation power.
+strength can be adapted to future improvements in computation power.
 
 You can change the cost at any time — even if you already have some passwords
 hashed using a different cost. New passwords will be hashed using the new
-cost, while the already hashed ones will be validated using a cost that was
-used back when they were hashed.
+cost, while the already hashed ones will be validated using the cost that was
+used when they were hashed.
 
 .. _reference-security-sodium:
 
@@ -701,10 +701,10 @@ It uses the `Argon2 key derivation function`_. Argon2 support is available in
 PHP via the bundled `libsodium`_ extension.
 
 The hashed passwords are ``96`` characters long, but due to the hashing
-requirements saved in the resulting hash this may change in the future, so make
+requirements saved in the resulting hash, this may change in the future, so make
 sure to allocate enough space for them to be persisted. Also, passwords include
 the `cryptographic salt`_ inside them (it's generated automatically for each new
-password) so you don't have to deal with it.
+password), so you don't have to deal with it.
 
 .. _reference-security-pbkdf2:
 
@@ -717,7 +717,7 @@ to those newer hashing algorithms.
 
 .. _custom-password-hasher:
 
-Creating a custom Password Hasher
+Creating a Custom Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to create your own, it needs to follow these rules:

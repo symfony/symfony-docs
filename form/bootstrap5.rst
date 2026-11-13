@@ -45,7 +45,7 @@ configuration:
             ],
         ]);
 
-If you prefer to apply the Bootstrap styles on a form to form basis, include the
+If you prefer to apply the Bootstrap styles on a form-by-form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
 
 .. code-block:: html+twig
@@ -62,7 +62,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 .. note::
 
     By default, all inputs are rendered with the ``mb-3`` class on their
-    container. If you override the ``row_attr`` class option, the ``mb-3`` will
+    container. If you override the ``row_attr`` class option, the ``mb-3`` class will
     be overridden too and you will need to explicitly add it.
 
 .. _reference-forms-bootstrap5-error-messages:
@@ -145,7 +145,7 @@ class to the label:
 .. tip::
 
     You can also render your switches inline by adding the
-    ``checkbox-inline`` class on the ``label_attr`` option::
+    ``checkbox-inline`` class to the ``label_attr`` option::
 
         // ...
         'label_attr' => [
@@ -155,9 +155,9 @@ class to the label:
 
 .. warning::
 
-    Switches only work with **checkbox**.
+    Switches only work with **checkboxes**.
 
-Input group
+Input Group
 -----------
 
 To create an `input group`_ in your Symfony Form, add the ``input-group``
@@ -185,10 +185,10 @@ class to the ``row_attr`` option.
 
 .. warning::
 
-    If you fill the ``help`` option of your form, it will also be rendered
+    If you define the ``help`` option of your form, it will also be rendered
     as part of the group.
 
-Floating labels
+Floating Labels
 ---------------
 
 To render an input field with a `floating label`_, you must add a ``label``,

@@ -134,7 +134,7 @@ method of the kernel class, which you can override to return a different value::
 
 Symfony follows the `reproducible builds`_ philosophy, which ensures that the
 result of compiling the exact same source code doesn't produce different
-results. This helps checking that a given binary or executable code was compiled
+results. This helps check that a given binary or executable code was compiled
 from some trusted source code.
 
 In practice, the compiled :doc:`service container </service_container>` of your
@@ -157,7 +157,7 @@ Since the ``container.build_time`` value will change every time you compile the
 application, the build will not be strictly reproducible. If you care about
 this, the solution is to use another container parameter called
 ``kernel.container_build_time`` and set it to a non-changing build time to
-achieve a strict reproducible build:
+achieve a strictly reproducible build:
 
 .. configuration-block::
 
@@ -271,8 +271,8 @@ used by the application.
 
 This value defines the configuration options used to run the application, whereas
 the :ref:`kernel.runtime_environment <configuration-kernel-runtime-environment>`
-option defines the place where the application is deployed. This allows for
-example to run an application with the ``prod`` config (``kernel.environment``)
+option defines the place where the application is deployed. For example, this allows
+you to run an application with the ``prod`` config (``kernel.environment``)
 in different scenarios like ``staging`` or ``production`` (``kernel.runtime_environment``).
 
 ``kernel.error_controller``
@@ -361,7 +361,7 @@ is not set, this parameter falls back to the value of ``kernel.environment``.
 
 This value defines the place where the application is deployed, whereas the
 :ref:`kernel.environment <configuration-kernel-environment>` option defines
-the configuration options used to run the application. This allows for example
+the configuration options used to run the application. For example, this allows you
 to run an application with the ``prod`` config (``kernel.environment``) in different
 scenarios like ``staging`` or ``production`` (``kernel.runtime_environment``).
 

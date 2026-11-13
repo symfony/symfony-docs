@@ -43,7 +43,7 @@ supports multiple applications:
 The following example shows how to create a new application for the API of a new
 Symfony project.
 
-Step 1) Create a new Application
+Step 1) Create a New Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This example follows the `Shared Kernel`_ pattern: all applications maintain an
@@ -53,7 +53,7 @@ requirements, so it's up to you to decide which best suits your project.
 
 First, create a new ``apps`` directory at the root of your project, which will
 hold all the necessary applications. Each application will follow a simplified
-directory structure like the one described in :doc:`Symfony Best Practice </best_practices>`:
+directory structure like the one described in :doc:`Symfony Best Practices </best_practices>`:
 
 .. code-block:: text
 
@@ -104,7 +104,7 @@ section:
 Additionally, don't forget to run ``composer dump-autoload`` to generate the
 autoload files.
 
-Step 2) Update the Kernel class to support Multiple Applications
+Step 2) Update the Kernel Class to Support Multiple Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since there will be multiple applications, it's better to add a new property
@@ -212,7 +212,7 @@ This example reuses the default implementation to import the configuration and
 routes based on a given configuration directory. As shown earlier, this
 approach will import both the shared and the app-specific resources.
 
-Step 3) Add a new APP_ID environment variable
+Step 3) Add a New APP_ID Environment Variable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Next, define a new environment variable that identifies the current application.
@@ -278,7 +278,7 @@ Executing Commands
 The ``bin/console`` script, which is used to run Symfony commands, always uses
 the ``Kernel`` class to build the application and load the commands. If you
 need to run console commands for a specific application, you can provide the
-``--id`` option along with the appropriate identity value:
+``--id`` option along with the appropriate application ID:
 
 .. code-block:: terminal
 
@@ -385,7 +385,7 @@ its existence:
 
 Remember to run ``composer dump-autoload`` to generate the autoload files.
 
-And, here is the update needed for the ``phpunit.xml`` file:
+And here is the update needed for the ``phpunit.xml`` file:
 
 .. code-block:: xml
 
@@ -398,12 +398,12 @@ And, here is the update needed for the ``phpunit.xml`` file:
         </testsuite>
     </testsuites>
 
-Adding more Applications
+Adding More Applications
 ------------------------
 
 Now you can begin adding more applications as needed, such as an ``admin``
 application to manage the project's configuration and permissions. To do that,
-you will have to repeat the step 1 only:
+you only have to repeat step 1:
 
 .. code-block:: text
 

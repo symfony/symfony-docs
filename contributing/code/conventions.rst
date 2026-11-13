@@ -100,7 +100,7 @@ conventions:
 * No third level sections are allowed;
 
 * Messages should follow the :ref:`commit message conventions <commit-messages>`:
-  should be short, capitalize the line, do not end with a period, use an
+  they should be short, capitalize the line, do not end with a period, use an
   imperative verb to start the line;
 
 * New entries must be added on top of the list.
@@ -133,9 +133,9 @@ that happens when a feature implementation cannot be changed because of
 backward compatibility issues, but we still want to propose a "better"
 alternative. In that case, the old implementation can be **deprecated**.
 
-Deprecations must only be introduced on the next minor version of the impacted
+Deprecations must only be introduced in the next minor version of the impacted
 component (or bundle, or bridge, or contract). They can exceptionally be
-introduced on previous supported versions if they are critical.
+introduced in previous supported versions if they are critical.
 
 A new class (or interface, or trait) cannot be introduced as deprecated, or
 contain deprecated methods.
@@ -156,7 +156,7 @@ and whenever possible, how it was replaced::
      * @deprecated since Symfony 5.1, use Replacement instead.
      */
 
-When the replacement is in another namespace than the deprecated class, its FQCN must be used::
+When the replacement is in a different namespace than the deprecated class, its FQCN must be used::
 
     /**
      * @deprecated since Symfony 5.1, use A\B\Replacement instead.
@@ -167,7 +167,7 @@ A deprecation must also be triggered to help people with the migration
 
     trigger_deprecation('symfony/package-name', '5.1', 'The "%s" class is deprecated, use "%s" instead.', Deprecated::class, Replacement::class);
 
-When deprecating a whole class the ``trigger_deprecation()`` call should be placed
+When deprecating a whole class, the ``trigger_deprecation()`` call should be placed
 after the use declarations, like in this example from `ServiceRouterLoader`_::
 
     namespace Symfony\Component\Routing\Loader\DependencyInjection;
@@ -215,7 +215,7 @@ All these tasks are mandatory and must be done in the same pull request.
 Removing Deprecated Code
 ------------------------
 
-Removing deprecated code can only be done once every two years, on the next
+Removing deprecated code can only be done once every two years, in the next
 major version of the impacted component (``6.0`` branch, ``7.0`` branch, etc.).
 
 When removing deprecated code, the consequences of the deprecation must be added

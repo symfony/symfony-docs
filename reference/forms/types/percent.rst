@@ -51,7 +51,7 @@ symbol
 
 By default, fields are rendered with a percentage sign ``%`` after the input.
 Setting the value to ``false`` will not display the percentage sign. Setting the
-value to a ``string`` (e.g. ``‱``), will show that string instead of the default
+value to a ``string`` (e.g. ``‱``) will show that string instead of the default
 ``%`` sign.
 
 type
@@ -60,7 +60,7 @@ type
 **type**: ``string`` **default**: ``fractional``
 
 This controls how your data is stored on your object. For example, a percentage
-corresponding to "55%", might be stored as ``0.55`` or ``55`` on your
+corresponding to "55%" might be stored as ``0.55`` or ``55`` on your
 object. The two "types" handle these two cases:
 
 *   ``fractional``

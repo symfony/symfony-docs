@@ -143,7 +143,7 @@ This outputs:
     | 80-902734-1-6 | And Then There Were None | Agatha Christie                |
     +---------------+--------------------------+--------------------------------+
 
-Note that the defined column widths are always considered as the minimum column
+Note that the defined column widths are always considered the minimum column
 widths. If the contents don't fit, the given column width is increased up to the
 longest content length. That's why in the previous example the first column has
 a ``13`` character length although the user defined ``10`` as its width.
@@ -196,7 +196,7 @@ This outputs:
 Customizing the Table Style
 ---------------------------
 
-The table style can be changed to any built-in styles via
+The table style can be changed to any of the built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 
     // this 'default' style is the one used when no style is specified
@@ -329,7 +329,7 @@ Here is a full list of things you can customize:
         // registers the style under the colorful name
         Table::setStyleDefinition('colorful', $tableStyle);
 
-        // applies the custom style for the given table
+        // applies the custom style to the given table
         $table->setStyle('colorful');
 
     This method can also be used to override a built-in style.
@@ -366,7 +366,7 @@ to each table cell via :class:`Symfony\\Component\\Console\\Helper\\TableCellSty
 Spanning Multiple Columns and Rows
 ----------------------------------
 
-To make a table cell that spans multiple columns you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
+To make a table cell that spans multiple columns, you can use a :class:`Symfony\\Component\\Console\\Helper\\TableCell`::
 
     use Symfony\Component\Console\Helper\Table;
     use Symfony\Component\Console\Helper\TableCell;
@@ -418,7 +418,7 @@ This outputs:
         | ...                    |
         +-------+-------+--------+
 
-In a similar way you can span multiple rows::
+In a similar way, you can span multiple rows::
 
     use Symfony\Component\Console\Helper\Table;
     use Symfony\Component\Console\Helper\TableCell;

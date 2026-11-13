@@ -74,7 +74,7 @@ The `Data Source Name (DSN)`_ for this adapter must use the following format:
 
     memcached://[user:pass@][ip|host|socket[:port]][?weight=int]
 
-The DSN must include a IP/host (and an optional port) or a socket path, an
+The DSN must include an IP/host (and an optional port) or a socket path, an
 optional username and password (for SASL authentication; it requires that the
 memcached extension was compiled with ``--enable-memcached-sasl``) and an
 optional weight (for prioritizing servers in a cluster; its value is an integer
@@ -159,7 +159,7 @@ Available Options
 
 ``libketama_compatible`` (type: ``bool``, default: ``true``)
     Enables or disables "libketama" compatible behavior, enabling other
-    libketama-based clients to access the keys stored by client instance
+    libketama-based clients to access the keys stored by the client instance
     transparently (like Python and Ruby). Enabling this option sets the ``hash``
     option to ``md5`` and the ``distribution`` option to ``consistent``.
 
@@ -171,7 +171,7 @@ Available Options
     Specifies the number of replicas that should be stored for each item (on
     different servers). This does not dedicate certain memcached servers to
     store the replicas in, but instead stores the replicas together with all of
-    the other objects (on the "n" next servers registered).
+    the other objects (on the next "n" servers registered).
 
     Valid option values include *any positive integer*.
 
@@ -189,10 +189,10 @@ Available Options
 
 ``randomize_replica_read`` (type: ``bool``, default: ``false``)
     Enables or disables randomization of the replica reads starting point.
-    Normally the read is done from primary server and in case of a miss the read
+    Normally the read is done from the primary server and in case of a miss the read
     is done from "primary+1", then "primary+2", all the way to "n" replicas.
     This option sets the replica reads as randomized between all available
-    servers; it allows distributing read load to multiple servers with the
+    servers; it allows distributing read load to multiple servers at the
     expense of more write traffic.
 
 ``recv_timeout`` (type: ``int``, default: ``0``)
@@ -216,7 +216,7 @@ Available Options
 
 ``serializer`` (type: ``string``, default: ``php``)
     Specifies the serializer to use for serializing non-scalar values. The
-    ``igbinary`` options requires the igbinary PHP extension to be enabled, as
+    ``igbinary`` option requires the igbinary PHP extension to be enabled, as
     well as the memcached extension to have been compiled with support for it.
 
     Valid option values include ``php`` and ``igbinary``.
@@ -229,14 +229,14 @@ Available Options
     Valid option values include *any positive integer*.
 
 ``socket_recv_size`` (type: ``int``)
-    Specified the maximum buffer size (in bytes) in the context of incoming
+    Specifies the maximum buffer size (in bytes) in the context of incoming
     (receive) socket connection data.
 
     Valid option values include *any positive integer*, with a default value
     that *varies by platform and kernel configuration*.
 
 ``socket_send_size`` (type: ``int``)
-    Specified the maximum buffer size (in bytes) in the context of outgoing (send)
+    Specifies the maximum buffer size (in bytes) in the context of outgoing (send)
     socket connection data.
 
     Valid option values include *any positive integer*, with a default value

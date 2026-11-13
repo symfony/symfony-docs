@@ -100,7 +100,7 @@ only initialize if the host from the request matches against the configuration.
         ]);
 
 The ``host`` (like the ``pattern``) is a regular expression. In this example,
-the firewall will only be activated if the host is equal exactly (due to
+the firewall will only be activated if the host is exactly equal (due to
 the ``^`` and ``$`` regex characters) to the hostname ``admin.example.com``.
 If the hostname does not match this pattern, the firewall will not be activated
 and subsequent firewalls will have the opportunity to be matched for this
@@ -150,7 +150,7 @@ have the opportunity to be matched for this request.
 Restricting by Service
 ----------------------
 
-If the above options don't fit your needs you can configure any service implementing
+If the above options don't fit your needs, you can configure any service implementing
 :class:`Symfony\\Component\\HttpFoundation\\RequestMatcherInterface` as ``request_matcher``.
 
 .. configuration-block::

@@ -100,6 +100,6 @@ in your ``webpack_encore.yaml`` file:
             defer: false
 
 This will make sure there is *not* a ``defer`` attribute on your ``script``
-tags. For more information, see `Moving <script> inside <head> and the "defer" Attribute`_
+tags. For more information, see `Moving <script> inside <head> and the "defer" Attribute`_.
 
 .. _`Moving <script> inside <head> and the "defer" Attribute`: https://symfony.com/blog/moving-script-inside-head-and-the-defer-attribute

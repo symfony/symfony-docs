@@ -75,7 +75,7 @@ Your own Receiver
 A receiver is responsible for getting messages from a source and dispatching
 them to the application.
 
-Imagine you already processed some "orders" in your application using a
+Imagine you already process some "orders" in your application using a
 ``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
 application but you can't use an API and need to use a shared CSV file with new
 orders.
@@ -99,7 +99,7 @@ do is to write your own CSV receiver::
             private SerializerInterface $serializer,
             private string $filePath,
         ) {
-            // Available connection bundled with the Messenger component
+            // Available connections bundled with the Messenger component
             // can be found in "Symfony\Component\Messenger\Bridge\*\Transport\Connection".
             $this->connection = /* create your connection */;
         }

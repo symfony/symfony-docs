@@ -33,7 +33,7 @@ options to show (e.g. don't show "months", but *do* show "days")::
 
     $builder->add('remindEvery', DateIntervalType::class, [
         'widget'      => 'integer', // render a text field for each part
-        // 'input'    => 'string',  // if you want the field to return a ISO 8601 string back to you
+        // 'input'    => 'string',  // if you want the field to return an ISO 8601 string back to you
 
         // customize which text boxes are shown
         'with_years'  => false,
@@ -97,10 +97,10 @@ when the ``widget`` option is set to ``choice``::
 
 **type**: ``string`` **default**: ``dateinterval``
 
-The format of the *input* data - i.e. the format that the interval is stored on
+The format of the *input* data - i.e. the format that the interval is stored in
 your underlying object. Valid values are:
 
-* ``string`` (a string formatted with `ISO 8601`_ standard, e.g. ``P7Y6M5DT12H15M30S``)
+* ``string`` (a string formatted with the `ISO 8601`_ standard, e.g. ``P7Y6M5DT12H15M30S``)
 * ``dateinterval`` (a ``DateInterval`` object)
 * ``array`` (e.g. ``['days' => '1', 'hours' => '12',]``)
 
@@ -209,7 +209,7 @@ following:
   options.
   Default: Three fields for years, months and days.
 
-* ``single_text``: renders a single input of type ``text``. User's input
+* ``single_text``: renders a single input of type ``text``. The user's input
   will be validated against the format ``PnYnMnDTnHnMnS`` (or ``PnW`` if using
   only weeks).
 
@@ -223,7 +223,7 @@ input to capture days.
 
 .. warning::
 
-    This can not be used when `with_weeks`_ is enabled.
+    This cannot be used when `with_weeks`_ is enabled.
 
 ``with_hours``
 ~~~~~~~~~~~~~~
@@ -240,7 +240,7 @@ input to capture hours.
 
 Whether or not to include invert in the input. This will result in an additional
 checkbox.
-This can not be used when the `widget`_ option is set to ``single_text``.
+This cannot be used when the `widget`_ option is set to ``single_text``.
 
 ``with_minutes``
 ~~~~~~~~~~~~~~~~
@@ -276,7 +276,7 @@ input to capture weeks.
 
 .. warning::
 
-    This can not be used when `with_days`_ is enabled.
+    This cannot be used when `with_days`_ is enabled.
 
 ``with_years``
 ~~~~~~~~~~~~~~

@@ -123,12 +123,12 @@ To access a page, you must now use the ``front.php`` script:
 
 The key is to use the ``Request::getPathInfo()`` method, which returns
 the path of the Request by removing the front controller script name including
-its sub-directories (only if needed -- see above tip).
+its sub-directories (only if needed -- see the tip above).
 
 .. tip::
 
     You don't even need to set up a web server to test the code. Instead,
-    replace the ``$request = Request::createFromGlobals();`` call to something
+    replace the ``$request = Request::createFromGlobals();`` call with something
     like ``$request = Request::create('/hello?name=Fabien');`` where the
     argument is the URL path you want to simulate.
 

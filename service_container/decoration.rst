@@ -121,7 +121,7 @@ whereas in PHP classes you use the ``#[AutowireDecorated]`` attribute:
         {
             public function __construct(
                 // unlike other configuration formats (that must use $inner as the name of the
-                // decorated service) when using attributes you can choose any variable name
+                // decorated service), when using attributes you can choose any variable name
                 #[AutowireDecorated] private Mailer $mailer,
                 private LoggerInterface $logger,
             ) {
@@ -523,7 +523,7 @@ as in the previous section::
 Each frame of the ``stack`` can be either an :ref:`inlined service <anonymous-services>`,
 a :ref:`reference to an existing service <services-constructor-injection>` or a
 :ref:`child definition <parent-services>`. The latter allows embedding ``stack``
-definitions into each others.
+definitions into each other.
 
 For example, imagine that legal regulations require your application to audit
 all sent emails and to add a legal disclaimer to their contents. You can define
@@ -593,7 +593,7 @@ The result will be::
 
 .. note::
 
-    To change existing stacks (i.e. from a :doc:`compiler pass </service_container/compiler_passes>`),
+    To change existing stacks (e.g. from a :doc:`compiler pass </service_container/compiler_passes>`),
     you can access each frame by its generated id with the following structure:
     ``.stack_id.frame_key``. From the example above, ``.mailer_stack.1`` would
     be a reference to the inlined ``App\RateLimitingMailer`` service and
@@ -739,7 +739,7 @@ option allows you to choose the behavior to adopt.
 Three different behaviors are available:
 
 * ``exception``: (default) A ``ServiceNotFoundException`` will be thrown telling
-  that decorator's dependency is missing.
+  that the decorator's dependency is missing.
 * ``ignore``: The container will remove the decorator.
 * ``null``: The container will keep the decorator service and will set the
   decorated one to ``null``; declare the constructor argument that receives

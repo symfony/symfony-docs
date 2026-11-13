@@ -3,9 +3,9 @@ Using Parameters within a Dependency Injection Class
 
 You have seen how to use configuration parameters within
 :ref:`Symfony service containers <service-container-parameters>`.
-There are special cases such as when you want, for instance, to use the
+There are special cases, for instance when you want to use the
 ``%kernel.debug%`` parameter to make the services in your bundle enter
-debug mode. For this case there is more work to do in order
+debug mode. In this case, there is more work to do in order
 to make the system understand the parameter value. By default,
 your parameter ``%kernel.debug%`` will be treated as a string. Consider the
 following example::
@@ -124,5 +124,5 @@ And set it in the constructor of ``Configuration`` via the :class:`Symfony\\Comp
 .. tip::
 
     There are some instances of ``%kernel.debug%`` usage within a
-    ``Configurator`` class for example in TwigBundle. However, this is because
+    ``Configurator`` class, for example in TwigBundle. However, this is because
     the default parameter value is set by the Extension class.

@@ -1,4 +1,4 @@
-How to Log Messages to different Files
+How to Log Messages to Different Files
 ======================================
 
 The Symfony Framework organizes log messages into channels. By default, there
@@ -11,13 +11,13 @@ the channel).
 
 .. note::
 
-    Each channel corresponds to a different logger service (``monolog.logger.XXX``)
+    Each channel corresponds to a different logger service (``monolog.logger.XXX``).
     Use the ``php bin/console debug:container monolog`` command to see a full
     list of services and learn :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 .. _logging-channel-handler:
 
-Switching a Channel to a different Handler
+Switching a Channel to a Different Handler
 ------------------------------------------
 
 Now, suppose you want to log the ``security`` channel to a different file.
@@ -91,7 +91,7 @@ You can specify the configuration in different ways:
     channels: [foo, bar]   # Include only channels 'foo' and 'bar'
     channels: ['!foo', '!bar'] # Include all channels, except 'foo' and 'bar'
 
-Creating your own Channel
+Creating Your Own Channel
 -------------------------
 
 You can change the channel Monolog logs to one service at a time. This is done

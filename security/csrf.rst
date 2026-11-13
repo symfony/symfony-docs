@@ -78,8 +78,8 @@ with CSRF protection.
 
 .. _caching-pages-that-contain-csrf-protected-forms:
 
-This leads to many strategies to help with caching pages that include CSRF
-protected forms, among them:
+This leads to many strategies to help with caching pages that include CSRF-protected
+forms, among them:
 
 * Embed the form inside an uncached :doc:`ESI fragment </http_cache/esi>` and
   cache the rest of the page contents;
@@ -88,7 +88,7 @@ protected forms, among them:
   load the CSRF token with an uncached AJAX request and replace the form
   field value with it.
 
-The most effective way to cache pages that need CSRF protected forms is to use
+The most effective way to cache pages that need CSRF-protected forms is to use
 :ref:`stateless CSRF tokens <csrf-stateless-tokens>`, as explained below.
 
 .. _csrf-protection-forms:
@@ -113,7 +113,7 @@ to do anything to be protected against CSRF attacks.
 
 .. _form-csrf-customization:
 
-By default Symfony adds the CSRF token in a hidden field called ``_token``, but
+By default, Symfony adds the CSRF token in a hidden field called ``_token``, but
 this can be customized (1) globally for all forms and (2) on a form-by-form basis.
 Globally, you can configure it under the ``framework.form`` option:
 
@@ -201,7 +201,7 @@ Generating and Checking CSRF Tokens Manually
 --------------------------------------------
 
 Although Symfony Forms provide automatic CSRF protection by default, you may
-need to generate and check CSRF tokens manually for example when using regular
+need to generate and check CSRF tokens manually, for example when using regular
 HTML forms not managed by the Symfony Form component.
 
 Consider an HTML form created to allow deleting items. First, use the
@@ -347,7 +347,7 @@ array, the attribute is ignored for that request, and no CSRF validation occurs:
 You can also choose where the CSRF token is read from using the ``tokenSource``
 parameter. This is a bitfield that allows you to combine different sources:
 
-* ``IsCsrfTokenValid::SOURCE_PAYLOAD`` (default): request payload (POST body / json)
+* ``IsCsrfTokenValid::SOURCE_PAYLOAD`` (default): request payload (POST body / JSON)
 * ``IsCsrfTokenValid::SOURCE_QUERY``: query string
 * ``IsCsrfTokenValid::SOURCE_HEADER``: request header
 
@@ -533,7 +533,7 @@ attribute. You can adapt this logic to your needs as long as the same protocol
 is followed.
 
 To prevent validation from being downgraded, an extra behavioral check is performed:
-if (and only if) a session already exists, successful "double-submit" is remembered
+if (and only if) a session already exists, a successful "double-submit" is remembered
 and becomes required for future requests. This ensures that once the optional cookie/header
 validation has been proven effective, it remains enforced for that session.
 

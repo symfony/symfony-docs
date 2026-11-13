@@ -4,14 +4,14 @@ How to Create a Form Type Extension
 Form type extensions are *incredibly* powerful: they allow you to *modify* any
 existing form field types across the entire system.
 
-They have 2 main use-cases:
+They have 2 main use cases:
 
 #. You want to add a **specific feature to a single form type** (such
    as adding a "download" feature to the ``FileType`` field type);
 #. You want to add a **generic feature to several types** (such as
    adding a "help" text to every "input text"-like type).
 
-Imagine that you have a ``Media`` entity, and that each media is associated
+Imagine that you have a ``Media`` entity, and that each media object is associated
 with a file. Your ``Media`` form uses a file type, but when editing the entity,
 you would like to see its image automatically rendered next to the file
 input.
@@ -92,10 +92,10 @@ Once the extension is registered, any method that you've overridden (e.g.
 
         $ php bin/console debug:form
 
-Adding the extension Business Logic
+Adding the Extension Business Logic
 -----------------------------------
 
-The goal of your extension is to display a nice image next to file input
+The goal of your extension is to display a nice image next to the file input
 (when the underlying model contains images). For that purpose, suppose that
 you use an approach similar to the one described in
 :doc:`How to handle File Uploads with Doctrine </controller/upload_file>`:
@@ -130,8 +130,8 @@ Your form type extension class will need to do two things in order to extend
 the ``FileType::class`` form type:
 
 #. Override the ``configureOptions()`` method so that any ``FileType`` field can
-   have an  ``image_property`` option;
-#. Override the ``buildView()`` methods to pass the image URL to the view.
+   have an ``image_property`` option;
+#. Override the ``buildView()`` method to pass the image URL to the view.
 
 For example::
 

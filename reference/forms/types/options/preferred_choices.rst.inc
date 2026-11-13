@@ -20,7 +20,7 @@ form of languages, you can list the most popular on top, like Bork and Pirate::
         'preferred_choices' => ['muppets', 'arr'],
     ]);
 
-This options can also be a callback function to give you more flexibility. This might
+This option can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

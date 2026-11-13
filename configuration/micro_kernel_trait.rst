@@ -161,7 +161,7 @@ that define your bundles, your services and your routes:
 
 **configureRoutes(RoutingConfigurator $routes)**
     In this method, you can use the ``RoutingConfigurator`` object to define routes
-    in your application and associate them to the controllers defined in this very
+    in your application and associate them with the controllers defined in this very
     same file.
 
     However, it's more convenient to define the controller routes using PHP attributes,
@@ -218,7 +218,7 @@ the dedicated section about
 :doc:`managing configuration with extensions </service_container/extensions>`.
 
 It is also possible to implement the ``EventSubscriberInterface`` to handle
-events directly from the kernel, again it will be registered automatically::
+events directly from the kernel; again, it will be registered automatically::
 
     // ...
     use App\Exception\Danger;
@@ -314,7 +314,7 @@ Now it looks like this::
         {
             $container->import(__DIR__.'/../config/framework.yaml');
 
-            // register all classes in /src/ as service
+            // register all classes in /src/ as services
             $container->services()
                 ->load('App\\', __DIR__.'/*')
                 ->autowire()
@@ -486,7 +486,7 @@ this:
     ├─ composer.json
     └─ composer.lock
 
-As before you can use the :ref:`Symfony local web server <symfony-cli-server>`:
+As before, you can use the :ref:`Symfony local web server <symfony-cli-server>`:
 
 .. code-block:: terminal
 

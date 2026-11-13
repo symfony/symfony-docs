@@ -68,7 +68,7 @@ sticks to these rules.
 
 .. warning::
 
-    The exception to this rule are interfaces tagged with ``@internal``. Such
+    The exceptions to this rule are interfaces tagged with ``@internal``. Such
     interfaces should not be used or implemented.
 
 If you implement an interface, we promise that we won't ever break your code.
@@ -161,7 +161,7 @@ All traits provided by Symfony may be used in your classes.
 
 .. warning::
 
-    The exception to this rule are traits tagged with ``@internal``. Such
+    The exceptions to this rule are traits tagged with ``@internal``. Such
     traits should not be used.
 
 To be on the safe side, check the following table to know which use cases are
@@ -205,7 +205,7 @@ to the rules listed below in order to ensure smooth upgrades for our users.
 Changing Interfaces
 ~~~~~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on
+This table tells you which changes you are allowed to make when working on
 Symfony's interfaces:
 
 ==============================================  ==============  ===============
@@ -244,7 +244,7 @@ Change value of a constant                      Yes             :ref:`[1] <note-
 Changing Classes
 ~~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on
+This table tells you which changes you are allowed to make when working on
 Symfony's classes:
 
 ========================================================================  ==============  ===============
@@ -361,7 +361,7 @@ Change value of a constant                                                Yes   
 Changing Traits
 ~~~~~~~~~~~~~~~
 
-This table tells you which changes you are allowed to do when working on
+This table tells you which changes you are allowed to make when working on
 Symfony's traits:
 
 ===============================================================================  ==============  ===============
@@ -471,7 +471,7 @@ ancestor of the class.
 **[5]** The value of a constant may only be changed when the constants aren't
 used in configuration (e.g. Yaml and XML files), as these do not support
 constants and have to hardcode the value. For instance, event name constants
-can't change the value without introducing a BC break. Additionally, if a
+can't change their value without introducing a BC break. Additionally, if a
 constant will likely be used in objects that are serialized, the value of a
 constant should not be changed.
 
@@ -545,7 +545,7 @@ method through the interface or the parent class can pass arguments by name.
 
 .. _note-11:
 
-**[11]** Only optional argument(s) of a constructor at last position may be added.
+**[11]** Only optional argument(s) of a constructor in the last position may be added.
 When the constructor uses the ``@optional-arguments-by-name`` or
 ``@arguments-by-name`` tag, a new optional argument may be added at any position
 after the required arguments.
@@ -573,7 +573,7 @@ Making Code Changes in a Backward Compatible Way
 As you read above, many changes are not allowed because they would represent a
 backward compatibility break. However, we want to be able to improve the code and
 its features over time and that can be done thanks to some strategies that
-allow you to still do some unallowed changes in several steps that ensure backward
+allow you to still make some disallowed changes in several steps that ensure backward
 compatibility and a smooth upgrade path. Some of them are described in the next
 sections.
 
@@ -617,7 +617,7 @@ If that's the case, here is how to do it properly in a minor version:
 
     trigger_deprecation('symfony/COMPONENT', 'X.Y', 'Not passing the "bool $stripWhitespace" argument explicitly is deprecated, its default value will change to X in Z.0.');
 
-#. If the argument has no default value, warn the user that is going to be
+#. If the argument has no default value, warn the user that it is going to be
    required in the next major version::
 
     if (\func_num_args() < 2) {

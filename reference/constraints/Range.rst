@@ -416,7 +416,7 @@ Parameter        Description
 
 **type**: ``string``
 
-It defines the object property whose value is used as ``max`` option.
+It defines the object property whose value is used as the ``max`` option.
 
 For example, if you want to compare the ``$submittedDate`` property of some object
 with regard to the ``$deadline`` property of the same object, use
@@ -460,7 +460,7 @@ Parameter        Description
 
 **type**: ``string``
 
-It defines the object property whose value is used as ``min`` option.
+It defines the object property whose value is used as the ``min`` option.
 
 For example, if you want to compare the ``$endDate`` property of some object
 with regard to the ``$startDate`` property of the same object, use

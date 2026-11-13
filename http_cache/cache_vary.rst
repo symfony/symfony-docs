@@ -26,7 +26,7 @@ trigger a different representation of the requested resource:
 
     This particular ``Vary`` header would cache different versions of each
     resource based on the URI and the value of the ``Accept-Encoding`` and
-    ``User-Agent`` request header.
+    ``User-Agent`` request headers.
 
 Set the ``Vary`` header via the ``Response`` object methods or the ``#[Cache]``
 attribute::
@@ -35,8 +35,8 @@ attribute::
 
     .. code-block:: php-attributes
 
-        // this attribute takes an array with the name of the header(s)
-        // names for which the response varies
+        // this attribute takes an array with the names of the headers
+        // for which the response varies
         use Symfony\Component\HttpKernel\Attribute\Cache;
         // ...
 

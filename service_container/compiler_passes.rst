@@ -153,7 +153,7 @@ fetched from the container::
     // adds a new argument
     $definition->addArgument($argumentValue);
 
-    // replaces argument on a specific index (0 = first argument)
+    // replaces the argument at a specific index (0 = first argument)
     $definition->replaceArgument($index, $argument);
 
     // replaces all previously configured arguments with the passed array
@@ -161,14 +161,14 @@ fetched from the container::
 
 .. warning::
 
-    Don't use ``get()`` to get a service that you want to inject as constructor
-    argument, the service is not yet available. Instead, use a
+    Don't use ``get()`` to get a service that you want to inject as a constructor
+    argument because the service is not available yet. Instead, use a
     ``Reference`` instance as shown above.
 
 Setting the Method Calls
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-If the service you are working with uses setter injection then you can manipulate
+If the service you are working with uses setter injection, you can manipulate
 any method calls in the definitions as well::
 
     // gets all configured method calls
@@ -276,7 +276,7 @@ pass that asks the container for the tagged services with the
     }
 
 The double loop may be confusing. This is because a service can have more
-than one tag. You tag a service twice or more with the ``app.report_generator``
+than one tag. You can tag a service twice or more with the ``app.report_generator``
 tag. The second ``foreach`` loop iterates over the ``app.report_generator``
 tags set for the current service and gives you the attributes.
 
@@ -538,7 +538,7 @@ class, call this method in the ``loadExtension()`` method of the main bundle cla
     For bundles not extending the ``AbstractBundle`` class, call this method in
     the ``load()`` method of the :doc:`bundle extension class </bundles/extension>`.
 
-Autoconfiguration registering is not limited to interfaces. It is possible
+Registering autoconfiguration rules is not limited to interfaces. It is possible
 to use PHP attributes to autoconfigure services by using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
 method::
@@ -572,7 +572,7 @@ method::
             // ...
 
             $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (ChildDefinition $definition, SensitiveElement $attribute, \ReflectionClass $reflector): void {
-                // Apply the 'app.sensitive_element' tag to all classes with SensitiveElement
+                // Apply the 'app.sensitive_element' tag to all classes with the SensitiveElement
                 // attribute, and attach the token value to the tag
                 $definition->addTag('app.sensitive_element', ['token' => $attribute->getToken()]);
             });

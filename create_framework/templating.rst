@@ -30,7 +30,7 @@ As the rendering is now done by an external function (``render_template()``
 here), we need to pass to it the attributes extracted from the URL. We could
 have passed them as an additional argument to ``render_template()``, but
 instead, let's use another feature of the ``Request`` class called
-*attributes*: Request attributes is a way to attach additional information
+*attributes*: Request attributes are a way to attach additional information
 about the Request that is not directly related to the HTTP Request data.
 
 You can now create the ``render_template()`` function, a generic controller
@@ -70,7 +70,7 @@ the ``_controller`` route attribute::
     }
 
 A route can now be associated with any controller and within a controller, you
-can still use the ``render_template()`` to render a template::
+can still use the ``render_template()`` function to render a template::
 
     $routes->add('hello', new Routing\Route('/hello/{name}', [
         'name' => 'World',
@@ -138,7 +138,7 @@ application that needs some simple logic. Our application has one page that
 says whether a given year is a leap year or not. When calling
 ``/is_leap_year``, you get the answer for the current year, but you can
 also specify a year like in ``/is_leap_year/2009``. Being generic, the
-framework does not need to be modified in any way, create a new
+framework does not need to be modified in any way; create a new
 ``app.php`` file::
 
     // example.com/src/app.php

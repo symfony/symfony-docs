@@ -203,7 +203,7 @@ Array Nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
-node. The array node itself, may have a predefined set of variable nodes::
+node. The array node itself may have a predefined set of variable nodes::
 
     $rootNode
         ->children()
@@ -460,12 +460,12 @@ the Symfony Config component treats arrays as lists by default.
 
 .. note::
 
-    As of writing this, there is an inconsistency: if only one file provides the
+    At the time of writing, there is an inconsistency: if only one file provides the
     configuration in question, the keys (i.e. ``sf_connection`` and ``default``)
     are *not* lost. But if more than one file provides the configuration, the keys
     are lost as described above.
 
-In order to maintain the array keys use the ``useAttributeAsKey()`` method::
+In order to maintain the array keys, use the ``useAttributeAsKey()`` method::
 
     $node
         ->children()
@@ -520,8 +520,7 @@ Default and Required Values
 ---------------------------
 
 For all node types, it is possible to define default values and replacement
-values in case a node
-has a certain value:
+values in case a node has a certain value:
 
 ``defaultValue()``
     Set a default value
@@ -897,7 +896,7 @@ an array with the second argument of ``arrayNode()``.
 
 You can further control the normalization process if you need to. For example,
 you may want to allow a string to be set and used as a particular key or
-several keys to be set explicitly. So that, if everything apart from ``name``
+several keys to be set explicitly. So, if everything apart from ``name``
 is optional in this config:
 
 .. code-block:: yaml

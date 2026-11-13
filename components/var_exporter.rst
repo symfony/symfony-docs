@@ -117,7 +117,7 @@ their properties without calling their constructors or any other methods::
     $fooObject = Instantiator::instantiate(Foo::class, ['propertyName' => $propertyValue]);
 
 The instantiator can also populate the property of a parent class. Assuming ``Bar``
-is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+is the parent class of ``Foo`` and defines a ``privateBarProperty`` property::
 
     use Symfony\Component\VarExporter\Instantiator;
 
@@ -155,7 +155,7 @@ basic usage of the hydrator populating a property of an object::
     Hydrator::hydrate($object, ['propertyName' => $propertyValue]);
 
 The hydrator can also populate the property of a parent class. Assuming ``Bar``
-is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+is the parent class of ``Foo`` and defines a ``privateBarProperty`` property::
 
     use Symfony\Component\VarExporter\Hydrator;
 

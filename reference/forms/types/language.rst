@@ -71,7 +71,7 @@ Overridden Options
 **default**: ``Symfony\Component\Intl\Languages::getNames()``.
 
 The choices option defaults to all languages.
-The default locale is used to translate the languages names.
+The default locale is used to translate the language names.
 
 .. warning::
 

@@ -11,7 +11,7 @@ The Question Helper has a single method
 :class:`Symfony\\Component\\Console\\Input\\InputInterface` instance as the
 first argument, an :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance as the second argument and a
-:class:`Symfony\\Component\\Console\\Question\\Question` as last argument.
+:class:`Symfony\\Component\\Console\\Question\\Question` as the last argument.
 
 .. note::
 
@@ -50,8 +50,9 @@ the following to your command::
     }
 
 In this case, the user will be asked "Continue with this action?". If the user
-answers with ``y`` (or any word, expression starting with ``y`` due to default
-answer regex, e.g ``yeti``) it returns ``true`` or ``false`` otherwise, e.g. ``n``.
+answers with ``y`` (or any word or expression starting with ``y`` due to the default
+answer regex, e.g. ``yeti``), it returns ``true``. Otherwise (e.g. ``n``), it returns
+``false``.
 
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
@@ -176,8 +177,8 @@ Multiple Choices
 ................
 
 Sometimes, multiple answers can be given. The ``ChoiceQuestion`` provides this
-feature using comma separated values. This is disabled by default, to enable
-this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMultiselect`::
+feature using comma-separated values. This is disabled by default. To enable
+it, use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMultiselect`::
 
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
@@ -271,7 +272,7 @@ provide a callback function to dynamically generate suggestions::
         return Command::SUCCESS;
     }
 
-Do not Trim the Answer
+Do Not Trim the Answer
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You can also specify if you want to not trim the answer by setting it directly with
@@ -287,7 +288,7 @@ You can also specify if you want to not trim the answer by setting it directly w
 
         $question = new Question('What is the name of the child?');
         $question->setTrimmable(false);
-        // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
+        // if the user inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
 
         // ... do something with the name
@@ -406,7 +407,7 @@ convenient for passwords::
 
     When you ask for a hidden response, Symfony will use either a binary, change
     ``stty`` mode or use another trick to hide the response. If none is available,
-    it will fallback and allow the response to be visible unless you set this
+    it will fall back and allow the response to be visible unless you set this
     behavior to ``false`` using
     :method:`Symfony\\Component\\Console\\Question\\Question::setHiddenFallback`
     like in the example above. In this case, a ``RuntimeException``
@@ -439,7 +440,7 @@ Normalizing the Answer
 
 Before validating the answer, you can "normalize" it to fix minor errors or
 tweak it as needed. For instance, in a previous example you asked for the bundle
-name. In case the user adds white spaces around the name by mistake, you can
+name. In case the user adds whitespace around the name by mistake, you can
 trim the name before validating it. To do so, configure a normalizer using the
 :method:`Symfony\\Component\\Console\\Question\\Question::setNormalizer`
 method::
@@ -688,11 +689,11 @@ from the command line, you need to set the inputs that the command expects::
         // ...
         $commandTester = new CommandTester($command);
 
-        // Equals to a user inputting "Test" and hitting ENTER
+        // Equivalent to a user inputting "Test" and hitting ENTER
         $commandTester->setInputs(['Test']);
 
-        // Equals to a user inputting "This", "That" and hitting ENTER
-        // This can be used for answering two separated questions for instance
+        // Equivalent to a user inputting "This", "That" and hitting ENTER
+        // This can be used for answering two separate questions for instance
         $commandTester->setInputs(['This', 'That']);
 
         // For simulating a positive answer to a confirmation question, adding an
@@ -714,18 +715,18 @@ from the command line, you need to set the inputs that the command expects::
 
 By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
 you imitate what the console would do internally with all user input through the CLI.
-This method takes an array as only argument with, for each input that the command expects,
-a string representing what the user would have typed.
+This method takes an array as its only argument, with one string for each input that the command
+expects, representing what the user would have typed.
 This way you can test any user interaction (even complex ones) by passing the appropriate inputs.
 
 .. note::
 
     The :class:`Symfony\\Component\\Console\\Tester\\CommandTester` automatically
-    simulates a user hitting ``ENTER`` after each input, no need for passing
+    simulates a user hitting ``ENTER`` after each input, so you don't need to pass
     an additional input.
 
 .. warning::
 
-    On Windows systems Symfony uses a special binary to implement hidden
+    On Windows systems, Symfony uses a special binary to implement hidden
     questions. This means that those questions don't use the default ``Input``
     console object and therefore you can't test them on Windows.

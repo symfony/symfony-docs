@@ -44,7 +44,7 @@ Clear Error Messages
 
 Whenever you have a syntax problem with your YAML files, the library outputs a
 helpful message with the filename and the line number where the problem
-occurred. It eases the debugging a lot.
+occurred. This makes debugging a lot easier.
 
 Dump Support
 ~~~~~~~~~~~~
@@ -132,7 +132,7 @@ array to its YAML representation::
 
     file_put_contents('/path/to/file.yaml', $yaml);
 
-If an error occurs during the dump, the parser throws a
+If an error occurs during the dump, the dumper throws a
 :class:`Symfony\\Component\\Yaml\\Exception\\DumpException` exception.
 
 .. _array-expansion-and-inlining:
@@ -140,8 +140,8 @@ If an error occurs during the dump, the parser throws a
 Expanded and Inlined Arrays
 ...........................
 
-The YAML format supports two kind of representation for arrays, the expanded
-one, and the inline one. By default, the dumper uses the expanded
+The YAML format supports two kinds of representation for arrays: the expanded
+one and the inline one. By default, the dumper uses the expanded
 representation:
 
 .. code-block:: yaml
@@ -192,7 +192,7 @@ changed using the third argument as follows::
 Numeric Literals
 ................
 
-Long numeric literals, being integer, float or hexadecimal, are known for their
+Long numeric literals, whether integer, float or hexadecimal, are known for their
 poor readability in code and configuration files. That's why YAML files allow
 adding underscores to improve their readability:
 
@@ -205,7 +205,7 @@ adding underscores to improve their readability:
         hex_words: 0x_CAFE_F00D
 
 During the parsing of the YAML contents, all the ``_`` characters are removed
-from the numeric literal contents, so there is not a limit in the number of
+from the numeric literal contents, so there is no limit to the number of
 underscores you can include or the way you group contents.
 
 Parsing Untrusted YAML
@@ -276,7 +276,7 @@ representation of the object.
 
 .. danger::
 
-    Object serialization is specific to this implementation, other PHP YAML
+    Object serialization is specific to this implementation; other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
     implementations certainly won't - use with discretion!
 
@@ -418,14 +418,14 @@ giving the enumeration FQCN::
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Non UTF-8 encoded strings are dumped as base64 encoded data::
+Non-UTF-8 encoded strings are dumped as base64 encoded data::
 
     $imageContents = file_get_contents(__DIR__.'/images/logo.png');
 
     $dumped = Yaml::dump(['logo' => $imageContents]);
     // logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...
 
-Binary data is automatically parsed if they include the ``!!binary`` YAML tag::
+Binary data is automatically parsed if it includes the ``!!binary`` YAML tag::
 
     $dumped = 'logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...';
     $parsed = Yaml::parse($dumped);
@@ -434,7 +434,7 @@ Binary data is automatically parsed if they include the ``!!binary`` YAML tag::
 Parsing and Dumping Custom Tags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to the built-in support of tags like ``!php/const`` and
+In addition to the built-in support for tags like ``!php/const`` and
 ``!!binary``, you can define your own custom YAML tags and parse them with the
 ``PARSE_CUSTOM_TAGS`` flag::
 
@@ -492,7 +492,7 @@ Dumping Numeric Keys as Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, digit-only array keys are dumped as integers. You can use the
-``DUMP_NUMERIC_KEY_AS_STRING`` flag if you want to dump string-only keys::
+``DUMP_NUMERIC_KEY_AS_STRING`` flag if you want to dump them as strings::
 
     $dumped = Yaml::dump([200 => 'foo']);
     // 200: foo
@@ -517,8 +517,8 @@ if they are reserved words or contain newlines and spaces). Use the
     ], 2, 4, Yaml::DUMP_FORCE_DOUBLE_QUOTES_ON_VALUES);
     // "foo": "bar", "some foo": "some bar", "x": 3.14, "y": true, "z": null
 
-Dumping Collection of Maps
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Dumping Collections of Maps
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When the YAML component dumps collections of maps, it uses a hyphen on a separate
 line as a delimiter:

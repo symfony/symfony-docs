@@ -1,7 +1,7 @@
 Advanced Webpack Config
 =======================
 
-Summarized, Encore generates the Webpack configuration that's used in your
+In short, Encore generates the Webpack configuration that's used in your
 ``webpack.config.js`` file. Encore doesn't support adding all of Webpack's
 `configuration options`_, because many can be added on your own.
 
@@ -280,12 +280,12 @@ normally use from the command-line interface:
         keepPublicPath: true,
     });
 
-Having the full control on Loaders Rules
-----------------------------------------
+Having Full Control over Loader Rules
+-------------------------------------
 
-The method ``configureLoaderRule()`` provides a clean way to configure Webpack loaders rules (``module.rules``, see `Configuration <https://webpack.js.org/concepts/loaders/#configuration>`_).
+The method ``configureLoaderRule()`` provides a clean way to configure Webpack loader rules (``module.rules``, see `Configuration <https://webpack.js.org/concepts/loaders/#configuration>`_).
 
-This is a low-level method. All your modifications will be applied just before pushing the loaders rules to Webpack.
+This is a low-level method. All your modifications will be applied just before pushing the loader rules to Webpack.
 It means that you can override the default configuration provided by Encore, which may break things. Be careful when using it.
 
 For example, you could use it to configure the ``vue`` loader to enable a specific option:
@@ -361,7 +361,7 @@ In Webpack Encore you can use this option via the ``addExternals()`` method:
 
     // this won't include jQuery and React in the output bundles generated
     // by Webpack Encore. You'll need to load those dependencies yourself
-    // (e.g with a `<script>` tag) to make the application or website work.
+    // (e.g. with a `<script>` tag) to make the application or website work.
     Encore.addExternals({
         jquery: 'jQuery',
         react: 'react'

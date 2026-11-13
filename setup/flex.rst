@@ -12,7 +12,7 @@ so much that it's strongly recommended to use it in all your applications.
     use Flex.
 
 Symfony Flex recommends that applications use the following directory structure,
-which is the same used by default in Symfony, but you can
+which is the same one used by default in Symfony, but you can
 :ref:`customize some directories <flex-customize-paths>`:
 
 .. code-block:: text
@@ -71,8 +71,8 @@ manual steps:
              }
          }
 
-   Now you must add in ``composer.json`` all the Symfony dependencies required
-   by your project. A quick way to do that is to add all the components that
+   Now you must add all the Symfony dependencies required by your project to
+   ``composer.json``. A quick way to do that is to add all the components that
    were included in the previous ``symfony/symfony`` dependency and later you
    can remove anything you don't really need:
 
@@ -121,8 +121,8 @@ manual steps:
    * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
-#. Move the original PHP source code files from ``src/AppBundle/*``, except bundle
-   specific files (like ``AppBundle.php`` and ``DependencyInjection/``), to
+#. Move the original PHP source code files from ``src/AppBundle/*``, except
+   bundle-specific files (like ``AppBundle.php`` and ``DependencyInjection/``), to
    ``src/`` and update the namespace of each moved file to be ``App\...`` (advanced
    IDEs can do this automatically).
 
@@ -147,19 +147,19 @@ manual steps:
    ``APP_DEBUG`` and ``APP_ENV``. Copy their values to the new vars and then remove
    the former ones.
 
-#. Create the new ``public/index.php`` front controller
+#. Create the new ``public/index.php`` front controller by
    `copying Symfony's index.php source`_ and, if you made any customization in
    your ``web/app.php`` and ``web/app_dev.php`` files, copy those changes into
    the new file. You can now remove the old ``web/`` dir.
 
-#. Update the ``bin/console`` script `copying Symfony's bin/console source`_
+#. Update the ``bin/console`` script by `copying Symfony's bin/console source`_
    and changing anything according to your original console script.
 
 #. Remove the ``bin/symfony_requirements`` script and if you need a replacement
    for it, use the new `Symfony Requirements Checker`_.
 
 #. Update the ``.gitignore`` file to replace the existing ``var/logs/`` entry
-   by ``var/log/``, which is the new name for the log directory.
+   with ``var/log/``, which is the new name for the log directory.
 
 .. _flex-customize-paths:
 
@@ -190,7 +190,7 @@ The configurable paths are:
 * ``public-dir``: defaults to ``public/``
 * ``assets-dir``: defaults to ``assets/``
 
-If you customize these paths, some files copied from a recipe still may contain
+If you customize these paths, some files copied from a recipe may still contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
 

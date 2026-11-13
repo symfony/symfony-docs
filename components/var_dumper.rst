@@ -2,7 +2,7 @@ The VarDumper Component
 =======================
 
     The VarDumper component provides mechanisms for extracting the state out of
-    any PHP variables. Built on top, it provides a better ``dump()`` function
+    any PHP variable. Built on top, it provides a better ``dump()`` function
     that you can use instead of :phpfunction:`var_dump`.
 
 Installation
@@ -60,7 +60,7 @@ current PHP SAPI:
 
 .. tip::
 
-    You can also select the output format explicitly defining the
+    You can also select the output format explicitly by defining the
     ``VAR_DUMPER_FORMAT`` environment variable and setting its value to either
     ``html``, ``cli`` or :ref:`server <var-dumper-dump-server-format>`.
 
@@ -221,9 +221,9 @@ In a Twig template, two constructs are available for dumping a variable.
 Choosing between both is mostly a matter of personal taste, still:
 
 * ``{% dump foo.bar %}`` is the way to go when the original template output
-  shall not be modified: variables are not dumped inline, but in the web
+  must not be modified: variables are not dumped inline, but in the web
   debug toolbar;
-* on the contrary, ``{{ dump(foo.bar) }}`` dumps inline and may or not
+* on the contrary, ``{{ dump(foo.bar) }}`` dumps inline and may or may not
   be suited to your use case (e.g. you shouldn't use it in an HTML
   attribute or a ``<script>`` tag).
 
@@ -248,7 +248,7 @@ Using the VarDumper Component in your PHPUnit Test Suite
 
 The VarDumper component provides
 :class:`a trait <Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait>`
-that can help writing some of your tests for PHPUnit.
+that can help you write some of your tests for PHPUnit.
 
 This will provide you with two new assertions:
 
@@ -536,7 +536,7 @@ you can configure these limits:
 
 :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString`
     Configures the maximum number of characters that will be cloned before
-    cutting overlong strings.  Specifying ``-1`` removes the limit.
+    cutting overlong strings. Specifying ``-1`` removes the limit.
 
 Before dumping it, you can further limit the resulting
 :class:`Symfony\\Component\\VarDumper\\Cloner\\Data` object using the following methods:
@@ -807,7 +807,7 @@ colliding with a class name.
 Because an object has one main class and potentially many parent classes
 or interfaces, many casters can be applied to one object. In this case,
 casters are called one after the other, starting from casters bound to the
-interfaces, the parents classes and then the main class. Several casters
+interfaces, the parent classes and then the main class. Several casters
 can also be registered for the same resource type/class/interface.
 They are called in registration order.
 
@@ -819,7 +819,7 @@ being cloned in an array. They are callables that accept five arguments:
 * a :class:`Symfony\\Component\\VarDumper\\Cloner\\Stub` object
   representing the main properties of the object (class, type, etc.);
 * true/false when the caster is called nested in a structure or not;
-* A bit field of :class:`Symfony\\Component\\VarDumper\\Caster\\Caster` ``::EXCLUDE_*``
+* a bit field of :class:`Symfony\\Component\\VarDumper\\Caster\\Caster` ``::EXCLUDE_*``
   constants.
 
 Here is a simple caster not doing anything::
@@ -875,15 +875,15 @@ can use:
 * :class:`Symfony\\Component\\VarDumper\\Caster\\ImgStub` to wrap an image;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\EnumStub` to wrap a set of virtual
   values (i.e. values that do not exist as properties in the original PHP data
-  structure, but are worth listing alongside with real ones);
+  structure, but are worth listing alongside real ones);
 * :class:`Symfony\\Component\\VarDumper\\Caster\\LinkStub` to wrap strings that can
   be turned into links by dumpers;
 * :class:`Symfony\\Component\\VarDumper\\Caster\\TraceStub` to wrap a PHP trace array
-  (e.g. like the one returned by ``Exception->getTrace()``, or ``debug_backtrace()``);
+  (e.g. the one returned by ``Exception->getTrace()``, or ``debug_backtrace()``);
 * :class:`Symfony\\Component\\VarDumper\\Caster\\FrameStub` to wrap a single backtrace frame
   (i.e. each individual element of a PHP trace array);
 * :class:`Symfony\\Component\\VarDumper\\Caster\\ArgsStub` to wrap a list of function arguments
-  (related to PHP traces wrapping, used by :class:`Symfony\\Component\\VarDumper\\Caster\\ExceptionCaster`);
+  (related to PHP traces wrapping, used by :class:`Symfony\\Component\\VarDumper\\Caster\\ExceptionCaster`).
 
 For example, if you know that your ``Product`` objects have a ``brochure`` property
 that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell

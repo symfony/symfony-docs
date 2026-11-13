@@ -17,7 +17,7 @@ going to be required so this theme makes that easy.
     Tailwind CSS, Symfony also provides a ``daisyui_5_layout.html.twig``
     form theme for it.
 
-To use, first be sure you have installed and integrated `Tailwind CSS`_ and the
+To use it, first make sure you have installed and integrated `Tailwind CSS`_ and the
 `form plugin`_. Follow their respective documentation to install both packages.
 
 If you prefer to use the Tailwind theme on a form-by-form basis, include the
@@ -55,7 +55,7 @@ You can customize classes of individual fields by setting some class options.
         widget_errors_class: 'my widget with error classes',
     }) }}
 
-When customizing the classes this way the defaults provided by the theme
+When customizing the classes this way, the defaults provided by the theme
 are *overridden*, as opposed to merged, as is the case with other themes. This
 enables you to take full control of the classes without worrying about
 *undoing* the generic defaults the theme provides.

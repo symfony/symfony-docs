@@ -103,7 +103,7 @@ Parameter        Description
 
 **type**: ``boolean`` **default**: ``true``
 
-If this option is set to ``true`` the constraint will check if the UUID is formatted per the
+If this option is set to ``true``, the constraint will check if the UUID is formatted per the
 RFC's input format rules: ``216fff40-98d9-11e3-a5e2-0800200c9a66``. Setting this to ``false``
 will allow alternate input formats like:
 

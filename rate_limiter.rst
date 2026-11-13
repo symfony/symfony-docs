@@ -15,7 +15,7 @@ time, but you can use them for your own features too.
 
     By definition, the Symfony rate limiters require Symfony to be booted
     in a PHP process. This makes them not useful to protect against `DoS attacks`_.
-    Such protections must consume the least resources possible. Consider
+    Such protections must consume as few resources as possible. Consider
     using `Apache mod_ratelimit`_, `NGINX rate limiting`_,
     `Caddy HTTP rate limit module`_ (also supported by FrankenPHP)
     or proxies (like AWS or Cloudflare) to prevent your server from being overwhelmed.
@@ -60,7 +60,7 @@ Sliding Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The sliding window algorithm is an alternative to the fixed window algorithm
-designed to reduce bursts. This is the same example as above, but then
+designed to reduce bursts. This is the same example as above, but
 using a 1 hour window that slides over the timeline:
 
 .. raw:: html
@@ -78,11 +78,11 @@ the previous window.
 For example: the limit is 5,000 requests per hour; a user made 4,000 requests
 the previous hour and 500 requests this hour. 15 minutes into the current hour
 (25% of the window) the hit count would be calculated as: 75% * 4,000 + 500 = 3,500.
-At this point in time the user can only do 1,500 more requests.
+At this point in time the user can only make 1,500 more requests.
 
 The math shows that the closer the last window is, the more the hit count
 of the last window will affect the current limit. This will make sure that a user can
-do 5,000 requests per hour but only if they are evenly spread out.
+make 5,000 requests per hour but only if they are evenly spread out.
 
 .. note::
 
@@ -118,7 +118,7 @@ of 1 token per 15 minutes:
 
 This algorithm handles more complex back-off burst management.
 For instance, it can allow a user to try a password 5 times and then only
-allow 1 every 15 minutes (unless the user waits 75 minutes and they will be
+allow 1 every 15 minutes (if the user waits 75 minutes, they will be
 allowed 5 tries again).
 
 Installation
@@ -747,7 +747,7 @@ using the ``reserve()`` method::
             // this blocks the application until the given number of tokens can be consumed
             $limiter->reserve(1)->wait();
 
-            // optional, pass a maximum wait time (in seconds), a MaxWaitDurationExceededException
+            // optionally, pass a maximum wait time (in seconds), a MaxWaitDurationExceededException
             // is thrown if the process has to wait longer. E.g. to wait at most 20 seconds:
             //$limiter->reserve(1, 20)->wait();
 

@@ -71,7 +71,7 @@ In this case, the file located at ``[assets directory]/dist/controller.js`` will
     You can either write raw JS in this ``dist/controller.js`` file, or you can
     e.g. write your controller with TypeScript and transpile it to JavaScript.
 
-    Here is an example to do so:
+    Here is an example of how to do so:
 
     1. Add the following to your ``package.json`` file:
 
@@ -140,7 +140,7 @@ Twig ``stimulus_*`` functions.
     of the controller in ``package.json`` is ``slug``. So, the full controller name for Stimulus will be
     ``acme--feature--slug``, though with the ``stimulus_controller()`` function, you can use ``acme/feature/slug``.
 
-Each controller has a number of options in ``package.json`` file:
+Each controller has a number of options in the ``package.json`` file:
 
 ``enabled``:
     Whether the controller should be enabled by default.
@@ -148,7 +148,7 @@ Each controller has a number of options in ``package.json`` file:
     Path to the controller file.
 ``fetch``:
     How controller & dependencies are included when the page loads.
-    Use ``eager`` (default) to make controller & dependencies included in the
+    Use ``eager`` (default) to include controller & dependencies in the
     JavaScript that's downloaded when the page is loaded.
     Use ``lazy`` to make controller & dependencies isolated into a separate file
     and only downloaded asynchronously if (and when) the data-controller HTML

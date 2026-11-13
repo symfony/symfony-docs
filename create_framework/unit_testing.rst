@@ -40,7 +40,7 @@ Then, create a PHPUnit configuration file in ``example.com/phpunit.dist.xml``:
     </phpunit>
 
 This configuration defines sensible defaults for most PHPUnit settings; more
-interesting, the autoloader is used to bootstrap the tests, and tests will be
+interestingly, the autoloader is used to bootstrap the tests, and tests will be
 stored under the ``example.com/tests/`` directory.
 
 Now, let's write a test for "not found" resources. To avoid the creation of
@@ -135,7 +135,7 @@ Execute this test by running ``phpunit`` in the ``example.com`` directory:
 After the test ran, you should see a green bar. If not, you have a bug
 either in the test or in the framework code!
 
-Adding a unit test for any exception thrown in a controller::
+Add a unit test for any exception thrown in a controller::
 
     public function testErrorHandling(): void
     {
@@ -146,7 +146,7 @@ Adding a unit test for any exception thrown in a controller::
         $this->assertEquals(500, $response->getStatusCode());
     }
 
-Last, but not the least, let's write a test for when we actually have a proper
+Last but not least, let's write a test for when we actually have a proper
 Response::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -205,7 +205,7 @@ Alternatively you can output the result directly to the console:
     $ ./vendor/bin/phpunit --coverage-text
 
 Thanks to the clean object-oriented code that we have written so far, we have
-been able to write unit-tests to cover all possible use cases of our
+been able to write unit tests to cover all possible use cases of our
 framework; test doubles ensured that we were actually testing our code and not
 Symfony code.
 

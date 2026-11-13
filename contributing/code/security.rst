@@ -29,7 +29,7 @@ email for confirmation):
   production (including the web profiler or anything enabled when ``APP_DEBUG``
   is set to ``true`` or ``APP_ENV`` set to anything but ``prod``);
 
-* Any security issues found in classes provided to help for testing that should
+* Any security issues found in classes provided to help with testing that should
   never be used in production (like for instance mock classes that contain
   ``Mock`` in their name or classes in the ``Test`` namespace);
 
@@ -59,7 +59,7 @@ confirmed, the core team works on a solution following these steps:
 #. Write a security announcement for the official Symfony `blog`_ about the
    vulnerability. This post should contain the following information:
 
-   * a title that always include the "Security release" string;
+   * a title that always includes the "Security release" string;
    * a description of the vulnerability;
    * the affected versions;
    * the possible exploits;
@@ -86,7 +86,7 @@ confirmed, the core team works on a solution following these steps:
 
 .. note::
 
-    The resolution takes anywhere between a couple of days to a month depending
+    The resolution takes anywhere between a couple of days and a month depending
     on its complexity and the coordination with the downstream projects (see
     next paragraph).
 
@@ -104,7 +104,7 @@ projects. The process works as follows:
 #. The Symfony security team creates a private Git repository to ease the
    collaboration on the issue and access to this repository is given to the
    Symfony security team, to the Symfony contributors that are impacted by
-   the issue, and to one representative of each downstream projects;
+   the issue, and to one representative of each downstream project;
 
 #. All people with access to the private repository work on a solution to
    solve the issue via pull requests, code reviews, and comments;

@@ -28,8 +28,8 @@ In this case, your ``Invoice`` entity has a relationship to the interface
 the goal is to use the ``ResolveTargetEntityListener`` to replace all
 references to this interface with a concrete class that implements it.
 
-Set up
-------
+Setup
+-----
 
 This article uses two basic (incomplete) entities to demonstrate how to set up
 and use the ``ResolveTargetEntityListener``.

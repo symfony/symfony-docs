@@ -5,7 +5,7 @@ Symfony is an open source project driven by a large community. If you don't feel
 ready to contribute code or documentation yet, **reviewing issues and pull
 requests** is a great way to get involved. It works the same whether the change
 touches code or documentation, and **anyone with some basic familiarity with
-Symfony can do it**, you don't need to be an expert. People who "triage" issues
+Symfony can do it**; you don't need to be an expert. People who "triage" issues
 are the backbone of Symfony's success!
 
 .. tip::
@@ -91,7 +91,7 @@ Reviewing a Pull Request
 
 The process is similar to reviewing a bug report, but usually takes a little
 longer since you need to understand the change. **It's okay to do partial
-reviews!** If you do, comment how far you got and leave the PR in the "Needs
+reviews!** If you do, comment on how far you got and leave the PR in the "Needs
 Review" state.
 
 Pick a pull request from the `PRs in need of review`_ and follow these steps:
@@ -179,7 +179,7 @@ Writing Respectful Comments
 ---------------------------
 
 Before you leave a comment, take a step back and think: is what you are about to
-say actually what you intend? Communicating over the Internet with nothing but
+actually say what you intend? Communicating over the Internet with nothing but
 text is hard, especially in a world-wide community of people with different
 ideas, opinions and backgrounds. Not everyone speaks English natively, and some
 may have had a bad experience contributing to other projects.
@@ -193,7 +193,7 @@ may have had a bad experience contributing to other projects.
 
 Many programming decisions are opinions. Discuss trade-offs, say which you
 prefer, and reach a resolution quickly. It's not about being right or wrong, but
-using what works.
+about using what works.
 
 Tone of Voice
 ~~~~~~~~~~~~~
@@ -252,8 +252,8 @@ Asking for Changes
 ~~~~~~~~~~~~~~~~~~
 
 Understand that the author already spent time on the change, and that asking for
-(small) changes may be misread as a personal attack, *especially for a first
-time contributor*. Be thankful for their work, stay positive and help them make
+(small) changes may be misread as a personal attack, *especially for a first-time
+contributor*. Be thankful for their work, stay positive and help them make
 the contribution a great one. Use words like "Please", "Thank you" and "Could
 you" instead of making demands:
 

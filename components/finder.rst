@@ -70,7 +70,7 @@ can be chained because they implement a `fluent interface`_.
 Location
 ~~~~~~~~
 
-The location is the only mandatory criteria. It tells the finder which
+The location is the only mandatory criterion. It tells the finder which
 directory to use for the search::
 
     $finder->in(__DIR__);
@@ -117,10 +117,10 @@ It's also possible to ignore directories that you don't have permission to read:
 As the Finder uses PHP iterators, you can pass any URL with a supported
 `PHP wrapper for URL-style protocols`_ (``ftp://``, ``zlib://``, etc.)::
 
-    // always add a trailing slash when looking for in the FTP root dir
+    // always add a trailing slash when searching in the FTP root dir
     $finder->in('ftp://example.com/');
 
-    // you can also look for in a FTP directory
+    // you can also search in an FTP directory
     $finder->in('ftp://example.com/pub/');
 
 And it also works with user-defined streams::
@@ -157,7 +157,7 @@ If you want to follow `symbolic links`_, use the ``followLinks()`` method::
     $finder->files()->followLinks();
 
 Note that this method follows links but it doesn't resolve them. Consider
-the following structure of files of directories:
+the following structure of files and directories:
 
 .. code-block:: text
 
@@ -269,7 +269,7 @@ Pass multiple patterns to find files that match any of them (or all)::
     // same as above
     $finder->files()->contains(['lorem', '/ipsum/i']);
 
-The ``notContains()`` method excludes files containing given pattern::
+The ``notContains()`` method excludes files containing the given pattern::
 
     $finder->files()->notContains('dolor sit amet');
 
@@ -434,7 +434,7 @@ Sort the results by name, extension, size or type (directories first, then files
     The ``sortByCaseInsensitiveName()`` method uses the case insensitive
     :phpfunction:`strcasecmp` PHP function. Pass ``true`` as its argument to use
     PHP's case insensitive `natural sort order`_ algorithm instead (i.e. the
-    :phpfunction:`strnatcasecmp` PHP function)
+    :phpfunction:`strnatcasecmp` PHP function).
 
 Sort the files and directories by the last accessed, changed or modified time::
 
@@ -458,7 +458,7 @@ You can reverse any sorting by using the ``reverseSorting()`` method::
 .. note::
 
     Notice that the ``sort*`` methods need to get all matching elements to do
-    their jobs. For large iterators, it is slow.
+    their job. For large iterators, this is slow.
 
 Transforming Results into Arrays
 --------------------------------

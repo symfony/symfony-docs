@@ -6,7 +6,7 @@ direction and evolution of the Symfony project. Their votes rule if the
 features and patches proposed by the community are approved or rejected.
 
 All the Symfony Core members are long-time contributors with solid technical
-expertise and they have demonstrated a strong commitment to drive the project
+expertise and they have demonstrated a strong commitment to driving the project
 forward.
 
 This document states the rules that govern the Symfony core team. These rules
@@ -26,8 +26,8 @@ Core Team Member Responsibilities
 ---------------------------------
 
 Core Team members are unpaid volunteers and as such, they are not expected to
-dedicate any specific amount of time on Symfony. They are expected to help the
-project in any way they can. From reviewing pull requests and writing documentation,
+dedicate any specific amount of time to Symfony. They are expected to help the
+project in any way they can, from reviewing pull requests and writing documentation
 to participating in discussions and helping the community in general. However,
 their involvement is completely voluntary and can be as much or as little as
 they want.
@@ -35,13 +35,13 @@ they want.
 Core Team Communication
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-As an open source project, public discussions and documentation is favored
+As an open source project, public discussions and documentation are favored
 over private ones. All communication in the Symfony community conforms to
 the :doc:`/contributing/code_of_conduct/code_of_conduct`. Request
-assistance from other Core and CARE team members when getting in situations
+assistance from other Core and CARE team members when getting into situations
 not following the Code of Conduct.
 
-Core Team members are invited in a private Slack channel, for quick
+Core Team members are invited to a private Slack channel, for quick
 interactions and private processes (e.g. security issues). Each member
 should feel free to ask for assistance for anything they may encounter.
 Expect no judgement from other team members.
@@ -225,7 +225,7 @@ Pull Request Merging Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All code must be committed to the repository through pull requests, except
-for :ref:`unsubstantial change <core-team_unsubstantial-changes>` which can be
+for :ref:`unsubstantial changes <core-team_unsubstantial-changes>`, which can be
 committed directly to the repository.
 
 **Mergers** must always use the command-line ``gh`` tool provided by the
@@ -273,7 +273,7 @@ generate the CHANGELOG files when releasing new versions.
        ``git remote set-url --push origin dev://null`` (change ``origin``
        to the Git remote pointing to the Symfony repository);
     #. A clone for merging, which they use in combination with ``gh`` and
-       allows them to push to the main repository.
+       which allows them to push to the main repository.
 
 Upmerging Version Branches
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -299,15 +299,15 @@ The process follows these steps:
 
 #. Start on the oldest version and make sure it's up to date with the
    upstream repository;
-#. Check-out the second oldest version, update from upstream and merge the
+#. Check out the second oldest version, update from upstream and merge the
    previous version from the local branch;
-#. Continue this process until you reached the latest version;
+#. Continue this process until you reach the latest version;
 #. Push the branches to the repository and monitor the test suite. Failure
    might indicate hidden/missed merge conflicts.
 
 .. code-block:: terminal
 
-    # 'origin' is referred to as the main upstream project
+    # 'origin' refers to the main upstream project
     $ git fetch origin
 
     # update the local branches

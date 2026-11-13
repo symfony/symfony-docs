@@ -49,7 +49,7 @@ Symfony ships with the following value resolvers in the
     When requesting the ``/cards/H`` URL, the ``$suit`` variable will store the
     ``Suit::Hearts`` case.
 
-    Furthermore, you can limit route parameter's allowed values to
+    Furthermore, you can limit the route parameter's allowed values to
     only one (or more) with ``EnumRequirement``::
 
         use Symfony\Component\Routing\Requirement\EnumRequirement;
@@ -73,7 +73,7 @@ Symfony ships with the following value resolvers in the
         }
 
     The example above allows requesting only ``/cards/D`` and ``/cards/S``
-    URLs and leads to 404 Not Found response in two other cases.
+    URLs and leads to a 404 Not Found response in the two other cases.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestPayloadValueResolver`
     Maps the request payload or the query string into the type-hinted object.
@@ -173,8 +173,8 @@ In addition, some components, bridges and official bundles provide other value r
 :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
     Injects the object that represents the current logged in user if type-hinted
     with ``UserInterface``. You can also type-hint your own ``User`` class but you
-    must then add the ``#[CurrentUser]`` attribute to the argument. Default value
-    can be set to ``null`` in case  the controller can be accessed by anonymous
+    must then add the ``#[CurrentUser]`` attribute to the argument. The default value
+    can be set to ``null`` in case the controller can be accessed by anonymous
     users. It requires installing the :doc:`SecurityBundle </security>`.
 
     Union types are also supported, which is useful when your application has
@@ -192,7 +192,7 @@ In addition, some components, bridges and official bundles provide other value r
     with status code 401 is thrown by the resolver to prevent access to the controller.
 
 :class:`Symfony\\Bridge\\Doctrine\\ArgumentResolver\\EntityValueResolver`
-    Automatically query for an entity and pass it as an argument to your controller.
+    Automatically queries for an entity and passes it as an argument to your controller.
 
     For example, the following will query the ``Product`` entity which has ``{id}`` as primary key::
 
@@ -239,7 +239,7 @@ if there is none.
 
 In that specific case, you don't need any resolver running before
 ``SessionValueResolver``, so skipping them would not only improve performance,
-but also prevent one of them providing a value before ``SessionValueResolver``
+but also prevent one of them from providing a value before ``SessionValueResolver``
 has a chance to.
 
 The :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute
@@ -306,7 +306,7 @@ resolver and ``MapDateTime`` targets the resolver that creates the date::
         // ...
     }
 
-A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
+A targeted resolver can also be disabled by setting ``ValueResolver``'s ``$disabled``
 argument to ``true``; this is how :ref:`MapEntity allows you to disable the
 EntityValueResolver for a specific controller <doctrine-entity-value-resolver>`.
 Yes, ``MapEntity`` extends ``ValueResolver``!

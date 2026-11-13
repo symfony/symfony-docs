@@ -121,26 +121,26 @@ Example #4:
   * **URI** ``/admin/user``
   * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``GET``
   * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
-  * **Why?** The ``ip`` matches neither the first rule nor the second rule.
-  * So the third rule (which matches) is used.
+  * **Why?** The ``ip`` matches neither the first rule nor the second rule,
+    so the third rule (which matches) is used.
 Example #5:
   * **URI** ``/admin/user``
   * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``POST``
   * **Rule applied**: rule #3 (``ROLE_USER_HOST``)
   * **Why?** The third rule still matches. This would also match the fourth rule
-  * (``ROLE_USER_METHOD``), but only the **first** matched ``access_control`` is used.
+    (``ROLE_USER_METHOD``), but only the **first** matched ``access_control`` is used.
 Example #6:
   * **URI** ``/admin/user``
   * **IP**: ``168.0.0.1``, **Port**: ``80``, **Host**: ``example.com``, **Method**: ``POST``
   * **Rule applied**: rule #4 (``ROLE_USER_METHOD``)
   * **Why?** The ``ip`` and ``host`` don't match the first three entries, but
-  * the fourth - ``ROLE_USER_METHOD`` - matches and is used.
+    the fourth - ``ROLE_USER_METHOD`` - matches and is used.
 Example #7:
   * **URI** ``/foo``
   * **IP**: ``127.0.0.1``, **Port**: ``80``, **Host**: ``symfony.com``, **Method**: ``POST``
   * **Rule applied**: matches no entries
   * **Why?** This doesn't match any ``access_control`` rules, since its URI
-  * doesn't match any of the ``path`` values.
+    doesn't match any of the ``path`` values.
 
 .. warning::
 
@@ -201,7 +201,7 @@ options:
     logged in, the 403 "access denied" error page will be shown. See
     :doc:`/controller/error_pages` for more information.
 
-Matching access_control By IP
+Matching access_control by IP
 -----------------------------
 
 Certain situations may arise when you need to have an ``access_control``
@@ -212,7 +212,7 @@ requests *except* those from a trusted, internal server.
 .. warning::
 
     As you'll read in the explanation below the example, the ``ips`` option
-    does not restrict to a specific IP address. Instead, using the ``ips``
+    does not restrict access to a specific IP address. Instead, using the ``ips``
     key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down
     the ``access_control`` list.
@@ -257,7 +257,7 @@ the external IP address ``10.0.0.1``:
 * The second access control rule is enabled (the only restriction being the
   ``path``) and so it matches. If you make sure that no users ever have
   ``ROLE_NO_ACCESS``, then access is denied (``ROLE_NO_ACCESS`` can be anything
-  that does not match an existing role, it only serves as a trick to always
+  that does not match an existing role; it only serves as a trick to always
   deny access).
 
 But if the same request comes from ``127.0.0.1`` or ``::1`` (the IPv6 loopback
@@ -313,9 +313,9 @@ includes the ``X-Secure-Access`` header.
 
 .. note::
 
-    Internally ``allow_if`` triggers the built-in
+    Internally, ``allow_if`` triggers the built-in
     :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\ExpressionVoter`
-    as like it was part of the attributes defined in the ``roles`` option.
+    as if it were part of the attributes defined in the ``roles`` option.
 
 Inside the expression, you have access to a number of different variables
 and functions including ``request``, which is the Symfony
@@ -330,11 +330,11 @@ For a list of the other functions and variables, see
     The ``allow_if`` expressions can also contain custom functions registered
     with :ref:`expression providers <components-expression-language-provider>`.
 
-Restrict to a port
+Restrict to a Port
 ------------------
 
 Add the ``port`` option to any ``access_control`` entries to require users to
-access those URLs via a specific port. This could be useful for example for
+access those URLs via a specific port. This could be useful, for example, for
 ``localhost:8080``.
 
 .. configuration-block::

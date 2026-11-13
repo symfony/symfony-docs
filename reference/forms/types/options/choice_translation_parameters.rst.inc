@@ -3,7 +3,7 @@ choice_translation_parameters
 
 **type**: ``array``, ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``[]``
 
-The choice values are translated before displaying it, so it can contain
+The choice values are translated before displaying them, so they can contain
 :ref:`translation placeholders <component-translation-placeholders>`.
 This option defines the values used to replace those placeholders. This can be
 an associative array where the keys match the choice keys and the values

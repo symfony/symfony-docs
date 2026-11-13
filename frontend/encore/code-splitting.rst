@@ -57,7 +57,7 @@ is on a ``.default`` key. There are reasons why this is done, but it does look
 quirky. The ``{ default: VideoPlayer }`` code makes sure that the ``VideoPlayer``
 module you want is read from this ``.default`` property.
 
-For more details and configuration options, see `dynamic imports`_ on Webpack's
+For more details and configuration options, see `dynamic imports`_ in Webpack's
 documentation.
 
 .. _`video.js`: https://videojs.com/

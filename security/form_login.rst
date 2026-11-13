@@ -246,8 +246,8 @@ This option can also be set via the ``_failure_path`` request parameter:
 Customizing the Target and Failure Request Parameters
 -----------------------------------------------------
 
-The name of the request attributes used to define the success and failure login
-redirects can be customized using the  ``target_path_parameter`` and
+The names of the request attributes used to define the success and failure login
+redirects can be customized using the ``target_path_parameter`` and
 ``failure_path_parameter`` options of the firewall that defines the login form.
 
 .. configuration-block::

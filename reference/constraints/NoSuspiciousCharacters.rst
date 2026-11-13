@@ -2,7 +2,7 @@ NoSuspiciousCharacters
 ======================
 
 Validates that the given string does not contain characters used in spoofing
-security attacks, such as invisible characters such as zero-width spaces or
+security attacks, such as invisible characters (e.g. zero-width spaces) or
 characters that are visually similar.
 
 "symfony.com" and "ѕymfony.com" look similar, but their first letter is different
@@ -134,7 +134,7 @@ Configures the set of acceptable characters for the validated string through a
 specified "level":
 
 * ``NoSuspiciousCharacters::RESTRICTION_LEVEL_MINIMAL`` requires the string's
-  characters to match :ref:`the configured locales <locales>`'.
+  characters to match :ref:`the configured locales <locales>`.
 * ``NoSuspiciousCharacters::RESTRICTION_LEVEL_MODERATE`` also requires the string
   to be `covered`_ by Latin and any one other `Recommended`_ or `Limited Use`_
   script, except Cyrillic, Greek, and Cherokee.

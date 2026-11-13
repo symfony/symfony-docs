@@ -17,7 +17,7 @@ Databases are a broad topic, so the documentation is divided into three articles
   in Symfony applications;
 * Read :doc:`this other article </doctrine/dbal>` if you need **low-level access**
   to perform raw SQL queries to relational databases (similar to PHP's `PDO`_);
-* Read `DoctrineMongoDBBundle docs`_ if you are working with **MongoDB databases**.
+* Read the `DoctrineMongoDBBundle docs`_ if you are working with **MongoDB databases**.
 
 Installing Doctrine
 -------------------
@@ -384,7 +384,7 @@ Example usage::
 Migrations: Creating the Database Tables/Schema
 -----------------------------------------------
 
-The ``Product`` class is fully-configured and ready to save to a ``product`` table.
+The ``Product`` class is fully configured and ready to save to a ``product`` table.
 If you just defined this class, your database doesn't actually have the ``product``
 table yet. To add it, you can leverage the `DoctrineMigrationsBundle`_, which is
 already installed:
@@ -706,8 +706,8 @@ be able to go to ``/product/1`` to see your new product::
         }
     }
 
-Another possibility is to use the ``ProductRepository`` using Symfony's autowiring
-and injected by the dependency injection container::
+Another possibility is to inject the ``ProductRepository`` with Symfony's
+autowiring::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -829,7 +829,7 @@ yourself::
 .. tip::
 
     When enabled globally, it's possible to disable the behavior on a specific
-    controller, by using the ``MapEntity`` set to ``disabled``::
+    controller by setting the ``disabled`` option of ``MapEntity`` to ``true``::
 
         public function show(
             #[CurrentUser]
@@ -1227,7 +1227,7 @@ a new method for this to your repository::
     }
 
 The string passed to ``createQuery()`` might look like SQL, but it is
-`Doctrine Query Language`_. This allows you to type queries using commonly
+`Doctrine Query Language`_. This allows you to type queries using a commonly
 known query language, but referencing PHP objects instead (i.e. in the ``FROM``
 statement).
 

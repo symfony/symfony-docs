@@ -1,9 +1,9 @@
 How to Sequentially Apply Validation Groups
 ===========================================
 
-In some cases, you want to validate your groups by steps. To do this, you can
+In some cases, you want to validate your groups in steps. To do this, you can
 use the ``GroupSequence`` feature. In this case, an object defines a group
-sequence, which determines the order groups should be validated.
+sequence, which determines the order in which groups should be validated.
 
 For example, suppose you have a ``User`` class and want to validate that the
 username and the password are different only if all other validation passes
@@ -115,12 +115,12 @@ username and the password are different only if all other validation passes
 
 In this example, it will first validate all constraints in the group ``User``
 (which is the same as the ``Default`` group). Only if all constraints in
-that group are valid, the second group, ``Strict``, will be validated.
+that group are valid will the second group, ``Strict``, be validated.
 
 .. warning::
 
     As you have already seen in :doc:`/validation/groups`, the ``Default`` group
-    and the group containing the class name (e.g. ``User``) were identical.
+    and the group containing the class name (e.g. ``User``) are identical.
     However, when using Group Sequences, they are no longer identical. The
     ``Default`` group will now reference the group sequence, instead of all
     constraints that do not belong to any group.
@@ -148,10 +148,10 @@ that group are valid, the second group, ``Strict``, will be validated.
 
 .. warning::
 
-    Calling ``validate()`` with a group in the sequence (``Strict`` in previous
+    Calling ``validate()`` with a group in the sequence (``Strict`` in the previous
     example) will cause a validation **only** with that group and not with all
-    the groups in the sequence. This is because sequence is now referred to
-    ``Default`` group validation.
+    the groups in the sequence. This is because the
+    ``Default`` group now references the sequence.
 
 You can also define a group sequence in the ``validation_groups`` form option::
 
@@ -427,7 +427,7 @@ method, which should return an array of groups to use::
         }
     }
 
-At last, you have to notify the Validator component that your ``User`` class
+Finally, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:
 
 .. configuration-block::

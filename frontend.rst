@@ -47,7 +47,7 @@ Can update 3rd party packages     yes                                 no :ref:`[
 
 .. _ux-note-1:
 
-**[1]** Using JSX (React), Vue, etc with AssetMapper is possible, but you'll
+**[1]** Using JSX (React), Vue, etc. with AssetMapper is possible, but you'll
 need to use their native tools for pre-compilation. Also, some features (like
 Vue single-file components) cannot be compiled down to pure JavaScript that can
 be executed by a browser.

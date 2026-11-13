@@ -3,7 +3,7 @@ How to Style a Console Command
 
 One of the most boring tasks when creating console commands is to deal with the
 styling of the command's input and output. Displaying titles and tables or asking
-questions to the user involves a lot of repetitive code.
+the user questions involves a lot of repetitive code.
 
 Symfony provides the **Symfony Style Guide**, a set of helper methods to render
 input and output in a consistent way. If you prefer to apply your own styles
@@ -193,8 +193,8 @@ Content Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
-    most of the times you won't need it at all. The reason is that every helper
-    already adds their own blank lines, so you don't have to care about the
+    most of the time you won't need it at all. The reason is that every helper
+    already adds its own blank lines, so you don't have to care about the
     vertical spacing::
 
         // outputs a single blank line
@@ -208,7 +208,7 @@ Admonition Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::note`
     It displays the given string or array of strings as a highlighted admonition.
-    Use this helper sparingly to avoid cluttering command's output::
+    Use this helper sparingly to avoid cluttering the command's output::
 
         // use simple strings for short notes
         $io->note('Lorem ipsum dolor sit amet');
@@ -227,7 +227,7 @@ Admonition Methods
     highlighted. The resulting contents resemble an error message, so you should
     avoid using this helper unless strictly necessary::
 
-        // use simple strings for short caution message
+        // use simple strings for short caution messages
         $io->caution('Lorem ipsum dolor sit amet');
 
         // ...
@@ -252,7 +252,7 @@ Progress Bar Methods
         // displays a progress bar of unknown length
         $io->progressStart();
 
-        // displays a 100-step length progress bar
+        // displays a 100-step progress bar
         $io->progressStart(100);
 
         // displays a 100-step progress bar with a custom format
@@ -367,7 +367,7 @@ User Input Methods
         });
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::confirm`
-    It asks a Yes/No question to the user and it only returns ``true`` or ``false``::
+    It asks the user a Yes/No question and it only returns ``true`` or ``false``::
 
         $io->confirm('Restart the web server?');
 
@@ -394,7 +394,7 @@ User Input Methods
         $io->choice('Select the queue to analyze', [5 => 'queue1', 6 => 'queue2', 7 => 'queue3']);
 
     Finally, you can allow users to select multiple choices. To do so, users must
-    separate each choice with a comma (e.g. typing ``1, 2`` will select choice 1
+    separate each choice with a comma (e.g. typing ``1, 2`` will select choices 1
     and 2)::
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
@@ -434,7 +434,7 @@ Result Methods
 
 .. note::
 
-    If you print any URL it won't be broken/cut, it will be clickable - if the terminal provides it. If the "well
+    If you print any URL, it won't be broken/cut, so it will be clickable if the terminal supports it. If the "well
     formatted output" is more important, you can switch it off::
 
         $io->getOutputWrapper()->setAllowCutUrls(true);
@@ -458,7 +458,7 @@ Result Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::info`
     It's similar to the ``success()`` method (the given string or array of strings
-    are displayed with a green background) but the ``[OK]`` label is not prefixed.
+    is displayed with a green background) but the ``[OK]`` label is not prefixed.
     It's meant to be used once to display the final result of executing the given
     command, without showing the result as a successful or failed one::
 
@@ -567,7 +567,7 @@ If you prefer to wrap all contents, including URLs, use this method::
         }
     }
 
-Defining your Own Styles
+Defining Your Own Styles
 ------------------------
 
 If you don't like the design of the commands that use the Symfony Style, you can
@@ -584,7 +584,7 @@ define your own set of console styles. Create a class that implements the
     }
 
 Then, instantiate this custom class instead of the default ``SymfonyStyle`` in
-your commands. Thanks to the ``StyleInterface`` you won't need to change the code
+your commands. Thanks to the ``StyleInterface``, you won't need to change the code
 of your commands to change their appearance::
 
     // src/Command/MyCommand.php
@@ -606,7 +606,7 @@ of your commands to change their appearance::
         }
     }
 
-Writing to the error output
+Writing to the Error Output
 ---------------------------
 
 If you reuse the output of a command as the input of other commands or dump it
@@ -695,7 +695,7 @@ Any hex color is supported for foreground and background colors. Besides that, t
     the nearest color depending on the terminal capabilities. E.g. ``#c0392b`` is
     degraded to ``#d75f5f`` in 256-color terminals and to ``red`` in 8-color terminals.
 
-And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
+The available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors
 are swapped) and ``conceal`` (sets the foreground color to transparent, making
 the typed text invisible - although it can be selected and copied; this option is
@@ -732,7 +732,7 @@ Commands can use the special ``<href>`` tag to display links similar to the
 
     $output->writeln('<href=https://symfony.com>Symfony Homepage</>');
 
-If your terminal belongs to the `list of terminal emulators that support links`_
+If your terminal belongs to the `list of terminal emulators that support links`_,
 you can click on the *"Symfony Homepage"* text to open its URL in your default
 browser. Otherwise, you'll see *"Symfony Homepage"* as regular text and the URL
 will be lost.

@@ -35,7 +35,7 @@ must be doubled to escape it:
     'A single quote '' inside a single-quoted string'
 
 Strings containing any of the following characters must be quoted:
-``: { } [ ] , & * # ? | - < > = ! % @`` Although you can use double quotes, for
+``: { } [ ] , & * # ? | - < > = ! % @``. Although you can use double quotes, for
 these characters it is more convenient to use single quotes, which avoids having
 to escape any backslash ``\``.
 
@@ -118,7 +118,7 @@ Numbers
 
 .. code-block:: yaml
 
-    # an hexadecimal
+    # a hexadecimal
     0xC
 
 .. code-block:: yaml
@@ -231,7 +231,7 @@ The above YAML is equivalent to the following PHP code::
 
 There is one important thing you need to remember when using indentation in a
 YAML file: *Indentation must be done with one or more spaces, but never with
-tabulators*.
+tabs*.
 
 You can nest sequences and mappings as you like:
 
@@ -261,7 +261,7 @@ braces (``{}``):
 
     { PHP: 5.2, MySQL: 5.1, Apache: 2.2.20 }
 
-You can mix and match styles to achieve a better readability:
+You can mix and match styles to achieve better readability:
 
 .. code-block:: yaml
 

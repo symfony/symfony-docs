@@ -47,7 +47,7 @@ Other Fields
 Symfony UX Fields
 ~~~~~~~~~~~~~~~~~
 
-These types are part of the `Symfony UX Packages`_
+These types are part of the `Symfony UX Packages`_.
 
 * `CropperType`_ (using Cropper.js)
 * `DropzoneType`_

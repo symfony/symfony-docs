@@ -31,7 +31,7 @@ to look like this::
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
     };
 
-So how does this front-controller work? At first, the special
+So how does this front-controller work? First, the special
 ``autoload_runtime.php`` file is automatically created by the Composer plugin in
 the component. This file runs the following logic:
 
@@ -76,7 +76,7 @@ Selecting Runtimes
 ------------------
 
 The default Runtime is :class:`Symfony\\Component\\Runtime\\SymfonyRuntime`. It
-works excellent on most applications running with a webserver using PHP-FPM like
+works well for most applications running with a webserver using PHP-FPM like
 Nginx or Apache.
 
 The component also provides a :class:`Symfony\\Component\\Runtime\\GenericRuntime`,
@@ -84,7 +84,7 @@ which uses PHP's ``$_SERVER``, ``$_POST``, ``$_GET``, ``$_FILES`` and
 ``$_SESSION`` superglobals. You may also use a custom Runtime (e.g. to
 integrate with Swoole or AWS Lambda).
 
-Use the ``APP_RUNTIME`` environment variable or by specifying the
+Use the ``APP_RUNTIME`` environment variable or specify the
 ``extra.runtime.class`` in ``composer.json`` to change the Runtime class:
 
 .. code-block:: json
@@ -120,9 +120,9 @@ Symfony provides a `runtime template file`_ that you can use to create your own.
 Using the Runtime
 -----------------
 
-A Runtime is responsible for passing arguments into the closure and run the
+A Runtime is responsible for passing arguments into the closure and running the
 application returned by the closure. The :class:`Symfony\\Component\\Runtime\\SymfonyRuntime` and
-:class:`Symfony\\Component\\Runtime\\GenericRuntime` supports a number of
+:class:`Symfony\\Component\\Runtime\\GenericRuntime` support a number of
 arguments and different applications that you can use in your
 front-controllers.
 
@@ -391,7 +391,7 @@ The following options are supported by the ``SymfonyRuntime``:
     To define the paths (relative to the project directory) of additional
     dot-env files to load after the ``.env`` files (e.g. ``[".env.extra"]``).
 ``dotenv_overload`` (default: ``false``)
-    To tell Dotenv whether to override ``.env`` vars with ``.env.local`` (or other ``.env.*`` files)
+    To tell Dotenv whether to override ``.env`` vars with ``.env.local`` (or other ``.env.*`` files).
 ``use_putenv``
     To tell Dotenv to set env vars using ``putenv()`` (NOT RECOMMENDED).
 ``prod_envs`` (default: ``["prod"]``)
@@ -404,7 +404,7 @@ The following options are supported by the ``SymfonyRuntime``:
 Besides these, the ``GenericRuntime`` and ``SymfonyRuntime`` also support
 these options:
 
-``debug`` (default: the value of the env var defined by ``debug_var_name`` option
+``debug`` (default: the value of the env var defined by the ``debug_var_name`` option
     (usually, ``APP_DEBUG``), or ``true`` if such env var is not defined)
     Toggles the :ref:`debug mode <debug-mode>` of Symfony applications (e.g. to
     display errors)
@@ -439,7 +439,7 @@ application outside of the global state in 6 steps:
    a :class:`Symfony\\Component\\Runtime\\ResolverInterface`. This resolver returns
    an array with the app callable (or something that decorates this callable) at
    index 0 and all its resolved arguments at index 1.
-#. The *app callable* is invoked with its arguments, it will return an object that
+#. The *app callable* is invoked with its arguments and returns an object that
    represents the application.
 #. This *application object* is passed to ``RuntimeInterface::getRunner()``, which
    returns a :class:`Symfony\\Component\\Runtime\\RunnerInterface`: an instance
@@ -534,7 +534,7 @@ always using this ``ReactPHPRunner``::
         }
     }
 
-The end user will now be able to create front controller like::
+The end user will now be able to create a front controller like this::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 

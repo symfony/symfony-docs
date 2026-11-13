@@ -318,7 +318,7 @@ Parameter                       Description
 
 **type**: ``string``  **default**: ``null``
 
-The charset to be used when computing value's filename max length with the
+The charset to be used when computing the value's filename max length with the
 :phpfunction:`mb_check_encoding` and :phpfunction:`mb_strlen`
 PHP functions.
 

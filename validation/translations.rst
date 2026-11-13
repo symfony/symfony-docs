@@ -6,7 +6,7 @@ creating a translation resource for the ``validators``
 :ref:`translation domain <translation-resource-locations>`.
 
 First of all, install the Symfony translation component (if it's not already
-installed in your application) running the following command:
+installed in your application) by running the following command:
 
 .. code-block:: terminal
 

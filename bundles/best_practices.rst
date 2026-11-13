@@ -52,7 +52,7 @@ class name.
 
 Each bundle has an alias, which is the lower-cased short version of the bundle
 name using underscores (``acme_blog`` for AcmeBlogBundle). This alias
-is used to enforce uniqueness within a project and for defining bundle's
+is used to enforce uniqueness within a project and for defining the bundle's
 configuration options (see below for some usage examples).
 
 Directory Structure
@@ -115,7 +115,7 @@ them under the ``cache/`` or ``log/`` directory of the host application. Tools
 can generate files in the bundle directory structure, but only if the generated
 files are going to be part of the repository.
 
-The following classes and files have specific emplacements (some are mandatory
+The following classes and files have specific locations (some are mandatory
 and others are just conventions followed by most developers):
 
 ===================================================  ========================================
@@ -199,7 +199,7 @@ providing this feature for free for open source projects, like `GitHub Actions`_
 
 A bundle should at least test:
 
-* The lower bound of their dependencies (by running ``composer update --prefer-lowest``);
+* The lower bound of its dependencies (by running ``composer update --prefer-lowest``);
 * The supported PHP versions;
 * All supported major Symfony versions (e.g. both ``6.4`` and ``7.x`` if
   support is claimed for both).
@@ -265,7 +265,7 @@ when it's installed: in all environments, or only in the ``dev`` and ``test``
 environments when the application requires it as a dev dependency.
 
 If your bundle requires any setup (e.g. configuration, new files, changes to
-``.gitignore``, etc), then you should create a `Symfony Flex recipe`_.
+``.gitignore``, etc.), then you should create a `Symfony Flex recipe`_.
 
 Documentation
 -------------
@@ -276,7 +276,7 @@ Extensive documentation should also be provided in the ``docs/``
 directory.
 The index file (for example ``docs/index.rst`` or
 ``docs/index.md``) is the only mandatory file and must be the entry
-point for the documentation. The
+point for the documentation.
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on the Symfony website.
 
@@ -466,7 +466,7 @@ services. For example, AcmeBlogBundle services must be prefixed with ``acme_blog
 The reason is that bundles shouldn't rely on features such as service autowiring
 or autoconfiguration to not impose an overhead when compiling application services.
 
-In addition, services not meant to be used by the application directly, should
+In addition, services not meant to be used by the application directly should
 be :ref:`defined as private <container-private-services>`. For public services,
 :ref:`aliases should be created <service-autowiring-alias>` from the interface/class
 to the service id. For example, in MonologBundle, an alias is created from
@@ -485,7 +485,7 @@ be defined explicitly.
 
 .. seealso::
 
-    You can learn much more about service loading in bundles reading this article:
+    You can learn much more about service loading in bundles by reading this article:
     :doc:`How to Load Service Configuration inside a Bundle </bundles/extension>`.
 
 Composer Metadata
@@ -508,7 +508,7 @@ The ``composer.json`` file should include at least the following metadata:
     Use the ``symfony-bundle`` value.
 
 ``license``
-    a string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
+    A string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
 
 ``autoload``
     This information is used by Symfony to load the classes of the bundle. It's
@@ -540,7 +540,7 @@ Resources
 If the bundle references any resources (config files, translation files, etc.),
 you can use physical paths (e.g. ``__DIR__/config/services.xml``).
 
-In the past, we recommended to only use logical paths (e.g.
+In the past, we recommended using only logical paths (e.g.
 ``@AcmeBlogBundle/config/services.xml``) and resolve them with the
 :ref:`resource locator <http-kernel-resource-locator>` provided by the Symfony
 kernel, but this is no longer a recommended practice.

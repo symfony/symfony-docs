@@ -4,7 +4,7 @@ Progress Indicator
 Progress indicators are useful to let users know that a command isn't stalled.
 Unlike :doc:`progress bars </console/helpers/progressbar>`, these
 indicators are used when the command duration is indeterminate (e.g. long-running
-commands, unquantifiable tasks, etc.)
+commands, unquantifiable tasks, etc.).
 
 They work by instantiating the :class:`Symfony\\Component\\Console\\Helper\\ProgressIndicator`
 class and advancing the progress as the command executes::
@@ -145,6 +145,6 @@ For example, this is how you can customize the ``message`` placeholder::
 
 .. note::
 
-    Placeholders customization is applied globally, which means that any
+    Placeholder customization is applied globally, which means that any
     progress indicator displayed after the
     ``setPlaceholderFormatterDefinition()`` call will be affected.
