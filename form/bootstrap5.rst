@@ -20,7 +20,9 @@ template which other templates extend from):
 
 If your application uses modern front-end practices, it's better to use
 :doc:`Webpack Encore </frontend>` and follow :doc:`this tutorial </frontend/encore/bootstrap>`
-to import Bootstrap's sources into your SCSS and JavaScript files.
+to import Bootstrap's sources into your SCSS and JavaScript files. If you use
+AssetMapper, :ref:`install Bootstrap and its CSS <asset-mapper-3rd-party-css>`
+with the ``importmap:require`` command.
 
 The next step is to configure the Symfony application to use Bootstrap 5 styles
 when rendering forms. If you want to apply them to all forms, define this

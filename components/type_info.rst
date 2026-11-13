@@ -11,6 +11,10 @@ This component provides:
 * A way to get types from PHP elements such as properties, method arguments,
   return types, and raw strings.
 
+Other Symfony features use these types, such as the
+:doc:`PropertyInfo component </components/property_info>` and the
+:doc:`JsonStreamer component </serializer/streaming_json>`.
+
 Installation
 ------------
 

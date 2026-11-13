@@ -5,7 +5,9 @@ Validates that the given password has reached the minimum strength required by
 the constraint. The strength of the password is not evaluated with a set of
 predefined rules (include a number, use lowercase and uppercase characters,
 etc.) but by measuring the entropy of the password based on its length and the
-number of unique characters used.
+number of unique characters used. To also reject passwords leaked in data
+breaches, use the :doc:`/reference/constraints/NotCompromisedPassword`
+constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

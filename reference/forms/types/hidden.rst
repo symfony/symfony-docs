@@ -1,7 +1,9 @@
 HiddenType Field
 ================
 
-The hidden type represents a hidden input field.
+The hidden type represents a hidden input field. To store an object (e.g. an
+entity) in this field, use a :doc:`data transformer </form/data_transformers>`
+to convert it into its ID and back.
 
 +---------------------------+----------------------------------------------------------------------+
 | Rendered as               | ``input`` ``hidden`` field                                           |

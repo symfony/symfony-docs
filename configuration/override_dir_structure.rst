@@ -138,6 +138,10 @@ In this case you have changed the location of the cache directory to
 You can also change the cache directory by defining an environment variable
 named ``APP_CACHE_DIR`` whose value is the full path of the cache folder.
 
+If you only need to move the read-only part of the cache (e.g. the compiled
+container), change the
+:ref:`build directory <configuration-kernel-build-directory>` instead.
+
 .. warning::
 
     You should keep the cache directory different for each environment;

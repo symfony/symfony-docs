@@ -107,6 +107,10 @@ This handler must implement
 The access token authenticator will use the returned user identifier to
 load the user using the :ref:`user provider <security-user-providers>`.
 
+If clients send the token on every request, make the firewall
+:ref:`stateless <reference-security-stateless>` so Symfony doesn't store the
+authenticated user in the session.
+
 .. warning::
 
     It is important to check whether the token is valid. For instance, the

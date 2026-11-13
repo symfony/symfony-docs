@@ -185,6 +185,8 @@ particularly useful when, for example, a class has properties that require
 heavy computation to determine their values. In such cases, you may want to
 trigger the computation only when the property is actually accessed. This way,
 the expensive processing is avoided entirely if the property is never used.
+In Symfony applications, you can make services lazy without using this component
+directly; read :doc:`/service_container/lazy_services`.
 
 Since version 8.4, PHP provides support for lazy objects via the reflection API.
 This native API works with concrete classes, but not with abstract or internal ones.

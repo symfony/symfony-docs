@@ -18,8 +18,9 @@ Run this command to install the component before using it:
 Configuration
 -------------
 
-To see all configuration options, run this command if you are using the
-component inside a Symfony project:
+To see all configuration options, read the
+:ref:`workflows configuration reference <reference-workflows-name>` or run this
+command if you are using the component inside a Symfony project:
 
 .. code-block:: terminal
 
@@ -1905,6 +1906,8 @@ In Twig templates, metadata is available via the ``workflow_metadata()`` functio
             </li>
         </ul>
     </p>
+
+.. _workflow-validating-definitions:
 
 Validating Workflow Definitions
 -------------------------------

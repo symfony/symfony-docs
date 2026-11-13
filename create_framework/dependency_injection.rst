@@ -241,8 +241,9 @@ And the related change in the front controller::
 We have barely scratched the surface of what you can do with the
 container: from class names as parameters, to overriding existing object
 definitions, from shared service support to dumping a container to a plain PHP class,
-and much more. The Symfony dependency injection container is really powerful
-and is able to manage any kind of PHP class.
+and much more. The
+:doc:`Symfony dependency injection container </service_container>` is really
+powerful and is able to manage any kind of PHP class.
 
 Don't yell at me if you don't want to use a dependency injection container in
 your framework. If you don't like it, don't use it. It's your framework, not

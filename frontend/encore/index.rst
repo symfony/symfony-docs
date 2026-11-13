@@ -7,7 +7,7 @@ Webpack Encore Documentation
 
     Webpack Encore is now in low-maintenance mode (bug fixes, security patches,
     and ``peerDependencies`` updates only). If your project needs a bundler, we
-    recommend migrating to `Symfony Reprise`_.
+    recommend migrating to :ref:`Symfony Reprise <frontend-reprise>`.
 
 Getting Started
 ...............
@@ -59,4 +59,3 @@ Full API
 * `Full API`_
 
 .. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
-.. _`Symfony Reprise`: https://github.com/symfony/reprise

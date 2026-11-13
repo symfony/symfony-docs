@@ -53,7 +53,9 @@ You can **detect deprecations** in two ways:
    ``./vendor/bin/simple-phpunit``
 
 Fix the reported deprecations, rerun the test suite and repeat the process
-until no deprecations remain.
+until no deprecations remain. Read
+:ref:`the upgrade guide <upgrade-major-symfony-deprecations>` for other ways to
+find deprecations.
 
 Fixing Deprecations
 ~~~~~~~~~~~~~~~~~~~

@@ -76,7 +76,8 @@ displayed to the user::
 
     For example, to store the last login date of users, listen to the
     :class:`Symfony\\Component\\Security\\Http\\Event\\LoginSuccessEvent`
-    instead, which Symfony doesn't dispatch when impersonating users.
+    instead, which Symfony doesn't dispatch when impersonating users. Read
+    more about :ref:`security events <security-security-events>`.
 
 Enabling the Custom User Checker
 --------------------------------

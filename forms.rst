@@ -713,6 +713,8 @@ possible paths:
    is validated (validation is explained in the next section). If it is invalid,
    :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns
    ``false`` and the form is rendered again, but now with validation errors.
+   When :ref:`CSRF protection <csrf-protection-forms>` is enabled, Symfony also
+   checks the CSRF token of the form at this point.
 
    By passing ``$form`` to the ``render()`` method (instead of
    ``$form->createView()``), the response code is automatically set to
@@ -729,7 +731,9 @@ possible paths:
 
     Redirecting a user after a successful form submission is a best practice
     that prevents the user from being able to hit the "Refresh" button of
-    their browser and re-post the data.
+    their browser and re-post the data. Use
+    :ref:`flash messages <flash-messages>` to show a success message on the
+    next page.
 
 Accessing Form Data
 ~~~~~~~~~~~~~~~~~~~
@@ -899,6 +903,10 @@ method to get the clicked button's name::
     if ($form->getClickedButton() === $form->get('saveAndAdd')) {
         // ...
     }
+
+You can also :ref:`choose the validation groups based on the clicked button
+<form-validation-groups-clicked-button>` (e.g. to skip validation for a "Back"
+button).
 
 .. _component-form-intro-validation:
 .. _validating-forms:
@@ -1440,7 +1448,8 @@ If the object handled by the form includes validation constraints, Symfony can
 introspect that metadata to guess the type of your field.
 In the above example, Symfony can guess from the validation rules that the
 ``task`` field is a normal ``TextType`` field and the ``dueDate`` field is a
-``DateType`` field.
+``DateType`` field. You can also
+:doc:`create your own type guesser </form/type_guesser>`.
 
 To enable Symfony's "guessing mechanism", omit the second argument to the ``add()`` method, or
 pass ``null`` to it::

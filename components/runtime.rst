@@ -19,7 +19,8 @@ Usage
 
 The Runtime component abstracts most bootstrapping logic as so-called
 *runtimes*, allowing you to write front-controllers in a generic way.
-For instance, the Runtime component allows Symfony's ``public/index.php``
+For instance, the Runtime component allows Symfony's
+:ref:`front controller <architecture-front-controller>` (``public/index.php``)
 to look like this::
 
     // public/index.php

@@ -364,7 +364,9 @@ HTTP Caching and User Sessions
 Whenever the session is started during a request, Symfony turns the response
 into a private non-cacheable response. This is the best default behavior to not
 cache private user information (e.g. a shopping cart, a user's profile details,
-etc.) and expose it to other visitors.
+etc.) and expose it to other visitors. To make sure that a page you want to
+cache doesn't use the session by mistake, mark its route as
+:ref:`stateless <stateless-routing>`.
 
 However, even requests making use of the session can be cached under some
 circumstances. For example, information related to some user group could be

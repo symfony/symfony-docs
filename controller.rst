@@ -102,7 +102,8 @@ Generating URLs
 ~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::generateUrl`
-method is just a helper method that generates the URL for a given route::
+method is just a helper method that
+:ref:`generates the URL <routing-generating-urls>` for a given route::
 
     $url = $this->generateUrl('app_lucky_number', ['max' => 10]);
 
@@ -440,8 +441,8 @@ attribute in your controller::
         // ...
     }
 
-You can customize the validation groups used during the mapping and also the
-HTTP status to return if the validation fails::
+You can customize the :doc:`validation groups </validation/groups>` used during
+the mapping and also the HTTP status to return if the validation fails::
 
     use Symfony\Component\HttpFoundation\Response;
 
@@ -802,6 +803,9 @@ them ideal for storing user notifications::
         return $this->redirectToRoute(/* ... */);
     }
 
+Read the :ref:`flash messages <flash-messages>` section of the session article
+to learn how to display these messages in your templates.
+
 .. _request-object-info:
 
 The Request and Response Objects
@@ -1062,6 +1066,8 @@ On the client side, you can listen to events using the native ``EventSource`` AP
     For high-traffic applications that need to broadcast updates to many clients
     simultaneously, consider using :doc:`Mercure </mercure>`, which is built on
     top of SSE but uses a dedicated hub to manage connections efficiently.
+
+.. _controller-decoupling:
 
 Decoupling Controllers from Symfony
 -----------------------------------

@@ -516,3 +516,5 @@ like any other regular Twig variable:
             </div>
         {% endif %}
     {% endblock %}
+
+To test your custom form type, read :doc:`/form/unit_testing`.

@@ -9,7 +9,7 @@ Validates that a value is a valid "file", which can be one of the following:
   (including objects of :class:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile` class).
 
 This constraint is commonly used in forms with the :doc:`FileType </reference/forms/types/file>`
-form field.
+form field (see :doc:`/controller/upload_file`).
 
 .. seealso::
 

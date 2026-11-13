@@ -106,8 +106,9 @@ Setter Injection
 ----------------
 
 Another possible injection point into a class is a **setter method** that accepts
-the dependency. If you use autowiring, add the ``#[Required]`` attribute to the
-setter and the container calls it automatically when instantiating the service::
+the dependency. If you use :ref:`autowiring <autowiring-calls>`, add the
+``#[Required]`` attribute to the setter and the container calls it automatically
+when instantiating the service::
 
     // src/Mail/NewsletterSender.php
     namespace App\Mail;
@@ -372,6 +373,8 @@ to setter injection but with this additional important problem:
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
 as in a third party library, which uses public properties for its dependencies.
+If you use autowiring, add the ``#[Required]`` attribute to a public typed
+property to :ref:`inject it automatically <autowiring-calls>`.
 
 .. _optional-dependencies:
 

@@ -623,6 +623,10 @@ the one-to-many relationship. For more advanced details and examples of how
 to use other types of relations (e.g. one-to-one, many-to-many), see
 Doctrine's `Association Mapping Documentation`_.
 
+To edit these relations in forms, use the
+:doc:`EntityType field </reference/forms/types/entity>` to select related
+entities or a :doc:`collection of forms </form/form_collections>` to edit them.
+
 .. note::
 
     If you're using attributes, you'll need to prepend all attributes with

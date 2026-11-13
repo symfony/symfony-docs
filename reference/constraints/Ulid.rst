@@ -2,6 +2,7 @@ ULID
 ====
 
 Validates that a value is a valid `Universally Unique Lexicographically Sortable Identifier (ULID)`_.
+Read :ref:`the UID docs <ulid>` to learn how to generate and store ULIDs.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

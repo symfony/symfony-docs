@@ -4,7 +4,8 @@ Expression
 This constraint allows you to use an :ref:`expression <component-expression-language-examples>`
 for more complex, dynamic validation. See `Basic Usage`_ for an example.
 See :doc:`/reference/constraints/Callback` for a different constraint that
-gives you similar flexibility.
+gives you similar flexibility. To apply other constraints only when an
+expression is true, use :doc:`/reference/constraints/When`.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`

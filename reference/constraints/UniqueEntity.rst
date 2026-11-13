@@ -5,6 +5,11 @@ Validates that a particular field (or fields) in a Doctrine entity is (are)
 unique. This is commonly used, for example, to prevent a new user from registering
 with an email address that already exists in the system.
 
+.. tip::
+
+    When :ref:`automatic validation <automatic_object_validation>` is enabled,
+    Symfony adds this constraint to the properties mapped with ``unique=true``.
+
 .. seealso::
 
     If you want to validate that all the elements of a collection are unique,

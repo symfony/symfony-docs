@@ -185,6 +185,8 @@ as you normally do:
     The ``--optimize-autoloader`` flag improves Composer's autoloader performance
     significantly by building a "class map". The ``--no-dev`` flag ensures that
     development packages are not installed in the production environment.
+    For other ways to make your application faster in production, see
+    :doc:`/performance`.
 
 .. warning::
 
@@ -231,13 +233,14 @@ F) Other Things!
 There may be lots of other things that you need to do, depending on your
 setup:
 
-* Running any database migrations
+* Running any :ref:`database migrations <doctrine-creating-the-database-tables-schema>`
 * Clearing your APCu cache
 * Adding/editing CRON jobs
 * Restarting your workers
 * Pushing assets to a CDN
 * :ref:`Dumping error pages as static HTML files <dumping-error-pages-as-static-html-files>`
-* On a shared hosting platform using the Apache web server, you may need to
+* On a shared hosting platform using the
+  :doc:`Apache web server </setup/web_server_configuration>`, you may need to
   install the `symfony/apache-pack`_ package
 * etc.
 

@@ -152,7 +152,8 @@ defined, an argument has no matching attribute, ...).
     resolver, you might wonder why someone would want to create another one
     (why would there be an interface if not?). Two examples: in Symfony,
     ``getController()`` is enhanced to support :doc:`controllers as services </controller/service>`;
-    and ``getArguments()`` provides an extension point to alter or enhance
+    and ``getArguments()`` provides an
+    :doc:`extension point </controller/value_resolver>` to alter or enhance
     the resolving of arguments.
 
 Let's conclude with the new version of our framework::

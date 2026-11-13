@@ -13,9 +13,12 @@ going to be required so this theme makes that easy.
 
 To use it, first make sure you have installed and integrated `Tailwind CSS`_ and the
 `form plugin`_. Follow their respective documentation to install both packages.
+If you use AssetMapper, read :ref:`how to use Tailwind with AssetMapper
+<asset-mapper-tailwind>`.
 
-If you prefer to use the Tailwind theme on a form-by-form basis, include the
-``form_theme`` tag in the templates where those forms are used:
+You can :ref:`apply this theme to all forms <forms-theming-global>` of your
+application. If you prefer to use the Tailwind theme on a form-by-form basis,
+include the ``form_theme`` tag in the templates where those forms are used:
 
 .. code-block:: html+twig
 
@@ -58,7 +61,8 @@ Project Specific Form Layout
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you have a generic Tailwind style for all your forms, you can create
-a custom form theme using the Tailwind CSS theme as a base.
+a :ref:`custom form theme <create-your-own-form-theme>` using the Tailwind CSS
+theme as a base.
 
 .. code-block:: twig
 

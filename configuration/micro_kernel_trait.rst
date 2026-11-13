@@ -182,7 +182,8 @@ the dedicated section about
 :doc:`managing configuration with extensions </service_container/extensions>`.
 
 It is also possible to implement the ``EventSubscriberInterface`` to handle
-events directly from the kernel; again, it will be registered automatically::
+events directly from the kernel; again, it will be registered automatically
+(read more about :ref:`event subscribers <events-subscriber>`)::
 
     // ...
     use App\Exception\Danger;

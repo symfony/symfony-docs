@@ -17,6 +17,10 @@ It transforms incoming JSON request payloads into PHP objects that your
 application can work with. Similarly, it converts processed PHP objects into a
 JSON stream for outgoing responses.
 
+If you need features like serialization groups, name converters or formats
+other than JSON, read
+:ref:`when to use the Serializer instead <serializer-json-streamer>`.
+
 Installation
 ------------
 

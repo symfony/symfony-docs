@@ -6,7 +6,8 @@ the :ref:`Symfony local web server <symfony-cli-server>`.
 
 However, when running the application in the production environment, you'll need
 to use a fully-featured web server. This article describes how to use Symfony
-with FrankenPHP, Caddy, Nginx or Apache.
+with FrankenPHP, Caddy, Nginx or Apache. For the other steps needed to run your
+application in production, read :doc:`/deployment`.
 
 .. sidebar:: The public directory
 

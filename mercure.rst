@@ -745,8 +745,9 @@ dispatch the updates asynchronously thanks to the provided integration with
 the Messenger component.
 
 First, be sure :doc:`to install the Messenger component </messenger>`
-and to properly configure a transport (if you don't, the handler will
-be called synchronously).
+and to properly configure a transport and :ref:`route <messenger-routing>` the
+``Update`` class to it (if you don't, the handler will be called
+synchronously).
 
 Then, dispatch the Mercure ``Update`` to the Messenger's Message Bus;
 it will be handled automatically::

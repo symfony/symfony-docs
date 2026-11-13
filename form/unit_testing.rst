@@ -7,6 +7,8 @@ How to Unit Test your Forms
     :doc:`custom form types </form/create_custom_field_type>`. If you are using
     the :doc:`built-in Symfony form types </reference/forms/types>` or the form
     types provided by third-party bundles, you don't need to unit test them.
+    To test how your forms are submitted in your application, write
+    :ref:`functional tests <testing-forms>` instead.
 
 The Form component consists of 3 core objects: a form type (implementing
 :class:`Symfony\\Component\\Form\\FormTypeInterface`), the

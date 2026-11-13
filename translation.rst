@@ -534,7 +534,8 @@ support for both Twig and PHP templates.
 Using Twig Filters
 ~~~~~~~~~~~~~~~~~~
 
-The ``trans`` filter can be used to translate *variable texts* and complex expressions:
+The :ref:`trans filter <reference-twig-filter-trans>` can be used to translate
+*variable texts* and complex expressions:
 
 .. code-block:: twig
 
@@ -1127,9 +1128,9 @@ is stored in the request and is accessible via the ``Request`` object::
         $locale = $request->getLocale();
     }
 
-To set the user's locale, you may want to create a custom event listener so
-that it's set before any other parts of the system (i.e. the translator) need
-it::
+To set the user's locale, you may want to create a custom
+:doc:`event listener </event_dispatcher>` so that it's set before any other
+parts of the system (i.e. the translator) need it::
 
         public function onKernelRequest(RequestEvent $event): void
         {

@@ -563,8 +563,8 @@ visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
 before accessing certain resources. For example, you might not allow "remember me"
-users to change their password. You can do this by using a few special
-"attributes"::
+users to change their password. You can do this by using a few
+:ref:`special attributes <checking-to-see-if-a-user-is-logged-in-is-authenticated-fully>`::
 
     // src/Controller/AccountController.php
     // ...
@@ -596,7 +596,8 @@ users to change their password. You can do this by using a few special
 Customizing the Remember Me Cookie
 ----------------------------------
 
-The ``remember_me`` configuration contains many options to customize the
+The :ref:`remember_me configuration <reference-security-firewall-remember-me>`
+contains many options to customize the
 cookie created by the system:
 
 ``name`` (default value: ``REMEMBERME``)

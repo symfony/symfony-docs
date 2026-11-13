@@ -1,6 +1,13 @@
 Memcached Cache Adapter
 =======================
 
+.. seealso::
+
+    This article explains how to create and configure the Memcached adapter
+    itself. In Symfony applications, you can use the
+    ``cache.adapter.memcached`` service by
+    :ref:`configuring the cache <cache-configuration-with-frameworkbundle>`.
+
 This adapter stores the values in-memory using one (or more) `Memcached server`_
 instances. Unlike the :doc:`APCu adapter </cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Redis adapter </cache/adapters/redis_adapter>`, it is not limited to the current server's

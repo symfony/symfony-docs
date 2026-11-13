@@ -224,7 +224,9 @@ message:
     Most of the time you won't interact directly with the validator or need
     to worry about printing out the errors, because you'll use validation
     indirectly when handling submitted form data. For more information, see
-    :ref:`how to validate Symfony forms <validating-forms>`.
+    :ref:`how to validate Symfony forms <validating-forms>`. The same happens
+    when :ref:`mapping the request payload <controller-mapping-request-payload>`
+    to an object in your controllers.
 
 You could also pass the collection of errors into a template::
 
@@ -275,6 +277,9 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
+
+To validate a single value with the ``validator`` service, see
+:doc:`/validation/raw_values`.
 
 .. _validation-constraints:
 
@@ -396,8 +401,9 @@ literature genre mostly associated with the author, which can be set to either
 Constraints in Form Classes
 ---------------------------
 
-Constraints can be defined while building the form via the ``constraints`` option
-of the form fields::
+Constraints can be defined while building the form via the
+:ref:`constraints option <reference-form-option-constraints>` of the form
+fields::
 
     use Symfony\Component\Validator\Constraints as Assert;
 

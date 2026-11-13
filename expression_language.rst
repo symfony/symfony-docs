@@ -14,8 +14,9 @@ Booleans) using a syntax similar to PHP and Twig.
 Symfony itself uses expressions in many features, such as :doc:`security rules
 </security/expressions>`, :ref:`route matching conditions
 <routing-matching-expressions>`, the :doc:`Expression validation constraint
-</reference/constraints/Expression>` and :ref:`service container configuration
-<services-expressions>`.
+</reference/constraints/Expression>`, :ref:`service container configuration
+<services-expressions>` and :ref:`workflow transition guards
+<workflow-blocking-transitions>`.
 
 In your own applications, the ExpressionLanguage component is a perfect
 candidate for the foundation of a *business rule engine*. The idea is to let
@@ -390,6 +391,10 @@ or by using the second argument of the constructor::
 
     // using registerProvider()
     $expressionLanguage->registerProvider(new StringExpressionLanguageProvider());
+
+In a Symfony application, you can also add the functions of a provider to the
+routing and security expressions by tagging its service with one of the
+:doc:`expression language provider tags </reference/dic_tags>`.
 
 .. tip::
 

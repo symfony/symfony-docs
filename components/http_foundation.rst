@@ -215,6 +215,10 @@ wrapping this data::
 
     $data = $request->getPayload();
 
+In Symfony applications, you can also
+:ref:`map the request payload to an object <controller-mapping-request-payload>`
+and validate it.
+
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -698,6 +702,9 @@ method::
 
 If the Response is not modified, it sets the status code to 304 and removes the
 actual response content.
+
+Read :doc:`/http_cache` to learn how to use HTTP caching in Symfony
+applications.
 
 .. _redirect-response:
 

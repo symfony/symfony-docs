@@ -377,7 +377,8 @@ one of the messages reaches an ``action_level``. Take this example:
 Now, if even one log entry has a ``LogLevel::ERROR`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that
 your log file will contain *all* the details about the problematic request - making
-debugging much easier!
+debugging much easier! To avoid triggering it for errors like 404 or 403, see
+:doc:`/logging/monolog_exclude_http_codes`.
 
 .. tip::
 
@@ -389,7 +390,8 @@ All Built-in Handlers
 
 Monolog comes with *many* built-in handlers for emailing logs, sending them to Loggly,
 or notifying you in Slack. These are documented inside of MonologBundle itself. For
-a full list, see `Monolog Configuration`_.
+a full list, see `Monolog Configuration`_. Symfony also provides some
+:doc:`extra handlers </logging/handlers>`.
 
 How to Rotate your Log Files
 ----------------------------
