@@ -65,7 +65,7 @@ a ``$lockFactory`` property with your own lock factory::
         // ...
     }
 
-.. versionadded::  7.1
+.. versionadded:: 7.1
 
     The ``$lockFactory`` property was introduced in Symfony 7.1.
 

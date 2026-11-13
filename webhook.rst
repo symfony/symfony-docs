@@ -523,7 +523,7 @@ Sweego          ``mailer.webhook.request_parser.sweego``      :class:`Symfony\\C
 
 .. versionadded:: 7.1
 
-    The support for ``Resend`` and ``MailerSend`` were introduced in Symfony 7.1.
+    The support for ``Resend`` and ``MailerSend`` was introduced in Symfony 7.1.
 
 .. versionadded:: 7.2
 

@@ -1,4 +1,4 @@
-How to Override Symfony's default Directory Structure
+How to Override Symfony's Default Directory Structure
 =====================================================
 
 Symfony applications have the following default directory structure, but you can
@@ -131,7 +131,7 @@ Changing the cache directory can be achieved by overriding the
         }
     }
 
-In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
+In this code, ``$this->environment`` is the current environment (e.g. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache/``.
 
@@ -140,8 +140,8 @@ named ``APP_CACHE_DIR`` whose value is the full path of the cache folder.
 
 .. warning::
 
-    You should keep the cache directory different for each environment,
-    otherwise some unexpected behavior may happen. Each environment generates
+    You should keep the cache directory different for each environment;
+    otherwise, some unexpected behavior may happen. Each environment generates
     its own cached configuration files, and so each needs its own directory to
     store those cache files.
 
@@ -154,7 +154,7 @@ named ``%kernel.share_dir%``.
 
 .. versionadded:: 7.4
 
-    The ``Kernel::getShareDir()`` method, the ``%kernel.share_dir`` parameter and
+    The ``Kernel::getShareDir()`` method, the ``%kernel.share_dir%`` parameter and
     the support for the ``APP_SHARE_DIR`` environment variable were introduced
     in Symfony 7.4.
 
@@ -166,7 +166,7 @@ Override the Log Directory
 Overriding the ``var/log/`` directory is almost the same as overriding the
 ``var/cache/`` directory.
 
-You can do it overriding the ``getLogDir()`` method in the ``Kernel`` class of
+You can do it by overriding the ``getLogDir()`` method in the ``Kernel`` class of
 your application::
 
     // src/Kernel.php
@@ -184,7 +184,7 @@ your application::
 
 Here you have changed the location of the directory to ``var/{environment}/log/``.
 
-You can also change the log directory defining an environment variable named
+You can also change the log directory by defining an environment variable named
 ``APP_LOG_DIR`` whose value is the full path of the log folder.
 
 .. _override-src-dir:

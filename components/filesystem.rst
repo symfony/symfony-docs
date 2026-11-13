@@ -2,7 +2,7 @@ The Filesystem Component
 ========================
 
     The Filesystem component provides platform-independent utilities for
-    filesystem operations and for file/directory paths manipulation.
+    filesystem operations and for file/directory path manipulation.
 
 Installation
 ------------
@@ -204,7 +204,7 @@ support symbolic links, a third boolean argument is available::
 ``readlink``
 ~~~~~~~~~~~~
 
-:method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` read links targets.
+:method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` reads link targets.
 
 The :method:`Symfony\\Component\\Filesystem\\Filesystem::readlink` method
 provided by the Filesystem component behaves in the same way on all operating
@@ -213,7 +213,7 @@ systems (unlike PHP's :phpfunction:`readlink` function)::
     // returns the next direct target of the link without considering the existence of the target
     $filesystem->readlink('/path/to/link');
 
-    // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
+    // returns the absolute, fully resolved final version of the target (if there are nested links, they are resolved)
     $filesystem->readlink('/path/to/link', true);
 
 Its behavior is the following:
@@ -231,7 +231,7 @@ Its behavior is the following:
 .. note::
 
     If you wish to canonicalize the path without checking its existence, you can
-    use :method:`Symfony\\Component\\Filesystem\\Path::canonicalize` method instead.
+    use the :method:`Symfony\\Component\\Filesystem\\Path::canonicalize` method instead.
 
 ``makePathRelative``
 ~~~~~~~~~~~~~~~~~~~~
@@ -291,9 +291,9 @@ The available options are:
 temporary file with a unique filename, and returns its path, or throws an
 exception on failure::
 
-    // returns a path like : /tmp/prefix_wyjgtF
+    // returns a path like: /tmp/prefix_wyjgtF
     $filesystem->tempnam('/tmp', 'prefix_');
-    // returns a path like : /tmp/prefix_wyjgtF.png
+    // returns a path like: /tmp/prefix_wyjgtF.png
     $filesystem->tempnam('/tmp', 'prefix_', '.png');
 
 .. _filesystem-dumpfile:
@@ -305,7 +305,7 @@ exception on failure::
 contents into a file (creating the file and its directory if they don't exist).
 It does this in an atomic manner: it writes a temporary file first and then moves
 it to the new file location when it's finished. This means that the user will
-always see either the complete old file or complete new file (but never a
+always see either the complete old file or the complete new file (but never a
 partially-written file)::
 
     $filesystem->dumpFile('file.txt', 'Hello World');
@@ -434,7 +434,7 @@ Absolute/relative paths can be converted with the methods
 :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute`
 and :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`.
 
-:method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` method expects a
+The :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` method expects a
 relative path and a base path to base that relative path upon::
 
     echo Path::makeAbsolute('config/config.yaml', '/var/www/project');
@@ -456,7 +456,7 @@ example, relative to the root directory of your project) and absolute paths at
 the same time.
 
 :method:`Symfony\\Component\\Filesystem\\Path::makeRelative` is the inverse
-operation to :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute`::
+operation of :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute`::
 
     echo Path::makeRelative('/var/www/project/config/config.yaml', '/var/www/project');
     // => config/config.yaml
@@ -559,7 +559,7 @@ to obtain the root of a path::
 Error Handling
 --------------
 
-Whenever something wrong happens, an exception implementing
+Whenever something goes wrong, an exception implementing
 :class:`Symfony\\Component\\Filesystem\\Exception\\ExceptionInterface` or
 :class:`Symfony\\Component\\Filesystem\\Exception\\IOExceptionInterface` is thrown.
 

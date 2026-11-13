@@ -2,7 +2,7 @@ How to Add "Remember Me" Login Functionality
 ============================================
 
 Once a user is authenticated, their credentials are typically stored in the
-session. This means that when the session ends they will be logged out and
+session. This means that when the session ends, they will be logged out and
 have to provide their login details again next time they wish to access the
 application. You can allow users to choose to stay logged in for longer than
 the session lasts using a cookie with the ``remember_me`` firewall option:
@@ -44,7 +44,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 <firewall name="main">
                     <!-- ... -->
 
-                    <!-- secret: default to "%kernel.secret%"
+                    <!-- secret: defaults to "%kernel.secret%"
                          lifetime: 604800 is 1 week in seconds -->
                     <remember-me
                         secret="%kernel.secret%"
@@ -108,8 +108,8 @@ Activating the Remember Me System
 ---------------------------------
 
 Using the remember me cookie is not always appropriate (e.g. you should not
-use it on a shared PC). This is why by default, Symfony requires your users
-to opt-in to the remember me system via a request parameter.
+use it on a shared PC). This is why, by default, Symfony requires your users
+to opt in to the remember me system via a request parameter.
 
 Remember Me for Form Login
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,7 +139,7 @@ checkbox must have a name of ``_remember_me``:
 Remember Me for JSON Login
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you implement the login via an API that uses :ref:`JSON Login <json-login>`
+If you implement the login via an API that uses :ref:`JSON Login <json-login>`,
 you can add a ``_remember_me`` key to the body of your POST request.
 
 .. code-block:: json
@@ -159,7 +159,7 @@ Always activating Remember Me
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes, you may wish to always activate the remember me system and not
-allow users to opt-out. In these cases, you can use the
+allow users to opt out. In these cases, you can use the
 ``always_remember_me`` setting:
 
 .. configuration-block::
@@ -279,7 +279,7 @@ precautions to allow invalidating any generated tokens.
 
 Symfony provides two ways to validate remember me tokens:
 
-Signature based tokens
+Signature-based tokens
     By default, the remember me cookie contains a signature based on
     properties of the user. If the properties change, the signature changes
     and already generated tokens are no longer considered valid. See
@@ -385,9 +385,9 @@ if the ``updatedAt``, password or user identifier for this user changes.
 .. tip::
 
     Signature properties allow for some advanced usages without having to
-    set-up storage for all remember me tokens. For instance, you can add a
+    set up storage for all remember me tokens. For instance, you can add a
     ``forceReloginAt`` field to your user and to the signature properties.
-    This way, you can invalidate all remember me tokens from a user by
+    This way, you can invalidate all remember me tokens of a user by
     changing this timestamp.
 
 .. _security-remember-me-persistent:
@@ -403,7 +403,7 @@ This implementation uses a *remember me token provider* for storing and
 retrieving the tokens from the database. The DoctrineBridge provides a
 token provider using Doctrine.
 
-You can enable the doctrine token provider using the ``doctrine`` setting:
+You can enable the Doctrine token provider using the ``doctrine`` setting:
 
 .. configuration-block::
 
@@ -590,7 +590,7 @@ users to change their password. You can do this by using a few special
 
 .. tip::
 
-    There is also a ``IS_REMEMBERED`` attribute that grants access *only*
+    There is also an ``IS_REMEMBERED`` attribute that grants access *only*
     when the user is authenticated via the remember me mechanism.
 
 Customizing the Remember Me Cookie
@@ -603,20 +603,20 @@ cookie created by the system:
     The name of the cookie used to keep the user logged in. If you enable the
     ``remember_me`` feature in several firewalls of the same application, make sure
     to choose a different name for the cookie of each firewall. Otherwise, you'll
-    face lots of security related problems.
+    face lots of security-related problems.
 
 ``lifetime`` (default value: ``31536000`` i.e. 1 year in seconds)
-    The number of seconds after which the cookie will be expired. This
+    The number of seconds after which the cookie will expire. This
     defines the maximum time between two visits for the user to remain
     authenticated.
 
 ``path`` (default value: ``/``)
-    The path where the cookie associated with this feature is used. By default
-    the cookie will be applied to the entire website but you can restrict to a
+    The path where the cookie associated with this feature is used. By default,
+    the cookie will be applied to the entire website, but you can restrict it to a
     specific section (e.g. ``/forum``, ``/admin``).
 
 ``domain`` (default value: ``null``)
-    The domain where the cookie associated with this feature is used. By default
+    The domain where the cookie associated with this feature is used. By default,
     cookies use the current domain obtained from ``$_SERVER``.
 
 ``secure`` (default value: ``false``)

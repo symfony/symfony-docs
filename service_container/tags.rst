@@ -488,7 +488,7 @@ iterator, add the ``exclude`` option:
             ;
         };
 
-In the case the referencing service is itself tagged with the tag being used in the tagged
+If the referencing service is itself tagged with the tag being used in the tagged
 iterator, it is automatically excluded from the injected iterable. This behavior can be
 disabled by setting the ``exclude_self`` option to ``false``:
 
@@ -632,7 +632,7 @@ the number, the earlier the tagged service will be located in the collection:
             ;
         };
 
-Another option, which is particularly useful when using autoconfiguring
+Another option, which is particularly useful when autoconfiguring
 tags, is to implement the static ``getDefaultPriority()`` method on the
 service itself::
 
@@ -958,7 +958,7 @@ same service under different indexes::
 Tagging Non-Service Classes
 ---------------------------
 
-Not all classes need to be registered as services. Entities, value objects, and
+Not all classes need to be registered as services. Entities, value objects and
 DTOs, for example, should be discoverable at compile time but must not be instantiated
 by the container. Use **resource tags** to tag such classes while keeping them
 excluded from the service container.

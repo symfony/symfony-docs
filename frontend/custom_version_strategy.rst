@@ -3,7 +3,7 @@ How to Use a Custom Version Strategy for Assets
 
 Asset versioning is a technique that improves the performance of web
 applications by adding a version identifier to the URL of the static assets
-(CSS, JavaScript, images, etc.) When the content of the asset changes, its
+(CSS, JavaScript, images, etc.). When the content of the asset changes, its
 identifier is also modified to force the browser to download it again instead of
 reusing the cached asset.
 
@@ -22,7 +22,7 @@ own version strategy.
 Creating your Own Asset Version Strategy
 ----------------------------------------
 
-Symfony provides a strategy to version assets based on their contents hash.
+Symfony provides a strategy to version assets based on their content hash.
 The following example extends that idea to create a version strategy that reads
 a JSON file mapping each asset to its content hash and combines that hash with
 a global application version.

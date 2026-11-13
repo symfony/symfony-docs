@@ -229,7 +229,7 @@ user changes the Country:
     </script>
 
 This reuses your existing form processing logic on the server. No additional
-endpoints needed.
+endpoints are needed.
 
 .. tip::
 

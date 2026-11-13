@@ -1,7 +1,7 @@
 PHP Array Cache Adapter
 =======================
 
-This adapter is a high performance cache for static data (e.g. application configuration)
+This adapter is a high-performance cache for static data (e.g. application configuration)
 that is optimized and preloaded into OPcache memory storage. It is suited for any data that
 is mostly read-only after warm-up::
 

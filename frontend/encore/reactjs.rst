@@ -8,7 +8,7 @@ Enabling React.js with Webpack Encore
 
 .. tip::
 
-    Check out live demos of Symfony UX React component at `https://ux.symfony.com/react`_!
+    Check out live demos of the Symfony UX React component at `https://ux.symfony.com/react`_!
 
 Using React? First add some dependencies with npm:
 

@@ -25,7 +25,7 @@ languages.
 
 Mercure comes with an authorization mechanism,
 automatic reconnection in case of network issues
-with retrieving of lost updates, a presence API,
+with retrieval of lost updates, a presence API,
 "connection-less" push for smartphones and auto-discoverability (a supported
 client can automatically discover and subscribe to updates of a given resource
 thanks to a specific HTTP header).
@@ -44,8 +44,8 @@ All these features are supported in the Symfony integration.
     or high-traffic scalability.
 
 `In this recording`_ you can see how a Symfony web API leverages Mercure
-and API Platform to update a React app and a mobile app (React Native) in real time
-generated using the API Platform client generator.
+and API Platform to update, in real time, a React app and a mobile app
+(React Native) generated using the API Platform client generator.
 
 Installation
 ------------
@@ -80,7 +80,7 @@ A Docker image, a Helm chart for Kubernetes
 and a managed, High Availability Hub are also provided.
 
 Thanks to :doc:`the Docker integration of Symfony </setup/docker>`,
-:ref:`Flex <symfony-flex>` proposes to install a Mercure hub for development.
+:ref:`Flex <symfony-flex>` offers to install a Mercure hub for development.
 Run ``docker compose up`` to start the hub if you have chosen this option.
 
 If you use the :ref:`Symfony local web server <symfony-cli-server>`,
@@ -134,12 +134,12 @@ MercureBundle will use it to automatically generate and sign the needed JWTs.
 In addition to these environment variables,
 MercureBundle provides a more advanced configuration:
 
-* ``secret``: the key to use to sign the JWT - A key of the same size as the hash output (for instance, 256 bits for "HS256") or larger MUST be used. (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
-* ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
-* ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
+* ``secret``: the key to use to sign the JWT - A key of the same size as the hash output (for instance, 256 bits for "HS256") or larger MUST be used (all other options, except ``algorithm``, ``subscribe`` and ``publish``, will be ignored)
+* ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when ``secret`` or ``factory`` is provided)
+* ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when ``secret`` or ``factory`` is provided)
 * ``algorithm``: The algorithm to use to sign the JWT (only usable when ``secret`` is provided)
 * ``provider``: The ID of a service to call to provide the JWT (all other options will be ignored)
-* ``factory``: The ID of a service to call to create the JWT (all other options, beside ``subscribe``, and ``publish`` will be ignored)
+* ``factory``: The ID of a service to call to create the JWT (all other options, except ``subscribe`` and ``publish``, will be ignored)
 * ``value``: the raw JWT to use (all other options will be ignored)
 
 .. configuration-block::
@@ -221,7 +221,7 @@ MercureBundle provides a more advanced configuration:
         }
 
     The jwt.io website is a convenient way to create and sign JWTs, check out this `example JWT`_.
-    Don't forget to set your secret key properly in the bottom of the right panel of the form!
+    Don't forget to set your secret key properly at the bottom of the right panel of the form!
 
 Basic Usage
 -----------
@@ -291,7 +291,7 @@ Subscribing to updates in JavaScript from a Twig template is straightforward:
 
 The ``mercure()`` Twig function generates the URL of the Mercure hub
 according to the configuration. The URL includes the ``topic`` query
-parameters corresponding to the topics passed as first argument.
+parameters corresponding to the topics passed as the first argument.
 
 If you want to access this URL from an external JavaScript file, generate the
 URL in a dedicated HTML element:
@@ -319,7 +319,7 @@ Then retrieve it from your JS file:
     this.eventSource = new EventSource(this.mercureUrlValue);
 
 Mercure also allows subscribing to several topics,
-and to use URI Templates or the special value ``*`` (matched by all topics)
+and using URI Templates or the special value ``*`` (matched by all topics)
 as patterns:
 
 .. code-block:: html+twig
@@ -446,8 +446,8 @@ of the ``Update`` constructor to ``true``::
         }
     }
 
-To subscribe to private updates, subscribers must provide to the Hub
-a JWT containing a topic selector matching the topic of the update.
+To subscribe to private updates, subscribers must provide the Hub
+with a JWT containing a topic selector matching the topic of the update.
 
 To provide this JWT, the subscriber can use a cookie,
 or an ``Authorization`` HTTP header.
@@ -479,12 +479,12 @@ is the way to go.
 .. warning::
 
     To use the cookie authentication method, the Symfony app and the Hub
-    must be served from the same domain (can be different sub-domains).
+    must be served from the same domain (they can use different subdomains).
 
 .. tip::
 
     The native implementation of EventSource doesn't allow specifying headers.
-    For example, authorization using a Bearer token. In order to achieve that, use `a polyfill`_
+    For example, authorization using a Bearer token. In order to achieve that, use `a polyfill`_.
 
     .. code-block:: html+twig
 
@@ -600,8 +600,8 @@ Then, reference this service in the bundle configuration:
             ],
         ]);
 
-This method is especially convenient when using tokens having an expiration
-date, that can be refreshed programmatically.
+This method is especially convenient when using tokens that have an expiration
+date and can be refreshed programmatically.
 
 Web APIs
 --------
@@ -694,7 +694,7 @@ For functional testing, you can instead create a stub of the Hub::
             return 'id';
         }
 
-        // implement rest of HubInterface methods here
+        // implement the rest of the HubInterface methods here
     }
 
 Use ``HubStub`` to replace the default hub service so no updates are actually
@@ -728,8 +728,8 @@ enable it:
     :alt: The Mercure panel of the Symfony Profiler, showing information like time, memory, topics and data of each message sent by Mercure.
     :class: with-browser
 
-The Mercure hub itself provides a debug tool that can be enabled and it's
-available on ``/.well-known/mercure/ui/``
+The Mercure hub itself provides a debug tool that can be enabled and is
+available at ``/.well-known/mercure/ui/``.
 
 Async Dispatching
 -----------------
@@ -748,7 +748,7 @@ First, be sure :doc:`to install the Messenger component </messenger>`
 and to properly configure a transport (if you don't, the handler will
 be called synchronously).
 
-Then, dispatch the Mercure ``Update`` to the Messenger's Message Bus,
+Then, dispatch the Mercure ``Update`` to the Messenger's Message Bus;
 it will be handled automatically::
 
     // src/Controller/PublishController.php

@@ -110,7 +110,7 @@ your shell.
 
 .. note::
 
-    When using Bash, make sure you installed and setup the "bash completion"
+    When using Bash, make sure you installed and set up the "bash completion"
     package for your OS (typically named ``bash-completion``).
 
 After installing and restarting your terminal, you're all set to use
@@ -152,7 +152,7 @@ attribute. For example, you may want a command to create a user::
     {
         public function __invoke(): int
         {
-            // ... put here the code to create the user
+            // ... put the code to create the user here
 
             // this method must return an integer number with the "exit status code"
             // of the command. You can also use these constants to make code more readable
@@ -174,7 +174,7 @@ attribute. For example, you may want a command to create a user::
 .. versionadded:: 7.3
 
     Support for invokable commands that don't extend the base ``Command`` class
-    was introduced in Symfony 7.3
+    was introduced in Symfony 7.3.
 
 You can also use ``#[AsCommand]`` to add a description, usage examples, and
 longer help text for the command::
@@ -682,7 +682,7 @@ console::
 
                 // prefix the key with two dashes when passing options,
                 // e.g: '--some-option' => 'option_value',
-                // use brackets for testing array value,
+                // use brackets for testing array values,
                 // e.g: '--some-option' => ['option_value'],
             ]);
 
@@ -730,7 +730,7 @@ console::
         $commandTester->execute([], ['capture_stderr_separately' => true]);
 
 When testing your commands, it could be useful to understand how your command
-reacts on different settings like the width and the height of the terminal, or
+reacts to different settings like the width and the height of the terminal, or
 even the color mode being used. You have access to such information thanks to the
 :class:`Symfony\\Component\\Console\\Terminal` class::
 
@@ -868,11 +868,11 @@ The log messages emitted by the service are displayed in the console output.
 Verbosity
 ~~~~~~~~~
 
-Depending on the verbosity level that the command is run, messages may or
+Depending on the verbosity level used to run the command, messages may or
 may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance.
 
-By default, the console logger behaves like the
+By default, the console logger behaves like
 :doc:`Monolog's Console Handler </logging/monolog_console>`.
 The association between the log level and the verbosity can be configured
 through the second parameter of the :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger`
@@ -1078,7 +1078,7 @@ been executed.
 
 After the command has been executed, the ``ConsoleEvents::TERMINATE`` event is
 dispatched. It can be used to do any actions that need to be executed for all
-commands or to cleanup what you initiated in a ``ConsoleEvents::COMMAND``
+commands or to clean up what you initiated in a ``ConsoleEvents::COMMAND``
 listener (like sending logs, closing a database connection, sending emails,
 ...). A listener might also change the exit code.
 
@@ -1110,7 +1110,7 @@ Listeners receive a
     The exit code received in this case is the exception code.
 
     Additionally, the event is dispatched when the command is being exited on
-    a signal. You can learn more about signals in the
+    a signal. You can learn more about signals in
     :ref:`the dedicated section <console-signal-handling>`.
 
 .. _console-events_signal:
@@ -1319,7 +1319,7 @@ profile is accessible through the web page of the profiler.
 .. tip::
 
     If you run the command in verbose mode (adding the ``-v`` option), Symfony
-    will display in the output a clickable link to the command profile (if your
+    will display a clickable link to the command profile in the output (if your
     terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
     also see the time and memory consumed by the command.
 
@@ -1445,7 +1445,7 @@ are supported, but invokable commands are recommended::
     {
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
-            // ... put here the code to create the user
+            // ... put the code to create the user here
         }
     }
 
@@ -1480,7 +1480,7 @@ arguments by overriding the ``configure()`` method::
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
-first and then call to the parent constructor, to make those properties
+first and then call the parent constructor, to make those properties
 available in the ``configure()`` method::
 
     // src/Command/CreateUserCommand.php
@@ -1492,7 +1492,7 @@ available in the ``configure()`` method::
 
         public function __construct(bool $requirePassword = false)
         {
-            // best practices recommend to call the parent constructor first and
+            // best practices recommend calling the parent constructor first and
             // then set your own properties. That wouldn't work in this case
             // because configure() needs the properties set in this constructor
             $this->requirePassword = $requirePassword;

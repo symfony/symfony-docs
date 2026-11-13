@@ -8,7 +8,7 @@ File Watching Issues
 --------------------
 
 When using a virtual machine, your project root directory is shared with the
-virtual machine using `NFS`_. This introduces issues with files watching, so
+virtual machine using `NFS`_. This introduces issues with file watching, so
 you must enable the `polling`_ option to make it work:
 
 .. code-block:: javascript
@@ -31,7 +31,7 @@ Configure the Public Path
 .. note::
 
     You can skip this section if your application is running on
-    ``http://localhost`` instead a custom local domain-name like
+    ``http://localhost`` instead of a custom local domain name like
     ``http://app.vm``.
 
 When running the development server, you will probably see the following errors
@@ -90,7 +90,7 @@ connections:
 .. danger::
 
     Make sure to run the development server inside your virtual machine only;
-    otherwise other computers can have access to it.
+    otherwise other computers can access it.
 
 Fix "Invalid Host header" Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

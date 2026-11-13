@@ -6,7 +6,7 @@ for the HTTP context and :class:`Symfony\\Component\\Console\\Logger\\ConsoleLog
 CLI context. In conformance with `the twelve-factor app methodology`_, they send messages
 starting from the ``WARNING`` level to `stderr`_.
 
-The minimal log level can be changed by setting the ``SHELL_VERBOSITY`` environment variable:
+The minimum log level can be changed by setting the ``SHELL_VERBOSITY`` environment variable:
 
 =========================  =================
 ``SHELL_VERBOSITY`` value  Minimum log level
@@ -74,7 +74,7 @@ and trigger various actions.
 For instance, using Monolog you can configure the logger to do different things based on the
 *level* of a message (e.g. :doc:`send an email when an error occurs </logging/monolog_email>`).
 
-Run this command to install the Monolog based logger before using it:
+Run this command to install the Monolog-based logger before using it:
 
 .. code-block:: terminal
 
@@ -82,13 +82,13 @@ Run this command to install the Monolog based logger before using it:
 
 The following sections assume that Monolog is installed.
 
-Where Logs are Stored
+Where Logs Are Stored
 ---------------------
 
 By default, log entries are written to the ``var/log/dev.log`` file when you're
 in the ``dev`` environment.
 
-In the ``prod`` environment, logs are written to `STDERR PHP stream`_, which
+In the ``prod`` environment, logs are written to the `STDERR PHP stream`_, which
 works best in modern containerized applications deployed to servers without
 disk write permissions.
 
@@ -394,7 +394,7 @@ a full list, see `Monolog Configuration`_.
 How to Rotate your Log Files
 ----------------------------
 
-Over time, log files can grow to be *huge*, both while developing and on
+Over time, log files can grow to be *huge*, both while developing and in
 production. One best-practice solution is to use a tool like the `logrotate`_
 Linux command to rotate log files before they become too large.
 
@@ -466,9 +466,10 @@ any service whose class implements ``Psr\Log\LoggerAwareInterface`` will
 receive a call to its method ``setLogger()`` with the default logger service
 passed as a service.
 
-If you want to use in your own services a pre-configured logger which uses a
-specific channel (``app`` by default), you can either :ref:`autowire monolog channels <monolog-autowire-channels>`
-or use the ``monolog.logger`` tag  with the ``channel`` property as explained in the
+If you want to use a pre-configured logger which uses a specific channel
+(``app`` by default) in your own services, you can either
+:ref:`autowire monolog channels <monolog-autowire-channels>` or use the
+``monolog.logger`` tag with the ``channel`` property as explained in the
 :ref:`Dependency Injection reference <dic_tags-monolog>`.
 
 Adding Extra Data to Each Log (e.g. a unique request token)
@@ -488,7 +489,7 @@ can be cleared using the ``reset()`` method on a ``Monolog\Logger`` instance.
 This should typically be called between every job or task that a long-running process
 is working through.
 
-Learn more
+Learn More
 ----------
 
 .. toctree::

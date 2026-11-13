@@ -37,7 +37,7 @@ in your classes.
 Others might be useful as labeling interfaces, to hint about a specific behavior
 that can be enabled when using :ref:`autoconfiguration <services-autoconfigure>`
 or manual :doc:`service tagging </service_container/tags>` (or any other means
-provided by your framework.)
+provided by your framework).
 
 Design Principles
 -----------------
@@ -69,7 +69,7 @@ How Is this Different From PHP-FIG's PSRs?
 
 When applicable, the provided contracts are built on top of `PHP-FIG`_'s PSRs.
 However, PHP-FIG has different goals and different processes. Symfony Contracts
-focuses on providing abstractions that are useful on their own while still
+focuses on providing abstractions that are useful on their own while still being
 compatible with implementations provided by Symfony.
 
 .. _`PHP-FIG`: https://www.php-fig.org/

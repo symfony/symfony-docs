@@ -54,7 +54,7 @@ Suppose you have a Task form with a tags ``text`` type::
     }
 
 Internally the ``tags`` are stored as an array, but displayed to the user as a
-plain comma separated string to make them easier to edit.
+plain comma-separated string to make them easier to edit.
 
 This is a *perfect* time to attach a custom data transformer to the ``tags``
 field. The easiest way to do this is with the :class:`Symfony\\Component\\Form\\CallbackTransformer`
@@ -102,7 +102,7 @@ the format you'll use in your code.
     :class:`Symfony\\Component\\Form\\DataTransformerInterface` - so you can create
     your own classes, instead of putting all the logic in the form (see the next section).
 
-You can also add the transformer, right when adding the field by changing the format
+You can also add the transformer right when adding the field by changing the format
 slightly::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -122,7 +122,7 @@ possible issues could eventually get *really* long and take a long time to load.
 Instead, you decide you want to add a text box, where the user can enter the
 issue number.
 
-Start by setting up the text field like normal::
+Start by setting up the text field as usual::
 
     // src/Form/Type/TaskType.php
     namespace App\Form\Type;
@@ -163,7 +163,7 @@ You could use the ``CallbackTransformer`` like earlier. But since this is a bit 
 complex, creating a new transformer class will keep the ``TaskType`` form class simpler.
 
 Create an ``IssueToNumberTransformer`` class: it will be responsible for converting
-to and from the issue number and the ``Issue`` object::
+between the issue number and the ``Issue`` object::
 
     // src/Form/DataTransformer/IssueToNumberTransformer.php
     namespace App\Form\DataTransformer;
@@ -359,7 +359,7 @@ Creating a Reusable issue_selector Field
 
 In the above example, you applied the transformer to a normal ``text`` field. But
 if you do this transformation a lot, it might be better to
-:doc:`create a custom field type </form/create_custom_field_type>`.
+:doc:`create a custom field type </form/create_custom_field_type>`
 that does this automatically.
 
 First, create the custom field type class::
@@ -451,7 +451,7 @@ In any form, the three different types of data are:
    you're dealing with the "model" data.
 
 #. **Norm Data** - This is a normalized version of your data and is commonly
-   the same as your "model" data (though not in our example). It's not commonly
+   the same as your "model" data (though not in this example). It's not commonly
    used directly.
 
 #. **View Data** - This is the format that's used to fill in the form fields
@@ -483,17 +483,17 @@ To use the view transformer, call ``addViewTransformer()``.
     Collection (i.e. filtering out some items), as in that case the collection
     ends up with some empty children.
 
-    A possible workaround for that limitation could be not using the underlying
-    object directly, but a DTO (Data Transfer Object) instead, that implements
-    the transformation of such incompatible data structures.
+    A possible workaround for that limitation is to use a DTO (Data Transfer
+    Object) that implements the transformation of such incompatible data
+    structures, instead of using the underlying object directly.
 
-So why Use the Model Transformer?
+So Why Use the Model Transformer?
 ---------------------------------
 
 In this example, the field is a ``text`` field, and a text field is always
 expected to be a simple, scalar format in the "norm" and "view" formats. For
 this reason, the most appropriate transformer was the "model" transformer
-(which converts to/from the *norm* format - string issue number - to the *model*
+(which converts between the *norm* format - string issue number - and the *model*
 format - Issue object).
 
 The difference between the transformers is subtle and you should always think

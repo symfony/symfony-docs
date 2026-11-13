@@ -71,7 +71,7 @@ and ``#[IsGranted]`` attribute also accept an
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
 user object's ``isSuperAdmin()`` method returns ``true``, then access will
-be granted (note: your User object may not have an ``isSuperAdmin()`` method,
+be granted (note: your User object may not have an ``isSuperAdmin()`` method;
 that method is invented for this example).
 
 .. _security-expression-variables:
@@ -107,7 +107,7 @@ Additionally, you have access to a number of functions inside the expression:
     Equal to checking if the user has the ``IS_AUTHENTICATED_FULLY`` role.
 ``is_granted()``
     Checks if the user has the given permission. Optionally accepts a
-    second argument with the object where permission is checked on. It's
+    second argument with the object on which permission is checked. It's
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
 
@@ -138,7 +138,7 @@ Additionally, you have access to a number of functions inside the expression:
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
 
-In case of the ``#[IsGranted]`` attribute, the subject can also be an
+In the case of the ``#[IsGranted]`` attribute, the subject can also be an
 :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     // src/Controller/MyController.php
@@ -162,7 +162,7 @@ In case of the ``#[IsGranted]`` attribute, the subject can also be an
         }
     }
 
-In this example, we fetch the author of the post and use it as the subject. If the subject matches
+In this example, the subject expression fetches the author of the post. If the subject matches
 the current user, then access will be granted.
 
 The subject may also be an array where the key can be used as an alias for the result of an expression::
@@ -201,7 +201,7 @@ Inside the subject's expression, you have access to two variables:
 ``args``
     An array of controller arguments that are passed to the controller.
 
-Additionally to expressions, the ``#[IsGranted]`` attribute also accepts
+In addition to expressions, the ``#[IsGranted]`` attribute also accepts
 closures that return a boolean value. The subject can also be a closure that
 returns an array of values that will be injected into the closure::
 

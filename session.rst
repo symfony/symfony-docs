@@ -9,7 +9,7 @@ object-oriented interface using a variety of session storage drivers.
 Symfony sessions are designed to replace the usage of the ``$_SESSION`` super
 global and native PHP functions related to manipulating the session like
 ``session_start()``, ``session_regenerate_id()``, ``session_id()``,
-``session_name()``, and ``session_destroy()``.
+``session_name()`` and ``session_destroy()``.
 
 .. note::
 
@@ -290,7 +290,7 @@ configuration <config-framework-session>` in
 
         # config/packages/framework.yaml
         framework:
-            # Enables session support. Note that the session will ONLY be started if you read or write from it.
+            # Enables session support. Note that the session will ONLY be started if you read from or write to it.
             # Remove or comment this section to explicitly disable session support.
             session:
                 # ID of the service used for session storage
@@ -314,11 +314,11 @@ configuration <config-framework-session>` in
 
             <framework:config>
                 <!--
-                    Enables session support. Note that the session will ONLY be started if you read or write from it.
+                    Enables session support. Note that the session will ONLY be started if you read from or write to it.
                     Remove or comment this section to explicitly disable session support.
                     handler-id: ID of the service used for session storage
                                 NULL means that Symfony uses PHP default session mechanism
-                    cookie-secure and cookie-samesite: improves the security of the cookies used for sessions
+                    cookie-secure and cookie-samesite: improve the security of the cookies used for sessions
                 -->
                 <framework:session handler-id="null"
                                    cookie-secure="auto"
@@ -335,7 +335,7 @@ configuration <config-framework-session>` in
 
         return static function (FrameworkConfig $framework): void {
             $framework->session()
-                // Enables session support. Note that the session will ONLY be started if you read or write from it.
+                // Enables session support. Note that the session will ONLY be started if you read from or write to it.
                 // Remove or comment this section to explicitly disable session support.
                 ->enabled(true)
                 // ID of the service used for session storage
@@ -456,8 +456,8 @@ Check out the Symfony config reference to learn more about the other available
 
 .. warning::
 
-    Symfony sessions are incompatible with ``php.ini`` directive
-    ``session.auto_start = 1`` This directive should be turned off in
+    Symfony sessions are incompatible with the ``php.ini`` directive
+    ``session.auto_start = 1``. This directive should be turned off in
     ``php.ini``, in the web server directives or in ``.htaccess``.
 
 .. deprecated:: 7.2
@@ -749,7 +749,7 @@ Symfony will now use your Redis server to read and write the session data.
 .. seealso::
 
     If you use Memcached instead of Redis, follow a similar approach but
-    replace ``RedisSessionHandler`` by
+    replace ``RedisSessionHandler`` with
     :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`.
     The same session locking limitation applies; to enable locking, configure
     Memcached as the session handler via ``php.ini`` instead (the Memcached
@@ -793,7 +793,7 @@ To use it, first register a new handler service with your database credentials:
                 arguments:
                     - '%env(DATABASE_URL)%'
 
-                    # you can also use PDO configuration, but requires passing two arguments
+                    # you can also use PDO configuration, but it requires passing two arguments
                     # - 'mysql:dbname=mydatabase; host=myhost; port=myport'
                     # - { db_username: myuser, db_password: mypassword }
 
@@ -812,7 +812,7 @@ To use it, first register a new handler service with your database credentials:
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                     <argument>%env(DATABASE_URL)%</argument>
 
-                    <!-- you can also use PDO configuration, but requires passing two arguments: -->
+                    <!-- you can also use PDO configuration, but it requires passing two arguments: -->
                     <!-- <argument>mysql:dbname=mydatabase; host=myhost; port=myport</argument>
                         <argument type="collection">
                             <argument key="db_username">myuser</argument>
@@ -835,7 +835,7 @@ To use it, first register a new handler service with your database credentials:
             $services->set(PdoSessionHandler::class)
                 ->args([
                     env('DATABASE_URL'),
-                    // you can also use PDO configuration, but requires passing two arguments:
+                    // you can also use PDO configuration, but it requires passing two arguments:
                     // 'mysql:dbname=mydatabase; host=myhost; port=myport',
                     // ['db_username' => 'myuser', 'db_password' => 'mypassword'],
                 ])
@@ -992,7 +992,7 @@ Before storing sessions in the database, you must create the table that stores
 the information.
 
 With Doctrine installed, the session table will be automatically generated when
-you run the ``make:migration`` command if the database targeted by doctrine is
+you run the ``make:migration`` command if the database targeted by Doctrine is
 identical to the one used by this component.
 
 Or if you prefer to create the table yourself and the table has not already been
@@ -1022,7 +1022,7 @@ file and run the migration with the following command:
 
     $ php bin/console doctrine:migrations:migrate
 
-If needed, you can also add this table to your schema by calling
+If needed, you can also add this table to your schema by calling the
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler::configureSchema`
 method in your code.
 
@@ -1086,7 +1086,7 @@ working MongoDB connection in your Symfony application as explained in the
 `DoctrineMongoDBBundle configuration`_ article.
 
 Then, register a new handler service for ``MongoDbSessionHandler`` and pass it
-the MongoDB connection as argument, and the required parameters:
+the MongoDB connection as an argument, and the required parameters:
 
 ``database``:
     The name of the database
@@ -1314,12 +1314,12 @@ Configuring the Session TTL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Symfony by default will use PHP's ini setting ``session.gc_maxlifetime`` as
-session lifetime. When you store sessions in a database, you can also
+the session lifetime. When you store sessions in a database, you can also
 configure your own TTL in the framework configuration or even at runtime.
 
 .. note::
 
-    Changing the ini setting is not possible once the session is started so
+    Changing the ini setting is not possible once the session is started, so
     if you want to use a different TTL depending on which user is logged
     in, you must do it at runtime using the callback method below.
 
@@ -1370,7 +1370,7 @@ Configure the TTL Dynamically at Runtime
 If you would like to have a different TTL for different users or sessions
 for whatever reason, this is also possible by passing a callback as the TTL
 value. The callback will be called right before the session is written and
-has to return an integer which will be used as TTL.
+has to return an integer which will be used as the TTL.
 
 .. configuration-block::
 
@@ -1555,7 +1555,7 @@ Setting the Locale Based on the User's Preferences
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You might want to improve this technique even further and define the locale
-based on the user entity of the logged in user. However, since the
+based on the user entity of the logged-in user. However, since the
 ``LocaleSubscriber`` is called before the ``FirewallListener``, which is
 responsible for handling authentication and setting the user token on the
 ``TokenStorage``, you have no access to the user who is logged in.
@@ -1665,7 +1665,7 @@ Symfony to use your session handler instead of the default one:
         };
 
 Keep reading the next sections to learn how to use the session handlers in
-practice to solve two common use cases: encrypt session information and define
+practice to solve two common use cases: encrypting session information and defining
 read-only guest sessions.
 
 Encryption of Session Data
@@ -1886,12 +1886,12 @@ for the ``handler_id``:
         // Get Symfony to interface with this existing session
         $session = new Session(new PhpBridgeSessionStorage());
 
-        // symfony will now interface with the existing PHP session
+        // Symfony will now interface with the existing PHP session
         $session->start();
 
 Otherwise, if the problem is that you cannot avoid the application
 starting the session with ``session_start()``, you can still make use of
-a Symfony based session save handler by specifying the save handler as in
+a Symfony-based session save handler by specifying the save handler as in
 the example below:
 
 .. configuration-block::
@@ -1936,7 +1936,7 @@ the example below:
 .. note::
 
     If the legacy application requires its own session save handler, do not
-    override this. Instead set ``handler_id: ~``. Note that a save handler
+    override this. Instead, set ``handler_id: ~``. Note that a save handler
     cannot be changed once the session has been started. If the application
     starts the session before Symfony is initialized, the save handler will
     have already been set. In this case, you will need ``handler_id: ~``.

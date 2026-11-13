@@ -162,7 +162,7 @@ the ``BlogController``:
 Matching HTTP Methods
 ~~~~~~~~~~~~~~~~~~~~~
 
-By default, routes match any HTTP verb (``GET``, ``POST``, ``PUT``, etc.)
+By default, routes match any HTTP verb (``GET``, ``POST``, ``PUT``, etc.).
 Use the ``methods`` option to restrict the verbs each route should respond to:
 
 .. configuration-block::
@@ -529,9 +529,9 @@ evaluates them:
 
 .. versionadded:: 7.4
 
-    For sites that don't have routes with schemes or hosts defined those columns are
-    hidden. They will be displayed if some routes configure the schema or host properties
-    of the route
+    For sites that don't have routes with schemes or hosts defined, those columns are
+    hidden. They will be displayed if some routes configure the scheme or host properties
+    of the route:
 
     .. code-block:: terminal
 
@@ -545,8 +545,8 @@ evaluates them:
         contact_post  POST     ANY      localhost  /contact
         ------------  -------  -------  ---------  ---------
 
-Pass the name (or part of the name) of some route to this argument to print the
-route details:
+Pass the name (or part of the name) of some route as the argument of this command to
+print the route details:
 
 .. code-block:: terminal
 
@@ -966,7 +966,7 @@ Now, when the user visits ``/blog``, the ``blog_list`` route will match and
 
 If you want to always include some default value in the generated URL (for
 example to force the generation of ``/blog/1`` instead of ``/blog`` in the
-previous example) add the ``!`` character before the parameter name: ``/blog/{!page}``
+previous example), add the ``!`` character before the parameter name: ``/blog/{!page}``.
 
 As it happens with requirements, default values can also be inlined in each
 parameter using the syntax ``{parameter_name?default_value}``. This feature
@@ -1032,7 +1032,7 @@ parameter:
     To give a ``null`` default value to any parameter, add nothing after the
     ``?`` character (e.g. ``/blog/{page?}``). If you do this, don't forget to
     update the types of the related controller arguments to allow passing
-    ``null`` values (e.g. replace ``int $page`` by ``?int $page``).
+    ``null`` values (e.g. replace ``int $page`` with ``?int $page``).
 
 Priority Parameter
 ~~~~~~~~~~~~~~~~~~
@@ -1126,7 +1126,7 @@ corresponding ``BlogPost`` object from the database using the slug.
 
 When mapping multiple entities from route parameters, name collisions can occur.
 In this example, the route tries to define two mappings: one for an author and one
-for a category; both using the same ``name`` parameter. This isn't allowed because
+for a category, both using the same ``name`` parameter. This isn't allowed because
 the route ends up declaring ``name`` twice::
 
     #[Route('/search-book/{name:author}/{name:category}')]
@@ -1213,7 +1213,7 @@ special parameters created by Symfony:
 
 You can include these attributes (except ``_fragment``) both in individual routes
 and in route imports. Symfony defines some special attributes with the same name
-(except for the leading underscore) so you can define them easier:
+(except for the leading underscore) so you can define them more easily:
 
 .. configuration-block::
 
@@ -1444,14 +1444,14 @@ A possible solution is to change the parameter requirements to be more permissiv
     if the pattern is ``/share/{token}.{_format}`` and ``{token}`` allows any
     character, the ``/share/foo/bar.json`` URL will consider ``foo/bar.json``
     as the token and the format will be empty. This can be solved by replacing
-    the ``.+`` requirement by ``[^.]+`` to allow any character except dots.
+    the ``.+`` requirement with ``[^.]+`` to allow any character except dots.
 
 .. _routing-alias:
 
 Route Aliasing
 --------------
 
-Route alias allows you to have multiple names for the same route
+Route aliases allow you to have multiple names for the same route
 and can be used to provide backward compatibility for routes that
 have been renamed. Let's say you have a route called ``product_show``:
 
@@ -1590,11 +1590,11 @@ Deprecating Route Aliases
 Route aliases can be used to provide backward compatibility for routes that
 have been renamed.
 
-Now, let's say you want to replace the ``product_show`` route in favor of
+Now, let's say you want to replace the ``product_show`` route with
 ``product_details`` and mark the old one as deprecated.
 
 In the previous example, the alias ``product_details`` was pointing to
-``product_show`` route.
+the ``product_show`` route.
 
 To mark the ``product_show`` route as deprecated, you need to "switch" the alias.
 The ``product_show`` becomes the alias, and will now point to the ``product_details`` route.
@@ -2077,7 +2077,7 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
 .. tip::
 
     Symfony also provides some utilities to
-    :ref:`redirect inside controllers <controller-redirect>`
+    :ref:`redirect inside controllers <controller-redirect>`.
 
 .. _routing-trailing-slash-redirection:
 
@@ -2284,7 +2284,7 @@ these routes.
 
 .. note::
 
-    When using sub-domain routing, you must set the ``Host`` HTTP headers in
+    When using sub-domain routing, you must set the ``Host`` HTTP header in
     :doc:`functional tests </testing>` or routes won't match::
 
         $crawler = $client->request(
@@ -2308,8 +2308,8 @@ Localized Routes (i18n)
 -----------------------
 
 If your application is translated into multiple languages, each route can define
-a different URL per each :ref:`translation locale <translation-locale>`. This
-avoids the need for duplicating routes, which also reduces the potential bugs:
+a different URL for each :ref:`translation locale <translation-locale>`. This
+avoids the need for duplicating routes, which also reduces potential bugs:
 
 .. configuration-block::
 
@@ -2447,7 +2447,7 @@ with a locale. This can be done by defining a different prefix for each locale
 
     E.g. if a route contains ``locale: 'en'`` in its definition and it's being
     imported with ``en`` (prefix: empty) and ``nl`` (prefix: ``/nl``) locales,
-    that route will be available only in ``en`` locale and not in ``nl``.
+    that route will be available only in the ``en`` locale and not in ``nl``.
 
 Another common requirement is to host the website on a different domain
 according to the locale. This can be done by defining a different host for each
@@ -2587,8 +2587,8 @@ application. If you don't set the route name explicitly with the ``name``
 option, Symfony generates an automatic name based on the controller and action.
 
 Symfony declares route aliases based on the FQCN if the target class has an
-``__invoke()`` method that adds a route **and** if the target class added
-one route exactly. Symfony also automatically adds an alias for every method
+``__invoke()`` method that adds a route **and** if the target class defines exactly
+one route. Symfony also automatically adds an alias for every method
 that defines only one route. Consider the following class::
 
         // src/Controller/MainController.php
@@ -2639,7 +2639,7 @@ use the ``generateUrl()`` helper::
             // argument to generate different URLs (e.g. an "absolute URL")
             $signUpPage = $this->generateUrl('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            // when a route is localized, Symfony uses by default the current request locale
+            // when a route is localized, Symfony uses the current request locale by default
             // pass a different '_locale' value if you want to set the locale explicitly
             $signUpPageInDutch = $this->generateUrl('sign_up', ['_locale' => 'nl']);
 
@@ -2661,7 +2661,7 @@ use the ``generateUrl()`` helper::
 
     While objects are converted to string when used as placeholders, they are not
     converted when used as extra parameters. So, if you're passing an object (e.g. a Uuid)
-    as value of an extra parameter, you need to explicitly convert it to a string::
+    as the value of an extra parameter, you need to explicitly convert it to a string::
 
         $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid()]);
 
@@ -2707,7 +2707,7 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
             // argument to generate different URLs (e.g. an "absolute URL")
             $signUpPage = $this->urlGenerator->generate('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            // when a route is localized, Symfony uses by default the current request locale
+            // when a route is localized, Symfony uses the current request locale by default
             // pass a different '_locale' value if you want to set the locale explicitly
             $signUpPageInDutch = $this->urlGenerator->generate('sign_up', ['_locale' => 'nl']);
         }
@@ -2821,7 +2821,7 @@ Now you'll get the expected results when generating URLs in your commands::
             // argument to generate different URIs (e.g. an "absolute URL")
             $signUpPage = $this->urlGenerator->generate('sign_up', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-            // when a route is localized, Symfony uses by default the current request locale
+            // when a route is localized, Symfony uses the current request locale by default
             // pass a different '_locale' value if you want to set the locale explicitly
             $signUpPageInDutch = $this->urlGenerator->generate('sign_up', ['_locale' => 'nl']);
 
@@ -2877,7 +2877,7 @@ Forcing HTTPS on Generated URLs
 .. note::
 
     If your server runs behind a proxy that terminates SSL, make sure to
-    :doc:`configure Symfony to work behind a proxy </deployment/proxies>`
+    :doc:`configure Symfony to work behind a proxy </deployment/proxies>`.
 
     The configuration for the scheme is only used for non-HTTP requests.
     The ``schemes`` option together with incorrect proxy configuration will

@@ -66,7 +66,7 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
 
 .. warning::
 
-    If the username, password or host contain any character considered special in a
+    If the username, password or host contains any character considered special in a
     URI (such as ``: / ? # [ ] @ ! $ & ' ( ) * + , ; =``), you must
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
@@ -164,7 +164,7 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     MAILER_DSN=sendgrid://KEY@default
 
 The ``MAILER_DSN`` isn't a *real* address: it's a convenient format that
-offloads most of the configuration work to mailer. The ``sendgrid`` scheme
+offloads most of the configuration work to Mailer. The ``sendgrid`` scheme
 activates the SendGrid provider that you installed, which knows all about
 how to deliver messages via SendGrid. The *only* part you need to change is the
 ``KEY`` placeholder.
@@ -179,11 +179,11 @@ transport, but you can force it to use a specific one:
 .. code-block:: env
 
     # .env
-    # force to use SMTP instead of HTTP (which is the default)
+    # force the use of SMTP instead of HTTP (which is the default)
     MAILER_DSN=sendgrid+smtp://$SENDGRID_KEY@default
 
-This table shows the full list of available DSN formats for each third
-party provider:
+This table shows the full list of available DSN formats for each third-party
+provider:
 
 +------------------------+-------------------------------------------------------------------------------------------+
 | Provider               | Formats                                                                                   |
@@ -274,12 +274,12 @@ party provider:
 
     If your credentials contain special characters, you must URL-encode them.
     For example, the DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be
-    configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
+    configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``.
 
 .. warning::
 
     If you want to use the ``ses+smtp`` transport together with :doc:`Messenger </messenger>`
-    to :ref:`send messages in background <mailer-sending-messages-async>`,
+    to :ref:`send messages in the background <mailer-sending-messages-async>`,
     you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
     a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
 
@@ -297,7 +297,7 @@ party provider:
 .. note::
 
     To use Google Gmail, you must have a Google Account with 2-Step-Verification (2FA)
-    enabled and you must use `App Password`_ to authenticate. Also note that Google
+    enabled and you must use an `App Password`_ to authenticate. Also note that Google
     revokes your App Passwords when you change your Google Account password and then
     you need to generate a new one.
     Using other methods (like ``XOAUTH2`` or the ``Gmail API``) is not currently supported.
@@ -317,7 +317,7 @@ party provider:
 
 .. note::
 
-    The specific transports, e.g. ``mailgun+smtp`` are designed to work without any manual configuration.
+    The specific transports, e.g. ``mailgun+smtp``, are designed to work without any manual configuration.
     Changing the port by appending it to your DSN is not supported for any of these ``<provider>+smtp`` transports.
     If you need to change the port, use the ``smtp`` transport instead, like so:
 
@@ -328,7 +328,7 @@ party provider:
 
 .. tip::
 
-    Some third party mailers, when using the API, support status callbacks
+    Some third-party mailers, when using the API, support status callbacks
     via webhooks. See the :doc:`Webhook documentation </webhook>` for more
     details.
 
@@ -345,7 +345,7 @@ A failover transport is configured with two or more transports and the
 
     MAILER_DSN="failover(postmark+api://ID@default sendgrid+smtp://KEY@default)"
 
-The failover-transport starts using the first transport and if it fails, it
+The failover transport starts using the first transport and, if it fails, it
 will retry the same delivery with the next transports until one of them succeeds
 (or until all of them fail).
 
@@ -406,8 +406,8 @@ TLS Peer Fingerprint Verification
 
 Additional fingerprint verification can be enforced with the ``peer_fingerprint``
 option. This is especially useful when a self-signed certificate is used and
-disabling ``verify_peer`` is needed, but security is still desired. Fingerprint
-may be specified as SHA1 or MD5 hash::
+disabling ``verify_peer`` is needed, but security is still desired. The fingerprint
+may be specified as a SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
@@ -486,7 +486,7 @@ available on the SMTP server, one after the other. In some cases, it may be
 useful to redefine the supported authentication methods to ensure that the
 preferred method will be used first.
 
-This can be done from ``EsmtpTransport`` constructor or using the
+This can be done from the ``EsmtpTransport`` constructor or using the
 ``setAuthenticators()`` method::
 
     use Symfony\Component\Mailer\Transport\Smtp\Auth\XOAuth2Authenticator;
@@ -507,23 +507,23 @@ Other Options
 ~~~~~~~~~~~~~
 
 ``command``
-    Command to be executed by ``sendmail`` transport::
+    Command to be executed by the ``sendmail`` transport::
 
         $dsn = 'sendmail://default?command=/usr/sbin/sendmail%20-oi%20-t'
 
 ``local_domain``
-    The domain name to use in ``HELO`` command::
+    The domain name to use in the ``HELO`` command::
 
         $dsn = 'smtps://smtp.example.com?local_domain=example.org'
 
 ``restart_threshold``
-    The maximum number of messages to send before re-starting the transport. It
+    The maximum number of messages to send before restarting the transport. It
     can be used together with ``restart_threshold_sleep``::
 
         $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
 
 ``restart_threshold_sleep``
-    The number of seconds to sleep between stopping and re-starting the transport.
+    The number of seconds to sleep between stopping and restarting the transport.
     It's common to combine it with ``restart_threshold``::
 
         $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
@@ -558,7 +558,7 @@ class to save some boilerplate code::
 
         protected function getSupportedSchemes(): array
         {
-            // this supports DSN starting with `acme://`
+            // this supports DSNs starting with `acme://`
             return ['acme'];
         }
     }
@@ -616,7 +616,7 @@ Email Addresses
 ~~~~~~~~~~~~~~~
 
 All the methods that require email addresses (``from()``, ``to()``, etc.) accept
-both strings or address objects::
+both strings and address objects::
 
     // ...
     use Symfony\Component\Mime\Address;
@@ -751,7 +751,7 @@ file system::
         ->addPart(new DataPart(new File('/path/to/documents/contract.doc'), 'Contract', 'application/msword'))
     ;
 
-Alternatively you can attach contents from a stream by passing it directly to
+Alternatively, you can attach contents from a stream by passing it directly to
 the ``DataPart``::
 
     $email = (new Email())
@@ -876,7 +876,7 @@ part, use the low-level :class:`Symfony\\Component\\Mime\\Message` class
 instead. This is not recommended for applications with regular email
 requirements because it adds complexity for no real gain.
 
-Before continuing, it's important to have a look at the low level structure of
+Before continuing, it's important to have a look at the low-level structure of
 an email message. Consider a message which includes some content as both text
 and HTML, a single PNG image embedded in those contents and a PDF file attached
 to it. The MIME standard allows structuring this message in different ways, but
@@ -954,7 +954,7 @@ Configuring Emails Globally
 ---------------------------
 
 Instead of calling ``->from()`` on each Email you create, you can configure this
-value globally so that it is set on all sent emails. The same is true with ``->to()``
+value globally so that it is set on all sent emails. The same is true for ``->to()``
 and headers.
 
 .. configuration-block::
@@ -1041,7 +1041,7 @@ Catch that exception to recover from the error or to display some message::
     try {
         $mailer->send($email);
     } catch (TransportExceptionInterface $e) {
-        // some error prevented the email sending; display an
+        // some error prevented the email from being sent; display an
         // error message or try to resend the message
     }
 
@@ -1137,7 +1137,7 @@ for Twig templates::
         // path of the Twig template to render
         ->htmlTemplate('emails/signup.html.twig')
 
-        // change locale used in the template, e.g. to match user's locale
+        // change the locale used in the template, e.g. to match the user's locale
         ->locale('de')
 
         // pass variables (name => value) to the template
@@ -1293,7 +1293,7 @@ the email contents:
     <h1>Welcome {{ email.toName }}!</h1>
     {# ... #}
 
-By default this will create an attachment using the file path as file name:
+By default, this will create an attachment using the file path as the file name:
 ``Content-Disposition: inline; name="cid..."; filename="@images/logo.png"``.
 This behavior can be overridden by passing a custom file name as the third argument:
 
@@ -1364,7 +1364,7 @@ arguments to the filter:
         {# ... #}
     {% endapply %}
 
-You can pass unlimited number of arguments to ``inline_css()`` to load multiple
+You can pass an unlimited number of arguments to ``inline_css()`` to load multiple
 CSS files. For this example to work, you also need to define a new Twig namespace
 called ``styles`` that points to the directory where ``email.css`` lives:
 
@@ -1499,7 +1499,7 @@ You can combine all filters to create complex email messages:
         {# ... #}
     {% endapply %}
 
-This makes use of the :ref:`styles Twig namespace <mailer-css-namespace>` we created
+This makes use of the :ref:`styles Twig namespace <mailer-css-namespace>` you created
 earlier. You could, for example, `download the foundation-emails.css file`_
 directly from GitHub and save it in ``assets/styles``.
 
@@ -1529,7 +1529,7 @@ Before signing/encrypting messages, make sure to have:
     by a :class:`Symfony\\Component\\Mailer\\EventListener\\MessageListener`.
     So, if you want to sign and/or encrypt such a message, you need to do it in
     a :ref:`MessageEvent <messageevent>` listener run after it (you need to set
-    a negative priority to your listener).
+    a negative priority for your listener).
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
@@ -1543,7 +1543,7 @@ hide its contents.
 
 You can sign messages using either ``S/MIME`` or ``DKIM``. In both cases, the
 certificate and private key must be `PEM encoded`_, and can be either created
-using for example OpenSSL or obtained at an official Certificate Authority (CA).
+using, for example, OpenSSL or obtained from an official Certificate Authority (CA).
 The email recipient must have the CA certificate in the list of trusted issuers
 in order to verify the signature.
 
@@ -1577,8 +1577,8 @@ requires using both a certificate and a private key::
 .. tip::
 
     The ``SMimeSigner`` class defines other optional arguments to pass
-    intermediate certificates and to configure the signing process using a
-    bitwise operator options for :phpfunction:`openssl_pkcs7_sign` PHP function.
+    intermediate certificates and to configure the signing process using
+    bitwise operator options for the :phpfunction:`openssl_pkcs7_sign` PHP function.
 
 DKIM Signer
 ...........
@@ -1606,7 +1606,7 @@ key but not a certificate::
     $signedEmail = $signer->sign($email);
     // now use the Mailer component to send this $signedEmail instead of the original email
 
-    // DKIM signer provides many config options and a helper object to configure them
+    // the DKIM signer provides many config options and a helper object to configure them
     use Symfony\Component\Mime\Crypto\DkimOptions;
 
     $signedEmail = $signer->sign($email, (new DkimOptions())
@@ -1872,11 +1872,11 @@ This can be configured by replacing the ``dsn`` configuration entry with a
             ;
         };
 
-By default the first transport is used. The other transports can be selected by
+By default, the first transport is used. The other transports can be selected by
 adding an ``X-Transport`` header (which Mailer will remove automatically from
 the final email)::
 
-    // Send using first transport ("main"):
+    // Send using the first transport ("main"):
     $mailer->send($email);
 
     // ... or use the transport "alternative":
@@ -2111,8 +2111,8 @@ Draft Emails
 
 :class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
 :class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
-(with body, attachments, etc) and make available to download as an ``.eml`` with
-the ``X-Unsent`` header. Many email clients can open these files and interpret
+(with body, attachments, etc.) and make it available to download as an ``.eml`` file
+with the ``X-Unsent`` header. Many email clients can open these files and interpret
 them as *draft emails*. You can use these to create advanced ``mailto:`` links.
 
 Here's an example of making one available to download::
@@ -2150,8 +2150,8 @@ Here's an example of making one available to download::
 
 .. note::
 
-    As it's possible for :class:`Symfony\\Component\\Mime\\DraftEmail`'s to be created
-    without a To/From they cannot be sent with the mailer.
+    As :class:`Symfony\\Component\\Mime\\DraftEmail` objects can be created
+    without a To/From, they cannot be sent with the mailer.
 
 Mailer Events
 -------------
@@ -2424,7 +2424,7 @@ address(es) defined in ``recipients``, as with all other emails:
                         recipients: ['youremail@example.com']
                         allowed_recipients:
                             - 'internal@example.com'
-                            # you can also use regular expression to define allowed recipients
+                            # you can also use regular expressions to define allowed recipients
                             - 'internal-.*@example.(com|fr)'
 
     .. code-block:: xml
@@ -2444,7 +2444,7 @@ address(es) defined in ``recipients``, as with all other emails:
                     <framework:envelope>
                         <framework:recipient>youremail@example.com</framework:recipient>
                         <framework:allowed-recipient>internal@example.com</framework:allowed-recipient>
-                        <!-- you can also use regular expression to define allowed recipients -->
+                        <!-- you can also use regular expressions to define allowed recipients -->
                         <framework:allowed-recipient>internal-.*@example.(com|fr)</framework:allowed-recipient>
                     </framework:envelope>
                 </framework:mailer>
@@ -2463,7 +2463,7 @@ address(es) defined in ``recipients``, as with all other emails:
                     ->recipients(['youremail@example.com'])
                     ->allowedRecipients([
                         'internal@example.com',
-                        // you can also use regular expression to define allowed recipients
+                        // you can also use regular expressions to define allowed recipients
                         'internal-.*@example.(com|fr)',
                     ])
             ;

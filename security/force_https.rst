@@ -75,7 +75,7 @@ access control:
 
 To make life easier while developing, you can also use an environment variable,
 like ``requires_channel: '%env(REQUIRED_SCHEME)%'``. In your ``.env`` file, set
-``REQUIRED_SCHEME`` to ``http`` by default, but override it to ``https`` on production.
+``REQUIRED_SCHEME`` to ``http`` by default, but override it to ``https`` in production.
 
 See :doc:`/security/access_control` for more details about ``access_control``
 in general.

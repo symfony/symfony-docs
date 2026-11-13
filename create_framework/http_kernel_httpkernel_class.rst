@@ -189,9 +189,9 @@ of registering event listeners/subscribers.
 Hopefully, you now have a better understanding of why the simple looking
 ``HttpKernelInterface`` is so powerful. Its default implementation,
 ``HttpKernel``, gives you access to a lot of cool and ready to be used features,
-with no efforts. And because HttpKernel is actually the code
+with no effort. And because HttpKernel is actually the code
 that powers the Symfony framework, you have the best of both
 worlds: a custom framework, tailored to your needs, but based on a rock-solid
 and well maintained low-level architecture that has been proven to work for
-many websites; a code that has been audited for security issues and that has
+many websites; code that has been audited for security issues and that has
 proven to scale well.

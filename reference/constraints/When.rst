@@ -1,7 +1,7 @@
 When
 ====
 
-This constraint allows you to apply constraints validation only if the
+This constraint allows you to apply validation constraints only if the
 provided expression returns true. See `Basic Usage`_ for an example.
 
 ==========  ===================================================================
@@ -9,7 +9,7 @@ Applies to  :ref:`class <validation-class-target>`
             or :ref:`property/method <validation-property-target>`
 Options     - `expression`_
             - `constraints`_
-            _ `otherwise`_
+            - `otherwise`_
             - `groups`_
             - `payload`_
             - `values`_
@@ -182,8 +182,8 @@ Options
 The condition evaluated to decide if the constraint is applied or not. It can be
 defined as a closure or a string using the :doc:`expression language syntax </reference/formats/expression_language>`.
 If the result is a falsey value (``false``, ``null``, ``0``, an empty string or
-an empty array) the constraints defined in the ``constraints`` option won't be
-applied but the constraints defined in ``otherwise`` option (if provided) will be applied.
+an empty array), the constraints defined in the ``constraints`` option won't be
+applied but the constraints defined in the ``otherwise`` option (if provided) will be applied.
 
 **When using an expression**, you have access to the following variables:
 
@@ -337,4 +337,4 @@ One or multiple constraints that are applied if the expression returns false.
 **type**: ``array`` **default**: ``[]``
 
 The values of the custom variables used in the expression. Values can be of any
-type (numeric, boolean, strings, null, etc.)
+type (numeric, boolean, strings, null, etc.).

@@ -16,13 +16,13 @@ Before creating your first Symfony application you must:
 
 * Install PHP 8.2 or higher and these PHP extensions (which are installed and
   enabled by default in most PHP 8 installations): `Ctype`_, `iconv`_,
-  `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
+  `PCRE`_, `Session`_, `SimpleXML`_ and `Tokenizer`_;
 * `Install Composer`_, which is used to install PHP packages.
 
 .. _setup-symfony-cli:
 
 Also, `install the Symfony CLI`_. This is optional, but it gives you a
-helpful binary called ``symfony`` that provides all tools you need to
+helpful binary called ``symfony`` that provides all the tools you need to
 develop and run your Symfony application locally.
 
 The ``symfony`` binary also provides a tool to check if your computer meets all
@@ -79,7 +79,7 @@ started. In other words, your new application is ready!
 
     The project's cache and logs directory (by default, ``<project>/var/cache/``
     and ``<project>/var/log/``) must be writable by the web server. If you have
-    any issue, read how to :doc:`set up permissions for Symfony applications </setup/file_permissions>`.
+    any issues, read how to :doc:`set up permissions for Symfony applications </setup/file_permissions>`.
 
 .. _install-existing-app:
 
@@ -120,7 +120,7 @@ development.
 
 .. _symfony-binary-web-server:
 
-However for local development, the most convenient way of running Symfony is by
+However, for local development, the most convenient way of running Symfony is by
 using the :ref:`local web server <symfony-cli-server>` provided by the
 Symfony CLI tool. This local server provides support for HTTP/2, concurrent
 requests, TLS/SSL and automatic generation of security certificates, among
@@ -139,7 +139,7 @@ server as follows:
     # this starts the server in the background so you can keep using the terminal
     $ symfony serve -d
 
-Browse your application by visiting the URL displayed by Symfony Server
+Browse your application by visiting the URL displayed by the Symfony server
 (for example, ``http://localhost:8000/``). You can also open the application
 automatically:
 
@@ -187,7 +187,7 @@ that is installed by default when creating a new Symfony application and which
 
     You can also :doc:`add Symfony Flex to an existing project </setup/flex>`.
 
-Symfony Flex modifies the behavior of the ``require``, ``update``, and
+Symfony Flex modifies the behavior of the ``require``, ``update`` and
 ``remove`` Composer commands to provide advanced features. Consider the
 following example:
 
@@ -211,7 +211,7 @@ Symfony applications. Flex keeps track of the recipes it installed in a
 Symfony Flex recipes are contributed by the community and they are stored in
 two public repositories:
 
-* `Main recipe repository`_ is a curated list of recipes for high quality and
+* `Main recipe repository`_ is a curated list of recipes for high-quality and
   maintained packages. Symfony Flex only looks in this repository by default.
 
 * `Contrib recipe repository`_ contains all the recipes created by the
@@ -248,7 +248,7 @@ Checking Security Vulnerabilities
 
 The ``symfony`` binary created when you installed the :ref:`Symfony CLI <setup-symfony-cli>`
 provides a command to check whether your project's dependencies contain any known security
-vulnerability:
+vulnerabilities:
 
 .. code-block:: terminal
 
@@ -257,7 +257,7 @@ vulnerability:
 A good security practice is to execute this command regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
 check is done locally by fetching the public `PHP security advisories database`_,
-so your ``composer.lock`` file is not sent on the network.
+so your ``composer.lock`` file is not sent over the network.
 
 The ``check:security`` command terminates with a non-zero exit code if any of
 your dependencies is affected by a known security vulnerability. This way you
@@ -292,8 +292,8 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
     # you can also select an exact specific Symfony version
     $ symfony new my_project_directory --version="7.4.*"
 
-The ``lts`` and ``next`` shortcuts are only available when using Symfony to
-create new projects. If you use Composer, you need to tell the exact version:
+The ``lts`` and ``next`` shortcuts are only available when using the Symfony CLI to
+create new projects. If you use Composer, you need to specify the exact version:
 
 .. code-block:: terminal
 

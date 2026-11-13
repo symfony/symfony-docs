@@ -1,7 +1,7 @@
 How to Create your Custom Context Builder
 =========================================
 
-That serialization process of the :doc:`Serializer Component </serializer>`
+The serialization process of the :doc:`Serializer Component </serializer>`
 can be configured by the :ref:`serialization context <serializer-context>`,
 which can be built thanks to :ref:`context builders <serializer-using-context-builders>`.
 
@@ -12,9 +12,9 @@ may want to create a custom context builder for your
 Creating a new Context Builder
 ------------------------------
 
-Let's imagine that you want to handle date denormalization differently if they
-are coming from a legacy system, by converting dates to ``null`` if the serialized
-value is ``0000-00-00``. To do that you'll first have to create your normalizer::
+Let's imagine that you want to handle date denormalization differently if the
+dates come from a legacy system, by converting dates to ``null`` if the serialized
+value is ``0000-00-00``. To do that, you'll first have to create your normalizer::
 
     // src/Serializer/ZeroDateTimeDenormalizer.php
     namespace App\Serializer;

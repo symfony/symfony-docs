@@ -11,7 +11,7 @@ Make Symfony Trust the Reverse Proxy
 
 Varnish automatically forwards the IP as ``X-Forwarded-For`` and leaves the
 ``X-Forwarded-Proto`` header in the request. If you do not configure Varnish as
-trusted proxy, Symfony will see all requests as coming through insecure HTTP
+a trusted proxy, Symfony will see all requests as coming through insecure HTTP
 connections from the Varnish host instead of the real client.
 
 Remember to call the :ref:`Request::setTrustedProxies() <request-set-trusted-proxies>`
@@ -112,7 +112,7 @@ cookies should also be preserved.
                 set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
                 if (req.http.Cookie == "") {
-                    // If there are no more cookies, remove the header to get page cached.
+                    // If there are no more cookies, remove the header to get the page cached.
                     remove req.http.Cookie;
                 }
             }

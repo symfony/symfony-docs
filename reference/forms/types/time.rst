@@ -93,8 +93,8 @@ input
 
 **type**: ``string`` **default**: ``datetime``
 
-The format of the *input* data - i.e. the format that the date is stored
-on your underlying object. Valid values are:
+The format of the *input* data - i.e. the format in which the date is stored
+in your underlying object. Valid values are:
 
 * ``string`` (e.g. ``12:17:26``)
 * ``datetime`` (a ``DateTime`` object)
@@ -140,7 +140,7 @@ based on this date.
 
 .. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-When no `reference_date`_ is set the ``view_timezone`` defaults to the
+When no `reference_date`_ is set, the ``view_timezone`` defaults to the
 configured `model_timezone`_.
 
 .. warning::

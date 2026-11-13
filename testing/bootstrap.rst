@@ -6,8 +6,8 @@ running those tests. For example, if you're running a functional test and
 have introduced a new translation resource, then you will need to clear your
 cache before running those tests.
 
-When :ref:`installing testing <testing-installation>` using Symfony Flex,
-it already created a ``tests/bootstrap.php`` file that is run by PHPUnit
+When you :ref:`install the testing packages <testing-installation>` using Symfony
+Flex, it creates a ``tests/bootstrap.php`` file that PHPUnit runs
 before your tests.
 
 You can modify this file to add custom logic:
@@ -35,7 +35,7 @@ You can modify this file to add custom logic:
 .. note::
 
     If you don't use Symfony Flex, make sure this file is configured as
-    bootstrap file in your ``phpunit.dist.xml`` file:
+    the bootstrap file in your ``phpunit.dist.xml`` file:
 
     .. code-block:: xml
 

@@ -67,7 +67,7 @@ You can configure this using the ``entry_point`` setting:
             $security->enableAuthenticatorManager(true);
             // ....
 
-            // allow authentication using a form or HTTP basic
+            // allow authentication using a form or a custom authenticator
             $mainFirewall = $security->firewall('main');
             $mainFirewall
                 ->formLogin()
@@ -84,7 +84,7 @@ You can configure this using the ``entry_point`` setting:
     class that implements
     :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`.
     You can then set ``entry_point`` to the service id (e.g.
-    ``entry_point: App\Security\CustomEntryPoint``)
+    ``entry_point: App\Security\CustomEntryPoint``).
 
 Multiple Authenticators with Separate Entry Points
 --------------------------------------------------

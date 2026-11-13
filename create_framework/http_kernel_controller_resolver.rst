@@ -28,7 +28,7 @@ Update the route definition accordingly::
     ]));
 
 The move is pretty straightforward and makes a lot of sense as soon as you
-create more pages but you might have noticed a non-desirable side effect...
+create more pages but you might have noticed an undesirable side effect...
 The ``LeapYearController`` class is *always* instantiated, even if the
 requested URL does not match the ``leap_year`` route. This is bad for one main
 reason: performance-wise, all controllers for all routes must now be
@@ -108,14 +108,14 @@ correctly::
     // won't work
     public function index($request)
 
-More interesting, ``getArguments()`` is also able to inject any Request
-attribute; if the argument has the same name as the corresponding
+More interestingly, ``getArguments()`` is also able to inject any Request
+attribute if the argument has the same name as the corresponding
 attribute::
 
     public function index(int $year)
 
 You can also inject the Request and some attributes at the same time (as the
-matching is done on the argument name or a type hint, the arguments order does
+matching is done on the argument name or a type hint, the order of the arguments does
 not matter)::
 
     public function index(Request $request, int $year)
@@ -142,7 +142,7 @@ Let's inject the ``$year`` request attribute for our controller::
     }
 
 The resolvers also take care of validating the controller callable and its
-arguments. In case of a problem, it throws an exception with a nice message
+arguments. In case of a problem, they throw an exception with a nice message
 explaining the problem (the controller class does not exist, the method is not
 defined, an argument has no matching attribute, ...).
 
@@ -191,6 +191,6 @@ Let's conclude with the new version of our framework::
     $response->send();
 
 Think about it once more: our framework is more robust and more flexible than
-ever and it still has less than 50 lines of code.
+ever and it still has fewer than 50 lines of code.
 
 .. _`reflection`: https://www.php.net/reflection

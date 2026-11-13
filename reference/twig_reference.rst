@@ -51,7 +51,7 @@ access_decision
 
 Returns an :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecision`
 object, which tells whether the current user has the given role (``isGranted``) and
-gives the reason of a denial (``message``). More information can be found in
+gives the reason for a denial (``message``). More information can be found in
 :ref:`security-template`.
 
 access_decision_for_user
@@ -1117,14 +1117,14 @@ file_relative
     **type**: ``string``
 
 It transforms the given absolute file path into a new file path relative to
-project's root directory:
+the project's root directory:
 
 .. code-block:: twig
 
     {{ '/var/www/blog/templates/admin/index.html.twig'|file_relative }}
-    {# if project root dir is '/var/www/blog/', it returns 'templates/admin/index.html.twig' #}
+    {# if the project root dir is '/var/www/blog/', it returns 'templates/admin/index.html.twig' #}
 
-If the given file path is out of the project directory, a ``null`` value
+If the given file path is outside the project directory, a ``null`` value
 will be returned.
 
 format_args
@@ -1214,8 +1214,8 @@ humanize
 ``text``
     **type**: ``string``
 
-Transforms the given string into a human readable string (by replacing underscores
-with spaces, capitalizing the string, etc.) It's useful e.g. when displaying
+Transforms the given string into a human-readable string (by replacing underscores
+with spaces, capitalizing the string, etc.). It's useful e.g. when displaying
 the names of PHP properties/variables to end users:
 
 .. code-block:: twig

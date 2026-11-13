@@ -34,12 +34,12 @@ a case by case basis:
 * **Translations**: Translation updates and additions are always merged in the
   oldest maintained branch;
 
-* **External data**: Updates for external data included in Symfony can be
+* **External data**: External data included in Symfony can be
   updated (like ICU for instance);
 
 * **Version updates for Composer dependencies**: Changing the minimal version
-  of a dependency is possible, bumping to a major one or increasing PHP
-  minimal version is not;
+  of a dependency is possible, bumping to a major one or increasing the minimal PHP
+  version is not;
 
 * **Tests**: Tests that increase the code coverage can be added.
 
@@ -47,7 +47,7 @@ The following changes are **generally not accepted** in a patch version, except
 on a case by case basis (mostly when this is related to fixing a security
 issue):
 
-* **Performance improvement**: Performance improvement should only be accepted
+* **Performance improvement**: Performance improvements should only be accepted
   if the changes are local (located in one class) and only for algorithmic
   issues (any such patches must come with numbers that show a significant
   improvement on real-world code);
@@ -70,7 +70,7 @@ issue):
 * **Adding or updating annotations**: Adding or updating annotations (PHPDoc
   annotations for instance) is not allowed; fixing them might be accepted.
 
-Anything not explicitly listed above should be done on the next minor or major
+Anything not explicitly listed above should be done in the next minor or major
 version instead. For instance, the following changes are never accepted in a
 patch version:
 
@@ -103,4 +103,4 @@ patch version:
     to move forward with the newest Symfony versions in the safest way. One should
     be able to move PHP versions, OS or Symfony versions almost independently.
     That's the reason why supporting the latest PHP versions or OS features is
-    considered as bug fixes.
+    considered a bug fix.

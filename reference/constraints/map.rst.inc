@@ -90,7 +90,7 @@ File Constraints
 * :doc:`Image </reference/constraints/Image>`
 * :doc:`Video </reference/constraints/Video>`
 
-Financial and other Number Constraints
+Financial and Other Number Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. class:: ui-list-two-columns

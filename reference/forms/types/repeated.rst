@@ -1,7 +1,7 @@
 RepeatedType Field
 ==================
 
-This is a special field "group", that creates two identical fields whose
+This is a special field "group" that creates two identical fields whose
 values must match (or a validation error is thrown). The most common use
 is when you need the user to repeat their password or email to verify
 accuracy.
@@ -99,7 +99,7 @@ Field Options
 This is the actual field name to be used for the first field. This is mostly
 meaningless, however, as the actual data entered into both of the fields
 will be available under the key assigned to the ``RepeatedType`` field itself
-(e.g.  ``password``). However, if you don't specify a label, this field
+(e.g. ``password``). However, if you don't specify a label, this field
 name is used to "guess" the label for you.
 
 ``first_options``

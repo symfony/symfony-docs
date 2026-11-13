@@ -1,7 +1,7 @@
 Console Input (Arguments & Options)
 ===================================
 
-The most interesting part of the commands are the arguments and options that
+The most interesting parts of the commands are the arguments and options that
 you can make available. These arguments and options allow you to pass dynamic
 information from the terminal to the command.
 
@@ -228,8 +228,8 @@ Using Command Options
 
 Unlike arguments, options are not ordered (meaning you can specify them in any
 order) and are specified with two dashes (e.g. ``--yell``). Options are
-*always* optional, and can be setup to accept a value (e.g. ``--dir=src``) or
-as a boolean flag without a value (e.g.  ``--yell``).
+*always* optional, and can be set up to accept a value (e.g. ``--dir=src``) or
+as a boolean flag without a value (e.g. ``--yell``).
 
 .. _console-input-options:
 
@@ -435,13 +435,13 @@ flag:
         ;
 
 Note that to comply with the `docopt standard`_, long options can specify their
-values after a whitespace or an ``=`` sign (e.g. ``--iterations 5`` or
-``--iterations=5``), but short options can only use whitespaces or no
+values after a space or an ``=`` sign (e.g. ``--iterations 5`` or
+``--iterations=5``), but short options can only use spaces or no
 separation at all (e.g. ``-i 5`` or ``-i5``).
 
 .. warning::
 
-    While it is possible to separate an option from its value with a whitespace,
+    While it is possible to separate an option from its value with a space,
     using this form leads to an ambiguity should the option appear before the
     command name. For example, ``php bin/console --iterations 5 app:greet Fabien``
     is ambiguous; Symfony would interpret ``5`` as the command name. To avoid
@@ -455,11 +455,11 @@ There are five option variants you can use:
 
 ``InputOption::VALUE_NONE``
     Do not accept input for this option (e.g. ``--yell``). The value returned
-    from is a boolean (``false`` if the option is not provided).
+    is a boolean (``false`` if the option is not provided).
     This is the default behavior of options;
 
 ``InputOption::VALUE_REQUIRED``
-    This value is required (e.g. ``--iterations=5`` or ``-i5``), the option
+    This value is required (e.g. ``--iterations=5`` or ``-i5``), but the option
     itself is still optional;
 
 ``InputOption::VALUE_OPTIONAL``
@@ -900,7 +900,7 @@ Since the ``foo`` option doesn't accept a value, it will be either ``false``
 (when it is not passed to the command) or ``true`` (when ``--foo`` was passed
 by the user). The value of the ``bar`` option (and its ``b`` shortcut respectively)
 is required. It can be separated from the option name either by spaces or
-``=`` characters. The ``cat`` option (and its ``c`` shortcut) behaves similar
+``=`` characters. The ``cat`` option (and its ``c`` shortcut) behaves similarly,
 except that it doesn't require a value. Have a look at the following table
 to get an overview of the possible ways to pass options:
 
@@ -944,7 +944,7 @@ Input                           ``bar``            ``cat``      ``arg``
 ``-b Hello -c World``           ``"Hello"``        ``"World"``  ``null``
 ==============================  =================  ===========  ===========
 
-Fetching The Raw Command Input
+Fetching the Raw Command Input
 ------------------------------
 
 Symfony provides a :method:`Symfony\\Component\\Console\\Input\\ArgvInput::getRawTokens`
@@ -1064,11 +1064,11 @@ of ``addArgument()`` or the 6th argument of ``addOption()``::
                         // pressing Tab, this will contain "Fa"
                         $currentValue = $input->getCompletionValue();
 
-                        // get the list of username names from somewhere (e.g. the database)
+                        // get the list of usernames from somewhere (e.g. the database)
                         // you may use $currentValue to filter down the names
                         $availableUsernames = ...;
 
-                        // then suggested the usernames as values
+                        // then suggest the usernames as values
                         return $availableUsernames;
                     }
                 )
@@ -1077,7 +1077,7 @@ of ``addArgument()`` or the 6th argument of ``addOption()``::
     }
 
 That's all you need! Assuming users "Fabien" and "Fabrice" exist, pressing
-tab after typing ``app:greet Fa`` will give you these names as a suggestion.
+tab after typing ``app:greet Fa`` will give you these names as suggestions.
 
 .. tip::
 
@@ -1087,10 +1087,10 @@ tab after typing ``app:greet Fa`` will give you these names as a suggestion.
     command.
 
     You may use ``CompletionInput::getCompletionValue()`` to get the
-    current input if that helps improving performance (e.g. by reducing the
+    current input if that helps improve performance (e.g. by reducing the
     number of rows fetched from the database).
 
-Testing the Completion script
+Testing the Completion Script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Console component comes with a special
@@ -1131,7 +1131,7 @@ Command Global Options
 The Console component adds some predefined options to all commands:
 
 * ``--verbose``: sets the verbosity level (e.g. ``1`` the default, ``2`` and
-  ``3``, or you can use respective shortcuts ``-v``, ``-vv`` and ``-vvv``)
+  ``3``, or you can use the respective shortcuts ``-v``, ``-vv`` and ``-vvv``)
 * ``--silent``: disables all output and interaction, including errors
 * ``--quiet|-q``: disables output and interaction, but errors are still displayed
 * ``--no-interaction|-n``: disables interaction

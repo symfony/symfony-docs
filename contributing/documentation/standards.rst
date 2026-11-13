@@ -16,7 +16,7 @@ rest of the Symfony documentation:
   this rule for tables);
 * Use the ``::`` shorthand marker instead of ``.. code-block:: php`` to begin a
   PHP code block, unless this results in the marker being the only content on its own line;
-* Don't use inline hyperlinks. Separate the link and their target definition,
+* Don't use inline hyperlinks. Separate the link and its target definition,
   which you add at the bottom of the page;
 * Don't extend inline markup formatting (e.g., bold text) across multiple lines.
 
@@ -86,7 +86,7 @@ Formats
 
 Configuration examples should show all supported formats using
 :ref:`configuration blocks <docs-configuration-blocks>`. The supported formats
-(and their orders) are:
+(and their order) are:
 
 * **Configuration** (including services): YAML, XML, PHP
 * **Routing**: Attributes, YAML, XML, PHP
@@ -126,13 +126,13 @@ Example
 .. warning::
 
     In YAML you should put a space after ``{`` and before ``}`` (e.g. ``{ _controller: ... }``),
-    but this should not be done in Twig (e.g.  ``{'hello' : 'value'}``).
+    but this should not be done in Twig (e.g. ``{'hello' : 'value'}``).
 
 Files and Directories
 ---------------------
 
-* When referencing directories, always add a trailing slash to avoid confusions
-  with regular files (e.g. "execute the ``console`` script located at the ``bin/``
+* When referencing directories, always add a trailing slash to avoid confusion
+  with regular files (e.g. "execute the ``console`` script located in the ``bin/``
   directory").
 * When referencing file extensions explicitly, you should include a leading dot
   for every extension (e.g. "XML files use the ``.xml`` extension").
@@ -187,7 +187,7 @@ In addition, documentation follows these rules:
 
 * **Section titles**: use a variant of the title case, where the first
   word is always capitalized and all other words are capitalized, except for
-  the closed-class words (read Wikipedia article about `headings and titles`_).
+  the closed-class words (read the Wikipedia article about `headings and titles`_).
 
   E.g.: The Vitamins are in my Fresh California Raisins
 

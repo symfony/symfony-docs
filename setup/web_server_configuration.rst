@@ -2,7 +2,7 @@ Configuring a Web Server
 ========================
 
 The preferred way to develop your Symfony application is to use
-:ref:`Symfony local web server <symfony-cli-server>`.
+the :ref:`Symfony local web server <symfony-cli-server>`.
 
 However, when running the application in the production environment, you'll need
 to use a fully-featured web server. This article describes how to use Symfony
@@ -77,8 +77,8 @@ Configuring PHP-FPM
 -------------------
 
 Both Nginx and Apache use the PHP FastCGI process manager
-(PHP-FPM). Ensure that you have installed PHP-FPM (for example, on a Debian
-based system you have to install the ``php-fpm`` package).
+(PHP-FPM). Ensure that you have installed PHP-FPM (for example, on a Debian-based
+system you have to install the ``php-fpm`` package).
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
@@ -113,7 +113,7 @@ The **minimum configuration** to get your application running under Nginx is:
         root /var/www/project/public;
 
         location / {
-            # try to serve file directly, fallback to index.php
+            # try to serve file directly, fall back to index.php
             try_files $uri /index.php$is_args$args;
         }
 

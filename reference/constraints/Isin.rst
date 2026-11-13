@@ -79,7 +79,7 @@ Options
 message
 ~~~~~~~
 
-**type**: ``string`` default: ``This value is not a valid International Securities Identification Number (ISIN).``
+**type**: ``string`` **default**: ``This value is not a valid International Securities Identification Number (ISIN).``
 
 The message shown if the given value is not a valid ISIN.
 

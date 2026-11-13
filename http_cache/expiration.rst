@@ -49,7 +49,7 @@ additional directives):
     Using the ``setSharedMaxAge()`` method is not equivalent to using both
     ``setPublic()`` and ``setMaxAge()`` methods. According to the
     `Serving Stale Responses`_ section of RFC 7234, the ``s-maxage`` setting
-    (added by ``setSharedMaxAge()`` method) prohibits a cache to use a stale
+    (added by ``setSharedMaxAge()`` method) prohibits a cache from using a stale
     response in ``stale-if-error`` scenarios. That's why it's recommended to use
     both ``public`` and ``max-age`` directives.
 

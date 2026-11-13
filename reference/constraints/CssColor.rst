@@ -171,7 +171,7 @@ hex_long
 ........
 
 A regular expression. Allows all values which represent a CSS color of 6
-characters (in addition of the leading ``#``) and contained in ranges: ``0`` to
+characters (in addition to the leading ``#``) and contained in ranges: ``0`` to
 ``9`` and ``A`` to ``F`` (case insensitive).
 
 Examples: ``#2F2F2F``, ``#2f2f2f``
@@ -180,7 +180,7 @@ hex_long_with_alpha
 ...................
 
 A regular expression. Allows all values which represent a CSS color with alpha
-part of 8 characters (in addition of the leading ``#``) and contained in
+part of 8 characters (in addition to the leading ``#``) and contained in
 ranges: ``0`` to ``9`` and ``A`` to ``F`` (case insensitive).
 
 Examples: ``#2F2F2F80``, ``#2f2f2f80``
@@ -189,7 +189,7 @@ hex_short
 .........
 
 A regular expression. Allows all values which represent a CSS color of strictly
-3 characters (in addition of the leading ``#``) and contained in ranges: ``0``
+3 characters (in addition to the leading ``#``) and contained in ranges: ``0``
 to ``9`` and ``A`` to ``F`` (case insensitive).
 
 Examples: ``#CCC``, ``#ccc``
@@ -198,7 +198,7 @@ hex_short_with_alpha
 ....................
 
 A regular expression. Allows all values which represent a CSS color with alpha
-part of strictly 4 characters (in addition of the leading ``#``) and contained
+part of strictly 4 characters (in addition to the leading ``#``) and contained
 in ranges: ``0`` to ``9`` and ``A`` to ``F`` (case insensitive).
 
 Examples: ``#CCC8``, ``#ccc8``

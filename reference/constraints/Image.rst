@@ -128,7 +128,7 @@ that it is within a certain size, add the following:
 The ``headshot`` property is validated to guarantee that it is a real image
 and that it is between a certain width and height.
 
-You may also want to guarantee the ``headshot`` image to be square. In this
+You may also want to guarantee that the ``headshot`` image is square. In this
 case you can disable portrait and landscape orientations as shown in the
 following code:
 
@@ -340,7 +340,7 @@ Parameter             Description
 
 **type**: ``integer`` | ``float``
 
-If set, the amount of pixels of the image file must be less than or equal to this
+If set, the number of pixels of the image file must be less than or equal to this
 value.
 
 ``maxPixelsMessage``
@@ -349,7 +349,7 @@ value.
 **type**: ``string`` **default**: ``The image has too many pixels ({{ pixels }} pixels).
 Maximum amount expected is {{ max_pixels }} pixels.``
 
-The error message if the amount of pixels of the image exceeds `maxPixels`_.
+The error message if the number of pixels of the image exceeds `maxPixels`_.
 
 You can use the following parameters in this message:
 
@@ -357,8 +357,8 @@ You can use the following parameters in this message:
 Parameter             Description
 ====================  =========================================================
 ``{{ height }}``      The current image height
-``{{ max_pixels }}``  The maximum allowed amount of pixels
-``{{ pixels }}``      The current amount of pixels
+``{{ max_pixels }}``  The maximum allowed number of pixels
+``{{ pixels }}``      The current number of pixels
 ``{{ width }}``       The current image width
 ====================  =========================================================
 
@@ -387,7 +387,7 @@ You can use the following parameters in this message:
 ===================  ==========================================================
 Parameter            Description
 ===================  ==========================================================
-``{{ max_ratio }}``  The maximum required ratio
+``{{ max_ratio }}``  The maximum allowed ratio
 ``{{ ratio }}``      The current (invalid) ratio
 ===================  ==========================================================
 
@@ -463,7 +463,7 @@ Parameter             Description
 
 **type**: ``integer`` | ``float``
 
-If set, the amount of pixels of the image file must be greater than or equal to this
+If set, the number of pixels of the image file must be greater than or equal to this
 value.
 
 ``minPixelsMessage``
@@ -472,7 +472,7 @@ value.
 **type**: ``string`` **default**: ``The image has too few pixels ({{ pixels }} pixels).
 Minimum amount expected is {{ min_pixels }} pixels.``
 
-The error message if the amount of pixels of the image is less than `minPixels`_.
+The error message if the number of pixels of the image is less than `minPixels`_.
 
 You can use the following parameters in this message:
 
@@ -480,8 +480,8 @@ You can use the following parameters in this message:
 Parameter             Description
 ====================  =========================================================
 ``{{ height }}``      The current image height
-``{{ min_pixels }}``  The minimum required amount of pixels
-``{{ pixels }}``      The current amount of pixels
+``{{ min_pixels }}``  The minimum required number of pixels
+``{{ pixels }}``      The current number of pixels
 ``{{ width }}``       The current image width
 ====================  =========================================================
 

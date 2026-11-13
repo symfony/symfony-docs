@@ -138,7 +138,7 @@ typical usage of this is gender:
         ];
 
 This might look very complex. The basic syntax for all functions is
-``{variable_name, function_name, function_statement}`` (where, as you see
+``{variable_name, function_name, function_statement}`` (where, as you'll see
 later, ``function_statement`` is optional for some functions). In this case,
 the function name is ``select`` and its statement contains the "cases" of this
 select. This function is applied over the ``organizer_gender`` variable::
@@ -166,7 +166,7 @@ you to use literal text in the select statements:
 
 #. The first ``{organizer_gender, select, ...}`` block starts the "code" mode,
    which means ``organizer_gender`` is processed as a variable.
-#. The inner ``{... has invited you to her party!}`` block brings you back in
+#. The inner ``{... has invited you to her party!}`` block brings you back to
    "literal" mode, meaning the text is not processed.
 #. Inside this block, ``{organizer_name}`` starts "code" mode again, allowing
    ``organizer_name`` to be processed as a variable.
@@ -175,7 +175,7 @@ you to use literal text in the select statements:
 
     While it might seem more logical to only put ``her``, ``his`` or ``their``
     in the switch statement, it is better to use "complex arguments" at the
-    outermost structure of the message. The strings are in this way better
+    outermost structure of the message. This way, the strings are more
     readable for translators and, as you can see in the ``multiple`` case, other
     parts of the sentence might be influenced by the variables.
 
@@ -279,7 +279,7 @@ Usage of this string is the same as with variables and select::
 .. tip::
 
     When combining the ``select`` and ``plural`` functions, try to still have
-    ``select`` as outermost function:
+    ``select`` as the outermost function:
 
     .. code-block:: text
 
@@ -316,7 +316,7 @@ Usage of this string is the same as with variables and select::
         // with a message like:
         // ]-Inf,0]Oops! I'm down|]0,1000]I still have money|]1000,Inf]I have lots of money
 
-        // use three different messages for each range:
+        // use a different message for each range:
         if ($balance < 0) {
             $message = $translator->trans('no_money_message');
         } elseif ($balance < 1000) {
@@ -328,12 +328,12 @@ Usage of this string is the same as with variables and select::
 Additional Placeholder Functions
 --------------------------------
 
-Besides these, the ICU MessageFormat comes with a couple other interesting functions.
+Besides these, the ICU MessageFormat comes with a couple of other interesting functions.
 
 Ordinal
 ~~~~~~~
 
-Similar to ``plural``, ``selectordinal`` allows you to use numbers as ordinal scale:
+Similar to ``plural``, ``selectordinal`` allows you to use numbers on an ordinal scale:
 
 .. configuration-block::
 
@@ -494,7 +494,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     echo $translator->trans('progress', ['progress' => 1]);
 
     // prints "This artifact is worth $9,988,776.65"
-    // if we would translate this to i.e. French, the value would be shown as
+    // if you translate this to e.g. French, the value would be shown as
     // "9 988 776,65 €"
     echo $translator->trans('value_of_object', ['value' => 9988776.65]);
 

@@ -17,7 +17,7 @@ Instead, you can run the command directly from the controller.
     a controller has a slight performance impact because of the request stack
     overhead.
 
-Imagine you want to run the ``debug:twig`` from inside your controller::
+Imagine you want to run the ``debug:twig`` command from inside your controller::
 
     // src/Controller/DebugTwigController.php
     namespace App\Controller;
@@ -61,8 +61,8 @@ Imagine you want to run the ``debug:twig`` from inside your controller::
 Showing Colorized Command Output
 --------------------------------
 
-By telling the :class:`Symfony\\Component\\Console\\Output\\BufferedOutput`
-it is decorated via the second parameter, it will return the Ansi color-coded
+If you tell the :class:`Symfony\\Component\\Console\\Output\\BufferedOutput` that
+it is decorated via its second parameter, it will return the ANSI color-coded
 content. The `SensioLabs AnsiToHtml converter`_ can be used to convert this to
 colorful HTML.
 

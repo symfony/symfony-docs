@@ -171,7 +171,7 @@ Navigation is handled via special submit button types:
 * ``ResetFlowType``: clears all stored data and returns to the first step
 
 Symfony provides a default navigator that includes previous, next, and
-finish buttons:
+finish buttons::
 
     use Symfony\Component\Form\Flow\Type\NavigatorFlowType;
 

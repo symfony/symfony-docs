@@ -64,7 +64,7 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
         'couchbase://10.0.0.100',
         'couchbase://10.0.0.101',
         'couchbase://10.0.0.102',
-        // etc...
+        // etc.
     ]);
 
     // a single DSN can define multiple servers using the following syntax:
@@ -99,10 +99,10 @@ Available Options
 ~~~~~~~~~~~~~~~~~
 
 ``username`` (type: ``string``)
-    Username for connection ``CouchbaseCluster``.
+    Username for the ``CouchbaseCluster`` connection.
 
 ``password`` (type: ``string``)
-    Password of connection ``CouchbaseCluster``.
+    Password for the ``CouchbaseCluster`` connection.
 
 ``operationTimeout`` (type: ``int``, default: ``2500000``)
     The operation timeout (in microseconds) is the maximum amount of time the library will
@@ -115,13 +115,13 @@ Available Options
     Per-node configuration timeout (in microseconds).
 
 ``viewTimeout`` (type: ``int``, default: ``75000000``)
-    The I/O timeout (in microseconds) for HTTP requests to Couchbase Views API.
+    The I/O timeout (in microseconds) for HTTP requests to the Couchbase Views API.
 
 ``httpTimeout`` (type: ``int``, default: ``75000000``)
     The I/O timeout (in microseconds) for HTTP queries (management API).
 
 ``configDelay`` (type: ``int``, default: ``10000``)
-    Config refresh throttling
+    Config refresh throttling.
     Modify the amount of time (in microseconds) before the configuration error threshold will forcefully be set to its maximum number forcing a configuration refresh.
 
 ``htconfigIdleTimeout`` (type: ``int``, default: ``4294967295``)

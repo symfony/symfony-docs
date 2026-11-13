@@ -6,7 +6,7 @@ Environment Variable Processors
 :ref:`Using env vars to configure Symfony applications <config-env-vars>` is a
 common practice to make your applications truly dynamic.
 
-The main issue of env vars is that their values can only be strings and your
+The main issue with env vars is that their values can only be strings and your
 application may need other data types (integer, boolean, etc.). Symfony solves
 this problem with "env var processors", which transform the original contents of
 the given environment variables. The following example uses the integer
@@ -288,7 +288,7 @@ Symfony provides the following env var processors:
 
 ``env(resolve:FOO)``
     If the content of ``FOO`` includes container parameters (with the syntax
-    ``%parameter_name%``), it replaces the parameters by their values:
+    ``%parameter_name%``), it replaces the parameters with their values:
 
     .. configuration-block::
 
@@ -502,7 +502,7 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(trim:FOO)``
-    Trims the content of ``FOO`` env var, removing whitespaces from the beginning
+    Trims the content of the ``FOO`` env var, removing whitespace from the beginning
     and end of the string. This is especially useful in combination with the
     ``file`` processor, as it'll remove newlines at the end of a file.
 
@@ -831,7 +831,7 @@ Symfony provides the following env var processors:
 
 ``env(urlencode:FOO)``
     Encodes the content of the ``FOO`` env var using the :phpfunction:`urlencode`
-    PHP function. This is especially useful when ``FOO`` value is not compatible
+    PHP function. This is especially useful when the ``FOO`` value is not compatible
     with DSN syntax.
 
     .. configuration-block::
@@ -961,8 +961,8 @@ tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-Resolving Environment Variable At Compile Time
-----------------------------------------------
+Resolving Environment Variables at Compile Time
+-----------------------------------------------
 
 Environment variables are resolved at runtime, but you can also resolve them
 :ref:`at compile time <resolving-env-vars-at-compile-time>`.

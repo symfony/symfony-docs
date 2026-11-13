@@ -1,4 +1,4 @@
-How to Forward Requests to another Controller
+How to Forward Requests to Another Controller
 =============================================
 
 Though not very common, you can also forward to another controller internally

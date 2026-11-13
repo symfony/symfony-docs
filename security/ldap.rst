@@ -253,7 +253,7 @@ LDAP server), you may query the LDAP server using the
     attacks when using the component directly.
 
 By default, LDAP entries are lazy-loaded. If you wish to fetch
-all entries in a single call and do something with the results'
+all entries in a single call and do something with the results
 array, you may use the
 :method:`Symfony\\Component\\Ldap\\Adapter\\ExtLdap\\Collection::toArray` method::
 
@@ -279,7 +279,7 @@ Use the ``filter`` option to only retrieve some specific attributes::
 Creating and Updating Entries
 -----------------------------
 
-The Ldap component provides means to create new LDAP entries, update or even
+The Ldap component provides methods to create new LDAP entries and to update or even
 delete existing ones::
 
     use Symfony\Component\Ldap\Entry;
@@ -342,8 +342,8 @@ method to update multiple attributes at once::
     ]);
 
 Possible operation types are ``LDAP_MODIFY_BATCH_ADD``, ``LDAP_MODIFY_BATCH_REMOVE``,
-``LDAP_MODIFY_BATCH_REMOVE_ALL``, ``LDAP_MODIFY_BATCH_REPLACE``. Parameter
-``$values`` must be ``NULL`` when using ``LDAP_MODIFY_BATCH_REMOVE_ALL``
+``LDAP_MODIFY_BATCH_REMOVE_ALL`` and ``LDAP_MODIFY_BATCH_REPLACE``. The
+``$values`` parameter must be ``NULL`` when using the ``LDAP_MODIFY_BATCH_REMOVE_ALL``
 operation type.
 
 .. _security-ldap-user-provider:
@@ -441,7 +441,7 @@ base_dn
 
 **type**: ``string`` **default**: ``null``
 
-This is the base DN for the directory
+This is the base DN for the directory.
 
 search_dn
 .........
@@ -466,7 +466,7 @@ default_roles
 
 This is the default role you wish to give to a user fetched from the LDAP
 server. If you do not configure this key, your users won't have any roles,
-and will not be considered as authenticated fully.
+and will not be considered fully authenticated.
 
 role_fetcher
 ............
@@ -523,8 +523,8 @@ replaced by the user identifier you are trying to load.
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 
-If you pass ``null`` as the value of this option, the default filter is used
-``({uid_key}={user_identifier})``.
+If you pass ``null`` as the value of this option, the default filter
+``({uid_key}={user_identifier})`` is used.
 
 To prevent `LDAP injection`_, the username will be escaped.
 
@@ -643,13 +643,13 @@ search string (e.g. ``uid="{user_identifier}"``). The placeholder value will be
 replaced by the actual user identifier.
 
 When this option is used, ``query_string`` will search in the DN specified by
-``dn_string`` and the DN resulted of the ``query_string`` will be used to
+``dn_string`` and the DN resulting from the ``query_string`` will be used to
 authenticate the user with their password. Following the previous example, if
-your users have the following two DN: ``dc=companyA,dc=example,dc=com`` and
+your users have the following two DNs: ``dc=companyA,dc=example,dc=com`` and
 ``dc=companyB,dc=example,dc=com``, then ``dn_string`` should be
 ``dc=example,dc=com``.
 
-Note that usernames must be unique across both DN, as the authentication
+Note that usernames must be unique across both DNs, as the authentication
 provider won't be able to select the correct user for the bind process if more
 than one is found.
 

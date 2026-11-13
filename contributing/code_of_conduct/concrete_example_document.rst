@@ -11,7 +11,7 @@ Concrete Examples
 
 * Unwelcome comments regarding a person's lifestyle choices and practices,
   including those related to food, health, parenting, drugs, and employment;
-* Deliberate misgendering or use of `dead names`_ (The birth name
+* Deliberate misgendering or use of `dead names`_ (the birth name
   of a person who has since changed their name, often a transgender person);
 * Threats of violence like "The person that created this PR should be
   punched in the face";
@@ -25,7 +25,7 @@ Concrete Examples
 * Taking photographs of a conference attendee or speaker in the foreground and
   publishing them without their permission.
 
-The original list is inspired and modified from `geek feminism`_ and
+The original list is inspired by and modified from `geek feminism`_ and
 confirmed by experiences from PHPWomen.
 
 .. _dead names: https://en.wiktionary.org/wiki/deadname

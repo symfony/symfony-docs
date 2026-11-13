@@ -1,7 +1,7 @@
 UserPassword
 ============
 
-This validates that an input value is equal to the current authenticated
+This validates that an input value is equal to the currently authenticated
 user's password. This is useful in a form where a user can change their
 password, but needs to enter their old password for security.
 
@@ -12,8 +12,8 @@ password, but needs to enter their old password for security.
 
 .. note::
 
-    In order to use this constraint, you should have installed the
-    symfony/security-core component with Composer.
+    In order to use this constraint, you must install the
+    ``symfony/security-core`` component with Composer.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -24,7 +24,7 @@ Validator   :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\
 Basic Usage
 -----------
 
-Suppose you have a ``ChangePassword`` class, that's used in a form where
+Suppose you have a ``ChangePassword`` class that's used in a form where
 the user can change their password by entering their old password and a
 new password. This constraint will validate that the old password matches
 the user's current password:

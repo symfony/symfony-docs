@@ -18,7 +18,7 @@ creating hard dependencies. This feature also works with the ``EntityValueResolv
 .. versionadded:: 7.3
 
     Support for target entity resolution in the ``EntityValueResolver`` was
-    introduced Symfony 7.3
+    introduced in Symfony 7.3.
 
 Background
 ----------
@@ -33,8 +33,8 @@ In this case, your ``Invoice`` entity has a relationship to the interface
 the goal is to use the ``ResolveTargetEntityListener`` to replace all
 references to this interface with a concrete class that implements it.
 
-Set up
-------
+Setup
+-----
 
 This article uses two basic (incomplete) entities to demonstrate how to set up
 and use the ``ResolveTargetEntityListener``.

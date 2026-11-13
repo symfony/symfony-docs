@@ -19,9 +19,9 @@ or variable is typed and you pass a value of a different type, PHP will throw an
 exception before this constraint is checked.
 
 The following example checks if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
-``firstName`` is of type ``string`` (using :phpfunction:`is_string` PHP function),
-``age`` is an ``integer`` (using :phpfunction:`is_int` PHP function) and
-``accessCode`` contains either only letters or only digits (using
+``firstName`` is of type ``string`` (using the :phpfunction:`is_string` PHP function),
+``age`` is an ``integer`` (using the :phpfunction:`is_int` PHP function) and
+``accessCode`` contains either only letters or only digits (using the
 :phpfunction:`ctype_alpha` and :phpfunction:`ctype_digit` PHP functions).
 
 .. configuration-block::
@@ -152,7 +152,7 @@ Options
 
 **type**: ``string`` **default**: ``This value should be of type {{ type }}.``
 
-The message if the underlying data is not of the given type.
+The message shown if the underlying data is not of the given type.
 
 You can use the following parameters in this message:
 
@@ -201,8 +201,8 @@ If you're dealing with arrays, you can use the following types in the constraint
 * ``list`` which uses :phpfunction:`array_is_list <array_is_list>` internally
 * ``associative_array`` which is true for any **non-empty** array that is not a list
 
-Also, you can use ``ctype_*()`` functions from corresponding
-`built-in PHP extension`_. Consider `a list of ctype functions`_:
+Also, you can use ``ctype_*()`` functions from the corresponding
+`built-in PHP extension`_. See `a list of ctype functions`_:
 
 * :phpfunction:`alnum <ctype_alnum>`
 * :phpfunction:`alpha <ctype_alpha>`

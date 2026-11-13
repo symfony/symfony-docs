@@ -26,7 +26,7 @@ core types and you can use it to test your types too.
 
 .. note::
 
-    Depending on the way you installed your Symfony or Symfony Form component
+    Depending on the way you installed Symfony or the Symfony Form component,
     the tests may not be downloaded. Use the ``--prefer-source`` option with
     Composer if this is the case.
 
@@ -84,7 +84,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
 So, what does it test? Here comes a detailed explanation.
 
-First you verify if the ``FormType`` compiles. This includes basic class
+First, you verify that the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm()`` method and options resolution. This should
 be the first test you write::
 
@@ -124,8 +124,8 @@ variable exists and will be available in your form themes::
 .. warning::
 
     When your type relies on the ``EntityType``, you should register the
-    :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmExtension`, which will
-    need to mock the ``ManagerRegistry``.
+    :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmExtension`, which requires
+    mocking the ``ManagerRegistry``.
 
     However, if you cannot use a mock to write your test, you should extend
     the ``KernelTestCase`` instead and use the ``form.factory`` service to
@@ -229,7 +229,7 @@ allows you to return a list of extensions to register::
 
 .. note::
 
-    By default only the
+    By default, only the
     :class:`Symfony\\Component\\Form\\Extension\\Core\\CoreExtension` is
     registered in tests. You can find other extensions from the Form component
     in the ``Symfony\Component\Form\Extension`` namespace.

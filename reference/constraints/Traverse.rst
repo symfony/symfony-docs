@@ -142,8 +142,8 @@ The ``groups`` option is not available for this constraint.
 
 **type**: ``boolean`` **default**: ``true``
 
-Instances of ``\Traversable`` are traversed by default, use this option to
-disable validating:
+Instances of ``\Traversable`` are traversed by default. Use this option to
+disable validating them:
 
 .. configuration-block::
 

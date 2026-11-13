@@ -3,7 +3,7 @@ How to Keep Sensitive Information Secret
 
 :ref:`Environment variables <config-env-vars>` are the best way to store configuration
 that depends on where the application is run - for example, some API key that
-might be set to one value while developing locally and another value on production.
+might be set to one value while developing locally and another value in production.
 
 When these values are *sensitive* and need to be kept private, you can safely
 store them by using Symfony's secrets management system - sometimes called a
@@ -53,7 +53,7 @@ This will generate ``config/secrets/prod/prod.encrypt.public.php`` and
 
     The ``prod.decrypt.private.php`` file is highly sensitive. Your team of developers
     and even Continuous Integration services don't need that key. If the
-    **decryption key** has been exposed (ex-employee leaving for instance), you
+    **decryption key** has been exposed (e.g. an employee left the team), you
     should consider generating a new one by running:
     ``secrets:generate-keys --rotate``.
 
@@ -81,7 +81,7 @@ in ``config/secrets/prod``. You can also set the secret in a few other ways:
 
 .. code-block:: terminal
 
-    # provide a file where to read the secret from
+    # provide a file to read the secret from
     $ php bin/console secrets:set DATABASE_PASSWORD ~/Download/password.json
 
     # or contents passed to STDIN
@@ -103,7 +103,7 @@ Secret values can be referenced in the same way as
 accidentally define a secret *and* an environment variable with the same name:
 **environment variables override secrets**.
 
-If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
+If you stored a ``DATABASE_PASSWORD`` secret, you can reference it like this:
 
 .. configuration-block::
 
@@ -187,13 +187,13 @@ you to reveal a single secret's value.
 Remove Secrets
 --------------
 
-Symfony provides a convenient command to remove a Secret:
+Symfony provides a convenient command to remove a secret:
 
 .. code-block:: terminal
 
     $ php bin/console secrets:remove DATABASE_PASSWORD
 
-Local secrets: Overriding Secrets Locally
+Local Secrets: Overriding Secrets Locally
 -----------------------------------------
 
 The ``dev`` environment secrets should contain nice default values for development.

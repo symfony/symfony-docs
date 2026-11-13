@@ -28,7 +28,7 @@ Create a PHPDoc Type Guesser
 ----------------------------
 
 In this section, you are going to build a guesser that reads information about
-fields from the PHPDoc of the properties. At first, you need to create a class
+fields from the PHPDoc of the properties. First, you need to create a class
 which implements :class:`Symfony\\Component\\Form\\FormTypeGuesserInterface`.
 This interface requires four methods:
 
@@ -74,10 +74,10 @@ Guessing the Type
 ~~~~~~~~~~~~~~~~~
 
 When guessing a type, the method returns either an instance of
-:class:`Symfony\\Component\\Form\\Guess\\TypeGuess` or nothing, to determine
+:class:`Symfony\\Component\\Form\\Guess\\TypeGuess` or nothing, to indicate
 that the type guesser cannot guess the type.
 
-The ``TypeGuess`` constructor requires three options:
+The ``TypeGuess`` constructor requires three arguments:
 
 * The type name (one of the :doc:`form types </reference/forms/types>`);
 * Additional options (for instance, when the type is ``entity``, you also
@@ -164,7 +164,7 @@ set.
 
 .. warning::
 
-    You should be very careful using the ``guessMaxLength()`` method. When the
+    You should be very careful when using the ``guessMaxLength()`` method. When the
     type is a float, you cannot determine a length (e.g. you want a float to be
     less than ``5``, ``5.512313`` is not valid but
     ``length(5.512314) > length(5)`` is, so the pattern will succeed). In this

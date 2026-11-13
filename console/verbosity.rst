@@ -20,7 +20,7 @@ messages, but you can control their verbosity with the ``-q`` and ``-v`` options
     # increase verbosity of messages
     $ php bin/console some-command -v
 
-    # display also the informative non essential messages
+    # also display the informative non-essential messages
     $ php bin/console some-command -vv
 
     # display all messages (useful to debug errors)
@@ -32,7 +32,7 @@ messages, but you can control their verbosity with the ``-q`` and ``-v`` options
 
 The verbosity level can also be controlled globally for all commands with the
 ``SHELL_VERBOSITY`` environment variable (the ``-q`` and ``-v`` options still
-have more precedence over the value of ``SHELL_VERBOSITY``):
+take precedence over the value of ``SHELL_VERBOSITY``):
 
 =====================  =========================  ===========================================
 Console option         ``SHELL_VERBOSITY`` value  Equivalent PHP constant
@@ -99,10 +99,10 @@ without actually printing.
 
     The MonologBridge provides a :class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler`
     class that allows you to display messages on the console. This is cleaner
-    than wrapping your output calls in conditions. For an example use in
+    than wrapping your output calls in conditions. For an example of its use in
     the Symfony Framework, see :doc:`/logging/monolog_console`.
 
 .. tip::
 
-    The full exception stacktrace is printed if the ``VERBOSITY_VERBOSE``
+    The full exception stack trace is printed if the ``VERBOSITY_VERBOSE``
     level or above is used.

@@ -48,7 +48,7 @@ autoescape_service_method
 
 **type**: ``string`` **default**: ``null``
 
-If ``autoescape_service`` option is defined, then this option defines the method
+If the ``autoescape_service`` option is defined, then this option defines the method
 called to determine the default escaping applied to the template.
 
 If the service defined in ``autoescape_service`` is invocable (i.e. it defines
@@ -123,7 +123,7 @@ interval_format
 **type**: ``string`` **default**: ``%d days``
 
 The format used by the ``date`` filter to display ``DateInterval`` instances
-when no specific format is passed as argument.
+when no specific format is passed as an argument.
 
 timezone
 ........
@@ -153,7 +153,7 @@ default_path
 
 The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
-the :ref:`paths <config-twig-paths>`  option too.
+the :ref:`paths <config-twig-paths>` option too.
 
 .. _config-twig-file-name-pattern:
 
@@ -171,7 +171,7 @@ non-Twig templates (and it ignores compilation errors). The result is an
 unnecessary consumption of CPU and disk resources.
 
 In those cases, use this option to define the filename pattern(s) of the files
-that are Twig templates (the rest of files will be ignored by ``cache:warmup``).
+that are Twig templates (the rest of the files will be ignored by ``cache:warmup``).
 The value of this option can be a regular expression, a glob, or a string:
 
 .. configuration-block::
@@ -310,7 +310,7 @@ decimals
 **type**: ``integer`` **default**: ``0``
 
 The number of decimals used to format numeric values when no specific number is
-passed as argument to the ``number_format`` filter.
+passed as an argument to the ``number_format`` filter.
 
 decimal_point
 .............
@@ -318,7 +318,7 @@ decimal_point
 **type**: ``string`` **default**: ``.``
 
 The character used to separate the decimals from the integer part of numeric
-values when no specific character is passed as argument to the ``number_format``
+values when no specific character is passed as an argument to the ``number_format``
 filter.
 
 thousands_separator
@@ -327,7 +327,7 @@ thousands_separator
 **type**: ``string`` **default**: ``,``
 
 The character used to separate every group of thousands in numeric values when
-no specific character is passed as argument to the ``number_format`` filter.
+no specific character is passed as an argument to the ``number_format`` filter.
 
 optimizations
 ~~~~~~~~~~~~~

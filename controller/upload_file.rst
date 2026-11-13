@@ -285,8 +285,8 @@ them and process each file individually::
 Creating an Uploader Service
 ----------------------------
 
-To avoid logic in controllers, making them big, you can extract the upload
-logic to a separate service::
+To avoid putting too much logic in controllers and making them big, you can extract
+the upload logic to a separate service::
 
     // src/Service/FileUploader.php
     namespace App\Service;
@@ -376,7 +376,7 @@ recommended, because Doctrine events shouldn't be used for your domain logic.
 
 Moreover, Doctrine listeners are often dependent on internal Doctrine behavior
 which may change in future versions. Also, they can introduce performance issues
-unwillingly (because your listener persists entities which cause other entities to
+unintentionally (because your listener persists entities which cause other entities to
 be changed and persisted).
 
 As an alternative, you can use :doc:`Symfony events, listeners and subscribers </event_dispatcher>`.

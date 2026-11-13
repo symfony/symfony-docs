@@ -656,8 +656,8 @@ The ``addTagFormDeleteLink()`` function will look something like this:
         });
     }
 
-When a tag form is removed from the DOM and submitted, the removed ``Tag`` object
-will not be included in the collection passed to ``setTags()``. Depending on
+When a tag form is removed from the DOM and the form is submitted, the removed ``Tag``
+object will not be included in the collection passed to ``setTags()``. Depending on
 your persistence layer, this may or may not be enough to actually remove
 the relationship between the removed ``Tag`` and ``Task`` object.
 

@@ -16,7 +16,7 @@ Want to use `TypeScript`_? No problem! First, enable it:
 
           // optionally enable forked type script for faster builds
           // https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
-          // requires that you have a tsconfig.json file that is setup correctly.
+          // requires that you have a tsconfig.json file that is set up correctly.
     +     //.enableForkedTypeScriptTypesChecking()
       ;
 

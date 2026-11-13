@@ -9,7 +9,7 @@ The "value" for each country is the two-letter country code.
 
 .. note::
 
-    The locale of your user is guessed using :phpmethod:`Locale::getDefault`
+    The locale of your user is guessed using :phpmethod:`Locale::getDefault`.
 
 Unlike the ``ChoiceType``, you don't need to specify a ``choices`` option as the
 field type automatically uses all of the countries of the world. You *can* specify
@@ -71,7 +71,7 @@ Overridden Options
 **default**: ``Symfony\Component\Intl\Countries::getNames()``
 
 The country type defaults the ``choices`` option to the whole list of countries.
-The locale is used to translate the countries names.
+The locale is used to translate the country names.
 
 .. warning::
 

@@ -1,7 +1,7 @@
 Language
 ========
 
-Validates that a value is a valid language *Unicode language identifier*
+Validates that a value is a valid *Unicode language identifier*
 (e.g. ``fr`` or ``zh-Hant``).
 
 ==========  ===================================================================
@@ -79,7 +79,7 @@ alpha3
 
 **type**: ``boolean`` **default**: ``false``
 
-If this option is ``true``, the constraint checks that the value is a
+If this option is ``true``, the constraint checks that the value is an
 `ISO 639-2 (2T)`_ three-letter code (e.g. French = ``fra``) instead of the default
 `ISO 639-1`_ two-letter code (e.g. French = ``fr``).
 

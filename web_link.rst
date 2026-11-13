@@ -2,7 +2,7 @@ Asset Preloading and Resource Hints with WebLink
 ================================================
 
 Symfony provides native support (via the `WebLink`_ component)
-for managing ``Link`` HTTP headers, which are the key to improve the application
+for managing ``Link`` HTTP headers, which are the key to improving the application
 performance when using preloading capabilities of modern web browsers.
 
 ``Link`` headers are used to hint resources (e.g. CSS and JavaScript files) to
@@ -119,7 +119,7 @@ away, before it encounters the corresponding tag in the HTML.
 
 Popular proxy services and CDNs including `Cloudflare`_, `Fastly`_ and `Akamai`_
 also leverage ``Link`` headers to optimize resource delivery and improve
-performance of your applications in production.
+the performance of your applications in production.
 
 .. _early-hints:
 
@@ -180,7 +180,7 @@ Technically, Early Hints are an informational HTTP response with the status code
 ``103``. The ``sendEarlyHints()`` method creates a ``Response`` object with that
 status code and sends its headers immediately.
 
-This way, browsers can start downloading the assets immediately; like the
+This way, browsers can start downloading the assets immediately, like the
 ``style.css`` and ``script.js`` files in the above example. The
 ``sendEarlyHints()`` method also returns the ``Response`` object, which you
 must use to create the full response sent from the controller action.

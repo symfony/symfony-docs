@@ -33,13 +33,13 @@ workflow below describes the process to fill in a job application.
 .. image:: /_images/components/workflow/job_application.png
     :alt: A complex state diagram showing many places with multiple possible transitions between them.
 
-When you fill in a job application in this example there are 4 to 7 steps
+When you fill in a job application in this example, there are 4 to 7 steps
 depending on the job you are applying for. Some jobs require personality
 tests, logic tests and/or formal requirements to be answered by the user. Some
 jobs don't. The ``GuardEvent`` is used to decide what next steps are allowed for
 a specific application.
 
-By defining a workflow like this, there is an overview of how the process looks. The process logic is not mixed with the controllers, models or view. The
+By defining a workflow like this, you get an overview of how the process looks. The process logic is not mixed with the controllers, models or view. The
 order of the steps can be changed by changing the configuration only.
 
 State Machines
@@ -52,14 +52,14 @@ your model. The most important differences between them are:
   machines can't;
 * In order to apply a transition, workflows require that the object is in all
   the previous places of the transition, whereas state machines only require
-  that the object is at least in one of those places.
+  that the object is in at least one of those places.
 
 Example
 ~~~~~~~
 
-A pull request starts in an initial "start" state, then a state "test", e.g. for running
-tests on continuous integration stack. When this is finished, the pull request is in the "review"
-state, where contributors can require changes, reject or accept the
+A pull request starts in an initial "start" state, then moves to a "test" state, e.g. for
+running tests on a continuous integration stack. When this is finished, the pull request is in the
+"review" state, where contributors can request changes, reject or accept the
 pull request. At any time, you can also "update" the pull request, which
 will result in another continuous integration run.
 
@@ -266,7 +266,7 @@ Symfony automatically creates a service for each workflow (:class:`Symfony\\Comp
 or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you
 have defined in your configuration. You can use the workflow inside a class by using
 :doc:`service autowiring </service_container/autowiring>` and using
-``camelCased workflow name + Workflow`` as parameter name. If it is a state
+``camelCased workflow name + Workflow`` as the parameter name. If it is a state
 machine type, use ``camelCased workflow name + StateMachine``::
 
     // ...

@@ -78,7 +78,7 @@ alpha3
 
 **type**: ``boolean`` **default**: ``false``
 
-If this option is ``true``, the constraint checks that the value is a
+If this option is ``true``, the constraint checks that the value is an
 `ISO 3166-1 alpha-3`_ three-letter code (e.g. France = ``FRA``) instead
 of the default `ISO 3166-1 alpha-2`_ two-letter code (e.g. France = ``FR``).
 

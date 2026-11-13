@@ -1,8 +1,8 @@
 IsNull
 ======
 
-Validates that a value is exactly equal to ``null``. To force that a property
-is blank (blank string or ``null``), see the  :doc:`/reference/constraints/Blank`
+Validates that a value is exactly equal to ``null``. To validate that a property
+is blank (blank string or ``null``), see the :doc:`/reference/constraints/Blank`
 constraint. To ensure that a property is not null, see :doc:`/reference/constraints/NotNull`.
 
 Also see :doc:`NotNull </reference/constraints/NotNull>`.

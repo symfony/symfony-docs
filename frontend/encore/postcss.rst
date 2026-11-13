@@ -50,7 +50,7 @@ Next, create a ``postcss.config.js`` file at the root of your project:
     CommonJS (``module.exports = { ... }``). If you prefer to keep CommonJS syntax,
     rename the file to ``postcss.config.cjs``.
 
-That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
+That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc. files.
 You can also pass options to the `postcss-loader`_ by passing a callback:
 
 .. code-block:: diff
@@ -74,7 +74,7 @@ Adding browserslist to ``package.json``
 ---------------------------------------
 
 The ``autoprefixer`` (and many other tools) need to know what browsers you want to
-support. The best-practice is to configure this directly in your ``package.json``
+support. The best practice is to configure this directly in your ``package.json``
 (so that all the tools can read this):
 
 .. code-block:: diff

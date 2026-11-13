@@ -69,8 +69,8 @@ framework more configurable, but at the same time, it introduces a lot of
 issues:
 
 * We are not able to register custom listeners anymore as the dispatcher is
-  not available outside the Framework class (a workaround could be the
-  adding of a ``Framework::getEventDispatcher()`` method);
+  not available outside the Framework class (a workaround could be
+  adding a ``Framework::getEventDispatcher()`` method);
 
 * We have lost the flexibility we had before; you cannot change the
   implementation of the ``UrlMatcher`` or of the ``ControllerResolver``
@@ -84,11 +84,11 @@ issues:
 
 The previous code did not exhibit the same issues because we used dependency
 injection; all dependencies of our objects were injected into their
-constructors (for instance, the event dispatchers were injected into the
+constructors (for instance, the event dispatcher was injected into the
 framework so that we had total control of its creation and configuration).
 
 Does it mean that we have to make a choice between flexibility, customization,
-ease of testing and not to copy and paste the same code into each application
+ease of testing and not copying and pasting the same code into each application
 front controller? As you might expect, there is a solution. We can solve all
 these issues and some more by using the Symfony dependency injection
 container:
@@ -145,7 +145,7 @@ Create a new file to host the dependency injection container configuration::
 The goal of this file is to configure your objects and their dependencies.
 Nothing is instantiated during this configuration step. This is purely a
 static description of the objects you need to manipulate and how to create
-them. Objects will be created on-demand when you access them from the
+them. Objects will be created on demand when you access them from the
 container or when the container needs them to create other objects.
 
 For instance, to create the router listener, we tell Symfony that its class
@@ -227,7 +227,7 @@ object::
     $container->setParameter('charset', 'UTF-8');
 
 Instead of relying on the convention that the routes are defined by the
-``$routes`` variables, let's use a reference::
+``$routes`` variable, let's use a reference::
 
     // ...
     $container->register('matcher', Routing\Matcher\UrlMatcher::class)
@@ -250,7 +250,7 @@ mine.
 
 This is (already) the last chapter of this book on creating a framework on top
 of the Symfony components. I'm aware that many topics have not been covered
-in great details, but hopefully it gives you enough information to get started
+in great detail, but hopefully it gives you enough information to get started
 on your own and to better understand how the Symfony framework works
 internally.
 

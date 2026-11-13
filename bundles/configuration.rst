@@ -10,7 +10,7 @@ settings.
 
 For example, the following configuration tells the FrameworkBundle to enable the
 form integration, which involves the definition of quite a few services as well
-as integration of other related components:
+as the integration of other related components:
 
 .. configuration-block::
 
@@ -193,7 +193,7 @@ can add some configuration that looks like this:
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,
 options. As the bundle developer, you then parse through that configuration and
-load correct services and parameters inside an "Extension" class.
+load the correct services and parameters inside an "Extension" class.
 
 .. note::
 
@@ -272,7 +272,7 @@ Here's how it works. Create a ``Configuration`` class in the
 ``DependencyInjection`` directory and build a tree that defines the structure
 of your bundle's configuration.
 
-The ``Configuration`` class to handle the sample configuration looks like::
+The ``Configuration`` class to handle the sample configuration looks like this::
 
     // src/DependencyInjection/Configuration.php
     namespace Acme\SocialBundle\DependencyInjection;
@@ -416,7 +416,7 @@ In your extension, you can load this and dynamically set its arguments::
         public function load(array $configs, ContainerBuilder $container): void
         {
             $config = [];
-            // let resources override the previous set value
+            // let resources override the previously set value
             foreach ($configs as $subConfig) {
                 $config = array_merge($config, $subConfig);
             }
@@ -459,7 +459,7 @@ Make your Config Tree ready for XML
 
 The Config component provides some methods by default to allow it to correctly
 process XML configuration. See ":ref:`component-config-normalization`" of the
-component documentation. However, you can do some optional things as well, this
+component documentation. However, you can do some optional things as well, which
 will improve the experience of using XML configuration:
 
 Choosing an XML Namespace
@@ -500,18 +500,18 @@ Providing an XML Schema
 
 XML has a very useful feature called `XML schema`_. This allows you to
 describe all possible elements and attributes and their values in an XML Schema
-Definition (an XSD file). This XSD file is used by IDEs for auto completion and
+Definition (an XSD file). This XSD file is used by IDEs for autocompletion and
 it is used by the Config component to validate the elements.
 
 In order to use the schema, the XML configuration file must provide an
 ``xsi:schemaLocation`` attribute pointing to the XSD file for a certain XML
 namespace. This location always starts with the XML namespace. This XML
-namespace is then replaced with the XSD validation base path returned from
+namespace is then replaced with the XSD validation base path returned from the
 :method:`Extension::getXsdValidationBasePath() <Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface::getXsdValidationBasePath>`
 method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 
-By convention, the XSD file lives in ``config/schema/`` directory, but you
+By convention, the XSD file lives in the ``config/schema/`` directory, but you
 can place it anywhere you like. You should return this path as the base path::
 
     // src/DependencyInjection/AcmeHelloExtension.php

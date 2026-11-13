@@ -3,7 +3,7 @@ Negative
 
 Validates that a value is a negative number. Zero is neither positive nor
 negative, so you must use :doc:`/reference/constraints/NegativeOrZero` if you
-want to allow zero as value.
+want to allow zero as a value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -15,7 +15,7 @@ Basic Usage
 -----------
 
 The following constraint ensures that the ``withdraw`` (withdrawal) property of a bank account
-``TransferItem`` is a negative number (lesser than zero):
+``TransferItem`` is a negative number (less than zero):
 
 .. configuration-block::
 

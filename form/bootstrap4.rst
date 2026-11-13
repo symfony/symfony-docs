@@ -63,7 +63,7 @@ configuration:
             // ...
         };
 
-If you prefer to apply the Bootstrap styles on a form-to-form basis, include the
+If you prefer to apply the Bootstrap styles on a form-by-form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
 
 .. code-block:: html+twig
@@ -101,12 +101,12 @@ Checkboxes and Radios
 For a checkbox/radio field, calling ``form_label()`` doesn't render anything.
 Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 
-File inputs
+File Inputs
 -----------
 
 File inputs are rendered using the Bootstrap "custom-file" class, which hides
 the name of the selected file. To fix that, use the `bs-custom-file-input`_
-JavaScript plugin, as recommended by `Bootstrap Forms documentation`_.
+JavaScript plugin, as recommended by the `Bootstrap Forms documentation`_.
 
 Accessibility
 -------------
@@ -127,7 +127,7 @@ Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the la
 
 * For a `custom radio`_, use ``radio-custom``;
 * For a `custom checkbox`_, use ``checkbox-custom``;
-* For having a `switch instead of a checkbox`_, use ``switch-custom``.
+* To have a `switch instead of a checkbox`_, use ``switch-custom``.
 
 .. code-block:: twig
 
