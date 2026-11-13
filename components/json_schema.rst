@@ -113,6 +113,8 @@ property is described by the type of the parameter, its default value, its
 are required. The generator doesn't apply the constraints of the Validator
 component to parameters.
 
+PHPDoc parameter descriptions require ``phpstan/phpdoc-parser`` 2.x.
+
 Configuring the Schema
 ----------------------
 
@@ -157,10 +159,13 @@ The constructor accepts the following arguments, in this order:
     groups of the class.
 
 ``definitionName`` and ``definitionPrefix``
-    Customize the name of the definition of the root class. The prefix replaces
-    the short name of the class. The name replaces the suffix built from the
-    other options (groups, direction, etc.) and is separated from the prefix
-    by a hyphen; an empty name leaves only the prefix.
+    With the default definition policy, ``definitionPrefix`` replaces the short
+    class name used to prefix the root definition. ``definitionName`` replaces
+    the configuration suffix of every definition, including nested ones.
+    A custom suffix is separated from the class prefix by a hyphen; an empty
+    name leaves only the prefix for ordinary classes. Generic specializations
+    retain their argument suffix, giving ``Envelope-of.Customer-Custom`` with
+    a custom name or ``Envelope-of.Customer`` with an empty name.
 
 ``format``
     The serializer format, such as ``json``. It's unrelated to the dialect.
@@ -235,17 +240,328 @@ document, and the document gives access to all of them::
 
 A *definition policy* names the definitions. The default one,
 :class:`Symfony\\Component\\JsonSchema\\DefinitionPolicy\\ShortNameDefinitionPolicy`,
-uses the short name of the class followed by the groups, the direction and
-the other options that change its shape (e.g. ``Book-book.write_input`` for
-the ``book:write`` group and the input direction).
+uses the short name of the class, any generic arguments, the groups, the
+direction and the other options that change its shape (e.g.
+``Book-book.write_input`` for the ``book:write`` group and the input direction).
 
-Because the name depends on these options, the same class can have several
-definitions in a document. Use ``getDefinitionClasses()`` to find the class of
-a definition, for example to map a ``$ref`` back to its class::
+Because the name depends on the type arguments and these options, the same class
+can have several definitions in a document. Use ``getDefinitionClasses()`` to
+find the class of a definition, for example to map a ``$ref`` back to its
+class::
 
     // indexed by name and in the same order as getDefinitions():
     // ['Book-book.write' => Book::class, 'Author-book.write' => Author::class]
     $classes = $document->getDefinitionClasses();
+
+.. _json-schema-generic-classes:
+
+Generic Classes
+---------------
+
+.. note::
+
+    Generic specialization requires TypeInfo's ``Type::map()`` method, introduced
+    in Symfony 8.2. With older TypeInfo versions, generic objects use their raw
+    class definitions.
+
+To describe PHPDoc-typed properties with the default generator, install the
+optional PHPDoc packages:
+
+.. code-block:: terminal
+
+    $ composer require phpstan/phpdoc-parser phpdocumentor/type-resolver
+
+This applies both to ``SchemaGenerator::create()`` and to the generator service
+in Symfony applications. Without PHPDoc support, type arguments declared on
+properties are ignored and different specializations share the native class's
+definition.
+
+Use a generic DTO when several properties share the same structure but contain
+values of different types. For example, the following ``Inbox`` contains an
+``Envelope<string>`` and an ``Envelope<Customer>``::
+
+    use Symfony\Component\JsonSchema\SchemaGenerator;
+    use Symfony\Component\TypeInfo\Type;
+
+    /** @template T */
+    class Envelope
+    {
+        /** @var T */
+        public mixed $data;
+        public string $status;
+    }
+
+    class Customer
+    {
+        public string $name;
+    }
+
+    class Inbox
+    {
+        /** @var Envelope<string> */
+        public Envelope $message;
+
+        /** @var Envelope<Customer> */
+        public Envelope $customer;
+    }
+
+    $generator = SchemaGenerator::create();
+    $schema = $generator->generate(Type::object(Inbox::class));
+
+The generated definitions include a separate schema for each specialization::
+
+    $schema->getDefinitions();
+    // [
+    //     'Inbox' => ['type' => 'object', 'properties' => [
+    //         'message' => ['$ref' => '#/$defs/Envelope-of.string'],
+    //         'customer' => ['$ref' => '#/$defs/Envelope-of.Customer'],
+    //     ]],
+    //     'Envelope-of.string' => ['type' => 'object', 'properties' => [
+    //         'data' => ['type' => 'string'],
+    //         'status' => ['type' => 'string'],
+    //     ]],
+    //     'Envelope-of.Customer' => ['type' => 'object', 'properties' => [
+    //         'data' => ['$ref' => '#/$defs/Customer'],
+    //         'status' => ['type' => 'string'],
+    //     ]],
+    //     'Customer' => ['type' => 'object', 'properties' => [
+    //         'name' => ['type' => 'string'],
+    //     ]],
+    // ]
+
+You can also describe a generic root by passing its arguments explicitly::
+
+    $schema = $generator->generate(Type::generic(
+        Type::object(Envelope::class),
+        Type::object(Customer::class),
+    ));
+
+Without the optional PHPDoc packages, this explicit root keeps its
+``Envelope-of.Customer`` name, but its properties are not specialized:
+``data`` accepts any value.
+
+Arguments are substituted in nested generic classes, collections, nullable and
+union types, supported intersections, and array and object shapes. Without
+arguments, ``Envelope`` uses its template bounds: ``data`` accepts any value.
+An explicit ``Envelope<mixed>`` produces a separate ``Envelope-of.mixed``
+definition with the same property schemas.
+
+Template Declarations
+~~~~~~~~~~~~~~~~~~~~~
+
+Arguments follow the order of the class's template declarations. Missing
+arguments use the declared bounds. For example::
+
+    /**
+     * @template T
+     * @template U of int
+     */
+    class Pair
+    {
+        /** @var T */
+        public mixed $first;
+
+        /** @var U */
+        public mixed $second;
+    }
+
+``Pair<string>`` describes ``first`` as a string and ``second`` as an integer.
+``Pair<string, int>`` has the same property schemas, but the definition names
+are different: ``Pair-of.string`` and ``Pair-of.string.int``. Omitted arguments
+are not added to the name. Extra arguments affect names without assigning
+additional property types, because extensions can use them.
+
+Each class uses its own arguments. In ``Envelope<Pair<string, int>>``, the
+envelope's ``data`` references ``Pair-of.string.int``, whose ``first`` and
+``second`` properties use ``string`` and ``int`` respectively.
+
+Plain, covariant and contravariant template declarations are supported,
+including their PHPStan- and Psalm-prefixed forms. Repeated aliases of the same
+template name occupy one argument position. Supported phpdoc-parser 1.x and 2.x
+versions both work for generic properties.
+
+If you pass your own PropertyInfo extractor to ``new SchemaGenerator()`` or
+replace your application's PropertyInfo type extractors, they must return
+TypeInfo ``TemplateType`` values for properties typed with a template, as
+``PhpStanExtractor`` does. Keep ``phpstan/phpdoc-parser`` installed so JsonSchema
+can read the class's template declarations.
+
+Inherited Generic Properties
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+With the built-in PHPDoc extractor, TypeInfo resolves inherited types using
+``@extends`` and ``@implements`` declarations. It also applies ``@use`` mappings
+to trait properties, getters and setters before JsonSchema substitutes the
+class's arguments. A child can therefore use different template names from its
+parent::
+
+    use Symfony\Component\TypeInfo\Type;
+
+    /**
+     * @template T
+     * @template U
+     * @extends Envelope<U>
+     */
+    class ChildEnvelope extends Envelope
+    {
+        /** @var T */
+        public mixed $extra;
+    }
+
+    $schema = $generator->generate(Type::generic(
+        Type::object(ChildEnvelope::class),
+        Type::int(),
+        Type::object(Customer::class),
+    ));
+
+Here, ``data`` uses the ``Customer`` schema and ``extra`` uses the integer
+schema. Concrete parent arguments, such as ``@extends Envelope<string>``,
+remain concrete regardless of the child's template names.
+
+Without a matching ``@extends``, ``@implements`` or ``@use`` tag, templates
+from a parent class, interface or trait use the arguments of templates with
+the same names in the class being described. Unmatched templates keep their
+bounds.
+
+Collections and Pagination
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHPDoc types for classes implementing ``Traversable`` or ``ArrayAccess`` are
+extracted as collections. For example, a ``Page<Customer>`` property whose
+``Page`` implements ``IteratorAggregate`` is described as an array of
+``Customer``. Extra properties such as ``total`` are not included.
+
+To describe pagination as an object with ``items`` and ``total``, use a DTO
+without these interfaces::
+
+    /** @template T */
+    class Page
+    {
+        /** @var list<T> */
+        public array $items;
+        public int $total;
+    }
+
+A ``Page<Customer>`` property then references ``Page-of.Customer``, with an
+array of customers in ``items`` and an integer ``total``.
+
+The Serializer also normalizes ``Traversable`` values as collections. For a
+class that implements only ``ArrayAccess``, the default ``ObjectNormalizer``
+produces an object such as ``{"items": [...], "total": 1}``, while its generic
+PHPDoc type is described as an array. To match the schema to that output, use a
+DTO without these interfaces or replace the schema of the property that uses
+it with a property schema provider (see
+:ref:`json-schema-extending-generator`).
+
+Passing a pagination class as an explicit object type to ``generate()``
+bypasses PHPDoc collection handling; it does not change how the Serializer
+normalizes a ``Traversable`` value.
+
+Definition Names
+~~~~~~~~~~~~~~~~
+
+Built-in type and class arguments use readable labels, such as
+``Envelope-of.Customer`` and ``Pair-of.string.int``. Nested generics and lists
+extend these labels recursively when all their parts are readable:
+``Envelope<Envelope<Customer>>`` becomes ``Envelope-of.Envelope_Customer`` and
+``Envelope<list<Customer>>`` becomes ``Envelope-of.list_Customer``.
+
+Nullable types, non-list collections (such as ``array<Customer>`` and
+``Customer[]``), unions, intersections, shapes and generic arguments containing
+these types use a hash instead. For example,
+``Envelope<int|string>`` produces
+``Envelope-of.generic.95cee375039d6796``. Readable labels longer than 128 bytes
+also use a hash. The hash is derived from the argument types, so the same types
+produce the same argument hash between runs.
+
+The configuration suffix follows the arguments. Setting ``definitionName`` to
+``'Custom'`` gives ``Envelope-of.Customer-Custom`` and also names its nested
+definition ``Customer-Custom``. An empty ``definitionName`` keeps
+``Envelope-of.Customer``. Setting ``definitionPrefix`` to ``'Result'`` changes
+only the root prefix, giving ``Result-of.Customer-Custom`` with that suffix.
+
+When a class short name is already used by another class in the document,
+argument labels can include namespace segments, as in
+``Envelope-of.Billing.Customer``. If two specializations still receive the same
+definition name, the default policy appends a hash. Names can therefore depend
+on the order in which classes are described. Once a specialization has a name
+for a given configuration, later calls reuse that name in the same document.
+
+If generation fails, the document state is rolled back, but the default naming
+policy keeps the names it selected. A retry reuses those names; a later type may
+receive a suffix it would not receive in a fresh document. Use a new document
+when you need fresh naming history, or a custom definition policy when names
+must be independent of generation order (see
+:ref:`json-schema-extending-generator`).
+
+Configuration labels or custom names can still collide and prevent schema
+generation. For example, describing ``Customer`` with the groups ``book:write``
+and then ``book.write`` in the same document produces the name
+``Customer-book.write`` twice, so the second call fails. A custom policy must
+assign distinct names to distinct types and configurations.
+``SchemaDocument::getDefinitionClasses()`` maps each definition name to its
+base class; several definitions can map to the same class.
+
+When exporting definitions to another schema format, use
+``SchemaDocument::getDefinitionTypes()`` to keep their generic arguments. It
+returns each definition's ``ObjectType`` or ``GenericType``, indexed by name::
+
+    use Symfony\Component\JsonSchema\Configuration;
+    use Symfony\Component\JsonSchema\SchemaDocument;
+    use Symfony\Component\TypeInfo\Type\GenericType;
+
+    $document = new SchemaDocument();
+    $generator->generate(Type::object(Inbox::class), new Configuration(), $document);
+
+    foreach ($document->getDefinitionTypes() as $name => $type) {
+        if ($type instanceof GenericType) {
+            $class = $type->getWrappedType()->getClassName();
+            $arguments = $type->getVariableTypes();
+        } else {
+            $class = $type->getClassName();
+            $arguments = [];
+        }
+
+        // map $name to $class and $arguments in the target format
+    }
+
+Different groups or directions can produce several definitions for the same
+type. With the default naming policy, types with the same string representation
+share a definition for the same configuration. The getter keeps the type used
+to generate it first. For example, ``Type::enum(Status::class)`` and
+``Type::object(Status::class)`` arguments for ``Envelope`` share one definition
+when ``Status`` is an enum.
+
+Limitations
+~~~~~~~~~~~
+
+Generic arguments supplied for a discriminator base class are not propagated
+to its mapped subclasses.
+
+A template used in an intersection, such as ``T&Named``, cannot receive a union
+argument such as ``Foo|Bar``. Type arguments are not validated against their
+declared bounds or variance.
+
+Normal recursion works: a ``Node<T>`` with a ``Node<T>|null`` property references
+its own definition. For example, ``Node<string>`` uses one ``Node-of.string``
+definition. A generic type whose arguments still contain a ``TemplateType``
+uses the raw class, so using ``Node`` without arguments keeps its original
+``Node`` definition.
+
+A ``GrowingNode<T>`` with a ``GrowingNode<list<T>>|null`` property keeps creating
+larger specializations instead. JsonSchema uses the raw class definition when
+argument types exceed 64 nesting levels or the combined arguments expand
+to more than 1,024 type nodes. The limits count TypeInfo's type structure, so a
+single PHPDoc construct can add several nodes or nesting levels. Shared argument
+types count at every occurrence. Deep or large finite arguments can also reach
+these limits and use the raw class definition too. Previously generated
+specializations remain available. These limits apply to generic arguments,
+not to the number of properties or ordinary classes in a definition path.
+Xdebug may stop recursion earlier at its own frame limit.
+Extensions remain responsible for avoiding unbounded recursion when describing
+additional types.
+
+.. _json-schema-extending-generator:
 
 Extending the Generator
 -----------------------
@@ -257,7 +573,8 @@ another type in the same document:
 
 :class:`Symfony\\Component\\JsonSchema\\DefinitionPolicy\\DefinitionPolicyInterface`
     Names the definition of a class. The name identifies the definition, so
-    it must include everything that changes the shape of the definition.
+    it must include everything that changes its shape, including generic
+    arguments and configuration.
 
 :class:`Symfony\\Component\\JsonSchema\\ClassSchemaResolver\\ClassSchemaResolverInterface`
     Describes a class with an inline schema instead of a definition, for
@@ -265,7 +582,8 @@ another type in the same document:
     dates, UIDs, enums and a few other classes normalized to scalars.
 
 :class:`Symfony\\Component\\JsonSchema\\PropertySchemaProvider\\PropertySchemaProviderInterface`
-    Replaces the whole schema of a property.
+    Replaces the whole schema of a property, taking precedence over a schema
+    generated from its type.
 
 :class:`Symfony\\Component\\JsonSchema\\PropertySchemaEnricher\\PropertySchemaEnricherInterface`
     Refines the schema of a property, for example to add keywords or to
@@ -274,6 +592,62 @@ another type in the same document:
 :class:`Symfony\\Component\\JsonSchema\\DefinitionProcessor\\DefinitionProcessorInterface`
     Post-processes each object definition once its properties are built.
 
+Class-level hooks (naming policies, class resolvers and definition processors)
+receive an ``ObjectType`` or a ``GenericType`` wrapping an ``ObjectType``.
+``GenericType::getVariableTypes()`` returns its ordered arguments. Decorators
+must forward the complete type. When calling a definition policy, class
+resolver or definition processor yourself, pass ``Type::object($class)`` for
+an ordinary class and the complete ``GenericType`` for a specialization.
+
+For example, this processor adds a title containing the class and any generic
+arguments, even when no property uses a template::
+
+    // src/JsonSchema/TitleDefinitionProcessor.php
+    namespace Acme\JsonSchema;
+
+    use Symfony\Component\JsonSchema\Configuration;
+    use Symfony\Component\JsonSchema\DefinitionParent;
+    use Symfony\Component\JsonSchema\DefinitionProcessor\DefinitionProcessorInterface;
+    use Symfony\Component\JsonSchema\SchemaDocument;
+    use Symfony\Component\TypeInfo\Type\GenericType;
+    use Symfony\Component\TypeInfo\Type\ObjectType;
+
+    class TitleDefinitionProcessor implements DefinitionProcessorInterface
+    {
+        /**
+         * @param array<string, mixed> $definition
+         *
+         * @return array<string, mixed>
+         */
+        public function process(
+            array $definition,
+            ObjectType|GenericType $type,
+            Configuration $config,
+            SchemaDocument $document,
+            ?DefinitionParent $parent,
+        ): array {
+            $definition['title'] = (string) $type;
+
+            return $definition;
+        }
+    }
+
+An extension that needs only the base class can extract it from the type::
+
+    $objectType = $type instanceof GenericType ? $type->getWrappedType() : $type;
+    $class = $objectType->getClassName();
+
+Property schema providers identify a property by its class and property names,
+so a provider for ``Envelope::$data`` replaces that property's schema in every
+specialization. To adapt a property schema to its resolved type, use an
+enricher: ``PropertySchema::$type`` contains ``string`` in ``Envelope<string>``
+or the template type ``T`` when ``Envelope`` is used without arguments.
+
+Class resolvers and definition processors can describe a type argument in the
+same document by passing it to ``$document->describe()``.
+``DefinitionParent::$class`` contains the owning class name without its generic
+arguments.
+
 The class schema resolvers passed to ``create()`` run before the built-in one,
 and the property schema enrichers run after the built-in ones (Validator
 constraints and ``#[JsonSchemaConstraint]``). There are no built-in property
@@ -281,6 +655,7 @@ schema providers or definition processors::
 
     use Acme\JsonSchema\ExamplesPropertySchemaEnricher;
     use Acme\JsonSchema\MoneyClassSchemaResolver;
+    use Acme\JsonSchema\TitleDefinitionProcessor;
 
     $generator = SchemaGenerator::create(
         // the definition policy (null uses ShortNameDefinitionPolicy)
@@ -291,6 +666,8 @@ schema providers or definition processors::
         [],
         // the property schema enrichers
         [new ExamplesPropertySchemaEnricher()],
+        // the definition processors
+        [new TitleDefinitionProcessor()],
     );
 
 Using the Generator in Symfony Applications
