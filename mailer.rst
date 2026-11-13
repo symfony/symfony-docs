@@ -111,6 +111,7 @@ Service               Install with                                        Webhoo
 `Resend`_             ``composer require symfony/resend-mailer``          yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``        yes
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``        yes
+`Sendly`_             ``composer require symfony/sendly-mailer``
 `Sweego`_             ``composer require symfony/sweego-mailer``          yes
 `TurboSMTP`_          ``composer require symfony/turbo-smtp-mailer``      yes
 `Zoho CPaaS`_         ``composer require symfony/zoho-cpaas-mailer``
@@ -118,8 +119,8 @@ Service               Install with                                        Webhoo
 
 .. versionadded:: 8.2
 
-    The ``MailKite``, ``PufferPost``, ``TurboSMTP``, ``Cloudflare`` and
-    ``Zoho CPaaS`` integrations were introduced in Symfony 8.2.
+    The ``MailKite``, ``PufferPost``, ``TurboSMTP``, ``Cloudflare``,
+    ``Zoho CPaaS`` and ``Sendly`` integrations were introduced in Symfony 8.2.
     Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
 
 .. note::
@@ -260,6 +261,10 @@ party provider:
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``sendgrid+api://KEY@default``                                                      |
 +------------------------+-------------------------------------------------------------------------------------------+
+| `Sendly`_              | - SMTP n/a                                                                                |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``sendly+api://KEY@default``                                                        |
++------------------------+-------------------------------------------------------------------------------------------+
 | `Sweego`_              | - SMTP ``sweego+smtp://LOGIN:PASSWORD@HOST:PORT``                                         |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``sweego+api://API_KEY@default``                                                    |
@@ -368,6 +373,12 @@ party provider:
     ``pufferpost`` is an alias for ``pufferpost+api``. PufferPost has no SMTP
     relay, so the API transport is the only one. Templated sending goes through
     :class:`Symfony\\Component\\Mailer\\RemoteTemplateEmail`.
+
+.. note::
+
+    ``sendly`` is an alias for ``sendly+api``, the only transport available.
+    The ``From`` address must belong to a domain verified in your Sendly
+    project.
 
 .. note::
 
@@ -2557,6 +2568,7 @@ The following transports only support tags:
 * MailerSend
 * MailPace
 * Resend
+* Sendly
 
 .. versionadded:: 8.2
 
@@ -3098,6 +3110,7 @@ sent by the previous requests of the test.
 .. _`PGP/MIME`: https://datatracker.ietf.org/doc/html/rfc3156
 .. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
+.. _`Sendly`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendly/README.md
 .. _`MJML`: https://github.com/mjmlio/mjml
 .. _`RFC 5546`: https://www.ietf.org/rfc/rfc5546.txt
 .. _`RFC 6047`: https://www.ietf.org/rfc/rfc6047.txt
