@@ -1111,6 +1111,8 @@ You can also add a processor for a specific logging channel by using the
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
 
+.. _reference-dic-tags-property-info-warmup-class-provider:
+
 property_info.warmup_class_provider
 -----------------------------------
 
@@ -1252,6 +1254,20 @@ Run the following command to check the priorities of the default normalizers:
 .. code-block:: terminal
 
     $ php bin/console debug:container --tag serializer.normalizer
+
+serializer.warmup_class_provider
+--------------------------------
+
+**Purpose**: Add classes to the Serializer metadata cache warmer
+
+Tag an iterable service that yields fully qualified class names. This warms
+metadata for classes discovered outside Serializer mappings. The service has
+the same shape as the :ref:`PropertyInfo provider
+<reference-dic-tags-property-info-warmup-class-provider>`.
+
+.. versionadded:: 8.2
+
+    The ``serializer.warmup_class_provider`` tag was introduced in Symfony 8.2.
 
 .. _dic-tags-translation-loader:
 
@@ -1686,6 +1702,20 @@ Then, tag it with the ``validator.initializer`` tag (it has no options).
 
 For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
+
+validator.warmup_class_provider
+-------------------------------
+
+**Purpose**: Add classes to the Validator metadata cache warmer
+
+Tag an iterable service that yields fully qualified class names. This warms
+metadata for classes discovered outside Validator mappings. The service has
+the same shape as the :ref:`PropertyInfo provider
+<reference-dic-tags-property-info-warmup-class-provider>`.
+
+.. versionadded:: 8.2
+
+    The ``validator.warmup_class_provider`` tag was introduced in Symfony 8.2.
 
 .. _`FilesystemLoader`: https://github.com/twigphp/Twig/blob/3.x/src/Loader/FilesystemLoader.php
 .. _`Twig's documentation`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
