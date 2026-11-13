@@ -11,11 +11,11 @@ published through a *time-based model*:
   month. It only contains bug fixes, so you can safely upgrade your applications;
 * A new **Symfony minor version** (e.g. 7.1, 7.2, 7.3) comes out every *six months*:
   one in *May* and one in *November*. It contains bug fixes and new features,
-  can contain new deprecations but it doesn't include any breaking change,
+  can contain new deprecations but it doesn't include any breaking changes,
   so you can safely upgrade your applications;
 * A new **Symfony major version** (e.g. 6.0, 7.0, 8.0) comes out every *two years*
   in November of odd years (e.g. 2021, 2023, 2025). It can contain breaking changes,
-  so you may need to do some changes in your applications before upgrading.
+  so you may need to make some changes in your applications before upgrading.
 
 .. tip::
 
@@ -95,18 +95,18 @@ learn more about how deprecations are handled in Symfony.
 .. _major-version-development:
 
 This deprecation policy also requires a custom development process for major
-versions (7.0, 8.0, etc.) In those cases, Symfony develops at the same time
-two versions: the new major one (e.g. 7.0) and the latest version of the
+versions (7.0, 8.0, etc.). In those cases, Symfony develops two versions at the same
+time: the new major one (e.g. 7.0) and the latest version of the
 previous branch (e.g. 6.4).
 
 Both versions have the same new features, but they differ in the deprecated
-features. The oldest version (6.4 in this example) contains all the deprecated
+features. The older version (6.4 in this example) contains all the deprecated
 features whereas the new version (7.0 in this example) removes all of them.
 
 This allows you to upgrade your projects to the latest minor version (e.g. 6.4),
 see all the deprecation messages and fix them. Once you have fixed all those
 deprecations, you can upgrade to the new major version (e.g. 7.0) without
-effort, because it contains the same features (the only difference are the
+effort, because it contains the same features (the only differences are the
 deprecated features, which your project no longer uses).
 
 PHP Compatibility
@@ -122,12 +122,12 @@ including new major versions will be supported. In this way, the **maximum** sup
 version of PHP for a maintained Symfony release is the latest released
 one that is publicly available.
 
-For out-of-support releases of Symfony, the latest PHP version at time of EOL is the last
+For out-of-support releases of Symfony, the latest PHP version at the time of EOL is the last
 supported PHP version. Newer versions of PHP may or may not function.
 
 .. note::
 
-    By exception to the rule, bumping the minimum **minor** version of PHP is
+    As an exception to the rule, bumping the minimum **minor** version of PHP is
     possible for a **minor** Symfony version when this helps fix important
     issues.
 
@@ -150,14 +150,14 @@ This release process was adopted to give more *predictability* and
 * Give companies a strict and predictable timeline they can rely on to plan
   their own projects development.
 
-The six month period was chosen as two releases fit in a year. It also allows
+The six-month period was chosen as two releases fit in a year. It also allows
 for plenty of time to work on new features and it allows for non-ready
 features to be postponed to the next version without having to wait too long
 for the next cycle.
 
 The dual maintenance mode was adopted to make every Symfony user happy. Fast
 movers, who want to work with the latest and the greatest, use the standard
-version: a new version is published every six months, and there is a two months
+version: a new version is published every six months, and there is a two-month
 period to upgrade. Companies wanting more stability use the LTS versions: a new
 version is published every two years and there is a year to upgrade.
 

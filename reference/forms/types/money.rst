@@ -30,7 +30,7 @@ currency
 
 Specifies the currency that the money is being specified in. This determines
 the currency symbol that should be shown by the text box. Depending on
-the currency - the currency symbol may be shown before or after the input
+the currency, the currency symbol may be shown before or after the input
 text field.
 
 This can be any `3 letter ISO 4217 code`_. You can also set this to false
@@ -43,7 +43,7 @@ divisor
 
 If you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
-For example if you store prices as integers in order to avoid `rounding errors`_,
+For example, if you store prices as integers in order to avoid `rounding errors`_,
 you can transform values in cents automatically::
 
     use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -82,8 +82,8 @@ input
 
 By default, the money value is converted to a ``float`` PHP type. If you need the
 value to be converted into an integer (e.g. because some library needs money
-values stored in cents as integers) set this option to ``integer``.
-You can also set this option to ``string``, it can be useful if the underlying
+values stored in cents as integers), set this option to ``integer``.
+You can also set this option to ``string``, which can be useful if the underlying
 data is a string for precision reasons (for example, Doctrine uses strings for
 the decimal type).
 

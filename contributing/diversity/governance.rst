@@ -70,7 +70,7 @@ is at least 75% of active, appointed members of the guidance team - to abstain
 from voting means that vote will not be counted towards the quorum.
 For an actionable item to pass, approval from more than 50% of the voting
 guidance team members is required. Use or management of finances/donations
-require at least a two-thirds majority to pass.
+requires at least a two-thirds majority to pass.
 
 For transparency and ease-of-understanding, this means only the following
 combinations of votes will result in an actionable item passing:
@@ -107,7 +107,7 @@ The guidance team should act with integrity: adopting values which help achieve
 the initiative's purposes, even where difficult or unpopular decisions are
 required. Guidance team members should undertake their duties, aware of the
 importance of confidence and trust in the initiative from the wider community,
-and ultimately acknowledges shared responsibility for the reputation of the
+and ultimately acknowledge shared responsibility for the reputation of the
 Symfony project like the Core Team.
 
 Decision-making Effectiveness
@@ -132,7 +132,7 @@ Adaptability
 
 The initiative should establish processes that do not require any one person to
 hold specific positions while being adaptable to accommodate unforeseen needs of
-the community, especially as membership and involvement grows over time (changes
+the community, especially as membership and involvement grow over time (changes
 to guidance team member appointment will have to be approved by the current
 system, which is Fabien Potencier).
 

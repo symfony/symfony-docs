@@ -19,13 +19,13 @@ Code of Conduct
 `Ashe Dryden - Codes of Conduct 101 + FAQ <https://www.ashedryden.com/blog/codes-of-conduct-101-faq>`_
 `Phil Sturgeon - Codes of Conduct: Maybe They're Not So Bad? <https://philsturgeon.uk/2016/09/15/codes-of-conduct-maybe-theyre-not-so-bad>`_
 
-Inclusive language
+Inclusive Language
 ------------------
 
 `Jenée Desmond-Harris - Why I'm finally convinced it's time to stop saying "you guys" <https://www.vox.com/2015/6/11/8761227/you-guys-sexism-language>`_
 `inclusive language presentations <https://github.com/hcorona/diversity-inclusion/blob/master/inclusive-language-presentations.md>`_
 
-Other talks and Blog Posts
+Other Talks and Blog Posts
 --------------------------
 
 `Lena Reinhard – A Talk About Nothing <https://www.youtube.com/watch?v=D3e3V66TH2Y>`_

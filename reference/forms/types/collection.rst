@@ -2,7 +2,7 @@ CollectionType Field
 ====================
 
 This field type is used to render a "collection" of some field or form.
-In the easiest sense, it could be an array of ``TextType`` fields that populate
+In the simplest case, it could be an array of ``TextType`` fields that populate
 an ``emails`` array. In more complex examples, you can embed entire
 forms, which is useful when creating forms that expose one-to-many
 relationships (e.g. a product from which you can manage many related product
@@ -90,8 +90,8 @@ allow_add
 **type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, then if unrecognized items are submitted to the collection,
-they will be added as new items. The ending array will contain the existing
-items as well as the new item that was in the submitted data. See the above
+they will be added as new items. The final array will contain the existing
+items as well as the new items that were in the submitted data. See the above
 example for more details.
 
 The `prototype`_ option can be used to help render a prototype item that
@@ -135,8 +135,8 @@ delete_empty
 **type**: ``Boolean`` or ``callable`` **default**: ``false``
 
 If you want to explicitly remove entirely empty collection entries from your
-form you have to set this option to ``true``. However, existing collection entries
-will only be deleted if you have the allow_delete_ option enabled. Otherwise
+form, you have to set this option to ``true``. However, existing collection entries
+will only be deleted if you have the allow_delete_ option enabled. Otherwise,
 the empty values will be kept.
 
 .. warning::
@@ -163,7 +163,7 @@ the value is removed from the collection. For example::
         },
     ]);
 
-Using a callable is particularly useful in case of compound form types, which
+Using a callable is particularly useful in the case of compound form types, which
 may define complex conditions for considering them empty.
 
 entry_options
@@ -302,7 +302,7 @@ prototype_name
 
 **type**: ``string`` **default**: ``__name__``
 
-If you have several collections in your form, or worse, nested collections
+If you have several collections in your form, or worse, nested collections,
 you may want to change the placeholder so that unrelated placeholders are
 not replaced with the same value.
 

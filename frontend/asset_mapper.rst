@@ -247,7 +247,7 @@ The ``importmap()`` function also outputs a set of "preloads":
     <link rel="modulepreload" href="/assets/app-4e986c1a.js">
     <link rel="modulepreload" href="/assets/duck-1b7a64b3.js">
 
-This is a performance optimization and you can learn more about below
+This is a performance optimization and you can learn more about it below
 in :ref:`Performance: Add Preloading <performance-preloading>`.
 
 Browser Support
@@ -307,7 +307,7 @@ this can be done by importing its full URL, like from a CDN:
     import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
 
 But yikes! Needing to include that URL is a pain! Instead, you can add this package
-to our "importmap" via the ``importmap:require`` command. This command can be used
+to your "importmap" via the ``importmap:require`` command. This command can be used
 to add any `npm package`_:
 
 .. code-block:: terminal
@@ -567,7 +567,7 @@ To include it on the page, import it from a JavaScript file:
     file. In those cases, when you ``importmap:require bootstrap``, the
     CSS file is also added to ``importmap.php`` for convenience. If some package
     doesn't advertise its CSS file in the ``style`` property of the
-    `package.json configuration file`_ try to contact the package maintainer to
+    `package.json configuration file`_, try to contact the package maintainer to
     ask them to add that.
 
 Paths Inside of CSS Files
@@ -659,7 +659,7 @@ You can import and use this data in your JavaScript:
 
     displayUsers();
 
-How it Works? When you import a JSON file, AssetMapper detects the import during
+How does it work? When you import a JSON file, AssetMapper detects the import during
 asset processing, creates a JavaScript module that exports a Promise resolving
 to the JSON content, and adds it to the importmap. The imported JSON file is
 versioned like any other asset, so changes to the JSON content will produce a
@@ -756,7 +756,7 @@ To use the `Tailwind`_ CSS framework with the AssetMapper component, check out
 Using Sass
 ~~~~~~~~~~
 
-To use Sass with AssetMapper component, check out `symfonycasts/sass-bundle`_.
+To use Sass with the AssetMapper component, check out `symfonycasts/sass-bundle`_.
 
 .. _asset-mapper-ts:
 
@@ -786,7 +786,7 @@ component.
 Vue files *can* be written in native JavaScript, and those *will* work with
 the AssetMapper component. But you cannot write single-file components (i.e. ``.vue``
 files), as those must be used in a build system. See the
-`UX Vue.js Documentation`_ for more details about using with the AssetMapper
+`UX Vue.js Documentation`_ for more details about using it with the AssetMapper
 component.
 
 Minification
@@ -1055,7 +1055,7 @@ slowest) compression ratios beforehand and provide those compressed assets to th
 server, which then returns them to the client without wasting CPU resources on
 compression.
 
-AssetMapper supports  `Brotli`_, `Zstandard`_ and  `gzip`_ compression formats.
+AssetMapper supports `Brotli`_, `Zstandard`_ and `gzip`_ compression formats.
 Before using any of them, the machine that pre-compresses assets must have
 installed the following PHP extensions or CLI commands:
 
@@ -1205,7 +1205,7 @@ directly in a Twig template:
 
         <img src="{{ asset('images/duck.png') }}">
 
-Then the path that you pass ``asset()`` should be the "logical path" to the
+Then the path that you pass to ``asset()`` should be the "logical path" to the
 file. Use the ``debug:asset-map`` command to see all valid logical paths
 in your app.
 
@@ -1281,7 +1281,7 @@ connect to the ``jsDelivr`` CDN:
                 # if you use CURL, add extra options:
                 extra:
                     curl:
-                        # 61 is value of constant CURLOPT_HTTPPROXYTUNNEL
+                        # 61 is the value of the CURLOPT_HTTPPROXYTUNNEL constant
                         '61': true
 
 When you install a UX package with Composer, Symfony Flex runs the
@@ -1311,13 +1311,13 @@ This is done via regex and works very well, though it isn't perfect. If you
 comment-out an import, it will still be found and added to your importmap. That
 doesn't harm anything, but could be surprising.
 
-If the imported path cannot be found, you'll see warning log when that asset
+If the imported path cannot be found, you'll see a warning log when that asset
 is being built, which you can ignore.
 
 Configuration Reference
 -----------------------
 
-You can see every available configuration options and some info by running:
+You can see every available configuration option and some info by running:
 
 .. code-block:: terminal
 

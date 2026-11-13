@@ -26,8 +26,8 @@ Usage
 This component gives you a :class:`Symfony\\Component\\TypeInfo\\Type` object that
 represents the PHP type of anything you built or asked to resolve.
 
-There are two ways to use this component. First one is to create a type manually thanks
-to the :class:`Symfony\\Component\\TypeInfo\\Type` static methods as follows::
+There are two ways to use this component. The first one is to create a type manually using
+the :class:`Symfony\\Component\\TypeInfo\\Type` static methods as follows::
 
     use Symfony\Component\TypeInfo\Type;
 
@@ -73,7 +73,7 @@ that need a simple way to describe a class or anything with a type::
     $typeResolver->resolve('array{id: int, name?: string}'); // returns an array shape type instance where 'id' is required and 'name' is optional
 
 
-    // Types can be instantiated thanks to static factories
+    // Types can be instantiated using static factories
     $type = Type::list(Type::nullable(Type::bool()));
 
     // Type instances have several helper methods
@@ -86,7 +86,7 @@ that need a simple way to describe a class or anything with a type::
     // the following code will return true
     $isValueNullable = $type->getCollectionValueType()->isNullable();
 
-Each of these calls will return you a ``Type`` instance that corresponds to the
+Each of these calls will return a ``Type`` instance that corresponds to the
 static method used. You can also resolve types from a string (as shown in the
 ``bool`` parameter of the previous example).
 

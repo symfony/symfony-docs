@@ -25,7 +25,7 @@ The Request-Response Lifecycle
     This article explains how to use the HttpKernel features as an independent
     component in any PHP application. In Symfony applications everything is
     already configured and ready to use. Read the :doc:`/controller` and
-    :doc:`/event_dispatcher` articles to learn about how to use it to create
+    :doc:`/event_dispatcher` articles to learn how to use it to create
     controllers and define events in Symfony applications.
 
 Every HTTP web interaction begins with a request and ends with a response.
@@ -41,7 +41,7 @@ This is a simplified overview of the request-response lifecycle in Symfony appli
 #. The **browser** displays the **resource** to the **user**.
 
 Typically, some sort of framework or system is built to handle all the repetitive
-tasks (e.g. routing, security, etc) so that a developer can build each *page* of
+tasks (e.g. routing, security, etc.) so that a developer can build each *page* of
 the application. Exactly *how* these systems are built varies greatly. The HttpKernel
 component provides an interface that formalizes the process of starting with a
 request and creating the appropriate response. The component is meant to be the
@@ -85,7 +85,7 @@ HttpKernel: Driven by Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``HttpKernel::handle()`` method works internally by dispatching events.
-This makes the method both flexible, but also a bit abstract, since all the
+This makes the method both flexible and a bit abstract, since all the
 "work" of a framework/application built with HttpKernel is actually done
 in event listeners.
 
@@ -427,7 +427,7 @@ to create a ``Response``.
 This can be useful if you want to use a "view" layer: instead of returning
 a ``Response`` from the controller, you return data that represents the page.
 A listener to this event could then use this data to create a ``Response`` that
-is in the correct format (e.g HTML, JSON, etc).
+is in the correct format (e.g. HTML, JSON, etc.).
 
 At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
@@ -450,7 +450,7 @@ return a ``Response``.
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
     capable of using a single controller to return many different content-type
-    responses (e.g. HTML, JSON, XML, etc).
+    responses (e.g. HTML, JSON, XML, etc.).
 
 .. _component-http-kernel-kernel-response:
 
@@ -576,13 +576,13 @@ For example, to generate a 404 page, you might throw a special type of exception
 and then add a listener on this event that looks for this exception and
 creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`,
-which if you choose to use, will do this and more by default (see the sidebar
+which, if you choose to use it, will do this and more by default (see the sidebar
 below for more details).
 
 The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` exposes the
 :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::isKernelTerminating`
-method, which you can use to determine if the kernel is currently terminating
-at the moment the exception was thrown.
+method, which you can use to determine if the kernel was terminating
+when the exception was thrown.
 
 .. note::
 
@@ -596,7 +596,7 @@ at the moment the exception was thrown.
 
     **ErrorListener in the HttpKernel Component**
 
-    The first comes core to the HttpKernel component
+    The first is built into the HttpKernel component
     and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`.
     The listener has several goals:
 
@@ -663,7 +663,7 @@ The name of each of the "kernel" events is defined as a constant on the
 :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Additionally, each
 event listener is passed a single argument, which is some subclass of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`.
 This object contains information about the current state of the system and
-each event has their own event object:
+each event has its own event object:
 
 .. _component-http-kernel-event-table:
 
@@ -803,7 +803,7 @@ attribute instances are created only when a matching listener exists.
 
 .. _http-kernel-working-example:
 
-A full Working Example
+A Full Working Example
 ----------------------
 
 When using the HttpKernel component, you're free to attach any listeners
@@ -862,7 +862,7 @@ In addition to the "main" request that's sent into ``HttpKernel::handle()``,
 you can also send a so-called "sub request". A sub request looks and acts like
 any other request, but typically serves to render just one small portion of
 a page instead of a full page. You'll most commonly make sub-requests from
-your controller (or perhaps from inside a template, that's being rendered by
+your controller (or perhaps from inside a template that's being rendered by
 your controller).
 
 .. raw:: html
@@ -923,9 +923,9 @@ Locating Resources
 ------------------
 
 The HttpKernel component is responsible for the bundle mechanism used in Symfony
-applications. One of the key features of the bundles is that you can use logic
+applications. One of the key features of the bundles is that you can use logical
 paths instead of physical paths to refer to any of their resources (config files,
-templates, controllers, translation files, etc.)
+templates, controllers, translation files, etc.).
 
 This allows you to import resources even if you don't know where in the filesystem a
 bundle will be installed. For example, the ``services.xml`` file stored in the

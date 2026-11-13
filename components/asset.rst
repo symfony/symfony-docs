@@ -84,7 +84,7 @@ With a package, you can:
 A) :ref:`version the assets <component-assets-versioning>`;
 B) set a :ref:`common base path <component-assets-path-package>` (e.g. ``/css``)
    for the assets;
-C) :ref:`configure a CDN <component-assets-cdn>` for the assets
+C) :ref:`configure a CDN <component-assets-cdn>` for the assets.
 
 .. _component-assets-versioning:
 
@@ -171,7 +171,7 @@ listed in the manifest::
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
 
-    // The value of $strictMode can be specific per environment "true" for debugging and "false" for stability.
+    // The value of $strictMode can be specific per environment: "true" for debugging and "false" for stability.
     $strictMode = true;
     // assumes the JSON file above is called "rev-manifest.json"
     $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/rev-manifest.json', null, $strictMode));
@@ -263,7 +263,7 @@ class can take into account the context of the current request::
     echo $pathPackage->getUrl('logo.png');
     // result: /somewhere/static/images/logo.png?v1
 
-    // Both "base path" and "base url" are ignored when using absolute path for asset
+    // Both "base path" and "base url" are ignored when using absolute paths for assets
     echo $pathPackage->getUrl('/logo.png');
     // result: /logo.png?v1
 
@@ -307,7 +307,7 @@ You can also pass a schema-agnostic URL::
     // result: //static.example.com/images/logo.png?v1
 
 This is useful because assets will automatically be requested via HTTPS if
-a visitor is viewing your site in https. If you want to use this, make sure
+a visitor is viewing your site over HTTPS. If you want to use this, make sure
 that your CDN host supports HTTPS.
 
 In case you serve assets from more than one domain to improve application
@@ -328,17 +328,17 @@ constructor::
     echo $urlPackage->getUrl('/icon.png');
     // result: https://static2.example.com/images/icon.png?v1
 
-For each asset, one of the URLs will be randomly used. But, the selection
+For each asset, one of the URLs will be randomly used. However, the selection
 is deterministic, meaning that each asset will always be served by the same
-domain. This behavior simplifies the management of HTTP cache.
+domain. This behavior simplifies the management of the HTTP cache.
 
 Request Context Aware Assets
 ............................
 
 Similarly to application-relative assets, absolute assets can also take into
 account the context of the current request. In this case, only the request
-scheme is considered, in order to select the appropriate base URL (HTTPs or
-protocol-relative URLs for HTTPs requests, any base URL for HTTP requests)::
+scheme is considered, in order to select the appropriate base URL (HTTPS or
+protocol-relative URLs for HTTPS requests, any base URL for HTTP requests)::
 
     use Symfony\Component\Asset\Context\RequestStackContext;
     use Symfony\Component\Asset\UrlPackage;
@@ -360,7 +360,7 @@ Named Packages
 Applications that manage lots of different assets may need to group them in
 packages with the same versioning strategy and base path. The Asset component
 includes a :class:`Symfony\\Component\\Asset\\Packages` class to simplify
-management of several packages.
+the management of several packages.
 
 In the following example, all packages use the same versioning strategy, but
 they all have different base paths::
@@ -400,8 +400,8 @@ document inside a template::
 Local Files and Other Protocols
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to HTTP this component supports other protocols (such as ``file://``
-and ``ftp://``). This allows for example to serve local files in order to
+In addition to HTTP, this component supports other protocols (such as ``file://``
+and ``ftp://``). For example, this allows you to serve local files to
 improve performance::
 
     use Symfony\Component\Asset\UrlPackage;

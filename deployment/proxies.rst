@@ -2,7 +2,7 @@ How to Configure Symfony to Work behind a Load Balancer or a Reverse Proxy
 ==========================================================================
 
 When you deploy your application, you may be behind a load balancer (e.g.
-an AWS Elastic Load Balancing) or a reverse proxy (e.g. Varnish for
+AWS Elastic Load Balancing) or a reverse proxy (e.g. Varnish for
 :doc:`caching </http_cache>`).
 
 For the most part, this doesn't cause any problems with Symfony. But, when
@@ -10,7 +10,7 @@ a request passes through a proxy, certain request information is sent using
 either the standard ``Forwarded`` header or ``X-Forwarded-*`` headers. For example,
 instead of reading the ``REMOTE_ADDR`` header (which will now be the IP address of
 your reverse proxy), the user's true IP will be stored in a standard ``Forwarded: for="..."``
-header or a ``X-Forwarded-For`` header.
+header or an ``X-Forwarded-For`` header.
 
 If you don't configure Symfony to look for these headers, you'll get incorrect
 information about the client's IP address, whether or not the client is connecting
@@ -104,7 +104,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
    other than your load balancers. For AWS, this can be done with `security groups`_.
 
 #. Once you've guaranteed that traffic will only come from your trusted reverse
-   proxies, configure Symfony to *always* trust incoming request:
+   proxies, configure Symfony to *always* trust incoming requests:
 
    .. code-block:: yaml
 
@@ -140,12 +140,12 @@ subpath/subfolder of the reverse proxy.
 To fix this, you need to pass the subpath/subfolder route prefix of the reverse
 proxy to Symfony by setting the ``X-Forwarded-Prefix`` header. The header can
 normally be configured in your reverse proxy configuration. Configure
-``X-Forwarded-Prefix`` as trusted header to be able to use this feature.
+``X-Forwarded-Prefix`` as a trusted header to be able to use this feature.
 
 The ``X-Forwarded-Prefix`` is used by Symfony to prefix the base URL of request
 objects, which is used to generate absolute paths and URLs in Symfony applications.
-Without the header, the base URL would be only determined based on the configuration
-of the web server running Symfony, which leads to incorrect paths/URLs, when the
+Without the header, the base URL would only be determined based on the configuration
+of the web server running Symfony, which leads to incorrect paths/URLs when the
 application is served under a subpath/subfolder by a reverse proxy.
 
 For example if your Symfony application is directly served under a URL like
@@ -182,10 +182,10 @@ Overriding Configuration Behind Hidden SSL Termination
 
 Some cloud setups (like running a Docker container with the "Web App for Containers"
 in `Microsoft Azure`_) do SSL termination and contact your web server over HTTP, but
-do not change the remote address nor set the ``X-Forwarded-*`` headers. This means
+do not change the remote address or set the ``X-Forwarded-*`` headers. This means
 the trusted proxy feature of Symfony can't help you.
 
-Once you made sure your server is only reachable through the cloud proxy over HTTPS
+Once you have made sure your server is only reachable through the cloud proxy over HTTPS
 and not through HTTP, you can override the information your web server sends to PHP.
 For Nginx, this could look like this:
 

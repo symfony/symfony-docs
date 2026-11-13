@@ -296,7 +296,7 @@ config.
     *exactly* like an array, but has some added flexibility. Just imagine that
     it is an ``array`` and you'll be in good shape.
 
-Your database is set up! Now, run the migrations like normal:
+Your database is set up! Now, run the migrations as usual:
 
 .. code-block:: terminal
 
@@ -350,7 +350,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
 
 When you go to ``/product``, a single row is added to both the ``category`` and
 ``product`` tables. The ``product.category_id`` column for the new product is set
-to whatever the ``id`` is of the new category. Doctrine manages the persistence of this
+to the ``id`` of the new category. Doctrine manages the persistence of this
 relationship for you:
 
 .. raw:: html
@@ -591,9 +591,9 @@ on that ``Product`` will be set to ``null`` in the database.
 .. warning::
 
     Please be aware that the inverse side could be associated with a large number of records.
-    I.e. there could be a large number of products with the same category.
+    For example, there could be a large number of products with the same category.
     In this case ``$this->products->contains($product)`` could lead to unwanted database
-    requests and very high memory consumption with the risk of hard to debug "Out of memory" errors.
+    requests and very high memory consumption with the risk of hard-to-debug "Out of memory" errors.
 
     So make sure you actually need an inverse side, and check whether the generated code could cause such issues.
 

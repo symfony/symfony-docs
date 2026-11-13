@@ -8,7 +8,7 @@ To do so, it relies on the **JsonStreamer** component, which is designed for
 high efficiency and can process large JSON data incrementally without needing
 to load the entire content into memory.
 
-This component is ideal for handling APIs or interacting with third-party APIs.
+This component is ideal for building APIs or interacting with third-party APIs.
 It transforms incoming JSON request payloads into PHP objects that your
 application can work with. Similarly, it converts processed PHP objects into a
 JSON stream for outgoing responses.
@@ -269,7 +269,7 @@ In the ``pickTheTenthCat`` method, the JSON data is read as a stream using
 incrementally rather than being fully loaded into memory.
 
 To optimize memory usage, JsonStreamer creates `ghost objects`_ instead of
-fully instantiating them. These lightweight placeholders delay object creation
+fully instantiated objects. These lightweight placeholders delay object creation
 until the data is actually needed.
 
 * Advantage: Efficient memory usage, ideal for very large JSON files.
@@ -574,7 +574,7 @@ Then specify it in the attribute::
         }
     }
 
-This will extract first and last names from a full name in the input JSON::
+This will extract the first and last names from a full name in the input JSON::
 
     use App\Dto\Duck;
     use Symfony\Component\TypeInfo\Type;
@@ -594,8 +594,8 @@ This will extract first and last names from a full name in the input JSON::
 
 .. _json-streamer-transform-with-services:
 
-Transforming Value Using Services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Transforming Values Using Services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When callables are not enough, you can use a service implementing the
 :class:`Symfony\\Component\\JsonStreamer\\Transformer\\PropertyValueTransformerInterface`::

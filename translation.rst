@@ -5,7 +5,7 @@ The term "internationalization" (often abbreviated `i18n`_) refers to the
 process of abstracting strings and other locale-specific pieces out of your
 application into a layer where they can be translated and converted based
 on the user's locale (i.e. language and country). For text, this means
-wrapping each with a function capable of translating the text (or "message")
+wrapping each string with a function capable of translating the text (or "message")
 into the language of the user::
 
     // text will *always* print out in English
@@ -244,7 +244,7 @@ The Translation Process
 To actually translate the message, Symfony uses the following process when
 using the ``trans()`` method:
 
-#. The ``locale`` of the current user, which is stored on the request is
+#. The ``locale`` of the current user, which is stored on the request, is
    determined; this is typically set via a ``_locale`` :ref:`attribute on
    your routes <translation-locale-url>`;
 
@@ -328,7 +328,7 @@ placeholders are not enough. For example, you might need to adjust a message:
 * based on gender: *"He accepted the invitation"* vs *"She accepted the invitation"*
   vs *"They accepted the invitation"*
 * based on the user's locale: e.g. different date formats, such as
-  *"Published on January 25, 2026"* (English) vs *"Publicado el 25 de Enero de 2026"* (Spanish)
+  *"Published on January 25, 2026"* (English) vs *"Publicado el 25 de enero de 2026"* (Spanish)
 
 Symfony handles all these cases through the :doc:`ICU MessageFormat </reference/formats/message_format>`
 syntax, using PHP's :phpclass:`MessageFormatter` class. ICU placeholders use ``{name}``
@@ -677,7 +677,7 @@ The ``translation:extract`` command looks for missing translations in:
   :ref:`translatable objects <translatable-objects>` using the constructor or
   the ``t()`` method or calls the ``trans()`` method;
 * Any PHP file/class stored in the ``src/`` directory that uses
-  :ref:`Constraints Attributes <validation-constraints>`  with ``*message`` named argument(s).
+  :ref:`Constraints Attributes <validation-constraints>` with ``*message`` named argument(s).
 
 .. tip::
 
@@ -734,10 +734,10 @@ must be named according to the following path: ``domain.locale.loader``:
 
 * **domain**: The translation domain;
 
-* **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
+* **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc.);
 
 * **loader**: How Symfony should load and parse the file (e.g. ``xlf``,
-  ``php``, ``yaml``, etc).
+  ``php``, ``yaml``, etc.).
 
 The loader can be the name of any registered loader. By default, Symfony
 provides many loaders which are selected based on the following file extensions:
@@ -937,7 +937,7 @@ configure the ``providers`` option:
 
 .. important::
 
-    If you use Phrase as a provider you must configure a user agent in your dsn. See
+    If you use Phrase as a provider you must configure a user agent in your DSN. See
     `Identification via User-Agent`_ for reasoning and some examples.
 
     Also, the locale *names* in Phrase must follow RFC 4646 (e.g. pt-BR rather than pt_BR).
@@ -952,10 +952,10 @@ configure the ``providers`` option:
 
 .. tip::
 
-    If you use Lokalise as a provider and a locale format following the `ISO
-    639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
+    If you use Lokalise as a provider and your locales follow the `ISO
+    639-1`_ format (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
     in Lokalise for each of your locales, in order to override the
-    default value (which follow the `ISO 639-1`_ succeeded by a sub-code in
+    default value (which follows the `ISO 639-1`_ succeeded by a sub-code in
     capital letters that specifies the national variety (e.g. "GB" or "US"
     according to `ISO 3166-1 alpha-2`_)).
 
@@ -963,7 +963,7 @@ configure the ``providers`` option:
 
     The Phrase provider uses Phrase's tag feature to map translations to Symfony's translation
     domains. If you need some assistance with organizing your tags in Phrase, you might want
-    to consider the `Phrase Tag Bundle`_ which provides some commands helping you with that.
+    to consider the `Phrase Tag Bundle`_ which provides some commands to help you with that.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -983,8 +983,8 @@ now use the following commands to push (upload) and pull (download) translations
     # it will **not** update existing translations already on the provider.
     $ php bin/console translation:push loco --locales fr --domains validators
 
-    # push new local translations and delete provider's translations that not
-    # exists anymore in local files for the French locale and the validators domain.
+    # push new local translations and delete provider's translations that don't
+    # exist anymore in local files for the French locale and the validators domain.
     # it will **not** update existing translations already on the provider.
     $ php bin/console translation:push loco --delete-missing --locales fr --domains validators
 
@@ -995,7 +995,7 @@ now use the following commands to push (upload) and pull (download) translations
 
     # pull all provider's translations to local files for the locales and domains
     # configured in config/packages/translation.yaml file.
-    # it will overwrite completely your local files.
+    # it will completely overwrite your local files.
     $ php bin/console translation:pull loco --force
 
     # pull new translations from the Loco provider to local files for the French
@@ -1018,7 +1018,7 @@ your own providers. To do so, you need to create two classes:
 
 #. The first class must implement :class:`Symfony\\Component\\Translation\\Provider\\ProviderInterface`;
 #. The second class needs to be a factory which will create instances of the first class. It must implement
-:class:`Symfony\\Component\\Translation\\Provider\\ProviderFactoryInterface` (you can extend :class:`Symfony\\Component\\Translation\\Provider\\AbstractProviderFactory` to simplify its creation).
+   :class:`Symfony\\Component\\Translation\\Provider\\ProviderFactoryInterface` (you can extend :class:`Symfony\\Component\\Translation\\Provider\\AbstractProviderFactory` to simplify its creation).
 
 After creating these two classes, you need to register your factory as a service
 and tag it with :ref:`translation.provider_factory <reference-dic-tags-translation-provider-factory>`.
@@ -1210,14 +1210,14 @@ Imagine that the user's locale is ``es_AR`` and that you're translating the
 key ``Symfony is great``. To find the Spanish translation, Symfony actually
 checks translation resources for several locales:
 
-#. First, Symfony looks for the translation in a ``es_AR`` (Argentinean
+#. First, Symfony looks for the translation in an ``es_AR`` (Argentinean
    Spanish) translation resource (e.g. ``messages.es_AR.yaml``);
 
 #. If it wasn't found, Symfony looks for the translation in the
    parent locale, which is automatically defined only for some locales. In
    this example, the parent locale is ``es_419`` (Latin American Spanish);
 
-#. If it wasn't found, Symfony looks for the translation in a ``es``
+#. If it wasn't found, Symfony looks for the translation in an ``es``
    (Spanish) translation resource (e.g. ``messages.es.yaml``);
 
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
@@ -1354,9 +1354,9 @@ How to Find Missing or Unused Translation Messages
 --------------------------------------------------
 
 When you work with many translation messages in different languages, it can be
-hard to keep track which translations are missing and which are not used
+hard to keep track of which translations are missing and which are not used
 anymore. The ``debug:translation`` command helps you to find these missing or
-unused translation messages templates:
+unused translation messages in templates:
 
 .. code-block:: twig
 
@@ -1477,7 +1477,7 @@ output:
                 Symfony is great    Symfony est génial      Symfony is great
     ---------  ------------------  ----------------------  -------------------------------
 
-The state is empty which means the message is translated in the ``fr`` locale
+The state is empty, which means the message is translated in the ``fr`` locale
 and used in one or more templates.
 
 If you delete the message ``Symfony is great`` from your translation file
@@ -1513,7 +1513,7 @@ translation file in the ``fr`` locale and run the command, you will get:
     ----------  ------------------  ----------------------  -------------------------------
 
 You can see that the translations of the message are identical in the ``fr``
-and ``en`` locales which means this message was probably copied from English
+and ``en`` locales, which means this message was probably copied from English
 to French and maybe you forgot to translate it.
 
 By default, all domains are inspected, but it is possible to specify a single
@@ -1679,7 +1679,7 @@ Spanish. Unexpectedly, some text is cut and other contents are so long that
 they overflow and you can't see them:
 
 .. image:: /_images/translation/pseudolocalization-interface-translated.png
-    :alt: In Spanish, some menu items contain more letters which result in them being cut.
+    :alt: In Spanish, some menu items contain more letters, which results in them being cut.
 
 These kinds of errors are very common, because different languages can be longer
 or shorter than the original application language. Another common issue is to

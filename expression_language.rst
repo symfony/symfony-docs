@@ -87,8 +87,8 @@ The ExpressionLanguage component provides a way to parse and lint expressions.
 The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
 method returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`
 instance that can be used to inspect and manipulate the expression. The
-:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::lint`, on the
-other hand, throws a :class:`Symfony\\Component\\ExpressionLanguage\\SyntaxError`
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::lint` method, on
+the other hand, throws a :class:`Symfony\\Component\\ExpressionLanguage\\SyntaxError`
 if the expression is not valid::
 
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -276,7 +276,7 @@ Extending the ExpressionLanguage
 --------------------------------
 
 The ExpressionLanguage can be extended by adding custom functions. For
-instance, in the Symfony Framework, the security has custom functions to check
+instance, in the Symfony Framework, the security system has custom functions to check
 the user's role.
 
 .. note::
@@ -361,8 +361,8 @@ register::
 
 .. tip::
 
-    To create an expression function from a PHP function with the
-    :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp` static method::
+    Use the :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionFunction::fromPhp`
+    static method to create an expression function from a PHP function::
 
         ExpressionFunction::fromPhp('strtoupper');
 

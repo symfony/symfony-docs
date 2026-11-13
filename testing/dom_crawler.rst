@@ -85,11 +85,11 @@ The Crawler can extract information from the nodes::
 
     // extracts an array of attributes for all nodes
     // (_text returns the node value)
-    // returns an array for each element in crawler,
+    // returns an array for each element in the crawler,
     // each with the value and href
     $info = $crawler->extract(['_text', 'href']);
 
-    // executes a lambda for each node and return an array of results
+    // executes a lambda for each node and returns an array of results
     $data = $crawler->each(function ($node, int $i): string {
         return $node->attr('href');
     });

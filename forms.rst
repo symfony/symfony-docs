@@ -90,8 +90,8 @@ High-level flow:
 For a ``DateType`` field configured to render as three ``<select>`` elements:
 
 * **Model data**: a ``DateTime`` object;
-* **Norm data**: an array like ``['year' => 2026, 'month' => 10, 'day' => 18]``;
-  (values are integers)
+* **Norm data**: an array like ``['year' => 2026, 'month' => 10, 'day' => 18]``
+  (values are integers);
 * **View data**: an array like ``['year' => '2026', 'month' => '10', 'day' => '18']``
   (values are strings, as submitted by the browser).
 
@@ -203,7 +203,7 @@ and you can also :doc:`create your own form types </form/create_custom_field_typ
 
 .. tip::
 
-    You can use the ``debug:form`` to list all the available types, type
+    You can use the ``debug:form`` command to list all the available types, type
     extensions and type guessers in your application:
 
     .. code-block:: terminal
@@ -548,7 +548,7 @@ render the form contents:
 
 That's it! The :ref:`form() function <reference-forms-twig-form>` renders all
 fields *and* the ``<form>`` start and end tags. By default, the form method is
-``POST`` and the target URL is the same that displayed the form, but
+``POST`` and the target URL is the same one that displayed the form, but
 :ref:`you can change both <forms-change-action-method>`.
 
 Notice how the rendered ``task`` input field has the value of the ``task``
@@ -597,7 +597,7 @@ Bootstrap 3, 4 and 5, Foundation 5 and 6, as well as Tailwind 2. You can also
 In addition to form themes, Symfony allows you to
 :doc:`customize the way fields are rendered </form/form_customization>` with
 multiple functions to render each field part separately (widgets, labels,
-errors, help messages, etc.)
+errors, help messages, etc.).
 
 .. _component-form-intro-handling-submission:
 .. _processing-forms:
@@ -606,11 +606,11 @@ Processing Forms
 ----------------
 
 The :ref:`recommended way of processing forms <best-practice-handle-form>` is to
-use a single action for both rendering the form and handling the form submit.
+use a single action for both rendering the form and handling the form submission.
 You can use separate actions, but using one action simplifies everything while
 keeping the code concise and maintainable.
 
-Processing a form means to translate user-submitted data back to the properties
+Processing a form means translating user-submitted data back to the properties
 of an object. To make this happen, the submitted data from the user must be
 written into the form object:
 
@@ -635,7 +635,7 @@ written into the form object:
                 $form->handleRequest($request);
                 if ($form->isSubmitted() && $form->isValid()) {
                     // $form->getData() holds the submitted values
-                    // but, the original `$task` variable has also been updated
+                    // but the original `$task` variable has also been updated
                     $task = $form->getData();
 
                     // ... perform some action, such as saving the task to the database
@@ -666,7 +666,7 @@ written into the form object:
 
         if ($form->isSubmitted() && $form->isValid()) {
             // $form->getData() holds the submitted values
-            // but, the original `$task` variable has also been updated
+            // but the original `$task` variable has also been updated
             $task = $form->getData();
 
             // ... perform some action, such as saving the task to the database
@@ -688,7 +688,7 @@ in your form factory, as explained in :ref:`forms-standalone-setup`.
 .. warning::
 
     The form's ``createView()`` method must be called *after* ``handleRequest()``.
-    Otherwise, when using :doc:`form events </form/events>`, changes done
+    Otherwise, when using :doc:`form events </form/events>`, changes made
     in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
 
 This controller follows a common pattern for handling forms and has three
@@ -714,7 +714,7 @@ possible paths:
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
    returns ``true``. Now you have the opportunity to perform some actions using
    the ``$task`` object (e.g. persisting it to the database) before redirecting
-   the user to some other page (e.g. a "thank you" or "success" page);
+   the user to some other page (e.g. a "thank you" or "success" page).
 
 .. note::
 
@@ -865,8 +865,8 @@ For example, if you add a second button with the caption "Save and Add" to your 
         ->getForm();
 
 In your controller, use the button's
-:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method for
-querying if the "Save and Add" button was clicked::
+:method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method to
+check if the "Save and Add" button was clicked::
 
     if ($form->isSubmitted() && $form->isValid()) {
         // ... perform some action, such as saving the task to the database
@@ -878,7 +878,7 @@ querying if the "Save and Add" button was clicked::
         return $this->redirectToRoute($nextAction);
     }
 
-Alternatively you can use the :method:`Symfony\\Component\\Form\\Form::getClickedButton`
+Alternatively, you can use the :method:`Symfony\\Component\\Form\\Form::getClickedButton`
 method to get the clicked button's name::
 
     if ($form->getClickedButton() && 'saveAndAdd' === $form->getClickedButton()->getName()) {
@@ -914,8 +914,8 @@ to a class. You can add them either to the entity class or by using the
 :ref:`constraints option <reference-form-option-constraints>` of form types.
 
 To see the first approach - adding constraints to the entity - in action,
-add the validation constraints, so that the ``task`` field cannot be empty,
-and the ``dueDate`` field cannot be empty, and must be a valid ``DateTimeImmutable``
+add the validation constraints, so that the ``task`` field cannot be empty
+and the ``dueDate`` field cannot be empty and must be a valid ``DateTimeImmutable``
 object.
 
 .. configuration-block::
@@ -1450,7 +1450,7 @@ browser from, for example, submitting blank fields.
 HTML Validation for date/time inputs
 ....................................
 
-When using ``DateType`` or ``DateTimeType``, you can rely on ``attr`` option to
+When using ``DateType`` or ``DateTimeType``, you can rely on the ``attr`` option to
 enable client-side validation::
 
     $builder->add('dueDate', DateTimeType::class, [
@@ -1526,7 +1526,7 @@ If you'd like to change one of the guessed values, override it in the options fi
 .. seealso::
 
     Besides guessing the form type, Symfony also guesses :ref:`validation constraints <validating-forms>`
-    if you're using a Doctrine entity. Read :ref:`automatic_object_validation`
+    if you're using a Doctrine entity. Read the :ref:`automatic_object_validation`
     guide for more information.
 
 .. _form-unmapped-fields:
@@ -1901,7 +1901,7 @@ This factory can already be used to create basic forms, but it is lacking
 support for very important features:
 
 * **Request Handling:** Support for request handling and file uploads;
-* **CSRF Protection:** Support for protection against Cross-Site-Request-Forgery
+* **CSRF Protection:** Support for protection against Cross-Site Request Forgery
   (CSRF) attacks;
 * **Templating:** Integration with a templating layer that allows you to reuse
   HTML fragments when rendering a form;
@@ -1953,7 +1953,7 @@ arguments::
 
 Internally, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
 object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
-``$_GET``) based on the HTTP method configured on the form (POST is default).
+``$_GET``) based on the HTTP method configured on the form (POST is the default).
 
 .. seealso::
 
@@ -2048,7 +2048,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     // this file comes with TwigBridge
     $defaultFormTheme = 'form_div_layout.html.twig';
 
-    // the path to TwigBridge library so Twig can locate the
+    // the path to the TwigBridge library so Twig can locate the
     // form_div_layout.html.twig file
     $appVariableReflection = new \ReflectionClass('\Symfony\Bridge\Twig\AppVariable');
     $vendorTwigBridgeDirectory = dirname($appVariableReflection->getFileName());
@@ -2132,7 +2132,7 @@ to your ``Twig\Environment`` instance::
         'en'
     );
 
-    // adds the TranslationExtension (it gives us trans filter)
+    // adds the TranslationExtension (it provides the trans filter)
     $twig->addExtension(new TranslationExtension($translator));
 
     $formFactory = Forms::createFormFactoryBuilder()

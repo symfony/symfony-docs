@@ -53,14 +53,14 @@ as the value to the current URL:
 
 .. tip::
 
-    You can use the Twig function ``impersonation_path('thomas')``
+    You can use the Twig function ``impersonation_path('thomas')``.
 
 .. tip::
 
     Instead of adding a ``_switch_user`` query string parameter, you can pass
     the username in a custom HTTP header by adjusting the ``parameter`` setting.
-    For example, to use ``X-Switch-User`` header (available in PHP as
-    ``HTTP_X_SWITCH_USER``) add this configuration:
+    For example, to use the ``X-Switch-User`` header (available in PHP as
+    ``HTTP_X_SWITCH_USER``), add this configuration:
 
     .. configuration-block::
 
@@ -100,7 +100,7 @@ To switch back to the original user, use the special ``_exit`` username:
 
 .. tip::
 
-    You can leverage the Twig function ``impersonation_exit_path('/somewhere')``
+    You can leverage the Twig function ``impersonation_exit_path('/somewhere')``.
 
 This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
 Using :ref:`role_hierarchy <security-role-hierarchy>` is a great way to give this
@@ -123,7 +123,7 @@ Finding the Original User
 -------------------------
 
 In some cases, you may need to get the object that represents the impersonator
-user rather than the impersonated user. When a user is impersonated the token
+user rather than the impersonated user. When a user is impersonated, the token
 stored in the token storage will be a ``SwitchUserToken`` instance. Use the
 following snippet to obtain the original token which gives you access to
 the impersonator user::
@@ -440,7 +440,7 @@ use it to get the original impersonator user.
 
 The :ref:`locale-sticky-session` section does not update the locale when you
 impersonate a user. If you *do* want to be sure to update the locale when you
-switch users, add an event subscriber on this event::
+switch users, add an event subscriber for this event::
 
     // src/EventSubscriber/SwitchUserSubscriber.php
     namespace App\EventSubscriber;
@@ -475,6 +475,6 @@ switch users, add an event subscriber on this event::
 
 That's it! If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically discover your service and call ``onSwitchUser`` whenever
-a switch user occurs.
+a user switch occurs.
 
 For more details about event subscribers, see :doc:`/event_dispatcher`.

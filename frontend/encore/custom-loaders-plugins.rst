@@ -7,10 +7,10 @@ Adding Custom Loaders
 Encore already comes with a variety of different loaders,
 but if there is a specific loader that you want to use that is not currently supported, you
 can add your own loader through the ``addLoader`` function.
-The ``addLoader`` takes any valid webpack rules config.
+The ``addLoader()`` method takes any valid webpack rules config.
 
 If, for example, you want to add the `handlebars-loader`_, call ``addLoader`` with
-your loader config
+your loader config:
 
 .. code-block:: javascript
 

@@ -7,13 +7,13 @@ with an email address that already exists in the system.
 
 .. seealso::
 
-    If you want to validate that all the elements of the collection are unique
+    If you want to validate that all the elements of a collection are unique,
     use the :doc:`Unique constraint </reference/constraints/Unique>`.
 
 .. note::
 
-    In order to use this constraint, you should have installed the
-    symfony/doctrine-bridge with Composer.
+    In order to use this constraint, you must install the
+    ``symfony/doctrine-bridge`` package with Composer.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
@@ -26,7 +26,7 @@ Basic Usage
 
 Suppose you have a ``User`` entity that has an ``email`` field. You can use the
 ``UniqueEntity`` constraint to guarantee that the ``email`` field remains unique
-between all of the rows in your user table:
+across all the rows in your user table:
 
 .. configuration-block::
 
@@ -149,7 +149,7 @@ between all of the rows in your user table:
 
 .. _reference-constraints-unique-entity-php-class:
 
-Using a PHP class
+Using a PHP Class
 -----------------
 
 Instead of applying the ``UniqueEntity`` constraint directly to a Doctrine
@@ -259,15 +259,15 @@ defining the following:
 Options
 -------
 
-em
-~~
+``em``
+~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
 The name of the entity manager to use for making the query to determine
 the uniqueness. If it's left blank, the correct entity manager will be
-determined for this class. For that reason, this option should probably
-not need to be used.
+determined for this class. For that reason, you probably
+won't need to use this option.
 
 ``entityClass``
 ~~~~~~~~~~~~~~~
@@ -287,7 +287,7 @@ This option is also useful when the object being validated is not a Doctrine ent
 
 **type**: ``string`` **default**: The name of the first field in `fields`_
 
-If the entity violates the constraint the error message is bound to the
+If the entity violates the constraint, the error message is bound to the
 first field in `fields`_. If there is more than one field, you may want
 to map the error message to another field.
 
@@ -383,7 +383,7 @@ Now, the message would be bound to the ``port`` field with this configuration.
 
 This required option is the field (or list of fields) on which this entity
 should be unique. For example, if you specified both the ``email`` and ``name``
-field in a single ``UniqueEntity`` constraint, then it would enforce that
+fields in a single ``UniqueEntity`` constraint, then it would enforce that
 the combination value is unique (e.g. two users could have the same email,
 as long as they don't have the same name also).
 
@@ -696,7 +696,7 @@ If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
 
 In addition to ignoring the ``null`` values of all unique fields, you can also use
-this option to specify one or more fields to only ignore ``null`` values on them:
+this option to ignore ``null`` values only on one or more specific fields:
 
 .. configuration-block::
 

@@ -186,7 +186,7 @@ the locks:
         }
 
 The first argument of ``createLock()`` is an arbitrary string that represents
-the locked resource. If the lock can not be acquired (e.g. because another
+the locked resource. If the lock cannot be acquired (e.g. because another
 process already acquired it), the ``acquire()`` method returns ``false``
 immediately; pass ``true`` to it to wait until the lock is available (see
 :ref:`blocking locks <lock-blocking-locks>`). The ``acquire()`` method can be
@@ -303,7 +303,7 @@ because the execution of your application stops until the lock is acquired::
 When the store does not support blocking locks by implementing the
 :class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface (see
 :ref:`lock stores <lock-stores>` for supported stores), the ``Lock`` class
-will retry to acquire the lock in a non-blocking way until the lock is
+will retry acquiring the lock in a non-blocking way until the lock is
 acquired.
 
 If the lock cannot be acquired despite blocking (e.g. because the store's
@@ -482,7 +482,7 @@ read-only lock by calling the ``acquireRead()`` method.
 When the provided store does not implement the
 :class:`Symfony\\Component\\Lock\\SharedLockStoreInterface` interface (see
 :ref:`lock stores <lock-stores>` for supported stores), the ``Lock`` class
-will fallback to a write lock by calling the ``acquire()`` method.
+will fall back to a write lock by calling the ``acquire()`` method.
 
 The Owner of The Lock
 ---------------------
@@ -699,7 +699,7 @@ path to the lock directory changes between two deployments.
 
 Using a ``FlockStore`` in an HTTP context is incompatible with multiple front
 servers, unless you ensure that the same resource will always be locked on the
-same machine or you use a well configured shared file system.
+same machine or you use a well-configured shared file system.
 
 Files on the file system can be removed during a maintenance operation (for
 instance, when cleaning up the ``/tmp`` directory or after a reboot of the
@@ -734,10 +734,10 @@ connection implementing the ``\Memcached`` class::
 Memcached stores its items in memory, so locks are not persisted and may
 disappear by mistake at any time. If the Memcached service or the machine
 hosting it restarts, every lock is lost without notifying the running
-processes. To avoid that someone else acquires a lock after a restart, delay
+processes. To prevent someone else from acquiring a lock after a restart, delay
 the service start for at least as long as the longest lock TTL.
 
-By default, Memcached uses a LRU mechanism to remove old entries when the
+By default, Memcached uses an LRU mechanism to remove old entries when the
 service needs space to add new items. Keep the number of items stored in
 Memcached under control; if that's not possible, disable LRU or store the
 locks in a dedicated Memcached service away from the cache.
@@ -892,7 +892,7 @@ PdoStore but requires a `Doctrine DBAL Connection`_, or a `Doctrine DBAL URL`_::
 
     This store does not support TTL lower than 1 second.
 
-The table where values are stored will be automatically generated when your run
+The table where values are stored will be automatically generated when you run
 the command:
 
 .. code-block:: terminal
@@ -970,15 +970,15 @@ implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster``, ``\Relay\Relay`
 
 Redis stores its items in memory, so locks are not persisted and may disappear
 by mistake at any time. If the Redis service or the machine hosting it
-restarts, every lock is lost without notifying the running processes. To avoid
-that someone else acquires a lock after a restart, delay the service start for
+restarts, every lock is lost without notifying the running processes. To prevent
+someone else from acquiring a lock after a restart, delay the service start for
 at least as long as the longest lock TTL. Redis can also be configured to
 persist items on disk, but this option slows down writes on the service and
 could go against other uses of the server.
 
 .. danger::
 
-    When the Redis service is shared and used for multiple usages, locks could
+    When the Redis service is shared and used for multiple purposes, locks could
     be removed by mistake. Never call the ``FLUSHDB`` command, or store the
     locks in a dedicated Redis service away from the cache.
 
@@ -1054,7 +1054,7 @@ the stores::
     In order to get high availability when using the ``ConsensusStrategy``, the
     minimum cluster size must be three servers. This allows the cluster to keep
     working when a single server fails (because this strategy requires that the
-    lock is acquired for more than half of the servers).
+    lock is acquired in more than half of the servers).
 
 It's a common mistake to think that this store makes the lock mechanism more
 reliable. The ``CombinedStore`` is, at best, as reliable as the least reliable
@@ -1087,7 +1087,7 @@ ZooKeeper does not require a TTL because it maintains the locks as ephemeral
 nodes, which are automatically released at the end of the session (e.g. in case
 the client cannot unlock for any reason). However, if the ZooKeeper service or
 the machine hosting it restarts, every lock is lost without notifying the
-running processes. Also, since the clean up of intermediate nodes becomes an
+running processes. Also, since the cleanup of intermediate nodes becomes an
 overhead, this store does not support multi-level node locks and all locks are
 maintained at the root level.
 
@@ -1177,7 +1177,7 @@ the job and handle the unexpected expiration explicitly::
         // Perform the task whose duration MUST be less than 5 seconds
     }
 
-Choose wisely the lifetime of the ``Lock`` and check whether its remaining
+Choose the lifetime of the ``Lock`` wisely and check whether its remaining
 time to live is enough to perform the task. Keep in mind that storing a
 ``Lock`` usually takes a few milliseconds, but network conditions may increase
 that time a lot (up to a few seconds); take that into account when choosing

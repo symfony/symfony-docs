@@ -1,7 +1,7 @@
 Form Types Reference
 ====================
 
-A form is composed of *fields*, each of which are built with the help of
+A form is composed of *fields*, each of which is built with the help of
 a field *type* (e.g. ``TextType``, ``ChoiceType``, etc). Symfony comes
 standard with a large list of field types that can be used in your application.
 

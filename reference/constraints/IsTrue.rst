@@ -110,7 +110,7 @@ Then you can validate this method with ``IsTrue`` as follows:
             // ...
         }
 
-If the ``isTokenValid()`` returns false, the validation will fail.
+If the ``isTokenValid()`` method returns false, the validation will fail.
 
 .. include:: /reference/constraints/_null-values-are-valid.rst.inc
 

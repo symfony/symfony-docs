@@ -20,7 +20,7 @@ Basic Usage
 
     This article explains how to use the BrowserKit features as an independent
     component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
-    article to learn about how to use it in Symfony applications.
+    article to learn how to use it in Symfony applications.
 
 Creating a Client
 ~~~~~~~~~~~~~~~~~
@@ -71,7 +71,7 @@ and traversing HTML elements programmatically.
 
 .. note::
 
-    After making a request, subsequent requests will make the client to
+    After making a request, subsequent requests will make the client
     reboot the kernel. This clears the security token, detaches Doctrine
     entities, etc. Read more about :ref:`making multiple requests in the same test <testing-multiple-requests-in-one-test>`.
 
@@ -362,10 +362,10 @@ history::
     $link = $crawler->selectLink('Documentation')->link();
     $client->click($link);
 
-    // go back to home page
+    // go back to the home page
     $crawler = $client->back();
 
-    // go forward to documentation page
+    // go forward to the documentation page
     $crawler = $client->forward();
 
     // check if the history position is on the first page

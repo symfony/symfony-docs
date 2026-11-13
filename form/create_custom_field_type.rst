@@ -3,7 +3,7 @@ How to Create a Custom Form Field Type
 
 Symfony comes with :doc:`dozens of form types </reference/forms/types>`
 (called "form fields" in other projects) ready to use in your applications.
-However, it's common to create custom form types to solve specific purposes in
+However, it's common to create custom form types to serve specific purposes in
 your projects.
 
 Creating Form Types Based on Symfony Built-in Types
@@ -89,8 +89,8 @@ Creating Form Types from Scratch
 
 Some form types are so specific to your projects that they cannot be based on
 any :doc:`existing form types </reference/forms/types>` because they are too
-different. Consider an application that wants to reuse in different forms the
-following set of fields as the "postal address":
+different. Consider an application that wants to reuse the
+following set of fields (the "postal address") in different forms:
 
 .. raw:: html
 
@@ -149,7 +149,7 @@ These are the most important methods that a form type class can define:
 
 ``finishView()``
     Same as ``buildView()``. This is useful only if your form type consists of
-    many fields (i.e. A ``ChoiceType`` composed of many radio buttons or checkboxes),
+    many fields (e.g. a ``ChoiceType`` composed of many radio buttons or checkboxes),
     as this method will allow accessing child views with
     ``$view['child_name']``. For any other use case, it's recommended to use
     ``buildView()`` instead.
@@ -412,7 +412,7 @@ The first part of the Twig block name (e.g. ``postal_address``) comes from the
 class name (``PostalAddressType`` -> ``postal_address``). This can be controlled
 by overriding the ``getBlockPrefix()`` method in ``PostalAddressType``. The
 second part of the Twig block name (e.g. ``_row``) defines which form type part
-is being rendered (row, widget, help, errors, etc.)
+is being rendered (row, widget, help, errors, etc.).
 
 The article about form themes explains the
 :ref:`form fragment naming rules <form-fragment-naming>` in detail. These
@@ -482,7 +482,7 @@ this example will already work! Otherwise, :ref:`create a service <service-conta
 for this form class and :doc:`tag it </service_container/tags>` with ``form.type``.
 
 The variables added in ``buildView()`` are available in the form type template
-as any other regular Twig variable:
+like any other regular Twig variable:
 
 .. code-block:: html+twig
 

@@ -154,7 +154,7 @@ This time the **advantages** are:
 
 The **disadvantages** of setter injection are:
 
-* The setter can be called more than once, also long after initialization,
+* The setter can be called more than once, even long after initialization,
   so you cannot be sure the dependency is not replaced during the lifetime
   of the object (except by explicitly writing the setter method to check if
   it has already been called).
@@ -235,7 +235,7 @@ You can also configure this method call explicitly with the special
 
 The **advantages** of immutable setters are:
 
-* Like the constructor injection, using immutable setters forces the dependency
+* Like constructor injection, using immutable setters forces the dependency
   to stay the same during the lifetime of a service.
 * This type of injection works well with traits as the service can be composed.
   This way, adapting the service to your application requirements is easier.
@@ -302,7 +302,7 @@ Another possibility is **setting public fields** of the class directly::
 There are mainly only **disadvantages** to using property injection. It is similar
 to setter injection but with this additional important problem:
 
-* You cannot control when the dependency is set at all, it can be changed
+* You cannot control when the dependency is set at all; it can be changed
   at any point in the object's lifetime.
 
 But, it is useful to know that this can be done with the service container,

@@ -8,11 +8,11 @@ hook into the framework life cycle to modify the way the request is handled.
 What kind of hooks are we talking about? Authentication or caching for
 instance. To be flexible, hooks must be plug-and-play; the ones you "register"
 for an application are different from the next one depending on your specific
-needs. Many software have a similar concept like Drupal or WordPress. In some
+needs. Many software projects like Drupal or WordPress have a similar concept. In some
 languages, there is even a standard like `WSGI`_ in Python or `Rack`_ in Ruby.
 
 As there is no standard for PHP, we are going to use a well-known design
-pattern, the *Mediator*, to allow any kind of behaviors to be attached to our
+pattern, the *Mediator*, to allow any kind of behavior to be attached to our
 framework; the Symfony EventDispatcher Component implements a lightweight
 version of this pattern:
 
@@ -143,7 +143,7 @@ the registration of a listener for the ``response`` event::
     The listener is just a proof of concept and you should add the Google
     Analytics code just before the body tag.
 
-As you can see, ``addListener()`` associates a valid PHP callback to a named
+As you can see, ``addListener()`` associates a valid PHP callback with a named
 event (``response``); the event name must be the same as the one used in the
 ``dispatch()`` call.
 
@@ -168,7 +168,7 @@ set::
 Depending on whether you have added this piece of code before the previous
 listener registration or after it, you will have the wrong or the right value
 for the ``Content-Length`` header. Sometimes, the order of the listeners
-matter but by default, all listeners are registered with the same priority,
+matters but by default, all listeners are registered with the same priority,
 ``0``. To tell the dispatcher to run a listener early, change the priority to
 a positive number; negative numbers can be used for low priority listeners.
 Here, we want the ``Content-Length`` listener to be executed last, so change
@@ -246,7 +246,7 @@ to this dilemma is to use subscribers instead of listeners::
     $dispatcher->addSubscriber(new Simplex\ContentLengthListener());
     $dispatcher->addSubscriber(new Simplex\GoogleListener());
 
-A subscriber knows about all the events it is interested in and pass this
+A subscriber knows about all the events it is interested in and passes this
 information to the dispatcher via the ``getSubscribedEvents()`` method. Have a
 look at the new version of the ``GoogleListener``::
 

@@ -1,7 +1,7 @@
 PHP Files Cache Adapter
 =======================
 
-Similarly to :doc:`Filesystem Adapter </cache/adapters/filesystem_adapter>`, this cache
+Similarly to the :doc:`Filesystem Adapter </cache/adapters/filesystem_adapter>`, this cache
 implementation writes cache entries out to disk, but unlike the Filesystem cache adapter,
 the PHP Files cache adapter writes and reads back these cache files *as native PHP code*.
 For example, caching the value ``['my', 'cached', 'array']`` will write out a cache
@@ -32,7 +32,7 @@ file similar to the following::
 
     While it supports updates and because it is using OPcache as a backend, this adapter is
     better suited for append-mostly needs. Using it in other scenarios might lead to
-    periodical reset of the OPcache memory, potentially leading to degraded performance.
+    periodic resets of the OPcache memory, potentially leading to degraded performance.
 
 The PhpFilesAdapter can optionally be provided a namespace, default cache lifetime, and cache
 directory path as constructor arguments::

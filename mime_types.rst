@@ -30,7 +30,7 @@ Converting MIME Types into File Extensions
 
 The :class:`Symfony\\Component\\Mime\\MimeTypes` class transforms between
 MIME types and file name extensions. In Symfony applications, inject this
-object in your services using the
+object into your services using the
 :class:`Symfony\\Component\\Mime\\MimeTypesInterface` type-hint; in any other
 application, create it yourself:
 

@@ -227,8 +227,8 @@ Disabling global themes
 .......................
 
 By default, the ``form_theme`` tag adds your theme on top of the globally
-configured themes. Add the ``only`` keyword to use exclusively the specified
-themes, ignoring all global configuration:
+configured themes. Add the ``only`` keyword to use the specified
+themes exclusively, ignoring all global configuration:
 
 .. code-block:: twig
 
@@ -293,7 +293,7 @@ Block Name                         Customizes
 ``_user_email_widget``             The email input in UserType
 ``_user_email_row``                The complete email row in UserType
 ``_product_price_label``           The price label in ProductType
-``_registration_terms_errors``     Errors for terms checkbox in RegistrationType
+``_registration_terms_errors``     Errors for the terms checkbox in RegistrationType
 =================================  ==========================================
 
 The form name comes from your form type class name in snake_case (``UserType`` is

@@ -47,7 +47,7 @@ color. Symfony uses this when printing error messages.
 If you print your error message on more than one line manually, you will
 notice that the background is only as long as each individual line. Use the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatBlock`
-to generate a block output::
+method to generate a block output::
 
     $errorMessages = ['Error!', 'Something went wrong'];
     $formattedBlock = $formatter->formatBlock($errorMessages, 'error');
@@ -55,7 +55,7 @@ to generate a block output::
 
 As you can see, passing an array of messages to the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatBlock`
-method creates the desired output. If you pass ``true`` as third parameter, the
+method creates the desired output. If you pass ``true`` as the third parameter, the
 block will be formatted with more padding (one blank line above and below the
 messages and 2 spaces on the left and right).
 
@@ -108,14 +108,14 @@ By default, the ``...`` suffix is used. If you wish to use a different suffix,
 pass it as the third argument to the method.
 The suffix is always appended, unless the truncated length is longer than the
 message plus the suffix length.
-If you don't want to use suffix at all, pass an empty string::
+If you don't want to use a suffix at all, pass an empty string::
 
     $truncatedMessage = $formatter->truncate($message, 7, '!!'); // result: This is!!
     $truncatedMessage = $formatter->truncate($message, 7, '');   // result: This is
 
     $truncatedMessage = $formatter->truncate('test', 10);
     // result: test
-    // because length of the "test..." string is shorter than 10
+    // because the length of the "test..." string is shorter than 10
 
 Formatting Time
 ---------------

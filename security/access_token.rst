@@ -1,7 +1,7 @@
-How to use Access Token Authentication
+How to Use Access Token Authentication
 ======================================
 
-Access tokens or API tokens are commonly used as authentication mechanism
+Access tokens or API tokens are commonly used as an authentication mechanism
 in API contexts. The access token is a string, obtained during authentication
 (using the application or an authorization server). The access token's role
 is to verify the user identity and receive consent before the token is
@@ -391,7 +391,7 @@ Next, configure the ``base_uri`` and ``discovery`` options:
     ``https://www.example.com/realms/demo`` results in
     ``https://www.example.com/realms/.well-known/openid-configuration``).
 
-Following the `OpenID Connect Specification`_, the ``sub`` claim is used as user
+Following the `OpenID Connect Specification`_, the ``sub`` claim is used as the user
 identifier by default. To use another claim, specify it using the ``claim`` option:
 
 .. configuration-block::
@@ -518,13 +518,13 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                 algorithms: ['ES256', 'RS256']
                                 # A JSON-encoded JWK
                                 keyset: '{"keys":[{"kty":"...","k":"..."}]}'
-                                # Audience (`aud` claim): required for validation purpose
+                                # Audience (`aud` claim): required for validation purposes
                                 audience: 'api-example'
-                                # Issuers (`iss` claim): required for validation purpose
+                                # Issuers (`iss` claim): required for validation purposes
                                 issuers: ['https://oidc.example.com']
                                 encryption:
-                                    enabled: true # Default to false
-                                    enforce: false # Default to false, requires an encrypted token when true
+                                    enabled: true # Defaults to false
+                                    enforce: false # Defaults to false, requires an encrypted token when true
                                     algorithms: ['ECDH-ES', 'A128GCM']
                                     keyset: '{"keys": [...]}' # Encryption private keyset
 
@@ -544,14 +544,14 @@ it, and retrieves the user information from it. Optionally, the token can be enc
                                     'algorithms' => ['ES256', 'RS256'],
                                     // A JSON-encoded JWK
                                     'keyset' => '{"keys":[{"kty":"...","k":"..."}]}',
-                                    // Audience (`aud` claim): required for validation purpose
+                                    // Audience (`aud` claim): required for validation purposes
                                     'audience' => 'api-example',
-                                    // Issuers (`iss` claim): required for validation purpose
+                                    // Issuers (`iss` claim): required for validation purposes
                                     'issuers' => ['https://oidc.example.com'],
                                     // Encryption:
                                     'encryption' => [
-                                        'enabled' => true, // Default to false
-                                        'enforce' => false, // Default to false, requires an encrypted token when true
+                                        'enabled' => true, // Defaults to false
+                                        'enforce' => false, // Defaults to false, requires an encrypted token when true
                                         'algorithms' => ['ECDH-ES', 'A128GCM'],
                                         'keyset' => '{"keys": [...]}' // Encryption private keyset
                                     ],
@@ -689,7 +689,7 @@ are excluded. Keys without any usage designation are included.
     ``https://www.example.com/realms/.well-known/openid-configuration``).
 
 Following the `OpenID Connect Specification`_, the ``sub`` claim is used by
-default as user identifier. To use another claim, specify it on the
+default as the user identifier. To use another claim, specify it in the
 configuration:
 
 .. configuration-block::
@@ -824,7 +824,7 @@ same issuer.
 
 .. _creating-a-oidc-token-from-the-command-line:
 
-Creating an OIDC token from the command line
+Creating an OIDC Token from the Command Line
 --------------------------------------------
 
 The ``security:oidc:generate-token`` command helps you generate JWTs. It's mostly
@@ -1072,8 +1072,8 @@ specify the service name via the ``http_client`` option:
             ],
         ]);
 
-By default the token handler will read the validation URL XML response with a
-``cas`` prefix but you can configure another prefix:
+By default, the token handler will read the validation URL XML response with a
+``cas`` prefix, but you can configure another prefix:
 
 .. configuration-block::
 
@@ -1114,7 +1114,7 @@ By default the token handler will read the validation URL XML response with a
 Creating Users from Token
 -------------------------
 
-Some types of tokens (for instance OIDC) contain all information required
+Some types of tokens (for instance OIDC) contain all the information required
 to create a user entity (e.g. username and roles). In this case, you don't
 need a user provider to create a user from the database::
 

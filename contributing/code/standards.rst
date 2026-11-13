@@ -149,7 +149,7 @@ Structure
 
 * Do not add the ``void`` return type to methods in tests;
 
-* Use braces to indicate control structure body regardless of the number of
+* Use braces to indicate the control structure body regardless of the number of
   statements it contains;
 
 * Define one class per file - this does not apply to private helper classes
@@ -167,9 +167,9 @@ Structure
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
-  matter how many arguments there are. The only exception are constructor methods
+  matter how many arguments there are. The only exceptions are constructor methods
   using `constructor property promotion`_, where each parameter must be on a new
-  line with `trailing comma`_;
+  line with a `trailing comma`_;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
@@ -178,7 +178,7 @@ Structure
 
 * Exception and error messages must not contain backticks,
   even when referring to a technical element (such as a method or variable name).
-  Double quotes must be used at all time:
+  Double quotes must be used at all times:
 
   .. code-block:: diff
 
@@ -261,8 +261,8 @@ Service Naming Conventions
   its class (e.g. ``App\EventSubscriber\UserSubscriber``);
 
 * If there are multiple services for the same class, use the FQCN for the main
-  service and use lowercase and underscored names for the rest of services.
-  Optionally divide them in groups separated with dots (e.g.
+  service and use lowercase and underscored names for the rest of the services.
+  Optionally divide them into groups separated with dots (e.g.
   ``something.service_name``, ``fos_user.something.service_name``);
 
 * Use lowercase letters for parameter names (except when referring
@@ -300,7 +300,7 @@ Documentation
 * When adding a new class or when making significant changes to an existing class,
   an ``@author`` tag with personal contact information may be added, or expanded.
   Please note it is possible to have the personal contact information updated or
-  removed per request to the :doc:`core team </contributing/core_team>`.
+  removed on request to the :doc:`core team </contributing/core_team>`.
 
 License
 ~~~~~~~

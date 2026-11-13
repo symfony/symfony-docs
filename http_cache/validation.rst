@@ -21,7 +21,7 @@ page again (see below for an implementation example).
     The 304 status code means "Not Modified". It's important because with
     this status code the response does *not* contain the actual content being
     requested. Instead, the response only consists of the response headers that
-    tells the cache that it can use its stored version of the content.
+    tell the cache that it can use its stored version of the content.
 
 Like with expiration, there are two different HTTP headers that can be used
 to implement the validation model: ``ETag`` and ``Last-Modified``.
@@ -116,7 +116,7 @@ since the response was cached.
 
 For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the ``Last-Modified``
-header value::
+header::
 
     // src/Controller/ArticleController.php
     namespace App\Controller;
@@ -215,8 +215,8 @@ the better. The ``Response::isNotModified()`` method does exactly that::
         }
     }
 
-When the ``Response`` is not modified, the ``isNotModified()`` automatically sets
-the response status code to ``304``, removes the content, and removes some
+When the ``Response`` is not modified, the ``isNotModified()`` method automatically
+sets the response status code to ``304``, removes the content, and removes some
 headers that must not be present for ``304`` responses (see
 :method:`Symfony\\Component\\HttpFoundation\\Response::setNotModified`).
 

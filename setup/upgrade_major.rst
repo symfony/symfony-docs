@@ -32,7 +32,7 @@ functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
 ``6.4.*``), you should be able to upgrade without a problem. That means that
 you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
-(e.g. 5.4) so that you can see *all* the deprecations.
+(e.g. 6.4) so that you can see *all* the deprecations.
 
 To help you find deprecations, notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
@@ -47,7 +47,7 @@ Ultimately, you should aim to stop using the deprecated functionality.
 Sometimes the warning might tell you exactly what to change.
 
 But other times, the warning might be unclear: a setting somewhere might
-cause a class deeper to trigger the warning. In this case, Symfony does its
+cause a class deeper in the code to trigger the warning. In this case, Symfony does its
 best to give a clear message, but you may need to research that warning further.
 
 And sometimes, the warning may come from a third-party library or bundle
@@ -95,7 +95,7 @@ Now, you can start fixing the notices:
         2x in PageAdminTest::testPageList from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
         1x in PageAdminTest::testPageEdit from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
 
-Once you fixed them all, the command ends with ``0`` (success) and you're
+Once you've fixed them all, the command ends with ``0`` (success) and you're
 done!
 
 .. sidebar:: Using the Weak Deprecations Mode

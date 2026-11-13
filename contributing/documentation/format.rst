@@ -11,7 +11,7 @@ reStructuredText is a plain text markup syntax similar to Markdown, but much
 stricter with its syntax. If you are new to reStructuredText, check out the
 `reStructuredText Primer`_ tutorial and the `reStructuredText Reference`_.
 
-You can also take some time to familiarize with this format by reading the
+You can also take some time to familiarize yourself with this format by reading the
 existing `Symfony documentation`_ source.
 
 .. warning::
@@ -71,7 +71,7 @@ directive to show the configuration in all supported configuration formats
 
             // Configuration in PHP
 
-The previous reStructuredText snippet renders as follow:
+The previous reStructuredText snippet renders as follows:
 
 .. configuration-block::
 
@@ -102,7 +102,7 @@ standalone components in any PHP application, use the special formats
 
         // PHP code using standalone components
 
-The current list of supported formats are the following:
+The current list of supported formats is the following:
 
 ===================  ==============================================================================
 Markup Format        Use It to Display
@@ -156,7 +156,7 @@ configuration blocks when rendered, but tabs can hold any type of content:
 Adding Links
 ~~~~~~~~~~~~
 
-The most common type of links are **internal links** to other documentation pages,
+The most common links are **internal links** to other documentation pages,
 which use the following syntax:
 
 .. code-block:: rst
@@ -195,7 +195,7 @@ If you want to modify that title, use this alternative syntax:
         :doc:`environments`
 
 **Links to specific page sections** follow a different syntax. First, define a
-target above section you will link to (syntax: ``.. _`` + target name + ``:``):
+target above the section you will link to (syntax: ``.. _`` + target name + ``:``):
 
 .. code-block:: rst
 
@@ -209,7 +209,7 @@ target above section you will link to (syntax: ``.. _`` + target name + ``:``):
 
     // section content ...
 
-Then, use the ``:ref::`` directive to link to that section from another file:
+Then, use the ``:ref:`` directive to link to that section from another file:
 
 .. code-block:: rst
 
@@ -243,7 +243,7 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behavior change use the ``.. versionadded:: 8.x``
+For a new feature or a behavior change, use the ``.. versionadded:: 8.x``
 directive:
 
 .. code-block:: rst
@@ -262,7 +262,7 @@ describe how the behavior has changed:
        ... ... ... was introduced in Symfony 8.2. Prior to this,
        ... ... ... ... ... ... ... ... .
 
-For a deprecation use the ``.. deprecated:: 8.x`` directive:
+For a deprecation, use the ``.. deprecated:: 8.x`` directive:
 
 .. code-block:: rst
 
@@ -270,7 +270,7 @@ For a deprecation use the ``.. deprecated:: 8.x`` directive:
 
         ... ... ... was deprecated in Symfony 8.2.
 
-Whenever a new major version of Symfony is released (e.g. 9.0, 10.0, etc), a new
+Whenever a new major version of Symfony is released (e.g. 9.0, 10.0, etc.), a new
 branch of the documentation is created from the ``x.4`` branch of the previous
 major version. At this point, all the ``versionadded`` and ``deprecated`` tags
 for Symfony versions that have a lower major version will be removed. For

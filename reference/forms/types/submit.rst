@@ -42,8 +42,8 @@ attr
 **type**: ``array`` **default**: ``[]``
 
 If you want to add extra attributes to the HTML representation of the button,
-you can use ``attr`` option. It's an associative array with HTML attribute
-as a key. This can be useful when you need to set a custom class for the button::
+you can use the ``attr`` option. It's an associative array with HTML attributes
+as keys. This can be useful when you need to set a custom class for the button::
 
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     // ...
@@ -91,7 +91,7 @@ You can specify the placeholder values as follows::
     ]);
 
 The ``label_translation_parameters`` option of buttons is merged with the same
-option of its parents, so buttons can reuse and/or override any of the parent
+option of their parents, so buttons can reuse and/or override any of the parent
 placeholders.
 
 .. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc

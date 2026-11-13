@@ -266,7 +266,7 @@ Parameter        Description
 
 **type**: ``boolean`` **default**: ``true``
 
-If ``false``, the validation fails when expression returns ``true``.
+If ``false``, the validation fails when the expression returns ``true``.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

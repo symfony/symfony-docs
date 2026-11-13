@@ -131,14 +131,15 @@ method. You can also pass a callback function for more control::
         }
     ]);
 
-The method is called for each entity in the list and passed to the function. For
-more details, see the main :ref:`choice_label <reference-form-choice-label>` documentation.
+The function is called for each entity in the list, and that entity is passed to it as
+the argument. For more details, see the main :ref:`choice_label <reference-form-choice-label>`
+documentation.
 
 .. note::
 
     When passing a string, the ``choice_label`` option is a property path. So you
     can use anything supported by the
-    :doc:`PropertyAccess component </components/property_access>`
+    :doc:`PropertyAccess component </components/property_access>`.
 
     For example, if the translations property is actually an associative
     array of objects, each with a ``name`` property, then you could do this::
@@ -186,7 +187,7 @@ loading all entities.
 .. warning::
 
     The entity used in the ``FROM`` clause of the ``query_builder`` option
-    will always be validated against the class which you have specified at the
+    will always be validated against the class which you have specified in the
     `class`_ option. If you return another entity instead of the
     one used in your ``FROM`` clause (for instance if you return an entity
     from a joined table), it will break validation.
@@ -247,7 +248,7 @@ submitted.
 ``choices``
 ~~~~~~~~~~~
 
-**type**:  ``array`` | ``\Traversable`` **default**: ``null``
+**type**: ``array`` | ``\Traversable`` **default**: ``null``
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.

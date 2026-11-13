@@ -2,11 +2,11 @@ Cursor Helper
 =============
 
 The :class:`Symfony\\Component\\Console\\Cursor` allows you to change the
-cursor position in a console command. This allows you to write on any position
+cursor position in a console command. This allows you to write at any position
 of the output:
 
 .. image:: /_images/components/console/cursor.gif
-    :alt: A command outputs on various positions on the screen, eventually drawing the letters "SF".
+    :alt: A command outputs at various positions on the screen, eventually drawing the letters "SF".
 
 .. code-block:: php
 
@@ -30,17 +30,17 @@ of the output:
             // row (2nd argument) position
             $cursor->moveToPosition(7, 11);
 
-            // and write text on this position using the output
+            // and write text at this position using the output
             $output->write('My text');
 
             // ...
         }
     }
 
-Using the cursor
+Using the Cursor
 ----------------
 
-Moving the cursor
+Moving the Cursor
 .................
 
 There are a few methods to control moving the command cursor::
@@ -73,7 +73,7 @@ You can get the current command's cursor position by using::
     // $position[0] // columns (aka x coordinate)
     // $position[1] // rows (aka y coordinate)
 
-Clearing output
+Clearing Output
 ...............
 
 The cursor can also clear some output on the screen::
@@ -90,5 +90,5 @@ The cursor can also clear some output on the screen::
     // clears the entire screen
     $cursor->clearScreen();
 
-You also can leverage the :method:`Symfony\\Component\\Console\\Cursor::show`
+You can also leverage the :method:`Symfony\\Component\\Console\\Cursor::show`
 and :method:`Symfony\\Component\\Console\\Cursor::hide` methods on the cursor.

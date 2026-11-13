@@ -8,7 +8,7 @@ generate a response based on the authentication state:
 
 * **If the user is not authenticated** (or authenticated anonymously), an
   authentication entry point is used to generate a response (typically
-  a redirect to the login page or an *401 Unauthorized* response);
+  a redirect to the login page or a *401 Unauthorized* response);
 * **If the user is authenticated, but does not have the required
   permissions**, a *403 Forbidden* response is generated.
 

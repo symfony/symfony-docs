@@ -10,19 +10,19 @@ It comes with the following features:
 * Sets by default a consistent locale (``C``) for your tests (you can
   :ref:`change this locale <phpunit-bridge-locale>` if needed);
 
-* Auto-register ``class_exists`` to load Doctrine annotations (when used);
+* Auto-registers ``class_exists`` to load Doctrine annotations (when used);
 
 * It displays the whole list of deprecated features used in the application;
 
-* Displays the stack trace of a deprecation on-demand;
+* Displays the stack trace of a deprecation on demand;
 
-* Provides a ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
+* Provides the ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
   sensitive to time, network or class existence;
 
 * Provides a modified version of PHPUnit that allows:
 
-  #. separating the dependencies of your app from those of phpunit to prevent any unwanted constraints to apply;
-  #. running tests in parallel when a test suite is split in several phpunit.xml files;
+  #. separating the dependencies of your app from those of phpunit to prevent any unwanted constraints from applying;
+  #. running tests in parallel when a test suite is split into several phpunit.xml files;
   #. recording and replaying skipped tests;
 
 * It allows you to create tests that are compatible with multiple PHPUnit versions
@@ -286,10 +286,10 @@ Value              Recommended situation
 Ignoring Deprecations
 .....................
 
-If your application has some deprecations that you can't fix for some reasons,
+If your application has some deprecations that you can't fix for some reason,
 you can tell Symfony to ignore them.
 
-You need first to create a text file where each line is a deprecation to ignore
+First, you need to create a text file where each line is a deprecation to ignore
 defined as a regular expression. Lines beginning with a hash (``#``) are
 considered comments:
 
@@ -314,7 +314,7 @@ You can also take a snapshot of deprecations currently triggered by your applica
 code, and ignore those during your test runs, still reporting newly added ones.
 To do so, create a file with the allowed deprecations and define it as the
 "deprecation baseline". Deprecations inside that file are ignored but the rest of
-deprecations are still reported.
+the deprecations are still reported.
 
 First, generate the file with the allowed deprecations (run the same command
 whenever you want to update the existing file):
@@ -362,7 +362,7 @@ Disabling the Deprecation Helper
 
 Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled=1``
 to completely disable the deprecation helper. This is useful to make use of the
-rest of features provided by this component without getting errors or messages
+rest of the features provided by this component without getting errors or messages
 related to deprecations.
 
 Deprecation Notices at Autoloading Time
@@ -489,7 +489,7 @@ configuration file:
         </php>
     </phpunit>
 
-Finally, if you want to avoid the bridge to force any locale, you can set the
+Finally, if you want to prevent the bridge from forcing any locale, set the
 ``SYMFONY_PHPUNIT_LOCALE`` environment variable to ``0``.
 
 .. _write-assertions-about-deprecations:
@@ -621,7 +621,7 @@ You calculated the duration time of your process using the Stopwatch utilities t
 on the load of the server or the processes running on your local machine, the
 ``$duration`` could for example be ``10.000023s`` instead of ``10s``.
 
-This kind of tests are called transient tests: they are failing randomly
+These tests are called transient tests: they fail randomly
 depending on spurious and external circumstances. They often cause trouble
 when using public continuous integration services like `Travis CI`_.
 
@@ -631,7 +631,7 @@ Clock Mocking
 The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``,
 ``sleep()``, ``usleep()``, ``gmdate()``, ``hrtime()``, and ``strtotime()``.
-Additionally the function ``date()`` is mocked so it uses the mocked time if no
+Additionally, the function ``date()`` is mocked so it uses the mocked time if no
 timestamp is specified.
 
 Other functions with an optional timestamp parameter that defaults to ``time()``
@@ -732,7 +732,7 @@ And that's all!
 .. warning::
 
     Time-based function mocking follows the `PHP namespace resolutions rules`_
-    so "fully qualified function calls" (e.g ``\time()``) cannot be mocked.
+    so "fully qualified function calls" (e.g. ``\time()``) cannot be mocked.
 
 The ``@group time-sensitive`` annotation is equivalent to calling
 ``ClockMock::register(MyTest::class)``. If you want to mock a function used in a
@@ -928,8 +928,8 @@ are installed during tests) would look like::
         }
     }
 
-In order to test the default behavior instead use the
-``ClassExistsMock::withMockedClasses()`` to configure the expected
+In order to test the default behavior instead, use the
+``ClassExistsMock::withMockedClasses()`` method to configure the expected
 classes, interfaces and/or traits for the code to run::
 
     use MyClass;
@@ -958,7 +958,7 @@ and :phpfunction:`trait_exists` return true.
 
 To register an enumeration and mock :phpfunction:`enum_exists`,
 ``ClassExistsMock::withMockedEnums()`` must be used. Note that, like in
-PHP 8.1 and later, calling ``class_exists`` on a enum will return ``true``.
+PHP 8.1 and later, calling ``class_exists`` on an enum will return ``true``.
 That's why calling ``ClassExistsMock::withMockedEnums()`` will also register the enum
 as a mocked class.
 
@@ -968,7 +968,7 @@ Troubleshooting
 The ``@group time-sensitive`` and ``@group dns-sensitive`` annotations work
 "by convention" and assume that the namespace of the tested class can be
 obtained just by removing the ``Tests\`` part from the test namespace. I.e.
-if your test cases fully-qualified class name (FQCN) is
+if your test case's fully-qualified class name (FQCN) is
 ``App\Tests\Watch\DummyWatchTest``, it assumes the tested class namespace
 is ``App\Watch``.
 
@@ -1000,7 +1000,7 @@ Internally, a PHPUnit listener injects the mocked functions in the tested
 classes' namespace. In order to work as expected, the listener has to run before
 the tested class ever runs.
 
-By default, the mocked functions are created when the annotation are found and
+By default, the mocked functions are created when the annotations are found and
 the corresponding tests are run. Depending on how your tests are constructed,
 this might be too late.
 
@@ -1043,8 +1043,8 @@ its ``bin/simple-phpunit`` command. It has the following features:
 * Does not embed ``prophecy`` to prevent any conflicts with its dependencies;
 * Collects and replays skipped tests when the ``SYMFONY_PHPUNIT_SKIPPED_TESTS``
   env var is defined: the env var should specify a file name that will be used for
-  storing skipped tests on a first run, and replay them on the second run;
-* Parallelizes test suites execution when given a directory as argument, scanning
+  storing skipped tests on a first run and replaying them on the second run;
+* Parallelizes test suite execution when given a directory as an argument, scanning
   this directory for ``phpunit.dist.xml`` files up to ``SYMFONY_PHPUNIT_MAX_DEPTH``
   levels (specified as an env var, defaults to ``3``);
 
@@ -1084,7 +1084,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     It is also possible to require additional packages that will be installed along
     with the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
-    env variable. This is specially useful for installing PHPUnit plugins without
+    env variable. This is especially useful for installing PHPUnit plugins without
     having to add them to your main ``composer.json`` file. The required packages
     need to be separated with a space.
 

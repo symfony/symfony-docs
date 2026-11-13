@@ -6,7 +6,7 @@ The Intl Component
 .. seealso::
 
     This article explains how to use the Intl features as an independent component
-    in any PHP application. Read the :doc:`/translation` article to learn about
+    in any PHP application. Read the :doc:`/translation` article to learn
     how to internationalize and manage the user locale in Symfony applications.
 
 Installation
@@ -32,7 +32,7 @@ This component provides the following ICU data:
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Intl\\Languages` class provides access to the name of all languages
+The :class:`Symfony\\Component\\Intl\\Languages` class provides access to the names of all languages
 according to the `ISO 639-1 alpha-2`_ list and the `ISO 639-2 alpha-3 (2T)`_ list::
 
     use Symfony\Component\Intl\Languages;
@@ -119,7 +119,7 @@ Country Names
 ~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\Intl\\Countries` class provides access to the
-name of all countries according to the `ISO 3166-1 alpha-2`_ list and the
+names of all countries according to the `ISO 3166-1 alpha-2`_ list and the
 `ISO 3166-1 alpha-3`_ list of officially recognized countries and territories::
 
     use Symfony\Component\Intl\Countries;
@@ -178,7 +178,7 @@ The `ISO 3166-1 numeric`_ standard defines three-digit country codes to represen
 countries, dependent territories, and special areas of geographical interest.
 
 The main advantage over the ISO 3166-1 alphabetic codes (alpha-2 and alpha-3) is
-that these numeric codes are independent from the writing system. The alphabetic
+that these numeric codes are independent of the writing system. The alphabetic
 codes use the 26-letter English alphabet, which might be unavailable or difficult
 to use for people and systems using non-Latin scripts (e.g. Arabic or Japanese).
 
@@ -215,7 +215,7 @@ A locale is the combination of a language, a region and some parameters that
 define the interface preferences of the user. For example, "Chinese" is the
 language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified"
 (script) + "Macau SAR China" (region). The :class:`Symfony\\Component\\Intl\\Locales`
-class provides access to the name of all locales::
+class provides access to the names of all locales::
 
     use Symfony\Component\Intl\Locales;
 
@@ -246,7 +246,7 @@ to catching the exception, you can also check if a given locale code is valid::
 Currencies
 ~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Intl\\Currencies` class provides access to the name
+The :class:`Symfony\\Component\\Intl\\Currencies` class provides access to the names
 of all currencies as well as some of their information (symbol, fraction digits, etc.)::
 
     use Symfony\Component\Intl\Currencies;
@@ -386,7 +386,7 @@ translate into any locale with the ``getName()`` method shown earlier::
     // => ['America/Punta_Arenas', 'America/Santiago', 'Pacific/Easter']
 
 The reverse lookup is also possible thanks to the ``getCountryCode()`` method,
-which returns the code of the country where the given timezone ID belongs to::
+which returns the code of the country where the given timezone ID belongs::
 
     $countryCode = Timezones::getCountryCode('America/Vancouver');
     // => $countryCode = 'CA' (CA = Canada)
@@ -404,10 +404,10 @@ display it to users)::
     $offset = Timezones::getGmtOffset('America/Buenos_Aires'); // $offset = 'GMT-03:00'
     $offset = Timezones::getGmtOffset('Asia/Katmandu');        // $offset = 'GMT+05:45'
 
-The timezone offset can vary in time because of the `daylight saving time (DST)`_
+The timezone offset can vary over time because of the `daylight saving time (DST)`_
 practice. By default these methods use the ``time()`` PHP function to get the
-current timezone offset value, but you can pass a timestamp as their second
-arguments to get the offset at any given point in time::
+current timezone offset value, but you can pass a timestamp as the second
+argument to get the offset at any given point in time::
 
     // In 2019, the DST period in Madrid (Spain) went from March 31 to October 27
     $offset = Timezones::getRawOffset('Europe/Madrid', strtotime('March 31, 2019'));   // $offset = 3600

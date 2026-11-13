@@ -20,8 +20,8 @@ The typical steps taken while deploying a Symfony application include:
 #. Install your vendor dependencies (typically done via Composer and may be done
    before uploading);
 #. Compile your assets, if needed;
-#. Running database migrations or similar tasks to update any changed data structures;
-#. Clearing (and optionally, warming up) your cache.
+#. Run database migrations or similar tasks to update any changed data structures;
+#. Clear (and optionally, warm up) your cache.
 
 A deployment may also include other tasks, such as:
 
@@ -30,9 +30,9 @@ A deployment may also include other tasks, such as:
 * Creating a temporary staging area to build your updated setup "offline";
 * Running any tests available and :ref:`linting Twig templates <linting-twig-templates>`
   to ensure code and/or server stability;
-* Removal of any unnecessary files from the ``public/`` directory to keep your
+* Removing any unnecessary files from the ``public/`` directory to keep your
   production environment clean;
-* Clearing of external cache systems (like `Memcached`_ or `Redis`_).
+* Clearing external cache systems (like `Memcached`_ or `Redis`_).
 
 How to Deploy a Symfony Application
 -----------------------------------
@@ -44,7 +44,7 @@ Basic File Transfer
 ~~~~~~~~~~~~~~~~~~~
 
 The most basic way of deploying an application is copying the files manually
-via FTP/SCP (or similar method). This has its disadvantages as you lack control
+via FTP/SCP (or a similar method). This has its disadvantages as you lack control
 over the system as the upgrade progresses. This method also requires you
 to take some manual steps after transferring the files (see `Common Deployment Tasks`_).
 
@@ -196,7 +196,7 @@ as you normally do:
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you clear and warm-up your Symfony cache:
+Make sure you clear and warm up your Symfony cache:
 
 .. code-block:: terminal
 
@@ -233,7 +233,7 @@ setup:
 
 * Running any database migrations
 * Clearing your APCu cache
-* Add/edit CRON jobs
+* Adding/editing CRON jobs
 * Restarting your workers
 * Pushing assets to a CDN
 * :ref:`Dumping error pages as static HTML files <dumping-error-pages-as-static-html-files>`
@@ -250,7 +250,7 @@ deploying to staging, QA (Quality Assurance), running tests, etc.
 
 The use of staging, testing, QA, continuous integration, database migrations
 and the capability to roll back in case of failure are all strongly advised. There
-are simple and more complex tools and one can make the deployment as easy
+are simple and more complex tools and you can make the deployment as easy
 (or sophisticated) as your environment requires.
 
 Don't forget that deploying your application also involves updating any dependency

@@ -33,7 +33,7 @@ depending on your needs:
 #. If you also want to tweak the logic used by Symfony to generate error pages,
    :ref:`override the default error controller <custom-error-controller>`;
 
-#. If you need total control of exception handling to run your own logic
+#. If you need total control of exception handling to run your own logic,
    :ref:`use the kernel.exception event <use-kernel-exception-event>`.
 
 .. _use-default-error-controller:
@@ -112,7 +112,7 @@ store the HTTP status code and message respectively.
     and its required ``getStatusCode()`` method. Otherwise, the ``status_code``
     will default to ``500``.
 
-Additionally you have access to the :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
+Additionally, you have access to the :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
 object via the ``exception`` Twig variable. For example, if the exception sets a
 message (e.g. using ``throw $this->createNotFoundException('The product does not exist')``),
 use ``{{ exception.message }}`` to print that message. You can also output the
@@ -129,7 +129,7 @@ Security & 404 Pages
 
 Due to the order of how routing and security are loaded, security information will
 *not* be available on your 404 pages. This means that it will appear as if your
-user is logged out on the 404 page (it will work while testing, but not on production).
+user is logged out on the 404 page (it will work while testing, but not in production).
 
 .. _testing-error-pages:
 
@@ -175,14 +175,14 @@ automatically when installing ``symfony/framework-bundle``):
 
 With this route added, you can use URLs like these to preview the *error* page
 for a given status code as HTML or for a given status code and format (you might
-need to replace ``http://localhost/`` by the host used in your local setup):
+need to replace ``http://localhost/`` with the host used in your local setup):
 
 * ``http://localhost/_error/{statusCode}`` for HTML
 * ``http://localhost/_error/{statusCode}.{format}`` for any other format
 
 .. _overriding-non-html-error-output:
 
-Overriding Error Output for non-HTML Formats
+Overriding Error Output for Non-HTML Formats
 --------------------------------------------
 
 To override non-HTML error output, the Serializer component needs to be installed.
@@ -307,7 +307,7 @@ time and again, you can have just one (or several) listeners deal with them.
 
 .. tip::
 
-    See :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener`
+    See the :class:`Symfony\\Component\\Security\\Http\\Firewall\\ExceptionListener`
     class code for a real example of an advanced listener of this type. This
     listener handles various security-related exceptions that are thrown in
     your application (like :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`)

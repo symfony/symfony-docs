@@ -244,7 +244,7 @@ Inside the template, you can output the list of errors exactly as needed:
 
 .. note::
 
-    Each validation error (called a "constraint violation"), is represented by
+    Each validation error (called a "constraint violation") is represented by
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object. This
     object allows you, among other things, to get the constraint that caused this
     violation thanks to the ``ConstraintViolation::getConstraint()`` method.
@@ -261,7 +261,7 @@ If you have lots of validation errors, you can filter them by error code::
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 
-The ``Validation`` also allows you to create a closure to validate values
+The ``Validation`` class also allows you to create a closure to validate values
 against a set of constraints (useful for example when
 :ref:`validating Console command answers <console-validate-question-answer>` or
 when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
@@ -559,7 +559,7 @@ class to have at least 3 characters.
 
 .. warning::
 
-    The validator will use a value ``null`` if a typed property is uninitialized.
+    The validator will use the ``null`` value if a typed property is uninitialized.
     This can cause unexpected behavior if the property holds a value when initialized.
     In order to avoid this, make sure all properties are initialized before validating them.
 
@@ -678,7 +678,7 @@ will always merge the parent constraints for each property.
 
 You can't change this behavior, but you can overcome it by defining the parent
 and the child constraints in different :doc:`validation groups </validation/groups>`
-and then select the appropriate group when validating each object.
+and then selecting the appropriate group when validating each object.
 
 .. _validation-extends-validation:
 

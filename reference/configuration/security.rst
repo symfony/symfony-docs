@@ -191,7 +191,7 @@ application:
                     # 'pattern' is a regular expression matched against the incoming
                     # request URL. If there's a match, authentication is triggered
                     pattern: ^/admin
-                    # the rest of options depend on the authentication mechanism
+                    # the other options depend on the authentication mechanism
                     # ...
 
     .. code-block:: php
@@ -209,7 +209,7 @@ application:
                         // 'pattern' is a regular expression matched against the incoming
                         // request URL. If there's a match, authentication is triggered
                         'pattern' => '^/admin',
-                        // the rest of options depend on the authentication mechanism
+                        // the other options depend on the authentication mechanism
                         // ...
                     ],
                 ],
@@ -259,7 +259,7 @@ depend on the authentication mechanism, which can be any of these:
                     remember_me:
                         # ...
 
-You can view actual information about the firewalls in your application with
+You can view current information about the firewalls in your application with
 the ``debug:firewall`` command:
 
 .. code-block:: terminal
@@ -292,7 +292,7 @@ This is the route or path that the user will be redirected to (unless ``use_forw
 is set to ``true``) when they try to access a protected resource but aren't
 fully authenticated.
 
-This path **must** be accessible by a normal, unauthenticated user, else
+This path **must** be accessible by a normal, unauthenticated user, otherwise
 you might create a redirect loop.
 
 check_path
@@ -377,7 +377,7 @@ default_target_path
 **type**: ``string`` **default**: ``/``
 
 The page users are redirected to when there is no previous page stored in the
-session (for example, when the users browse the login page directly).
+session (for example, when users browse to the login page directly).
 
 target_path_parameter
 .....................
@@ -549,7 +549,7 @@ target
 
 The relative path (if the value starts with ``/``), or absolute URL (if it
 starts with ``http://`` or ``https://``) or the route name (otherwise) to
-redirect after logout.
+redirect to after logout.
 
 .. _reference-security-logout-csrf:
 
@@ -559,7 +559,7 @@ enable_csrf
 **type**: ``boolean`` **default**: ``null``
 
 Set this option to ``true`` to enable CSRF protection in the logout process
-using Symfony's default CSRF token manager. Set also the ``csrf_token_manager``
+using Symfony's default CSRF token manager. Also set the ``csrf_token_manager``
 option if you need to use a custom CSRF token manager.
 
 csrf_parameter
@@ -686,8 +686,8 @@ You can authenticate to an LDAP server using the LDAP variants of the
 ``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap``, which will
 attempt to ``bind`` against an LDAP server instead of using password comparison.
 
-Both authentication providers have the same arguments as their normal
-counterparts, with the addition of two configuration keys:
+All these authentication providers have the same arguments as their normal
+counterparts, with the addition of these configuration keys:
 
 service
 .......
@@ -1234,7 +1234,7 @@ multiple firewalls, the "context" could actually be shared:
 
 .. note::
 
-    The firewall context key is stored in session, so every firewall using it
+    The firewall context key is stored in the session, so every firewall using it
     must set its ``stateless`` option to ``false``. Otherwise, the context is
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
@@ -1527,14 +1527,14 @@ providers
 ---------
 
 This option defines how the application users are loaded (from a database,
-an LDAP server, a configuration file, etc.) Read
+an LDAP server, a configuration file, etc.). Read
 :doc:`/security/user_providers` to learn more about each of those
 providers.
 
 role_hierarchy
 --------------
 
-Instead of associating many roles to users, this option allows you to define
+Instead of associating many roles with users, this option allows you to define
 role inheritance rules by creating a role hierarchy, as explained in
 :ref:`security-role-hierarchy`.
 

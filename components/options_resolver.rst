@@ -452,10 +452,10 @@ if you need to use other options during normalization::
     }
 
 To normalize a new allowed value in subclasses that are being normalized
-in parent classes, use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addNormalizer` method.
+in parent classes, use the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addNormalizer` method.
 This way, the ``$value`` argument will receive the previously normalized
-value, otherwise you can prepend the new normalizer by passing ``true`` as
-third argument.
+value. Otherwise, you can prepend the new normalizer by passing ``true`` as
+the third argument.
 
 Default Values that Depend on another Option
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -540,7 +540,7 @@ Options without Default Values
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In some cases, it is useful to define an option without setting a default value.
-This is useful if you need to know whether or not the user *actually* set
+This is useful if you need to know whether the user *actually* set
 an option or not. For example, if you set the default value for an option,
 it's not possible to know whether the user passed this value or if it comes
 from the default::
@@ -685,7 +685,7 @@ default value::
 Nested options also support required options, validation (type, value) and
 normalization of their values. If the default value of a nested option depends
 on another option defined in the parent level, add a second ``Options`` argument
-to the closure to access to them::
+to the closure to access them::
 
     class Mailer
     {
@@ -709,7 +709,7 @@ to the closure to access to them::
     ``Options`` respectively. Otherwise, the closure itself is considered as the
     default value of the option.
 
-In same way, parent options can access to the nested options as normal arrays::
+In the same way, parent options can access the nested options as normal arrays::
 
     class Mailer
     {
@@ -745,7 +745,7 @@ options that may repeat many times within another option. Let's imagine a
 ``connections`` option that will accept an array of database connections
 with ``host``, ``database``, ``user`` and ``password`` each.
 
-The best way to implement this is to define the ``connections`` option as prototype::
+The best way to implement this is to define the ``connections`` option as a prototype::
 
     $resolver->setOptions('connections', function (OptionsResolver $connResolver): void {
         $connResolver
@@ -785,7 +785,7 @@ connections.
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Once an option is outdated or you decided not to maintain it anymore, you can
+Once an option is outdated or you decide not to maintain it anymore, you can
 deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
 method::
 
@@ -880,9 +880,9 @@ Chaining Option Configurations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In many cases you may need to define multiple configurations for each option.
-For example, suppose the ``InvoiceMailer`` class has an ``host`` option that is required
+For example, suppose the ``InvoiceMailer`` class has a ``host`` option that is required
 and a ``transport`` option which can be one of ``sendmail``, ``mail`` and ``smtp``.
-You can improve the readability of the code avoiding to duplicate option name for
+You can improve the readability of the code by avoiding duplicating the option name for
 each configuration using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define`
 method::
 
@@ -943,7 +943,7 @@ can change your code to do the configuration only once per class::
     }
 
 Now the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` instance
-will be created once per class and reused from that on. Be aware that this may
+will be created once per class and reused from then on. Be aware that this may
 lead to memory leaks in long-running applications, if the default options contain
 references to objects or object graphs. If that's the case for you, implement a
 method ``clearOptionsConfig()`` and call it periodically::

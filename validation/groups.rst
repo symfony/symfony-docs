@@ -1,7 +1,7 @@
-How to Apply only a Subset of all Your Validation Constraints (Validation Groups)
+How to Apply Only a Subset of All Your Validation Constraints (Validation Groups)
 =================================================================================
 
-By default, when validating an object all constraints of this class will
+By default, when validating an object, all constraints of this class will
 be checked whether or not they actually pass. In some cases, however, you
 will need to validate an object against only *some* constraints on that class.
 To do this, you can organize each constraint into one or more "validation
@@ -161,7 +161,7 @@ the class name or the string ``Default``.
 
     If you have inheritance (e.g. ``User extends BaseUser``) and you validate
     with the class name of the subclass (i.e. ``User``), then all constraints
-    in the ``User`` and ``BaseUser`` will be validated. However, if you
+    in the ``User`` and ``BaseUser`` classes will be validated. However, if you
     validate using the base class (i.e. ``BaseUser``), then only the default
     constraints in the ``BaseUser`` class will be validated.
 
@@ -173,6 +173,6 @@ as the third argument to the ``validate()`` method::
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.
 
-In a full stack Symfony project, you'll usually work with validation indirectly
+In a full-stack Symfony project, you'll usually work with validation indirectly
 through the form library. For information on how to use validation groups inside
 forms, see :doc:`/form/validation_groups`.

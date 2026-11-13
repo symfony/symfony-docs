@@ -7,8 +7,8 @@ heavy computations, so future requests can read it instantly instead of
 recomputing it.
 
 The Symfony Cache component implements both the `PSR-6`_ standard and the
-simpler `Cache Contracts`_ for greatest interoperability. It's designed for
-performance and resiliency, and ships with ready to use adapters for the most
+simpler `Cache Contracts`_ for the greatest interoperability. It's designed for
+performance and resiliency, and ships with ready-to-use adapters for the most
 common caching backends: Redis, Memcached, APCu, relational databases, the
 filesystem, etc. It also provides advanced features such as tag-based
 invalidation and cache :ref:`stampede prevention <cache_stampede-prevention>`.
@@ -126,7 +126,7 @@ application, create the pool by instantiating one of the
 
 Now you can retrieve and delete cached data using this object. The first
 argument of the ``get()`` method is a key, an arbitrary string that you
-associate to the cached value so you can retrieve it later. The second argument
+associate with the cached value so you can retrieve it later. The second argument
 is a PHP callable which is executed when the key is not found in the cache to
 generate and return the value::
 
@@ -417,7 +417,7 @@ You can also create more customized pools:
                     acme.cache:
                         adapter: cache.adapter.memcached
 
-                    # control adapter's configuration
+                    # control the adapter's configuration
                     foobar.cache:
                         adapter: cache.adapter.memcached
                         provider: 'memcached://user:password@example.com'
@@ -452,7 +452,7 @@ You can also create more customized pools:
                         'acme.cache' => [
                             'adapter' => 'cache.adapter.memcached',
                         ],
-                        // control adapter's configuration
+                        // control the adapter's configuration
                         'foobar.cache' => [
                             'adapter' => 'cache.adapter.memcached',
                             'provider' => 'memcached://user:password@example.com',
@@ -546,7 +546,7 @@ Custom Provider Options
 
 Some providers have specific options that can be configured. The
 :doc:`RedisAdapter </cache/adapters/redis_adapter>` allows you to
-create providers with the options ``timeout``, ``retry_interval``. etc. To use these
+create providers with the options ``timeout``, ``retry_interval``, etc. To use these
 options with non-default values you need to create your own ``\Redis`` provider
 and use that when configuring the pool.
 
@@ -740,7 +740,7 @@ Preventing Cache Stampede
 
 The Cache Contracts come with built-in `Stampede prevention`_. This will
 remove CPU spikes at the moments when the cache is cold. If an example application
-spends 5 seconds to compute data that is cached for 1 hour and this data is accessed
+spends 5 seconds computing data that is cached for 1 hour and this data is accessed
 10 times every second, this means that you mostly have cache hits and everything
 is fine. But after 1 hour, the application receives 10 new requests to a cold cache.
 So the data is computed again. The next second the same thing happens. So the data
@@ -1046,8 +1046,8 @@ several cached items, keeping them in sync can be difficult.
 
 The Symfony Cache component provides two mechanisms to help solve this problem:
 
-* :ref:`Tags-based invalidation <cache-using-cache-tags>` for managing data dependencies;
-* :ref:`Expiration based invalidation <cache-component-expiration>` for time-related dependencies.
+* :ref:`Tag-based invalidation <cache-using-cache-tags>` for managing data dependencies;
+* :ref:`Expiration-based invalidation <cache-component-expiration>` for time-related dependencies.
 
 .. _cache-using-cache-tags:
 .. _cache-component-tags:
@@ -1258,7 +1258,7 @@ and their invalidation version number (conceptually similar to their latest
 invalidation date). When only one adapter is used, items and tags are all stored
 in the same place. By using two adapters, you can e.g. store some big cached items
 on the filesystem or in the database and keep tags in a Redis database to sync all
-your fronts and have very fast invalidation checks::
+your front-end servers and have very fast invalidation checks::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\RedisAdapter;
@@ -1289,7 +1289,7 @@ Pruning Cache Items
 -------------------
 
 Some cache backends, such as Redis, Memcached and APCu, remove expired items
-automatically. Others, such as the filesystem or database based caches, don't
+automatically. Others, such as the filesystem or database-based caches, don't
 include a mechanism to do that. For example, the
 :doc:`FilesystemAdapter </cache/adapters/filesystem_adapter>` doesn't remove
 expired cache items *until an item is explicitly requested and determined to
@@ -1592,11 +1592,11 @@ given key::
     $latestNews = $cache->getItem('latest_news');
 
 If no item is defined for the given key, the method doesn't return a ``null``
-value but an empty object which implements the
+value but an empty object of the
 :class:`Symfony\\Component\\Cache\\CacheItem` class.
 
-If you need to fetch several cache items simultaneously, use instead the
-``getItems([$key1, $key2, ...])`` method::
+If you need to fetch several cache items simultaneously, use the
+``getItems([$key1, $key2, ...])`` method instead::
 
     $stocks = $cache->getItems(['AAPL', 'FB', 'GOOGL', 'MSFT']);
 
@@ -1679,7 +1679,7 @@ or ``false`` if some error occurred)::
 Sometimes you may prefer to not save the objects immediately in order to
 increase the application performance. In those cases, use the
 ``Psr\Cache\CacheItemPoolInterface::saveDeferred`` method to mark cache
-items as "ready to be persisted" and then call to
+items as "ready to be persisted" and then call the
 ``Psr\Cache\CacheItemPoolInterface::commit`` method when you are ready
 to persist them all::
 

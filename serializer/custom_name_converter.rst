@@ -15,7 +15,7 @@ Imagine you have the following object::
         public string $address;
     }
 
-And in the serialized form, all attributes must be prefixed by ``org_`` like
+And in the serialized form, all attributes must be prefixed with ``org_`` like
 the following:
 
 .. code-block:: json
@@ -38,7 +38,7 @@ A custom name converter can handle such cases::
 
         public function denormalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
         {
-            // remove the 'org_' prefix on denormalizing
+            // remove the 'org_' prefix when denormalizing
             return str_starts_with($propertyName, 'org_') ? substr($propertyName, 4) : $propertyName;
         }
     }
@@ -71,7 +71,7 @@ Then, configure the serializer to use your name converter:
         ]);
 
 Now, when using the serializer in the application, all attributes will be
-prefixed by ``org_``::
+prefixed with ``org_``::
 
     // ...
     $company = new Company('Acme Inc.', '123 Main Street, Big City');

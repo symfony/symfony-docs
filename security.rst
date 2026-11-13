@@ -61,7 +61,7 @@ discussed:
 
 `The Firewall`_ & `Authenticating Users`_ (``firewalls``)
     The firewall is the core of securing your application. Every request
-    within the firewall is checked if it needs an authenticated user. The
+    within the firewall is checked to see if it needs an authenticated user. The
     firewall also takes care of authenticating this user (e.g. using a
     login form);
 
@@ -279,7 +279,7 @@ based on a "user identifier" (e.g. the user's email address or username).
 The configuration above uses Doctrine to load the ``User`` entity using the
 ``email`` property as "user identifier".
 
-User providers are used in a couple places during the security lifecycle:
+User providers are used in a couple of places during the security lifecycle:
 
 **Load the User based on an identifier**
     During login (or any other authenticator), the provider loads the user
@@ -301,7 +301,7 @@ Symfony comes with several built-in user providers:
 :ref:`Entity User Provider <security-entity-user-provider>`
     Loads users from a database using :doc:`Doctrine </doctrine>`;
 :ref:`LDAP User Provider <security-ldap-user-provider>`
-    Loads users from a LDAP server;
+    Loads users from an LDAP server;
 :ref:`Memory User Provider <security-memory-user-provider>`
     Loads users from a configuration file;
 :ref:`Chain User Provider <security-chain-user-provider>`
@@ -582,7 +582,7 @@ don't accidentally block Symfony's dev tools - which live under URLs like
                 ],
             ]);
 
-A firewall can have many modes of authentication, in other words, it enables many
+A firewall can have many modes of authentication; in other words, it enables many
 ways to ask the question "Who are you?". Often, the user is unknown (i.e. not logged in)
 when they first visit your website. If you visit your homepage right now, you *will*
 have access and you'll see that you're visiting a page behind the firewall in the toolbar:
@@ -592,7 +592,7 @@ have access and you'll see that you're visiting a page behind the firewall in th
 
 Visiting a URL under a firewall doesn't necessarily require you to be authenticated
 (e.g. the login form has to be accessible or some parts of your application
-are public). On the other hand, all pages that you want to be *aware* of a logged in
+are public). On the other hand, all pages that you want to be *aware* of a logged-in
 user have to be under the same firewall. So if you want to display a *"You are logged in
 as ..."* message on every page, they all have to be included in the same firewall.
 
@@ -857,7 +857,7 @@ The form can look like anything, but it usually follows some conventions:
     :ref:`form_login-csrf` on how to protect your login form.
 
 And that's it! When you submit the form, the security system automatically
-reads the ``_username`` and ``_password`` POST parameter, loads the user via
+reads the ``_username`` and ``_password`` POST parameters, loads the user via
 the user provider, checks the user's credentials and either authenticates the
 user or sends them back to the login form where the error can be displayed.
 
@@ -866,7 +866,7 @@ To review the whole process:
 #. The user tries to access a resource that is protected (e.g. ``/admin``);
 #. The firewall initiates the authentication process by redirecting the
    user to the login form (``/login``);
-#. The ``/login`` page renders login form via the route and controller created
+#. The ``/login`` page renders the login form via the route and controller created
    in this example;
 #. The user submits the login form to ``/login``;
 #. The security system (i.e. the ``FormLoginAuthenticator``) intercepts the
@@ -946,7 +946,7 @@ After this, you have protected your login form against CSRF attacks.
 .. tip::
 
     You can change the name of the field by setting ``csrf_parameter`` and change
-    the token ID by setting  ``csrf_token_id`` in your configuration. See
+    the token ID by setting ``csrf_token_id`` in your configuration. See
     :ref:`reference-security-firewall-form-login` for more details.
 
 .. _security-json-login:
@@ -1107,7 +1107,7 @@ HTTP Basic
 ~~~~~~~~~~
 
 `HTTP Basic authentication`_ is a standardized HTTP authentication
-framework. It asks credentials (username and password) using a dialog in
+framework. It asks for credentials (username and password) using a dialog in
 the browser and the HTTP basic authenticator of Symfony will verify these
 credentials.
 
@@ -1182,7 +1182,7 @@ X.509 Client Certificates
 When using client certificates, your web server does all the authentication
 itself. The X.509 authenticator provided by Symfony extracts the email from
 the "distinguished name" (DN) of the client certificate. Then, it uses this
-email as user identifier in the user provider.
+email as the user identifier in the user provider.
 
 First, configure your web server to enable client certificate verification
 and to expose the certificate's DN to the Symfony application:
@@ -1295,7 +1295,7 @@ Remote Users
 ~~~~~~~~~~~~
 
 Besides client certificate authentication, there are more web server
-modules that pre-authenticate a user (e.g. kerberos). The remote user
+modules that pre-authenticate a user (e.g. Kerberos). The remote user
 authenticator provides a basic integration for these services.
 
 These modules often expose the authenticated user in the ``REMOTE_USER``
@@ -1448,10 +1448,10 @@ You can configure the cache pool or provide a
             ;
         };
 
-Login attempts are limited on ``max_attempts`` (default: 5)
+Login attempts are limited to ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
-failed requests for ``IP address``. The second limit protects against an
-attacker using multiple usernames from bypassing the first limit, without
+failed requests for ``IP address``. The second limit prevents an
+attacker who uses multiple usernames from bypassing the first limit, without
 disrupting normal users on big networks (such as offices).
 
 Before using the username in the first limit, Symfony trims and case-folds it,
@@ -1628,7 +1628,7 @@ You can log in a user programmatically using the ``login()`` method of the
 Logging Out
 -----------
 
-To enable logging out, activate the  ``logout`` config parameter under your firewall:
+To enable logging out, activate the ``logout`` config parameter under your firewall:
 
 .. configuration-block::
 
@@ -1699,10 +1699,10 @@ you have imported the logout route loader in your routes:
             ],
         ]);
 
-Logout programmatically
+Logout Programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-You can logout the user programmatically using the ``logout()`` method of the
+You can log out the user programmatically using the ``logout()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
 
     // src/Controller/SecurityController.php
@@ -1714,7 +1714,7 @@ You can logout the user programmatically using the ``logout()`` method of the
     {
         public function someAction(Security $security): Response
         {
-            // logout the user on the current firewall
+            // log out the user on the current firewall
             $response = $security->logout();
 
             // you can also disable the CSRF protection
@@ -1916,7 +1916,7 @@ makes the dependency on the authenticated user explicit in the method signature:
 Fetching the User from a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to get the logged in user from a service, use the
+If you need to get the logged-in user from a service, use the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
 
     // src/Service/ExampleService.php
@@ -1945,7 +1945,7 @@ If you need to get the logged in user from a service, use the
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In a Twig Template the user object is available via the ``app.user`` variable
+In a Twig template, the user object is available via the ``app.user`` variable
 thanks to the :ref:`Twig global app variable <twig-app-variable>`:
 
 .. code-block:: html+twig
@@ -2043,7 +2043,7 @@ rules by creating a role hierarchy:
         ]);
 
 Users with the ``ROLE_ADMIN`` role will also have the ``ROLE_USER`` role.
-Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
+Users with ``ROLE_SUPER_ADMIN`` will automatically have ``ROLE_ADMIN``,
 ``ROLE_ALLOWED_TO_SWITCH`` and ``ROLE_USER`` (inherited from
 ``ROLE_ADMIN``).
 
@@ -2068,7 +2068,7 @@ Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
 
 .. tip::
 
-    To help debug your roles hierarchy, you can generate a visual representation
+    To help debug your role hierarchy, you can generate a visual representation
     of it as an SVG or PNG image. First, install the free and open-source
     `Mermaid CLI`_, which provides the ``mmdc`` command, and then run:
 
@@ -2234,7 +2234,7 @@ See :doc:`/security/access_control`.
 
 .. _security-securing-controller:
 
-Securing Controllers and other Code
+Securing Controllers and Other Code
 ...................................
 
 You can deny access from inside a controller::
@@ -2311,7 +2311,7 @@ Symfony resolves it automatically from the controller method signature:
     }
 
 If you want to use a custom status code instead of the default one (which
-is 403), this can be done by setting with the ``statusCode`` argument::
+is 403), this can be done by setting the ``statusCode`` argument::
 
     // src/Controller/AdminController.php
     // ...
@@ -2423,7 +2423,7 @@ permission in :ref:`your custom security voters <creating-the-custom-voter>`:
 
 .. _security-isgrantedforuser:
 
-Securing other Services
+Securing Other Services
 .......................
 
 You can check access *anywhere* in your code by injecting the ``Security``
@@ -2515,7 +2515,7 @@ When a visitor isn't yet logged in to your website, they are treated as
 visiting your pages if you defined an ``access_control`` rule.
 
 In the ``access_control`` configuration, you can use the ``PUBLIC_ACCESS``
-security attribute to exclude some routes for unauthenticated access (e.g.
+security attribute to allow unauthenticated access to some routes (e.g.
 the login page):
 
 .. configuration-block::
@@ -2586,7 +2586,7 @@ Setting Individual User Permissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most applications require more specific access rules. For instance, a user
-should be able to only edit their *own* comments on a blog. Voters allow you
+should only be able to edit their *own* comments on a blog. Voters allow you
 to write *whatever* business logic you need to determine access. Using
 these voters is similar to the role-based access checks implemented in the
 previous chapters. Read :doc:`/security/voters` to learn how to implement
@@ -2613,7 +2613,7 @@ Secondly, you can use the special "attribute" ``IS_AUTHENTICATED`` in place of a
         // ...
     }
 
-You can use ``IS_AUTHENTICATED`` anywhere roles are used: like
+You can use ``IS_AUTHENTICATED`` anywhere roles are used, like in
 ``access_control`` or in Twig.
 
 ``IS_AUTHENTICATED`` isn't a role, but it kind of acts like one, and every
@@ -2625,7 +2625,7 @@ like this:
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
 * ``IS_REMEMBERED``: *Only* users authenticated using the
-  :doc:`remember me functionality </security/remember_me>`, (i.e. a
+  :doc:`remember me functionality </security/remember_me>` (i.e. a
   remember-me cookie).
 
 * ``IS_IMPERSONATOR``: When the current user is
@@ -2634,7 +2634,7 @@ like this:
 
 .. _user_session_refresh:
 
-Understanding how Users are Refreshed from the Session
+Understanding How Users Are Refreshed from the Session
 ------------------------------------------------------
 
 At the end of every request (unless your firewall is ``stateless``), your
@@ -2678,8 +2678,8 @@ successfully, but you immediately lose authentication after the first redirect.
 
 In that case, review the serialization logic (e.g. the ``__serialize()`` or
 ``serialize()`` methods) on your user class (if you have any) to make sure
-that all the fields necessary are serialized and also exclude all the
-fields not necessary to be serialized (e.g. Doctrine relations).
+that all the necessary fields are serialized and that all the fields that don't need
+to be serialized are excluded (e.g. Doctrine relations).
 
 Comparing Users Manually with EquatableInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2706,7 +2706,7 @@ for these events.
     both the global and the firewall-specific dispatcher. You can register
     on the firewall dispatcher if you want your listener to only be
     called for a specific firewall. For instance, if you have an ``api``
-    and ``main`` firewall, use this configuration to register only on the
+    and a ``main`` firewall, use this configuration to register only on the
     logout event in the ``main`` firewall:
 
     .. configuration-block::
@@ -2755,8 +2755,8 @@ Authentication Events
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\AuthenticationTokenCreatedEvent`
     Dispatched after the passport was validated and the authenticator
-    created the security token (and user). This can be used in advanced use-cases
-    where you need to modify the created token (e.g. for multi factor
+    created the security token (and user). This can be used in advanced use cases
+    where you need to modify the created token (e.g. for multi-factor
     authentication).
 
 :class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSuccessEvent`
@@ -2800,7 +2800,7 @@ Frequently Asked Questions
 **Can I have Multiple Firewalls?**
     Yes! However, each firewall is like a separate security system: being authenticated
     in one firewall doesn't make you authenticated in another one. Each firewall can have
-    multiple ways of allowing authentication (e.g. form login, and API key authentication).
+    multiple ways of allowing authentication (e.g. form login and API key authentication).
     If you want to share authentication between firewalls, you have to explicitly
     specify the same :ref:`reference-security-firewall-context` for different firewalls.
 

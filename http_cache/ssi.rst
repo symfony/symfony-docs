@@ -3,7 +3,7 @@
 Working with Server Side Includes
 =================================
 
-In a similar way as :doc:`ESI (Edge Side Includes) </http_cache/esi>`,
+In a similar way to :doc:`ESI (Edge Side Includes) </http_cache/esi>`,
 SSI can be used to control HTTP caching on fragments of a response.
 The most important difference is that SSI is known directly by most
 web servers like `Apache`_, `Nginx`_ etc.
@@ -29,11 +29,11 @@ Symfony manages only the ``#include virtual`` one.
 
 .. danger::
 
-    Be careful with SSI, your website may fall victim to injections.
+    Be careful with SSI: your website may fall victim to injections.
     Please read this `OWASP article`_ first!
 
-When the web server reads an SSI directive, it requests the given URI or gives
-directly from its cache. It repeats this process until there is no more
+When the web server reads an SSI directive, it requests the given URI or serves it
+directly from its cache. It repeats this process until there are no more
 SSI directives to handle. Then, it merges all responses into one and sends
 it to the client.
 
@@ -129,23 +129,23 @@ The profile index page does not have public caching, but the GDPR block has
     {# you can use a controller reference #}
     {{ render_ssi(controller('App\\Controller\\ProfileController::gdpr')) }}
 
-    {# ... or a path (in server's SSI configuration is common to use relative paths instead of absolute URLs) #}
+    {# ... or a path (it's common to use relative paths instead of absolute URLs in the server's SSI configuration) #}
     {{ render_ssi(path('profile_gdpr')) }}
 
-The ``render_ssi`` twig helper will generate something like:
+The ``render_ssi`` Twig helper will generate something like:
 
 .. code-block:: html
 
     <!--#include virtual="/_fragment?_hash=abcdef1234&_path=_controller=App\Controller\ProfileController::gdpr" -->
 
-``render_ssi`` ensures that SSI directive is generated only if the request
+``render_ssi`` ensures that the SSI directive is generated only if the request
 has the header requirement like ``Surrogate-Capability: device="SSI/1.0"``
 (normally given by the web server).
-Otherwise it will embed directly the sub-response.
+Otherwise, it embeds the sub-response directly.
 
 .. note::
 
-    For more information about Symfony cache fragments, take a tour on
+    For more information about Symfony cache fragments, read
     the :ref:`ESI documentation <http_cache-fragments>`.
 
 .. _`Apache`: https://httpd.apache.org/docs/current/en/howto/ssi.html

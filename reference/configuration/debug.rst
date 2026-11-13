@@ -83,5 +83,5 @@ theme
 
 **type**: ``string`` **default**: ``dark``
 
-Changes the color of the ``dump()`` output when rendered directly on the
-templating. The value of this option can be ``dark`` or ``light``.
+Changes the color of the ``dump()`` output when rendered directly in templates.
+The value of this option can be ``dark`` or ``light``.

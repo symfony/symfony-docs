@@ -2,7 +2,7 @@ IdenticalTo
 ===========
 
 Validates that a value is identical to another value, defined in the options.
-To force that a value is *not* identical, see
+To validate that a value is *not* identical, see
 :doc:`/reference/constraints/NotIdenticalTo`.
 
 .. warning::

@@ -117,7 +117,7 @@ Parameter        Description
 **type**: ``mixed``
 
 This option is required and represents the name of the number scheme used
-to validate the credit card number, it can either be a string or an array.
+to validate the credit card number. It can be either a string or an array.
 Valid values are:
 
 * ``AMEX``
@@ -133,7 +133,7 @@ Valid values are:
 * ``UATP``
 * ``VISA``
 
-For more information about the used schemes, see
+For more information about these schemes, see
 `Wikipedia: Issuer identification number (IIN)`_.
 
 .. _`Wikipedia: Issuer identification number (IIN)`: https://en.wikipedia.org/wiki/Bank_card_number#Issuer_identification_number_.28IIN.29

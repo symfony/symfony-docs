@@ -68,7 +68,7 @@ must be replaced by ``rediss`` (the second ``s`` means "secure").
 
 .. note::
 
-    A `Data Source Name (DSN)`_ for this adapter must use either one of the following formats.
+    A `Data Source Name (DSN)`_ for this adapter must use one of the following formats:
 
     .. code-block:: text
 
@@ -192,9 +192,9 @@ Available Options
 
 ``class`` (type: ``string``, default: ``null``)
     Specifies the connection library to return, either ``\Redis``, ``\Relay\Relay`` or ``\Predis\Client``.
-    If none is specified, fallback value is in following order, depending which one is available first:
-    ``\Redis``, ``\Relay\Relay``, ``\Predis\Client``. Explicitly set this to ``\Predis\Client`` for Sentinel if you are
-    running into issues when retrieving master information.
+    If none is specified, the fallback value is chosen in the following order, depending on which one is
+    available first: ``\Redis``, ``\Relay\Relay``, ``\Predis\Client``. Explicitly set this to ``\Predis\Client`` for Sentinel
+    if you are running into issues when retrieving master information.
 
 ``auth`` (type: ``string|string[]``, default: ``null``)
     Specifies the authentication credentials for the Redis connection. Use a string
@@ -254,7 +254,7 @@ Available Options
 
 ``failover`` (type: ``string``, default: ``none``)
     Specifies failover for cluster implementations. For ``\RedisCluster`` valid options are ``none`` (default),
-    ``error``, ``distribute`` or ``slaves``.  For ``\Predis\ClientInterface`` valid options are ``slaves``
+    ``error``, ``distribute`` or ``slaves``. For ``\Predis\ClientInterface`` valid options are ``slaves``
     or ``distribute``.
 
 ``ssl`` (type: ``array``, default: ``null``)
@@ -262,7 +262,7 @@ Available Options
 
 ``relay_cluster_context`` (type: ``array``, default: ``[]``)
     Defines configuration options specific to ``\Relay\Cluster``. For example, to
-    use a self-signed certificate for testing in local environment::
+    use a self-signed certificate for testing in a local environment::
 
         $options = [
             // ...
@@ -289,7 +289,7 @@ Available Options
 Configuring Redis
 -----------------
 
-When using Redis as cache, you should configure the ``maxmemory`` and ``maxmemory-policy``
+When using Redis as a cache, you should configure the ``maxmemory`` and ``maxmemory-policy``
 settings. By setting ``maxmemory``, you limit how much memory Redis is allowed to consume.
 If the amount is too low, Redis will drop entries that would still be useful and you benefit
 less from your cache. Setting the ``maxmemory-policy`` to ``allkeys-lru`` tells Redis that
@@ -307,7 +307,7 @@ Working with Tags
 
 In order to use tag-based invalidation, you can wrap your adapter in
 :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`. However, when Redis
-is used as backend, it's often more interesting to use the dedicated
+is used as the backend, it's often better to use the dedicated
 :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag
 invalidation logic is implemented in Redis itself, this adapter offers better
 performance when using tag-based invalidation::
@@ -326,8 +326,8 @@ performance when using tag-based invalidation::
 
 Read more about this topic in the official `Redis LRU Cache Documentation`_.
 
-Working with Marshaller
------------------------
+Working with Marshallers
+------------------------
 
 TagAwareMarshaller for Tag-Based Caching
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

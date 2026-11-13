@@ -2,7 +2,7 @@ Cidr
 ====
 
 Validates that a value is a valid `CIDR`_ (Classless Inter-Domain Routing) notation.
-By default, this will validate the CIDR's IP and netmask both for version 4 and 6,
+By default, this will validate the CIDR's IP and netmask for both versions 4 and 6,
 with the option of allowing only one type of IP version to be valid. It also supports
 a minimum and maximum range constraint in which the value of the netmask is valid.
 
@@ -124,7 +124,7 @@ Parameter        Description
 **type**: ``string`` **default**: ``all``
 
 This determines exactly *how* the CIDR notation is validated and can take one
-of :ref:`IP version ranges <reference-constraint-ip-version>`.
+of the :ref:`IP version ranges <reference-constraint-ip-version>`.
 
 .. note::
 

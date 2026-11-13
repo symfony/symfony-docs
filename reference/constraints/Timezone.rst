@@ -97,7 +97,7 @@ The value of this option must be a valid `ISO 3166-1 alpha-2`_ country code
 
 This constraint considers valid both the `PHP timezone identifiers`_ and the
 :ref:`ICU timezones <component-intl-timezones>` provided by Symfony's
-:doc:`Intl component </components/intl>`
+:doc:`Intl component </components/intl>`.
 
 However, the timezones provided by the Intl component can be different from the
 timezones provided by PHP's Intl extension (because they use different ICU

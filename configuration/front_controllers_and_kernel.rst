@@ -2,7 +2,7 @@ Understanding how the Front Controller, Kernel and Environments Work together
 =============================================================================
 
 The :ref:`configuration environments <configuration-environments>` section
-explained the basics on how Symfony uses environments to run your application
+explained the basics of how Symfony uses environments to run your application
 with different configuration settings. This section will explain a bit more
 in-depth what happens when your application is bootstrapped. To hook into this
 process, you need to understand three parts that work together:
@@ -49,7 +49,7 @@ You can choose the front controller that's used by adding it in the URL, like:
      http://localhost/index.php/some/path/...
 
 As you can see, this URL contains the PHP script to be used as the front
-controller. You can use that to switch to a custom made front controller
+controller. You can use that to switch to a custom-made front controller
 that is located in the ``public/`` directory.
 
 .. seealso::
@@ -91,8 +91,8 @@ you must implement them all:
     and services.
 
 To fill these (small) blanks, your application needs to extend the Kernel class
-and use the MicroKernelTrait to implement these methods. Symfony provides by
-default that kernel in the ``src/Kernel.php`` file.
+and use the MicroKernelTrait to implement these methods. By default, Symfony provides
+this kernel in the ``src/Kernel.php`` file.
 
 This class uses the name of the environment - which is passed to the Kernel's
 :method:`constructor <Symfony\\Component\\HttpKernel\\Kernel::__construct>`
@@ -105,7 +105,7 @@ new kernel.
 
 .. note::
 
-    The name and location of the ``Kernel`` is not fixed. When putting
+    The name and location of the ``Kernel`` are not fixed. When putting
     :doc:`multiple kernels into a single application </configuration/multiple_kernels>`,
     it might therefore make sense to add additional sub-directories, for example
     ``src/admin/AdminKernel.php`` and ``src/api/ApiKernel.php``. All that matters
@@ -217,8 +217,8 @@ More technically, these names are nothing more than strings passed from the
 front controller to the ``Kernel``'s constructor. This name can then be used in
 the ``configureContainer()`` method to decide which configuration files to load.
 
-Symfony's default ``Kernel`` class implements this method by loading first the
-config files found on ``config/packages/*`` and then, the files found on
+Symfony's default ``Kernel`` class implements this method by first loading the
+config files found in ``config/packages/*`` and then the files found in
 ``config/packages/ENVIRONMENT_NAME/``. You are free to implement this method
 differently if you need a more sophisticated way of loading your configuration.
 

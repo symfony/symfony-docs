@@ -98,7 +98,7 @@ bind
 
 **type**: ``array`` **default**: ``[]``
 
-Defines the values that Symfony injects in the arguments of the services. Keys
+Defines the values that Symfony injects into the arguments of the services. Keys
 can be argument names (``$variableName``), types (``Some\Class\Name``) or both
 (``Some\Class\Name $variableName``). These bindings are merged with the
 per-service :ref:`bind <reference-services-bind>` option. Read more in
@@ -487,7 +487,7 @@ from_callable
 
 Creates the service by calling ``Closure::fromCallable()`` with the given
 callable, so the service is a ``Closure``. When `class`_ is set to an
-interface with a single method, Symfony creates instead an object that
+interface with a single method, Symfony instead creates an object that
 implements that interface and calls the given callable. It can't be combined
 with `factory`_. Read more in :ref:`autowiring_closures`.
 

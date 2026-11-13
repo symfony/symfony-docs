@@ -69,7 +69,7 @@ Basic Usage
         }
 
 This constraint doesn't check that the host of the given URL really exists,
-because the information of the DNS records is not reliable. Use the
+because DNS records are not reliable. Use the
 :phpfunction:`checkdnsrr` PHP function if you still want to check that.
 
 .. include:: /reference/constraints/_empty-values-are-valid.rst.inc
@@ -249,8 +249,8 @@ The value of this option can also be an asterisk (``*``) to allow all protocols:
 **type**: ``boolean`` **default**: ``false``
 
 If ``true``, the protocol is considered optional when validating the syntax of
-the given URL. This means that both ``http://`` and ``https://`` are valid but
-also relative URLs that contain no protocol (e.g. ``//example.com``).
+the given URL. This means that not only ``http://`` and ``https://`` URLs are valid
+but also relative URLs that contain no protocol (e.g. ``//example.com``).
 
 .. configuration-block::
 

@@ -10,7 +10,7 @@ settings.
 
 For example, the following configuration tells the FrameworkBundle to enable the
 form integration, which involves the definition of quite a few services as well
-as integration of other related components:
+as the integration of other related components:
 
 .. configuration-block::
 
@@ -164,7 +164,7 @@ can add some configuration that looks like this:
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,
 options. As the bundle developer, you then parse through that configuration and
-load correct services and parameters inside an "Extension" class.
+load the correct services and parameters inside an "Extension" class.
 
 .. note::
 
@@ -243,7 +243,7 @@ Here's how it works. Create a ``Configuration`` class in the
 ``DependencyInjection`` directory and build a tree that defines the structure
 of your bundle's configuration.
 
-The ``Configuration`` class to handle the sample configuration looks like::
+The ``Configuration`` class to handle the sample configuration looks like this::
 
     // src/DependencyInjection/Configuration.php
     namespace Acme\SocialBundle\DependencyInjection;
@@ -381,7 +381,7 @@ In your extension, you can load this and dynamically set its arguments::
         public function load(array $configs, ContainerBuilder $container): void
         {
             $config = [];
-            // let resources override the previous set value
+            // let resources override the previously set value
             foreach ($configs as $subConfig) {
                 $config = array_merge($config, $subConfig);
             }

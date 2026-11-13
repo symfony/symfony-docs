@@ -37,7 +37,7 @@ which describe the action needed to get from one place to another.
 
 A set of places and transitions creates a **definition**. A workflow needs
 a ``Definition`` and a way to write the states to the objects (i.e. an
-instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
+instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`).
 
 Consider the following example for a blog post. A post can have these places:
 ``draft``, ``reviewed``, ``rejected``, ``published``. You could define the workflow as
@@ -226,7 +226,7 @@ you must declare a setter to write your property::
 .. note::
 
     The marking store type could be "multiple_state" or "single_state". A single
-    state marking store does not support a model being on multiple places at the
+    state marking store does not support a model being in multiple places at the
     same time. This means a "workflow" must use a "multiple_state" marking store
     and a "state_machine" must use a "single_state" marking store. Symfony
     configures the marking store according to the "type" by default, so it's
@@ -319,7 +319,7 @@ Using Enums in Workflows
 Using Enums in Workflow Definitions
 ...................................
 
-When using a state machine, you can use PHP backend enums as places in your
+When using a state machine, you can use PHP backed enums as places in your
 workflows. First, define your enum with backed values::
 
     // src/Enumeration/BlogPostStatus.php
@@ -403,7 +403,7 @@ and transitions:
         ]);
 
 The component will now transparently cast the enum to its backing value
-when needed and vice-versa when working with your objects::
+when needed and vice versa when working with your objects::
 
     // src/Entity/BlogPost.php
     namespace App\Entity;
@@ -509,7 +509,7 @@ each place could only record whether the object was there or not, like a binary 
 **Weighted transitions** introduce multiplicity: a place can now track how many
 times an object is in that place. Technically, weighted transitions allow you to
 define transitions where multiple tokens (instances) are consumed from or produced
-to places. This is useful for modeling complex workflows such as manufacturing
+in places. This is useful for modeling complex workflows such as manufacturing
 processes, resource allocation, or any scenario where multiple instances of something
 need to be produced or consumed.
 
@@ -662,7 +662,7 @@ Weighted transitions can also be defined programmatically using the
     // Build the top
     $workflow->apply($subject, 'build_top');
 
-    // Now we can join all parts
+    // Now you can join all the parts
     $workflow->apply($subject, 'join');
 
 The ``Arc`` class takes two parameters: the place name and the weight (which must be
@@ -767,7 +767,7 @@ method.
     * ``workflow.workflow``: all workflows;
     * ``workflow.state_machine``: all state machines.
 
-    Note that workflow metadata are attached to tags under the ``metadata`` key,
+    Note that workflow metadata is attached to tags under the ``metadata`` key,
     giving you more context and information about the workflow at your disposal.
     Learn more about :ref:`tag attributes <tags_additional-attributes>` and
     :ref:`storing workflow metadata <workflow_storing-metadata>`.
@@ -826,7 +826,7 @@ Using Events
 
 To make your workflows more flexible, you can construct the ``Workflow``
 object with an ``EventDispatcher``. You can now create event listeners to
-block transitions (i.e. depending on the data in the blog post) and perform
+block transitions (e.g. depending on the data in the blog post) and perform
 additional actions when a workflow operation happens (e.g. sending
 announcements).
 
@@ -926,7 +926,7 @@ order:
     then the ``workflow.[workflow_name].entered.[initial_place_name]`` event will
     be called with the default context (``Workflow::DEFAULT_INITIAL_CONTEXT``).
 
-Here is an example of how to enable logging for every time a "blog_publishing"
+Here is an example of how to log a message every time a "blog_publishing"
 workflow leaves a place::
 
     // src/EventSubscriber/WorkflowLoggerSubscriber.php
@@ -991,7 +991,7 @@ with the following attributes:
 * :class:`Symfony\\Component\\Workflow\\Attribute\\AsLeaveListener`
 * :class:`Symfony\\Component\\Workflow\\Attribute\\AsTransitionListener`
 
-These attributes do work like the
+These attributes work like the
 :class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
 attributes::
 
@@ -1025,7 +1025,7 @@ list of the guard event names.
 * ``workflow.[workflow name].guard``
 * ``workflow.[workflow name].guard.[transition name]``
 
-This example stops any blog post being transitioned to "reviewed" if it is
+This example stops any blog post from being transitioned to "reviewed" if it is
 missing a title::
 
     // src/EventSubscriber/BlogPostReviewSubscriber.php
@@ -1242,7 +1242,7 @@ transition. The value of this option is any valid expression created with the
 
 You can also use transition blockers to block and return a user-friendly error
 message when you stop a transition from happening.
-In the example we get this message from the
+In the following example, this message comes from the
 :class:`Symfony\\Component\\Workflow\\Event\\Event`'s metadata, giving you a
 central place to manage the text.
 
@@ -1268,8 +1268,8 @@ place::
                 return;
             }
 
-            // Block the transition "publish" if it is more than 8 PM
-            // with the message for end user
+            // Block the transition "publish" if it is later than 8 PM
+            // with the message for the end user
             $explanation = $event->getMetadata('explanation', $eventTransition);
             $event->addTransitionBlocker(new TransitionBlocker($explanation , '0'));
         }
@@ -1547,7 +1547,7 @@ In a :ref:`flash message <flash-messages>` in your controller::
     $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
     $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
-Metadata can also be accessed in a Listener, from the :class:`Symfony\\Component\\Workflow\\Event\\Event` object.
+Metadata can also be accessed in a listener, from the :class:`Symfony\\Component\\Workflow\\Event\\Event` object.
 
 In Twig templates, metadata is available via the ``workflow_metadata()`` function:
 
@@ -1653,7 +1653,7 @@ After implementing your validator, configure your workflow to use it:
 The ``BlogPublishingValidator`` will be executed during container compilation
 to validate the workflow definition.
 
-Learn more
+Learn More
 ----------
 
 .. toctree::

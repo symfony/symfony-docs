@@ -29,7 +29,7 @@ It will result in more detailed output with debug verbosity (e.g. ``-vvv``):
 In case the process fails, debugging is easier:
 
 .. image:: /_images/components/console/process-helper-error-debug.png
-    :alt: The last line shows "RES 127 Command did not run successfully", and the output lines show more the error information from the command.
+    :alt: The last line shows "RES 127 Command did not run successfully", and the output lines show more information about the error from the command.
 
 .. note::
 

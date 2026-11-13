@@ -185,7 +185,7 @@ We now have a clear separation between the configuration (everything
 specific to our application in ``app.php``) and the framework (the generic
 code that powers our application in ``front.php``).
 
-With less than 30 lines of code, we have a new framework, more powerful and
+With fewer than 30 lines of code, we have a new framework, more powerful and
 more flexible than the previous one. Enjoy!
 
 Using the Routing component has one big additional benefit: the ability to

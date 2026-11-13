@@ -358,7 +358,7 @@ their priorities:
 
 This event is dispatched as soon as an error occurs during the handling of the
 HTTP request. It's useful to recover from errors or modify the exception details
-sent as response::
+sent as the response::
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -367,7 +367,7 @@ sent as response::
     {
         $exception = $event->getThrowable();
         $response = new Response();
-        // setup the Response object based on the caught exception
+        // set up the Response object based on the caught exception
         $event->setResponse($response);
 
         // you can alternatively set a new Exception
@@ -394,7 +394,7 @@ response:
   then ``getStatusCode()`` is called on the exception and used (the headers
   from ``getHeaders()`` are also added);
 
-* If both of the above aren't true, then a 500 status code is used.
+* If neither of the above is true, then a 500 status code is used.
 
 .. note::
 

@@ -287,9 +287,9 @@ send SMS messages::
                 '+1411111111',
                 // the message
                 'A new login was detected!',
-                // optionally, you can override default "from" defined in transports
+                // optionally, you can override the default "from" defined in transports
                 '+1422222222',
-                // you can also add options object implementing MessageOptionsInterface
+                // you can also add an options object implementing MessageOptionsInterface
                 $options
             );
 
@@ -762,9 +762,9 @@ To send a notification, autowire the
 The ``Notification`` is created by using two arguments: the subject and
 channels. The channels specify which channel (or transport) should be used
 to send the notification. For instance, ``['email', 'sms']`` will send
-both an email and SMS notification to the user.
+both an email and an SMS notification to the user.
 
-The default notification also has a ``content()`` and ``emoji()`` method to
+The default notification also has ``content()`` and ``emoji()`` methods to
 set the notification content and icon.
 
 Symfony provides the following recipients:
@@ -855,7 +855,7 @@ Customize Notifications
 -----------------------
 
 You can extend the ``Notification`` or ``Recipient`` base classes to
-customize their behavior. For instance, you can overwrite the
+customize their behavior. For instance, you can override the
 ``getChannels()`` method to only return ``sms`` if the invoice price is
 very high and the recipient has a phone number::
 
@@ -980,7 +980,7 @@ which provides useful methods for testing your Notifier implementation.
 You can benefit from this class by using it directly or extending the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`.
 
-See :ref:`testing documentation <notifier-assertions>` for the list of available assertions.
+See the :ref:`testing documentation <notifier-assertions>` for the list of available assertions.
 
 Disabling Delivery
 ------------------
@@ -1056,7 +1056,7 @@ The ``FailedMessageEvent`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: Doing something before the exception is thrown
-(Retry to send the message or log additional information).
+(like retrying to send the message or logging additional information).
 
 Whenever an exception is thrown while sending the message, the event class
 ``FailedMessageEvent`` is dispatched. A listener can do anything useful before
@@ -1082,7 +1082,7 @@ The ``SentMessageEvent`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Typical Purposes**: To perform some action when the message is successfully
-sent (like retrieve the id returned when the message is sent).
+sent (like retrieving the ID returned when the message is sent).
 
 After the message has been successfully sent, the event class ``SentMessageEvent``
 is dispatched. Listeners receive a

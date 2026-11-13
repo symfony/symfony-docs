@@ -279,7 +279,7 @@ special type of exception::
     // ...
     public function index(): Response
     {
-        // retrieve the object from database
+        // retrieve the object from the database
         $product = ...;
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
@@ -340,7 +340,7 @@ Request object.
 Automatic Mapping Of The Request
 --------------------------------
 
-It is possible to automatically map request's payload and/or query parameters to
+It is possible to automatically map the request payload and/or query parameters to
 your controller's action arguments with attributes.
 
 Mapping Query Parameters Individually
@@ -349,7 +349,7 @@ Mapping Query Parameters Individually
 Let's say a user sends you a request with the following query string:
 ``https://example.com/dashboard?firstName=John&lastName=Smith&age=27``.
 Thanks to the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter`
-attribute, arguments of your controller's action can be automatically fulfilled::
+attribute, arguments of your controller's action can be automatically filled::
 
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -493,7 +493,7 @@ Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 When creating an API and dealing with HTTP methods other than ``GET`` (like
-``POST`` or ``PUT``), user's data are not stored in the query string
+``POST`` or ``PUT``), the user's data is not stored in the query string
 but directly in the request payload, like this:
 
 .. code-block:: json
@@ -537,7 +537,7 @@ your DTO::
     }
 
 You can also customize the validation groups used, the status code to return if
-the validation fails as well as supported payload formats::
+the validation fails as well as the supported payload formats::
 
     use Symfony\Component\HttpFoundation\Response;
     // ...
@@ -952,8 +952,8 @@ them ideal for storing user notifications::
 
 .. _request-object-info:
 
-The Request and Response Object
--------------------------------
+The Request and Response Objects
+--------------------------------
 
 As mentioned :ref:`earlier <controller-request-argument>`, Symfony will
 pass the ``Request`` object to any controller argument that is type-hinted with
@@ -1007,7 +1007,7 @@ In Symfony, a controller is required to return a ``Response`` object::
     $response->headers->set('Content-Type', 'text/css');
 
 To facilitate this, different response objects are included to address different
-response types.  Some of these are mentioned below. To learn more about the
+response types. Some of these are mentioned below. To learn more about the
 ``Request`` and ``Response`` (and different ``Response`` classes), see the
 :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
 
@@ -1325,7 +1325,7 @@ where each helper is available as a public method::
     }
 
 You can inject the entire ``ControllerHelper`` class if you prefer, but using the
-:ref:`AutowireMethodOf <autowiring_closures>` attribute as in the previous example,
+:ref:`AutowireMethodOf <autowiring_closures>` attribute as in the previous example
 lets you inject only the exact helpers you need, making your code more efficient.
 
 Since ``#[AutowireMethodOf]`` also works with interfaces, you can define interfaces
@@ -1360,11 +1360,11 @@ Final Thoughts
 --------------
 
 In Symfony, a controller is usually a class method which is used to accept
-requests, and return a ``Response`` object. When mapped with a URL, a controller
+requests and return a ``Response`` object. When mapped with a URL, a controller
 becomes accessible and its response can be viewed.
 
 To facilitate the development of controllers, Symfony provides an
-``AbstractController``.  It can be used to extend the controller class allowing
+``AbstractController``. It can be used to extend the controller class, allowing
 access to some frequently used utilities such as ``render()`` and
 ``redirectToRoute()``. The ``AbstractController`` also provides the
 ``createNotFoundException()`` utility which is used to return a page not found
@@ -1379,7 +1379,7 @@ Keep Going!
 
 Next, learn all about :doc:`rendering templates with Twig </templates>`.
 
-Learn more about Controllers
+Learn More about Controllers
 ----------------------------
 
 .. toctree::

@@ -4,8 +4,8 @@ How to Use the Serializer
 Symfony provides a serializer to transform data structures from one format
 to PHP objects and the other way around.
 
-This is most commonly used when building an API or communicating with third
-party APIs. The serializer can transform an incoming JSON request payload
+This is most commonly used when building an API or communicating with third-party
+APIs. The serializer can transform an incoming JSON request payload
 to a PHP object that is consumed by your application. Then, when generating
 the response, you can use the serializer to transform the PHP objects back
 to a JSON response.
@@ -36,7 +36,7 @@ install the serializer :ref:`Symfony pack <symfony-packs>` before using it:
 .. seealso::
 
     A popular alternative to the Symfony Serializer component is the third-party
-    library, `JMS serializer`_.
+    library `JMS serializer`_.
 
 Serializing an Object
 ---------------------
@@ -118,7 +118,7 @@ the :class:`Symfony\\Component\\Serializer\\SerializerInterface` parameter type:
         // $jsonContent contains {"name":"Jane Doe","age":39,"sportsperson":false}
 
 The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
-is the object to be serialized and the second is used to choose the proper
+method is the object to be serialized and the second is used to choose the proper
 encoder (i.e. format), in this case the :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
 
 .. tip::
@@ -295,8 +295,8 @@ places:
 * :ref:`For a specific property <serializer-using-context-builders>`
 
 You can use all three options at the same time. When the same setting is
-configured in multiple places, the latter in the list above will override
-the previous one (e.g. the setting on a specific property overrides the one
+configured in multiple places, the later ones in the list above override
+the previous ones (e.g. the setting on a specific property overrides the one
 configured globally).
 
 .. _serializer-default-context:
@@ -407,7 +407,7 @@ complex (de)serialization context, you can chain them using the
 
 .. seealso::
 
-    You can also :doc:`create your context builders </serializer/custom_context_builders>`
+    You can also :doc:`create your own context builders </serializer/custom_context_builders>`
     to have autocompletion, validation, and documentation for your custom
     context values.
 
@@ -608,8 +608,8 @@ You can also restrict the usage of a context to some
             </class>
         </serializer>
 
-The attribute can be repeated as much as needed on a single property.
-Context without group is always applied first. Then contexts for the
+The attribute can be repeated as many times as needed on a single property.
+Contexts without groups are always applied first. Then contexts for the
 matching groups are merged in the provided order.
 
 If you repeat the same context in multiple properties, consider using the
@@ -664,7 +664,7 @@ Serializing to or from PHP Arrays
 ---------------------------------
 
 The default :class:`Symfony\\Component\\Serializer\\Serializer` can also be
-used to only perform one step of the :ref:`two step serialization process <serializer-process>`
+used to only perform one step of the :ref:`two-step serialization process <serializer-process>`
 by using the respective interface:
 
 .. configuration-block::
@@ -834,7 +834,7 @@ Ignoring Attributes Using the Context
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can also pass an array of attribute names to ignore at runtime using
-the ``ignored_attributes`` context options::
+the ``ignored_attributes`` context option::
 
     use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
@@ -1047,7 +1047,7 @@ in the PHP object. For instance, imagine a JSON response like this:
         }
     }
 
-You may wish to serialize this information to a single PHP object like::
+You may wish to deserialize this information to a single PHP object like::
 
     class Person
     {
@@ -1056,7 +1056,7 @@ You may wish to serialize this information to a single PHP object like::
         private string $fullName;
     }
 
-Use the ``#[SerializedPath]`` to specify the path of the nested property
+Use the ``#[SerializedPath]`` attribute to specify the path of the nested property
 using :doc:`valid PropertyAccess syntax </components/property_access>`:
 
 .. configuration-block::
@@ -1263,7 +1263,7 @@ snake_case to CamelCase
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In Symfony applications, it is common to use camelCase for naming properties.
-However some packages may follow a snake_case convention.
+However, some packages may follow a snake_case convention.
 
 Symfony provides a built-in name converter designed to transform between
 CamelCase and snake_case styles during serialization and deserialization
@@ -1313,7 +1313,7 @@ By default, the serializer service is configured with the following
 normalizers (in order of priority):
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UnwrappingDenormalizer`
-    Can be used to only denormalize a part of the input, read more about
+    Can be used to only denormalize a part of the input. Read more about
     this :ref:`later in this article <serializer-unwrapping-denormalizer>`.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
@@ -1331,7 +1331,7 @@ normalizers (in order of priority):
     ``UidNormalizer::NORMALIZATION_FORMAT_KEY`` to ``UidNormalizer::NORMALIZATION_FORMAT_BASE58``,
     ``UidNormalizer::NORMALIZATION_FORMAT_BASE32`` or ``UidNormalizer::NORMALIZATION_FORMAT_RFC4122``.
 
-    Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
+    It can also denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
@@ -1407,7 +1407,7 @@ normalizers (in order of priority):
     from an existing codebase using simple :phpfunction:`json_encode` to the Symfony
     Serializer by allowing you to mix which normalizers are used for which classes.
 
-    Unlike with :phpfunction:`json_encode` circular references can be handled.
+    Unlike with :phpfunction:`json_encode`, circular references can be handled.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
     This denormalizer converts an array of arrays to an array of objects
@@ -1448,7 +1448,7 @@ normalizers (in order of priority):
     when the ``@param`` and the ``@var`` of a class declare different types.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
-    This is the most powerful default normalizer and used for any object
+    This is the most powerful default normalizer and is used for any object
     that could not be normalized by the other normalizers.
 
     It leverages the :doc:`PropertyAccess Component </components/property_access>`
@@ -1473,7 +1473,7 @@ Built-in Normalizers
 
 Besides the normalizers registered by default (see previous section), the
 serializer component also provides some extra normalizers. You can register
-these by defining a service and tag it with :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`.
+these by defining a service and tagging it with :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`.
 For instance, to use the ``CustomNormalizer`` you have to define a service
 like:
 
@@ -2017,7 +2017,7 @@ context (or the default context specified in ``framework.yaml``)::
     // $jsonContent contains {"name":"Joe","mother":{"name":"Sophie"}}
 
 You can also configure a custom callable that is used when the maximum
-depth is reached. This can be used to for instance return the unique
+depth is reached. For instance, this can be used to return the unique
 identifier of the next nested object, instead of omitting the property::
 
     use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
@@ -2190,12 +2190,12 @@ this by configuring the ``object_to_populate`` serializer context option::
     $serializer->deserialize($jsonData, Person::class, 'json', [
         AbstractNormalizer::OBJECT_TO_POPULATE => $person,
     ]);
-    // instead of returning a new object, $person is updated instead
+    // instead of returning a new object, $person is updated
 
 .. note::
 
     The ``AbstractNormalizer::OBJECT_TO_POPULATE`` option is only used for
-    the top level object. If that object is the root of a tree structure,
+    the top-level object. If that object is the root of a tree structure,
     all child elements that exist in the normalized data will be re-created
     with new instances.
 
@@ -2268,7 +2268,7 @@ these type names to the real PHP class name when deserializing:
         </serializer>
 
 With the discriminator map configured, the serializer can now pick the
-correct class for properties typed as ``InvoiceItemInterface``::
+correct class for properties typed as ``InvoiceItemInterface``:
 
 .. configuration-block::
 
@@ -2523,12 +2523,12 @@ Extending Serialization for a Class
 -----------------------------------
 
 Sometimes you may want to add or override serialization metadata on a class you
-cannot modify, for example a model coming from a third party library or a
+cannot modify, for example a model coming from a third-party library or a
 vendor package. Traditionally, you would have to create YAML or XML mapping
 files to configure serialization for these classes. The ``#[ExtendsSerializationFor]``
 attribute provides a more convenient alternative.
 
-Suppose you use a third party ``Product`` class and you want to expose different
+Suppose you use a third-party ``Product`` class and you want to expose different
 serialized field names or groups without modifying the original class.
 
 To do this, create a separate class and use the ``#[ExtendsSerializationFor]``

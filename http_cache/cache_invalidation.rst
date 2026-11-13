@@ -23,8 +23,8 @@ notifications, typically through special HTTP requests.
     explained in :ref:`optimizing-cache-validation`.
 
     Furthermore, since invalidation is a topic specific to each type of reverse
-    proxy, using this concept will tie you to a specific reverse proxy or need
-    additional efforts to support different proxies.
+    proxy, using this concept will tie you to a specific reverse proxy or require
+    additional effort to support different proxies.
 
 Sometimes, however, you need that extra performance you can get when
 explicitly invalidating. For invalidation, your application needs to detect
@@ -38,9 +38,9 @@ that data from its cache.
     cache invalidation concepts and also documents the configuration for a
     couple of common caching proxies.
 
-If one content corresponds to one URL, the ``PURGE`` model works well.
+If each piece of content corresponds to one URL, the ``PURGE`` model works well.
 You send a request to the cache proxy with the HTTP method ``PURGE`` (using
-the word "PURGE" is a convention, technically this can be any string) instead
+the word "PURGE" is a convention; technically this can be any string) instead
 of ``GET`` and make the cache proxy detect this and remove the data from the
 cache instead of going to the application to get a response.
 
@@ -146,12 +146,12 @@ instructed to discard its local cache and fetch the content again. This way,
 the new content is already available in the cache. The drawback of refreshing
 is that variants are not invalidated.
 
-In many applications, the same content bit is used on various pages with
+In many applications, the same piece of content is used on various pages with
 different URLs. More flexible concepts exist for those cases:
 
 * **Banning** invalidates responses matching regular expressions on the
   URL or other criteria;
-* **Cache tagging** lets you add a tag for each content used in a response
-  so that you can invalidate all URLs containing a certain content.
+* **Cache tagging** lets you add a tag for each piece of content used in a response
+  so that you can invalidate all URLs containing that content.
 
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/

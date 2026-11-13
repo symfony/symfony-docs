@@ -17,7 +17,7 @@ you can take advantage of automatic Docker configuration from :ref:`Symfony Flex
 Flex Recipes & Docker Configuration
 -----------------------------------
 
-The :ref:`Flex recipe <symfony-flex>` for some packages also include Docker configuration.
+The :ref:`Flex recipes <symfony-flex>` for some packages also include Docker configuration.
 For example, when you run ``composer require doctrine`` (to get ``symfony/orm-pack``),
 your ``compose.yaml`` file will automatically be updated to include a
 ``database`` service.

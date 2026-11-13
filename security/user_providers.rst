@@ -1,9 +1,9 @@
 User Providers
 ==============
 
-User providers (re)load users from a storage (e.g. a database) based on a
+User providers (re)load users from storage (e.g. a database) based on a
 "user identifier" (e.g. the user's email address or username). See
-:ref:`security-user-providers` for more detailed information when a user
+:ref:`security-user-providers` for more information about when a user
 provider is used.
 
 Symfony provides several user providers:
@@ -81,8 +81,8 @@ Using a Custom Query to Load the User
 .....................................
 
 The entity provider can only query from one *specific* field, specified by
-the ``property`` config key. If you want a bit more control over this - e.g. you
-want to find a user by ``email`` *or* ``username``, you can do that by
+the ``property`` config key. If you want a bit more control over this (e.g. you
+want to find a user by ``email`` *or* ``username``), you can do that by
 implementing :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`
 in your :ref:`Doctrine repository <doctrine-queries>` (e.g. ``UserRepository``)::
 

@@ -365,7 +365,7 @@ on the requested URI::
     }
 
 For organization, both controllers (formerly ``/index.php`` and ``/index.php/show``)
-are now PHP functions and each has been moved into a separate file named ``controllers.php``::
+are now PHP functions and both have been moved into a separate file named ``controllers.php``::
 
     // controllers.php
     function list_action()
@@ -400,7 +400,7 @@ have *many* controller functions: one for each page.
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
 from being satisfied. For example, the routing system is fickle, and wouldn't
-recognize that the list page - ``/index.php``  - should be accessible also via ``/``
+recognize that the list page - ``/index.php`` - should also be accessible via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.
 routing, calling controllers, templates, etc.). More time will need to be
@@ -439,7 +439,7 @@ into a ``vendor/`` directory:
 
     $ composer install
 
-Beside downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
+Besides downloading your dependencies, Composer generates a ``vendor/autoload.php`` file,
 which takes care of autoloading for all the files in the Symfony Framework as well as
 the files mentioned in the autoload section of your ``composer.json``.
 
@@ -562,7 +562,7 @@ them for you. Here's the same sample application, now built in Symfony::
         }
     }
 
-Notice, both controller functions now live inside a "controller class". This is a
+Notice that both controller functions now live inside a "controller class". This is a
 nice way to group related pages. The controller functions are also sometimes called
 *actions*.
 
@@ -669,7 +669,7 @@ migrating the blog from flat PHP to Symfony has improved your life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
-  allows for new developers to be productive in your project more quickly;
+  allows new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
   to develop or maintain low-level utilities** such as autoloading,

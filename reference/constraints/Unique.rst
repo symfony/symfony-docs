@@ -15,7 +15,7 @@ If you want to apply any other comparison logic, use the `normalizer`_ option.
 .. seealso::
 
     If you want to validate that the value of an entity property is unique among
-    all entities of the same type (e.g. the registration email of all users) use
+    all entities of the same type (e.g. the registration email of all users), use
     the :doc:`UniqueEntity constraint </reference/constraints/UniqueEntity>`.
 
 ==========  ===================================================================
@@ -98,11 +98,11 @@ Options
 This defines the key or keys in a collection that should be checked for
 uniqueness. By default, all collection keys are checked for uniqueness.
 
-For instance, assume you have a collection of items that contain a
+For instance, assume you have a collection of items that contain
 ``latitude``, ``longitude`` and ``label`` fields. By default, you can have
 duplicate coordinates as long as the label is different. By setting the
 ``fields`` option, you can force latitude+longitude to be unique in the
-collection::
+collection:
 
 .. configuration-block::
 

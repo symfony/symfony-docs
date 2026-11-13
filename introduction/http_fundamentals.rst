@@ -34,7 +34,7 @@ Step 1: The Client Sends a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every conversation on the web starts with a *request*. The request is a text
-message created by a client (e.g. a browser, a smartphone app, etc) in a
+message created by a client (e.g. a browser, a smartphone app, etc.) in a
 special format known as HTTP. The client sends that request to a server,
 and then waits for the response.
 
@@ -61,7 +61,7 @@ resource the client is requesting. The first line of an HTTP request is the
 most important, because it contains two important things: the HTTP method (GET)
 and the URI (``/``).
 
-The URI (e.g. ``/``, ``/contact``, etc) is the unique address or location
+The URI (e.g. ``/``, ``/contact``, etc.) is the unique address or location
 that identifies the resource the client wants. The HTTP method (e.g. ``GET``)
 defines what the client wants to *do* with the resource. The HTTP methods (also
 known as verbs) define the few common ways that the client can act upon the
@@ -254,7 +254,7 @@ needs to be returned to the client::
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
     $response->setStatusCode(Response::HTTP_OK);
 
-    // sets a HTTP response header
+    // sets an HTTP response header
     $response->headers->set('Content-Type', 'text/html');
 
     // prints the HTTP headers followed by the content
@@ -363,7 +363,7 @@ Incoming requests are interpreted by the :doc:`Routing component </routing>` and
 passed to PHP functions that return ``Response`` objects.
 
 This may not make sense yet, but as you keep reading, you'll learn about :doc:`routes </routing>`
-and :doc:`controllers </controller>`: the two fundamental parts to creating a page.
+and :doc:`controllers </controller>`: the two fundamental parts of creating a page.
 But as you go along, don't forget that no matter *how* complex your app gets, your
 job is always the same: read information from the Request and use it to create a
 Response.
@@ -371,13 +371,13 @@ Response.
 Summary: The Request-Response Flow
 ----------------------------------
 
-Here's what we've learned so far:
+Here's what you've learned so far:
 
 #. A client (e.g. a browser) sends an HTTP request;
 #. Each request executes the same, single file (called a "front controller");
 #. The front controller boots Symfony and passes the request information;
 #. Internally, Symfony uses *routes* and *controllers* to create the Response for
-   the page (we'll learn about these soon!);
+   the page (you'll learn about these soon!);
 #. Symfony turns your ``Response`` object into the text headers and content
    (i.e. the HTTP response), which are sent back to the client.
 

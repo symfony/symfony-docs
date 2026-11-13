@@ -2,7 +2,7 @@ When and How to Use Data Mappers
 ================================
 
 When a form is compound, the initial data needs to be passed to children so each can display their
-own input value. On submission, children values need to be written back into the form.
+own input value. On submission, the children's values need to be written back into the form.
 
 Data mappers are responsible for reading and writing data from and into parent forms.
 
@@ -18,7 +18,7 @@ It is important to know the difference between
 
 * **Data transformers** change the representation of a single value, e.g. from
   ``"2016-08-12"`` to a ``DateTime`` instance;
-* **Data mappers** map data (e.g. an object or array) to one or many form fields, and vice versa,
+* **Data mappers** map data (e.g. an object or array) to one or more form fields, and vice versa,
   e.g. using a single ``DateTime`` instance to populate the inner fields (e.g. year, hour, etc.)
   of a compound date type.
 
@@ -117,7 +117,7 @@ in your form type::
 
             // as data is passed by reference, overriding it will change it in
             // the form object as well
-            // beware of type inconsistency, see caution below
+            // beware of type inconsistency, see the warning below
             $viewData = new Color(
                 $forms['red']->getData(),
                 $forms['green']->getData(),

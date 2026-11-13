@@ -43,5 +43,5 @@ incompatible adapters are silently ignored::
         new FilesystemAdapter(),  // DOES implement PruneableInterface
     ]);
 
-    // prune will proxy the call to FilesystemAdapter while silently skip ApcuAdapter
+    // prune will proxy the call to FilesystemAdapter while silently skipping ApcuAdapter
     $cache->prune();

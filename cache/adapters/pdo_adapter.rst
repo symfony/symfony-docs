@@ -9,8 +9,8 @@ The PDO adapters store the cache items in a table of an SQL database.
     allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>`
     by calling the ``prune()`` method.
 
-The :class:`Symfony\\Component\\Cache\\Adapter\\PdoAdapter` requires a :phpclass:`PDO`,
-or `DSN`_ as its first parameter. You can pass a namespace, default cache
+The :class:`Symfony\\Component\\Cache\\Adapter\\PdoAdapter` requires a :phpclass:`PDO`
+instance or a `DSN`_ as its first parameter. You can pass a namespace, default cache
 lifetime, options array and :ref:`marshaller <cache-component-marshalling>`
 as the other optional arguments::
 

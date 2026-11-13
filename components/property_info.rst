@@ -79,7 +79,7 @@ one category.
 
 For example, while the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
 and :class:`Symfony\\Bridge\\Doctrine\\PropertyInfo\\DoctrineExtractor`
-both provide list and type information it is probably better that:
+both provide list and type information, it is probably better that:
 
 * The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
   has priority for list information so that all properties in a class (not
@@ -125,7 +125,7 @@ class exposes public methods to extract several types of information:
 
 .. note::
 
-    Be sure to pass a *class* name, not an object to the extractor methods::
+    Be sure to pass a *class* name, not an object, to the extractor methods::
 
         // bad! It may work, but not with all extractors
         $propertyInfo->getProperties($awesomeObject);
@@ -200,7 +200,7 @@ Description Information
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface`
-provide long and short descriptions from a properties annotations as
+provide long and short descriptions from a property's annotations as
 strings::
 
     $title = $propertyInfo->getShortDescription($class, $property);
@@ -234,7 +234,7 @@ provide whether properties are readable or writable as booleans::
     // Example Result: bool(false)
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
-for getter/isser/setter/hasser method in addition to whether or not a property is public
+for getter/isser/setter/hasser methods in addition to whether or not a property is public
 to determine if it's accessible. This is based on how the :doc:`PropertyAccess </components/property_access>`
 component works. It assumes camel case style method names following `PSR-1`_. For example,
 both ``myProperty`` and ``my_property`` properties are readable if there's a
@@ -271,7 +271,7 @@ Extractors
 ----------
 
 The extraction of property information is performed by *extractor classes*.
-An extraction class can provide one or more types of property information
+An extractor class can provide one or more types of property information
 by implementing the correct interface(s).
 
 The :class:`Symfony\\Component\\PropertyInfo\\PropertyInfoExtractor` will
@@ -281,7 +281,7 @@ the appropriate method and return the first result that is not ``null``.
 .. _`components-property-information-extractors-available`:
 
 While you can create your own extractors, the following are already available
-to cover most use-cases:
+to cover most use cases:
 
 ReflectionExtractor
 ~~~~~~~~~~~~~~~~~~~
@@ -346,8 +346,8 @@ PhpDocExtractor
 Using `phpDocumentor Reflection`_ to parse property and method annotations,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor`
 provides type and description information. This extractor is automatically
-registered with the ``property_info`` in the Symfony Framework *if* the dependent
-library is present::
+registered with the ``property_info`` service in the Symfony Framework *if* the
+dependent library is present::
 
     use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 
@@ -458,7 +458,7 @@ ConstructorExtractor
 ~~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
-tries to extract properties information by using either the
+tries to extract property information by using either the
 :class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpStanExtractor` or
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
 on the constructor arguments::

@@ -82,7 +82,7 @@ Before reaching for events, consider these simpler alternatives:
         }
     }
 
-**For data that depends on the logged in user**, inject the
+**For data that depends on the logged-in user**, inject the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
 
     class MessageType extends AbstractType
@@ -227,7 +227,7 @@ by that point, the child's data is fully processed.
 #. Country field: ``POST_SUBMIT`` fires
 #. Listener reads selected country
 #. Listener modifies parent form's ``State`` field
-#. Parent form continues submit (``State`` field now has correct choices)
+#. Parent form continues the submission (``State`` field now has correct choices)
 
 .. _form-events-listeners-vs-subscribers:
 
@@ -490,8 +490,8 @@ Fires after view-to-norm transformation, before norm-to-model transformation.
 
 **When to use:**
 
-* Modify normalized data (rarely needed; consider :doc:`data transformers </form/data_transformers>`
-instead)
+* Modify normalized data (rarely needed; consider
+  :doc:`data transformers </form/data_transformers>` instead)
 
 **What you can access:**
 
