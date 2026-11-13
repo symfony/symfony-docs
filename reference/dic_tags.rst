@@ -1111,6 +1111,36 @@ You can also add a processor for a specific logging channel by using the
     You cannot use both the ``handler`` and ``channel`` attributes for the
     same tag as handlers are shared between all channels.
 
+property_info.warmup_class_provider
+-----------------------------------
+
+**Purpose**: Add classes to the PropertyInfo cache warmer
+
+Tag an iterable service that yields fully qualified class names. PropertyInfo
+warms their metadata when you run ``cache:warmup``. Use this tag when a bundle
+discovers classes from its own metadata.
+
+For example, this service adds ``Product`` to the warmup::
+
+    // src/PropertyInfo/WarmupClasses.php
+    namespace App\PropertyInfo;
+
+    use App\Entity\Product;
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('property_info.warmup_class_provider')]
+    final class WarmupClasses implements \IteratorAggregate
+    {
+        public function getIterator(): \Traversable
+        {
+            yield Product::class;
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``property_info.warmup_class_provider`` tag was introduced in Symfony 8.2.
+
 routing.controller
 ------------------
 
