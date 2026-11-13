@@ -19,6 +19,12 @@ Databases are a broad topic, so the documentation is divided into three articles
   to perform raw SQL queries to relational databases (similar to PHP's `PDO`_);
 * Read the `DoctrineMongoDBBundle docs`_ if you are working with **MongoDB databases**.
 
+.. note::
+
+    For PostgreSQL applications, `ModernORM`_ is another ORM option. The
+    `ModernORMBundle`_ integrates it with Symfony and documents its requirements,
+    installation and configuration.
+
 Installing Doctrine
 -------------------
 
@@ -1337,3 +1343,5 @@ Learn more
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`enumerations`: https://php.net/enumerations
+.. _`ModernORM`: https://github.com/andreybolonin/modernorm
+.. _`ModernORMBundle`: https://github.com/andreybolonin/modernormbundle
