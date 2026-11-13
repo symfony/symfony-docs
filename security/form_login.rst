@@ -3,7 +3,10 @@ Customizing the Form Login Authenticator Responses
 
 The form login authenticator creates a login form where users authenticate
 using an identifier (e.g. email address or username) and a password. In
-:ref:`security-form-login` the usage of this authenticator is explained.
+:ref:`security-form-login` the usage of this authenticator is explained. All
+its options are listed in the
+:ref:`form_login configuration reference
+<reference-security-firewall-form-login>`.
 
 Redirecting after Success
 -------------------------

@@ -212,7 +212,8 @@ The Serializer component has a built-in ``FlattenException`` normalizer
 (:class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`) and
 JSON/XML/CSV/YAML encoders. When your application throws an exception, Symfony
 can output it in one of those formats. If you want to change the output
-contents, create a new Normalizer that supports the ``FlattenException`` input::
+contents, create a new :doc:`normalizer </serializer/custom_normalizer>` that
+supports the ``FlattenException`` input::
 
     # src/Serializer/MyCustomProblemNormalizer.php
     namespace App\Serializer;
@@ -309,8 +310,9 @@ Working with the ``kernel.exception`` Event
 -------------------------------------------
 
 When an exception is thrown, the :class:`Symfony\\Component\\HttpKernel\\HttpKernel`
-class catches it and dispatches a ``kernel.exception`` event. This gives you the
-power to convert the exception into a ``Response`` in a few different ways.
+class catches it and dispatches a :ref:`kernel.exception <kernel-kernel.exception>`
+event. This gives you the power to convert the exception into a ``Response`` in
+a few different ways.
 
 Working with this event is actually much more powerful than what has been explained
 before, but also requires a thorough understanding of Symfony internals. Suppose

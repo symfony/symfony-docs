@@ -1598,6 +1598,10 @@ so the :doc:`Cache component </cache>` must be installed in your application.
         $client = HttpClient::createForBaseUri('https://example.com');
         $cachingClient = new CachingHttpClient($client, $cache);
 
+Besides ``cache_pool``, the ``caching`` option also defines whether the cache is
+:ref:`shared <reference-http-client-caching-shared>` and the
+:ref:`maximum TTL <reference-http-client-caching-max-ttl>` of cached responses.
+
 .. tip::
 
     It is strongly recommended to configure a

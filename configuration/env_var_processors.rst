@@ -932,8 +932,11 @@ It is also possible to combine any number of processors:
 Custom Environment Variable Processors
 --------------------------------------
 
-It's also possible to add your own processors for environment variables. First,
-create a class that implements
+It's also possible to add your own processors for environment variables. If you
+need to load env vars from another source instead of transforming their values,
+read :ref:`configuration-env-var-loaders`.
+
+First, create a class that implements
 :class:`Symfony\\Component\\DependencyInjection\\EnvVarProcessorInterface`::
 
     use Symfony\Component\DependencyInjection\EnvVarProcessorInterface;

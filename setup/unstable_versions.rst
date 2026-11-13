@@ -20,6 +20,10 @@ run the following command:
 Once the command finishes, you'll have a new Symfony project created
 in the ``my_project/`` directory.
 
+If you use the :doc:`Symfony CLI </setup/symfony_cli>`, run
+``symfony new my_project --version=next`` to create a project based on the next
+Symfony version to be released.
+
 Upgrading your Project to an Unstable Symfony Version
 -----------------------------------------------------
 

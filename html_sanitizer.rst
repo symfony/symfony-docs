@@ -116,8 +116,9 @@ Sanitizing HTML from Form Input
 The HTML sanitizer component directly integrates with Symfony Forms, to
 sanitize the form input before it is processed by your application.
 
-You can enable the sanitizer in ``TextType`` forms, or any form extending
-this type (such as ``TextareaType``), using the ``sanitize_html`` option::
+You can enable the sanitizer in :doc:`TextType </reference/forms/types/text>`
+forms, or any form extending this type (such as ``TextareaType``), using the
+``sanitize_html`` option::
 
     // src/Form/BlogPostType.php
     namespace App\Form;
@@ -143,7 +144,9 @@ Sanitizing HTML in Twig Templates
 ---------------------------------
 
 Besides sanitizing user input, you can also sanitize HTML code before
-outputting it in a Twig template using the ``sanitize_html()`` filter:
+outputting it in a Twig template using the ``sanitize_html()`` filter. Twig
+:ref:`escapes all output <output-escaping>` by default, so use this filter
+instead of ``raw`` when you need to render HTML created by users:
 
 .. code-block:: twig
 

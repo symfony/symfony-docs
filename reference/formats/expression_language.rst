@@ -512,6 +512,7 @@ expressions (e.g. the request, the current user, etc.):
 
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :ref:`Variables available in service container expressions <services-expressions>`;
-* :ref:`Variables available in routing expressions <routing-matching-expressions>`.
+* :ref:`Variables available in routing expressions <routing-matching-expressions>`;
+* :ref:`Variables available in validation expressions <reference-constraint-expression-option>`.
 
 .. _`null-coalescing operator in PHP`: https://www.php.net/manual/en/language.operators.comparison.php#language.operators.comparison.coalesce

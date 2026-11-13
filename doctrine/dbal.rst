@@ -213,6 +213,8 @@ production where a replica is configured, ``$connection`` is an instance
 of ``PrimaryReadReplicaConnection``; in development without replicas, it
 is a regular ``Connection`` instance.
 
+.. _doctrine-dbal-custom-mapping-types:
+
 Registering custom Mapping Types
 --------------------------------
 

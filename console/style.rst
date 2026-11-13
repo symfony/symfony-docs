@@ -168,7 +168,8 @@ Content Methods
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createTable`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\Table`
     styled according to the Symfony Style Guide, which allows you to use
-    features such as dynamically appending rows.
+    features such as
+    :ref:`dynamically appending rows <console-modify-rendered-tables>`.
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::tree`
     It displays the given nested array as a formatted directory/file tree
@@ -288,7 +289,9 @@ Progress Bar Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
-    styled according to the Symfony Style Guide.
+    styled according to the Symfony Style Guide. Read the
+    :doc:`progress bar helper </console/helpers/progressbar>` article to learn
+    about its formats and other options.
 
 .. _symfony-style-questions:
 

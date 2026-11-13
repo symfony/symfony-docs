@@ -118,7 +118,8 @@ Example #2: Transforming an Issue Number into an Issue Entity
 
 Say you have a many-to-one relation from the Task entity to an Issue entity (i.e. each
 Task has an optional foreign key to its related Issue). Adding a list box with all
-possible issues could eventually get *really* long and take a long time to load.
+possible issues (e.g. with an :doc:`EntityType </reference/forms/types/entity>`
+field) could eventually get *really* long and take a long time to load.
 Instead, you decide you want to add a text box, where the user can enter the
 issue number.
 

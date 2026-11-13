@@ -284,7 +284,9 @@ as the first argument and the route parameters as the optional second argument:
 The ``path()`` function generates relative URLs. If you need to generate
 absolute URLs (for example when rendering templates for emails or RSS feeds),
 use the ``url()`` function, which takes the same arguments as ``path()``
-(e.g. ``<a href="{{ url('blog_index') }}"> ... </a>``).
+(e.g. ``<a href="{{ url('blog_index') }}"> ... </a>``). When rendering templates
+outside of an HTTP request (e.g. in console commands), read
+:ref:`how to set the host of absolute URLs <router-generate-urls-commands>`.
 
 .. _templates-link-to-assets:
 
@@ -1467,6 +1469,9 @@ use the `Twig raw filter`_ to disable the output escaping for that variable:
 
 Read the `Twig output escaping docs`_ to learn more about how to disable output
 escaping for a block or even an entire template.
+
+If the HTML contents come from users, don't use ``raw``. Use the
+:ref:`sanitize_html() filter <html-sanitizer-twig>` instead.
 
 .. _templates-namespaces:
 

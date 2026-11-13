@@ -131,8 +131,9 @@ method. Each constraint exposes the attached payload as a public property::
     $constraint = $constraintViolation->getConstraint();
     $severity = $constraint->payload['severity'] ?? null;
 
-For example, you can leverage this to customize the ``form_errors`` block
-so that the severity is added as an additional HTML class:
+For example, you can leverage this to customize the ``form_errors`` block in a
+:ref:`form theme <create-your-own-form-theme>` so that the severity is added as
+an additional HTML class:
 
 .. code-block:: html+twig
 

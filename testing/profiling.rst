@@ -61,8 +61,8 @@ collection disabled globally and enable it selectively by calling
 ``$client->enableProfiler()`` in those tests.
 
 Note that calling ``enableProfiler()`` does not enable the profiler itself, which
-must already be enabled via configuration. It only enables data collection for
-the current test client.
+must already be enabled :ref:`via configuration <reference-profiler-enabled>`.
+It only enables data collection for the current test client.
 
 Testing the Profiler Information
 --------------------------------

@@ -77,7 +77,9 @@ the ``list()`` method of the ``BlogController`` class.
 
     The query string of a URL is not considered when matching routes. In this
     example, URLs like ``/blog?foo=bar`` and ``/blog?foo=bar&bar=foo`` will
-    also match the ``blog_list`` route.
+    also match the ``blog_list`` route. To get query string parameters as
+    controller arguments, see
+    :ref:`automatic mapping of the request <controller_map-request>`.
 
 .. warning::
 

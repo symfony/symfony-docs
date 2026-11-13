@@ -71,7 +71,9 @@ characters that are not allowed in file names. You should sanitize the value
 before using it directly.
 
 Read :doc:`/controller/upload_file` for an example of how to manage a file
-upload associated with a Doctrine entity.
+upload associated with a Doctrine entity. To validate the uploaded file, use
+the :doc:`File </reference/constraints/File>` or
+:doc:`Image </reference/constraints/Image>` constraints.
 
 Field Options
 -------------

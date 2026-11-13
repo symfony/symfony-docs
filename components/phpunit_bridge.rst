@@ -589,6 +589,10 @@ may need to change some code in your tests. For example, instead of ``new DateTi
 you should use ``DateTime::createFromFormat('U', (string) time())`` to use the mocked
 ``time()`` function.
 
+If your code uses the :doc:`Clock component </components/clock>`, use its
+:ref:`ClockSensitiveTrait <clock_writing-tests>` instead, which doesn't need to
+mock any PHP function.
+
 To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
 annotation to its class or methods. This annotation only works when executing
 PHPUnit using the ``vendor/bin/simple-phpunit`` script or when registering the

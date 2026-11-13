@@ -36,8 +36,8 @@ workflow below describes the process to fill in a job application.
 When you fill in a job application in this example, there are 4 to 7 steps
 depending on the job you are applying for. Some jobs require personality
 tests, logic tests and/or formal requirements to be answered by the user. Some
-jobs don't. The ``GuardEvent`` is used to decide what next steps are allowed for
-a specific application.
+jobs don't. The :ref:`guard event <workflow-usage-guard-events>` is used to
+decide what next steps are allowed for a specific application.
 
 By defining a workflow like this, you get an overview of how the process looks. The process logic is not mixed with the controllers, models or view. The
 order of the steps can be changed by changing the configuration only.
@@ -296,9 +296,11 @@ Automatic and Manual Validation
 -------------------------------
 
 During cache warmup, Symfony validates the workflows and state machines that are
-defined in configuration files. If your workflows or state machines are defined
-programmatically instead of in a configuration file, you can validate them with
-the :class:`Symfony\\Component\\Workflow\\Validator\\WorkflowValidator` and
+defined in configuration files (you can also add
+:ref:`your own validation logic <workflow-validating-definitions>`). If your
+workflows or state machines are defined programmatically instead of in a
+configuration file, you can validate them with the
+:class:`Symfony\\Component\\Workflow\\Validator\\WorkflowValidator` and
 :class:`Symfony\\Component\\Workflow\\Validator\\StateMachineValidator`::
 
     // ...

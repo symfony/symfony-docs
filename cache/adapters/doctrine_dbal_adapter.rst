@@ -1,6 +1,13 @@
 Doctrine DBAL Cache Adapter
 ===========================
 
+.. seealso::
+
+    This article explains how to create and configure the Doctrine DBAL adapter
+    itself. In Symfony applications, you can use the
+    ``cache.adapter.doctrine_dbal`` service by
+    :ref:`configuring the cache <cache-configuration-with-frameworkbundle>`.
+
 The Doctrine DBAL adapters store the cache items in a table of an SQL database.
 
 .. note::

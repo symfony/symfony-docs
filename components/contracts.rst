@@ -70,6 +70,8 @@ How Is this Different From PHP-FIG's PSRs?
 When applicable, the provided contracts are built on top of `PHP-FIG`_'s PSRs.
 However, PHP-FIG has different goals and different processes. Symfony Contracts
 focuses on providing abstractions that are useful on their own while still being
-compatible with implementations provided by Symfony.
+compatible with implementations provided by Symfony. For example, the
+:ref:`cache contracts <cache-contracts-vs-psr6>` provide a simpler alternative
+to the PSR-6 caching interfaces.
 
 .. _`PHP-FIG`: https://www.php-fig.org/

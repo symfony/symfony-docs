@@ -22,13 +22,17 @@ The Serializer component provides several built-in encoders:
     :ref:`Creating a Custom Encoder <serializer-custom-encoder>` below.
 
 All these encoders are enabled by default when using the Serializer component
-in a Symfony application.
+in a Symfony application. Each encoder has its own context options, which you
+can also define with
+:ref:`context builders <serializer-using-context-builders>`.
 
 The ``JsonEncoder``
 -------------------
 
 The ``JsonEncoder`` encodes to and decodes from JSON strings, based on the PHP
-:phpfunction:`json_encode` and :phpfunction:`json_decode` functions.
+:phpfunction:`json_encode` and :phpfunction:`json_decode` functions. To process
+large JSON data without loading all of it in memory, use
+:doc:`JsonStreamer </serializer/streaming_json>` instead.
 
 It can be useful to modify how these functions operate in certain instances
 by providing options such as ``JSON_PRESERVE_ZERO_FRACTION``. You can use

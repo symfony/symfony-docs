@@ -373,6 +373,10 @@ By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
 :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full
 control over your time-sensitive code's behavior.
 
+If your code calls PHP functions such as ``time()`` or ``sleep()`` directly
+instead of using the clock, use the
+:ref:`ClockMock class of the PHPUnit Bridge <phpunit-bridge-time-sensitive-tests>`.
+
 Exceptions Management
 ---------------------
 

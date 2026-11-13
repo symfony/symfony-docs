@@ -8,6 +8,10 @@ the request will handle it.
 The last firewall can be configured without any matcher to handle every incoming
 request.
 
+Restricting a firewall only defines which requests it handles. To deny access
+to some URLs, use
+:ref:`access_control <security-access-control-matching-options>`.
+
 Restricting by Configuration
 ----------------------------
 

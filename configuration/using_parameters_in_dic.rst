@@ -91,7 +91,8 @@ Now, examine the results to see this closely:
         // The Configurator does not know anything about
         // "%kernel.debug%" being a parameter.
 
-In order to support this use case, the ``Configuration`` class has to
+In order to support this use case, the
+:doc:`Configuration class </bundles/configuration>` of the bundle has to
 be injected with this parameter via the extension as follows::
 
     namespace App\DependencyInjection;

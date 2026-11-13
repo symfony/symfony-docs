@@ -80,8 +80,9 @@ You can configure this using the ``entry_point`` setting:
 
 .. note::
 
-    You can also create your own authentication entry point by creating a
-    class that implements
+    You can also create
+    :ref:`your own authentication entry point <security-entry-point>` by
+    creating a class that implements
     :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`.
     You can then set ``entry_point`` to the service id (e.g.
     ``entry_point: App\Security\CustomEntryPoint``).
