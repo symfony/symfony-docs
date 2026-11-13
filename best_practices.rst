@@ -350,7 +350,9 @@ Use Keys for Translations Instead of Content Strings
 
 Using keys simplifies the management of the translation files because you can
 change the original contents in templates, controllers, and services without
-having to update all the translation files.
+having to update all the translation files. Read
+:ref:`Using Real or Keyword Messages <translation-real-vs-keyword-messages>` to
+compare both approaches.
 
 Keys should always describe their *purpose* and *not* their location. For
 example, if a form has a field with the label "Username", then a nice key
@@ -364,7 +366,8 @@ Define a Single Firewall
 
 Unless you have two legitimately different authentication systems and users
 (e.g. form login for the main site and a token system for your API only), it's
-recommended to have only one firewall to keep things simple.
+recommended to have only one :ref:`firewall <firewalls-authentication>` to keep
+things simple.
 
 Use the ``auto`` Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -401,8 +404,9 @@ Smoke Test your URLs
 
 In software engineering, `smoke testing`_ consists of *"preliminary testing to
 reveal simple failures severe enough to reject a prospective software release"*.
-Using `PHPUnit data providers`_ you can define a functional test that
-checks that all application URLs load successfully::
+Using `PHPUnit data providers`_ you can define a
+:ref:`functional test <functional-tests>` that checks that all application URLs
+load successfully::
 
     // tests/ApplicationAvailabilityFunctionalTest.php
     namespace App\Tests;

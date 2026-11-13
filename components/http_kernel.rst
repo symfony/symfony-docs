@@ -698,8 +698,9 @@ In addition to the "main" request that's sent into ``HttpKernel::handle()``,
 you can also send a so-called "sub request". A sub request looks and acts like
 any other request, but typically serves to render just one small portion of
 a page instead of a full page. You'll most commonly make sub-requests from
-your controller (or perhaps from inside a template that's being rendered by
-your controller).
+your controller (e.g. when :doc:`forwarding to another controller
+</controller/forwarding>`) or from inside a template (e.g. when
+:ref:`embedding controllers <templates-embed-controllers>`).
 
 .. raw:: html
 

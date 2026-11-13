@@ -2,8 +2,9 @@ The DOM Crawler
 ===============
 
 A Crawler instance is returned each time you make a request with the Client.
-It allows you to traverse HTML or XML documents: select nodes, find links
-and forms, and retrieve attributes or contents.
+It allows you to traverse HTML or XML documents: select nodes, find
+:ref:`links <testing-links>` and :ref:`forms <testing-forms>`, and retrieve
+attributes or contents.
 
 Traversing
 ----------
@@ -93,5 +94,8 @@ The Crawler can extract information from the nodes::
     $data = $crawler->each(function ($node, int $i): string {
         return $node->attr('href');
     });
+
+If you only need to check the contents of some nodes in your tests, use the
+:ref:`crawler assertions <testing-crawler-assertions>` instead.
 
 .. _`XPath expression`: https://developer.mozilla.org/en-US/docs/Web/XML/XPath

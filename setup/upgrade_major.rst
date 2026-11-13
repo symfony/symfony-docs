@@ -363,6 +363,9 @@ Classes in the ``vendor/`` directory are always ignored.
 
        Now, you can safely allow ``^6.0`` for the Symfony dependencies.
 
+    Read :doc:`/setup/bundles` for other changes needed to support a new
+    major Symfony version in your bundles.
+
 .. _`PHP CS Fixer`: https://github.com/friendsofphp/php-cs-fixer
 .. _`Rector`: https://github.com/rectorphp/rector
 .. _`maintained Symfony versions`: https://symfony.com/releases

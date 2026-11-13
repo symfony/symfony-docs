@@ -36,15 +36,15 @@ Choosing the Target Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most importantly, this means that you will have to decide which version you
-are aiming to migrate to, either a current stable release or the long
-term support version (LTS). The main difference is how frequently you
-will need to upgrade in order to use a supported version. In the context
-of a migration, other factors, such as the supported PHP-version or
-support for libraries/bundles you use, may have a strong impact as well.
-Using the most recent, stable release will likely give you more features,
-but it will also require you to update more frequently to ensure you will
-get support for bug fixes and security patches and you will have to work
-faster on fixing deprecations to be able to upgrade.
+are aiming to migrate to, either a current stable release or the
+:ref:`long term support version (LTS) <releases-lts>`. The main difference is
+how frequently you will need to upgrade in order to use a supported version. In
+the context of a migration, other factors, such as the supported PHP-version or
+support for libraries/bundles you use, may have a strong impact as well. Using
+the most recent, stable release will likely give you more features, but it will
+also require you to update more frequently to ensure you will get support for
+bug fixes and security patches and you will have to work faster on fixing
+:ref:`deprecations <upgrade-major-symfony-deprecations>` to be able to upgrade.
 
 .. tip::
 

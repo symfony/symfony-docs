@@ -1,9 +1,9 @@
 Maintenance
 ===========
 
-During the lifetime of a minor version, new releases (patch versions) are
-published on a monthly basis. This document describes the boundaries of
-acceptable changes.
+During the :ref:`lifetime of a minor version <contributing-release-maintenance>`,
+new releases (patch versions) are published on a monthly basis. This document
+describes the boundaries of acceptable changes.
 
 **Bug fixes** are accepted under the following conditions:
 
@@ -16,8 +16,8 @@ acceptable changes.
     When documentation (or PHPDoc) is not in sync with the code, code behavior
     should always be considered as being the correct one.
 
-To avoid backward compatibility breaks, we tend to be very strict about changes
-accepted for patch versions.
+To avoid :doc:`backward compatibility breaks </contributing/code/bc>`, we tend
+to be very strict about changes accepted for patch versions.
 
 Besides bug fixes, other minor changes might be accepted in a patch version on
 a case by case basis:

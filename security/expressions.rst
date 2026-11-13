@@ -236,5 +236,6 @@ returns an array of values that will be injected into the closure::
 Learn more
 ----------
 
+* :ref:`Expressions in access_control entries <security-allow-if>`
 * :ref:`Expressions in service arguments <services-expressions>`
 * :doc:`/reference/constraints/Expression`

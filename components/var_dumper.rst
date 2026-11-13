@@ -226,7 +226,7 @@ applications.
 Since generating (even debug) output in the controller or in the model
 of your application may just break it by e.g. sending HTTP headers or
 corrupting your view, the bundle configures the ``dump()`` function so that
-variables are dumped in the web debug toolbar.
+variables are dumped in the :doc:`web debug toolbar </profiler>`.
 
 But if the toolbar cannot be displayed because you e.g. called
 ``die()``/``exit()``/``dd()`` or a fatal error occurred, then dumps are written

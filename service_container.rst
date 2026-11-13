@@ -1969,7 +1969,7 @@ the real dependencies of your classes and it removes most of the benefits of
 dependency injection explained at the beginning of this article. It only makes
 sense at the *entry point* of an application (that's why the
 :ref:`standalone usage section <service-container-standalone>` uses it) and in
-some tests.
+some :ref:`tests <testing-retrieving-services>`.
 
 That's why every service defined is **private by default**. When a service is
 private, you cannot access it directly from the container using

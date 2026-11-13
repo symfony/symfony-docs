@@ -134,7 +134,8 @@ To switch back to the original user, use the special ``_exit`` username:
 
 .. tip::
 
-    You can leverage the Twig function ``impersonation_exit_path('/somewhere')``.
+    You can leverage the ``impersonation_exit_path('/somewhere')``
+    :doc:`Twig function </reference/twig_reference>` to generate this URL.
 
 This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
 Using :ref:`role_hierarchy <security-role-hierarchy>` is a great way to give this

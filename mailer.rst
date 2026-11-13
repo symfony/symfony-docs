@@ -1028,7 +1028,8 @@ Handling Sending Failures
 Symfony Mailer considers that sending was successful when your transport (SMTP
 server or third-party provider) accepts the mail for further delivery. The message
 can later be lost or not delivered because of some problem in your provider, but
-that's out of reach for your Symfony application.
+that's out of reach for your Symfony application. However, many providers can
+notify your application about these problems using :doc:`webhooks </webhook>`.
 
 If there's an error when handing over the email to your transport, Symfony throws
 a :class:`Symfony\\Component\\Mailer\\Exception\\TransportExceptionInterface`.

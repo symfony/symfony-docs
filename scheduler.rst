@@ -866,6 +866,8 @@ the Messenger component:
     the Messenger worker process using tools like cron, Supervisor, or systemd.
     This ensures workers are running continuously. For more details, refer to the
     `Deploying to Production`_ section of the Messenger component documentation.
+    In development, the Symfony CLI can also
+    :ref:`run this worker along with the web server <symfony-server_configuring-workers>`.
 
 Creating a Consumer Programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

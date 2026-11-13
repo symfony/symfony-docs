@@ -332,18 +332,20 @@ Admin application:
         paths:
             '%kernel.project_dir%/apps/admin/templates': Admin
 
-Then, use this Twig namespace to reference any template within the Admin
-application only, for example ``@Admin/form/fields.html.twig``.
+Then, use this :ref:`Twig namespace <templates-namespaces>` to reference any
+template within the Admin application only, for example
+``@Admin/form/fields.html.twig``.
 
 Running Tests
 -------------
 
-In Symfony applications, functional tests typically extend from
-the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase` class by
-default. Within its parent class, ``KernelTestCase``, there is a method called
-``createKernel()`` that attempts to create the kernel responsible for running
-the application during tests. However, the current logic of this method doesn't
-include the new application ID argument, so you need to update it::
+In Symfony applications, :ref:`functional tests <functional-tests>` typically
+extend from the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`
+class by default. Within its parent class, ``KernelTestCase``, there is a
+method called ``createKernel()`` that attempts to create the kernel responsible
+for running the application during tests. However, the current logic of this
+method doesn't include the new application ID argument, so you need to update
+it::
 
     // apps/api/tests/ApiTestCase.php
     namespace Api\Tests;

@@ -15,6 +15,8 @@ will suppress the label::
             'label' => new TranslatableMessage('address.zipCode', ['%country%' => $country], 'address'),
         ])
 
+Read more about :ref:`translatable objects <translatable-objects>`.
+
 The label can also be set in the template:
 
 .. configuration-block::

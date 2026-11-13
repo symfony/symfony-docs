@@ -299,6 +299,9 @@ create new projects. If you use Composer, you need to specify the exact version:
 
     $ composer create-project symfony/skeleton:"7.4.*" my_project_directory
 
+To work with Symfony versions that are still in development, read
+:doc:`/setup/unstable_versions`.
+
 The Symfony Demo application
 ----------------------------
 

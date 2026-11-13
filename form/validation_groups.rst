@@ -39,6 +39,8 @@ other group, add the special ``Default`` group::
     "lower snake case" (e.g. ``foo_bar``), while automatically generated
     groups use "UpperCamelCase" (e.g. ``Default``, ``SomeClassName``).
 
+.. _form-validation-groups-clicked-button:
+
 Choosing Validation Groups Based on the Clicked Button
 ------------------------------------------------------
 
@@ -66,6 +68,9 @@ To do so, configure the validation groups of the ``previousStep`` button to
 Now the form will skip your validation constraints when that button is clicked.
 It will still validate basic integrity constraints, such as checking whether an
 uploaded file was too large or whether you tried to submit text in a number field.
+
+If you are building a full multi-step form, use
+:doc:`form flows </form/form_flow>` instead of creating these buttons yourself.
 
 Choosing Validation Groups Based on Submitted Data
 --------------------------------------------------
@@ -160,4 +165,5 @@ Learn More
 ----------
 
 For more information about how validation groups work, see
-:doc:`/validation/groups`.
+:doc:`/validation/groups`. To apply validation groups in order and stop at the
+first one that fails, see :doc:`/validation/sequence_provider`.

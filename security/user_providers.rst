@@ -455,7 +455,9 @@ command will generate a nice skeleton to get you started::
     }
 
 Most of the work is already done! Read the comments in the code and update the
-TODO sections to finish the user provider. When you're done, tell Symfony about
+TODO sections to finish the user provider (read
+:ref:`upgrade-the-password-custom-provider` to learn more about the
+``upgradePassword()`` method). When you're done, tell Symfony about
 the user provider by adding it in ``security.yaml``:
 
 .. configuration-block::

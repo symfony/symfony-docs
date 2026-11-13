@@ -780,10 +780,10 @@ monolog.processor
 
 **Purpose**: Add a custom processor for logging
 
-Monolog allows you to add processors in the logger or in the handlers to
-add extra data in the records. A processor receives the record as an argument
-and must return it after adding some extra data in the ``extra`` attribute
-of the record.
+Monolog allows you to add :doc:`processors </logging/processors>` in the
+logger or in the handlers to add extra data in the records. A processor
+receives the record as an argument and must return it after adding some extra
+data in the ``extra`` attribute of the record.
 
 The built-in ``IntrospectionProcessor`` can be used to add the file, the
 line, the class and the method where the logger was triggered.
@@ -1097,8 +1097,9 @@ translation.extractor
 **Purpose**: To register a custom service that extracts messages from a
 file
 
-When executing the ``translation:extract`` command, it uses extractors to
-extract translation messages from a file. By default, the Symfony Framework
+When :ref:`extracting translations <extracting-translation-contents>` with
+the ``translation:extract`` command, Symfony uses extractors to extract
+translation messages from a file. By default, the Symfony Framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` to find and
 extract translation keys from Twig templates.
 

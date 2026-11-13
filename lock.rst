@@ -7,7 +7,8 @@ Symfony's Lock component creates and manages `locks`_, a mechanism to provide
 exclusive access to a shared resource, ensuring that only one process runs a
 critical section of code at any point in time to prevent race conditions.
 Locks are useful for example to ensure that a command is not executed more
-than once at the same time, on the same or different servers.
+than once at the same time, on the same or different servers (for console
+commands, you can also use the :doc:`LockableTrait </console/lockable_trait>`).
 
 The following example shows a typical usage of the lock::
 

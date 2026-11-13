@@ -50,6 +50,9 @@ should be regenerated::
     // you may want to require the cached code:
     require $cachePath;
 
+Read :doc:`/components/config/resources` to learn how to create the
+``$delegatingLoader`` used in this example.
+
 In debug mode, a ``.meta`` file will be created in the same directory as
 the cache file itself. This ``.meta`` file contains the serialized resources,
 whose timestamps are used to determine if the cache is still fresh. When

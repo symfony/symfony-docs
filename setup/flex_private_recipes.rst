@@ -1,9 +1,9 @@
 How To Configure and Use Flex Private Recipe Repositories
 =========================================================
 
-You can build your own private Symfony Flex recipe repositories and seamlessly
-integrate them into the ``composer`` package installation and maintenance
-process.
+You can build your own private :ref:`Symfony Flex recipe <recipes-description>`
+repositories and seamlessly integrate them into the ``composer`` package
+installation and maintenance process.
 
 This is particularly useful when you have private bundles or packages that must
 perform their own installation tasks. To do this, you need to complete several steps:

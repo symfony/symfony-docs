@@ -16,7 +16,8 @@ instance as the second argument and a
 .. note::
 
     As an alternative, consider using the
-    :ref:`SymfonyStyle <symfony-style-questions>` to ask questions.
+    :ref:`SymfonyStyle <symfony-style-questions>` to ask questions or, in
+    invokable commands, the :ref:`#[Ask] attribute <console-interactive-input>`.
 
 Asking the User for Confirmation
 --------------------------------
@@ -579,8 +580,9 @@ You can also use a validator with a hidden question::
 Testing a Command that Expects Input
 ------------------------------------
 
-If you want to write a unit test for a command which expects some kind of input
-from the command line, you need to set the inputs that the command expects::
+If you want to write a :ref:`unit test for a command <console-testing-commands>`
+which expects some kind of input from the command line, you need to set the
+inputs that the command expects::
 
     use Symfony\Component\Console\Tester\CommandTester;
 

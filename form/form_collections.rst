@@ -445,7 +445,8 @@ for the tags in the ``Task`` class::
         }
     }
 
-Next, add a ``by_reference`` option to the ``tags`` field and set it to ``false``::
+Next, add a :ref:`by_reference <reference-form-types-by-reference>` option to
+the ``tags`` field and set it to ``false``::
 
     // src/Form/TaskType.php
 

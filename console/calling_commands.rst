@@ -64,10 +64,12 @@ method)::
     Note that all the commands will run in the same process and some of Symfony's
     built-in commands may not work well this way. For instance, the ``cache:clear``
     and ``cache:warmup`` commands change some class definitions, so running
-    something after them is likely to break.
+    something after them is likely to break. To avoid this, run the command in
+    a separate process with the :doc:`Process component </components/process>`.
 
 .. note::
 
     Most of the time, calling a command from code that is not executed on the
     command line is not a good idea. The main reason is that the command's
     output is optimized for the console and not to be passed to other commands.
+    If you still need it, read :doc:`/console/command_in_controller`.

@@ -5,7 +5,8 @@ A *factory* is a class or a callable whose main purpose is to create and return
 other objects. The `factory design pattern`_ is useful when the creation of an
 object requires some special logic that shouldn't live in the object itself,
 such as selecting the concrete class to instantiate based on some condition or
-running some code after the instantiation.
+running some code after the instantiation. For the latter, you can also use a
+:ref:`service configurator <service-configurators>`.
 
 Symfony's :doc:`service container </service_container>` supports this pattern:
 instead of instantiating the class of a service directly, the container can

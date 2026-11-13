@@ -201,7 +201,8 @@ The default translation domain can be changed globally using the
             ;
         };
 
-Or it can be customized for a specific violation from a constraint validator::
+Or it can be customized for a specific violation from a
+:doc:`constraint validator </validation/custom_constraint>`::
 
     public function validate($value, Constraint $constraint): void
     {

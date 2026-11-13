@@ -4,7 +4,9 @@ How to Write a Custom Authenticator
 Symfony comes with :ref:`many authenticators <security-authenticators>`, and
 third-party bundles also implement more complex cases like JWT and OAuth 2.0.
 However, sometimes you need to implement a custom authentication mechanism
-that doesn't exist yet, or you need to customize an existing one.
+that doesn't exist yet, or you need to customize an existing one. If you
+authenticate users with API tokens, check the built-in
+:doc:`access token authenticator </security/access_token>` first.
 
 To save time, you can install `Symfony Maker`_ and let Symfony generate a new
 authenticator by running the following command:

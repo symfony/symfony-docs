@@ -122,8 +122,10 @@ it is broken down.
             ;
         };
 
-The ``main`` handler is a ``fingers_crossed`` handler which means that
-it is only triggered when the action level, in this case ``critical``, is reached.
+The ``main`` handler is a
+:ref:`fingers_crossed handler <logging-handler-fingers_crossed>` which means
+that it is only triggered when the action level, in this case ``critical``, is
+reached.
 The ``critical`` level is only triggered for 5xx HTTP code errors. If this level
 is reached once, the ``fingers_crossed`` handler will log all messages
 regardless of their level. The ``handler`` setting means that the output

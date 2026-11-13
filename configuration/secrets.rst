@@ -304,9 +304,10 @@ does *not* need to remain on the server(s).
 .. tip::
 
     When ``SYMFONY_DECRYPTION_SECRET`` is set and ``APP_SECRET`` is not defined,
-    the ``kernel.secret`` parameter is automatically derived from the decryption
-    secret. This means you don't need to define a separate ``APP_SECRET``
-    environment variable if you are already using the secrets vault.
+    the :ref:`kernel.secret <configuration-framework-secret>` parameter is
+    automatically derived from the decryption secret. This means you don't need
+    to define a separate ``APP_SECRET`` environment variable if you are already
+    using the secrets vault.
 
     .. versionadded:: 7.2
 

@@ -80,7 +80,8 @@ The DOT image will look like this:
 
     The ``label`` metadata is not included in the dumped metadata, because it is used as a place's title.
 
-You can use ``metadata`` with the following keys to style the workflow:
+You can use :ref:`metadata <workflow_storing-metadata>` with the following keys
+to style the workflow:
 
 * for places:
 

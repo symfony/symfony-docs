@@ -38,8 +38,8 @@ This means that the following scenarios will work:
   either the LDAP form login or LDAP HTTP Basic authentication providers.
 
 * Checking a user's password against an LDAP server while fetching user
-  information from another source (like your main database for
-  example).
+  information from another source (like your main database, using the
+  :ref:`entity user provider <security-entity-user-provider>`).
 
 * Loading user information from an LDAP server, while using another
   authentication strategy (token-based pre-authentication, for example).
@@ -602,8 +602,10 @@ constructor argument to override it.
 Authenticating against an LDAP server
 -------------------------------------
 
-Authenticating against an LDAP server can be done using the form login, the
-HTTP Basic or the JSON login authentication providers, via the
+Authenticating against an LDAP server can be done using the
+:ref:`form login <security-form-login>`, the
+:ref:`HTTP Basic <security-http_basic>` or the
+:ref:`JSON login <security-json-login>` authentication providers, via the
 ``form_login_ldap``, ``http_basic_ldap`` and ``json_login_ldap`` options.
 
 They are configured exactly as their non-LDAP counterparts, with the
