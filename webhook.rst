@@ -457,6 +457,7 @@ Mailer Service  Parser service name                           Payload converter
 AhaSend         ``mailer.webhook.request_parser.ahasend``     :class:`Symfony\\Component\\Mailer\\Bridge\\AhaSend\\RemoteEvent\\AhaSendPayloadConverter`
 Azure           ``mailer.webhook.request_parser.azure``       :class:`Symfony\\Component\\Mailer\\Bridge\\Azure\\RemoteEvent\\AzurePayloadConverter`
 Brevo           ``mailer.webhook.request_parser.brevo``       :class:`Symfony\\Component\\Mailer\\Bridge\\Brevo\\RemoteEvent\\BrevoPayloadConverter`
+Groundmail      ``mailer.webhook.request_parser.groundmail``  :class:`Symfony\\Component\\Mailer\\Bridge\\Groundmail\\RemoteEvent\\GroundmailPayloadConverter`
 Mandrill        ``mailer.webhook.request_parser.mailchimp``   :class:`Symfony\\Component\\Mailer\\Bridge\\Mailchimp\\RemoteEvent\\MailchimpPayloadConverter`
 MailerSend      ``mailer.webhook.request_parser.mailersend``  :class:`Symfony\\Component\\Mailer\\Bridge\\MailerSend\\RemoteEvent\\MailerSendPayloadConverter`
 Mailgun         ``mailer.webhook.request_parser.mailgun``     :class:`Symfony\\Component\\Mailer\\Bridge\\Mailgun\\RemoteEvent\\MailgunPayloadConverter`
@@ -472,7 +473,7 @@ Sweego          ``mailer.webhook.request_parser.sweego``      :class:`Symfony\\C
 
 .. versionadded:: 8.2
 
-    The Scaleway webhook parser was introduced in Symfony 8.2.
+    The Scaleway and Groundmail webhook parsers were introduced in Symfony 8.2.
 
 .. note::
 
