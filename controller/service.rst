@@ -198,8 +198,8 @@ Any controller (whether or not it is registered as a service) can also define a
 single action using the ``__invoke()`` method, which is a common practice when
 following the `ADR pattern`_ (Action-Domain-Responder). When the class is
 registered as a service (for example via ``#[Route]`` on the class, as shown
-below), the ``__invoke()`` method benefits from service argument injection just
-like any other action method:
+below), the ``__invoke()`` method benefits from service argument injection like
+any other action method:
 
 .. configuration-block::
 

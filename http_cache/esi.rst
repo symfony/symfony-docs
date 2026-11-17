@@ -149,7 +149,7 @@ When using the default ``render()`` function (or setting the renderer to
 before sending the response to the client. But if you use the ``esi`` renderer
 (i.e. call ``render_esi()``) *and* if Symfony detects that it's talking to a
 gateway cache that supports ESI, it generates an ESI include tag. But if there
-is no gateway cache or if it does not support ESI, Symfony will just merge
+is no gateway cache or if it does not support ESI, Symfony will merge
 the included page content within the main one as it would have done if you had
 used ``render()``.
 
@@ -272,9 +272,9 @@ The ``render_esi`` helper supports three other useful options:
     alternative URL to be used if the ``src`` cannot be found.
 
 ``ignore_errors``
-    If set to true, an ``onerror`` attribute will be added to the ESI tag with a value
-    of ``continue`` indicating that, in the event of a failure, the gateway cache
-    will remove the ESI tag silently.
+    If set to true, an ``onerror`` attribute will be added to the ESI tag with a
+    value of ``continue`` indicating that, in the event of a failure, the gateway
+    cache will remove the ESI tag silently.
 
 ``absolute_uri``
      If set to true, an absolute URI will be generated. **default**: ``false``

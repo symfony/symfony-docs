@@ -2,7 +2,7 @@ Bootstrap 4 Form Theme
 ======================
 
 Symfony provides several ways of integrating `Bootstrap 4`_ into your application. The
-most straightforward way is to add the required ``<link>`` and ``<script>``
+simplest way is to add the required ``<link>`` and ``<script>``
 elements in your templates (usually you only include them in the main layout
 template which other templates extend from):
 

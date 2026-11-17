@@ -108,7 +108,7 @@ information:
             ->register(SessionRequestProcessor::class)
             ->addTag('monolog.processor');
 
-Finally, set the formatter to be used on whatever handler you want:
+Finally, set the formatter to be used on any handler you want:
 
 .. configuration-block::
 
@@ -193,12 +193,12 @@ Symfony's MonologBridge provides processors that can be registered inside your a
     error message to the record.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\TokenProcessor`
-    Adds information from the current user's token to the record, namely the
+    Adds information from the current user's token to the record: the
     username, roles and whether the user is authenticated.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\SwitchUserTokenProcessor`
-    Adds information about the user who is impersonating the logged-in user,
-    namely username, roles and whether the user is authenticated.
+    Adds information about the user who is impersonating the logged-in user:
+    username, roles and whether the user is authenticated.
 
 :class:`Symfony\\Bridge\\Monolog\\Processor\\WebProcessor`
     Overrides data from the request using the data inside Symfony's request

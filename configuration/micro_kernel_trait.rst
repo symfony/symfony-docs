@@ -100,7 +100,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
             return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
         };
 
-That's it! To test it, start the :ref:`Symfony local web server <symfony-cli-server>`:
+To test it, start the :ref:`Symfony local web server <symfony-cli-server>`:
 
 .. code-block:: terminal
 
@@ -161,8 +161,8 @@ that define your bundles, your services and your routes:
 
 **configureRoutes(RoutingConfigurator $routes)**
     In this method, you can use the ``RoutingConfigurator`` object to define routes
-    in your application and associate them with the controllers defined in this very
-    same file.
+    in your application and associate them with the controllers defined in this
+    very same file.
 
     However, it's more convenient to define the controller routes using PHP attributes,
     as shown above. That's why this method is commonly used only to load external
@@ -446,9 +446,8 @@ Finally, you need a front controller to boot and run the application. Create a
     $response->send();
     $kernel->terminate($request, $response);
 
-That's it! This ``/random/10`` URL will work, Twig will render, and you'll even
-get the web debug toolbar to show up at the bottom. The final structure looks like
-this:
+Now, this ``/random/10`` URL will work, Twig will render, and the web debug
+toolbar will show up at the bottom. The final structure looks like this:
 
 .. code-block:: text
 

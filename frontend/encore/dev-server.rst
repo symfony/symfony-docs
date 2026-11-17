@@ -108,7 +108,7 @@ it's required to solve the CORS issue.
 Hot Module Replacement (HMR)
 ----------------------------
 
-Hot module replacement is a superpower of the ``dev-server`` where styles and
+Hot module replacement is a feature of the ``dev-server`` where styles and
 (in some cases) JavaScript can automatically update without needing to reload
 your page. HMR works automatically with CSS (as long as you're using
 ``dev-server``) but only works with some JavaScript
@@ -117,7 +117,7 @@ your page. HMR works automatically with CSS (as long as you're using
 Live Reloading when changing PHP / Twig Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To utilize the HMR superpower along with live reload for your PHP code and
+To use HMR along with live reload for your PHP code and
 templates, set the following options:
 
 .. code-block:: javascript

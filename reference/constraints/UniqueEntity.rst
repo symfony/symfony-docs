@@ -148,7 +148,7 @@ across all the rows in your user table:
 
 .. warning::
 
-    This constraint cannot deal with duplicates found in a collection of items
+    This constraint cannot handle duplicates found in a collection of items
     that haven't been persisted as entities yet. You'll need to create your own
     validator to handle that case.
 
@@ -271,8 +271,8 @@ Options
 
 The name of the entity manager to use for making the query to determine
 the uniqueness. If it's left blank, the correct entity manager will be
-determined for this class. For that reason, you probably
-won't need to use this option.
+determined for this class. For that reason, you probably won't need to use
+this option.
 
 ``entityClass``
 ~~~~~~~~~~~~~~~

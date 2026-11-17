@@ -43,8 +43,8 @@ divisor
 
 If you need to divide your starting value by a number
 before rendering it to the user, you can use the ``divisor`` option.
-For example, if you store prices as integers in order to avoid `rounding errors`_,
-you can transform values in cents automatically::
+For example, if you store prices as integers in order to avoid
+`rounding errors`_, you can transform values in cents automatically::
 
     use Symfony\Component\Form\Extension\Core\Type\MoneyType;
     // ...
@@ -83,9 +83,9 @@ input
 By default, the money value is converted to a ``float`` PHP type. If you need the
 value to be converted into an integer (e.g. because some library needs money
 values stored in cents as integers), set this option to ``integer``.
-You can also set this option to ``string``, which can be useful if the underlying
-data is a string for precision reasons (for example, Doctrine uses strings for
-the decimal type).
+You can also set this option to ``string``, which can be useful if the
+underlying data is a string for precision reasons (for example, Doctrine uses
+strings for the decimal type).
 
 .. versionadded:: 7.1
 

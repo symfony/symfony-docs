@@ -166,7 +166,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 
     The support for the ``'PRIVATE_SUBNETS'`` string was introduced in Symfony 7.2.
 
-That's it! It's critical that you prevent traffic from all non-trusted sources.
+It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 

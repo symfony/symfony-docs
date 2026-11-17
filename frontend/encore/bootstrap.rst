@@ -26,7 +26,7 @@ a ``global.scss`` file, import it from there:
     // the ~ allows you to reference things in node_modules
     @import "~bootstrap/scss/bootstrap";
 
-That's it! This imports the ``node_modules/bootstrap/scss/bootstrap.scss``
+This imports the ``node_modules/bootstrap/scss/bootstrap.scss``
 file into ``global.scss``. You can even customize the Bootstrap variables first!
 
 .. tip::

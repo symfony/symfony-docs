@@ -143,7 +143,7 @@ The validator class only has one required method, ``validate()``::
             }
 
             // custom constraints should ignore null and empty values to allow
-            // other constraints (NotBlank, NotNull, etc.) to take care of that
+            // other constraints (NotBlank, NotNull, etc.) to handle that
             if (null === $value || '' === $value) {
                 return;
             }

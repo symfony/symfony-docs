@@ -95,5 +95,5 @@ The cursor can also clear some output on the screen::
     // clears the entire screen
     $cursor->clearScreen();
 
-You can also leverage the :method:`Symfony\\Component\\Console\\Cursor::show`
+You can also use the :method:`Symfony\\Component\\Console\\Cursor::show`
 and :method:`Symfony\\Component\\Console\\Cursor::hide` methods on the cursor.

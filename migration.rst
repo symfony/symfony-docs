@@ -16,7 +16,7 @@ by avoiding a "big bang"-release for the new application.
 
     The topic of migrating from an existing application towards Symfony is
     sometimes discussed during conferences. For example the talk
-    `Modernizing with Symfony`_ reiterates some of the points from this page.
+    `Modernizing with Symfony`_ repeats some of the points from this page.
 
 Prerequisites
 -------------
@@ -84,7 +84,7 @@ A good way to ensure compatibility is to use the same ``composer.json``
 for both projects' dependencies.
 
 Once you have introduced Composer for managing your project's dependencies
-you can use its autoloader to ensure you do not run into any conflicts due
+you can use its autoloader to ensure you do not encounter any conflicts due
 to custom autoloading from your existing framework. This usually entails
 adding an `autoload`_-section to your ``composer.json`` and configuring it
 based on your application and replacing your custom logic with something
@@ -112,7 +112,7 @@ the age of the project as PHP itself underwent many improvements throughout
 the years that your code might not have caught up with yet. As long as both
 your existing code and a new Symfony project can run in parallel on the
 same system you are on the right track. All these steps do not require you to
-introduce Symfony just yet and will already open up some opportunities for
+introduce Symfony yet and will already create some opportunities for
 modernizing your existing code.
 
 Establishing a Safety Net for Regressions
@@ -128,18 +128,18 @@ at all or have low code coverage. Introducing unit tests for this code is
 likely not cost effective as the old code might be replaced with functionality
 from Symfony components or might be adapted to the new application.
 Additionally legacy code tends to be hard to write tests for, making the process
-slow and cumbersome.
+slow and difficult.
 
 Instead of providing low level tests that ensure each class works as expected, it
-might make sense to write high level tests ensuring that anything user
-facing works on at least a superficial level. These kinds of tests are commonly
+might make sense to write high level tests ensuring that anything user facing
+works on at least a superficial level. These kinds of tests are commonly
 called End-to-End tests, because they cover the whole application from what the
 user sees in the browser down to the very code that is being run and connected
 services like a database. To automate this you have to make sure that you can
-get a test instance of your system running as easily as possible and
-that external systems do not change your production environment, e.g.
-provide a separate test database with (anonymized) data from a production
-system or set up a new schema with a basic dataset for your test
+get a test instance of your system running as easily as possible and that
+external systems do not change your production environment, e.g. provide a
+separate test database with (anonymized) data from a production system or set
+up a new schema with a basic dataset for your test
 environment. Since these tests do not rely as much on isolating testable code
 and instead look at the interconnected system, writing them is usually easier
 and more productive when doing a migration. You can then limit your effort to
@@ -158,14 +158,14 @@ Introducing Symfony to the Existing Application
 
 The following instructions only provide an outline of common tasks for
 setting up a Symfony application that falls back to a legacy application
-whenever a route is not accessible. Your mileage may vary and likely you
-will need to adjust some of this or even provide additional configuration
-or retrofitting to make it work with your application. This guide is not
+whenever a route is not accessible. Every application is different and likely
+you will need to adjust some of this or even provide additional configuration
+or changes to make it work with your application. This guide is not
 supposed to be comprehensive and instead aims to be a starting point.
 
 .. tip::
 
-    If you get stuck or need additional help you can reach out to the
+    If you get stuck or need additional help you can ask the
     :doc:`Symfony community </contributing/index>` whenever you need
     concrete feedback on an issue you are facing.
 
@@ -295,7 +295,7 @@ Line 41 - 46
   If Symfony handled the response, it is sent; otherwise, the ``LegacyBridge``
   handles the request.
 
-This legacy bridge is responsible for figuring out which file should be loaded
+This legacy bridge is responsible for finding out which file should be loaded
 in order to process the old application logic. This can either be a front
 controller similar to Symfony's ``public/index.php`` or a specific script file
 based on the current route. The basic outline of this LegacyBridge could look
@@ -357,7 +357,7 @@ somewhat like this::
 
 This is the most generic approach you can take that is likely to work
 no matter what your previous system was. You might have to account for
-certain "quirks", but since your original application is only started
+certain unusual behaviors, but since your original application is only started
 after Symfony has finished handling the request you reduce the chances
 for side effects and any interference.
 
@@ -376,7 +376,7 @@ making it easier to transition it over to the new Symfony application.
 The major downside is that both systems are not well integrated
 with each other, leading to some redundancies and possibly duplicated code.
 For example, since the Symfony application is already done handling the
-request you cannot take advantage of kernel events or utilize Symfony's
+request you cannot take advantage of kernel events or use Symfony's
 routing for determining which legacy script to call.
 
 Legacy Route Loader
@@ -385,12 +385,12 @@ Legacy Route Loader
 The major difference from the previous LegacyBridge-approach is that the
 logic is moved inside the Symfony application. It removes some of the
 redundancies and allows you to also interact with parts of the legacy
-application from inside Symfony, instead of just the other way around.
+application from inside Symfony, instead of only the other way around.
 
 .. tip::
 
-    The following route loader is just a generic example that you might
-    have to tweak for your legacy application. You can familiarize
+    The following route loader is only a generic example that you might
+    have to adjust for your legacy application. You can familiarize
     yourself with the concepts by reading up on it in :doc:`Routing </routing>`.
 
 The legacy route loader is :doc:`a custom route loader </routing/custom_route_loader>`.

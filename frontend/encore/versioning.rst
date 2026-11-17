@@ -63,7 +63,7 @@ an ``img`` tag) to certain assets. If you're using Symfony, activate the
         assets:
             json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
 
-That's it! Be sure to wrap each path in the Twig ``asset()`` function
+Make sure to wrap each path in the Twig ``asset()`` function
 like normal:
 
 .. code-block:: html+twig

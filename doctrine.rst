@@ -205,7 +205,7 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 .. tip::
 
     Starting in `MakerBundle`_: v1.57.0 - You can pass either ``--with-uuid`` or
-    ``--with-ulid`` to ``make:entity``. Leveraging Symfony's :doc:`Uid Component </components/uid>`,
+    ``--with-ulid`` to ``make:entity``. Using Symfony's :doc:`Uid Component </components/uid>`,
     this generates an entity with the ``id`` type as :ref:`Uuid <uuid>`
     or :ref:`Ulid <ulid>` instead of ``int``.
 
@@ -221,8 +221,8 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
 .. note::
 
-    Confused why the price is an integer? Don't worry: this is just an example.
-    But, storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
+    Confused why the price is an integer? This is only an example. But,
+    storing prices as integers (e.g. 100 = $1 USD) can avoid rounding issues.
 
 .. warning::
 
@@ -407,7 +407,7 @@ Migrations: Creating the Database Tables/Schema
 
 The ``Product`` class is fully configured and ready to save to a ``product`` table.
 If you just defined this class, your database doesn't actually have the ``product``
-table yet. To add it, you can leverage the `DoctrineMigrationsBundle`_, which is
+table yet. To add it, you can use the `DoctrineMigrationsBundle`_, which is
 already installed:
 
 .. code-block:: terminal
@@ -834,7 +834,7 @@ automatically! You can simplify the controller to::
         }
     }
 
-That's it! The attribute uses the ``{id}`` from the route to query for the ``Product``
+The attribute uses the ``{id}`` from the route to query for the ``Product``
 by the ``id`` column. If it's not found, a 404 error is thrown.
 
 You can change this behavior by making the controller argument optional. In that

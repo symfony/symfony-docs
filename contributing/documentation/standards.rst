@@ -75,7 +75,7 @@ Code Examples
   declaration;
 * When referencing classes, be sure to show the ``use`` statements at the
   top of your code block. You don't need to show *all* ``use`` statements
-  in every example, just show what is actually being used in the code block;
+  in every example, only show what is actually used in the code block;
 * If useful, a ``codeblock`` should begin with a comment containing the filename
   of the file in the code block. Don't place a blank line after this comment,
   unless the next line is also a comment;
@@ -132,8 +132,8 @@ Files and Directories
 ---------------------
 
 * When referencing directories, always add a trailing slash to avoid confusion
-  with regular files (e.g. "execute the ``console`` script located in the ``bin/``
-  directory").
+  with regular files (e.g. "execute the ``console`` script located in the
+  ``bin/`` directory").
 * When referencing file extensions explicitly, you should include a leading dot
   for every extension (e.g. "XML files use the ``.xml`` extension").
 * When you list a Symfony file/directory hierarchy, use ``your-project/`` as the
@@ -187,7 +187,8 @@ In addition, documentation follows these rules:
 
 * **Section titles**: use a variant of the title case, where the first
   word is always capitalized and all other words are capitalized, except for
-  the closed-class words (read the Wikipedia article about `headings and titles`_).
+  the closed-class words (read the Wikipedia article about
+  `headings and titles`_).
 
   E.g.: The Vitamins are in my Fresh California Raisins
 

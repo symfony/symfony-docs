@@ -65,7 +65,8 @@ Start by creating a new class called ``AcmeBlogBundle``::
 .. warning::
 
     If your bundle must be compatible with previous Symfony versions you have to
-    extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle` class instead.
+    extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`
+    class instead.
 
 .. tip::
 

@@ -32,9 +32,9 @@ underlying minifier through the ``minify`` option.
 Minifying JavaScript
 --------------------
 
-JavaScript is minified out of the box (no extra package required) using Terser,
+JavaScript is minified by default (no extra package required) using Terser,
 which is bundled inside ``minimizer-webpack-plugin``. Use
-``configureJsMinimizerPlugin()`` to tweak its options or switch to another
+``configureJsMinimizerPlugin()`` to change its options or switch to another
 minifier.
 
 The ``MinimizerPlugin`` class is passed as the second argument of the callback, so
@@ -46,7 +46,7 @@ resolve under pnpm, being a transitive dependency of Encore):
     // webpack.config.js
     // ...
 
-    // Tweak the default (Terser) options
+    // Change the default (Terser) options
     Encore.configureJsMinimizerPlugin((options) => {
         options.terserOptions = {
             // ...

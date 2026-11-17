@@ -208,7 +208,7 @@ whereas in PHP classes you use the ``#[AutowireDecorated]`` attribute:
                 ->args([service('.inner')]);
         };
 
-Behind the scenes, the original service keeps a real ID built as the decorating
+Internally, the original service keeps a real ID built as the decorating
 service ID plus the ``.inner`` suffix (e.g. ``'App\LoggingMailer.inner'``).
 In configuration files you can change that ID with the ``decoration_inner_name``
 option:
@@ -387,7 +387,7 @@ In practice, the container now creates the ``App\Mailer`` service like this
 
     $mailer = new RateLimitingMailer(new LoggingMailer(new Mailer()));
 
-Since higher priority decorators are applied earlier, they end up closer to the
+Since higher priority decorators are applied earlier, they are placed closer to the
 original service. When using the decorated service, the outermost decorator
 (i.e. the one with the lowest priority) runs first. In this example,
 ``RateLimitingMailer`` checks the sending quota before ``LoggingMailer`` logs

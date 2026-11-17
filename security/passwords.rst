@@ -112,7 +112,7 @@ Further in this article, you can find a
 
 .. tip::
 
-    Hashing passwords is resource-intensive and takes time in order to
+    Hashing passwords is resource-intensive and takes time to
     generate secure password hashes. In general, this makes your password
     hashing more secure.
 
@@ -325,7 +325,7 @@ When injecting a specific hasher by its name, you should type-hint the generic
 Password Migration
 ------------------
 
-In order to protect passwords, it is recommended to store them using the latest
+To protect passwords, it is recommended to store them using the latest
 hash algorithms. This means that if a better hash algorithm is supported on your
 system, the user's password should be *rehashed* using the newer algorithm and
 stored. That's possible with the ``migrate_from`` option:
@@ -473,14 +473,15 @@ password should be stored:
 * :ref:`When using Doctrine's entity user provider <upgrade-the-password-doctrine>`
 * :ref:`When using a custom user provider <upgrade-the-password-custom-provider>`
 
-After this, you're done and passwords are always hashed as securely as possible!
+After this, passwords are always hashed as securely as possible.
 
 .. note::
 
     When using the PasswordHasher component outside a Symfony application,
     you must manually use the ``PasswordHasherInterface::needsRehash()``
-    method to check if a rehash is needed and the ``PasswordHasherInterface::hash()``
-    method to rehash the plaintext password using the new algorithm.
+    method to check if a rehash is needed and the
+    ``PasswordHasherInterface::hash()`` method to rehash the plaintext password
+    using the new algorithm.
 
 .. _upgrade-the-password-doctrine:
 
@@ -642,7 +643,7 @@ cost? This can be done with named hashers:
             ],
         ]);
 
-This creates a hasher named ``harsh``. In order for a ``User`` instance
+This creates a hasher named ``harsh``. For a ``User`` instance
 to use it, the class must implement
 :class:`Symfony\\Component\\PasswordHasher\\Hasher\\PasswordHasherAwareInterface`.
 The interface requires one method - ``getPasswordHasherName()`` - which should return
@@ -680,7 +681,7 @@ the name of the hasher to use::
 
 If you created your own password hasher implementing the
 :class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`,
-you must register a service for it in order to use it as a named hasher:
+you must register a service for it to use it as a named hasher:
 
 .. configuration-block::
 
@@ -794,7 +795,7 @@ It produces hashed passwords with the `bcrypt password hashing function`_.
 Hashed passwords are ``60`` characters long, so make sure to
 allocate enough space for them to be persisted. Also, passwords include the
 `cryptographic salt`_ inside them (it's generated automatically for each new
-password), so you don't have to deal with it.
+password), so you don't have to handle it.
 
 Its only configuration option is ``cost``, which is an integer in the range of
 ``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
@@ -824,7 +825,7 @@ The hashed passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash, this may change in the future, so make
 sure to allocate enough space for them to be persisted. Also, passwords include
 the `cryptographic salt`_ inside them (it's generated automatically for each new
-password), so you don't have to deal with it.
+password), so you don't have to handle it.
 
 .. _reference-security-pbkdf2:
 

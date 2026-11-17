@@ -215,8 +215,8 @@ gendered, racially motivated or that singles out a group. For example, prefer
 Giving Positive Feedback
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-While reviewing you may run into suggestions that don't reflect your ideas, or
-that are simply wrong. Before you comment, consider the time the author spent and
+While reviewing you may find suggestions that don't reflect your ideas, or
+that are wrong. Before you comment, consider the time the author spent and
 how your response would make them feel. Did you correctly understand their
 intention, or are you making assumptions? Be explicit, and avoid terms that refer
 to personal traits ("dumb", "stupid"). Assume everyone is intelligent and
@@ -252,10 +252,10 @@ Asking for Changes
 ~~~~~~~~~~~~~~~~~~
 
 Understand that the author already spent time on the change, and that asking for
-(small) changes may be misread as a personal attack, *especially for a first-time
-contributor*. Be thankful for their work, stay positive and help them make
-the contribution a great one. Use words like "Please", "Thank you" and "Could
-you" instead of making demands:
+(small) changes may be misread as a personal attack, *especially for a
+first-time contributor*. Be thankful for their work, stay positive and help them
+make the contribution a great one. Use words like "Please", "Thank you" and
+"Could you" instead of making demands:
 
 * "Thank you for your work so far. I left some suggestions to make the code more
   readable.";

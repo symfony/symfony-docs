@@ -78,7 +78,7 @@ constructor, you can pass a mock object within a test::
         }
     }
 
-In this example, you are building the mocks from the inside out, first creating
+In this example, you build the mocks starting from the innermost one: first
 the employee which gets returned by the ``Repository``, which itself gets
 returned by the ``EntityManager``. This way, no real class is involved in
 testing.

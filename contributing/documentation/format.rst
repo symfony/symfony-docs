@@ -11,8 +11,8 @@ reStructuredText is a plain text markup syntax similar to Markdown, but much
 stricter with its syntax. If you are new to reStructuredText, check out the
 `reStructuredText Primer`_ tutorial and the `reStructuredText Reference`_.
 
-You can also take some time to familiarize yourself with this format by reading the
-existing `Symfony documentation`_ source.
+You can also take some time to familiarize yourself with this format by reading
+the existing `Symfony documentation`_ source.
 
 .. warning::
 
@@ -195,7 +195,8 @@ If you want to modify that title, use this alternative syntax:
         :doc:`environments`
 
 **Links to specific page sections** follow a different syntax. First, define a
-target above the section you will link to (syntax: ``.. _`` + target name + ``:``):
+target above the section you will link to (syntax: ``.. _`` + target name +
+``:``):
 
 .. code-block:: rst
 

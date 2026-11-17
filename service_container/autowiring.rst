@@ -360,8 +360,8 @@ Working with Interfaces
 -----------------------
 
 You might also find yourself type-hinting abstractions (e.g. interfaces) instead
-of concrete classes because it allows you to replace your dependencies with other
-objects. To follow this best practice, suppose you decide to create a
+of concrete classes because it allows you to replace your dependencies with
+other objects. To follow this best practice, suppose you decide to create a
 ``FormatterInterface``::
 
     // src/Formatter/FormatterInterface.php
@@ -459,9 +459,9 @@ dealing with the ``FormatterInterface``.
 
 .. tip::
 
-    Autowiring is powerful enough to guess which service to inject even when using
-    union and intersection types. This means you're able to type-hint arguments with
-    complex types like this::
+    Autowiring is powerful enough to guess which service to inject even when
+    using union and intersection types. This means you're able to type-hint
+    arguments with complex types like this::
 
         use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
         use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -724,8 +724,8 @@ argument (e.g. a string), this cannot be autowired: Symfony will throw a clear
 exception.
 
 To fix this, you can :ref:`manually wire the problematic argument <services-manually-wire-args>`
-in the service configuration. You wire up only the difficult arguments;
-Symfony takes care of the rest.
+in the service configuration. You wire only the difficult arguments;
+Symfony handles the rest.
 
 You can also use the ``#[Autowire]`` parameter attribute to instruct the autowiring
 logic about those arguments::
@@ -899,7 +899,7 @@ Generating Closures with Autowiring
 -----------------------------------
 
 A **service closure** is an anonymous function that returns a service. This type
-of instantiation is handy when you are dealing with lazy-loading. It is also
+of instantiation is useful for lazy-loading. It is also
 useful for :ref:`non-shared service dependencies <services-shared>`. If you want
 to delay the instantiation of a service without changing the code that uses it,
 inject it as a :doc:`lazy service </service_container/lazy_services>` instead;
@@ -1116,7 +1116,7 @@ Injecting Service Closures in Configuration Files
 
 Service closures can also be defined in configuration files, without using any
 attribute in the service class. The service is instantiated the first time the
-closure is called, while all subsequent calls return the same instance, unless
+closure is called, while all later calls return the same instance, unless
 the service is :ref:`not shared <services-shared>`::
 
     // src/Service/MyService.php
@@ -1497,7 +1497,7 @@ attribute, directly next to the corresponding argument::
 
 This example tells Symfony to inject an object created by calling the
 ``ScopingHttpClient::forBaseUri()`` factory with the specified base URI and
-default options. This is just one example: you can use the ``#[AutowireInline]``
+default options. This is only one example: you can use the ``#[AutowireInline]``
 attribute to define any kind of anonymous service.
 
 While this approach is convenient for simple service definitions, consider moving

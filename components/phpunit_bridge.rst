@@ -362,8 +362,8 @@ Disabling the Deprecation Helper
 
 Set the ``SYMFONY_DEPRECATIONS_HELPER`` environment variable to ``disabled=1``
 to completely disable the deprecation helper. This is useful to make use of the
-rest of the features provided by this component without getting errors or messages
-related to deprecations.
+rest of the features provided by this component without getting errors or
+messages related to deprecations.
 
 Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1049,8 +1049,8 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
     It is also possible to require additional packages that will be installed along
     with the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
-    env variable. This is especially useful for installing PHPUnit plugins without
-    having to add them to your main ``composer.json`` file. The required packages
+    env variable. This is especially useful for installing PHPUnit plugins
+    without having to add them to your main ``composer.json`` file. The required packages
     need to be separated with a space.
 
     .. code-block:: xml

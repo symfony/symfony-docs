@@ -917,7 +917,7 @@ Input                  ``foo``    ``bar``       ``cat``
 ``-cbWorld``           ``false``  ``""``        ``"bWorld"``
 =====================  =========  ============  ============
 
-Things get a little bit more tricky when the command also accepts an optional
+Things get a little more complex when the command also accepts an optional
 argument::
 
     // ...
@@ -1076,7 +1076,7 @@ of ``addArgument()`` or the 6th argument of ``addOption()``::
         }
     }
 
-That's all you need! Assuming users "Fabien" and "Fabrice" exist, pressing
+With this code, assuming users "Fabien" and "Fabrice" exist, pressing
 tab after typing ``app:greet Fa`` will give you these names as suggestions.
 
 .. tip::

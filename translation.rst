@@ -205,7 +205,7 @@ idea of the message. The keyword message is then used as the "id" for
 any translations. In this case, translations must be made for the default
 locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
 
-The second method is handy because the message key won't need to be changed
+The second method is useful because the message key won't need to be changed
 in every translation file if you decide that the message should actually
 read "Symfony is really great" in the default locale.
 
@@ -393,7 +393,7 @@ happens later, when the object is rendered::
         'store'
     );
 
-In Twig, pass translatable objects to the ``trans`` filter just like regular strings:
+In Twig, pass translatable objects to the ``trans`` filter like regular strings:
 
 .. code-block:: html+twig
 
@@ -1570,10 +1570,10 @@ To inspect all messages in the ``fr`` locale for the application, run:
     ---------  ------------------  ----------------------  -------------------------------
 
 It shows you a table with the result when translating the message in the ``fr``
-locale and the result when the fallback locale ``en`` would be used. On top
-of that, it will also show you when the translation is the same as the fallback
+locale and the result when the fallback locale ``en`` would be used. In
+addition, it will show you when the translation is the same as the fallback
 translation (this could indicate that the message was not correctly translated).
-Furthermore, it indicates that the message ``Symfony is great`` is unused
+It also indicates that the message ``Symfony is great`` is unused
 because it is translated, but you haven't used it anywhere yet.
 
 Now, if you translate the message in one of your templates, you will get this
@@ -1606,7 +1606,7 @@ for the ``fr`` locale and run the command, you will get:
     ---------  ------------------  ----------------------  -------------------------------
 
 The state indicates the message is missing because it is not translated in
-the ``fr`` locale but it is still used in the template. Moreover, the message
+the ``fr`` locale but it is still used in the template. Also, the message
 in the ``fr`` locale equals the message in the ``en`` locale. This is a
 special case because the untranslated message id equals its translation in
 the ``en`` locale.
@@ -1635,7 +1635,7 @@ domain:
 
     $ php bin/console debug:translation en --domain=messages
 
-When the application has a lot of messages, it is useful to display only the
+When the application has many messages, it is useful to display only the
 unused or only the missing messages, by using the ``--only-unused`` or
 ``--only-missing`` options:
 
@@ -1895,7 +1895,7 @@ it in the translator configuration:
             ;
         };
 
-That's all. The application will now start displaying those strange, but
+The application will now start displaying those strange, but
 readable, contents to help you internationalize it. See for example the
 difference in the `Symfony Demo`_ application. This is the original page:
 
@@ -1913,7 +1913,7 @@ Summary
 -------
 
 With the Symfony Translation component, creating an internationalized application
-no longer needs to be a painful process and boils down to these steps:
+no longer needs to be a difficult process and consists of these steps:
 
 * Abstract messages in your application by wrapping each in the
   :method:`Symfony\\Component\\Translation\\Translator::trans` method;

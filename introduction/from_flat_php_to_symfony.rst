@@ -3,11 +3,11 @@
 Symfony versus Flat PHP
 =======================
 
-**Why is Symfony better than just opening up a file and writing flat PHP?**
+**Why is Symfony better than opening a file and writing flat PHP?**
 
 If you've never used a PHP framework, aren't familiar with the
-`Model-View-Controller`_ (MVC) philosophy, or just wonder what all the *hype*
-is around Symfony, this article is for you. Instead of *telling* you that
+`Model-View-Controller`_ (MVC) philosophy, or wonder why so many people talk
+about Symfony, this article is for you. Instead of *telling* you that
 Symfony allows you to develop faster and better software than with flat PHP,
 you'll see for yourself.
 
@@ -22,9 +22,9 @@ let you take back control of your code.
 A Basic Blog in Flat PHP
 ------------------------
 
-In this article, you'll build the token blog application using only flat PHP.
+In this article, you'll build a basic blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
-persisted to the database. Writing in flat PHP is quick and dirty:
+persisted to the database. Writing in flat PHP is fast but messy:
 
 .. code-block:: html+php
 
@@ -130,7 +130,7 @@ of *your* code that processes user input and prepares the response.
 
 In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
-change *just* the template file if you needed to render the blog
+change *only* the template file if you needed to render the blog
 entries in some other format (e.g. ``list.json.php`` for JSON format).
 
 Isolating the Application (Domain) Logic

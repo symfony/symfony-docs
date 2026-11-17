@@ -75,7 +75,7 @@ your Vue.js app update *without* a browser refresh! To activate it, use the
 
     $ npm run dev-server
 
-That's it! Change one of your ``.vue`` files and watch your browser update. But
+Now, change one of your ``.vue`` files and watch your browser update. But
 note: this does *not* currently work for *style* changes in a ``.vue`` file. Seeing
 updated styles still requires a page refresh.
 

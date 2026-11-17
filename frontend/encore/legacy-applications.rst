@@ -2,7 +2,7 @@ jQuery Plugins and Legacy Applications with Webpack Encore
 ==========================================================
 
 Inside Webpack, when you require a module, it does *not* (usually) set a global variable.
-Instead, it just returns a value:
+Instead, it only returns a value:
 
 .. code-block:: javascript
 

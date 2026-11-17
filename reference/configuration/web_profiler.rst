@@ -31,7 +31,7 @@ excluded_ajax_paths
 
 When the toolbar logs AJAX requests, it matches their URLs against this regular
 expression. If the URL matches, the request is not displayed in the toolbar. This
-is useful when the application makes lots of AJAX requests, or if they are heavy
+is useful when the application makes many AJAX requests, or if they are heavy
 and you want to exclude some of them.
 
 .. _intercept_redirects:

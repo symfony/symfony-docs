@@ -110,7 +110,7 @@ Congrats! You now have three new files:
     that helps performance, but doesn't affect how things work. Others help Encore
     do its work.
 
-Next, to include these in your base layout, you can leverage two Twig helpers from
+Next, to include these in your base layout, you can use two Twig helpers from
 WebpackEncoreBundle:
 
 .. code-block:: html+twig
@@ -144,7 +144,7 @@ WebpackEncoreBundle:
 
 .. _encore-entrypointsjson-simple-description:
 
-That's it! When you refresh your page, all of the JavaScript from
+When you refresh your page, all of the JavaScript from
 ``assets/app.js`` - as well as any other JavaScript files it included - will
 be executed. All the CSS files that were required will also be displayed.
 
@@ -205,7 +205,7 @@ Great! Use ``import`` to import ``jquery`` and ``greet.js``:
     +     $('body').prepend('<h1>'+greet('jill')+'</h1>');
     + });
 
-That's it! If you previously ran ``encore dev --watch``, your final, built files
+If you previously ran ``encore dev --watch``, your final, built files
 have already been updated: jQuery and ``greet.js`` have been automatically
 added to the output file (``app.js``). Refresh to see the message!
 
@@ -222,10 +222,9 @@ Stimulus & Symfony UX
 ---------------------
 
 As simple as the above example is, instead of building your application inside of
-``app.js``, we recommend `Stimulus`_: a small JavaScript framework that makes it
-easy to attach behavior to HTML. It's powerful, and you will love it! Symfony
-even provides packages to add more features to Stimulus. These are called the
-Symfony UX Packages.
+``app.js``, we recommend `Stimulus`_: a small JavaScript framework that
+helps you attach behavior to HTML. Symfony even provides packages to add more
+features to Stimulus. These are called the Symfony UX Packages.
 
 To use Stimulus, first install StimulusBundle:
 
@@ -315,7 +314,7 @@ want to include on *certain* pages?
 Lazy Controllers
 ~~~~~~~~~~~~~~~~
 
-One very nice solution if you're using Stimulus is to leverage `lazy controllers`_.
+One good solution if you're using Stimulus is to use `lazy controllers`_.
 To activate this on a controller, add a special ``stimulusFetch: 'lazy'`` above
 your controller class:
 
@@ -329,10 +328,10 @@ your controller class:
         // ...
     }
 
-That's it! This controller's code - and any modules that it imports - will be
-split into *separate* files by Encore. Then, those files won't be downloaded until
-the moment a matching element (e.g. ``<div data-controller="lazy-example">``)
-appears on the page!
+This controller's code - and any modules that it imports - will be
+split into *separate* files by Encore. Then, those files won't be downloaded
+until the moment a matching element
+(e.g. ``<div data-controller="lazy-example">``) appears on the page!
 
 .. note::
 

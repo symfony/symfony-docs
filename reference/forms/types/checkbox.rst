@@ -5,7 +5,7 @@ Creates a single input checkbox. This should always be used for a field
 that has a boolean value: if the box is checked, the field will be set to
 true; if the box is unchecked, the value will be set to false. Optionally
 you can specify an array of values that, if submitted, will be evaluated
-to "false" as well (this differs from what HTTP defines, but can be handy
+to "false" as well (this differs from what HTTP defines, but can be useful
 if you want to handle submitted values like "0" or "false").
 
 +---------------------------+------------------------------------------------------------------------+

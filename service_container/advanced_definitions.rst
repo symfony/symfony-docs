@@ -296,10 +296,10 @@ the name of the argument and some short description about its purpose:
 Anonymous Services
 ------------------
 
-In some cases, you may want to prevent a service from being used as a dependency of
-other services. This can be achieved by creating an anonymous service. These
-services are like regular services but they don't define an ID and they are
-created where they are used.
+In some cases, you may want to prevent a service from being used as a
+dependency of other services. This can be achieved by creating an anonymous
+service. These services are like regular services but they don't define an ID
+and they are created where they are used.
 
 The following example shows how to inject an anonymous service into another service:
 

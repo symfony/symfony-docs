@@ -51,9 +51,9 @@ the following to your command::
     }
 
 In this case, the user will be asked "Continue with this action?". If the user
-answers with ``y`` (or any word or expression starting with ``y`` due to the default
-answer regex, e.g. ``yeti``), it returns ``true``. Otherwise (e.g. ``n``), it returns
-``false``.
+answers with ``y`` (or any word or expression starting with ``y`` due to the
+default answer regex, e.g. ``yeti``), it returns ``true``. Otherwise (e.g.
+``n``), it returns ``false``.
 
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
@@ -444,7 +444,7 @@ Normalizing the Answer
 ----------------------
 
 Before validating the answer, you can "normalize" it to fix minor errors or
-tweak it as needed. For instance, in a previous example you asked for the bundle
+adjust it as needed. For instance, in a previous example you asked for the bundle
 name. In case the user adds whitespace around the name by mistake, you can
 trim the name before validating it. To do so, configure a normalizer using the
 :method:`Symfony\\Component\\Console\\Question\\Question::setNormalizer`
@@ -618,15 +618,15 @@ inputs that the command expects::
 
 By calling :method:`Symfony\\Component\\Console\\Tester\\CommandTester::setInputs`,
 you imitate what the console would do internally with all user input through the CLI.
-This method takes an array as its only argument, with one string for each input that the command
-expects, representing what the user would have typed.
+This method takes an array as its only argument, with one string for each input
+that the command expects, representing what the user would have typed.
 This way you can test any user interaction (even complex ones) by passing the appropriate inputs.
 
 .. note::
 
     The :class:`Symfony\\Component\\Console\\Tester\\CommandTester` automatically
-    simulates a user hitting ``ENTER`` after each input, so you don't need to pass
-    an additional input.
+    simulates a user hitting ``ENTER`` after each input, so you don't need to
+    pass an additional input.
 
 .. warning::
 

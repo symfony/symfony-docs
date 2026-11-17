@@ -19,7 +19,7 @@ objects from the database.
 Basic Usage
 -----------
 
-The ``entity`` type has just one required option: the entity which should
+The ``entity`` type has only one required option: the entity which should
 be listed inside the choice field::
 
     use App\Entity\User;
@@ -131,9 +131,9 @@ method. You can also pass a callback function for more control::
         }
     ]);
 
-The function is called for each entity in the list, and that entity is passed to it as
-the argument. For more details, see the main :ref:`choice_label <reference-form-choice-label>`
-documentation.
+The function is called for each entity in the list, and that entity is passed
+to it as the argument. For more details, see the main
+:ref:`choice_label <reference-form-choice-label>` documentation.
 
 .. note::
 
@@ -259,8 +259,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 **type**: ``boolean`` **default**: ``false``
 
-If ``true``, the user will be able to select multiple options (as opposed
-to choosing just one option). Depending on the value of the ``expanded``
+If ``true``, the user will be able to select multiple options (instead of
+choosing only one option). Depending on the value of the ``expanded``
 option, this will render either a select tag or checkboxes if ``true`` and
 a select tag or radio buttons if ``false``. The returned value will be
 Doctrine's Array Collection.

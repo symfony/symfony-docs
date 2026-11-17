@@ -38,8 +38,8 @@ directly on GitHub, without installing anything:
        :alt: The "Comparing changes" page on GitHub.
        :class: with-browser
 
-#. Click **Create pull request**. That's it, **congratulations!** The community
-   will review your pull request and may suggest tweaks.
+#. Click **Create pull request**. **Congratulations!** The community will
+   review your pull request and may suggest changes.
 
 For anything larger, or if you prefer to work on your own computer, use the local
 workflow below.

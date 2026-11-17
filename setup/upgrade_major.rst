@@ -2,8 +2,8 @@ Upgrading a Major Version (e.g. 6.4.0 to 7.0.0)
 ===============================================
 
 Every two years, Symfony releases a new major version release (the first number
-changes). These releases are the trickiest to upgrade, as they are allowed to
-break backward compatibility. However, Symfony makes this upgrade process as
+changes). These releases are the most difficult to upgrade, as they are allowed
+to break backward compatibility. However, Symfony makes this upgrade process as
 smooth as possible.
 
 This means that you can update most of your code before the major release is
@@ -34,8 +34,8 @@ using these deprecated features in the last version before the major (e.g.
 you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
 (e.g. 6.4) so that you can see *all* the deprecations.
 
-To help you find deprecations, notices are triggered whenever you end up
-using a deprecated feature. When visiting your application in the
+To help you find deprecations, notices are triggered whenever you use
+a deprecated feature. When visiting your application in the
 :ref:`dev environment <configuration-environments>`
 in your browser, these notices are shown in the web dev toolbar:
 
@@ -51,7 +51,7 @@ cause a class deeper in the code to trigger the warning. In this case, Symfony d
 best to give a clear message, but you may need to research that warning further.
 
 And sometimes, the warning may come from a third-party library or bundle
-that you're using. If that's true, there's a good chance that those deprecations
+that you're using. If that's true, it's likely that those deprecations
 have already been updated. In that case, upgrade the library to fix them.
 
 .. tip::
@@ -70,7 +70,7 @@ When you run your tests using PHPUnit, no deprecation notices are shown.
 To help you here, Symfony provides a PHPUnit bridge. This bridge will show
 you a nice summary of all deprecation notices at the end of the test report.
 
-All you need to do is install the PHPUnit bridge:
+To use it, install the PHPUnit bridge:
 
 .. code-block:: terminal
 
@@ -304,9 +304,9 @@ env var. The value of this env var is url-encoded (e.g.
     used when running the script.
 
 ``deprecations``
-    Set to ``0`` to disable deprecations. Otherwise, a deprecation notice is triggered
-    when a child class misses a return type while the parent declares an
-    ``@return`` annotation (defaults to ``1``).
+    Set to ``0`` to disable deprecations. Otherwise, a deprecation notice is
+    triggered when a child class misses a return type while the parent
+    declares an ``@return`` annotation (defaults to ``1``).
 
 If there are specific files that should be ignored, you can set the
 ``SYMFONY_PATCH_TYPE_EXCLUDE`` env var to a regex. This regex will be

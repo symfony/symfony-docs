@@ -24,9 +24,9 @@ template from the AcmeUserBundle, create this template:
     If you add a template in a new location, you *may* need to clear your
     cache (``php bin/console cache:clear``), even if you are in debug mode.
 
-Instead of overriding an entire template, you may just want to override one or
+Instead of overriding an entire template, you may only want to override one or
 more blocks. However, since you are overriding the template you want to extend
-from, you would end up in an infinite loop error. The solution is to use the
+from, you would get an infinite loop error. The solution is to use the
 special ``!`` prefix in the template name to tell Symfony that you want to
 extend from the original template, not from the overridden one:
 
@@ -46,8 +46,8 @@ extend from the original template, not from the overridden one:
 
     Symfony internals use some bundles too, so you can apply the same technique
     to override the core Symfony templates. For example, you can
-    :doc:`customize error pages </controller/error_pages>` by overriding TwigBundle
-    templates.
+    :doc:`customize error pages </controller/error_pages>` by overriding
+    TwigBundle templates.
 
 Routing
 -------

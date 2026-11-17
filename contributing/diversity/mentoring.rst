@@ -25,11 +25,11 @@ their knowledge and experience with others. Every different point of view adds t
 our collective understanding of how to best use and evolve the code, design
 patterns and architecture provided within the Symfony community. Because of this,
 we specifically want to hear from long-time contributors and new users, who often
-come across entirely different challenges with a totally fresh new perspective.
+encounter entirely different challenges with a totally fresh new perspective.
 
-Giving a first talk at a conference can seem quite intimidating. But don't worry!
-Every speaker went through the same process at one time. We want to make sure that
-as many people as possible are empowered to take this path if they are motivated.
+Giving a first talk at a conference can seem quite intimidating. Every speaker
+went through the same process at one time. We want to make sure that as many
+people as possible are empowered to take this path if they are motivated.
 
 .. tip::
 
