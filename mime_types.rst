@@ -91,6 +91,9 @@ part of the file contents. Symfony applies multiple guessing mechanisms, one
 of them based on the PHP `fileinfo extension`_. It's recommended to install
 that extension to improve the guessing performance.
 
+To validate the MIME type of uploaded files, use the
+:doc:`File constraint </reference/constraints/File>`.
+
 Adding a MIME Type Guesser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 

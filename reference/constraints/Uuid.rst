@@ -4,7 +4,8 @@ UUID
 Validates that a value is a valid `Universally unique identifier (UUID)`_ per `RFC 4122`_.
 By default, this will validate the format according to the RFC's guidelines, but this can
 be relaxed to accept non-standard UUIDs that other systems (like PostgreSQL) accept.
-UUID versions can also be restricted using a list of allowed versions.
+UUID versions can also be restricted using a list of allowed versions. Read
+:ref:`the UID docs <uuid>` to learn how to generate and store UUIDs.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

@@ -63,7 +63,8 @@ The validation error displayed when the submitted CSRF token isn't valid.
 
 **type**: ``boolean`` **default**: ``true``
 
-Whether to protect this form against CSRF attacks. The default value comes from
+Whether to protect this form against
+:ref:`CSRF attacks <csrf-protection-forms>`. The default value comes from
 the :ref:`form.csrf_protection.enabled <reference-framework-form-csrf-protection>`
 option of FrameworkBundle. Symfony only adds the token to the root form.
 

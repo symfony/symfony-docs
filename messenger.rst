@@ -320,7 +320,8 @@ matched under ``routing`` will still be handled immediately, i.e. synchronously.
     no message is handled synchronously by default.
 
     The only drawback is that ``'*'`` will also apply to the emails sent with the
-    Symfony Mailer (which uses ``SendEmailMessage`` when Messenger is available).
+    Symfony Mailer (which uses ``SendEmailMessage`` when Messenger is available,
+    as explained in :ref:`mailer-sending-messages-async`).
     This could cause issues if your emails are not serializable (e.g. if they include
     file attachments as PHP resources/streams).
 
@@ -1272,7 +1273,7 @@ and pass an instance to the ``Worker`` constructor::
         // ... implement the remaining interface methods
     }
 
-.. _messenger-retries-failures:
+.. _messenger-rate-limited-transport:
 
 Rate Limited Transport
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1314,6 +1315,8 @@ by setting its ``rate_limiter`` option:
     When a rate limiter is configured on a transport, it will block the whole
     worker when the limit is hit. You should make sure you configure a dedicated
     worker for a rate limited transport to avoid blocking other transports.
+
+.. _messenger-retries-failures:
 
 Retries & Failures
 ------------------

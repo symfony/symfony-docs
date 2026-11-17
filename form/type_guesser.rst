@@ -1,10 +1,10 @@
 Creating a custom Type Guesser
 ==============================
 
-The Form component can guess the type and some options of a form field by
-using type guessers. The component already includes a type guesser using the
-assertions of the Validation component, but you can also add your own custom
-type guessers.
+The Form component can :ref:`guess the type and some options <form-type-guessing>`
+of a form field by using type guessers. The component already includes a type
+guesser using the assertions of the Validation component, but you can also add
+your own custom type guessers.
 
 .. sidebar:: Form Type Guessers in the Bridges
 

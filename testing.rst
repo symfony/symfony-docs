@@ -233,6 +233,8 @@ in them, files lower in the list override previous items):
     The ``.env.local`` file is **not** used in the test environment, to
     make each test set-up as consistent as possible.
 
+.. _testing-retrieving-services:
+
 Retrieving Services in the Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -313,6 +315,9 @@ concrete one::
 
 No further configuration is required, as the test service container is a special one
 that allows you to interact with private services and aliases.
+
+To freeze or change the current time in your tests, use the
+:ref:`ClockSensitiveTrait <clock_writing-tests>`.
 
 Mocking Non-Shared Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1126,6 +1131,8 @@ To use these assertions, your test class must extend
         {
             self::assertThatForClient(new SomeCustomConstraint());
         }
+
+.. _testing-crawler-assertions:
 
 Crawler Assertions
 ~~~~~~~~~~~~~~~~~~

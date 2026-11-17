@@ -52,9 +52,10 @@ Next, add a new ``category`` property to the ``Task`` class::
 
 .. tip::
 
-    The ``Valid`` Constraint has been added to the property ``category``. This
-    cascades the validation to the corresponding entity. If you omit this constraint,
-    the child entity would not be validated.
+    The :doc:`Valid </reference/constraints/Valid>` constraint has been added
+    to the property ``category``. This cascades the validation to the
+    corresponding entity. If you omit this constraint, the child entity would
+    not be validated.
 
 Now that your application has been updated to reflect the new requirements,
 create a form class so that a ``Category`` object can be modified by the user::
@@ -83,9 +84,10 @@ create a form class so that a ``Category`` object can be modified by the user::
     }
 
 The end goal is to allow the ``Category`` of a ``Task`` to be modified right
-inside the task form itself. To accomplish this, add a ``category`` field
-to the ``TaskType`` object whose type is an instance of the new ``CategoryType``
-class::
+inside the task form itself (if you only need to select an existing category,
+use the :doc:`EntityType field </reference/forms/types/entity>` instead). To
+accomplish this, add a ``category`` field to the ``TaskType`` object whose type
+is an instance of the new ``CategoryType`` class::
 
     // src/Form/TaskType.php
     use App\Form\CategoryType;

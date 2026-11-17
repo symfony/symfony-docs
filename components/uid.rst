@@ -377,6 +377,9 @@ The following constants are available:
 You can also use the ``Uuid::FORMAT_ALL`` constant to accept any UUID format.
 By default, only the RFC 4122 format is accepted.
 
+To validate UUIDs submitted by users, use the
+:doc:`Uuid constraint </reference/constraints/Uuid>`.
+
 .. tip::
 
     When creating or parsing an invalid UID (UUID or ULID), the

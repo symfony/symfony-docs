@@ -143,7 +143,7 @@ Internet Media Types like ``text/html`` to tell the client which format is
 being returned. You can see a `List of common media types`_ from IANA.
 
 Many other headers exist, some of which are very powerful. For example, certain
-headers can be used to create a powerful caching system.
+headers can be used to create a powerful :doc:`caching system </http_cache>`.
 
 Requests, Responses and Web Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

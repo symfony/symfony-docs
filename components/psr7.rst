@@ -26,6 +26,10 @@ can use any of the `libraries that implement psr/http-factory-implementation`_:
 Usage
 -----
 
+In Symfony controllers, you don't need to convert requests manually: you can
+type-hint PSR-7 request interfaces thanks to the
+:ref:`built-in value resolvers <functionality-shipped-with-the-httpkernel>`.
+
 Converting from HttpFoundation Objects to PSR-7
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

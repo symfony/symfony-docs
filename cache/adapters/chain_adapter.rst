@@ -5,6 +5,8 @@ This adapter allows combining any number of the other
 :ref:`available cache adapters <component-cache-creating-cache-pools>`. Cache items are
 fetched from the first adapter containing them and cache items are saved to all the
 given adapters. This exposes a simple and efficient method for creating a layered cache.
+In Symfony applications, you can also
+:ref:`define cache chains in the cache configuration <cache-chain>`.
 
 The ChainAdapter constructor takes two arguments: the ordered list of adapters
 used to fetch cached items and, optionally, the default lifetime (in seconds)

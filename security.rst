@@ -661,9 +661,13 @@ many other authenticators:
 * `JSON Login`_
 * `HTTP Basic`_
 * `Login Link`_
+* :doc:`Access Tokens </security/access_token>`
 * `X.509 Client Certificates`_
 * `Remote users`_
 * :doc:`Custom Authenticators </security/custom_authenticator>`
+
+To run extra checks on the user with any of these authenticators (e.g. to
+block banned users), use a :doc:`user checker </security/user_checkers>`.
 
 .. tip::
 
@@ -2262,6 +2266,9 @@ will happen:
    be shown the 403 access denied page (which you can
    :ref:`customize <controller-error-pages-by-status-code>`).
 
+To customize both responses for a firewall, read
+:doc:`how to customize access denied responses </security/access_denied_handler>`.
+
 .. _security-securing-controller-annotations:
 .. _security-securing-controller-attributes:
 
@@ -2309,6 +2316,9 @@ Symfony resolves it automatically from the controller method signature:
             // ...
         }
     }
+
+For rules that are too simple to need a voter, ``#[IsGranted]`` also accepts
+:doc:`security expressions and closures </security/expressions>`.
 
 If you want to use a custom status code instead of the default one (which
 is 403), this can be done by setting the ``statusCode`` argument::

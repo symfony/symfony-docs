@@ -47,6 +47,10 @@ if the starting data for this field is ``true``, then ``Yes`` will be auto-selec
 In other words, the **choice** of each item is the value you want to get/set in PHP
 code, while the **key** is the **label** that will be shown to the user.
 
+If the choices are Doctrine entities or PHP enum cases, use the
+:doc:`EntityType </reference/forms/types/entity>` or the
+:doc:`EnumType </reference/forms/types/enum>` instead.
+
 Advanced Example (with Objects!)
 --------------------------------
 

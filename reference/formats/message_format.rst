@@ -13,8 +13,8 @@ handle this, the :doc:`Translator component </translation>` supports the
 Using the ICU Message Format
 ----------------------------
 
-In order to use the ICU Message Format, the message domain has to be
-suffixed with ``+intl-icu``:
+In order to use the ICU Message Format, the message
+:ref:`domain <translation-domain>` has to be suffixed with ``+intl-icu``:
 
 ======================  ===============================
 Normal file name        ICU Message Format filename
