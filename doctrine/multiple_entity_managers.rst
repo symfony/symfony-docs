@@ -13,7 +13,10 @@ entities, each with their own database connection strings or separate cache conf
 
     Using multiple entity managers is not complicated to configure, but it's more
     advanced and not usually required. Be sure you actually need multiple
-    entity managers before adding in this layer of complexity.
+    entity managers before adding in this layer of complexity. If you only
+    want to send read queries to a replica database, use a
+    :ref:`primary/read replica connection <doctrine-dbal-read-replicas>`
+    instead.
 
 .. warning::
 

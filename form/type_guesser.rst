@@ -1,8 +1,9 @@
 Creating a custom Type Guesser
 ==============================
 
-The Form component can guess the type and some options of a form field by
-using type guessers. The component already includes these type guessers:
+The Form component can :ref:`guess the type and some options <form-type-guessing>`
+of a form field by using type guessers. The component already includes these
+type guessers:
 
 * :class:`Symfony\\Component\\Form\\Extension\\Validator\\ValidatorTypeGuesser`,
   which uses the constraints of the Validator component;

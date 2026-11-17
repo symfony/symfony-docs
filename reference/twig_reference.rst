@@ -583,8 +583,9 @@ logout_path
 ``key`` *(optional)*
     **type**: ``string``
 
-Generates a relative logout URL for the given firewall. If no key is provided,
-the URL is generated for the current firewall the user is logged into.
+Generates a relative :ref:`logout <security-logging-out>` URL for the given
+firewall. If no key is provided, the URL is generated for the current firewall
+the user is logged into.
 
 .. code-block:: yaml
 
@@ -1268,8 +1269,8 @@ file_link
 ``line``
     **type**: ``integer``
 
-Generates a link to the provided file and line number using
-a preconfigured scheme.
+Generates a link to the provided file and line number using the scheme
+configured in the :ref:`framework.ide <reference-framework-ide>` option.
 
 .. code-block:: twig
 

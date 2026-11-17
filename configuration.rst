@@ -959,6 +959,8 @@ after changing the value of an inlined variable.
 
     The ``Used`` and ``Inlined`` columns were introduced in Symfony 8.2.
 
+.. _configuration-env-var-loaders:
+
 Creating Your Own Logic to Load Env Vars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

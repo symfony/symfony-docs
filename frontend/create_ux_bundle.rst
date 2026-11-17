@@ -163,8 +163,9 @@ Specifics for Asset Mapper
 --------------------------
 
 To make your bundle's assets work with AssetMapper, you must add the ``importmap``
-config like above in your ``package.json`` file, and prepend some configuration
-to the container::
+config like above in your ``package.json`` file, and
+:doc:`prepend some configuration </bundles/prepend_extension>` to the
+container::
 
     namespace Acme\FeatureBundle;
 

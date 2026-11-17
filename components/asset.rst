@@ -163,6 +163,9 @@ In those cases, use the
     echo $package->getUrl('css/app.css');
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
 
+In Symfony applications, enable this strategy with the
+:ref:`json_manifest_path <reference-assets-json-manifest-path>` option.
+
 If you request an asset that is *not found* in the ``rev-manifest.json`` file,
 the original - *unmodified* - asset path will be returned. The ``$strictMode``
 argument helps debug issues because it throws an exception when the asset is not
@@ -220,6 +223,9 @@ every day::
             return sprintf('%s?v=%s', $path, $this->getVersion($path));
         }
     }
+
+In Symfony applications, :doc:`register the strategy as a service
+</frontend/custom_version_strategy>` to use it with all your assets.
 
 .. _component-assets-path-package:
 

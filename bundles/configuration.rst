@@ -86,6 +86,10 @@ class, you can add all the logic related to processing the configuration in that
         }
     }
 
+Read :doc:`how to define configuration values </components/config/definition>`
+to learn about all the node types and options available when defining the
+configuration tree.
+
 .. note::
 
     The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
@@ -491,6 +495,8 @@ Keep in mind the following restrictions:
   forwarded as an empty array);
 * aliases can't be chained, so the alias must point to the bundle that actually
   handles the section.
+
+.. _bundle-config-dump-reference:
 
 Dump the Configuration
 ----------------------

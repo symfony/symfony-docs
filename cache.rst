@@ -63,6 +63,8 @@ Before using the cache for the first time, learn about its main concepts:
     when using a DSN string as the provider, the connection service is created
     automatically.
 
+.. _cache-contracts-vs-psr6:
+
 Cache Contracts versus PSR-6
 ----------------------------
 
@@ -321,9 +323,10 @@ to configure and use them:
 Configuring Cache with FrameworkBundle
 --------------------------------------
 
-In Symfony applications, cache pools are defined with the ``framework.cache``
-configuration. Some of the built-in adapters can be configured via shortcuts,
-which define the default provider used by all the pools based on that adapter:
+In Symfony applications, cache pools are defined with the
+:ref:`framework.cache <reference-cache>` configuration. Some of the built-in
+adapters can be configured via shortcuts, which define the default provider used
+by all the pools based on that adapter:
 
 .. configuration-block::
 
@@ -733,6 +736,8 @@ and use that when configuring the pool.
                 ],
             ],
         ]);
+
+.. _cache-chain:
 
 Creating a Cache Chain
 ----------------------
@@ -1620,8 +1625,9 @@ function from the `Igbinary extension`_::
 There are other *marshallers* that can encrypt or compress the data before storing it.
 
 In Symfony applications, the marshaller used by all cache pools is defined by
-the ``cache.default_marshaller`` service. You can decorate that service to
-change how cached data is processed, as shown in the next section.
+the ``cache.default_marshaller`` service. You can
+:doc:`decorate that service </service_container/decoration>` to change how
+cached data is processed, as shown in the next section.
 
 .. _cache-compressing-values:
 

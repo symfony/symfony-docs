@@ -19,7 +19,9 @@ access_denied_url
 **type**: ``string`` **default**: ``null``
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
-you define a custom access denial handler). Example: ``/no-permission``
+you define a
+:doc:`custom access denied handler </security/access_denied_handler>`).
+Example: ``/no-permission``
 
 recent_authentication_lifetime
 ------------------------------
@@ -444,7 +446,8 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
 logout
 ~~~~~~
 
-You can configure logout options.
+You can configure logout options. Read more about
+:ref:`logging out users <security-logging-out>`.
 
 delete_cookies
 ..............
@@ -1482,7 +1485,8 @@ authenticate again with this entry point when they're denied
 required_badges
 ~~~~~~~~~~~~~~~
 
-Firewalls can configure a list of required badges that must be present on the authenticated passport:
+Firewalls can configure a list of required badges that must be present on the
+authenticated :ref:`passport <security-passport>`:
 
 .. configuration-block::
 

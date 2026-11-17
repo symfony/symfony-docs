@@ -611,7 +611,7 @@ method::
     ;
 
 The info will be printed as a comment when dumping the configuration tree
-with the ``config:dump-reference`` command.
+with the :ref:`config:dump-reference command <bundle-config-dump-reference>`.
 
 In YAML you may have:
 
@@ -1053,6 +1053,10 @@ Otherwise the result is a clean array of configuration values::
 
     When processing the configuration tree, the processor assumes that the top
     level array key (which matches the extension name) is already stripped off.
+
+In bundles that extend ``AbstractBundle``, Symfony merges and processes the
+configuration for you, as explained in
+:ref:`Using the AbstractBundle Class <bundle-friendly-config-bundle-class>`.
 
 Exporting the Configuration Tree
 --------------------------------

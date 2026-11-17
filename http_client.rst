@@ -1733,6 +1733,10 @@ streamed body are never cached.
         $client = HttpClient::createForBaseUri('https://example.com');
         $cachingClient = new CachingHttpClient($client, $cache);
 
+Besides ``cache_pool``, the ``caching`` option also defines whether the cache is
+:ref:`shared <reference-http-client-caching-shared>` and the
+:ref:`maximum TTL <reference-http-client-caching-max-ttl>` of cached responses.
+
 By default, cached responses are limited to a maximum TTL of 86,400 seconds
 (24 hours). This prevents cache items from living forever when the origin
 server does not send explicit cache control directives.

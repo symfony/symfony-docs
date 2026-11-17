@@ -646,6 +646,9 @@ Define processes that should start automatically with the server in
         # Auto-start Docker Compose
         docker_compose: ~
 
+These workers are meant for local development. In production, run the Messenger
+consumers with a :ref:`process manager <messenger-supervisor>`.
+
 Advanced Configuration
 ----------------------
 

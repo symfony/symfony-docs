@@ -1,6 +1,12 @@
 PDO Cache Adapter
 =================
 
+.. seealso::
+
+    This article explains how to create and configure the PDO adapter itself.
+    In Symfony applications, you can use the ``cache.adapter.pdo`` service by
+    :ref:`configuring the cache <cache-configuration-with-frameworkbundle>`.
+
 The PDO adapters store the cache items in a table of an SQL database.
 
 .. note::

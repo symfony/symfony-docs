@@ -213,6 +213,12 @@ When sending a request to this controller (e.g.
 will create a new instance of ``Person`` and set the properties to the
 values from the given JSON.
 
+.. tip::
+
+    In controllers, use the
+    :ref:`#[MapRequestPayload] attribute <controller-mapping-request-payload>`
+    to deserialize and validate the request data without this manual code.
+
 .. note::
 
     By default, additional attributes that are not mapped to the
@@ -633,6 +639,8 @@ all the properties of the class::
     {
         // ...
     }
+
+.. _serializer-json-streamer:
 
 Serializing JSON Using Streams
 ------------------------------
@@ -1793,6 +1801,9 @@ normalizers (in order of priority):
     serializing the ``DateTime`` or ``DateTimeImmutable`` classes to avoid
     excessive memory usage and exposing internal details.
 
+If none of these normalizers fits your needs, you can
+:doc:`create your own normalizer </serializer/custom_normalizer>`.
+
 Built-in Normalizers
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -2448,6 +2459,10 @@ at once, and to get the object partially denormalized::
 
         // ... return violation list to the user
     }
+
+The ``#[MapRequestPayload]`` and ``#[MapQueryString]``
+:ref:`controller attributes <controller-mapping-request-payload>` already
+collect these errors and return them as a validation error response.
 
 .. deprecated:: 8.1
 

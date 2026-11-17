@@ -44,6 +44,9 @@ automatically in controllers or services when type-hinting for
         }
     }
 
+The ``UserInput`` DTO usually comes from the request contents, as explained in
+:ref:`mapping the request payload <controller-mapping-request-payload>`.
+
 Basic Mapping
 -------------
 
@@ -1397,7 +1400,8 @@ Using it in practice::
 Decorating the ObjectMapper
 ---------------------------
 
-The ``object_mapper`` service can be decorated to add custom logic or manage
+The ``object_mapper`` service can be
+:doc:`decorated </service_container/decoration>` to add custom logic or manage
 state around the mapping process.
 
 You can use the :class:`Symfony\\Component\\ObjectMapper\\ObjectMapperAwareInterface`

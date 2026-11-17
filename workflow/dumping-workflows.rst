@@ -95,7 +95,8 @@ display the workflow listeners associated with places and transitions:
 
     This option is currently only supported by the DOT dumper.
 
-You can use ``metadata`` with the following keys to style the workflow:
+You can use :ref:`metadata <workflow_storing-metadata>` with the following keys
+to style the workflow:
 
 * for places:
 

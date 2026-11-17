@@ -133,7 +133,7 @@ You should see your ``app_lucky_number`` route in the list:
 You will also see debugging routes besides ``app_lucky_number`` -- more on
 the debugging routes in the next section.
 
-You'll learn about many more commands as you continue!
+You'll learn about :doc:`many more commands </console>` as you continue!
 
 .. tip::
 
@@ -153,7 +153,8 @@ developing. This is all included by default when using a :ref:`Symfony pack <sym
 called ``symfony/profiler-pack``.
 
 You will see a dark bar along the bottom of the page. You'll learn more about
-all the information it holds along the way, but feel free to experiment: hover
+:doc:`all the information it holds </profiler>` along the way, but feel free to
+experiment: hover
 over and click the different icons to get information about routing,
 performance, logging and more.
 

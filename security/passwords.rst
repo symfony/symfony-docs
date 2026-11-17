@@ -172,6 +172,12 @@ After configuring the correct algorithm, you can use the
             throw new \Exception('Bad credentials, cannot delete this user.');
         }
 
+In forms, use the :doc:`UserPassword </reference/constraints/UserPassword>`
+constraint to check the current password of the user, and the
+:doc:`PasswordStrength </reference/constraints/PasswordStrength>` and
+:doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+constraints to validate new passwords.
+
 Reset Password
 --------------
 
