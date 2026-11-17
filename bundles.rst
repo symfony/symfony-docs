@@ -75,8 +75,9 @@ Start by creating a new class called ``AcmeBlogBundle``::
     this class BlogBundle (and naming the file ``BlogBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though
-commonly empty, this class is powerful and can be used to customize the behavior
-of the bundle. Now that you've created the bundle, enable it::
+commonly empty, this class is powerful and can be used to
+:ref:`customize the behavior of the bundle <bundle-friendly-config-bundle-class>`.
+Now that you've created the bundle, enable it::
 
     // config/bundles.php
     return [
@@ -114,6 +115,8 @@ enough to be adjusted if needed:
 
 ``templates/``
     Holds templates organized by controller name (e.g. ``category/show.html.twig``).
+    Refer to them using the :ref:`bundle namespace <templates-namespaces>`
+    (e.g. ``@AcmeBlog/category/show.html.twig``).
 
 ``tests/``
     Holds all tests for the bundle.

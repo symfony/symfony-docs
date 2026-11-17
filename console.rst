@@ -474,6 +474,11 @@ Now, try executing the command:
     Whoa!
     You are about to create a user.
 
+.. tip::
+
+    Use :doc:`SymfonyStyle </console/style>` to display titles, tables,
+    questions and other common elements with a consistent style.
+
 .. _console-output-sections:
 
 Output Sections
@@ -641,7 +646,9 @@ command:
     Its purpose is to check if some of the options/arguments are missing
     and interactively ask the user for those values. This is the last place
     where you can ask for missing required options/arguments. This method is
-    called before validating the input.
+    called before validating the input. In invokable commands, use the
+    :ref:`#[Ask] and #[Interact] attributes <console-interactive-input>`
+    instead.
     Note that it will not be called when the command is run without interaction
     (e.g. when passing the ``--no-interaction`` global option flag).
 
@@ -868,9 +875,9 @@ The log messages emitted by the service are displayed in the console output.
 Verbosity
 ~~~~~~~~~
 
-Depending on the verbosity level used to run the command, messages may or
-may not be sent to the :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
-instance.
+Depending on the :doc:`verbosity level </console/verbosity>` used to run the
+command, messages may or may not be sent to the
+:class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance.
 
 By default, the console logger behaves like
 :doc:`Monolog's Console Handler </logging/monolog_console>`.

@@ -1119,6 +1119,8 @@ environment variables, with their values, referenced in Symfony's container conf
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
 
+.. _configuration-env-var-loaders:
+
 Creating Your Own Logic to Load Env Vars
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

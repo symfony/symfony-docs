@@ -6,8 +6,9 @@ with the ``forward()`` method provided by the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController`
 class.
 
-Instead of redirecting the user's browser, this makes an "internal" sub-request
-and calls the defined controller. The ``forward()`` method returns the
+Instead of :ref:`redirecting <controller-redirect>` the user's browser, this
+makes an "internal" sub-request and calls the defined controller. The
+``forward()`` method returns the
 :class:`Symfony\\Component\\HttpFoundation\\Response` object that is returned
 from *that* controller::
 

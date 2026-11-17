@@ -738,7 +738,8 @@ resource
 **type**: ``string`` **required**
 
 The resource to import: the path of a file or directory, a glob pattern or
-any other value supported by the route loaders.
+any other value supported by the
+:doc:`route loaders </routing/custom_route_loader>`.
 
 .. _reference-routing-trailing-slash-on-root:
 

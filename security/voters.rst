@@ -18,6 +18,10 @@ this could look if you want to make a route accessible to the "owner" only::
         throw $this->createAccessDeniedException();
     }
 
+For basic rules like this one, you can also pass
+:doc:`a security expression or a closure </security/expressions>` to the
+``#[IsGranted]`` attribute.
+
 In that sense, the following example used throughout this page is a minimal
 example for voters.
 
@@ -284,7 +288,8 @@ To recap, here's what's expected from the two abstract methods:
     job is to return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any).
     The ``$vote`` argument can be used to provide an explanation for the vote.
-    This explanation is included in log messages and on exception pages.
+    This explanation is included in log messages and on exception pages, and
+    you can also :ref:`read it in templates <security-template>`.
 
 .. _declaring-the-voter-as-a-service:
 

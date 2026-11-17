@@ -1013,6 +1013,10 @@ which will automatically do most of these things for you:
   to a very long time (e.g. 1 year). This isn't automatic in
   any web server, but can be enabled.
 
+- **Serve assets from a CDN**: Upload the compiled assets to a CDN and set its
+  URL in the :ref:`base_urls <reference-assets-base-urls>` option. The
+  ``asset()`` function and the importmap will use that URL for all assets.
+
 Once you've done these things, you can use a tool like `Lighthouse`_ to
 check the performance of your site.
 

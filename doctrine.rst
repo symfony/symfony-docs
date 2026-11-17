@@ -69,6 +69,12 @@ The database connection information is stored as an environment variable called
     if the database server only listens on IPv4. Using ``127.0.0.1`` also
     behaves consistently on Windows and in CI environments.
 
+.. tip::
+
+    If your database runs in a Docker container and you use the
+    :ref:`Symfony CLI local web server <symfony-server-docker>`, it defines
+    ``DATABASE_URL`` for you, so you don't need to edit ``.env``.
+
 .. warning::
 
     If the username, password, host or database name contain any character considered
@@ -255,7 +261,9 @@ Entity Field Types
 
 Doctrine supports a wide variety of **field types** (numbers, strings, enums,
 binary, dates, JSON, etc.), each with its own options. Check out the
-`list of Doctrine mapping types`_ in the Doctrine documentation.
+`list of Doctrine mapping types`_ in the Doctrine documentation. If none of
+them fits your needs, you can
+:ref:`create your own mapping types <doctrine-dbal-custom-mapping-types>`.
 
 One of these types is based on PHP `enumerations`_, which allow you to define a
 closed set of possible values for a given type. This makes them a good fit for
@@ -1200,7 +1208,8 @@ a new method for this to your repository::
 The string passed to ``createQuery()`` might look like SQL, but it is
 `Doctrine Query Language`_. This allows you to type queries using a commonly
 known query language, but referencing PHP objects instead (i.e. in the ``FROM``
-statement).
+statement). If you need database functions that DQL doesn't support, register
+them as :doc:`custom DQL functions </doctrine/custom_dql_functions>`.
 
 Now, you can call this method on the repository::
 
@@ -1303,7 +1312,9 @@ Doctrine Extensions (Timestampable, Translatable, etc.)
 The Doctrine community has created some extensions to implement common needs such as
 *"set the value of the createdAt property automatically when creating an entity"*.
 Read more about the `available Doctrine extensions`_ and use the
-`StofDoctrineExtensionsBundle`_ to integrate them in your application.
+`StofDoctrineExtensionsBundle`_ to integrate them in your application. You can
+also implement these features yourself with
+:doc:`Doctrine events </doctrine/events>`.
 
 Learn more
 ----------

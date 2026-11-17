@@ -348,8 +348,8 @@ named transport using your own DSN:
             ;
         };
 
-In addition to being able to route your messages to the ``yours`` sender, this
-will give you access to the following services:
+In addition to being able to :ref:`route your messages <messenger-routing>` to
+the ``yours`` sender, this will give you access to the following services:
 
 #. ``messenger.sender.yours``: the sender;
 #. ``messenger.receiver.yours``: the receiver.

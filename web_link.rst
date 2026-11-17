@@ -94,7 +94,8 @@ header, without waiting for the full HTML to be parsed.
     When using the :doc:`AssetMapper component </frontend/asset_mapper>` (e.g.
     ``importmap('app')``), there's no need to add the ``<link rel="preload">``
     tag. The ``importmap()`` Twig function automatically adds the ``Link`` HTTP
-    header for you when the WebLink component is available.
+    header for you when the WebLink component is available (read
+    :ref:`how AssetMapper preloads files <performance-preloading>`).
 
 Additionally, according to `the Priority Hints specification`_, you can signal
 the priority of the resource to download using the ``importance`` attribute:

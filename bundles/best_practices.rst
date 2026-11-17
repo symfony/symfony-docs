@@ -396,13 +396,15 @@ Templates
 ---------
 
 If a bundle provides templates, they must use Twig. A bundle must not provide
-a main layout, except if it provides a full working application.
+a main layout, except if it provides a full working application. Keep in mind
+that applications can :ref:`override bundle templates <override-templates>`.
 
 Translation Files
 -----------------
 
 If a bundle provides message translations, they must be defined in the XLIFF
-format; the domain should be named after the bundle name (``AcmeBlog``).
+format; the :ref:`domain <translation-domain>` should be named after the bundle
+name (``AcmeBlog``).
 
 A bundle must not override existing messages from another bundle.
 

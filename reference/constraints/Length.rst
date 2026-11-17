@@ -2,6 +2,10 @@ Length
 ======
 
 Validates that a given string length is *between* some minimum and maximum value.
+To validate the number of words, use the
+:doc:`WordCount </reference/constraints/WordCount>` constraint; to validate the
+number of elements of a collection, use the
+:doc:`Count </reference/constraints/Count>` constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

@@ -1025,7 +1025,8 @@ token.
 
     Please note that for simplicity in this recipe, tokens will be defined
     in config and neither database setup nor authentication via the Security
-    component will be used.
+    component will be used. For real API authentication, use the
+    :doc:`access token authenticator </security/access_token>`.
 
 Before Filters with the ``kernel.controller`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1373,6 +1374,9 @@ could listen to the ``mailer.post_send`` event and change the method's return va
 
 That's it! Your subscriber should be called automatically (or read more about
 :ref:`event subscriber configuration <ref-event-subscriber-configuration>`).
+
+If you can't change the code of the class (e.g. it's defined by a third-party
+bundle), :doc:`decorate its service </service_container/decoration>` instead.
 
 Learn More
 ----------

@@ -8,6 +8,11 @@ How to Upload Files
     operations (such as file renaming, saving and deleting) and it's tightly
     integrated with Doctrine ORM, MongoDB ODM, PHPCR ODM and Propel.
 
+This article uploads files with Symfony forms. If you don't need a form (e.g.
+in an API endpoint), use the
+:ref:`MapUploadedFile <controller_map-uploaded-file>` attribute to get and
+validate the uploaded files in your controller.
+
 Imagine that you have a ``Product`` entity in your application and you want to
 add a PDF brochure for each product. To do so, add a new property called
 ``brochureFilename`` in the ``Product`` entity::
@@ -42,9 +47,10 @@ Note that the type of the ``brochureFilename`` column is ``string`` instead of
 file contents.
 
 The next step is to add a new field to the form that manages the ``Product``
-entity. This must be a ``FileType`` field so the browsers can display the file
-upload widget. The trick to make it work is to add the form field as "unmapped",
-so Symfony doesn't try to get/set its value from the related entity::
+entity. This must be a :doc:`FileType </reference/forms/types/file>` field so
+the browsers can display the file upload widget. The trick to make it work is to
+add the form field as :ref:`unmapped <form-unmapped-fields>`, so Symfony doesn't
+try to get/set its value from the related entity::
 
     // src/Form/ProductType.php
     namespace App\Form;

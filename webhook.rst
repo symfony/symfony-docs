@@ -443,8 +443,9 @@ Asynchronous Consuming
 ......................
 
 By default, webhook consumers are invoked synchronously when the RemoteEvent
-is dispatched. To process webhooks asynchronously, configure Messenger routing
-for :class:`Symfony\\Component\\RemoteEvent\\Messenger\\ConsumeRemoteEventMessage`:
+is dispatched. To process webhooks asynchronously, configure
+:ref:`Messenger routing <messenger-routing>` for
+:class:`Symfony\\Component\\RemoteEvent\\Messenger\\ConsumeRemoteEventMessage`:
 
 .. configuration-block::
 
@@ -629,7 +630,7 @@ Then create a consumer to handle delivery and engagement events::
 Notifier Webhooks
 .................
 
-Receive SMS status notifications from providers:
+Receive SMS status notifications from :ref:`SMS providers <sending-sms>`:
 
 ============ ==========================================
 SMS service  Parser service name
@@ -690,7 +691,7 @@ Basic Usage
 
 To send a webhook, dispatch a
 :class:`Symfony\\Component\\Webhook\\Messenger\\SendWebhookMessage` via
-the Messenger component::
+the :doc:`Messenger component </messenger>`::
 
     use Symfony\Component\Messenger\MessageBusInterface;
     use Symfony\Component\RemoteEvent\RemoteEvent;

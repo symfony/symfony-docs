@@ -774,6 +774,10 @@ merging occurs.
 cache
 ~~~~~
 
+.. seealso::
+
+    For more details, see the :doc:`Cache </cache>` documentation.
+
 .. _reference-cache-app:
 
 app
@@ -1847,9 +1851,9 @@ For 'short', a concise trace of the main request will be added as an HTTP header
 http_client
 ~~~~~~~~~~~
 
-When the HttpClient component is installed, an HTTP client is available
-as a service named ``http_client`` or using the autowiring alias
-:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`.
+When the :doc:`HttpClient component </http_client>` is installed, an HTTP
+client is available as a service named ``http_client`` or using the autowiring
+alias :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`.
 
 enabled
 .......
@@ -2827,6 +2831,10 @@ enabled
 
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
+.. seealso::
+
+    For more details, see the :doc:`Mailer </mailer>` documentation.
+
 .. _mailer-dsn:
 
 dsn
@@ -3639,6 +3647,10 @@ enabled
 .......
 
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
+
+.. seealso::
+
+    For more details, see the :doc:`Rate Limiter </rate_limiter>` documentation.
 
 .. _reference-rate-limiter-name:
 

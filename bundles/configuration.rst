@@ -101,6 +101,10 @@ class, you can add all the logic related to processing the configuration in that
         }
     }
 
+Read :doc:`how to define configuration values </components/config/definition>`
+to learn about all the node types and options available when defining the
+configuration tree.
+
 .. note::
 
     The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
@@ -431,6 +435,8 @@ If you have multiple bundles that depend on each other, it may be useful to
 allow one ``Extension`` class to modify the configuration passed to another
 bundle's ``Extension`` class. This can be achieved using a prepend extension.
 For more details, see :doc:`/bundles/prepend_extension`.
+
+.. _bundle-config-dump-reference:
 
 Dump the Configuration
 ----------------------

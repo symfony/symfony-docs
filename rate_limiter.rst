@@ -5,7 +5,8 @@ A "rate limiter" controls how frequently some event (e.g. an HTTP request or a
 login attempt) is allowed to happen. Rate limiting is commonly used as a
 defensive measure to protect services from excessive use (intended or not) and
 maintain their availability. It's also useful to control your internal or
-outbound processes (e.g. limit the number of simultaneously processed messages).
+outbound processes (e.g. limit the number of
+:ref:`simultaneously processed messages <messenger-rate-limited-transport>`).
 
 Symfony uses these rate limiters in built-in features like :ref:`login throttling <security-login-throttling>`,
 which limits how many failed login attempts a user can make in a given period of
@@ -215,6 +216,9 @@ are allowed to make up to 5,000 HTTP requests in total, and this number grows
 at a rate of another 500 requests every 15 minutes. If you don't make that
 number of requests, the unused ones don't accumulate (the ``limit`` option
 prevents that number from being higher than 5,000).
+
+The :ref:`rate limiter configuration reference <reference-rate-limiter-name>`
+lists all the options available for each limiter.
 
 .. tip::
 

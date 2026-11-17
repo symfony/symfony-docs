@@ -53,6 +53,9 @@ method to load service definitions from configuration files::
 This method works similarly to the ``Extension::load()`` method explained below,
 but it uses a new simpler API to define and import service configuration.
 
+To modify services defined by other bundles or to process tagged services, use
+a :doc:`compiler pass </service_container/compiler_passes>` instead.
+
 .. note::
 
     Unlike the ``$configs`` parameter in ``Extension::load()``, the
@@ -141,9 +144,9 @@ loading the services and parameters, the copy will be merged into the actual
 container, to ensure all services and parameters are also added to the actual
 container.
 
-In the ``load()`` method, you can use PHP code to register service definitions,
-but it is more common to put these definitions in a configuration file
-(using the YAML, XML or PHP format).
+In the ``load()`` method, you can use PHP code to register
+:ref:`service definitions <service-definitions>`, but it is more common to put
+these definitions in a configuration file (using the YAML, XML or PHP format).
 
 For instance, if you have a file called ``services.xml`` in the
 ``config/`` directory of your bundle, your ``load()`` method looks like this::

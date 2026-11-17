@@ -7,6 +7,14 @@ application using the :doc:`HttpKernel component </components/http_kernel>`)
 dispatches some :doc:`events </event_dispatcher>` which you can use to modify
 how the request is handled and how the response is returned.
 
+.. seealso::
+
+    Other parts of Symfony dispatch their own events: see the
+    :ref:`console events <console-events>`, the
+    :ref:`security events <security-security-events>`, the
+    :doc:`form events </form/events>` and the
+    :ref:`workflow events <workflow_using-events>`.
+
 Kernel Events
 -------------
 
@@ -138,6 +146,8 @@ HTML contents) into the ``Response`` object needed by Symfony::
 .. seealso::
 
     Read more on the :ref:`kernel.view event <component-http-kernel-kernel-view>`.
+    The :ref:`#[Template] attribute <templates-template-attribute>` uses this
+    event to render the array returned by the controller.
 
 Execute this command to find out which listeners are registered for this event and
 their priorities:
@@ -288,7 +298,8 @@ response:
 
 .. seealso::
 
-    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`.
+    Read more on the :ref:`kernel.exception event <component-http-kernel-kernel-exception>`
+    and on :ref:`using it for custom error pages <use-kernel-exception-event>`.
 
 Execute this command to find out which listeners are registered for this event and
 their priorities:

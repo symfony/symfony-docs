@@ -15,6 +15,9 @@ them later in JavaScript. For example:
         <!-- ... -->
     </div>
 
+The :ref:`serialize filter <reference-twig-filter-serialize>` uses the
+Serializer component, so you can also pass it a serialization context.
+
 Fetch this in JavaScript:
 
 .. code-block:: javascript

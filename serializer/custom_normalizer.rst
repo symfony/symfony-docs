@@ -7,6 +7,11 @@ any data into an array. The component provides several
 need to create your own normalizer to transform an unsupported data
 structure.
 
+If you only need to hide or rename some properties, you don't need a custom
+normalizer: use :ref:`serialization groups <serializer-groups-attribute>`,
+:ref:`ignored properties <serializer_ignoring-attributes>` or
+:ref:`name conversion <serializer-name-conversion>` instead.
+
 Creating a New Normalizer
 -------------------------
 

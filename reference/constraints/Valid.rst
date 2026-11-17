@@ -3,7 +3,9 @@ Valid
 
 This constraint is used to enable validation on objects that are embedded
 as properties on an object being validated. This allows you to validate
-an object and all sub-objects associated with it.
+an object and all sub-objects associated with it. To apply this constraint to
+all the properties of a class at once, use the
+:doc:`Cascade </reference/constraints/Cascade>` constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
