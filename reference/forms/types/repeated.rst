@@ -38,7 +38,7 @@ Example Usage
 
 Upon a successful form submit, the value entered into both of the "password"
 fields becomes the data of the ``password`` key. In other words, even though
-two fields are actually rendered, the end data from the form is just the
+two fields are actually rendered, the final data from the form is only the
 single value (usually a string) that you need.
 
 The most important option is ``type``, which can be any field type and determines

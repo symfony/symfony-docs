@@ -293,7 +293,7 @@ your ``User`` class.
 
 If you used the ``make:user`` command to create your ``User`` class (and you
 answered the questions indicating that you need a custom user provider), that
-command will generate a nice skeleton to get you started::
+command will generate a skeleton class to start from::
 
     // src/Security/UserProvider.php
     namespace App\Security;

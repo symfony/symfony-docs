@@ -107,15 +107,15 @@ json_manifest_path
 
 The file path or absolute URL to a ``manifest.json`` file containing an
 associative array of asset names and their respective compiled names. A common
-cache-busting technique using a "manifest" file works by writing out assets with
+cache-busting technique using a "manifest" file works by writing assets with
 a "hash" appended to their file names (e.g. ``main.ae433f1cb.css``) during a
 front-end compilation routine.
 
 .. tip::
 
     Symfony's :ref:`Webpack Encore <frontend-webpack-encore>` supports
-    :ref:`outputting hashed assets <encore-long-term-caching>`. Moreover, this
-    can be incorporated into many other workflows, including Webpack using
+    :ref:`outputting hashed assets <encore-long-term-caching>`. This can
+    also be used in many other workflows, including Webpack using
     `webpack-manifest-plugin`_.
 
 This option can be set globally for all assets and individually for each asset
@@ -173,8 +173,8 @@ package:
 .. note::
 
     This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
-    Additionally, this option cannot be nullified at the package scope if a global manifest
-    file is specified.
+    Additionally, this option cannot be set to ``null`` at the package scope if
+    a global manifest file is specified.
 
 .. tip::
 
@@ -208,7 +208,7 @@ to inject the ``foo_package`` package defined earlier::
 
 **(2) Use the ``#[Target]`` attribute**
 
-When :ref:`dealing with multiple implementations of the same type <autowiring-multiple-implementations-same-type>`
+When :ref:`handling multiple implementations of the same type <autowiring-multiple-implementations-same-type>`
 the ``#[Target]`` attribute helps you select which one to inject. Symfony creates
 a target with the same name as the asset package.
 
@@ -369,13 +369,13 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
 .. note::
 
     All percentage signs (``%``) in the format string must be doubled to
-    escape the character. Without escaping, values might inadvertently be
-    interpreted as :ref:`service-container-parameters`.
+    escape the character. Without escaping, values might be interpreted by
+    mistake as :ref:`service-container-parameters`.
 
 .. tip::
 
     Some CDNs do not support cache-busting via query strings, so injecting
-    the version into the actual file path is necessary. Thankfully,
+    the version into the actual file path is necessary. Fortunately,
     ``version_format`` is not limited to producing versioned query
     strings.
 
@@ -386,10 +386,10 @@ is set to ``5``, the asset's path would be ``/images/logo.png?version=5``.
     ``version-%%2$s/%%1$s``, which would result in the path
     ``version-5/images/logo.png``.
 
-    URL rewrite rules could then be used to disregard the version prefix
+    URL rewrite rules could then be used to ignore the version prefix
     before serving the asset. Alternatively, you could copy assets to the
     appropriate version path as part of your deployment process and skip
-    any URL rewriting. The latter option is useful if you would like older
+    any URL rewriting. The second option is useful if you would like older
     asset versions to remain accessible at their original URL.
 
 .. _reference-assets-version-strategy:
@@ -645,7 +645,7 @@ the ``dev`` environment).
 
 .. tip::
 
-    It might be tough to understand at the beginning, so to avoid confusion
+    It might be difficult to understand at first, so to avoid confusion
     remember that all pools perform the same actions but on different media,
     depending on the adapter they are based on. Internally, a pool wraps the definition
     of an adapter.
@@ -865,7 +865,7 @@ multiple applications into the same path (on different servers) that share the
 same cache backend.
 
 It's also useful when using `blue/green deployment`_ strategies and more
-generally, when you need to abstract out the actual deployment directory (for
+generally, when you don't want to depend on the actual deployment directory (for
 example, when warming caches offline).
 
 .. note::
@@ -1035,7 +1035,7 @@ slots and leave some of them empty:
     Support for environment variables in ``enabled_locales`` was introduced
     in Symfony 8.1.
 
-An added bonus of defining the enabled locales is that they are automatically
+Another benefit of defining the enabled locales is that they are automatically
 added as a requirement of the :ref:`special _locale parameter <routing-locale-parameter>`.
 For example, if you define this value as ``['ar', 'he', 'ja', 'zh']``, the
 ``_locale`` routing parameter will have an ``ar|he|ja|zh`` requirement. If some
@@ -1065,9 +1065,9 @@ disallow_search_engine_index
 
 **type**: ``boolean`` **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
-If ``true``, Symfony adds an ``X-Robots-Tag: noindex`` HTTP header to all responses
-(unless your own app adds that header, in which case it's not modified). This
-`X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
+If ``true``, Symfony adds an ``X-Robots-Tag: noindex`` HTTP header to all
+responses (unless your own app adds that header, in which case it's not
+modified). This `X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
 This option is a protection measure in case you accidentally publish your site
 in debug mode.
 
@@ -1562,7 +1562,7 @@ debug
 **type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If true, exceptions are thrown when things go wrong. Otherwise, the cache will
-try to carry on and deliver a meaningful response.
+try to continue and deliver a meaningful response.
 
 default_ttl
 ...........
@@ -1821,8 +1821,8 @@ bindto
 
 **type**: ``string``
 
-A network interface name, an IP address, a host name or a UNIX socket to use as the
-outgoing network interface.
+A network interface name, an IP address, a host name or a UNIX socket to use as
+the outgoing network interface.
 
 buffer
 ......
@@ -1835,8 +1835,8 @@ content type of the response is ``text/*``, ``application/json`` or ``applicatio
 
 If this option is a boolean value, the response is buffered when the value is
 ``true``. If this option is a closure, the response is buffered when the
-returned value is ``true`` (the closure receives an array with the
-response headers as its argument).
+returned value is ``true`` (the closure receives an array with the response
+headers as its argument).
 
 caching
 .......
@@ -2330,10 +2330,10 @@ specific list of methods, only those methods will be allowed as overrides:
             ;
         };
 
-This security feature is useful for hardening your application by explicitly
-defining which methods can be tunneled through POST requests. For example, if
-your application only needs to override POST requests to PUT and DELETE, you
-can restrict the allowed methods accordingly.
+This security feature is useful for making your application more secure by
+explicitly defining which methods can be tunneled through POST requests. For
+example, if your application only needs to override POST requests to PUT and
+DELETE, you can restrict the allowed methods accordingly.
 
 You can also configure this programmatically using the
 :method:`Request::setAllowedHttpMethodOverride <Symfony\\Component\\HttpFoundation\\Request::setAllowedHttpMethodOverride>`
@@ -2392,8 +2392,8 @@ doubling them to prevent Symfony from interpreting them as container parameters)
         ]);
 
 Since every developer uses a different IDE, the recommended way to enable this
-feature is to configure it at the system level. First, you can define this option
-in the ``SYMFONY_IDE`` environment variable, which Symfony reads automatically
+feature is to configure it at the system level. First, you can define this
+option in the ``SYMFONY_IDE`` environment variable, which Symfony reads automatically
 when the ``framework.ide`` option is not set.
 
 Another alternative is to set the ``xdebug.file_link_format`` option in your
@@ -3171,8 +3171,8 @@ Combine it with the ``collect`` option to enable/disable the profiler on demand:
   request and has any value other than ``true``, ``yes``, ``on`` or ``1``, the
   request data will not be collected;
 * If the ``collect`` option is set to ``false``, but this parameter exists in a
-  request and has a value of ``true``, ``yes``, ``on`` or ``1``, the request data
-  will be collected.
+  request and has a value of ``true``, ``yes``, ``on`` or ``1``, the request
+  data will be collected.
 
 .. _profiler-dsn:
 
@@ -3427,8 +3427,8 @@ formats
 **type**: ``array`` **default**: ``[]``
 
 This setting is used to associate additional request formats (e.g. ``html``)
-with one or more mime types (e.g. ``text/html``), which will allow you to use the
-format & mime types to call
+with one or more mime types (e.g. ``text/html``), which will allow you to use
+the format & mime types to call
 :method:`Request::getFormat($mimeType) <Symfony\\Component\\HttpFoundation\\Request::getFormat>` or
 :method:`Request::getMimeType($format) <Symfony\\Component\\HttpFoundation\\Request::getMimeType>`.
 
@@ -3533,7 +3533,7 @@ type
 
 **type**: ``string``
 
-The type of the resource to hint the loaders about the format. This isn't
+The type of the resource to tell the loaders about the format. This isn't
 needed when you use the default routers with the expected file extensions
 (``.xml``, ``.yaml``, ``.php``).
 
@@ -3854,7 +3854,7 @@ cookie_domain
 
 This determines the domain to set in the session cookie.
 
-If not set, ``php.ini``'s `session.cookie_domain`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.cookie_domain`_ directive.
 
 cookie_httponly
 ...............
@@ -3875,7 +3875,7 @@ This determines the lifetime of the session - in seconds.
 Setting this value to ``0`` means the cookie is valid for
 the length of the browser session.
 
-If not set, ``php.ini``'s `session.cookie_lifetime`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.cookie_lifetime`_ directive.
 
 cookie_path
 ...........
@@ -3884,7 +3884,7 @@ cookie_path
 
 This determines the path to set in the session cookie.
 
-If not set, ``php.ini``'s `session.cookie_path`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.cookie_path`_ directive.
 
 cookie_samesite
 ...............
@@ -3893,7 +3893,7 @@ cookie_samesite
 
 It controls the way cookies are sent when the HTTP request did not originate
 from the same domain that is associated with the cookies. Setting this option is
-recommended to mitigate `CSRF security attacks`_.
+recommended to reduce the risk of `CSRF security attacks`_.
 
 By default, browsers send all cookies related to the domain of the HTTP request.
 This may be a problem for example when you visit a forum and some malicious
@@ -3924,7 +3924,7 @@ This determines whether cookies should only be sent over secure connections. In
 addition to ``true`` and ``false``, there's a special ``'auto'`` value that
 means ``true`` for HTTPS requests and ``false`` for HTTP requests.
 
-If not set, ``php.ini``'s `session.cookie_secure`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.cookie_secure`_ directive.
 
 .. _reference-session-enabled:
 
@@ -3964,7 +3964,7 @@ gc_divisor
 
 See `gc_probability`_.
 
-If not set, ``php.ini``'s `session.gc_divisor`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.gc_divisor`_ directive.
 
 gc_maxlifetime
 ..............
@@ -3975,7 +3975,7 @@ This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
-If not set, ``php.ini``'s `session.gc_maxlifetime`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.gc_maxlifetime`_ directive.
 
 gc_probability
 ..............
@@ -4074,7 +4074,7 @@ name
 
 This specifies the name of the session cookie.
 
-If not set, ``php.ini``'s `session.name`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.name`_ directive.
 
 save_path
 .........
@@ -4142,7 +4142,7 @@ use_cookies
 This specifies if the session ID is stored on the client side using cookies or
 not.
 
-If not set, ``php.ini``'s `session.use_cookies`_ directive will be relied on.
+If not set, Symfony uses ``php.ini``'s `session.use_cookies`_ directive.
 
 ssi
 ~~~
@@ -4188,8 +4188,8 @@ default_path
 
 **type**: ``string`` **default**: ``%kernel.project_dir%/translations``
 
-This option allows you to define the path where the application translation files
-are stored.
+This option allows you to define the path where the application translation
+files are stored.
 
 .. _reference-translator-enabled:
 
@@ -4379,8 +4379,8 @@ response contents with the file that is defined in that header. This improves
 performance because files are no longer served by your application but directly
 by the web server.
 
-This configuration option determines whether to trust the ``x-sendfile`` header for
-BinaryFileResponse. If enabled, Symfony calls the
+This configuration option determines whether to trust the ``x-sendfile`` header
+for BinaryFileResponse. If enabled, Symfony calls the
 :method:`BinaryFileResponse::trustXSendfileTypeHeader <Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader>`
 method automatically. It becomes the service container parameter named
 ``kernel.trust_x_sendfile_type_header``.
@@ -4403,8 +4403,8 @@ trusted_hosts
 
 A lot of different attacks have been discovered relying on inconsistencies
 in handling the ``Host`` header by various software (web servers, reverse
-proxies, web frameworks, etc.). In short, every time the framework generates
-an absolute URL (when sending an email to reset a password for
+proxies, web frameworks, etc.). In short, every time the framework
+generates an absolute URL (when sending an email to reset a password for
 instance), the host might have been manipulated by an attacker.
 
 .. seealso::
@@ -4569,7 +4569,7 @@ auto_mapping
 
 **type**: ``array`` **default**: ``[]``
 
-Defines the Doctrine entities that will be introspected to add
+Defines the Doctrine entities that will be inspected to add
 :ref:`automatic validation constraints <automatic_object_validation>` to them:
 
 .. configuration-block::
@@ -4704,8 +4704,8 @@ enabled
 **type**: ``boolean`` **default**: ``true``
 
 If you set this option to ``false``, no HTTP requests will be made and the given
-password will be considered valid. This is useful when you don't want to or can't
-make HTTP requests, such as in ``dev`` and ``test`` environments or in
+password will be considered valid. This is useful when you don't want to or
+can't make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
 
 endpoint

@@ -44,7 +44,7 @@ listener:
         ]);
 
 To switch to another user, add a query string with the ``_switch_user``
-parameter and the username (or whatever field your user provider uses to load users)
+parameter and the username (or any other field your user provider uses to load users)
 as the value to the current URL:
 
 .. code-block:: text
@@ -100,7 +100,7 @@ To switch back to the original user, use the special ``_exit`` username:
 
 .. tip::
 
-    You can leverage the ``impersonation_exit_path('/somewhere')``
+    You can use the ``impersonation_exit_path('/somewhere')``
     :doc:`Twig function </reference/twig_reference>` to generate this URL.
 
 This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
@@ -269,8 +269,8 @@ be called):
             ],
         ]);
 
-Then, create a voter class that responds to this role and includes whatever custom
-logic you want::
+Then, create a voter class that responds to this role and includes any custom
+logic you need::
 
     // src/Security/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
@@ -323,7 +323,7 @@ logic you want::
         }
     }
 
-That's it! When switching users, your voter now has full control over whether or
+When switching users, your voter now has full control over whether or
 not this is allowed. If your voter isn't called, see :ref:`declaring-the-voter-as-a-service`.
 
 Impersonating Users Across Multiple Firewalls
@@ -474,7 +474,7 @@ switch users, add an event subscriber for this event::
         }
     }
 
-That's it! If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically discover your service and call ``onSwitchUser`` whenever
 a user switch occurs.
 

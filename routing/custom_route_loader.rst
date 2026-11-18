@@ -199,7 +199,7 @@ tag it manually with ``routing.route_loader``.
 
     The routes defined using service route loaders will be automatically
     cached by the framework. So whenever your service should load new routes,
-    don't forget to clear the cache.
+    make sure to clear the cache.
 
 .. tip::
 
@@ -351,7 +351,7 @@ for the ``ExtraLoader``, so it is set to ``.`` (a single dot).
 
     The routes defined using custom route loaders will be automatically
     cached by the framework. So whenever you change something in the loader
-    class itself, don't forget to clear the cache.
+    class itself, make sure to clear the cache.
 
 More Advanced Loaders
 ---------------------

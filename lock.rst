@@ -1,5 +1,5 @@
-Dealing with Concurrency with Locks
-===================================
+Handling Concurrency with Locks
+===============================
 
 When a program runs concurrently, some parts of code that modify shared
 resources should not be accessed by multiple processes at the same time.
@@ -211,8 +211,8 @@ about this behavior and how to disable it.
 Locking a Dynamic Resource
 --------------------------
 
-Sometimes the application is able to cut the resource into small pieces in
-order to lock a small subset of processes and let others through. The previous
+Sometimes the application is able to split the resource into small pieces in
+order to lock a small subset of processes and let others continue. The previous
 example showed how to lock the ``$pdf->getOrCreatePdf()`` call for everybody;
 now let's see how to lock a ``$pdf->getOrCreatePdf($version)`` call only for
 processes asking for the same ``$version``::
@@ -326,10 +326,10 @@ released automatically after some amount of time has passed (called TTL for
 the ``createLock()`` method. If needed, these locks can also be released early
 with the ``release()`` method.
 
-The trickiest part when working with expiring locks is choosing the right TTL.
-If it's too short, other processes could acquire the lock before finishing the
-job; if it's too long and the process crashes before calling the ``release()``
-method, the resource will stay locked until the timeout::
+The most difficult part when working with expiring locks is choosing the right
+TTL. If it's too short, other processes could acquire the lock before finishing
+the job; if it's too long and the process crashes before calling the
+``release()`` method, the resource will stay locked until the timeout::
 
     // ...
     // create an expiring lock that lasts 30 seconds (default is 300.0)
@@ -349,7 +349,7 @@ method, the resource will stay locked until the timeout::
     To avoid leaving the lock in a locked state, it's recommended to wrap the
     job in a try/catch/finally block to always try to release the expiring lock.
 
-In case of long-running tasks, it's better to start with a not too long TTL and
+In case of long-running tasks, it's better to start with a short TTL and
 then use the :method:`Symfony\\Component\\Lock\\LockInterface::refresh` method
 to reset the TTL to its original value::
 
@@ -597,7 +597,7 @@ to handle the rest of the job::
 
 .. note::
 
-    Don't forget to set the ``autoRelease`` argument to ``false`` in the
+    Make sure to set the ``autoRelease`` argument to ``false`` in the
     ``Lock`` instantiation to avoid releasing the lock when the destructor is
     called (see :ref:`lock-automatic-release`).
 
@@ -695,7 +695,7 @@ container and use the same absolute path to the lock directory. Be careful
 when updating a Kubernetes or Swarm service because, for a short period of
 time, there can be two containers running in parallel. Be careful also with
 symlinks that could change at any time (symlink-based release strategies and
-blue/green deployments often use that trick) and, in general, whenever the
+blue/green deployments often change them) and, in general, whenever the
 path to the lock directory changes between two deployments.
 
 Using a ``FlockStore`` in an HTTP context is incompatible with multiple front
@@ -735,8 +735,8 @@ connection implementing the ``\Memcached`` class::
 Memcached stores its items in memory, so locks are not persisted and may
 disappear by mistake at any time. If the Memcached service or the machine
 hosting it restarts, every lock is lost without notifying the running
-processes. To prevent someone else from acquiring a lock after a restart, delay
-the service start for at least as long as the longest lock TTL.
+processes. To prevent someone else from acquiring a lock after a restart,
+delay the service start for at least as long as the longest lock TTL.
 
 By default, Memcached uses an LRU mechanism to remove old entries when the
 service needs space to add new items. Keep the number of items stored in
@@ -828,7 +828,7 @@ more about `Expire Data from Collections by Setting TTL`_ in MongoDB.
 
     ``MongoDbStore`` will attempt to automatically create a TTL index. It's
     recommended to set the constructor option ``gcProbability`` to ``0.0`` to
-    disable this behavior if you have manually dealt with TTL index creation.
+    disable this behavior if you have created the TTL index manually.
 
 This store relies on all PHP application and database nodes having
 synchronized clocks for lock expiry to occur at the correct time. To ensure
@@ -971,11 +971,11 @@ implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster``, ``\Relay\Relay`
 
 Redis stores its items in memory, so locks are not persisted and may disappear
 by mistake at any time. If the Redis service or the machine hosting it
-restarts, every lock is lost without notifying the running processes. To prevent
-someone else from acquiring a lock after a restart, delay the service start for
-at least as long as the longest lock TTL. Redis can also be configured to
-persist items on disk, but this option slows down writes on the service and
-could go against other uses of the server.
+restarts, every lock is lost without notifying the running processes. To
+prevent someone else from acquiring a lock after a restart, delay the service
+start for at least as long as the longest lock TTL. Redis can also be
+configured to persist items on disk, but this option slows down writes on the
+service and could conflict with other uses of the server.
 
 .. danger::
 
@@ -1093,8 +1093,8 @@ overhead, this store does not support multi-level node locks and all locks are
 maintained at the root level.
 
 To use ZooKeeper's high-availability feature, you can set up a cluster of
-multiple servers so that, in case one of the servers goes down, the majority
-will still be up and serving the requests. All the available servers in the
+multiple servers so that, in case one of the servers fails, the majority
+will still be running and serving the requests. All the available servers in the
 cluster will see the same state.
 
 .. _lock-store-dynamodb:
@@ -1151,8 +1151,8 @@ Expiring Stores
 
 Expiring stores (see the ``Expiring`` column in the table of
 :ref:`available stores <lock-stores>`) guarantee that the lock is acquired
-only for the defined duration of time. If the task takes longer to be
-accomplished, then the lock can be released by the store and acquired by
+only for the defined duration of time. If the task takes longer to
+finish, then the lock can be released by the store and acquired by
 someone else.
 
 When you can't be sure that the task will finish within the TTL, the safest

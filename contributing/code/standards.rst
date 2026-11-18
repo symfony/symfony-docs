@@ -167,9 +167,9 @@ Structure
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
-  matter how many arguments there are. The only exceptions are constructor methods
-  using `constructor property promotion`_, where each parameter must be on a new
-  line with a `trailing comma`_;
+  matter how many arguments there are. The only exceptions are constructor
+  methods using `constructor property promotion`_, where each parameter must be
+  on a new line with a `trailing comma`_;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
@@ -249,7 +249,7 @@ Naming Conventions
   or ``Boolean``), ``int`` (instead of ``integer``), ``float`` (instead of
   ``double`` or ``real``);
 
-* Don't forget to look at the more verbose :doc:`conventions </contributing/code/conventions>` document for
+* Also read the more verbose :doc:`conventions </contributing/code/conventions>` document for
   more subjective naming considerations.
 
 .. _service-naming-conventions:
@@ -294,7 +294,7 @@ Documentation
 * Omit the ``@return`` annotation if the method does not return anything;
 
 * Don't use one-line PHPDoc blocks on classes, methods and functions, even
-  when they contain just one annotation (e.g. don't put ``/** {@inheritdoc} */``
+  when they contain only one annotation (e.g. don't put ``/** {@inheritdoc} */``
   in a single line);
 
 * When adding a new class or when making significant changes to an existing class,

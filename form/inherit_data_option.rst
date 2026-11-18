@@ -117,7 +117,7 @@ access the properties of the ``Customer`` instance instead.
 .. note::
 
     Instead of setting the ``inherit_data`` option inside ``LocationType``, you
-    can also (just like with any option) pass it in the third argument of
+    can also (like with any option) pass it in the third argument of
     ``$builder->add()``.
 
 Finally, make this work by adding the location form to your two original forms::
@@ -162,7 +162,7 @@ Finally, make this work by adding the location form to your two original forms::
         }
     }
 
-That's it! You have extracted duplicated field definitions to a separate
+You have now extracted duplicated field definitions to a separate
 location form that you can reuse wherever you need it.
 
 .. warning::

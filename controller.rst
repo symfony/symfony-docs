@@ -95,14 +95,14 @@ Add the ``use`` statement atop your controller class and then modify
           // ...
       }
 
-That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
+You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
 and many others that you'll learn about next.
 
 Generating URLs
 ~~~~~~~~~~~~~~~
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::generateUrl`
-method is just a helper method that
+method is a helper method that
 :ref:`generates the URL <routing-generating-urls>` for a given route::
 
     $url = $this->generateUrl('app_lucky_number', ['max' => 10]);
@@ -285,7 +285,7 @@ special type of exception::
         if (!$product) {
             throw $this->createNotFoundException('The product does not exist');
 
-            // the above is just a shortcut for:
+            // the above is a shortcut for:
             // throw new NotFoundHttpException('The product does not exist');
         }
 
@@ -293,7 +293,7 @@ special type of exception::
     }
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createNotFoundException`
-method is just a shortcut to create a special
+method is a shortcut to create a special
 :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`
 object, which ultimately triggers a 404 HTTP response inside Symfony.
 
@@ -341,8 +341,8 @@ Request object.
 Automatic Mapping Of The Request
 --------------------------------
 
-It is possible to automatically map the request payload and/or query parameters to
-your controller's action arguments with attributes.
+It is possible to automatically map the request payload and/or query parameters
+to your controller's action arguments with attributes.
 
 Mapping Query Parameters Individually
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -493,7 +493,7 @@ default value for your controller arguments::
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-When creating an API and dealing with HTTP methods other than ``GET`` (like
+When creating an API and handling HTTP methods other than ``GET`` (like
 ``POST`` or ``PUT``), the user's data is not stored in the query string
 but directly in the request payload, like this:
 
@@ -1010,7 +1010,7 @@ In Symfony, a controller is required to return a ``Response`` object::
     $response = new Response('<style> ... </style>');
     $response->headers->set('Content-Type', 'text/css');
 
-To facilitate this, different response objects are included to address different
+To help with this, different response objects are included to address different
 response types. Some of these are mentioned below. To learn more about the
 ``Request`` and ``Response`` (and different ``Response`` classes), see the
 :ref:`HttpFoundation component documentation <component-http-foundation-request>`.
@@ -1331,8 +1331,9 @@ where each helper is available as a public method::
     }
 
 You can inject the entire ``ControllerHelper`` class if you prefer, but using the
-:ref:`AutowireMethodOf <autowiring_closures>` attribute as in the previous example
-lets you inject only the exact helpers you need, making your code more efficient.
+:ref:`AutowireMethodOf <autowiring_closures>` attribute as in the previous
+example lets you inject only the exact helpers you need, making your code more
+efficient.
 
 Since ``#[AutowireMethodOf]`` also works with interfaces, you can define interfaces
 for these helper methods::
@@ -1369,9 +1370,9 @@ In Symfony, a controller is usually a class method which is used to accept
 requests and return a ``Response`` object. When mapped with a URL, a controller
 becomes accessible and its response can be viewed.
 
-To facilitate the development of controllers, Symfony provides an
-``AbstractController``. It can be used to extend the controller class, allowing
-access to some frequently used utilities such as ``render()`` and
+To help you develop controllers, Symfony provides an
+``AbstractController``. It can be used to extend the controller class,
+allowing access to some frequently used utilities such as ``render()`` and
 ``redirectToRoute()``. The ``AbstractController`` also provides the
 ``createNotFoundException()`` utility which is used to return a page not found
 response.

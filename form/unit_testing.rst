@@ -126,8 +126,8 @@ variable exists and will be available in your form themes::
 .. warning::
 
     When your type relies on the ``EntityType``, you should register the
-    :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmExtension`, which requires
-    mocking the ``ManagerRegistry``.
+    :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmExtension`, which
+    requires mocking the ``ManagerRegistry``.
 
     However, if you cannot use a mock to write your test, you should extend
     the ``KernelTestCase`` instead and use the ``form.factory`` service to
@@ -252,7 +252,7 @@ When testing the themes of your forms, consider making your test extend the
 :class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class. This saves a lot
 of boilerplate and code duplication by implementing the
 :class:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase` methods for you.
-All you need to do is to implement the
+You only need to implement the
 :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTemplatePaths`, the
 :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTwigExtensions` and
 the :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getThemes` methods.

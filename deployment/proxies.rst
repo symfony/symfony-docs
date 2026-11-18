@@ -122,7 +122,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
            # runtime by the IpUtils::PRIVATE_SUBNETS constant
            # trusted_proxies: '127.0.0.1,PRIVATE_SUBNETS'
 
-That's it! It's critical that you prevent traffic from all non-trusted sources.
+It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 

@@ -85,8 +85,8 @@ When no tag name is specified, the fully qualified class name (FQCN) of the targ
 .. tip::
 
     If you need more capabilities to autoconfigure instances of your base class
-    like their laziness, their bindings or their calls for example, you may rely
-    on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
+    like their laziness, their bindings or their calls for example, you can use
+    the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
 
 You can achieve the same in configuration files with the ``_instanceof`` option:
 
@@ -361,9 +361,9 @@ iterator, add the ``exclude`` option:
             ],
         ]);
 
-If the referencing service is itself tagged with the tag being used in the tagged
-iterator, it is automatically excluded from the injected iterable. This behavior can be
-disabled by setting the ``exclude_self`` option to ``false``:
+If the referencing service is itself tagged with the tag being used in the
+tagged iterator, it is automatically excluded from the injected iterable. This
+behavior can be disabled by setting the ``exclude_self`` option to ``false``:
 
 .. configuration-block::
 
@@ -470,9 +470,8 @@ the number, the earlier the tagged service will be located in the collection:
     The ``getDefaultPriority()`` method is deprecated since Symfony 8.1.
     Use the :ref:`#[AsTaggedItem] attribute <tags_as-tagged-item>` instead.
 
-Another option, which is particularly useful when autoconfiguring
-tags, is to implement the static ``getDefaultPriority()`` method on the
-service itself::
+Another option, which is particularly useful when autoconfiguring tags, is to
+implement the static ``getDefaultPriority()`` method on the service itself::
 
     // src/Handler/One.php
     namespace App\Handler;
@@ -878,7 +877,7 @@ using :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::findTa
 Creating Custom Tags and Processing Them with Compiler Passes
 -------------------------------------------------------------
 
-Tags on their own don't actually alter the functionality of your services in
+Tags on their own don't change the behavior of your services in
 any way. You can create and apply any custom tag (e.g. ``app.report_generator``)
 to your services and nothing will happen. Tags "mean" something when some code
 asks the container for the list of services tagged with them.

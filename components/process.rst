@@ -442,8 +442,8 @@ the relationship between your program and the process: teletype (tty) and
 pseudo-teletype (pty). See `What Are TTY and PTY?`_ above to learn about them.
 
 In TTY mode, you connect the input and output of the process to the input
-and output of your program. This allows you, for instance, to open an editor like
-Vim or Nano as a process. You enable TTY mode by calling
+and output of your program. This allows you, for instance, to open an editor
+like Vim or Nano as a process. You enable TTY mode by calling
 :method:`Symfony\\Component\\Process\\Process::setTty`::
 
     $process = new Process(['vim']);
@@ -536,8 +536,8 @@ the :class:`Symfony\\Component\\Process\\PhpSubprocess` class to run the command
 Process Timeout
 ---------------
 
-By default, processes have a timeout of 60 seconds, but you can change it by passing
-a different timeout (in seconds) to the ``setTimeout()`` method::
+By default, processes have a timeout of 60 seconds, but you can change it by
+passing a different timeout (in seconds) to the ``setTimeout()`` method::
 
     use Symfony\Component\Process\Process;
 

@@ -142,7 +142,7 @@ the class name or the string ``Default``.
 
 .. warning::
 
-    When validating *just* the User object, there is no difference between the
+    When validating *only* the User object, there is no difference between the
     ``Default`` group and the ``User`` group. But, there is a difference if
     ``User`` has embedded objects. For example, imagine ``User`` has an
     ``address`` property that contains some ``Address`` object and that you've

@@ -258,7 +258,7 @@ toolbar to be refreshed after each AJAX request by enabling ``ajax_replace`` in 
             ],
         ]);
 
-If you need a more sophisticated solution, you can set the
+If you need a more advanced solution, you can set the
 ``Symfony-Debug-Toolbar-Replace`` header to a value of ``'1'`` in the response
 yourself::
 
@@ -510,7 +510,7 @@ block and setting the value of two variables called ``icon`` and ``text``:
 .. tip::
 
     Built-in collector templates define all their images as embedded SVG files.
-    This makes them work everywhere without having to mess with web assets links:
+    This makes them work everywhere without having to handle web assets links:
 
     .. code-block:: twig
 

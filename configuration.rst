@@ -46,7 +46,7 @@ example, this is the default file created by the "API Platform" bundle:
             paths: ['%kernel.project_dir%/src/Entity']
 
 Splitting the configuration into lots of small files might seem intimidating to some
-Symfony newcomers. However, you'll get used to them quickly and you rarely need
+Symfony newcomers. However, you'll get used to them soon and you rarely need
 to change these files after package installation.
 
 .. tip::
@@ -284,8 +284,8 @@ essential parameters for your application's functionality are not empty::
     $container->parameterCannotBeEmpty('app.private_key', 'Did you forget to set a value for the "app.private_key" parameter?');
 
 If a non-empty parameter is ``null``, an empty string ``''``, or an empty array ``[]``,
-Symfony will throw an exception. This validation is **not** performed at compile time
-but when attempting to retrieve the value of the parameter.
+Symfony will throw an exception. This validation is **not** performed at compile
+time but when attempting to retrieve the value of the parameter.
 
 .. seealso::
 
@@ -337,9 +337,9 @@ Take the ``framework`` package, installed by default, as an example:
   is loaded to override some of the settings previously configured in
   ``config/packages/framework.yaml``.
 
-In reality, each environment differs only somewhat from the others. This means that
-all environments share a large base of common configuration, which is put in
-files directly in the ``config/packages/`` directory.
+In reality, each environment differs only somewhat from the others. This means
+that all environments share a large base of common configuration, which is put
+in files directly in the ``config/packages/`` directory.
 
 .. tip::
 
@@ -606,7 +606,7 @@ To do so, define a parameter with the same name as the env var using this syntax
 
 .. tip::
 
-    Some hosts - like Upsun.com - offer easy `utilities to manage env vars`_
+    Some hosts - like Upsun.com - offer `utilities to manage env vars`_
     in production.
 
 .. note::
@@ -744,8 +744,8 @@ local machine), you can do that in a ``.env.local`` file:
     DATABASE_URL="mysql://root:@127.0.0.1:3306/my_database_name"
 
 This file should be ignored by git and should *not* be committed to your repository.
-Several other ``.env`` files are available to set environment variables in *just*
-the right situation:
+Several other ``.env`` files are available to set environment variables in
+*exactly* the right situation:
 
 * ``.env``: defines the default values of the env vars needed by the application;
 * ``.env.local``: overrides the default values for all environments but only on
@@ -795,7 +795,7 @@ Configuring Environment Variables in Production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In production, the ``.env`` files are also parsed and loaded on each request. So
-the easiest way to define env vars is by creating a ``.env.local`` file on your
+the simplest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
 To improve performance, you can optionally run the ``dump-env`` Composer command:
@@ -980,7 +980,7 @@ environment variables from the file::
         {
             $fileName = __DIR__.\DIRECTORY_SEPARATOR.self::ENV_VARS_FILE;
             if (!is_file($fileName)) {
-                // throw an exception or just ignore this loader, depending on your needs
+                // throw an exception or ignore this loader, depending on your needs
             }
 
             $content = json_decode(file_get_contents($fileName), true);
@@ -989,15 +989,15 @@ environment variables from the file::
         }
     }
 
-That's it! Now the application will look for an ``env.json`` file in the
-current directory to populate environment variables (in addition to the
-already existing ``.env`` files).
+Now the application will look for an ``env.json`` file in the current
+directory to populate environment variables (in addition to the already
+existing ``.env`` files).
 
 .. tip::
 
-    If you want an env var to have a value in a certain environment but to fall back
-    on loaders in another environment, assign an empty value to the env var for
-    the environment where you want to use loaders:
+    If you want an env var to have a value in a certain environment but to fall
+    back on loaders in another environment, assign an empty value to the env var
+    for the environment where you want to use loaders:
 
     .. code-block:: bash
 
@@ -1260,7 +1260,7 @@ parameters at once by type-hinting any of its constructor arguments with the
 Keep Going!
 -----------
 
-Congratulations! You've tackled the basics of Symfony. Next, learn about *each*
+Congratulations! You've learned the basics of Symfony. Next, learn about *each*
 part of Symfony individually by following the guides. Check out:
 
 * :doc:`/forms`

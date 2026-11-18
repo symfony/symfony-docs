@@ -18,15 +18,15 @@ single Kernel:
 * An application that defines an API can be divided into two segments to improve
   performance. The first segment serves the regular web application, while the
   second segment exclusively responds to API requests. This approach requires
-  loading fewer bundles and enabling fewer features for the second part, thus
-  optimizing performance;
+  loading fewer bundles and enabling fewer features for the second part, which
+  improves performance;
 * A highly sensitive application could be divided into two parts for enhanced
   security. The first part would only load routes corresponding to the publicly
   exposed sections of the application. The second part would load the remainder
-  of the application, with its access safeguarded by the web server;
+  of the application, with its access protected by the web server;
 * A monolithic application could be gradually transformed into a more
   distributed architecture, such as micro-services. This approach allows for a
-  seamless migration of a large application while still sharing common
+  smooth migration of a large application while still sharing common
   configurations and components.
 
 Turning a Single Application into Multiple Applications
@@ -101,8 +101,7 @@ section:
         }
     }
 
-Additionally, don't forget to run ``composer dump-autoload`` to generate the
-autoload files.
+Then, run ``composer dump-autoload`` to generate the autoload files.
 
 Step 2) Update the Kernel Class to Support Multiple Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -270,8 +269,6 @@ the application ID to run in the CLI context::
         return $application;
     };
 
-That's it!
-
 Executing Commands
 ------------------
 
@@ -318,7 +315,7 @@ Then, run ``composer auto-scripts`` to test it!
 Rendering Templates
 -------------------
 
-Let's consider that you need to create another app called ``admin``. If you
+Suppose that you need to create another app called ``admin``. If you
 follow the :doc:`Symfony Best Practices </best_practices>`, the shared Kernel
 templates will be located in the ``templates/`` directory at the project's root.
 For admin-specific templates, you can create a new directory

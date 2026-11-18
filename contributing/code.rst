@@ -27,7 +27,7 @@ Symfony better even if you don't fix it yourself.
 
     This is about **bugs**. If you have an idea for a **new feature**, discuss it
     first on the ``#contribs`` channel of the `Symfony Slack`_ or open an issue
-    (ideally alongside a pull request) rather than just filing a request.
+    (ideally alongside a pull request) rather than only filing a request.
 
 Before Reporting
 ~~~~~~~~~~~~~~~~
@@ -403,8 +403,8 @@ Then, run the test suite from the Symfony root directory with the following comm
 
     $ php ./phpunit symfony
 
-The output should display ``OK``. If not, read the reported errors to figure out
-what's going on and if the tests are broken because of the new code.
+The output should display ``OK``. If not, read the reported errors to understand
+what's wrong and if the tests are broken because of the new code.
 
 .. tip::
 
@@ -424,7 +424,7 @@ what's going on and if the tests are broken because of the new code.
 Testing Generated Code
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Some tests generate code on the fly and verify that it matches the expected
+Some tests generate code dynamically and verify that it matches the expected
 output stored in a file. To regenerate those files, run the tests with the
 environment variable ``TEST_GENERATE_FIXTURES`` set to ``1``:
 

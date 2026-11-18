@@ -34,12 +34,12 @@ a case by case basis:
 * **Translations**: Translation updates and additions are always merged in the
   oldest maintained branch;
 
-* **External data**: External data included in Symfony can be
-  updated (like ICU for instance);
+* **External data**: External data included in Symfony can be updated (like
+  ICU for instance);
 
 * **Version updates for Composer dependencies**: Changing the minimal version
-  of a dependency is possible, bumping to a major one or increasing the minimal PHP
-  version is not;
+  of a dependency is possible, bumping to a major one or increasing the
+  minimal PHP version is not;
 
 * **Tests**: Tests that increase the code coverage can be added.
 

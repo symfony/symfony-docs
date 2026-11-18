@@ -44,8 +44,8 @@ Basic File Transfer
 ~~~~~~~~~~~~~~~~~~~
 
 The most basic way of deploying an application is copying the files manually
-via FTP/SCP (or a similar method). This has its disadvantages as you lack control
-over the system as the upgrade progresses. This method also requires you
+via FTP/SCP (or a similar method). This has its disadvantages as you lack
+control over the system as the upgrade progresses. This method also requires you
 to take some manual steps after transferring the files (see `Common Deployment Tasks`_).
 
 Using Source Control
@@ -57,8 +57,8 @@ upgrade, fetch the latest updates from your source control
 system. When using Git, a common approach is to create a tag for each release
 and check out the appropriate tag on deployment (see `Git Tagging`_).
 
-This makes updating your files *easier*, but you still need to worry about
-manually taking other steps (see `Common Deployment Tasks`_).
+This makes updating your files *easier*, but you still need to take other
+steps manually (see `Common Deployment Tasks`_).
 
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +70,7 @@ provides a dedicated Symfony integration and helps fund the Symfony development.
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are also tools to help ease the pain of deployment. `Deployer`_ is a
+There are also tools to make deployment less difficult. `Deployer`_ is a
 deployment tool written in PHP that provides ready-to-use recipes for common
 Symfony deployment tasks.
 
@@ -253,10 +253,10 @@ deploying to staging, QA (Quality Assurance), running tests, etc.
 
 The use of staging, testing, QA, continuous integration, database migrations
 and the capability to roll back in case of failure are all strongly advised. There
-are simple and more complex tools and you can make the deployment as easy
-(or sophisticated) as your environment requires.
+are simple and more complex tools and you can make the deployment as simple
+(or complex) as your environment requires.
 
-Don't forget that deploying your application also involves updating any dependency
+Remember that deploying your application also involves updating any dependency
 (typically via Composer), migrating your database, clearing your cache and
 other potential things like pushing assets to a CDN (see `Common Deployment Tasks`_).
 

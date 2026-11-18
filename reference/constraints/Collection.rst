@@ -321,8 +321,8 @@ This will result in the following configuration::
     );
 
 The default ``allowMissingFields`` option requires the fields in all groups.
-So when validating in the ``contact`` group, ``$name`` can be empty but the key is
-still required. If this is not the intended behavior, use the ``Optional``
+So when validating in the ``contact`` group, ``$name`` can be empty but the key
+is still required. If this is not the intended behavior, use the ``Optional``
 constraint explicitly instead of ``Required``.
 
 Options

@@ -3,8 +3,8 @@ LessThan
 
 Validates that a value is less than another value, defined in the options. To
 validate that a value is less than or equal to another value, see
-:doc:`/reference/constraints/LessThanOrEqual`. To validate that a value is greater
-than another value, see :doc:`/reference/constraints/GreaterThan`.
+:doc:`/reference/constraints/LessThanOrEqual`. To validate that a value is
+greater than another value, see :doc:`/reference/constraints/GreaterThan`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

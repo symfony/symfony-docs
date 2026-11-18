@@ -6,13 +6,13 @@ Symfony CLI
 
 The **Symfony CLI** is a free and `open source`_ developer tool to help you build,
 run, and manage your Symfony applications directly from your terminal. It's designed
-to boost your productivity with smart features like:
+to improve your productivity with smart features like:
 
 * **Web server** optimized for development, with **HTTPS support**
 * **Docker** integration and automatic environment variable management
 * Management of multiple **PHP versions**
 * Support for background **workers**
-* Seamless integration with **Symfony Cloud**
+* Integration with **Symfony Cloud**
 
 Installation
 ------------
@@ -188,8 +188,8 @@ Enabling HTTPS/TLS
 
 Running your application over HTTPS locally helps detect mixed content issues
 early and allows using features that require secure connections. Traditionally,
-this has been painful and complicated to set up, but the Symfony server automates
-everything for you:
+this has been difficult to set up, but the Symfony server automates everything
+for you:
 
 .. code-block:: terminal
 
@@ -209,7 +209,7 @@ everything for you:
         $ explorer.exe `wslpath -w $HOME/.config/symfony-cli/certs`
         # in legacy Symfony CLI versions, the path was $HOME/.symfony5/certs
 
-    In the file explorer window that just opened, double-click on the file
+    In the file explorer window that opened, double-click on the file
     called ``default.p12``.
 
 PHP Management
@@ -222,8 +222,8 @@ Selecting PHP Version
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have multiple PHP versions installed on your computer, you can tell
-Symfony which one to use by creating a file called ``.php-version`` at the project
-root directory:
+Symfony which one to use by creating a file called ``.php-version`` at the
+project root directory:
 
 .. code-block:: terminal
 
@@ -698,7 +698,7 @@ The ``.symfony.local.yaml`` file provides advanced configuration options:
 Symfony Cloud Integration
 -------------------------
 
-The Symfony CLI provides seamless integration with `Symfony Cloud`_ (powered by
+The Symfony CLI integrates with `Symfony Cloud`_ (powered by
 `Upsun`_):
 
 .. code-block:: terminal

@@ -155,8 +155,8 @@ includeInternalMessages
 **type**: ``boolean`` **default**: ``true``
 
 If set to ``true``, the message that is shown if the validation fails
-will include the list of messages for the internal constraints. See the `message`_
-option for an example.
+will include the list of messages for the internal constraints. See the
+`message`_ option for an example.
 
 message
 ~~~~~~~
@@ -178,7 +178,8 @@ messageCollection
 
 This is the message that will be shown if the validation fails
 and the internal constraint is either :doc:`/reference/constraints/All`
-or :doc:`/reference/constraints/Collection`. See the `message`_ option for an example.
+or :doc:`/reference/constraints/Collection`. See the `message`_ option for an
+example.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 

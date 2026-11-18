@@ -882,8 +882,8 @@ Chaining Option Configurations
 In many cases you may need to define multiple configurations for each option.
 For example, suppose the ``InvoiceMailer`` class has a ``host`` option that is required
 and a ``transport`` option which can be one of ``sendmail``, ``mail`` and ``smtp``.
-You can improve the readability of the code by avoiding duplicating the option name for
-each configuration using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define`
+You can improve the readability of the code by avoiding duplicating the option
+name for each configuration using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::define`
 method::
 
     // ...

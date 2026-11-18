@@ -2,7 +2,7 @@ Copying & Referencing Images with Webpack Encore
 ================================================
 
 Need to reference a static file - like the path to an image for an ``img`` tag?
-That can be tricky if you store your assets outside of the public document root.
+That can be difficult if you store your assets outside of the public document root.
 Fortunately, depending on your situation, there is a solution!
 
 Referencing Images from Inside a Webpacked JavaScript File

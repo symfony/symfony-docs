@@ -161,9 +161,9 @@ fetched from the container::
 
 .. warning::
 
-    Don't use ``get()`` to get a service that you want to inject as a constructor
-    argument because the service is not available yet. Instead, use a
-    ``Reference`` instance as shown above.
+    Don't use ``get()`` to get a service that you want to inject as a
+    constructor argument because the service is not available yet. Instead,
+    use a ``Reference`` instance as shown above.
 
 Setting the Method Calls
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -203,7 +203,7 @@ Processing Tagged Services in a Compiler Pass
 
 A common use case of compiler passes is to search for all service definitions
 that have a certain :doc:`tag </service_container/tags>` in order to
-dynamically plug each one into another service.
+dynamically inject each one into another service.
 
 .. tip::
 
@@ -276,9 +276,10 @@ pass that asks the container for the tagged services with the
     }
 
 The double loop may be confusing. This is because a service can have more
-than one tag. You can tag a service twice or more with the ``app.report_generator``
-tag. The second ``foreach`` loop iterates over the ``app.report_generator``
-tags set for the current service and gives you the attributes.
+than one tag. You can tag a service twice or more with the
+``app.report_generator`` tag. The second ``foreach`` loop iterates over the
+``app.report_generator`` tags set for the current service and gives you the
+attributes.
 
 Creating Service Locators in a Compiler Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

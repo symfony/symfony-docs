@@ -56,7 +56,7 @@ such a case, you can insulate your clients::
     $this->assertMatchesRegularExpression('/Hello/', $sally->getResponse()->getContent());
 
 Insulated clients transparently run their requests in a dedicated and
-clean PHP process, thus avoiding any side effects.
+clean PHP process, so they avoid any side effects.
 
 .. tip::
 

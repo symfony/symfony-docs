@@ -19,7 +19,7 @@ time, but you can use them for your own features too.
     Such protections must consume as few resources as possible. Consider
     using `Apache mod_ratelimit`_, `NGINX rate limiting`_,
     `Caddy HTTP rate limit module`_ (also supported by FrankenPHP)
-    or proxies (like AWS or Cloudflare) to prevent your server from being overwhelmed.
+    or proxies (like AWS or Cloudflare) to prevent your server from being overloaded.
 
 .. _rate-limiter-policies:
 

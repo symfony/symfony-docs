@@ -15,12 +15,12 @@ to identify something as something else to exploit the resulting confusion.
 This is why it is recommended to check user-submitted, public-facing identifiers
 for suspicious characters in order to prevent such attacks.
 
-Because Unicode contains such a large number of characters and incorporates the
-varied writing systems of the world, incorrect usage can expose programs or
+Because Unicode contains such a large number of characters and includes the
+different writing systems of the world, incorrect usage can expose programs or
 systems to possible security attacks.
 
 That's why this constraint ensures strings or :phpclass:`Stringable`s do not
-include any suspicious characters. As it leverages PHP's :phpclass:`Spoofchecker`,
+include any suspicious characters. As it uses PHP's :phpclass:`Spoofchecker`,
 the intl extension must be enabled to use it.
 
 ==========  ===================================================================

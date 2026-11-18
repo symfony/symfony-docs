@@ -30,8 +30,9 @@ Usage
 This component gives you a :class:`Symfony\\Component\\TypeInfo\\Type` object that
 represents the PHP type of anything you built or asked to resolve.
 
-There are two ways to use this component. The first one is to create a type manually using
-the :class:`Symfony\\Component\\TypeInfo\\Type` static methods as follows::
+There are two ways to use this component. The first one is to create a type
+manually using the :class:`Symfony\\Component\\TypeInfo\\Type` static methods
+as follows::
 
     use Symfony\Component\TypeInfo\Type;
 

@@ -8,7 +8,7 @@ are automatically set up to work for image files specifically.
 Additionally it has options so you can validate against the width and height
 of the image.
 
-See the :doc:`File </reference/constraints/File>` constraint for the bulk
+See the :doc:`File </reference/constraints/File>` constraint for most
 of the documentation on this constraint.
 
 ==========  ===================================================================

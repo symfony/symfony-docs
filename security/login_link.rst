@@ -56,7 +56,7 @@ and ``signature_properties`` (explained below):
 The ``signature_properties`` are used to create a signed URL. This must
 contain at least one property of your ``User`` object that uniquely
 identifies this user (e.g. the user ID). Read more about this setting
-:ref:`further down below <security-login-link-signature>`.
+:ref:`later in this article <security-login-link-signature>`.
 
 The ``check_route`` must be the name of an existing route and it will be used to
 generate the login link that will authenticate the user. You don't need a
@@ -505,7 +505,7 @@ cache. Enable this support by setting the ``max_uses`` option:
         ]);
 
 Make sure there is enough space left in the cache; otherwise, invalid links
-can no longer be stored (and thus become valid again). Expired invalid
+can no longer be stored (so they become valid again). Expired invalid
 links are automatically removed from the cache.
 
 The cache pools are not cleared by the ``cache:clear`` command, but
@@ -521,7 +521,7 @@ make it work as expected. Email providers and browsers often load a
 preview of the links, meaning that the link is already invalidated by
 the preview loader.
 
-In order to solve this issue, first set the ``check_post_only`` option to let
+To solve this issue, first set the ``check_post_only`` option to let
 the authenticator only handle HTTP POST methods:
 
 .. configuration-block::

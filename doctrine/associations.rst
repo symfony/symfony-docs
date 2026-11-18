@@ -82,7 +82,7 @@ This will generate your new entity class::
 .. tip::
 
     You can pass either ``--with-uuid`` or ``--with-ulid`` to ``make:entity``.
-    Leveraging Symfony's :doc:`Uid Component </components/uid>`, this generates
+    Using Symfony's :doc:`Uid Component </components/uid>`, this generates
     an entity with the ``id`` type as :ref:`Uuid <uuid>` or :ref:`Ulid <ulid>`
     instead of ``int``.
 
@@ -100,7 +100,7 @@ From the perspective of the ``Category`` entity, this is a one-to-many relations
 To map this, first create a ``category`` property on the ``Product`` class with
 the ``ManyToOne`` attribute. You can do this by hand, or by using the ``make:entity``
 command, which will ask you several questions about your relationship. If you're
-not sure of the answer, don't worry! You can always change the settings later:
+not sure of the answer, you can always change the settings later:
 
 .. code-block:: bash
 
@@ -255,7 +255,7 @@ class that will hold these objects:
                 products:
                     targetEntity: App\Entity\Product
                     mappedBy: category
-        # Don't forget to initialize the collection in
+        # make sure to initialize the collection in
         # the __construct() method of the entity
 
     .. code-block:: xml
@@ -275,7 +275,7 @@ class that will hold these objects:
                     mapped-by="category"/>
 
                 <!--
-                    don't forget to init the collection in
+                    make sure to initialize the collection in
                     the __construct() method of the entity
                 -->
             </entity>
@@ -293,8 +293,8 @@ config.
     The code inside ``__construct()`` is important: The ``$products`` property must
     be a collection object that implements Doctrine's ``Collection`` interface.
     In this case, an `ArrayCollection`_ object is used. This looks and acts almost
-    *exactly* like an array, but has some added flexibility. Just imagine that
-    it is an ``array`` and you'll be in good shape.
+    *exactly* like an array, but has some added flexibility. You can think of
+    it as an ``array``.
 
 Your database is set up! Now, run the migrations as usual:
 

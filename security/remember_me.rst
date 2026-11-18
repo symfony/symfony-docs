@@ -446,8 +446,8 @@ users to change their password. You can do this by using a few
 
     public function accountInfo(): Response
     {
-        // allow any authenticated user - we don't care if they just
-        // logged in, or are logged in via a remember me cookie
+        // allow any authenticated user - it doesn't matter if they logged in
+        // recently or are logged in via a remember me cookie
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
 
         // ...
@@ -488,12 +488,12 @@ cookie created by the system:
 
 ``path`` (default value: ``/``)
     The path where the cookie associated with this feature is used. By default,
-    the cookie will be applied to the entire website, but you can restrict it to a
-    specific section (e.g. ``/forum``, ``/admin``).
+    the cookie will be applied to the entire website, but you can restrict it to
+    a specific section (e.g. ``/forum``, ``/admin``).
 
 ``domain`` (default value: ``null``)
-    The domain where the cookie associated with this feature is used. By default,
-    cookies use the current domain obtained from ``$_SERVER``.
+    The domain where the cookie associated with this feature is used. By
+    default, cookies use the current domain obtained from ``$_SERVER``.
 
 ``secure`` (default value: ``false``)
     If ``true``, the cookie associated with this feature is sent to the user

@@ -2,7 +2,7 @@ How To Configure and Use Flex Private Recipe Repositories
 =========================================================
 
 You can build your own private :ref:`Symfony Flex recipe <recipes-description>`
-repositories and seamlessly integrate them into the ``composer`` package
+repositories and integrate them into the ``composer`` package
 installation and maintenance process.
 
 This is particularly useful when you have private bundles or packages that must
@@ -87,7 +87,7 @@ The ``"all"`` entry tells ``symfony/flex`` to create an entry in your project's
 ``bundles.php`` file for all environments. To load your bundle only for the
 ``dev`` environment, replace ``"all"`` with ``"dev"``.
 
-The name of your recipe JSON file must conform to the following convention,
+The name of your recipe JSON file must follow this convention,
 where ``1.0`` is the version number of your bundle (replace ``acme`` and
 ``private-bundle`` with your own private bundle or package details):
 
@@ -133,7 +133,7 @@ For more examples of what you can include in a recipe file, browse the
 Generating Private Recipes Automatically
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Writing recipe files in the format described above can be tedious. The
+Writing recipe files in the format described above can be time-consuming. The
 `recipes checker`_ tool can generate these files for you from a simplified
 directory structure.
 
@@ -336,7 +336,7 @@ Replace ``your-github-account-name`` and ``your-recipes-repository`` with your o
 
 .. tip::
 
-    The ``extra.symfony`` key will most probably already exist in your
+    The ``extra.symfony`` key probably already exists in your
     ``composer.json``. In that case, add the ``"endpoint"`` key to the existing
     ``extra.symfony`` entry.
 
@@ -372,7 +372,7 @@ Replace ``your-gitlab-project-id`` with your own details.
 
 .. tip::
 
-    The ``extra.symfony`` key will most probably already exist in your
+    The ``extra.symfony`` key probably already exists in your
     ``composer.json``. In that case, add the ``"endpoint"`` key to the existing
     ``extra.symfony`` entry.
 

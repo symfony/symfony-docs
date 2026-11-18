@@ -523,7 +523,7 @@ Fires after view-to-norm transformation, before norm-to-model transformation.
 .. note::
 
     Symfony's :doc:`UrlType </reference/forms/types/url>` already does this via
-    ``FixUrlProtocolListener``. This is just an example of modifying normalized data.
+    ``FixUrlProtocolListener``. This is only an example of modifying normalized data.
 
 .. _form-events-post-submit:
 

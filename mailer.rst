@@ -135,7 +135,7 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     MAILER_DSN=sendgrid://KEY@default
 
 The ``MAILER_DSN`` isn't a *real* address: it's a convenient format that
-offloads most of the configuration work to Mailer. The ``sendgrid`` scheme
+leaves most of the configuration work to Mailer. The ``sendgrid`` scheme
 activates the SendGrid provider that you installed, which knows all about
 how to deliver messages via SendGrid. The *only* part you need to change is the
 ``KEY`` placeholder.
@@ -153,8 +153,8 @@ transport, but you can force it to use a specific one:
     # force the use of SMTP instead of HTTP (which is the default)
     MAILER_DSN=sendgrid+smtp://$SENDGRID_KEY@default
 
-This table shows the full list of available DSN formats for each third-party
-provider:
+This table shows the full list of available DSN formats for each
+third-party provider:
 
 +------------------------+-------------------------------------------------------------------------------------------+
 | Provider               | Formats                                                                                   |
@@ -379,8 +379,8 @@ TLS Peer Fingerprint Verification
 
 Additional fingerprint verification can be enforced with the ``peer_fingerprint``
 option. This is especially useful when a self-signed certificate is used and
-disabling ``verify_peer`` is needed, but security is still desired. The fingerprint
-may be specified as a SHA1 or MD5 hash::
+disabling ``verify_peer`` is needed, but security is still desired. The
+fingerprint may be specified as a SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
@@ -566,7 +566,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
         }
     }
 
-That's it! The message will be sent immediately via the transport you configured.
+The message will be sent immediately via the transport you configured.
 If you prefer to send emails asynchronously to improve performance, read the
 :ref:`Sending Messages Async <mailer-sending-messages-async>` section. Also, if
 your application has the :doc:`Messenger component </messenger>` installed, all
@@ -952,7 +952,7 @@ and headers.
 .. warning::
 
     Some third-party providers don't support the usage of keywords like ``from``
-    in the ``headers``. Check out your provider's documentation before setting
+    in the ``headers``. Check your provider's documentation before setting
     any global header.
 
 Handling Sending Failures
@@ -961,10 +961,10 @@ Handling Sending Failures
 Symfony Mailer considers that sending was successful when your transport (SMTP
 server or third-party provider) accepts the mail for further delivery. The message
 can later be lost or not delivered because of some problem in your provider, but
-that's out of reach for your Symfony application. However, many providers can
+your Symfony application can't control that. However, many providers can
 notify your application about these problems using :doc:`webhooks </webhook>`.
 
-If there's an error when handing over the email to your transport, Symfony throws
+If there's an error when passing the email to your transport, Symfony throws
 a :class:`Symfony\\Component\\Mailer\\Exception\\TransportExceptionInterface`.
 Catch that exception to recover from the error or to display some message::
 
@@ -1169,10 +1169,10 @@ the ``TemplatedEmail`` class:
 Embedding Images
 ~~~~~~~~~~~~~~~~
 
-Instead of dealing with the ``<img src="cid: ...">`` syntax explained in the
+Instead of using the ``<img src="cid: ...">`` syntax explained in the
 previous sections, when using Twig to render email contents you can refer to
 image files as usual. First, to simplify things, define a Twig namespace called
-``images`` that points to whatever directory your images are stored in:
+``images`` that points to the directory where your images are stored:
 
 .. configuration-block::
 
@@ -1226,13 +1226,13 @@ Inlining CSS Styles
 ~~~~~~~~~~~~~~~~~~~
 
 Designing the HTML contents of an email is very different from designing a
-normal HTML page. For starters, most email clients only support a subset of all
+normal HTML page. First, most email clients only support a subset of all
 CSS features. In addition, popular email clients like Gmail don't support
 defining styles inside ``<style> ... </style>`` sections and you must **inline
 all the CSS styles**.
 
 CSS inlining means that every HTML tag must define a ``style`` attribute with
-all its CSS styles. This can make organizing your CSS a mess. That's why Twig
+all its CSS styles. This can make your CSS hard to organize. That's why Twig
 provides a ``CssInlinerExtension`` that automates everything for you. Install
 it with:
 
@@ -1483,7 +1483,7 @@ requires using both a certificate and a private key::
 DKIM Signer
 ...........
 
-`DKIM`_ is an email authentication method that affixes a digital signature,
+`DKIM`_ is an email authentication method that adds a digital signature,
 linked to a domain name, to each outgoing email message. It requires a private
 key but not a certificate::
 
@@ -1721,7 +1721,7 @@ Sending Messages Async
 ----------------------
 
 When you call ``$mailer->send($email)``, the email is sent to the transport immediately.
-To improve performance, you can leverage :doc:`Messenger </messenger>` to send
+To improve performance, you can use :doc:`Messenger </messenger>` to send
 the messages later via a Messenger transport.
 
 Start by following the :doc:`Messenger </messenger>` documentation and configuring
@@ -1766,7 +1766,7 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent
 to the transport to be handled later (see :ref:`messenger-worker`). Note that
 the "rendering" of the email (computed headers, body rendering, ...) is also
-deferred and will only happen just before the email is sent by the Messenger
+deferred and will only happen right before the email is sent by the Messenger
 handler.
 
 When sending an email asynchronously, its instance must be serializable.
@@ -1909,10 +1909,10 @@ Draft Emails
 ------------
 
 :class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
-:class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
-(with body, attachments, etc.) and make it available to download as an ``.eml`` file
-with the ``X-Unsent`` header. Many email clients can open these files and interpret
-them as *draft emails*. You can use these to create advanced ``mailto:`` links.
+:class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build an email
+(with body, attachments, etc.) and make it available to download as an ``.eml``
+file with the ``X-Unsent`` header. Many email clients can open these files and
+interpret them as *draft emails*. You can use these to create advanced ``mailto:`` links.
 
 Here's an example of making one available to download::
 
@@ -2102,8 +2102,8 @@ to test if sending emails works correctly:
     # (check the command help to learn about its options)
     $ php bin/console mailer:test someone@example.com
 
-This command bypasses the :doc:`Messenger bus </messenger>`, if configured, to
-ease testing emails even when the Messenger consumer is not running.
+This command bypasses the :doc:`Messenger bus </messenger>`, if configured, so
+you can test emails even when the Messenger consumer is not running.
 
 Disabling Delivery
 ~~~~~~~~~~~~~~~~~~
@@ -2225,7 +2225,7 @@ etc., will also be delivered to those addresses.
 Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony provides lots of :ref:`built-in mailer assertions <mailer-assertions>`
+Symfony provides many :ref:`built-in mailer assertions <mailer-assertions>`
 to functionally test that an email was sent, its contents or headers, etc.
 They are available in test classes extending
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` or when using

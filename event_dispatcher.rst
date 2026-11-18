@@ -411,10 +411,10 @@ via its ``ExceptionEvent`` class::
         }
     }
 
-In Symfony applications, that's all you need to do. Your ``services.yaml``
-file should already be set up to load services from the ``EventSubscriber``
-directory, so Symfony takes care of the rest. In other PHP applications,
-register the subscriber with the
+In Symfony applications, no other configuration is needed. Your
+``services.yaml`` file should already be set up to load services from the
+``EventSubscriber`` directory, so Symfony takes care of the rest. In other PHP
+applications, register the subscriber with the
 :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::addSubscriber`
 method::
 
@@ -628,7 +628,7 @@ Creating a custom event class, as shown in the previous sections, is the
 recommended way to pass data to listeners: the class name identifies the event
 and its methods define the exact data passed to the listeners.
 
-However, for quick prototypes or very simple needs, you can use the
+However, for prototypes or very simple needs, you can use the
 :class:`Symfony\\Component\\EventDispatcher\\GenericEvent` class instead of
 creating one custom class per event. It stores an arbitrary event *subject*
 and optional arguments, which are also accessible via the
@@ -1039,7 +1039,7 @@ First, define some token configuration as parameters:
 Tag Controllers to Be Checked
 .............................
 
-A ``kernel.controller`` (aka ``KernelEvents::CONTROLLER``) listener gets notified
+A ``kernel.controller`` (also called ``KernelEvents::CONTROLLER``) listener gets notified
 on *every* request, right before the controller is executed. So, first, you need
 some way to identify if the controller that matches the request needs token validation.
 
@@ -1121,7 +1121,7 @@ event subscribers, you can learn more about :ref:`how to use them <events-subscr
         }
     }
 
-That's it! Your ``services.yaml`` file should already be set up to load services from
+Your ``services.yaml`` file should already be set up to load services from
 the ``EventSubscriber`` directory. Symfony takes care of the rest. Your
 ``TokenSubscriber`` ``onKernelController()`` method will be executed on each request.
 If the controller that is about to be executed implements ``TokenAuthenticatedController``,
@@ -1143,7 +1143,7 @@ can also add a hook that's executed *after* your controller. For this example,
 imagine that you want to add a ``sha1`` hash (with a salt using that token) to
 all responses that have passed this token authentication.
 
-Another core Symfony event - called ``kernel.response`` (aka ``KernelEvents::RESPONSE``) -
+Another core Symfony event - called ``kernel.response`` (also called ``KernelEvents::RESPONSE``) -
 is notified on every request, but after the controller returns a Response object.
 To create an "after" listener, create a listener class and register
 it as a service on this event.
@@ -1196,7 +1196,7 @@ header on the response if it's found::
         ];
     }
 
-That's it! The ``TokenSubscriber`` is now notified before every controller is
+The ``TokenSubscriber`` is now notified before every controller is
 executed (``onKernelController()``) and after every controller returns a response
 (``onKernelResponse()``). By making specific controllers implement the ``TokenAuthenticatedController``
 interface, your listener knows which controllers it should take action on.
@@ -1340,7 +1340,7 @@ could listen to the ``mailer.post_send`` event and change the method's return va
         }
     }
 
-That's it! Your subscriber should be called automatically (or read more about
+Your subscriber should now be called automatically (or read more about
 :ref:`event subscriber configuration <ref-event-subscriber-configuration>`).
 
 If you can't change the code of the class (e.g. it's defined by a third-party

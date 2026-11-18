@@ -16,7 +16,7 @@ Types of Tests
 There are many types of automated tests and precise definitions often
 differ from project to project. In Symfony, the following definitions are
 used. If you have learned something different, that is not necessarily
-wrong, merely different from what the Symfony documentation is using.
+wrong, only different from what the Symfony documentation is using.
 
 `Unit Tests`_
     These tests ensure that *individual* units of source code (e.g. a single
@@ -351,7 +351,7 @@ Configuring a Database for Tests
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Tests that interact with the database should use their own separate
-database to not mess with the databases used in the other
+database to not change the databases used in the other
 :ref:`configuration environments <configuration-environments>`.
 
 To do that, edit or create the ``.env.test.local`` file at the root
@@ -420,10 +420,10 @@ Now, enable it as a PHPUnit extension:
         </extensions>
     </phpunit>
 
-That's it! This bundle uses a clever trick: it begins a database
-transaction before every test and rolls it back automatically after the
-test finishes to undo all changes. Read more in the documentation of the
-`DAMADoctrineTestBundle`_.
+Now each test starts with an unmodified database. Internally, this bundle
+begins a database transaction before every test and rolls it back automatically
+after the test finishes to undo all changes. Read more in the documentation of
+the `DAMADoctrineTestBundle`_.
 
 .. _doctrine-fixtures:
 
@@ -496,7 +496,7 @@ have a very specific workflow:
 #. :ref:`Make a request <testing-applications-arrange>`;
 #. :ref:`Interact with the page <testing-applications-act>` (e.g. click on a link or submit a form);
 #. :ref:`Test the response <testing-application-assertions>`;
-#. Rinse and repeat.
+#. Repeat these steps as needed.
 
 .. note::
 
@@ -607,7 +607,7 @@ This allows you to create all types of requests you can think of:
 Multiple Requests in One Test
 .............................
 
-After making a request, subsequent requests will make the client reboot the kernel.
+After making a request, the next requests will make the client reboot the kernel.
 This recreates the container from scratch to ensure that requests are isolated
 and use new service objects each time. This behavior can have some unexpected
 consequences: for example, the security token will be cleared, Doctrine entities
@@ -693,8 +693,8 @@ Logging in Users (Authentication)
 When you want to add application tests for protected pages, you have to
 first "log in" as a user. Reproducing the actual steps - such as
 submitting a login form - makes a test very slow. For this reason, Symfony
-provides a ``loginUser()`` method to simulate logging in during your functional
-tests.
+provides a ``loginUser()`` method to simulate logging in during your
+functional tests.
 
 Instead of logging in with real users, it's recommended to create a user
 only for tests. You can do that with `Doctrine data fixtures`_ to load the
@@ -1004,7 +1004,7 @@ input::
 
 .. tip::
 
-    If you purposefully want to select "invalid" select/radio values, see
+    If you want to select "invalid" select/radio values on purpose, see
     :ref:`components-dom-crawler-invalid`.
 
 .. tip::

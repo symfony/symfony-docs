@@ -277,7 +277,7 @@ You can then run this test using PHPUnit, like you would for any other test:
 
     $ ./vendor/bin/phpunit tests/HomepageTest.php
 
-When writing end-to-end tests, you should keep in mind that they are
+When writing end-to-end tests, remember that they are
 slower than other tests. If you need to check that the WebDriver connection
 is still active during long-running tests, you can use the
 ``Client::ping()`` method which returns a boolean depending on the
@@ -599,7 +599,7 @@ Usage With Other Testing Tools
 ------------------------------
 
 If you want to use Panther with other testing tools like `LiipFunctionalTestBundle`_
-or if you just need to use a different base class, you can use the
+or if you only need to use a different base class, you can use the
 ``Symfony\Component\Panther\PantherTestCaseTrait`` to enhance your existing
 test-infrastructure with some Panther mechanisms::
 
@@ -870,8 +870,8 @@ The following features are not currently supported:
 * Selecting invalid choices in the select
 
 Also, there is a known issue if you are using Bootstrap 5. It implements a
-scrolling effect which tends to mislead Panther. To fix this,
-deactivate this effect by setting the Bootstrap 5 ``$enable-smooth-scroll``
+scrolling effect which tends to mislead Panther. To fix this, deactivate this
+effect by setting the Bootstrap 5 ``$enable-smooth-scroll``
 variable to ``false`` in your style file:
 
 .. code-block:: scss

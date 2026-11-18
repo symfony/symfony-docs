@@ -307,7 +307,7 @@ will intercept any requests (``POST`` requests only, by default) to this
 URL and process the submitted login credentials.
 
 Be sure that this URL is covered by your main firewall (i.e. don't create
-a separate firewall just for the ``check_path`` URL).
+a separate firewall only for the ``check_path`` URL).
 
 failure_path
 ............
@@ -1237,8 +1237,8 @@ multiple firewalls, the "context" could actually be shared:
 
 .. note::
 
-    The firewall context key is stored in the session, so every firewall using it
-    must set its ``stateless`` option to ``false``. Otherwise, the context is
+    The firewall context key is stored in the session, so every firewall using
+    it must set its ``stateless`` option to ``false``. Otherwise, the context is
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 

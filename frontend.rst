@@ -7,7 +7,7 @@ are generally two approaches:
 #. :ref:`building your HTML with PHP & Twig <frontend-twig-php>`;
 #. :ref:`building your frontend with a JavaScript framework <frontend-js>` like React, Vue, Svelte, etc.
 
-Both work great - and are discussed below.
+Both work well and are explained below.
 
 .. _frontend-twig-php:
 
@@ -17,7 +17,7 @@ Using PHP & Twig
 Symfony comes with several powerful options to help you build a modern and fast frontend:
 
 * :ref:`AssetMapper <frontend-asset-mapper>` (recommended for new projects) runs
-  entirely in PHP, doesn't require any build step and leverages modern web standards.
+  entirely in PHP, doesn't require any build step and uses modern web standards.
 
 * :ref:`Symfony Reprise <frontend-reprise>` brings first-class Symfony integration
   to modern JavaScript bundlers (`Vite`_ and `Rsbuild`_), the way Webpack Encore did
@@ -76,8 +76,8 @@ AssetMapper (Recommended)
     Do you prefer video tutorials? Check out the `AssetMapper screencast series`_.
 
 AssetMapper is the recommended system for handling your assets. It runs entirely
-in PHP with no complex build step or dependencies. It does this by leveraging
-the ``importmap`` feature of your browser, which is available in all browsers thanks
+in PHP with no complex build step or dependencies. It does this by using the
+``importmap`` feature of your browser, which is available in all browsers thanks
 to a polyfill.
 
 :doc:`Read the AssetMapper Documentation </frontend/asset_mapper>`
@@ -173,7 +173,7 @@ Using a Front-end Framework (React, Vue, Svelte, etc)
     Do you prefer video tutorials? Check out the `API Platform screencast series`_.
 
 If you want to use a front-end framework (Next.js, React, Vue, Svelte, etc),
-we recommend using their native tools and using Symfony as a pure API. A wonderful
+we recommend using their native tools and using Symfony as a pure API. A good
 tool to do that is `API Platform`_. Their standard distribution comes with a
 Symfony-powered API backend, frontend scaffolding in Next.js (other frameworks
 are also supported) and a React admin interface. It comes fully Dockerized and even

@@ -63,8 +63,8 @@ Imagine you already process some "orders" in your application using a
 application but you can't use an API and need to use a shared CSV file with new
 orders.
 
-You will read this CSV file and dispatch a ``NewOrder`` message. All you need to
-do is to write your own CSV receiver::
+You will read this CSV file and dispatch a ``NewOrder`` message. To do that,
+write your own CSV receiver::
 
     namespace App\MessageReceiver;
 

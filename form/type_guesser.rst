@@ -164,9 +164,9 @@ set.
 
 .. warning::
 
-    You should be very careful when using the ``guessMaxLength()`` method. When the
-    type is a float, you cannot determine a length (e.g. you want a float to be
-    less than ``5``, ``5.512313`` is not valid but
+    You should be very careful when using the ``guessMaxLength()`` method. When
+    the type is a float, you cannot determine a length (e.g. you want a float to
+    be less than ``5``, ``5.512313`` is not valid but
     ``length(5.512314) > length(5)`` is, so the pattern will succeed). In this
     case, the value should be set to ``null`` with a ``MEDIUM_CONFIDENCE``.
 

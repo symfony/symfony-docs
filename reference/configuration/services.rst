@@ -415,7 +415,7 @@ decoration_priority
 
 When several services decorate the same service, this option defines the
 order in which they are applied. Decorators with a higher priority are applied
-first, so they end up closer to the decorated service. It's only used
+first, so they are closer to the decorated service. It's only used
 together with `decorates`_.
 
 .. _reference-services-deprecated:
