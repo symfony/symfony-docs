@@ -251,7 +251,7 @@ Inside the template, you can output the list of errors exactly as needed:
     object allows you, among other things, to get the constraint that caused this
     violation thanks to the ``ConstraintViolation::getConstraint()`` method.
 
-If you have lots of validation errors, you can filter them by error code::
+If you have many validation errors, you can filter them by error code::
 
     use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -527,7 +527,7 @@ Constraint Targets
 
 Constraints can be applied to a class property (e.g. ``name``),
 a getter method (e.g. ``getFullName()``) or an entire class. Property constraints
-are the most common and easy to use. Getter constraints allow you to specify
+are the most common and the simplest to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
 
@@ -715,7 +715,7 @@ Classes
 Some constraints apply to the entire class being validated. For example,
 the :doc:`Callback </reference/constraints/Callback>` constraint is a generic
 constraint that's applied to the class itself. When that class is validated,
-methods specified by that constraint are simply executed so that each can
+methods specified by that constraint are executed so that each can
 provide more custom validation.
 
 Validating Object With Inheritance

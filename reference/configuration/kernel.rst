@@ -270,11 +270,12 @@ This parameter stores the value of
 This parameter stores the name of the current :ref:`configuration environment <configuration-environments>`
 used by the application.
 
-This value defines the configuration options used to run the application, whereas
+This value defines the configuration options used to run the application, while
 the :ref:`kernel.runtime_environment <configuration-kernel-runtime-environment>`
-option defines the place where the application is deployed. For example, this allows
-you to run an application with the ``prod`` config (``kernel.environment``)
-in different scenarios like ``staging`` or ``production`` (``kernel.runtime_environment``).
+option defines the place where the application is deployed. For example, this
+allows you to run an application with the ``prod`` config
+(``kernel.environment``) in different scenarios like ``staging`` or
+``production`` (``kernel.runtime_environment``).
 
 ``kernel.error_controller``
 ---------------------------
@@ -361,11 +362,12 @@ This parameter stores the name of the current
 application. Define it with the ``APP_RUNTIME_ENV`` env var; when that env var
 is not set, this parameter falls back to the value of ``kernel.environment``.
 
-This value defines the place where the application is deployed, whereas the
+This value defines the place where the application is deployed, while the
 :ref:`kernel.environment <configuration-kernel-environment>` option defines
-the configuration options used to run the application. For example, this allows you
-to run an application with the ``prod`` config (``kernel.environment``) in different
-scenarios like ``staging`` or ``production`` (``kernel.runtime_environment``).
+the configuration options used to run the application. For example, this allows
+you to run an application with the ``prod`` config (``kernel.environment``) in
+different scenarios like ``staging`` or ``production``
+(``kernel.runtime_environment``).
 
 ``kernel.runtime_mode``
 -----------------------

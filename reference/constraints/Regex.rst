@@ -14,8 +14,8 @@ Basic Usage
 
 Suppose you have a ``description`` field and you want to verify that it
 begins with a valid word character. The regular expression to test for this
-would be ``/^\w+/``, indicating that you're looking for at least one
-word character at the beginning of your string:
+would be ``/^\w+/``, indicating that you're looking for at least one word
+character at the beginning of your string:
 
 .. configuration-block::
 

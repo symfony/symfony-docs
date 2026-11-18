@@ -82,12 +82,12 @@ Session Attributes
 
 PHP's session management requires the use of the ``$_SESSION`` super-global.
 However, this interferes with code testability and encapsulation in an OOP
-paradigm. To help overcome this, Symfony uses *session bags* linked to the
+paradigm. To help solve this, Symfony uses *session bags* linked to the
 session to encapsulate a specific dataset of **attributes**.
 
-This approach mitigates namespace pollution within the ``$_SESSION``
+This approach reduces namespace pollution within the ``$_SESSION``
 super-global because each bag stores all its data under a unique namespace.
-This allows Symfony to peacefully co-exist with other applications or libraries
+This allows Symfony to work together with other applications or libraries
 that might use the ``$_SESSION`` super-global and all data remains completely
 compatible with Symfony's session management.
 
@@ -193,9 +193,9 @@ Flash Messages
 --------------
 
 You can store special messages, called "flash" messages, on the user's session.
-By design, flash messages are meant to be used exactly once: they vanish from
+By design, flash messages are meant to be used exactly once: they are removed from
 the session automatically as soon as you retrieve them. This feature makes
-"flash" messages particularly great for storing user notifications.
+"flash" messages particularly useful for storing user notifications.
 
 For example, imagine you're processing a :doc:`form </forms>` submission::
 
@@ -410,7 +410,7 @@ configuration <config-framework-session>` in
 
 Setting the ``handler_id`` config option to ``null`` and not setting the
 ``save_path`` option means that Symfony will use the native PHP session
-mechanism. Under the hood, the ``session.handler`` service becomes a
+mechanism. Internally, the ``session.handler`` service becomes a
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\StrictSessionHandler`
 that wraps PHP's own :phpclass:`SessionHandler` class, which delegates to the
 handler selected by the ``session.save_handler`` php.ini directive (``files``
@@ -496,17 +496,17 @@ like Roadrunner or Swoole.
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are often circumstances where you may want to protect or minimize
+There are often cases where you may want to protect or minimize
 unauthorized use of a session. You can do this by destroying the session after a
-certain period of idle time, such as when a user steps away from their terminal
+certain period of idle time, such as when a user leaves their computer
 while logged in. For
-example, it is common for banking applications to log the user out after just
+example, it is common for banking applications to log the user out after only
 5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
-appropriate because that can be manipulated by the client, so we must do the expiry
+appropriate because that can be manipulated by the client, so you must do the expiry
 on the server side. The easiest way is to implement this via :ref:`session garbage collection <session-garbage-collection>`
 which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
-to destroy sessions at whatever the desired idle period is.
+to destroy sessions after the idle period that you want.
 
 The other option is to specifically check whether a session has expired after it
 is started. The session can be destroyed as required. This method of
@@ -550,7 +550,7 @@ of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
 If the garbage collection handler is invoked, PHP will pass the value stored in
 the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
 that any stored session that was saved more than ``gc_maxlifetime`` ago should be
-deleted. This allows one to expire records based on idle time.
+deleted. This allows you to expire records based on idle time.
 
 However, some operating systems (e.g. Debian) manage session handling differently
 and set the ``session.gc_probability`` variable to ``0`` to prevent PHP from performing
@@ -1064,7 +1064,7 @@ configuration option to tell Symfony to use this service as the session handler:
             ],
         ]);
 
-That's all! Symfony will now use your MongoDB server to read and write the
+Symfony will now use your MongoDB server to read and write the
 session data. You do not need to do anything to initialize your session
 collection. However, you may want to add an index to improve garbage collection
 performance. Run this from the `MongoDB shell`_:
@@ -1213,8 +1213,8 @@ You need to pass the TTL in the options array of the session handler you are usi
 Configure the TTL Dynamically at Runtime
 ........................................
 
-If you would like to have a different TTL for different users or sessions
-for whatever reason, this is also possible by passing a callback as the TTL
+If you would like to have a different TTL for different users or sessions,
+this is also possible by passing a callback as the TTL
 value. The callback will be called right before the session is written and
 has to return an integer which will be used as the TTL.
 
@@ -1367,7 +1367,7 @@ can determine the correct locale however you want::
     }
 
 If you're using the :ref:`default services.yaml configuration
-<service-container-services-load-example>`, you're done! Symfony will
+<service-container-services-load-example>`, Symfony will
 automatically know about the event subscriber and call the ``onKernelRequest``
 method on each request.
 
@@ -1411,8 +1411,8 @@ via some "Change Locale" route & controller), or create a route with the
                 ],
             ]);
 
-Now celebrate by changing the user's locale and seeing that it's sticky
-throughout the request.
+Now change the user's locale and check that it's sticky throughout the
+request.
 
 Remember, to get the user's locale, always use the :method:`Request::getLocale
 <Symfony\\Component\\HttpFoundation\\Request::getLocale>` method::
@@ -1435,7 +1435,7 @@ responsible for handling authentication and setting the user token on the
 ``TokenStorage``, you have no access to the user who is logged in.
 
 Suppose you have a ``locale`` property on your ``User`` entity and want to use
-this as the locale for the given user. To accomplish this, you can hook into
+this as the locale for the given user. To do this, you can listen to
 the login process and update the user's session with this locale value before
 they are redirected to their first page.
 
@@ -1527,8 +1527,8 @@ Symfony to use your session handler instead of the default one:
         ]);
 
 Keep reading the next sections to learn how to use the session handlers in
-practice to solve two common use cases: encrypting session information and defining
-read-only guest sessions.
+practice to solve two common use cases: encrypting session information and
+defining read-only guest sessions.
 
 Encryption of Session Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1718,7 +1718,7 @@ for the ``handler_id``:
         $session->start();
 
 Otherwise, if the problem is that you cannot avoid the application
-starting the session with ``session_start()``, you can still make use of
+starting the session with ``session_start()``, you can still use
 a Symfony-based session save handler by specifying the save handler as in
 the example below:
 

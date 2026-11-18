@@ -96,7 +96,7 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(not:FOO)``
-    Casts ``FOO`` to a bool (just as ``env(bool:...)`` does) except it returns the inverted value
+    Casts ``FOO`` to a bool (the same as ``env(bool:...)`` does) except it returns the inverted value
     (falsy values are returned as ``true``, truthy values are returned as ``false``):
 
     .. configuration-block::
@@ -325,9 +325,9 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(trim:FOO)``
-    Trims the content of the ``FOO`` env var, removing whitespace from the beginning
-    and end of the string. This is especially useful in combination with the
-    ``file`` processor, as it'll remove newlines at the end of a file.
+    Trims the content of the ``FOO`` env var, removing whitespace from the
+    beginning and end of the string. This is especially useful in combination
+    with the ``file`` processor, as it'll remove newlines at the end of a file.
 
     .. configuration-block::
 
@@ -463,7 +463,7 @@ Symfony provides the following env var processors:
 
     .. warning::
 
-        In order to ease extraction of the resource from the URL, the leading
+        To make it easier to extract the resource from the URL, the leading
         ``/`` is trimmed from the ``path`` component.
 
 ``env(query_string:FOO)``
@@ -566,8 +566,8 @@ Symfony provides the following env var processors:
 
 ``env(urlencode:FOO)``
     Encodes the content of the ``FOO`` env var using the :phpfunction:`urlencode`
-    PHP function. This is especially useful when the ``FOO`` value is not compatible
-    with DSN syntax.
+    PHP function. This is especially useful when the ``FOO`` value is not
+    compatible with DSN syntax.
 
     .. configuration-block::
 

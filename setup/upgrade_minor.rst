@@ -5,8 +5,8 @@ If you're upgrading a minor version (where the middle number changes), then
 you should *not* encounter significant backward compatibility changes. For
 details, see the :doc:`Symfony backward compatibility promise </contributing/code/bc>`.
 
-However, some backwards-compatibility breaks *are* possible and you'll learn in
-a second how to prepare for them.
+However, some backwards-compatibility breaks *are* possible and you'll learn
+below how to prepare for them.
 
 There are two steps to upgrading a minor version:
 

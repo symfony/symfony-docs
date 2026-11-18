@@ -3,9 +3,9 @@ Understanding how the Front Controller, Kernel and Environments Work together
 
 The :ref:`configuration environments <configuration-environments>` section
 explained the basics of how Symfony uses environments to run your application
-with different configuration settings. This section will explain a bit more
-in-depth what happens when your application is bootstrapped. To hook into this
-process, you need to understand three parts that work together:
+with different configuration settings. This section explains in more detail
+what happens when your application is bootstrapped. To hook into this process,
+you need to understand three parts that work together:
 
 * `The Front Controller`_
 * `The Kernel Class`_
@@ -30,8 +30,8 @@ In the Symfony Skeleton, this role is taken by the ``index.php`` file in the
 request is processed.
 
 The main purpose of the front controller is to create an instance of the
-``Kernel`` (more on that in a second), make it handle the request and return
-the resulting response to the browser.
+``Kernel`` (explained in the next section), make it handle the request and
+return the resulting response to the browser.
 
 Because every request is routed through it, the front controller can be
 used to perform global initialization prior to setting up the kernel or
@@ -91,8 +91,8 @@ you must implement them all:
     and services.
 
 To fill these (small) blanks, your application needs to extend the Kernel class
-and use the MicroKernelTrait to implement these methods. By default, Symfony provides
-this kernel in the ``src/Kernel.php`` file.
+and use the MicroKernelTrait to implement these methods. By default, Symfony
+provides this kernel in the ``src/Kernel.php`` file.
 
 This class uses the name of the environment - which is passed to the Kernel's
 :method:`constructor <Symfony\\Component\\HttpKernel\\Kernel::__construct>`
@@ -100,8 +100,7 @@ method and is available via :method:`Symfony\\Component\\HttpKernel\\Kernel::get
 to decide which bundles to enable. The logic for that is in ``registerBundles()``.
 
 You are free to create your own, alternative or additional ``Kernel`` variants.
-All you need is to adapt your (or add a new) front controller to make use of the
-new kernel.
+Then, update your front controller (or add a new one) to use the new kernel.
 
 .. note::
 
@@ -115,8 +114,8 @@ new kernel.
 
     There's a lot more the ``Kernel`` can be used for, for example
     :doc:`overriding the default directory structure </configuration/override_dir_structure>`.
-    But odds are high that you don't need to change things like this on the
-    fly by having several ``Kernel`` implementations.
+    But you probably don't need to change things like this at runtime by
+    having several ``Kernel`` implementations.
 
 .. _debug-mode:
 

@@ -584,13 +584,13 @@ For example, to generate a 404 page, you might throw a special type of exception
 and then add a listener on this event that looks for this exception and
 creates and returns a 404 ``Response``. In fact, the HttpKernel component
 comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`,
-which, if you choose to use it, will do this and more by default (see the sidebar
-below for more details).
+which, if you choose to use it, will do this and more by default (see the
+sidebar below for more details).
 
 The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` exposes the
 :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::isKernelTerminating`
-method, which you can use to determine if the kernel was terminating
-when the exception was thrown.
+method, which you can use to determine if the kernel was terminating when the
+exception was thrown.
 
 .. note::
 

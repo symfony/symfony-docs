@@ -460,10 +460,10 @@ the Symfony Config component treats arrays as lists by default.
 
 .. note::
 
-    At the time of writing, there is an inconsistency: if only one file provides the
-    configuration in question, the keys (i.e. ``sf_connection`` and ``default``)
-    are *not* lost. But if more than one file provides the configuration, the keys
-    are lost as described above.
+    At the time of writing, there is an inconsistency: if only one file provides
+    the configuration in question, the keys (i.e. ``sf_connection`` and
+    ``default``) are *not* lost. But if more than one file provides the
+    configuration, the keys are lost as described above.
 
 In order to maintain the array keys, use the ``useAttributeAsKey()`` method::
 

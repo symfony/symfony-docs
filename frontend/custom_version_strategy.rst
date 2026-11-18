@@ -141,7 +141,7 @@ The ``APP_VERSION`` environment variable holds the current application version
 (e.g. the Git commit hash or the release tag). Define it during your deployment
 process so it changes with every new release.
 
-Finally, enable the new asset versioning for all the application assets or just
+Finally, enable the new asset versioning for all the application assets or only
 for some :ref:`asset package <reference-framework-assets-packages>` thanks to
 the :ref:`version_strategy <reference-assets-version-strategy>` option:
 

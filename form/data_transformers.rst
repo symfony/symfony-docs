@@ -319,7 +319,7 @@ end-user error message in the data transformer using the
         }
     }
 
-That's it! If you're using the
+If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically know to pass your ``TaskType`` an instance of the
 ``IssueToNumberTransformer`` thanks to :ref:`autowire <services-autowire>` and
@@ -345,7 +345,7 @@ its error message can be controlled with the ``invalid_message`` field option.
 .. warning::
 
     Be careful when adding your transformers. For example, the following is **wrong**,
-    as the transformer would be applied to the entire form, instead of just this
+    as the transformer would be applied to the entire form, instead of only this
     field::
 
         // THIS IS WRONG - TRANSFORMER WILL BE APPLIED TO THE ENTIRE FORM
@@ -449,7 +449,7 @@ In any form, the three different types of data are:
 
 #. **Model data** - This is the data in the format used in your application
    (e.g. an ``Issue`` object). If you call ``Form::getData()`` or ``Form::setData()``,
-   you're dealing with the "model" data.
+   you're working with the "model" data.
 
 #. **Norm Data** - This is a normalized version of your data and is commonly
    the same as your "model" data (though not in this example). It's not commonly
@@ -482,7 +482,7 @@ To use the view transformer, call ``addViewTransformer()``.
     ``ResizeFormListener`` and their data is populated later from the normalized
     data. So your model transformer cannot reduce the number of items within the
     Collection (i.e. filtering out some items), as in that case the collection
-    ends up with some empty children.
+    would have some empty children.
 
     A possible workaround for that limitation is to use a DTO (Data Transfer
     Object) that implements the transformation of such incompatible data
@@ -494,8 +494,8 @@ So Why Use the Model Transformer?
 In this example, the field is a ``text`` field, and a text field is always
 expected to be a simple, scalar format in the "norm" and "view" formats. For
 this reason, the most appropriate transformer was the "model" transformer
-(which converts between the *norm* format - string issue number - and the *model*
-format - Issue object).
+(which converts between the *norm* format - string issue number - and the
+*model* format - Issue object).
 
 The difference between the transformers is subtle and you should always think
 about what the "norm" data for a field should really be. For example, the

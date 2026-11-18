@@ -4,8 +4,8 @@ ChoiceType Field (select drop-downs, radio buttons & checkboxes)
 A multi-purpose field used to allow the user to "choose" one or more options.
 It can be rendered as a ``select`` tag, radio buttons, or checkboxes.
 
-To use this field, you must specify *either* the ``choices`` or the ``choice_loader``
-option.
+To use this field, you must specify *either* the ``choices`` or the
+``choice_loader`` option.
 
 +---------------------------+----------------------------------------------------------------------+
 | Rendered as               | can be various tags (see below)                                      |

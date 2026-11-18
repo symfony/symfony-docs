@@ -6,7 +6,7 @@ Forms
 
     Do you prefer video tutorials? Check out the `Symfony Forms screencast series`_.
 
-Creating and processing HTML forms is hard and repetitive. You need to deal with
+Creating and processing HTML forms is hard and repetitive. You need to handle
 rendering HTML form fields, validating submitted data, mapping the form data
 into objects and a lot more. Symfony includes a powerful form feature that
 provides all these features and many more for truly complex scenarios.
@@ -552,7 +552,7 @@ render the form contents:
 .. image:: /_images/form/simple-form.png
     :alt: An HTML form showing a text box labelled "Task", three select boxes for a year, month and day labelled "Due date" and a button labelled "Create Task".
 
-That's it! The :ref:`form() function <reference-forms-twig-form>` renders all
+The :ref:`form() function <reference-forms-twig-form>` renders all
 fields *and* the ``<form>`` start and end tags. By default, the form method is
 ``POST`` and the target URL is the same one that displayed the form, but
 :ref:`you can change both <forms-change-action-method>`.
@@ -612,9 +612,9 @@ Processing Forms
 ----------------
 
 The :ref:`recommended way of processing forms <best-practice-handle-form>` is to
-use a single action for both rendering the form and handling the form submission.
-You can use separate actions, but using one action simplifies everything while
-keeping the code concise and maintainable.
+use a single action for both rendering the form and handling the form
+submission. You can use separate actions, but using one action simplifies
+everything while keeping the code concise and maintainable.
 
 Processing a form means translating user-submitted data back to the properties
 of an object. To make this happen, the submitted data from the user must be
@@ -1009,7 +1009,7 @@ object.
             }
         }
 
-That's it! If you re-submit the form with invalid data, you'll see the
+Now, if you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
 To see the second approach - adding constraints to the form - refer to
@@ -1464,8 +1464,8 @@ browser from, for example, submitting blank fields.
 HTML Validation for date/time inputs
 ....................................
 
-When using ``DateType`` or ``DateTimeType``, you can rely on the ``attr`` option to
-enable client-side validation::
+When using ``DateType`` or ``DateTimeType``, you can rely on the ``attr`` option
+to enable client-side validation::
 
     $builder->add('dueDate', DateTimeType::class, [
         'years' => range(2020, 2030),
@@ -1600,8 +1600,8 @@ If you'd like to change one of the guessed values, override it in the options fi
 .. seealso::
 
     Besides guessing the form type, Symfony also guesses :ref:`validation constraints <validating-forms>`
-    if you're using a Doctrine entity. Read the :ref:`automatic_object_validation`
-    guide for more information.
+    if you're using a Doctrine entity. Read the
+    :ref:`automatic_object_validation` guide for more information.
 
 .. _form-unmapped-fields:
 
@@ -2027,7 +2027,8 @@ arguments::
 
 Internally, this uses a :class:`Symfony\\Component\\Form\\NativeRequestHandler`
 object to read data off of the correct PHP superglobals (i.e. ``$_POST`` or
-``$_GET``) based on the HTTP method configured on the form (POST is the default).
+``$_GET``) based on the HTTP method configured on the form (POST is the
+default).
 
 .. seealso::
 
@@ -2359,7 +2360,7 @@ data from an object (``Task``) to an HTML form so that the user can modify that
 data. The second goal of a form is to take the data submitted by the user and to
 re-apply it to the object.
 
-There's a lot more to learn and a lot of *powerful* tricks in the Symfony forms:
+There's a lot more to learn about Symfony forms:
 
 Reference:
 

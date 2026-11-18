@@ -248,7 +248,7 @@ computed once and then used as any other description.
     Symfony 8.2.
 
 Additionally, you can extend the :class:`Symfony\\Component\\Console\\Command\\Command` class to
-leverage advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
+use advanced features like lifecycle hooks (e.g. :method:`Symfony\\Component\\Console\\Command\\Command::initialize`
 and :method:`Symfony\\Component\\Console\\Command\\Command::interact`)::
 
     use Symfony\Component\Console\Attribute\AsCommand;
@@ -1121,7 +1121,7 @@ with the :class:`Symfony\\Component\\Console\\Tester\\ApplicationTester` class::
 
 .. note::
 
-    Don't forget to call ``setAutoExit(false)`` on the application before passing
+    Make sure to call ``setAutoExit(false)`` on the application before passing
     it to ``ApplicationTester``. Without it, the application calls ``exit()``
     after running the command, which would terminate the PHPUnit process.
 
@@ -1411,7 +1411,7 @@ The ``ConsoleEvents::COMMAND`` Event
 which command is going to be executed), or displaying something about the event
 to be executed.
 
-Just before executing any command, the ``ConsoleEvents::COMMAND`` event is
+Immediately before executing any command, the ``ConsoleEvents::COMMAND`` event is
 dispatched. Listeners receive a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleCommandEvent` event::
 
@@ -1542,7 +1542,7 @@ Listeners receive a
 .. tip::
 
     This event is also dispatched when an exception is thrown by the command.
-    It is then dispatched just after the ``ConsoleEvents::ERROR`` event.
+    It is then dispatched immediately after the ``ConsoleEvents::ERROR`` event.
     The exit code received in this case is the exception code.
 
     Additionally, the event is dispatched when the command is being exited on
@@ -1796,7 +1796,7 @@ Building a Single-Command Application
 -------------------------------------
 
 When building a command line tool, you may not need to provide several commands.
-In that case, having to pass the command name each time is tedious. Use the
+In that case, having to pass the command name each time is repetitive. Use the
 :class:`Symfony\\Component\\Console\\SingleCommandApplication` class to create
 an application that runs a single command, without having to pass its name.
 The following example uses the :doc:`Finder component </components/finder>`

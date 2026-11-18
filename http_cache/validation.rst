@@ -215,9 +215,9 @@ the better. The ``Response::isNotModified()`` method does exactly that::
         }
     }
 
-When the ``Response`` is not modified, the ``isNotModified()`` method automatically
-sets the response status code to ``304``, removes the content, and removes some
-headers that must not be present for ``304`` responses (see
+When the ``Response`` is not modified, the ``isNotModified()`` method
+automatically sets the response status code to ``304``, removes the content,
+and removes some headers that must not be present for ``304`` responses (see
 :method:`Symfony\\Component\\HttpFoundation\\Response::setNotModified`).
 
 .. _cache-attribute-expressions:

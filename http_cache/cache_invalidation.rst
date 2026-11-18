@@ -22,9 +22,9 @@ notifications, typically through special HTTP requests.
     and adjust your controllers to perform efficient validation checks as
     explained in :ref:`optimizing-cache-validation`.
 
-    Furthermore, since invalidation is a topic specific to each type of reverse
-    proxy, using this concept will tie you to a specific reverse proxy or require
-    additional effort to support different proxies.
+    Also, since invalidation is a topic specific to each type of reverse
+    proxy, using this concept will tie you to a specific reverse proxy or
+    require additional effort to support different proxies.
 
 Sometimes, however, you need that extra performance you can get when
 explicitly invalidating. For invalidation, your application needs to detect
@@ -151,7 +151,7 @@ different URLs. More flexible concepts exist for those cases:
 
 * **Banning** invalidates responses matching regular expressions on the
   URL or other criteria;
-* **Cache tagging** lets you add a tag for each piece of content used in a response
-  so that you can invalidate all URLs containing that content.
+* **Cache tagging** lets you add a tag for each piece of content used in a
+  response so that you can invalidate all URLs containing that content.
 
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/

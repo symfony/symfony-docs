@@ -5,12 +5,12 @@ When building reusable and extensible applications, developers are often
 faced with a choice: either create a single large bundle or multiple smaller
 bundles. Creating a single bundle has the drawback that it's impossible for
 users to remove unused functionality. Creating multiple
-bundles has the drawback that configuration becomes more tedious and settings
+bundles has the drawback that configuration becomes more repetitive and settings
 often need to be repeated for various bundles.
 
 It is possible to remove the disadvantage of the multiple bundle approach by
 enabling a single Extension to prepend the settings for any bundle. It can use
-the settings defined in the ``config/*`` files to prepend settings just as if
+the settings defined in the ``config/*`` files to prepend settings as if
 they had been written explicitly by the user in the application configuration.
 
 For example, this could be used to configure the entity manager name to use in

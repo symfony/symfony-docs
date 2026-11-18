@@ -545,8 +545,8 @@ method through the interface or the parent class can pass arguments by name.
 
 .. _note-11:
 
-**[11]** Only optional argument(s) of a constructor in the last position may be added.
-When the constructor uses the ``@optional-arguments-by-name`` or
+**[11]** Only optional argument(s) of a constructor in the last position may be
+added. When the constructor uses the ``@optional-arguments-by-name`` or
 ``@arguments-by-name`` tag, a new optional argument may be added at any position
 after the required arguments.
 
@@ -573,9 +573,9 @@ Making Code Changes in a Backward Compatible Way
 As you read above, many changes are not allowed because they would represent a
 backward compatibility break. However, we want to be able to improve the code and
 its features over time and that can be done thanks to some strategies that
-allow you to still make some disallowed changes in several steps that ensure backward
-compatibility and a smooth upgrade path. Some of them are described in the next
-sections.
+allow you to still make some disallowed changes in several steps that ensure
+backward compatibility and a smooth upgrade path. Some of them are described in
+the next sections.
 
 .. _add-argument-public-method:
 

@@ -1,7 +1,7 @@
 How to Create a Form Type Extension
 ===================================
 
-Form type extensions are *incredibly* powerful: they allow you to *modify* any
+Form type extensions are *very* powerful: they allow you to *modify* any
 existing form field types across the entire system.
 
 They have 2 main use cases:
@@ -162,7 +162,7 @@ For example::
         public function buildView(FormView $view, FormInterface $form, array $options): void
         {
             if (isset($options['image_property'])) {
-                // this will be whatever class/entity is bound to your form (e.g. Media)
+                // this will be the class/entity bound to your form (e.g. Media)
                 $parentData = $form->getParent()->getData();
 
                 $imageUrl = null;

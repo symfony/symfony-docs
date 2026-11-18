@@ -123,7 +123,7 @@ projects. The process works as follows:
 
 The list of downstream projects participating in this process is kept as small
 as possible in order to better manage the flow of confidential information
-prior to disclosure. As such, projects are included at the sole discretion of
+before disclosure. As such, projects are included at the sole discretion of
 the Symfony security team.
 
 As of today, the following projects have validated this process and are part

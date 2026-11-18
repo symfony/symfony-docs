@@ -243,8 +243,8 @@ if there is none.
 
 In that specific case, you don't need any resolver running before
 ``SessionValueResolver``, so skipping them would not only improve performance,
-but also prevent one of them from providing a value before ``SessionValueResolver``
-has a chance to.
+but also prevent one of them from providing a value before
+``SessionValueResolver`` has a chance to.
 
 The :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute
 lets you do this by "targeting" the resolver you want::
@@ -391,8 +391,8 @@ This method first checks whether it can resolve the value:
 When those requirements are met, the method creates a new instance of the
 custom value object and returns it as the value for this argument.
 
-That's it! Now all you have to do is add the configuration for the service
-container. This can be done by adding one of the following tags to your value resolver.
+Now, add the configuration for the service container. This can be done by
+adding one of the following tags to your value resolver.
 
 ``controller.argument_value_resolver``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

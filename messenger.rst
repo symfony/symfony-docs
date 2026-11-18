@@ -48,7 +48,7 @@ they relate to each other:
    applicable throughout the application and affecting the entire message bus.
    For instance: logging, validating a message, starting a transaction, ...
    They are also responsible for calling the next middleware in the chain,
-   which means they can tweak the envelope, by adding stamps to it or even
+   which means they can change the envelope, by adding stamps to it or even
    replacing it, as well as interrupt the middleware chain. Middleware are called
    both when a message is originally dispatched and again later when a message
    is received from a transport.
@@ -120,9 +120,9 @@ message class (or a message interface)::
 
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
-message is dispatched. Most of the time, this is all you need to do. But you can
-also :ref:`manually configure message handlers <messenger-handler-config>`. To
-see all the configured handlers, run:
+message is dispatched. Most of the time, no other configuration is needed. But
+you can also :ref:`manually configure message handlers <messenger-handler-config>`.
+To see all the configured handlers, run:
 
 .. code-block:: terminal
 
@@ -189,7 +189,7 @@ is capable of sending messages (e.g. to a queueing system) and then
 .. note::
 
     If you want to use a transport that's not supported, check out the
-    `Enqueue's transport`_, which backs services like Kafka and Google
+    `Enqueue's transport`_, which supports services like Kafka and Google
     Pub/Sub.
 
 A transport is registered using a "DSN". Thanks to Messenger's Flex recipe, your
@@ -500,7 +500,7 @@ If you must remove a property, consider one of the following approaches:
 * Implement custom serialization logic to control how the message is
   serialized and deserialized.
 
-If the change alters the meaning of the message instead of simply extending it,
+If the change alters the meaning of the message instead of only extending it,
 create a **new version of the message class** instead of modifying the existing one::
 
     // Keep SendInvoice until all queued messages using it are processed
@@ -981,7 +981,7 @@ the transport until another worker handles them.
 **Stopping Workers That Encounter Errors**
 
 If a worker dependency like your database server is down, or a timeout is reached,
-you can try to add :ref:`reconnect logic <middleware-doctrine>`, or just quit
+you can try to add :ref:`reconnect logic <middleware-doctrine>`, or stop
 the worker if it receives too many errors with the ``--failure-limit`` option
 of the ``messenger:consume`` command. You can also make the worker
 :ref:`stop consuming a transport for a while <messenger-cooldown>` after several
@@ -1438,7 +1438,7 @@ Next, tell Supervisor to read your config and start your workers:
 
     $ sudo supervisorctl start messenger-consume:*
 
-    # If you deploy an update of your code, don't forget to restart your workers
+    # If you deploy an update of your code, make sure to restart your workers
     # to run the new code
     $ sudo supervisorctl restart messenger-consume:*
 
@@ -1590,7 +1590,7 @@ Enable lingering on the user to activate that behavior:
 
     $ loginctl enable-linger <your-username>
 
-Logs are managed by journald and can be worked with using the journalctl
+Logs are managed by journald and can be read with the journalctl
 command:
 
 .. code-block:: terminal
@@ -2773,7 +2773,7 @@ message timeout. It tells the broker that the connection is still active.
 
 .. tip::
 
-    If your application faces socket exceptions or `high connection churn`_
+    If your application has socket exceptions or `high connection churn`_
     (shown by the rapid creation and deletion of connections), consider using
     `AMQProxy`_. This tool works as a gateway between Symfony Messenger and the AMQP server,
     maintaining stable connections and minimizing overheads (which also improves
@@ -2845,7 +2845,7 @@ The transport has a number of options:
 ``auto_setup``
     Whether the table should be created automatically during send / get.
 
-When using PostgreSQL, you have access to the following options to leverage
+When using PostgreSQL, you have access to the following options to use
 the `LISTEN/NOTIFY`_ feature. This allows a more performant approach
 than the default polling behavior of the Doctrine transport because
 PostgreSQL will directly notify the workers when a new message is inserted
@@ -3530,7 +3530,7 @@ the value from the DSN is used:
 .. warning::
 
     There should never be more than one ``messenger:consume`` command running with the same
-    combination of ``stream``, ``group`` and ``consumer``, or messages could end up being
+    combination of ``stream``, ``group`` and ``consumer``, or messages could be
     handled more than once. If you run multiple queue workers, ``consumer`` can be set to an
     environment variable, like ``%env(MESSENGER_CONSUMER_NAME)%``, set by Supervisor
     (example below) or any other service used to manage the worker processes.
@@ -3544,9 +3544,9 @@ the value from the DSN is used:
 .. tip::
 
     Set ``delete_after_ack`` to ``true`` (if you use a single group) or define
-    ``stream_max_entries`` (if you can estimate the maximum number of entries acceptable
-    in your case) to avoid memory leaks. Otherwise, all messages will remain
-    forever in Redis.
+    ``stream_max_entries`` (if you can estimate the maximum number of entries
+    acceptable in your case) to avoid memory leaks. Otherwise, all messages will
+    remain forever in Redis.
 
 The Redis transport supports the ``--keepalive`` option by using Redis's ``XCLAIM``
 command to periodically reset the message's idle time to zero.
@@ -4645,8 +4645,8 @@ Trigger a Command
 
 It is possible to trigger any command by dispatching a
 :class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage`. Symfony
-will take care of handling this message and executing the command passed
-to the message parameter::
+will handle this message and execute the command passed to the message
+parameter::
 
     use Symfony\Component\Console\Messenger\RunCommandMessage;
     use Symfony\Component\Messenger\MessageBusInterface;
@@ -4674,18 +4674,18 @@ parameters when creating your instance of
 
 Once handled, the handler will return a
 :class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext` which
-contains much useful information such as the exit code or the output of the
+contains useful information such as the exit code or the output of the
 process. You can refer to the page dedicated to
 :ref:`handler results <messenger-getting-handler-results>` for more information.
 
 Trigger An External Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Messenger comes with a handy helper to run external processes by
+Messenger comes with a useful helper to run external processes by
 dispatching a message. This takes advantage of the
 :doc:`Process component </components/process>`. By dispatching a
 :class:`Symfony\\Component\\Process\\Messenger\\RunProcessMessage`, Messenger
-will take care of creating a new process with the parameters you passed::
+will create a new process with the parameters you passed::
 
     use Symfony\Component\Messenger\MessageBusInterface;
     use Symfony\Component\Process\Messenger\RunProcessMessage;
@@ -4731,7 +4731,7 @@ For more information, read the documentation about
 
 Once handled, the handler will return a
 :class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext` which
-contains much useful information such as the exit code or the output of the
+contains useful information such as the exit code or the output of the
 process. You can refer to the page dedicated to
 :ref:`handler results <messenger-getting-handler-results>` for more information.
 
@@ -5700,7 +5700,7 @@ And similarly::
 
 This option routes the ``UploadedImage`` message to *both* transports and binds
 each handler to its own transport, so you don't need to add anything to the
-``routing`` configuration. That's it! You can now consume each transport:
+``routing`` configuration. You can now consume each transport:
 
 .. code-block:: terminal
 
@@ -6402,11 +6402,11 @@ and a different instance will be created per bus.
 .. tip::
 
     If you have installed the MakerBundle, you can use the ``make:messenger-middleware``
-    command to bootstrap the creation of your own messenger middleware.
+    command to generate your own messenger middleware.
 
 Middleware must implement the
 :class:`Symfony\\Component\\Messenger\\Middleware\\MiddlewareInterface`. Instead
-of dealing directly with the messages, middleware receive the envelope.
+of working directly with the messages, middleware receive the envelope.
 Therefore, they can inspect the envelope content and its stamps, or add any::
 
     use App\Message\Stamp\AnotherStamp;

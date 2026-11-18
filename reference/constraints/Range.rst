@@ -93,7 +93,7 @@ Date Ranges
 This constraint can be used to compare ``DateTime`` objects against date ranges.
 The minimum and maximum date of the range should be given as any date string
 `accepted by the DateTime constructor`_. For example, you could check that a
-date must lie within the current year like this:
+date is within the current year like this:
 
 .. configuration-block::
 
@@ -419,7 +419,7 @@ Parameter        Description
 It defines the object property whose value is used as the ``max`` option.
 
 For example, if you want to compare the ``$submittedDate`` property of some object
-with regard to the ``$deadline`` property of the same object, use
+with the ``$deadline`` property of the same object, use
 ``maxPropertyPath="deadline"`` in the range constraint of ``$submittedDate``.
 
 .. tip::
@@ -463,7 +463,7 @@ Parameter        Description
 It defines the object property whose value is used as the ``min`` option.
 
 For example, if you want to compare the ``$endDate`` property of some object
-with regard to the ``$startDate`` property of the same object, use
+with the ``$startDate`` property of the same object, use
 ``minPropertyPath="startDate"`` in the range constraint of ``$endDate``.
 
 .. tip::

@@ -8,7 +8,7 @@ a collection of directories on a locally mounted filesystem.
 
 .. tip::
 
-    The performance of this adapter can be greatly increased by utilizing a
+    The performance of this adapter can be greatly increased by using a
     temporary, in-memory filesystem, such as `tmpfs`_ on Linux, or one of the
     many other `RAM disk solutions`_ available.
 
@@ -40,7 +40,7 @@ constructor parameters::
 .. warning::
 
     The overhead of filesystem IO often makes this adapter one of the *slower*
-    choices. If throughput is paramount, the in-memory adapters
+    choices. If throughput is the most important factor, the in-memory adapters
     (:doc:`Apcu </cache/adapters/apcu_adapter>`, :doc:`Memcached </cache/adapters/memcached_adapter>`,
     and :doc:`Redis </cache/adapters/redis_adapter>`) or the database adapters
     (:doc:`Doctrine DBAL </cache/adapters/doctrine_dbal_adapter>`, :doc:`PDO </cache/adapters/pdo_adapter>`)

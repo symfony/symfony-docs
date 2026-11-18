@@ -179,8 +179,8 @@ In the case of the ``#[IsGranted]`` attribute, the subject can also be an
         }
     }
 
-In this example, the subject expression fetches the author of the post. If the subject matches
-the current user, then access will be granted.
+In this example, the subject expression fetches the author of the post. If the
+subject matches the current user, then access will be granted.
 
 The subject may also be an array where the key can be used as an alias for the result of an expression::
 

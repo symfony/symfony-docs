@@ -8,7 +8,7 @@ The choice values are translated before displaying them, so they can contain
 This option defines the values used to replace those placeholders. This can be
 an associative array where the keys match the choice keys and the values
 are the attributes for each choice, a callable or a property path
-(just like `choice_label`_).
+(like `choice_label`_).
 
 Given this translation message:
 

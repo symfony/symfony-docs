@@ -42,7 +42,7 @@ access control:
                 ],
             ]);
 
-To make life easier while developing, you can also use an environment variable,
+To simplify development, you can also use an environment variable,
 like ``requires_channel: '%env(REQUIRED_SCHEME)%'``. In your ``.env`` file, set
 ``REQUIRED_SCHEME`` to ``http`` by default, but override it to ``https`` in production.
 

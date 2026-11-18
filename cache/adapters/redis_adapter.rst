@@ -14,7 +14,7 @@ or `Valkey`_ server instances.
 Unlike the :doc:`APCu adapter </cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Memcached adapter </cache/adapters/memcached_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment. The ability
-to utilize a cluster of servers to provide redundancy and/or fail-over is also available.
+to use a cluster of servers to provide redundancy and/or fail-over is also available.
 
 .. warning::
 
@@ -192,9 +192,10 @@ Available Options
 
 ``class`` (type: ``string``, default: ``null``)
     Specifies the connection library to return, either ``\Redis``, ``\Relay\Relay`` or ``\Predis\Client``.
-    If none is specified, the fallback value is chosen in the following order, depending on which one is
-    available first: ``\Redis``, ``\Relay\Relay``, ``\Predis\Client``. Explicitly set this to ``\Predis\Client`` for Sentinel
-    if you are running into issues when retrieving master information.
+    If none is specified, the fallback value is chosen in the following order,
+    depending on which one is available first: ``\Redis``, ``\Relay\Relay``,
+    ``\Predis\Client``. Explicitly set this to ``\Predis\Client`` for Sentinel if
+    you are running into issues when retrieving master information.
 
 ``auth`` (type: ``string|string[]``, default: ``null``)
     Specifies the authentication credentials for the Redis connection. Use a string
@@ -382,7 +383,7 @@ Uses ``igbinary`` for faster and more efficient serialization when available::
 DefaultMarshaller with Exception on Failure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Throws an exception if serialization fails, facilitating error handling::
+Throws an exception if serialization fails, which helps with error handling::
 
     $marshaller = new DefaultMarshaller(false, true);
 

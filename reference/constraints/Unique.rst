@@ -15,8 +15,8 @@ If you want to apply any other comparison logic, use the `normalizer`_ option.
 .. seealso::
 
     If you want to validate that the value of an entity property is unique among
-    all entities of the same type (e.g. the registration email of all users), use
-    the :doc:`UniqueEntity constraint </reference/constraints/UniqueEntity>`.
+    all entities of the same type (e.g. the registration email of all users),
+    use the :doc:`UniqueEntity constraint </reference/constraints/UniqueEntity>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

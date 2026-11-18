@@ -246,8 +246,8 @@ Disabling global themes
 .......................
 
 By default, the ``form_theme`` tag adds your theme on top of the globally
-configured themes. Add the ``only`` keyword to use the specified
-themes exclusively, ignoring all global configuration:
+configured themes. Add the ``only`` keyword to use the specified themes
+exclusively, ignoring all global configuration:
 
 .. code-block:: twig
 

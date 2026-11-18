@@ -450,7 +450,7 @@ Using a Service Subscriber without Autowiring
 
 Using :ref:`autowiring <services-autowire>` with service subscribers is
 convenient but not mandatory. When defining the service arguments explicitly,
-leave out the locator argument: the container injects it automatically.
+omit the locator argument: the container injects it automatically.
 
 If the class receives the locator through a setter method instead of the
 constructor (e.g. the ``setContainer()`` method defined by the
@@ -596,7 +596,7 @@ most of that boilerplate: add the
 :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute to
 any private method that defines a return type and the trait will build the list
 of subscribed services using those return types. Each method returns the
-service associated with it, so the class ends up with a type-hinted helper
+service associated with it, so the class gets a type-hinted helper
 method per dependency::
 
     // src/Service/MyService.php

@@ -83,7 +83,7 @@ Both Nginx and Apache use the PHP FastCGI process manager
 system you have to install the ``php-fpm`` package).
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
-configure an arbitrary number of pools in the FPM configuration. In a pool
+configure any number of pools in the FPM configuration. In a pool
 you configure either a TCP socket (IP and port) or a Unix domain socket to
 listen on. Each pool can also be run under a different UID and GID:
 
@@ -226,7 +226,7 @@ directive to pass requests for PHP files to PHP FPM:
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling assets (e.g. Sass or PostCSS)
+        # or have problems when compiling assets (e.g. Sass or PostCSS)
         # <Directory /var/www/project>
         #     Options FollowSymlinks
         # </Directory>
@@ -245,7 +245,7 @@ directive to pass requests for PHP files to PHP FPM:
 
 .. note::
 
-    If you're running some quick tests with Apache, you can run
+    If you only want to run some tests with Apache, you can run
     ``composer require symfony/apache-pack`` to create an ``.htaccess`` file in
     the ``public/`` directory with the rewrite rules needed to serve the Symfony
     application. Make sure Apache's ``AllowOverride`` setting is set to ``All``

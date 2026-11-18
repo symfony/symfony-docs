@@ -1,8 +1,8 @@
 Using a CDN with Webpack Encore
 ===============================
 
-Are you deploying to a CDN? That's awesome :) Once you've made sure that your
-built files are uploaded to the CDN, configure it in Encore:
+Are you deploying to a CDN? Once you've made sure that your built files are
+uploaded to the CDN, configure it in Encore:
 
 .. code-block:: diff
 
@@ -25,7 +25,7 @@ built files are uploaded to the CDN, configure it in Encore:
     +     Encore.setManifestKeyPrefix('build/');
     + }
 
-That's it! Internally, Webpack will now know to load assets from your CDN -
+Internally, Webpack will now know to load assets from your CDN -
 e.g. ``https://my-cool-app.com.global.prod.fastly.net/dashboard.js``.
 
 .. note::

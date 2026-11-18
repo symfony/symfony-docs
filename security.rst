@@ -45,7 +45,7 @@ creates a ``security.yaml`` configuration file for you:
                 # https://symfony.com/doc/current/security/impersonating_user.html
                 # switch_user: true
 
-        # An easy way to control access for large sections of your site
+        # A simple way to control access for large sections of your site
         # Note: Only the *first* access control that matches will be used
         access_control:
             # - { path: ^/admin, roles: ROLE_ADMIN }
@@ -212,11 +212,11 @@ from the `MakerBundle`_:
 .. tip::
 
     You can pass either ``--with-uuid`` or ``--with-ulid`` to ``make:user``.
-    Leveraging Symfony's :doc:`Uid Component </components/uid>`, this
+    Using Symfony's :doc:`Uid Component </components/uid>`, this
     generates a ``User`` entity with the ``id`` type as :ref:`Uuid <uuid>` or
     :ref:`Ulid <ulid>` instead of ``int``.
 
-If your user is a Doctrine entity, like in the example above, don't forget
+If your user is a Doctrine entity, like in the example above, make sure
 to create the tables by :ref:`creating and running a migration <doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: terminal
@@ -1009,7 +1009,7 @@ The form can look like anything, but it usually follows some conventions:
     This login form is currently not protected against CSRF attacks. Read
     :ref:`form_login-csrf` on how to protect your login form.
 
-And that's it! When you submit the form, the security system automatically
+When you submit the form, the security system automatically
 reads the ``_username`` and ``_password`` POST parameters, loads the user via
 the user provider, checks the user's credentials and either authenticates the
 user or sends them back to the login form where the error can be displayed.
@@ -1019,8 +1019,8 @@ To review the whole process:
 #. The user tries to access a resource that is protected (e.g. ``/admin``);
 #. The firewall initiates the authentication process by redirecting the
    user to the login form (``/login``);
-#. The ``/login`` page renders the login form via the route and controller created
-   in this example;
+#. The ``/login`` page renders the login form via the route and controller
+   created in this example;
 #. The user submits the login form to ``/login``;
 #. The security system (i.e. the ``FormLoginAuthenticator``) intercepts the
    request, checks the user's submitted credentials, authenticates the user if
@@ -1185,7 +1185,7 @@ create a controller for this path:
 
 This login controller will be called after the authenticator successfully
 authenticates the user. You can get the authenticated user, generate a
-token (or whatever you need to return) and return the JSON response:
+token (or anything else you need to return) and return the JSON response:
 
 .. code-block:: diff
 
@@ -1223,7 +1223,7 @@ token (or whatever you need to return) and return the JSON response:
     retrieve the authenticated user. In services, you would use
     :method:`Symfony\\Bundle\\SecurityBundle\\Security::getUser`.
 
-That's it! To summarize the process:
+To summarize the process:
 
 #. A client (e.g. the front-end) makes a *POST request* with the
    ``Content-Type: application/json`` header to ``/api/login`` with
@@ -1298,7 +1298,7 @@ authentication:
             ],
         ]);
 
-That's it! Whenever an unauthenticated user tries to visit a protected
+Now, whenever an unauthenticated user tries to visit a protected
 page, Symfony will inform the browser that it needs to start HTTP basic
 authentication (using the ``WWW-Authenticate`` response header). Then, the
 authenticator verifies the credentials and authenticates the user.
@@ -1613,8 +1613,8 @@ You can configure the cache pool or provide a
 
 Login attempts are limited to ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
-failed requests for ``IP address``. The second limit prevents an
-attacker who uses multiple usernames from bypassing the first limit, without
+failed requests for ``IP address``. The second limit prevents an attacker
+who uses multiple usernames from bypassing the first limit, without
 disrupting normal users on big networks (such as offices).
 
 Before using the username in the first limit, Symfony trims and case-folds it,
@@ -2468,10 +2468,10 @@ database and every user is *always* given at least one role: ``ROLE_USER``::
         }
     }
 
-This is a nice default, but you can do *whatever* you want to determine which roles
+This is a nice default, but you can use *any* logic to determine which roles
 a user should have. The only rule is that every role **must start with** the
 ``ROLE_`` prefix - otherwise, things won't work as expected. Other than that,
-a role is just a string and you can invent whatever you need (e.g. ``ROLE_PRODUCT_ADMIN``).
+a role is only a string and you can invent any role you need (e.g. ``ROLE_PRODUCT_ADMIN``).
 
 You'll use these roles next to grant access to specific sections of your site.
 
@@ -2810,7 +2810,7 @@ You can deny access from inside a controller::
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
     }
 
-That's it! If access is not granted, a special
+If access is not granted, a special
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
 is thrown and no more code in your controller is called. Then, one of two things
 will happen:
@@ -3238,7 +3238,7 @@ Setting Individual User Permissions
 
 Most applications require more specific access rules. For instance, a user
 should only be able to edit their *own* comments on a blog. Voters allow you
-to write *whatever* business logic you need to determine access. Using
+to write *any* business logic you need to determine access. Using
 these voters is similar to the role-based access checks implemented in the
 previous chapters. Read :doc:`/security/voters` to learn how to implement
 your own voter.
@@ -3718,8 +3718,8 @@ successfully, but you immediately lose authentication after the first redirect.
 
 In that case, review the serialization logic (e.g. the ``__serialize()`` or
 ``serialize()`` methods) on your user class (if you have any) to make sure
-that all the necessary fields are serialized and that all the fields that don't need
-to be serialized are excluded (e.g. Doctrine relations).
+that all the necessary fields are serialized and that all the fields that
+don't need to be serialized are excluded (e.g. Doctrine relations).
 
 Comparing Users Manually with EquatableInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

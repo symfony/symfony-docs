@@ -223,7 +223,7 @@ These are the options available on the :ref:`serializer context <serializer-cont
 ``xml_standalone`` (default: ``true``)
     Adds the standalone attribute in the generated XML.
 ``xml_type_cast_attributes`` (default: ``true``)
-    This provides the ability to forget the attribute type casting.
+    This provides the ability to skip the attribute type casting.
 ``xml_root_node_name`` (default: ``response``)
     Sets the root node name.
 ``as_collection`` (default: ``false``)

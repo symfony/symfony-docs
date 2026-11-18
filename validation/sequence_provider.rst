@@ -150,8 +150,8 @@ that group are valid will the second group, ``Strict``, be validated.
 
     Calling ``validate()`` with a group in the sequence (``Strict`` in the previous
     example) will cause a validation **only** with that group and not with all
-    the groups in the sequence. This is because the
-    ``Default`` group now references the sequence.
+    the groups in the sequence. This is because the ``Default`` group now
+    references the sequence.
 
 You can also define a group sequence in the ``validation_groups`` form option::
 
@@ -494,7 +494,7 @@ you might need to use some external configuration or service to define that
 sequence of groups.
 
 Managing the entity initialization and manually setting its dependencies can
-be cumbersome, and the implementation might not align with the entity
+be complex, and the implementation might not align with the entity
 responsibilities. To solve this, you can configure the implementation of the
 :class:`Symfony\\Component\\Validator\\GroupProviderInterface` outside of the
 entity, and even register the group provider as a service.
@@ -579,4 +579,4 @@ How to Sequentially Apply Constraints on a Single Property
 
 Sometimes, you may want to apply constraints sequentially on a single
 property. The :doc:`Sequentially constraint </reference/constraints/Sequentially>`
-can solve this for you in a more straightforward way than using a ``GroupSequence``.
+can solve this for you in a simpler way than using a ``GroupSequence``.

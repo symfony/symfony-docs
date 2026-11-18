@@ -171,7 +171,7 @@ Symfony provides a convenient command to remove a secret:
 Local Secrets: Overriding Secrets Locally
 -----------------------------------------
 
-The ``dev`` environment secrets should contain nice default values for development.
+The ``dev`` environment secrets should contain good default values for development.
 But sometimes a developer *still* needs to override a secret value locally when
 developing.
 
@@ -212,7 +212,7 @@ Secrets in the test Environment
 
 If you add a secret in the ``dev`` and ``prod`` environments, it will be missing
 from the ``test`` environment. You *could* create a "vault" for the ``test``
-environment and define the secrets there. But an easier way is to set the test
+environment and define the secrets there. But a simpler way is to set the test
 values via the ``.env.test`` file:
 
 .. code-block:: bash
@@ -231,7 +231,7 @@ values via the ``.env.test`` file:
 Deploy Secrets to Production
 ----------------------------
 
-Due to the fact that decryption keys should never be committed, you will need to
+Because decryption keys should never be committed, you will need to
 manually store this file somewhere and deploy it. There are 2 ways to do that:
 
 **(1) Uploading the file**
@@ -242,8 +242,8 @@ The first option is to copy the **production decryption key** -
 **(2) Using an Environment Variable**
 
 The second way is to set the ``SYMFONY_DECRYPTION_SECRET`` environment variable
-to the base64 encoded value of the **production decryption key**. A fancy way to
-fetch the value of the key is:
+to the base64 encoded value of the **production decryption key**. A useful way
+to fetch the value of the key is:
 
 .. code-block:: terminal
 

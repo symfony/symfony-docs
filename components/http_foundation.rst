@@ -159,10 +159,10 @@ doesn't support returning arrays, so you need to use the following code::
 .. _component-foundation-attributes:
 
 Thanks to the public ``attributes`` property, which is also an instance of
-:class:`Symfony\\Component\\HttpFoundation\\ParameterBag`, you can store additional
-data in the request. This is mostly used
-to attach information that belongs to the Request and that needs to be
-accessed from many different points in your application.
+:class:`Symfony\\Component\\HttpFoundation\\ParameterBag`, you can store
+additional data in the request. This is mostly used to attach information that
+belongs to the Request and that needs to be accessed from many different points
+in your application.
 
 Finally, the raw data sent with the request body can be accessed using
 :method:`Symfony\\Component\\HttpFoundation\\Request::getContent`::

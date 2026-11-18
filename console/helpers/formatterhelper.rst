@@ -55,9 +55,9 @@ method to generate a block output::
 
 As you can see, passing an array of messages to the
 :method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatBlock`
-method creates the desired output. If you pass ``true`` as the third parameter, the
-block will be formatted with more padding (one blank line above and below the
-messages and 2 spaces on the left and right).
+method creates the desired output. If you pass ``true`` as the third parameter,
+the block will be formatted with more padding (one blank line above and below
+the messages and 2 spaces on the left and right).
 
 The exact "style" you use in the block is up to you. In this case, you're using
 the pre-defined ``error`` style, but there are other styles (``info``,

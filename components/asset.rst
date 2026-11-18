@@ -406,9 +406,9 @@ document inside a template::
 Local Files and Other Protocols
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to HTTP, this component supports other protocols (such as ``file://``
-and ``ftp://``). For example, this allows you to serve local files to
-improve performance::
+In addition to HTTP, this component supports other protocols (such as
+``file://`` and ``ftp://``). For example, this allows you to serve local files
+to improve performance::
 
     use Symfony\Component\Asset\UrlPackage;
     // ...

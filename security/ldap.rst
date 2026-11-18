@@ -224,7 +224,7 @@ LDAP server), you may query the LDAP server using the
 
     The Security component escapes provided input data when the LDAP user
     provider is used. However, the LDAP component itself does not provide
-    any escaping yet. Thus, it's your responsibility to prevent LDAP injection
+    any escaping yet. So it's your responsibility to prevent LDAP injection
     attacks when using the component directly.
 
 By default, LDAP entries are lazy-loaded. If you wish to fetch
@@ -254,8 +254,8 @@ Use the ``filter`` option to only retrieve some specific attributes::
 Creating and Updating Entries
 -----------------------------
 
-The Ldap component provides methods to create new LDAP entries and to update or even
-delete existing ones::
+The Ldap component provides methods to create new LDAP entries and to update or
+even delete existing ones::
 
     use Symfony\Component\Ldap\Entry;
     use Symfony\Component\Ldap\Ldap;
@@ -332,8 +332,8 @@ method to update multiple attributes at once::
 
 Possible operation types are ``LDAP_MODIFY_BATCH_ADD``, ``LDAP_MODIFY_BATCH_REMOVE``,
 ``LDAP_MODIFY_BATCH_REMOVE_ALL`` and ``LDAP_MODIFY_BATCH_REPLACE``. The
-``$values`` parameter must be ``NULL`` when using the ``LDAP_MODIFY_BATCH_REMOVE_ALL``
-operation type.
+``$values`` parameter must be ``NULL`` when using the
+``LDAP_MODIFY_BATCH_REMOVE_ALL`` operation type.
 
 .. _security-ldap-user-provider:
 

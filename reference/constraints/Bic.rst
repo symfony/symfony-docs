@@ -84,7 +84,8 @@ Available Options
 
 **type**: ``string`` **default**: ``null``
 
-An IBAN value used to check that its country code is the same as that of the BIC.
+An IBAN value used to check that its country code is the same as that of the
+BIC.
 
 ``ibanMessage``
 ~~~~~~~~~~~~~~~

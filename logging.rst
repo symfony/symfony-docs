@@ -3,7 +3,7 @@ Logging
 
 Symfony comes with two minimalist `PSR-3`_ loggers: :class:`Symfony\\Component\\HttpKernel\\Log\\Logger`
 for the HTTP context and :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger` for the
-CLI context. In conformance with `the twelve-factor app methodology`_, they send messages
+CLI context. Following `the twelve-factor app methodology`_, they send messages
 starting from the ``WARNING`` level to `stderr`_.
 
 The minimum log level can be changed by setting the ``SHELL_VERBOSITY`` environment variable:
@@ -59,7 +59,7 @@ Adding placeholders to log messages is recommended because:
   that are the same except for some variable values inside them;
 * It's much easier to translate those log messages;
 * It's better for security, because escaping can then be done by the
-  implementation in a context-aware fashion.
+  implementation in a way that depends on the context.
 
 The ``logger`` service has different methods for different logging levels/priorities.
 See `LoggerInterface`_ for a list of all of the methods on the logger.
@@ -67,7 +67,7 @@ See `LoggerInterface`_ for a list of all of the methods on the logger.
 Monolog
 -------
 
-Symfony integrates seamlessly with `Monolog`_, the most popular PHP logging
+Symfony integrates with `Monolog`_, the most popular PHP logging
 library, to create and store log messages in a variety of different places
 and trigger various actions.
 
@@ -109,7 +109,7 @@ to different locations (e.g. files, database, Slack, etc.).
     messages in different places. See :doc:`/logging/channels_handlers`.
 
 Symfony pre-configures some basic handlers in the default ``monolog.yaml``
-config files. Check these out for some real-world examples.
+config files. Check these files for some real-world examples.
 
 This example uses *two* handlers: ``stream`` (to write to a file) and ``syslog``
 to write logs using the :phpfunction:`syslog` function:
@@ -384,7 +384,7 @@ During long-running processes, logs can be accumulated into Monolog and cause so
 buffer overflows, memory increases or even illogical logs. Monolog in-memory data
 can be cleared using the ``reset()`` method on a ``Monolog\Logger`` instance.
 This should typically be called between every job or task that a long-running process
-is working through.
+is processing.
 
 Learn More
 ----------

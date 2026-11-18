@@ -57,9 +57,9 @@ Instead of advancing the bar by a number of steps (with the
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
 
-If you are resuming long-running tasks, it's useful to start drawing the progress
-bar at a certain point. Use the second optional argument of ``start()`` to set
-that starting point::
+If you are resuming long-running tasks, it's useful to start drawing the
+progress bar at a certain point. Use the second optional argument of
+``start()`` to set that starting point::
 
     use Symfony\Component\Console\Helper\ProgressBar;
 
@@ -113,7 +113,7 @@ The progress will then be displayed as a throbber:
     :doc:`/console/helpers/progressindicator` instead of a
     progress bar.
 
-Whenever your task is finished, don't forget to call
+Whenever your task is finished, make sure to call
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::finish` to ensure
 that the progress bar display is refreshed with a 100% completion.
 
@@ -250,7 +250,7 @@ For instance, here is how you could set the format to be the same as the
 
     $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:16s%/%estimated:-16s% %memory:6s%');
 
-Notice the ``:6s`` part added to some placeholders? That's how you can tweak
+Notice the ``:6s`` part added to some placeholders? That's how you can adjust
 the appearance of the bar (formatting and alignment). The part after the colon
 (``:``) is used to set the ``sprintf`` format of the string.
 

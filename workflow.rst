@@ -4,7 +4,7 @@ Workflow
 The Workflow component provides tools for managing a workflow or a finite
 state machine. Using this component requires first knowing some basic theory
 and concepts about workflows and state machines.
-:doc:`Read this article </workflow/workflow-and-state-machine>` for a quick overview.
+:doc:`Read this article </workflow/workflow-and-state-machine>` for a short overview.
 
 Installation
 ------------
@@ -558,7 +558,7 @@ and transitions:
             ],
         ]);
 
-The component will now transparently cast the enum to its backing value
+The component will now automatically cast the enum to its backing value
 when needed and vice versa when working with your objects::
 
     // src/Entity/BlogPost.php
@@ -660,7 +660,7 @@ Using Weighted Transitions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A key feature of workflows (as opposed to state machines) is that an object can
-be in multiple places simultaneously. For example, when building a product, you
+be in multiple places at the same time. For example, when building a product, you
 might assemble several components in parallel. However, in the previous example,
 each place could only record whether the object was there or not, like a binary flag.
 
@@ -985,7 +985,7 @@ Then inject the class wherever you need the workflow::
     * ``workflow.state_machine``: all state machines.
 
     Note that workflow metadata is attached to tags under the ``metadata`` key,
-    giving you more context and information about the workflow at your disposal.
+    giving you more context and information about the workflow.
     Learn more about :ref:`tag attributes <tags_additional-attributes>` and
     :ref:`storing workflow metadata <workflow_storing-metadata>`.
 
@@ -1053,7 +1053,7 @@ Each step has three events that are fired in order:
 * An event for the workflow concerned;
 * An event for the workflow concerned with the specific transition or place name.
 
-When a state transition is initiated, the events are dispatched in the following
+When a state transition starts, the events are dispatched in the following
 order:
 
 ``workflow.guard``
@@ -1185,7 +1185,7 @@ workflow leaves a place::
 .. tip::
 
     All built-in workflow events define the ``getName(?string $workflowName, ?string $transitionOrPlaceName)``
-    method to build the full event name without having to deal with strings.
+    method to build the full event name without concatenating strings yourself.
     You can also use this method in your custom events via the
     :class:`Symfony\\Component\\Workflow\\Event\\EventNameTrait`.
 
@@ -1223,9 +1223,9 @@ attributes::
         // ...
     }
 
-You may refer to the documentation about
+Read the documentation about
 :ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
-for further use.
+to learn more.
 
 In a class using the :ref:`#[AsWorkflow] attribute <workflow-attributes>`, the
 ``workflow`` argument of these attributes defaults to the workflow of the

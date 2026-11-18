@@ -215,8 +215,8 @@ real IP address of the client.
 .. warning::
 
     As you'll read in the explanation below the example, the ``ips`` option
-    does not restrict access to a specific IP address. Instead, using the ``ips``
-    key means that the ``access_control`` entry will only match this IP address,
+    does not restrict access to a specific IP address. Instead, using the
+    ``ips`` key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down
     the ``access_control`` list.
 

@@ -253,7 +253,7 @@ The ExpressionLanguage component provides a
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::compile`
 method to be able to cache the expressions in plain PHP. But internally, the
 component also caches the parsed expressions, so duplicated expressions can be
-compiled/evaluated quicker.
+compiled/evaluated faster.
 
 The Workflow
 ~~~~~~~~~~~~
@@ -265,7 +265,7 @@ values. For ``evaluate()``, this overhead is even bigger.
 Both methods need to tokenize and parse the expression. This is done by the
 :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
 method. It returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`.
-Now, the ``compile()`` method just returns the string conversion of this object.
+Now, the ``compile()`` method only returns the string conversion of this object.
 The ``evaluate()`` method needs to loop through the "nodes" (pieces of an
 expression saved in the ``ParsedExpression``) and evaluate them dynamically.
 

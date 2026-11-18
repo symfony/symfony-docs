@@ -80,8 +80,9 @@ metadata to code):
           }
       }
 
-That's it! If you are using :ref:`the Symfony web server <symfony-cli-server>`,
-try it out by going to: http://localhost:8000/lucky/number
+The page is now ready. If you are using
+:ref:`the Symfony web server <symfony-cli-server>`, try it out by going to:
+http://localhost:8000/lucky/number
 
 .. tip::
 
@@ -90,7 +91,7 @@ try it out by going to: http://localhost:8000/lucky/number
     :doc:`define routes in separate files </routing>` using the YAML or PHP formats.
 
 If you see a lucky number being printed back to you, congratulations! But before
-you run off to play the lottery, check out how this works. Remember the two steps
+you play the lottery, check out how this works. Remember the two steps
 to create a page?
 
 #. *Create a controller and a method*: This is a function where *you* build the page and ultimately
@@ -187,7 +188,7 @@ Make sure that ``LuckyController`` extends Symfony's base
           // ...
       }
 
-Now, use the handy ``render()`` method to render a template. Pass it a ``number``
+Now, use the ``render()`` method to render a template. Pass it a ``number``
 variable so you can use it in Twig::
 
     // src/Controller/LuckyController.php
@@ -228,7 +229,7 @@ no ``</body>`` tag in the current template. You can add the body element yoursel
 or extend ``base.html.twig``, which contains all default HTML elements.
 
 In the :doc:`templates </templates>` article, you'll learn all about Twig: how
-to loop, render other templates and leverage its powerful layout inheritance system.
+to loop, render other templates and use its powerful layout inheritance system.
 
 Checking out the Project Structure
 ----------------------------------

@@ -26,9 +26,9 @@ must match the following requirements:
 
 In such situations, you may encounter three issues:
 
-* the ``Length`` or ``Regex`` constraints may fail hard with a :class:`Symfony\\Component\\Validator\\Exception\\UnexpectedValueException`
+* the ``Length`` or ``Regex`` constraints may fail with a :class:`Symfony\\Component\\Validator\\Exception\\UnexpectedValueException`
   exception if the actual value is not a string, as enforced by ``Type``.
-* you may end up with multiple error messages for the same property.
+* you may get multiple error messages for the same property.
 * you may perform a useless and heavy external call to geolocate the address,
   even though the format isn't valid.
 

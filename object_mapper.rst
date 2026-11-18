@@ -1585,7 +1585,7 @@ Finally, use your custom mapper service::
     $userDto = $mapperService->map($legacyUser); // Target (UserDto) is inferred from #[Map] on LegacyUserMapper
 
 This approach keeps mapping logic centralized within dedicated services, which can
-be beneficial for complex applications or when adhering to specific architectural patterns.
+be beneficial for complex applications or when following specific architectural patterns.
 
 When ObjectMapper asks the metadata factory for the mapping of a nested object,
 the ``$context`` argument of ``create()`` contains the ``target`` and

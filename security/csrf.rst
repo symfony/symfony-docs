@@ -27,7 +27,7 @@ actor could create the following website:
 If you visit this website (e.g. by clicking on some email link or some social
 network post) and you were already logged in on the ``https://example.com`` site,
 the malicious actor could change the email address associated with your account
-(effectively taking over your account) without you even being aware of it.
+(and so take control of your account) without you even being aware of it.
 
 An effective way of preventing CSRF attacks is to use anti-CSRF tokens. These are
 unique tokens added to forms as hidden fields. The legitimate server validates them to
@@ -78,8 +78,8 @@ with CSRF protection.
 
 .. _caching-pages-that-contain-csrf-protected-forms:
 
-This leads to many strategies to help with caching pages that include CSRF-protected
-forms, among them:
+This leads to many strategies to help with caching pages that include
+CSRF-protected forms, among them:
 
 * Embed the form inside an uncached :doc:`ESI fragment </http_cache/esi>` and
   cache the rest of the page contents;
@@ -412,7 +412,7 @@ CSRF Tokens and Compression Side-Channel Attacks
 ------------------------------------------------
 
 `BREACH`_ and `CRIME`_ are security exploits against HTTPS when using HTTP
-compression. Attackers can leverage information leaked by compression to recover
+compression. Attackers can use information leaked by compression to recover
 targeted parts of the plaintext. To mitigate these attacks, and prevent an
 attacker from guessing the CSRF tokens, a random mask is prepended to the token
 and used to scramble it.

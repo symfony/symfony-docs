@@ -61,10 +61,10 @@ Imagine you want to run the ``debug:twig`` command from inside your controller::
 Showing Colorized Command Output
 --------------------------------
 
-If you tell the :class:`Symfony\\Component\\Console\\Output\\BufferedOutput` that
-it is decorated via its second parameter, it will return the ANSI color-coded
-content. The `SensioLabs AnsiToHtml converter`_ can be used to convert this to
-colorful HTML.
+If you tell the :class:`Symfony\\Component\\Console\\Output\\BufferedOutput`
+that it is decorated via its second parameter, it will return the ANSI
+color-coded content. The `SensioLabs AnsiToHtml converter`_ can be used to
+convert this to colorful HTML.
 
 First, require the package:
 

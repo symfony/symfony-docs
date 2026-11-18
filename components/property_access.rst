@@ -307,7 +307,8 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
 
 .. warning::
 
-    The ``__call()`` feature is disabled by default. You can enable it by calling
+    The ``__call()`` feature is disabled by default. You can enable it by
+    calling
     :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder::enableMagicCall`
     (see `Enable other Features`_).
 

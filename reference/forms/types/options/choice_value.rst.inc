@@ -5,7 +5,7 @@
 
 Returns the string "value" for each choice, which must be unique across all choices.
 This is used in the ``value`` attribute in HTML and submitted in the POST/PUT requests.
-You don't normally need to worry about this, but it might be handy when processing
+You don't normally need to worry about this, but it might be useful when processing
 an API request (since you can configure the value that will be sent in the API request).
 
 This can be a callable or a property path. By default, the choices are used if they

@@ -224,7 +224,7 @@ important**: the first in the list is called first.
 3) Submit a Request
 ~~~~~~~~~~~~~~~~~~~
 
-That's it! Your application can now authenticate incoming requests using an
+Your application can now authenticate incoming requests using an
 API token.
 
 Using the default header extractor, you can test the feature by submitting
@@ -644,8 +644,9 @@ set its service ID in the ``discovery.cache.id`` option.
 
     The ``cache.security.discovery`` pool was introduced in Symfony 8.2.
 
-Following the `OpenID Connect Specification`_, the ``sub`` claim is used as the user
-identifier by default. To use another claim, specify it using the ``claim`` option:
+Following the `OpenID Connect Specification`_, the ``sub`` claim is used as the
+user identifier by default. To use another claim, specify it using the ``claim``
+option:
 
 .. configuration-block::
 

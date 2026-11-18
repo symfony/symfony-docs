@@ -21,8 +21,8 @@ It accepts strings and returns a formatted string, which you then
 output to the console (or even log the information or do anything else).
 
 All methods of this helper have an identifier as the first argument. This is a
-unique value for each program. This way, the helper can show debug information for
-multiple programs at the same time. When using the
+unique value for each program. This way, the helper can show debug information
+for multiple programs at the same time. When using the
 :doc:`Process component </components/process>`, you probably want to use
 :phpfunction:`spl_object_hash`.
 
@@ -55,7 +55,7 @@ This will output:
 
      RUN Some process description
 
-You can tweak the prefix using the third argument::
+You can change the prefix using the third argument::
 
     $output->writeln($debugFormatter->start(
         spl_object_hash($process),
