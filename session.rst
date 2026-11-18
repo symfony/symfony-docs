@@ -1948,5 +1948,5 @@ the example below:
 .. _`Valkey`: https://valkey.io/
 .. _`phpredis extension`: https://github.com/phpredis/phpredis
 .. _`DoctrineMongoDBBundle configuration`: https://symfony.com/doc/master/bundles/DoctrineMongoDBBundle/config.html
-.. _`MongoDB shell`: https://docs.mongodb.com/manual/mongo/
+.. _`MongoDB shell`: https://www.mongodb.com/docs/mongodb-shell/
 .. _`php-encryption`: https://github.com/defuse/php-encryption
