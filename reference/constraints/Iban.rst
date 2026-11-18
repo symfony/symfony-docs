@@ -3,8 +3,8 @@ IBAN
 
 This constraint is used to ensure that a bank account number has the proper
 format of an `International Bank Account Number (IBAN)`_. IBAN is an
-internationally agreed means of identifying bank accounts across national
-borders with a reduced risk of propagating transcription errors.
+internationally agreed way to identify bank accounts across national
+borders with a lower risk of errors when copying the account number.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

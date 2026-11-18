@@ -68,7 +68,7 @@ real applications:
   ``TextFormatter`` behavior.
 
 The origin of these problems is the same: the class creates the objects it
-needs (its *dependencies*) instead of receiving them. A good rule of thumb is
+needs (its *dependencies*) instead of receiving them. A good general rule is
 to avoid using the ``new`` keyword to create dependencies inside your classes.
 
 The **first step** to fix this is to move the dependency to the **constructor**.
@@ -553,7 +553,7 @@ and use it later::
         }
     }
 
-That's it! The container will *automatically* know to pass the ``logger`` service
+The container will *automatically* know to pass the ``logger`` service
 when instantiating the ``MessageGenerator``. How does it know to do this?
 :ref:`Autowiring <services-autowire>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
@@ -1247,7 +1247,7 @@ But, you can control this and pass in a different logger:
                 arguments:
                     # the '@' symbol is important: that's what tells the container
                     # you want to pass the *service* whose id is 'monolog.logger.request',
-                    # and not just the *string* 'monolog.logger.request'
+                    # and not only the *string* 'monolog.logger.request'
                     $logger: '@monolog.logger.request'
 
     .. code-block:: xml

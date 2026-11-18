@@ -47,8 +47,9 @@ unauthenticated user tries to access a protected resource::
         }
     }
 
-That's it if you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`.
-Otherwise, you have to register this service in the container.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+the handler is ready to use. Otherwise, you have to register this service in the
+container.
 
 Now, configure this service ID as the entry point for the firewall:
 
@@ -102,7 +103,7 @@ Customize the Forbidden Response
 Create a class that implements
 :class:`Symfony\\Component\\Security\\Http\\Authorization\\AccessDeniedHandlerInterface`.
 This interface defines one method called ``handle()`` where you can
-implement whatever logic should execute when access is denied for the
+implement any logic that should execute when access is denied for the
 current user (e.g. send a mail, log a message, or generally return a custom
 response)::
 

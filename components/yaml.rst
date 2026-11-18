@@ -192,9 +192,9 @@ changed using the third argument as follows::
 Numeric Literals
 ................
 
-Long numeric literals, whether integer, float or hexadecimal, are known for their
-poor readability in code and configuration files. That's why YAML files allow
-adding underscores to improve their readability:
+Long numeric literals, whether integer, float or hexadecimal, are known for
+their poor readability in code and configuration files. That's why YAML files
+allow adding underscores to improve their readability:
 
 .. code-block:: yaml
 

@@ -151,8 +151,8 @@ productive (for example by resolving aliases). However, you may face this error:
     calling Encore directly.
 
 It fails because the Encore Runtime Environment is only configured when you are
-running it (e.g. when executing ``npx encore dev``). Fix this issue by calling the
-``Encore.isRuntimeEnvironmentConfigured()`` and
+running it (e.g. when executing ``npx encore dev``). Fix this issue by calling
+the ``Encore.isRuntimeEnvironmentConfigured()`` and
 ``Encore.configureRuntimeEnvironment()`` methods:
 
 .. code-block:: javascript

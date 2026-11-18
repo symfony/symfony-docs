@@ -72,7 +72,7 @@ manual steps:
          }
 
    Now you must add all the Symfony dependencies required by your project to
-   ``composer.json``. A quick way to do that is to add all the components that
+   ``composer.json``. A fast way to do that is to add all the components that
    were included in the previous ``symfony/symfony`` dependency and later you
    can remove anything you don't really need:
 
@@ -85,7 +85,7 @@ manual steps:
 #. If the project's ``composer.json`` file doesn't contain the ``symfony/symfony``
    dependency, it already defines its dependencies explicitly, as required by
    Flex. Reinstall all dependencies to force Flex to generate the
-   configuration files in ``config/``, which is the most tedious part of the upgrade
+   configuration files in ``config/``, which is the most time-consuming part of the upgrade
    process:
 
    .. code-block:: terminal
@@ -121,8 +121,8 @@ manual steps:
    * ``app/Resources/<BundleName>/views/`` -> ``templates/bundles/<BundleName>/``
    * rest of ``app/Resources/`` files -> ``src/Resources/``
 
-#. Move the original PHP source code files from ``src/AppBundle/*``, except
-   bundle-specific files (like ``AppBundle.php`` and ``DependencyInjection/``), to
+#. Move the original PHP source code files from ``src/AppBundle/*``, except bundle-specific
+   files (like ``AppBundle.php`` and ``DependencyInjection/``), to
    ``src/`` and update the namespace of each moved file to be ``App\...`` (advanced
    IDEs can do this automatically).
 

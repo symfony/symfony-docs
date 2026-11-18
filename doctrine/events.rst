@@ -54,7 +54,7 @@ define a callback for the ``prePersist`` Doctrine event:
 
         use Doctrine\ORM\Mapping as ORM;
 
-        // When using attributes, don't forget to add #[ORM\HasLifecycleCallbacks]
+        // When using attributes, make sure to add #[ORM\HasLifecycleCallbacks]
         // to the class of the entity where you define the callback
 
         #[ORM\Entity]

@@ -253,8 +253,8 @@ The value of this option can also be an asterisk (``*``) to allow all protocols:
 **type**: ``boolean`` **default**: ``false``
 
 If ``true``, the protocol is considered optional when validating the syntax of
-the given URL. This means that not only ``http://`` and ``https://`` URLs are valid
-but also relative URLs that contain no protocol (e.g. ``//example.com``).
+the given URL. This means that not only ``http://`` and ``https://`` URLs are
+valid but also relative URLs that contain no protocol (e.g. ``//example.com``).
 
 .. configuration-block::
 

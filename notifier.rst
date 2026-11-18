@@ -1119,7 +1119,7 @@ The default behavior for browser channel notifications is to add a
 :ref:`flash message <flash-messages>` with ``notification`` as its key.
 
 However, you might prefer to map the importance level of the notification to the
-type of flash message, so you can tweak their style.
+type of flash message, so you can adjust their style.
 
 You can do that by overriding the default ``notifier.flash_message_importance_mapper``
 service with your own implementation of

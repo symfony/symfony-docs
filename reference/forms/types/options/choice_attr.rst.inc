@@ -6,7 +6,7 @@
 Use this to add additional HTML attributes to each choice. This can be
 an associative array where the keys match the choice keys and the values
 are the attributes for each choice, a callable or a property path
-(just like `choice_label`_).
+(like `choice_label`_).
 
 If an array, the keys of the ``choices`` array must be used as keys::
 

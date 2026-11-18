@@ -14,7 +14,7 @@ requiring "push" capabilities.
 Symfony provides a simple component, built on top of
 `the Mercure protocol`_, specifically designed for this class of use cases.
 
-Mercure is an open protocol designed from the ground up to publish updates from
+Mercure is an open protocol designed from the start to publish updates from
 server to clients. It is a modern and efficient alternative to timer-based
 polling and to WebSocket.
 
@@ -43,7 +43,7 @@ All these features are supported in the Symfony integration.
     automatic reconnection with message recovery, broadcasting to many clients,
     or high-traffic scalability.
 
-`In this recording`_ you can see how a Symfony web API leverages Mercure
+`In this recording`_ you can see how a Symfony web API uses Mercure
 and API Platform to update, in real time, a React app and a mobile app
 (React Native) generated using the API Platform client generator.
 
@@ -99,7 +99,7 @@ the same origin as your application, which also works with HTTPS (see
 
     $ symfony server:start --proxy-mercure -d
 
-If you use the Docker integration, a hub is already up and running.
+If you use the Docker integration, a hub is already running.
 
 Configuration
 -------------
@@ -113,7 +113,7 @@ has been updated by the Flex recipe to include the available env vars.
 Also, if you are using the Docker integration with the Symfony Local Web Server,
 `Symfony Docker`_ or the `API Platform distribution`_,
 the proper environment variables have been automatically set.
-Skip straight to the next section.
+Go directly to the next section.
 
 Otherwise, set the URL of your hub as the value of the ``MERCURE_URL``
 and ``MERCURE_PUBLIC_URL`` env vars.
@@ -124,7 +124,7 @@ In this case, ``MERCURE_URL`` must contain the local URL used by the
 Symfony app (e.g. ``https://mercure/.well-known/mercure``), and ``MERCURE_PUBLIC_URL``
 the publicly available URL (e.g. ``https://example.com/.well-known/mercure``).
 
-The clients must also bear a `JSON Web Token`_ (JWT)
+The clients must also send a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates and, sometimes, to subscribe.
 
 This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeThisMercureHubJWTSecretKey!`` if you use the Docker integration).
@@ -221,7 +221,7 @@ MercureBundle provides a more advanced configuration:
         }
 
     The jwt.io website is a convenient way to create and sign JWTs, check out this `example JWT`_.
-    Don't forget to set your secret key properly at the bottom of the right panel of the form!
+    Make sure to set your secret key properly at the bottom of the right panel of the form!
 
 Basic Usage
 -----------
@@ -277,7 +277,7 @@ Atom, HTML or XML is recommended.
 Subscribing
 ~~~~~~~~~~~
 
-Subscribing to updates in JavaScript from a Twig template is straightforward:
+Subscribing to updates in JavaScript from a Twig template looks like this:
 
 .. code-block:: html+twig
 
@@ -360,7 +360,7 @@ Discovery
 ---------
 
 The Mercure protocol comes with a discovery mechanism.
-To leverage it, the Symfony application must expose the URL of the Mercure Hub
+To use it, the Symfony application must expose the URL of the Mercure Hub
 in a ``Link`` HTTP header.
 
 .. raw:: html
@@ -474,7 +474,7 @@ The supported options are:
 
 Using cookies is the most secure and preferred way when the client is a web
 browser. If the client is not a web browser, then using an authorization header
-is the way to go.
+is the recommended option.
 
 .. warning::
 
@@ -640,8 +640,8 @@ hypermedia API, and automatic update broadcasting through the Mercure hub::
         public string $status = '';
     }
 
-As showcased `in this recording`_, the API Platform Client Generator also
-allows you to scaffold complete React and React Native applications from this API.
+As shown `in this recording`_, the API Platform Client Generator also
+allows you to generate complete React and React Native applications from this API.
 These applications will render the content of Mercure updates in real-time.
 
 Check out `the dedicated API Platform documentation`_ to learn more about
@@ -652,7 +652,7 @@ Testing
 
 During unit testing it's usually not needed to send updates to Mercure.
 
-You can instead make use of the ``MockHub`` class::
+You can instead use the ``MockHub`` class::
 
     // tests/Unit/Controller/FunctionalTest.php
     namespace App\Tests\Unit\Controller;

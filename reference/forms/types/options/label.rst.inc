@@ -3,8 +3,8 @@
 
 **type**: ``string`` or ``TranslatableMessage`` **default**: The label is "guessed" from the field name
 
-Sets the label that will be used when rendering the field. Setting it to ``false``
-will suppress the label::
+Sets the label that will be used when rendering the field. Setting it to
+``false`` will suppress the label::
 
     use Symfony\Component\Translation\TranslatableMessage;
 

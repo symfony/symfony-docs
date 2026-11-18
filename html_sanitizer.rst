@@ -247,7 +247,7 @@ inject the ``app.post_sanitizer`` defined earlier, use an argument named ``$appP
 
 **(2) Use the ``#[Target]`` attribute**
 
-When :ref:`dealing with multiple implementations of the same type <autowiring-multiple-implementations-same-type>`
+When :ref:`handling multiple implementations of the same type <autowiring-multiple-implementations-same-type>`
 the ``#[Target]`` attribute helps you select which one to inject. Symfony creates
 a target with the same name as the HTML sanitizer::
 

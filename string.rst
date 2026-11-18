@@ -24,7 +24,7 @@ and they can be encoded even with the most limited standards (e.g. `ASCII`_).
 
 However, other languages require thousands of symbols to display their contents.
 They need complex encoding standards such as `Unicode`_ and concepts like
-"character" no longer make sense. Instead, you have to deal with these terms:
+"character" no longer make sense. Instead, you have to understand these terms:
 
 * `Code points`_: they are the atomic units of information. A string is a series
   of code points. Each code point is a number whose meaning is given by the
@@ -164,7 +164,7 @@ There is also a method to get the bytes stored at some position::
 Methods Related to Length and Whitespace Characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-These methods measure the contents of the string and deal with its whitespace
+These methods measure the contents of the string and handle its whitespace
 characters::
 
     // returns the number of graphemes, code points or bytes of the given string
@@ -208,7 +208,7 @@ another case::
     u('FOO Bar Brİan')->localeLower('en');  // 'foo bar bri̇an'
     u('FOO Bar Brİan')->localeLower('lt');  // 'foo bar bri̇̇an'
 
-    // when dealing with different languages, uppercase/lowercase is not enough
+    // when working with different languages, uppercase/lowercase is not enough
     // there are three cases (lower, upper, title), some characters have no case,
     // case is context-sensitive and locale-sensitive, etc.
     // this method returns a string that you can use in case-insensitive comparisons
@@ -389,7 +389,7 @@ Methods to Join, Split, Truncate and Reverse
 
 These methods merge, break, shorten and reverse the contents of the string::
 
-    // uses the string as the "glue" to merge all the given strings
+    // uses the string as the separator to merge all the given strings
     u(', ')->join(['foo', 'bar']); // 'foo, bar'
 
     // breaks the string into pieces using the given delimiter
@@ -489,7 +489,7 @@ Lazy-loaded Strings
 
 Sometimes, creating a string with the methods presented in the previous sections
 is not optimal. For example, consider a hash value that requires certain
-computation to obtain and which you might end up not using.
+computation to obtain and which you might never use.
 
 In those cases, it's better to use the :class:`Symfony\\Component\\String\\LazyString`
 class that allows storing a string whose value is only generated when you need it::

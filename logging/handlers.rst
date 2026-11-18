@@ -4,9 +4,9 @@ Handlers
 ElasticsearchLogstashHandler
 ----------------------------
 
-This handler deals directly with the HTTP interface of Elasticsearch. This means
-it will slow down your application if Elasticsearch takes time to answer, even
-if all HTTP calls are done asynchronously.
+This handler communicates directly with the HTTP interface of Elasticsearch.
+This means it will slow down your application if Elasticsearch takes time to
+answer, even if all HTTP calls are done asynchronously.
 
 To use it, declare it as a service:
 

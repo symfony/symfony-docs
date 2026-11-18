@@ -19,10 +19,10 @@ or variable is typed and you pass a value of a different type, PHP will throw an
 exception before this constraint is checked.
 
 The following example checks if ``emailAddress`` is an instance of ``Symfony\Component\Mime\Address``,
-``firstName`` is of type ``string`` (using the :phpfunction:`is_string` PHP function),
-``age`` is an ``integer`` (using the :phpfunction:`is_int` PHP function) and
-``accessCode`` contains either only letters or only digits (using the
-:phpfunction:`ctype_alpha` and :phpfunction:`ctype_digit` PHP functions).
+``firstName`` is of type ``string`` (using the :phpfunction:`is_string` PHP
+function), ``age`` is an ``integer`` (using the :phpfunction:`is_int` PHP
+function) and ``accessCode`` contains either only letters or only digits (using
+the :phpfunction:`ctype_alpha` and :phpfunction:`ctype_digit` PHP functions).
 
 .. configuration-block::
 
@@ -196,7 +196,7 @@ PHP class/interface or a valid PHP datatype (checked by PHP's ``is_()`` function
 * :phpfunction:`resource <is_resource>`
 * :phpfunction:`null <is_null>`
 
-If you're dealing with arrays, you can use the following types in the constraint:
+If you're validating arrays, you can use the following types in the constraint:
 
 * ``list`` which uses :phpfunction:`array_is_list <array_is_list>` internally
 * ``associative_array`` which is true for any **non-empty** array that is not a list

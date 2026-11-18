@@ -62,8 +62,8 @@ use the ``single_text`` widget::
     ]);
 
 This will render as an ``input type="date"`` HTML5 field, which means that **some -
-but not all - browsers will add nice date picker functionality to the field**. If you
-want to be absolutely sure that *every* user has a consistent date picker, use an
+but not all - browsers will add date picker functionality to the field**. If you
+want to be sure that *every* user has a consistent date picker, use an
 external JavaScript library.
 
 For example, suppose you want to use the `Bootstrap Datepicker`_ library. First,
@@ -97,7 +97,7 @@ picker:
     </script>
 
 This ``format`` key tells the date picker to use the date format that Symfony expects.
-This can be tricky: if the date picker is misconfigured, Symfony won't understand
+This can be difficult: if the date picker is misconfigured, Symfony won't understand
 the format and will throw a validation error. You can also configure the format
 that Symfony should expect via the `format`_ option.
 
@@ -106,7 +106,7 @@ that Symfony should expect via the `format`_ option.
     The string used by a JavaScript date picker to describe its format (e.g. ``yyyy-mm-dd``)
     may not match the string that Symfony uses (e.g. ``yyyy-MM-dd``). This is because
     different libraries use different formatting rules to describe the date format.
-    Be aware of this - it can be tricky to make the formats truly match!
+    Be aware of this - it can be difficult to make the formats match exactly.
 
 Field Options
 -------------

@@ -45,7 +45,7 @@ value is ``0000-00-00``. To do that, you'll first have to create your normalizer
         }
     }
 
-Now you can cast zero-ish dates to ``null`` during denormalization::
+Now you can cast zero dates to ``null`` during denormalization::
 
     $legacyData = '{"updatedAt": "0000-00-00"}';
     $serializer->deserialize($legacyData, MyModel::class, 'json', ['zero_datetime_to_null' => true]);

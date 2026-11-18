@@ -25,7 +25,7 @@ Extensions must implement
 :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`.
 The main work of the extension is done in its ``load()`` method, where you
 load configuration files and manipulate the
-:ref:`service definitions <service-definitions>`. A simple extension may just
+:ref:`service definitions <service-definitions>`. A simple extension may only
 load the service configuration files of its module::
 
     use Symfony\Component\Config\FileLocator;
@@ -236,8 +236,8 @@ Deprecating Extension Parameters
 --------------------------------
 
 You can deprecate the container parameters defined by your extension to warn
-users that they should stop using them. This helps with the migration across major
-versions of the extension. Deprecation is only possible when using PHP to
+users that they should stop using them. This helps with the migration across
+major versions of the extension. Deprecation is only possible when using PHP to
 configure the extension, not when using XML or YAML. Use the
 ``ContainerBuilder::deprecateParameter()`` method to provide the deprecation
 details::

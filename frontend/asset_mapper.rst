@@ -31,7 +31,7 @@ To install the AssetMapper component, run:
 In addition to ``symfony/asset-mapper``, this also makes sure that you have the
 :doc:`Asset Component </components/asset>` and Twig available.
 
-If you're using :ref:`Symfony Flex <symfony-flex>`, you're done! The recipe just
+If you're using :ref:`Symfony Flex <symfony-flex>`, you're done! The recipe
 added a number of files:
 
 * ``assets/app.js`` Your main JavaScript file;
@@ -144,7 +144,7 @@ Importmaps & Writing JavaScript
 -------------------------------
 
 All modern browsers support the JavaScript `import statement`_ and modern
-`ES6`_ features like classes. So this code "just works":
+`ES6`_ features like classes. So this code works as is:
 
 .. code-block:: javascript
 
@@ -206,7 +206,7 @@ relative path, your browser looks for that file relative to the one importing
 it. So, it would look for ``/assets/duck.js``. That URL *would* be correct,
 except that the ``duck.js`` file is versioned. Fortunately, the AssetMapper component
 sees the import and adds a mapping from ``/assets/duck.js`` to the correct, versioned
-filename. The result: importing ``./duck.js`` just works!
+filename. The result: importing ``./duck.js`` works!
 
 The ``importmap()`` function also outputs an `ES module shim`_ so that
 `older browsers <https://caniuse.com/import-maps>`_ understand importmaps
@@ -310,7 +310,7 @@ this can be done by importing its full URL, like from a CDN:
 
     import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
 
-But yikes! Needing to include that URL is a pain! Instead, you can add this package
+But including that URL is not convenient. Instead, you can add this package
 to your "importmap" via the ``importmap:require`` command. This command can be used
 to add any `npm package`_:
 
@@ -369,7 +369,7 @@ Importing Specific Files From a 3rd Party Package
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes you'll need to import a specific file from a package. For example,
-suppose you're integrating `highlight.js`_ and want to import just the core
+suppose you're integrating `highlight.js`_ and want to import only the core
 and a specific language:
 
 .. code-block:: javascript
@@ -432,7 +432,7 @@ command that checks security vulnerabilities in the dependencies of your applica
     6 vulnerabilities found: 1 Critical / 1 High / 4 Medium
 
 The command will return the ``0`` exit code if no vulnerability is found, or
-the ``1`` exit code otherwise. This means that you can seamlessly integrate this
+the ``1`` exit code otherwise. This means that you can integrate this
 command as part of your CI to be warned anytime a new vulnerability is found.
 
 .. tip::
@@ -671,9 +671,9 @@ You can import and use this data in your JavaScript:
 
     displayUsers();
 
-How does it work? When you import a JSON file, AssetMapper detects the import during
-asset processing, creates a JavaScript module that exports a Promise resolving
-to the JSON content, and adds it to the importmap. The imported JSON file is
+How does it work? When you import a JSON file, AssetMapper detects the import
+during asset processing, creates a JavaScript module that exports a Promise
+resolving to the JSON content, and adds it to the importmap. The imported JSON file is
 versioned like any other asset, so changes to the JSON content will produce a
 new filename and browsers will load the updated version.
 
@@ -768,7 +768,8 @@ To use the `Tailwind`_ CSS framework with the AssetMapper component, check out
 Using Sass
 ~~~~~~~~~~
 
-To use Sass with the AssetMapper component, check out `symfonycasts/sass-bundle`_.
+To use Sass with the AssetMapper component, check out
+`symfonycasts/sass-bundle`_.
 
 .. _asset-mapper-ts:
 
@@ -809,7 +810,7 @@ performed by web servers before sending them (see :ref:`Optimization <optimizati
 is sufficient. If you think you could benefit from minifying assets (in addition
 to later compressing them), use the `SensioLabs Minify Bundle`_.
 
-This bundle integrates seamlessly with AssetMapper and minifies all web assets
+This bundle integrates with AssetMapper and minifies all web assets
 automatically when running the ``asset-map:compile`` command (as explained in
 the :ref:`Compiling Assets <asset-mapper-compile-assets>` section).
 
@@ -1178,7 +1179,7 @@ is allowed to load other resources.
 Troubleshooting
 ---------------
 
-There are a few common errors and problems you might run into.
+There are a few common errors and problems you might find.
 
 Missing importmap Entry
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1268,7 +1269,7 @@ re-calculated whenever ``other.css`` changes. This is because the version hash o
 will change... which will cause the final content of ``app.css`` to change, since
 it includes the final ``other.css`` filename inside.
 
-Mostly, this system just works. But if you have a file that is not being
+Usually, this system works as expected. But if you have a file that is not being
 re-calculated when you expect it to, you can run:
 
 .. code-block:: terminal

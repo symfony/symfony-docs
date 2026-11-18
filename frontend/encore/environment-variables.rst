@@ -103,7 +103,7 @@ attribute rendered by Twig.
 
 .. warning::
 
-    Everything passed through ``configureDefinePlugin()`` ends up in a
+    Everything passed through ``configureDefinePlugin()`` is included in a
     JavaScript file served to the browser. Never pass API secrets, private keys
     or database credentials this way.
 

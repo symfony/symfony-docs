@@ -39,8 +39,9 @@ tests, logic tests and/or formal requirements to be answered by the user. Some
 jobs don't. The :ref:`guard event <workflow-usage-guard-events>` is used to
 decide what next steps are allowed for a specific application.
 
-By defining a workflow like this, you get an overview of how the process looks. The process logic is not mixed with the controllers, models or view. The
-order of the steps can be changed by changing the configuration only.
+By defining a workflow like this, you get an overview of how the process looks.
+The process logic is not mixed with the controllers, models or view. The order
+of the steps can be changed by changing the configuration only.
 
 State Machines
 --------------
@@ -57,10 +58,10 @@ your model. The most important differences between them are:
 Example
 ~~~~~~~
 
-A pull request starts in an initial "start" state, then moves to a "test" state, e.g. for
-running tests on a continuous integration stack. When this is finished, the pull request is in the
-"review" state, where contributors can request changes, reject or accept the
-pull request. At any time, you can also "update" the pull request, which
+A pull request starts in an initial "start" state, then moves to a "test" state,
+e.g. for running tests on a continuous integration stack. When this is finished,
+the pull request is in the "review" state, where contributors can request
+changes, reject or accept the pull request. At any time, you can also "update" the pull request, which
 will result in another continuous integration run.
 
 .. image:: /_images/components/workflow/pull_request.png

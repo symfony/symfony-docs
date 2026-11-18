@@ -116,7 +116,7 @@ can generate files in the bundle directory structure, but only if the generated
 files are going to be part of the repository.
 
 The following classes and files have specific locations (some are mandatory
-and others are just conventions followed by most developers):
+and others are only conventions followed by most developers):
 
 ===================================================  ========================================
 Type                                                 Directory
@@ -283,7 +283,7 @@ used to render the documentation on the Symfony website.
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to ease the installation of third-party bundles, consider using the
+To help with the installation of third-party bundles, consider using the
 following standardized instructions in your ``README.md`` file.
 
 .. configuration-block::
@@ -421,7 +421,7 @@ using the Symfony built-in mechanisms.
 For simple configuration settings, rely on the default ``parameters`` entry of
 the Symfony configuration. Symfony parameters are simple key/value pairs; a
 value being any valid PHP value. Each parameter name should start with the
-bundle alias, though this is just a best-practice suggestion. The rest of the
+bundle alias, though this is only a best-practice suggestion. The rest of the
 parameter name will use a period (``.``) to separate different parts (e.g.
 ``acme_blog.author.email``).
 
@@ -502,8 +502,8 @@ be defined explicitly.
 
 .. seealso::
 
-    You can learn much more about service loading in bundles by reading this article:
-    :doc:`How to Load Service Configuration inside a Bundle </bundles/extension>`.
+    You can learn much more about service loading in bundles by reading this
+    article: :doc:`How to Load Service Configuration inside a Bundle </bundles/extension>`.
 
 Composer Metadata
 -----------------

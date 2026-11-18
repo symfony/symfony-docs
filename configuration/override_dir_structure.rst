@@ -150,7 +150,7 @@ container), change the
     store those cache files.
 
 In case you have multiple frontend servers using the same shared filesystem, you
-can make use of the :method:`Symfony\\Component\\HttpKernel\\Kernel::getShareDir` method to
+can use the :method:`Symfony\\Component\\HttpKernel\\Kernel::getShareDir` method to
 get a shared directory for cache and shared data. The shared directory can be set
 by overriding an environment variable named ``APP_SHARE_DIR`` whose value is the full
 path of the shared folder. This directory is also accessible as a container parameter
@@ -170,8 +170,8 @@ Override the Log Directory
 Overriding the ``var/log/`` directory is almost the same as overriding the
 ``var/cache/`` directory.
 
-You can do it by overriding the ``getLogDir()`` method in the ``Kernel`` class of
-your application::
+You can do it by overriding the ``getLogDir()`` method in the ``Kernel`` class
+of your application::
 
     // src/Kernel.php
 
@@ -216,7 +216,7 @@ and updating the ``autoload.psr-4`` option in the ``composer.json`` file:
 
 .. tip::
 
-    Don't forget to run the ``composer dump-autoload`` command once ``autoload.psr-4``
+    Make sure to run the ``composer dump-autoload`` command once ``autoload.psr-4``
     has been changed.
 
 .. _override-templates-dir:
@@ -321,9 +321,9 @@ Override the Public Directory
 
 If you need to rename or move your ``public/`` directory, the only thing you
 need to guarantee is that the path to the ``vendor/`` directory is still correct in
-your ``index.php`` front controller. If you renamed the directory, you're fine.
-But if you moved it in some way, you may need to modify these paths inside those
-files::
+your ``index.php`` front controller. If you only renamed the directory, no
+other change is needed. But if you moved it in some way, you may need to modify
+these paths inside those files::
 
     require_once __DIR__.'/../path/to/vendor/autoload_runtime.php';
 

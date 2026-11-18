@@ -6,8 +6,8 @@ The Intl Component
 .. seealso::
 
     This article explains how to use the Intl features as an independent component
-    in any PHP application. Read the :doc:`/translation` article to learn
-    how to internationalize and manage the user locale in Symfony applications.
+    in any PHP application. Read the :doc:`/translation` article to learn how
+    to internationalize and manage the user locale in Symfony applications.
 
 Installation
 ------------

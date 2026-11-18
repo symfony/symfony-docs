@@ -32,8 +32,8 @@ Symfony manages only the ``#include virtual`` one.
     Be careful with SSI: your website may fall victim to injections.
     Please read this `OWASP article`_ first!
 
-When the web server reads an SSI directive, it requests the given URI or serves it
-directly from its cache. It repeats this process until there are no more
+When the web server reads an SSI directive, it requests the given URI or serves
+it directly from its cache. It repeats this process until there are no more
 SSI directives to handle. Then, it merges all responses into one and sends
 it to the client.
 

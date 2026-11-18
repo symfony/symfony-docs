@@ -11,7 +11,7 @@ This adapter stores the values in-memory using one (or more) `Couchbase server`_
 instances. Unlike the :doc:`APCu adapter </cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Memcached adapter </cache/adapters/memcached_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment.
-The ability to utilize a cluster of servers to provide redundancy and/or fail-over
+The ability to use a cluster of servers to provide redundancy and/or fail-over
 is also available.
 
 .. warning::
@@ -115,7 +115,8 @@ Available Options
     Per-node configuration timeout (in microseconds).
 
 ``viewTimeout`` (type: ``int``, default: ``75000000``)
-    The I/O timeout (in microseconds) for HTTP requests to the Couchbase Views API.
+    The I/O timeout (in microseconds) for HTTP requests to the Couchbase Views
+    API.
 
 ``httpTimeout`` (type: ``int``, default: ``75000000``)
     The I/O timeout (in microseconds) for HTTP queries (management API).

@@ -66,7 +66,7 @@ You might calculate the filename in one of the following ways::
     $file->move($directory, rand(1, 99999).'.'.$extension);
 
 Using the original name via ``getClientOriginalName()`` or ``getClientOriginalPath``
-is not safe as it could have been manipulated by the end-user. Moreover, it can contain
+is not safe as it could have been manipulated by the end-user. Also, it can contain
 characters that are not allowed in file names. You should sanitize the value
 before using it directly.
 

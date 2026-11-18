@@ -128,9 +128,9 @@ application, create the pool by instantiating one of the
 
 Now you can retrieve and delete cached data using this object. The first
 argument of the ``get()`` method is a key, an arbitrary string that you
-associate with the cached value so you can retrieve it later. The second argument
-is a PHP callable which is executed when the key is not found in the cache to
-generate and return the value::
+associate with the cached value so you can retrieve it later. The second
+argument is a PHP callable which is executed when the key is not found in the
+cache to generate and return the value::
 
     use Symfony\Contracts\Cache\ItemInterface;
 
@@ -203,7 +203,7 @@ you can configure them. For example, you can set their expiration time::
     });
 
 The value of the cache item (i.e. the value returned by the callback) is set
-automatically, so you don't have to deal with the cache item outside of the
+automatically, so you don't have to handle the cache item outside of the
 callback.
 
 .. _cache-component-expiration:
@@ -748,8 +748,8 @@ Creating a Cache Chain
 ----------------------
 
 Different cache adapters have different strengths and weaknesses. Some might be
-really quick but optimized to store small items and some may be able to contain
-a lot of data but are quite slow. To get the best of both worlds you may use a
+really fast but optimized to store small items and some may be able to contain
+a lot of data but are quite slow. To get the advantages of both, you may use a
 chain of adapters.
 
 A cache chain combines several cache pools into a single one. When storing an
@@ -919,7 +919,7 @@ stampede prevention.
 
 The first solution is to use locking: only allow one PHP process (on a per-host basis)
 to compute a specific key at a time. Locking is built-in by default, so
-you don't need to do anything beyond leveraging the Cache Contracts.
+you don't need to do anything beyond using the Cache Contracts.
 
 The second solution is also built-in when using the Cache Contracts: instead of
 waiting for the full delay before expiring a value, recompute it ahead of its
@@ -1082,7 +1082,7 @@ You can now start the consumer:
 
     $ php bin/console messenger:consume async_bus
 
-That's it! Now, whenever an item is queried from this cache pool, its cached
+Now, whenever an item is queried from this cache pool, its cached
 value will be returned immediately. If it is elected for early-expiration, a
 message will be sent through the bus to schedule a background computation to refresh
 the value.
@@ -1241,7 +1241,7 @@ The ``cache.adapter.redis_tag_aware`` adapter stores the keys of the items of
 each tag in a Redis set. Reading an item requires a single Redis call, but
 invalidating a tag deletes all its items, so it takes longer as the number of
 tagged items grows. Redis runs this deletion as a single script, so invalidating
-tags with lots of items can delay the commands of other Redis clients.
+tags with many items can delay the commands of other Redis clients.
 
 These sets use memory for each item/tag relationship and they never expire.
 When an item expires or Redis evicts it, its key stays in the sets until you
@@ -1723,8 +1723,8 @@ given key::
     $latestNews = $cache->getItem('latest_news');
 
 If no item is defined for the given key, the method doesn't return a ``null``
-value but an empty object of the
-:class:`Symfony\\Component\\Cache\\CacheItem` class.
+value but an empty object of the :class:`Symfony\\Component\\Cache\\CacheItem`
+class.
 
 If you need to fetch several cache items simultaneously, use the
 ``getItems([$key1, $key2, ...])`` method instead::
@@ -1748,7 +1748,7 @@ standard states that caching errors should not result in application failures.
 
 That's why the ``getItem()`` method always returns an object which implements
 the ``Psr\Cache\CacheItemInterface`` interface, even when the cache item
-doesn't exist. Therefore, you don't have to deal with ``null`` return values
+doesn't exist. So you don't have to handle ``null`` return values
 and you can safely store in the cache values such as ``false`` and ``null``.
 
 In order to decide if the returned object represents a value coming from the

@@ -12,7 +12,7 @@ This adapter stores the values in-memory using one (or more) `Memcached server`_
 instances. Unlike the :doc:`APCu adapter </cache/adapters/apcu_adapter>`, and similarly to the
 :doc:`Redis adapter </cache/adapters/redis_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment.
-The ability to utilize a cluster of servers to provide redundancy and/or fail-over
+The ability to use a cluster of servers to provide redundancy and/or fail-over
 is also available.
 
 .. warning::
@@ -196,8 +196,8 @@ Available Options
 
 ``randomize_replica_read`` (type: ``bool``, default: ``false``)
     Enables or disables randomization of the replica reads starting point.
-    Normally the read is done from the primary server and in case of a miss the read
-    is done from "primary+1", then "primary+2", all the way to "n" replicas.
+    Normally the read is done from the primary server and in case of a miss the
+    read is done from "primary+1", then "primary+2", all the way to "n" replicas.
     This option sets the replica reads as randomized between all available
     servers; it allows distributing read load to multiple servers at the
     expense of more write traffic.

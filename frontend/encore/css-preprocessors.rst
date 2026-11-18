@@ -11,7 +11,7 @@ To use the Sass, LESS or Stylus pre-processors, enable the one you want in ``web
     Encore
         // ...
 
-        // enable just the one you want
+        // enable only the one you want
 
         // processes files ending in .scss or .sass
         .enableSassLoader()

@@ -48,8 +48,8 @@ autoescape_service_method
 
 **type**: ``string`` **default**: ``null``
 
-If the ``autoescape_service`` option is defined, then this option defines the method
-called to determine the default escaping applied to the template.
+If the ``autoescape_service`` option is defined, then this option defines the
+method called to determine the default escaping applied to the template.
 
 If the service defined in ``autoescape_service`` is invocable (i.e. it defines
 the `__invoke() PHP magic method`_) you can omit this option.
@@ -171,8 +171,9 @@ non-Twig templates (and it ignores compilation errors). The result is an
 unnecessary consumption of CPU and disk resources.
 
 In those cases, use this option to define the filename pattern(s) of the files
-that are Twig templates (the rest of the files will be ignored by ``cache:warmup``).
-The value of this option can be a regular expression, a glob, or a string:
+that are Twig templates (the rest of the files will be ignored by
+``cache:warmup``). The value of this option can be a regular expression, a
+glob, or a string:
 
 .. configuration-block::
 
@@ -318,8 +319,8 @@ decimal_point
 **type**: ``string`` **default**: ``.``
 
 The character used to separate the decimals from the integer part of numeric
-values when no specific character is passed as an argument to the ``number_format``
-filter.
+values when no specific character is passed as an argument to the
+``number_format`` filter.
 
 thousands_separator
 ...................

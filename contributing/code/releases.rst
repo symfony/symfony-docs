@@ -42,7 +42,7 @@ is divided into two phases:
 
 * **Stabilization**: *Two months* to fix bugs, prepare the release, and wait
   for the whole Symfony ecosystem (third-party libraries, bundles, and
-  projects using Symfony) to catch up.
+  projects using Symfony) to update.
 
 During the development phase, any new feature can be reverted if it won't be
 finished in time or if it won't be stable enough to be included in the current
@@ -95,8 +95,8 @@ learn more about how deprecations are handled in Symfony.
 .. _major-version-development:
 
 This deprecation policy also requires a custom development process for major
-versions (7.0, 8.0, etc.). In those cases, Symfony develops two versions at the same
-time: the new major one (e.g. 7.0) and the latest version of the
+versions (7.0, 8.0, etc.). In those cases, Symfony develops two versions at
+the same time: the new major one (e.g. 7.0) and the latest version of the
 previous branch (e.g. 6.4).
 
 Both versions have the same new features, but they differ in the deprecated
@@ -145,7 +145,7 @@ This release process was adopted to give more *predictability* and
   feature might be available in Symfony;
 * Coordinate the Symfony timeline with popular PHP projects that work well
   with Symfony and with projects using Symfony;
-* Give time to the Symfony ecosystem to catch up with the new versions
+* Give time to the Symfony ecosystem to adapt to the new versions
   (bundle authors, documentation writers, translators, ...);
 * Give companies a strict and predictable timeline they can rely on to plan
   their own projects development.

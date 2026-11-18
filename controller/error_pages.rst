@@ -30,7 +30,7 @@ depending on your needs:
 #. If you want to change the contents of non-HTML error output,
    :ref:`create a new normalizer <overriding-non-html-error-output>`;
 
-#. If you also want to tweak the logic used by Symfony to generate error pages,
+#. If you also want to change the logic used by Symfony to generate error pages,
    :ref:`override the default error controller <custom-error-controller>`;
 
 #. If you need total control of exception handling to run your own logic,
@@ -246,7 +246,7 @@ supports the ``FlattenException`` input::
 Overriding the Default ErrorController
 --------------------------------------
 
-If you need a little more flexibility beyond just overriding the template,
+If you need a little more flexibility beyond overriding the template,
 then you can change the controller that renders the error page. For example,
 you might need to pass some additional variables into your template.
 
@@ -334,7 +334,7 @@ error pages.
 
 This approach allows you to create centralized and layered error handling:
 instead of catching (and handling) the same exceptions in various controllers
-time and again, you can have just one (or several) listeners deal with them.
+again and again, you can have only one (or several) listeners handle them.
 
 .. tip::
 

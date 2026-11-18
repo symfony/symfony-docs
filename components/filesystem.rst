@@ -305,8 +305,8 @@ exception on failure::
 contents into a file (creating the file and its directory if they don't exist).
 It does this in an atomic manner: it writes a temporary file first and then moves
 it to the new file location when it's finished. This means that the user will
-always see either the complete old file or the complete new file (but never a
-partially-written file)::
+always see either the complete old file or the complete new file (but never
+a partially-written file)::
 
     $filesystem->dumpFile('file.txt', 'Hello World');
 
@@ -434,8 +434,8 @@ Absolute/relative paths can be converted with the methods
 :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute`
 and :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`.
 
-The :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` method expects a
-relative path and a base path to base that relative path upon::
+The :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` method expects
+a relative path and a base path to base that relative path upon::
 
     echo Path::makeAbsolute('config/config.yaml', '/var/www/project');
     // => /var/www/project/config/config.yaml

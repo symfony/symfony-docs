@@ -3,8 +3,8 @@ GreaterThan
 
 Validates that a value is greater than another value, defined in the options. To
 validate that a value is greater than or equal to another value, see
-:doc:`/reference/constraints/GreaterThanOrEqual`. To validate that a value is less
-than another value, see :doc:`/reference/constraints/LessThan`.
+:doc:`/reference/constraints/GreaterThanOrEqual`. To validate that a value is
+less than another value, see :doc:`/reference/constraints/LessThan`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`

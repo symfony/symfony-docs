@@ -65,8 +65,8 @@ files and ``PlantUmlDumper`` to create the PlantUML files::
 Styling
 -------
 
-You can use the ``--with-metadata`` option in the ``workflow:dump`` command to include the metadata of places,
-transitions and workflows.
+You can use the ``--with-metadata`` option in the ``workflow:dump`` command to
+include the metadata of places, transitions and workflows.
 
 The DOT image will look like this:
 

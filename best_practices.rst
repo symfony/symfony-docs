@@ -242,7 +242,7 @@ Use Attributes to Configure Routing, Caching, and Security
 
 Using attributes for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
-formats (YAML, XML, PHP): all the configuration is just where you require it,
+formats (YAML, XML, PHP): all the configuration is right where you need it,
 and it only uses one format.
 
 Use Dependency Injection to Get Services
@@ -324,9 +324,9 @@ Use a Single Action to Render and Process the Form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 :ref:`Rendering forms <rendering-forms>` and :ref:`processing forms <processing-forms>`
-are two of the main tasks when handling forms. Both are very similar (most of the
-time, almost identical), so it's much simpler to let a single controller action
-handle both.
+are two of the main tasks when handling forms. Both are very similar (most of
+the time, almost identical), so it's much simpler to let a single controller
+action handle both.
 
 .. _best-practice-internationalization:
 

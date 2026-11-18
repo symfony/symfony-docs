@@ -16,7 +16,7 @@ be implemented with a :doc:`ChoiceType </reference/forms/types/choice>` where th
 ``choices`` option is set to the list of available shipping options.
 
 However, if you use the same form type in several forms, repeating the list of
-``choices`` every time you use it quickly becomes boring. In this example, a
+``choices`` every time you use it becomes repetitive. In this example, a
 better solution is to create a custom form type based on ``ChoiceType``. The
 custom type looks and behaves like a ``ChoiceType`` but the list of choices is
 already populated with the shipping options so you don't need to define them.
@@ -79,7 +79,7 @@ Now you can add this form type when :doc:`creating Symfony forms </forms>`::
         // ...
     }
 
-That's all. The ``shipping`` form field will be rendered correctly in any
+The ``shipping`` form field will now be rendered correctly in any
 template because it reuses the templating logic defined by its parent type
 ``ChoiceType``. If you prefer, you can also define a template for your custom
 types, as explained later in this article.
@@ -89,8 +89,8 @@ Creating Form Types from Scratch
 
 Some form types are so specific to your projects that they cannot be based on
 any :doc:`existing form types </reference/forms/types>` because they are too
-different. Consider an application that wants to reuse the
-following set of fields (the "postal address") in different forms:
+different. Consider an application that wants to reuse the following set of
+fields (the "postal address") in different forms:
 
 .. raw:: html
 

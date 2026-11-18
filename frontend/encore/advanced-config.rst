@@ -285,7 +285,7 @@ Having Full Control over Loader Rules
 
 The method ``configureLoaderRule()`` provides a clean way to configure Webpack loader rules (``module.rules``, see `Configuration <https://webpack.js.org/concepts/loaders/#configuration>`_).
 
-This is a low-level method. All your modifications will be applied just before pushing the loader rules to Webpack.
+This is a low-level method. All your modifications will be applied right before pushing the loader rules to Webpack.
 It means that you can override the default configuration provided by Encore, which may break things. Be careful when using it.
 
 For example, you could use it to configure the ``vue`` loader to enable a specific option:

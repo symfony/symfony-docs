@@ -86,8 +86,8 @@ Next, make sure your user checker is registered as a service. If you're using th
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the service is registered automatically.
 
-All that's left to do is add the checker to the desired firewall where the value
-is the service id of your user checker:
+Then, add the checker to the desired firewall, where the value is the service
+id of your user checker:
 
 .. configuration-block::
 

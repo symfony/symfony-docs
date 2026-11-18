@@ -14,8 +14,8 @@ This component is useful to schedule tasks like maintenance (database cleanup,
 cache clearing, etc.), background processing (queue handling, data synchronization,
 etc.), periodic data updates, scheduled notifications (emails, alerts), and more.
 
-This document focuses on using the Scheduler component in the context of a full-stack
-Symfony application.
+This document focuses on using the Scheduler component in the context of a
+full-stack Symfony application.
 
 Installation
 ------------
@@ -42,7 +42,7 @@ At its core, the Scheduler component allows you to create a task (called a messa
 that is executed by a service and repeated on some schedule. It has some similarities
 with the :doc:`Symfony Messenger </messenger>` component (such as message,
 handler, bus, transport, etc.), but the main difference is that Messenger can't
-deal with repetitive tasks at regular intervals.
+handle repetitive tasks at regular intervals.
 
 Consider the following example of an application that sends some reports to
 customers on a scheduled basis. First, create a Scheduler message that represents
@@ -282,8 +282,8 @@ For example::
 
 .. note::
 
-    The day of month range is ``1-28`` to account for February,
-    which has a minimum of 28 days.
+    The day of month range is ``1-28`` to account for February, which has a
+    minimum of 28 days.
 
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
@@ -407,7 +407,7 @@ Finally, the recurring message has to be attached to a schedule::
         }
     }
 
-So, this ``RecurringMessage`` will encompass both the trigger, defining the
+So, this ``RecurringMessage`` will contain both the trigger, defining the
 generation frequency of the message, and the message itself, the one to be
 processed by a specific handler.
 
@@ -426,7 +426,7 @@ at a defined frequency. For these dynamic scenarios, it gives you the capability
 to dynamically define your message(s) instead of statically. This is achieved by
 defining a :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
 
-Essentially, this means you can dynamically, at runtime, define your message(s)
+This means you can dynamically, at runtime, define your message(s)
 through a callback that gets executed each time the scheduler transport
 checks for messages to be generated::
 
@@ -579,13 +579,13 @@ While planning a schedule in advance is beneficial, it is rare for a schedule to
 remain static over time. After a certain period, some ``RecurringMessages`` may
 become obsolete, while others may need to be integrated into the planning.
 
-As a general practice, to alleviate a heavy workload, the recurring messages in
+As a general practice, to reduce the workload, the recurring messages in
 the schedules are stored in memory to avoid recalculation each time the scheduler
-transport generates messages. However, this approach can have a flip side.
+transport generates messages. However, this approach has a drawback.
 
 Following the same report generation example as above, the company might do some
 promotions during specific periods (and they need to be communicated repetitively
-throughout a given timeframe) or the deletion of old reports needs to be halted
+throughout a given timeframe) or the deletion of old reports needs to be stopped
 under certain circumstances.
 
 This is why the ``Scheduler`` incorporates a mechanism to dynamically modify the
@@ -652,7 +652,7 @@ In your handler, you can check a condition and, if it's met, access the
         }
     }
 
-Nevertheless, this system may not be the most suitable for all scenarios. Also,
+However, this system may not be the most suitable for all scenarios. Also,
 the handler should ideally be designed to process the type of message it is
 intended for, without making decisions about adding or removing a new recurring
 message.
@@ -663,8 +663,9 @@ handler. This is because the handler will no longer be called or executed once
 there are no more messages of that type.
 
 However, the Scheduler also features an event system that is integrated into a
-Symfony full-stack application by grafting onto Symfony Messenger events. These
-events are dispatched through a listener, providing a convenient means to respond.
+Symfony full-stack application by building on top of Symfony Messenger events.
+These events are dispatched through a listener, providing a useful way to
+respond.
 
 Managing Scheduled Messages via Events
 --------------------------------------
@@ -679,8 +680,8 @@ preserving decoupling. Three primary event types have been introduced:
 * ``POST_RUN_EVENT``
 * ``FAILURE_EVENT``
 
-Access to the schedule is a crucial feature, allowing effortless addition or
-removal of message types. Additionally, it will be possible to access the
+Access to the schedule is an important feature, allowing you to add or remove
+message types. Additionally, it will be possible to access the
 currently processed message and its message context.
 
 In this scenario, you can listen to the ``PRE_RUN_EVENT`` and
@@ -689,7 +690,7 @@ recurring message for cleaning old reports again, with the same or different
 configurations, or add any other recurring message(s).
 
 If you had chosen to handle the deletion of the recurring message, you could
-have done so in a listener for this event. Importantly, it reveals a specific
+have done so in a listener for this event. Importantly, it provides a specific
 feature :method:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent::shouldCancel`
 that allows you to prevent the message of the deleted recurring message from
 being transferred and processed by its handler::
@@ -978,9 +979,9 @@ recurring messages. You can narrow down the list to a specific schedule:
 Efficient Management With Symfony Scheduler
 -------------------------------------------
 
-When a worker is restarted or undergoes shutdown for a period, the Scheduler transport won't be able to generate the messages (because they are created on the fly by the scheduler transport).
+When a worker is restarted or stopped for a period, the Scheduler transport won't be able to generate the messages (because they are created at runtime by the scheduler transport).
 This implies that any messages scheduled to be sent during the worker's inactive period are not sent, and the Scheduler will lose track of the last processed message.
-Upon restart, it will recalculate the messages to be generated from that point onward.
+After the restart, it will recalculate the messages to be generated from that point onward.
 
 To illustrate, consider a recurring message set to be sent every 3 days.
 If a worker is restarted on day 2, the message will be sent 3 days from the restart, on day 5.
@@ -1061,7 +1062,7 @@ once::
 .. note::
 
     The lock applies to the whole schedule, not to each task: only one worker
-    generates messages at a time and the others wait as standbys, taking over
+    generates messages at a time and the others wait as backups, replacing it
     if the active one stops. Running more workers gives you high availability,
     not more throughput. To scale the processing of your tasks, dispatch them
     to a Messenger transport as explained below.

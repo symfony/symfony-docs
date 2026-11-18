@@ -227,8 +227,8 @@ Scoping Client
 ~~~~~~~~~~~~~~
 
 It's common that some of the HTTP client options depend on the URL of the
-request (e.g. you must set some headers when making requests to the GitHub API but
-not for other hosts). If that's the case, the component provides scoped
+request (e.g. you must set some headers when making requests to the GitHub API
+but not for other hosts). If that's the case, the component provides scoped
 clients (using :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`) to
 autoconfigure the HTTP client based on the requested URL:
 
@@ -712,7 +712,7 @@ be used for subsequent requests). That's why this component doesn't handle
 cookies automatically.
 
 You can either :ref:`send cookies with the BrowserKit component <component-browserkit-sending-cookies>`,
-which integrates seamlessly with the HttpClient component, or manually set
+which integrates with the HttpClient component, or manually set
 `the Cookie HTTP request header`_ as follows::
 
     use Symfony\Component\HttpClient\HttpClient;
@@ -761,7 +761,7 @@ an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the
 number of times a request is retried.
 
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
-to learn how to tweak each of them to fit your application needs.
+to learn how to adjust each of them to fit your application needs.
 
 When using the HttpClient outside of a Symfony application, use the
 :class:`Symfony\\Component\\HttpClient\\RetryableHttpClient` class to wrap your
@@ -1012,7 +1012,7 @@ with HTTP/2 and with doing concurrent asynchronous streamed and multiplexed
 requests/responses. Even when doing regular synchronous calls, this design
 allows keeping connections to remote hosts open between requests, improving
 performance by saving repetitive DNS resolution, SSL negotiation, etc.
-To leverage all these design benefits, the cURL extension is needed.
+To take advantage of all these design benefits, the cURL extension is needed.
 
 Enabling cURL Support
 ~~~~~~~~~~~~~~~~~~~~~
@@ -1289,7 +1289,7 @@ When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
 throw an appropriate exception, all of which implement the
 :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`.
 
-To opt out of this exception and deal with 300-599 status codes on your own,
+To avoid this exception and handle 300-599 status codes yourself,
 pass ``false`` as the optional argument to every call of those methods,
 e.g. ``$response->getHeaders(false);``.
 
@@ -1297,7 +1297,7 @@ If you do not call any of these 3 methods at all, the exception will still be th
 when the ``$response`` object is destructed.
 
 Calling ``$response->getStatusCode()`` is enough to disable this behavior
-(but then don't forget to check the status code yourself).
+(but then make sure to check the status code yourself).
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
@@ -1325,7 +1325,7 @@ This behavior provided at destruction-time is part of the fail-safe design of th
 component. No errors will go unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
-opt out of these fallback mechanisms as the destructor won't have anything
+disable these fallback mechanisms as the destructor won't have anything
 remaining to do.
 
 .. _http-client-concurrent-requests:
@@ -1453,8 +1453,8 @@ Dealing with Network Errors
 Network errors (broken pipe, failed DNS resolution, etc.) are thrown as instances
 of :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`.
 
-First of all, you don't *have* to deal with them: letting errors bubble up to your
-generic exception-handling stack might be really fine in most use cases.
+First of all, you don't *have* to handle them: letting errors bubble up to
+your generic exception-handling stack might be really fine in most use cases.
 
 If you want to handle them, here is what you need to know:
 
@@ -1478,7 +1478,7 @@ network errors can happen when calling e.g. ``getStatusCode()`` too::
 
     Because ``$response->getInfo()`` is non-blocking, it shouldn't throw by design.
 
-When multiplexing responses, you can deal with errors for individual streams by
+When multiplexing responses, you can handle errors for individual streams by
 catching :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`
 in the foreach loop::
 
@@ -1486,7 +1486,7 @@ in the foreach loop::
         try {
             if ($chunk->isTimeout()) {
                 // ... decide what to do when a timeout occurs
-                // if you want to stop a response that timed out, don't forget
+                // if you want to stop a response that timed out, make sure
                 // to call $response->cancel() or the destructor of the response
                 // will try to complete it one more time
             } elseif ($chunk->isFirst()) {
@@ -1621,8 +1621,8 @@ This component provides a :class:`Symfony\\Component\\HttpClient\\ThrottlingHttp
 decorator that allows you to limit the number of requests within a certain period,
 potentially delaying calls based on the rate limiting policy.
 
-The implementation leverages the
-:class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class under the hood
+The implementation uses the
+:class:`Symfony\\Component\\RateLimiter\\LimiterInterface` class internally
 so the :doc:`Rate Limiter component </rate_limiter>` needs to be
 installed in your application::
 
@@ -2117,7 +2117,7 @@ it must return an
 
 The custom processing of chunks should happen in ``$passthru``: this generator
 is where you need to write your logic. It will be called for each chunk yielded
-by the underlying client. A ``$passthru`` that does nothing would just ``yield
+by the underlying client. A ``$passthru`` that does nothing would only ``yield
 $chunk;``. You could also yield a modified chunk, split the chunk into smaller
 ones by yielding several times, or even skip a chunk altogether by issuing a
 ``return;`` instead of yielding.
@@ -2156,7 +2156,7 @@ the service being online or the request changing state, for example deleting
 a resource.
 
 :class:`Symfony\\Component\\HttpClient\\MockHttpClient` implements the
-:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`, just like any actual
+:class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`, like any actual
 HTTP client in this component. When you type-hint with
 :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface` your code will accept
 the real client outside tests, while replacing it with
@@ -2375,7 +2375,7 @@ You can use :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse` 
         'foo' => 'bar',
     ]);
 
-Just like :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`, you can
+Like :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`, you can
 also create a :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse`
 directly from a file::
 

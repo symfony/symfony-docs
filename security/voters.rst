@@ -167,7 +167,7 @@ code like this:
         }
 
 The ``#[IsGranted]`` attribute or ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
-calls out to the "voter" system. Right now, no voters will vote on whether or not
+calls the "voter" system. Right now, no voters will vote on whether or not
 the user can "view" or "edit" a ``Post``. But you can create your *own* voter that
 decides this using whatever logic you want.
 
@@ -269,7 +269,7 @@ by its author. A voter that implements this logic could look like this::
 
         The ``$extraData`` property was introduced in Symfony 7.4.
 
-That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a-service>`.
+The voter is now complete. Next, :ref:`configure it <declaring-the-voter-as-a-service>`.
 
 To recap, here's what's expected from the two abstract methods:
 
@@ -359,8 +359,9 @@ with ``ROLE_SUPER_ADMIN``::
     instead.
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-you're done! Symfony will automatically pass the ``security.helper``
-service when instantiating your voter (thanks to autowiring).
+no extra configuration is needed. Symfony will automatically pass the
+``security.helper`` service when instantiating your voter (thanks to
+autowiring).
 
 .. _voter-improve-performance:
 

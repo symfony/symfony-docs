@@ -209,7 +209,7 @@ user changes the Country:
     const stateSelect = document.getElementById('address_state');
 
     countrySelect.addEventListener('change', async function() {
-        // submit just the country field to get updated state options
+        // submit only the country field to get updated state options
         const formData = new FormData();
         formData.append(this.name, this.value);
 

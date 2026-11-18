@@ -232,7 +232,7 @@ When the user submits the form, the submitted data for the ``tags`` field is
 used to construct an ``ArrayCollection`` of ``Tag`` objects. The collection is
 then set on the ``tags`` field of the ``Task`` and can be accessed via ``$task->getTags()``.
 
-So far, this works great, but only to edit *existing* tags. It doesn't yet let you
+So far, this works well, but only to edit *existing* tags. It doesn't yet let you
 add new tags or delete existing ones.
 
 .. warning::
@@ -318,7 +318,7 @@ Now add a button to dynamically add a new tag:
 
 .. tip::
 
-    The ``form.tags.vars.prototype`` is a form element that looks and feels just
+    The ``form.tags.vars.prototype`` is a form element that looks and works exactly
     like the individual ``form_widget(tag.*)`` elements inside your ``for`` loop.
     This means that you can call ``form_widget()``, ``form_row()`` or ``form_label()``
     on it. You could even choose to render only one of its fields (e.g. the
@@ -657,10 +657,10 @@ The ``addTagFormDeleteLink()`` function will look something like this:
         });
     }
 
-When a tag form is removed from the DOM and the form is submitted, the removed ``Tag``
-object will not be included in the collection passed to ``setTags()``. Depending on
-your persistence layer, this may or may not be enough to actually remove
-the relationship between the removed ``Tag`` and ``Task`` object.
+When a tag form is removed from the DOM and the form is submitted, the removed
+``Tag`` object will not be included in the collection passed to ``setTags()``.
+Depending on your persistence layer, this may or may not be enough to actually
+remove the relationship between the removed ``Tag`` and ``Task`` object.
 
 .. sidebar:: Doctrine: Ensuring the database persistence
 
@@ -731,7 +731,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
             }
         }
 
-    As you can see, adding and removing the elements correctly can be tricky.
+    As you can see, adding and removing the elements correctly can be complex.
     Unless you have a many-to-many relationship where Task is the "owning" side,
     you'll need to do extra work to make sure that the relationship is properly
     updated (whether you're adding new tags or removing existing tags) on
