@@ -67,6 +67,49 @@ Replace the full item list at runtime with ``setItems()``::
 
 This resets the selection index and any active filter.
 
+Read the items with ``getItems()``, and the position of the highlighted
+item among the items shown by the filter with ``getSelectedIndex()``::
+
+    $items = $list->getItems();
+    $index = $list->getSelectedIndex();
+
+.. versionadded:: 8.3
+
+    The ``getItems()`` and ``getSelectedIndex()`` methods were
+    introduced in Symfony 8.3.
+
+Grouping Items
+--------------
+
+.. versionadded:: 8.3
+
+    The ``group`` item key was introduced in Symfony 8.3.
+
+Add a ``group`` key to the items to display them under headings. The
+first item of each run of items with the same group gets a heading with
+the group name, styled by the ``group`` sub-element (gray by default)::
+
+    $items = [
+        ['value' => 'apple', 'label' => 'Apple', 'group' => 'Fruits'],
+        ['value' => 'banana', 'label' => 'Banana', 'group' => 'Fruits'],
+        ['value' => 'carrot', 'label' => 'Carrot', 'group' => 'Vegetables'],
+    ];
+
+This list is displayed as follows:
+
+.. code-block:: text
+
+    Fruits
+    → Apple
+      Banana
+    Vegetables
+      Carrot
+
+Headings are not items: the user can't highlight them, and they change
+neither the navigation nor the events. Items aren't sorted, so keep the
+items of a group next to each other. When there is not enough room, the
+highlighted item is displayed instead of its heading.
+
 .. _tui-select-list-multiselect:
 
 Selecting Multiple Items

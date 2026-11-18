@@ -36,6 +36,20 @@ pass ``truncate: true`` to the constructor::
 
     $text = new TextWidget('A very long line...', truncate: true);
 
+You can also turn truncation on or off later with ``setTruncate()``,
+which accepts the string that ends truncated lines (``...`` by
+default)::
+
+    $text->setTruncate(ellipsis: '…');
+    $text->isTruncated(); // true
+
+    $text->setTruncate(false); // wrap again
+
+.. versionadded:: 8.3
+
+    The ``setTruncate()`` and ``isTruncated()`` methods were introduced
+    in Symfony 8.3.
+
 FIGlet Fonts
 ------------
 
