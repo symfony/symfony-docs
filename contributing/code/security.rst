@@ -2,8 +2,8 @@ Security Issues
 ===============
 
 This document explains how Symfony security issues are handled by the
-Symfony core team (Symfony being the code hosted on the main ``symfony/symfony``
-`Git repository`_).
+Symfony core team (Symfony being the code hosted under the
+`Symfony GitHub organization`_).
 
 Reporting a Security Issue
 --------------------------
@@ -202,7 +202,7 @@ Check the `Security Advisories`_ blog category for a list of all security
 vulnerabilities that were fixed in Symfony releases, starting from Symfony
 1.0.0.
 
-.. _`Git repository`: https://github.com/symfony/symfony
+.. _`Symfony GitHub organization`:https://github.com/symfony
 .. _blog: https://symfony.com/blog/
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`mitre.org`: https://cveform.mitre.org/
