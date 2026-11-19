@@ -221,11 +221,14 @@ folder or reinstall the package with Composer to go back to the published versio
 Learn more
 ----------
 
-* :doc:`/bundles/override`
-* :doc:`/bundles/best_practices`
-* :doc:`/bundles/configuration`
-* :doc:`/bundles/extension`
-* :doc:`/bundles/prepend_extension`
+.. toctree::
+    :maxdepth: 1
+
+    /bundles/override
+    /bundles/best_practices
+    /bundles/configuration
+    /bundles/extension
+    /bundles/prepend_extension
 
 .. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/

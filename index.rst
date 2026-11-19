@@ -50,6 +50,7 @@ Topics
     setup
     serializer
     service_container
+    scheduler
     testing
     translation
     validation
@@ -60,21 +61,32 @@ Topics
 Components
 ----------
 
-Read the :doc:`Components </components/>` documentation.
+Read the :doc:`Components </components/index>` documentation.
+
+.. toctree::
+    :hidden:
+
+     /components/index
 
 Reference Documents
 -------------------
 
 Get answers quickly with reference documents:
 
-.. include:: /reference/map.rst.inc
+.. toctree::
+    :titlesonly:
+
+    /reference/index
 
 Contributing
 ------------
 
 Contribute to Symfony:
 
-.. include:: /contributing/map.rst.inc
+.. toctree::
+    :titlesonly:
+
+    /contributing/index
 
 Create Your Own Framework
 -------------------------
