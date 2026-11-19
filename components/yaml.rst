@@ -646,9 +646,12 @@ the same header used by editors that support the `YAML language server`_:
     some_config:
         # ...
 
-The shorter ``# $schema=path/to/schema.json`` header also works. Relative paths
+The shorter ``# $schema: path/to/schema.json`` header also works. Relative paths
 are resolved from the directory of the linted file and remote schemas (URLs) are
-not supported. Files that declare no schema are reported as valid.
+not supported. Encode spaces in paths as ``%20`` (e.g.
+``path/to/my%20schema.json``). Set the schema to ``none`` (e.g.
+``# $schema: none``) to skip the validation of a file. Files that don't declare
+a schema are reported as valid.
 
 The linter skips the schemas that it can't load (e.g. missing files or remote
 URLs). Add the ``--check-schema`` option to make the validation mandatory. Then,
