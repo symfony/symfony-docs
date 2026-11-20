@@ -65,7 +65,8 @@ one of the values is changed.
     If you're using a mutable object with constructor arguments, instead of
     using a data mapper, you should configure the ``empty_data`` option with a closure
     as described in
-    :ref:`How to Configure empty Data for a Form Class <forms-empty-data-closure>`.
+    :ref:`how to configure the empty data of a form class
+    <forms-empty-data-closure>`.
 
 The red, green and blue form fields have to be mapped to the constructor
 arguments and the ``Color`` instance has to be mapped to red, green and blue
