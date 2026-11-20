@@ -8,6 +8,6 @@ The configured payload is not used by the Validator component, but its processin
 is completely up to you.
 
 For example, you may want to use
-:doc:`several error levels </validation/severity>` to present failed
+:ref:`several error levels <validation-payload>` to present failed
 constraints differently in the front-end depending on the severity of the
 error.
