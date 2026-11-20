@@ -124,6 +124,19 @@ Parameter                 Description
 ``{{ compared_value }}``  The number configured in the ``divisibleBy`` option
 ========================  ===================================================
 
+``exactly``
+~~~~~~~~~~~
+
+**type**: ``integer``
+
+This option is the "exact" count value. Validation will fail if the given collection elements count is not **exactly** equal to this value.
+
+.. note::
+
+    This option is the one being set by default when using the ``Count`` constraint
+    without passing any named argument to it. This means that, for example,
+    ``#[Assert\Count(20)]`` and ``#[Assert\Count(exactly: 20)]`` are equivalent.
+
 ``exactMessage``
 ~~~~~~~~~~~~~~~~
 
