@@ -49,7 +49,10 @@ an encrypted date, not as an encrypted string.
 
 An encrypted column cannot be searched. See
 :doc:`/key_management/searching` for how to find a row by a value the
-database holds only as ciphertext.
+database holds only as ciphertext. When that value identifies a user, such
+as the email address they log in with,
+:ref:`security-user-providers-encrypted-identifier` shows how to use its
+blind index in a user provider.
 
 Omitting the Key
 ----------------
