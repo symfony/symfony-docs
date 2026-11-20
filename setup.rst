@@ -161,10 +161,62 @@ automatically:
     The web server works with any PHP application, not only Symfony projects,
     so it's a very useful generic development tool.
 
+.. _setup-docker:
+
 Symfony Docker Integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you'd like to use Docker with Symfony, see :doc:`/setup/docker`.
+If you'd like a complete Docker environment (where PHP, the web server, the
+database, etc. all run in Docker), use the `Symfony Docker`_ project.
+
+Alternatively, install PHP on your local machine and use the Symfony CLI local
+web server, which detects your Docker services and exposes them as environment
+variables (read about the
+:ref:`Docker integration of the Symfony CLI <symfony-server-docker>`).
+
+.. note::
+
+    On macOS, you must allow the default Docker socket to be used for the
+    Symfony CLI Docker integration to work,
+    `as explained in the Docker documentation`_.
+
+Flex Recipes & Docker Configuration
+...................................
+
+In both cases, the :ref:`Flex recipes <symfony-flex>` of some packages also
+include Docker configuration. For example, when you run
+``composer require doctrine`` (which installs ``symfony/orm-pack``), Flex
+adds a ``database`` service to your ``compose.yaml`` file.
+
+The first time you install a recipe containing Docker configuration, Flex asks
+whether you want to include it. You can also store your choice in the
+``extra.symfony.docker`` option of your ``composer.json`` file (``true`` or
+``false``). If this option isn't defined but the ``SYMFONY_DOCKER`` environment
+variable is, Flex doesn't ask and stores the value of that variable in this
+option.
+
+When updating recipes (e.g. with ``composer recipes:update``), Flex only
+updates the Docker configuration if the ``extra.symfony.docker`` option is
+``true``.
+
+Some recipes also add contents to your ``Dockerfile``. To get those changes,
+your application must already have a ``Dockerfile`` in its root directory
+that includes the following section anywhere inside it:
+
+.. code-block:: text
+
+    ###> recipes ###
+    ###< recipes ###
+
+Flex adds the recipe changes inside this section. The ``Dockerfile`` of the
+`Symfony Docker`_ project already includes it.
+
+When a recipe changes your Docker Compose files, rebuild your containers by
+running:
+
+.. code-block:: terminal
+
+    $ docker compose up --build
 
 .. _symfony-flex:
 .. _flex-quick-intro:
@@ -300,8 +352,15 @@ version:
 
     $ composer create-project symfony/skeleton:"7.4.*" my_project_directory
 
-To work with Symfony versions that are still in development, read
-:doc:`how to install unreleased Symfony versions </setup/unstable_versions>`.
+To create a project based on the Symfony version that is still in development
+using Composer, set the minimum stability to ``dev``:
+
+.. code-block:: terminal
+
+    $ composer create-project symfony/skeleton my_project_directory --stability=dev
+
+To test an existing application with a Symfony version that isn't released yet,
+read :ref:`how to upgrade to an unstable Symfony version <upgrade-major-unstable-versions>`.
 
 The Symfony Demo application
 ----------------------------
@@ -328,7 +387,6 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    setup/docker
     setup/web_server_configuration
     setup/*
 
@@ -338,6 +396,8 @@ Learn More
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
+.. _`Symfony Docker`: https://github.com/dunglas/symfony-docker
+.. _`as explained in the Docker documentation`: https://docs.docker.com/desktop/mac/permission-requirements/
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`Symfony releases`: https://symfony.com/releases
 .. _`Main recipe repository`: https://github.com/symfony/recipes
