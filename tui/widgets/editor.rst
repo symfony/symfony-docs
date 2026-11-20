@@ -40,6 +40,84 @@ To make the editor fill all remaining vertical space, call::
 
     $editor->expandVertically(true);
 
+By default, the text is displayed between two horizontal borders, which
+show how many lines are scrolled out of view above and below. Remove
+them with ``setFramed(false)``, for instance when the editor is inside a
+panel that already has a border::
+
+    $editor->setFramed(false);
+
+A vertically expanded editor without borders gives their rows to the
+text.
+
+.. versionadded:: 8.3
+
+    The ``setFramed()`` method was introduced in Symfony 8.3.
+
+Line Wrapping
+-------------
+
+.. versionadded:: 8.3
+
+    The ``setLineWrapping()`` method was introduced in Symfony 8.3.
+
+Long lines wrap onto several rows by default. Call
+``setLineWrapping(false)`` to keep each line on one row instead; the
+editor then scrolls horizontally to keep the cursor in view::
+
+    $editor->setLineWrapping(false);
+
+Placeholder
+-----------
+
+.. versionadded:: 8.3
+
+    The ``setPlaceholder()`` method was introduced in Symfony 8.3.
+
+A placeholder is a hint displayed on the first row while the editor is
+empty. It is styled by the ``placeholder`` sub-element, gray by
+default::
+
+    $editor->setPlaceholder('Write a message');
+
+Read-only Editors
+-----------------
+
+.. versionadded:: 8.3
+
+    The ``setReadOnly()`` method was introduced in Symfony 8.3.
+
+A read-only editor displays a text the user can't change. It can still
+get the focus, the user can still move its cursor and scroll, and
+**Enter** and **Escape** still dispatch their events, but typing,
+pasting, undo, redo and yanks are ignored::
+
+    $editor->setText($logs)->setReadOnly();
+
+Limiting the Length
+-------------------
+
+.. versionadded:: 8.3
+
+    The ``setMaxLength()`` method was introduced in Symfony 8.3.
+
+``setMaxLength()`` limits the number of characters of the text, line
+breaks included::
+
+    $editor->setMaxLength(500);
+
+Typed and pasted text is cut to the room left. Any other edit that would
+make the text longer than the limit, such as yanking from the kill ring
+or inserting a new line, is ignored. As for inputs, the length is
+counted in characters as the user sees them (grapheme clusters). A text
+passed to ``setText()`` is not limited. Pass ``null`` to remove the
+limit.
+
+.. note::
+
+    The editor counts the characters of the whole text on each edit, so
+    the limit adds a small cost to each key press for very long texts.
+
 Events
 ------
 
