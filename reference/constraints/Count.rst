@@ -124,13 +124,26 @@ Parameter                 Description
 ``{{ compared_value }}``  The number configured in the ``divisibleBy`` option
 ========================  ===================================================
 
+``exactly``
+~~~~~~~~~~~
+
+**type**: ``integer`` **default**: ``null``
+
+This option is the "exact" count value. Validation will fail if the given
+collection elements count is not **exactly** equal to this value. Using this
+option is the same as setting the `min`_ and `max`_ options to the same value.
+
+This is the default option of the constraint, so you can pass its value as the
+first argument without naming it (e.g. ``#[Assert\Count(3)]``).
+
 ``exactMessage``
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This collection should contain exactly {{ limit }} elements.``
 
-The message that will be shown if min and max values are equal and the underlying
-collection elements count is not exactly this value.
+The message that will be shown if the `exactly`_ option is set (or the ``min``
+and ``max`` values are equal) and the underlying collection elements count is
+not exactly this value.
 
 You can use the following parameters in this message:
 
