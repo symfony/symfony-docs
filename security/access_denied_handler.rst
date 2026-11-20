@@ -1,5 +1,5 @@
-How to Customize Access Denied Responses
-========================================
+How to Customize Entry Points and Access Denied Responses
+=========================================================
 
 In Symfony, you can throw an
 :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
@@ -17,7 +17,11 @@ generate a response based on the authentication state:
 Customize the Unauthorized Response
 -----------------------------------
 
-You need to create a class that implements
+When an unauthenticated user tries to access a protected page, Symfony
+gives them a suitable response to let them start authentication (e.g.
+redirect to a login form or show a 401 Unauthorized HTTP response for
+APIs). This response is created by the *authentication entry point* of the
+firewall. To customize it, create a class that implements
 :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`.
 This interface has one method (``start()``) that is called whenever an
 unauthenticated user tries to access a protected resource::
@@ -95,6 +99,165 @@ Now, configure this service ID as the entry point for the firewall:
                 // ....
                 ->entryPoint(AuthenticationEntryPoint::class)
             ;
+        };
+
+Configure the Entry Point of a Firewall
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A firewall can have multiple ways to authenticate (e.g. both a form login and
+a social login). If more than one of its authenticators provides an entry
+point, you must choose which one to use with the ``entry_point`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            firewalls:
+                main:
+                    # allow authentication using a form or a custom authenticator
+                    form_login: ~
+                    custom_authenticators:
+                        - App\Security\SocialConnectAuthenticator
+
+                    # use the form login as the entry point for unauthenticated users
+                    entry_point: form_login
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <!-- entry-point: use the form login as the entry point for
+                                  unauthenticated users -->
+                <firewall name="main"
+                    entry-point="form_login"
+                >
+                    <!-- allow authentication using a form or a custom authenticator -->
+                    <form-login/>
+                    <custom-authenticator>App\Security\SocialConnectAuthenticator</custom-authenticator>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\SocialConnectAuthenticator;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+            // allow authentication using a form or a custom authenticator
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall
+                ->formLogin()
+                ->customAuthenticators([SocialConnectAuthenticator::class])
+
+                // use the form login as the entry point for unauthenticated users
+                ->entryPoint('form_login')
+            ;
+        };
+
+The ``entry_point`` setting accepts the name of one of the authenticators of
+the firewall (e.g. ``form_login``) or the service ID of a custom entry point,
+like the ``App\Security\AuthenticationEntryPoint`` class shown above.
+
+Multiple Authenticators with Separate Entry Points
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Some applications use different authenticators to protect different parts of
+the application. For example, a login form protects the main website and API
+keys protect the API endpoints used by external parties.
+
+A firewall can only have one entry point, so split the configuration into two
+separate firewalls:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            firewalls:
+                api:
+                    pattern: ^/api/
+                    custom_authenticators:
+                        - App\Security\ApiTokenAuthenticator
+                main:
+                    lazy: true
+                    form_login: ~
+
+            access_control:
+                - { path: '^/login', roles: PUBLIC_ACCESS }
+                - { path: '^/api', roles: ROLE_API_USER }
+                - { path: '^/', roles: ROLE_USER }
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <firewall name="api" pattern="^/api/">
+                    <custom-authenticator>App\Security\ApiTokenAuthenticator</custom-authenticator>
+                </firewall>
+
+                <firewall name="main" lazy="true">
+                    <form-login/>
+                </firewall>
+
+                <rule path="^/login" role="PUBLIC_ACCESS"/>
+                <rule path="^/api" role="ROLE_API_USER"/>
+                <rule path="^/" role="ROLE_USER"/>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\ApiTokenAuthenticator;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            $apiFirewall = $security->firewall('api');
+            $apiFirewall
+                ->pattern('^/api/')
+                ->customAuthenticators([ApiTokenAuthenticator::class])
+            ;
+
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall
+                ->lazy(true)
+                ->formLogin()
+            ;
+
+            // each call to accessControl() creates a new rule
+            $security->accessControl()->path('^/login')->roles(['PUBLIC_ACCESS']);
+            $security->accessControl()->path('^/api')->roles(['ROLE_API_USER']);
+            $security->accessControl()->path('^/')->roles(['ROLE_USER']);
         };
 
 Customize the Forbidden Response
