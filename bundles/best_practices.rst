@@ -274,6 +274,10 @@ point for the documentation. The
 :doc:`reStructuredText (rST) </contributing/documentation/format>` is the format
 used to render the documentation on the Symfony website.
 
+To request a listing for your bundle in the `Symfony Bundles Documentation`_,
+contact the Symfony Documentation Team on `Symfony Slack`_. Include a link
+to your bundle's documentation pull request.
+
 Installation Instructions
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -568,3 +572,5 @@ Learn more
 .. _`choose any license`: https://choosealicense.com/
 .. _`valid license identifier`: https://spdx.org/licenses/
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`Symfony Bundles Documentation`: https://symfony.com/bundles
+.. _`Symfony Slack`: https://symfony.com/slack
