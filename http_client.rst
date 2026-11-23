@@ -1602,11 +1602,12 @@ Besides ``cache_pool``, the ``caching`` option also defines whether the cache is
 :ref:`shared <reference-http-client-caching-shared>` and the
 :ref:`maximum TTL <reference-http-client-caching-max-ttl>` of cached responses.
 
-.. tip::
+.. note::
 
-    It is strongly recommended to configure a
-    :ref:`retry strategy <http-client-retry-failed-requests>` to gracefully
-    handle temporary cache inconsistencies or validation failures.
+    The :ref:`retry_failed <http-client-retry-failed-requests>` option applies
+    to requests sent to the origin, including cache revalidation requests.
+    If a chunk is missing while reading a cached response, the caching client
+    invalidates the entry and reports an error to the caller.
 
 .. versionadded:: 7.4
 
