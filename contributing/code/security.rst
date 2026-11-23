@@ -208,8 +208,8 @@ Check the `Security Advisories`_ blog category for a list of all security
 vulnerabilities that were fixed in Symfony releases, starting from Symfony
 1.0.0.
 
-.. _`Symfony GitHub organization`:https://github.com/symfony
-.. _blog: https://symfony.com/blog/
+.. _`Symfony GitHub organization`: https://github.com/symfony
+.. _`blog`: https://symfony.com/blog/
 .. _`security advisories database`: https://github.com/FriendsOfPHP/security-advisories
 .. _`CVE Numbering Authority`: https://symfony.com/cna
 .. _`Security Advisories`: https://symfony.com/blog/category/security-advisories
