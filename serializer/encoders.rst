@@ -230,8 +230,8 @@ These are the options available on the :ref:`serializer context <serializer-cont
     Always returns results as a collection, even if only one line is decoded.
 ``force_collection`` (default: ``[]``)
     A list of tag names that are always decoded as a collection, even when they
-    hold a single child. Without this option, the shape of the decoded data
-    depends on the number of children found in the document.
+    appear only once inside their parent element. Without this option, the shape
+    of the decoded data depends on how many times each tag appears in its parent.
 
     .. versionadded:: 8.2
 
@@ -319,7 +319,8 @@ Example with ``force_collection``::
     $xmlEncoder->decode($xml, 'xml');
     // returns ['people' => ['person' => ['name' => 'Jane']]]
 
-    $xmlEncoder->decode($xml, 'xml', ['force_collection' => ['people']]);
+    // list the repeated tag (<person>), not its container tag (<people>)
+    $xmlEncoder->decode($xml, 'xml', ['force_collection' => ['person']]);
     // returns ['people' => ['person' => [['name' => 'Jane']]]]
 
 Example with ``preserve_numeric_keys``::
