@@ -105,12 +105,13 @@ The database connection information is stored as an environment variable called
         # config/packages/doctrine.yaml
         doctrine:
             dbal:
-                user:     '%env(DATABASE_USER)%'
-                password: '%env(DATABASE_PASSWORD)%'
-                host:     '%env(DATABASE_HOST)%'
-                port:     '%env(DATABASE_PORT)%'
-                dbname:   '%env(DATABASE_NAME)%'
-                driver:   pdo_mysql
+                user:           '%env(DATABASE_USER)%'
+                password:       '%env(DATABASE_PASSWORD)%'
+                host:           '%env(DATABASE_HOST)%'
+                port:           '%env(DATABASE_PORT)%'
+                dbname:         '%env(DATABASE_NAME)%'
+                server_version: '%env(DATABASE_SERVER_VERSION)%'
+                driver:         pdo_mysql
 
 Now that your connection parameters are set up, Doctrine can create the ``db_name``
 database for you:
