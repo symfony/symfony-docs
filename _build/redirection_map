@@ -43,7 +43,7 @@
 /cmf/cookbook/creating_a_cms/make-homepage /cmf/tutorial/make-homepage
 /cmf/cookbook/creating_a_cms/sonata-admin /cmf/tutorial/sonata-admin
 /cmf/cookbook/creating_a_cms/the-frontend /cmf/tutorial/the-frontend
-/cookbook/upgrading /cookbook/upgrade/index
+/cookbook/upgrading /setup/upgrade_major
 /cookbook/security/voters_data_permission /cookbook/security/voters
 /cookbook/configuration/pdo_session_storage /cookbook/doctrine/pdo_session_storage
 /cookbook/configuration/mongodb_session_storage /cookbook/doctrine/mongodb_session_storage
@@ -178,12 +178,12 @@
 /cookbook/form/use_empty_data /form/use_empty_data
 /cookbook/frontend/bower /frontend
 /cookbook/frontend/index /frontend
-/cookbook/install/unstable_versions /setup/unstable_versions
+/cookbook/install/unstable_versions /setup/upgrade_major#upgrade-major-unstable-versions
 /cookbook/install/bundles /setup/bundles
 /cookbook/install/index /setup
 /cookbook/install/upgrade_major /setup/upgrade_major
 /cookbook/install/upgrade_minor /setup/upgrade_minor
-/cookbook/install/upgrade_patch /setup/upgrade_patch
+/cookbook/install/upgrade_patch /setup/upgrade_minor#upgrade-patch-version
 /cookbook/logging/channels_handlers /logging/channels_handlers
 /cookbook/logging/index /logging
 /cookbook/logging/monolog /logging
@@ -272,11 +272,11 @@
 /cookbook/testing/insulating_clients /testing/insulating_clients
 /cookbook/testing/profiling /testing/profiling
 /cookbook/testing/simulating_authentication /testing/simulating_authentication
-/cookbook/upgrade/bundles /upgrade/patch_version
+/cookbook/upgrade/bundles /setup/bundles
 /cookbook/upgrade/index /setup/upgrade_major
-/cookbook/upgrade/major_version /setup/upgrade_minor
-/cookbook/upgrade/minor_version /setup/upgrade_major
-/cookbook/upgrade/patch_version /upgrade/bundles
+/cookbook/upgrade/major_version /setup/upgrade_major
+/cookbook/upgrade/minor_version /setup/upgrade_minor
+/cookbook/upgrade/patch_version /setup/upgrade_minor#upgrade-patch-version
 /cookbook/validation/custom_constraint /validation/custom_constraint
 /cookbook/validation/group_service_resolver /form/validation_group_service_resolver
 /cookbook/validation/index /validation
@@ -285,7 +285,7 @@
 /cookbook/web_server/index /setup/built_in_web_server
 /cookbook/web_services/index /controller/soap_web_service
 /cookbook/web_services/php_soap_extension /controller/soap_web_service
-/cookbook/workflow/homestead /setup/homestead
+/cookbook/workflow/homestead /setup/symfony_cli
 /cookbook/workflow/index /setup
 /cookbook/workflow/new_project_git /setup
 /cookbook/workflow/new_project_svn /setup
@@ -676,3 +676,7 @@
 /components/console/helpers/table /console/helpers/table
 /components/console/helpers/tree /console/helpers/tree
 /components/validator/resources /validation#validation-metadata-loaders
+/setup/homestead /setup/symfony_cli
+/setup/upgrade_patch /setup/upgrade_minor#upgrade-patch-version
+/setup/docker /setup#setup-docker
+/setup/unstable_versions /setup/upgrade_major#upgrade-major-unstable-versions
