@@ -343,12 +343,15 @@ instance to disallow extra fields while deserializing:
 
     .. code-block:: php-standalone
 
-        use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+        use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+        use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
         use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+        use Symfony\Component\Serializer\Serializer;
 
         // ...
+        $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
         $normalizers = [
-            new ObjectNormalizer(null, null, null, null, null, null, [
+            new ObjectNormalizer($classMetadataFactory, null, null, null, null, null, [
                 'allow_extra_attributes' => false,
             ]),
         ];
