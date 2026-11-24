@@ -79,7 +79,7 @@ can be downloaded as a static binary from `Mercure.rocks`_.
 A Docker image, a Helm chart for Kubernetes
 and a managed, High Availability Hub are also provided.
 
-Thanks to :doc:`the Docker integration of Symfony </setup/docker>`,
+Thanks to :ref:`the Docker integration of Symfony <setup-docker>`,
 :ref:`Flex <symfony-flex>` offers to install a Mercure hub for development.
 Run ``docker compose up`` to start the hub if you have chosen this option.
 

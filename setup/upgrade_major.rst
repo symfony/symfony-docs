@@ -229,6 +229,38 @@ cache directory contents:
     # run this command on Windows
     C:\> rmdir /s /q var\cache\*
 
+.. _upgrade-major-unstable-versions:
+
+Upgrading to an Unstable Version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Testing your application with a Symfony version that isn't released yet (e.g.
+a beta or release candidate version) helps you find problems before the stable
+release. Update the version constraints as explained above and change the
+``minimum-stability`` option of your ``composer.json`` file:
+
+.. code-block:: diff
+
+      {
+          "...": "...",
+
+    -     "minimum-stability": "stable",
+    +     "minimum-stability": "beta",
+          "prefer-stable": true,
+
+          "extra": {
+              "symfony": {
+    -             "require": "6.4.*"
+    +             "require": "7.0.*"
+              }
+          }
+      }
+
+Use ``dev`` instead of ``beta`` to install the code that is still in
+development. Keep ``prefer-stable`` set to ``true`` so Composer installs the
+stable versions of the packages that have them. Then, run
+``composer update "symfony/*"`` as usual.
+
 .. include:: /setup/_update_dep_errors.rst.inc
 
 .. include:: /setup/_update_all_packages.rst.inc
