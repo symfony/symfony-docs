@@ -207,6 +207,53 @@ method::
         // ensure a fresh cache when debug mode is disabled
         new \Symfony\Component\Filesystem\Filesystem()->remove(__DIR__.'/../var/cache/test');
 
+.. _testing-bootstrap:
+
+Customizing the Bootstrap Process
+.................................
+
+Sometimes you need to do additional work before running your tests (e.g.
+clearing the cache after adding a new translation resource or creating the
+test database). When you :ref:`install the testing packages <testing-installation>`
+using Symfony Flex, it creates a ``tests/bootstrap.php`` file that PHPUnit
+runs before your tests. Add your custom logic to this file:
+
+.. code-block:: diff
+
+      // tests/bootstrap.php
+      use Symfony\Component\Dotenv\Dotenv;
+
+      require dirname(__DIR__).'/vendor/autoload.php';
+
+      if (method_exists(Dotenv::class, 'bootEnv')) {
+          new Dotenv()->bootEnv(dirname(__DIR__).'/.env');
+      }
+
+    + // executes the "php bin/console cache:clear" command
+    + passthru(sprintf(
+    +     'php "%s/../bin/console" cache:clear --env=%s --no-warmup',
+    +     __DIR__,
+    +     $_SERVER['APP_ENV']
+    + ));
+
+.. note::
+
+    If you don't use Symfony Flex, make sure this file is configured as
+    the bootstrap file in your ``phpunit.dist.xml`` file:
+
+    .. code-block:: xml
+
+        <!-- phpunit.dist.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <phpunit
+            bootstrap="tests/bootstrap.php"
+        >
+            <!-- ... -->
+        </phpunit>
+
+Now, when running ``vendor/bin/phpunit``, the bootstrap file clears the cache
+before running all tests.
+
 Customizing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -389,7 +436,7 @@ After that, you can create the test database and all tables using:
 .. tip::
 
     You can run these commands to create the database during the
-    :doc:`test bootstrap process </testing/bootstrap>`.
+    :ref:`test bootstrap process <testing-bootstrap>`.
 
 .. tip::
 
@@ -490,6 +537,57 @@ Empty the database and reload *all* the fixture classes with:
     $ php bin/console --env=test doctrine:fixtures:load
 
 For more information, read the `DoctrineFixturesBundle documentation`_.
+
+.. _testing-doctrine-repositories:
+
+Testing Doctrine Repositories
+.............................
+
+Don't test Doctrine repositories in unit tests with mocks. Repositories run
+database queries, so test them against a real database in
+:ref:`integration tests <integration-tests>`. To do so, get the entity manager
+from the service container as follows (this example assumes that the database
+contains the :ref:`fixtures <doctrine-fixtures>` used by the test)::
+
+    // tests/Repository/ProductRepositoryTest.php
+    namespace App\Tests\Repository;
+
+    use App\Entity\Product;
+    use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+
+    class ProductRepositoryTest extends KernelTestCase
+    {
+        private ?EntityManagerInterface $entityManager;
+
+        protected function setUp(): void
+        {
+            self::bootKernel();
+
+            $this->entityManager = static::getContainer()
+                ->get('doctrine')
+                ->getManager();
+        }
+
+        public function testSearchByName(): void
+        {
+            $product = $this->entityManager
+                ->getRepository(Product::class)
+                ->findOneBy(['name' => 'Priceless widget'])
+            ;
+
+            $this->assertSame(14.50, $product->getPrice());
+        }
+
+        protected function tearDown(): void
+        {
+            parent::tearDown();
+
+            // doing this is recommended to avoid memory leaks
+            $this->entityManager->close();
+            $this->entityManager = null;
+        }
+    }
 
 .. _functional-tests:
 
@@ -696,6 +794,77 @@ each reboot, until the end of the test::
 .. versionadded:: 8.2
 
     The ``configure_container`` option was introduced in Symfony 8.2.
+
+.. _testing-multiple-clients:
+
+Testing the Interaction of Several Clients
+..........................................
+
+If you need to simulate an interaction between different clients (think of a
+chat for instance), create several clients::
+
+    // ...
+    use Symfony\Component\HttpFoundation\Response;
+
+    $harry = static::createClient();
+
+    // before creating another client, shut down the current kernel first;
+    // this does NOT invalidate the $harry client, which can still be used
+    // after this call
+    self::ensureKernelShutdown();
+
+    $sally = static::createClient();
+
+    // optional: run the requests of each client in a separate PHP process
+    // (this is only needed when your code has some global state; see below)
+    $harry->insulate();
+    $sally->insulate();
+
+    $harry->request('POST', '/say/sally/Hello');
+    $sally->request('GET', '/messages');
+
+    $this->assertSame(
+        Response::HTTP_CREATED,
+        $harry->getResponse()->getStatusCode()
+    );
+    $this->assertMatchesRegularExpression(
+        '/Hello/',
+        $sally->getResponse()->getContent()
+    );
+
+Each call to ``createClient()`` boots a kernel and stores it as the current
+kernel for the test case. Creating another client while a kernel is still
+running triggers a ``LogicException``. Call ``self::ensureKernelShutdown()``
+before creating the next client.
+
+Shutting down the kernel does not make previously created clients unusable.
+Existing clients (like ``$harry`` in the above example) can still perform
+requests after the call, but the next ``createClient()`` call will boot a
+fresh kernel instance.
+
+The assertions provided by ``WebTestCase``, such as
+``assertResponseIsSuccessful()`` or ``assertEmailCount()``, always check the
+last client created and its kernel (``$sally`` in the above example). To check
+other clients, use their own methods, like ``$harry->getResponse()``.
+
+Using several clients works except when your code maintains a global state or
+if it depends on a third-party library that has some kind of global state. In
+such a case, insulate your clients by calling their ``insulate()`` method, as
+shown in the above example. Insulated clients transparently run their requests
+in a dedicated and clean PHP process, so they avoid any side effects.
+
+.. tip::
+
+    As an insulated client is slower, you can keep one client in the main
+    process, and insulate the other ones.
+
+.. warning::
+
+    Insulating tests requires some serializing and unserializing operations. If
+    your test includes data that can't be serialized, such as file streams when
+    using the ``UploadedFile`` class, you'll see an exception about
+    *"serialization is not allowed"*. This is a technical limitation of PHP, so
+    the only solution is to disable insulation for those tests.
 
 Browsing the Site
 .................
@@ -969,26 +1138,110 @@ You can also get the objects related to the latest request::
     // the Crawler instance
     $crawler = $client->getCrawler();
 
+.. _testing-profiler-data:
+.. _speeding-up-tests-by-not-collecting-profiler-data:
+
 Accessing the Profiler Data
 ...........................
 
-On each request, you can enable the Symfony profiler to collect data about the
-internal handling of that request. For example, the profiler could be used to
-verify that a given page runs fewer than a certain number of database
-queries when loading.
+On each request, you can enable :doc:`the Symfony Profiler </profiler>` to
+collect data about the internal handling of that request. For example, use it
+to verify that a given page runs fewer than a certain number of database
+queries or to check the time spent in the framework.
 
-To get the profiler for the last request, do the following::
+Collecting profiler data can slow down your tests significantly. For this
+reason, Symfony keeps the profiler enabled but **disables data collection** by
+default in the test environment:
 
-    // enables the profiler for the very next request
-    $client->enableProfiler();
+.. configuration-block::
 
-    $crawler = $client->request('GET', '/profiler');
+    .. code-block:: yaml
 
-    // gets the profile
-    $profile = $client->getProfile();
+        # config/packages/web_profiler.yaml
+        when@test:
+            framework:
+                profiler: { enabled: true, collect: false }
 
-For specific details on using the profiler inside a test, see the
-:doc:`/testing/profiling` article.
+    .. code-block:: php
+
+        // config/packages/web_profiler.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'when@test' => [
+                'framework' => [
+                    'profiler' => [
+                        'enabled' => true,
+                        'collect' => false,
+                    ],
+                ],
+            ],
+        ]);
+
+Setting ``collect`` to ``true`` enables profiler data collection for all tests.
+If you only need profiler data in a few tests, keep collection disabled and
+call ``$client->enableProfiler()`` in those tests. This method doesn't enable
+the profiler itself (which must be enabled
+:ref:`via configuration <reference-profiler-enabled>`); it only enables data
+collection for the next request of the test client.
+
+Then, use the collectors of the profile returned by ``$client->getProfile()``
+to check the collected data::
+
+    // tests/Controller/LuckyControllerTest.php
+    namespace App\Tests\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class LuckyControllerTest extends WebTestCase
+    {
+        public function testRandomNumber(): void
+        {
+            $client = static::createClient();
+
+            // enable profiler data collection only for the next request;
+            // call this method again before each additional request
+            $client->enableProfiler();
+
+            $crawler = $client->request('GET', '/lucky/number');
+
+            // ... write some assertions about the Response
+
+            // getProfile() returns false or null when no profile is available
+            if ($profile = $client->getProfile()) {
+                // check the number of database queries
+                $this->assertLessThan(
+                    10,
+                    $profile->getCollector('db')->getQueryCount()
+                );
+
+                // check the time spent in the framework
+                $this->assertLessThan(
+                    500,
+                    $profile->getCollector('time')->getDuration()
+                );
+            }
+        }
+    }
+
+If a test fails because of profiling data (e.g. too many database queries),
+include the profile token in the error message so you can analyze the request
+in the web profiler after the tests finish::
+
+    $this->assertLessThan(
+        30,
+        $profile->getCollector('db')->getQueryCount(),
+        sprintf(
+            'Checks that query count is less than 30 (token %s)',
+            $profile->getToken()
+        )
+    );
+
+The profiler information is available even if you
+:ref:`insulate the client <testing-multiple-clients>` or if you use an HTTP
+layer for your tests. Read the code of the built-in
+:ref:`data collectors <profiler-data-collector>` to learn about the
+information that each of them provides.
 
 .. _testing-applications-act:
 

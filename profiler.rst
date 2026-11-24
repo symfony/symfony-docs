@@ -46,7 +46,7 @@ Accessing Profiling Data Programmatically
 Most of the time, the profiler information is accessed and analyzed using its
 web-based interface. However, you can also retrieve profiling information
 programmatically thanks to the methods provided by the ``profiler`` service
-(e.g. to check that data in :doc:`functional tests </testing/profiling>`).
+(e.g. to check that data in :ref:`functional tests <testing-profiler-data>`).
 
 When the response object is available, use the
 :method:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler::loadProfileFromResponse`
@@ -436,7 +436,8 @@ These are the methods that you can define in the data collector class:
     By default it returns the FQCN of the data collector class, but you can
     override this method to return a custom name (e.g. ``app.request_collector``).
     This value is used later to access the collector information (see
-    :doc:`/testing/profiling`) so you may prefer using short strings instead of FQCN strings.
+    :ref:`how to access the profiler data in tests <testing-profiler-data>`) so
+    you may prefer using short strings instead of FQCN strings.
 
 The ``collect()`` method is called during the :ref:`kernel.response <component-http-kernel-kernel-response>`
 event. If you need to collect data that is only available later, implement
