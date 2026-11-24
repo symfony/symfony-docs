@@ -1,5 +1,5 @@
-Upgrading a Minor Version (e.g. 6.3.0 to 6.4.0)
-===============================================
+Upgrading a Minor or Patch Version (e.g. 6.3.0 to 6.4.0)
+========================================================
 
 If you're upgrading a minor version (where the middle number changes), then
 you should *not* encounter significant backward compatibility changes. For
@@ -103,6 +103,24 @@ These documents can also be found in the `Symfony Repository`_.
 .. _updating-flex-recipes:
 
 .. include:: /setup/_update_recipes.rst.inc
+
+.. _upgrade-patch-version:
+
+Upgrading a Patch Version
+-------------------------
+
+Patch versions (where only the last number changes, e.g. 6.4.0 to 6.4.1) only
+contain bug fixes, so upgrading to them shouldn't cause any problems. Upgrade
+as soon as possible, because these versions may fix important bugs and security
+vulnerabilities.
+
+The :ref:`version constraints <upgrade-minor-symfony-composer>` of your
+``composer.json`` file already allow new patch versions, so you only need to
+run this command:
+
+.. code-block:: terminal
+
+    $ composer update "symfony/*"
 
 .. _`Symfony Repository`: https://github.com/symfony/symfony
 .. _`UPGRADE-6.4.md`: https://github.com/symfony/symfony/blob/6.4/UPGRADE-6.4.md
