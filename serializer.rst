@@ -1602,6 +1602,108 @@ setting the ``name_converter`` setting to
         ];
         $serializer = new Serializer($normalizers, $encoders);
 
+.. _serializer-property-path:
+
+Serializing Properties of Related Objects
+-----------------------------------------
+
+Sometimes the serialized data needs a single property of a related object
+instead of the whole object. For example, the serialized person might include
+only the name of their company instead of the full company. In the YAML and XML
+mapping, use a :doc:`property path </components/property_access>` as the
+attribute name to do this.
+
+Consider a ``Person`` that belongs to a ``Company``::
+
+    // src/Model/Person.php
+    namespace App\Model;
+
+    class Person
+    {
+        private string $name;
+        private ?Company $company = null;
+
+        // ... getters and setters
+    }
+
+    // src/Model/Company.php
+    namespace App\Model;
+
+    class Company
+    {
+        private string $name;
+
+        // ... getters and setters
+    }
+
+Map the ``company?.name`` property path and give it a serialized name:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/serializer/person.yaml
+        App\Model\Person:
+            attributes:
+                name:
+                    groups: ['public-view']
+                # the "?" returns null when the person has no company
+                company?.name:
+                    # without serialized_name, the key is "company?.name"
+                    serialized_name: company_name
+                    groups: ['public-view']
+
+    .. code-block:: xml
+
+        <!-- config/serializer/person.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Model\Person">
+                <attribute name="name">
+                    <group>public-view</group>
+                </attribute>
+                <!-- the "?" returns null when the person has no company;
+                     without serialized-name, the key is "company?.name" -->
+                <attribute name="company?.name" serialized-name="company_name">
+                    <group>public-view</group>
+                </attribute>
+            </class>
+        </serializer>
+
+The name of the company now appears at the root of the serialized person::
+
+    // property paths are only serialized when using groups
+    $json = $serializer->serialize($person, 'json', [
+        'groups' => 'public-view',
+    ]);
+    // $json contains {"name":"Jane Doe","company_name":"Acme Inc."}
+    // when the person has no company: {"name":"John Doe","company_name":null}
+
+You must use :ref:`groups <serializer-groups-attribute>`, as in the example
+above. Without groups, the serializer only looks at the properties and getters
+of the object, so ``company_name`` doesn't appear in the result.
+
+Property paths only work with the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`, which
+is the normalizer that Symfony uses by default for objects. They can't be
+defined with PHP attributes; instead, add a getter that returns the value (e.g.
+``getCompanyName()``) and :ref:`rename it <serializer-name-conversion>` with
+``#[SerializedName]``.
+
+.. warning::
+
+    When deserializing, the related object must already exist (e.g. when
+    :ref:`deserializing into an existing object
+    <serializer-populate-existing-object>`) because the serializer doesn't
+    create it. Otherwise, ``company?.name`` is
+    ignored and ``company.name`` (without ``?``) throws an exception. The value
+    is also written as is, without denormalizing it (e.g. a date string isn't
+    turned into a ``DateTimeImmutable`` object).
+
 .. _serializer-built-in-normalizers:
 
 Serializer Normalizers
