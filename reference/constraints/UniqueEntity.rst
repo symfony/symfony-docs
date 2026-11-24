@@ -150,8 +150,8 @@ between all of the rows in your user table:
 Options
 -------
 
-em
-~~
+``em``
+~~~~~~
 
 **type**: ``string`` **default**: ``null``
 

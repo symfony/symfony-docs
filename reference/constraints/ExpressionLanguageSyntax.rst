@@ -37,7 +37,7 @@ The following constraints ensure that:
         class Order
         {
             #[Assert\ExpressionLanguageSyntax]
-            protected string  $promotion;
+            protected string $promotion;
 
             #[Assert\ExpressionLanguageSyntax(
                 allowedVariables: ['user', 'shipping_centers'],
@@ -81,7 +81,7 @@ The following constraints ensure that:
 
     .. code-block:: php
 
-        // src/Entity/Student.php
+        // src/Entity/Order.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
@@ -104,8 +104,8 @@ The following constraints ensure that:
 Options
 -------
 
-allowedVariables
-~~~~~~~~~~~~~~~~
+``allowedVariables``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` or ``null`` **default**: ``null``
 
@@ -115,8 +115,8 @@ allow any variables.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be a valid expression.``
 
