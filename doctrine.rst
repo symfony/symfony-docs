@@ -1269,7 +1269,8 @@ For info, see :doc:`/doctrine/associations`.
 Database Testing
 ----------------
 
-Read the article about :doc:`testing code that interacts with the database </testing/database>`.
+Read the section about
+:ref:`testing code that interacts with the database <testing-databases>`.
 
 Doctrine Extensions (Timestampable, Translatable, etc.)
 -------------------------------------------------------
@@ -1293,7 +1294,6 @@ Learn more
     doctrine/dbal
     doctrine/multiple_entity_managers
     doctrine/resolve_target_entity
-    testing/database
 
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt

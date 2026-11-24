@@ -264,13 +264,13 @@
 /cookbook/templating/PHP /templating/PHP
 /cookbook/templating/render_without_controller /templating/render_without_controller
 /cookbook/templating/twig_extension /templating/twig_extension
-/cookbook/testing/bootstrap /testing/bootstrap
-/cookbook/testing/database /testing/database
-/cookbook/testing/doctrine /testing/doctrine
+/cookbook/testing/bootstrap /testing#testing-bootstrap
+/cookbook/testing/database /testing#testing-doctrine-repositories
+/cookbook/testing/doctrine /testing#testing-doctrine-repositories
 /cookbook/testing/http_authentication /testing/http_authentication
 /cookbook/testing/index /testing
-/cookbook/testing/insulating_clients /testing/insulating_clients
-/cookbook/testing/profiling /testing/profiling
+/cookbook/testing/insulating_clients /testing#testing-multiple-clients
+/cookbook/testing/profiling /testing#testing-profiler-data
 /cookbook/testing/simulating_authentication /testing/simulating_authentication
 /cookbook/upgrade/bundles /setup/bundles
 /cookbook/upgrade/index /setup/upgrade_major
@@ -488,7 +488,7 @@
 /templating/namespaced_paths /templates#template-namespaces
 /templating/embedding_controllers /templates#embedding-controllers
 /templating/inheritance /templates#template-inheritance-and-layouts
-/testing/doctrine /testing/database
+/testing/doctrine /testing#testing-doctrine-repositories
 /translation/templates /translation#translation-in-templates
 /translation/debug /translation#translation-debug
 /translation/lint /translation#translation-lint
@@ -680,3 +680,7 @@
 /setup/upgrade_patch /setup/upgrade_minor#upgrade-patch-version
 /setup/docker /setup#setup-docker
 /setup/unstable_versions /setup/upgrade_major#upgrade-major-unstable-versions
+/testing/bootstrap /testing#testing-bootstrap
+/testing/insulating_clients /testing#testing-multiple-clients
+/testing/profiling /testing#testing-profiler-data
+/testing/database /testing#testing-doctrine-repositories
