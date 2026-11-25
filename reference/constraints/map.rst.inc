@@ -39,6 +39,7 @@ String Constraints
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`Uuid </reference/constraints/Uuid>`
 * :doc:`WordCount </reference/constraints/WordCount>`
+* :doc:`Xml </reference/constraints/Xml>`
 * :doc:`Yaml </reference/constraints/Yaml>`
 
 Comparison Constraints
