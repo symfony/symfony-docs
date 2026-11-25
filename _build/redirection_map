@@ -685,3 +685,5 @@
 /testing/insulating_clients /testing#testing-multiple-clients
 /testing/profiling /testing#testing-profiler-data
 /testing/database /testing#testing-doctrine-repositories
+/serializer/custom_context_builders /serializer#serializer-custom-context-builders
+/serializer/custom_name_converter /serializer#serializer-custom-name-converters

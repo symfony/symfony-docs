@@ -417,11 +417,91 @@ complex (de)serialization context, you can chain them using the
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());
 
-.. seealso::
+.. _serializer-custom-context-builders:
 
-    You can also :doc:`create your own context builders </serializer/custom_context_builders>`
-    to have autocompletion, validation, and documentation for your custom
-    context values.
+Creating Custom Context Builders
+""""""""""""""""""""""""""""""""
+
+The built-in context builders only define the context options of the built-in
+normalizers and encoders. Create your own context builder to have
+autocompletion, validation and documentation for the context values of your
+:doc:`custom normalizers </serializer/custom_normalizer>`.
+
+For example, imagine that some dates come from a legacy system that stores
+empty dates as ``0000-00-00`` and you want to convert them to ``null`` during
+denormalization. First, create a custom denormalizer that is only applied when
+a ``zero_datetime_to_null`` context option is enabled::
+
+    // src/Serializer/ZeroDateTimeDenormalizer.php
+    namespace App\Serializer;
+
+    use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
+    use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
+    use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+
+    final class ZeroDateTimeDenormalizer implements DenormalizerInterface, DenormalizerAwareInterface
+    {
+        use DenormalizerAwareTrait;
+
+        public function denormalize(mixed $data, string $type, ?string $format = null, array $context = []): mixed
+        {
+            if ('0000-00-00' === $data) {
+                return null;
+            }
+
+            unset($context['zero_datetime_to_null']);
+
+            return $this->denormalizer->denormalize($data, $type, $format, $context);
+        }
+
+        public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
+        {
+            return true === ($context['zero_datetime_to_null'] ?? false)
+                && is_a($type, \DateTimeInterface::class, true);
+        }
+
+        public function getSupportedTypes(?string $format): array
+        {
+            // the result depends on the context, so it can't be cached
+            return [\DateTimeInterface::class => false];
+        }
+    }
+
+Now you can convert zero dates to ``null`` during denormalization::
+
+    $legacyData = '{"updatedAt": "0000-00-00"}';
+    $serializer->deserialize($legacyData, Product::class, 'json', [
+        'zero_datetime_to_null' => true,
+    ]);
+
+To avoid having to remember the ``zero_datetime_to_null`` context key, create
+a dedicated context builder::
+
+    // src/Serializer/LegacyContextBuilder.php
+    namespace App\Serializer;
+
+    use Symfony\Component\Serializer\Context\ContextBuilderInterface;
+    use Symfony\Component\Serializer\Context\ContextBuilderTrait;
+
+    final class LegacyContextBuilder implements ContextBuilderInterface
+    {
+        use ContextBuilderTrait;
+
+        public function withLegacyDates(bool $legacy): static
+        {
+            return $this->with('zero_datetime_to_null', $legacy);
+        }
+    }
+
+Finally, use it to build the deserialization context::
+
+    $legacyData = '{"updatedAt": "0000-00-00"}';
+
+    $context = (new LegacyContextBuilder())
+        ->withLegacyDates(true)
+        ->toArray();
+
+    $serializer->deserialize($legacyData, Product::class, 'json', $context);
 
 Configure Context on a Specific Property
 ........................................
@@ -1432,11 +1512,6 @@ to all name converters and to the type property of discriminator maps.
     as an :ref:`extra attribute <serializer-collecting-extra-attributes-errors>`
     in Symfony 9.0.
 
-.. seealso::
-
-    You can also create a custom name converter class. Read more about this
-    in :doc:`/serializer/custom_name_converter`.
-
 .. _serializer-name-per-group:
 
 Using a Different Name per Group
@@ -1601,6 +1676,95 @@ setting the ``name_converter`` setting to
             new ObjectNormalizer(null, new SnakeCaseToCamelCaseNameConverter()),
         ];
         $serializer = new Serializer($normalizers, $encoders);
+
+.. _serializer-custom-name-converters:
+
+Creating Custom Name Converters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If none of the built-in name converters fits your needs, create your own. For
+example, consider the following class::
+
+    // src/Model/Company.php
+    namespace App\Model;
+
+    class Company
+    {
+        public function __construct(
+            public string $name,
+            public string $address,
+        ) {
+        }
+    }
+
+Its serialized form must prefix all attributes with ``org_``:
+
+.. code-block:: json
+
+    {"org_name": "Acme Inc.", "org_address": "123 Main Street, Big City"}
+
+A custom name converter can handle such cases::
+
+    // src/Serializer/OrgPrefixNameConverter.php
+    namespace App\Serializer;
+
+    use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+
+    class OrgPrefixNameConverter implements NameConverterInterface
+    {
+        public function normalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
+        {
+            // during normalization, add the prefix
+            return 'org_'.$propertyName;
+        }
+
+        public function denormalize(string $propertyName, ?string $class = null, ?string $format = null, array $context = []): string
+        {
+            // during denormalization, remove the prefix
+            return str_starts_with($propertyName, 'org_')
+                ? substr($propertyName, 4)
+                : $propertyName;
+        }
+    }
+
+Then, configure the serializer to use your name converter:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/serializer.yaml
+        framework:
+            serializer:
+                # pass the service ID of your name converter
+                name_converter: 'App\Serializer\OrgPrefixNameConverter'
+
+    .. code-block:: php
+
+        // config/packages/serializer.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Serializer\OrgPrefixNameConverter;
+
+        return App::config([
+            'framework' => [
+                'serializer' => [
+                    // pass the service ID of your name converter
+                    'name_converter' => OrgPrefixNameConverter::class,
+                ],
+            ],
+        ]);
+
+Now the serializer prefixes all attributes with ``org_``::
+
+    // ...
+    $company = new Company('Acme Inc.', '123 Main Street, Big City');
+
+    $json = $serializer->serialize($company, 'json');
+    // {"org_name":"Acme Inc.","org_address":"123 Main Street, Big City"}
+
+    $companyCopy = $serializer->deserialize($json, Company::class, 'json');
+    // $companyCopy contains the same data as $company
 
 .. _serializer-property-path:
 
