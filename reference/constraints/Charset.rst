@@ -42,7 +42,7 @@ class uses UTF-8, you could do the following:
             properties:
                 content:
                     - Charset:
-                        charset: 'UTF-8'
+                        encodings: 'UTF-8'
 
     .. code-block:: xml
 
@@ -55,7 +55,7 @@ class uses UTF-8, you could do the following:
             <class name="App\Entity\FileDTO">
                 <property name="content">
                     <constraint name="Charset">
-                        <option name="charset">UTF-8</option>
+                        <option name="encodings">UTF-8</option>
                     </constraint>
                 </property>
             </class>
