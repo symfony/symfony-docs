@@ -280,7 +280,7 @@
 /cookbook/validation/custom_constraint /validation/custom_constraint
 /cookbook/validation/group_service_resolver /form/validation_group_service_resolver
 /cookbook/validation/index /validation
-/cookbook/validation/severity /validation/severity
+/cookbook/validation/severity /validation#validation-payload
 /cookbook/web_server/built_in /setup/built_in_web_server
 /cookbook/web_server/index /setup/built_in_web_server
 /cookbook/web_services/index /controller/soap_web_service
@@ -691,3 +691,6 @@
 /form/use_empty_data /forms#forms-empty-data-closure
 /form/bootstrap4 /form/bootstrap#forms-bootstrap4-theme
 /form/bootstrap5 /form/bootstrap
+/validation/raw_values /validation#validation-raw-values
+/validation/translations /validation#validation-translations
+/validation/severity /validation#validation-payload

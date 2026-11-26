@@ -192,7 +192,7 @@ applied but the constraints defined in the ``otherwise`` option (if provided) wi
 ``value``
     Either the object being validated (when the constraint is applied to a class),
     the value of the property being validated (when applied to a property),
-    or the :doc:`raw value </validation/raw_values>`.
+    or the :ref:`raw value <validation-raw-values>`.
 ``context``
     The :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
     object that provides information such as the currently validated class, the

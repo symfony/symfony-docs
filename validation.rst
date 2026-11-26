@@ -260,6 +260,67 @@ If you have many validation errors, you can filter them by error code::
         // handle this specific error (display some message, send an email, etc.)
     }
 
+.. _validation-raw-values:
+
+Validating Raw Values
+~~~~~~~~~~~~~~~~~~~~~
+
+Usually you validate entire objects, but sometimes you need to validate a
+single value (e.g. to check that a string is a valid email address). To do
+so, pass the value and the constraint (or an array of constraints) to the
+``validate()`` method::
+
+    // ...
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+    // ...
+    public function addEmail(string $email, ValidatorInterface $validator): void
+    {
+        $errors = $validator->validate($email, [
+            new Assert\NotBlank(),
+            new Assert\Email(message: 'Invalid email address'),
+        ]);
+
+        if (0 !== count($errors)) {
+            // this is *not* a valid email address
+            $errorMessage = $errors[0]->getMessage();
+
+            // ... do something with the error
+        }
+
+        // ...
+    }
+
+Read the :doc:`constraints reference </reference/constraints>` to see the
+full list of available constraints and their options.
+
+To validate arrays, use the
+:doc:`Collection </reference/constraints/Collection>` constraint::
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    $input = [
+        'name' => 'Fabien Potencier',
+        'email' => 'fabien@example.com',
+        'tags' => ['symfony', 'php'],
+    ];
+
+    $constraint = new Assert\Collection([
+        // the keys correspond to the keys in the input array; by default,
+        // keys missing from the input or not defined here are reported as errors
+        'name' => [new Assert\NotBlank(), new Assert\Length(max: 100)],
+        'email' => new Assert\Email(),
+        // the 'tags' key can be missing from the input array
+        'tags' => new Assert\Optional([
+            new Assert\Type('array'),
+            // applies the given constraints to each element of the array
+            new Assert\All(new Assert\Length(min: 2)),
+        ]),
+    ]);
+
+    $violations = $validator->validate($input, $constraint);
+
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -273,9 +334,6 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
-
-To validate a single value with the ``validator`` service, see
-:doc:`how to validate raw values </validation/raw_values>`.
 
 Validating Properties
 ~~~~~~~~~~~~~~~~~~~~~
@@ -454,6 +512,341 @@ literature genre mostly associated with the author, which can be set to either
                 ));
             }
         }
+
+.. _validation-payload:
+
+Attaching Custom Data to Constraints with Payloads
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All constraints define a ``payload`` option to attach arbitrary data to them.
+The Validator component ignores this data, so you can use it for your own
+purposes, such as displaying some errors differently than others.
+
+For example, in a registration form, the username and password are required,
+but the bank account number is optional. If users enter a bank account number,
+it must be valid, but you want to display its errors as warnings instead of
+errors. Use the payload to define the severity of each constraint:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            #[Assert\NotBlank(payload: ['severity' => 'error'])]
+            protected string $username;
+
+            #[Assert\NotBlank(payload: ['severity' => 'error'])]
+            protected string $password;
+
+            #[Assert\Iban(payload: ['severity' => 'warning'])]
+            protected string $bankAccountNumber;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\User:
+            properties:
+                username:
+                    - NotBlank:
+                        payload:
+                            severity: error
+                password:
+                    - NotBlank:
+                        payload:
+                            severity: error
+                bankAccountNumber:
+                    - Iban:
+                        payload:
+                            severity: warning
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\User">
+                <property name="username">
+                    <constraint name="NotBlank">
+                        <option name="payload">
+                            <value key="severity">error</value>
+                        </option>
+                    </constraint>
+                </property>
+                <property name="password">
+                    <constraint name="NotBlank">
+                        <option name="payload">
+                            <value key="severity">error</value>
+                        </option>
+                    </constraint>
+                </property>
+                <property name="bankAccountNumber">
+                    <constraint name="Iban">
+                        <option name="payload">
+                            <value key="severity">warning</value>
+                        </option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class User
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('username', new Assert\NotBlank(
+                    payload: ['severity' => 'error'],
+                ));
+                $metadata->addPropertyConstraint('password', new Assert\NotBlank(
+                    payload: ['severity' => 'error'],
+                ));
+                $metadata->addPropertyConstraint('bankAccountNumber', new Assert\Iban(
+                    payload: ['severity' => 'warning'],
+                ));
+            }
+        }
+
+When the validation of the ``User`` object fails, use the
+:method:`Symfony\\Component\\Validator\\ConstraintViolation::getConstraint`
+method to get the constraint that caused each violation. The payload is
+available in the public ``payload`` property of the constraint::
+
+    $violations = $validator->validate($user);
+
+    foreach ($violations as $violation) {
+        $severity = $violation->getConstraint()->payload['severity'] ?? null;
+        // ...
+    }
+
+In forms, you can use this to customize the ``form_errors`` block in a
+:ref:`form theme <create-your-own-form-theme>` and add the severity as an
+HTML class:
+
+.. code-block:: html+twig
+
+    {# templates/form/custom_errors.html.twig #}
+    {%- block form_errors -%}
+        {%- if errors|length > 0 -%}
+        <ul>
+            {%- for error in errors -%}
+                <li class="{{ error.cause.constraint.payload.severity ?? '' }}">{{ error.message }}</li>
+            {%- endfor -%}
+        </ul>
+        {%- endif -%}
+    {%- endblock form_errors -%}
+
+.. seealso::
+
+    :doc:`How to customize form rendering </form/form_customization>`.
+
+.. _validation-translations:
+
+Translating Constraint Messages
+-------------------------------
+
+When the :doc:`Translation component </translation>` is installed, Symfony
+translates constraint violation messages into the current locale using the
+``validators`` :ref:`translation domain <translation-resource-locations>`.
+Symfony already provides translations of the built-in constraint messages in
+many languages, so you only need to translate your own messages.
+
+To do so, set the ``message`` option of the constraint to the translation key.
+For example, to make sure that the ``$name`` property of the ``Author`` class
+is not empty:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\NotBlank(message: 'author.name.not_blank')]
+            public string $name;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Author:
+            properties:
+                name:
+                    - NotBlank: { message: 'author.name.not_blank' }
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Author">
+                <property name="name">
+                    <constraint name="NotBlank">
+                        <option name="message">author.name.not_blank</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        // ...
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Author
+        {
+            public string $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->addPropertyConstraint('name', new Assert\NotBlank(
+                    message: 'author.name.not_blank',
+                ));
+            }
+        }
+
+Then, translate that key in a ``validators`` catalog file stored in the
+``translations/`` directory:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- translations/validators/validators.en.xlf -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="author.name.not_blank">
+                        <source>author.name.not_blank</source>
+                        <target>Please enter an author name.</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: yaml
+
+        # translations/validators/validators.en.yaml
+        author.name.not_blank: Please enter an author name.
+
+    .. code-block:: php
+
+        // translations/validators/validators.en.php
+        return [
+            'author.name.not_blank' => 'Please enter an author name.',
+        ];
+
+You may need to clear your cache (even in the dev environment) after creating
+this file for the first time.
+
+.. tip::
+
+    Set the :ref:`enabled_locales <reference-translator-enabled-locales>`
+    option to restrict the locales of your application. Symfony then only
+    generates the translation files of the built-in validation messages for
+    those locales, which improves performance.
+
+When building violations in your own validation logic, you can also pass a
+:class:`Symfony\\Component\\Translation\\TranslatableMessage` object as the
+violation message::
+
+    use Symfony\Component\Translation\TranslatableMessage;
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, mixed $payload): void
+    {
+        // somehow you have an array of "fake names"
+        $fakeNames = [/* ... */];
+
+        // check if the name is actually a fake name
+        if (in_array($this->getFirstName(), $fakeNames, true)) {
+            $message = new TranslatableMessage('author.name.fake', [], 'validators');
+
+            $context->buildViolation($message)
+                ->atPath('firstName')
+                ->addViolation()
+            ;
+        }
+    }
+
+You can learn more about translatable messages in
+:ref:`the dedicated section <translatable-objects>`.
+
+Custom Translation Domain
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To use a different translation domain for all violation messages, set the
+:ref:`translation_domain <reference-validation-translation-domain>` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/validator.yaml
+        framework:
+            validation:
+                translation_domain: validation_errors
+
+    .. code-block:: php
+
+        // config/packages/validator.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'validation' => [
+                    'translation_domain' => 'validation_errors',
+                ],
+            ],
+        ]);
+
+To change the domain of a single violation, call ``setTranslationDomain()``
+when building it in a
+:doc:`constraint validator </validation/custom_constraint>`::
+
+    public function validate(mixed $value, Constraint $constraint): void
+    {
+        // validation logic
+
+        $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ string }}', $value)
+            ->setTranslationDomain('validation_errors')
+            ->addViolation();
+    }
 
 Constraints in Form Classes
 ---------------------------

@@ -1054,7 +1054,9 @@ object.
         }
 
 Now, if you re-submit the form with invalid data, you'll see the
-corresponding errors printed out with the form.
+corresponding errors printed out with the form. Read
+:ref:`how to translate constraint messages <validation-translations>` to
+display these errors in other languages.
 
 To see the second approach - adding constraints to the form - refer to
 :ref:`this section <form-option-constraints>`. Both approaches can be used together.
@@ -2096,7 +2098,7 @@ Constraints At Field Level
 ..........................
 
 You can attach constraints to the individual fields. The overall approach is
-covered a bit more in :doc:`this validation article </validation/raw_values>`,
+covered a bit more in :ref:`the validation article <validation-raw-values>`,
 but here's a short example::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
