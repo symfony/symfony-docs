@@ -29,7 +29,7 @@ for multiple programs at the same time. When using the
 .. tip::
 
     This information is often too verbose to be shown by default. You can use
-    :doc:`verbosity levels </console/verbosity>` to only show it when in
+    :ref:`verbosity levels <console-verbosity>` to only show it when in
     debugging mode (``-vvv``).
 
 Starting a Program
