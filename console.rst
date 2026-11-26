@@ -378,50 +378,6 @@ If you can't use PHP attributes, register the command as a service and
     method is deprecated. Use the ``#[AsCommand]`` attribute or the
     ``console.command`` service tag instead.
 
-.. _console-command-service-lazy-loading:
-
-Commands are loaded lazily: their classes are only instantiated when the
-command is run. This is possible because Symfony reads the command name from
-the ``#[AsCommand]`` attribute without instantiating the class. When registering
-commands manually with the ``console.command`` tag, set the command name in the
-``command`` attribute of the tag to get the same behavior:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\Command\CreateUserCommand:
-                tags:
-                    - { name: 'console.command', command: 'app:create-user' }
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Command\CreateUserCommand;
-
-        return App::config([
-            'services' => [
-                CreateUserCommand::class => [
-                    'tags' => [
-                        ['console.command' => ['command' => 'app:create-user']],
-                    ],
-                ],
-            ],
-        ]);
-
-.. warning::
-
-    Running the ``list`` command instantiates all commands, including lazy ones.
-    The only exception is commands defined as
-    :doc:`LazyCommand instances </console/lazy_commands>`, whose command factory
-    is not executed.
-
 In standalone applications, create the console application in a PHP script and
 register your commands with the
 :method:`Symfony\\Component\\Console\\Application::addCommand` method::
@@ -459,6 +415,105 @@ and pass the closure to ``setCode()``. The closure accepts the same
 
             return Command::SUCCESS;
         });
+
+.. _console-command-service-lazy-loading:
+
+Some commands are expensive to instantiate, so it's better to load them lazily
+(their classes are only instantiated when the command is run). Symfony
+applications do this automatically, because they read the command name from the
+``#[AsCommand]`` attribute without instantiating the class. In standalone
+applications, the commands registered with ``addCommand()`` are instantiated on
+every run; to avoid this, register them with a command loader:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // src/Command/CreateUserCommand.php
+        namespace App\Command;
+
+        use Symfony\Component\Console\Attribute\AsCommand;
+
+        // nothing else to do: Symfony gets the name and the description
+        // from the attribute and creates the command only when it's needed
+        #[AsCommand(name: 'app:create-user', description: 'Creates a new user.')]
+        class CreateUserCommand
+        {
+            // ...
+        }
+
+    .. code-block:: php-standalone
+
+        // application.php
+        use App\Command\CreateUserCommand;
+        use Symfony\Component\Console\Application;
+        use Symfony\Component\Console\Command\Command;
+        use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
+
+        $commandLoader = new FactoryCommandLoader([
+            // the keys are the command names and the values are PHP callables
+            // that return a Command instance; they are only called when the command
+            // is needed (invokable classes must be wrapped in a Command object)
+            'app:create-user' => static fn (): Command => new Command(
+                null,
+                new CreateUserCommand()
+            ),
+        ]);
+
+        $application = new Application();
+        $application->setCommandLoader($commandLoader);
+        $application->run();
+
+The :method:`Symfony\\Component\\Console\\Application::setCommandLoader`
+method accepts any
+:class:`Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface`
+instance, such as the built-in
+:class:`Symfony\\Component\\Console\\CommandLoader\\ContainerCommandLoader`,
+which loads commands from a PSR-11 container using a map of command names to
+service identifiers.
+
+When registering commands manually in a Symfony application with the
+``console.command`` tag, set the command name in the ``command`` attribute of
+the tag to keep them lazy:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\Command\CreateUserCommand:
+                tags:
+                    - { name: 'console.command', command: 'app:create-user' }
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Command\CreateUserCommand;
+
+        return App::config([
+            'services' => [
+                CreateUserCommand::class => [
+                    'tags' => [
+                        ['console.command' => ['command' => 'app:create-user']],
+                    ],
+                ],
+            ],
+        ]);
+
+Some commands instantiate other commands even if they are lazy. For example,
+``list`` needs the name and description of all commands (``help`` and
+``_complete`` can also instantiate other commands). To prevent this, Symfony
+applications wrap the commands that define a description in a
+:class:`Symfony\\Component\\Console\\Command\\LazyCommand`. This object stores
+the name, aliases and description of the command, and only creates the real
+command when running it or when reading its arguments and options. In
+standalone applications, return ``LazyCommand`` instances from the factories
+of the command loader to get the same behavior.
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
@@ -751,6 +806,135 @@ to it, not its parent command.
     The registration of the class-level ``#[AsCommand]`` attribute as a parent
     command was introduced in Symfony 8.2.
 
+.. _console-lockable:
+
+Preventing Multiple Executions of a Command
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use `locks`_ to prevent the same command from running multiple times on
+the same server. The :doc:`Lock component </lock>` provides multiple
+classes to create locks based on the filesystem (:ref:`FlockStore <lock-store-flock>`),
+shared memory (:ref:`SemaphoreStore <lock-store-semaphore>`) and even databases
+and Redis servers.
+
+In addition, the Console component provides a PHP trait called ``LockableTrait``
+that adds two convenient methods to lock and release commands::
+
+    // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Command\LockableTrait;
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    #[AsCommand(name: 'contents:update')]
+    class UpdateContentsCommand
+    {
+        use LockableTrait;
+
+        public function __invoke(SymfonyStyle $io): int
+        {
+            if (!$this->lock()) {
+                $io->writeln('The command is already running in another process.');
+
+                return Command::SUCCESS;
+            }
+
+            // If you prefer to wait until the lock is released, use this:
+            // $this->lock(null, true);
+
+            // expiring stores (e.g. Redis) release the lock after 300 seconds by
+            // default; if the command can run longer, pass a TTL (in seconds):
+            // $this->lock(null, false, 3600);
+
+            // ...
+
+            // if not released explicitly, Symfony releases the lock
+            // automatically when the execution of the command ends
+            $this->release();
+
+            return Command::SUCCESS;
+        }
+    }
+
+.. versionadded:: 8.2
+
+    The ``$ttl`` argument of the ``lock()`` method was introduced in
+    Symfony 8.2.
+
+The ``LockableTrait`` uses the ``SemaphoreStore`` if available and the
+``FlockStore`` otherwise. These stores aren't scoped to your project, so
+different projects (or parallel test processes) that run a command with the
+same name on the same server share the same lock.
+
+In Symfony applications, you can change the store used by all the commands
+that use the ``LockableTrait`` by configuring a
+:ref:`named lock <lock-named-locks>` called ``console``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/lock.yaml
+        framework:
+            lock:
+                default: '%env(LOCK_DSN)%'
+                # stores the lock files inside the project instead of the
+                # shared temporary directory of the system
+                console: 'flock://%kernel.project_dir%/var/lock'
+
+    .. code-block:: php
+
+        // config/packages/lock.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'framework' => [
+                'lock' => [
+                    'default' => '%env(LOCK_DSN)%',
+                    // stores the lock files inside the project instead of the
+                    // shared temporary directory of the system
+                    'console' => 'flock://%kernel.project_dir%/var/lock',
+                ],
+            ],
+        ]);
+
+Symfony injects the factory of this lock into autowired commands through the
+``setLockFactory()`` method of the trait. If you don't define a lock called
+``console``, commands keep using the default stores explained above (they
+don't use the ``default`` lock).
+
+.. note::
+
+    Keep the ``default`` lock when adding named locks. Otherwise, you can't
+    autowire the ``LockFactory`` service without the ``#[Target]`` attribute.
+
+.. versionadded:: 8.2
+
+    The autowiring of the ``console`` named lock in the ``LockableTrait``
+    was introduced in Symfony 8.2.
+
+You can also set the ``$lockFactory`` property in the constructor of your
+command. This lock factory takes precedence over the ``console`` named lock::
+
+    // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Command\LockableTrait;
+    use Symfony\Component\Lock\LockFactory;
+
+    #[AsCommand(name: 'contents:update')]
+    class UpdateContentsCommand
+    {
+        use LockableTrait;
+
+        // don't use PHP constructor property promotion here because the
+        // LockableTrait already defines the `$lockFactory` property in this class
+        public function __construct(LockFactory $lockFactory)
+        {
+            $this->lockFactory = $lockFactory;
+        }
+
+        // ...
+    }
+
 Console Output
 --------------
 
@@ -796,6 +980,99 @@ Now, try executing the command:
 
     Use :doc:`SymfonyStyle </console/style>` to display titles, tables,
     questions and other common elements with a consistent style.
+
+.. _console-verbosity:
+
+Verbosity Levels
+~~~~~~~~~~~~~~~~
+
+Console commands have different verbosity levels, which determine the messages
+displayed in their output. By default, commands display only the most useful
+messages, but you can control their verbosity with the ``--silent``, ``-q`` and
+``-v`` options:
+
+.. code-block:: terminal
+
+    # suppress all output, including errors
+    $ php bin/console some-command --silent
+
+    # suppress all output (even the command result messages) but display errors
+    $ php bin/console some-command -q
+    $ php bin/console some-command --quiet
+
+    # normal behavior, no option required (display only the useful messages)
+    $ php bin/console some-command
+
+    # increase verbosity of messages
+    $ php bin/console some-command -v
+
+    # also display the informative non-essential messages
+    $ php bin/console some-command -vv
+
+    # display all messages (useful to debug errors)
+    $ php bin/console some-command -vvv
+
+The verbosity level can also be controlled globally for all commands with the
+``SHELL_VERBOSITY`` environment variable (the ``-q`` and ``-v`` options still
+take precedence over the value of ``SHELL_VERBOSITY``):
+
+=====================  =========================  ===========================================
+Console option         ``SHELL_VERBOSITY`` value  Equivalent PHP constant
+=====================  =========================  ===========================================
+``--silent``           ``-2``                     ``OutputInterface::VERBOSITY_SILENT``
+``-q`` or ``--quiet``  ``-1``                     ``OutputInterface::VERBOSITY_QUIET``
+(none)                 ``0``                      ``OutputInterface::VERBOSITY_NORMAL``
+``-v``                 ``1``                      ``OutputInterface::VERBOSITY_VERBOSE``
+``-vv``                ``2``                      ``OutputInterface::VERBOSITY_VERY_VERBOSE``
+``-vvv``               ``3``                      ``OutputInterface::VERBOSITY_DEBUG``
+=====================  =========================  ===========================================
+
+It is possible to print a message in a command for only a specific verbosity
+level. For example::
+
+    // ...
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    #[AsCommand(name: 'app:create-user')]
+    class CreateUserCommand
+    {
+        public function __invoke(OutputInterface $output, #[Argument] string $username, #[Argument] string $password): int
+        {
+            $user = new User(...);
+
+            $output->writeln([
+                'Username: '.$username,
+                'Password: '.$password,
+            ]);
+
+            // available methods: ->isSilent(), ->isQuiet(), ->isVerbose(), ->isVeryVerbose(), ->isDebug()
+            if ($output->isVerbose()) {
+                $output->writeln('User class: '.$user::class);
+            }
+
+            // alternatively you can pass the verbosity level PHP constant to writeln()
+            $output->writeln(
+                'Will only be printed in verbose mode or higher',
+                OutputInterface::VERBOSITY_VERBOSE
+            );
+
+            return Command::SUCCESS;
+        }
+    }
+
+When the silent or quiet level is used, all output is suppressed because the
+default :method:`Symfony\\Component\\Console\\Output\\Output::write` method
+returns without printing anything. With the silent level, errors aren't
+displayed either, but they are still logged by the :doc:`Symfony logger </logging>`.
+The full stack trace of exceptions is only displayed when using the verbose
+level or higher.
+
+Instead of wrapping your output calls in verbosity conditions, log messages
+and let :ref:`Monolog's console handler <console-monolog-handler>` display them
+according to the verbosity level.
 
 .. _console-output-sections:
 
@@ -980,6 +1257,146 @@ command:
     This method is executed after ``interact()`` and ``initialize()``.
     It contains the logic you want the command to execute and it must
     return an integer which will be used as the command `exit status`_.
+
+.. _console-calling-commands:
+
+Calling Commands from Code
+--------------------------
+
+If a command depends on another one being run before it, you can call that one
+in the console command itself. This is also useful to create a "meta" command
+that runs several other commands (for instance, all the commands that must run
+after deploying new code to the production servers).
+
+Create an :class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the
+arguments and options to pass to the command (the command name must be the
+first argument) and pass it to the
+:method:`Symfony\\Component\\Console\\Application::doRun` method::
+
+    // ...
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\Console\Attribute\Argument;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Input\ArrayInput;
+    use Symfony\Component\Console\Output\OutputInterface;
+
+    #[AsCommand(name: 'app:create-user')]
+    class CreateUserCommand
+    {
+        public function __invoke(#[Argument] string $username, OutputInterface $output, Application $application): int
+        {
+            // ... create the user
+
+            $welcomeEmailInput = new ArrayInput([
+                // the command name must be the first argument
+                'command' => 'app:send-welcome-email',
+                'username' => $username,
+                '--locale' => 'en',
+            ]);
+
+            // disable the interactive behavior of the called command
+            $welcomeEmailInput->setInteractive(false);
+
+            // pass a NullOutput object instead of $output to hide the command output;
+            // doRun() returns the exit status code of the called command
+            $exitCode = $application->doRun($welcomeEmailInput, $output);
+
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
+Use ``doRun()`` instead of ``run()`` because ``run()`` can exit the PHP process
+after running the command. Also, use ``doRun()`` instead of
+``$application->find('app:send-welcome-email')->run()`` to dispatch the
+:ref:`console events <console-events>` for the called command too.
+
+.. warning::
+
+    All commands run in the same PHP process and some built-in Symfony commands
+    don't work well this way. For example, ``cache:clear`` and ``cache:warmup``
+    change some class definitions, so running other commands after them will
+    probably fail. In those cases, run the command in a separate process with
+    the :doc:`Process component </components/process>`.
+
+.. _console-command-in-controller:
+
+Calling Commands from Controllers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Most of the time, calling a command from code that is not executed on the
+command line (e.g. a controller) is not a good idea, because the command output
+is optimized for the console. If you need a feature that is only available in a
+console command, move that logic into a service that both the command and the
+controller can use. However, when the command is part of a third-party library,
+you can't change its code, so you can run the command from the controller
+(this is a bit slower than running it in the console).
+
+For example, to run the ``debug:twig`` command from a controller::
+
+    // src/Controller/DebugTwigController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Console\Input\ArrayInput;
+    use Symfony\Component\Console\Output\BufferedOutput;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\KernelInterface;
+
+    class DebugTwigController extends AbstractController
+    {
+        public function debugTwig(KernelInterface $kernel): Response
+        {
+            $application = new Application($kernel);
+            $application->setAutoExit(false);
+
+            $input = new ArrayInput([
+                'command' => 'debug:twig',
+                // (optional) define the value of command arguments
+                'name' => 'base.html.twig',
+                // (optional) pass options to the command
+                '--format' => 'json',
+            ]);
+
+            // use a NullOutput object if you don't need the command output
+            $output = new BufferedOutput();
+            $application->run($input, $output);
+
+            return new Response($output->fetch());
+        }
+    }
+
+By default, ``BufferedOutput`` removes the ANSI color codes from the output. To
+keep them, pass ``true`` as its second constructor argument. Then, use the
+`SensioLabs AnsiToHtml converter`_ to turn that output into HTML (it can also
+be registered `as a Twig extension`_):
+
+.. code-block:: terminal
+
+    $ composer require sensiolabs/ansi-to-html
+
+Now, use it in your controller::
+
+    // src/Controller/DebugTwigController.php
+    use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
+    use Symfony\Component\Console\Output\BufferedOutput;
+    use Symfony\Component\Console\Output\OutputInterface;
+    // ...
+
+    public function debugTwig(KernelInterface $kernel): Response
+    {
+        // ...
+        // the second argument tells the output to keep the ANSI color codes
+        $output = new BufferedOutput(OutputInterface::VERBOSITY_NORMAL, true);
+        $application->run($input, $output);
+
+        $converter = new AnsiToHtmlConverter();
+
+        return new Response($converter->convert($output->fetch()));
+    }
 
 .. _console-testing-commands:
 
@@ -1242,8 +1659,196 @@ Using the Console Logger
 ------------------------
 
 In Symfony applications, commands log messages by injecting the ``LoggerInterface``
-service. :doc:`Monolog's console handler </logging/monolog_console>` then displays
+service. :ref:`Monolog's console handler <console-monolog-handler>` then displays
 those messages in the console output according to the verbosity level.
+
+.. _console-monolog-handler:
+
+Displaying Log Messages with Monolog
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `MonologBridge`_ provides a
+:class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler` that listens to
+console events and writes log messages to the console output depending on the
+log level of each message and the :ref:`verbosity level <console-verbosity>`
+of the command. In your commands, use the logger as in any other service::
+
+    // src/Command/MyCommand.php
+    namespace App\Command;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+
+    #[AsCommand(name: 'app:my-command')]
+    class MyCommand
+    {
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
+        }
+
+        public function __invoke(): int
+        {
+            $this->logger->debug('Some info');
+            $this->logger->notice('Some more info');
+
+            return Command::SUCCESS;
+        }
+    }
+
+Depending on the verbosity level used to run the command and the handler
+configuration (see below), these messages are displayed or not in the console.
+Displayed messages include a timestamp and a color based on their level. Error
+messages are written to the error output (``php://stderr``). This table shows
+the verbosity level needed to display each log level:
+
+===============  =======================================  ============
+LoggerInterface  Verbosity                                Command line
+===============  =======================================  ============
+->error()        OutputInterface::VERBOSITY_QUIET         stderr
+->warning()      OutputInterface::VERBOSITY_NORMAL        stdout
+->notice()       OutputInterface::VERBOSITY_VERBOSE       -v
+->info()         OutputInterface::VERBOSITY_VERY_VERBOSE  -vv
+->debug()        OutputInterface::VERBOSITY_DEBUG         -vvv
+===============  =======================================  ============
+
+The Monolog console handler is enabled by default:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/monolog.yaml
+        when@dev:
+            monolog:
+                handlers:
+                    # ...
+                    console:
+                        type:   console
+                        process_psr_3_messages: false
+                        channels: ['!event', '!doctrine', '!console']
+
+                        # optionally configure the mapping between verbosity levels and log levels
+                        # verbosity_levels:
+                        #     VERBOSITY_NORMAL: NOTICE
+
+    .. code-block:: php
+
+        // config/packages/monolog.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return App::config([
+            'when@dev' => [
+                'monolog' => [
+                    'handlers' => [
+                        'console' => [
+                            'type' => 'console',
+                            'process_psr_3_messages' => false,
+                            'channels' => ['!event', '!doctrine', '!console'],
+
+                            // optionally configure the mapping between verbosity levels and log levels
+                            // 'verbosity_levels' => [
+                            //     'VERBOSITY_NORMAL' => 'NOTICE',
+                            // ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+.. note::
+
+    In this configuration, ``console`` is an arbitrary handler name and can be
+    any string. The ``type: console`` option selects the
+    :class:`Symfony\\Bridge\\Monolog\\Handler\\ConsoleHandler`, which writes log
+    messages to the command output.
+
+    The ``channels`` option uses the ``!`` prefix to exclude specific
+    :doc:`channels </logging/channels_handlers>`. The ``console`` channel is
+    excluded to reduce noise. This is the channel where Symfony logs command
+    lifecycle events (e.g. *Command "{command}" exited with code "{code}"*).
+    Excluding this channel does **not** affect any log messages you write yourself
+    inside your commands, which use different channels and will still appear normally.
+
+With the normal verbosity level, the console displays warnings and higher
+levels. With the ``-vvv`` option, it displays all messages.
+
+Filtering Logs by Channel
+.........................
+
+In high verbosity modes, the logs of all
+:doc:`channels </logging/channels_handlers>` can make the output hard to read.
+For example, when a command fails while calling an external API, you may only
+want to see the logs of the ``http_client`` channel. Instead of changing the
+``channels`` option of the handler and clearing the cache, define the
+``SYMFONY_CONSOLE_LOG_CHANNELS`` environment variable when running the command:
+
+.. code-block:: terminal
+
+    # display only the logs of the "http_client" channel
+    $ SYMFONY_CONSOLE_LOG_CHANNELS=http_client php bin/console app:import -vvv
+
+    # display the logs of several channels (use a comma-separated list)
+    $ SYMFONY_CONSOLE_LOG_CHANNELS=app,http_client php bin/console app:import -vvv
+
+    # display the logs of all channels except some (prefix them with "!")
+    # (you can't mix included and excluded channels in the same list)
+    $ SYMFONY_CONSOLE_LOG_CHANNELS='!php,!cache' php bin/console app:import -vvv
+
+The logs hidden from the console are still sent to the other handlers (e.g.
+the one that writes to ``var/log/dev.log``). This variable only filters the
+channels allowed by the ``channels`` option of the handler. For example, with
+the configuration shown above, ``SYMFONY_CONSOLE_LOG_CHANNELS=doctrine``
+displays nothing because that option excludes the ``doctrine`` channel.
+
+.. versionadded:: 8.2
+
+    The ``SYMFONY_CONSOLE_LOG_CHANNELS`` environment variable was introduced
+    in Symfony 8.2.
+
+Limiting Output to Interactive Mode
+...................................
+
+In automated environments like CI/CD pipelines or cron jobs, console log output
+may interfere with command output or create unnecessary clutter. You can configure
+the console handler to only output logs when the console is interactive:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/dev/monolog.yaml
+        monolog:
+            handlers:
+                console:
+                    type: console
+                    process_psr_3_messages: false
+                    channels: ['!event', '!doctrine', '!console']
+                    interactive_only: true
+
+    .. code-block:: php
+
+        // config/packages/dev/monolog.php
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog): void {
+            $monolog->handler('console')
+                ->type('console')
+                ->processPsr3Messages(false)
+                ->interactiveOnly(true)
+                ->channels()->elements(['!event', '!doctrine', '!console'])
+            ;
+        };
+
+When ``interactive_only`` is set to ``true``, the console handler will only
+output logs and prevent propagation to other handlers when the command is
+running in an interactive terminal. In non-interactive mode (e.g., when using
+the ``--no-interaction`` option or in automated scripts), logs will be
+propagated to other handlers instead.
+
+Logging Without Monolog
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Standalone applications and commands that don't use Monolog can use the
 :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger` class instead. It's a
@@ -1302,14 +1907,14 @@ Create a ``ConsoleLogger`` inside the command and pass it to the service::
 The log messages emitted by the service are displayed in the console output.
 
 Verbosity
-~~~~~~~~~
+.........
 
-Depending on the :doc:`verbosity level </console/verbosity>` used to run the
+Depending on the :ref:`verbosity level <console-verbosity>` used to run the
 command, messages may or may not be sent to the
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance.
 
 By default, the console logger behaves like
-:doc:`Monolog's Console Handler </logging/monolog_console>`.
+:ref:`Monolog's console handler <console-monolog-handler>`.
 The association between the log level and the verbosity can be configured
 through the second parameter of the :class:`Symfony\\Component\\Console\\Logger\\ConsoleLogger`
 constructor::
@@ -1325,7 +1930,7 @@ constructor::
     $logger = new ConsoleLogger($output, $verbosityLevelMap);
 
 Color
-~~~~~
+.....
 
 The logger outputs the log messages formatted with a color reflecting their
 level. This behavior is configurable through the third parameter of the
@@ -1340,7 +1945,7 @@ constructor::
     $logger = new ConsoleLogger($output, [], $formatLevelMap);
 
 Errors
-~~~~~~
+......
 
 The console logger includes a ``hasErrored()`` method which returns ``true`` as
 soon as any error message has been logged during the execution of the command.
@@ -1399,7 +2004,8 @@ regular event listeners:
 
     Console events are only triggered by the main command being executed.
     Commands called by the main command will not trigger any event, unless
-    run by the application itself, see :doc:`/console/calling_commands`.
+    run by the application itself, see
+    :ref:`how to call other commands <console-calling-commands>`.
 
 The following sections explain each console event and show the ``__invoke()``
 method of a listener for it.
@@ -2113,3 +2719,7 @@ tables, formatting the output or running external processes:
 .. _`constants of the PCNTL PHP extension`: https://www.php.net/manual/en/pcntl.constants.php
 .. _`PSR-3`: https://www.php-fig.org/psr/psr-3/
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
+.. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
+.. _`SensioLabs AnsiToHtml converter`: https://github.com/sensiolabs/ansi-to-html
+.. _`as a Twig extension`: https://github.com/sensiolabs/ansi-to-html#twig-integration
+.. _MonologBridge: https://github.com/symfony/monolog-bridge
