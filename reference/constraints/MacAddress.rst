@@ -53,7 +53,7 @@ can contain a MAC address:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\Entity\Device">
-                <property name="max">
+                <property name="mac">
                     <constraint name="MacAddress"/>
                 </property>
             </class>
