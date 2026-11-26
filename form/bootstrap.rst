@@ -1,5 +1,5 @@
-Bootstrap 5 Form Theme
-======================
+Bootstrap Form Themes
+=====================
 
 Symfony provides several ways of integrating `Bootstrap 5`_ into your application.
 The simplest way is to add the required ``<link>`` and ``<script>``
@@ -72,9 +72,11 @@ If you prefer to apply the Bootstrap styles on a form-by-form basis, include the
 Error Messages
 --------------
 
-Unlike in the :doc:`Bootstrap 4 theme </form/bootstrap4>`, errors are rendered
-**after** the ``input`` element. However, this still makes a strong connection
-between the error and its ``<input>``, as required by the `WCAG 2.0 standard`_.
+Unlike in the
+:ref:`Bootstrap 4 theme <reference-forms-bootstrap4-error-messages>`, errors
+are rendered **after** the ``input`` element. However, this still makes a strong
+connection between the error and its ``<input>``, as required by the
+`WCAG 2.0 standard`_.
 
 Checkboxes and Radios
 ---------------------
@@ -240,9 +242,69 @@ This does not mean that your entire website automatically complies with the full
 standard, but it does mean that you have come far in your work to create a
 design for **all** users.
 
+.. _forms-bootstrap4-theme:
+
+Bootstrap 4 Theme
+-----------------
+
+Symfony also provides form themes for `Bootstrap 4`_
+(``bootstrap_4_layout.html.twig`` and
+``bootstrap_4_horizontal_layout.html.twig``). Enable them in the same way as
+the Bootstrap 5 themes explained above, using these file names instead. The
+rest of this section explains the differences with the Bootstrap 5 themes.
+
+.. _reference-forms-bootstrap4-error-messages:
+
+Error Messages
+~~~~~~~~~~~~~~
+
+Form errors are rendered **inside** the ``<label>`` element to make sure there
+is a strong connection between the error and its ``<input>``, as required by the
+`WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
+``form_label()`` internally. If you call ``form_errors()`` in your template,
+you'll get the error messages displayed *twice*.
+
+.. tip::
+
+    Since form errors are rendered *inside* the ``<label>``, you cannot use CSS
+    ``:after`` to append an asterisk to the label, because it would be displayed
+    after the error message. Use the :ref:`label <reference-form-option-label>`
+    or :ref:`label_html <reference-form-option-label-html>` options instead.
+
+File Inputs
+~~~~~~~~~~~
+
+File inputs are rendered using the Bootstrap "custom-file" class, which hides
+the name of the selected file. To fix that, use the `bs-custom-file-input`_
+JavaScript plugin, as recommended by the `Bootstrap Forms documentation`_.
+
+Custom Forms
+~~~~~~~~~~~~
+
+Bootstrap 4 has a feature called `custom forms`_. You can enable that on your
+Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the
+label:
+
+* For a `custom radio`_, use ``radio-custom``;
+* For a `custom checkbox`_, use ``checkbox-custom``;
+* To have a `switch instead of a checkbox`_, use ``switch-custom``.
+
+.. code-block:: twig
+
+    {{ form_row(form.myRadio, {label_attr: {class: 'radio-custom'} }) }}
+    {{ form_row(form.myCheckbox, {label_attr: {class: 'checkbox-custom'} }) }}
+    {{ form_row(form.myCheckbox, {label_attr: {class: 'switch-custom'} }) }}
+
 .. _`Bootstrap 5`: https://getbootstrap.com/docs/5.3/
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`inline`: https://getbootstrap.com/docs/5.0/forms/checks-radios/#inline
 .. _`switches`: https://getbootstrap.com/docs/5.0/forms/checks-radios/#switches
 .. _`input group`: https://getbootstrap.com/docs/5.0/forms/input-group/
 .. _`floating label`: https://getbootstrap.com/docs/5.0/forms/floating-labels/
+.. _`Bootstrap 4`: https://getbootstrap.com/docs/4.6/
+.. _`bs-custom-file-input`: https://www.npmjs.com/package/bs-custom-file-input
+.. _`Bootstrap Forms documentation`: https://getbootstrap.com/docs/4.6/components/forms/#file-browser
+.. _`custom forms`: https://getbootstrap.com/docs/4.6/components/forms/#custom-forms
+.. _`custom radio`: https://getbootstrap.com/docs/4.6/components/forms/#radios
+.. _`custom checkbox`: https://getbootstrap.com/docs/4.6/components/forms/#checkboxes
+.. _`switch instead of a checkbox`: https://getbootstrap.com/docs/4.6/components/forms/#switches

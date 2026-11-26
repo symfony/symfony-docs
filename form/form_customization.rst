@@ -205,9 +205,9 @@ Renders validation errors. When called on the form itself, renders global errors
 
 .. note::
 
-    In the Bootstrap 4 and 5 themes, ``form_errors()`` is already included in
-    ``form_label()``. See :doc:`Bootstrap 5 theme documentation </form/bootstrap5>`
-    for details.
+    In the Bootstrap 4 theme, ``form_errors()`` is already included in
+    ``form_label()``. See the :ref:`Bootstrap 4 error messages
+    <reference-forms-bootstrap4-error-messages>` for details.
 
 .. _reference-forms-twig-help:
 
