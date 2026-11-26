@@ -118,8 +118,8 @@ instead. They're designed specifically for converting between formats.
 the ``getter``/``setter`` field options.
 
 **For validation logic**, use :doc:`validation constraints </validation>` with
-:doc:`validation groups </form/validation_groups>` or the :doc:`When </reference/constraints/When>`
-constraint.
+:ref:`validation groups <form-validation-groups>` or the
+:doc:`When </reference/constraints/When>` constraint.
 
 **For setting default values**, use the ``empty_data`` option or populate your
 object before passing it to the form.

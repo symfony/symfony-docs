@@ -106,8 +106,9 @@ validation_groups
 **type**: ``array`` **default**: ``null``
 
 When your form contains multiple submit buttons, you can change the validation
-group based on the clicked button. Read the article about
-:doc:`using validation groups in Symfony forms </form/validation_groups>`.
+group based on the clicked button. Read the section about
+:ref:`choosing validation groups based on the clicked button
+<form-validation-groups-clicked-button>`.
 
 Form Variables
 --------------

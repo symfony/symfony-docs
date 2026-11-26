@@ -18,9 +18,9 @@ value will be set. Use the ``data`` option or the ``placeholder`` key of the
 .. note::
 
     If a form is compound, you can set ``empty_data`` as an array, object or
-    closure. This option can be set for your entire form class, see the
-    :doc:`/form/use_empty_data` article for more details about these
-    options.
+    closure. This option can be set for your entire form class, see
+    :ref:`how to configure the empty data of a form class
+    <forms-empty-data-closure>` for more details about these options.
 
 .. warning::
 
