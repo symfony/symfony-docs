@@ -61,7 +61,7 @@ Validating Against an XSD Schema
 --------------------------------
 
 You can validate that the XML content conforms to a specific XSD schema using
-the ``schema`` option:
+the ``schemaPath`` option:
 
 .. configuration-block::
 
@@ -74,7 +74,7 @@ the ``schema`` option:
 
         class Report
         {
-            #[Assert\Xml(schema: 'path/to/schema.xsd')]
+            #[Assert\Xml(schemaPath: 'path/to/schema.xsd')]
             private string $xmlContent;
         }
 
@@ -85,13 +85,30 @@ the ``schema`` option:
             properties:
                 xmlContent:
                     - Xml:
-                        schema: path/to/schema.xsd
+                        schemaPath: path/to/schema.xsd
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Report">
+                <property name="xmlContent">
+                    <constraint name="Xml">
+                        <option name="schemaPath">path/to/schema.xsd</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
 Options
 -------
 
-``message``
-~~~~~~~~~~~
+``formatMessage``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not valid XML.``
 
@@ -102,12 +119,49 @@ You can use the following parameters in this message:
 ===============  ==============================================================
 Parameter        Description
 ===============  ==============================================================
-``{{ error }}``  The full error message from the XML parser
-``{{ line }}``   The line where the XML syntax error occurred
+``{{ value }}``  The current (invalid) value
 ===============  ==============================================================
 
-``schema``
-~~~~~~~~~~
+.. include:: /reference/constraints/_groups-option.rst.inc
+
+``maxSize``
+~~~~~~~~~~~
+
+**type**: ``integer`` **default**: ``5242880`` (5 MiB)
+
+The maximum size, in bytes, of the XML content. If the value is larger than
+this, validation fails with the `tooLargeMessage`_.
+
+.. include:: /reference/constraints/_payload-option.rst.inc
+
+``schemaFlags``
+~~~~~~~~~~~~~~~
+
+**type**: ``integer`` **default**: ``0``
+
+A bitmask of `libxml constants`_ (e.g. ``LIBXML_SCHEMA_CREATE``) that enables
+optional features of the XML parser when validating the content against the
+schema defined in the `schemaPath`_ option.
+
+``schemaMessage``
+~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``This value does not conform to the expected XSD schema.``
+
+This message is shown if the underlying data doesn't conform to the XSD schema
+defined in the `schemaPath`_ option.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ error }}``  The full error message from the XML parser
+``{{ line }}``   The line where the error occurred
+===============  ==============================================================
+
+``schemaPath``
+~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -115,8 +169,22 @@ The path to the XSD schema file to validate the XML content against. When this
 option is set, the constraint validates not only that the content is well-formed
 XML, but also that it conforms to the specified schema.
 
-.. include:: /reference/constraints/_groups-option.rst.inc
+``tooLargeMessage``
+~~~~~~~~~~~~~~~~~~~
 
-.. include:: /reference/constraints/_payload-option.rst.inc
+**type**: ``string`` **default**: ``This XML payload is too large ({{ size }} bytes): it exceeds the limit of {{ limit }} bytes.``
+
+This message is shown if the size of the underlying data is larger than the
+value of the `maxSize`_ option.
+
+You can use the following parameters in this message:
+
+===============  ==============================================================
+Parameter        Description
+===============  ==============================================================
+``{{ size }}``   The size of the value (in bytes)
+``{{ limit }}``  The maximum allowed size (in bytes)
+===============  ==============================================================
 
 .. _`XML`: https://en.wikipedia.org/wiki/XML
+.. _`libxml constants`: https://php.net/manual/libxml.constants
