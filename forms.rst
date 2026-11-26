@@ -397,7 +397,8 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
 Every form needs to know the name of the class that holds the underlying data
 (e.g. ``App\Entity\Task``). Usually, this is guessed based on the object passed
 to the second argument to ``createForm()`` (i.e. ``$task``). Later, when you
-begin :doc:`embedding forms </form/embedded>`, this will no longer be sufficient.
+begin :ref:`embedding forms <forms-embedding-single-object>`, this will no
+longer be sufficient.
 
 So, while not always necessary, it's generally a good idea to explicitly specify
 the ``data_class`` option by adding the following to your form type class::
@@ -426,6 +427,142 @@ the ``data_class`` option by adding the following to your form type class::
     If a form only lists the fields of its data class, you can skip the form
     type class and define the form on the data class itself with
     :doc:`PHP attributes </form/attribute_form_types>`.
+
+.. _forms-empty-data-closure:
+
+Configuring the Empty Data of a Form Class
+..........................................
+
+The ``empty_data`` option defines the data that a form uses when you submit it
+without having called ``setData()`` or passed any data when creating it. For
+example, in a controller::
+
+    public function index(): Response
+    {
+        $blog = ...;
+
+        // $blog is passed in as the data, so the empty_data
+        // option is not needed
+        $form = $this->createForm(BlogType::class, $blog);
+
+        // no data is passed in, so empty_data is
+        // used to get the "starting data"
+        $form = $this->createForm(BlogType::class);
+    }
+
+When the form defines a ``data_class`` option, ``empty_data`` creates a new
+instance of that class (unless the form is not required and nothing was
+submitted, in which case it's ``null``). That instance is created by calling
+the constructor with no arguments or, if the constructor has required arguments
+or promoted readonly properties, by passing it the data of the form fields (see
+:ref:`forms-empty-data-constructor`). To create the object differently (e.g.
+when its constructor takes arguments that don't come from the form fields), set
+``empty_data`` to a closure. The closure only creates the object if it's needed
+and it receives a ``FormInterface`` instance as its first argument::
+
+    // src/Form/Type/BlogType.php
+    use App\Entity\Blog;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    // ...
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'empty_data' => function (FormInterface $form): Blog {
+                return new Blog($form->get('title')->getData());
+            },
+        ]);
+    }
+
+If the form doesn't define the ``data_class`` option, set ``empty_data`` to a
+string or, if the form is compound, to an array of strings whose keys match the
+field names.
+
+.. _forms-empty-data-constructor:
+
+Using the Constructor of the Data Class
+.......................................
+
+.. versionadded:: 8.2
+
+    The mapping of the fields to the constructor of the data class was
+    introduced in Symfony 8.2.
+
+Immutable classes, such as the ones that use promoted ``readonly`` properties,
+receive all their data in the constructor and can't be modified after creating
+them. If the constructor of the ``data_class`` is public and has required
+arguments or promoted readonly properties, you don't need to define the
+``empty_data`` option or the ``setter`` option of each field. Symfony passes
+the data of the form fields to the constructor, matching each argument with the
+field whose property path is the name of that argument (e.g. ``email``, but not
+``address.street``)::
+
+    // src/Model/SignUp.php
+    namespace App\Model;
+
+    final readonly class SignUp
+    {
+        public function __construct(
+            public string $email,
+            public \DateTimeImmutable $birthDate,
+            // the form doesn't define a 'newsletter' field, so the
+            // default value of this argument is used
+            public bool $newsletter = false,
+        ) {
+        }
+    }
+
+    // src/Form/Type/SignUpType.php
+    namespace App\Form\Type;
+
+    use App\Model\SignUp;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\Extension\Core\Type\DateType;
+    use Symfony\Component\Form\Extension\Core\Type\EmailType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    class SignUpType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder
+                ->add('email', EmailType::class)
+                ->add('birthDate', DateType::class, ['widget' => 'single_text'])
+            ;
+        }
+
+        public function configureOptions(OptionsResolver $resolver): void
+        {
+            $resolver->setDefaults(['data_class' => SignUp::class]);
+        }
+    }
+
+This works for any required constructor argument, promoted or not. Arguments
+without a matching field get their default value. If a required argument has
+no matching field, the form fails; add that field or define the ``empty_data``
+option. Disabled and unsubmitted fields pass their initial data to the
+constructor. Symfony doesn't map fields to variadic arguments, nor fields that
+define the ``setter`` option or set the ``mapped`` option to ``false``.
+
+When editing an existing object, if the user changes a field mapped to a
+promoted readonly property, Symfony creates a new object with the new value and
+reads the other arguments from the previous object. As a result,
+``$form->getData()`` returns a new object and the original object doesn't
+change. Symfony only does this when the constructor promotes all the properties
+of the class (including the ones declared in its parent classes), so no data is
+lost. Otherwise, the form fails because it can't write the new value into the
+readonly property. Fields mapped to promoted properties that aren't readonly
+pass their value to the constructor and are then written like any other
+property.
+
+If the submitted value of a field is empty and the argument isn't nullable,
+Symfony uses the default value of the argument. If the argument has no default
+value, the form adds an error to that field. When the Validator component is
+installed, the constraints of the mapped property (e.g. ``NotBlank`` or
+``NotNull``) are validated against the field data first. If they pass, the
+``invalid_message`` of the field is displayed.
 
 .. _form-property-path:
 
@@ -574,7 +711,7 @@ suitable for being rendered in an HTML form.
 
 As short as this rendering is, it's not very flexible. Usually, you'll need more
 control over how the entire form or some of its fields look. For example, thanks
-to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap5>` you
+to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap>` you
 can set this option to generate forms compatible with the Bootstrap 5 CSS framework:
 
 .. configuration-block::
@@ -1059,6 +1196,183 @@ Because clearing the errors makes the form valid,
 :method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors`
 should only be called after testing whether the form is valid.
 
+.. _form-validation-groups:
+
+Validation Groups
+~~~~~~~~~~~~~~~~~
+
+If the object handled in your form uses
+:doc:`validation groups </validation/groups>`, you need to specify which
+validation group(s) the form should apply.
+
+To define them when
+:ref:`creating forms in classes <creating-forms-in-classes>`, use the
+``configureOptions()`` method::
+
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            // ...
+            'validation_groups' => ['registration'],
+        ]);
+    }
+
+When :ref:`creating forms in controllers <creating-forms-in-controllers>`, pass
+it as a form option::
+
+    $form = $this->createFormBuilder($user, [
+        'validation_groups' => ['registration'],
+    ])->add(/* ... */);
+
+In both cases, *only* the ``registration`` group will be used to validate the
+object. To apply the ``registration`` group *and* all constraints not in any
+other group, add the special ``Default`` group::
+
+    [
+        // ...
+        'validation_groups' => ['Default', 'registration'],
+    ]
+
+To apply validation groups in order and stop at the first one that fails, see
+:doc:`how to sequentially apply validation groups
+</validation/sequence_provider>`.
+
+.. note::
+
+    You can use any name for your validation groups. Symfony recommends using
+    "lower snake case" (e.g. ``foo_bar``), while automatically generated
+    groups use "UpperCamelCase" (e.g. ``Default``, ``SomeClassName``).
+
+.. _form-validation-groups-clicked-button:
+
+Choosing Validation Groups Based on the Clicked Button
+......................................................
+
+When your form has
+:ref:`multiple submit buttons <processing-forms-multiple-buttons>`, you can
+change the validation group based on the clicked button. For example, in a
+multi-step form like the following, you might want to skip validation when
+returning to a previous step::
+
+    $form = $this->createFormBuilder($task)
+        // ...
+        ->add('nextStep', SubmitType::class)
+        ->add('previousStep', SubmitType::class)
+        ->getForm();
+
+To do so, configure the validation groups of the ``previousStep`` button to
+``false``, which is a special value that skips validation::
+
+    $form = $this->createFormBuilder($task)
+        // ...
+        ->add('previousStep', SubmitType::class, [
+            'validation_groups' => false,
+        ])
+        ->getForm();
+
+Now the form will skip your validation constraints when that button is clicked.
+It will still validate basic integrity constraints, such as checking whether an
+uploaded file was too large or whether you tried to submit text in a number
+field.
+
+If you are building a full multi-step form, use
+:doc:`form flows </form/form_flow>` instead of creating these buttons yourself.
+
+.. _form-validation-groups-submitted-data:
+
+Choosing Validation Groups Based on Submitted Data
+..................................................
+
+To determine validation groups dynamically based on submitted data, use a
+callback. This is called after the form is submitted, but before validation is
+invoked. The callback receives the form object as its first argument::
+
+    use App\Entity\Client;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'validation_groups' => function (FormInterface $form): array {
+                $data = $form->getData();
+
+                if (Client::TYPE_PERSON === $data->getType()) {
+                    return ['Default', 'person'];
+                }
+
+                return ['Default', 'company'];
+            },
+        ]);
+    }
+
+.. note::
+
+    Adding ``Default`` to the list of validation groups is common but not
+    mandatory.
+
+You can also pass a static class method callback::
+
+    'validation_groups' => [Client::class, 'determineValidationGroups']
+
+.. _form-validation-groups-service:
+
+Choosing Validation Groups via a Service
+........................................
+
+If validation group logic requires services or can't fit in a closure, use a
+dedicated validation group resolver service. The class of this service must
+be invokable and receive the form object as its first argument::
+
+    // src/Validation/ValidationGroupResolver.php
+    namespace App\Validation;
+
+    use Symfony\Component\Form\FormInterface;
+
+    class ValidationGroupResolver
+    {
+        public function __construct(
+            private object $service1,
+            private object $service2,
+        ) {
+        }
+
+        public function __invoke(FormInterface $form): array
+        {
+            $groups = [];
+
+            // ... determine which groups to return
+
+            return $groups;
+        }
+    }
+
+Then use the service in your form type::
+
+    // src/Form/Type/MyClassType.php
+    namespace App\Form\Type;
+
+    use App\Validation\ValidationGroupResolver;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    class MyClassType extends AbstractType
+    {
+        public function __construct(
+            private ValidationGroupResolver $groupResolver,
+        ) {
+        }
+
+        public function configureOptions(OptionsResolver $resolver): void
+        {
+            $resolver->setDefaults([
+                'validation_groups' => $this->groupResolver,
+            ]);
+        }
+    }
+
 .. _form-disabling-validation:
 
 Disabling Validation
@@ -1085,20 +1399,9 @@ The submission of extra form fields can be controlled with the
 the maximum upload file size should be handled via your PHP and web server
 configuration.
 
-You can also disable validation for specific submit buttons using
-``'validation_groups' => false``. This is useful in multi-step forms when you
-want a "Previous" button to save data without running validation::
-
-    $form = $this->createFormBuilder($task)
-        // ...
-        ->add('nextStep', SubmitType::class)
-        ->add('previousStep', SubmitType::class, [
-            'validation_groups' => false,
-        ])
-        ->getForm();
-
-The form will still validate basic integrity constraints even when clicking
-"previousStep".
+You can also disable validation only when a specific submit button is clicked,
+as explained in :ref:`choosing validation groups based on the clicked button
+<form-validation-groups-clicked-button>`.
 
 .. _form-custom-violation-mapper:
 
@@ -1512,7 +1815,7 @@ pass ``null`` to it::
 
 .. warning::
 
-    When using a specific :doc:`form validation group </form/validation_groups>`,
+    When using a specific :ref:`form validation group <form-validation-groups>`,
     the field type guesser will still consider *all* validation constraints when
     guessing your field types (including constraints that are not part of the
     validation group(s) being used).
@@ -1703,6 +2006,132 @@ read it like this::
 
     To accept extra fields, set the :ref:`allow_extra_fields <form-option-allow-extra-fields>`
     option to ``true``. Otherwise, the form will be invalid.
+
+.. _forms-embedding-single-object:
+
+Embedding Forms
+~~~~~~~~~~~~~~~
+
+Often, you'll want to build a form that will include fields from many different
+objects. For example, a registration form may contain data belonging to
+a ``User`` object as well as many ``Address`` objects.
+
+Suppose that each ``Task`` belongs to a ``Category`` object. Start by
+creating the ``Category`` class::
+
+    // src/Entity/Category.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class Category
+    {
+        #[Assert\NotBlank]
+        public string $name;
+    }
+
+Next, add a new ``category`` property to the ``Task`` class::
+
+    // src/Entity/Task.php
+    namespace App\Entity;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+    // ...
+
+    class Task
+    {
+        // ...
+
+        #[Assert\Type(Category::class)]
+        #[Assert\Valid]
+        protected ?Category $category = null;
+
+        // ...
+
+        public function getCategory(): ?Category
+        {
+            return $this->category;
+        }
+
+        public function setCategory(?Category $category): void
+        {
+            $this->category = $category;
+        }
+    }
+
+.. tip::
+
+    The :doc:`Valid </reference/constraints/Valid>` constraint cascades the
+    validation to the ``Category`` object. Without it, the embedded object is
+    not validated.
+
+Then, create a form class that allows users to edit a ``Category`` object::
+
+    // src/Form/Type/CategoryType.php
+    namespace App\Form\Type;
+
+    use App\Entity\Category;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    class CategoryType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options): void
+        {
+            $builder->add('name');
+        }
+
+        public function configureOptions(OptionsResolver $resolver): void
+        {
+            $resolver->setDefaults([
+                'data_class' => Category::class,
+            ]);
+        }
+    }
+
+The end goal is to allow the ``Category`` of a ``Task`` to be modified right
+inside the task form itself (if you only need to select an existing category,
+use the :doc:`EntityType field </reference/forms/types/entity>` instead). To
+do so, add a ``category`` field of type ``CategoryType`` to the ``TaskType``
+form::
+
+    // src/Form/Type/TaskType.php
+    use Symfony\Component\Form\FormBuilderInterface;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        // ...
+
+        $builder->add('category', CategoryType::class);
+    }
+
+The fields from ``CategoryType`` can now be rendered alongside those from
+the ``TaskType`` class.
+
+Render the ``Category`` fields in the same way as the original ``Task`` fields:
+
+.. code-block:: html+twig
+
+    {# ... #}
+
+    <h3>Category</h3>
+    <div class="category">
+        {{ form_row(form.category.name) }}
+    </div>
+
+    {# ... #}
+
+When the user submits the form, Symfony uses the submitted data of the
+``Category`` fields to create a ``Category`` object and sets it on the
+``category`` property of the ``Task`` object. You can get it with
+``$task->getCategory()`` and persist it to the database or use it however you
+need.
+
+You can also embed a collection of forms into one form (imagine a ``Category``
+form with many ``Product`` sub-forms) with the
+:doc:`CollectionType field </reference/forms/types/collection>`, as explained in
+:doc:`how to embed a collection of forms </form/form_collections>`.
 
 .. _forms-without-class:
 
@@ -1955,7 +2384,8 @@ To achieve this, use the ``expression`` option of the
 
     Another way to implement conditional constraints is to configure the
     ``validation_groups`` form option with a callable. See
-    :doc:`/form/validation_groups`.
+    :ref:`how to choose validation groups based on submitted data
+    <form-validation-groups-submitted-data>`.
 
 .. _forms-standalone-setup:
 
@@ -2388,8 +2818,7 @@ Form Themes and Customization:
 .. toctree::
     :maxdepth: 1
 
-    /form/bootstrap4
-    /form/bootstrap5
+    /form/bootstrap
     /form/tailwindcss
     /form/form_customization
     /form/form_themes
@@ -2402,24 +2831,15 @@ Events:
     /form/events
     /form/dynamic_form_modification
 
-Validation:
-
-.. toctree::
-    :maxdepth: 1
-
-    /form/validation_groups
-
 Misc.:
 
 .. toctree::
     :maxdepth: 1
 
-    /form/embedded
     /form/form_collections
     /form/form_flow
     /form/inherit_data_option
     /form/unit_testing
-    /form/use_empty_data
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

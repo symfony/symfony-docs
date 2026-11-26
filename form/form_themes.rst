@@ -86,10 +86,11 @@ No CSS framework
 `Bootstrap`_
     ``bootstrap_5_layout.html.twig`` / ``bootstrap_5_horizontal_layout.html.twig``
     for the most recent Bootstrap 5 version. Read more about
-    :doc:`how to use the Bootstrap form theme </form/bootstrap5>`.
+    :doc:`how to use the Bootstrap form theme </form/bootstrap>`.
 
     There are also form themes for legacy Bootstrap versions: ``bootstrap_4_layout.html.twig``
-    / ``bootstrap_4_horizontal_layout.html.twig`` for :doc:`Bootstrap 4 integration </form/bootstrap4>`
+    / ``bootstrap_4_horizontal_layout.html.twig`` for
+    :ref:`Bootstrap 4 integration <forms-bootstrap4-theme>`
     and ``bootstrap_3_layout.html.twig`` / ``bootstrap_3_horizontal_layout.html.twig``
     for Bootstrap 3.
 
@@ -682,7 +683,7 @@ Display an asterisk next to required field labels:
 Learn More
 ----------
 
-* :doc:`Bootstrap 5 theme with switches, floating labels, input groups </form/bootstrap5>`
+* :doc:`Bootstrap 5 theme with switches, floating labels, input groups </form/bootstrap>`
 * :doc:`Tailwind CSS theme customization </form/tailwindcss>`
 * :doc:`Creating reusable custom form types </form/create_custom_field_type>`
 * :doc:`Complete reference of all built-in form types </reference/forms/types>`

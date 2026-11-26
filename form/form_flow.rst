@@ -39,7 +39,7 @@ is rendered and processed.
 
 .. note::
 
-    :doc:`Validation groups </form/validation_groups>` are automatically scoped
+    :ref:`Validation groups <form-validation-groups>` are automatically scoped
     to the current step. By default, the active groups are ``['Default', '<current_step_name>']``,
     which allows you to define step-specific constraints on your data object.
 
