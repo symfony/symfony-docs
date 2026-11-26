@@ -115,7 +115,7 @@
 /cookbook/configuration/override_dir_structure /configuration/override_dir_structure
 /cookbook/configuration/using_parameters_in_dic /configuration/using_parameters_in_dic
 /cookbook/configuration/web_server_configuration /setup/web_server_configuration
-/cookbook/console/command_in_controller /console/command_in_controller
+/cookbook/console/command_in_controller /console#console-command-in-controller
 /cookbook/console/commands_as_services /console#console-registering-commands
 /cookbook/console/console_command /console
 /cookbook/console/index /console
@@ -187,7 +187,7 @@
 /cookbook/logging/channels_handlers /logging/channels_handlers
 /cookbook/logging/index /logging
 /cookbook/logging/monolog /logging
-/cookbook/logging/monolog_console /logging/monolog_console
+/cookbook/logging/monolog_console /console#console-monolog-handler
 /cookbook/logging/monolog_email /logging/monolog_email
 /cookbook/logging/monolog_regex_based_excludes /logging/monolog_regex_based_excludes
 /cookbook/profiler/data_collector /profiler#profiler-data-collector
@@ -698,3 +698,9 @@
 /http_cache/validation /http_cache#http-cache-validation-intro
 /http_cache/cache_vary /http_cache#http-cache-vary
 /http_cache/cache_invalidation /http_cache#http-cache-invalidation
+/console/verbosity /console#console-verbosity
+/console/lockable_trait /console#console-lockable
+/console/calling_commands /console#console-calling-commands
+/console/command_in_controller /console#console-command-in-controller
+/console/lazy_commands /console#console-registering-commands
+/logging/monolog_console /console#console-monolog-handler

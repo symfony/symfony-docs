@@ -398,7 +398,6 @@ Learn More
     logging/processors
     logging/handlers
     logging/monolog_exclude_http_codes
-    logging/monolog_console
 
 .. _`the twelve-factor app methodology`: https://12factor.net/logs
 .. _`PSR-3`: https://www.php-fig.org/psr/psr-3/
