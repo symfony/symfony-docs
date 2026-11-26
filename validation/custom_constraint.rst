@@ -182,7 +182,7 @@ The ``addViolation()`` method call finally adds the violation to the context.
 .. tip::
 
     Validation error messages are automatically
-    :doc:`translated </validation/translations>` to the current application
+    :ref:`translated <validation-translations>` to the current application
     locale. If your application doesn't use translations, you can disable this
     behavior by calling the ``disableTranslation()`` method of
     ``ConstraintViolationBuilderInterface``.

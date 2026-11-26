@@ -30,6 +30,10 @@ messages use the default ``messages`` domain::
 
     echo $translator->trans('Hello World', domain: 'messages');
 
+Some Symfony features use their own domain. For example, validation error
+messages use the ``validators`` domain, as explained in
+:ref:`how to translate constraint messages <validation-translations>`.
+
 The translation process has several steps:
 
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
