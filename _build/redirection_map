@@ -695,3 +695,7 @@
 /validation/raw_values /validation#validation-raw-values
 /validation/translations /validation#validation-translations
 /validation/severity /validation#validation-payload
+/http_cache/expiration /http_cache#http-cache-expiration-intro
+/http_cache/validation /http_cache#http-cache-validation-intro
+/http_cache/cache_vary /http_cache#http-cache-vary
+/http_cache/cache_invalidation /http_cache#http-cache-invalidation

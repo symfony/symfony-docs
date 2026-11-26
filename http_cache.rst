@@ -220,25 +220,28 @@ you're ready to cache your responses. To do that, you need to *communicate* to y
 cache *which* responses are cacheable and for how long. This is done by setting HTTP
 cache headers on the response.
 
-HTTP specifies four response cache headers that you can set to enable caching:
-
-* ``Cache-Control``
-* ``Expires``
-* ``ETag``
-* ``Last-Modified``
-
-These four headers are used to help cache your responses via *two* different models:
+HTTP defines two caching models and each of them uses two response headers:
 
 .. _http-expiration-validation:
 .. _http-expiration-and-validation:
 
-#. :ref:`Expiration Caching <http-cache-expiration-intro>`
-   Used to cache your entire response for a specific amount of time (e.g. 24 hours).
-   Simple, but cache invalidation is more difficult.
+#. :ref:`Expiration caching <http-cache-expiration-intro>` caches the entire
+   response for a specific amount of time (e.g. 24 hours). It's simple, but
+   cache invalidation is more difficult. It uses these headers:
 
-#. :ref:`Validation Caching <http-cache-validation-intro>`
-   More complex: used to cache your response, but allows you to dynamically invalidate
-   it as soon as your content changes.
+   * :ref:`Cache-Control <http-cache-cache-control>`
+   * :ref:`Expires <http-cache-expires>`
+
+#. :ref:`Validation caching <http-cache-validation-intro>` is more complex, but
+   it allows you to dynamically invalidate the response as soon as your content
+   changes. It uses these headers:
+
+   * :ref:`ETag <http-cache-etag>`
+   * :ref:`Last-Modified <http-cache-last-modified>`
+
+You can use both models in the same response: expiration wins over validation,
+so the cache serves the cached content until it expires and then checks with
+your application that the content is still valid.
 
 .. sidebar:: Reading the HTTP Specification
 
@@ -257,7 +260,19 @@ These four headers are used to help cache your responses via *two* different mod
 Expiration Caching
 ~~~~~~~~~~~~~~~~~~
 
-The *easiest* way to cache a response is by caching it for a specific amount of time::
+The `expiration model`_ is the more efficient of the two caching models and you
+should use it whenever possible. The cache returns the cached response without
+hitting your application until that response expires. You can define the
+expiration with one of two HTTP headers: ``Cache-Control`` or ``Expires``.
+
+.. _http-cache-cache-control:
+
+Expiration with the ``Cache-Control`` Header
+............................................
+
+Most of the time, you will use the ``Cache-Control`` header, which can specify
+many different cache directives. The *easiest* way to cache a response is by
+caching it for a specific amount of time::
 
 .. configuration-block::
 
@@ -311,7 +326,8 @@ for debugging information about cache hits and misses.
 
 .. tip::
 
-    The URI of the request is used as the cache key (unless you :doc:`vary </http_cache/cache_vary>`).
+    The URI of the request is used as the cache key (unless you
+    :ref:`vary the response <http-cache-vary>`).
 
 This provides great performance and is simple to use. But, cache *invalidation*
 is not supported. If your content changes, you'll need to wait until your cache
@@ -326,7 +342,227 @@ If you need to set cache headers for many different controller actions, check ou
 `FOSHttpCacheBundle`_. It provides a way to define cache headers based on the URL
 pattern and other request properties.
 
-Finally, for more information about expiration caching, see :doc:`/http_cache/expiration`.
+.. note::
+
+    Using the ``setSharedMaxAge()`` method is not equivalent to using both
+    ``setPublic()`` and ``setMaxAge()`` methods. According to the
+    `Serving Stale Responses`_ section of RFC 7234, the ``s-maxage`` setting
+    (added by ``setSharedMaxAge()`` method) prohibits a cache from using a stale
+    response in ``stale-if-error`` scenarios. That's why it's recommended to use
+    both ``public`` and ``max-age`` directives.
+
+.. note::
+
+    The ``#[Cache]`` attribute leaves unchanged the responses whose status code
+    isn't cacheable (e.g. ``201`` or ``500``).
+
+    .. versionadded:: 8.2
+
+        Support for ``308`` responses in the ``#[Cache]`` attribute and in the
+        :ref:`Symfony reverse proxy <symfony-gateway-cache>` was introduced in
+        Symfony 8.2.
+
+.. _http-cache-targeted-cache-control:
+
+Targeting a Specific Cache
+..........................
+
+.. versionadded:: 8.2
+
+    The ``Response::cacheControl()`` method and the ``target`` argument of the
+    ``#[Cache]`` attribute were introduced in Symfony 8.2.
+
+The ``Cache-Control`` header is read by every cache between your application and
+the user: the browser, your reverse proxy, a CDN, etc. `RFC 9213`_ allows sending
+different directives to a single cache using a header named after that cache.
+
+For example, a cache that identifies itself as ``CDN`` reads the ``CDN-Cache-Control``
+header and, when it's present, ignores the ``Cache-Control`` and ``Expires`` headers
+entirely. All the other caches keep reading ``Cache-Control`` as usual. Cloudflare,
+Fastly and Akamai support the ``CDN-Cache-Control`` header.
+
+This is useful, for example, to keep a response in the CDN for one hour while
+telling browsers to always revalidate it. Call the ``cacheControl()`` method
+with the name of the target cache::
+
+    // for browsers and any other cache
+    $response->setPrivate();
+    $response->setMaxAge(0);
+
+    // for the CDN only
+    $response->cacheControl('CDN')->setMaxAge(3600);
+
+The response now contains both headers:
+
+.. code-block:: text
+
+    Cache-Control: max-age=0, private
+    CDN-Cache-Control: max-age=3600
+
+The object returned by ``cacheControl()`` provides the same methods as the
+response itself: ``setPublic()``, ``setPrivate()``, ``setMaxAge()``, ``setNoStore()``,
+``setImmutable()``, ``setStaleWhileRevalidate()`` and ``setStaleIfError()``. For
+any other directive, use the ``set()``, ``get()``, ``has()``, ``remove()`` and
+``all()`` methods. All these methods can be chained::
+
+    $response->cacheControl('CDN')
+        ->setMaxAge(3600)
+        ->setStaleWhileRevalidate(60)
+        ->set('some-proprietary-directive', 'value');
+
+.. note::
+
+    There is no ``setSharedMaxAge()`` method, so always use ``setMaxAge()``.
+    The ``s-maxage`` directive exists to tell shared caches apart from browsers,
+    which is not needed when the header already targets a single cache.
+    Moreover, RFC 9213 requires caches to support ``max-age``, but ``s-maxage``
+    is optional, so a cache that doesn't support it would get no freshness
+    information at all.
+
+When using the ``#[Cache]`` attribute, set targeted directives with its ``target``
+argument. It accepts the name of a cache, or a list of names to set the same
+directives for several caches::
+
+    use Symfony\Component\HttpKernel\Attribute\Cache;
+    // ...
+
+    // for browsers and any other cache
+    #[Cache(public: true, maxage: 60)]
+    // for the generic CDN header and the Cloudflare-specific header only
+    #[Cache(maxage: 3600, staleWhileRevalidate: 60, target: ['CDN', 'Cloudflare-CDN'])]
+    public function index(): Response
+    {
+        // ...
+    }
+
+The response now contains these headers:
+
+.. code-block:: text
+
+    Cache-Control: max-age=60, public
+    CDN-Cache-Control: max-age=3600, stale-while-revalidate=60
+    Cloudflare-CDN-Cache-Control: max-age=3600, stale-while-revalidate=60
+
+When using ``target``, only the ``maxage``, ``public``, ``mustRevalidate``,
+``staleWhileRevalidate``, ``staleIfError`` and ``noStore`` arguments are allowed.
+Other arguments, such as ``smaxage`` or ``vary``, don't apply to targeted
+headers and throw an exception.
+
+.. warning::
+
+    Symfony's :ref:`built-in reverse proxy <symfony-gateway-cache>` ignores
+    targeted headers and only reads ``Cache-Control``.
+
+.. _http-cache-expires:
+
+Expiration with the ``Expires`` Header
+......................................
+
+An alternative to the ``Cache-Control`` header is ``Expires``. According to the
+HTTP specification, "the ``Expires`` header field gives the date/time after
+which the response is considered stale." Set it with the ``expires`` option of
+the ``#[Cache]`` attribute or with the ``setExpires()`` method of the
+``Response``::
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        #[Cache(expires: '+600 seconds')]
+        public function index(): Response
+        {
+            // ...
+        }
+
+    .. code-block:: php
+
+        $response->setExpires(new \DateTime('+600 seconds'));
+
+The resulting HTTP header will look like this:
+
+.. code-block:: text
+
+    Expires: Thu, 01 Mar 2011 16:00:00 GMT
+
+.. note::
+
+    The ``expires`` option and the ``setExpires()`` method automatically convert
+    the date to the GMT timezone as required by the specification.
+
+Note that in HTTP versions before 1.1 the origin server wasn't required to
+send the ``Date`` header. Consequently, the cache (e.g. the browser) might
+need to rely on the local clock to evaluate the ``Expires`` header, making
+the lifetime calculation vulnerable to clock skew. Another limitation
+of the ``Expires`` header is that the specification states that "HTTP/1.1
+servers should not send ``Expires`` dates more than one year in the future."
+That's why ``Cache-Control`` is the preferred header.
+
+.. note::
+
+    According to the `Calculating Freshness Lifetime`_ section of RFC 7234,
+    the ``Expires`` header value is ignored when the ``s-maxage`` or ``max-age``
+    directive of the ``Cache-Control`` header is defined.
+
+Applying Cache Conditionally
+............................
+
+.. versionadded:: 8.1
+
+    The ``if`` option of the ``#[Cache]`` attribute was introduced in Symfony 8.1.
+
+Use the ``if`` option to apply the ``#[Cache]`` attribute only when a given
+condition is met. This option accepts a closure or an
+:doc:`ExpressionLanguage </expression_language>` expression that
+receives the ``Request`` object and the controller arguments and must return
+a boolean value:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        // Using a closure
+        #[Cache(
+            public: true,
+            maxage: 3600,
+            if: static fn (Request $request): bool => $request->query->has('cache')
+        )]
+        public function index(Request $request): Response
+        {
+            // ...
+        }
+
+        // Using an expression
+        #[Cache(
+            public: true,
+            maxage: 3600,
+            if: "request.query.has('cache')"
+        )]
+        public function show(Request $request): Response
+        {
+            // ...
+        }
+
+When the condition evaluates to ``true``, the cache headers are applied; when
+it evaluates to ``false``, they are not.
+
+This is useful when you need to enable caching based on runtime conditions such
+as user authentication state, feature flags, or request parameters. It is also
+helpful when the controller does not return a ``Response`` object directly (e.g.
+when using `FOSRestBundle`_ or other libraries that handle view rendering).
+
+.. note::
+
+    The ``#[Cache]`` attribute is repeatable. When multiple attributes are
+    defined on the same controller, they are evaluated in order and the first
+    one whose condition returns ``true`` is applied. If no condition matches,
+    no cache headers are set by the attribute.
 
 .. _http-cache-validation-intro:
 
@@ -341,7 +577,404 @@ If you need to see updated content *immediately*, you either need to
 :ref:`invalidate <http-cache-invalidation>` your cache *or* use the validation
 caching model.
 
-For details, see :doc:`/http_cache/validation`.
+In the `validation model`_, the cache still stores responses, but for each
+request it asks the application if the cached response is still valid or if it
+needs to be regenerated. If the cached response *is* still valid, your
+application should return a 304 status code and no content. This tells the
+cache that it's OK to return the cached response.
+
+Under this model, you only save CPU if you're able to determine that the
+cached response is still valid by doing *less* work than generating the whole
+page again (see below for an implementation example).
+
+.. tip::
+
+    The 304 status code means "Not Modified". It's important because with
+    this status code the response does *not* contain the actual content being
+    requested. Instead, the response only consists of the response headers that
+    tell the cache that it can use its stored version of the content.
+
+Like with expiration, there are two different HTTP headers that can be used
+to implement the validation model: ``ETag`` and ``Last-Modified``.
+
+.. _http-cache-etag:
+
+Validation with the ``ETag`` Header
+...................................
+
+The `HTTP ETag`_ ("entity-tag") header is an optional HTTP header whose value is
+an arbitrary string that uniquely identifies one representation of the target
+resource. It's entirely generated and set by your application so that you can
+tell, for example, if the ``/about`` resource that's stored by the cache is
+up-to-date with what your application would return.
+
+An ``ETag`` is like a fingerprint and is used to quickly compare if two
+different versions of a resource are equivalent. Like fingerprints, each
+``ETag`` must be unique across all representations of the same resource.
+
+In the following example, the ``ETag`` is the ``md5`` hash of the content::
+
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class DefaultController extends AbstractController
+    {
+        public function homepage(Request $request): Response
+        {
+            $response = $this->render('static/homepage.html.twig');
+            $response->setEtag(md5($response->getContent()));
+            $response->setPublic(); // make sure the response is public/cacheable
+            $response->isNotModified($request);
+
+            return $response;
+        }
+    }
+
+The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
+method compares the ``If-None-Match`` header with the ``ETag`` response header.
+If the two match, the method automatically sets the ``Response`` status code
+to 304.
+
+.. note::
+
+    When using ``mod_deflate`` or ``mod_brotli`` in Apache 2.4, the original
+    ``ETag`` value is modified (e.g. if ``ETag`` was ``foo``, Apache turns it
+    into ``foo-gzip`` or ``foo-br``), which breaks the ``ETag``-based validation.
+
+    You can control this behavior with the `DeflateAlterETag`_ and `BrotliAlterETag`_
+    directives. Alternatively, you can use the following Apache configuration to
+    keep both the original ``ETag`` and the modified one when compressing responses:
+
+    .. code-block:: apache
+
+        RequestHeader edit "If-None-Match" '^"((.*)-(gzip|br))"$' '"$1", "$2"'
+
+.. note::
+
+    The cache sets the ``If-None-Match`` header on the request to the ``ETag``
+    of the original cached response before sending the request back to the
+    app. This is how the cache and server communicate with each other and
+    decide whether or not the resource has been updated since it was cached.
+
+This algorithm works and is very generic, but you need to create the whole
+``Response`` before being able to compute the ``ETag``, which is sub-optimal.
+In other words, it saves on bandwidth, but not CPU cycles.
+
+In the :ref:`optimizing-cache-validation` section, you'll see how validation
+can be used more intelligently to determine the validity of a cache without
+doing so much work.
+
+.. tip::
+
+    Symfony also supports weak ``ETag`` values by passing ``true`` as the second
+    argument to the
+    :method:`Symfony\\Component\\HttpFoundation\\Response::setEtag` method.
+
+.. _http-cache-last-modified:
+
+Validation with the ``Last-Modified`` Header
+............................................
+
+The ``Last-Modified`` header is the second form of validation. According
+to the HTTP specification, "The ``Last-Modified`` header field indicates
+the date and time at which the origin server believes the representation
+was last modified." In other words, the application compares this date with
+the date of the cached response to decide if the content has changed since the
+response was cached.
+
+For instance, you can use the latest update date for all the objects needed to
+compute the resource representation as the value for the ``Last-Modified``
+header::
+
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
+
+    // ...
+    use App\Entity\Article;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ArticleController extends AbstractController
+    {
+        public function show(Article $article, Request $request): Response
+        {
+            // use the most recent update date of the article and its author
+            $lastModifiedAt = max(
+                $article->getUpdatedAt(),
+                $article->getAuthor()->getUpdatedAt()
+            );
+
+            $response = new Response();
+            $response->setLastModified($lastModifiedAt);
+            // Set response as public. Otherwise it will be private by default.
+            $response->setPublic();
+
+            if ($response->isNotModified($request)) {
+                return $response;
+            }
+
+            // ... do more work to populate the response with the full content
+
+            return $response;
+        }
+    }
+
+The :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
+method compares the ``If-Modified-Since`` header with the ``Last-Modified``
+response header. If they are equivalent, the ``Response`` will be set to a
+304 status code.
+
+.. note::
+
+    The cache sets the ``If-Modified-Since`` header on the request to the ``Last-Modified``
+    of the original cached response before sending the request back to the
+    app. This is how the cache and server communicate with each other and
+    decide whether or not the resource has been updated since it was cached.
+
+.. _optimizing-cache-validation:
+
+Optimizing your Code with Validation
+....................................
+
+The main goal of any caching strategy is to lighten the load on the application.
+Put another way, the less you do in your application to return a 304 response,
+the better. The ``Response::isNotModified()`` method does exactly that::
+
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
+
+    // ...
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ArticleController extends AbstractController
+    {
+        public function show(string $articleSlug, Request $request): Response
+        {
+            // Get the minimum information to compute
+            // the ETag or the Last-Modified value
+            // (based on the Request, data is retrieved from
+            // a database or a key-value store for instance)
+            $article = ...;
+
+            // create a Response with an ETag and/or a Last-Modified header
+            $response = new Response();
+            $response->setEtag($article->computeETag());
+            $response->setLastModified($article->getPublishedAt());
+
+            // Set response as public. Otherwise it will be private by default.
+            $response->setPublic();
+
+            // Check that the Response is not modified for the given Request
+            if ($response->isNotModified($request)) {
+                // return the 304 Response immediately
+                return $response;
+            }
+
+            // do more work here - like retrieving more data
+            $comments = ...;
+
+            // or render a template with the $response you've already started
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+                'comments' => $comments,
+            ], $response);
+        }
+    }
+
+When the ``Response`` is not modified, the ``isNotModified()`` method
+automatically sets the response status code to ``304``, removes the content,
+and removes some headers that must not be present for ``304`` responses (see
+:method:`Symfony\\Component\\HttpFoundation\\Response::setNotModified`).
+
+.. _cache-attribute-expressions:
+
+Using Expressions in the Cache Attribute
+........................................
+
+The ``#[Cache]`` attribute supports using expressions for the ``etag`` and
+``lastModified`` options. These expressions are evaluated using the
+:doc:`ExpressionLanguage component </expression_language>` and
+have access to the following variables:
+
+``request``
+    The current :class:`Symfony\\Component\\HttpFoundation\\Request` object,
+    which gives you access to headers, query parameters, and other request data.
+
+``args``
+    An array containing all controller action arguments (including those
+    resolved via :doc:`argument value resolvers </controller/value_resolver>`).
+
+In addition to these variables, all request attributes (such as route parameters)
+are also available directly by name.
+
+The following example uses expressions to compute the ``ETag`` and
+``Last-Modified`` values dynamically::
+
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
+
+    use App\Entity\Article;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\Cache;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class ArticleController extends AbstractController
+    {
+        #[Route('/article/{id}')]
+        #[Cache(
+            etag: "args['article'].computeETag()",
+            lastModified: "args['article'].getUpdatedAt()",
+            public: true,
+        )]
+        public function show(Article $article): Response
+        {
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+            ]);
+        }
+    }
+
+You can also use the ``request`` variable to include request-specific data
+in the cache key::
+
+    #[Cache(etag: "request.headers.get('Accept-Language') ~ args['article'].getId()")]
+    public function show(Article $article): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 8.1
+
+    The ``request`` and ``args`` variables in ``#[Cache]`` attribute expressions
+    were introduced in Symfony 8.1.
+
+Using Closures in the Cache Attribute
+.....................................
+
+In addition to expressions, the ``#[Cache]`` attribute also supports PHP
+closures to compute the ``etag`` and ``lastModified`` values. This is useful
+when the logic is too complex for an expression string or when you prefer
+type-safe PHP code over the ExpressionLanguage syntax.
+
+Closures receive two arguments: an array containing all resolved controller
+arguments (the same as the ``args`` variable in expressions) and the current
+:class:`Symfony\\Component\\HttpFoundation\\Request` object::
+
+    // src/Controller/ArticleController.php
+    namespace App\Controller;
+
+    use App\Entity\Article;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\Cache;
+    use Symfony\Component\Routing\Attribute\Route;
+
+    class ArticleController extends AbstractController
+    {
+        #[Route('/article/{id}')]
+        #[Cache(
+            lastModified: static function (array $args, Request $request): \DateTimeInterface {
+                return $args['article']->getUpdatedAt();
+            },
+            etag: static function (array $args, Request $request): string {
+                return $args['article']->computeETag();
+            },
+            public: true,
+        )]
+        public function show(Article $article): Response
+        {
+            return $this->render('article/show.html.twig', [
+                'article' => $article,
+            ]);
+        }
+    }
+
+
+You can also use the ``$request`` argument to include request-specific data
+in the cache key::
+
+    #[Cache(
+        etag: static function (array $args, Request $request): string {
+            return $request->headers->get('Accept-Language').$args['article']->getId();
+        },
+    )]
+    public function show(Article $article): Response
+    {
+        // ...
+    }
+
+Like expressions, closures follow the same rules: cache headers already set
+on the response are not overridden by the ``#[Cache]`` attribute.
+
+.. versionadded:: 8.1
+
+    Support for closures in the ``#[Cache]`` attribute was introduced in
+    Symfony 8.1.
+
+.. _http-cache-vary:
+
+Varying the Response for HTTP Cache
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the cache uses the URI of the request as the cache key, so all
+requests to the same URI receive the same cached response. Sometimes, the same
+URI must have different representations depending on some request headers.
+For instance, if you compress pages when the client supports it, any given URI
+has two representations: one for clients that support compression and another
+one for clients that don't. The ``Accept-Encoding`` request header tells which
+representation the client needs.
+
+In this case, the cache must store both a compressed and an uncompressed
+version of the response for that URI and return one of them based on the
+``Accept-Encoding`` value of the request. Use the ``Vary`` response header to
+do that. Its value is a comma-separated list of the request headers whose
+values change the representation of the requested resource:
+
+.. code-block:: text
+
+    Vary: Accept-Encoding, User-Agent
+
+With this header, the cache stores a different version of each resource
+depending on the URI and the values of the ``Accept-Encoding`` and
+``User-Agent`` request headers.
+
+Set the ``Vary`` header with the ``vary`` option of the ``#[Cache]`` attribute
+or with the ``setVary()`` method of the ``Response``::
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        // the option takes an array with the names of the request headers
+        // for which the response varies
+        #[Cache(vary: ['Accept-Encoding'])]
+        public function index(): Response
+        {
+            // ...
+        }
+
+        #[Cache(vary: ['Accept-Encoding', 'User-Agent'])]
+        public function show(): Response
+        {
+            // ...
+        }
+
+    .. code-block:: php
+
+        // this method takes a header name or an array of header names for
+        // which the response varies
+        $response->setVary('Accept-Encoding');
+        $response->setVary(['Accept-Encoding', 'User-Agent']);
 
 .. _safe-methods-only-caching-get-or-head-requests:
 
@@ -400,14 +1033,163 @@ Additionally, most cache-related HTTP headers can be set via the single
 
     All these options are also available when using the ``#[Cache]`` attribute.
 
+.. _http-cache-invalidation:
+
 Cache Invalidation
 ------------------
+
+    "There are only two hard things in Computer Science: cache invalidation
+    and naming things." -- Phil Karlton
 
 Cache invalidation is *not* part of the HTTP specification. Still, it can be really
 useful to delete various HTTP cache entries as soon as some content on your site
 is updated.
 
-For details, see :doc:`/http_cache/cache_invalidation`.
+Once a URL is cached by a gateway cache, the cache will not ask the
+application for that content anymore. This allows the cache to provide fast
+responses and reduces the load on your application. However, you risk
+delivering outdated content. A way out of this dilemma is to use long
+cache lifetimes, but to actively notify the gateway cache when content
+changes. Reverse proxies usually provide a channel to receive such
+notifications, typically through special HTTP requests.
+
+.. warning::
+
+    While cache invalidation is powerful, avoid it when possible. If you fail
+    to invalidate something, outdated caches will be served for a potentially
+    long time. Instead, use short cache lifetimes or use the validation model,
+    and adjust your controllers to perform efficient validation checks as
+    explained in :ref:`optimizing-cache-validation`.
+
+    Also, since invalidation is a topic specific to each type of reverse
+    proxy, using this concept will tie you to a specific reverse proxy or
+    require additional effort to support different proxies.
+
+Sometimes, however, you need that extra performance you can get when
+explicitly invalidating. For invalidation, your application needs to detect
+when content changes and tell the cache to remove the URLs which contain
+that data from its cache.
+
+.. tip::
+
+    If you want to use cache invalidation, have a look at the
+    `FOSHttpCacheBundle`_. This bundle provides services to help with various
+    cache invalidation concepts and also documents the configuration for a
+    couple of common caching proxies.
+
+If each piece of content corresponds to one URL, the ``PURGE`` model works well.
+You send a request to the cache proxy with the HTTP method ``PURGE`` (using
+the word "PURGE" is a convention; technically this can be any string) instead
+of ``GET`` and make the cache proxy detect this and remove the data from the
+cache instead of going to the application to get a response.
+
+Here is how you can configure the :ref:`Symfony reverse proxy <symfony-gateway-cache>`
+to support the ``PURGE`` HTTP method. First create a caching kernel that overrides the
+:method:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::invalidate` method::
+
+    // src/CacheKernel.php
+    namespace App;
+
+    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    class CacheKernel extends HttpCache
+    {
+        protected function invalidate(Request $request, bool $catch = false): Response
+        {
+            if ('PURGE' !== $request->getMethod()) {
+                return parent::invalidate($request, $catch);
+            }
+
+            if ('127.0.0.1' !== $request->getClientIp()) {
+                return new Response('Forbidden', Response::HTTP_FORBIDDEN);
+            }
+
+            $response = new Response();
+            if ($this->getStore()->purge($request->getUri())) {
+                $response->setStatusCode(Response::HTTP_OK, 'Purged');
+            } else {
+                $response->setStatusCode(Response::HTTP_NOT_FOUND, 'Not found');
+            }
+
+            return $response;
+        }
+    }
+
+Then, register the class as a service that :doc:`decorates </service_container/decoration>`
+``http_cache``::
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/CacheKernel.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(bind: ['$surrogate' => '@?esi'])]
+        #[AsDecorator(decorates: 'http_cache')]
+        class CacheKernel extends HttpCache
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\CacheKernel:
+                decorates: http_cache
+                arguments:
+                    - '@kernel'
+                    - '@http_cache.store'
+                    - '@?esi'
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\CacheKernel;
+
+        return App::config([
+            'services' => [
+                CacheKernel::class => [
+                    'decorates' => 'http_cache',
+                    'arguments' => [
+                        service('kernel'),
+                        service('http_cache.store'),
+                        service('esi')->nullOnInvalid(),
+                    ],
+                ],
+            ],
+        ]);
+
+.. danger::
+
+    You must protect the ``PURGE`` HTTP method somehow to avoid random people
+    purging your cached data.
+
+**Purge** instructs the cache to drop a resource in *all its variants*
+(according to the ``Vary`` header, see
+:ref:`Varying the Response for HTTP Cache <http-cache-vary>`). An alternative
+to purging is **refreshing** the content. Refreshing means that the caching
+proxy discards its local cache and fetches the content again. This way,
+the new content is already available in the cache. The drawback of refreshing
+is that variants are not invalidated.
+
+In many applications, the same piece of content is used on various pages with
+different URLs. More flexible concepts exist for those cases:
+
+* **Banning** invalidates responses matching regular expressions on the
+  URL or other criteria;
+* **Cache tagging** lets you add a tag for each piece of content used in a
+  response so that you can invalidate all URLs containing that content.
 
 Using Edge Side Includes
 ------------------------
@@ -468,3 +1250,12 @@ Learn more
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.org/
 .. _`they can be cached`: https://tools.ietf.org/html/draft-ietf-httpbis-p2-semantics-20#section-2.3.4
 .. _`RFC 9211`: https://www.rfc-editor.org/rfc/rfc9211.html
+.. _`RFC 9213`: https://www.rfc-editor.org/rfc/rfc9213.html
+.. _`expiration model`: https://tools.ietf.org/html/rfc2616#section-13.2
+.. _`Calculating Freshness Lifetime`: https://tools.ietf.org/html/rfc7234#section-4.2.1
+.. _`Serving Stale Responses`: https://tools.ietf.org/html/rfc7234#section-4.2.4
+.. _`validation model`: https://tools.ietf.org/html/rfc2616#section-13.3
+.. _`HTTP ETag`: https://en.wikipedia.org/wiki/HTTP_ETag
+.. _`DeflateAlterETag`: https://httpd.apache.org/docs/trunk/mod/mod_deflate.html#deflatealteretag
+.. _`BrotliAlterETag`: https://httpd.apache.org/docs/2.4/mod/mod_brotli.html#brotlialteretag
+.. _`FOSRestBundle`: https://github.com/FriendsOfSymfony/FOSRestBundle
