@@ -225,7 +225,7 @@
 /cookbook/security/custom_provider /security/custom_provider
 /cookbook/security/entity_provider /security/entity_provider
 /cookbook/security/firewall_restriction /security/firewall_restriction
-/cookbook/security/force_https /security/force_https
+/cookbook/security/force_https /security/access_control#security-access-control-channel
 /cookbook/security/form_login /security/form_login
 /cookbook/security/form_login_setup /security/form_login_setup
 /cookbook/security/guard-authentication /security/guard_authentication
@@ -567,7 +567,7 @@
 /security/acl https://github.com/symfony/acl-bundle/blob/main/src/Resources/doc/index.rst
 /security/securing_services /security#securing-other-services
 /security/authenticator_manager /security
-/security/multiple_guard_authenticators /security/entry_point
+/security/multiple_guard_authenticators /security/access_denied_handler#security-entry-point
 /security/guard_authentication /security/custom_authenticator
 /components/security/authentication /security#authenticating-users
 /components/security/authorization /security#access-control-authorization
@@ -705,3 +705,5 @@
 /console/command_in_controller /console#console-command-in-controller
 /console/lazy_commands /console#console-registering-commands
 /logging/monolog_console /console#console-monolog-handler
+/security/force_https /security/access_control#security-access-control-channel
+/security/entry_point /security/access_denied_handler#security-entry-point
