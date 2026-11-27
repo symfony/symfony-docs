@@ -684,7 +684,7 @@ channel when injecting the logger in a service.
 
 .. tip::
 
-    You can create :doc:`custom channels </logging/channels_handlers>` and
+    You can create :ref:`custom channels <logging-channels>` and
     even :ref:`autowire logging channels <monolog-autowire-channels>`.
 
 .. _dic_tags-monolog-processor:
@@ -694,7 +694,7 @@ monolog.processor
 
 **Purpose**: Add a custom processor for logging
 
-Monolog allows you to add :doc:`processors </logging/processors>` in the
+Monolog allows you to add :ref:`processors <logging-processors>` in the
 logger or in the handlers to add extra data in the records. A processor
 receives the record as an argument and must return it after adding some extra
 data in the ``extra`` attribute of the record.

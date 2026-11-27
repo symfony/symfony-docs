@@ -184,12 +184,12 @@
 /cookbook/install/upgrade_major /setup/upgrade_major
 /cookbook/install/upgrade_minor /setup/upgrade_minor
 /cookbook/install/upgrade_patch /setup/upgrade_minor#upgrade-patch-version
-/cookbook/logging/channels_handlers /logging/channels_handlers
+/cookbook/logging/channels_handlers /logging#logging-channels
 /cookbook/logging/index /logging
 /cookbook/logging/monolog /logging
 /cookbook/logging/monolog_console /console#console-monolog-handler
 /cookbook/logging/monolog_email /logging/monolog_email
-/cookbook/logging/monolog_regex_based_excludes /logging/monolog_regex_based_excludes
+/cookbook/logging/monolog_regex_based_excludes /logging#logging-excluded-http-codes
 /cookbook/profiler/data_collector /profiler#profiler-data-collector
 /profiler/data_collector /profiler#profiler-data-collector
 /cookbook/profiler/index /profiler
@@ -552,7 +552,7 @@
 /components https://symfony.com/components
 /components/index https://symfony.com/components
 /serializer/normalizers /serializer#serializer-built-in-normalizers
-/logging/monolog_regex_based_excludes /logging/monolog_exclude_http_codes
+/logging/monolog_regex_based_excludes /logging#logging-excluded-http-codes
 /security/named_encoders /security/named_hashers
 /components/inflector /string#inflector
 /security/experimental_authenticators /security
@@ -706,3 +706,8 @@
 /logging/monolog_console /console#console-monolog-handler
 /security/force_https /security/access_control#security-access-control-channel
 /security/entry_point /security/access_denied_handler#security-entry-point
+/logging/formatter /logging#logging-formatter
+/logging/monolog_exclude_http_codes /logging#logging-excluded-http-codes
+/logging/handlers /logging#logging-elasticsearch-handler
+/logging/channels_handlers /logging#logging-channels
+/logging/processors /logging#logging-processors
