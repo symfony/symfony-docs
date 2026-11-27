@@ -296,6 +296,14 @@ The message displayed if the video file contains multiple video streams.
 
 The message displayed if ``ffprobe`` cannot detect the dimensions of the video.
 
+``thumbnailNotAllowedMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The video stream is a thumbnail, not a video.``
+
+The message displayed if ``ffprobe`` detects that the video stream is a still
+image (e.g. an embedded cover art or thumbnail) instead of a video.
+
 ``unsupportedCodecMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
