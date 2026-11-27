@@ -1450,7 +1450,7 @@ entry_point_path
 
 The path, absolute URL or route name where anonymous users are redirected when
 they need to authenticate. Use it instead of creating an
-:doc:`entry point </security/entry_point>` class that only returns a
+:ref:`entry point <security-entry-point>` class that only returns a
 redirection. This option can't be used together with the ``entry_point``
 option. Read more about it in :ref:`security-entry-point-path`.
 

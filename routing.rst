@@ -2775,7 +2775,7 @@ defined as attributes:
 .. note::
 
     The Security component provides
-    :doc:`another way to enforce HTTP or HTTPS </security/force_https>`
+    :ref:`another way to enforce HTTP or HTTPS <security-access-control-channel>`
     via the ``requires_channel`` setting.
 
 .. _routing-signing-uris:

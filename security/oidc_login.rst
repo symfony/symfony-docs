@@ -160,7 +160,7 @@ because the start route is tied to the firewall whose flow it starts.
 
 When ``oidc_login`` is the only authenticator of the firewall that can start
 the authentication, it also becomes the
-:doc:`entry point </security/entry_point>` of the firewall: when an anonymous
+:ref:`entry point <security-entry-point>` of the firewall: when an anonymous
 user requests a protected page, Symfony redirects them to the authorization
 endpoint of the provider. You don't need anything else to log in users.
 

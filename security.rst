@@ -3952,7 +3952,6 @@ Authentication (Identifying/Logging in the User)
     security/csrf
     security/form_login
     security/custom_authenticator
-    security/entry_point
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3964,7 +3963,6 @@ Authorization (Denying Access)
     security/access_control
     security/expressions
     security/access_denied_handler
-    security/force_https
 
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks

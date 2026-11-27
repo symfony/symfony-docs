@@ -149,7 +149,8 @@ should review it:
     You may want your authenticator to implement
     ``AuthenticationEntryPointInterface``. This defines the response sent
     to users to start authentication (e.g. when they visit a protected
-    page). Read more about it in :doc:`/security/entry_point`.
+    page). Read more about it in
+    :ref:`how to customize the entry point <security-entry-point>`.
 
 The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &
