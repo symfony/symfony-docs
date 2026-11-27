@@ -95,6 +95,7 @@ Service               Install with                                        Webhoo
 `Azure`_              ``composer require symfony/azure-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``           yes
 `Cloudflare`_         ``composer require symfony/cloudflare-mailer``
+`Groundmail`_         ``composer require symfony/groundmail-mailer``      yes
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``         yes
 `Mailjet`_            ``composer require symfony/mailjet-mailer``         yes
@@ -118,8 +119,9 @@ Service               Install with                                        Webhoo
 
 .. versionadded:: 8.2
 
-    The ``MailKite``, ``PufferPost``, ``TurboSMTP``, ``Cloudflare`` and
-    ``Zoho CPaaS`` integrations were introduced in Symfony 8.2.
+    The ``MailKite``, ``PufferPost``, ``TurboSMTP``, ``Cloudflare``,
+    ``Zoho CPaaS`` and ``Groundmail`` integrations were introduced in
+    Symfony 8.2.
     Webhook support for ``Scaleway`` was also introduced in Symfony 8.2.
 
 .. note::
@@ -194,6 +196,10 @@ third-party provider:
 | `Google Gmail`_        | - SMTP ``gmail+smtp://USERNAME:APP-PASSWORD@default``                                     |
 |                        | - HTTP n/a                                                                                |
 |                        | - API ``gmail+api://SERVICE-ACCOUNT:PRIVATE-KEY@default?user=USER-EMAIL``                 |
++------------------------+-------------------------------------------------------------------------------------------+
+| `Groundmail`_          | - SMTP ``groundmail+smtp://groundmail:SMTP_PASSWORD@default``                             |
+|                        | - HTTP n/a                                                                                |
+|                        | - API ``groundmail+api://API_KEY@default``                                                |
 +------------------------+-------------------------------------------------------------------------------------------+
 | `Infobip`_             | - SMTP ``infobip+smtp://KEY@default``                                                     |
 |                        | - HTTP n/a                                                                                |
@@ -378,6 +384,15 @@ third-party provider:
     ``default`` host uses the US data center (``cpaas.zoho.com`` for the API and
     ``smtp.zeptomail.com`` for SMTP). For other data centers, set the host
     explicitly, such as ``zohocpaas+api://API_KEY@cpaas.zoho.eu``.
+
+.. note::
+
+    ``groundmail`` is an alias for ``groundmail+api``. The SMTP username is
+    always ``groundmail`` and the password is an SMTP credential (``gmsmtp_...``)
+    created in the Groundmail dashboard. ``groundmail+smtp`` uses STARTTLS on
+    port 587; use ``groundmail+smtp://groundmail:SMTP_PASSWORD@default:2525``
+    when your host blocks port 587. Prefer the API transport when your host
+    blocks outbound SMTP entirely.
 
 .. tip::
 
@@ -1709,6 +1724,7 @@ Transport       Template Reference              Custom Subject
 ==============  ==============================  ===============
 Amazon SES      template name                   no
 Brevo           numeric template id             yes
+Groundmail      template id or alias            yes
 MailerSend      template id                     yes
 Mailgun         template name                   yes
 Mailjet         numeric template id             yes
@@ -2567,6 +2583,7 @@ The following transports only support metadata:
 
 * Amazon SES (note that Amazon refers to this feature as "tags", but Symfony
   calls it "metadata" because it contains a key and a value)
+* Groundmail (metadata is stored as Groundmail tags, which are key/value pairs)
 
 .. _mailer-tracking:
 
@@ -2689,9 +2706,9 @@ Some providers behave differently:
 * **Mailchimp** (Mandrill) over SMTP only accepts a list of tracking features
   to enable, so a ``null`` flag is disabled when the other one is set explicitly.
 
-Resend and Mailtrap configure tracking per domain, Amazon SES via configuration
-sets (the ``X-SES-CONFIGURATION-SET`` header) and MailPace doesn't track emails,
-so the header has no effect on them.
+Groundmail, Resend and Mailtrap configure tracking per domain, Amazon SES via
+configuration sets (the ``X-SES-CONFIGURATION-SET`` header) and MailPace doesn't
+track emails, so the header has no effect on them.
 
 Draft Emails
 ------------
@@ -3069,6 +3086,7 @@ sent by the previous requests of the test.
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
 .. _`Google Gmail`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Google/README.md
+.. _`Groundmail`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Groundmail/README.md
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Infobip/README.md
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
