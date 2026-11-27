@@ -357,6 +357,8 @@ access those URLs via a specific port. This could be useful, for example, for
             ],
         ]);
 
+.. _security-access-control-channel:
+
 Forcing a Channel (http, https)
 -------------------------------
 
@@ -388,5 +390,21 @@ the user will be redirected to ``https``:
             ],
         ]);
 
+The best policy is to force HTTPS on all URLs. You can do that in your web
+server configuration or by adding the ``requires_channel`` option to every
+``access_control`` entry, including a catch-all entry for all other URLs
+(e.g. ``{ path: '^/', roles: PUBLIC_ACCESS, requires_channel: https }``).
+
+To simplify development, use an environment variable for this option (e.g.
+``requires_channel: '%env(REQUIRED_SCHEME)%'``). In your ``.env`` file, set
+``REQUIRED_SCHEME`` to ``http`` by default and override it to ``https`` in
+production.
+
 You can also force HTTPS per route with the
 :ref:`schemes option of the routes <routing-force-https>`.
+
+.. note::
+
+    If your application runs behind a reverse proxy or load balancer, configure
+    it as explained in :doc:`/deployment/proxies` to avoid infinite redirect
+    loops when forcing HTTPS.
