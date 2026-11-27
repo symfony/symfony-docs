@@ -1299,7 +1299,7 @@ The Monolog console handler is enabled by default:
     messages to the command output.
 
     The ``channels`` option uses the ``!`` prefix to exclude specific
-    :doc:`channels </logging/channels_handlers>`. The ``console`` channel is
+    :ref:`channels <logging-channels>`. The ``console`` channel is
     excluded to reduce noise. This is the channel where Symfony logs command
     lifecycle events (e.g. *Command "{command}" exited with code "{code}"*).
     Excluding this channel does **not** affect any log messages you write yourself
