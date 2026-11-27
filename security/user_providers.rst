@@ -402,3 +402,109 @@ the user provider by adding it in ``security.yaml``:
 Lastly, update the ``config/packages/security.yaml`` file to set the
 ``provider`` key to ``your_custom_user_provider`` in all the firewalls which
 will use this custom user provider.
+
+.. _security-user-providers-encrypted-identifier:
+
+Loading Users by an Encrypted Email
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An email address is personal data, so an application may store it encrypted.
+The database then holds ciphertext only and ``WHERE email = ?`` never matches.
+The login form still submits the address as the user identifier, so the user
+provider has to find the row through a :ref:`blind index
+<key-management-blind-index>` of the column. Reuse the index service
+registered in :ref:`key-management-blind-index-doctrine` and give its id to
+``#[Autowire]``::
+
+    // src/Security/EmailBlindIndexUserProvider.php
+    namespace App\Security;
+
+    use App\Entity\User;
+    use App\Repository\UserRepository;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Symfony\Component\KeyManagement\BlindIndexInterface;
+    use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+    use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+    use Symfony\Component\Security\Core\User\UserInterface;
+    use Symfony\Component\Security\Core\User\UserProviderInterface;
+
+    class EmailBlindIndexUserProvider implements UserProviderInterface
+    {
+        public function __construct(
+            private readonly UserRepository $users,
+            #[Autowire(service: 'app.blind_index.user_email')]
+            private readonly BlindIndexInterface $index,
+        ) {
+        }
+
+        public function loadUserByIdentifier(string $identifier): UserInterface
+        {
+            $emailIndex = $this->index->of($identifier);
+
+            return $this->users->findOneBy(['emailIndex' => $emailIndex])
+                ?? throw new UserNotFoundException(sprintf(
+                    'No user found for the email "%s".',
+                    $identifier,
+                ));
+        }
+
+        public function refreshUser(UserInterface $user): UserInterface
+        {
+            if (!$user instanceof User) {
+                throw new UnsupportedUserException(
+                    sprintf('Invalid user class "%s".', $user::class),
+                );
+            }
+
+            return $this->users->find($user->getId())
+                ?? throw new UserNotFoundException();
+        }
+
+        public function supportsClass(string $class): bool
+        {
+            return User::class === $class || is_subclass_of($class, User::class);
+        }
+    }
+
+``of()`` computes the tag of the submitted address and the provider searches
+the column holding it, as explained in
+:ref:`key-management-blind-index-doctrine`. Register the provider under the
+firewall like any other custom provider:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            providers:
+                database_users:
+                    id: App\Security\EmailBlindIndexUserProvider
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Security\EmailBlindIndexUserProvider;
+
+        return App::config([
+            'security' => [
+                'providers' => [
+                    'database_users' => [
+                        'id' => EmailBlindIndexUserProvider::class,
+                    ],
+                ],
+            ],
+        ]);
+
+The form field still submits the address under the ``_username`` name; only
+its label changes.
+
+.. include:: /key_management/_experimental.rst.inc
+
+The tag is rebuilt from the submitted address on every attempt, so the
+provider finds the user without decrypting the column. The index comes with
+two caveats: it is filled by the ORM on flush only, so a row inserted through
+DBAL or changed by a bulk ``UPDATE`` keeps a stale tag; and equal addresses
+give equal tags, which reveals which rows share an address.

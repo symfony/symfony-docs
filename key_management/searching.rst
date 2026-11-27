@@ -181,6 +181,10 @@ A tag isn't authenticated either. A database writer can copy a tag to another
 row together with the encrypted value. Finding a row by its tag therefore
 doesn't prove that the value belongs to that row.
 
+When the indexed value is the email address users log in with, see
+:ref:`security-user-providers-encrypted-identifier` for a user provider that
+searches the tag instead of the encrypted column.
+
 Choosing a Projection
 ---------------------
 
