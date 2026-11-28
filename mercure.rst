@@ -101,6 +101,42 @@ the same origin as your application, which also works with HTTPS (see
 
 If you use the Docker integration, a hub is already running.
 
+Using FrankenPHP's Built-in Hub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`FrankenPHP`_ embeds a Mercure hub. When your application runs on FrankenPHP
+with `its Mercure support`_ enabled, MercureBundle publishes updates in
+process, with no HTTP request and no publisher JWT. Leave the ``url`` option
+empty (an empty or unset ``MERCURE_URL`` env var) and only set ``public_url``,
+the URL browsers subscribe to:
+
+.. code-block:: yaml
+
+    # config/packages/mercure.yaml
+    mercure:
+        hubs:
+            default:
+                public_url: '%env(string:MERCURE_PUBLIC_URL)%'
+                jwt:
+                    secret: '%env(string:MERCURE_JWT_SECRET)%'
+                    claims:
+                        iss: '%env(string:MERCURE_JWT_ISSUER)%'
+                        sub: 'my-app'
+                        client_id: 'my-app'
+
+The ``jwt`` options are still used to sign the tokens of subscribers, for
+instance to receive private updates.
+
+.. warning::
+
+    Publishing in process only works in code that FrankenPHP runs: HTTP
+    requests and FrankenPHP workers. Commands, including ``messenger:consume``
+    and data fixtures, run in a separate PHP CLI process: publishing an update
+    there throws an exception. This also applies to entities broadcast by UX
+    Turbo or API Platform and changed by a command. To publish from these
+    processes, set ``url`` to the URL of the hub: MercureBundle then publishes
+    over HTTP with a publisher JWT, from every process.
+
 Configuration
 -------------
 
@@ -790,6 +826,8 @@ Going Further
 .. _`high-level implementations`: https://mercure.rocks/docs/ecosystem/awesome
 .. _`In this recording`: https://www.youtube.com/watch?v=UI1l0JOjLeI
 .. _`Mercure.rocks`: https://mercure.rocks
+.. _`FrankenPHP`: https://frankenphp.dev
+.. _`its Mercure support`: https://frankenphp.dev/docs/mercure/
 .. _`Symfony Docker`: https://github.com/dunglas/symfony-docker/
 .. _`API Platform distribution`: https://api-platform.com/docs/distribution/
 .. _`JSON Web Token`: https://tools.ietf.org/html/rfc7519
